@@ -44,7 +44,8 @@ contracts load verbatim. Per-type decisions + status: `Source/AXE/_CCTYPES.md`.
       `RP1Rendezvous`, `HorizontalLanding`, Kerbalism sample/experiment) to real checks.
 
 ## M3 — Pass C + D: rewards & parts funds sink ⛏ M2
-> Backbone data ready: **`docs/PROGRAMS.md`** (per-program baseFunding × gated-contract counts × ~funds/contract).
+> Backbone data ready: **`docs/PROGRAMS.md`** (Pass C reward distribution) and **`docs/ENTRYCOSTS.md`**
+> (Pass D — lift LRTR `tree/parts` entryCost values + RO EntryCostModifiers pricing guide).
 - [ ] Pass C: redistribute each program's `baseFunding` (from `seed` `Programs.cfg` reference) into
       per-contract `rewardFunds`; add modest `rewardScience`. (`design/Rewards/`)
 - [ ] Pass D: rebuild part `entryCost` — LRTR values for add-on/futuristic mods; RO core hand-priced
@@ -64,7 +65,8 @@ contracts load verbatim. Per-type decisions + status: `Source/AXE/_CCTYPES.md`.
       check vs Kerbalism quotas. (`design/Science/`)
 - [ ] Pass F: extend `RP0TechTree.cfg` with late/future nodes; place Near Future / Far Future / KSPIE
       / Cryo / Heat Control parts via `@PART{ %TechRequired }`, **explicitly** (OrphanNode hides
-      unplaced parts). (`design/Tree/`)
+      unplaced parts). (`design/Tree/`) — head start: LRTR `tree/parts/*.cfg` already has
+      `%TechRequired` for these mods, but on LRTR node ids → **remap to our tree** (see `ENTRYCOSTS.md`).
 - [ ] **Prove:** future nodes appear, futuristic parts are placed (not orphaned), costs budgeted.
 
 ## M6 — Pass G: avionics/control & start node ⛏ M1
