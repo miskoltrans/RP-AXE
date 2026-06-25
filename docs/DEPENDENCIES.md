@@ -67,21 +67,28 @@ Near-future + cryo/nuclear (RP-1 `suggests`):
 - `NearFutureLaunchVehicles` `NearFutureConstruction` `NearFutureElectrical`
   `NearFutureExploration` `NearFutureSolar`
 
-### Far-future — INCLUDED (configed + RO-scaled; not netkan-endorsed, so verify orphans on install)
-- [x] `FarFutureTechnologies` — fusion/exotic; 21 tree configs + RO support.
-- [x] `HeatControl` — radiators/thermal for reactors & high-power parts; 19 configs + RO support.
+### Near-future propulsion — INCLUDED
 - [x] `NearFuturePropulsion` — ion/plasma/VASIMR; 28 configs + RO support.
+- [x] `NearFutureAeronautics`, `NearFutureSpacecraft` — optional, minimal configs (user installed them).
+
+### Far-future — DEFERRED (skip for now, per decision; revisit later)
+- [ ] `FarFutureTechnologies` — fusion/exotic; 21 tree configs + RO support.
+- [ ] `HeatControl` — radiators/thermal; 19 configs + RO support.
 
 ### Exploration / utility additions — INCLUDED
 Turnkey (RP-1 tree-placed → ~zero work, just verify orphans):
-- `ProbesPlus` (Coatl Aerospace) — probe cores + science instruments (120 configs). Key for exploration.
-- `DMagicOrbitalScience` (8) · `SurfaceExperimentPackage` (21) · `SCANsat` (15) — science/scanning (SCANsat has a seed contract type).
-- `KAS` (20) · `KIS` (36) · `UniversalStorage2` (40) — construction/connectors + service bays.
-- `TantaresLV` (24) — Soviet-styled launch vehicles.
+- `SCANsat` (15) — orbital scanning (has a seed contract type).
+- `KAS` (20) · `KIS` (36) — construction/connectors.
+- `TantaresLV` (24), `TantaresSP` — Soviet-styled launch vehicles + spaceplanes.
 
 Needs placement work (RO-scaled but NOT in RP-1's tree → Pass F authoring, not just orphan-fix):
 - `Tantares` (Soviet spacecraft + station parts) — RO-supported (`RO_SuggestedMods/Tantares`) but
   unplaced; we author `%TechRequired` for these (LRTR `tree/parts/Tantares.cfg` is a head start; remap nodes).
+
+Dropped from the set:
+- `ProbesPlus`, `DMagicOrbitalScience`, `SurfaceExperimentPackage` — **not available** in the user's
+  CKAN (compat-filtered/unlisted); skipped for now.
+- `UniversalStorage2` — skipped (per decision).
 
 American stockalike: **none** — `ROCapsules`/`ROEngines` (baseline) already cover US real-scale capsules/engines.
 
