@@ -34,4 +34,24 @@ namespace RPAxe.Contracts
         protected override void OnParameterSave(ConfigNode node) { base.OnParameterSave(node); }
         protected override void OnParameterLoad(ConfigNode node) { base.OnParameterLoad(node); }
     }
+
+    /// <summary>
+    /// Completes immediately on register, regardless of scene or vessel. Used by the "Begin
+    /// Program" charter contracts so they complete the moment they're accepted at the space centre
+    /// (the VesselParameter-based AxeAlwaysComplete would need an active vessel to tick).
+    /// </summary>
+    public class AxeInstantComplete : ContractParameter
+    {
+        private string _title;
+
+        public AxeInstantComplete() { }
+        public AxeInstantComplete(string title) { _title = title; }
+
+        protected override string GetTitle() => string.IsNullOrEmpty(_title) ? "Authorise the program" : _title;
+
+        protected override void OnRegister() { SetComplete(); }
+
+        protected override void OnSave(ConfigNode node) { node.AddValue("title", _title ?? ""); }
+        protected override void OnLoad(ConfigNode node) { _title = node.GetValue("title"); }
+    }
 }

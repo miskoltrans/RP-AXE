@@ -34,4 +34,8 @@ namespace RPAxe.Contracts
 
     public class RP1HasExperimentFactory : ParameterFactory    // Kerbalism experiment check; revisit
     { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }
+
+    // `type = AXEInstant` — completes immediately (used by the "Begin Program" charter contracts).
+    public class AXEInstantFactory : ParameterFactory
+    { public override ContractParameter Generate(Contract c) => new AxeInstantComplete(title); }
 }

@@ -95,6 +95,23 @@ CC auto-discovers our factories by class name (`XxxFactory` → `type = Xxx`). F
 `Source/AXE/_CCTYPES.md`. **Builds clean but NOT yet validated in a running game** — see the M2
 validation checklist in `docs/TASKS.md`. M3/M4 depend on this validating.
 
+### D7 — 2026-06-25 — M3 + M4 first-pass implemented (⚠️ UNVALIDATED, validate with M2)
+
+At the user's direction ("do 1 and 2"), implemented the next milestones on top of the still-
+unvalidated M2 rather than waiting:
+- **M4 program switcher:** `AxeProgramHandler` (ScenarioModule), `ActivateProgram` behaviour, and
+  `ProgramActive` made **real** (was the M2 always-true stub). 12 early "Begin Program" charters
+  with a guided chain (`design/Programs/ActivatePrograms.cfg`). Added an `AXEInstant` parameter so
+  charters complete at the space centre.
+- **M3 Pass C:** flat per-program `rewardFunds` on gated contracts (`design/Rewards/ProgramRewards.cfg`).
+- **M3 Pass D:** conservative category-default `entryCost` (`design/EntryCosts/Defaults.cfg`).
+- **Expression stub:** `RP1CommsPayload`/`RP1WeatherPayload` → 0 (`ExpressionFunctions.cs`).
+
+Consequence: making `ProgramActive` real **changes the validation flow** — gated contracts now appear
+only after accepting a charter. Validation is therefore a single **combined M2+M3+M4** pass (checklist
+in `docs/TASKS.md` M2). Known risk to watch: charters surfacing under KSP's offered-contract limit
+(RP-1 raised it via plugin; we don't).
+
 ---
 
 ## Open decisions (resolve as MVP progresses)

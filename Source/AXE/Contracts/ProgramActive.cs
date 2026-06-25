@@ -7,10 +7,9 @@ namespace RPAxe.Contracts
     /// `REQUIREMENT { type = ProgramActive }` — RP-1's gate that only offers a contract while its
     /// Program is active (~368 uses across the contract set).
     ///
-    /// M2: always met, so the program-gated contracts load and are offered. M4 (the program
-    /// switcher) will make this real — return true only when the named program(s) have been
-    /// started in our AxeProgramHandler. The `program` values are parsed now so configs are
-    /// preserved verbatim and the M4 change is a one-method edit.
+    /// M4: met only when all named program(s) have been started in AxeProgramHandler (via a
+    /// "Begin Program" charter contract). Before any handler exists (e.g. evaluated with no game
+    /// loaded) it is not met.
     /// </summary>
     public class ProgramActiveRequirement : ContractRequirement
     {
@@ -37,8 +36,7 @@ namespace RPAxe.Contracts
 
         public override bool RequirementMet(ConfiguredContract contract)
         {
-            // M2 stub: always available. M4 wires this to AxeProgramHandler.IsActive(programs).
-            return true;
+            return AxeProgramHandler.Instance != null && AxeProgramHandler.Instance.AllActive(programs);
         }
 
         protected override string RequirementText()

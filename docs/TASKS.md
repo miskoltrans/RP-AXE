@@ -30,22 +30,30 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · ⛏ depends on
 Approach (DECISIONS D6): wrote our OWN CC types in `AXE.dll` (`Source/AXE/Contracts/`) so RP-1's
 contracts load verbatim. Per-type decisions + status: `Source/AXE/_CCTYPES.md`.
 - [x] CC-type triage — researched each type's behaviour & dependency (most are self-contained stock logic).
-- [x] Implement all 14 names (real / no-op / `ProgramActive` always-true stub). **Builds clean.**
-- [ ] ⚠️ **VALIDATE IN-GAME — blocked, needs a KSP launch (do this before M3/M4):**
-  - [ ] Main menu → `KSP.log` "Loaded X out of 346 CONTRACT_TYPE nodes" jumps from **47** toward
-        ~341 (346 − ~2 duplicate − ~3 expr-func contracts).
-  - [ ] grep `KSP.log`: **no** remaining `Unknown parameter/requirement/behaviour` for our 14 names;
-        no `unexpected`/ERROR spam from the no-op factories.
-  - [ ] Start a science/career game: an early contract (sounding rocket / first satellite) is **offered**.
-  - [ ] Fly one: confirm `DownrangeDistance` / `ReachMach` / `RP1ReturnHome` / `RP1CollectScience`
-        actually complete.
-- [x] Dedupe `FirstTundraSat` & `landingTriton` → `design/Contracts/DedupeContracts.cfg` (confirm in validation).
-- [ ] Deferred (polish): stub `RP1CommsPayload`/`RP1WeatherPayload`; promote no-ops (`ImpactCB`,
-      `RP1Rendezvous`, `HorizontalLanding`, Kerbalism sample/experiment) to real checks.
+- [x] Implement all 14 names (real / no-op). `ProgramActive` is now **real** (M4), not the stub. **Builds clean.**
+- [x] Dedupe `FirstTundraSat` & `landingTriton` → `design/Contracts/DedupeContracts.cfg`.
+- [x] Stub `RP1CommsPayload`/`RP1WeatherPayload` → `Source/AXE/Contracts/ExpressionFunctions.cs`.
+- [ ] Deferred (polish): promote no-ops (`ImpactCB`, `RP1Rendezvous`, `HorizontalLanding`, Kerbalism
+      sample/experiment) to real checks.
 
-## M3 — Pass C + D: rewards & parts funds sink ⛏ M2
-> Backbone data ready: **`docs/PROGRAMS.md`** (Pass C reward distribution) and **`docs/ENTRYCOSTS.md`**
-> (Pass D — lift LRTR `tree/parts` entryCost values + RO EntryCostModifiers pricing guide).
+### ⚠️ COMBINED VALIDATION (M2 + M3 + M4) — blocked, needs one KSP launch
+M3/M4 are now implemented on top of M2, so validate together:
+- [ ] **Load (M2):** main menu → `KSP.log` "Loaded X out of 346 CONTRACT_TYPE nodes" near **~346**
+      (dedupe + expr-stub should clear the previously-failing ones); **no** `Unknown
+      parameter/requirement/behaviour` for our names; no `unexpected`/ERROR spam from no-op factories.
+- [ ] **Switcher (M4):** new career/science → Mission Control shows the **"Begin Program: …"** charters
+      (≥ the 3 Tier-0). Accept one → `[AXE] Program activated: X` in log → that program's contracts
+      start being offered. *(If charters don't surface among many offered contracts, raise the
+      offered-contract limit / add `weight` to the charters — note it.)*
+- [ ] **Economy (M3):** accepted program contracts pay `rewardFunds` (not 0); newly-unlocked parts
+      cost funds (entryCost no longer 1).
+- [ ] **Checks:** fly an early one → `DownrangeDistance`/`ReachMach`/`RP1ReturnHome`/`RP1CollectScience` complete.
+
+## M3 — Pass C + D: rewards & parts funds sink ⛏ M2  —  v1 IMPLEMENTED, ⚠️ pending combined validation
+> Backbone data: **`docs/PROGRAMS.md`** (Pass C) and **`docs/ENTRYCOSTS.md`** (Pass D).
+> v1 shipped: Pass C **flat** per-program `rewardFunds` (`design/Rewards/ProgramRewards.cfg`);
+> Pass D **conservative category-default** entryCost (`design/EntryCosts/Defaults.cfg`).
+> Follow-ups: capstone weighting + `rewardScience`; per-part LRTR entryCost porting; balance vs vehicle cost.
 - [ ] Pass C: redistribute each program's `baseFunding` (from `seed` `Programs.cfg` reference) into
       per-contract `rewardFunds`; add modest `rewardScience`. (`design/Rewards/`)
 - [ ] Pass D: rebuild part `entryCost` — LRTR values for add-on/futuristic mods; RO core hand-priced
@@ -53,8 +61,12 @@ contracts load verbatim. Per-type decisions + status: `Source/AXE/_CCTYPES.md`.
 - [ ] Document global Funds/Science multipliers as the final trim knob.
 - [ ] **Prove:** funds are a real, non-trivial budget; each early era's income covers its vehicle costs.
 
-## M4 — Pass B: program switcher ⛏ M2
+## M4 — Pass B: program switcher ⛏ M2  —  v1 IMPLEMENTED, ⚠️ pending combined validation
 > Design + program list/membership: **`docs/PROGRAMS.md`** (§ "M4 — program switcher").
+> v1 shipped: `AxeProgramHandler` (ScenarioModule) + `ActivateProgram` behaviour + real `ProgramActive`;
+> 12 early "Begin Program" charters with a guided chain (`design/Programs/ActivatePrograms.cfg`).
+> Follow-ups: charters for the remaining ~28 programs; surfacing (offered-contract limit / `weight`);
+> optional toolbar UI.
 - [ ] Author "Activate [X] Program" contracts (always available) for the program list (DEPENDENCIES/
       ARCHITECTURE §6). (`design/Programs/`)
 - [ ] Re-point member contracts to gate on `AcceptContract{ contractType = Activate_X }`.
