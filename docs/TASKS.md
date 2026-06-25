@@ -81,8 +81,9 @@ M3/M4 are now implemented on top of M2, so validate together:
   - [ ] CKAN-install the full part set into the instance.
   - [ ] Launch; grep `KSP.log` for parts swept into the `orphanParts` node (= version-drift between
         RP-1's placements and current mod part names). Add `@PART{ %TechRequired }` only for those.
-  - [ ] (Only if we later add RO-only mods) author placements from scratch (LRTR `tree/parts` head
-        start, remap node ids — see ENTRYCOSTS.md). Not needed for the current set.
+  - [ ] **Author placements for `Tantares` spacecraft/station parts** — RO-scaled but not in RP-1's
+        tree (only `TantaresLV` is placed). Use LRTR `tree/parts/Tantares*.cfg` as a head start
+        (remap node ids → our tree). This is the one authoring task in the current set.
 - [ ] **Prove:** future nodes appear, futuristic parts are placed (not orphaned), costs budgeted.
 
 ## M6 — Pass G: avionics/control & start node ⛏ M1

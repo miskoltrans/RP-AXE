@@ -72,6 +72,19 @@ Near-future + cryo/nuclear (RP-1 `suggests`):
 - [x] `HeatControl` — radiators/thermal for reactors & high-power parts; 19 configs + RO support.
 - [x] `NearFuturePropulsion` — ion/plasma/VASIMR; 28 configs + RO support.
 
+### Exploration / utility additions — INCLUDED
+Turnkey (RP-1 tree-placed → ~zero work, just verify orphans):
+- `ProbesPlus` (Coatl Aerospace) — probe cores + science instruments (120 configs). Key for exploration.
+- `DMagicOrbitalScience` (8) · `SurfaceExperimentPackage` (21) · `SCANsat` (15) — science/scanning (SCANsat has a seed contract type).
+- `KAS` (20) · `KIS` (36) · `UniversalStorage2` (40) — construction/connectors + service bays.
+- `TantaresLV` (24) — Soviet-styled launch vehicles.
+
+Needs placement work (RO-scaled but NOT in RP-1's tree → Pass F authoring, not just orphan-fix):
+- `Tantares` (Soviet spacecraft + station parts) — RO-supported (`RO_SuggestedMods/Tantares`) but
+  unplaced; we author `%TechRequired` for these (LRTR `tree/parts/Tantares.cfg` is a head start; remap nodes).
+
+American stockalike: **none** — `ROCapsules`/`ROEngines` (baseline) already cover US real-scale capsules/engines.
+
 ### Excluded (legacy "configed but newer support lacking", or no RO support)
 - `Bluedog_DB` — dropped from `RP-1.netkan` (legacy `RP-0` only); RO support is beta/community; 110
   *legacy* tree configs risk part-name drift vs current BDB v1.14. **Skip.**
@@ -89,8 +102,10 @@ quirks).
 - **`depends` — bedrock (never trim):** ModuleManager, RealSolarSystem, RealismOverhaul, RealFuels,
   Kerbalism, ContractConfigurator.
 - **`depends` — examine-later:** RealAntennas, ROLibrary/ROUtils, CustomBarnKit.
-- **`depends` — part set:** the **Baseline (LOCKED IN)** list + the three **Far-future — INCLUDED**
-  mods (`FarFutureTechnologies`, `HeatControl`, `NearFuturePropulsion`) under "Part-mod set" above.
+- **`depends` — part set:** the **Baseline (LOCKED IN)** + **Far-future — INCLUDED**
+  (`FarFutureTechnologies`, `HeatControl`, `NearFuturePropulsion`) + **Exploration/utility additions**
+  (`ProbesPlus`, `DMagicOrbitalScience`, `SurfaceExperimentPackage`, `SCANsat`, `KAS`, `KIS`,
+  `UniversalStorage2`, `Tantares`, `TantaresLV`) under "Part-mod set" above.
 - **`conflicts`:** RP-1 (invariant 2 — vendored configs must not double-patch a real RP-1).
 - **`suggests`:** tools only (SCANsat, SurfaceExperimentPackage, kOS).
 
