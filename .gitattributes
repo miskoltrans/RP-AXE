@@ -1,0 +1,8 @@
+*.png !text !filter !merge !diff
+*.tga !text !filter !merge !diff
+*.mbm !text !filter !merge !diff
+*.wav !text !filter !merge !diff
+*.ogg !text !filter !merge !diff
+*.truecolor !text !filter !merge !diff
+*.mu !text !filter !merge !diff
+*.dds !text !filter !merge !diff

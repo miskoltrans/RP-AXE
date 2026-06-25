@@ -1,0 +1,71 @@
+# RP-AXE Decision Log
+
+Append-only record of architectural decisions. Newest at the bottom.
+
+---
+
+### D0 — 2026-06-25 — Project charter
+
+RP-AXE is a config-first, lightweight career/science layer on RP-1's realism stack. Realism kept;
+RP-1's career grind axed. Ahistorical/what-if. Near/far-future parts are expected content.
+Contracts guide early game then step aside. MVP scope. (From project brief.)
+
+### D1 — 2026-06-25 — Contracts: PORT & STRIP
+
+**Context:** RP-1's 312 contracts are pervasively coupled to `CC_RP0.dll` (e.g. `ProgramActive`
+used 742× across 300/312 files), which itself depends on `RP0.dll`. Pure-config yoinking is
+impossible.
+
+**Options weighed:** (A) author a fresh lightweight set; (B) ship RP-1's plugins; (C) port & strip.
+
+**Decision: (C) Port & strip** RP-1's contracts — remove/replace RP0 coupling rather than
+rewriting from scratch or shipping RP-1's plugins.
+
+**Why it's viable (not the "enormous/lossy" version):** combined with D2, we reimplement the custom
+CC types under their **existing registered names** in our own DLL, so most ported contracts load
+nearly verbatim. See ARCHITECTURE §5.
+
+### D2 — 2026-06-25 — A minimal plugin of OUR OWN is allowed
+
+**Context:** the program starter and several contract checks (Mach, downrange, return-home, collect-
+science) have no stock ContractConfigurator equivalent.
+
+**Decision:** MVP stays config-first, but we **may ship a minimal `AXE.dll`** — a ContractConfigurator
+extension + a simple program ScenarioModule. Explicitly **not** RP-1's plugins, and explicitly
+**not** a reimplementation of KCT/maintenance/tooling/avionics/crew.
+
+**Implication:** the repo needs a `Source/` tree and a build step (see WORKFLOW.md).
+
+### D3 — 2026-06-25 — Merge with the build brief (supersedes the framing of D1/D2)
+
+The user's prior build brief was reviewed and merged. It refines D1/D2:
+
+- **Config-first via `seed/`+`design/` split.** Vendor RP-1 config pristine in `seed/`; do all
+  transformation as ModuleManager patches in `design/` (`:AFTER[...]`/`:FINAL`). MM runs before
+  ContractConfigurator parses contract types, so Pass-A patches rewrite `type =`, delete params,
+  and zero rewards before CC ever sees them. This is the primary mechanism — *not* "reimplement
+  custom types in our DLL" (the old D1/§5 framing).
+- **Plugin = researched fallback, not default.** Per the plugin decision: keep a **boilerplate
+  `AXE.dll` scaffold ready**, but gate using it on a **per-CC-type triage** (Pass A research) —
+  default to config (swap-to-stock / strip); write code only where stock genuinely can't express a
+  check. Honours "plugin-free by default" while keeping the escape hatch.
+- **Funds ON, rebuilt light** (see D4). **Name confirmed:** "Ahistorical Xploration & Engineering".
+
+### D4 — 2026-06-25 — Funds ON, rebuilt (resolves OD1)
+
+Career with funds, **not** science-only and **not** RP-1's plugin economy. Science is the primary
+gate; funds are a secondary budget with **no time pressure**. Income = per-contract rewards
+(program `baseFunding` redistributed, Pass C); sink = part `entryCost` (Pass D). OD1 closed.
+
+---
+
+## Open decisions (resolve as MVP progresses)
+
+- **OD1 — RESOLVED (D4):** funds ON, rebuilt light.
+- **OD2 — Avionics replacement:** accept stock-like probe control, or add lightweight config gating
+  so the tree still feels like progression? (Validate in-game first — see ARCHITECTURE §7.)
+- **OD3 — TestFlight (part failures):** keep for realism or drop for lightweight? Default: keep
+  installed, configs out-of-scope for MVP.
+- **OD4 — Program starter UX:** plugin ScenarioModule + small UI (preferred) vs. pure-CC "charter
+  contract" chains (zero-code fallback).
+- **OD5 — Far-future part pack selection** (post-MVP research).

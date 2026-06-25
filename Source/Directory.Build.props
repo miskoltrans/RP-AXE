@@ -1,0 +1,15 @@
+<Project>
+  <!--
+    Shared MSBuild settings for RP-AXE plugins.
+    KSPRoot points at the KSP install we build against (managed assemblies + ContractConfigurator).
+    Override on the command line:  dotnet build /p:KSPRoot=C:\path\to\KSP
+    Default: the sibling test instance at C:\git\ksp\Instance.
+  -->
+  <PropertyGroup>
+    <KSPRoot Condition="'$(KSPRoot)' == ''">$(MSBuildThisFileDirectory)..\..\Instance</KSPRoot>
+    <ReferencePath>$(KSPRoot)\KSP_x64_Data\Managed</ReferencePath>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+</Project>

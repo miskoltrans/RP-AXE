@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    RP-AXE minimal plugin: a ContractConfigurator extension + a lightweight program ScenarioModule.
+    NOT a reimplementation of RP-1's career engine (no KCT/maintenance/tooling/avionics/crew).
+    Build:  $env:KSPRoot = "C:\git\ksp\Instance"; dotnet build Source/AXE/AXE.csproj -c Release
+    Output AXE.dll is copied into GameData/RP-AXE/Plugins/ by the post-build target below.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>AXE</AssemblyName>
+    <RootNamespace>RPAxe</RootNamespace>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Nullable>disable</Nullable>
+    <!-- KSP ships its own copies; never copy framework/engine DLLs to output. -->
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(ReferencePath)\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>$(ReferencePath)\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(ReferencePath)\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(ReferencePath)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ContractConfigurator">
+      <HintPath>$(KSPRoot)\GameData\ContractConfigurator\ContractConfigurator.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Drop the built DLL straight into the shipping GameData folder. -->
+  <Target Name="CopyToGameData" AfterTargets="Build">
+    <MakeDir Directories="$(MSBuildProjectDirectory)\..\..\GameData\RP-AXE\Plugins" />
+    <Copy SourceFiles="$(TargetPath)"
+          DestinationFolder="$(MSBuildProjectDirectory)\..\..\GameData\RP-AXE\Plugins" />
+  </Target>
+
+</Project>

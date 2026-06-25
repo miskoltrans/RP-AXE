@@ -1,0 +1,19 @@
+# --- Build output ---
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+.vs/
+packages/
+
+# Built plugin artifact — produced by `dotnet build`, not vendored.
+GameData/RP-AXE/Plugins/*.dll
+GameData/RP-AXE/Plugins/*.pdb
+
+# NOTE: GameData/RP-AXE/seed/ (vendored RP-1 config) IS committed — the mod ships self-contained.
+# Refresh it with tools/sync-seed.ps1; never hand-edit it (changes go in design/).
+
+# --- OS / editor cruft ---
+Thumbs.db
+desktop.ini
+.DS_Store
