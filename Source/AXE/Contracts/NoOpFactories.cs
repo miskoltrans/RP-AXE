@@ -11,8 +11,7 @@ namespace RPAxe.Contracts
     // Extra config fields on these (descentAngle, builtAt, experiment, distance, ...) are simply
     // ignored. Promote any of these to a real check by giving it its own factory/parameter.
 
-    public class HorizontalLandingFactory : ParameterFactory   // RP-1: glide-style landing
-    { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }
+    // HorizontalLanding is now a REAL check (see HorizontalLanding.cs), no longer a no-op.
 
     public class AvionicsCheckFactory : ParameterFactory       // avionics removed -> always passes
     { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }

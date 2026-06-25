@@ -16,7 +16,7 @@ Counts are actual failures from the M1 `KSP.log`.
 | `DownrangeDistance` | param | 10 | **real** | Great-circle distance flown from lift-off point. |
 | `ReachMach` | param | 1 | **real** | `vessel.mach > mach`. |
 | `AcceptContractBehaviour` | behaviour | 2 | **real** | Auto-accepts named contract on a lifecycle event. |
-| `HorizontalLanding` | param | 19 | no-op | Glide-style landing. Revisit if X-plane contracts need teeth. |
+| `HorizontalLanding` | param | 19 | **real** | Glide check (horizontal speed > \|vertical\| × cot(descentAngle)), latched while airborne. Ported from RP-1. |
 | `AvionicsCheck` | param | 12 | no-op | Avionics removed; RP-1's also auto-passed without it. |
 | `VesselBuiltAt` | param | 27 | no-op | KCT removed; RP-1's also auto-passed without it. |
 | `RP1Rendezvous` | param | 3 | no-op | Revisit: real proximity check (drop KCT "different-launch"). |
