@@ -47,15 +47,38 @@ DockingPortSoundFX, KerbalRenamer, TextureReplacer, AtmosphereAutopilot, KSPBurs
 - **TestFlight / TestLite** — part failures. *Decision pending* (realism vs. lightweight). Default:
   keep TestFlight (it's installed) but treat its configs as out-of-scope for MVP.
 
-## Promoted (post-MVP): near & far future as expected content
+## Part-mod set (the RP-AXE parts)
 
-RP-1 lists these under `suggests`; the AXE vision makes them expected. They need RO scaling
-configs to be realistic under RSS — that's a research task, **not MVP**:
+Decision basis: a mod is *turnkey* for us when it is **RO-scaled** (realism) **and** already placed in
+RP-1's tree (which we ship). "Endorsed" = in `RP-1.netkan` (recommends/suggests). "Configed" = has
+`TREE-Parts.cfg` placements (a larger, partly-legacy superset — see the RP-1 wiki "Which Mods Have
+RP1 Configurations?"). CKAN identifiers in `code`. CKAN auto-resolves transitive deps
+(CryoTanks, CommunityResourcePack, DynamicBatteryStorage, B9PartSwitch, etc.).
 
-- Near-future: NearFutureLaunchVehicles, NearFutureConstruction, NearFutureElectrical,
-  NearFutureSolar, NearFutureExploration, CryoEngines, KerbalAtomics.
-- Far-future: candidates to evaluate — Far Future Technologies, KSP Interstellar Extended.
-  (Tracked in TASKS.md as research, since RSS/RO compatibility is non-trivial.)
+### Baseline — LOCKED IN (RO-scaled + RP-1-endorsed + tree-placed → ~zero work)
+Core part packs (RP-1 `recommends`):
+- `ReStock`, `ReStockPlus` · `ROEngines` `ROTanks` `ROCapsules` `ROSolar` `ROHeatshields`
+- `ProceduralParts`, `ProceduralFairings` · `B9-PWings-Fork` · `KSPWheel`
+- `RealAntennas` · `ModularLaunchPads` · `ConformalDecals`
+- (already bedrock deps, parts included: `SXTContinued`, `VenStockRevamp-NewParts`)
+
+Near-future + cryo/nuclear (RP-1 `suggests`):
+- `CryoEngines` · `KerbalAtomics` · `InternalRCS`
+- `NearFutureLaunchVehicles` `NearFutureConstruction` `NearFutureElectrical`
+  `NearFutureExploration` `NearFutureSolar`
+
+### Opt-in far-future — CANDIDATES (configed + RO-scaled, but not netkan-endorsed; verify orphans)
+- [ ] `FarFutureTechnologies` — fusion/exotic; 21 tree configs + RO support.
+- [ ] `HeatControl` — radiators/thermal for reactors & high-power parts; 19 configs + RO support.
+- [ ] `NearFuturePropulsion` — ion/plasma/VASIMR; 28 configs + RO support.
+
+### Excluded (legacy "configed but newer support lacking", or no RO support)
+- `Bluedog_DB` — dropped from `RP-1.netkan` (legacy `RP-0` only); RO support is beta/community; 110
+  *legacy* tree configs risk part-name drift vs current BDB v1.14. **Skip.**
+- `RealScaleBoosters`, `CoatlAerospace`/`ProbesPlus`, `FASA`, the `RN_` Soviet/US packs,
+  `NearFutureAeronautics`, `NearFutureSpacecraft`, `StationPartsExpansionRedux` — configed but not
+  endorsed; revisit individually only if wanted (version-drift checking required).
+- `KSPIE` (KSP Interstellar Extended) — **no RO support**; would need DIY scaling. Skip.
 
 ## CKAN metadata (target `RP-AXE.netkan`)
 
@@ -65,12 +88,11 @@ quirks).
 
 - **`depends` — bedrock (never trim):** ModuleManager, RealSolarSystem, RealismOverhaul, RealFuels,
   Kerbalism, ContractConfigurator.
-- **`depends` — examine-later (likely required, confirm by experiment):** RealAntennas (the
-  `AddToGroundSegment`/`AchieveConnectionAvailability` contracts need it), ROLibrary/ROUtils,
-  CustomBarnKit, plus the RO part packs the tree places (ReStock(+Plus), ROEngines, ROTanks,
-  ROCapsules, ROSolar, ROHeatshields, ProceduralParts/Fairings).
+- **`depends` — examine-later:** RealAntennas, ROLibrary/ROUtils, CustomBarnKit.
+- **`depends` — part set:** the entire **Baseline (LOCKED IN)** list under "Part-mod set" above.
 - **`conflicts`:** RP-1 (invariant 2 — vendored configs must not double-patch a real RP-1).
-- **`suggests` (optional content gates):** SCANsat, SurfaceExperimentPackage, kOS, SXT.
+- **`suggests`:** the **Opt-in far-future** candidates (`FarFutureTechnologies`, `HeatControl`,
+  `NearFuturePropulsion`) + tools (SCANsat, SurfaceExperimentPackage, kOS).
 
 ## Reconstituting the instance
 
