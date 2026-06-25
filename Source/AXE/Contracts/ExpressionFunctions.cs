@@ -6,20 +6,24 @@ namespace RPAxe.Contracts
 {
     /// <summary>
     /// Registers the two global CC expression functions a few RP-1 "Commercial Applications"
-    /// contracts use in their reward formulas. RP-1 returned a live payload count from its RP0
-    /// ContractGUI; we stub them to 0 so those contracts parse (their payload-scaled reward terms
-    /// just contribute nothing). Inherits BaseParser only to reach the protected static
-    /// RegisterGlobalFunction (same pattern as RP-1's CustomExpressionParserRegistrer).
+    /// contracts use. RP-1 returned a player-selected payload count from its RP0 ContractGUI slider
+    /// (gone with the plugin); we return a small POSITIVE default. Returning 0 broke those contracts:
+    /// they set `minQuantity = @/payload - 0.1`, so payload 0 -> negative minQuantity, which CC
+    /// rejects. A positive default keeps them loadable (fixed payload instead of a slider; tune
+    /// later). Inherits BaseParser only to reach the protected static RegisterGlobalFunction.
     /// </summary>
     public class AxeExpressionRegistrer : BaseParser, IExpressionParserRegistrer
     {
+        // Fixed stand-in payload (RP-1's slider is gone). Tune if these commercial contracts matter.
+        private const int DEFAULT_PAYLOAD = 1;
+
         static AxeExpressionRegistrer()
         {
-            RegisterGlobalFunction(new Function<int>("RP1CommsPayload", Zero, false));
-            RegisterGlobalFunction(new Function<int>("RP1WeatherPayload", Zero, false));
+            RegisterGlobalFunction(new Function<int>("RP1CommsPayload", DefaultPayload, false));
+            RegisterGlobalFunction(new Function<int>("RP1WeatherPayload", DefaultPayload, false));
         }
 
-        private static int Zero() => 0;
+        private static int DefaultPayload() => DEFAULT_PAYLOAD;
 
         public void RegisterExpressionParsers() { }
 
