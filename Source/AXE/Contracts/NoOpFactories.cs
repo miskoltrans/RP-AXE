@@ -26,8 +26,19 @@ namespace RPAxe.Contracts
     public class RP1RendezvousFactory : ParameterFactory       // 3 uses; revisit (real proximity later)
     { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }
 
-    public class ImpactCBFactory : ParameterFactory            // iconic but few uses; revisit
-    { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }
+    // No-op, but parse its fields so a contract title expression like
+    // "Impact @targetBody at a speed of at least @minSrfVel m/s" resolves (base parses targetBody).
+    public class ImpactCBFactory : ParameterFactory            // iconic but few uses; revisit (make real)
+    {
+        public override bool Load(ConfigNode node)
+        {
+            bool valid = base.Load(node);
+            double minSrfVel = 0;
+            ConfigNodeUtil.ParseValue<double>(node, "minSrfVel", x => minSrfVel = x, this, 0.0);
+            return valid;
+        }
+        public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title);
+    }
 
     public class RP1HasSamplesFactory : ParameterFactory       // Kerbalism sample check; revisit
     { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }
