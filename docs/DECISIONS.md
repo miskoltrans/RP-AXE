@@ -25,6 +25,28 @@ rewriting from scratch or shipping RP-1's plugins.
 CC types under their **existing registered names** in our own DLL, so most ported contracts load
 nearly verbatim. See ARCHITECTURE §5.
 
+### D5 — 2026-06-25 — RealismOverhaul gates Career/Science → fixed via AXE.dll reflection
+
+**Discovery during M1:** with RP-1 removed, RealismOverhaul.dll Harmony-patches
+`MainMenu.ConfirmNewGame` and forces **"Only Sandbox Supported"** for Career & Science. Verified
+against the RO source (cloned shallow to `C:\git\ksp\RealismOverhaul`, `Source/Harmony/MainMenu.cs`):
+
+```
+_hasRP1 = AssemblyLoader.loadedAssemblies.FirstOrDefault(a => a.name == "RP-0") != null;
+if (_needCheckDB) { ...read REALISMOVERHAULSETTINGS{allowCareer}... }   // _needCheckDB inits FALSE, never set
+if (_hasRP1 || _overrideCareer) return true;                            // else: sandbox-only popup
+```
+
+Two consequences: (1) RO detects RP-1 by a **loaded assembly named `"RP-0"`**; (2) the
+`REALISMOVERHAULSETTINGS { allowCareer }` config override is **dead code** in the shipped build —
+**so there is no pure-config fix.**
+
+**Decision:** flip RO's private `_overrideCareer` flag by reflection from our own `AXE.dll`
+(`Source/AXE/EnableCareer.cs`, a MainMenu KSPAddon). We do **not** name our assembly `"RP-0"` —
+that would also trip every `:NEEDS[RP-0]` ModuleManager patch (uncontrolled RP-1-tuned config).
+This is the first real use of the D2 "minimal own plugin" escape hatch. The inert config node is
+kept as future-proofing (see `design/Settings/RO_EnableCareer.cfg`).
+
 ### D2 — 2026-06-25 — A minimal plugin of OUR OWN is allowed
 
 **Context:** the program starter and several contract checks (Mach, downrange, return-home, collect-
