@@ -39,11 +39,12 @@ contracts load verbatim. Per-type decisions + status: `Source/AXE/_CCTYPES.md`.
   - [ ] Start a science/career game: an early contract (sounding rocket / first satellite) is **offered**.
   - [ ] Fly one: confirm `DownrangeDistance` / `ReachMach` / `RP1ReturnHome` / `RP1CollectScience`
         actually complete.
-- [ ] Deferred (M4 / polish): dedupe `FirstTundraSat` & `landingTriton`; stub
-      `RP1CommsPayload`/`RP1WeatherPayload`; promote no-ops (`ImpactCB`, `RP1Rendezvous`,
-      `HorizontalLanding`, Kerbalism sample/experiment) to real checks.
+- [x] Dedupe `FirstTundraSat` & `landingTriton` → `design/Contracts/DedupeContracts.cfg` (confirm in validation).
+- [ ] Deferred (polish): stub `RP1CommsPayload`/`RP1WeatherPayload`; promote no-ops (`ImpactCB`,
+      `RP1Rendezvous`, `HorizontalLanding`, Kerbalism sample/experiment) to real checks.
 
 ## M3 — Pass C + D: rewards & parts funds sink ⛏ M2
+> Backbone data ready: **`docs/PROGRAMS.md`** (per-program baseFunding × gated-contract counts × ~funds/contract).
 - [ ] Pass C: redistribute each program's `baseFunding` (from `seed` `Programs.cfg` reference) into
       per-contract `rewardFunds`; add modest `rewardScience`. (`design/Rewards/`)
 - [ ] Pass D: rebuild part `entryCost` — LRTR values for add-on/futuristic mods; RO core hand-priced
@@ -52,6 +53,7 @@ contracts load verbatim. Per-type decisions + status: `Source/AXE/_CCTYPES.md`.
 - [ ] **Prove:** funds are a real, non-trivial budget; each early era's income covers its vehicle costs.
 
 ## M4 — Pass B: program switcher ⛏ M2
+> Design + program list/membership: **`docs/PROGRAMS.md`** (§ "M4 — program switcher").
 - [ ] Author "Activate [X] Program" contracts (always available) for the program list (DEPENDENCIES/
       ARCHITECTURE §6). (`design/Programs/`)
 - [ ] Re-point member contracts to gate on `AcceptContract{ contractType = Activate_X }`.

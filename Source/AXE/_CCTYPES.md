@@ -29,11 +29,11 @@ Implementation: `Source/AXE/Contracts/` — `AxeAlwaysComplete.cs` (shared no-op
 `ReachMach.cs`, `ReturnHome.cs`, `DownrangeDistance.cs`, `CollectScience.cs`, `ProgramActive.cs`,
 `AcceptContract.cs`.
 
-## Known M2 leftovers (deferred)
-- **Duplicate contract names:** `FirstTundraSat` (Earth Satellites + Commercial Applications 2) and
-  `landingTriton` (Neptunian Moon Landings + Outer Gas Giant Survey). RP-1's `ContractClobberer`
-  deduped these; without it CC drops one (non-fatal error). Resolve during M4 program restructuring.
-- **Expression functions** `RP1CommsPayload()` / `RP1WeatherPayload()` (RP0 `ContractGUI`): used by
+## Known M2 leftovers
+- **Duplicate contract names:** ✅ resolved — `design/Contracts/DedupeContracts.cfg` deletes the
+  redundant copy of `FirstTundraSat` (keeps `TargetedSats`) and `landingTriton` (keeps
+  `NeptuneMoonLandings`), matched by `group`. (Confirm with the M2 in-game validation.)
+- **Expression functions** (still deferred) `RP1CommsPayload()` / `RP1WeatherPayload()` (RP0 `ContractGUI`): used by
   3 advanced "Commercial Applications 2" contracts; those will fail to parse until we stub the
   functions. Out of MVP scope.
 - No-op upgrades: promote `ImpactCB`, `RP1Rendezvous`, `HorizontalLanding`, Kerbalism sample/experiment
