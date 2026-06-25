@@ -14,8 +14,11 @@ namespace RPAxe.Contracts
     /// </summary>
     public class AxeExpressionRegistrer : BaseParser, IExpressionParserRegistrer
     {
-        // Fixed stand-in payload (RP-1's slider is gone). Tune if these commercial contracts matter.
-        private const int DEFAULT_PAYLOAD = 1;
+        // Fixed stand-in payload (RP-1's slider is gone). Must be on the slider's old scale: the
+        // comsat contracts compute payload = Round(RP1CommsPayload() * 0.25.., 25) -> a value of 1
+        // rounds to 0 -> minQuantity = -0.1 -> CC rejects. 100 -> payload 25 (the contracts' own
+        // "baseline of 100" comment). Tune if these commercial contracts matter.
+        private const int DEFAULT_PAYLOAD = 100;
 
         static AxeExpressionRegistrer()
         {
