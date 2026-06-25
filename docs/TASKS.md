@@ -26,18 +26,22 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · ⛏ depends on
 - [ ] **Prove:** game loads to menu + a new career; tree renders with parts in correct nodes; check
       whether `.truecolor` icons render (ROLibrary) or fall back. Capture `KSP.log` (no RP0/CC_RP0).
 
-## M2 — Pass A: de-rail contracts + pluginless fixes ⛏ M1
-- [ ] **CC-type triage (research):** for each custom CC type still in the contracts, decide
-      *swap-to-stock* / *strip* / *implement in `AXE.dll`*. Record in `Source/AXE/_CCTYPES.md`.
-      (Default to config; only choose code where stock genuinely can't express the check.)
-- [ ] Patch (`design/Contracts/`): **strip** `ProgramActive` (~362); **swap** `RP1ReturnHome`→`ReturnHome`,
-      `RP1CollectScience`→`CollectScience`; **delete** `AvionicsCheck`, `VesselBuiltAt` riders.
-- [ ] Triage residue (`HorizontalLanding`, `DownrangeDistance`, `ReachMach`, `ImpactCB`,
-      `RP1Rendezvous`, `RP1NoDocking`, `RP1HasExperiment`, `RP1HasSamples`): apply each type's verdict.
-- [ ] **Verify** `AddToGroundSegment`/`AchieveConnectionAvailability` load (RealAntennas-backed).
-- [ ] Keep early `CompleteContract`/`AcceptContract` chains (graduated onboarding); ensure decline/
-      fail penalties are 0.
-- [ ] **Prove:** contracts appear and at least the early ones are completable end-to-end.
+## M2 — Contract CC types in AXE.dll ⛏ M1  —  IMPLEMENTED, ⚠️ VALIDATION PENDING
+Approach (DECISIONS D6): wrote our OWN CC types in `AXE.dll` (`Source/AXE/Contracts/`) so RP-1's
+contracts load verbatim. Per-type decisions + status: `Source/AXE/_CCTYPES.md`.
+- [x] CC-type triage — researched each type's behaviour & dependency (most are self-contained stock logic).
+- [x] Implement all 14 names (real / no-op / `ProgramActive` always-true stub). **Builds clean.**
+- [ ] ⚠️ **VALIDATE IN-GAME — blocked, needs a KSP launch (do this before M3/M4):**
+  - [ ] Main menu → `KSP.log` "Loaded X out of 346 CONTRACT_TYPE nodes" jumps from **47** toward
+        ~341 (346 − ~2 duplicate − ~3 expr-func contracts).
+  - [ ] grep `KSP.log`: **no** remaining `Unknown parameter/requirement/behaviour` for our 14 names;
+        no `unexpected`/ERROR spam from the no-op factories.
+  - [ ] Start a science/career game: an early contract (sounding rocket / first satellite) is **offered**.
+  - [ ] Fly one: confirm `DownrangeDistance` / `ReachMach` / `RP1ReturnHome` / `RP1CollectScience`
+        actually complete.
+- [ ] Deferred (M4 / polish): dedupe `FirstTundraSat` & `landingTriton`; stub
+      `RP1CommsPayload`/`RP1WeatherPayload`; promote no-ops (`ImpactCB`, `RP1Rendezvous`,
+      `HorizontalLanding`, Kerbalism sample/experiment) to real checks.
 
 ## M3 — Pass C + D: rewards & parts funds sink ⛏ M2
 - [ ] Pass C: redistribute each program's `baseFunding` (from `seed` `Programs.cfg` reference) into

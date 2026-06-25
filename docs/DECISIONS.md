@@ -79,6 +79,22 @@ Career with funds, **not** science-only and **not** RP-1's plugin economy. Scien
 gate; funds are a secondary budget with **no time pressure**. Income = per-contract rewards
 (program `baseFunding` redistributed, Pass C); sink = part `entryCost` (Pass D). OD1 closed.
 
+### D6 — 2026-06-25 — M2: write our OWN CC types in AXE.dll (⚠️ UNVALIDATED in-game)
+
+Research (reading `CC_RP0` source) showed RP-1's 14 custom contract types are *mostly* self-contained
+stock-logic, not coupled to the RP0 career engine. Per direction ("write our own from scratch; use
+stock where it's complicated; transmit science is enough"), we implemented our own versions in
+`AXE.dll` (`Source/AXE/Contracts/`), **not** forking `CC_RP0`:
+- **Real:** `ReachMach`, `DownrangeDistance`, `RP1ReturnHome` (simplified), `RP1CollectScience`
+  (simplified to "science received"), `AcceptContractBehaviour`.
+- **No-op (always-pass):** `HorizontalLanding`, `AvionicsCheck`, `VesselBuiltAt`, `RP1Rendezvous`,
+  `RP1NoDocking`, `ImpactCB`, `RP1HasSamples`, `RP1HasExperiment`.
+- **`ProgramActive`:** always-true stub → real gating in M4.
+
+CC auto-discovers our factories by class name (`XxxFactory` → `type = Xxx`). Full table:
+`Source/AXE/_CCTYPES.md`. **Builds clean but NOT yet validated in a running game** — see the M2
+validation checklist in `docs/TASKS.md`. M3/M4 depend on this validating.
+
 ---
 
 ## Open decisions (resolve as MVP progresses)
