@@ -75,10 +75,14 @@ M3/M4 are now implemented on top of M2, so validate together:
 ## M5 — Pass E + F: science tune & future tree ⛏ M1, M3
 - [ ] Pass E: tune science pace (global multiplier; frontier nodes expensive); per-tier solvency
       check vs Kerbalism quotas. (`design/Science/`)
-- [ ] Pass F: extend `RP0TechTree.cfg` with late/future nodes; place Near Future / Far Future / KSPIE
-      / Cryo / Heat Control parts via `@PART{ %TechRequired }`, **explicitly** (OrphanNode hides
-      unplaced parts). (`design/Tree/`) — head start: LRTR `tree/parts/*.cfg` already has
-      `%TechRequired` for these mods, but on LRTR node ids → **remap to our tree** (see `ENTRYCOSTS.md`).
+- [ ] Pass F: the chosen part set (DEPENDENCIES.md — baseline + FarFutureTechnologies, HeatControl,
+      NearFuturePropulsion) is **already placed in RP-1's tree we ship**, so this is mostly
+      **install + verify orphans**, not authoring placements:
+  - [ ] CKAN-install the full part set into the instance.
+  - [ ] Launch; grep `KSP.log` for parts swept into the `orphanParts` node (= version-drift between
+        RP-1's placements and current mod part names). Add `@PART{ %TechRequired }` only for those.
+  - [ ] (Only if we later add RO-only mods) author placements from scratch (LRTR `tree/parts` head
+        start, remap node ids — see ENTRYCOSTS.md). Not needed for the current set.
 - [ ] **Prove:** future nodes appear, futuristic parts are placed (not orphaned), costs budgeted.
 
 ## M6 — Pass G: avionics/control & start node ⛏ M1

@@ -67,10 +67,10 @@ Near-future + cryo/nuclear (RP-1 `suggests`):
 - `NearFutureLaunchVehicles` `NearFutureConstruction` `NearFutureElectrical`
   `NearFutureExploration` `NearFutureSolar`
 
-### Opt-in far-future — CANDIDATES (configed + RO-scaled, but not netkan-endorsed; verify orphans)
-- [ ] `FarFutureTechnologies` — fusion/exotic; 21 tree configs + RO support.
-- [ ] `HeatControl` — radiators/thermal for reactors & high-power parts; 19 configs + RO support.
-- [ ] `NearFuturePropulsion` — ion/plasma/VASIMR; 28 configs + RO support.
+### Far-future — INCLUDED (configed + RO-scaled; not netkan-endorsed, so verify orphans on install)
+- [x] `FarFutureTechnologies` — fusion/exotic; 21 tree configs + RO support.
+- [x] `HeatControl` — radiators/thermal for reactors & high-power parts; 19 configs + RO support.
+- [x] `NearFuturePropulsion` — ion/plasma/VASIMR; 28 configs + RO support.
 
 ### Excluded (legacy "configed but newer support lacking", or no RO support)
 - `Bluedog_DB` — dropped from `RP-1.netkan` (legacy `RP-0` only); RO support is beta/community; 110
@@ -89,10 +89,10 @@ quirks).
 - **`depends` — bedrock (never trim):** ModuleManager, RealSolarSystem, RealismOverhaul, RealFuels,
   Kerbalism, ContractConfigurator.
 - **`depends` — examine-later:** RealAntennas, ROLibrary/ROUtils, CustomBarnKit.
-- **`depends` — part set:** the entire **Baseline (LOCKED IN)** list under "Part-mod set" above.
+- **`depends` — part set:** the **Baseline (LOCKED IN)** list + the three **Far-future — INCLUDED**
+  mods (`FarFutureTechnologies`, `HeatControl`, `NearFuturePropulsion`) under "Part-mod set" above.
 - **`conflicts`:** RP-1 (invariant 2 — vendored configs must not double-patch a real RP-1).
-- **`suggests`:** the **Opt-in far-future** candidates (`FarFutureTechnologies`, `HeatControl`,
-  `NearFuturePropulsion`) + tools (SCANsat, SurfaceExperimentPackage, kOS).
+- **`suggests`:** tools only (SCANsat, SurfaceExperimentPackage, kOS).
 
 ## Reconstituting the instance
 
