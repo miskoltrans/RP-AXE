@@ -36,9 +36,11 @@ namespace RPAxe.Contracts
     }
 
     /// <summary>
-    /// Completes immediately on register, regardless of scene or vessel. Used by the "Begin
-    /// Program" charter contracts so they complete the moment they're accepted at the space centre
-    /// (the VesselParameter-based AxeAlwaysComplete would need an active vessel to tick).
+    /// Completes one tick AFTER its contract becomes Active (i.e. just after the player accepts the
+    /// "Begin Program" charter), regardless of scene or vessel. We deliberately do NOT complete on
+    /// register/offered: a parameter already complete at accept makes the contract finish *inside*
+    /// MissionControl's accept-click handler, which NREs in ContractConfigurator's MissionControlUI.
+    /// Completing a frame later lets the accept finish normally, then the contract completes cleanly.
     /// </summary>
     public class AxeInstantComplete : ContractParameter
     {
@@ -49,7 +51,12 @@ namespace RPAxe.Contracts
 
         protected override string GetTitle() => string.IsNullOrEmpty(_title) ? "Authorise the program" : _title;
 
-        protected override void OnRegister() { SetComplete(); }
+        protected override void OnUpdate()
+        {
+            base.OnUpdate();
+            if (State != ParameterState.Complete && Root != null && Root.ContractState == Contract.State.Active)
+                SetComplete();
+        }
 
         protected override void OnSave(ConfigNode node) { node.AddValue("title", _title ?? ""); }
         protected override void OnLoad(ConfigNode node) { _title = node.GetValue("title"); }
