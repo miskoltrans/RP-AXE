@@ -68,19 +68,23 @@ Hands-free smoke test (`-axe-autotest`, see `Source/AXE/AutoTest/`): CAREER → 
 - [ ] Re-point member contracts to gate on `AcceptContract{ contractType = Activate_X }`.
 - [ ] **Prove:** activating a program opens its bundle; ignoring it hides them; any order works.
 
-## M5 — Pass E + F: science tune & future tree ⛏ M1, M3
+## M5 — Pass E + F: science tune & future tree ⛏ M1, M3  —  Pass F ✅ PLACEMENT DONE (AutoTest 2026-06-26)
 - [ ] Pass E: tune science pace (global multiplier; frontier nodes expensive); per-tier solvency
       check vs Kerbalism quotas. (`design/Science/`)
-- [ ] Pass F: the chosen part set (DEPENDENCIES.md — baseline + FarFutureTechnologies, HeatControl,
-      NearFuturePropulsion) is **already placed in RP-1's tree we ship**, so this is mostly
-      **install + verify orphans**, not authoring placements:
-  - [ ] CKAN-install the full part set into the instance.
-  - [ ] Launch; grep `KSP.log` for parts swept into the `orphanParts` node (= version-drift between
-        RP-1's placements and current mod part names). Add `@PART{ %TechRequired }` only for those.
-  - [ ] **Author placements for `Tantares` spacecraft/station parts** — RO-scaled but not in RP-1's
-        tree (only `TantaresLV` is placed). Use LRTR `tree/parts/Tantares*.cfg` as a head start
-        (remap node ids → our tree). This is the one authoring task in the current set.
-- [ ] **Prove:** future nodes appear, futuristic parts are placed (not orphaned), costs budgeted.
+- [x] Pass F — **orphan browser + part placement** (`design/Tree/AxePlace_*.cfg`, `OrphanBrowser.cfg`,
+      `zzzAxeTags.cfg`):
+  - [x] Installed part set: Tantares(+LV+SP), full NearFuture suite, Cryo, KerbalAtomics (CKAN, RP-AXE
+        instance). (ProbesPlus/DMagic/SurfaceExperiment/UniversalStorage/FarFuture deferred by user.)
+  - [x] **Orphan browser**: surface RP-1's hidden `orphanParts` pool as 12 visible categorised RDNodes
+        (right of the tree) so the orphan set is browsable. Everything RP-AXE touches is marked:
+        `ModuleAxeMarker` (FE "RP-AXE" filter) + `rp-axe` tag + `[RP-AXE]` description note.
+  - [x] **Placed 828 parts** (Tantares/NF/Cryo/Atomics) onto RP-1 era nodes by porting LRTR's
+        `tree/parts/*.cfg` tier judgement: strip `:NEEDS[LRTRTechTree]`, run `:LAST[RP-AXE]` (override
+        OrphanNode), remap 58 stock/CTT node ids → RP-1 nodes (93 shared lift verbatim), keep LRTR
+        cost/entryCost. 0 placement failures; browser drained 1248 → 568 (genuine remainder).
+- [x] **Prove (AutoTest):** career→R&D→Mission Control SUCCESS; future nodes render; orphanParts 0;
+      placed parts on real nodes; 0 new errors. *Remaining:* per-part **entryCost balance** review
+      (LRTR values are a head start, not RP-AXE-tuned) → folds into M3 Pass D.
 
 ## M6 — Pass G: avionics/control & start node ⛏ M1
 - [ ] Remove/hide the ~4 inert procedural-avionics parts.
