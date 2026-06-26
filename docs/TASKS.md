@@ -107,13 +107,17 @@ Hands-free smoke test (`-axe-autotest`, see `Source/AXE/AutoTest/`): CAREER → 
 - [ ] **Prove (needs a play session):** actually build + launch a sounding rocket from `start`.
       Config-complete (engine+guidance+control+tank+comms+science all at start, free, 100k funds).
 
-## M7 — Packaging & release ⛏ all
-- [ ] `RP-AXE.version` (KSP-AVC) + GitHub update block. *(scaffolded — fill URL/DOWNLOAD)*
-- [ ] `RP-AXE.netkan`/metapackage: `depends` seeded from RP-1's CKAN depends minus RP-1, then trimmed;
-      `conflicts: RP-1`; `suggests` optional content. (See DEPENDENCIES.md.)
-- [ ] **Clean-room install test:** install from the published netkan via CKAN with **zero manual
-      steps**; prove the self-contained / plugin-free / conflicts-RP-1 install works for a stranger.
-- [ ] Update README status; short "playing the MVP" note.
+## M7 — Packaging & release ⛏ all  —  AUTHORED (awaiting GitHub owner + publish)
+- [x] `GameData/RP-AXE/RP-AXE.version` (KSP-AVC): v0.1.0, KSP 1.12.0–1.12.5, URL/DOWNLOAD filled (with
+      `__GITHUB_OWNER__` placeholder). Renamed from AXE.version.
+- [x] `RP-AXE.netkan`: depends = the test instance's real CKAN set (proven to resolve+run) minus RP-1/
+      Skopos/TestFlight/tooling; `conflicts: RP-1`; `recommends` DLCs/MechJeb/KAC; `suggests` tools.
+      Valid JSON. Tantares ids are `NewTantares`/`NewTantaresLV`.
+- [x] README: status → MVP config-complete, economy summary, Install + "Playing the MVP" notes.
+- [x] `docs/RELEASE.md`: build-payload + publish + **clean-room install test** procedure.
+- [ ] **Fill `__GITHUB_OWNER__`** (RP-AXE.netkan, RP-AXE.version, README) + netkan `author`; tag v0.1.0,
+      GitHub release with the `GameData/RP-AXE` zip. *(blocked on the GitHub repo path.)*
+- [ ] Run the clean-room install test (fresh KSP 1.12.5 + CKAN, zero manual steps). *(blocked on publish.)*
 
 ---
 

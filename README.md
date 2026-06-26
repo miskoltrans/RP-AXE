@@ -19,8 +19,37 @@ purpose-built layer:
 
 ## Status
 
-🚧 **Pre-MVP / project setup.** See [`docs/TASKS.md`](docs/TASKS.md) for the backlog and
-[`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for how the pieces fit together.
+✅ **MVP — config-complete & AutoTest-validated** (v0.1.0). The full loop works pluginlessly:
+custom science tech tree, ported RP-1 contracts running on our own lightweight ContractConfigurator
+types, a config-only "program" switcher, future-part placement (Tantares + NearFuture + Cryo/Atomics),
+a flyable start node, and the economy below. The only thing not yet proven by automated test is a real
+play session (build + fly) — see *Playing the MVP*. Backlog: [`docs/TASKS.md`](docs/TASKS.md).
+
+**The RP-AXE economy** (exploration + engineering, not management):
+- **Parts unlock free with science** — science is the only gate on *what* you can build.
+- **RealFuels engine-config development still costs funds** — the one buy-to-unlock with real
+  engineering meaning.
+- **Launch cost is the only ongoing money sink** (90% part / 95% propellant recovery rewards
+  recoverable, efficient designs). Generous: ~100k starting funds, milestone contracts pay well.
+- **Earth is not a science farm** — sub-40 km home-planet science is removed; science comes from real
+  spaceflight and exploration. The solar system holds ~57× the tree's science (see
+  [`docs/SCIENCE_AUDIT.md`](docs/SCIENCE_AUDIT.md)).
+
+## Install
+
+CKAN (recommended): the metadata is `RP-AXE.netkan` — it pulls RP-1's realism + part stack, **minus
+the RP-1 plugin**, and **conflicts with `RP-1`** (don't install both). Until it's on the CKAN registry,
+add it locally via *CKAN → Settings → … → Add netkan* (or the netkan inflator). Manual: drop
+`GameData/RP-AXE/` into a KSP 1.12 install that already has the dependencies (`docs/DEPENDENCIES.md`),
+and make sure **`GameData/RP-1/` is not present**.
+
+## Playing the MVP
+
+Start a **Career**. You begin with ~100,000 funds and the full basic parts set on the `start` node
+(sounding-rocket engines, early guidance, tanks, antennas, instruments) — all free to use. Build a
+small sounding rocket, fly it up past 40 km for your first science, take the early contracts, and
+activate a *program* (in Mission Control) to open its contract line. Tech unlocks with science; money
+is for building and flying, not for unlocking parts.
 
 ## Repo layout
 

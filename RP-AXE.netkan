@@ -1,0 +1,102 @@
+{
+    "spec_version": "v1.18",
+    "identifier": "RP-AXE",
+    "name": "RP-AXE: Ahistorical Xploration & Engineering",
+    "abstract": "RP-1's realism stack with a lightweight, science-driven, exploration-first career replacing the RP-1 career plugin. Parts unlock free with science; engineering and exploration are the focus, not management.",
+    "author": [ "__GITHUB_OWNER__" ],
+    "license": "CC-BY-NC-SA-4.0",
+
+    "$kref": "#/ckan/github/__GITHUB_OWNER__/RP-AXE",
+
+    "ksp_version_min": "1.12.0",
+    "ksp_version_max": "1.12.5",
+
+    "tags": [ "config", "career", "total-conversion", "career-scaling", "physics" ],
+
+    "comment": "RP-AXE = RP-1's dependency set MINUS the RP-1 career plugin, PLUS the future-part packs it places in the tree. CKAN auto-resolves transitive deps (Kopernicus, RealHeat, FAR, AJE, B9PartSwitch, CommunityResourcePack, ROLib's deps, etc.), so they are not listed here. Tantares identifiers are NewTantares/NewTantaresLV.",
+
+    "depends": [
+        { "name": "ModuleManager" },
+        { "name": "RealismOverhaul" },
+        { "name": "RealSolarSystem" },
+        { "name": "RealFuels" },
+        { "name": "Kerbalism" },
+        { "name": "Kerbalism-Config-RO" },
+        { "name": "ContractConfigurator" },
+        { "name": "KSPCommunityFixes" },
+        { "name": "CustomBarnKit" },
+        { "name": "RealAntennas" },
+        { "name": "ROUtils" },
+        { "name": "ROLib" },
+        { "name": "MakingHistory-DLC" },
+
+        { "name": "ReStock" },
+        { "name": "ReStockPlus" },
+        { "name": "ROEngines" },
+        { "name": "ROTanks" },
+        { "name": "ROCapsules" },
+        { "name": "ROSolar" },
+        { "name": "ROHeatshields" },
+        { "name": "ProceduralParts" },
+        { "name": "ProceduralFairings" },
+        { "name": "B9-PWings-Fork" },
+        { "name": "KSPWheel" },
+        { "name": "ModularLaunchPads" },
+        { "name": "ConformalDecals" },
+        { "name": "InternalRCS" },
+        { "name": "SXTContinued" },
+        { "name": "VenStockRevamp-NewParts" },
+
+        { "name": "CryoEngines" },
+        { "name": "CryoTanks" },
+        { "name": "KerbalAtomics" },
+        { "name": "NearFutureLaunchVehicles" },
+        { "name": "NearFutureConstruction" },
+        { "name": "NearFutureElectrical" },
+        { "name": "NearFutureExploration" },
+        { "name": "NearFutureSolar" },
+        { "name": "NearFuturePropulsion" },
+        { "name": "NearFutureAeronautics" },
+        { "name": "NearFutureSpacecraft" },
+
+        { "name": "SCANsat" },
+        { "name": "KAS" },
+        { "name": "KIS" },
+        { "name": "NewTantares" },
+        { "name": "NewTantaresLV" },
+        { "name": "TantaresSP" }
+    ],
+
+    "conflicts": [
+        { "name": "RP-1" }
+    ],
+
+    "recommends": [
+        { "name": "BreakingGround-DLC" },
+        { "name": "MechJeb2" },
+        { "name": "KerbalAlarmClock" }
+    ],
+
+    "suggests": [
+        { "name": "kOS" },
+        { "name": "EditorExtensionsRedux" },
+        { "name": "TransferWindowPlannerFork" },
+        { "name": "TestFlight" },
+        { "name": "Skopos" },
+        { "name": "Waterfall" },
+        { "name": "TextureReplacer" }
+    ],
+
+    "install": [
+        {
+            "find": "RP-AXE",
+            "install_to": "GameData"
+        }
+    ],
+
+    "resources": {
+        "homepage": "https://github.com/__GITHUB_OWNER__/RP-AXE",
+        "repository": "https://github.com/__GITHUB_OWNER__/RP-AXE",
+        "bugtracker": "https://github.com/__GITHUB_OWNER__/RP-AXE/issues"
+    }
+}
