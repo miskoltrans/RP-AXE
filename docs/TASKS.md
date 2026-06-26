@@ -68,9 +68,16 @@ Hands-free smoke test (`-axe-autotest`, see `Source/AXE/AutoTest/`): CAREER → 
 - [ ] Re-point member contracts to gate on `AcceptContract{ contractType = Activate_X }`.
 - [ ] **Prove:** activating a program opens its bundle; ignoring it hides them; any order works.
 
-## M5 — Pass E + F: science tune & future tree ⛏ M1, M3  —  Pass F ✅ PLACEMENT DONE (AutoTest 2026-06-26)
-- [ ] Pass E: tune science pace (global multiplier; frontier nodes expensive); per-tier solvency
-      check vs Kerbalism quotas. (`design/Science/`)
+## M5 — Pass E + F: science tune & future tree ⛏ M1, M3  —  ✅ Pass E + F DONE (AutoTest 2026-06-26)
+- [x] Pass E — **science pace + economy** ("Gentle trim", `design/Science/`, `design/Rewards/`):
+  - [x] `SciencePace.cfg`: node science cost ×0.8 (tree 215,069 → 173,756). Ease the requirement,
+        not income (world science is finite).
+  - [x] `EarthScienceRemoval.cfg`: near-zero Earth sub-40km science (landed/splashed 0.00001, flyingLow
+        0.001) — no home-planet biome farming; science comes from ≥40km/orbit/recovery + other bodies
+        (whose multipliers are 2–50× Earth's, so completability is safe). Matches LRTR.
+  - [x] Funds ×1.25 both channels: `FundsTrim.cfg` (CONTRACT_GROUP[RP0] DATA globalHardContractMultiplier
+        1.0→1.25) + `ProgramRewards.cfg` re-baked baseFunding/N×1.25.
+  - [ ] *Follow-up:* true per-tier solvency (income vs vehicle+entryCost per era) — needs a play session.
 - [x] Pass F — **orphan browser + part placement** (`design/Tree/AxePlace_*.cfg`, `OrphanBrowser.cfg`,
       `zzzAxeTags.cfg`):
   - [x] Installed part set: Tantares(+LV+SP), full NearFuture suite, Cryo, KerbalAtomics (CKAN, RP-AXE
