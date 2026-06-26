@@ -3,10 +3,10 @@
     "identifier": "RP-AXE",
     "name": "RP-AXE: Ahistorical Xploration & Engineering",
     "abstract": "RP-1's realism stack with a lightweight, science-driven, exploration-first career replacing the RP-1 career plugin. Parts unlock free with science; engineering and exploration are the focus, not management.",
-    "author": [ "__GITHUB_OWNER__" ],
+    "author": [ "miskoltrans" ],
     "license": "CC-BY-NC-SA-4.0",
 
-    "$kref": "#/ckan/github/__GITHUB_OWNER__/RP-AXE",
+    "$kref": "#/ckan/github/miskoltrans/RP-AXE",
 
     "ksp_version_min": "1.12.0",
     "ksp_version_max": "1.12.5",
@@ -95,8 +95,8 @@
     ],
 
     "resources": {
-        "homepage": "https://github.com/__GITHUB_OWNER__/RP-AXE",
-        "repository": "https://github.com/__GITHUB_OWNER__/RP-AXE",
-        "bugtracker": "https://github.com/__GITHUB_OWNER__/RP-AXE/issues"
+        "homepage": "https://github.com/miskoltrans/RP-AXE",
+        "repository": "https://github.com/miskoltrans/RP-AXE",
+        "bugtracker": "https://github.com/miskoltrans/RP-AXE/issues"
     }
 }

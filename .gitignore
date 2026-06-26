@@ -17,3 +17,4 @@ GameData/RP-AXE/Plugins/*.pdb
 Thumbs.db
 desktop.ini
 .DS_Store
+dist/

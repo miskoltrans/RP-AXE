@@ -115,8 +115,10 @@ Hands-free smoke test (`-axe-autotest`, see `Source/AXE/AutoTest/`): CAREER → 
       Valid JSON. Tantares ids are `NewTantares`/`NewTantaresLV`.
 - [x] README: status → MVP config-complete, economy summary, Install + "Playing the MVP" notes.
 - [x] `docs/RELEASE.md`: build-payload + publish + **clean-room install test** procedure.
-- [ ] **Fill `__GITHUB_OWNER__`** (RP-AXE.netkan, RP-AXE.version, README) + netkan `author`; tag v0.1.0,
-      GitHub release with the `GameData/RP-AXE` zip. *(blocked on the GitHub repo path.)*
+- [x] Owner/author/URLs filled → `miskoltrans` / `miskoltrans/RP-AXE`. AutoTest ships disabled
+      (`enabled = false`; `-axe-autotest` flag force-enables for dev).
+- [ ] Create the GitHub repo + remote, tag v0.1.0, GitHub release with the `GameData/RP-AXE` zip.
+      *(user will set up the remote later; release zip prebuilt at `dist/RP-AXE-v0.1.0.zip`.)*
 - [ ] Run the clean-room install test (fresh KSP 1.12.5 + CKAN, zero manual steps). *(blocked on publish.)*
 
 ---

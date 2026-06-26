@@ -3,16 +3,14 @@
 Artifacts: `RP-AXE.netkan` (CKAN metadata), `GameData/RP-AXE/RP-AXE.version` (KSP-AVC), `LICENSE.md`
 (CC-BY-NC-SA-4.0). Target: **KSP 1.12.0–1.12.5**.
 
-## Before first release — fill these in
-Both files contain the placeholder **`__GITHUB_OWNER__`** and the netkan `author` field. Replace
-across the repo once the GitHub repo exists:
-
-```
-git grep -l __GITHUB_OWNER__        # RP-AXE.netkan, GameData/RP-AXE/RP-AXE.version, README
-# replace __GITHUB_OWNER__ with the GitHub owner/org, and set the netkan "author"
-```
-
-If the default branch is `master` (not `main`), fix the raw URL in `RP-AXE.version` too.
+## Before first release — remaining
+- **Owner/author/URLs: DONE** — set to `miskoltrans` / repo `miskoltrans/RP-AXE` in `RP-AXE.netkan`
+  and `GameData/RP-AXE/RP-AXE.version`.
+- The `.version` raw URL assumes the default branch is **`main`** — if the repo uses `master`, fix it.
+- No git remote yet (`git remote add origin git@github.com:miskoltrans/RP-AXE.git`) and the GitHub repo
+  isn't created — both are prerequisites for tagging/release and the `$kref` to resolve.
+- AutoTest harness ships **disabled** (`Plugins/PluginData/AutoTest.cfg` `enabled = false`); the
+  `-axe-autotest` launch flag force-enables it for development.
 
 ## Build the release payload
 1. Build the plugin into the shipped folder:
