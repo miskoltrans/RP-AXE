@@ -1,6 +1,6 @@
 import re, os
-TMP = r"C:\Users\User\.claude\jobs\5bb92631\tmp"
-TREE = r"C:\git\ksp\RP-AXE\GameData\RP-AXE\seed\Tree\RP0TechTree.cfg"
+TMP = os.path.dirname(os.path.abspath(__file__))
+TREE = os.path.join(TMP, "..", "GameData", "RP-AXE", "seed", "Tree", "RP0TechTree.cfg")
 SCALE = 0.8  # our science-pace trim
 
 # ---------- 1) tree: per-node (cost, era_x) via RDNode-chunk parsing ----------
@@ -17,7 +17,7 @@ print(f"tree: {len(nodes)} nodes, total science (x{SCALE}) = {tree_total:,.0f}")
 
 # ---------- 2) experiments ----------
 exps = []
-for line in open(os.path.join(TMP, "experiments.txt")):
+for line in open(os.path.join(TMP, "science_audit_experiments.txt")):
     p = line.strip().split("|")
     if len(p) == 4 and p[1]:
         exps.append((p[0], float(p[1]), int(p[2]), int(p[3])))
