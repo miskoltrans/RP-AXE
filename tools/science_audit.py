@@ -1,7 +1,7 @@
 import re, os
 TMP = os.path.dirname(os.path.abspath(__file__))
 TREE = os.path.join(TMP, "..", "GameData", "RP-AXE", "seed", "Tree", "RP0TechTree.cfg")
-SCALE = 0.8  # our science-pace trim
+SCALE = 1.0  # science pace reverted to x1.0 (RP-1 original node costs)
 
 # ---------- 1) tree: per-node (cost, era_x) via RDNode-chunk parsing ----------
 txt = open(TREE, encoding="utf-8", errors="ignore").read()

@@ -70,8 +70,8 @@ Hands-free smoke test (`-axe-autotest`, see `Source/AXE/AutoTest/`): CAREER → 
 
 ## M5 — Pass E + F: science tune & future tree ⛏ M1, M3  —  ✅ Pass E + F DONE (AutoTest 2026-06-26)
 - [x] Pass E — **science pace + economy** ("Gentle trim", `design/Science/`, `design/Rewards/`):
-  - [x] `SciencePace.cfg`: node science cost ×0.8 (tree 215,069 → 173,756). Ease the requirement,
-        not income (world science is finite).
+  - [x] Science pace: **RP-1 original ×1.0** (trialled a ×0.8 `SciencePace.cfg` trim, then reverted —
+        the solvency audit showed ~57× headroom, so easing an already-trivial gate wasn't worth it).
   - [x] `EarthScienceRemoval.cfg`: near-zero Earth sub-40km science (landed/splashed 0.00001, flyingLow
         0.001) — no home-planet biome farming; science comes from ≥40km/orbit/recovery + other bodies
         (whose multipliers are 2–50× Earth's, so completability is safe). Matches LRTR.
