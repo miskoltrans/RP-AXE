@@ -9,13 +9,13 @@ Folders map to the transformation passes (see `docs/ARCHITECTURE.md` and `docs/T
 
 | folder | pass | what it does |
 |---|---|---|
-| `Contracts/` | A | de-rail (strip `ProgramActive`), swap custom CC types to stock where possible (`RP1ReturnHome`→`ReturnHome`, `RP1CollectScience`→`CollectScience`), delete guard riders (`AvionicsCheck`, `VesselBuiltAt`), strip dead reward lines |
+| `Contracts/` | A | **fixups only** — dedupe + Uranus/Neptune moon-group plumbing. The 14 custom CC types are implemented in `AXE.dll` under their registered names (D6, `Source/AXE/Contracts/`), so contracts load verbatim — no broad config type-swap |
 | `Programs/` | B | "Activate [X] Program" contracts + `AcceptContract`-gating that replaces `ProgramActive` (opt-in, any order) |
-| `Rewards/` | C | rebuild per-contract `rewardFunds`/`rewardScience` (program `baseFunding` redistributed) |
-| `EntryCosts/` | D | rebuild part `entryCost` funds sink (LRTR values + RO core hand-priced) |
-| `Tree/` | F | future/ahistorical nodes + placements for near/far-future part mods (mind `OrphanNode`) |
-| `Science/` | E | science pacing tune (global multiplier; frontier nodes kept expensive) |
-| `Avionics/` | G | command part guaranteed at `start`, remove inert proc-avionics parts, early antenna/instrument placement |
+| `Rewards/` | C | per-contract `rewardFunds` (`ProgramRewards.cfg`) + the ×1.25 funds trim (`FundsTrim.cfg`) |
+| `EntryCosts/` | D | **parts unlock FREE** (D8) — `ZeroEntryCost.cfg` (`@PART[*] %entryCost=0`) + `Source/AXE/FreePartUnlock.cs`. The entryCost funds-sink was abandoned; launch cost is the only sink |
+| `Tree/` | F | future/ahistorical placements (`AxePlace_*`), orphan browser, marking, **and the M6 `StartParts.cfg`** (repoint RP-1's `unlockParts` "Starting Parts" → `start`) (mind `OrphanNode`) |
+| `Science/` | E | RP-1 ×1.0 pace (×0.8 trim reverted, D9) + `EarthScienceRemoval.cfg` (no sub-40 km home-planet science) |
+| `Settings/` | G | (no `Avionics/` folder — Pass-G shipped as `Tree/StartParts.cfg`.) Avionics axed; stock `ModuleCommand` control; inert proc-avionics parts **kept** as probe cores |
 
 For custom CC types that can't be cleanly swapped to stock (e.g. `HorizontalLanding`,
 `DownrangeDistance`, `ReachMach`), the triage decides per-type: tweak-in-cfg, strip, or implement

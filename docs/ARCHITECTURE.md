@@ -17,13 +17,18 @@ Programs/Confidence economy, deadlines — all lived in RP-1's `RP0.dll`, which 
 
 ## 2. Design invariants (do NOT violate)
 
-1. **Plugin-free by default.** Behaviour comes from vendored config + stock systems + dependency
-   mods. We *may* ship a small `AXE.dll` of **our own**, but only where research proves a contract
-   check or feature genuinely can't be done in config (see §5). Never ship/load `RP0.dll`/`CC_RP0.dll`.
+1. **Config-first; our own minimal `AXE.dll` where config can't reach.** Behaviour comes from
+   vendored config + stock systems + dependency mods wherever possible. Never ship/load
+   `RP0.dll`/`CC_RP0.dll`. **NOTE (D6/D8): `AXE.dll` is now load-bearing, not optional** — it
+   implements the 14 ContractConfigurator types every ported contract needs (D6), enables Career
+   (D5), runs the free-parts economy + generous start (D8), and is the program switcher's real
+   gating. If it fails to load, no career loads. (The original "plugin-free by default" posture is
+   superseded; "config-first for *content*, small own plugin for *mechanics*" is the live stance.)
 2. **Self-contained + `conflicts: RP-1`.** Vendored RP-1 config must never coexist with a real RP-1
    install (double-patching). CKAN metadata declares the conflict.
-3. **Funds are ON, rebuilt light.** Not RP-1's plugin economy, not "no funds". Science is the
-   primary gate; funds are a secondary budget with **no time pressure**. (Resolves OD1.)
+3. **Funds ON; parts unlock FREE (D8 supersedes the entryCost sink).** Science is the *only* gate on
+   *what* you can build; the only ongoing funds sink is **launch cost** (the entryCost sink was
+   abandoned). RealFuels engine-CONFIG charging is the one kept buy-to-unlock. No time pressure.
 4. **No time pressure anywhere.** No build time, research time, deadlines, or rep decay. (These were
    plugin systems — they vanish for free; just never re-introduce them.) Post-accept contract
    durations are fine.
@@ -69,12 +74,12 @@ per-type in Pass A.
 | Contracts | `Contracts/**` + `CC_RP0.dll` | **VENDOR** seed + **de-rail/convert/strip** in `design/` (Pass A) |
 | Programs | `Programs/Programs.cfg` + `ProgramHandler` (RP0) | **REPLACE** with config-only program switcher (Pass B); `Programs.cfg` is funding *reference only* |
 | Contract rewards | program `baseFunding` (RP0) | **REBUILD** as per-contract `rewardFunds`/`rewardScience` (Pass C) |
-| Parts funds sink | RP0 tooling/maintenance | **REBUILD** via part `entryCost` (Pass D; LRTR values + RO core hand-priced) |
-| Avionics (`ModuleAvionics`, proc avionics) | RP0 | **AXE** — craft become stock-controllable; remove inert proc-avionics parts; guarantee start-node command part (Pass G) |
+| Parts funds sink | RP0 tooling/maintenance | **DROPPED (D8)** — parts unlock **free** (`ZeroEntryCost.cfg` + `FreePartUnlock.cs`); only funds sink is **launch cost**; RealFuels engine-CONFIG charging kept |
+| Avionics (`ModuleAvionics`, proc avionics) | RP0 | **AXE** — craft become stock-controllable (stock `ModuleCommand`); start-node command guaranteed (D9/M6, `StartParts.cfg`); inert proc-avionics parts **kept** (still work as probe cores) |
 | Build/integration times, KCT, maintenance, tooling, crew, confidence/unlock-credit, leaders, milestones, careerlog, editor warnings | RP0 | **AXE** — gone by design (this is the grind) |
 | Near/far-future parts | RP-1 *suggests* | **PROMOTE** to expected end-game content (Pass F, needs RO/RSS scaling) |
 
-## 5. Contract transformation strategy (config-first, plugin as researched fallback)
+## 5. Contract transformation strategy (the plan; see the D6 update box for what shipped)
 
 `design/Contracts/` holds ModuleManager patches that run **before** ContractConfigurator parses the
 contract types — so a patch can rewrite a contract's `type =` field, delete a parameter, or zero a
@@ -89,6 +94,13 @@ delete patches (see [`TASKS.md`](TASKS.md) Pass A and the table in §3).
 by default" while keeping the escape hatch the decision asked for. The plugin is also the home for
 any *optional* future feature (e.g. an avionics-by-mass control model — explicitly out of scope for
 v0).
+
+> **Update (D6 — what actually happened).** The per-type triage concluded RP-1's 14 custom CC types
+> are mostly self-contained stock-logic, so we implemented our **own** versions of all of them in
+> `AXE.dll` (`Source/AXE/Contracts/`, table in `_CCTYPES.md`) under their registered names — the
+> ported contracts then load **verbatim** (356/356, AutoTest). `design/Contracts/` ended up holding
+> only *fixups* (dedupe, Uranus/Neptune moon-group plumbing), not the broad config type-swap this
+> section originally envisioned. So the DLL is load-bearing (invariant 1), not a dormant fallback.
 
 ## 6. Program switcher (replaces ProgramHandler) — Pass B
 
@@ -109,14 +121,16 @@ No `AXE.dll` is required for the switcher — it's pure ContractConfigurator.
   program's `baseFunding` (from `Programs.cfg`, reference only) and distribute it across that
   program's member contracts as per-contract `rewardFunds` (capstone heavier than stepping-stones).
   `rewardScience` is a **modest supplement** to Kerbalism income, not the main source.
-- **Parts sink (D):** most `entryCost` is `1`. Rebuild a real sink — lift LRTR's per-part values for
-  add-on/futuristic mods (prices only, keep our `TechRequired`), hand-price RO core from
-  `EntryCostModifiers.cfg`. Remember the dominant RSS drain is **per-launch vehicle cost**, not
-  entry cost — balance era income (C) to comfortably cover era vehicle costs.
-- **Science pacing (E):** keep the vendored `Science/` (ROKerbalism profile); target a **moderate**
-  pace via the global multiplier; keep frontier nodes expensive; budget node costs per-tier against
-  reachable Kerbalism quotas (invariant 5). The futuristic extension (Pass F) is the one region with
-  no upstream balancing — hand-budget it.
+- **Parts sink (D) — DROPPED (D8):** parts unlock **free** (`ZeroEntryCost.cfg` + `FreePartUnlock.cs`).
+  The only ongoing funds sink is **per-launch vehicle cost** (Σ part `cost` + propellant, 90 %/95 %
+  recovered) — exactly the "dominant RSS drain" this section always warned about; RealFuels
+  engine-CONFIG charging is the one kept buy-to-unlock. Income (C, scaled ×1.25) + 100 k start
+  (`GenerousStart.cs`) fund the missions. **Open:** mid/late solvency vs procedural big vehicles.
+- **Science pacing (E):** kept the vendored `Science/` at **RP-1 ×1.0** (a ×0.8 trim was tried and
+  **reverted**, D9 — the solvency audit showed ~57× headroom, so science is *not* a binding gate).
+  **Earth sub-40 km science removed** (`EarthScienceRemoval.cfg`) so the home planet isn't a farm.
+  The futuristic extension (Pass F) is the one region with no upstream balancing. See
+  [`SCIENCE_AUDIT.md`](SCIENCE_AUDIT.md).
 
 ## 8. Tech tree, OrphanNode & the update model
 
@@ -135,7 +149,9 @@ No `AXE.dll` is required for the switcher — it's pure ContractConfigurator.
   RP0 plugin? (Verify one before trusting all.)
 - Does engine-config / tank-type tech gating still hold (driven by RealFuels / stock upgrades, not
   the plugin)?
-- Is the `start` node actually flyable (command part + enough to loft a first sounding rocket)?
-- Per-tier science solvency: sum Kerbalism quotas per reachable destination; confirm each tier's
-  node costs are affordable from that tier's new science.
-- Tech progression without avionics gating — does the tree still feel like progression? *(user flag)*
+- Is the `start` node actually flyable? **Config-complete (D9/M6 — 549 parts on `start`: command,
+  engines, guidance, tanks, antennas, instruments). The build-and-fly proof is still a play session.**
+- Per-tier science solvency: **audited (`SCIENCE_AUDIT.md`) — ~57× headroom, solvent at every era;
+  a play session confirms it *feels* right.**
+- Tech progression without avionics gating — does the tree still feel like progression? *(user flag;
+  sharpened by the audit: science is abundant, so science is a weak gate — see playtest watchlist.)*

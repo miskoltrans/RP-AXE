@@ -22,7 +22,7 @@ metapackage can be authored.
 | ClickThroughBlocker, ToolbarController | UI plumbing (our plugin UI may use these) | keep |
 | SXTContinued, VenStockRevamp-NewParts | parts referenced by RO/tree | keep |
 | KerbalChangelog | changelog display | keep (optional) |
-| CustomBarnKit | facility levels/costs config | keep (we supply our own CBK config) |
+| CustomBarnKit | facility levels/costs | keep. **We do NOT supply our own CBK config** — building/recovery use CBK defaults; starting funds (100k) are granted in code (`Source/AXE/GenerousStart.cs`), since CBK has no `startingFunds` field. |
 | Skopos | RP-1's commercial-comms contract sim plugin | **drop for MVP** (its contracts are advanced; revisit) |
 
 > Note: RealismOverhaul transitively pulls Real Fuels, Real Heat, FAR, AJE, RealChute, RealPlume,
@@ -100,21 +100,27 @@ American stockalike: **none** — `ROCapsules`/`ROEngines` (baseline) already co
   endorsed; revisit individually only if wanted (version-drift checking required).
 - `KSPIE` (KSP Interstellar Extended) — **no RO support**; would need DIY scaling. Skip.
 
-## CKAN metadata (target `RP-AXE.netkan`)
+## CKAN metadata
 
-Strategy: **seed `depends` from RP-1's own CKAN depends (`ckan show RP-1`), minus RP-1, then trim by
-experiment.** Verify exact CKAN identifiers (Kerbalism / its RO config and ROLibrary have provider
-quirks).
+> ✅ **AUTHORED — the source of truth is now [`../RP-AXE.netkan`](../RP-AXE.netkan)** (M7). The notes
+> below are the *original strategy*; where they disagree with the netkan, the netkan wins. It was
+> seeded from the test instance's **actual 104-module CKAN set**, minus RP-1, minus tooling.
 
-- **`depends` — bedrock (never trim):** ModuleManager, RealSolarSystem, RealismOverhaul, RealFuels,
-  Kerbalism, ContractConfigurator.
-- **`depends` — examine-later:** RealAntennas, ROLibrary/ROUtils, CustomBarnKit.
-- **`depends` — part set:** the **Baseline (LOCKED IN)** + **Far-future — INCLUDED**
-  (`FarFutureTechnologies`, `HeatControl`, `NearFuturePropulsion`) + **Exploration/utility additions**
-  (`ProbesPlus`, `DMagicOrbitalScience`, `SurfaceExperimentPackage`, `SCANsat`, `KAS`, `KIS`,
-  `UniversalStorage2`, `Tantares`, `TantaresLV`) under "Part-mod set" above.
-- **`conflicts`:** RP-1 (invariant 2 — vendored configs must not double-patch a real RP-1).
-- **`suggests`:** tools only (SCANsat, SurfaceExperimentPackage, kOS).
+Reconciled against the shipped netkan + what's actually installed:
+- **`depends`:** the bedrock (ModuleManager, RealismOverhaul, RealSolarSystem, RealFuels, Kerbalism +
+  Kerbalism-Config-RO, ContractConfigurator, KSPCommunityFixes, CustomBarnKit, RealAntennas, ROUtils,
+  ROLib, **MakingHistory-DLC**) + the part packs (ReStock(+Plus), RO Engines/Tanks/Capsules/Solar/
+  Heatshields, Procedural Parts/Fairings, B9-PWings-Fork, KSPWheel, ModularLaunchPads, ConformalDecals,
+  InternalRCS, SXTContinued, VenStockRevamp-NewParts) + the future set (CryoEngines/Tanks, KerbalAtomics,
+  the NearFuture suite) + exploration (`SCANsat`, `KAS`, `KIS`, **`NewTantares`/`NewTantaresLV`/
+  `TantaresSP`** — note the CKAN ids). Transitive deps (Kopernicus, RealHeat, FAR, AJE, B9PartSwitch,
+  CRP…) are **not** listed — CKAN resolves them.
+- **DROPPED (not installed, NOT in depends):** `ProbesPlus`, `DMagicOrbitalScience`,
+  `SurfaceExperimentPackage`, `UniversalStorage2`, `FarFutureTechnologies`, `HeatControl`. *(This section
+  previously listed these in `depends` — stale; they were dropped per the "Part-mod set" decisions above.)*
+- **`conflicts`:** `RP-1` (invariant 2). **`recommends`:** BreakingGround-DLC, MechJeb2, KerbalAlarmClock.
+  **`suggests`:** kOS, EditorExtensionsRedux, TransferWindowPlannerFork, **`Skopos`**, **`TestFlight`**,
+  Waterfall, TextureReplacer (both Skopos and TestFlight are suggests-only, not deps — D8/OD3).
 
 ## Reconstituting the instance
 

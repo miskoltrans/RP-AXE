@@ -1,5 +1,12 @@
 # Part entry costs (M3 Pass D reference)
 
+> ⚠️ **SUPERSEDED / HISTORICAL (see DECISIONS D8, 2026-06-26).** RP-AXE **abandoned the part-entryCost
+> funds sink**: parts now unlock **free** with science (`design/EntryCosts/ZeroEntryCost.cfg` +
+> `Source/AXE/FreePartUnlock.cs`). The only buy-to-unlock kept is **RealFuels engine-config** charging;
+> the only ongoing funds sink is **launch cost**. This document is retained as a record of the
+> approach that was tried and dropped — do **not** treat it as current intent or reintroduce per-part
+> entryCosts.
+
 Rebuild a real **funds sink**: most RO/RP-1 part `entryCost` values are `1` because RP-1 put funds
 pressure in its plugin (tooling/maintenance), which we removed. Pluginless, we set flat `entryCost`
 directly via ModuleManager — exactly how **LRTR** does it.

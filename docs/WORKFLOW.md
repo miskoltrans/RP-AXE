@@ -47,9 +47,12 @@ pwsh tools/deploy.ps1 -Revert  # unlink AXE, re-enable RP-1
 
 ## Building the plugin (`AXE.dll`)
 
-> `AXE.dll` is a **researched fallback**, kept as boilerplate by default (it just logs `[AXE]`).
-> Only add real code when the M2 CC-type triage proves stock config can't express a check. The
-> build still needs to work so the fallback is ready — keep it green.
+> `AXE.dll` is **load-bearing** (it started as a researched fallback — D2 — but D5/D6/D8 made it
+> required). It implements: the 14 ContractConfigurator types (`Contracts/`, every ported contract
+> needs them), Career-enable (`EnableCareer.cs`, reflects RO's `_overrideCareer`), the program
+> switcher (`AxeProgramHandler`), the free-parts economy (`FreePartUnlock.cs`), and the 100 k
+> generous start (`GenerousStart.cs`). **If it fails to build/load, no career loads** — keep it green.
+> (The AutoTest harness also lives here but ships disabled; the `-axe-autotest` flag force-enables it.)
 
 `Source/AXE/` is a .NET Framework 4.8 class library. It references KSP's managed assemblies and
 `ContractConfigurator.dll` **from the instance**, via the `KSPRoot` MSBuild property.

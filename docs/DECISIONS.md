@@ -73,13 +73,13 @@ The user's prior build brief was reviewed and merged. It refines D1/D2:
   check. Honours "plugin-free by default" while keeping the escape hatch.
 - **Funds ON, rebuilt light** (see D4). **Name confirmed:** "Ahistorical Xploration & Engineering".
 
-### D4 — 2026-06-25 — Funds ON, rebuilt (resolves OD1)
+### D4 — 2026-06-25 — Funds ON, rebuilt (resolves OD1) — ⚠️ SUPERSEDED by D8 (parts now free; sink = launch cost)
 
 Career with funds, **not** science-only and **not** RP-1's plugin economy. Science is the primary
 gate; funds are a secondary budget with **no time pressure**. Income = per-contract rewards
 (program `baseFunding` redistributed, Pass C); sink = part `entryCost` (Pass D). OD1 closed.
 
-### D6 — 2026-06-25 — M2: write our OWN CC types in AXE.dll (⚠️ UNVALIDATED in-game)
+### D6 — 2026-06-25 — M2: write our OWN CC types in AXE.dll (✅ VALIDATED via AutoTest 2026-06-26)
 
 Research (reading `CC_RP0` source) showed RP-1's 14 custom contract types are *mostly* self-contained
 stock-logic, not coupled to the RP0 career engine. Per direction ("write our own from scratch; use
@@ -95,7 +95,7 @@ CC auto-discovers our factories by class name (`XxxFactory` → `type = Xxx`). F
 `Source/AXE/_CCTYPES.md`. **Builds clean but NOT yet validated in a running game** — see the M2
 validation checklist in `docs/TASKS.md`. M3/M4 depend on this validating.
 
-### D7 — 2026-06-25 — M3 + M4 first-pass implemented (⚠️ UNVALIDATED, validate with M2)
+### D7 — 2026-06-25 — M3 + M4 first-pass implemented (✅ VALIDATED via AutoTest 2026-06-26; Pass D later superseded by D8)
 
 At the user's direction ("do 1 and 2"), implemented the next milestones on top of the still-
 unvalidated M2 rather than waiting:
@@ -112,15 +112,55 @@ only after accepting a charter. Validation is therefore a single **combined M2+M
 in `docs/TASKS.md` M2). Known risk to watch: charters surfacing under KSP's offered-contract limit
 (RP-1 raised it via plugin; we don't).
 
+### D8 — 2026-06-26 — Economy pivot: parts unlock FREE (supersedes D4 + invariant 3's entryCost sink)
+
+After in-game review the economy is reframed: **exploration + engineering, not management.** This
+**supersedes D4 / ARCHITECTURE invariant 3** ("sink = part `entryCost`", Pass D).
+
+- **Parts unlock free with science** — science is the *only* gate on *what* you can build. The
+  entryCost funds-sink (Pass D) is **abandoned**. Implemented as `design/EntryCosts/ZeroEntryCost.cfg`
+  (`@PART[*]:FINAL %entryCost = 0`) **plus** `Source/AXE/FreePartUnlock.cs` (reflect-zeroes the private
+  `AvailablePart._entryCost` after RealFuels/ProceduralParts recompute it at load — config alone can't
+  reach those ~936 parts).
+- **NOT via `BypassEntryPurchaseAfterResearch`** — that flag *also* disables RealFuels' engine-CONFIG
+  charging, which we deliberately **keep** (verified: `RP0/Harmony/RealFuels.cs` gates config cost on
+  the flag; `RealFuels.dll` honours it).
+- **RealFuels engine-config development is the one buy-to-unlock with engineering meaning** — kept,
+  and works without RP0 (RF resolves the `ENTRYCOSTMODS` tree itself; e.g. Aestus config = 70 000,
+  verified at runtime).
+- **Launch cost (Σ part `cost` + propellant, 90 %/95 % recovered) is the only ongoing funds sink.**
+- **"Generous" bite (locked, not for further tuning):** 100 000 starting funds
+  (`Source/AXE/GenerousStart.cs`, a ScenarioModule — CustomBarnKit has no `startingFunds` field),
+  contract income ×1.25 (`design/Rewards/FundsTrim.cfg` `globalHardContractMultiplier` +
+  `ProgramRewards.cfg`), CBK building-upgrade costs left at defaults.
+- **Canonical record:** this entry + the doc-comments in `GenerousStart.cs` / `FreePartUnlock.cs`.
+  `docs/ENTRYCOSTS.md` is **superseded/historical**. Open: mid/late funds solvency vs procedural
+  big-vehicle costs (play-session question).
+
+### D9 — 2026-06-26 — M5/M6: future-part placement, science economy, flyable start
+
+- **Science pace = RP-1 original ×1.0.** Trialled a ×0.8 trim then **reverted**: the solvency audit
+  (`docs/SCIENCE_AUDIT.md`, `tools/science_audit.py`) showed the system holds **~57× the tree's
+  science** — science is *not* a binding gate, so easing it was pointless. **Earth sub-40 km science
+  removed** (`design/Science/EarthScienceRemoval.cfg`) so the home planet isn't a science farm.
+- **M5 Pass F:** orphan browser (`design/Tree/OrphanBrowser.cfg`, 12 visible category nodes) + **828
+  Tantares/NearFuture/Cryo/Atomics parts placed** (`design/Tree/AxePlace_*.cfg`, ported from LRTR via
+  an awk node-remap, `:LAST[RP-AXE]` to override `OrphanNode`). Every RP-AXE-touched part is marked
+  (`ModuleAxeMarker` + `rp-axe` tag + `[RP-AXE]` note).
+- **M6 start-of-career:** RP-1's 506-part "Starting Parts" node (`unlockParts`, cost 999) was
+  auto-unlocked by the axed plugin → stranded at turn 1. `design/Tree/StartParts.cfg` repoints it onto
+  `start`. **Avionics:** stock `ModuleCommand` control works without RP-1's mass-based system; the
+  inert `ModuleProceduralAvionics` parts are **kept** (still function as probe cores), not removed.
+
 ---
 
 ## Open decisions (resolve as MVP progresses)
 
-- **OD1 — RESOLVED (D4):** funds ON, rebuilt light.
-- **OD2 — Avionics replacement:** accept stock-like probe control, or add lightweight config gating
-  so the tree still feels like progression? (Validate in-game first — see ARCHITECTURE §7.)
-- **OD3 — TestFlight (part failures):** keep for realism or drop for lightweight? Default: keep
-  installed, configs out-of-scope for MVP.
+- **OD1 — RESOLVED (D4, then reframed by D8):** funds ON; parts free, launch cost is the sink.
+- **OD2 — RESOLVED (D9/M6):** accept stock-like probe control (RP-1 avionics axed; `ModuleCommand`
+  works). No config gating added — science + RF-config charging are the gates.
+- **OD3 — TestFlight (part failures):** **dropped from the MVP** — `suggests`-only in `RP-AXE.netkan`,
+  not a dependency (lightweight default; revisit if realism is wanted).
 - **OD4 — Program starter UX:** plugin ScenarioModule + small UI (preferred) vs. pure-CC "charter
   contract" chains (zero-code fallback).
 - **OD5 — Far-future part pack selection** (post-MVP research).

@@ -57,7 +57,7 @@ is for building and flying, not for unlocking parts.
 |------|------------|
 | `GameData/RP-AXE/seed/` | **Pristine, vendored** RP-1 config (Tree / Contracts / Science). Never edited — refreshed from upstream. |
 | `GameData/RP-AXE/design/` | All RP-AXE transformations & new content — MM patches applied *after* the seed. |
-| `Source/AXE/` | Boilerplate C# plugin — a *researched fallback* for the few contract checks stock ContractConfigurator can't express. |
+| `Source/AXE/` | **`AXE.dll` — the (load-bearing) plugin.** Implements the ContractConfigurator types the contracts need, Career-enable, the program switcher, the free-parts economy, and the 100k generous start. *Not* RP-1's plugin; never ships `RP0.dll`. |
 | `docs/` | Architecture, workflow, dependencies, decisions, task list. |
 | `tools/` | `deploy.ps1` (link into the test instance), `sync-seed.ps1` (refresh vendored RP-1 config). |
 
