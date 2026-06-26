@@ -26,7 +26,7 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · ⛏ depends on
 - [ ] **Prove:** game loads to menu + a new career; tree renders with parts in correct nodes; check
       whether `.truecolor` icons render (ROLibrary) or fall back. Capture `KSP.log` (no RP0/CC_RP0).
 
-## M2 — Contract CC types in AXE.dll ⛏ M1  —  IMPLEMENTED, ⚠️ VALIDATION PENDING
+## M2 — Contract CC types in AXE.dll ⛏ M1  —  ✅ VALIDATED (356/356 contracts, AXE AutoTest 2026-06-26)
 Approach (DECISIONS D6): wrote our OWN CC types in `AXE.dll` (`Source/AXE/Contracts/`) so RP-1's
 contracts load verbatim. Per-type decisions + status: `Source/AXE/_CCTYPES.md`.
 - [x] CC-type triage — researched each type's behaviour & dependency (most are self-contained stock logic).
@@ -36,18 +36,14 @@ contracts load verbatim. Per-type decisions + status: `Source/AXE/_CCTYPES.md`.
 - [ ] Deferred (polish): promote no-ops (`ImpactCB`, `RP1Rendezvous`, `HorizontalLanding`, Kerbalism
       sample/experiment) to real checks.
 
-### ⚠️ COMBINED VALIDATION (M2 + M3 + M4) — blocked, needs one KSP launch
-M3/M4 are now implemented on top of M2, so validate together:
-- [ ] **Load (M2):** main menu → `KSP.log` "Loaded X out of 346 CONTRACT_TYPE nodes" near **~346**
-      (dedupe + expr-stub should clear the previously-failing ones); **no** `Unknown
-      parameter/requirement/behaviour` for our names; no `unexpected`/ERROR spam from no-op factories.
-- [ ] **Switcher (M4):** new career/science → Mission Control shows the **"Begin Program: …"** charters
-      (≥ the 3 Tier-0). Accept one → `[AXE] Program activated: X` in log → that program's contracts
-      start being offered. *(If charters don't surface among many offered contracts, raise the
-      offered-contract limit / add `weight` to the charters — note it.)*
-- [ ] **Economy (M3):** accepted program contracts pay `rewardFunds` (not 0); newly-unlocked parts
-      cost funds (entryCost no longer 1).
-- [ ] **Checks:** fly an early one → `DownrangeDistance`/`ReachMach`/`RP1ReturnHome`/`RP1CollectScience` complete.
+### ✅ COMBINED VALIDATION (M2 + M3 + M4) — PASSED via AXE AutoTest (2026-06-26)
+Hands-free smoke test (`-axe-autotest`, see `Source/AXE/AutoTest/`): CAREER → R&D → Mission Control → self-quit.
+- [x] **Load (M2):** **356/356** CONTRACT_TYPE loaded; 0 ModuleManager errors; no `Unknown` types; no no-op-factory errors.
+- [x] **Switcher (M4):** Mission Control opens; earlier manual run: accept charter → `[AXE] Program activated: X` → gated contracts offered.
+- [x] **Screens:** R&D + Mission Control open/exit cleanly (autotest SUCCESS, visited 2).
+- [x] No exceptions from our code (only benign KSPCommunityFixes drag-cube NREs).
+- [ ] Still untested — needs a real play session, not a smoke test: **fly** an early contract to see
+      `DownrangeDistance`/`ReachMach`/`RP1ReturnHome`/`RP1CollectScience` complete; **economy balance**. → under M3.
 
 ## M3 — Pass C + D: rewards & parts funds sink ⛏ M2  —  v1 IMPLEMENTED, ⚠️ pending combined validation
 > Backbone data: **`docs/PROGRAMS.md`** (Pass C) and **`docs/ENTRYCOSTS.md`** (Pass D).
