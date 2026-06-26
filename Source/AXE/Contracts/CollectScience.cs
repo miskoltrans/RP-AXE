@@ -17,8 +17,11 @@ namespace RPAxe.Contracts
         public override bool Load(ConfigNode configNode)
         {
             bool valid = base.Load(configNode);
-            ConfigNodeUtil.ParseValue(configNode, "experiment", x => experiment = x, this, new List<ScienceExperiment>());
-            ConfigNodeUtil.ParseValue(configNode, "subject", x => subjects = x, this, new List<ScienceSubject>());
+            // Fold the parse results into `valid` so a renamed/missing experiment or subject id fails
+            // the factory loudly at load, instead of silently degrading to "any science, anywhere"
+            // (the empty-filter match=true fallthrough below).
+            valid &= ConfigNodeUtil.ParseValue(configNode, "experiment", x => experiment = x, this, new List<ScienceExperiment>());
+            valid &= ConfigNodeUtil.ParseValue(configNode, "subject", x => subjects = x, this, new List<ScienceSubject>());
             return valid;
         }
 

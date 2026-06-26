@@ -2,6 +2,7 @@ using Contracts;
 using ContractConfigurator;
 using System;
 using System.Linq;
+using UnityEngine;
 
 namespace RPAxe.Contracts
 {
@@ -50,7 +51,9 @@ namespace RPAxe.Contracts
             node.TryGetValue("contractType", ref _ccType);
             string s = null;
             node.TryGetValue("eventType", ref s);
-            if (!string.IsNullOrEmpty(s)) _evt = (ContractEventType)Enum.Parse(typeof(ContractEventType), s);
+            // Defensive: a corrupt/hand-edited persistent eventType must not throw inside contract load.
+            if (!string.IsNullOrEmpty(s) && !Enum.TryParse(s, out _evt))
+                Debug.LogWarning("[AXE] AcceptContract: unknown eventType '" + s + "' on load; keeping " + _evt);
         }
 
         protected override void OnSave(ConfigNode node)

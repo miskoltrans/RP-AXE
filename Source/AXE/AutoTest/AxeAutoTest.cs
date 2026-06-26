@@ -26,8 +26,11 @@ namespace RPAxe.AutoTest
         public const string CmdFlag = "-axe-autotest";   // force-enable override (regardless of cfg)
         public const string EnvVar = "AXE_AUTOTEST";
 
-        // Defaults; overridden by AutoTest.cfg on load.
-        public static bool Enabled = true;
+        // Defaults; overridden by AutoTest.cfg on load. Enabled MUST default false: if the cfg is
+        // missing (reinstall / CKAN drops PluginData / AV quarantine) LoadFromFile writes defaults and
+        // returns without touching this, so a `true` default would make a shipped install self-create a
+        // career and Application.Quit() every launch. The -axe-autotest flag force-enables for dev.
+        public static bool Enabled = false;
         public static Game.Modes GameMode = Game.Modes.CAREER;
         public static string SaveName = "AXE_AutoTest";
         public static string[] Screens = { "RND", "MISSIONCONTROL" };
@@ -152,7 +155,7 @@ namespace RPAxe.AutoTest
 AXE_AUTOTEST
 {
     // Run the automated test on launch? (-axe-autotest / AXE_AUTOTEST=1 force-enable regardless.)
-    enabled = true
+    enabled = false
 
     // New game to create: CAREER, SCIENCE_SANDBOX, or SANDBOX.
     gameMode = CAREER
