@@ -93,12 +93,19 @@ Hands-free smoke test (`-axe-autotest`, see `Source/AXE/AutoTest/`): CAREER → 
       placed parts on real nodes; 0 new errors. *Remaining:* per-part **entryCost balance** review
       (LRTR values are a head start, not RP-AXE-tuned) → folds into M3 Pass D.
 
-## M6 — Pass G: avionics/control & start node ⛏ M1
-- [ ] Remove/hide the ~4 inert procedural-avionics parts.
-- [ ] Guarantee a basic command part at the `start` node (turn-one flight works).
-- [ ] Ensure early standalone antennas (RealAntennas) + science instruments are placed sensibly (no
-      gap left by avionics unbundling). (`design/Avionics/`)
-- [ ] **Prove:** a first sounding rocket is flyable from `start`; early comms/science reachable.
+## M6 — Pass G: avionics/control & start node ⛏ M1  —  ✅ CONFIG-COMPLETE (AutoTest 2026-06-26)
+- [x] **Real root cause: 506 "Starting Parts" stranded.** RP-1 keeps the basic 1940s-50s set (sounding
+      engines, early guidance, cockpits, procedural parts) on the `unlockParts` node (cost 999), which
+      its ConfigurableStart/FirstStart plugin auto-unlocked. Plugin axed → stranded behind 999 science
+      at turn 1. Fixed: `design/Tree/StartParts.cfg` repoints `unlockParts → start` + hides the empty
+      node. start 43 → **549 parts**; first-rocket essentials confirmed on start.
+- [x] Basic command part at `start`: kv1Pod, SXT-TMA1new, GuidanceStart1m — stock `ModuleCommand`
+      control (RP-1's mass-based avionics system is gone with the plugin, but control works stock-like).
+- [x] Early antennas + science at start: **26 RealAntenna** parts + **37 science instruments** on start.
+- [~] Inert procedural-avionics parts (proceduralAvionics, ROT-ProbeCore): **kept** — both have
+      `ModuleCommand`, still work as probe cores; only the avionics PAW is cosmetically dead. Not removed.
+- [ ] **Prove (needs a play session):** actually build + launch a sounding rocket from `start`.
+      Config-complete (engine+guidance+control+tank+comms+science all at start, free, 100k funds).
 
 ## M7 — Packaging & release ⛏ all
 - [ ] `RP-AXE.version` (KSP-AVC) + GitHub update block. *(scaffolded — fill URL/DOWNLOAD)*
