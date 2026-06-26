@@ -24,4 +24,4 @@ feeds the RP0 plugin (KCT presets, maintenance/tooling/leaders/crew/avionics con
 
 ## Source / last sync
 - Upstream: KSP-RO/RP-1 -- local source at `C:\git\ksp\RP-1` (instance had RP-1 **v4.4.0.0**).
-- Synced from `C:\git\ksp\RP-1\GameData\RP-1` on 2026-06-25 17:12. RP-1.version: v4.4.0.0 (KSP 1.12.3).
+- Synced from `C:\git\ksp\RP-1\GameData\RP-1` on 2026-06-27 00:06. RP-1.version: v4.4.0.0 (KSP 1.12.3), checked out at the v4.4.0.0 tag.
