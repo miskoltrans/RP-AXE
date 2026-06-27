@@ -1,4 +1,4 @@
-# seed/ -- vendored RP-1 config (read-only import)
+﻿# seed/ -- vendored RP-1 config (read-only import)
 
 This folder is **imported, pristine RP-1 config** that RP-AXE ships and loads as-is. **Never
 hand-edit anything here.** All RP-AXE changes live in `../design/` as ModuleManager patches that
@@ -24,4 +24,5 @@ feeds the RP0 plugin (KCT presets, maintenance/tooling/leaders/crew/avionics con
 
 ## Source / last sync
 - Upstream: KSP-RO/RP-1 -- local source at `C:\git\ksp\RP-1` (instance had RP-1 **v4.4.0.0**).
-- Synced from `C:\git\ksp\RP-1\GameData\RP-1` on 2026-06-27 00:06. RP-1.version: v4.4.0.0 (KSP 1.12.3), checked out at the v4.4.0.0 tag.
+- Synced from "C:\git\ksp\RP-1\GameData\RP-1" on 2026-06-28 01:28. RP-1.version: { "NAME": "Realistic Progression One", "URL": "https://raw.githubusercontent.com/KSP-RO/RP-1/master/GameData/RP-1/RP-1.version", "DOWNLOAD": "https://github.com/KSP-RO/RP-1/releases/download/v4.4.0.0/RP-1-v4.4.0.0.zip", "HOMEPAGE": "https://github.com/KSP-RO/RP-1/", "VERSION": { "MAJOR": 4, "MINOR": 4, "PATCH": 0, "BUILD": 0 }, "KSP_VERSION": { "MAJOR": "1", "MINOR": "12", "PATCH": "3" }, "KSP_VERSION_MIN": { "MAJOR": "1", "MINOR": "12", "PATCH": "0" }, "KSP_VERSION_MAX": { "MAJOR": "1", "MINOR": "12", "PATCH": "99" } }
+
