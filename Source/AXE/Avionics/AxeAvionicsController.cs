@@ -5,12 +5,15 @@ using UnityEngine;
 namespace RPAxe
 {
     /// <summary>
-    /// Per-flight controller that locks ATTITUDE control (yaw/pitch/roll + RCS translation) when the
-    /// active vessel has no guidance — i.e. it's a "dumb rocket": throttle and staging still work, but
-    /// you can't steer (fly it spin/fin-stabilized). The lock decision is <see cref="AxeControlLockerUtils"/>.
+    /// Per-flight controller that locks ATTITUDE control (yaw/pitch/roll + RCS translation) when the active
+    /// vessel lacks full guidance. Three levels (from <see cref="AxeControlLockerUtils"/>):
+    ///   * Unlocked — full control.
+    ///   * Axial    — rotation + lateral translation locked, but axial-thrust (Z) translation allowed, so a
+    ///     spin-stabilized Science-Core kick stage can still fire along its axis.
+    ///   * Locked   — "dumb rocket": throttle + staging only.
     ///
     /// Adapted from RP-1's ControlLocker (a Flight-scene MonoBehaviour following the active vessel),
-    /// stripped to a binary lock and to attitude-only (no throttle/wheel locks, no mass logic).
+    /// attitude-only (no throttle/wheel locks, no mass logic).
     /// </summary>
     [KSPAddon(KSPAddon.Startup.Flight, false)]
     public class AxeAvionicsController : MonoBehaviour
@@ -20,7 +23,7 @@ namespace RPAxe
         const float UpdateFrequency = 1f;
 
         Vessel _vessel;
-        bool _locked;
+        AxeControlLockerUtils.LockLevel _level = AxeControlLockerUtils.LockLevel.Unlocked;
         bool _requested;
         bool _started;
         readonly ScreenMessage _message = new ScreenMessage("", 6f, ScreenMessageStyle.UPPER_CENTER);
@@ -66,14 +69,14 @@ namespace RPAxe
             if (to != null && to.loaded) to.OnPostAutopilotUpdate += FlightInputModifier;
         }
 
-        // Hard guarantee: zero steering every physics frame while locked; leave throttle & staging alone.
+        // Hard guarantee, every physics frame: while locked, zero steering + lateral translation; leave throttle
+        // & staging alone. Axial level additionally permits Z (axial-thrust) translation for spin-stabilized stages.
         void FlightInputModifier(FlightCtrlState st)
         {
-            if (_locked)
-            {
-                st.yaw = st.pitch = st.roll = 0f;
-                st.X = st.Y = st.Z = 0f;
-            }
+            if (_level == AxeControlLockerUtils.LockLevel.Unlocked) return;
+            st.yaw = st.pitch = st.roll = 0f;
+            st.X = st.Y = 0f;
+            if (_level == AxeControlLockerUtils.LockLevel.Locked) st.Z = 0f;
         }
 
         IEnumerator CheckLoop()
@@ -108,22 +111,26 @@ namespace RPAxe
 
         void Recompute()
         {
-            if (_vessel == null) { SetLocked(false); return; }
-            bool shouldLock = !CheatOptions.InfiniteElectricity && AxeControlLockerUtils.ShouldLock(_vessel.Parts);
-            SetLocked(shouldLock);
+            if (_vessel == null) { SetLevel(AxeControlLockerUtils.LockLevel.Unlocked); return; }
+            AxeControlLockerUtils.LockLevel lvl = CheatOptions.InfiniteElectricity
+                ? AxeControlLockerUtils.LockLevel.Unlocked
+                : AxeControlLockerUtils.ShouldLock(_vessel.Parts);
+            SetLevel(lvl);
             UpdateMechJeb();
         }
 
-        void SetLocked(bool locked)
+        void SetLevel(AxeControlLockerUtils.LockLevel level)
         {
-            if (locked == _locked) return;
-            _locked = locked;
-            if (locked)
+            if (level == _level) return;
+            _level = level;
+            if (level != AxeControlLockerUtils.LockLevel.Unlocked)
             {
                 InputLockManager.SetControlLock(LockMask, LockID);
                 _vessel.Autopilot.Disable();
                 _vessel.ActionGroups.SetGroup(KSPActionGroup.SAS, false);
-                _message.message = "Avionics: no guidance — attitude locked (throttle & staging only)";
+                _message.message = level == AxeControlLockerUtils.LockLevel.Axial
+                    ? "Avionics: spin-stabilized — axial thrust only (no steering)"
+                    : "Avionics: no guidance — attitude locked (throttle & staging only)";
             }
             else
             {
@@ -139,7 +146,7 @@ namespace RPAxe
             if (_masterMechJeb == null)
                 _masterMechJeb = _getMasterMechJeb.Invoke(null, new object[] { FlightGlobals.ActiveVessel });
             if (_masterMechJeb != null)
-                _mjDeactivate.SetValue(_masterMechJeb, _locked, null);
+                _mjDeactivate.SetValue(_masterMechJeb, _level != AxeControlLockerUtils.LockLevel.Unlocked, null);
         }
 
         void OnDestroy()

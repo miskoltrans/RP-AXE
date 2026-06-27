@@ -1,43 +1,52 @@
 # RP-AXE vs RP-1 — Avionics Comparison & Grounding (2026-06-27)
 
-Grounds RP-AXE's avionics core against RP-1's procedural avionics. **RP-AXE now adopts RP-1's Near-Earth
-formulas directly**, so the old divergences (flat un-scaling mass; the tier freeze at ~1960) are resolved.
-Script: `tools/avionics_compare.py` (parses the shipped `TIER` ladder from `AxeAvionicsCore.cfg`; re-run
-after editing it to refresh the tables below).
+Grounds RP-AXE's avionics core against RP-1's procedural avionics. **RP-AXE adopts RP-1's formulas directly**,
+so the old divergences (flat un-scaling mass; the tier freeze at ~1960) are resolved. A VAB-only toggle picks
+the **model**: **guided = Near-Earth** (RP-1's vessel-scaled, full-control curve) or **unguided = Science-Core**
+(RP-1's light flat-mass sequencer). Deep-Space is intentionally dropped (range is handled by comms, not
+avionics). Script: `tools/avionics_compare.py` (parses the shipped `TIER` ladder from `AxeAvionicsCore.cfg`;
+re-run after editing it to refresh the tables below).
 
-## Headline — same formulas, two summed curves, keyed off the live craft
+## Headline — two RP-1 models on one toggle, draw keyed off live dry mass
 
-RP-AXE's `ModuleAxeAvionics` evaluates RP-1's **Near-Earth** mass and power polynomials on the **live vessel
-mass**, with the per-tier `massFactor` / `powerFactor` taken straight from RP-1's 13-tier ladder. Total
-avionics mass is the sum of two curves:
+RP-AXE's `ModuleAxeAvionics` evaluates RP-1's polynomials with the per-tier factors taken straight from RP-1's
+ladders. The guided/unguided toggle selects the as-built model (frozen at launch). Avionics mass = a hardware
+curve + the battery you size.
 
 | | **RP-1 proc avionics** | **RP-AXE core** |
 |---|---|---|
-| Mass input | **rated** `controllableMass` (slider, ≥ vessel) | **live vessel load** (auto, ≈ vessel mass) |
-| Hardware mass | `(M^0.46172 + 0.96)·massFactor/1000` | **same formula**, frozen at launch |
-| Draw input | rated `controllableMass`, **static** | **live vessel mass**, falls as it burns |
+| Models | Near-Earth / Deep-Space / Science-Core (separate configs) | **Near-Earth (guided) / Science-Core (unguided)**, one VAB toggle |
+| Mass input (NE) | **rated** `controllableMass` (slider, ≥ vessel) | **live vessel load** (auto, ≈ vessel mass), frozen at launch |
+| Hardware mass (NE) | `(M^0.46172 + 0.96)·massFactor/1000` | **same formula** |
+| Draw input | rated `controllableMass`, **static** | **live DRY mass** — steady on burn, steps down on staging |
 | Control cliff | hard — vessel > massLimit ⇒ **no control** | **none** — bigger just costs more |
+| Low-power | Deep-Space hibernation only | **Hibernate toggle on every core** (draw → 5%) |
 | Battery | leftover part volume after hardware | **same** — hardware reserves vol, rest is EC |
 | Tiers | 13 (powerFactor 56.4 → 7.8) | **same 13**, 1:1 by tech node |
 | SAS | level 3 from TL0 | level 3 once guidance is active |
 
-The result lands on RP-1's numbers at every craft size, and what differs is all **easier**: AXE keys
-hardware off the *actual* load (RP-1 players rate `controllableMass` with margin), the draw is *live* vs
-RP-1's static, mass *freezes at launch* (RP-1-like) while the live draw keeps dropping as stages separate,
-guidance is gated at `postWarAvionics` (vs RP-1's `start`), and SAS is a flat 3.
+The result lands on RP-1's numbers at every craft size, and what differs is all **easier**: AXE keys hardware
+off the *actual* load (RP-1 players rate `controllableMass` with margin), the draw is *live* off **dry mass**
+vs RP-1's static, mass *freezes at launch* (RP-1-like), guidance is gated at `postWarAvionics` (vs RP-1's
+`start`), and SAS is a flat 3.
 
-## The two models (exact)
+## The formulas (exact)
 
 RP-1 `GetPolynomial(v,e,c,f) = (v^e + c)·f` — from `ModuleProceduralAvionics.cs`:
 - hardware **mass** (t) = `(M^0.46172 + 0.96)·massFactor / 1000`  (M = `controllableMass`)
 - **EC draw** (kW) = `(M^0.57853 + 1.035)·powerFactor / 1000`
-- hardware **volume** = mass / `avionicsDensity` (0.5 t/m³); leftover part volume → EC battery
+- Science-Core: `controllableMass = 0` ⇒ flat **mass** = `scMassFactor/1000` t, flat **draw** = `scPowerFactor/1000` kW
+- hardware **volume** = mass / `avionicsDensity`; leftover part volume → EC battery
 
-RP-AXE — from `ModuleAxeAvionics.cs`:
-- hardware **mass** (t) = `(load^0.46172 + 0.96)·massFactor / 1000`, `load` ≈ vessel mass, **frozen at launch**
-- **EC draw** (W) = `(vesselMass^0.57853 + 1.035)·powerFactor`, **live**, ×0.1 when guidance off
-- hardware **volume** = mass / 0.5; the part auto-grows to fit, leftover → **RealFuels EC battery** you size
-- guidance gated at `postWarAvionics`; runs **dumb** if the battery goes flat in flight
+RP-AXE — from `ModuleAxeAvionics.cs` (the guided/unguided toggle picks the model, frozen at launch):
+- **Near-Earth (guided)**: mass (t) = `(load^0.46172 + 0.96)·massFactor / 1000`, `load` ≈ vessel mass; full control
+- **Science-Core (unguided)**: mass (t) = `scMassFactor / 1000`, **flat per tier** (size-independent); no steering
+  (axial-thrust only from `improvedAvionics` up)
+- **EC draw** (W) = `(dryMass^0.57853 + 1.035)·powerFactor` for NE (live), or flat `scPowerFactor` for SC;
+  ×0.1 when a NE core is dumb, ×0.05 when **hibernating** (either model)
+- hardware **volume** = mass / density (NE 0.5; SC per-tier); the part auto-grows to fit, leftover → **RealFuels
+  EC battery** you size
+- guidance gated at `postWarAvionics`; runs **dumb** if the battery goes flat in flight or the core is hibernated
 
 ## A) Tier ladder — AXE tech node → (massFactor, powerFactor), matched 1:1 to RP-1 Near-Earth
 
@@ -71,7 +80,7 @@ The ladder lives in `AxeAvionicsCore.cfg` as `TIER` nodes — the single source 
 AXE is fed the **actual** vessel load and freezes it; RP-1 uses rated `controllableMass ≥ load` (with
 margin), and AXE's live draw drops as stages separate ⇒ AXE ≤ RP-1 in play.
 
-## C) EC DRAW (W) vs vessel mass — AXE == RP-1 per tier, live (falls as it burns)
+## C) EC DRAW (W) vs DRY mass — AXE == RP-1 per tier, live (steady on burn, steps on staging)
 
 | tier | 1 t | 3 t | 10 t | 30 t | 100 t | 300 t | 1000 t |
 |---|--:|--:|--:|--:|--:|--:|--:|
@@ -115,15 +124,43 @@ EC per kg: **Battery-I 222 · II 346 · III 556 · IV 694**.
 | Battery-III | 1.8 | 5 | 0.60 | electronicsAdvCapsules ~1964 |
 | Battery-IV | 1.44 | 4 | 0.75 | electronicsLunar ~1967 |
 
+## G) Science-Core (unguided model) — flat per tier, size-independent (RP-1 Science-Core)
+
+The unguided half of the VAB toggle. Mass and draw are **flat per tech tier** (no vessel scaling); no steering,
+but axial-thrust spin-stabilization is allowed from `improvedAvionics` up. For sounding rockets and kick stages.
+
+| AXE tech (`TIER` node) | mass (kg) | draw (W) | density | axial |
+|---|--:|--:|--:|:--:|
+| postWarAvionics | 33 | 50 | 2.4 | no |
+| avionicsPrototypes | 17 | 25 | 1.4 | no |
+| earlyAvionics | 4 | 0.15 | 0.5 | no |
+| basicAvionics | 1.5 | 0.10 | 0.5 | no |
+| interplanetaryProbes | 1 | 0.09 | 0.5 | no |
+| improvedAvionics | 0.81 | 0.081 | 0.5 | **yes** |
+| matureAvionics | 0.73 | 0.073 | 0.5 | yes |
+| largeScaleAvionics | 0.66 | 0.066 | 0.5 | yes |
+| advancedAvionics | 0.59 | 0.059 | 0.5 | yes |
+| nextGenAvionics | 0.53 | 0.053 | 0.5 | yes |
+| longTermAvionics | 0.48 | 0.048 | 0.5 | yes |
+| internationalAvionics | 0.43 | 0.043 | 0.5 | yes |
+| modernAvionics | 0.39 | 0.039 | 0.5 | yes |
+
+vs Near-Earth at the same node (e.g. `basicAvionics`): **1.5 kg / 0.1 W** unguided vs **193 kg / 166 W** for 10 t
+of guided control — a featherweight, near-zero-power sequencer that simply can't steer.
+
 ## What still differs (all intended, all easier)
 
-1. **Hardware keys off actual load, not rated mass.** RP-1 players set `controllableMass ≥ vessel` (margin);
+1. **Two models on the guided/unguided toggle.** Guided = Near-Earth, unguided = Science-Core (RP-1's third
+   config, Deep-Space, is dropped — range is comms, not avionics). Chosen in the VAB, frozen at launch.
+2. **Hardware keys off actual load, not rated mass** (NE). RP-1 players set `controllableMass ≥ vessel` (margin);
    AXE uses the real load ⇒ a touch lighter.
-2. **Draw is live.** AXE's draw falls as fuel burns and stages drop; RP-1's is static at the rated value.
-3. **Mass freezes at launch** (RP-1-like static hardware) — no in-flight dry-mass fluctuation.
-4. **Guidance gate** at `postWarAvionics` vs RP-1's `start` — slightly more progression-flavored.
-5. **SAS** is a flat level 3 (config), suppressed while dumb by `AxeAvionicsController`.
-6. **Funds**: control is free; only the battery costs (out of scope per design).
+3. **Draw is live off DRY mass.** Steady as fuel burns, steps down as stages drop; RP-1's is static at the rated
+   value. (Mass itself still freezes at launch — RP-1-like.)
+4. **Hibernation on every core** (flight Hibernate toggle, draw → 5%, control suspended) — RP-1 gates hibernation
+   to Deep-Space only.
+5. **Guidance gate** at `postWarAvionics` vs RP-1's `start` — so the very start flies Science-Core only.
+6. **SAS** is a flat level 3 (config), suppressed while dumb/axial by `AxeAvionicsController`.
+7. **Funds**: control is free; only the battery costs (out of scope per design).
 
 ## Where the numbers live
 - RP-1 coeffs: `RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg` (`AVIONICSCONFIGS`: Near-Earth …)

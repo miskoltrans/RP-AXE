@@ -8,13 +8,15 @@ of two curves:
     per-craft load (≈ whole-vessel mass) and FROZEN at launch. Reproduces RP-1's hardware mass at every size.
   * BATTERY        — the RealFuels EC tank the player sizes; the hardware reserves (mass / avionicsDensity)
     m^3 of the procedural part, the rest is EC.
-EC DRAW (W) = (vesselMass^0.57853 + 1.035) * powerFactor(tier), evaluated LIVE (falls as fuel burns/stages
-drop). massFactor/powerFactor per tier come from the 13 TIER nodes in AxeAvionicsCore.cfg (parsed below, so
-this script and the game share one source of truth).
+EC DRAW (W) = (dryMass^0.57853 + 1.035) * powerFactor(tier), evaluated LIVE (steady as fuel burns, steps
+down on staging). massFactor/powerFactor per tier come from the 13 TIER nodes in AxeAvionicsCore.cfg (parsed
+below, so this script and the game share one source of truth).
 
-The differences that remain are all "easier": AXE keys hardware off the ACTUAL load (RP-1 rates
-controllableMass >= mass, with margin); AXE's draw is live vs RP-1's static; guidance is gated at
-postWarAvionics vs RP-1's start; SAS is a flat level 3.
+The guided/unguided toggle is the MODEL selector (VAB-only, frozen at launch): guided = Near-Earth (above),
+unguided = Science-Core (RP-1's flat per-tier scMassFactor/scPowerFactor — section G). A flight-only Hibernate
+toggle deep-sleeps either model. Range is NOT gated (that's comms). Other differences are all "easier": AXE
+keys hardware off the ACTUAL load (RP-1 rates controllableMass >= mass, with margin); AXE's draw is live vs
+RP-1's static; guidance is gated at postWarAvionics vs RP-1's start; SAS is a flat level 3.
 
 Sources:
   RP-1 coeffs   : RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg  (AVIONICSCONFIGS, Near-Earth)
@@ -58,18 +60,36 @@ NE = [
 ]
 
 # ---- RP-AXE ladder: parsed from the cfg TIER nodes (single source of truth) ----
+# Each TIER carries factors for BOTH models: Near-Earth (massFactor/powerFactor) + Science-Core
+# (scMassFactor/scPowerFactor/scDensity/scAllowAxial). Parse the whole block then pull fields by key, so
+# key order / extra keys don't matter.
 CFG = os.path.join(os.path.dirname(__file__), "..", "GameData", "RP-AXE", "design", "Tree", "AxeAvionicsCore.cfg")
-TIER_RE = re.compile(r"TIER\s*\{\s*tech\s*=\s*(\S+)\s+massFactor\s*=\s*([\d.]+)\s+powerFactor\s*=\s*([\d.]+)\s*\}")
+TIER_RE = re.compile(r"TIER\s*\{([^}]*)\}")
+
+def _field(body, key):
+    m = re.search(r"\b" + key + r"\s*=\s*([^\s}]+)", body)
+    return m.group(1) if m else None
 
 def load_axe_ladder():
+    """(NE list of (name, massFactor, powerFactor), SC dict name -> (scMass kg, scPower W, scDensity, axial))."""
     try:
         with open(CFG, encoding="utf-8") as f:
             text = f.read()
     except OSError:
-        return []
-    return [(m.group(1), float(m.group(2)), float(m.group(3))) for m in TIER_RE.finditer(text)]
+        return [], {}
+    ne, sc = [], {}
+    for blk in TIER_RE.finditer(text):
+        body = blk.group(1)
+        tech, mf, pf = _field(body, "tech"), _field(body, "massFactor"), _field(body, "powerFactor")
+        if not (tech and mf and pf):
+            continue
+        ne.append((tech, float(mf), float(pf)))
+        scm, scp, scd = _field(body, "scMassFactor"), _field(body, "scPowerFactor"), _field(body, "scDensity")
+        if scm and scp and scd:
+            sc[tech] = (float(scm), float(scp), float(scd), (_field(body, "scAllowAxial") or "").lower() == "true")
+    return ne, sc
 
-AXE = load_axe_ladder()
+AXE, AXE_SC = load_axe_ladder()
 
 # ---- RealFuels battery chemistries: name -> (kg/1000EC, funds/1000EC, maxUtil, unlock) ----
 BATT = {
@@ -102,7 +122,7 @@ def main():
     print("  (AXE is fed ACTUAL vessel load and freezes it; RP-1 uses rated controllableMass>=load, with")
     print("   margin, and AXE's load drops as stages separate -> AXE <= RP-1 in play)")
 
-    print(); print(bar); print("C) EC DRAW (W) vs vessel mass — AXE == RP-1 per tier, live (falls as it burns)"); print(bar)
+    print(); print(bar); print("C) EC DRAW (W) vs DRY mass — AXE == RP-1 per tier, live (steady on burn, steps on staging)"); print(bar)
     print(f"{'tier':22} | " + " ".join(f"{m:>7}t" for m in masses))
     for name, mf, pf in [AXE[0], AXE[3], AXE[8], AXE[12]]:
         print(f"{name:22} | " + " ".join(f"{draw_W(m, pf):8.0f}" for m in masses))
@@ -127,6 +147,17 @@ def main():
     print(); print(bar); print("F) BATTERY chemistries (RO electronics line); EC per kg: I 222 II 346 III 556 IV 694"); print(bar)
     for bn, (kg, fn, mu, unl) in BATT.items():
         print(f"   {bn:11}: {1000/kg:6.0f} EC/kg, {kg:4.2f} kg/1000EC, {fn:2} funds/1000EC, maxUtil {mu:.2f}  (unlock: {unl})")
+
+    if AXE_SC:
+        print(); print(bar); print("G) SCIENCE-CORE (unguided model) — flat per tier, size-independent (RP-1 Science-Core)"); print(bar)
+        print(f"{'AXE tech (TIER node)':22} {'mass(kg)':>9} {'draw(W)':>9} {'density':>9} {'axial':>7}")
+        for name, _mf, _pf in AXE:
+            if name not in AXE_SC: continue
+            scm, scp, scd, sca = AXE_SC[name]
+            print(f"{name:22} {scm:9.2f} {scp:9.3f} {scd:9.2f} {('yes' if sca else 'no'):>7}")
+        print("  (mass = scMassFactor/1000 t and draw = scPowerFactor/1000 kW are FLAT — no vessel scaling;")
+        print("   axial = axial-thrust spin-stabilization allowed from improvedAvionics up. vs Near-Earth at the")
+        print("   same node: a fraction of the mass + near-zero power, but no steering.)")
 
 if __name__ == "__main__":
     main()
