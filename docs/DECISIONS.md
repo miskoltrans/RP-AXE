@@ -152,6 +152,57 @@ After in-game review the economy is reframed: **exploration + engineering, not m
   `start`. **Avionics:** stock `ModuleCommand` control works without RP-1's mass-based system; the
   inert `ModuleProceduralAvionics` parts are **kept** (still function as probe cores), not removed.
 
+### D10 — 2026-06-26 — Part-inclusion policy: RO-configured ONLY, but broader than RP-1
+
+**Rule (hard): every part in the RP-AXE tree must have an RO config.** Parts RO has *not* flagged
+with `RSSROConfig=True` are surfaced in-game by RO itself as `non RO - <title>` /
+`(PART NOT SUPPORTED BY RO)` (and category 97 under FilterExtensions) — see
+`RealismOverhaul_Global_Config.cfg` `@PART[*]:HAS[~RSSROConfig[]]:FOR[zzzRealismOverhaul]`. Such parts
+run on stock/mod-default stats (wrong mass/fuel/ISP/scale) in an RSS game → **unwanted. Cut or hide,
+never place.**
+
+**But RP-1's part selection is too restrictive.** RP-1 places only a subset of the RO-configured
+universe. RP-AXE wants the *fuller* RO-configured set as ahistorical content. So the part universe
+partitions three ways:
+
+1. **RO-configured AND RP-1-placed** → keep (inherited).
+2. **RO-configured AND NOT RP-1-placed** → **candidate pool the user curates himself** — the
+   deliberate value-add over RP-1.
+3. **NOT RO-configured** → cut/hide.
+
+**Reality check (merged `ModuleManager.ConfigCache`, 2026-06-26; `tools/ro_coverage.py`):** whole
+install = 2929 parts, **1058 not RO-supported (~36 %)**. The future suites placed in M5 Pass F are
+hit hard — enforcing this is a re-curation, not a trim:
+- **Tantares (all 3): 591 parts, only 120 supported (471 NOT).** TantaresLV 1/122, TantaresSP 0/103,
+  Tantares 119/366. (The unsupported tail is variant parts — surface antennas, decoupler/adapter size
+  variants, fins — that RO never configured.)
+- NearFutureLaunchVehicles 12/78, NearFutureSpacecraft 3/39, NearFutureExploration 20/62,
+  NearFutureAeronautics 5/32, NearFuturePropulsion 26/65; CryoTanks 0/15, KerbalAtomics 3/7.
+
+**Supersedes** the M5 Pass F assumption that LRTR-derived placement was sufficient (it placed many
+non-RO parts). **Placed-set breakdown computed (2026-06-26, `tools/ro_coverage.py` + ConfigCache
+cross-ref):** of our **828 parts on real tree nodes, 595 (~72%) are non-RO** (only 233 RO-ok); of the
+568 browser-parked, 412 non-RO. On the **whole real tech tree, 631 non-RO** (the extra 36 are RP-1 base
+placements — SXT 9, KIS 4, …). Dominated by the suites we added: Tantares-all-3 **370**, NearFuture
+suite **210**, CryoTanks 15. **Action (deferred — "figure out before sacking", now figured):** (a) ✓
+done; (b) drop the 595 non-RO placements, (c) curate the RO-configured-but-not-RP-1 band into the tree.
+**Reframes OD5.**
+
+**IMPLEMENTED & VALIDATED (2026-06-27, `design/Tree/zzzzAxeSackNonRO.cfg`):** soft-sack — a visible
+`axeNonRO` quarantine RDNode + a `:FINAL` patch routing every non-RO play-tree part onto it. AutoTest
+confirmed: 105 073 MM patches, 0 errors, **exactly 631 parts on `axeNonRO`, 0 non-RO left on real
+nodes**, career/R&D/Mission Control all open (SUCCESS), no exceptions from our code. Two gotchas cost a
+rebuild each:
+- **Don't key on `RSSROConfig`.** RO uses it as a *temporary* marker and deletes it in its
+  `zzzTagCleanup` pass (a `:FOR`-phase pass, before `:FINAL`). At `:FINAL` no part has it, so
+  `~RSSROConfig[]` matches the whole tree (over-sacked 2330 parts incl. RO's own ROEngines/ROCapsules).
+  Key on the persistent description tag instead: `#description[*PART?NOT?SUPPORTED?BY?RO*]`.
+- **MM forbids literal spaces in a patch selector** — write them as `?` (its single-char wildcard),
+  hence `PART?NOT?SUPPORTED?BY?RO`. (Error: "node name does not have balanced brackets (or a space - if
+  so replace with ?)".)
+- Open: 2 benign `KSP.UI.Screens.RDNode.DrawArrow` NREs at R&D open (KSP UI, not ours); likely the
+  `axeNonRO` long `start`→far-right connector — candidate to make the node parentless.
+
 ---
 
 ## Open decisions (resolve as MVP progresses)
@@ -163,4 +214,6 @@ After in-game review the economy is reframed: **exploration + engineering, not m
   not a dependency (lightweight default; revisit if realism is wanted).
 - **OD4 — Program starter UX:** plugin ScenarioModule + small UI (preferred) vs. pure-CC "charter
   contract" chains (zero-code fallback).
-- **OD5 — Far-future part pack selection** (post-MVP research).
+- **OD5 — Part curation under the RO-only rule (D10):** scope the RO-configured-but-not-RP-1 band and
+  decide per-part/per-pack what to place; drop all non-RO parts. (Replaces the old "far-future pack
+  selection" framing — the constraint is RO-config coverage, not pack identity.)
