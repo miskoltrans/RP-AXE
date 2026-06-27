@@ -102,28 +102,34 @@ American stockalike: **none** — `ROCapsules`/`ROEngines` (baseline) already co
 
 ## CKAN metadata
 
-> ✅ **AUTHORED — the source of truth is now [`../RP-AXE.netkan`](../RP-AXE.netkan)** (M7). The notes
-> below are the *original strategy*; where they disagree with the netkan, the netkan wins. It was
-> seeded from the test instance's **actual 104-module CKAN set**, minus RP-1, minus tooling.
+> ✅ **AUTHORED — the source of truth is now [`../RP-AXE.netkan`](../RP-AXE.netkan)** (M7). The
+> per-mod tables above remain the *rationale* (why each mod is in the set); the netkan/metapackage are
+> the *mechanical* list and win on any disagreement.
 
-Reconciled against the shipped netkan + what's actually installed:
-- **`depends`:** the bedrock (ModuleManager, RealismOverhaul, RealSolarSystem, RealFuels, Kerbalism +
-  Kerbalism-Config-RO, ContractConfigurator, KSPCommunityFixes, CustomBarnKit, RealAntennas, ROUtils,
-  ROLib, **MakingHistory-DLC**) + the part packs (ReStock(+Plus), RO Engines/Tanks/Capsules/Solar/
-  Heatshields, Procedural Parts/Fairings, B9-PWings-Fork, KSPWheel, ModularLaunchPads, ConformalDecals,
-  InternalRCS, SXTContinued, VenStockRevamp-NewParts) + the future set (CryoEngines/Tanks, KerbalAtomics,
-  the NearFuture suite) + exploration (`SCANsat`, `KAS`, `KIS`, **`NewTantares`/`NewTantaresLV`/
-  `TantaresSP`** — note the CKAN ids). Transitive deps (Kopernicus, RealHeat, FAR, AJE, B9PartSwitch,
-  CRP…) are **not** listed — CKAN resolves them.
-- **DROPPED (not installed, NOT in depends):** `ProbesPlus`, `DMagicOrbitalScience`,
-  `SurfaceExperimentPackage`, `UniversalStorage2`, `FarFutureTechnologies`, `HeatControl`. *(This section
-  previously listed these in `depends` — stale; they were dropped per the "Part-mod set" decisions above.)*
-- **`conflicts`:** `RP-1` (invariant 2). **`recommends`:** BreakingGround-DLC, MechJeb2, KerbalAlarmClock.
-  **`suggests`:** kOS, EditorExtensionsRedux, TransferWindowPlannerFork, **`Skopos`**, **`TestFlight`**,
-  Waterfall, TextureReplacer (both Skopos and TestFlight are suggests-only, not deps — D8/OD3).
+**Dependency model — REVISED 2026-06-27: `depends` = the exact installed set of the perfect
+environment.** Rather than hand-curate roots and lean on CKAN to resolve transitive deps, the netkan
+now lists **every module installed in the test instance** — derived directly from
+`Instance/CKAN/registry.json` (`installed_modules`). This makes a rebuild reproduce the curated stack
+verbatim, independent of CKAN's recommend-resolution.
+
+- **`depends` (81 modules)** = 57 user-requested roots + 24 CKAN-resolved transitive deps, **including
+  the two DLC** (`MakingHistory-DLC`, `BreakingGround-DLC`). The transitive layer (Kopernicus, RealHeat,
+  FAR, AJE, B9PartSwitch, CRP, KSPBurst, ROLib, ROUtils, ModuleManager, KSPCommunityFixes, ClickThroughBlocker,
+  ToolbarController, …) is now **named explicitly** instead of being left to resolution. Tantares CKAN ids
+  are `NewTantares`/`NewTantaresLV`/`TantaresSP`.
+- **No `recommends`/`suggests`.** Anything not installed in the perfect environment is not part of the
+  set — so QoL mods that *are* installed (MechJeb2, KerbalAlarmClock, EditorExtensionsRedux,
+  TransferWindowPlannerFork, Waterfall, TextureReplacer, Skopos, TestFlight, …) are now hard `depends`,
+  and ones that were merely suggested but never installed (e.g. `kOS`) are simply absent.
+- **`conflicts`:** `RP-1` (invariant 2 — RP-AXE replaces the RP-1 career plugin).
+- Regenerate with the PowerShell snippet in [`WORKFLOW.md`](WORKFLOW.md) ("Rebuilding a clean
+  instance") whenever the instance's mod set changes — it rewrites both the netkan `depends` and the
+  `RP-AXE-deps.ckan` metapackage from the live registry.
 
 ## Reconstituting the instance
 
-The current snapshot is `Instance/CKAN/installed-RP-AXE.ckan` (a metapackage). It currently still
-lists `RP-1` — that's a stale snapshot. The intended metapackage drops `RP-1` and keeps the rows
-above. Authoring a clean `RP-AXE.netkan`/metapackage is a backlog task.
+`../RP-AXE-deps.ckan` (a CKAN metapackage, `kind=metapackage`, 81 `depends`, `conflicts: RP-1`) is the
+one-shot installer. Import via CKAN → *File → Install from .ckan file* (CLI: `ckan install -c
+RP-AXE-deps.ckan`), then deploy RP-AXE itself via `tools/deploy.ps1`. See WORKFLOW.md for the full
+nuke-&-restore procedure. *(The legacy `Instance/CKAN/installed-RP-AXE.ckan` auto-export is CKAN's own
+snapshot and is not used for installs.)*

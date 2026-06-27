@@ -3,97 +3,277 @@
     "identifier": "RP-AXE",
     "name": "RP-AXE: Ahistorical Xploration & Engineering",
     "abstract": "RP-1's realism stack with a lightweight, science-driven, exploration-first career replacing the RP-1 career plugin. Parts unlock free with science; engineering and exploration are the focus, not management.",
-    "author": [ "miskoltrans" ],
+    "author": [
+        "miskoltrans"
+    ],
     "license": "CC-BY-NC-SA-4.0",
-
     "$kref": "#/ckan/github/miskoltrans/RP-AXE",
-
     "ksp_version_min": "1.12.0",
     "ksp_version_max": "1.12.5",
-
-    "tags": [ "config", "career", "total-conversion", "career-scaling", "physics" ],
-
-    "comment": "RP-AXE = RP-1's dependency set MINUS the RP-1 career plugin, PLUS the future-part packs it places in the tree. CKAN auto-resolves transitive deps (Kopernicus, RealHeat, FAR, AJE, B9PartSwitch, CommunityResourcePack, ROLib's deps, etc.), so they are not listed here. Tantares identifiers are NewTantares/NewTantaresLV.",
-
+    "tags": [
+        "config",
+        "career",
+        "total-conversion",
+        "career-scaling",
+        "physics"
+    ],
+    "comment": "RP-AXE = the exact mod set of the curated 'perfect environment' test instance. depends lists EVERY installed module (81: 57 user-requested + 24 CKAN-resolved transitive, incl. MakingHistory-DLC + BreakingGround-DLC), so installing RP-AXE reproduces that stack verbatim. Regenerated from Instance/CKAN/registry.json; no version pins (latest mutually-compatible). Conflicts with RP-1 (RP-AXE replaces the RP-1 career plugin).",
     "depends": [
-        { "name": "ModuleManager" },
-        { "name": "RealismOverhaul" },
-        { "name": "RealSolarSystem" },
-        { "name": "RealFuels" },
-        { "name": "Kerbalism" },
-        { "name": "Kerbalism-Config-RO" },
-        { "name": "ContractConfigurator" },
-        { "name": "KSPCommunityFixes" },
-        { "name": "CustomBarnKit" },
-        { "name": "RealAntennas" },
-        { "name": "ROUtils" },
-        { "name": "ROLib" },
-        { "name": "MakingHistory-DLC" },
-
-        { "name": "ReStock" },
-        { "name": "ReStockPlus" },
-        { "name": "ROEngines" },
-        { "name": "ROTanks" },
-        { "name": "ROCapsules" },
-        { "name": "ROSolar" },
-        { "name": "ROHeatshields" },
-        { "name": "ProceduralParts" },
-        { "name": "ProceduralFairings" },
-        { "name": "B9-PWings-Fork" },
-        { "name": "KSPWheel" },
-        { "name": "ModularLaunchPads" },
-        { "name": "ConformalDecals" },
-        { "name": "InternalRCS" },
-        { "name": "SXTContinued" },
-        { "name": "VenStockRevamp-NewParts" },
-
-        { "name": "CryoEngines" },
-        { "name": "CryoTanks" },
-        { "name": "KerbalAtomics" },
-        { "name": "NearFutureLaunchVehicles" },
-        { "name": "NearFutureConstruction" },
-        { "name": "NearFutureElectrical" },
-        { "name": "NearFutureExploration" },
-        { "name": "NearFutureSolar" },
-        { "name": "NearFuturePropulsion" },
-        { "name": "NearFutureAeronautics" },
-        { "name": "NearFutureSpacecraft" },
-
-        { "name": "SCANsat" },
-        { "name": "KAS" },
-        { "name": "KIS" },
-        { "name": "NewTantares" },
-        { "name": "NewTantaresLV" },
-        { "name": "TantaresSP" }
+        {
+            "name": "AdvancedJetEngine"
+        },
+        {
+            "name": "AtmosphereAutopilot"
+        },
+        {
+            "name": "B9-PWings-Fork"
+        },
+        {
+            "name": "B9PartSwitch"
+        },
+        {
+            "name": "BDAnimationModules"
+        },
+        {
+            "name": "BreakingGround-DLC"
+        },
+        {
+            "name": "ClickThroughBlocker"
+        },
+        {
+            "name": "CommunityCategoryKit"
+        },
+        {
+            "name": "CommunityResourcePack"
+        },
+        {
+            "name": "ConformalDecals"
+        },
+        {
+            "name": "ContractConfigurator"
+        },
+        {
+            "name": "CustomBarnKit"
+        },
+        {
+            "name": "DepthMask"
+        },
+        {
+            "name": "EditorExtensionsRedux"
+        },
+        {
+            "name": "FerramAerospaceResearchContinued"
+        },
+        {
+            "name": "FirespitterCore"
+        },
+        {
+            "name": "FirespitterResourcesConfig"
+        },
+        {
+            "name": "HangerExtenderExtended"
+        },
+        {
+            "name": "Harmony2"
+        },
+        {
+            "name": "KerbalAlarmClock"
+        },
+        {
+            "name": "KerbalChangelog"
+        },
+        {
+            "name": "KerbalFoundriesContinued"
+        },
+        {
+            "name": "Kerbalism"
+        },
+        {
+            "name": "Kerbalism-Config-RO"
+        },
+        {
+            "name": "KerbalJointReinforcementContinued"
+        },
+        {
+            "name": "KerbalRenamer"
+        },
+        {
+            "name": "Kopernicus"
+        },
+        {
+            "name": "KSCSwitcher"
+        },
+        {
+            "name": "KSPBurst"
+        },
+        {
+            "name": "KSPBurst-Lite"
+        },
+        {
+            "name": "KSPCommunityFixes"
+        },
+        {
+            "name": "KSPTextureLoader"
+        },
+        {
+            "name": "KSPWheel"
+        },
+        {
+            "name": "LunarTransferPlanner"
+        },
+        {
+            "name": "MakingHistory-DLC"
+        },
+        {
+            "name": "MechJeb2"
+        },
+        {
+            "name": "ModularFlightIntegrator"
+        },
+        {
+            "name": "ModularLaunchPads"
+        },
+        {
+            "name": "ModuleManager"
+        },
+        {
+            "name": "PatchManager"
+        },
+        {
+            "name": "ProceduralFairings"
+        },
+        {
+            "name": "ProceduralParts"
+        },
+        {
+            "name": "RCSBuildAid"
+        },
+        {
+            "name": "RealAntennas"
+        },
+        {
+            "name": "RealChute"
+        },
+        {
+            "name": "RealChuteForStock"
+        },
+        {
+            "name": "RealFuels"
+        },
+        {
+            "name": "RealHeat"
+        },
+        {
+            "name": "RealismOverhaul"
+        },
+        {
+            "name": "RealPlume"
+        },
+        {
+            "name": "RealSolarSystem"
+        },
+        {
+            "name": "ReStock"
+        },
+        {
+            "name": "ReStockPlus"
+        },
+        {
+            "name": "Resurfaced"
+        },
+        {
+            "name": "RetractableLiftingSurface"
+        },
+        {
+            "name": "ROCapsules"
+        },
+        {
+            "name": "ROEngines"
+        },
+        {
+            "name": "ROHeatshields"
+        },
+        {
+            "name": "ROLib"
+        },
+        {
+            "name": "ROLoadingImages"
+        },
+        {
+            "name": "ROSolar"
+        },
+        {
+            "name": "ROTanks"
+        },
+        {
+            "name": "ROUtils"
+        },
+        {
+            "name": "RSSDateTimeFormatter"
+        },
+        {
+            "name": "RSSTextures4096"
+        },
+        {
+            "name": "Shabby"
+        },
+        {
+            "name": "Skopos"
+        },
+        {
+            "name": "SmokeScreen"
+        },
+        {
+            "name": "SolverEngines"
+        },
+        {
+            "name": "StagedAnimation"
+        },
+        {
+            "name": "StockAlarmClockDisabler"
+        },
+        {
+            "name": "SXTContinued"
+        },
+        {
+            "name": "TestFlight"
+        },
+        {
+            "name": "TextureReplacer"
+        },
+        {
+            "name": "TexturesUnlimited"
+        },
+        {
+            "name": "ToolbarController"
+        },
+        {
+            "name": "TransferWindowPlannerFork"
+        },
+        {
+            "name": "TweakScaleRescaled-Redist"
+        },
+        {
+            "name": "VenStockRevamp-Core"
+        },
+        {
+            "name": "VenStockRevamp-NewParts"
+        },
+        {
+            "name": "Waterfall"
+        }
     ],
-
     "conflicts": [
-        { "name": "RP-1" }
+        {
+            "name": "RP-1"
+        }
     ],
-
-    "recommends": [
-        { "name": "BreakingGround-DLC" },
-        { "name": "MechJeb2" },
-        { "name": "KerbalAlarmClock" }
-    ],
-
-    "suggests": [
-        { "name": "kOS" },
-        { "name": "EditorExtensionsRedux" },
-        { "name": "TransferWindowPlannerFork" },
-        { "name": "TestFlight" },
-        { "name": "Skopos" },
-        { "name": "Waterfall" },
-        { "name": "TextureReplacer" }
-    ],
-
     "install": [
         {
             "find": "RP-AXE",
             "install_to": "GameData"
         }
     ],
-
     "resources": {
         "homepage": "https://github.com/miskoltrans/RP-AXE",
         "repository": "https://github.com/miskoltrans/RP-AXE",

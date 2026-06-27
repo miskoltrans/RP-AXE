@@ -45,6 +45,78 @@ pwsh tools/deploy.ps1 -Revert  # unlink AXE, re-enable RP-1
 > do that. We only rename the `GameData/RP-1` folder. Dependency set of record is in
 > [`DEPENDENCIES.md`](DEPENDENCIES.md) so the instance can be rebuilt if needed.
 
+## Rebuilding a clean instance (nuke & restore)
+
+> **Fast path — `tools/rebuild-instance.ps1`** automates the whole nuke→restore→deps→deploy below:
+> ```powershell
+> pwsh tools/rebuild-instance.ps1          # prompts before the destructive nuke
+> pwsh tools/rebuild-instance.ps1 -Force   # skip the prompt
+> ```
+> It (1) unlinks the `GameData\RP-AXE` junction then deletes `Instance\`, (2) robocopies the pristine
+> snapshot `C:\git\ksp_instance_clean` (a clean KSP 1.12.5 **with both DLCs**, kept outside the working
+> tree) into a fresh `Instance\`, (3) `ckan install -c RP-AXE-deps.ckan --gamedir Instance --no-recommends
+> --headless` (targets the folder directly — no Manage-instances registration needed), and (4) runs
+> `deploy.ps1`. **No RP-1** is ever installed, so nothing has to be disabled. `AXE.dll` ships in the repo
+> (junctioned in), so no build step is required. Paths override via `-InstancePath`/`-CleanSnapshot`/
+> `-CkanExe`/`-DepsCkan`. The manual steps below are the same flow, by hand.
+
+When the instance's mod set drifts/breaks (e.g. a partial CKAN update leaves DLL versions
+inconsistent — see the cold-load assembly gotcha), the fastest fix is a clean rebuild. The whole
+dependency set installs in one shot from **`../RP-AXE-deps.ckan`** — a CKAN *metapackage* whose
+`depends` is the **exact installed mod set of the curated test instance** (the "perfect environment").
+It is generated straight from the live CKAN registry (snippet at the bottom of this section; re-run
+whenever the instance's mod set changes). It has no version pins, so CKAN resolves a latest
+mutually-compatible set.
+
+> **Dependency model (2026-06-27):** `depends` = **all 81 installed modules** (57 user-requested +
+> 24 CKAN-resolved transitive, incl. MakingHistory-DLC + BreakingGround-DLC), derived from
+> `Instance/CKAN/registry.json` rather than hand-curated. `RP-AXE.netkan` and `RP-AXE-deps.ckan`
+> carry the identical list; there are no `recommends`/`suggests` (anything not installed isn't part
+> of the perfect environment). Listing the full set — not just the roots — makes the rebuild
+> reproduce the stack verbatim without depending on CKAN's recommend-resolution behaviour.
+
+1. **Nuke:** in CKAN, *Manage instances* → remove the `Instance` entry (this only de-registers it),
+   then delete `C:\git\ksp\Instance\`. (Or keep the folder and just `git`-style wipe `GameData/`
+   back to stock — but a fresh copy is cleaner.)
+2. **Fresh KSP:** copy a pristine **KSP 1.12.5** (Steam → *Verify integrity*, or copy
+   `steamapps/common/Kerbal Space Program`) to `C:\git\ksp\Instance\`. Keep a vanilla copy so Steam
+   updates can't touch the modded one. Make sure **Making History** (and Breaking Ground if owned)
+   are present — RO/RP-1 require MH; CKAN can't install DLCs, only detect them.
+3. **Register:** CKAN → *Manage instances* → *Add instance* → point at `C:\git\ksp\Instance`. CKAN
+   creates a fresh empty registry.
+4. **Install deps:** CKAN → *File* → *Install from .ckan file* → pick `RP-AXE\RP-AXE-deps.ckan`
+   (CLI: `ckan install -c RP-AXE-deps.ckan`). Apply — CKAN pulls all 81 modules (the full installed
+   set is listed explicitly, so transitive deps like Kopernicus, FAR, AJE, B9PartSwitch, CRP,
+   KSPBurst are named directly rather than left to resolution).
+5. **Deploy RP-AXE:** `pwsh tools/deploy.ps1` (defaults to `C:\git\ksp\Instance`). Rebuild `AXE.dll`
+   if needed, then launch.
+
+> The instance path stays `C:\git\ksp\Instance`, so `deploy.ps1` and the `KSPRoot` build property
+> need no changes. For an *exact* reproduction (version-pinned lockfile) instead of latest, export a
+> modpack from a known-good instance: CKAN → *File* → *Export installed mods*.
+
+```powershell
+# regenerate depends from the LIVE instance registry = the perfect environment (run from repo root).
+# Source of truth is what CKAN actually has installed, not a hand-curated list.
+$reg = Get-Content ..\Instance\CKAN\registry.json -Raw | ConvertFrom-Json
+$ids = $reg.installed_modules.PSObject.Properties.Name | Sort-Object
+$depends = @($ids | ForEach-Object { [ordered]@{ name = $_ } })
+
+# 1) RP-AXE.netkan — replace its depends with the full installed set
+$nk = Get-Content RP-AXE.netkan -Raw | ConvertFrom-Json
+$nk.depends = $depends
+$nk | ConvertTo-Json -Depth 6 | Set-Content RP-AXE.netkan -Encoding utf8
+
+# 2) RP-AXE-deps.ckan — metapackage mirroring the same list
+$meta = [ordered]@{ spec_version='v1.18'; identifier='RP-AXE-deps'
+  name='RP-AXE: all dependencies (metapackage)'
+  abstract='Installs the complete RP-AXE perfect-environment mod set. Derived from the live registry.'
+  author=@('miskoltrans'); version='0.2.0'; kind='metapackage'; license='CC-BY-NC-SA-4.0'
+  ksp_version_min=$nk.ksp_version_min; ksp_version_max=$nk.ksp_version_max
+  depends=$depends; conflicts=@([ordered]@{ name='RP-1' }) }
+$meta | ConvertTo-Json -Depth 6 | Set-Content RP-AXE-deps.ckan -Encoding utf8
+```
+
 ## Building the plugin (`AXE.dll`)
 
 > `AXE.dll` is **load-bearing** (it started as a researched fallback — D2 — but D5/D6/D8 made it

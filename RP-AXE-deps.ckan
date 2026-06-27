@@ -1,0 +1,265 @@
+{
+    "spec_version": "v1.18",
+    "identifier": "RP-AXE-deps",
+    "name": "RP-AXE: all dependencies (metapackage)",
+    "abstract": "Installs the complete RP-AXE 'perfect environment' mod set. Import into a clean CKAN instance ('Install from .ckan file'), then add RP-AXE itself (junction/zip). Mirrors RP-AXE.netkan depends; regenerated from the live test-instance registry.",
+    "author": [
+        "miskoltrans"
+    ],
+    "version": "0.2.0",
+    "kind": "metapackage",
+    "license": "CC-BY-NC-SA-4.0",
+    "ksp_version_min": "1.12.0",
+    "ksp_version_max": "1.12.5",
+    "comment": "Every module installed in the RP-AXE test instance (81: 57 user-requested + 24 transitive, incl. MakingHistory-DLC + BreakingGround-DLC). No version pins. Conflicts with RP-1.",
+    "depends": [
+        {
+            "name": "AdvancedJetEngine"
+        },
+        {
+            "name": "AtmosphereAutopilot"
+        },
+        {
+            "name": "B9-PWings-Fork"
+        },
+        {
+            "name": "B9PartSwitch"
+        },
+        {
+            "name": "BDAnimationModules"
+        },
+        {
+            "name": "BreakingGround-DLC"
+        },
+        {
+            "name": "ClickThroughBlocker"
+        },
+        {
+            "name": "CommunityCategoryKit"
+        },
+        {
+            "name": "CommunityResourcePack"
+        },
+        {
+            "name": "ConformalDecals"
+        },
+        {
+            "name": "ContractConfigurator"
+        },
+        {
+            "name": "CustomBarnKit"
+        },
+        {
+            "name": "DepthMask"
+        },
+        {
+            "name": "EditorExtensionsRedux"
+        },
+        {
+            "name": "FerramAerospaceResearchContinued"
+        },
+        {
+            "name": "FirespitterCore"
+        },
+        {
+            "name": "FirespitterResourcesConfig"
+        },
+        {
+            "name": "HangerExtenderExtended"
+        },
+        {
+            "name": "Harmony2"
+        },
+        {
+            "name": "KerbalAlarmClock"
+        },
+        {
+            "name": "KerbalChangelog"
+        },
+        {
+            "name": "KerbalFoundriesContinued"
+        },
+        {
+            "name": "Kerbalism"
+        },
+        {
+            "name": "Kerbalism-Config-RO"
+        },
+        {
+            "name": "KerbalJointReinforcementContinued"
+        },
+        {
+            "name": "KerbalRenamer"
+        },
+        {
+            "name": "Kopernicus"
+        },
+        {
+            "name": "KSCSwitcher"
+        },
+        {
+            "name": "KSPBurst"
+        },
+        {
+            "name": "KSPBurst-Lite"
+        },
+        {
+            "name": "KSPCommunityFixes"
+        },
+        {
+            "name": "KSPTextureLoader"
+        },
+        {
+            "name": "KSPWheel"
+        },
+        {
+            "name": "LunarTransferPlanner"
+        },
+        {
+            "name": "MakingHistory-DLC"
+        },
+        {
+            "name": "MechJeb2"
+        },
+        {
+            "name": "ModularFlightIntegrator"
+        },
+        {
+            "name": "ModularLaunchPads"
+        },
+        {
+            "name": "ModuleManager"
+        },
+        {
+            "name": "PatchManager"
+        },
+        {
+            "name": "ProceduralFairings"
+        },
+        {
+            "name": "ProceduralParts"
+        },
+        {
+            "name": "RCSBuildAid"
+        },
+        {
+            "name": "RealAntennas"
+        },
+        {
+            "name": "RealChute"
+        },
+        {
+            "name": "RealChuteForStock"
+        },
+        {
+            "name": "RealFuels"
+        },
+        {
+            "name": "RealHeat"
+        },
+        {
+            "name": "RealismOverhaul"
+        },
+        {
+            "name": "RealPlume"
+        },
+        {
+            "name": "RealSolarSystem"
+        },
+        {
+            "name": "ReStock"
+        },
+        {
+            "name": "ReStockPlus"
+        },
+        {
+            "name": "Resurfaced"
+        },
+        {
+            "name": "RetractableLiftingSurface"
+        },
+        {
+            "name": "ROCapsules"
+        },
+        {
+            "name": "ROEngines"
+        },
+        {
+            "name": "ROHeatshields"
+        },
+        {
+            "name": "ROLib"
+        },
+        {
+            "name": "ROLoadingImages"
+        },
+        {
+            "name": "ROSolar"
+        },
+        {
+            "name": "ROTanks"
+        },
+        {
+            "name": "ROUtils"
+        },
+        {
+            "name": "RSSDateTimeFormatter"
+        },
+        {
+            "name": "RSSTextures4096"
+        },
+        {
+            "name": "Shabby"
+        },
+        {
+            "name": "Skopos"
+        },
+        {
+            "name": "SmokeScreen"
+        },
+        {
+            "name": "SolverEngines"
+        },
+        {
+            "name": "StagedAnimation"
+        },
+        {
+            "name": "StockAlarmClockDisabler"
+        },
+        {
+            "name": "SXTContinued"
+        },
+        {
+            "name": "TestFlight"
+        },
+        {
+            "name": "TextureReplacer"
+        },
+        {
+            "name": "TexturesUnlimited"
+        },
+        {
+            "name": "ToolbarController"
+        },
+        {
+            "name": "TransferWindowPlannerFork"
+        },
+        {
+            "name": "TweakScaleRescaled-Redist"
+        },
+        {
+            "name": "VenStockRevamp-Core"
+        },
+        {
+            "name": "VenStockRevamp-NewParts"
+        },
+        {
+            "name": "Waterfall"
+        }
+    ],
+    "conflicts": [
+        {
+            "name": "RP-1"
+        }
+    ]
+}
