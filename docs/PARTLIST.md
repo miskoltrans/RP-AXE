@@ -63,7 +63,13 @@ Investigated via reference caches (`ro_expanded` = native/no-Kerbalism; `rp1_exp
   beyond RP-1's set carry **no** science until we author RP0* assignments (→ gap-fill list). (4) **SCANsat
   absent** → stock orbital/surface scanners are inert (no experiment); revisit if SCANsat is added.
 
-### KerbalismLabExperimentsExpandedContinued — ADDED (crewed-STATION science layer)
+### KerbalismLabExperimentsExpandedContinued — ❌ DROPPED (shipped broken)
+**Update 2026-06-30:** deleted from `ksp_rp1_expanded`. It's missing its `KERBALISM_GROUP_SETTINGS` / lab-host
+base framework, so all 66 experiments fail their value lookup → **132 MM errors that block the ConfigCache from
+writing**. So **science backbone = RP-1's RP0\* alone**; T2 audits that. Re-obtain via GitHub-clone-as-sibling
++ the base lab-experiments dependency if ever revisited. *Analysis below retained for reference only.*
+
+#### (reference) how it would have worked — crewed-STATION science layer
 User added this (in `ksp_rp1_expanded`; **cache gone — regen by launching KSP**). It adds **66 real-instrument
 lab experiments** (ChemCam, AMS-02, ALSEP-2, CALET, GEDI, JUNO-JEDI…) — **crewed (Scientist L1–5), time-based**
 Kerbalism science hosted in a lab/station part (the "Laboratory Experiments" `Configure`), tech-gated (`UnlockTech`).
