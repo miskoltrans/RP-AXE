@@ -63,25 +63,25 @@ Investigated via reference caches (`ro_expanded` = native/no-Kerbalism; `rp1_exp
   beyond RP-1's set carry **no** science until we author RP0* assignments (→ gap-fill list). (4) **SCANsat
   absent** → stock orbital/surface scanners are inert (no experiment); revisit if SCANsat is added.
 
-### KerbalismLabExperimentsExpandedContinued — ADDED, integrating (the remap made real)
-User added this mod (in `ksp_rp1_expanded`; **its ConfigCache is gone — regen by launching KSP** to see the
-merged result). It adds **66 real-instrument lab experiments** (ChemCam, AMS-02 Alpha Magnetic Spectrometer,
-ALSEP-2, CALET, GEDI, ECOSTRESS, JUNO-JEDI, HaloSat…) — time-based crewed Kerbalism science hosted in any
-lab/station part (the "Laboratory Experiments" `Configure` module), each tech-gated (`UnlockTech`) with EC/
-crew cost and an **optional `requirements = Part:<name>`**. That part-requirement **IS the remap**: a
-previously-"redundant" instrument becomes the **required hardware that gates an experiment.** The mod is
-designed to hook DMagic / SCANsat / US2 (`EXPERIMENT_DEFINITION:NEEDS[DMagicOrbitalScience]` etc.).
+### KerbalismLabExperimentsExpandedContinued — ADDED (crewed-STATION science layer)
+User added this (in `ksp_rp1_expanded`; **cache gone — regen by launching KSP**). It adds **66 real-instrument
+lab experiments** (ChemCam, AMS-02, ALSEP-2, CALET, GEDI, JUNO-JEDI…) — **crewed (Scientist L1–5), time-based**
+Kerbalism science hosted in a lab/station part (the "Laboratory Experiments" `Configure`), tech-gated (`UnlockTech`).
 
-**Consequences (revising earlier cuts):**
-- **DMagic RESCUED → keep** (its 12 instruments gate experiments). "Balance around DMagic" was right —
-  via *gating*, not as the experiment source.
-- **Previously-cut UNIQUE science instruments are reinstated** as experiment-gating hardware (active gameplay,
-  not Experimental-park): Coatl's specialized instruments + Tantares `Travers SAR` / `Priroda`. Cut only
-  *generic* sensors that duplicate RP-1's RO-* tiers (barometer/thermometer/accelerometer).
-- Big science expansion → a real **"balance around the experiments"** task (your original instinct, now concrete).
-**Integration tasks (P3):** add to deps; **regen cache**; wire kept instruments → experiments via
-`requirements`; place the `UnlockTech` gates in the tree; balance the 66 science values; verify plugin/
-Kerbalism-version compat. *Final per-instrument keep-set + experiment wiring settled here.*
+**HOW IT ACTUALLY GATES (corrected — I earlier wrongly said it gates on instrument parts):** experiments require
+`Module:<Type>LabExperimentPackage`, which the mod attaches to **carriers of the BASE stock experiments**
+(`magnetometer`→Magnetometer pkg, `infraredTelescope`→Telescope, `mysteryGoo`→Biology, `mobileMaterialsLab`→
+Materials, `gravityScan`→Gravity, `atmosphereAnalysis`→Atmosphere) + **stock scanners/drills by name**
+(`OrbitalScanner`→Multispectral/Spectrometer, `SurveyScanner`→Radar, `*Drill*`→Drill). It does **NOT** gate on
+Coatl/DMagic probe instruments — and flavor-wise it's **crewed-station science, not uncrewed-probe instrument
+science**, so reinstating probe instruments was unjustified (**reverted**).
+
+**Real value:** turns STATIONS/labs (SSPX/Mir, the US2 goo/materials wedges) into rich science platforms — fits
+the station/exploration vision and integrates with parts we **already keep** (no new instruments needed).
+**Optional remap (deliberate, flavor-questionable):** we *could* author `*LabExperimentPackage` attachments onto
+chosen instruments, but probe→crewed-lab is a paradigm mismatch — skip unless a specific case clearly fits.
+**Integration tasks (P3):** add to deps; regen cache; confirm which packages have carriers under RP-1; place the
+`UnlockTech` gates in the tree; balance the 66 values; verify plugin/Kerbalism compat.
 
 ## Per-mod expanded-pack curation (in progress)
 Going mod-by-mod through RP-1's per-pack cuts, recording AXE's call. Lens: **science/exploration delivery
@@ -97,7 +97,7 @@ solar covers them); **mod-specific science instruments** (→ DMagic); **part-sp
 |---|---|---|---|
 | RN_US_Probes | 106 | **75** | Inherit 31 component cuts: 11 std solar panels (redundant), 12-part KH-9 spy-sat family, 8 part-specific decouplers/RCS/legs. Reverse: 13 iconic whole-probes (Mariner-Mars 3/4–10, LRO, LADEE, LCROSS, Juno, Helios, Mars Observer, Sphinx, TDRS A-G) **+ the 3 orbital/mapping scanners** (Galileo/LADEE/Magellan — SCANsat/ISRU hardware, *not* science; final config pends SCANsat decision). Prune RaiderNick's 3 internal `DEPRECATED` dupes. |
 | RN_Soviet_Probes | 27 | **23** | Reverse 15 whole probes + integral sub-parts (Luna 2/3/10/11/13, Venera 1, Molniya-1, Polyot, Proton 1-4 sats, Strela bus + astro/radio/vernier). Inherit 4 redundant cuts: `molniya_asas` (deprecated), 2 RCS blocks (Venera/Strela → generic), 1 payload decoupler. Corrects RP-1's US-centric bias (kept only 8/27). |
-| CoatlAerospace | 123 | **~100** | **REVISED (KerbalismLab):** keep 74 hardware **+ reinstate ~26 distinctive instruments** as experiment-gating hardware (gamma-ray spec, HiRISE telescope, IUVS UV / THEMIS IR spectrometers, MOLA, dust collectors, Venera SAR, Cassini RPWS/mag, mission cameras, soil samplers, science booms). Cut only ~3 *generic* sensors (barometer/thermometer/accelerometer → RP-1's RO-* tiers cover) + 8 solar/4 battery/2 tank/RCS-variants. **Final instrument set settled at P3 wiring.** |
+| CoatlAerospace | 123 | **74** | Inherit RP-1's 49 cuts: all 29 dedicated instruments (redundant with RP-1's RO-* set) + 8 solar/4 battery/2 tank/RCS-misc. Keep the **hardware** (buses, antennas, RTGs, reaction wheels, EDL aeroshells). *(KerbalismLab does NOT change this — its experiments are crewed-LAB science gated on base-experiment carriers + crew, not probe instruments; see Science § correction.)* |
 | Tantares | 119 | **48** | Value-add over RP-1 (RP-1 cut all 119). Cut ~71 redundant: engines→ROEngines, capsules→ROCapsules, generic structural→SSPX, solar/tanks/RCS/radiators→procedural/RO, antennas→RealAntennas; + ISS-Russian segment (Zarya/Zvezda/Nauka/Pirs ~22). Keep recognizable Soviet craft (Mir complex + LK-700 + TKS); 2 instruments → Experimental remap. **Exact list in Curated keep-lists below.** |
 | TantaresLV | 1 | **0** | inherit RP-1's cut (ROEngines/procedural cover). |
 | KerwisChineseAerospacePack | 62 | **19** | Pure Long March launch-vehicle pack (no crewed craft). Keep RP-1's **18 YF engines** (unique — 0 YF in ROEngines, fills the Chinese-engine gap) + add **`DFH-1`** (DongFangHong-1, first satellite — historical-firsts education). Cut 43 structural: CZ tanks/upper-stages, 7 fairings, 5 VEB instrument compartments, adapters/interstages/wings → procedural. |
@@ -109,7 +109,7 @@ solar covers them); **mod-specific science instruments** (→ DMagic); **part-sp
 | NearFutureSpacecraft | 3 | **0** | The 3 RO-supported parts are just RCS thrusters (the pods were non-RO, already deleted) → redundant with RO/stock RCS. **Mod removed from `../expansion modpack.ckan`** (nothing to keep). |
 | UniversalStorage2 | 34 | **10** | inherit RP-1's distilled set: 5 science wedges (goo/materials/mass-spec/atmospheric/orbital — unique science, RP-1-authored, ride with the science port) + 2 fuel cells + 2 RTGs + 1 radial tank. Cut 29 modular bulk (service cores/fairings/bulk tanks/batteries/ACDs/electrolysis/avionics → procedural). US2 stays a dependency for the wedge models. |
 | StationPartsExpansionRedux | 108 | **108** | inherit RP-1 — keep all. The only generic modular station + surface-base system: cores/hubs/crew-tubes/habitats/inflatables/centrifuges/cupolas/cargo/base-frames at 4 sizes. Carries the 20 unique station experiments. Complements Tantares (generic vs recognizable Mir). |
-| DMagicOrbitalScience | 12 | **12** | **REVISED** (was redundant → drop): with KerbalismLab its 12 distinct instruments become **experiment-gating hardware** — `dmscope` (telescope), `dmXRay`, `dmDAN` (neutron), `dmbioDrill`, `dmsurfacelaser`, `dmmagBoom`, `dmGoreSat` (IR), `dmImagingPlatform`, `dmSoilMoisture`, `dmSolarCollector`, `dmAnomScanner`, `rpwsAnt`. Keep all 12. |
+| DMagicOrbitalScience | 12 | **0–5 (redundant)** | RP-1 cuts all 12 standalone instruments; its 5 US2-wedge reskins add 0 unique science. **KerbalismLab does NOT rescue it** (lab experiments gate on base-experiment carriers + crew, not DMagic probe instruments). Lean: drop, or keep only as an optional dependency. |
 
 ## Curated keep-lists (exact part names, manifest-ready)
 ### Tantares — 48 kept
