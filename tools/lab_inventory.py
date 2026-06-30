@@ -10,8 +10,8 @@ group settings (LabDataRateMultiplier etc.) that the fork *requires but omits* (
 """
 import re, os, glob, json
 
-FORK = os.environ.get("KLE_FORK", r"C:\git\KerbalismLabExperimentsExpandedContinued\GameData\KerbalismLabExperimentsExpandedContinued")
-BASE = os.environ.get("KLE_BASE", r"C:\git\KerbalismScienceOnly\GameData\KerbalismScienceOnly\System\ScienceRework\Tweakables\StockGroups-Lab.cfg")
+FORK = os.environ.get("KLE_FORK", r"C:\git\ksp\KerbalismLabExperimentsExpandedContinued\GameData\KerbalismLabExperimentsExpandedContinued")
+BASE = os.environ.get("KLE_BASE", r"C:\git\ksp\KerbalismScienceOnly\GameData\KerbalismScienceOnly\System\ScienceRework\Tweakables\StockGroups-Lab.cfg")
 
 def field(block, key):
     m = re.search(r'(?m)^\s*'+re.escape(key)+r'\s*=\s*(.*?)\s*(?://.*)?$', block)

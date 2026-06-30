@@ -7,7 +7,7 @@ Body-type gates -> RSS bodies (Kerbalism conditions): HomeBody=Earth, HomeBodyAn
 Moon=Moon, Moons=all moons, Planets=sun-orbiting bodies, Gaseous=gas giants, Atmospheric=has-atmosphere,
 Oceanic=Earth, Suns=Sun. Situation maps Kerbalism virtual -> stock: Space->spLow, BodyGlobal->x1."""
 import re, os, glob
-FORK = os.environ.get("KLE_FORK", r"C:\git\KerbalismLabExperimentsExpandedContinued\GameData\KerbalismLabExperimentsExpandedContinued")
+FORK = os.environ.get("KLE_FORK", r"C:\git\ksp\KerbalismLabExperimentsExpandedContinued\GameData\KerbalismLabExperimentsExpandedContinued")
 
 # body -> ([landed,splashed,flyLow,flyHigh,spLow,spHigh], biomesum, era reach)  (same as science_budget.py)
 B={
