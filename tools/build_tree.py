@@ -9,7 +9,7 @@ One source of truth (YAML) -> the game cfg, the editor-openable cfg (Q1 "open wi
 picture. Validates: unique ids, known disciplines, parents exist, no cycles. Cost = node.cost or
 meta.tier_cost[tier]*scalar. Layout pos auto-derived from (discipline order, tier).
 """
-import os, sys, subprocess, collections, json
+import os, sys, subprocess, collections, json, re
 import yaml
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -21,6 +21,7 @@ REND = os.path.join(TREE, "render")
 X0, TIERW = 0, 430              # x = X0 + tier*TIERW (X anchored to MARGIN_X below)
 Y0, DISCH, SUBH = 300, 100, 34  # y = Y0 + (order-1)*DISCH + sub-stack (original; NOT normalized)
 MARGIN_X = -2568                # anchor leftmost node's X to the editor's stock-tree origin
+MULTI_ENTRY_COLOR = "#f4d35e"   # dashed-edge color for anyToUnlock (shared: graphviz render + html viewer)
 
 def die(msg):
     print("ERROR:", msg); sys.exit(1)
@@ -134,7 +135,7 @@ def emit_render(disc, meta, nodes, by):
     for n in nodes:
         dashed = n.get("anyToUnlock")
         for p in n.get("parents", []) or []:
-            style = 'style=dashed,color="#f4d35e"' if dashed else 'style=solid'
+            style = f'style=dashed,color="{MULTI_ENTRY_COLOR}"' if dashed else 'style=solid'
             L.append(f'  "{p}" -> "{n["id"]}" [{style}];')
     L.append('  labelloc="t"; fontcolor="#eeeeee"; fontsize=16;')
     L.append('  label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";')
@@ -169,7 +170,7 @@ def _trunc(s, n=27):
     s = s or ""
     return s if len(s) <= n else s[:n - 1] + "…"
 
-def emit_html(disc, meta, nodes, by):
+def emit_html(disc, nodes, by):
     """Self-contained read-only viewer: renders its OWN inline SVG from the node
     positions resolve() already computed (no graphviz dependency), then click a
     node to list the parts (and upgrades) that live there."""
@@ -188,7 +189,7 @@ def emit_html(disc, meta, nodes, by):
             p = by.get(pid)
             if not p: continue
             x1, y1 = X(p) + NW, Y(p) + NH / 2
-            dash = ' stroke-dasharray="5 4" stroke="#f4d35e"' if n.get("anyToUnlock") else ' stroke="#777"'
+            dash = f' stroke-dasharray="5 4" stroke="{MULTI_ENTRY_COLOR}"' if n.get("anyToUnlock") else ' stroke="#777"'
             edges.append(f'<path d="M{x1:.0f},{y1:.0f} C{x1+46:.0f},{y1:.0f} {x2-46:.0f},{y2:.0f} {x2:.0f},{y2:.0f}" fill="none"{dash} stroke-width="1.5"/>')
     for t in range(maxtier + 1):                     # tier column headers
         boxes.append(f'<text x="{PAD + t*COLW:.0f}" y="20" fill="#888" font-size="12" font-weight="600">T{t}</text>')
@@ -219,9 +220,14 @@ def emit_html(disc, meta, nodes, by):
         }
     npart = sum(len(d["parts"]) for d in data.values())
     sub = f"{len(nodes)} nodes · {npart} parts placed · click a node"
-    html = (HTML_TEMPLATE.replace("__SUBTITLE__", sub)
-                         .replace("__DATA__", json.dumps(data, ensure_ascii=False))
-                         .replace("__SVG__", svg))
+    payload = json.dumps(data, ensure_ascii=False)
+    # neutralize HTML-significant chars so the JSON can't break out of the <script> body
+    bs = chr(92)  # a backslash, built at runtime (tool transport JSON-decodes typed uXXXX escapes)
+    for ch in ("<", ">", "&", chr(0x2028), chr(0x2029)):
+        payload = payload.replace(ch, bs + "u%04x" % ord(ch))
+    # single pass: a sentinel appearing inside injected data/svg can't be re-matched and clobbered
+    fills = {"__SUBTITLE__": sub, "__DATA__": payload, "__SVG__": svg}
+    html = re.sub("|".join(map(re.escape, fills)), lambda m: fills[m.group(0)], HTML_TEMPLATE)
     with open(os.path.join(REND, "axe-tree.html"), "w", encoding="utf-8") as f:
         f.write(html)
 
@@ -237,6 +243,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   g.node rect{transition:stroke .1s;stroke:#0000;stroke-width:0}
   g.node:hover rect{stroke:#ffffffcc;stroke-width:2}
   g.node.sel rect{stroke:#fff;stroke-width:3}
+  g.node:focus{outline:none} g.node:focus rect{stroke:#ffd166;stroke-width:3}
   #bar{position:fixed;top:8px;left:8px;display:flex;gap:6px;align-items:center;
        background:#000a;padding:5px 8px;border-radius:6px;font-size:12px}
   #bar input{background:#111;border:1px solid #444;color:#eee;border-radius:4px;padding:3px 6px;width:150px}
@@ -291,6 +298,7 @@ function select(id,scroll){
 document.querySelectorAll('#canvas g.node').forEach(g=>{
   const id=g.getAttribute('data-id');if(!id)return;nodeG[id]=g;
   g.addEventListener('click',()=>select(id,false));
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(id,false);}});
 });
 // search: first node whose id/title or any part name/title matches
 document.getElementById('q').addEventListener('keydown',e=>{
@@ -304,7 +312,7 @@ document.getElementById('q').addEventListener('keydown',e=>{
 // zoom (scale svg width/height; viewBox keeps it crisp, scroll container handles pan)
 const svg=document.querySelector('#canvas svg');
 const bw=parseFloat(svg.getAttribute('width')),bh=parseFloat(svg.getAttribute('height'));let z=1;
-function zoom(nz){z=Math.max(.2,Math.min(4,nz));svg.setAttribute('width',(bw*z)+'pt');svg.setAttribute('height',(bh*z)+'pt');document.getElementById('zl').textContent=Math.round(z*100)+'%';}
+function zoom(nz){z=Math.max(.2,Math.min(4,nz));svg.setAttribute('width',bw*z);svg.setAttribute('height',bh*z);document.getElementById('zl').textContent=Math.round(z*100)+'%';}
 document.getElementById('zi').onclick=()=>zoom(z*1.2);
 document.getElementById('zo').onclick=()=>zoom(z/1.2);
 </script></body></html>"""
@@ -316,7 +324,7 @@ def main():
     resolve(disc, meta, nodes, by)
     emit_cfg(disc, nodes)
     emit_render(disc, meta, nodes, by)
-    emit_html(disc, meta, nodes, by)
+    emit_html(disc, nodes, by)
     # summary
     print(f"OK  {len(nodes)} nodes / {len(set(n['discipline'] for n in nodes))} disciplines")
     perd = collections.Counter(n["discipline"] for n in nodes)
