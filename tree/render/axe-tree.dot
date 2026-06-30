@@ -3,59 +3,66 @@ digraph AXE {
   node[shape=box,style="filled,rounded",fontname="Helvetica",fontsize=10,color="#00000000"];
   edge[color="#888888",arrowsize=0.6];
   "start" [label="Start\nPropellantChemistry T0 · 0",fillcolor="#e07a5f",fontcolor="#111111"];
-  "soundingRocketry" [label="Sounding Rocketry\nPropellantChemistry T1 · 20",fillcolor="#e07a5f",fontcolor="#111111"];
-  "pc_alcoholLox" [label="Alcohol–LOX Combustion\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
-  "pc_keroseneRefining" [label="Kerosene Refining (RP-1)\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
-  "pc_hypergolicHandling" [label="Hypergolic Propellant Handling\nPropellantChemistry T3 · 400",fillcolor="#e07a5f",fontcolor="#111111"];
-  "pc_compositeSolid" [label="Composite Solid Propellant (APCP)\nPropellantChemistry T3 · 400",fillcolor="#e07a5f",fontcolor="#111111"];
-  "pc_cryogenLiquefaction" [label="Cryogen Liquefaction\nPropellantChemistry T4 · 900",fillcolor="#e07a5f",fontcolor="#111111"];
-  "pc_highThrustKerolox" [label="High-Thrust Kerolox\nPropellantChemistry T4 · 900",fillcolor="#e07a5f",fontcolor="#111111"];
-  "pc_advancedOxidizers" [label="Advanced Storable Oxidizers\nPropellantChemistry T5 · 1500",fillcolor="#e07a5f",fontcolor="#111111"];
-  "cryo_loxHandling" [label="Liquid Oxygen Handling\nCryogenics T3 · 400",fillcolor="#4cc9f0",fontcolor="#111111"];
-  "cryo_lh2Insulation" [label="Liquid Hydrogen Insulation\nCryogenics T4 · 900",fillcolor="#4cc9f0",fontcolor="#111111"];
-  "cryo_boiloffControl" [label="Boiloff Control & Sub-cooling\nCryogenics T5 · 1500",fillcolor="#4cc9f0",fontcolor="#111111"];
-  "cryo_zbo" [label="Zero-Boiloff Cryocoolers\nCryogenics T6 · 2000",fillcolor="#4cc9f0",fontcolor="#111111"];
-  "tel_telemetry" [label="Telemetry Beacon\nTelecommunications T1 · 20",fillcolor="#4361ee",fontcolor="#111111"];
-  "tel_directional" [label="Directional Antennas\nTelecommunications T2 · 90",fillcolor="#4361ee",fontcolor="#111111"];
-  "tel_parabolicHGA" [label="Parabolic High-Gain Antenna\nTelecommunications T3 · 400",fillcolor="#4361ee",fontcolor="#111111"];
-  "tel_deepSpaceNet" [label="Deep-Space Network Tracking\nTelecommunications T4 · 900",fillcolor="#4361ee",fontcolor="#111111"];
-  "tel_phasedArray" [label="Phased-Array Antennas\nTelecommunications T5 · 1500",fillcolor="#4361ee",fontcolor="#111111"];
-  "ext_turbopumps" [label="High-Mass-Flow Turbopumps\nFluidDynamics T3 · 400",fillcolor="#ee9b00",fontcolor="#111111"];
-  "ext_regenCooling" [label="Regenerative Cooling\nThermodynamics T3 · 400",fillcolor="#f4a261",fontcolor="#111111"];
-  "ext_powerGrid" [label="Spacecraft Power Grid\nElectricalPower T5 · 1500",fillcolor="#ffd166",fontcolor="#111111"];
+  "soundingRocketry" [label="Spin-Stabilized Sounding Rockets\nPropellantChemistry T1 · 20",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_ethanolLox" [label="Ethanol/LOX Film-Cooled Combustion\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_keroseneHydrotreating" [label="Hydrotreated Narrow-Cut Kerosene (RP-1)\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_apcpGrain" [label="Aluminized AP/HTPB Composite Grain\nPropellantChemistry T3 · 400",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_hypergolicChemistry" [label="Self-Igniting Amine-Nitrate Hypergolics\nPropellantChemistry T3 · 400",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_cryoLiquefaction" [label="Claude-Cycle H2/O2 Liquefaction\nPropellantChemistry T4 · 900",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_storableOxidizers" [label="Passivated MON/NTO Storable Oxidizers\nPropellantChemistry T5 · 1500",fillcolor="#e07a5f",fontcolor="#111111"];
+  "met_earlyAlloys" [label="Aluminum Isogrid & Maraging-Steel Cases\nMetallurgy T2 · 90",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_oxRichSuperalloys" [label="Oxidizer-Rich Preburner Superalloys\nMetallurgy T4 · 900",fillcolor="#8d99ae",fontcolor="#111111"];
+  "fd_turbopumps" [label="Inducer-Stabilized Cryogenic Turbopumps\nFluidDynamics T3 · 400",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_combustionStability" [label="Baffled-Injector Combustion-Instability Suppression\nFluidDynamics T4 · 900",fillcolor="#ee9b00",fontcolor="#111111"];
+  "th_regenCooling" [label="Regenerative Forced-Convection Wall Cooling\nThermodynamics T3 · 400",fillcolor="#f4a261",fontcolor="#111111"];
+  "cryo_loxHandling" [label="Subcooled LOX Densification\nCryogenics T3 · 400",fillcolor="#4cc9f0",fontcolor="#111111"];
+  "cryo_lh2Insulation" [label="Multilayer Vacuum Insulation for LH2\nCryogenics T4 · 900",fillcolor="#4cc9f0",fontcolor="#111111"];
+  "cryo_stagedHydrolox" [label="Fuel-Rich Staged-Combustion Hydrolox\nCryogenics T5 · 1500",fillcolor="#4cc9f0",fontcolor="#111111"];
+  "cryo_zbo" [label="Reverse-Brayton Zero-Boiloff Cryocooling\nCryogenics T6 · 2000",fillcolor="#4cc9f0",fontcolor="#111111"];
+  "tel_pcmTelemetry" [label="PCM/FM Telemetry Downlink\nTelecommunications T1 · 20",fillcolor="#4361ee",fontcolor="#111111"];
+  "tel_helicalDirectional" [label="Helical Directional Arrays\nTelecommunications T2 · 90",fillcolor="#4361ee",fontcolor="#111111"];
+  "tel_cassegrainHGA" [label="Cassegrain Parabolic High-Gain Reflector\nTelecommunications T3 · 400",fillcolor="#4361ee",fontcolor="#111111"];
+  "tel_dsnRanging" [label="Coherent Two-Way Doppler & Ranging\nTelecommunications T4 · 900",fillcolor="#4361ee",fontcolor="#111111"];
+  "tel_phasedArray" [label="Electronically-Steered Phased Arrays\nTelecommunications T5 · 1500",fillcolor="#4361ee",fontcolor="#111111"];
+  "ext_powerGrid" [label="Kilowatt-Class Regulated Power Bus\nElectricalPower T5 · 1500",fillcolor="#ffd166",fontcolor="#111111"];
   { rank=same; "start" }
-  { rank=same; "soundingRocketry" "tel_telemetry" }
-  { rank=same; "pc_alcoholLox" "pc_keroseneRefining" "tel_directional" }
-  { rank=same; "pc_hypergolicHandling" "pc_compositeSolid" "cryo_loxHandling" "tel_parabolicHGA" "ext_turbopumps" "ext_regenCooling" }
-  { rank=same; "pc_cryogenLiquefaction" "pc_highThrustKerolox" "cryo_lh2Insulation" "tel_deepSpaceNet" }
-  { rank=same; "pc_advancedOxidizers" "cryo_boiloffControl" "tel_phasedArray" "ext_powerGrid" }
+  { rank=same; "soundingRocketry" "tel_pcmTelemetry" }
+  { rank=same; "pc_ethanolLox" "pc_keroseneHydrotreating" "met_earlyAlloys" "tel_helicalDirectional" }
+  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" }
+  { rank=same; "pc_cryoLiquefaction" "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" }
+  { rank=same; "pc_storableOxidizers" "cryo_stagedHydrolox" "tel_phasedArray" "ext_powerGrid" }
   { rank=same; "cryo_zbo" }
   "start" -> "soundingRocketry" [style=solid];
-  "soundingRocketry" -> "pc_alcoholLox" [style=solid];
-  "soundingRocketry" -> "pc_keroseneRefining" [style=solid];
-  "pc_alcoholLox" -> "pc_hypergolicHandling" [style=dashed,color="#f4d35e"];
-  "pc_keroseneRefining" -> "pc_hypergolicHandling" [style=dashed,color="#f4d35e"];
-  "soundingRocketry" -> "pc_compositeSolid" [style=solid];
-  "pc_alcoholLox" -> "pc_cryogenLiquefaction" [style=solid];
-  "pc_keroseneRefining" -> "pc_highThrustKerolox" [style=solid];
-  "ext_turbopumps" -> "pc_highThrustKerolox" [style=solid];
-  "ext_regenCooling" -> "pc_highThrustKerolox" [style=solid];
-  "pc_hypergolicHandling" -> "pc_advancedOxidizers" [style=solid];
-  "pc_alcoholLox" -> "cryo_loxHandling" [style=solid];
+  "soundingRocketry" -> "pc_ethanolLox" [style=solid];
+  "soundingRocketry" -> "pc_keroseneHydrotreating" [style=solid];
+  "soundingRocketry" -> "pc_apcpGrain" [style=solid];
+  "pc_ethanolLox" -> "pc_hypergolicChemistry" [style=dashed,color="#f4d35e"];
+  "pc_keroseneHydrotreating" -> "pc_hypergolicChemistry" [style=dashed,color="#f4d35e"];
+  "pc_ethanolLox" -> "pc_cryoLiquefaction" [style=solid];
+  "pc_hypergolicChemistry" -> "pc_storableOxidizers" [style=solid];
+  "soundingRocketry" -> "met_earlyAlloys" [style=solid];
+  "met_earlyAlloys" -> "met_oxRichSuperalloys" [style=solid];
+  "fd_turbopumps" -> "met_oxRichSuperalloys" [style=solid];
+  "pc_keroseneHydrotreating" -> "met_oxRichSuperalloys" [style=solid];
+  "met_earlyAlloys" -> "fd_turbopumps" [style=solid];
+  "pc_keroseneHydrotreating" -> "fd_combustionStability" [style=solid];
+  "fd_turbopumps" -> "fd_combustionStability" [style=solid];
+  "th_regenCooling" -> "fd_combustionStability" [style=solid];
+  "met_earlyAlloys" -> "th_regenCooling" [style=solid];
+  "pc_ethanolLox" -> "cryo_loxHandling" [style=solid];
   "cryo_loxHandling" -> "cryo_lh2Insulation" [style=solid];
-  "pc_cryogenLiquefaction" -> "cryo_lh2Insulation" [style=solid];
-  "ext_turbopumps" -> "cryo_lh2Insulation" [style=solid];
-  "ext_regenCooling" -> "cryo_lh2Insulation" [style=solid];
-  "cryo_lh2Insulation" -> "cryo_boiloffControl" [style=solid];
-  "cryo_boiloffControl" -> "cryo_zbo" [style=solid];
+  "pc_cryoLiquefaction" -> "cryo_lh2Insulation" [style=solid];
+  "fd_turbopumps" -> "cryo_lh2Insulation" [style=solid];
+  "th_regenCooling" -> "cryo_lh2Insulation" [style=solid];
+  "cryo_lh2Insulation" -> "cryo_stagedHydrolox" [style=solid];
+  "met_oxRichSuperalloys" -> "cryo_stagedHydrolox" [style=solid];
+  "cryo_lh2Insulation" -> "cryo_zbo" [style=solid];
   "ext_powerGrid" -> "cryo_zbo" [style=solid];
-  "start" -> "tel_telemetry" [style=solid];
-  "tel_telemetry" -> "tel_directional" [style=solid];
-  "tel_directional" -> "tel_parabolicHGA" [style=solid];
-  "tel_parabolicHGA" -> "tel_deepSpaceNet" [style=solid];
-  "tel_deepSpaceNet" -> "tel_phasedArray" [style=solid];
-  "soundingRocketry" -> "ext_turbopumps" [style=solid];
-  "soundingRocketry" -> "ext_regenCooling" [style=solid];
+  "start" -> "tel_pcmTelemetry" [style=solid];
+  "tel_pcmTelemetry" -> "tel_helicalDirectional" [style=solid];
+  "tel_helicalDirectional" -> "tel_cassegrainHGA" [style=solid];
+  "tel_cassegrainHGA" -> "tel_dsnRanging" [style=solid];
+  "tel_dsnRanging" -> "tel_phasedArray" [style=solid];
   "start" -> "ext_powerGrid" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;
   label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";

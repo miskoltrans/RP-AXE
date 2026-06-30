@@ -1,13 +1,15 @@
 # RP-AXE tech tree — SOURCE OF TRUTH (compiled by tools/build_tree.py).
-# VERTICAL SLICE (P1 prototype): Propellant Chemistry + Cryogenics + Telecommunications,
-# plus 3 off-slice external stubs to demonstrate cross-discipline convergence.
-# Proves: discipline-scatter, emergence (Cryogenics starts mid), convergence (anyToUnlock:false,
-# ALL parents), multi-entry (anyToUnlock:true, ANY parent), and clean-ladder vs convergence-heavy.
+# VERTICAL SLICE v2 (P1 prototype) — SCATTER-BY-DIFFICULTY + research-paper node names.
+# Each engine is homed at the discipline of its SIGNATURE BREAKTHROUGH (the bottleneck that kept it
+# from existing earlier), NOT its fuel. So the slice spans the engine-relevant disciplines:
+#   Propellant Chemistry · Fluid Dynamics · Thermodynamics · Metallurgy · Cryogenics · Telecommunications
+# Proves: scatter-by-difficulty (F-1->Fluids combustion instability; RD-170->Metallurgy ox-rich
+# superalloys; J-2->Cryo LH2 insulation; AJ10->Chemistry storables; RS-25->Cryo n Metallurgy),
+# pure-process nodes (kerosene refining unlocks no engine itself — it FEEDS engines homed elsewhere),
+# emergence, convergence (anyToUnlock:false = ALL parents), multi-entry (true = ANY parent),
+# upgrade-scatter, and a clean ladder (Telecom) for contrast.
 #
 # node: id / title / discipline / tier / [parents] / [anyToUnlock] / [cost] / flavor / [parts] / [upgrades]
-#   - parents default to the previous node in the same discipline if omitted.
-#   - anyToUnlock: false (default) = convergence gate (need ALL parents); true = multi-entry (ANY parent).
-#   - cost defaults from meta.tier_cost[tier] * meta.scalar.
 
 meta:
   scalar: 1.0                       # global science-cost dial (SCIENCE.md §4); tune at P3 play-session
@@ -22,153 +24,174 @@ meta:
     7: 2400
 
 nodes:
-  # ---------- bootstrap / soft fork ----------
+  # ---------- bootstrap ----------
   - id: start
     title: Start
     discipline: PropellantChemistry
     tier: 0
     parents: []
-    flavor: "1950. Kerbalkind is united; the universe is blind without us. Choose your path."
+    flavor: "1950. Kerbalkind is united; the universe is blind without us."
   - id: soundingRocketry
-    title: Sounding Rocketry
+    title: "Spin-Stabilized Sounding Rockets"
     discipline: PropellantChemistry
     tier: 1
     parents: [start]
-    flavor: "Spin-stabilized powder rockets carry the first instruments above the sensible atmosphere. (Rocket start; the X-plane root lives in Aerodynamics — off-slice.)"
+    flavor: "Fin-and-spin powder rockets loft the first instrument packages above the Karman line. (Rocket start; the X-plane root lives in Aerodynamics, off-slice.)"
     parts: [PioneerVernier]
 
-  # ---------- Propellant Chemistry ----------
-  - id: pc_alcoholLox
-    title: "Alcohol–LOX Combustion"
+  # ---------- Propellant Chemistry (homes chemistry-bottlenecked: storables, grains, fuel production) ----------
+  - id: pc_ethanolLox
+    title: "Ethanol/LOX Film-Cooled Combustion"
     discipline: PropellantChemistry
     tier: 2
     parents: [soundingRocketry]
-    flavor: "Ethanol burned with liquid oxygen — the V-2 chemistry. Crude, film-cooled, but it reaches space."
-  - id: pc_keroseneRefining
-    title: "Kerosene Refining (RP-1)"
+    flavor: "75% ethanol against liquid oxygen, the chamber wall protected by a deliberately fuel-rich boundary film. Crude, sooty, and enough to reach space — the A-4/V-2 chemistry."
+  - id: pc_keroseneHydrotreating
+    title: "Hydrotreated Narrow-Cut Kerosene (RP-1)"
     discipline: PropellantChemistry
     tier: 2
     parents: [soundingRocketry]
-    flavor: "Narrow-cut, low-sulfur kerosene that won't coke the cooling jacket. Denser than alcohol, storable, cheap — the workhorse fuel."
+    flavor: "A PROCESS node: catalytic hydrotreating strips sulfur and heavy aromatics to a narrow distillation cut that won't coke a cooling jacket. It unlocks no engine by itself — it FEEDS the kerolox engines that mature in Fluid Dynamics and Metallurgy."
     parts: [ROE-Merlin1A]
-  - id: pc_hypergolicHandling
-    title: "Hypergolic Propellant Handling"
-    discipline: PropellantChemistry
-    tier: 3
-    parents: [pc_alcoholLox, pc_keroseneRefining]
-    anyToUnlock: true                 # MULTI-ENTRY: storables build on either prior liquid line
-    flavor: "Fuels that ignite on contact with their oxidizer — no igniter, infinite restarts, but everything corrodes and everything is toxic. The chemistry of upper stages and spacecraft."
-    parts: [ROE-AJ10Early, ROE-AJ10Mid, ROE-AJ10-137]
-  - id: pc_compositeSolid
-    title: "Composite Solid Propellant (APCP)"
+  - id: pc_apcpGrain
+    title: "Aluminized AP/HTPB Composite Grain"
     discipline: PropellantChemistry
     tier: 3
     parents: [soundingRocketry]
-    flavor: "Aluminized ammonium-perchlorate rubber, cast and cured into a load-bearing grain. Cheap thrust by the meganewton — you light it once and pray."
+    flavor: "Ammonium-perchlorate oxidizer and aluminum powder bound in hydroxyl-terminated polybutadiene, cast and cured into a structural grain. The propellant chemistry, not the casing, is the headline here."
     parts: [MassiveBooster]
-  - id: pc_cryogenLiquefaction
-    title: "Cryogen Liquefaction"
+  - id: pc_hypergolicChemistry
+    title: "Self-Igniting Amine-Nitrate Hypergolics"
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [pc_ethanolLox, pc_keroseneHydrotreating]
+    anyToUnlock: true                # MULTI-ENTRY: storables build on either prior liquid line
+    flavor: "Fuels that detonate on contact with their oxidizer — no igniter, indefinite restarts, storable for years. The entire difficulty is chemistry and corrosion: handling hydrazines and nitric oxidizers that attack everything. The chemistry of upper stages and spacecraft."
+    parts: [ROE-AJ10Early, ROE-AJ10Mid, ROE-AJ10-137]
+  - id: pc_cryoLiquefaction
+    title: "Claude-Cycle H2/O2 Liquefaction"
     discipline: PropellantChemistry
     tier: 4
-    parents: [pc_alcoholLox]
-    flavor: "Industrial liquefaction of hydrogen and oxygen at scale. You can MAKE the cryogens here; STORING and flying them is Cryogenics' problem (next door)."
-  - id: pc_highThrustKerolox
-    title: "High-Thrust Kerolox"
-    discipline: PropellantChemistry
-    tier: 4
-    parents: [pc_keroseneRefining, ext_turbopumps, ext_regenCooling]
-    anyToUnlock: false                # CONVERGENCE: fuel + turbomachinery + cooling must all mature
-    flavor: "Taming combustion instability in a chamber the size of a car. The F-1 needed refined kerosene, a turbopump moving three tons a second, and a regenerative jacket that wouldn't melt — all at once."
-    parts: [ROE-F1, ROE-F1B]
-    upgrades: [RFUpgrade_F-1-1.52M, RFUpgrade_F-1A]
-  - id: pc_advancedOxidizers
-    title: "Advanced Storable Oxidizers"
+    parents: [pc_ethanolLox]
+    flavor: "Industrial Claude-cycle plants liquefy hydrogen and oxygen by the ton. You can now MAKE deep cryogens; STORING and flying them is Cryogenics' problem next door (a convergence)."
+  - id: pc_storableOxidizers
+    title: "Passivated MON/NTO Storable Oxidizers"
     discipline: PropellantChemistry
     tier: 5
-    parents: [pc_hypergolicHandling]
-    flavor: "Mixed oxides of nitrogen (MON) and dinitrogen tetroxide — denser, higher-performing, marginally less murderous storables for mature service modules."
+    parents: [pc_hypergolicChemistry]
+    flavor: "Mixed oxides of nitrogen and passivated dinitrogen tetroxide: denser, higher-performing, marginally less murderous storables for mature service propulsion."
     parts: [ROE-AJ10Adv, ROE-AJ10-190]
 
-  # ---------- Cryogenics (emerges mid-tree) ----------
+  # ---------- Metallurgy (homes materials-bottlenecked engines — the "metallurgy unlocks an engine" aha) ----------
+  - id: met_earlyAlloys
+    title: "Aluminum Isogrid & Maraging-Steel Cases"
+    discipline: Metallurgy
+    tier: 2
+    parents: [soundingRocketry]
+    flavor: "Chemically-milled isogrid aluminum for light pressure vessels; ultra-high-strength maraging steel for solid-motor cases and pump housings. The structural backbone everything else bolts to."
+  - id: met_oxRichSuperalloys
+    title: "Oxidizer-Rich Preburner Superalloys"
+    discipline: Metallurgy
+    tier: 4
+    parents: [met_earlyAlloys, fd_turbopumps, pc_keroseneHydrotreating]
+    anyToUnlock: false               # CONVERGENCE: alloys + turbomachinery + clean fuel
+    flavor: "For decades the West held that an oxygen-rich preburner would simply burn through any turbine. Soviet metallurgy disproved it: chrome-nickel alloys with burn-passivated surfaces survive hot, oxygen-rich gas, unlocking the most efficient kerolox engines ever flown. THE engine that metallurgy unlocks."
+    parts: [ROE-RD170, ROE-RD180, ROE-NK33]
+
+  # ---------- Fluid Dynamics (homes flow/combustion-bottlenecked engines — F-1) ----------
+  - id: fd_turbopumps
+    title: "Inducer-Stabilized Cryogenic Turbopumps"
+    discipline: FluidDynamics
+    tier: 3
+    parents: [met_earlyAlloys]
+    flavor: "Move propellant by the ton per second without cavitating the pump. An axial inducer ahead of the centrifugal impeller suppresses cavitation at low inlet pressure — the enabling piece of every high-thrust engine."
+  - id: fd_combustionStability
+    title: "Baffled-Injector Combustion-Instability Suppression"
+    discipline: FluidDynamics
+    tier: 4
+    parents: [pc_keroseneHydrotreating, fd_turbopumps, th_regenCooling]
+    anyToUnlock: false               # CONVERGENCE: clean fuel + turbopumps + cooling
+    flavor: "Tangential acoustic modes can couple to combustion and tear a large chamber apart in milliseconds. Injector baffles and tuned cavities damp them. Taming this — not the fuel — is why the F-1 took years and why it lives in Fluid Dynamics."
+    parts: [ROE-F1, ROE-F1B]
+    upgrades: [RFUpgrade_F-1-1.52M, RFUpgrade_F-1A]
+
+  # ---------- Thermodynamics (homes cooling-bottlenecked breakthroughs) ----------
+  - id: th_regenCooling
+    title: "Regenerative Forced-Convection Wall Cooling"
+    discipline: Thermodynamics
+    tier: 3
+    parents: [met_earlyAlloys]
+    flavor: "Route the fuel through milled channels in the chamber wall before burning it, carrying away heat flux that would melt any uncooled metal. The thermodynamics that lets a chamber run hotter than its own melting point."
+
+  # ---------- Cryogenics (homes cryo-bottlenecked engines — J-2, RS-25, BE-3) ----------
   - id: cryo_loxHandling
-    title: "Liquid Oxygen Handling"
+    title: "Subcooled LOX Densification"
     discipline: Cryogenics
     tier: 3
-    parents: [pc_alcoholLox]
-    flavor: "Keeping oxygen liquid at -183 C: vacuum-jacketed lines, careful materials, and the discipline to load it minutes before launch."
+    parents: [pc_ethanolLox]
+    flavor: "Hold oxygen below its boiling point: vacuum-jacketed lines, careful materials, and the operational discipline to load minutes before launch. Subcooling buys density — more propellant in the same tank."
   - id: cryo_lh2Insulation
-    title: "Liquid Hydrogen Insulation"
+    title: "Multilayer Vacuum Insulation for LH2"
     discipline: Cryogenics
     tier: 4
-    parents: [cryo_loxHandling, pc_cryogenLiquefaction, ext_turbopumps, ext_regenCooling]
-    anyToUnlock: false                # CONVERGENCE: cryo handling + cryogen supply + pumps + cooling
-    flavor: "Hydrogen boils at -253 C and leaks through metal. Multilayer insulation and obsessive thermal design make hydrolox — the highest-Isp chemistry there is — actually flyable. The J-2 lives here, fed by Propellant Chemistry's cryogen supply."
+    parents: [cryo_loxHandling, pc_cryoLiquefaction, fd_turbopumps, th_regenCooling]
+    anyToUnlock: false               # CONVERGENCE: cryo handling + cryogen supply + pumps + cooling
+    flavor: "Hydrogen boils at -253 C and diffuses through metal lattices. Dozens of radiation-shield layers under vacuum make hydrolox — the highest specific impulse chemistry there is — actually flyable. The J-2 lives here, fed by Chemistry's cryogen supply."
     parts: [ROE-J2, ROE-BE3]
-  - id: cryo_boiloffControl
-    title: "Boiloff Control & Sub-cooling"
+  - id: cryo_stagedHydrolox
+    title: "Fuel-Rich Staged-Combustion Hydrolox"
     discipline: Cryogenics
     tier: 5
-    parents: [cryo_lh2Insulation]
-    flavor: "Sub-cool below the boiling point and the tank stops venting on the pad. Long coast phases and restartable cryo upper stages become possible."
-    parts: [ROE-J2X]
+    parents: [cryo_lh2Insulation, met_oxRichSuperalloys]
+    anyToUnlock: false               # CONVERGENCE across TWO home disciplines: Cryo n Metallurgy
+    flavor: "Burn every gram twice: a fuel-rich preburner drives the turbopumps, then the exhaust is fully combusted in the chamber. The RS-25 needs both deep-cryo hydrogen handling AND reusable hot-section superalloys — a convergence of Cryogenics and Metallurgy."
+    parts: [ROE-RS25]
   - id: cryo_zbo
-    title: "Zero-Boiloff Cryocoolers"
+    title: "Reverse-Brayton Zero-Boiloff Cryocooling"
     discipline: Cryogenics
     tier: 6
-    parents: [cryo_boiloffControl, ext_powerGrid]
-    anyToUnlock: false                # CONVERGENCE: needs a real power grid to run the coolers
-    flavor: "Actively refrigerate the tank with a power-hungry cryocooler and the boiloff goes to zero. Multi-year missions to the outer planets stop bleeding propellant — if you can spare the kilowatts."
+    parents: [cryo_lh2Insulation, ext_powerGrid]
+    anyToUnlock: false               # CONVERGENCE: needs a real power grid to run the coolers
+    flavor: "A closed reverse-Brayton cryocooler actively pumps heat out of the tank, driving boiloff to zero — if you can spare the kilowatts. Multi-year outer-planet cryo stages stop bleeding propellant."
 
-  # ---------- Telecommunications (clean single-discipline ladder) ----------
-  - id: tel_telemetry
-    title: "Telemetry Beacon"
+  # ---------- Telecommunications (clean single-discipline ladder, for contrast) ----------
+  - id: tel_pcmTelemetry
+    title: "PCM/FM Telemetry Downlink"
     discipline: Telecommunications
     tier: 1
     parents: [start]
-    flavor: "A simple transmitter beeping vehicle health to the ground. Without it, a failure tells you nothing."
-  - id: tel_directional
-    title: "Directional Antennas"
+    flavor: "Pulse-code-modulated vehicle health, FM-keyed to the ground. Without it, a failure tells you nothing about why."
+  - id: tel_helicalDirectional
+    title: "Helical Directional Arrays"
     discipline: Telecommunications
     tier: 2
-    parents: [tel_telemetry]
-    flavor: "Concentrating the beam buys range and data rate at the cost of having to point it. The first step off the omni."
+    parents: [tel_pcmTelemetry]
+    flavor: "Axial-mode helices give circularly-polarized gain that tolerates a tumbling spacecraft — range and data rate at the cost of having to point."
     parts: [HighGainAntenna5_v2]
-  - id: tel_parabolicHGA
-    title: "Parabolic High-Gain Antenna"
+  - id: tel_cassegrainHGA
+    title: "Cassegrain Parabolic High-Gain Reflector"
     discipline: Telecommunications
     tier: 3
-    parents: [tel_directional]
-    flavor: "A steerable dish closes the link from lunar distance. Apollo talked home through one of these."
+    parents: [tel_helicalDirectional]
+    flavor: "A subreflector folds the feed back through the dish vertex, shortening the assembly and closing the link from lunar distance. Apollo talked home through one."
     parts: [HighGainAntenna, ROC-ApolloHGABDB]
-  - id: tel_deepSpaceNet
-    title: "Deep-Space Network Tracking"
+  - id: tel_dsnRanging
+    title: "Coherent Two-Way Doppler & Ranging"
     discipline: Telecommunications
     tier: 4
-    parents: [tel_parabolicHGA]
-    flavor: "Giant ground dishes and coherent two-way ranging pull a few bits per second out of interplanetary noise — and tell you exactly where the spacecraft is."
+    parents: [tel_cassegrainHGA]
+    flavor: "Phase-coherent ground dishes pull a few bits per second out of interplanetary noise and, from the round-trip Doppler, fix the spacecraft's state vector to meters."
   - id: tel_phasedArray
-    title: "Phased-Array Antennas"
+    title: "Electronically-Steered Phased Arrays"
     discipline: Telecommunications
     tier: 5
-    parents: [tel_deepSpaceNet]
-    flavor: "Steer the beam electronically with no moving parts. Higher rates, graceful degradation, the backbone of a relay constellation."
+    parents: [tel_dsnRanging]
+    flavor: "Steer the beam by element phasing, no moving parts. Higher rates, graceful degradation, the backbone of a relay constellation."
 
-  # ---------- external stubs (off-slice; full nodes live in their own disciplines) ----------
-  - id: ext_turbopumps
-    title: "High-Mass-Flow Turbopumps"
-    discipline: FluidDynamics
-    tier: 3
-    parents: [soundingRocketry]
-    flavor: "(off-slice stub) Fluid Dynamics. Shown to demonstrate convergence reaching outside the slice."
-  - id: ext_regenCooling
-    title: "Regenerative Cooling"
-    discipline: Thermodynamics
-    tier: 3
-    parents: [soundingRocketry]
-    flavor: "(off-slice stub) Thermodynamics. Route fuel through the chamber wall before burning it."
+  # ---------- external stub (off-slice; full node lives in Electrical Power) ----------
   - id: ext_powerGrid
-    title: "Spacecraft Power Grid"
+    title: "Kilowatt-Class Regulated Power Bus"
     discipline: ElectricalPower
     tier: 5
     parents: [start]
-    flavor: "(off-slice stub) Electrical Power. Kilowatt-class buses for active cryocooling and electric propulsion."
+    flavor: "(off-slice stub) Electrical Power. Regulated high-voltage buses for active cryocooling and electric propulsion."
