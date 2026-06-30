@@ -124,7 +124,7 @@ def final_disposition(name, srcfile):
         # implementation reference for capabilities AXE hasn't built: per-tier kOS integration
         # (kosDiskSpace/kosECPerInstruction/...) and hasScienceContainer gating. (costFactor and
         # interplanetary/Deep-Space are deliberately dropped per AXE design.)
-        return "REFERENCE-avionics", "superseded by AXE TIER ladder; retain AVIONICSCONFIGS as ref for kOS + science-container gating not yet built"
+        return "REFERENCE-avionics", "superseded by AXE TIER ladder; retain AVIONICSCONFIGS as ref for unbuilt bits: cost/efficiency curve + kOS + science-container gating (Deep-Space dropped)"
     if srcfile == "Tree/TechFacilityUpgrades.cfg":
         return "REFERENCE-comms-dsn", "DSN tracking-station tech-level gated by comms nodes; ref for AXE comms/ground-station axis (pairs w/ live RealAntennas commsTL1-10)"
     if srcfile == "Tree/KCTUpgrades.cfg":

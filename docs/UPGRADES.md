@@ -97,13 +97,30 @@ reference**. AXE's TIER ladder already covers `massFactor`/`powerFactor` (Near-E
 |---|---|---|
 | `massFactor` / `powerFactor` | ✅ in TIER ladder | Near-Earth, verbatim |
 | `scMassFactor` / `scPowerFactor` / `allowAxial` | ✅ in TIER ladder | Science-Core |
-| `kosDiskSpace`, `kosECPerInstruction`, `kosSpaceCostFactor`, `kosSpaceMassFactor` | ❌ **not built** | per-tier **kOS** (programmable flight computer) integration — the big one |
+| `costExponent` / `costConstant` / `costFactor` | 🔲 **to build** | **hardware-cost / efficiency-optimization dimension — needs to exist** (see below) |
+| `kosDiskSpace`, `kosECPerInstruction`, `kosSpaceCostFactor`, `kosSpaceMassFactor` | 🔲 **to build** | per-tier **kOS** (programmable flight computer) integration — the big one |
 | `hasScienceContainer` (from `basicAvionics`) | ⚠️ ungated | AXE gives science storage always-on; RP-1 gates it per tier |
-| `costFactor` | ❌ dropped (intended) | AXE: control is free, only the battery costs |
-| `interplanetary` (Deep-Space range model) | ❌ dropped (intended) | AXE: range = comms (RealAntennas), not avionics |
+| `interplanetary` (Deep-Space range model) | ❌ dropped (intended) | **Deep-Space does not exist in AXE**; range = comms (RealAntennas), not avionics |
 
-So if AXE wants **kOS** or **tier-gated science storage** later, `Tree/ProceduralAvionics.cfg`
-`AVIONICSCONFIGS` is the per-tier value reference. Cost and Deep-Space/interplanetary stay dropped.
+**Cost / hardware-efficiency optimization — required (revises the old "control is free" stance).**
+Avionics hardware must carry a funds cost, and that cost is where **hardware-efficiency optimization**
+shows up across tech progression. RP-1's curve is the reference and tells the story well — it is a
+**hump, not a monotonic drop**: `cost = (M^0.46172 + 3.034)·costFactor`, with `costFactor` rising
+through the early era (sophistication costs more), peaking, then falling as manufacturing matures:
+
+```
+start 48.12 → prototypes 51.56 → early 54.13 → basic 56.84 → interplanetary 59.68 →
+improved 62.67 → mature 65.80 (peak ~1964-66) → largeScale 58.85 → advanced 47.08 →
+nextGen 37.67 → longTerm 30.13 → international 24.11 → modern 19.29
+```
+
+Contrast the mass/power factors AXE already has, which fall **monotonically** (pure efficiency gain):
+the cost hump is a distinct, richer signal — early IC/transistor avionics are expensive before
+mass-production efficiency brings advanced hardware down below where it started. **Schema/impl impact
+when built:** add `costExponent`/`costConstant`/`costFactor` to the `TIER` nodes and a
+`GetModuleCost` in `ModuleAxeAvionics` (same polynomial as mass, keyed off the as-built load). So the
+"implement some of them" surface is **kOS, tier-gated science storage, and this cost/efficiency
+dimension**; only Deep-Space/`interplanetary` stays dropped.
 
 ### C2. Comms / DSN tracking-station (10, `Tree/TechFacilityUpgrades.cfg`)
 

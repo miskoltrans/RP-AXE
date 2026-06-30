@@ -160,7 +160,13 @@ of guided control — a featherweight, near-zero-power sequencer that simply can
    to Deep-Space only.
 5. **Guidance gate** at `postWarAvionics` vs RP-1's `start` — so the very start flies Science-Core only.
 6. **SAS** is a flat level 3 (config), suppressed while dumb/axial by `AxeAvionicsController`.
-7. **Funds**: control is free; only the battery costs (out of scope per design).
+7. **Funds**: control is currently free (only the battery costs) — but a **hardware-cost /
+   efficiency-optimization dimension is planned** (revises the old "out of scope" stance). RP-1's
+   avionics cost curve is the reference: `cost = (load^0.46172 + 3.034)·costFactor`, a *hump*
+   (`costFactor` 48→66 peak ~1964-66→19 modern) so cost captures hardware-efficiency optimization
+   across the tree, distinct from the monotonic mass/power gains. To build: add
+   `costExponent`/`costConstant`/`costFactor` to the `TIER` nodes + `GetModuleCost` in
+   `ModuleAxeAvionics`. See `docs/UPGRADES.md` §C1.
 
 ## Where the numbers live
 - RP-1 coeffs: `RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg` (`AVIONICSCONFIGS`: Near-Earth …)
