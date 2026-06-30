@@ -24,6 +24,13 @@ deploy/rebuild tooling (improve).
   (`design/Tree/AxeAvionicsCore.cfg`, `Source/AXE/Avionics/`); RP-1's `ModuleAvionics` /
   `ModuleProceduralAvionics` on vendored parts are dropped/replaced by AXE's modules in a design-pass
   patch (this is the P4 axis). In the meantime vendored parts still load — KSP strips unknown modules.
+- **RP-0 flag — KEEP registered.** Vendored RP-1 parts carry `:FOR[RP-0]`, which makes ModuleManager
+  treat RP-1 as installed, so the ~60 dormant `:NEEDS[RP-0]` patches across RO / RealAntennas /
+  KerbalismConfig / ROSolar / ROHeatshields / ROCapsules / MechJeb / Coatl apply → AXE **inherits
+  RP-1's RO-stack realism tuning** and matches `ksp_rp1_clean` (the manifest's curation source).
+  Validated by `-axe-autotest`: career loads, R&D + Mission Control open, 0 hard part errors, no NRE
+  traced to it. Reversible — override an individual misbehaving RP-0 patch if one surfaces (they
+  assume the full RP-1 incl. the axed `RP0.dll`). NOT installing RP-1 (still absent + `conflict`-ed).
 
 ## Roadmap (critical path)
 Each phase gates the next; avionics + contracts ride alongside, off the critical path.
