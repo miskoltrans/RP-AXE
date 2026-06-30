@@ -1,0 +1,72 @@
+name	techRequired	mod	title
+EarlyLunarHS	engineering101	ROHeatshields	Early Lunar Heatshields
+FairingBaseMax12m	heavyAerodynamics	ProceduralFairings	Procedural Fairings Max Diameter 12m
+FairingBaseMax2_75m	specializedConstruction	ProceduralFairings	Procedural Fairings Max Diameter 2.75m
+FairingBaseMax4m	advConstruction	ProceduralFairings	Procedural Fairings Max Diameter 4m
+FairingBaseMaxUnlimited	experimentalAerodynamics	ProceduralFairings	Procedural Fairings Max Diameter Unlimited
+FairingBaseMin0_4m	miniaturization	ProceduralFairings	Procedural Fairings Min Diameter 0.4m
+GeminiHS	engineering101	ROHeatshields	Gemini Heatshields
+Heatsink	engineering101	ROHeatshields	Heat sink thermal protection
+Inflatable	engineering101	ROHeatshields	Hypersonic Inflatable Aerodynamic Decelerator
+LunarHS	engineering101	ROHeatshields	Lunar Heatshields
+MLI.Upgrade1	generalConstruction	RealFuels	MLI Wrapping Upgrade (20 layers)
+MLI.Upgrade2	fuelSystems	RealFuels	MLI Wrapping Upgrade (40 layers)
+MLI.Upgrade3	advFuelSystems	RealFuels	MLI Wrapping Upgrade (60 layers)
+MLI.Upgrade4	largeVolumeContainment	RealFuels	MLI Wrapping Upgrade (80 layers)
+MLI.Upgrade5	highPerformanceFuelSystems	RealFuels	MLI Wrapping Upgrade  (100 layers)
+MercuryHS	engineering101	ROHeatshields	Mercury Heatshields
+RFTech-AddLifeSupport	crewSurvivability	RealismOverhaul	Life Support Tank Upgrade
+RFTech-AddOxygenGas	standardDockingPorts	RealismOverhaul	Oxygen Gas RCS Tank Upgrade
+RFTech-Battery-II	electronicsHuman	RealismOverhaul	Battery Tank Upgrade
+RFTech-Battery-III	electronicsAdvCapsules	RealismOverhaul	Battery Tank Upgrade
+RFTech-Battery-IV	electronicsLunar	RealismOverhaul	Battery Tank Upgrade
+RFTech-SM-II	materialsScienceHuman	RealismOverhaul	Service Module Tank Upgrade
+RFTech-SM-III	materialsScienceAdvCapsules	RealismOverhaul	Service Module Tank Upgrade
+RFTech-SM-IV	materialsScienceLunar	RealismOverhaul	Service Module Tank Upgrade
+RFTech-Tank-Balloon-SteelAlCu	materialsScienceSpaceplanes	RealismOverhaul	Balloon Tank Upgrade
+RFTech-Tank-Balloon-SteelAlLi	materialsScienceInternational	RealismOverhaul	Balloon Tank Upgrade
+RFTech-Tank-Iso-AlCu	materialsScienceLunar	RealismOverhaul	Isogrid Tank Upgrade
+RFTech-Tank-Iso-AlLi	materialsScienceInternational	RealismOverhaul	Isogrid Tank Upgrade
+RFTech-Tank-Iso-Comp	materialsScienceCommercial	RealismOverhaul	Isogrid Tank Upgrade
+RFTech-Tank-Iso-Magic	materialsScienceNF	RealismOverhaul	Isogrid Tank Upgrade
+RFTech-Tank-Sep-Al	postWarMaterialsScience	RealismOverhaul	Conventional Structure Tank Upgrade
+RFTech-Tank-Sep-Al2	earlyMaterialsScience	RealismOverhaul	Conventional Structure Tank Upgrade
+RFTech-Tank-Sep-AlCu	materialsScienceAdvCapsules	RealismOverhaul	Conventional Structure Tank Upgrade
+RFTech-Tank-Sep-AlLi	materialsScienceLongTerm	RealismOverhaul	Conventional Structure Tank Upgrade
+RFTech-Tank-Sep-Starship	materialsScienceNF	RealismOverhaul	Conventional Structure Tank Upgrade
+RFTech-Tank-Sep-Stir	materialsScienceCommercial	RealismOverhaul	Conventional Structure Tank Upgrade
+RFTech-Tank-Wet-Wing2	materialsScienceInternational	RealismOverhaul	Wet Wing Upgrade
+ThrustPlateMax12m	metaMaterials	ProceduralFairings	Procedural Fairings Thrust Plate Max Diameter 12m
+ThrustPlateMaxUnlimited	aerospaceTech	ProceduralFairings	Procedural Fairings Thrust Plate Max Diameter Unlimited
+Upgrade-Colony	improvedHabitats	KerbalismConfig	Permanent habitation
+ca-upgrade-avionics1	automation	CoatlAerospace	Coatl Aerospace Avionics Upgrade
+ca-upgrade-electrics1	specializedElectrics	CoatlAerospace	Coatl Aerospace Solar Cell Upgrade
+ca-upgrade-isp1	advFuelSystems	CoatlAerospace	Coatl Aerospace ISP Upgrade 1
+ca-upgrade-isp2	highPerformanceFuelSystems	CoatlAerospace	Coatl Aerospace ISP Upgrade 2
+ca-upgrade-optics1	fieldScience	CoatlAerospace	Coatl Aerospace Optics Upgrade
+ca-upgrade-rw1	actuators	CoatlAerospace	Coatl Aerospace Motors Upgrade 1
+ca-upgrade-rw2	advancedMotors	CoatlAerospace	Coatl Aerospace Motors Upgrade 2
+ca-upgrade-sensors1	scienceTech	CoatlAerospace	Coatl Aerospace Sensors Upgrade
+ca-upgrade-thrust1	heavierRocketry	CoatlAerospace	Coatl Aerospace Thrust Upgrade 1
+ca-upgrade-thrust2	veryHeavyRocketry	CoatlAerospace	Coatl Aerospace Thrust Upgrade 2
+commsTL1	lunarRangeComms	RealAntennas	Comms Tech Level 1
+commsTL10	modernComms	RealAntennas	Comms Tech Level 10
+commsTL2	digitalComms	RealAntennas	Comms Tech Level 2
+commsTL3	interplanetaryComms	RealAntennas	Comms Tech Level 3
+commsTL4	improvedComms	RealAntennas	Comms Tech Level 4
+commsTL5	advancedComms	RealAntennas	Comms Tech Level 5
+commsTL6	deepSpaceComms	RealAntennas	Comms Tech Level 6
+commsTL7	highDataRateComms	RealAntennas	Comms Tech Level 7
+commsTL8	massiveScaleComms	RealAntennas	Comms Tech Level 8
+commsTL9	efficientComms	RealAntennas	Comms Tech Level 9
+solarTL0	electronicsSatellite	ROSolar	Solar Panel Tech Level 0 (1956)
+solarTL1	primitiveSolarPanels	ROSolar	Solar Panel Tech Level 1 (1958)
+solarTL10	modernPower	ROSolar	Solar Panel Tech Level 10 (Modern)
+solarTL2	earlyPower	ROSolar	Solar Panel Tech Level 2 (1961)
+solarTL3	basicPower	ROSolar	Solar Panel Tech Level 3 (1963)
+solarTL4	improvedPower	ROSolar	Solar Panel Tech Level 4 (1964)
+solarTL5	lunarRatedPower	ROSolar	Solar Panel Tech Level 5 (1967)
+solarTL6	spaceStationSolarPanels	ROSolar	Solar Panel Tech Level 6 (1975)
+solarTL7	maturePower	ROSolar	Solar Panel Tech Level 7 (1980s)
+solarTL8	largeScaleSolarArrays	ROSolar	Solar Panel Tech Level 8 (1990s)
+solarTL9	advancedPower	ROSolar	Solar Panel Tech Level 9 (ISS)

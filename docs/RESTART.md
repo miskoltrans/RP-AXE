@@ -42,7 +42,8 @@ Each phase gates the next; avionics + contracts ride alongside, off the critical
   (id / tier / deps / `anyToUnlock` / flavor text); editor + build pipeline (lean on ETT).
   **Prove:** a documented branch map + schema; tooling renders a stub tree.
 - **P2 — Tree skeleton (parity).** Place the whole manifest so every part has a home (~200 nodes),
-  tiered node costs; convergence gates + multi-entry paths; Experimental side-node catches the rest.
+  tiered node costs; convergence gates + multi-entry paths; Experimental side-node catches the rest;
+  **remap the engine-progression + capability `PARTUPGRADE` `techRequired`s → AXE nodes (see T3)**.
   **Prove:** 0 orphans (bar Experimental); loads + renders; AutoTest passes.
 - **P3 — Economy rework.** Science = primary gate; part entryCost = R&D; launch cost = ops; no time
   pressure; **drop RP-1 reliability/run-data grind.** **Prove:** play session / solvency audit shows
@@ -101,6 +102,22 @@ Budget measured before setting node costs. Tools: `tools/science_budget.py` (pro
   `../KerbalismScienceOnly` (base framework source). *(KerbalismLab stays out of `ksp_rp1_expanded` so its
   cache stays clean for the manifest/audit.)*
 - **→ P1 unblocked:** tree architecture, designed against these numbers.
+
+### T3 — Upgrade realization (engine progression) — P2/P3 ✅ AUDIT DONE
+The part diff only compares `PART` nodes, so RP-1-authored `PARTUPGRADE`s are invisible to it. `tools/upgrade_audit.py`
+(→ `manifest/upgrades-absent.tsv` + `manifest/upgrades-live.tsv`) audits them against the live cache:
+- **626 RP-1-authored PARTUPGRADEs, ALL absent** under AXE (no RP-1). The 71 live are mod-authored (Coatl `ca-upgrade-*`,
+  RealAntennas `commsTL1-10`), present via their mods.
+- **532 = engine config-unlock progression** (`Tree/TREE-Engines.cfg` 517 + `RFTechLevels.cfg` 15). Each unlocks a better
+  RO engine `CONFIG` at a tech node (e.g. `RFUpgrade_11D23` → the RD0216's 11D23 config at `stagedCombustion1967`, via a
+  `:AFTER[RealismOverhaulEngines]` `%CONFIG[..]{ &specLevel = operational }` patch). **This is RP-1's entire engine-progression
+  layer and AXE currently has none of it.** NOT the legacy RealFuels `techLevel` system (RO dropped it — 0 engine refs).
+- **Sandbox is unaffected** (auto-unlocks all upgrades — engines + configs fully usable); the gap is **career progression only**.
+- Other dispositions: **35 avionics = SUPERSEDED** (AXE `ModuleAxeAvionics` `TIER` ladder, design/Tree/AxeAvionicsCore.cfg);
+  **32 KCT/facility = DROP** (axed career); **27 capability unlocks** (Payload/Fairing/Airlaunch/Cockpit/HardDrive) = **REVIEW**.
+- **The work:** vendor RP-1's engine config-unlock system (`Tree/TREE-Engines.cfg` + its CONFIG patches) and **remap each
+  `techRequired` → AXE node** (same job as the science `UnlockTech` remap, ×532) — OR re-author engine progression AXE's way.
+  Tree-coupled → **blocked on P1 nodes existing**; do it in P2 alongside placement. Drives off `manifest/upgrades-absent.tsv`.
 
 ## Reference instances (outside the repo — never nuke)
 - `../ksp_instance_clean` — pristine rebuild base; copy it to spin up a fresh test instance.
