@@ -58,25 +58,29 @@ Every part-mod curated (per-mod rationale + exact keep-lists in `docs/PARTLIST.m
 - **Modpack** `../expansion modpack.ckan` trimmed to **28 mods** (dropped NF-Spacecraft, DMagic, TantaresLV).
 - **Flag for P2:** `ModularLaunchPads` = 233 parts (biggest inherited block) — a tree-placement trim target.
 
-### T2 — Science-budget audit (with KerbalismLab) ⬅ DO BEFORE P1 tree architecture
-The tree's total cost ≈ total collectable science (VISION), so **measure the budget before setting node costs.**
-- **Science backbone = RP-1's RP0\* (96) + KerbalismLab (66 crewed-station experiments).** Mods are hardware,
-  not science. **AXE builds WITH KerbalismLab** — it's the science value-add.
-- **⚠️ Blocker to fix: KerbalismLab's missing base dependency.** As installed it errors (132 MM:
-  `Can't find nodeType:KERBALISM_GROUP_SETTINGS` → value lookups fail → MM won't write the cache). The
-  "Expanded Continued" fork is **missing its base lab-experiments framework** (whatever defines
-  `KERBALISM_GROUP_SETTINGS`/`LAB_EXPERIMENTS` + the "Laboratory Experiments" Configure host). **TODO: find +
-  add that base dependency** — clone the KerbalismLab GitHub as a sibling (README/netkan lists its deps) — so
-  it loads clean. *(User removed it from the `ksp_rp1_expanded` reference instance ONLY, to get a clean cache
-  for the manifest/audit — it stays in the AXE design.)*
-- **Two science streams (drive node tiering):** uncrewed **probe science** (RP0* instruments) funds early/mid;
-  **crewed-lab science** (KerbalismLab's 66 + RP0*'s crewed experiments) funds mid/late + stations/colonization.
-- **Method:** rebuild the deleted `science_audit.py` (`git show pre-restart-mvp:tools/science_audit.py`).
-  Base RP0* + stock + RSS body `ScienceValues` from `ksp_rp1_clean`'s cache; **+ KerbalismLab's 66** from its
-  configs (re-clone the repo, or once the base dep is fixed + rp1_expanded re-cached, read off the merged cache).
-- **Deliverables:** total budget + probe-vs-crewed split → tree total-cost target + per-tier budgets; AND how
-  much KerbalismLab's author-default values (10–500) need rebalancing.
-- **Then:** P1 tree architecture, designed against the real numbers.
+### T2 — Science-budget audit (with KerbalismLab) ✅ AUDIT DONE → full writeup in [`SCIENCE.md`](SCIENCE.md)
+Budget measured before setting node costs. Tools: `tools/science_budget.py` (probe),
+`tools/lab_inventory.py` → `manifest/lab-experiments.tsv` (lab). Headline numbers:
+- **Probe science (RP0\*, 98 exp):** ~6.6M theoretical max across RSS, but **heavily back-loaded** —
+  Earth+Moon only **79k**, outer planets ~5M. Realistic collection ~0.7–1.3M. (RP-1 full tree ≈ **115k**.)
+- **Crewed-lab science (KerbalismLab, 71 exp):** values 10–500 (median 25); **~51k** realistic (~8 crewed
+  bodies), ~205k theoretical-max — a mid-game **station stream** ~= home-system probe science, funding the
+  early-mid "station valley". UnlockTechs cluster early-mid (stock names → remap to AXE).
+- **Tree-budget target → ~150k–400k total node cost** (anchored on RP-1's 115k); per-tier must mirror the
+  back-loaded availability (cheap early, expensive late). Drives P1.
+- **⚠️ Blocker DIAGNOSED (fix deferred to P3):** the "Continued" fork is an *add-on*; it omits the
+  **Kerbalism ScienceRework lab framework** (`KERBALISM_GROUP_SETTINGS`/`LAB_EXPERIMENTS` root node +
+  `LabDataRateMultiplier` + the "Laboratory Experiments" `Configure` host) that lives in
+  **`KerbalismScienceOnly`** (NOT in stock Kerbalism, NOT in RP-1's config). 132 errors ≈ 2 lookups × 65 exp.
+  Fix recipe (vendor the minimal lab subset) + exact missing files in SCIENCE.md §1.
+- **OPEN DECISION (P3):** integration path — **A** vendor ScienceRework lab subsystem as-is /
+  **C** re-author the 65 as plain `Experiment` modules wired to AXE nodes *(recommended)* / **D** drop, use
+  RP0\*'s own crewed experiments. Also: final value rebalance needs an in-game **merged-cache read**, which is
+  blocked until the framework is restored (SCIENCE.md §3).
+- **Reference clones (siblings, outside repo):** `../KerbalismLabExperimentsExpandedContinued` (fork),
+  `../KerbalismScienceOnly` (base framework source). *(KerbalismLab stays out of `ksp_rp1_expanded` so its
+  cache stays clean for the manifest/audit.)*
+- **→ P1 unblocked:** tree architecture, designed against these numbers.
 
 ## Reference instances (outside the repo — never nuke)
 - `../ksp_instance_clean` — pristine rebuild base; copy it to spin up a fresh test instance.
