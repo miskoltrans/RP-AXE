@@ -1,0 +1,4 @@
+﻿Vendored from "C:\git\ksp\RP-1\GameData\RP-1" on 2026-06-30 21:43.
+RP-1.version: { "NAME": "Realistic Progression One", "URL": "https://raw.githubusercontent.com/KSP-RO/RP-1/master/GameData/RP-1/RP-1.version", "DOWNLOAD": "https://github.com/KSP-RO/RP-1/releases/download/v4.4.0.0/RP-1-v4.4.0.0.zip", "HOMEPAGE": "https://github.com/KSP-RO/RP-1/", "VERSION": { "MAJOR": 4, "MINOR": 4, "PATCH": 0, "BUILD": 0 }, "KSP_VERSION": { "MAJOR": "1", "MINOR": "12", "PATCH": "3" }, "KSP_VERSION_MIN": { "MAJOR": "1", "MINOR": "12", "PATCH": "0" }, "KSP_VERSION_MAX": { "MAJOR": "1", "MINOR": "12", "PATCH": "99" } }
+Paths rewritten: RP-1/Parts/ -> RP-AXE/seed/Parts/
+Do not hand-edit; re-run tools/sync-rp1-parts.ps1 to refresh.

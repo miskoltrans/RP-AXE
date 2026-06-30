@@ -1,3 +1,11 @@
+*.png filter=lfs diff=lfs merge=lfs -text
+*.tga filter=lfs diff=lfs merge=lfs -text
+*.mbm filter=lfs diff=lfs merge=lfs -text
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+*.truecolor filter=lfs diff=lfs merge=lfs -text
+*.mu filter=lfs diff=lfs merge=lfs -text
+*.dds filter=lfs diff=lfs merge=lfs -text
 *.png !text !filter !merge !diff
 *.tga !text !filter !merge !diff
 *.mbm !text !filter !merge !diff
