@@ -1,0 +1,28 @@
+# RP-AXE disciplines — the 18 engineering fields you fund (see docs/RESTART.md P1).
+# A discipline is a TAG/thread, not a node: you research the breakthroughs (nodes) inside it.
+# `order` = lane Y-order (top→bottom), grouped in the 4 clusters. `color` = render fill.
+# `icon` = stock RDicon_* (placeholder until AXE icon set exists). Naming obeys the
+# "no X & Y unless the real world names it one field" rule (GuidanceControl, OpticsPhotonics = exceptions).
+
+# --- cluster 1: Materials & Chemistry ---
+Metallurgy:            { title: "Metallurgy",            order: 1,  color: "#8d99ae", icon: RDicon_metalworks }
+CompositeMaterials:    { title: "Composite Materials",   order: 2,  color: "#a3b18a", icon: RDicon_composites }
+PropellantChemistry:   { title: "Propellant Chemistry",  order: 3,  color: "#e07a5f", icon: RDicon_fuelSystems }
+ResourceEngineering:   { title: "Resource Engineering",  order: 4,  color: "#b08968", icon: RDicon_construction }
+# --- cluster 2: Energy & Propulsion-physics ---
+Cryogenics:            { title: "Cryogenics",            order: 5,  color: "#4cc9f0", icon: RDicon_fuelSystems }
+Thermodynamics:        { title: "Thermodynamics",        order: 6,  color: "#f4a261", icon: RDicon_metamaterials }
+FluidDynamics:         { title: "Fluid Dynamics",        order: 7,  color: "#ee9b00", icon: RDicon_propulsionSystems }
+ElectricalPower:       { title: "Electrical Power",      order: 8,  color: "#ffd166", icon: RDicon_electrics }
+NuclearEngineering:    { title: "Nuclear Engineering",   order: 9,  color: "#90be6d", icon: RDicon_nuclearPropulsion }
+# --- cluster 3: Flight, Structure, Control ---
+Aerodynamics:          { title: "Aerodynamics",          order: 10, color: "#48cae4", icon: RDicon_aerodynamics }
+StructuresMechanisms:  { title: "Structures & Mechanisms", order: 11, color: "#adb5bd", icon: RDicon_construction }
+Robotics:              { title: "Robotics",              order: 12, color: "#bc6c25", icon: RDicon_robotics }
+Microelectronics:      { title: "Microelectronics",      order: 13, color: "#cdb4db", icon: RDicon_electronics }
+# --- cluster 4: Guidance, Comms, Optics, Crew ---
+Computing:             { title: "Computing",             order: 14, color: "#b5179e", icon: RDicon_electronics }
+GuidanceControl:       { title: "Guidance & Control",    order: 15, color: "#7209b7", icon: RDicon_flightControl }
+Telecommunications:    { title: "Telecommunications",    order: 16, color: "#4361ee", icon: RDicon_unmanned }
+OpticsPhotonics:       { title: "Optics & Photonics",    order: 17, color: "#3a0ca3", icon: RDicon_science }
+LifeSupport:           { title: "Life Support",          order: 18, color: "#f72585", icon: RDicon_commandmodules }
