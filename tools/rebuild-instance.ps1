@@ -100,6 +100,20 @@ if ($LASTEXITCODE -ge 8) { throw "robocopy failed (exit $LASTEXITCODE)" }
 $global:LASTEXITCODE = 0
 Write-Host "  copied."
 
+# Clear stray example .craft so CKAN never aborts with "tried to overwrite a file we didn't
+# install": part-mods (Tantares, US2, SSPX, ...) ship example craft into Ships\, and CKAN refuses
+# to overwrite any pre-existing unowned file. The snapshot's example craft are noise for our
+# part/tree work, so wipe them; mods reinstall their own and CKAN then owns them.
+$craftCleared = 0
+foreach ($d in @('Ships\VAB','Ships\SPH')) {
+    $cd = Join-Path $instFull $d
+    if (Test-Path $cd) {
+        Get-ChildItem $cd -Filter *.craft -File -ErrorAction SilentlyContinue |
+            ForEach-Object { Remove-Item $_.FullName -Force; $craftCleared++ }
+    }
+}
+Write-Host "  cleared $craftCleared stray example craft."
+
 # --- step 3: install RP-AXE CKAN dependencies ------------------------------------------------
 Step 3 "Install CKAN dependencies (RP-AXE-deps.ckan)"
 # --gamedir targets the instance directly (no Manage-instances registration needed).
