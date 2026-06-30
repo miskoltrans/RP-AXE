@@ -61,9 +61,9 @@ Every part-mod curated (per-mod rationale + exact keep-lists in `docs/PARTLIST.m
 ### T2 — Science-budget audit (with KerbalismLab) ✅ AUDIT DONE → full writeup in [`SCIENCE.md`](SCIENCE.md)
 Budget measured before setting node costs. Tools: `tools/science_budget.py` (probe),
 `tools/lab_inventory.py` → `manifest/lab-experiments.tsv` (lab). Headline numbers:
-- **Probe science (RP0\*, 98 exp):** ~7.3M theoretical max across RSS (cache-grounded biome weights),
-  but **heavily back-loaded** — Earth+Moon only **69k**, outer planets ~5.4M. Realistic ~0.7–1.5M.
-  (RP-1 full tree ≈ **115k**.)
+- **Probe science (RP0\*, 98 exp):** ~2.57M theoretical max across RSS (fully ground-truthed: cache
+  biome weights + RP-1's real `BodyAllowed` body restrictions — 49 exp Earth-only incl. `photos4`@10k).
+  Back-loaded — Earth+Moon only **49k**, outer planets ~1.8M. Realistic ~0.5–1.0M. (RP-1 full tree ≈ **115k**.)
 - **Crewed-lab science (KerbalismLab, 71 exp):** values 10–500 (median 25); **~51k** realistic (~8 crewed
   bodies), ~205k theoretical-max — a mid-game **station stream** ~= home-system probe science, funding the
   early-mid "station valley". UnlockTechs cluster early-mid (stock names → remap to AXE).

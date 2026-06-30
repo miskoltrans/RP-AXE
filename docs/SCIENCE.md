@@ -81,30 +81,37 @@ science = baseValue × bodyDataValue(situation) × biomeValue
 
 ## 2. Probe science (RP0\*) — the dominant, back-loaded stream
 
-`tools/science_budget.py`, 98 experiments (96 RP0\* + 2 surface samples). Body multipliers verified
-vs `BodyScienceParams.cfg` (Earth post-`EarthScienceRemoval`); **biome weights read from the RP-1 merged
-`ModuleManager.ConfigCache`** via `tools/extract_biomes.py` (not hand-counted). **Theoretical max:**
+`tools/science_budget.py`, 98 experiments (96 RP0\* + 2 surface samples). Fully ground-truthed:
+body multipliers vs `BodyScienceParams.cfg` (Earth post-`EarthScienceRemoval`); **biome weights** from
+the merged `ModuleManager.ConfigCache` (`tools/extract_biomes.py`); **per-experiment body restrictions**
+from RP-1's actual `BodyAllowed`/`BodyNotAllowed` (`manifest/experiment-bodies.tsv` via
+`tools/experiment_bodies.py`). **Theoretical max:**
 
 | reachable by era | cumulative probe science |
 |---|---|
-| first orbit ~1958 (Earth+Moon) | **69,138** |
-| inner planets ~1961 | 220,836 |
-| crewed + landing ~1964 | 475,452 |
-| adv probes/stations ~1967 | 751,197 |
-| Jupiter ~1970 | 1,898,982 |
-| Saturn ~1972 | 3,828,905 |
-| Uranus ~1986 | 5,535,440 |
-| Pluto/modern ~2015 | **7,262,353** |
+| first orbit ~1958 (Earth+Moon) | **48,575** |
+| inner planets ~1961 | 133,415 |
+| crewed + landing ~1964 | 257,846 |
+| adv probes/stations ~1967 | 423,191 |
+| Jupiter ~1970 | 812,279 |
+| Saturn ~1972 | 1,475,750 |
+| Uranus ~1986 | 1,963,473 |
+| Pluto/modern ~2015 | **2,568,951** |
 
-- **Earth-only 21k, Earth+Moon 69k** — the early game is genuinely science-tight (and ~10k tighter than
-  the first hand-counted pass: real Earth biome-weight is 12 not 15, and Moon biomes are nerfed to 0.5).
-- **Massively back-loaded**: outer planets (Jupiter→Pluto) are ~5.4M of the 7.3M, via large body/biome
-  multipliers (Mars 19 biomes, Vesta 14, Ceres 11, Pluto 20 — all undercounted before). No one collects
-  the theoretical max (no biome-walking every outer moon); realistic collection ~10–20% → ~0.7–1.5M.
-- Reference anchor: **RP-1's full tech tree costs ~115,070 science** (pre-restart tree, 333 nodes).
-  Total available dwarfs tree cost → late-game science is abundant; **scarcity is early**.
-- *Still modeled (not read):* body-assignment is a keyword heuristic (Earth/Moon/universal); Charon's
-  biomesum reads 0 (cache artifact — unloaded biome map). Tightening these is the next exactness step.
+- **Earth-only 21k, Earth+Moon 49k** — the early game is genuinely science-tight.
+- **Big correction from reading body restrictions:** 49 experiments are **Earth-only** (`HomeBody`),
+  5 Earth+Moon, 11 Moon-only; the rest universal. My earlier keyword heuristic had wrongly spread
+  several Earth-only experiments across all 32 bodies — worst case **`RP0photos4` (baseValue 10,000)** and
+  the rest of the film-return photography family ("photography" never matched the id "photos"). Fixing
+  that **cut the total from 7.3M → 2.57M (−65%)**. Lesson logged: heuristics on the highest-value rows
+  are where estimates go most wrong.
+- Still **back-loaded** (Jupiter→Pluto ≈ 1.8M of 2.57M) but far less extreme. No one collects the
+  theoretical max; realistic collection ~20–40% → **~0.5–1.0M**.
+- Reference anchor: **RP-1's full tech tree costs ~115,070 science** (pre-restart tree). The tree is
+  comfortably funded by **mid-game** (≥258k available by the early-crewed era), but completing a large
+  AXE tree requires genuine **interplanetary** exploration — science is binding throughout, tightest early.
+- *Still modeled (not read):* "theoretical max" = every experiment at every allowed body/biome (real
+  collection is a fraction); Charon biomesum reads 0 (cache artifact). Body-assignment is now exact.
 
 ## 3. Crewed-lab science (KerbalismLab) — a mid-game station stream
 
@@ -119,10 +126,10 @@ science `value` **10–500, median 25, raw per-run sum 3,653**.
 | realistic ~8 crewed bodies (Earth/Moon/Mars/Venus/4 moons) | **~51,000** |
 | theoretical 32 bodies | ~204,576 |
 
-- Magnitude check: realistic crewed-lab (~51k) is the **same order as home-system probe science
-  (~69k)** and ~44% of a full tree (~115k) — a **meaningful mid-game stream that ~doubles
-  home-system science** and specifically rewards the station/base era (where probe science is thin
-  until you can reach other planets). It is **not** a primary funder globally (~0.7% of probe max).
+- Magnitude check: realistic crewed-lab (~51k) **exceeds home-system probe science (~49k)** and is
+  ~44% of a full tree (~115k) — a **meaningful mid-game stream that more than doubles home-system
+  science** and specifically rewards the station/base era (where probe science is thin until you can
+  reach other planets). It is **not** a primary funder globally (~2% of probe max).
 - High-value items cluster in the `Space` telescopes / high-energy bucket (HaloSat 500, CALET 350,
   NICER/CXBN-2/ASTERIA 300). Biome experiments are individually small (10–15) but multiply.
 - Tier funding: UnlockTechs cluster at `basicScience / scienceTech / spaceExploration /
@@ -140,14 +147,15 @@ tree *architecture* the fixed-value estimate is sufficient; for final *balance* 
 
 ## 4. Tree-budget implications + decision needed
 
-**For P1 (tree architecture):**
-- Don't set tree total = total available (7.3M) — that's the un-collectable ceiling. Anchor the
-  tree near the RP-1 baseline (~115k) up to ~2–3× for a larger 200–500 node tree → **target ~150k–400k
-  total node cost.** Comfortably fundable by realistic collection (~0.7–1.5M probe + ~50k lab) while
-  keeping the **early game (Earth+Moon ≈ 69k probe + early lab) tight** — the intended difficulty curve.
-- Per-tier budgeting must mirror the **back-loaded** availability: cheap early nodes (paid by thin
-  home-system science), expensive late nodes (paid by abundant outer-planet science). Crewed-lab
-  fills the **mid-game station valley** between home-system probes and interplanetary probes.
+**For P1 (tree architecture):** two competing anchors to resolve —
+- **RP-1 anchor (completable):** ~115k baseline → a 200–500 node AXE tree at **~150k–400k** total cost
+  is fundable by realistic collection (~0.5–1.0M probe + ~50k lab) but requires genuine interplanetary
+  exploration to finish; early game (Earth+Moon ≈ 49k probe + early lab) stays tight.
+- **VISION anchor (not completable in one playthrough):** "tree cost ≈ total science" → ~2.5M, i.e. a
+  much costlier tree you can't finish. These pull opposite directions — **a P1 call**, not settled here.
+- Either way, per-tier budgeting must mirror availability: cheap early nodes (paid by thin home-system
+  science), costlier late nodes (paid by interplanetary science). Crewed-lab fills the **mid-game
+  station valley** between home-system probes and interplanetary probes.
 
 **For P3 (KerbalismLab integration) — DECIDED: re-author as plain `Experiment` modules.**
 Reimplement the 65 experiments as plain Kerbalism `Experiment` + `EXPERIMENT_DEFINITION` configs wired
