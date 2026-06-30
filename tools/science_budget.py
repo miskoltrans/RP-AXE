@@ -1,110 +1,104 @@
 #!/usr/bin/env python3
-"""Probe-science budget (RP0* suite) — available-science half of the old audit, tree-independent."""
-import os
-TMP = r"C:\git\ksp\RP-AXE\tools"
+"""Probe-science budget (RP0* suite) — tree-independent. See docs/SCIENCE.md.
 
-# situation bits: 1 Landed,2 Splashed,4 FlyLow,8 FlyHigh,16 SpaceLow,32 SpaceHigh
+GROUND-TRUTHED inputs (not hand-guessed):
+  - per-body situation multipliers: RP-1/Science/BodyScienceParams.cfg (verified), Earth row =
+    post AXE GameData/RP-AXE/design/Science/EarthScienceRemoval.cfg (sub-40km zeroed).
+  - per-body BIOME weight (summed biome `value`s): read from the RP-1 merged ModuleManager.ConfigCache
+    via tools/extract_biomes.py. Regenerate with: python tools/extract_biomes.py
+  - experiment baseValue/situationMask/biomeMask: tools/science_audit_experiments.txt (verified vs
+    RP-1/Science/Experiments/*.cfg, e.g. RP0visibleImaging1 = 1.5/63/29).
+Situation bits: 1 Landed 2 Splashed 4 FlyLow 8 FlyHigh 16 SpaceLow 32 SpaceHigh.
+Caveats (still modeled, not read): body-assignment is a keyword heuristic (Earth/Moon/universal);
+"theoretical max" counts every experiment at every body/biome (realistic collection is a fraction);
+Charon biomesum=0 is a cache artifact (unloaded biome map)."""
+import os
+TMP = os.path.dirname(os.path.abspath(__file__))
 SIT = [("landed",1),("splashed",2),("flyLow",4),("flyHigh",8),("spLow",16),("spHigh",32)]
 
-# body multipliers [landed,splashed,flyLow,flyHigh,spLow,spHigh], biome count, era reach (x)
+# [landed,splashed,flyLow,flyHigh,spLow,spHigh], REAL biomesum (cache), era reach (x)
 B = {
- "Earth":   ([0.00001,0.00001,0.001,0.6,1,1.25], 15, -3292),
- "Moon":    ([3,0,0,0,2,1.5],                     12, -3292),
- "Venus":   ([8,0,12,7,3,3],                       5, -2952),
- "Mars":    ([7,0,7,6,3,3],                       10, -2952),
- "Mercury": ([40,0,29,21,4,4],                     5, -2612),
- "Phobos":  ([4,0,5,4.5,4,4],                      2, -2612),
- "Deimos":  ([4,0,5,4.5,4,4],                      2, -2612),
- "Vesta":   ([20,0,12,7,5,4],                      5, -2272),
- "Ceres":   ([20,0,12,7,5,4],                      5, -2272),
- "Jupiter": ([0,0,24,15,10,6],                     3, -2102),
- "Io":      ([30,0,24,15,15,8],                    5, -2102),
- "Europa":  ([30,0,24,15,15,8],                    5, -2102),
- "Ganymede":([30,0,24,15,15,8],                    5, -2102),
- "Callisto":([30,0,24,15,15,8],                    5, -2102),
- "Saturn":  ([0,0,26,17,12,8],                     3, -1847),
- "Titan":   ([35,0,26,17,15,10],                   5, -1847),
- "Enceladus":([35,0,26,17,15,10],                  5, -1847),
- "Mimas":   ([35,0,26,17,15,10],                   5, -1847),
- "Tethys":  ([35,0,26,17,15,10],                   5, -1847),
- "Dione":   ([35,0,26,17,15,10],                   5, -1847),
- "Rhea":    ([35,0,26,17,15,10],                   5, -1847),
- "Iapetus": ([35,0,26,17,15,10],                   5, -1847),
- "Uranus":  ([0,0,28,20,18,13],                    3, -1200),
- "Ariel":   ([40,0,28,20,18,13],                   5, -1200),
- "Miranda": ([40,0,28,20,18,13],                   5, -1200),
- "Titania": ([40,0,28,20,18,13],                   5, -1200),
- "Umbriel": ([40,0,28,20,18,13],                   5, -1200),
- "Oberon":  ([40,0,29,21,23,18],                   5, -1200),
- "Neptune": ([0,0,29,21,20,15],                    3, -900),
- "Triton":  ([40,0,29,21,23,18],                   5, -900),
- "Pluto":   ([50,0,29,21,30,25],                   5, -657),
- "Charon":  ([50,0,29,21,30,25],                   5, -657),
+ "Earth":   ([0.00001,0.00001,0.001,0.6,1,1.25], 12.0, -3292),
+ "Moon":    ([3,0,0,0,2,1.5],                      8.5, -3292),
+ "Venus":   ([8,0,12,7,3,3],                       8.0, -2952),
+ "Mars":    ([7,0,7,6,3,3],                       19.0, -2952),
+ "Mercury": ([40,0,29,21,4,4],                     8.0, -2612),
+ "Phobos":  ([4,0,5,4.5,4,4],                      2.0, -2612),
+ "Deimos":  ([4,0,5,4.5,4,4],                      2.0, -2612),
+ "Vesta":   ([20,0,12,7,5,4],                     14.0, -2272),
+ "Ceres":   ([20,0,12,7,5,4],                     11.0, -2272),
+ "Jupiter": ([0,0,24,15,10,6],                     6.0, -2102),
+ "Io":      ([30,0,24,15,15,8],                    7.0, -2102),
+ "Europa":  ([30,0,24,15,15,8],                    6.0, -2102),
+ "Ganymede":([30,0,24,15,15,8],                    8.0, -2102),
+ "Callisto":([30,0,24,15,15,8],                    8.0, -2102),
+ "Saturn":  ([0,0,26,17,12,8],                     7.0, -1847),
+ "Titan":   ([35,0,26,17,15,10],                   7.0, -1847),
+ "Enceladus":([35,0,26,17,15,10],                  4.0, -1847),
+ "Mimas":   ([35,0,26,17,15,10],                   6.0, -1847),
+ "Tethys":  ([35,0,26,17,15,10],                   9.5, -1847),
+ "Dione":   ([35,0,26,17,15,10],                   6.0, -1847),
+ "Rhea":    ([35,0,26,17,15,10],                   5.0, -1847),
+ "Iapetus": ([35,0,26,17,15,10],                   6.0, -1847),
+ "Uranus":  ([0,0,28,20,18,13],                    6.0, -1200),
+ "Ariel":   ([40,0,28,20,18,13],                   3.0, -1200),
+ "Miranda": ([40,0,28,20,18,13],                   6.0, -1200),
+ "Titania": ([40,0,28,20,18,13],                   7.0, -1200),
+ "Umbriel": ([40,0,28,20,18,13],                   5.0, -1200),
+ "Oberon":  ([40,0,29,21,23,18],                   4.0, -1200),
+ "Neptune": ([0,0,29,21,20,15],                    6.0, -900),
+ "Triton":  ([40,0,29,21,23,18],                   9.0, -900),
+ "Pluto":   ([50,0,29,21,30,25],                  20.0, -657),
+ "Charon":  ([50,0,29,21,30,25],                   0.0, -657),
 }
 
-exps = []
-for line in open(os.path.join(TMP, "science_audit_experiments.txt")):
-    p = line.strip().split("|")
-    if len(p) == 4 and p[1]:
-        exps.append((p[0], float(p[1]), int(p[2]), int(p[3])))
+exps=[]
+for line in open(os.path.join(TMP,"science_audit_experiments.txt")):
+    p=line.strip().split("|")
+    if len(p)==4 and p[1]: exps.append((p[0],float(p[1]),int(p[2]),int(p[3])))
 
 def body_for_exp(eid):
-    s = eid.lower()
+    s=eid.lower()
     if "lunar" in s or "alsep" in s: return "Moon"
-    earth_kw = ["earth","supersonic","weather","ocean","airglow","longdurationhabit",
-        "compositecasting","galliumarsenide","gnatmice","egggrowth","bloodcells","closedloopag",
-        "foodevaluation","sleepanalysis","worktolerance","visualacuity","zerogflammability",
-        "vapordistillation","liquidsmicrogravity","flightcontrol","powertoolevaluation",
-        "orbitalmaneuvering","ionsensing","simplenavigation","staroccultation","nuclearemulsion",
-        "particlecollection","alfmed","bistaticradar","television","habit","navigation",
-        "terrainphotography","nightimage","uvairglow","uvpanorama","uvstellar","uvxray",
-        "ultraviolet","vhfpolar","visualtracking","zodiacal","solarxray","narrowbeam",
-        "galacticxray","earthresources","photography"]
+    earth_kw=["earth","supersonic","weather","ocean","airglow","longdurationhabit","compositecasting",
+     "galliumarsenide","gnatmice","egggrowth","bloodcells","closedloopag","foodevaluation","sleepanalysis",
+     "worktolerance","visualacuity","zerogflammability","vapordistillation","liquidsmicrogravity",
+     "flightcontrol","powertoolevaluation","orbitalmaneuvering","ionsensing","simplenavigation",
+     "staroccultation","nuclearemulsion","particlecollection","alfmed","bistaticradar","television",
+     "habit","navigation","terrainphotography","nightimage","uvairglow","uvpanorama","uvstellar",
+     "uvxray","ultraviolet","vhfpolar","visualtracking","zodiacal","solarxray","narrowbeam",
+     "galacticxray","earthresources","photography"]
     if any(k in s for k in earth_kw): return "Earth"
     return "UNIVERSAL"
 
-def exp_science_on(body, baseval, smask, bmask):
-    mult, biomes, _ = B[body]
-    tot = 0.0
-    for i,(name,bit) in enumerate(SIT):
-        if smask & bit:
-            bf = biomes if (bmask & bit) else 1
-            tot += baseval * mult[i] * bf
+def sci_on(body,bv,sm,bm):
+    mult,bsum,_=B[body]; tot=0.0
+    for i,(nm,bit) in enumerate(SIT):
+        if sm&bit:
+            bf=bsum if (bm&bit) else 1
+            tot+=bv*mult[i]*bf
     return tot
 
-avail = {b:0.0 for b in B}
-crewed_earth_moon = 0.0
-CREW_KW = ["habit","bloodcells","egggrowth","gnatmice","closedloopag","foodevaluation",
-    "sleepanalysis","worktolerance","visualacuity","alfmed","liquidsmicrogravity",
-    "compositecasting","galliumarsenide","zerogflammability","vapordistillation",
-    "powertoolevaluation","nuclearemulsion","longalsep","alsep","lunarisrudemo",
-    "lunarmicrobiome","lunarseismic","lunarnight"]
-crewed_sum = 0.0
+avail={b:0.0 for b in B}
 for eid,bv,sm,bm in exps:
-    tgt = body_for_exp(eid)
-    if tgt == "Earth": avail["Earth"] += exp_science_on("Earth",bv,sm,bm)
-    elif tgt == "Moon": avail["Moon"] += exp_science_on("Moon",bv,sm,bm)
+    t=body_for_exp(eid)
+    if t=="Earth": avail["Earth"]+=sci_on("Earth",bv,sm,bm)
+    elif t=="Moon": avail["Moon"]+=sci_on("Moon",bv,sm,bm)
     else:
-        for b in B: avail[b] += exp_science_on(b,bv,sm,bm)
+        for b in B: avail[b]+=sci_on(b,bv,sm,bm)
 
-total = sum(avail.values())
-print("=== RP0* PROBE-SCIENCE BUDGET (theoretical max, all RSS bodies, post-EarthScienceRemoval) ===")
+total=sum(avail.values())
+print("=== PROBE-SCIENCE BUDGET (RP0*, theoretical max, real biome weights) ===")
 print(f"experiments: {len(exps)}")
-print(f"TOTAL available probe science (all bodies) = {total:,.0f}\n")
+print(f"TOTAL available probe science = {total:,.0f}")
+print(f"Earth-only = {avail['Earth']:,.0f}   Earth+Moon (early game) = {avail['Earth']+avail['Moon']:,.0f}\n")
 print("per-body (sorted):")
-for b,v in sorted(avail.items(), key=lambda x:-x[1]):
-    print(f"  {b:10s}{v:12,.0f}   reach x={B[b][2]}")
-
-# era-cumulative (when each body first becomes reachable)
-print("\n=== cumulative reachable probe science by era milestone ===")
-mil = [(-3292,"first orbit ~1958"),(-2952,"inner-planet/early Moon ~1961"),
-   (-2612,"crewed+landing ~1964"),(-2272,"adv probes/stations ~1967"),
-   (-2102,"Jupiter ~1970"),(-1847,"Saturn/stations ~1972"),
-   (-1200,"Uranus ~1986"),(-657,"Pluto/modern ~2015"),(-62,"endgame")]
-for mx,label in mil:
-    reach = sum(v for b,v in avail.items() if B[b][2] <= mx)
-    print(f"  x<= {mx:6d} {label:30s} {reach:12,.0f}")
-
-# Earth+Moon only (home-system, where crewed stations realistically operate early/mid)
-print(f"\nEarth-only available       = {avail['Earth']:,.0f}")
-print(f"Earth+Moon available       = {avail['Earth']+avail['Moon']:,.0f}")
+for b,v in sorted(avail.items(),key=lambda x:-x[1]):
+    print(f"  {b:10s}{v:12,.0f}   biomesum={B[b][1]:>5}  reach x={B[b][2]}")
+print("\n=== cumulative reachable probe science by era ===")
+mil=[(-3292,"orbit ~1958"),(-2952,"inner planets ~1961"),(-2612,"crewed+landing ~1964"),
+ (-2272,"adv probes ~1967"),(-2102,"Jupiter ~1970"),(-1847,"Saturn ~1972"),(-1200,"Uranus ~1986"),
+ (-657,"Pluto ~2015")]
+for mx,lab in mil:
+    r=sum(v for b,v in avail.items() if B[b][2]<=mx)
+    print(f"  x<= {mx:6d} {lab:22s} {r:12,.0f}")
