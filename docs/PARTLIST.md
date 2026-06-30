@@ -91,6 +91,13 @@ solar covers them); **mod-specific science instruments** (→ DMagic); **part-sp
 | CoatlAerospace | 123 | **74** | Inherit RP-1's 49 cuts: all **29 dedicated instruments** (redundant with RP-1's RO-* set, per Science section) + 8 solar panels + 4 batteries + 2 tanks + RCS/misc. Keep the **hardware** (buses, antennas, RTGs, reaction wheels, EDL aeroshells). Optional adds flagged: SSTL-150 bus, STAR-24C motor. |
 | Tantares | 119 | **48** | Value-add over RP-1 (RP-1 cut all 119). Cut ~71 redundant: engines→ROEngines, capsules→ROCapsules, generic structural→SSPX, solar/tanks/RCS/radiators→procedural/RO, antennas→RealAntennas; + ISS-Russian segment (Zarya/Zvezda/Nauka/Pirs ~22). Keep recognizable Soviet craft (Mir complex + LK-700 + TKS); 2 instruments → Experimental remap. **Exact list in Curated keep-lists below.** |
 | TantaresLV | 1 | **0** | inherit RP-1's cut (ROEngines/procedural cover). |
+| KerwisChineseAerospacePack | 62 | **19** | Pure Long March launch-vehicle pack (no crewed craft). Keep RP-1's **18 YF engines** (unique — 0 YF in ROEngines, fills the Chinese-engine gap) + add **`DFH-1`** (DongFangHong-1, first satellite — historical-firsts education). Cut 43 structural: CZ tanks/upper-stages, 7 fairings, 5 VEB instrument compartments, adapters/interstages/wings → procedural. |
+| NearFuturePropulsion | 26 | **20** | inherit RP-1 — cut 4 xenon/argon tanks (→ procedural RF) + 2 dup thruster variants (EPEX MPD, Starlink HET); keep the 20 real electric thrusters (Hall/ion/VASIMR/MPD/PIT). |
+| NearFutureConstruction / NF-Electrical | 47 / 33 | **36 / 20** | inherit RP-1's trim-redundant pattern (redundant tanks/variants cut, future content kept). |
+| NF-Exploration / NF-LaunchVehicles / NF-Aeronautics | 20 / 12 / 5 | **kept whole** | inherit RP-1 (kept entirely). |
+| KerbalAtomics / CryoEngines / FarFutureTechnologies / RocketMotorMenagerie / HullCameraVDS | 3 / 7 / 21 / 6 / 11 | **kept whole** | inherit RP-1 — unique future-propulsion/camera content (RMM = our solids workhorse). |
+| NearFutureSolar | 29 | **6** | Rest redundant with RO's 4 *resizable* solar panels (solar = low-value rule). Keep a curated **"advanced solar" tier** of distinct tech RO doesn't convey (concentrating PV + roll-out blanket + large rigid + curved). List below. |
+| NearFutureSpacecraft | 3 | **0** | The 3 RO-supported parts are just RCS thrusters (the pods were non-RO, already deleted) → redundant with RO/stock RCS. **Mod removed from `../expansion modpack.ckan`** (nothing to keep). |
 
 ## Curated keep-lists (exact part names, manifest-ready)
 ### Tantares — 48 kept
@@ -104,6 +111,12 @@ solar covers them); **mod-specific science instruments** (→ DMagic); **part-sp
 - **Sofora truss (3):** `rana_mount_srf_1` `rana_truss_srf_1` `rana_truss_srf_2`
 - **TKS ferry (6):** `aquila_control_s2_1` `ro_TKS_adapter_s2_s0p5_1` `ro_TKS_adapter_s2_s1p5_1` `ro_TKS_crew_s1p5_2` `alnair_les_s0_2` `sargas_decoupler_s1p5_1`
 - **Remap → Experimental (2):** `aquila_sensor_synthetic_aperture_radar_srf_1` (Travers SAR) · `aquila_sensor_visible_light_telescope_s0_1` (Priroda cam)
+
+### NearFutureSolar — 6 kept (advanced-solar tier)
+- **Concentrating PV:** `nfs-panel-deploying-concentrator-1x4-juno-1` (K12-K, Juno-style)
+- **Roll-out blanket (ROSA/Gateway tech):** `nfs-panel-deploying-blanket-starship-1` (OKEB-25R 'Starship', small) · `nfs-panel-deploying-blanket-dsg-1` (OKEB-100 'Gateway', station) · `nfs-panel-deploying-blanket-arm-1` (OKEB-150R 'Halo', large circular)
+- **Large rigid array:** `nfs-panel-deploying-advanced-2x20-hub-1` (K55-A 'Megalador')
+- **Curved expanding:** `nfs-panel-deploying-curved-375-1` (NIV-75-R)
 
 ## Next
 - Continue mod-by-mod **hardware** curation: Kerwis (Chinese), NearFuture suite, US2, SSPX, SXT/VenStock, the rest.
