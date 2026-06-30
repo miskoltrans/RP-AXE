@@ -21,8 +21,9 @@ deploy/rebuild tooling (improve).
 ## Roadmap (critical path)
 Each phase gates the next; avionics + contracts ride alongside, off the critical path.
 
-- **P0 — Part list** *(= T1 below, unblocked, START HERE)*. Lock the canonical manifest.
-  **Prove:** committed manifest, every part RO-supported or has an authored config.
+- **P0 — Part list** ✅ **DONE** (= T1). Manifest locked: **`manifest/curated-parts.tsv` (1,820 parts)**,
+  built reproducibly by `tools/build_manifest.py`; full curation log in `docs/PARTLIST.md`.
+  **→ P1 is now unblocked.**
 - **P1 — Tree architecture.** Branch taxonomy (engineering disciplines, real names); node schema
   (id / tier / deps / `anyToUnlock` / flavor text); editor + build pipeline (lean on ETT).
   **Prove:** a documented branch map + schema; tooling renders a stub tree.
@@ -41,16 +42,21 @@ Each phase gates the next; avionics + contracts ride alongside, off the critical
 
 ## Tasks
 
-### T1 — Lock a good canonical part list BEFORE building the tree ⬅ blocks all tree work (= P0)
-The tree must be designed and balanced around a known, fixed part set. Do **not** start node
-layout until the part list is settled.
-- Diff RO-clean vs RP-1-clean → what RP-1 adds vs what it blacklists/hides. *(Groundwork parked at
-  `scratchpad/part_diff.py`. Caveat found: the two clean installs have **different mod sets** —
-  control for that. Both are ~100% RO-curated, so non-RO only appears once mods are added.)*
-- Decide the canonical set = shared RO-curated core + chosen RO-but-not-RP-1 parts + authored gap-fills.
-- Produce the **manifest** + a "what's new / unplaced / non-RO" diff workflow for testing added part mods.
-- **Prove:** a committed manifest; every part RO-supported or has an authored config; count vs the
-  ~200-node "home everything" target.
+### T1 — Lock the canonical part list ✅ DONE
+Every part-mod curated (per-mod rationale + exact keep-lists in `docs/PARTLIST.md`); consolidated into
+**`manifest/curated-parts.tsv` (1,820 parts)** via the reproducible `tools/build_manifest.py`.
+- **Curation rule:** RO's `HardRemoveNonRO` flag (RP-1-Express-shipped) = the plausibility floor — it
+  *deletes* un-physical parts, so the RO-config floor ≈ "plausible". Our job is cutting **redundant /
+  low-value**, not judging plausibility.
+- **Science model (big finding):** RP-1's **RP0\* suite (96 tiered real-instrument experiments)** is the
+  backbone, ported like contracts; mods contribute **hardware, not science** (DMagic/Coatl probe
+  instruments are redundant with RP-1's own 32). **Dropped:** DMagic, NearFutureSpacecraft, TantaresLV.
+- **KerbalismLab** (user added `KerbalismLabExperimentsExpandedContinued` = 66 crewed-station experiments)
+  is a station-science value-add → integrate at **P3** (regen cache + load-test; **remap its 66
+  `UnlockTech` gates to AXE nodes**; rebalance values). It gates on base-experiment carriers + crew, NOT
+  probe instruments.
+- **Modpack** `../expansion modpack.ckan` trimmed to **28 mods** (dropped NF-Spacecraft, DMagic, TantaresLV).
+- **Flag for P2:** `ModularLaunchPads` = 233 parts (biggest inherited block) — a tree-placement trim target.
 
 ## Reference instances (outside the repo — never nuke)
 - `../ksp_instance_clean` — pristine rebuild base; copy it to spin up a fresh test instance.
