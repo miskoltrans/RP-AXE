@@ -63,6 +63,17 @@ Investigated via reference caches (`ro_expanded` = native/no-Kerbalism; `rp1_exp
   beyond RP-1's set carry **no** science until we author RP0* assignments (→ gap-fill list). (4) **SCANsat
   absent** → stock orbital/surface scanners are inert (no experiment); revisit if SCANsat is added.
 
+### Parked: KerbalismExpanded — instrument-MODEL remap candidates (revisit when/if added)
+User may later add **KerbalismExpanded** (adds NEW experiments beyond RP-1's RP0*). Implication for our
+science cuts: a part cut as "redundant instrument" may actually be a **unique real-instrument MODEL** with
+no current RP0* config that could be **remapped** to a future KerbalismExpanded experiment. So when cutting
+science/instrument parts, distinguish *redundant model* (cut freely) from **unique-instrument model**
+(cut-for-now but **flag as a remap candidate** — keep recoverable, e.g. route to the Experimental node,
+don't lose the asset). Revisit the cut-instrument list when KerbalismExpanded is in.
+**Known remap candidates so far:** Coatl MOLA laser altimeter, HiRISE telescope, IUVS UV / THEMIS IR
+spectrometers, gamma-ray spectrometer, dust collectors; Tantares **Travers SAR** (synthetic-aperture radar)
++ **Priroda** earth-resources camera. (These are unique instruments, *not* duplicates of RP-1's RO-* set.)
+
 ## Per-mod expanded-pack curation (in progress)
 Going mod-by-mod through RP-1's per-pack cuts, recording AXE's call. Lens: **science/exploration delivery
 + real-engineering education** is the value axis (science is the central pillar; probes are liked because
@@ -75,9 +86,24 @@ solar covers them); **mod-specific science instruments** (→ DMagic); **part-sp
 
 | Mod | RO has | AXE keeps | Notes |
 |---|---|---|---|
-| RN_US_Probes | 106 | **72** | Inherit 34 component cuts: 11 std solar panels (redundant), 3 scanners (→DMagic), 12-part KH-9 spy-sat family, 8 part-specific decouplers/RCS/legs. Reverse the 13 iconic whole-probes (Mariner-Mars 3/4–10, LRO, LADEE, LCROSS, Juno, Helios, Mars Observer, Sphinx, TDRS A-G). Prune RaiderNick's 3 internal `DEPRECATED` dupes regardless. |
+| RN_US_Probes | 106 | **75** | Inherit 31 component cuts: 11 std solar panels (redundant), 12-part KH-9 spy-sat family, 8 part-specific decouplers/RCS/legs. Reverse: 13 iconic whole-probes (Mariner-Mars 3/4–10, LRO, LADEE, LCROSS, Juno, Helios, Mars Observer, Sphinx, TDRS A-G) **+ the 3 orbital/mapping scanners** (Galileo/LADEE/Magellan — SCANsat/ISRU hardware, *not* science; final config pends SCANsat decision). Prune RaiderNick's 3 internal `DEPRECATED` dupes. |
 | RN_Soviet_Probes | 27 | **23** | Reverse 15 whole probes + integral sub-parts (Luna 2/3/10/11/13, Venera 1, Molniya-1, Polyot, Proton 1-4 sats, Strela bus + astro/radio/vernier). Inherit 4 redundant cuts: `molniya_asas` (deprecated), 2 RCS blocks (Venera/Strela → generic), 1 payload decoupler. Corrects RP-1's US-centric bias (kept only 8/27). |
 | CoatlAerospace | 123 | **74** | Inherit RP-1's 49 cuts: all **29 dedicated instruments** (redundant with RP-1's RO-* set, per Science section) + 8 solar panels + 4 batteries + 2 tanks + RCS/misc. Keep the **hardware** (buses, antennas, RTGs, reaction wheels, EDL aeroshells). Optional adds flagged: SSTL-150 bus, STAR-24C motor. |
+| Tantares | 119 | **48** | Value-add over RP-1 (RP-1 cut all 119). Cut ~71 redundant: engines→ROEngines, capsules→ROCapsules, generic structural→SSPX, solar/tanks/RCS/radiators→procedural/RO, antennas→RealAntennas; + ISS-Russian segment (Zarya/Zvezda/Nauka/Pirs ~22). Keep recognizable Soviet craft (Mir complex + LK-700 + TKS); 2 instruments → Experimental remap. **Exact list in Curated keep-lists below.** |
+| TantaresLV | 1 | **0** | inherit RP-1's cut (ROEngines/procedural cover). |
+
+## Curated keep-lists (exact part names, manifest-ready)
+### Tantares — 48 kept
+- **LK-700 lander (7):** `aquarius_crew_s1p5_1` `vela_landing_leg_srf_1` `vela_landing_leg_srf_2` `aquarius_heatshield_s1p5_1` `aquarius_drogue_parachute_s0_1` `aquarius_parachute_s0p5_1` `vela_high_gain_antenna_srf_1`
+- **Mir Core (5):** `eridani_crew_s2_1` `eridani_crew_s2_s1p5_1` `eridani_crew_s1p5_1` `aquila_node_s0p5_1` `eridani_node_adapter_s1p5_s0p5_1`
+- **Kvant-1 (3):** `acamar_adapter_s2_s0p5_1` `acamar_crew_s2_1` `acamar_science_processor_s2_1`
+- **Kvant-2 (5):** `ro_kvant-2_adapter_s2_s0p5_1` `ro_kvant-2_adapter_s2_s1p5_1` `ro_kvant-2_crew_s1p5_2` `aquila_crew_s1_3` `aquila_lab_s1_1`
+- **Kristall (7):** `aquila_adapter_s2_s0p5_1` `aquila_adapter_s2_s1p5_1` `aquila_crew_s1p5_2` `aquila_crew_s1_1` `aquila_adapter_s1p5_1` `aquila_node_s0p5_2` `aquila_node_adapter_s1_1`
+- **Spektr (5):** `ro_spektr_adapter_s2_s0p5_1` `ro_spektr_adapter_s2_s1p5_1` `ro_spektr_crew_s1p5_2` `aquila_structural_cone_s1p5_1` `aquila_lab_s1p5_1`
+- **Priroda (5):** `ro_priroda_adapter_s2_s0p5_1` `ro_priroda_adapter_s2_s1p5_1` `ro_priroda_crew_s1p5_2` `aquila_experiment_rack_s1p5_1` `aquila_lab_s1p5_2`
+- **Sofora truss (3):** `rana_mount_srf_1` `rana_truss_srf_1` `rana_truss_srf_2`
+- **TKS ferry (6):** `aquila_control_s2_1` `ro_TKS_adapter_s2_s0p5_1` `ro_TKS_adapter_s2_s1p5_1` `ro_TKS_crew_s1p5_2` `alnair_les_s0_2` `sargas_decoupler_s1p5_1`
+- **Remap → Experimental (2):** `aquila_sensor_synthetic_aperture_radar_srf_1` (Travers SAR) · `aquila_sensor_visible_light_telescope_s0_1` (Priroda cam)
 
 ## Next
-- Continue mod-by-mod **hardware** curation: Tantares, NearFuture suite, US2, SSPX, SXT/VenStock, the rest.
+- Continue mod-by-mod **hardware** curation: Kerwis (Chinese), NearFuture suite, US2, SSPX, SXT/VenStock, the rest.
