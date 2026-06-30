@@ -98,7 +98,10 @@ def engine_disposition(config):
     cur = parts & curated
     if cur:
         return "KEEP-engine", f"config on curated engine(s): {','.join(sorted(cur)[:3])}"
-    return "EXPERIMENTAL-engine", f"config only on uncurated engine(s): {','.join(sorted(parts)[:3])}"
+    # config exists only on uncurated host part(s) (e.g. the N1 Block A/B cluster stages, SXTK1Base*).
+    # We curate the standalone engines (ROE-NK33/NK-43) but not the cluster bases, so there is no
+    # curated part that can use this clustered config -> sack the upgrade (user call, 2026-07-01).
+    return "DROP-no-curated-host", f"config only on uncurated part(s): {','.join(sorted(parts)[:3])}; no curated host -> sacked"
 
 # ---------------------------------------------------------------- per-row disposition
 COMPANION = {

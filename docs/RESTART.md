@@ -115,14 +115,15 @@ The part diff only compares `PART` nodes, so RP-1-authored `PARTUPGRADE`s are in
 (→ `manifest/upgrades-absent.tsv` + `manifest/upgrades-live.tsv`) enumerates them; `tools/curate_upgrades.py`
 (→ **`manifest/upgrades-curated.tsv`**) orphan-filters + dispositions them. The 71 live are mod-authored (Coatl,
 RealAntennas, ROSolar…), present via their mods.
-- **626 RP-1-authored PARTUPGRADEs, ALL absent** under AXE. Curated to **553 KEEP · 45 REFERENCE · 26 DROP · 2 EXP**
-  (user decisions folded in: HDD keep, avionics→reference, orphans keep, axed-career examined):
-  - **462 KEEP-engine** + **53 KEEP-engine-dormant** + **2 EXPERIMENTAL** (of 517 `Tree/TREE-Engines.cfg` RFUpgrade_*).
+- **626 RP-1-authored PARTUPGRADEs, ALL absent** under AXE. Curated to **553 KEEP · 45 REFERENCE · 28 DROP**
+  (user decisions folded in: HDD keep, avionics→reference, orphans keep, axed-career examined, N1 clusters sacked):
+  - **462 KEEP-engine** + **53 KEEP-engine-dormant** + **2 DROP-no-curated-host** (of 517 `Tree/TREE-Engines.cfg` RFUpgrade_*).
     Each unlocks engine `CONFIG X`; **orphan filter = reproduce RP-1's own `deleteme`/`Tree/UpgradeCleanup.cfg` offline**
     (parse live cache `Module*EngineConfigs`→`CONFIG`→host PART vs 1820 curated). 53 configs absent from our RO
     (e.g. `Merlin1B`,`NK-32`,`11D23`) → **KEPT as dormant** (vendor TREE-Engines.cfg whole; inert via deleteme, wakes if
     a mod adds the engine; **31/34 of their nodes already in the keeper remap** → forward-compat for ~3 extra lines).
-    2 (`30x_NK-33`,`8x_NK-43`) on uncurated SXT K-1 → Experimental.
+    2 (`30x_NK-33`,`8x_NK-43`) = N1 Block A/B cluster configs whose only host is the uncurated SXT N1 stages → **sacked**
+    (standalone ROE-NK33/NK-43 engines ARE curated; no curated cluster part).
   - **15 KEEP-engine-typelevel** (`Tree/RFTechLevels.cfg`, per engine-TYPE); **23 KEEP-capability** — PFTech-Fairing (6),
     X2Cockpit (1), ComSat/NavSat bus (6), **HDD data-storage (10, KEPT** — Kerbalism `KERBALISM_HDD_SIZES` subsystem,
     `Science/HardDriveConfigs.cfg`). Each pairs with a `%UPGRADES`/companion patch to vendor.
@@ -146,6 +147,16 @@ RealAntennas, ROSolar…), present via their mods.
   actual installed mods (`ls GameData` / `CKAN/registry.json`) before trusting any non-`*_clean` folder.**
 
 ## Parked ideas (later threads)
+- **Airlaunch** — RP-1's airlaunch is an interesting feature we **sacked** with the KCT/RP0.dll
+  career layer (T3, 2026-07-01). It is not a part: you build a vessel, KCT "mounts" it on a notional
+  carrier aircraft (time + funds), and it **spawns already airborne** inside an unlocked envelope.
+  Envelopes (`SCMData/AirlaunchLevels.cfg`, `KCTAIRLAUNCHTECHS`) are tech-gated and modeled on real
+  carriers — B-29→X-1 (7.6 km, 7.5 t), B-50→X-2 (9.1 km, 11.3 t), B-52→X-15/X-15A-2 (13.75 km,
+  15→25 t). The mass/size check is `AirlaunchTechLevel.CanLaunchVessel`. Reimplementing it for AXE
+  would be a **plugin** (spawn a vessel airborne within an envelope, gated by tech node), reusing
+  `AirlaunchLevels.cfg` + `Source/RP0/SpaceCenter/AirlaunchTechLevel.cs` / `UI/KCT/GUI_Airlaunch.cs`
+  as the reference — not a config port. (The dropped `airlaunchTL1-4` PARTUPGRADEs were only tree
+  icons; see [`UPGRADES.md`](UPGRADES.md) §D.)
 - **Relocatable / selectable KSC** — let the player choose or move the launch site ("united
   Kerbalkind → launch from anywhere"), where it's valid gameplay. Mechanically grounded:
   `KerbalKonstructs` + RSS launch sites (already in the RO_clean loadout); RP-1 has a launch-site

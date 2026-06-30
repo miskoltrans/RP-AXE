@@ -10,7 +10,7 @@ They are also AXE's **discipline-scatter mechanism** — one part, breakthrough-
 improvements unlocked across enabling-discipline nodes (RESTART.md T1 note). A node's payload is
 `unlocks:{parts:[…], upgrades:[…]}`.
 
-## Result — 553 KEEP · 45 REFERENCE · 26 DROP · 2 EXPERIMENTAL
+## Result — 553 KEEP · 45 REFERENCE · 28 DROP
 
 | Disposition | N | Bucket | Meaning |
 |---|---:|---|---|
@@ -21,7 +21,7 @@ improvements unlocked across enabling-discipline nodes (RESTART.md T1 note). A n
 | `REFERENCE-avionics` | 35 | REFERENCE | superseded by AXE's TIER ladder; keep `AVIONICSCONFIGS` as impl reference |
 | `REFERENCE-comms-dsn` | 10 | REFERENCE | DSN tracking-station tech gating; ref for AXE comms/ground-station axis |
 | `DROP-axed-career` | 26 | DROP | KCT engineer/researcher efficiency (22) + airlaunch (4) |
-| `EXPERIMENTAL-engine` | 2 | EXP | CONFIG only on an uncurated engine → rides it to the side-node |
+| `DROP-no-curated-host` | 2 | DROP | N1 cluster configs (`30x_NK-33`, `8x_NK-43`) — no curated cluster part |
 | **Total** | **626** | | |
 
 The **active keepers** (everything KEEP except the 53 dormant) map to **115 distinct RP-1
@@ -48,8 +48,11 @@ upgrade still flagged. We reproduce this by parsing the live `ModuleManager.Conf
   authored these against an RO version with variants we don't ship — e.g. `Merlin1B` when RO ships
   Merlin1A/1C/1D; `NK-32`; `11D23`). **Decision: keep them (see §E).** Vendored whole, they stay
   inert via deleteme and **wake automatically if a mod later supplies that engine config**.
-- **2 EXPERIMENTAL-engine** — `RFUpgrade_30x_NK-33`, `RFUpgrade_8x_NK-43`: config only on uncurated
-  SXT K-1 parts (`SXTK1BaseLarge`, `SXTK1Base5m`) → follow their part to the Experimental side-node.
+- **2 DROP-no-curated-host** — `RFUpgrade_30x_NK-33`, `RFUpgrade_8x_NK-43`: these are the **N1
+  Block A / Block B** cluster configs (30× NK-15/33, 8× NK-15V/43). The only live host is the
+  uncurated SXT N1 stage parts (`SXTK1BaseLarge` / `SXTK1Base5m`, titled "N1 Block A/B"). We curate
+  the standalone engines (`ROE-NK33`/`ROE-NK43`) but not the cluster bases, so no curated part can
+  use these configs → **sacked**. (Revisit if AXE ever curates/authors an N1 first stage.)
 
 `Tree/RFTechLevels.cfg` (**15 KEEP-engine-typelevel**) is the orthogonal RealFuels system: per
 engine **type** (Solids/Nuclear/RCS/Cryo/…) it raises the RF tech level at tech nodes. All types
@@ -131,14 +134,21 @@ the DSN-tech-by-comms-node progression is reference-worthy** — it lines up wit
 `RealAntennas` `commsTL1-10` upgrades (`manifest/upgrades-live.tsv`), which AXE keeps via the mod.
 Reference for AXE's comms/ground-station axis when P2 places the comms branch.
 
-## D. DROP (26, all `DROP-axed-career`)
+## D. DROP (28)
 
+`DROP-axed-career` (26):
 - **`rp0EngineerUpgrade*` (12) + `rp0ResearcherUpgrade*` (10)** (`Tree/KCTUpgrades.cfg`) — KCT
   personnel build-rate / research-rate efficiency multipliers. No AXE KCT; `description = unset`,
   no part payload → genuinely dead, no reference value.
-- **`airlaunchTL1…4` (4)** (`Tree/AirlaunchTechlevels.cfg`) — RP-0/KCT airlaunch capability
-  ("not a part you can use"), consumed by the axed airlaunch plugin. The mass/size envelopes are a
-  minor reference if AXE ever adds airlaunch, but the mechanism is gone.
+- **`airlaunchTL1…4` (4)** (`Tree/AirlaunchTechlevels.cfg`) — tree-icon mirrors of RP-1's airlaunch
+  capability gates, consumed by the axed RP0.dll/KCT airlaunch subsystem. The icons do nothing
+  without the plugin. (Airlaunch itself is an interesting sacked feature — parked in
+  RESTART.md "Parked ideas"; the reusable reference is `SCMData/AirlaunchLevels.cfg` +
+  `Source/RP0/SpaceCenter/AirlaunchTechLevel.cs` / `UI/KCT/GUI_Airlaunch.cs`, not these upgrades.)
+
+`DROP-no-curated-host` (2):
+- **`RFUpgrade_30x_NK-33`, `RFUpgrade_8x_NK-43`** — N1 Block A/B cluster configs whose only host is
+  the uncurated SXT N1 stage parts; no curated cluster part → sacked (see §A).
 
 ## E. Decision — keep the 53 engine orphans? **Yes.**
 
