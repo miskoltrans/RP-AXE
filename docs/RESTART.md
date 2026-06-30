@@ -115,22 +115,28 @@ The part diff only compares `PART` nodes, so RP-1-authored `PARTUPGRADE`s are in
 (→ `manifest/upgrades-absent.tsv` + `manifest/upgrades-live.tsv`) enumerates them; `tools/curate_upgrades.py`
 (→ **`manifest/upgrades-curated.tsv`**) orphan-filters + dispositions them. The 71 live are mod-authored (Coatl,
 RealAntennas, ROSolar…), present via their mods.
-- **626 RP-1-authored PARTUPGRADEs, ALL absent** under AXE. Curated to **490 KEEP · 124 DROP · 12 REVIEW/EXP**:
-  - **462 KEEP-engine** + **2 EXPERIMENTAL** + **53 DROP-orphan** (of 517 `Tree/TREE-Engines.cfg` RFUpgrade_*). Each
-    RFUpgrade_X unlocks engine `CONFIG X` (e.g. `RFUpgrade_11D23` → RD0216's 11D23 at `stagedCombustion1967`).
-    **Orphan filter = RP-1's own `deleteme`/`Tree/UpgradeCleanup.cfg` mechanism, computed offline** by parsing the live
-    cache (`Module*EngineConfigs`→`CONFIG`→host PART) vs the 1820 curated parts: 53 configs (e.g. `Merlin1B`, `NK-32`)
-    are absent from our installed RealismOverhaulEngines → drop (the deleteme mechanism drops them at load anyway, so
-    **vendoring TREE-Engines.cfg whole self-filters**); 2 (`30x_NK-33`,`8x_NK-43`) sit only on uncurated SXT K-1 parts → Experimental.
-  - **15 KEEP-engine-typelevel** (`Tree/RFTechLevels.cfg`) — RealFuels per-engine-TYPE levels (Solids/Nuclear/RCS/Cryo…);
-    NOT the legacy `techLevel` knob RO dropped.
-  - **13 KEEP-capability** — `PFTech-Fairing-*` (6, procedural mass), `X2CockpitUpgrade` (RO-X1Cockpit), ComSat/NavSat bus
-    tech (6, on curated RP-1-{Communication,Navigation}Sat). Each pairs with a `%UPGRADES` companion patch on the target part.
-  - **35 DROP-superseded-avionics** (`Tree/ProceduralAvionics.cfg` → AXE `ModuleAxeAvionics`); **36 DROP-axed-career**
-    (KCT 22 + facility 10 + airlaunch 4); **10 REVIEW** (`HDD-Upgrade-*` Kerbalism data-storage subsystem — **open scope call**, see UPGRADES.md §D).
+- **626 RP-1-authored PARTUPGRADEs, ALL absent** under AXE. Curated to **553 KEEP · 45 REFERENCE · 26 DROP · 2 EXP**
+  (user decisions folded in: HDD keep, avionics→reference, orphans keep, axed-career examined):
+  - **462 KEEP-engine** + **53 KEEP-engine-dormant** + **2 EXPERIMENTAL** (of 517 `Tree/TREE-Engines.cfg` RFUpgrade_*).
+    Each unlocks engine `CONFIG X`; **orphan filter = reproduce RP-1's own `deleteme`/`Tree/UpgradeCleanup.cfg` offline**
+    (parse live cache `Module*EngineConfigs`→`CONFIG`→host PART vs 1820 curated). 53 configs absent from our RO
+    (e.g. `Merlin1B`,`NK-32`,`11D23`) → **KEPT as dormant** (vendor TREE-Engines.cfg whole; inert via deleteme, wakes if
+    a mod adds the engine; **31/34 of their nodes already in the keeper remap** → forward-compat for ~3 extra lines).
+    2 (`30x_NK-33`,`8x_NK-43`) on uncurated SXT K-1 → Experimental.
+  - **15 KEEP-engine-typelevel** (`Tree/RFTechLevels.cfg`, per engine-TYPE); **23 KEEP-capability** — PFTech-Fairing (6),
+    X2Cockpit (1), ComSat/NavSat bus (6), **HDD data-storage (10, KEPT** — Kerbalism `KERBALISM_HDD_SIZES` subsystem,
+    `Science/HardDriveConfigs.cfg`). Each pairs with a `%UPGRADES`/companion patch to vendor.
+  - **35 REFERENCE-avionics** (`Tree/ProceduralAvionics.cfg`) — AXE's `ModuleAxeAvionics` TIER ladder already supersedes
+    them (and `AxeAvionicsCore.cfg:115-118` deletes the icons); **keep `AVIONICSCONFIGS` as the impl reference.** Gap AXE
+    hasn't built = per-tier **kOS** integration (`kosDiskSpace`/`kosECPerInstruction`/…) + `hasScienceContainer` gating;
+    `costFactor` + Deep-Space/`interplanetary` deliberately dropped. See [[rp-axe-avionics-core]], UPGRADES.md §C1.
+  - **10 REFERENCE-comms-dsn** (`Tree/TechFacilityUpgrades.cfg`) — DSN tracking-station tech gated by comms nodes; ref for
+    AXE comms/ground-station axis, pairs with live RealAntennas `commsTL1-10`.
+  - **26 DROP-axed-career** — `rp0Engineer/ResearcherUpgrade*` (22, KCT personnel efficiency, `description=unset`, dead) +
+    `airlaunchTL*` (4, RP-0/KCT airlaunch plugin).
 - **Sandbox unaffected** (auto-unlocks all upgrades); the gap is **career progression only**.
-- **The work (P2):** vendor TREE-Engines.cfg whole + UpgradeCleanup.cfg + RFTechLevels.cfg + the 13 capability companions,
-  then **remap each kept `techRequired` → AXE node** — **108 distinct RP-1 nodes** (not 490 edits). Tree-coupled →
+- **The work (P2):** vendor TREE-Engines.cfg whole + UpgradeCleanup.cfg + RFTechLevels.cfg + capability companions + the
+  HDD subsystem, then **remap each kept `techRequired` → AXE node** — **115 distinct RP-1 nodes** (+3 orphan-only). Tree-coupled →
   **blocked on P1 nodes existing**; do it in P2 alongside placement. Drives off `manifest/upgrades-curated.tsv`.
 
 ## Reference instances (outside the repo — never nuke)

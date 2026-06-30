@@ -91,7 +91,10 @@ config2parts = parse_cache(CACHE)
 def engine_disposition(config):
     parts = config2parts.get(config)
     if not parts:
-        return "DROP-orphan", f"config '{config}' absent from the live install (RO variant we don't ship)"
+        # KEEP, vendored-but-inert: RP-1's deleteme/UpgradeCleanup deletes it at load while its
+        # CONFIG is absent, then it lights up automatically if a future mod supplies that engine
+        # variant. 50/53 of these reference a node the keeper remap already covers (forward-compatible).
+        return "KEEP-engine-dormant", f"config '{config}' absent from current install; inert via deleteme, wakes if a mod adds it"
     cur = parts & curated
     if cur:
         return "KEEP-engine", f"config on curated engine(s): {','.join(sorted(cur)[:3])}"
@@ -105,6 +108,8 @@ COMPANION = {
     "Tree/CockpitUpgrades.cfg":   "Tree/CockpitUpgrades.cfg @PART[..RO-X1Cockpit..]:FOR[zRP-0] UPGRADES",
     "Tree/PayloadLevels.cfg":     "Tree/PayloadLevels.cfg + Parts/ContractSat/{Communication,Navigation}Sat.cfg UPGRADES",
     "Tree/HardDriveUpgrades.cfg": "Tree/HardDriveUpgrades.cfg + Science/HardDriveConfigs.cfg (Kerbalism KERBALISM_HDD_SIZES subsystem)",
+    "Tree/ProceduralAvionics.cfg":"Tree/ProceduralAvionics.cfg AVIONICSCONFIGS (reference data, not vendored as upgrades)",
+    "Tree/TechFacilityUpgrades.cfg":"Tree/TechFacilityUpgrades.cfg (DSN tracking-station tech gating; pairs w/ live RealAntennas commsTL*)",
 }
 
 def final_disposition(name, srcfile):
@@ -114,11 +119,18 @@ def final_disposition(name, srcfile):
     if srcfile == "Tree/RFTechLevels.cfg":
         return "KEEP-engine-typelevel", "RealFuels per-engine-TYPE tech-level (Solids/Nuclear/RCS/Cryo... all present)"
     if srcfile == "Tree/ProceduralAvionics.cfg":
-        return "DROP-superseded-avionics", "AXE ships its own ModuleAxeAvionics TIER ladder (settled decision)"
-    if srcfile in ("Tree/KCTUpgrades.cfg", "Tree/TechFacilityUpgrades.cfg"):
-        return "DROP-axed-career", "KCT / facility upgrade; AXE axes the KCT/career layer"
+        # AXE's ModuleAxeAvionics TIER ladder already supersedes the NE+SC progression and
+        # AxeAvionicsCore.cfg actively deletes these icons. Keep the source AVIONICSCONFIGS as the
+        # implementation reference for capabilities AXE hasn't built: per-tier kOS integration
+        # (kosDiskSpace/kosECPerInstruction/...) and hasScienceContainer gating. (costFactor and
+        # interplanetary/Deep-Space are deliberately dropped per AXE design.)
+        return "REFERENCE-avionics", "superseded by AXE TIER ladder; retain AVIONICSCONFIGS as ref for kOS + science-container gating not yet built"
+    if srcfile == "Tree/TechFacilityUpgrades.cfg":
+        return "REFERENCE-comms-dsn", "DSN tracking-station tech-level gated by comms nodes; ref for AXE comms/ground-station axis (pairs w/ live RealAntennas commsTL1-10)"
+    if srcfile == "Tree/KCTUpgrades.cfg":
+        return "DROP-axed-career", "KCT engineer/researcher build-&-research-rate efficiency; no AXE KCT (description=unset, no payload)"
     if srcfile == "Tree/AirlaunchTechlevels.cfg":
-        return "DROP-axed-career", "RP-0/KCT airlaunch capability ('not a part you can use'); plugin axed"
+        return "DROP-axed-career", "RP-0/KCT airlaunch capability ('not a part you can use'); plugin axed (mass/size envelopes = minor ref)"
     if srcfile == "Tree/PFTechLevels.cfg":
         return "KEEP-capability", "procedural fairing/structure mass tech; procedural parts are AXE's workhorse"
     if srcfile == "Tree/CockpitUpgrades.cfg":
@@ -126,7 +138,7 @@ def final_disposition(name, srcfile):
     if srcfile == "Tree/PayloadLevels.cfg":
         return "KEEP-capability", "ComSat/NavSat bus tech; RP-1-CommunicationSat & RP-1-NavigationSat curated"
     if srcfile == "Tree/HardDriveUpgrades.cfg":
-        return "REVIEW-keep-candidate", "Kerbalism data-storage capacity tech (proceduralAvionics/ROT-ProbeCore curated); whole HDD subsystem = scope decision"
+        return "KEEP-capability", "Kerbalism data-storage capacity tech (proceduralAvionics/ROT-ProbeCore curated + ModuleScienceContainer/Command); KEEP the data-storage axis"
     return "REVIEW", "uncategorised"
 
 absent = []
@@ -146,15 +158,26 @@ with open(out, "w", encoding="utf-8", newline="") as f:
         f.write("\t".join(r) + "\n")
 
 # ---------------------------------------------------------------- summary
+def bucket(k):
+    if k.startswith("KEEP"):      return "KEEP"
+    if k.startswith("REFERENCE"): return "REFERENCE"
+    if k.startswith("DROP"):      return "DROP"
+    return "EXP"
 cc = collections.Counter(r[3] for r in absent)
-keep = drop = review = 0
+tot = collections.Counter()
 print(f"curated parts {len(curated)} | live engine configs {len(config2parts)} | absent upgrades {len(absent)}\n")
 for k, v in sorted(cc.items(), key=lambda kv:(-kv[1])):
-    b = "KEEP" if k.startswith("KEEP") else "DROP" if k.startswith("DROP") else "REVIEW/EXP"
-    print(f"  {v:>4}  {k:<26} [{b}]")
-    if k.startswith("KEEP"): keep += v
-    elif k.startswith("DROP"): drop += v
-    else: review += v
-nodes = len({r[1] for r in absent if r[3].startswith("KEEP")})
-print(f"  ----\n  {keep:>4}  KEEP (vendor + remap techRequired -> AXE nodes, P2; {nodes} distinct RP-1 nodes)")
-print(f"  {drop:>4}  DROP\n  {review:>4}  REVIEW/EXPERIMENTAL\n\n-> {out}")
+    print(f"  {v:>4}  {k:<24} [{bucket(k)}]")
+    tot[bucket(k)] += v
+nodes = len({r[1] for r in absent if r[3].startswith("KEEP") and r[3] != "KEEP-engine-dormant"})
+# orphan (dormant) node coverage vs the active-keeper remap
+keepnodes = {r[1] for r in absent if r[3].startswith("KEEP") and r[3] != "KEEP-engine-dormant"}
+dormant_nodes = {r[1] for r in absent if r[3] == "KEEP-engine-dormant"}
+uncovered = dormant_nodes - keepnodes
+print(f"  ----")
+print(f"  {tot['KEEP']:>4}  KEEP        (vendor; active keepers remap {nodes} distinct RP-1 nodes -> AXE)")
+print(f"  {tot['REFERENCE']:>4}  REFERENCE   (retain source as design reference, not vendored as live upgrades)")
+print(f"  {tot['DROP']:>4}  DROP")
+print(f"  {tot['EXP']:>4}  EXPERIMENTAL")
+print(f"\n  dormant-orphan forward-compat: {len(dormant_nodes)-len(uncovered)}/{len(dormant_nodes)} nodes already covered by the keeper remap; uncovered: {sorted(uncovered)}")
+print(f"\n-> {out}")
