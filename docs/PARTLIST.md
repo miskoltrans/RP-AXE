@@ -42,6 +42,42 @@ RO and RP-1 reference installs. Tooling: `tools/ro_coverage.py` parser; diff scr
   (`RealismOverhaul/Parts/Avionics/Able/Agena/Centaur/Delta` + Saturn) that RP-1 drops — strong
   keep-and-tag candidates.
 
+## Science system — RP-1's RP0* is the backbone (curation decoupled from science)
+Investigated via reference caches (`ro_expanded` = native/no-Kerbalism; `rp1_expanded` = real baseline).
+- **RP-1 + Kerbalism IS the science baseline.** It strips every mod's *native* experiments and assigns its
+  own **RP0\* suite: 96 experiments / 69 instrument families** — tiered (massSpec ×4, imageSpec ×4,
+  infraredRad ×4, photos ×4, visibleImaging ×5, magScan ×3, RPWS ×3, cosmicRay/bioScan ×2) + ~55 one-off
+  historical experiments (ALSEP, lunar seismic network, ISRU demo, supersonic flight, TV broadcast,
+  materials processing, biology, UV/X-ray astronomy…). Ported wholesale like contracts.
+- **Instruments = RP-1's own 32 `category=Science` parts** (`RO-IonMassSpectrometer`→massSpec1,
+  `RO-EarlyMagnet`→magScan1, the TV/film-camera, IR-radiometer, UV/IR-spectrometer, RPWS, cosmic-ray
+  tiers — one part per experiment tier). **This is the instrument backbone.**
+- **Every other mod's dedicated instruments are REDUNDANT → RP-1 cuts them.** Confirmed: Coatl's **29**
+  native instruments → **all 29 cut**; DMagic's surviving 5 add **0 unique** (US-wedge reskins). Inherit.
+- **Only SSPX (+20 unique) and US2 (+7 unique) ADD science** — sole carriers of station/lab/long-duration
+  science (closed-loop ag, materials, lunar surface, UV/X-ray astronomy) + stock goo/seismic/materials.
+  **Keep their science parts.**
+- **Consequences:** (1) science-part curation = HARDWARE merit; cutting redundant instruments loses **no**
+  science (RP0* rides along on RP-1-configured buses). (2) Vision's "balance around **DMagic**" is
+  superseded — DMagic instruments are redundant reskins of RP-1's; backbone is RP0*. (3) value-add parts
+  beyond RP-1's set carry **no** science until we author RP0* assignments (→ gap-fill list). (4) **SCANsat
+  absent** → stock orbital/surface scanners are inert (no experiment); revisit if SCANsat is added.
+
+## Per-mod expanded-pack curation (in progress)
+Going mod-by-mod through RP-1's per-pack cuts, recording AXE's call. Lens: **science/exploration delivery
++ real-engineering education** is the value axis (science is the central pillar; probes are liked because
+they deliver it). Inherit RP-1's redundant/low-value cuts; reverse cuts of science/exploration-delivery or
+historical-education parts.
+
+**Low-value (emerging definition, from these calls):** standalone duplicate **solar panels** (RO/procedural
+solar covers them); **mod-specific science instruments** (→ DMagic); **part-specific decouplers/RCS/legs**
+(→ generic/procedural); **deprecated** dupes; niche film-return **spy-sat** subsystems (KH-9).
+
+| Mod | RO has | AXE keeps | Notes |
+|---|---|---|---|
+| RN_US_Probes | 106 | **72** | Inherit 34 component cuts: 11 std solar panels (redundant), 3 scanners (→DMagic), 12-part KH-9 spy-sat family, 8 part-specific decouplers/RCS/legs. Reverse the 13 iconic whole-probes (Mariner-Mars 3/4–10, LRO, LADEE, LCROSS, Juno, Helios, Mars Observer, Sphinx, TDRS A-G). Prune RaiderNick's 3 internal `DEPRECATED` dupes regardless. |
+| RN_Soviet_Probes | 27 | **23** | Reverse 15 whole probes + integral sub-parts (Luna 2/3/10/11/13, Venera 1, Molniya-1, Polyot, Proton 1-4 sats, Strela bus + astro/radio/vernier). Inherit 4 redundant cuts: `molniya_asas` (deprecated), 2 RCS blocks (Venera/Strela → generic), 1 payload decoupler. Corrects RP-1's US-centric bias (kept only 8/27). |
+| CoatlAerospace | 123 | **74** | Inherit RP-1's 49 cuts: all **29 dedicated instruments** (redundant with RP-1's RO-* set, per Science section) + 8 solar panels + 4 batteries + 2 tanks + RCS/misc. Keep the **hardware** (buses, antennas, RTGs, reaction wheels, EDL aeroshells). Optional adds flagged: SSTL-150 bus, STAR-24C motor. |
+
 ## Next
-- Understand RP-1's decisions on the **expanded candidate packs** (what it cuts from Tantares / NearFuture
-  / probes / Coatl / etc., and why) → feeds the ahistorical/future curation.
+- Continue mod-by-mod **hardware** curation: Tantares, NearFuture suite, US2, SSPX, SXT/VenStock, the rest.
