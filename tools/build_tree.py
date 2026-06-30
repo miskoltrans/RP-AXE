@@ -19,7 +19,8 @@ REND = os.path.join(TREE, "render")
 
 X0, TIERW = 0, 430              # x = X0 + tier*TIERW (normalized to MARGIN below)
 Y0, DISCH, SUBH = 0, 100, 34    # y = Y0 + (order-1)*DISCH + sub-stack
-MARGIN_X, MARGIN_Y = 120, 120   # keep the whole tree in positive/in-bounds coords (start not off-canvas)
+MARGIN_X, MARGIN_Y = -2568, 711  # anchor top-left to the editor's stock-tree origin (its home view);
+                                 # tree grows right/down from there like a normal KSP/RP-1 tree
 
 def die(msg):
     print("ERROR:", msg); sys.exit(1)
