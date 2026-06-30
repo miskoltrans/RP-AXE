@@ -161,17 +161,25 @@ no tail) vs. keep a deliberate handful as high-value deep-space targets (JUNO/so
 
 ---
 
-## 4. Tree-budget implications + decision needed
+## 4. Tree-cost decision — PROVISIONAL: ~300k total, front-loaded bite
 
-Total budget (§3b): **~3.93M theoretical (65% probe / 35% crewed-lab)**; realistic collection lower and
-probe-weighted. Two competing anchors for total tree cost —
-- **RP-1 anchor (completable):** ~115k baseline → a 200–500 node tree at **~150k–400k** is funded by
-  mid-game (≥371k combined by the early-crewed era) but needs interplanetary work to finish; early game
-  (≈58k combined at first orbit) stays tight.
-- **VISION anchor (not completable in one playthrough):** "tree cost ≈ total science" → **~3.93M** — a
-  much costlier tree you can't finish. Opposite directions — **a P1 call**, not settled here.
-- Either way, per-tier budgeting mirrors the §3b table: cheap early nodes (paid by the thin ~58–182k
-  home/inner-system tiers), costlier late nodes (paid by the interplanetary millions).
+Total budget (§3b): **~3.93M theoretical (65% probe / 35% crewed-lab)**; realistic collection is lower and
+probe-weighted. Anchors considered: RP-1 = **115k** (≈3% of pool, completable); VISION-literal "tree cost ≈
+total science" = ~3.93M (you'd unlock ~5% — absurd). **PROVISIONAL DECISION (2026-06-30): total tree cost
+≈ 300k** (≈ 2.6× RP-1, ≈ 8% of pool).
+
+- **Why 300k:** AXE drops RP-1's *other* gates (reliability/run-data grind, time pressure), so science is
+  the **sole** pacing axis and must do more work than RP-1's 115k. ~300k is finishable by a **broad-
+  exploration** playthrough (banks ~300–500k realistically) but not a focused rush → matches VISION's
+  "not expected to finish in one playthrough." Bracket: ~150k RP-1-comfortable … ~500k grand-tour-only.
+- **Shape = FRONT-LOAD the bite (NOT mirror availability):** cheap **bootstrap** (tiers 1–2 — can't gate
+  *reaching* orbit behind orbital science); **peak bite** in tiers 3–6 (orbit→Moon→inner planets) holding
+  ~55–60% of the 300k — the science-tight struggle VISION wants early; then **taper** late (outer/modern)
+  where science is flush and VISION hands the gate to *other* axes (power/heat/materials/money). Crewed-lab's
+  realistic ~5–15k lands in the early-mid, helping fund the peak-bite window.
+- **It's a dial, validated by play.** Implement as **one global science-cost scalar**; final tune comes
+  from the **P3 solvency play-session**, not more spreadsheet work. The budget fixes the *constraints*
+  (can't charge above availability; the curve); 300k is the working *choice*.
 
 **For P3 (KerbalismLab integration) — DECIDED: re-author as plain `Experiment` modules.**
 Reimplement the 65 experiments as plain Kerbalism `Experiment` + `EXPERIMENT_DEFINITION` configs wired
