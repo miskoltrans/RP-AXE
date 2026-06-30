@@ -24,7 +24,10 @@ meta:
     4: 900
     5: 1500
     6: 2000
-    7: 2400
+    7: 2300
+    8: 2100
+    9: 1700
+    10: 1300
 
 nodes:
   # ---------- bootstrap ----------
@@ -90,7 +93,7 @@ nodes:
     title: "Aluminum Isogrid & Maraging-Steel Cases"
     discipline: Metallurgy
     tier: 2
-    parents: [soundingRocketry]
+    parents: [met_weldedSteel]
     flavor: "Chemically-milled isogrid aluminum for light pressure vessels; ultra-high-strength maraging steel for solid-motor cases and pump housings. The structural backbone everything else bolts to."
   - id: met_oxRichSuperalloys
     title: "Oxidizer-Rich Preburner Superalloys"
@@ -198,3 +201,248 @@ nodes:
     tier: 5
     parents: [start]
     flavor: "(off-slice stub) Electrical Power. Regulated high-voltage buses for active cryocooling and electric propulsion."
+
+  # ======================= STAGE 1 — Materials & Chemistry cluster =======================
+  # ---------- Metallurgy (metals, casting, forming) ----------
+  - id: met_weldedSteel
+    title: "Welded Steel Pressure Vessels"
+    discipline: Metallurgy
+    tier: 1
+    parents: [start]
+    flavor: "Roll, weld and proof-test mild-steel cylinders that hold pressure without bursting. The first tank that flies."
+  - id: met_chemMilling
+    title: "Chemical Milling & Isogrid"
+    discipline: Metallurgy
+    tier: 3
+    parents: [met_earlyAlloys]
+    flavor: "Etch away everything that isn't load path, leaving a triangular-rib isogrid skin — stiffness at a fraction of the mass."
+  - id: met_vacuumInductionMelting
+    title: "Vacuum Induction Melting"
+    discipline: Metallurgy
+    tier: 4
+    parents: [met_chemMilling]
+    flavor: "Melt under vacuum to strip dissolved gases and inclusions, casting the clean nickel-base superalloys that hot sections demand."
+  - id: met_titaniumForming
+    title: "Superplastic Titanium Forming"
+    discipline: Metallurgy
+    tier: 5
+    parents: [met_chemMilling]
+    flavor: "Heat titanium until it flows like taffy and form one-piece, diffusion-bonded structures — strong, light, corrosion-proof."
+  - id: met_vacuumArcRemelting
+    title: "Vacuum Arc Remelting"
+    discipline: Metallurgy
+    tier: 5
+    parents: [met_vacuumInductionMelting]
+    flavor: "A consumable-electrode second melt homogenises the ingot grain by grain — the pedigree steel of turbine discs and gun-pressure cases."
+  - id: met_powderMetallurgyHIP
+    title: "Powder Metallurgy & Hot Isostatic Pressing"
+    discipline: Metallurgy
+    tier: 6
+    parents: [met_vacuumInductionMelting]
+    flavor: "Consolidate atomised powder under heat and pressure into near-net shapes with no casting porosity — complex parts, full density."
+  - id: met_singleCrystalTurbine
+    title: "Single-Crystal Turbine Castings"
+    discipline: Metallurgy
+    tier: 6
+    parents: [met_vacuumArcRemelting]
+    flavor: "Grow a turbine blade as one crystal with no grain boundaries to creep — it runs hotter and lasts longer than any equiaxed casting."
+  - id: met_refractoryMetals
+    title: "Refractory Metal Hot Sections"
+    discipline: Metallurgy
+    tier: 7
+    parents: [met_vacuumArcRemelting]
+    flavor: "Niobium, tantalum and tungsten alloys that stay strong red-hot — radiation-cooled nozzles and nuclear-thermal cores."
+  - id: met_additiveManufacturing
+    title: "Laser Powder-Bed Additive Manufacturing"
+    discipline: Metallurgy
+    tier: 8
+    parents: [met_powderMetallurgyHIP]
+    flavor: "Print a regen-cooled chamber as a single part with internal channels no machine could cut. Geometry becomes free; the alloy becomes the limit."
+  - id: met_amorphousAlloys
+    title: "Bulk Metallic Glasses"
+    discipline: Metallurgy
+    tier: 9
+    parents: [met_additiveManufacturing]
+    flavor: "Quench fast enough that the metal never crystallises — glassy alloys with spring-like elasticity and extreme strength-to-weight."
+  # ---------- Composite Materials (non-metallic structures & thermal protection) ----------
+  - id: cmp_glassFiber
+    title: "Glass-Fiber Laminates"
+    discipline: CompositeMaterials
+    tier: 2
+    parents: [met_weldedSteel]
+    flavor: "Glass cloth in cured resin: light, transparent to radio, and the gateway to every structural composite that follows."
+  - id: cmp_ablativeTPS
+    title: "Ablative Heatshields"
+    discipline: CompositeMaterials
+    tier: 3
+    parents: [cmp_glassFiber]
+    flavor: "A phenolic char layer that burns away on purpose, carrying reentry heat with it. The only thing between a capsule and a meteor's fate."
+    parts: [ROC-ApolloHSBDB]
+  - id: cmp_filamentWinding
+    title: "Filament-Wound Cases"
+    discipline: CompositeMaterials
+    tier: 4
+    parents: [cmp_glassFiber]
+    flavor: "Wind continuous fiber under tension around a mandrel for pressure vessels and solid-motor cases far lighter than steel."
+  - id: cmp_carbonCarbon
+    title: "Carbon-Carbon Hot Structures"
+    discipline: CompositeMaterials
+    tier: 5
+    parents: [cmp_ablativeTPS]
+    flavor: "Carbon fiber in a carbon matrix that gets STRONGER as it heats — reusable wing leading edges and throat inserts."
+  - id: cmp_carbonFiberComposite
+    title: "Carbon-Fiber Airframes"
+    discipline: CompositeMaterials
+    tier: 5
+    parents: [cmp_filamentWinding]
+    flavor: "Tailored carbon-epoxy laminates lay stiffness exactly along the load paths — the modern lightweight airframe and interstage."
+  - id: cmp_pica
+    title: "PICA / AVCOAT Reentry Ablators"
+    discipline: CompositeMaterials
+    tier: 6
+    parents: [cmp_ablativeTPS]
+    flavor: "Ultralight phenolic-impregnated carbon ablators survive lunar- and Mars-return entry velocities at a fraction of the mass."
+  - id: cmp_copv
+    title: "Composite Overwrapped Pressure Vessels"
+    discipline: CompositeMaterials
+    tier: 6
+    parents: [cmp_carbonFiberComposite]
+    flavor: "A thin metal liner overwrapped in carbon fiber holds helium at hundreds of bar for a tiny mass — the modern pressurant bottle."
+  - id: cmp_ceramicTiles
+    title: "Reusable Ceramic Tile TPS"
+    discipline: CompositeMaterials
+    tier: 6
+    parents: [cmp_carbonCarbon]
+    flavor: "Silica tiles so insulating you can hold one glowing at the edges — the Shuttle's reusable skin, fragile but flyable again."
+  - id: cmp_ceramicMatrixComposite
+    title: "Ceramic-Matrix Composites"
+    discipline: CompositeMaterials
+    tier: 7
+    parents: [cmp_carbonCarbon]
+    flavor: "Ceramic fibers in a ceramic matrix add toughness to refractory ceramics — uncooled nozzle extensions and turbine shrouds."
+  - id: cmp_metalMatrixComposite
+    title: "Metal-Matrix Composites"
+    discipline: CompositeMaterials
+    tier: 8
+    parents: [cmp_copv]
+    flavor: "Silicon-carbide whiskers in an aluminum or titanium matrix: stiffer, more dimensionally stable struts and booms."
+  - id: cmp_transpirationTPS
+    title: "Transpiration-Cooled TPS"
+    discipline: CompositeMaterials
+    tier: 8
+    parents: [cmp_ceramicMatrixComposite]
+    flavor: "Sweat coolant through a porous skin to hold a fully reusable surface below its limit through repeated high-energy entries."
+  # ---------- Propellant Chemistry (additions to the fuel-timeline ladder) ----------
+  - id: pc_blackPowder
+    title: "Pressed Black-Powder Grains"
+    discipline: PropellantChemistry
+    tier: 1
+    parents: [start]
+    flavor: "Charcoal, sulfur and saltpetre pressed into a grain — the oldest rocket propellant, and where solids begin."
+  - id: pc_doubleBaseSolid
+    title: "Double-Base Solid Propellant"
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [pc_blackPowder]
+    flavor: "Nitrocellulose gelled with nitroglycerine burns hotter and cleaner than powder — the smokeless propellant of early missiles."
+  - id: pc_hydrogenPeroxide
+    title: "High-Test Peroxide (HTP)"
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [pc_ethanolLox]
+    flavor: "Concentrated peroxide decomposes over a silver catalyst into hot steam and oxygen — monopropellant gas generators and soft-start oxidiser."
+  - id: pc_castableComposite
+    title: "Castable AP/Al Composite Grains"
+    discipline: PropellantChemistry
+    tier: 4
+    parents: [pc_apcpGrain]
+    flavor: "Cast and cure a meganewton-class grain directly into a segmented case — the chemistry of the largest boosters ever flown."
+    parts: [RO-RSRM]
+  - id: pc_greenMonoprop
+    title: "Green Monopropellants"
+    discipline: PropellantChemistry
+    tier: 5
+    parents: [pc_hypergolicChemistry]
+    flavor: "Ionic-liquid blends (LMP-103S, AF-M315E) match hydrazine's performance without the lethal toxicity — safer satellite propulsion."
+  - id: pc_gelledPropellant
+    title: "Gelled Hypergolic Propellants"
+    discipline: PropellantChemistry
+    tier: 6
+    parents: [pc_storableOxidizers]
+    flavor: "Thicken storables to a gel that won't slosh or leak yet still flows when throttled — restartable, safer high-density propulsion."
+  - id: pc_methalox
+    title: "Methane Liquefaction & Methalox"
+    discipline: PropellantChemistry
+    tier: 6
+    parents: [pc_cryoLiquefaction]
+    flavor: "Liquid methane: clean-burning, coke-free, dense enough for deep throttling and — crucially — makeable from CO2 on Mars."
+  - id: pc_subcooledDensified
+    title: "Densified Sub-cooled Propellants"
+    discipline: PropellantChemistry
+    tier: 7
+    parents: [pc_methalox]
+    flavor: "Chill propellant below its boiling point and pack more mass in the same tank — the last few percent of performance, at operational cost."
+  # ---------- Resource Engineering (ISRU — emerges mid-tree) ----------
+  - id: res_electrolysis
+    title: "Water Electrolysis"
+    discipline: ResourceEngineering
+    tier: 4
+    parents: [pc_cryoLiquefaction]
+    flavor: "Split water into hydrogen and oxygen with electricity — life-support oxygen now, in-situ propellant later."
+  - id: res_regolithExcavation
+    title: "Regolith Excavation & Augering"
+    discipline: ResourceEngineering
+    tier: 5
+    parents: [met_earlyAlloys]
+    flavor: "Dig and convey abrasive regolith in vacuum and low gravity — the unglamorous front end of every off-world supply chain."
+    parts: [kerbalism-drill]
+  - id: res_cryoLiquefactionISRU
+    title: "In-Situ Cryogenic Liquefaction"
+    discipline: ResourceEngineering
+    tier: 5
+    parents: [res_electrolysis]
+    flavor: "Liquefy and store electrolysis products as flight cryogens on the surface — close the loop from water to propellant."
+  - id: res_sabatier
+    title: "Sabatier Methane Synthesis"
+    discipline: ResourceEngineering
+    tier: 6
+    parents: [res_electrolysis]
+    flavor: "React CO2 with hydrogen over a catalyst to make methane and water — the reaction that fuels the trip home from Mars."
+    parts: [kerbalism-chemicalplant]
+  - id: res_oreBeneficiation
+    title: "Ore Beneficiation & Sintering"
+    discipline: ResourceEngineering
+    tier: 6
+    parents: [res_regolithExcavation]
+    flavor: "Concentrate and sinter raw regolith into feedstock and bricks — the first step from dirt toward parts and shielding."
+  - id: res_metalExtraction
+    title: "In-Situ Metal Extraction"
+    discipline: ResourceEngineering
+    tier: 7
+    parents: [res_oreBeneficiation]
+    flavor: "Molten-regolith electrolysis pulls iron, aluminium and oxygen out of the dirt itself — structural metal without a launch."
+    parts: [kerbalism-ISRU]
+  - id: res_propellantDepot
+    title: "Orbital Propellant Depots"
+    discipline: ResourceEngineering
+    tier: 7
+    parents: [res_sabatier]
+    flavor: "Aggregate, store and transfer cryogens on orbit so missions launch dry and tank up — the logistics keystone of deep space."
+  - id: res_atmosphericMining
+    title: "Atmospheric & Gas-Giant Mining"
+    discipline: ResourceEngineering
+    tier: 8
+    parents: [res_metalExtraction]
+    flavor: "Scoop and separate gases from a planet's air on the fly — hydrogen and helium harvested without ever landing."
+  - id: res_closedLoopFab
+    title: "Closed-Loop In-Situ Fabrication"
+    discipline: ResourceEngineering
+    tier: 9
+    parents: [res_metalExtraction]
+    flavor: "Mine, refine, print and assemble entirely off-world, recycling scrap — a foothold that builds the next foothold."
+  - id: res_heliumMining
+    title: "Helium-3 Extraction"
+    discipline: ResourceEngineering
+    tier: 9
+    parents: [res_atmosphericMining]
+    flavor: "Separate the rare fusion isotope from regolith or gas-giant atmosphere — the propellant of an ambitious, far-future endgame."

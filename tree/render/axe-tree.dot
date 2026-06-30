@@ -25,13 +25,55 @@ digraph AXE {
   "tel_dsnRanging" [label="Coherent Two-Way Doppler & Ranging\nTelecommunications T4 · 900",fillcolor="#4361ee",fontcolor="#111111"];
   "tel_phasedArray" [label="Electronically-Steered Phased Arrays\nTelecommunications T5 · 1500",fillcolor="#4361ee",fontcolor="#111111"];
   "ext_powerGrid" [label="Kilowatt-Class Regulated Power Bus\nElectricalPower T5 · 1500",fillcolor="#ffd166",fontcolor="#111111"];
+  "met_weldedSteel" [label="Welded Steel Pressure Vessels\nMetallurgy T1 · 20",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_chemMilling" [label="Chemical Milling & Isogrid\nMetallurgy T3 · 400",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_vacuumInductionMelting" [label="Vacuum Induction Melting\nMetallurgy T4 · 900",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_titaniumForming" [label="Superplastic Titanium Forming\nMetallurgy T5 · 1500",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_vacuumArcRemelting" [label="Vacuum Arc Remelting\nMetallurgy T5 · 1500",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_powderMetallurgyHIP" [label="Powder Metallurgy & Hot Isostatic Pressing\nMetallurgy T6 · 2000",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_singleCrystalTurbine" [label="Single-Crystal Turbine Castings\nMetallurgy T6 · 2000",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_refractoryMetals" [label="Refractory Metal Hot Sections\nMetallurgy T7 · 2300",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_additiveManufacturing" [label="Laser Powder-Bed Additive Manufacturing\nMetallurgy T8 · 2100",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_amorphousAlloys" [label="Bulk Metallic Glasses\nMetallurgy T9 · 1700",fillcolor="#8d99ae",fontcolor="#111111"];
+  "cmp_glassFiber" [label="Glass-Fiber Laminates\nCompositeMaterials T2 · 90",fillcolor="#a3b18a",fontcolor="#111111"];
+  "cmp_ablativeTPS" [label="Ablative Heatshields\nCompositeMaterials T3 · 400",fillcolor="#a3b18a",fontcolor="#111111"];
+  "cmp_filamentWinding" [label="Filament-Wound Cases\nCompositeMaterials T4 · 900",fillcolor="#a3b18a",fontcolor="#111111"];
+  "cmp_carbonCarbon" [label="Carbon-Carbon Hot Structures\nCompositeMaterials T5 · 1500",fillcolor="#a3b18a",fontcolor="#111111"];
+  "cmp_carbonFiberComposite" [label="Carbon-Fiber Airframes\nCompositeMaterials T5 · 1500",fillcolor="#a3b18a",fontcolor="#111111"];
+  "cmp_pica" [label="PICA / AVCOAT Reentry Ablators\nCompositeMaterials T6 · 2000",fillcolor="#a3b18a",fontcolor="#111111"];
+  "cmp_copv" [label="Composite Overwrapped Pressure Vessels\nCompositeMaterials T6 · 2000",fillcolor="#a3b18a",fontcolor="#111111"];
+  "cmp_ceramicTiles" [label="Reusable Ceramic Tile TPS\nCompositeMaterials T6 · 2000",fillcolor="#a3b18a",fontcolor="#111111"];
+  "cmp_ceramicMatrixComposite" [label="Ceramic-Matrix Composites\nCompositeMaterials T7 · 2300",fillcolor="#a3b18a",fontcolor="#111111"];
+  "cmp_metalMatrixComposite" [label="Metal-Matrix Composites\nCompositeMaterials T8 · 2100",fillcolor="#a3b18a",fontcolor="#111111"];
+  "cmp_transpirationTPS" [label="Transpiration-Cooled TPS\nCompositeMaterials T8 · 2100",fillcolor="#a3b18a",fontcolor="#111111"];
+  "pc_blackPowder" [label="Pressed Black-Powder Grains\nPropellantChemistry T1 · 20",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_doubleBaseSolid" [label="Double-Base Solid Propellant\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_hydrogenPeroxide" [label="High-Test Peroxide (HTP)\nPropellantChemistry T3 · 400",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_castableComposite" [label="Castable AP/Al Composite Grains\nPropellantChemistry T4 · 900",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_greenMonoprop" [label="Green Monopropellants\nPropellantChemistry T5 · 1500",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_gelledPropellant" [label="Gelled Hypergolic Propellants\nPropellantChemistry T6 · 2000",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_methalox" [label="Methane Liquefaction & Methalox\nPropellantChemistry T6 · 2000",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_subcooledDensified" [label="Densified Sub-cooled Propellants\nPropellantChemistry T7 · 2300",fillcolor="#e07a5f",fontcolor="#111111"];
+  "res_electrolysis" [label="Water Electrolysis\nResourceEngineering T4 · 900",fillcolor="#b08968",fontcolor="#111111"];
+  "res_regolithExcavation" [label="Regolith Excavation & Augering\nResourceEngineering T5 · 1500",fillcolor="#b08968",fontcolor="#111111"];
+  "res_cryoLiquefactionISRU" [label="In-Situ Cryogenic Liquefaction\nResourceEngineering T5 · 1500",fillcolor="#b08968",fontcolor="#111111"];
+  "res_sabatier" [label="Sabatier Methane Synthesis\nResourceEngineering T6 · 2000",fillcolor="#b08968",fontcolor="#111111"];
+  "res_oreBeneficiation" [label="Ore Beneficiation & Sintering\nResourceEngineering T6 · 2000",fillcolor="#b08968",fontcolor="#111111"];
+  "res_metalExtraction" [label="In-Situ Metal Extraction\nResourceEngineering T7 · 2300",fillcolor="#b08968",fontcolor="#111111"];
+  "res_propellantDepot" [label="Orbital Propellant Depots\nResourceEngineering T7 · 2300",fillcolor="#b08968",fontcolor="#111111"];
+  "res_atmosphericMining" [label="Atmospheric & Gas-Giant Mining\nResourceEngineering T8 · 2100",fillcolor="#b08968",fontcolor="#111111"];
+  "res_closedLoopFab" [label="Closed-Loop In-Situ Fabrication\nResourceEngineering T9 · 1700",fillcolor="#b08968",fontcolor="#111111"];
+  "res_heliumMining" [label="Helium-3 Extraction\nResourceEngineering T9 · 1700",fillcolor="#b08968",fontcolor="#111111"];
   { rank=same; "start" }
-  { rank=same; "soundingRocketry" "tel_pcmTelemetry" }
-  { rank=same; "pc_ethanolLox" "pc_keroseneHydrotreating" "met_earlyAlloys" "tel_helicalDirectional" }
-  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "pc_cryoLiquefaction" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" }
-  { rank=same; "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" }
-  { rank=same; "pc_storableOxidizers" "cryo_stagedHydrolox" "tel_phasedArray" "ext_powerGrid" }
-  { rank=same; "cryo_zbo" }
+  { rank=same; "soundingRocketry" "tel_pcmTelemetry" "met_weldedSteel" "pc_blackPowder" }
+  { rank=same; "pc_ethanolLox" "pc_keroseneHydrotreating" "met_earlyAlloys" "tel_helicalDirectional" "cmp_glassFiber" "pc_doubleBaseSolid" }
+  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "pc_cryoLiquefaction" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" "met_chemMilling" "cmp_ablativeTPS" "pc_hydrogenPeroxide" }
+  { rank=same; "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" "met_vacuumInductionMelting" "cmp_filamentWinding" "pc_castableComposite" "res_electrolysis" }
+  { rank=same; "pc_storableOxidizers" "cryo_stagedHydrolox" "tel_phasedArray" "ext_powerGrid" "met_titaniumForming" "met_vacuumArcRemelting" "cmp_carbonCarbon" "cmp_carbonFiberComposite" "pc_greenMonoprop" "res_regolithExcavation" "res_cryoLiquefactionISRU" }
+  { rank=same; "cryo_zbo" "met_powderMetallurgyHIP" "met_singleCrystalTurbine" "cmp_pica" "cmp_copv" "cmp_ceramicTiles" "pc_gelledPropellant" "pc_methalox" "res_sabatier" "res_oreBeneficiation" }
+  { rank=same; "met_refractoryMetals" "cmp_ceramicMatrixComposite" "pc_subcooledDensified" "res_metalExtraction" "res_propellantDepot" }
+  { rank=same; "met_additiveManufacturing" "cmp_metalMatrixComposite" "cmp_transpirationTPS" "res_atmosphericMining" }
+  { rank=same; "met_amorphousAlloys" "res_closedLoopFab" "res_heliumMining" }
   "start" -> "soundingRocketry" [style=solid];
   "soundingRocketry" -> "pc_ethanolLox" [style=solid];
   "soundingRocketry" -> "pc_keroseneHydrotreating" [style=solid];
@@ -40,7 +82,7 @@ digraph AXE {
   "pc_keroseneHydrotreating" -> "pc_hypergolicChemistry" [style=dashed,color="#f4d35e"];
   "pc_ethanolLox" -> "pc_cryoLiquefaction" [style=solid];
   "pc_hypergolicChemistry" -> "pc_storableOxidizers" [style=solid];
-  "soundingRocketry" -> "met_earlyAlloys" [style=solid];
+  "met_weldedSteel" -> "met_earlyAlloys" [style=solid];
   "met_earlyAlloys" -> "met_oxRichSuperalloys" [style=solid];
   "fd_turbopumps" -> "met_oxRichSuperalloys" [style=solid];
   "th_regenCooling" -> "met_oxRichSuperalloys" [style=solid];
@@ -63,6 +105,45 @@ digraph AXE {
   "tel_cassegrainHGA" -> "tel_dsnRanging" [style=solid];
   "tel_dsnRanging" -> "tel_phasedArray" [style=solid];
   "start" -> "ext_powerGrid" [style=solid];
+  "start" -> "met_weldedSteel" [style=solid];
+  "met_earlyAlloys" -> "met_chemMilling" [style=solid];
+  "met_chemMilling" -> "met_vacuumInductionMelting" [style=solid];
+  "met_chemMilling" -> "met_titaniumForming" [style=solid];
+  "met_vacuumInductionMelting" -> "met_vacuumArcRemelting" [style=solid];
+  "met_vacuumInductionMelting" -> "met_powderMetallurgyHIP" [style=solid];
+  "met_vacuumArcRemelting" -> "met_singleCrystalTurbine" [style=solid];
+  "met_vacuumArcRemelting" -> "met_refractoryMetals" [style=solid];
+  "met_powderMetallurgyHIP" -> "met_additiveManufacturing" [style=solid];
+  "met_additiveManufacturing" -> "met_amorphousAlloys" [style=solid];
+  "met_weldedSteel" -> "cmp_glassFiber" [style=solid];
+  "cmp_glassFiber" -> "cmp_ablativeTPS" [style=solid];
+  "cmp_glassFiber" -> "cmp_filamentWinding" [style=solid];
+  "cmp_ablativeTPS" -> "cmp_carbonCarbon" [style=solid];
+  "cmp_filamentWinding" -> "cmp_carbonFiberComposite" [style=solid];
+  "cmp_ablativeTPS" -> "cmp_pica" [style=solid];
+  "cmp_carbonFiberComposite" -> "cmp_copv" [style=solid];
+  "cmp_carbonCarbon" -> "cmp_ceramicTiles" [style=solid];
+  "cmp_carbonCarbon" -> "cmp_ceramicMatrixComposite" [style=solid];
+  "cmp_copv" -> "cmp_metalMatrixComposite" [style=solid];
+  "cmp_ceramicMatrixComposite" -> "cmp_transpirationTPS" [style=solid];
+  "start" -> "pc_blackPowder" [style=solid];
+  "pc_blackPowder" -> "pc_doubleBaseSolid" [style=solid];
+  "pc_ethanolLox" -> "pc_hydrogenPeroxide" [style=solid];
+  "pc_apcpGrain" -> "pc_castableComposite" [style=solid];
+  "pc_hypergolicChemistry" -> "pc_greenMonoprop" [style=solid];
+  "pc_storableOxidizers" -> "pc_gelledPropellant" [style=solid];
+  "pc_cryoLiquefaction" -> "pc_methalox" [style=solid];
+  "pc_methalox" -> "pc_subcooledDensified" [style=solid];
+  "pc_cryoLiquefaction" -> "res_electrolysis" [style=solid];
+  "met_earlyAlloys" -> "res_regolithExcavation" [style=solid];
+  "res_electrolysis" -> "res_cryoLiquefactionISRU" [style=solid];
+  "res_electrolysis" -> "res_sabatier" [style=solid];
+  "res_regolithExcavation" -> "res_oreBeneficiation" [style=solid];
+  "res_oreBeneficiation" -> "res_metalExtraction" [style=solid];
+  "res_sabatier" -> "res_propellantDepot" [style=solid];
+  "res_metalExtraction" -> "res_atmosphericMining" [style=solid];
+  "res_metalExtraction" -> "res_closedLoopFab" [style=solid];
+  "res_atmosphericMining" -> "res_heliumMining" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;
   label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";
 }
