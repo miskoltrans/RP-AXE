@@ -121,13 +121,27 @@ tree *architecture* the fixed-value estimate is sufficient; for final *balance* 
   home-system science), expensive late nodes (paid by abundant outer-planet science). Crewed-lab
   fills the **mid-game station valley** between home-system probes and interplanetary probes.
 
-**For P3 (KerbalismLab integration) — a fork in the road (recommendation: C):**
-- **A. Vendor the ScienceRework lab subsystem** as-is (scaffold + LAB_EXPERIMENTS + Configure host +
-  processing). Least re-authoring; keeps the fork's `Configure`-slot UX. Risk: drags in Kerbalism's
-  lab-slot/upgrade machinery and its interactions with RP-1's science; values stay author-defaults.
-- **C. Re-author the 65 experiments as plain Kerbalism `Experiment` modules** wired directly to AXE
-  nodes (the way RP-1 wires RP0\*), dropping the Configure/group/slot layer. More work up front but a
-  clean, RP-1-consistent crewed-science set **fully under AXE's control** (values, gating, scope) —
-  aligns with AXE's "author our own configs" pillar. **Recommended.**
-- **D. Drop KerbalismLab**, use RP0\*'s own crewed experiments (longDurationHabit, LunarHabit, ALSEP…)
-  for station science. Simplest; loses the 71-experiment station-science breadth that motivated adding it.
+**For P3 (KerbalismLab integration) — DECIDED: re-author as plain `Experiment` modules.**
+Reimplement the 65 experiments as plain Kerbalism `Experiment` + `EXPERIMENT_DEFINITION` configs wired
+directly to AXE instrument parts and AXE tech nodes — the way RP-1 wires RP0\* — dropping Kerbalism's
+ScienceRework `Configure`/group/slot layer entirely. Rationale: a clean, RP-1-consistent crewed-science
+set **fully under AXE's control** (values, gating, scope, part assignment), no dependency on the
+ScienceRework framework, and the two science streams then balance against each other identically.
+(Rejected: *vendor the ScienceRework lab subsystem as-is* — least work but imports Kerbalism's
+lab-slot machinery + its RP-1-coexistence risk, values stay author-defaults; *drop KerbalismLab* —
+loses the 71-experiment breadth, falls back on RP0\*'s own ~25–30 crewed experiments.)
+
+**Body-multiplier question — resolved by construction.** Because we re-author (not run the fork as-is),
+lab experiments scale like RP0\* (baseValue × situation × body × biome — the model behind §2). We *set*
+the values and situations against that known model, so there is **no need for an in-game cache read**.
+The §3 fixed-value crewed-lab budget (~51k realistic) is the **floor**; with body multipliers the real
+figure is higher and is a **calibration dial** (set baseValues / restrict situations so an outer-planet
+station isn't overpowered) rather than an unknown.
+
+**P3 re-author plan (turnkey once P1 nodes exist):**
+1. Generator: `lab-experiments.tsv` + the 65 cfgs → plain `Experiment`/`EXPERIMENT_DEFINITION` configs.
+2. Map each experiment's instrument requirement (the `Module:*LabExperimentPackage` column) to a curated
+   AXE part; decide whether to keep the DLL tags or hardcode `requirements = Part:<name>` (prefer the
+   latter — no compiled dependency, precise control).
+3. Remap the ~22 stock `UnlockTech` names → AXE nodes (blocked on P1; ship a remap table now).
+4. Calibrate baseValues against the body-multiplier model so the crewed-lab budget lands where intended.

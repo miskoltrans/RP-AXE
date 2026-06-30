@@ -73,10 +73,11 @@ Budget measured before setting node costs. Tools: `tools/science_budget.py` (pro
   `LabDataRateMultiplier` + the "Laboratory Experiments" `Configure` host) that lives in
   **`KerbalismScienceOnly`** (NOT in stock Kerbalism, NOT in RP-1's config). 132 errors ≈ 2 lookups × 65 exp.
   Fix recipe (vendor the minimal lab subset) + exact missing files in SCIENCE.md §1.
-- **OPEN DECISION (P3):** integration path — **A** vendor ScienceRework lab subsystem as-is /
-  **C** re-author the 65 as plain `Experiment` modules wired to AXE nodes *(recommended)* / **D** drop, use
-  RP0\*'s own crewed experiments. Also: final value rebalance needs an in-game **merged-cache read**, which is
-  blocked until the framework is restored (SCIENCE.md §3).
+- **DECIDED (P3 integration): re-author** the 65 as plain Kerbalism `Experiment`/`EXPERIMENT_DEFINITION`
+  configs wired directly to AXE parts + nodes (like RP0\*), dropping the ScienceRework Configure/slot layer.
+  Body-multiplier uncertainty is then **resolved by construction** (we set values/situations against the
+  RP0\* model; no cache-read needed; ~51k is the floor, calibration is a dial). Turnkey re-author plan in
+  SCIENCE.md §4 — blocked on P1 nodes existing (needs the `UnlockTech`→AXE-node remap).
 - **Reference clones (siblings, outside repo):** `../KerbalismLabExperimentsExpandedContinued` (fork),
   `../KerbalismScienceOnly` (base framework source). *(KerbalismLab stays out of `ksp_rp1_expanded` so its
   cache stays clean for the manifest/audit.)*
