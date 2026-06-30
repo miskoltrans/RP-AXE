@@ -54,10 +54,11 @@ Sorted by `baseFunding` (≈ progression order, early/cheap → late/expensive).
 ### Referenced by contracts but NOT funded in Programs.cfg (assign funding in M3)
 These appear as `program = X` gates but have no `RP0_PROGRAM` baseFunding — pick values from
 sibling tiers:
-- `CrewedSpaceplaneDev` (7) — early/mid; ~1.2M (≈ CrewedOrbitEarly).
+- `CrewedSpaceplaneDev` (7) — **deprecated** in RP-1 (`isDisabled`); we leave it un-chartered (M4),
+  so no funding needed unless re-enabled.
 - `SaturnMoonLandings` (9), `JupiterMoonLandings` (5), `UranusMoonLandings` (5),
-  `NeptuneMoonLandings` (1) — outer-moon landings, late; scale ~5–15M with OuterGasGiantSurvey /
-  PlutoLandings. Tune later.
+  `NeptuneMoonLandings` (1) — outer-moon landings, late; **chartered in M4** (so they can be offered)
+  but still unfunded; scale ~5–15M with OuterGasGiantSurvey / PlutoLandings. Tune later.
 
 (35 programs funded in `Programs.cfg`; 40 distinct programs referenced by contracts. RP-1 also has 4
 `RP0_PROGRAM_MODIFIER` variant-funding blocks we ignore.)
@@ -74,9 +75,20 @@ For each program, spread `baseFunding` across its gated contracts as per-contrac
 - Sanity rule (invariant): each era's total income must comfortably cover that era's **per-launch
   vehicle costs** (the dominant RSS drain), not just part entry costs.
 
-## M4 — program switcher (design)
+## M4 — program switcher ✅ DONE (config + code)
 
-Replaces RP-1's `ProgramHandler`. Pure-config + the `ProgramActive` requirement already stubbed in
+**Status:** implemented and (charters-side) complete. `AxeProgramHandler` ScenarioModule + the
+`ActivateProgram` behaviour + a real `ProgramActive` requirement all live in `AXE.dll`
+(`Source/AXE/`). Charters are authored in `design/Programs/ActivatePrograms.cfg` — **all 35 live
+programs** referenced by seed contracts now have a "Begin Program: …" charter, wired into an
+onboarding DAG (theme + funding order). The 5 programs RP-1 marks `isDisabled = true`
+(CommercialApplications1/2, GEOCommNetwork, CrewedOrbit, CrewedSpaceplaneDev) are **deliberately
+left un-chartered** so their contracts stay dormant, matching RP-1. The 4 outer-moon-landing
+programs are chartered but still need M3 funding.
+
+Design (as built):
+
+Replaces RP-1's `ProgramHandler`. Pure-config + the `ProgramActive` requirement implemented in
 `AXE.dll`:
 
 1. For each program `P`, author an **"Activate [P] Program"** contract (`design/Programs/`),
