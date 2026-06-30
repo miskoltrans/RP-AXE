@@ -64,16 +64,60 @@ digraph AXE {
   "res_atmosphericMining" [label="Atmospheric & Gas-Giant Mining\nResourceEngineering T8 · 2100",fillcolor="#b08968",fontcolor="#111111"];
   "res_closedLoopFab" [label="Closed-Loop In-Situ Fabrication\nResourceEngineering T9 · 1700",fillcolor="#b08968",fontcolor="#111111"];
   "res_heliumMining" [label="Helium-3 Extraction\nResourceEngineering T9 · 1700",fillcolor="#b08968",fontcolor="#111111"];
+  "fd_pressureFed" [label="Pressure-Fed Feed Systems\nFluidDynamics T1 · 20",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_gasGenerator" [label="Gas-Generator (Open) Cycle\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_expanderCycle" [label="Expander Cycle\nFluidDynamics T5 · 1500",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_tapOffCycle" [label="Combustion Tap-Off Cycle\nFluidDynamics T5 · 1500",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_stagedCombustion" [label="Staged-Combustion (Closed) Cycle\nFluidDynamics T5 · 1500",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_aerospike" [label="Altitude-Compensating Aerospike Nozzles\nFluidDynamics T6 · 2000",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_deepThrottle" [label="Deep-Throttle & Reliable Restart\nFluidDynamics T6 · 2000",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_fullFlowStaged" [label="Full-Flow Staged Combustion\nFluidDynamics T7 · 2300",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_dualBell" [label="Dual-Bell & Extendible Nozzles\nFluidDynamics T7 · 2300",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_rotatingDetonation" [label="Rotating Detonation Engines\nFluidDynamics T9 · 1700",fillcolor="#ee9b00",fontcolor="#111111"];
+  "th_filmCooling" [label="Film & Curtain Cooling\nThermodynamics T2 · 90",fillcolor="#f4a261",fontcolor="#111111"];
+  "th_ablativeCooling" [label="Ablative Chamber Liners\nThermodynamics T3 · 400",fillcolor="#f4a261",fontcolor="#111111"];
+  "th_passiveRadiators" [label="Passive Radiative Cooling\nThermodynamics T4 · 900",fillcolor="#f4a261",fontcolor="#111111"];
+  "th_heatPipes" [label="Heat-Pipe Thermal Transport\nThermodynamics T5 · 1500",fillcolor="#f4a261",fontcolor="#111111"];
+  "th_pumpedLoop" [label="Pumped Fluid-Loop Cooling\nThermodynamics T6 · 2000",fillcolor="#f4a261",fontcolor="#111111"];
+  "th_deployableRadiators" [label="Deployable Panel Radiators\nThermodynamics T6 · 2000",fillcolor="#f4a261",fontcolor="#111111"];
+  "th_cryocooler" [label="Mechanical Cryocoolers\nThermodynamics T7 · 2300",fillcolor="#f4a261",fontcolor="#111111"];
+  "th_dropletRadiator" [label="Liquid-Droplet Radiators\nThermodynamics T9 · 1700",fillcolor="#f4a261",fontcolor="#111111"];
+  "cryo_basicCryoStorage" [label="Vacuum-Jacketed Cryo Storage\nCryogenics T2 · 90",fillcolor="#4cc9f0",fontcolor="#111111"];
+  "cryo_subcooling" [label="Propellant Sub-cooling Operations\nCryogenics T5 · 1500",fillcolor="#4cc9f0",fontcolor="#111111"];
+  "cryo_orbitalTransfer" [label="Zero-g Cryo Propellant Transfer\nCryogenics T6 · 2000",fillcolor="#4cc9f0",fontcolor="#111111"];
+  "cryo_longDuration" [label="Long-Duration Cryo Storage\nCryogenics T7 · 2300",fillcolor="#4cc9f0",fontcolor="#111111"];
+  "cryo_slush" [label="Slush-Hydrogen Handling\nCryogenics T7 · 2300",fillcolor="#4cc9f0",fontcolor="#111111"];
+  "elec_silverZinc" [label="Silver-Zinc Primary Batteries\nElectricalPower T1 · 20",fillcolor="#ffd166",fontcolor="#111111"];
+  "elec_fuelCell" [label="Alkaline Fuel Cells\nElectricalPower T3 · 400",fillcolor="#ffd166",fontcolor="#111111"];
+  "elec_siliconPV" [label="Silicon Photovoltaics\nElectricalPower T3 · 400",fillcolor="#ffd166",fontcolor="#111111"];
+  "elec_bodyMountedArrays" [label="Body-Mounted & Deployable Arrays\nElectricalPower T4 · 900",fillcolor="#ffd166",fontcolor="#111111"];
+  "elec_trackingArrays" [label="Sun-Tracking Array Drives\nElectricalPower T5 · 1500",fillcolor="#ffd166",fontcolor="#111111"];
+  "elec_lithiumIon" [label="Lithium-Ion Energy Storage\nElectricalPower T6 · 2000",fillcolor="#ffd166",fontcolor="#111111"];
+  "elec_tripleJunction" [label="Triple-Junction GaAs Cells\nElectricalPower T6 · 2000",fillcolor="#ffd166",fontcolor="#111111"];
+  "elec_concentratorPV" [label="Concentrator Photovoltaics\nElectricalPower T7 · 2300",fillcolor="#ffd166",fontcolor="#111111"];
+  "elec_regenFuelCell" [label="Regenerative Fuel Cells\nElectricalPower T7 · 2300",fillcolor="#ffd166",fontcolor="#111111"];
+  "elec_flexibleArrays" [label="Flexible Roll-Out Solar Arrays\nElectricalPower T8 · 2100",fillcolor="#ffd166",fontcolor="#111111"];
+  "nuc_rtg" [label="Radioisotope Thermoelectric Generators\nNuclearEngineering T5 · 1500",fillcolor="#90be6d",fontcolor="#111111"];
+  "nuc_rtgAdvanced" [label="GPHS Multi-Mission RTGs\nNuclearEngineering T6 · 2000",fillcolor="#90be6d",fontcolor="#111111"];
+  "nuc_fissionReactor" [label="Compact Fission Reactors\nNuclearEngineering T6 · 2000",fillcolor="#90be6d",fontcolor="#111111"];
+  "nuc_thermionic" [label="Thermionic Reactor Conversion\nNuclearEngineering T7 · 2300",fillcolor="#90be6d",fontcolor="#111111"];
+  "nuc_braytonReactor" [label="Closed-Brayton Reactor Power\nNuclearEngineering T7 · 2300",fillcolor="#90be6d",fontcolor="#111111"];
+  "nuc_nuclearThermal" [label="Solid-Core Nuclear-Thermal Rocket\nNuclearEngineering T8 · 2100",fillcolor="#90be6d",fontcolor="#111111"];
+  "nuc_nuclearElectric" [label="Nuclear-Electric Propulsion\nNuclearEngineering T8 · 2100",fillcolor="#90be6d",fontcolor="#111111"];
+  "nuc_nervaImproved" [label="Particle-Bed Nuclear-Thermal\nNuclearEngineering T9 · 1700",fillcolor="#90be6d",fontcolor="#111111"];
+  "nuc_gasCoreNTR" [label="Gas-Core Nuclear-Thermal\nNuclearEngineering T10 · 1300",fillcolor="#90be6d",fontcolor="#111111"];
+  "nuc_fusionTorch" [label="Fusion Propulsion\nNuclearEngineering T10 · 1300",fillcolor="#90be6d",fontcolor="#111111"];
   { rank=same; "start" }
-  { rank=same; "soundingRocketry" "tel_pcmTelemetry" "met_weldedSteel" "pc_blackPowder" }
-  { rank=same; "pc_ethanolLox" "pc_keroseneHydrotreating" "met_earlyAlloys" "tel_helicalDirectional" "cmp_glassFiber" "pc_doubleBaseSolid" }
-  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "pc_cryoLiquefaction" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" "met_chemMilling" "cmp_ablativeTPS" "pc_hydrogenPeroxide" }
-  { rank=same; "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" "met_vacuumInductionMelting" "cmp_filamentWinding" "pc_castableComposite" "res_electrolysis" }
-  { rank=same; "pc_storableOxidizers" "cryo_stagedHydrolox" "tel_phasedArray" "ext_powerGrid" "met_titaniumForming" "met_vacuumArcRemelting" "cmp_carbonCarbon" "cmp_carbonFiberComposite" "pc_greenMonoprop" "res_regolithExcavation" "res_cryoLiquefactionISRU" }
-  { rank=same; "cryo_zbo" "met_powderMetallurgyHIP" "met_singleCrystalTurbine" "cmp_pica" "cmp_copv" "cmp_ceramicTiles" "pc_gelledPropellant" "pc_methalox" "res_sabatier" "res_oreBeneficiation" }
-  { rank=same; "met_refractoryMetals" "cmp_ceramicMatrixComposite" "pc_subcooledDensified" "res_metalExtraction" "res_propellantDepot" }
-  { rank=same; "met_additiveManufacturing" "cmp_metalMatrixComposite" "cmp_transpirationTPS" "res_atmosphericMining" }
-  { rank=same; "met_amorphousAlloys" "res_closedLoopFab" "res_heliumMining" }
+  { rank=same; "soundingRocketry" "tel_pcmTelemetry" "met_weldedSteel" "pc_blackPowder" "fd_pressureFed" "elec_silverZinc" }
+  { rank=same; "pc_ethanolLox" "pc_keroseneHydrotreating" "met_earlyAlloys" "tel_helicalDirectional" "cmp_glassFiber" "pc_doubleBaseSolid" "fd_gasGenerator" "th_filmCooling" "cryo_basicCryoStorage" }
+  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "pc_cryoLiquefaction" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" "met_chemMilling" "cmp_ablativeTPS" "pc_hydrogenPeroxide" "th_ablativeCooling" "elec_fuelCell" "elec_siliconPV" }
+  { rank=same; "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" "met_vacuumInductionMelting" "cmp_filamentWinding" "pc_castableComposite" "res_electrolysis" "th_passiveRadiators" "elec_bodyMountedArrays" }
+  { rank=same; "pc_storableOxidizers" "cryo_stagedHydrolox" "tel_phasedArray" "ext_powerGrid" "met_titaniumForming" "met_vacuumArcRemelting" "cmp_carbonCarbon" "cmp_carbonFiberComposite" "pc_greenMonoprop" "res_regolithExcavation" "res_cryoLiquefactionISRU" "fd_expanderCycle" "fd_tapOffCycle" "fd_stagedCombustion" "th_heatPipes" "cryo_subcooling" "elec_trackingArrays" "nuc_rtg" }
+  { rank=same; "cryo_zbo" "met_powderMetallurgyHIP" "met_singleCrystalTurbine" "cmp_pica" "cmp_copv" "cmp_ceramicTiles" "pc_gelledPropellant" "pc_methalox" "res_sabatier" "res_oreBeneficiation" "fd_aerospike" "fd_deepThrottle" "th_pumpedLoop" "th_deployableRadiators" "cryo_orbitalTransfer" "elec_lithiumIon" "elec_tripleJunction" "nuc_rtgAdvanced" "nuc_fissionReactor" }
+  { rank=same; "met_refractoryMetals" "cmp_ceramicMatrixComposite" "pc_subcooledDensified" "res_metalExtraction" "res_propellantDepot" "fd_fullFlowStaged" "fd_dualBell" "th_cryocooler" "cryo_longDuration" "cryo_slush" "elec_concentratorPV" "elec_regenFuelCell" "nuc_thermionic" "nuc_braytonReactor" }
+  { rank=same; "met_additiveManufacturing" "cmp_metalMatrixComposite" "cmp_transpirationTPS" "res_atmosphericMining" "elec_flexibleArrays" "nuc_nuclearThermal" "nuc_nuclearElectric" }
+  { rank=same; "met_amorphousAlloys" "res_closedLoopFab" "res_heliumMining" "fd_rotatingDetonation" "th_dropletRadiator" "nuc_nervaImproved" }
+  { rank=same; "nuc_gasCoreNTR" "nuc_fusionTorch" }
   "start" -> "soundingRocketry" [style=solid];
   "soundingRocketry" -> "pc_ethanolLox" [style=solid];
   "soundingRocketry" -> "pc_keroseneHydrotreating" [style=solid];
@@ -86,11 +130,11 @@ digraph AXE {
   "met_earlyAlloys" -> "met_oxRichSuperalloys" [style=solid];
   "fd_turbopumps" -> "met_oxRichSuperalloys" [style=solid];
   "th_regenCooling" -> "met_oxRichSuperalloys" [style=solid];
-  "met_earlyAlloys" -> "fd_turbopumps" [style=solid];
+  "fd_gasGenerator" -> "fd_turbopumps" [style=solid];
   "fd_turbopumps" -> "fd_combustionStability" [style=solid];
   "th_regenCooling" -> "fd_combustionStability" [style=solid];
-  "met_earlyAlloys" -> "th_regenCooling" [style=solid];
-  "pc_ethanolLox" -> "cryo_loxHandling" [style=solid];
+  "th_filmCooling" -> "th_regenCooling" [style=solid];
+  "cryo_basicCryoStorage" -> "cryo_loxHandling" [style=solid];
   "cryo_loxHandling" -> "cryo_lh2Insulation" [style=solid];
   "pc_cryoLiquefaction" -> "cryo_lh2Insulation" [style=solid];
   "fd_turbopumps" -> "cryo_lh2Insulation" [style=solid];
@@ -104,7 +148,7 @@ digraph AXE {
   "tel_helicalDirectional" -> "tel_cassegrainHGA" [style=solid];
   "tel_cassegrainHGA" -> "tel_dsnRanging" [style=solid];
   "tel_dsnRanging" -> "tel_phasedArray" [style=solid];
-  "start" -> "ext_powerGrid" [style=solid];
+  "elec_bodyMountedArrays" -> "ext_powerGrid" [style=solid];
   "start" -> "met_weldedSteel" [style=solid];
   "met_earlyAlloys" -> "met_chemMilling" [style=solid];
   "met_chemMilling" -> "met_vacuumInductionMelting" [style=solid];
@@ -144,6 +188,53 @@ digraph AXE {
   "res_metalExtraction" -> "res_atmosphericMining" [style=solid];
   "res_metalExtraction" -> "res_closedLoopFab" [style=solid];
   "res_atmosphericMining" -> "res_heliumMining" [style=solid];
+  "start" -> "fd_pressureFed" [style=solid];
+  "fd_pressureFed" -> "fd_gasGenerator" [style=solid];
+  "fd_turbopumps" -> "fd_expanderCycle" [style=solid];
+  "fd_gasGenerator" -> "fd_tapOffCycle" [style=solid];
+  "fd_turbopumps" -> "fd_stagedCombustion" [style=solid];
+  "fd_stagedCombustion" -> "fd_aerospike" [style=solid];
+  "fd_stagedCombustion" -> "fd_deepThrottle" [style=solid];
+  "fd_stagedCombustion" -> "fd_fullFlowStaged" [style=solid];
+  "fd_aerospike" -> "fd_dualBell" [style=solid];
+  "fd_fullFlowStaged" -> "fd_rotatingDetonation" [style=solid];
+  "met_weldedSteel" -> "th_filmCooling" [style=solid];
+  "th_filmCooling" -> "th_ablativeCooling" [style=solid];
+  "th_regenCooling" -> "th_passiveRadiators" [style=solid];
+  "th_passiveRadiators" -> "th_heatPipes" [style=solid];
+  "th_passiveRadiators" -> "th_pumpedLoop" [style=solid];
+  "th_heatPipes" -> "th_deployableRadiators" [style=solid];
+  "th_pumpedLoop" -> "th_cryocooler" [style=solid];
+  "th_deployableRadiators" -> "th_dropletRadiator" [style=solid];
+  "met_weldedSteel" -> "cryo_basicCryoStorage" [style=solid];
+  "cryo_lh2Insulation" -> "cryo_subcooling" [style=solid];
+  "cryo_lh2Insulation" -> "cryo_orbitalTransfer" [style=solid];
+  "cryo_zbo" -> "cryo_longDuration" [style=solid];
+  "cryo_zbo" -> "cryo_slush" [style=solid];
+  "start" -> "elec_silverZinc" [style=solid];
+  "elec_silverZinc" -> "elec_fuelCell" [style=solid];
+  "elec_silverZinc" -> "elec_siliconPV" [style=solid];
+  "elec_siliconPV" -> "elec_bodyMountedArrays" [style=solid];
+  "elec_bodyMountedArrays" -> "elec_trackingArrays" [style=solid];
+  "elec_fuelCell" -> "elec_lithiumIon" [style=solid];
+  "elec_trackingArrays" -> "elec_tripleJunction" [style=solid];
+  "elec_tripleJunction" -> "elec_concentratorPV" [style=solid];
+  "elec_lithiumIon" -> "elec_regenFuelCell" [style=solid];
+  "elec_tripleJunction" -> "elec_flexibleArrays" [style=solid];
+  "elec_siliconPV" -> "nuc_rtg" [style=solid];
+  "nuc_rtg" -> "nuc_rtgAdvanced" [style=solid];
+  "nuc_rtg" -> "nuc_fissionReactor" [style=solid];
+  "met_vacuumInductionMelting" -> "nuc_fissionReactor" [style=solid];
+  "nuc_fissionReactor" -> "nuc_thermionic" [style=solid];
+  "nuc_fissionReactor" -> "nuc_braytonReactor" [style=solid];
+  "nuc_fissionReactor" -> "nuc_nuclearThermal" [style=solid];
+  "cryo_lh2Insulation" -> "nuc_nuclearThermal" [style=solid];
+  "met_refractoryMetals" -> "nuc_nuclearThermal" [style=solid];
+  "nuc_braytonReactor" -> "nuc_nuclearElectric" [style=solid];
+  "nuc_nuclearThermal" -> "nuc_nervaImproved" [style=solid];
+  "nuc_nervaImproved" -> "nuc_gasCoreNTR" [style=solid];
+  "nuc_nuclearElectric" -> "nuc_fusionTorch" [style=solid];
+  "res_heliumMining" -> "nuc_fusionTorch" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;
   label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";
 }

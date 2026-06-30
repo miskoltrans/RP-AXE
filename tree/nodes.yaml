@@ -109,7 +109,7 @@ nodes:
     title: "Inducer-Stabilized Cryogenic Turbopumps"
     discipline: FluidDynamics
     tier: 3
-    parents: [met_earlyAlloys]
+    parents: [fd_gasGenerator]
     flavor: "Move propellant by the ton per second without cavitating the pump. An axial inducer ahead of the centrifugal impeller suppresses cavitation at low inlet pressure — the enabling piece of every high-thrust engine."
   - id: fd_combustionStability
     title: "Baffled-Injector Combustion-Instability Suppression"
@@ -126,7 +126,7 @@ nodes:
     title: "Regenerative Forced-Convection Wall Cooling"
     discipline: Thermodynamics
     tier: 3
-    parents: [met_earlyAlloys]
+    parents: [th_filmCooling]
     flavor: "Route the fuel through milled channels in the chamber wall before burning it, carrying away heat flux that would melt any uncooled metal. The thermodynamics that lets a chamber run hotter than its own melting point."
 
   # ---------- Cryogenics (homes cryo-bottlenecked engines — J-2, RS-25, BE-3) ----------
@@ -134,7 +134,7 @@ nodes:
     title: "Subcooled LOX Densification"
     discipline: Cryogenics
     tier: 3
-    parents: [pc_ethanolLox]
+    parents: [cryo_basicCryoStorage]
     flavor: "Hold oxygen below its boiling point: vacuum-jacketed lines, careful materials, and the operational discipline to load minutes before launch. Subcooling buys density — more propellant in the same tank."
   - id: cryo_lh2Insulation
     title: "Multilayer Vacuum Insulation for LH2"
@@ -199,8 +199,8 @@ nodes:
     title: "Kilowatt-Class Regulated Power Bus"
     discipline: ElectricalPower
     tier: 5
-    parents: [start]
-    flavor: "(off-slice stub) Electrical Power. Regulated high-voltage buses for active cryocooling and electric propulsion."
+    parents: [elec_bodyMountedArrays]
+    flavor: "High-voltage regulated distribution that turns raw array watts into the kilowatts cryocoolers and electric thrusters actually demand. The grid that gates heavy payloads."
 
   # ======================= STAGE 1 — Materials & Chemistry cluster =======================
   # ---------- Metallurgy (metals, casting, forming) ----------
@@ -446,3 +446,279 @@ nodes:
     tier: 9
     parents: [res_atmosphericMining]
     flavor: "Separate the rare fusion isotope from regolith or gas-giant atmosphere — the propellant of an ambitious, far-future endgame."
+
+  # ======================= STAGE 2 — Energy & Propulsion-physics cluster =======================
+  # ---------- Fluid Dynamics (engine cycles, turbomachinery, nozzle flow) ----------
+  - id: fd_pressureFed
+    title: "Pressure-Fed Feed Systems"
+    discipline: FluidDynamics
+    tier: 1
+    parents: [start]
+    flavor: "Push propellant with tank pressure alone — no pump, no turbine. Simple, restartable, and limited to low chamber pressure."
+  - id: fd_gasGenerator
+    title: "Gas-Generator (Open) Cycle"
+    discipline: FluidDynamics
+    tier: 2
+    parents: [fd_pressureFed]
+    flavor: "Burn a little propellant in a side chamber to spin the turbopump, then dump the turbine exhaust overboard. Simple, proven, slightly wasteful."
+  - id: fd_expanderCycle
+    title: "Expander Cycle"
+    discipline: FluidDynamics
+    tier: 5
+    parents: [fd_turbopumps]
+    flavor: "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, thrust-limited by heat pickup."
+  - id: fd_tapOffCycle
+    title: "Combustion Tap-Off Cycle"
+    discipline: FluidDynamics
+    tier: 5
+    parents: [fd_gasGenerator]
+    flavor: "Bleed hot gas straight from the main chamber to spin the turbine — one combustion zone, no separate gas generator."
+  - id: fd_stagedCombustion
+    title: "Staged-Combustion (Closed) Cycle"
+    discipline: FluidDynamics
+    tier: 5
+    parents: [fd_turbopumps]
+    flavor: "Burn the turbine drive gas, then route it into the main chamber to burn again — nothing wasted, chamber pressure soars, plumbing turns brutal."
+  - id: fd_aerospike
+    title: "Altitude-Compensating Aerospike Nozzles"
+    discipline: FluidDynamics
+    tier: 6
+    parents: [fd_stagedCombustion]
+    flavor: "Let the exhaust's outer edge follow ambient pressure so one engine stays efficient from sea level to vacuum."
+  - id: fd_deepThrottle
+    title: "Deep-Throttle & Reliable Restart"
+    discipline: FluidDynamics
+    tier: 6
+    parents: [fd_stagedCombustion]
+    flavor: "Hold stable combustion from full thrust down to a fraction of it, and relight on demand — the prerequisite for propulsive landing."
+  - id: fd_fullFlowStaged
+    title: "Full-Flow Staged Combustion"
+    discipline: FluidDynamics
+    tier: 7
+    parents: [fd_stagedCombustion]
+    flavor: "Two preburners, oxidiser-rich and fuel-rich, drive separate turbopumps and feed only warm gas to the seals. The highest-pressure, most reusable cycle there is."
+  - id: fd_dualBell
+    title: "Dual-Bell & Extendible Nozzles"
+    discipline: FluidDynamics
+    tier: 7
+    parents: [fd_aerospike]
+    flavor: "A two-mode bell or a deployable extension recovers altitude performance without an aerospike's cooling headache."
+  - id: fd_rotatingDetonation
+    title: "Rotating Detonation Engines"
+    discipline: FluidDynamics
+    tier: 9
+    parents: [fd_fullFlowStaged]
+    flavor: "Replace steady deflagration with a detonation wave chasing itself around an annulus — a theoretical efficiency jump, a practical nightmare to cool."
+  # ---------- Thermodynamics (cooling, heat transport, radiators) ----------
+  - id: th_filmCooling
+    title: "Film & Curtain Cooling"
+    discipline: Thermodynamics
+    tier: 2
+    parents: [met_weldedSteel]
+    flavor: "Run a fuel-rich boundary layer along the chamber wall as a sacrificial cool film — the crude cooling that made the first big engines survivable."
+  - id: th_ablativeCooling
+    title: "Ablative Chamber Liners"
+    discipline: Thermodynamics
+    tier: 3
+    parents: [th_filmCooling]
+    flavor: "Let a silica-phenolic liner char and erode away, carrying heat with it — cheap, disposable, and good for one burn."
+  - id: th_passiveRadiators
+    title: "Passive Radiative Cooling"
+    discipline: Thermodynamics
+    tier: 4
+    parents: [th_regenCooling]
+    flavor: "Reject waste heat to space with coatings, louvers and surface geometry alone — the baseline thermal balance of every spacecraft."
+    parts: [ca_louver_m]
+  - id: th_heatPipes
+    title: "Heat-Pipe Thermal Transport"
+    discipline: Thermodynamics
+    tier: 5
+    parents: [th_passiveRadiators]
+    flavor: "Move heat passively across a vehicle on a capillary evaporation-condensation loop — no pump, no power, no moving parts."
+  - id: th_pumpedLoop
+    title: "Pumped Fluid-Loop Cooling"
+    discipline: Thermodynamics
+    tier: 6
+    parents: [th_passiveRadiators]
+    flavor: "Circulate coolant to gather waste heat from across a large vehicle and dump it at the radiators — the thermal circulatory system of a station."
+  - id: th_deployableRadiators
+    title: "Deployable Panel Radiators"
+    discipline: Thermodynamics
+    tier: 6
+    parents: [th_heatPipes]
+    flavor: "Fold large radiating area for launch, deploy it on orbit — the only way to reject the tens of kilowatts a reactor or big array produces."
+  - id: th_cryocooler
+    title: "Mechanical Cryocoolers"
+    discipline: Thermodynamics
+    tier: 7
+    parents: [th_pumpedLoop]
+    flavor: "Actively pump heat down to cryogenic temperatures for detectors and zero-boiloff tanks — refrigeration where passive cooling can't reach."
+  - id: th_dropletRadiator
+    title: "Liquid-Droplet Radiators"
+    discipline: Thermodynamics
+    tier: 9
+    parents: [th_deployableRadiators]
+    flavor: "Spray a sheet of hot droplets through space and recollect them cooled — megawatts of heat rejection at a fraction of panel mass."
+  # ---------- Cryogenics (additions) ----------
+  - id: cryo_basicCryoStorage
+    title: "Vacuum-Jacketed Cryo Storage"
+    discipline: Cryogenics
+    tier: 2
+    parents: [met_weldedSteel]
+    flavor: "A double-walled, vacuum-jacketed dewar that keeps a cryogen liquid for hours — the first step from a chemistry-lab curiosity to a propellant."
+  - id: cryo_subcooling
+    title: "Propellant Sub-cooling Operations"
+    discipline: Cryogenics
+    tier: 5
+    parents: [cryo_lh2Insulation]
+    flavor: "Chill below the boiling point on the pad for density and margin — the operational craft of flying colder than equilibrium."
+  - id: cryo_orbitalTransfer
+    title: "Zero-g Cryo Propellant Transfer"
+    discipline: Cryogenics
+    tier: 6
+    parents: [cryo_lh2Insulation]
+    flavor: "Settle, gauge and pump cryogens between tanks in free fall without vapour locking — the hard fluid mechanics behind depots and refuelling."
+  - id: cryo_longDuration
+    title: "Long-Duration Cryo Storage"
+    discipline: Cryogenics
+    tier: 7
+    parents: [cryo_zbo]
+    flavor: "Combine insulation, vapour cooling and active refrigeration to hold cryogens for years — the enabler of outer-planet cryo stages."
+  - id: cryo_slush
+    title: "Slush-Hydrogen Handling"
+    discipline: Cryogenics
+    tier: 7
+    parents: [cryo_zbo]
+    flavor: "A solid-liquid hydrogen slurry packs more mass and absorbs more heat before it boils — the densest practical hydrogen there is."
+  # ---------- Electrical Power (batteries, fuel cells, photovoltaics, distribution) ----------
+  - id: elec_silverZinc
+    title: "Silver-Zinc Primary Batteries"
+    discipline: ElectricalPower
+    tier: 1
+    parents: [start]
+    flavor: "High energy density for a single mission's hours — the battery that powered the first satellites and short crewed flights."
+  - id: elec_fuelCell
+    title: "Alkaline Fuel Cells"
+    discipline: ElectricalPower
+    tier: 3
+    parents: [elec_silverZinc]
+    flavor: "React hydrogen and oxygen to make electricity and drinkable water — days of power for crewed flight, no sunlight required."
+    parts: [FuelCell]
+  - id: elec_siliconPV
+    title: "Silicon Photovoltaics"
+    discipline: ElectricalPower
+    tier: 3
+    parents: [elec_silverZinc]
+    flavor: "Doped silicon turns sunlight into watts indefinitely — the breakthrough that freed satellites from their batteries."
+    parts: [1x3SPanels]
+  - id: elec_bodyMountedArrays
+    title: "Body-Mounted & Deployable Arrays"
+    discipline: ElectricalPower
+    tier: 4
+    parents: [elec_siliconPV]
+    flavor: "Tile a spacecraft's skin or fold out fixed panels for hundreds of watts — the workhorse power source of the satellite age."
+  - id: elec_trackingArrays
+    title: "Sun-Tracking Array Drives"
+    discipline: ElectricalPower
+    tier: 5
+    parents: [elec_bodyMountedArrays]
+    flavor: "Gimbal the arrays to face the sun continuously, multiplying usable power — and adding the first always-moving mechanism to fail."
+  - id: elec_lithiumIon
+    title: "Lithium-Ion Energy Storage"
+    discipline: ElectricalPower
+    tier: 6
+    parents: [elec_fuelCell]
+    flavor: "Rechargeable high-density cells that survive thousands of eclipse cycles — the modern storage behind every station and rover night."
+  - id: elec_tripleJunction
+    title: "Triple-Junction GaAs Cells"
+    discipline: ElectricalPower
+    tier: 6
+    parents: [elec_trackingArrays]
+    flavor: "Stack three bandgaps to catch more of the spectrum — nearly twice silicon's efficiency for power-hungry deep-space craft."
+  - id: elec_concentratorPV
+    title: "Concentrator Photovoltaics"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_tripleJunction]
+    flavor: "Focus sunlight onto small high-efficiency cells with mirrors or lenses — more watts per kilogram far from the sun."
+  - id: elec_regenFuelCell
+    title: "Regenerative Fuel Cells"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_lithiumIon]
+    flavor: "Run the fuel cell backwards on solar power to re-split the water — closed-loop energy storage for long lunar nights."
+  - id: elec_flexibleArrays
+    title: "Flexible Roll-Out Solar Arrays"
+    discipline: ElectricalPower
+    tier: 8
+    parents: [elec_tripleJunction]
+    flavor: "Unroll a thin-film blanket for tens of kilowatts at a fraction of rigid-panel mass — the power wings of large modern stations."
+  # ---------- Nuclear Engineering (radioisotopes, fission, nuclear propulsion) ----------
+  - id: nuc_rtg
+    title: "Radioisotope Thermoelectric Generators"
+    discipline: NuclearEngineering
+    tier: 5
+    parents: [elec_siliconPV]
+    flavor: "A plutonium pellet's decay heat across a thermocouple gives steady watts for decades, anywhere, sunlight or not — the power of the outer planets."
+    parts: [RO-SNAP-3-RTGPo210]
+  - id: nuc_rtgAdvanced
+    title: "GPHS Multi-Mission RTGs"
+    discipline: NuclearEngineering
+    tier: 6
+    parents: [nuc_rtg]
+    flavor: "Modular general-purpose heat-source blocks make a rugged, standardised RTG — the quiet, reliable heartbeat of flagship deep-space probes."
+    parts: [RO-MMRTG]
+  - id: nuc_fissionReactor
+    title: "Compact Fission Reactors"
+    discipline: NuclearEngineering
+    tier: 6
+    parents: [nuc_rtg, met_vacuumInductionMelting]
+    anyToUnlock: false
+    flavor: "A controllable critical core gives kilowatts to megawatts where the sun is too faint and RTGs too feeble — and demands superalloys and radiators to match."
+    parts: [RO-reactor-BES5, RO-reactor-SAFE400]
+  - id: nuc_thermionic
+    title: "Thermionic Reactor Conversion"
+    discipline: NuclearEngineering
+    tier: 7
+    parents: [nuc_fissionReactor]
+    flavor: "Boil electrons straight off a hot reactor electrode into electricity with no moving parts — the TOPAZ approach to space fission power."
+    parts: [RO-reactor-TOPAZI]
+  - id: nuc_braytonReactor
+    title: "Closed-Brayton Reactor Power"
+    discipline: NuclearEngineering
+    tier: 7
+    parents: [nuc_fissionReactor]
+    flavor: "Spin a turbine on reactor-heated inert gas for efficient high-power conversion — the dynamic powerplant of a crewed surface base."
+  - id: nuc_nuclearThermal
+    title: "Solid-Core Nuclear-Thermal Rocket"
+    discipline: NuclearEngineering
+    tier: 8
+    parents: [nuc_fissionReactor, cryo_lh2Insulation, met_refractoryMetals]
+    anyToUnlock: false
+    flavor: "Heat hydrogen through a refractory reactor core for double a chemical engine's exhaust velocity. Needs the reactor, deep-cryo hydrogen, AND refractory metals at once — the NERVA convergence."
+    parts: [NERVA_NRX, PEWEE100]
+  - id: nuc_nuclearElectric
+    title: "Nuclear-Electric Propulsion"
+    discipline: NuclearEngineering
+    tier: 8
+    parents: [nuc_braytonReactor]
+    flavor: "Run a high-power reactor into electric thrusters for patient, fuel-thrifty thrust across the solar system — power and propulsion decoupled."
+  - id: nuc_nervaImproved
+    title: "Particle-Bed Nuclear-Thermal"
+    discipline: NuclearEngineering
+    tier: 9
+    parents: [nuc_nuclearThermal]
+    flavor: "Flow hydrogen through a bed of coated fuel particles for far higher power density and thrust-to-weight than a solid core."
+  - id: nuc_gasCoreNTR
+    title: "Gas-Core Nuclear-Thermal"
+    discipline: NuclearEngineering
+    tier: 10
+    parents: [nuc_nervaImproved]
+    flavor: "Let the fissioning fuel itself go gaseous and heat hydrogen to it directly — exhaust velocities chemical rockets can only dream of. Far-future."
+  - id: nuc_fusionTorch
+    title: "Fusion Propulsion"
+    discipline: NuclearEngineering
+    tier: 10
+    parents: [nuc_nuclearElectric, res_heliumMining]
+    anyToUnlock: false
+    flavor: "Confine and burn a fusion plasma for both power and thrust — the endgame drive, gated on the fuel you had to go mine from a gas giant."
