@@ -5,7 +5,10 @@
 #   Propellant Chemistry · Fluid Dynamics · Thermodynamics · Metallurgy · Cryogenics · Telecommunications
 # Proves: scatter-by-difficulty (F-1->Fluids combustion instability; RD-170->Metallurgy ox-rich
 # superalloys; J-2->Cryo LH2 insulation; AJ10->Chemistry storables; RS-25->Cryo n Metallurgy),
-# pure-process nodes (kerosene refining unlocks no engine itself — it FEEDS engines homed elsewhere),
+# PARENT RULE: convergence parents = LIMITING breakthroughs only, not routine consumed inputs. A
+# propellant-production node gates an engine ONLY when that production was itself hard (cryogen
+# liquefaction -> hydrolox YES; kerosene refining -> F-1/RD-170 NO — kerosene was routine). Keeps the
+# tree from sprouting "true but boring" fuel-hub edges. (Parked: fuels as a separate USABILITY gate.)
 # emergence, convergence (anyToUnlock:false = ALL parents), multi-entry (true = ANY parent),
 # upgrade-scatter, and a clean ladder (Telecom) for contrast.
 #
@@ -51,7 +54,7 @@ nodes:
     discipline: PropellantChemistry
     tier: 2
     parents: [soundingRocketry]
-    flavor: "A PROCESS node: catalytic hydrotreating strips sulfur and heavy aromatics to a narrow distillation cut that won't coke a cooling jacket. It unlocks no engine by itself — it FEEDS the kerolox engines that mature in Fluid Dynamics and Metallurgy."
+    flavor: "Catalytic hydrotreating strips sulfur and heavy aromatics to a narrow distillation cut that won't coke a cooling jacket — the dense, storable kerosene every kerolox engine burns. Homes the simplest early kerolox; the harder kerolox engines mature in Fluid Dynamics and Metallurgy."
     parts: [ROE-Merlin1A]
   - id: pc_apcpGrain
     title: "Aluminized AP/HTPB Composite Grain"
@@ -93,8 +96,8 @@ nodes:
     title: "Oxidizer-Rich Preburner Superalloys"
     discipline: Metallurgy
     tier: 4
-    parents: [met_earlyAlloys, fd_turbopumps, pc_keroseneHydrotreating]
-    anyToUnlock: false               # CONVERGENCE: alloys + turbomachinery + clean fuel
+    parents: [met_earlyAlloys, fd_turbopumps]
+    anyToUnlock: false               # CONVERGENCE: alloys + turbomachinery (kerosene was routine, NOT a gate)
     flavor: "For decades the West held that an oxygen-rich preburner would simply burn through any turbine. Soviet metallurgy disproved it: chrome-nickel alloys with burn-passivated surfaces survive hot, oxygen-rich gas, unlocking the most efficient kerolox engines ever flown. THE engine that metallurgy unlocks."
     parts: [ROE-RD170, ROE-RD180, ROE-NK33]
 
@@ -109,8 +112,8 @@ nodes:
     title: "Baffled-Injector Combustion-Instability Suppression"
     discipline: FluidDynamics
     tier: 4
-    parents: [pc_keroseneHydrotreating, fd_turbopumps, th_regenCooling]
-    anyToUnlock: false               # CONVERGENCE: clean fuel + turbopumps + cooling
+    parents: [fd_turbopumps, th_regenCooling]
+    anyToUnlock: false               # CONVERGENCE: turbopumps + cooling (kerosene was routine, NOT a gate)
     flavor: "Tangential acoustic modes can couple to combustion and tear a large chamber apart in milliseconds. Injector baffles and tuned cavities damp them. Taming this — not the fuel — is why the F-1 took years and why it lives in Fluid Dynamics."
     parts: [ROE-F1, ROE-F1B]
     upgrades: [RFUpgrade_F-1-1.52M, RFUpgrade_F-1A]

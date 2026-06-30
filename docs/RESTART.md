@@ -161,3 +161,16 @@ RealAntennas, ROSolar…), present via their mods.
   Kerbalkind → launch from anywhere"), where it's valid gameplay. Mechanically grounded:
   `KerbalKonstructs` + RSS launch sites (already in the RO_clean loadout); RP-1 has a launch-site
   system to study and strip of its career coupling.
+- **Fuel as a usability gate** (tree design, 2026-07-01) — make propellants *unlockable*, keyed off
+  Propellant Chemistry's tier ladder = the real fuel-availability timeline (alcohol/LOX & crude kerolox
+  ~1950 → RP-1 ~1957 → storable hypergolics late-50s/60s → hydrolox ~1963 → methalox/densified 2010s).
+  An engine homed/gated by its *bottleneck* discipline becomes **usable only once its fuel's tier is
+  reached** — so a "1963 hydrolox" engine researched early still can't fly until cryogenic fuel
+  production matures. Gives the "research the hardware, then unlock its fuel to use it" dynamic and makes
+  Propellant Chemistry a load-bearing cross-cutting axis **with no tree edges** (kills the fuel-hub
+  spaghetti). Keys off the RealFuels **engine-config** propellant (an engine can fly kerolox now, gain a
+  hydrolox config later) — same axis as the curated upgrades. **Same mechanism family as the VISION
+  probe "prerequisite-tech checklist"** — one plugin + checklist UI ("⚠ needs LH2 — unlock in Propellant
+  Chemistry") could serve both. NEW mechanic (RP-1/RO don't gate fuel *use*), so **post-MVP**. This is
+  why the tree drops "true-but-routine" fuel edges (kerosene→F-1): fuel realism lives on the Prop-Chem
+  ladder + this gate, not in per-engine prerequisite edges.

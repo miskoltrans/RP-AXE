@@ -43,9 +43,7 @@ digraph AXE {
   "soundingRocketry" -> "met_earlyAlloys" [style=solid];
   "met_earlyAlloys" -> "met_oxRichSuperalloys" [style=solid];
   "fd_turbopumps" -> "met_oxRichSuperalloys" [style=solid];
-  "pc_keroseneHydrotreating" -> "met_oxRichSuperalloys" [style=solid];
   "met_earlyAlloys" -> "fd_turbopumps" [style=solid];
-  "pc_keroseneHydrotreating" -> "fd_combustionStability" [style=solid];
   "fd_turbopumps" -> "fd_combustionStability" [style=solid];
   "th_regenCooling" -> "fd_combustionStability" [style=solid];
   "met_earlyAlloys" -> "th_regenCooling" [style=solid];
