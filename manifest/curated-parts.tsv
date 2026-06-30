@@ -1,0 +1,1821 @@
+mod	name	title
+B9_Aerospace_ProceduralWings	B9_Aero_Wing_Procedural_TypeA	B9 Procedural Wing (Spaceplane)
+B9_Aerospace_ProceduralWings	B9_Aero_Wing_Procedural_TypeB	B9 Procedural Control Surface (Spaceplane)
+B9_Aerospace_ProceduralWings	B9_Aero_Wing_Procedural_TypeC	B9 Procedural Wing, All-Moving (Spaceplane)
+B9_Aerospace_ProceduralWings	RO-B9ProcAMWing-Early	B9 Procedural Wing, All-Moving (Early)
+B9_Aerospace_ProceduralWings	RO-B9ProcAMWing-Supersonic	B9 Procedural Wing, All-Moving (Supersonic)
+B9_Aerospace_ProceduralWings	RO-B9ProcCS-Early	B9 Procedural Control Surface (Early)
+B9_Aerospace_ProceduralWings	RO-B9ProcCS-Supersonic	B9 Procedural Control Surface (Supersonic)
+B9_Aerospace_ProceduralWings	RO-B9ProcWing-Early	B9 Procedural Wing (Early)
+B9_Aerospace_ProceduralWings	RO-B9ProcWing-Supersonic	B9 Procedural Wing (Supersonic)
+CoatlAerospace	antenna_cone_toggle	CA-A02 Helical Omnidirectional Antenna
+CoatlAerospace	antenna_quetzal	CA-A06 Omnidirectional Antenna
+CoatlAerospace	ca_ESM2	LM900 Satellite Bus
+CoatlAerospace	ca_RM01	CAE-RM01 RCS Thruster Block
+CoatlAerospace	ca_RM02	CAE-RM02 RCS Thruster Block
+CoatlAerospace	ca_aacs	CA-AACS Advanced Attitude Control System
+CoatlAerospace	ca_ant_gps	CA-GPS Omnidirectional Antenna
+CoatlAerospace	ca_argo-mk2	Mariner Mars & Venus Spacecraft Bus
+CoatlAerospace	ca_argo-mk2-hga	Mariner Mars & Venus High Gain Antenna (HGA)
+CoatlAerospace	ca_argo-mk2-mast	Mariner Mars & Venus Low Gain Antenna (LGA)
+CoatlAerospace	ca_argo-mk2-solar	Mariner Mars Solar Array Wing (SAW)
+CoatlAerospace	ca_draco	Huygens Atmospheric Lander
+CoatlAerospace	ca_draco_as	Huygens Aeroshell
+CoatlAerospace	ca_draco_drogue	Huygens Drogue Parachute
+CoatlAerospace	ca_draco_hs	Huygens Heat Shield
+CoatlAerospace	ca_draco_parachute	Huygens Main Parachute
+CoatlAerospace	ca_explorer	IUE Spacecraft Bus
+CoatlAerospace	ca_explorer_solar	IUE Solar Array Wing (SAW)
+CoatlAerospace	ca_fom_drogue	Venera Lander Aeroshell (Drogue Parachute)
+CoatlAerospace	ca_fom_heatS	Venera Lander Aeroshell (Heat Shield)
+CoatlAerospace	ca_fom_lander	Venera Lander Bus
+CoatlAerospace	ca_fom_parachute	Venera Lander Aeroshell (Main Parachute)
+CoatlAerospace	ca_fom_sp	Venera Lander Bus Solar Array
+CoatlAerospace	ca_hera	Juno Spacecraft Bus
+CoatlAerospace	ca_jib	Generic 0.5 kN Thruster
+CoatlAerospace	ca_lahar	R-40
+CoatlAerospace	ca_landv_core	Surveyor Lander Core
+CoatlAerospace	ca_landv_hga	Surveyor Planar Antenna and Solar Array
+CoatlAerospace	ca_landv_omni	Surveyor Low Gain Antenna (LGA)
+CoatlAerospace	ca_landv_orbiter_HGA	Surveyor Orbiter High Gain Antenna
+CoatlAerospace	ca_landv_orbiter_core	Surveyor Orbiter Core
+CoatlAerospace	ca_landv_sp	Surveyor Orbiter Solar Array Wing
+CoatlAerospace	ca_louver_m	CA-TCL8 Thermal Control Louver
+CoatlAerospace	ca_louver_s	CA-TCL4 Thermal Control Louver
+CoatlAerospace	ca_louver_s2	CA-TCL4-B Thermal Control Louver
+CoatlAerospace	ca_mer_ft	Cassini Propulsion Module
+CoatlAerospace	ca_mer_leu	Cassini Lower Equipment Unit
+CoatlAerospace	ca_mer_rtg	GPHS-RTG
+CoatlAerospace	ca_rs01	CA-RS01 RCS Thruster Block
+CoatlAerospace	ca_rs04	CA-RS04 RCS Thruster Block
+CoatlAerospace	ca_rtg2000	Pioneer SNAP-19 RTG
+CoatlAerospace	ca_rtg3900	Voyager MHW-RTG
+CoatlAerospace	ca_rw_large	RW-4A Radial Reaction Wheel Assembly
+CoatlAerospace	ca_rw_medium	RW-2A Radial Reaction Wheel Assembly
+CoatlAerospace	ca_rw_small	RW4 Radial Reaction Wheel
+CoatlAerospace	ca_rw_xsmall	RW1 Radial Reaction Wheel
+CoatlAerospace	ca_startrack	CA-ACS 'StarTrack' Attitude Control System
+CoatlAerospace	ca_tank_mp_s	CA-MT10 Propellant Tank (Pressurized)
+CoatlAerospace	ca_trident	Bi-Propellant Apogee Engine
+CoatlAerospace	ca_vor_comm	4MV Spacecraft Bus Antenna Array
+CoatlAerospace	ca_vor_core	4MV Spacecraft Bus
+CoatlAerospace	ca_vor_dish	4MV-1 Spacecraft Bus Parabolic Antenna
+CoatlAerospace	ca_vor_mptank	CAE-MT12 Propellant Tank (Pressurized)
+CoatlAerospace	ca_vor_sep1	Venera Reentry Module Decoupler
+CoatlAerospace	ca_vor_sp	4MV Spacecraft Bus SAW & TCS (Standard)
+CoatlAerospace	ca_vor_sp2	4MV Spacecraft Bus SAW & TCS (Small)
+CoatlAerospace	ca_vor_tank	4MV-1/2 Spacecraft Bus Propellant Tank
+CoatlAerospace	dish_L	Voyager 1 & 2 Parabolic Antenna
+CoatlAerospace	dish_S	Ulysses Parabolic Antenna
+CoatlAerospace	dish_deploy_S	CA-A10 Folding Dish Antenna
+CoatlAerospace	dish_deploy_S2	Mariner Mars High Gain Antenna (HGA)
+CoatlAerospace	dish_hera	Juno Parabolic Antenna
+CoatlAerospace	dish_quetzal	Pioneer 10 & 11 Parabolic Antenna
+CoatlAerospace	dish_tatsujin	MAVEN Parabolic Antenna
+CoatlAerospace	dish_xihe	STEREO Parabolic Antenna
+CoatlAerospace	mer_dish	Cassini Parabolic Antenna
+CoatlAerospace	mer_ringDecoupler	Huygens Structural Adapter
+CoatlAerospace	meridiani	Cassini Spacecraft Bus
+CoatlAerospace	quetzal	Pioneer 10/11 Core
+CoatlAerospace	sp_mariner_a	CA-E100 1x2 Solar Panel
+CoatlAerospace	sp_mariner_b	CA-E100-SPV 1x2 Solar Panel
+CoatlAerospace	tatsujin	LM-DS Generic Spacecraft Bus
+CoatlAerospace	torekka	Voyager Core
+CoatlAerospace	xihe	STEREO Spacecraft Bus
+ConformalDecals	conformaldecals-flag	CDL-F Flag Decal
+ConformalDecals	conformaldecals-generic	CDL-1 Generic Decal
+ConformalDecals	conformaldecals-munar	CDL-3 Surface Base Decal
+ConformalDecals	conformaldecals-semiotic	CDL-2 Semiotic Standard Decal
+ConformalDecals	conformaldecals-text	CDL-T Text Decal
+CryoEngines	cryoengine-allosaur-1	STBE-3
+CryoEngines	cryoengine-buzzard-1	M10
+CryoEngines	cryoengine-eagle-1	Raptor-Vacuum
+CryoEngines	cryoengine-fuji-1	LE-9
+CryoEngines	cryoengine-pavonis-1	RL60/Vinci
+CryoEngines	cryoengine-tharsis-1	RL60/Vinci
+CryoEngines	cryoengine-vesuvius-1	Vulcain 2
+FarFutureTechnologies	RO-fft20mMMO	20 m "Mini-Mag" Orion Drive
+FarFutureTechnologies	RO-fft20mMMOtank	20 m "Mini-Mag" Orion Pulse Unit Magazine
+FarFutureTechnologies	RO-fftdustyplasmaffre	Dusty Plasma Fission Fragment Rocket Engine
+FarFutureTechnologies	RO-fftorion12	12 Meter Orion Drive
+FarFutureTechnologies	RO-fftorion8	8 Meter Orion Drive
+FarFutureTechnologies	fft-ffre-plasma-1	Dusty Plasma Afterburning Fission Fragment Rocket Engine
+FarFutureTechnologies	fft-fission-orion-5-1	10 Meter Orion Drive
+FarFutureTechnologies	fft-fission-zpinch-1	10 m "Mini-Mag" Orion Drive
+FarFutureTechnologies	fft-fueltank-fission-25-1	10 m Fissiles Tank (Long)
+FarFutureTechnologies	fft-fueltank-fission-25-2	10 m Fissiles Tank (Medium)
+FarFutureTechnologies	fft-fueltank-fission-25-3	10 m Fissiles Tank (Short)
+FarFutureTechnologies	fft-fueltank-fission-5-1	20 m Fissiles Tank (Long)
+FarFutureTechnologies	fft-fueltank-fission-5-2	20 m Fissiles Tank (Short)
+FarFutureTechnologies	fft-fueltank-fission-radial-1	3.2 m Fissiles Tank (Long)
+FarFutureTechnologies	fft-fueltank-fission-radial-2	3.2 m Fissiles Tank (Medium)
+FarFutureTechnologies	fft-fueltank-fission-radial-3	3.2 m Fissiles Tank (Short)
+FarFutureTechnologies	fft-fueltank-pulseunits-5-1	Orion Pulse Unit Magazine (Small)
+FarFutureTechnologies	fft-fueltank-pulseunits-5-2	Orion Pulse Unit Magazine (Medium)
+FarFutureTechnologies	fft-fueltank-pulseunits-5-3	Orion Pulse Unit Magazine (Large)
+FarFutureTechnologies	fft-fueltank-targets-5-1	10 m "Mini-Mag" Orion Pulse Unit Magazine
+FarFutureTechnologies	fft-nswr-2	20 m Nuclear Salt Water Rocket
+HullCameraVDS	aerocam	Aerocam
+HullCameraVDS	aerocam180	Aerocam 180
+HullCameraVDS	hc_booster	BoosterCam
+HullCameraVDS	hc_kazzelblad	BoosterCam
+HullCameraVDS	hc_launchcam	KSC Launchpad Camera
+HullCameraVDS	hc_navcam	NavCam
+HullCameraVDS	hc_nightvision	Nightvisioncam
+HullCameraVDS	hc_scicam	ScienceCam
+HullCameraVDS	hc_wideangle	Wide Angle Cam
+HullCameraVDS	kerbpro	KerbPro
+HullCameraVDS	mumech_hullcam	Basic Hull Camera Deluxe
+KerbalAtomics	RO-KA-LRCNTR	Lewis Research Center LNTR
+KerbalAtomics	RO-KA-PrincetonLNTR	Princeton LNTR
+KerbalAtomics	ntr-gc-25-1	Low-Pressure NTR
+KerbalFoundries	KF-ALG-Large	Adjustable Landing Gear (Large)
+KerbalFoundries	KF-ALG-Large-Spaceplane	Adjustable Landing Gear (Large) (Spaceplane)
+KerbalFoundries	KF-ALG-Medium	Adjustable Landing Gear (Medium)
+KerbalFoundries	KF-ALG-Medium-Spaceplane	Adjustable Landing Gear (Medium) (Spaceplane)
+KerbalFoundries	KF-ALG-Small	Adjustable Landing Gear (Small)
+KerbalFoundries	KF-ALG-Small-Spaceplane	Adjustable Landing Gear (Small) (Spaceplane)
+KerbalFoundries	KF-ALG-SmallSide	Adjustable Landing Gear (Small - Side)
+KerbalFoundries	KF-ALG-SmallSide-Spaceplane	Adjustable Landing Gear (Small - Side) (Spaceplane)
+KerbalFoundries	KF-ScrewDrive	KF Screw Drive
+KerbalFoundries	KF-Skid	KF Skid
+KerbalFoundries	KF-TrackInverting	KF-RBI Inverting Track
+KerbalFoundries	KF-TrackLong	KF Long Track
+KerbalFoundries	KF-TrackMedium	KF Medium track
+KerbalFoundries	KF-TrackMole	KF-RBI Mole Track
+KerbalFoundries	KF-TrackSimple	KF Simple Track
+KerbalFoundries	KF-TrackSmall	KF Small track
+KerbalFoundries	KF-TrackSurface	KF Surface track
+KerbalFoundries	KF-TrackTiny	KF RBI Tiny Track
+KerbalFoundries	KF-WheelLarge	KF Large Wheel
+KerbalFoundries	KF-WheelMedium	KF Medium Wheel
+KerbalFoundries	KF-WheelSmall	KF Small Rover Wheel
+KerbalFoundries	KF-WheelTiny	KF  Tiny Rover Wheel
+KerbalFoundries	KF-WheelTruck-Dual	KF Truck Wheel - Dual
+KerbalFoundries	KF-WheelTruck-Single	KF Truck Wheel - Single
+KerbalismConfig	LiquefactionArray	Liquefaction Array
+KerbalismConfig	Liquifier	Liquifier
+KerbalismConfig	kerbalism-ISRU	ISRU
+KerbalismConfig	kerbalism-chemicalplant	Chemical Plant
+KerbalismConfig	kerbalism-fuelcell	External Fuel Cell
+KerbalismConfig	kerbalism-lifesupportmodule	External ECLSS Module
+KerbalismConfig	kerbalism-miniISRU	Mini ISRU
+KerwisChineseAerospacePack	DFH-1	DongFangHong-1 Satelite
+KerwisChineseAerospacePack	YF100_Engine-double-withShell2	YF-100 with CZ-5 Boattail
+KerwisChineseAerospacePack	YF100_Engine_S	YF-100
+KerwisChineseAerospacePack	YF20_Engine	YF-20
+KerwisChineseAerospacePack	YF21_Engine	YF-21
+KerwisChineseAerospacePack	YF21_with_shell_CZ-2	YF-21 with CZ-2 Boattail
+KerwisChineseAerospacePack	YF21_with_shell_CZ-2C	YF-21 with CZ-2C Boattail
+KerwisChineseAerospacePack	YF21_with_shell_CZ-2D	YF-21 with CZ-2D Boattail
+KerwisChineseAerospacePack	YF22_Engine	YF-22
+KerwisChineseAerospacePack	YF23_Engine	YF-23
+KerwisChineseAerospacePack	YF25K_Engine	YF-20 with Boattail (no gimbal)
+KerwisChineseAerospacePack	YF2_Engine	YF-2 (no gimbal)
+KerwisChineseAerospacePack	YF2_with_shell	YF-2 with Boattail
+KerwisChineseAerospacePack	YF3_Engine	YF-3 (no gimbal)
+KerwisChineseAerospacePack	YF3_with_shell	YF-3 with Boattail
+KerwisChineseAerospacePack	YF75D_Engine	YF-75
+KerwisChineseAerospacePack	YF75_Engine	YF-75
+KerwisChineseAerospacePack	YF77_Engine	YF-77
+KerwisChineseAerospacePack	YF77_Engine-double-withShell	YF-77 with CZ-5 Boattail
+ModularLaunchPads	AM_MLP_AerobeeLaunchStand	Aerobee Launch Stand
+ModularLaunchPads	AM_MLP_AgenaServiceTower	Atlas-Agena Service Tower
+ModularLaunchPads	AM_MLP_Atlas2UmbilicalArm1	Atlas-Centaur I/II Umbilical Arm 1
+ModularLaunchPads	AM_MLP_Atlas2UmbilicalArm2	Atlas-Centaur I/II Umbilical Arm 2
+ModularLaunchPads	AM_MLP_Atlas2UmbilicalArm3	Atlas-Centaur I/II Wind Damper Arm 3
+ModularLaunchPads	AM_MLP_AtlasLaunchStand	Atlas Launch Stand
+ModularLaunchPads	AM_MLP_AtlasLaunchStandAlt	Atlas Launch Stand Alternate
+ModularLaunchPads	AM_MLP_AtlasSepClampArm	Atlas Side Clamp Arm
+ModularLaunchPads	AM_MLP_AtlasSepSideUmb	Atlas Side Umbilical
+ModularLaunchPads	AM_MLP_AtlasUmbilicalArmAgena	Atlas-Agena Umbilical Arm
+ModularLaunchPads	AM_MLP_AtlasUmbilicalArmCentaur	Atlas-Centaur D Umbilical Arms
+ModularLaunchPads	AM_MLP_AtlasUmbilicalArmCentaur1	Centaur Separate Umbilical Arm 1 - Tall
+ModularLaunchPads	AM_MLP_AtlasUmbilicalArmCentaur2	Centaur Separate Umbilical Arm 2 - Short
+ModularLaunchPads	AM_MLP_CentaurServiceTower1	Atlas-Centaur D Service Tower
+ModularLaunchPads	AM_MLP_CentaurServiceTower2	Atlas-Centaur I/II Service Tower
+ModularLaunchPads	AM_MLP_CrewElevatorAtlasUmbilical	Crew Elevator Mercury-Atlas Umbilical
+ModularLaunchPads	AM_MLP_CrewElevatorLargeExt	Crew Elevator Large Side Extension
+ModularLaunchPads	AM_MLP_CrewElevatorLargeSec1	Crew Elevator Large Section
+ModularLaunchPads	AM_MLP_CrewElevatorLargeTop	Crew Elevator Large Top
+ModularLaunchPads	AM_MLP_CrewElevatorSmallSec1	Crew Elevator Small Section
+ModularLaunchPads	AM_MLP_CrewElevatorSmallTop	Crew Elevator Small Top
+ModularLaunchPads	AM_MLP_CrewElevatorXLargeSec	Crew Elevator Extra Large Section
+ModularLaunchPads	AM_MLP_Delta4LaunchStand	Delta IV Launch Stand / 3.125m-2.5m
+ModularLaunchPads	AM_MLP_Delta4ModTowerCore	Delta IV Modular Service Tower Core
+ModularLaunchPads	AM_MLP_Delta4ModTowerTop	Delta IV Modular Service Tower Top
+ModularLaunchPads	AM_MLP_Delta4ServiceTower	Delta IV Service Tower - Single Piece
+ModularLaunchPads	AM_MLP_Delta4TowerArm1	Delta IV Swing Arm 1 - Core Tanks
+ModularLaunchPads	AM_MLP_Delta4TowerArm2	Delta IV Swing Arm 2 - DCSS
+ModularLaunchPads	AM_MLP_Delta4TowerArm3	Delta IV Swing Arm 3 - Fairing
+ModularLaunchPads	AM_MLP_FlatLaunchBaseMini	Flat Launch Base 1 - Mini Frame
+ModularLaunchPads	AM_MLP_FlatLaunchBaseSmall	Flat Launch Base 2 - Small Frame
+ModularLaunchPads	AM_MLP_FlatSlabServiceTower	Ariane V Service Mast
+ModularLaunchPads	AM_MLP_GenBaseLarge	Launch Base 5 - Large
+ModularLaunchPads	AM_MLP_GenBaseMedium	Launch Base 4 - Medium
+ModularLaunchPads	AM_MLP_GenBaseMicro	Launch Base 1 - Micro
+ModularLaunchPads	AM_MLP_GenBaseMini	Launch Base 2 - Mini
+ModularLaunchPads	AM_MLP_GenBaseSmall	Launch Base 3 - Small
+ModularLaunchPads	AM_MLP_GenBaseXLarge	Launch Base 6 - Extra Large
+ModularLaunchPads	AM_MLP_GeneralCrewArm	Crew Access Arm Large - Large Mount
+ModularLaunchPads	AM_MLP_GeneralCrewArmSmallMount	Crew Access Arm Large - Small Mount
+ModularLaunchPads	AM_MLP_GeneralCrewElevator	Crew Elevator Large Base - 70m with Hatch
+ModularLaunchPads	AM_MLP_GeneralCrewElevator2	Crew Elevator Extra Large Base - 130m with Hatch
+ModularLaunchPads	AM_MLP_GeneralCrewElevatorMini	Crew Elevator Mini Core with Hatch
+ModularLaunchPads	AM_MLP_GeneralCrewElevatorMiniArm	Crew Access Arm Small - Mini Mount
+ModularLaunchPads	AM_MLP_GeneralCrewElevatorMiniArmS	Crew Access Arm Small - Small Mount
+ModularLaunchPads	AM_MLP_GeneralCrewElevatorMiniSec1	Crew Elevator Mini Section
+ModularLaunchPads	AM_MLP_GeneralCrewElevatorSmall	Crew Elevator Small Base with Hatch
+ModularLaunchPads	AM_MLP_GeneralFallbackUmbilicalTower	General Fallback Umbilical Tower
+ModularLaunchPads	AM_MLP_GeneralHold1	General Hold-Down Type 1: Side-Arm
+ModularLaunchPads	AM_MLP_GeneralHold2	General Hold-Down Type 2: Drop-Arm
+ModularLaunchPads	AM_MLP_GeneralHold3	General Hold-Down Type 3: Vert Bolt Flat
+ModularLaunchPads	AM_MLP_GeneralHold4	General Hold-Down Type 4: Vert Bolt Tripod
+ModularLaunchPads	AM_MLP_GeneralHold5	General Hold-Down Type 5: Vert Bolt Arm
+ModularLaunchPads	AM_MLP_GeneralHold6	General Hold-Down Type 6: Clamp Arm Small
+ModularLaunchPads	AM_MLP_GeneralHold7	General Hold-Down Type 7: Clamp Arm Large
+ModularLaunchPads	AM_MLP_GeneralHoldSRB	General Hold-Down Type SRB
+ModularLaunchPads	AM_MLP_GeneralLaunchBase	Old Launch Base 3 *** DEPRECATED ***
+ModularLaunchPads	AM_MLP_GeneralLaunchBaseMedium	Old Launch Base 2 *** DEPRECATED ***
+ModularLaunchPads	AM_MLP_GeneralLaunchBaseSmall	Old Launch Base 1 *** DEPRECATED ***
+ModularLaunchPads	AM_MLP_GeneralLaunchPlate	Flat Launch Base 3 - Medium Frame
+ModularLaunchPads	AM_MLP_GeneralModularMultiTowerLarge	Modular Multi Tower 3 - Large
+ModularLaunchPads	AM_MLP_GeneralModularMultiTowerMast	Modular Multi Tower Top Mast
+ModularLaunchPads	AM_MLP_GeneralModularMultiTowerMedium	Modular Multi Tower 2 - Medium
+ModularLaunchPads	AM_MLP_GeneralModularMultiTowerSmall	Modular Multi Tower 1 - Small
+ModularLaunchPads	AM_MLP_GeneralModularMultiTowerTop	Modular Multi Tower Top
+ModularLaunchPads	AM_MLP_GeneralROFI	Multi ROFI Sparker
+ModularLaunchPads	AM_MLP_GeneralServiceTowerLargeSec1	General Service Tower Large Section
+ModularLaunchPads	AM_MLP_GeneralServiceTowerLargeTop	General Service Tower Large Top
+ModularLaunchPads	AM_MLP_GeneralServiceTowerMedium	General Service Tower Medium Core
+ModularLaunchPads	AM_MLP_GeneralServiceTowerMediumSec1	General Service Tower Medium Section
+ModularLaunchPads	AM_MLP_GeneralServiceTowerMediumTop	General Service Tower Medium Top
+ModularLaunchPads	AM_MLP_GeneralServiceTowerSmall	General Service Tower Small Core
+ModularLaunchPads	AM_MLP_GeneralServiceTowerSmallSec1	General Service Tower Small Section
+ModularLaunchPads	AM_MLP_GeneralServiceTowerSmallTop	General Service Tower Small Top
+ModularLaunchPads	AM_MLP_GeneralServiceTowerXLBase	Titan III Modular Service Tower Core
+ModularLaunchPads	AM_MLP_GeneralServiceTowerXLSec1	Titan III Modular Service Tower Section
+ModularLaunchPads	AM_MLP_GeneralServiceTowerXLTop	Titan III Modular Service Tower Top
+ModularLaunchPads	AM_MLP_GeneralStrongbackTowerFull	General Strongback Tower 1 - Large
+ModularLaunchPads	AM_MLP_GeneralStrongbackTowerMicro	Generaral Strongback Tower 4 - Micro
+ModularLaunchPads	AM_MLP_GeneralStrongbackTowerMini	Generaral Strongback Tower 3 - Mini
+ModularLaunchPads	AM_MLP_GeneralStrongbackTowerSmall	General Strongback Tower 2 - Small
+ModularLaunchPads	AM_MLP_GeneralTowerAtlasV	Atlas V Service Mast - Single Piece
+ModularLaunchPads	AM_MLP_GeneralTowerDeltaII	Delta II Service Tower - Single Piece
+ModularLaunchPads	AM_MLP_GeneralTowerMulti	General Service Tower Large Core
+ModularLaunchPads	AM_MLP_GeneralTowerSwingArm	Tower Swing Arm Full 1 - Small
+ModularLaunchPads	AM_MLP_GeneralTowerSwingArmLarge	Tower Swing Arm Full 3 - Large
+ModularLaunchPads	AM_MLP_GeneralTowerSwingArmMedium	Tower Swing Arm Full 2 - Medium
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopA	Tower Umbilical Droop 1A - Mini
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopA4	Tower Umbilical Droop 1B - Mini
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopAtlas2	Atlas-Centaur I/II Umbilical Droop
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopB	Tower Umbilical Droop 2A - Small
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopB4	Tower Umbilical Droop 2B - Small
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopC	Tower Umbilical Droop 3A - Medium
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopC4	Tower Umbilical Droop 3B - Medium
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopD	Tower Umbilical Droop 4A - Large
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopD4	Tower Umbilical Droop 4B - Large
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopE	Tower Umbilical Droop 5A - Extra Large
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDroopE4	Tower Umbilical Droop 5B - Extra Large
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDrop	Tower Umbilical Straight 2 - Medium
+ModularLaunchPads	AM_MLP_GeneralUmbilicalDropLarge	Tower Umbilical Straight 3 - Large
+ModularLaunchPads	AM_MLP_HoldArmSaturnIB	Saturn Launcher Hold-Down - Saturn IB
+ModularLaunchPads	AM_MLP_HoldArmSaturnV	Saturn Launcher Hold-Down - Saturn V
+ModularLaunchPads	AM_MLP_JupiterPetalCover	Redstone Launch Stand Petal Cover / 1.5m
+ModularLaunchPads	AM_MLP_LargeLaunchStand	Saturn IB Launch Stand
+ModularLaunchPads	AM_MLP_LaunchPlateEnergia	Launch Plate Energia
+ModularLaunchPads	AM_MLP_LaunchPlateFalcon9	Falcon 9 Launch Plate
+ModularLaunchPads	AM_MLP_LaunchPlateN1	Launch Plate N1
+ModularLaunchPads	AM_MLP_LaunchPlateRnd1	Launch Plate Size 1 Round
+ModularLaunchPads	AM_MLP_LaunchPlateRnd2	Launch Plate Size 2 Round
+ModularLaunchPads	AM_MLP_LaunchPlateRnd3	Launch Plate Size 3 Round
+ModularLaunchPads	AM_MLP_LaunchPlateSqr1	Launch Plate Size 1 Square
+ModularLaunchPads	AM_MLP_LaunchPlateSqr2	Launch Plate Size 2 Square
+ModularLaunchPads	AM_MLP_LaunchPlateSqr3	Launch Plate Size 3 Square
+ModularLaunchPads	AM_MLP_LaunchRailLarge	Launch Rail 4 - Large Size
+ModularLaunchPads	AM_MLP_LaunchRailMedium	Launch Rail 3 - Medium Size
+ModularLaunchPads	AM_MLP_LaunchRailMini	Launch Rail 1 - Mini Size
+ModularLaunchPads	AM_MLP_LaunchRailSmall	Launch Rail 2 - Small Size
+ModularLaunchPads	AM_MLP_LaunchStandCrewElevatorAtlas	Crew Elevator Mercury-Atlas, with Hatch
+ModularLaunchPads	AM_MLP_LaunchStandCrewElevatorGemini	Crew Elevator Gemini, with Hatch
+ModularLaunchPads	AM_MLP_LaunchStandCrewElevatorMercury	Crew Elevator Mercury-Redstone, with Hatch
+ModularLaunchPads	AM_MLP_LaunchStandCrewWalkwayMercury	Crew Elevator Walkway Mercury-Atlas
+ModularLaunchPads	AM_MLP_LaunchStandCrewWalkwayMini	Crew Elevator Walkway Mini
+ModularLaunchPads	AM_MLP_LaunchStandServiceTower1	Mini Modular Service Tower Type 1
+ModularLaunchPads	AM_MLP_LaunchStandServiceTower2	Mini Modular Service Tower Type 2
+ModularLaunchPads	AM_MLP_LaunchStandServiceTower3	Mini Modular Service Tower Type 3
+ModularLaunchPads	AM_MLP_LaunchStandServiceTower4	Mini Modular Service Tower Type 4
+ModularLaunchPads	AM_MLP_LaunchStandSmallPole	Redstone Umbilical Pole
+ModularLaunchPads	AM_MLP_LaunchStandSmallUmbilical	Tower Umbilical Straight 1- Small
+ModularLaunchPads	AM_MLP_MilkstoolLaunchStand1	Mini Milkstool Launch Stand 1 / 0.3125m, 0.625m
+ModularLaunchPads	AM_MLP_MilkstoolLaunchStand2	Mini Milkstool Launch Stand 2 / 0.9375m, 1.25m, 1.5m
+ModularLaunchPads	AM_MLP_MilkstoolLaunchStand3	Mini Milkstool Launch Stand 3 / 1.875m, 2.5m
+ModularLaunchPads	AM_MLP_MilkstoolMini1S	Mini Milkstool Decoupler Size 1 Short
+ModularLaunchPads	AM_MLP_MilkstoolMini1T	Mini Milkstool Decoupler Size 1 Tall
+ModularLaunchPads	AM_MLP_MilkstoolMini2S	Mini Milkstool Decoupler Size 2 Short
+ModularLaunchPads	AM_MLP_MilkstoolMini2T	Mini Milkstool Decoupler Size 2 Tall
+ModularLaunchPads	AM_MLP_MilkstoolMini3M	Mini Milkstool Decoupler Size 3 Medium
+ModularLaunchPads	AM_MLP_MilkstoolMini3S	Mini Milkstool Decoupler Size 3 Short
+ModularLaunchPads	AM_MLP_MilkstoolMini3T	Mini Milkstool Decoupler Size 3 Tall
+ModularLaunchPads	AM_MLP_N1ModularTower	N1 Basic Modular Tower
+ModularLaunchPads	AM_MLP_N1TowerPlatform	N1 Tower Platform
+ModularLaunchPads	AM_MLP_RedstoneLaunchStand	Redstone Launch Stand / 1.25m, 1.5m
+ModularLaunchPads	AM_MLP_SaturnHammerheadCrane	Saturn Tower Hammerhead Crane
+ModularLaunchPads	AM_MLP_SaturnLaunchStandPedestal	Saturn IB Launch Stand Tower Pedestal
+ModularLaunchPads	AM_MLP_SaturnLauncherMilkstool	Saturn Launcher Milkstool
+ModularLaunchPads	AM_MLP_SaturnLauncherTSM	Saturn Launcher Tail Service Mast
+ModularLaunchPads	AM_MLP_SaturnLightningMast	Saturn Tower Lightning Mast
+ModularLaunchPads	AM_MLP_SaturnLightningMastAlt	Shuttle Tower Lightning Mast
+ModularLaunchPads	AM_MLP_SaturnMilkstoolClamp	Saturn Milkstool Launch Stand
+ModularLaunchPads	AM_MLP_SaturnMobileLauncherBaseFree	Saturn Mobile Launcher Base - Free-Standing
+ModularLaunchPads	AM_MLP_SaturnMobileLauncherClampBase	Saturn Launcher Base
+ModularLaunchPads	AM_MLP_SaturnTowerBase	Saturn Modular Tower Base - Angled, with Hatches
+ModularLaunchPads	AM_MLP_SaturnTowerBaseSquare	Saturn Modular Tower Base - Square, with Hatches
+ModularLaunchPads	AM_MLP_SaturnTowerCrewArm	Saturn Tower Crew Access Arm
+ModularLaunchPads	AM_MLP_SaturnTowerCrewFloor	Saturn Tower Crew Section Floor
+ModularLaunchPads	AM_MLP_SaturnTowerCrewSection	Saturn Modular Tower Crew Section
+ModularLaunchPads	AM_MLP_SaturnTowerDamperArm	Saturn Tower Damper Arm
+ModularLaunchPads	AM_MLP_SaturnTowerMultiSection	Saturn Modular Tower Core Section
+ModularLaunchPads	AM_MLP_SaturnTowerSwingArm0	Swing Arm Saturn IB S-IB
+ModularLaunchPads	AM_MLP_SaturnTowerSwingArm2	Swing Arm Saturn V #2 S-IC Forward
+ModularLaunchPads	AM_MLP_SaturnTowerSwingArm3	Swing Arm Saturn V #3 S-II Aft
+ModularLaunchPads	AM_MLP_SaturnTowerSwingArm4	Swing Arm Saturn V #4 S-II Intermediate
+ModularLaunchPads	AM_MLP_SaturnTowerSwingArm5	Swing Arm Saturn V #5 S-II Forward
+ModularLaunchPads	AM_MLP_SaturnTowerSwingArm6	Swing Arm Saturn V #6 S-IVB Aft
+ModularLaunchPads	AM_MLP_SaturnTowerSwingArm7	Swing Arm Saturn V #7 S-IVB Forward
+ModularLaunchPads	AM_MLP_SaturnTowerSwingArm8	Swing Arm Saturn V #8 Serv Mod
+ModularLaunchPads	AM_MLP_SaturnTowerSwingArmBDB	Swing Arm Saturn V #1 S-IC Intertank
+ModularLaunchPads	AM_MLP_SaturnTowerSwingArmGen	Saturn Tower Swing Arm - General
+ModularLaunchPads	AM_MLP_SaturnTowerTopSection	Saturn Modular Tower Top Section
+ModularLaunchPads	AM_MLP_ScissorArmUmbilical	Ariane V Scissor Arm Umbilical
+ModularLaunchPads	AM_MLP_ShuttleLauncherBaseClamp	Shuttle Launcher Platform Base
+ModularLaunchPads	AM_MLP_ShuttleLauncherFSSBase	Shuttle Modular FSS Tower Base, with Hatches
+ModularLaunchPads	AM_MLP_ShuttleLauncherRSS	Shuttle Rotating Service Structure
+ModularLaunchPads	AM_MLP_ShuttleLauncherRSSHinge	Shuttle Rotating Service Structure Hinge
+ModularLaunchPads	AM_MLP_ShuttleLauncherSRBHold	Shuttle Launcher SRB Hold-Down
+ModularLaunchPads	AM_MLP_ShuttleLauncherTSM	Shuttle Launcher Tail Service Mast
+ModularLaunchPads	AM_MLP_ShuttleSLC6LaunchMount	SLC-6 Shuttle Launch Mount
+ModularLaunchPads	AM_MLP_ShuttleSLC6TowerCore	SLC-6 Shuttle Tower Core Section
+ModularLaunchPads	AM_MLP_ShuttleSLC6TowerCrew	SLC-6 Shuttle Tower Crew Section
+ModularLaunchPads	AM_MLP_ShuttleSLC6TowerCrewArm	SLC-6 Shuttle Tower Crew Access Arm
+ModularLaunchPads	AM_MLP_ShuttleSLC6TowerIntertank	SLC-6 Shuttle Tower Intertank Structure
+ModularLaunchPads	AM_MLP_ShuttleSLC6TowerLOXArm	SLC-6 Shuttle Tower Arm: LOX Vent
+ModularLaunchPads	AM_MLP_ShuttleSLC6TowerMast	SLC-6 Shuttle Tower Top Mast
+ModularLaunchPads	AM_MLP_ShuttleSLC6TowerTop	SLC-6 Shuttle Tower Top
+ModularLaunchPads	AM_MLP_ShuttleTowerArmHydrogen	Shuttle Tower Arm: Hydrogen Vent
+ModularLaunchPads	AM_MLP_ShuttleTowerArmIntertank	Shuttle Tower Arm: Intertank Access
+ModularLaunchPads	AM_MLP_ShuttleTowerArmLOX	Shuttle Tower Arm: LOX Vent
+ModularLaunchPads	AM_MLP_ShuttleTowerCrewArm	Shuttle Tower Crew Access Arm: Orbiter
+ModularLaunchPads	AM_MLP_ShuttleTowerCrewFloor	Shuttle Modular FSS Tower Crew Section Floor
+ModularLaunchPads	AM_MLP_ShuttleTowerCrewSection	Shuttle Modular FSS Tower Crew Section
+ModularLaunchPads	AM_MLP_ShuttleTowerIntertankStructure	Shuttle Tower Intertank Structure
+ModularLaunchPads	AM_MLP_ShuttleTowerMultiSection	Shuttle Modular FSS Tower Core Section
+ModularLaunchPads	AM_MLP_ShuttleTowerRodanCrewArm	Shuttle Tower Crew Access Arm: Rodan
+ModularLaunchPads	AM_MLP_ShuttleTowerTopSection	Shuttle Modular FSS Tower Top Section
+ModularLaunchPads	AM_MLP_SmallLaunchStand	General Round Launch Stand
+ModularLaunchPads	AM_MLP_SmallLaunchStandRect	General Rectangular Launch Stand
+ModularLaunchPads	AM_MLP_SmallTowerSwingArm	Tower Swing Arm Basic 1 - Small
+ModularLaunchPads	AM_MLP_SmallTowerSwingArmLarge	Tower Swing Arm Basic 3 - Large
+ModularLaunchPads	AM_MLP_SmallTowerSwingArmMedium	Tower Swing Arm Basic 2 - Medium
+ModularLaunchPads	AM_MLP_SoyuzLaunchBase	Soyuz Launch Base
+ModularLaunchPads	AM_MLP_SoyuzLaunchBaseArmLG	Soyuz Launch Base Large Fuel Arm
+ModularLaunchPads	AM_MLP_SoyuzLaunchBaseArmSM	Soyuz Launch Base Small Fuel Arm
+ModularLaunchPads	AM_MLP_SoyuzLaunchBaseClampArm	Soyuz Launch Base Clamp Arm
+ModularLaunchPads	AM_MLP_SoyuzLaunchBaseElevator	Soyuz Solo Crew Elevator with Hatches
+ModularLaunchPads	AM_MLP_SoyuzLaunchBaseGantry	Soyuz Launch Base Gantry with Hatches
+ModularLaunchPads	AM_MLP_SpecialServiceTowerAtlasVBase	Atlas V Modular Service Mast Base
+ModularLaunchPads	AM_MLP_SpecialServiceTowerAtlasVSec1	Atlas V Modular Service Mast Short Section
+ModularLaunchPads	AM_MLP_SpecialServiceTowerAtlasVSec2	Atlas V Modular Service Mast Core
+ModularLaunchPads	AM_MLP_SpecialServiceTowerAtlasVTop	Atlas V Modular Service Mast Top
+ModularLaunchPads	AM_MLP_SpecialServiceTowerDeltaIIBase	Delta II Modular Service Tower Base
+ModularLaunchPads	AM_MLP_SpecialServiceTowerDeltaIISec1	Delta II Modular Service Tower Detail Section
+ModularLaunchPads	AM_MLP_SpecialServiceTowerDeltaIISec2	Delta II Modular Service Tower Core Section
+ModularLaunchPads	AM_MLP_SpecialServiceTowerDeltaIITop	Delta II Modular Service Tower Top
+ModularLaunchPads	AM_MLP_TestStandEngine	Static Test Stand - Engine Type
+ModularLaunchPads	AM_MLP_TestStandSmall	Static Test Stand - Cradle Type
+ModularLaunchPads	AM_MLP_TestStandTower	Static Test Stand - Tower Type
+ModularLaunchPads	AM_MLP_ThorLaunchStand	Thor/Delta Launch Stand / 1.5m
+ModularLaunchPads	AM_MLP_ThorServiceTowerFallback	Thor/Delta Service Tower - Fallback Type
+ModularLaunchPads	AM_MLP_Titan3LaunchStand	Titan III Launch Stand / 1.875m
+ModularLaunchPads	AM_MLP_TitanIIITowerMast	Titan III Mast
+ModularLaunchPads	AM_MLP_TitanIILaunchStand	Titan II Launch Stand / 1.875m
+ModularLaunchPads	AM_MLP_TitanIIServiceTowerMast	Titan II Service Tower Mast
+ModularLaunchPads	AM_MLP_TitanIIServiceTowerModBase	Titan II Modular Service Tower Base
+ModularLaunchPads	AM_MLP_TitanIIServiceTowerModSec1	Titan II Modular Service Tower Detail Section
+ModularLaunchPads	AM_MLP_TitanIIServiceTowerModSec2	Titan II Modular Service Tower Core Section
+ModularLaunchPads	AM_MLP_TitanIIServiceTowerModTop	Titan II Modular Service Tower Top
+ModularLaunchPads	AM_MLP_TitanIIServiceTowerSingle	Titan II Service Tower - Single Piece
+ModularLaunchPads	AM_MLP_TitanIIServiceTowerUmbilical	Titan II Umbilical - Straight Style
+ModularLaunchPads	AM_MLP_TitanIIServiceTowerUmbilical2	Titan II Umbilical - Droop Style
+ModularLaunchPads	AM_MLP_TitanIIServiceTowerUmbilicalGem	Titan II Umbilical Gemini - Straight Style
+ModularLaunchPads	AM_MLP_TitanIIServiceTowerUmbilicalGem2	Titan II Umbilical Gemini - Droop Style
+ModularLaunchPads	AM_MLP_VanguardLaunchStand	Vanguard Launch Stand / 0.9375m
+ModularLaunchPads	AM_MLP_VanguardServiceTower	Vanguard Service Tower
+ModularLaunchPads	MountPlatform_MLP	General Mounting Platform
+NearFutureAeronautics	RO-nfa-RD41	2x RD-41 Turbojet
+NearFutureAeronautics	nfa-turbofan-25-2	Olympus 593 Turbojet
+NearFutureAeronautics	nfa-turbojet-25-1	GE4 Turbojet
+NearFutureAeronautics	nfa-vtol-0625-1	RB.162 Turbojet
+NearFutureAeronautics	nfa-vtol-125-1	2x RB.162 Turbojet
+NearFutureConstruction	docking-linear-1	Grip-O-Tron Linear Docking Connector
+NearFutureConstruction	docking-linear-2	Grip-O-Tron XL Linear Docking Connector
+NearFutureConstruction	truss-circular-01	Annular Modular Truss XL
+NearFutureConstruction	truss-circular-02	Annular Modular Truss
+NearFutureConstruction	truss-circular-03	Annular Modular Truss Mini
+NearFutureConstruction	truss-circular-04	Annular Modular Truss Micro
+NearFutureConstruction	truss-circular-adapter-01	Annular Truss Adapter
+NearFutureConstruction	truss-circular-adapter-02	Annular Truss Adapter V2
+NearFutureConstruction	truss-circular-docking-01	Annular Truss Docking Connector
+NearFutureConstruction	truss-hex-01	Hexa-Girder Modular Truss L1
+NearFutureConstruction	truss-hex-02	Hexa-Girder Modular Truss M1
+NearFutureConstruction	truss-hex-03	Hexa-Girder Modular Truss S1
+NearFutureConstruction	truss-hex-adapter-01	Hexa-Girder Truss Adapter
+NearFutureConstruction	truss-micro-01	Cubic-Family Large Strut
+NearFutureConstruction	truss-micro-02	Cubic-Family Medium Strut
+NearFutureConstruction	truss-octo-01	Octo-Girder Modular Truss XL
+NearFutureConstruction	truss-octo-02	Octo-Girder Modular Truss
+NearFutureConstruction	truss-octo-03	Octo-Girder Modular Truss Mini
+NearFutureConstruction	truss-octo-04	Octo-Girder Modular Truss Micro
+NearFutureConstruction	truss-octo-adapter-crew-01	Octo-Girder Pressurized Adapter
+NearFutureConstruction	truss-octo-angled-01	Octo-Girder Modular Angular Connector
+NearFutureConstruction	truss-octo-angled-crew-01	Octo-Girder Pressurized Angular Connector
+NearFutureConstruction	truss-octo-attach-01	Octo-Girder Radial Attach Node
+NearFutureConstruction	truss-octo-crew-01	Octo-Girder Pressurized Truss XL
+NearFutureConstruction	truss-octo-crew-02	Octo-Girder Pressurized Truss
+NearFutureConstruction	truss-octo-crew-03	Octo-Girder Pressurized Truss Mini
+NearFutureConstruction	truss-octo-docking-octo	Octo-Girder Octagonal Docking Connector
+NearFutureConstruction	truss-octo-drone-01	Octo-Girder Guidance Unit
+NearFutureConstruction	truss-octo-hub-01	Octo-Girder Modular Hub
+NearFutureConstruction	truss-octo-hub-crew-01	Octo-Girder Pressurized Hub
+NearFutureConstruction	truss-spinal-01	Spinal Modular Truss
+NearFutureConstruction	truss-spinal-02	Spinal Modular Truss Mini
+NearFutureConstruction	truss-spinal-03	Spinal Modular Truss Micro
+NearFutureConstruction	truss-spinal-adapter-01	Spinal Truss Series-3 Adapter
+NearFutureConstruction	truss-spinal-adapter-02	Spinal Truss Series-2 Adapter
+NearFutureConstruction	truss-spinal-docking-01	Spinal Truss Docking Connector
+NearFutureElectrical	RO-reactor-BES5	BES-5 Nuclear Reactor
+NearFutureElectrical	RO-reactor-RAPIDL	RAPID-L Nuclear Reactor
+NearFutureElectrical	RO-reactor-SAFE400	NASA SAFE-400 Nuclear Reactor
+NearFutureElectrical	RO-reactor-TOPAZI	TOPAZ-I Nuclear Reactor
+NearFutureElectrical	RO-reactor-TOPAZII	TOPAZ-II Nuclear Reactor
+NearFutureElectrical	RO-reactor-kilopower	NASA Kilopower 10kWe Reactor
+NearFutureElectrical	RO-reactor-prometheus	Prometheus 200 KWe Nuclear Reactor
+NearFutureElectrical	RO-reactor-snap10a	NASA SNAP-10A Nuclear Reactor
+NearFutureElectrical	RO-reactor-snap2	NASA SNAP-2 Nuclear Reactor
+NearFutureElectrical	RO-reactor-snap50	NASA SNAP-50 35 kWe Nuclear Reactor
+NearFutureElectrical	RO-reactor-snap50-300	NASA SNAP-50 300 kWe Nuclear Reactor
+NearFutureElectrical	RO-reactor-snap8	NASA SNAP-8 Nuclear Reactor
+NearFutureElectrical	nfe-rtg-asrg-1	NASA & DOE Advanced Sterling RG
+NearFutureElectrical	nfe-rtg-gphs-1	GPHS-RTG
+NearFutureElectrical	nfe-rtg-mmrtg-1	Multi-Mission RTG
+NearFutureElectrical	nfe-rtg-snap27-1	SNAP-27 Series RTG
+NearFutureElectrical	reactor-0625	DEPRECATED (DEPRECATED)
+NearFutureElectrical	reactor-125	DEPRECATED (DEPRECATED)
+NearFutureElectrical	reactor-25	DEPRECATED (DEPRECATED)
+NearFutureElectrical	rtg-0625	DEPRECATED (DEPRECATED)
+NearFutureExploration	nfex-antenna-deploy-wv3-1	DR-3 Deployable High Gain Antenna
+NearFutureExploration	nfex-antenna-feeder-direct-1	F-DA Direct Antenna Feed
+NearFutureExploration	nfex-antenna-phased-array-1	RA-X1 Phased Relay Antenna
+NearFutureExploration	nfex-antenna-phased-array-2	RA-X2 Phased Relay Antenna
+NearFutureExploration	nfex-antenna-phased-array-3	RA-X3 Phased Relay Antenna
+NearFutureExploration	nfex-antenna-phased-single-3	PH-3 Phased Array Antenna Element
+NearFutureExploration	nfex-antenna-reflector-giant-1	RFL-2000 Dish Reflector Array
+NearFutureExploration	nfex-antenna-reflector-huge-1	RFL-100 Giant Dish Reflector
+NearFutureExploration	nfex-antenna-reflector-large-1	RFL-50 Large Dish Reflector
+NearFutureExploration	nfex-antenna-reflector-side-1	RFL-1 Dish Reflector
+NearFutureExploration	nfex-antenna-reflector-side-2	RFL-2 Medium Dish Reflector
+NearFutureExploration	nfex-antenna-reflector-side-3	RFL-3 Dish Reflector Array
+NearFutureExploration	nfex-antenna-relay-tdrs-1	RA-0-8 Relay Antenna
+NearFutureExploration	nfex-antenna-relay-tdrs-2	RA-5B Advanced Relay Antenna
+NearFutureExploration	nfex-antenna-relay-tiny-1	RA-00-2 Micro-Relay Antenna
+NearFutureExploration	nfex-antenna-rover-2	AX-5 Aerial Micro-Antenna
+NearFutureExploration	nfex-antenna-rover-3	AX-30 High Gain Micro-Antenna
+NearFutureExploration	nfex-antenna-static-mini-1	DR-1 High Gain Antenna
+NearFutureExploration	nfex-antenna-top-dish-1	D-2 Spot Antenna
+NearFutureExploration	nfex-antenna-top-dish-2	D-50 Large Spot Antenna
+NearFutureLaunchVehicles	RO-nflv-rcs-aero-heavy-1-half	Aerodynamic RCS 4-Way [138/223 N Class]
+NearFutureLaunchVehicles	RO-nflv-rcs-aero-heavy-1-quarter	Aerodynamic RCS 4-Way [69/111 N Class]
+NearFutureLaunchVehicles	RO-nflv-rcs-aero-heavy-2-half	Aerodynamic RCS 4-Way [138/223 N Class]
+NearFutureLaunchVehicles	RO-nflv-rcs-aero-heavy-2-quarter	Aerodynamic RCS 4-Way [69/111 N Class]
+NearFutureLaunchVehicles	nflv-engine-ar1-1	AR-1
+NearFutureLaunchVehicles	nflv-engine-ar1c-1	AR-1
+NearFutureLaunchVehicles	nflv-engine-rd701-1	RD-701
+NearFutureLaunchVehicles	nflv-engine-rd704-1	RD-704
+NearFutureLaunchVehicles	nflv-engine-rs84-1	RS-84
+NearFutureLaunchVehicles	nflv-engine-stbe-kero-1	STBE (Pratt & Whitney)
+NearFutureLaunchVehicles	nflv-rcs-aero-heavy-1	Aerodynamic RCS 4-Way [275/445 N Class]
+NearFutureLaunchVehicles	nflv-rcs-aero-heavy-2	Aerodynamic RCS 4-Way [275/445 N Class]
+NearFuturePropulsion	RO-457M	457M 72kW Hall Effect Thruster
+NearFuturePropulsion	RO-ID500	ID-500 Gridded Ion Thruster
+NearFuturePropulsion	RO-PPS1350	PPS-1350 Hall Effect Thruster
+NearFuturePropulsion	RO-SPT100	SPT-100 Hall Effect Thruster
+NearFuturePropulsion	RO-SPT140	SPT-140 Hall Effect Thruster
+NearFuturePropulsion	RO-SPT50	SPT-50 Hall Effect Thruster
+NearFuturePropulsion	RO-SPT60	SPT-60 Hall Effect Thruster
+NearFuturePropulsion	RO-SPT70	SPT-70 Hall Effect Thruster
+NearFuturePropulsion	RO-nupit	NuPIT Pulsed Inductive Thruster
+NearFuturePropulsion	ionArgon-0625	HERMeS Hall Effect Thruster
+NearFuturePropulsion	ionArgon-0625-2	P5 5kW Hall Effect Thruster
+NearFuturePropulsion	ionArgon-0625-3	X3 Hall-Effect Thruster
+NearFuturePropulsion	ionXenon-0625	NEXT Gridded Ion Thruster
+NearFuturePropulsion	ionXenon-0625-2	HiPEP Gridded Ion Thruster
+NearFuturePropulsion	ionXenon-0625-3	DS4G Gridded Ion Thruster
+NearFuturePropulsion	mpdt-125	SX3 MPD Thruster
+NearFuturePropulsion	pit-0625	FARAD Pulsed Inductive Thruster
+NearFuturePropulsion	pit-125	PIT Mk Va Pulsed Inductive Thruster
+NearFuturePropulsion	vasimr-0625	VX-200SS VASIMR
+NearFuturePropulsion	vasimr-125	VF-200 VASIMR
+NearFutureSolar	nfs-panel-deploying-advanced-2x20-hub-1	K55-A 'Megalador' Advanced Solar Array
+NearFutureSolar	nfs-panel-deploying-blanket-arm-1	OKEB-150R 'Halo' Circular Blanket Photovoltaic Array
+NearFutureSolar	nfs-panel-deploying-blanket-dsg-1	OKEB-100 'Gateway' Blanket Photovoltaic Array
+NearFutureSolar	nfs-panel-deploying-blanket-starship-1	OKEB-25R 'Starship' Blanket Photovoltaic Array
+NearFutureSolar	nfs-panel-deploying-concentrator-1x4-juno-1	K12-K 1x4 Concentrating Photovoltaic Panels
+NearFutureSolar	nfs-panel-deploying-curved-375-1	NIV-75-R Expanding Curved Solar Array
+ProceduralFairings	KzFlatAdapter	Interstage Fairing Adapter (Flat)
+ProceduralFairings	KzFlatBoattail	Boattail Adapter (Flat)
+ProceduralFairings	KzInterstageAdapter2	IB - Procedural Interstage Fairing Adapter
+ProceduralFairings	KzProcFairingSide1	Procedural Fairing
+ProceduralFairings	KzProcFairingSide1_TU	Procedural Fairing (Recolorable)
+ProceduralFairings	KzProcFairingSide2	Procedural Fairing (Conic) (Deprecated)
+ProceduralFairings	KzProcFairingSide2_TU	Procedural Fairing (Conic) (Deprecated) (Recolorable)
+ProceduralFairings	KzResizableFairingBase	FB - Procedural Fairing Base
+ProceduralFairings	KzResizableFairingBaseRing	FB - Procedural Fairing Base Ring
+ProceduralFairings	KzThrustPlate	Thrust Plate [Procedural]
+ProceduralFairings	RSBRibbedBase	FB - Procedural Ribbed Payload Adapter
+ProceduralFairings	RSBRibbedBase_Boattail	Boattail Adapter (Ribbed)
+ProceduralFairings	RSBRibbedBase_Interstage	IB - Procedural Ribbed Interstage Adapter
+ProceduralFairings	RSBTrussBase	FB - Procedural Truss Payload Adapter
+ProceduralFairings	RSBTrussBase_Boattail	Boattail Adapter (Truss)
+ProceduralFairings	RSBTrussBase_Interstage	IB - Procedural Truss Interstage Adapter
+ProceduralFairings	SSTUBase	FB - Procedural Hollow Truss Payload Adapter
+ProceduralFairings	SSTUBase_Boattail	Boattail Adapter (Hollow Truss)
+ProceduralFairings	SSTUBase_Interstage	IB - Procedural Hollow Truss Interstage Adapter
+ProceduralFairings	SSTUHollowRing	FB - Procedural Hollow Payload Adapter Ring
+ProceduralFairings	SSTUHollowRing_Boattail	Boattail Adapter (Hollow Ring)
+ProceduralFairings	SSTUHollowRing_Interstage	IB - Procedural Hollow Interstage Ring
+ProceduralParts	RO-ProcTankSpaceplane	Tank [Procedural, Shielded]
+ProceduralParts	RO-RFTank-BalloonNew	Procedural Tank (Balloon)
+ProceduralParts	RO-RFTank-Integral	Procedural Tank (Isogrid Structure)
+ProceduralParts	RO-RFTank-SM	Procedural Tank (Service Module)
+ProceduralParts	RO-RFTank-Separate	Procedural Tank (Conventional Structure)
+ProceduralParts	proceduralAvionics	Avionics [Procedural]
+ProceduralParts	proceduralCrewTube	Crew Tube [Procedural]
+ProceduralParts	proceduralNoseCone	Nose Cone [Procedural]
+ProceduralParts	proceduralStackDecoupler	Decoupler [Procedural]
+ProceduralParts	proceduralStructural	Structure [Procedural]
+ProceduralParts	proceduralTankOre	Tank - Ore [Procedural]
+RN_Soviet_Probes	l11_astro	Luna 11 Astro
+RN_Soviet_Probes	l11_radio	Luna 11 Radio
+RN_Soviet_Probes	luna11_als	Luna 11 ALS
+RN_Soviet_Probes	luna13_als	Luna 13 ALS
+RN_Soviet_Probes	luna2	Luna E-1A
+RN_Soviet_Probes	luna3	Luna 3
+RN_Soviet_Probes	luna9_airbag_cvr	Luna 9/13 Airbag Cover
+RN_Soviet_Probes	luna9_als	Luna 9 ALS
+RN_Soviet_Probes	luna_als	Luna 10 ALS
+RN_Soviet_Probes	luna_astro	Luna 9/10/13 Astro
+RN_Soviet_Probes	luna_ktdu	Luna 9/10/13 KTDU
+RN_Soviet_Probes	luna_radio	Luna 9/10/13 Radio
+RN_Soviet_Probes	luna_vernier	Luna Vernier
+RN_Soviet_Probes	molniya1	Molniya-1
+RN_Soviet_Probes	polyot	Polyot
+RN_Soviet_Probes	polyot_side_engine	Polyot Side Engine
+RN_Soviet_Probes	rn_protonn4_1	Proton 1-3 N-4 Satellite
+RN_Soviet_Probes	rn_protonn6_4	Proton 4 N-6 Satellite
+RN_Soviet_Probes	rn_strela3_gonets	Strela-3/Gonets-D1 Satellite Bus
+RN_Soviet_Probes	rn_venera1	Venera 1/Mars 1M
+RN_Soviet_Probes	sputnik1	Sputnik 1
+RN_Soviet_Probes	sputnik2	Sputnik 2
+RN_Soviet_Probes	sputnik3	Sputnik 3 "Object D"
+RN_US_Probes	eos_aqua	Aqua
+RN_US_Probes	eos_aura	Aura
+RN_US_Probes	eos_tdrs	Tracking and Data Relay Satellite H-N
+RN_US_Probes	eos_terra	Terra
+RN_US_Probes	eos_terraalt	DEPRECATED - Terra Side Solar Panel
+RN_US_Probes	explorer_6	Explorer 6
+RN_US_Probes	galileo_aprobe	Galileo Atmospheric Probe
+RN_US_Probes	galileo_aprobe_bot	DEPRECATED - Galileo Atmospheric Probe Bottom (DEPRECATED)
+RN_US_Probes	galileo_hs_bot	Galileo Atmospheric Probe Heatshield Bottom
+RN_US_Probes	galileo_hs_mid	Galileo Atmospheric Probe Heatshield Middle
+RN_US_Probes	galileo_hs_top	Galileo Atmospheric Probe Heatshield Top
+RN_US_Probes	galileo_mb	Galileo Spacecraft
+RN_US_Probes	galileo_probe_hs_parachute	Galileo Probe Heatshield Parachute
+RN_US_Probes	galileo_probe_parachute	Galileo Probe Parachute
+RN_US_Probes	gdish_actual	Galileo Dish "Actual"
+RN_US_Probes	gdish_intended	Galileo Dish "Intended"
+RN_US_Probes	grab-1	GRAB 1
+RN_US_Probes	ius_bottom	IUS Booster First Stage
+RN_US_Probes	ius_dec_fs	IUS First Stage Decoupler
+RN_US_Probes	ius_dec_ss	IUS Second Stage Decoupler
+RN_US_Probes	ius_top	IUS Booster Second Stage
+RN_US_Probes	magellan	Magellan
+RN_US_Probes	neo_dawn	Dawn
+RN_US_Probes	neo_deepimpact	Deep Impact
+RN_US_Probes	neo_deepimpact_impactor	Deep Impact Impactor
+RN_US_Probes	neo_ds1	Deep Space 1
+RN_US_Probes	neo_near	NEAR - Shoemaker
+RN_US_Probes	neo_stardust	Stardust
+RN_US_Probes	neo_stardust_collector	Stardust Return Capsule
+RN_US_Probes	neo_stardust_para	Stardust Return Capsule Parachute
+RN_US_Probes	neo_ulysses	Ulysses
+RN_US_Probes	p1_decoupler	Pioneer 0/1/2 Booster Decoupler
+RN_US_Probes	pioneer1_booster	Pioneer 0/1/2 Top Boosters
+RN_US_Probes	pioneer_0_1_2	Pioneer 0/1/2
+RN_US_Probes	pioneer_10_11	Pioneer 10/11 Probe
+RN_US_Probes	pioneer_3_4	Pioneer 3/4
+RN_US_Probes	pioneer_5	Pioneer 5
+RN_US_Probes	pioneer_6_7_8_9	Pioneer 6/7/8/9
+RN_US_Probes	rn_cassini	Cassini Spacecraft
+RN_US_Probes	rn_galileo_scanner	Galileo Orbital Scanner
+RN_US_Probes	rn_heliosa_b	Helios-1/2
+RN_US_Probes	rn_huygen_hs_bottom	Huygens Heatshield Bottom
+RN_US_Probes	rn_huygen_hs_chute	Huygens Heatshield Parachute
+RN_US_Probes	rn_huygen_hs_top	Huygens Heatshield Top
+RN_US_Probes	rn_huygens	Huygens Lander
+RN_US_Probes	rn_huygens_chute	Huygens Lander Parachute
+RN_US_Probes	rn_juno_spacecraft	Juno
+RN_US_Probes	rn_ladee	Lunar Atmosphere Dust and Environment Explorer
+RN_US_Probes	rn_ladee_scanner	Ladee/LRO Orbital Scanner
+RN_US_Probes	rn_lcross_mb	LCROSS
+RN_US_Probes	rn_lro	Lunar Reconnaissance Orbiter
+RN_US_Probes	rn_magellan_scanner	Magellan Orbital Scanner
+RN_US_Probes	rn_mariner10	Mariner 10
+RN_US_Probes	rn_mariner1_2	Mariner 1/2
+RN_US_Probes	rn_mariner3-4	Mariner 3/4
+RN_US_Probes	rn_mariner5	Mariner 5
+RN_US_Probes	rn_mariner6-7	Mariner 6/7
+RN_US_Probes	rn_mariner8-9	Mariner 8/9
+RN_US_Probes	rn_mars_observer	Mars Observer
+RN_US_Probes	rn_messenger	MESSENGER
+RN_US_Probes	rn_new_horizons	New Horizons
+RN_US_Probes	rn_sphinx_t3e	Sphinx
+RN_US_Probes	rn_surveyor3	Surveyor Lunar Probe
+RN_US_Probes	rn_surveyor_engines	Surveyor Engines
+RN_US_Probes	rn_surveyor_retro	Surveyor Star 37 Solid Retro Booster
+RN_US_Probes	rn_surveyor_s_engine	TD-339
+RN_US_Probes	rn_surveyor_solar	Surveyor Solar Panels
+RN_US_Probes	rn_tdrs_ag	Tracking and Data Relay Satellite A-G
+RN_US_Probes	rn_voyager	Voyager 1/2 Probe
+RN_US_Probes	rn_vpam	DEPRECATED DO NOT USE (RN Voyager PAM) (DEPRECATED)
+RN_US_Probes	tiros-1	Tiros-1 Satellite
+RN_US_Probes	transit2a	Transit-2A Satellite
+RN_US_Probes	vanguard-1	Vanguard 1
+RN_US_Probes	vanguard-2	Vanguard 2
+RN_US_Probes	vanguard-3	Vanguard 3
+ROCapsules	ROC-APAS8995A	APAS 89/95 Active Docking Port (Deprecated) (DEPRECATED)
+ROCapsules	ROC-APAS8995Av2	APAS 89/95 Active Docking Port
+ROCapsules	ROC-APAS8995P	APAS 89/95 Passive Docking Port (Deprecated) (DEPRECATED)
+ROCapsules	ROC-APAS8995Pv2	APAS 89/95 Passive Docking Port
+ROCapsules	ROC-AgenaFairing	Agena Target Vehicle Nose Cone
+ROCapsules	ROC-AgenaPort	Gemini Agena Target Vehicle Docking Port
+ROCapsules	ROC-ApolloAPAS75BDB	APAS-75 Androgynous Docking Port
+ROCapsules	ROC-ApolloASTPAdapterBDB	Apollo-Soyuz Test Project Docking Module
+ROCapsules	ROC-ApolloASTPUVXBDB	Apollo-Soyuz Test Project UV Absorbtion Experiment
+ROCapsules	ROC-ApolloASTPVHFBDB	Apollo-Soyuz Test Project VHF-FM Antenna
+ROCapsules	ROC-ApolloCADSActive	Apollo Block IV CADS Active Docking Port
+ROCapsules	ROC-ApolloCADSPassive	Apollo Block IV CADS Passive Docking Port
+ROCapsules	ROC-ApolloCMBDB	Apollo Command Module (CM)
+ROCapsules	ROC-ApolloCMBDBBlockIII	Apollo Block III+ Command Module (CM)
+ROCapsules	ROC-ApolloDecouplerBDB	Apollo Command/Service Module Decoupler
+ROCapsules	ROC-ApolloDipoleBDB	Apollo 17 HF Dipole Radar Antenna
+ROCapsules	ROC-ApolloDockingLightBDB	Apollo Docking Spotlight
+ROCapsules	ROC-ApolloDrogueDockPortBDB	Apollo Docking Mechanism Drogue
+ROCapsules	ROC-ApolloDrogueParachuteBDB	Apollo Command Module Drogue Parachute Pack
+ROCapsules	ROC-ApolloEVALightBDB	Apollo EVA Spotlight
+ROCapsules	ROC-ApolloEngineMountBDB	Apollo Service Module Engine Mount
+ROCapsules	ROC-ApolloForwardHSBDB	Apollo Command Module Forward Heat Shield
+ROCapsules	ROC-ApolloHGABDB	Apollo High Gain Antenna (HGA)
+ROCapsules	ROC-ApolloHGABlockIII	Apollo Block III High Gain Antenna
+ROCapsules	ROC-ApolloHGABlockV	Apollo Block V High Gain Antenna
+ROCapsules	ROC-ApolloHSBDB	Apollo Command Module Heatshield
+ROCapsules	ROC-ApolloHSBDBBlockIII	Apollo Block III+ Heatshield
+ROCapsules	ROC-ApolloLESBDB	Apollo Launch Escape System (LES)
+ROCapsules	ROC-ApolloMissionModule	Apollo Block III+ Mission Module
+ROCapsules	ROC-ApolloMissionModule4	Apollo Block IV Mission Module
+ROCapsules	ROC-ApolloNoseconeBDB	Apollo Block I Nosecone
+ROCapsules	ROC-ApolloParachuteBDB	Apollo Command Module Main Parachute Pack
+ROCapsules	ROC-ApolloProbeDockPortBDB	Apollo Docking Mechanism Probe
+ROCapsules	ROC-ApolloRCS	Apollo Service Module RCS Block
+ROCapsules	ROC-ApolloSMB2BDB	Apollo Service Module (SM)
+ROCapsules	ROC-ApolloSMBlockIII	Apollo Block III+ Service Module
+ROCapsules	ROC-ApolloSMDBDBlockIV	Apollo Block IV Service Module
+ROCapsules	ROC-ApolloScimitarBDB	Apollo Scimitar Antenna
+ROCapsules	ROC-ApolloSolarBlockV	Apollo Block V Solar Array
+ROCapsules	ROC-ApolloVHFBDB	Apollo 17 VHF Yagi Antenna
+ROCapsules	ROC-BigGeminiCabinBDB	Big G Crew Module
+ROCapsules	ROC-BigGeminiDecoupler	Big G Service Module Decoupler
+ROCapsules	ROC-BigGeminiDockingAdapter	Big G Docking Adapter
+ROCapsules	ROC-BigGeminiHS	Big G Heat Shield
+ROCapsules	ROC-BigGeminiHSLunar	Big G Lunar Heat Shield
+ROCapsules	ROC-BigGeminiLES	Big G Launch Escape System
+ROCapsules	ROC-BigGeminiMOLPort	MOL Docking Mechanism
+ROCapsules	ROC-BigGeminiNose	Big G Nose Fairing
+ROCapsules	ROC-BigGeminiParachute	Big G Landing Parachute System
+ROCapsules	ROC-BigGeminiParachuteDrogue	Big G Drogue Parachute
+ROCapsules	ROC-BigGeminiSM	Big G Service Module
+ROCapsules	ROC-CSTCM	CST-100 Command Module
+ROCapsules	ROC-CSTHS	CST-100 Heat Shield
+ROCapsules	ROC-CSTNDSActive	NASA Docking System (Active)
+ROCapsules	ROC-CSTNDSPassive	NASA Docking System (Passive)
+ROCapsules	ROC-CSTNoseCone	CST-100 Nose Cone
+ROCapsules	ROC-CSTParachute	CST-100 Parachute Pack
+ROCapsules	ROC-CSTRS88	CST-100 Launch Abort Engines (LAE)
+ROCapsules	ROC-CSTSM	CST-100 Service Module
+ROCapsules	ROC-D2AJ10-133	AJ10-133-LH
+ROCapsules	ROC-D2Adaptor	D-2 Heatshield Adapter
+ROCapsules	ROC-D2Antenna	D-2 High Gain Antenna
+ROCapsules	ROC-D2Block1LES	D-2 Block I Abort Motor
+ROCapsules	ROC-D2Block1LESDecoupler	D-2 Block I Abort Motor Decoupler
+ROCapsules	ROC-D2Block2LES	D-2 Block II Launch Escape System
+ROCapsules	ROC-D2Block2Nosecone	D-2 Block II Nose Cone
+ROCapsules	ROC-D2CM	D-2 Descent Module
+ROCapsules	ROC-D2DockDrogue	D-2 Docking Drogue
+ROCapsules	ROC-D2DockProbe	D-2 Docking Probe
+ROCapsules	ROC-D2Interstage	D-2 Block I Interstage
+ROCapsules	ROC-D2Interstage2	D-2 3m Interstage
+ROCapsules	ROC-D2Interstage3	D-2 4m Interstage
+ROCapsules	ROC-D2MissionModule1	D-2 Block I Mission Module
+ROCapsules	ROC-D2MissionModule2	D-2 Block II Mission Module
+ROCapsules	ROC-D2Parachute	D-2 Parachute
+ROCapsules	ROC-D2RCS	D-2 Service Module RCS block
+ROCapsules	ROC-D2ServiceModule	D-2 Service Module
+ROCapsules	ROC-D2Skirt1	D-2 4-engine Skirt Section
+ROCapsules	ROC-D2Skirt2	D-2 1-engine Skirt Section
+ROCapsules	ROC-D2Solar	D-2 Solar Array
+ROCapsules	ROC-DynaAdapterBigMoroz	Dynasoar Aft Bay
+ROCapsules	ROC-DynaAntenna	DynaSoar Telemetry Antenna
+ROCapsules	ROC-DynaBayMoroz	Dynasoar Cargo Bay
+ROCapsules	ROC-DynaButtMoroz	Dynasoar Equipment Compartment
+ROCapsules	ROC-DynaCabinMoroz	Dynasoar Crew Cabin
+ROCapsules	ROC-DynaCockpitAltMoroz	Dynasoar Cockpit (Alt)
+ROCapsules	ROC-DynaCockpitMoroz	Dynasoar Cockpit
+ROCapsules	ROC-DynaCrewTubeMoroz	Dyna Crew Tube
+ROCapsules	ROC-DynaDockingArms	DynaSoar Docking Arms
+ROCapsules	ROC-DynaDockingSystem	DynaSoar Docking Rod
+ROCapsules	ROC-DynaElevonMoroz	Dynasoar Elevon
+ROCapsules	ROC-DynaRudderMoroz	Dynasoar Vertical Stabilizer
+ROCapsules	ROC-DynaShieldMoroz	Dynasoar Windows Cover
+ROCapsules	ROC-DynaSkidFront	Dynasoar Fore Skid
+ROCapsules	ROC-DynaSkidRear	Dynasoar Aft Skid
+ROCapsules	ROC-DynaWingMoroz	Dynasoar Wing
+ROCapsules	ROC-GeminiAntenna	Gemini Antenna
+ROCapsules	ROC-GeminiAntennaBDB	Gemini UHF Whip Antenna
+ROCapsules	ROC-GeminiBEquipmentSection	Gemini B Adapter Module
+ROCapsules	ROC-GeminiBRetrogradeSection	Gemini B Retro Module
+ROCapsules	ROC-GeminiCMBDB	Gemini Cabin
+ROCapsules	ROC-GeminiEquipmentSectionBDB	Gemini Equipment Section
+ROCapsules	ROC-GeminiFlightPack	Gemini Flight Pack
+ROCapsules	ROC-GeminiFlightPackContSurf	Gemini Flight Pack Control Surface
+ROCapsules	ROC-GeminiHSBDB	Gemini Heatshield
+ROCapsules	ROC-GeminiHSLunarBDB	Gemini Lunar Heatshield
+ROCapsules	ROC-GeminiLCMBDB	Gemini L Cabin
+ROCapsules	ROC-GeminiNoseCapBDB	Gemini Aerodynamic Nose Cover
+ROCapsules	ROC-GeminiNoseconeAeroBDB	Gemini Nose Fairing
+ROCapsules	ROC-GeminiNoseconeBDB	Gemini Nose Docking Mechanism
+ROCapsules	ROC-GeminiOAMSBDB	Gemini Orbit Attitude and Maneuvering System (SE-7-100)
+ROCapsules	ROC-GeminiOAMSRCSBDB	Gemini Orbit Attitude and Maneuvering System (SE-7-100) (RCS)
+ROCapsules	ROC-GeminiParachuteBDB	Gemini Landing Parachute System
+ROCapsules	ROC-GeminiParachuteDrogueBDB	Gemini Drogue Parachute
+ROCapsules	ROC-GeminiRetroBDB	Gemini Retro Rocket (Star-13E) (DEPRECATED)
+ROCapsules	ROC-GeminiRetroMECBDB	Gemini Retro Rocket (Star-13E)
+ROCapsules	ROC-GeminiRetrogradeSectionBDB	Gemini Retrograde Section
+ROCapsules	ROC-GeminiWing	Gemini Wings
+ROCapsules	ROC-GeminiWingContSurf	Gemini Wing Control Surface
+ROCapsules	ROC-LEMAscentBDB	Apollo LM Ascent Stage
+ROCapsules	ROC-LEMAscentTaxiBDB	AES LM Taxi Ascent Stage
+ROCapsules	ROC-LEMDecouplerBDB	Apollo LM Decoupler
+ROCapsules	ROC-LEMDescentBDB	Apollo LM Descent Stage
+ROCapsules	ROC-LEMFoldingSNAP27BDB	SNAP-27 Series RTG
+ROCapsules	ROC-LEMLMAEBDB	Lunar Module Ascent Engine (LMAE)
+ROCapsules	ROC-LEMLMDEBDB	Lunar Module Descent Engine (LMDE)
+ROCapsules	ROC-LEMLegsBDB	Apollo LM Legs
+ROCapsules	ROC-LEMMESABDB	Apollo LM Material Experiment Stowage Assembly
+ROCapsules	ROC-LEMRackSNAP9BDB	Quad SNAP-9 Series RTG
+ROCapsules	ROC-LEMRover	Apollo Lunar Roving Vehicle (LRV)
+ROCapsules	ROC-LEMShelterBDB	AES LM Shelter
+ROCapsules	ROC-LEMTruckPlatformBDB	AES LM Truck Payload Platform
+ROCapsules	ROC-LEMTruckRCS3BDB	AES LM Truck 3x RCS Cluster
+ROCapsules	ROC-LEMTruckRCS4BDB	AES LM Truck 4x RCS Cluster
+ROCapsules	ROC-LFVBDB	Lunar Flying Vehicle
+ROCapsules	ROC-MercuryAirbrakeBDB	Mercury M-ASF Destabilizing Flap
+ROCapsules	ROC-MercuryCMBDB	Mercury Capsule
+ROCapsules	ROC-MercuryDecouplerAtlasBDB	Mercury-Atlas Adapter
+ROCapsules	ROC-MercuryDecouplerBDB	Mercury Redstone Adapter
+ROCapsules	ROC-MercuryHS	Mercury Heatshield
+ROCapsules	ROC-MercuryLESBDB	Mercury Launch Escape System
+ROCapsules	ROC-MercuryNoseCapBDB	Mercury M-DCAM Nose Unit
+ROCapsules	ROC-MercuryParachuteBDB	Mercury M-ASD Main Parachute
+ROCapsules	ROC-MercuryPosigradeBDB	Mercury Posigrade Kick Motor
+ROCapsules	ROC-MercuryRCS2BDB	Mercury Landing and Control Module
+ROCapsules	ROC-MercuryRCSBDB	Mercury Landing and Control Module (DEPRECATED)
+ROCapsules	ROC-MercuryRetroBDB	Mercury Retro (TE-M-316)
+ROCapsules	ROC-MercuryRetropackBDB	Mercury Retropack
+ROCapsules	ROC-OrionCM	Orion Command Module
+ROCapsules	ROC-OrionCover1	Orion SM Fairing - 1
+ROCapsules	ROC-OrionCover2	Orion SM Fairing - 2
+ROCapsules	ROC-OrionCover3	Orion ESM Fairing - 3
+ROCapsules	ROC-OrionESM	Orion European Service Module
+ROCapsules	ROC-OrionEUSDecoupler	Orion Decoupler
+ROCapsules	ROC-OrionForwardHS	Orion Forward Heat Shield and Docking Port
+ROCapsules	ROC-OrionHS	Orion Heatshield
+ROCapsules	ROC-OrionLAS	Orion LAS and BPC
+ROCapsules	ROC-OrionParachute	Orion Main Parachute
+ROCapsules	ROC-OrionRCS	Orion RCS Thrusters
+ROCapsules	ROC-OrionSolar	Orion Solar Panels
+ROCapsules	ROC-ReentryControlSystemBDB	Gemini Re-entry Control System
+ROCapsules	ROC-RetrogradeDecouplerBDB	Gemini Retrograde Section Decoupler
+ROCapsules	ROC-VoskhodAirlock	Voskhod Airlock
+ROCapsules	ROC-VoskhodCapsule	Voskhod Descent Module
+ROCapsules	ROC-VoskhodRetroBooster	Voskhod Retro Package
+ROCapsules	ROC-VoskhodRetroDecoupler	Voskhod Retro Decoupler
+ROCapsules	ROC-VostokCapsule	Vostok Descent Module
+ROCapsules	ROC-VostokDecoupler	Vostok/Voskhod Decoupler
+ROCapsules	ROC-VostokParachute	Vostok/Voskhod Parachute
+ROCapsules	ROC-VostokService	Vostok/Voskhod/Zenit Service Module
+ROCapsules	ROC-ZenitCapsule	Zenit Descent Module (Improved Film Camera)
+ROCapsules	TOWER_SV	Saturn V Launch Tower
+ROEngines	PioneerVernier	Pioneer Adjustment Motor
+ROEngines	ROE-1204sepMotor	UA1204 Nosecone & Separation Motor
+ROEngines	ROE-1205sepMotor	UA1205 Nosecone & Separation Motor
+ROEngines	ROE-1206sepMotor	UA1206 Nosecone & Separation Motor
+ROEngines	ROE-1207sepMotor	UA1207 Nosecone & Separation Motor
+ROEngines	ROE-1208sepMotor	UA1208 Nosecone & Separation Motor
+ROEngines	ROE-120XDecoupler	UA120X Radial Decoupler
+ROEngines	ROE-18KS7800	Aerojet 1.8KS-7800
+ROEngines	ROE-25KS18000	Aerojet 2.5KS-18000
+ROEngines	ROE-A4	Model 39
+ROEngines	ROE-A7	NAA-75-110 A-Series
+ROEngines	ROE-AJ10-137	AJ10-137 (Service Propulsion System)
+ROEngines	ROE-AJ10-190	AJ10-190
+ROEngines	ROE-AJ10-transtar	AJ23 Transtar
+ROEngines	ROE-AJ10Adv	AJ10 Series (Advanced Short Nozzle)
+ROEngines	ROE-AJ10AdvLong	AJ10 Series (Advanced Long Nozzle)
+ROEngines	ROE-AJ10Early	AJ10 Series (Early)
+ROEngines	ROE-AJ10Mid	AJ10 Series (Mid)
+ROEngines	ROE-AJ260FLA	AJ-260 FL Radial Solid Rocket Booster
+ROEngines	ROE-AJ260FLF	AJ-260 FL
+ROEngines	ROE-AJ260SLA	AJ-260 SL Radial Solid Rocket Booster
+ROEngines	ROE-AJ260SLF	AJ-260 SL
+ROEngines	ROE-AJ60	AJ-60A
+ROEngines	ROE-Aerobee	Aerobee
+ROEngines	ROE-Agena	XLR81 (Agena) Vacuum Engine
+ROEngines	ROE-AgenaSPS	Agena-D Secondary Propulsion System
+ROEngines	ROE-Agena_EquipmentRack	Agena Equipment Rack
+ROEngines	ROE-Agena_Retro_TypeIII	Agena Retrorocket Type III
+ROEngines	ROE-Agena_Spinrocket	Agena 1KS30HA Spin Rocket
+ROEngines	ROE-Alcyone1	Alcyone 1 BE-3
+ROEngines	ROE-Algol1	Algol IB
+ROEngines	ROE-Algol1_Inline	Algol IB
+ROEngines	ROE-Algol2	Algol II
+ROEngines	ROE-Algol2_Inline	Algol II
+ROEngines	ROE-Algol3	Algol III
+ROEngines	ROE-Algol3_Inline	Algol III
+ROEngines	ROE-Altair	Altair X-248
+ROEngines	ROE-AltairII	Altair II X-258
+ROEngines	ROE-AltairIII	Altair III FW-4S
+ROEngines	ROE-Antares1	Antares I X-254
+ROEngines	ROE-Antares1_Inline	Antares I X-254
+ROEngines	ROE-Antares2	Antares IIA X-259
+ROEngines	ROE-Antares2_Inline	Antares IIA X-259
+ROEngines	ROE-Antares3	Antares III (STAR 31)
+ROEngines	ROE-Antares3_Inline	Antares III (STAR 31)
+ROEngines	ROE-BE3	BE-3PM
+ROEngines	ROE-BE4	BE-4
+ROEngines	ROE-BNTR	Bimodal NTR
+ROEngines	ROE-BabySergeant	Baby Sergeant (5.4KS-1975)
+ROEngines	ROE-BabySergeantX11	Baby Sergeant 11x Cluster
+ROEngines	ROE-BabySergeantX11Dec	Baby Sergeant 11x Cluster Decoupler
+ROEngines	ROE-BabySergeantX3	Baby Sergeant 3x Cluster
+ROEngines	ROE-BabySergeantX3Dec	Baby Sergeant 3x Cluster Decoupler
+ROEngines	ROE-C1	C-1
+ROEngines	ROE-Castor1	Castor 1
+ROEngines	ROE-Castor120	Castor 120
+ROEngines	ROE-Castor1_Inline	Castor 1
+ROEngines	ROE-Castor2	Castor 2
+ROEngines	ROE-Castor2_Inline	Castor 2
+ROEngines	ROE-Castor30	Castor 30A
+ROEngines	ROE-Castor30XL	Castor 30XL
+ROEngines	ROE-Castor4	Castor 4
+ROEngines	ROE-Castor4A	Castor 4A
+ROEngines	ROE-Castor4AXL	Castor 4AXL
+ROEngines	ROE-CastorDecoupler	Castor I & II Radial Decoupler
+ROEngines	ROE-E1	E-1
+ROEngines	ROE-F1	F-1
+ROEngines	ROE-F1B	F-1B
+ROEngines	ROE-G1	G-1
+ROEngines	ROE-GCRC	GCRC 33KS-2800
+ROEngines	ROE-GEM40	GEM 40
+ROEngines	ROE-GEM46	GEM 46
+ROEngines	ROE-GEM60	GEM 60
+ROEngines	ROE-GEM63	GEM 63
+ROEngines	ROE-Gamma2	Gamma 2
+ROEngines	ROE-Gamma301	Gamma-201/301
+ROEngines	ROE-Gamma8	Gamma 8
+ROEngines	ROE-H1C	H-1C Series
+ROEngines	ROE-H1D	H-1D Series
+ROEngines	ROE-HG3	HG-3
+ROEngines	ROE-HM7	HM-7
+ROEngines	ROE-HiPAT	R-4D
+ROEngines	ROE-J2	J-2
+ROEngines	ROE-J2T	J-2T
+ROEngines	ROE-J2X	J-2X
+ROEngines	ROE-Juno45K	Juno IVB JPL 45K Engine
+ROEngines	ROE-Juno6K	Juno IV 6k Engine
+ROEngines	ROE-JupiterVernier	S-3D Vernier Exhaust
+ROEngines	ROE-KTDU35	KTDU-35
+ROEngines	ROE-KTDU425A	KTDU-425
+ROEngines	ROE-LE5	LE-5
+ROEngines	ROE-LE7	LE-7
+ROEngines	ROE-LEROS1B	LEROS-1b (635N)
+ROEngines	ROE-LEROS4	LEROS-4 (1100N)
+ROEngines	ROE-LMAE	Lunar Module Ascent Engine (LMAE)
+ROEngines	ROE-LMDE	Lunar Module Descent Engine (LMDE)
+ROEngines	ROE-LR101	LR101 (DEPRECATED)
+ROEngines	ROE-LR101Inline	LR101 (DEPRECATED)
+ROEngines	ROE-LR101Inline_2	LR101
+ROEngines	ROE-LR101_2	LR101
+ROEngines	ROE-LR105	LR105 (DEPRECATED)
+ROEngines	ROE-LR105_2	LR105
+ROEngines	ROE-LR129	LR129
+ROEngines	ROE-LR79	LR79
+ROEngines	ROE-LR87	LR87
+ROEngines	ROE-LR87_11	LR87 Booster (Shielded)
+ROEngines	ROE-LR87_LH2	AJ23-65
+ROEngines	ROE-LR87_Single	LR87
+ROEngines	ROE-LR89	LR43/LR89 (DEPRECATED)
+ROEngines	ROE-LR89_2	LR43/LR89
+ROEngines	ROE-LR91	LR91
+ROEngines	ROE-LR91-4V	LR91 (4 Vernier)
+ROEngines	ROE-LargeApolloLC	Large Apollo Style Launch Clamp
+ROEngines	ROE-LargeLC	Large Launch Clamp (3.0 m)
+ROEngines	ROE-LargeRadialLC	Large Radial Launch Clamp
+ROEngines	ROE-M1	M-1
+ROEngines	ROE-M55	M55 (Minuteman)
+ROEngines	ROE-MB35	MB-35
+ROEngines	ROE-MB60	MB-60
+ROEngines	ROE-MR80B	MR-80B (MLE)
+ROEngines	ROE-MR80TDE	MR-80 (TDE)
+ROEngines	ROE-MediumApolloLC	Medium Apollo Style Launch Clamp
+ROEngines	ROE-MediumLC	Medium Launch Clamp (1.65m)
+ROEngines	ROE-MediumRadialLC	Medium Radial Launch Clamp
+ROEngines	ROE-Merlin1A	Merlin 1A
+ROEngines	ROE-Merlin1C	Merlin 1C
+ROEngines	ROE-Merlin1CV	Merlin 1C Vacuum
+ROEngines	ROE-Merlin1D	Merlin 1D
+ROEngines	ROE-Merlin1DV	Merlin 1D Vacuum
+ROEngines	ROE-ModularRCS	Modular RCS
+ROEngines	ROE-NERVA	NERVA I
+ROEngines	ROE-NERVAII	NERVA II
+ROEngines	ROE-NERVAXE	Nerva XE-Prime
+ROEngines	ROE-NK33	NK-15/33
+ROEngines	ROE-NK43	NK-15V/43
+ROEngines	ROE-NK9	NK-9
+ROEngines	ROE-NK9V	NK-9V/21/19/39/31
+ROEngines	ROE-NikeM5E1	Nike M5E1
+ROEngines	ROE-ORM65	ORM-65
+ROEngines	ROE-R103	R-103 Booster
+ROEngines	ROE-R40B	R-40
+ROEngines	ROE-R42	R-42
+ROEngines	ROE-RD0105	RD-0105/0109
+ROEngines	ROE-RD0110	RD-0107/0110
+ROEngines	ROE-RD0110R	RD-0110R
+ROEngines	ROE-RD0110Vernier	RD-0110 Vernier (DEPRECATED)
+ROEngines	ROE-RD0120	RD-0120
+ROEngines	ROE-RD0124	RD-0124
+ROEngines	ROE-RD0146	RD-0146
+ROEngines	ROE-RD0203	RD-0203/0204
+ROEngines	ROE-RD0210	RD-0208/0210
+ROEngines	ROE-RD0212	RD-0205/0212
+ROEngines	ROE-RD0213	RD-0206/0213
+ROEngines	ROE-RD0214	RD-0207/0214
+ROEngines	ROE-RD100	RD-100
+ROEngines	ROE-RD107	RD-107/117
+ROEngines	ROE-RD108	RD-108/118
+ROEngines	ROE-RD109	RD-109/119
+ROEngines	ROE-RD111	RD-111
+ROEngines	ROE-RD120	RD-120
+ROEngines	ROE-RD170	RD-170
+ROEngines	ROE-RD180	RD-180
+ROEngines	ROE-RD191	RD-191
+ROEngines	ROE-RD200	RD-200
+ROEngines	ROE-RD211	RD-211
+ROEngines	ROE-RD215	RD-216 (2x RD-215)
+ROEngines	ROE-RD215_Single	RD-215
+ROEngines	ROE-RD219	RD-219
+ROEngines	ROE-RD254	RD-254
+ROEngines	ROE-RD270	RD-270
+ROEngines	ROE-RD270M	RD-270M (DEPRECATED)
+ROEngines	ROE-RD275	RD-253/RD-275
+ROEngines	ROE-RD301	RD-301
+ROEngines	ROE-RD57	RD-57
+ROEngines	ROE-RD58	S1.5400/RD-58 Series
+ROEngines	ROE-RD8	RD-8
+ROEngines	ROE-RD855	RD-851/855
+ROEngines	ROE-RD856	RD-852/856
+ROEngines	ROE-RL10A4N	RL-10A-4N Series (46" Extendable Nozzle)
+ROEngines	ROE-RL10B2	RL-10B/C Series (84.1" Extendable Nozzle)
+ROEngines	ROE-RL10Fixed	RL-10 Series (Non-Extendable Nozzle)
+ROEngines	ROE-RS25	RS-25 (SSME)
+ROEngines	ROE-RS27	H-1/RS-27
+ROEngines	ROE-RS68	RS-68
+ROEngines	ROE-RZ	RZ.1/RZ.2
+ROEngines	ROE-RZ20	RZ.20
+ROEngines	ROE-RangerRetro	MC-4-610
+ROEngines	ROE-Raptor	Raptor (Surface Variant)
+ROEngines	ROE-RaptorVac	Raptor-Vacuum
+ROEngines	ROE-Rutherford	Rutherford
+ROEngines	ROE-RutherfordVac	Rutherford Vacuum
+ROEngines	ROE-S155	S-155
+ROEngines	ROE-S2253	S2.253/S3.42/S5.2
+ROEngines	ROE-S523	S5.23
+ROEngines	ROE-S592	S5.92
+ROEngines	ROE-S598M	S5.98M
+ROEngines	ROE-SNTPPFE100	SNTP-PFE100 Atomic Rocket Motor
+ROEngines	ROE-SR19	SR19
+ROEngines	ROE-SR73	SR73
+ROEngines	ROE-SRMU	SRMU
+ROEngines	ROE-SmallApolloLC	Small Apollo Style Launch Clamp
+ROEngines	ROE-SmallLC	Small Launch Clamp (0.375 m)
+ROEngines	ROE-SmallRadialLC	Small Radial Launch Clamp
+ROEngines	ROE-Star13	STAR 13
+ROEngines	ROE-Star13A	STAR 13A
+ROEngines	ROE-Star13D	STAR 13D
+ROEngines	ROE-Star17	STAR 17
+ROEngines	ROE-Star17A	STAR 17A
+ROEngines	ROE-Star37	STAR 37
+ROEngines	ROE-Star37E	STAR 37E
+ROEngines	ROE-Star37FM	STAR 37FM
+ROEngines	ROE-Star48B	STAR 48B
+ROEngines	ROE-Star5D	STAR 5D
+ROEngines	ROE-Star8	STAR 8 (RAD)
+ROEngines	ROE-Stentor	Stentor Booster
+ROEngines	ROE-SuperDraco	SuperDraco
+ROEngines	ROE-SuperDracoDouble	Twin SuperDraco
+ROEngines	ROE-TD339	TD-339
+ROEngines	ROE-TX280	S-IV TX-280 Ullage Motor
+ROEngines	ROE-UA1204	UA1204
+ROEngines	ROE-UA1205	UA1205
+ROEngines	ROE-UA1206	UA1206
+ROEngines	ROE-UA1207	UA1207
+ROEngines	ROE-UA1208	UA1208
+ROEngines	ROE-UmbilicalTower	Umbilical Tower
+ROEngines	ROE-UpgradeIcon-Coatl	Upgrades
+ROEngines	ROE-Veronique	Véronique (DEPRECATED)
+ROEngines	ROE-VeroniqueAK	Véronique
+ROEngines	ROE-Viking2	Viking 2
+ROEngines	ROE-Viking4	Viking (4/4B)
+ROEngines	ROE-Viking5	Viking (5/6)
+ROEngines	ROE-X405	X-405 (XLR50-GE-2)
+ROEngines	ROE-X405H	X-405H
+ROEngines	ROE-XLR10	XLR10
+ROEngines	ROE-XLR11	XLR11
+ROEngines	ROE-XLR25	XLR25
+ROEngines	ROE-XLR41	XLR41
+ROEngines	ROE-XLR99	XLR99
+ROEngines	ROE-generic-full	1.1/1.78kN Thruster
+ROEngines	ROE-generic-half	550/890N Thruster
+ROEngines	ROE-generic-quarter	275/445N Thruster
+ROHeatshields	ROH-AdjustableHIAD	Adjustable HIAD
+ROHeatshields	ROH-AdjustableHS	Adjustable Heatshield
+ROSolar	ROS-BlanketSolarPanel	Blanket Solar Panel
+ROSolar	ROS-FoldingSolarPanel	Folding Solar Panel
+ROSolar	ROS-HingedSolarPanel	Hinged Solar Panel
+ROSolar	ROS-StaticSolarPanel	Static Solar Panel
+ROTanks	ROT-AtlasDecoupler	Atlas Skirt Decoupler
+ROTanks	ROT-AtlasTank-Balloon	Atlas Modular Tank (Balloon)
+ROTanks	ROT-AtlasTank-Integral	Atlas Modular Tank (Isogrid Structure)
+ROTanks	ROT-AtlasTank-Separate	Atlas Modular Tank (Conventional Structure)
+ROTanks	ROT-BalloonTank-New	Modular Tank (Balloon)
+ROTanks	ROT-BoosterTank-Integral	Modular Booster Tank (Isogrid Structure)
+ROTanks	ROT-BoosterTank-Separate	Modular Booster Tank (Conventional Structure)
+ROTanks	ROT-GenericTank-Integral	Modular Tank (Isogrid Structure)
+ROTanks	ROT-GenericTank-Separate	Modular Tank (Conventional Structure)
+ROTanks	ROT-KatnissTank-Balloon	Katniss Parts Pack Tank (Balloon)
+ROTanks	ROT-KatnissTank-Integral	Katniss Parts Pack Tank (Isogrid Structure)
+ROTanks	ROT-KatnissTank-Separate	Katniss Parts Pack Tank (Conventional Structure)
+ROTanks	ROT-LanderTank-Integral	Modular Landing Tank (Isogrid Structure)
+ROTanks	ROT-LanderTank-SM	Modular Landing Tank (Service Module)
+ROTanks	ROT-LanderTank-Separate	Modular Landing Tank (Conventional Structure)
+ROTanks	ROT-MiscTank-Balloon	Another Modular Tank (Balloon)
+ROTanks	ROT-MiscTank-Integral	Another Modular Tank (Isogrid Structure)
+ROTanks	ROT-MiscTank-Radial-Integral	Another Modular Radial Tank (Isogrid Structure)
+ROTanks	ROT-MiscTank-Radial-Separate	Another Modular Radial Tank (Conventional Structure)
+ROTanks	ROT-MiscTank-Separate	Another Modular Tank (Conventional Structure)
+ROTanks	ROT-MiscTank-ServiceModule	Another Modular Tank (Service Module)
+ROTanks	ROT-MiscTank-Shielded	Another Modular Tank (Shielded)
+ROTanks	ROT-ModularCargoBay	Modular Cargo Bay
+ROTanks	ROT-Mount	Modular Mount (Structural)
+ROTanks	ROT-Nose-Integral	Modular Nose Tank (Isogrid Structure)
+ROTanks	ROT-Nose-Separate	Modular Nose Tank (Conventional Structure)
+ROTanks	ROT-Nose-ServiceModule	Modular Nose Tank (Service Module)
+ROTanks	ROT-OpenInterstage	Hollow Interstage
+ROTanks	ROT-ProbeCore	Procedural Probe Core
+ROTanks	ROT-RadialTank-Integral	Radial Tank (Isogrid Structure)
+ROTanks	ROT-RadialTank-Separate	Radial Tank (Conventional Structure)
+ROTanks	ROT-RingDecoupler	Ring Decoupler
+ROTanks	ROT-ServiceModule	Modular Tank (Service Module)
+ROTanks	ROT-SphericalTank-Integral	Spherical Tank (Isogrid Structure)
+ROTanks	ROT-SphericalTank-Separate	Spherical Tank (Conventional Structure)
+ROTanks	ROT-ToroidalTank-Integral	Modular Toroidal Tank (Isogrid Structure)
+ROTanks	ROT-ToroidalTank-Separate	Modular Toroidal Tank (Conventional Structure)
+RP-1	RO-AdvancedImager	VI04 - Advanced Visible Imaging Device
+RP-1	RO-BasicFilmCamera	PH02 - Basic Film Camera
+RP-1	RO-BasicTVCamera	VI02 - Basic TV Camera
+RP-1	RO-DigitalCamera	PH05 - Ultra Resolution Digital Imaging Camera
+RP-1	RO-EarlyMagnet	MG01 - Early Magnetometer
+RP-1	RO-EarlyTVCamera	VI01 - Early Television Camera
+RP-1	RO-FluxgateMagnet	MG03 - Fluxgate Magnetometer Boom
+RP-1	RO-GeigerMuller	CR01 - Geiger-Muller Counter
+RP-1	RO-HIRES	VI05 - High Resolution Imaging Device
+RP-1	RO-HRIRRadiometer	IR02 - High-Resolution Infrared Radiometer
+RP-1	RO-HeliumMagnet	MG02 - Helium Magnetometer Boom
+RP-1	RO-HighResFilmCamera	PH04 - High Resolution Film Camera
+RP-1	RO-IRIS	IS01 - Infrared Interferometer Spectrometer (IRIS)
+RP-1	RO-IRRadiometer	IR01 - Infrared Radiometer
+RP-1	RO-ImprovedFilmCamera	PH03 - Improved Film Camera
+RP-1	RO-ImprovedTVCamera	VI03 - Improved TV Camera
+RP-1	RO-IonMassSpectrometer	MS01 - Ion Mass Spectrometer
+RP-1	RO-MIMS	MS02 - Magnetic Ion-Mass Spectrometer (MIMS)
+RP-1	RO-Micrometeorite	MM01 - Micrometeorite Detector
+RP-1	RO-NIMS	IS03 - Near Infrared Mapping Spectrometer (NIMS) and Ultraviolet Spectrometer (UVS)
+RP-1	RO-PMIRR	IR04 - Pressure Modulated Infrared Radiometer (PMIRR)
+RP-1	RO-PlasmaWave	RPWS01 - Plasma Wave Detector
+RP-1	RO-QuadropoleMassSpectrometer	MS03 - Quadropole Mass Spectrometer
+RP-1	RO-RPWS	RPWS03 - Radio and Plasma Wave Science (RPWS)
+RP-1	RO-SWPlasmaAnalyzer	RPWS02 - Solar Wind Plasma Analyzer
+RP-1	RO-ScintillationCounter	CR02 - Scintillation Counter Cosmic Ray Telescope
+RP-1	RO-SurfaceSampleScoop	Soil Mechanics Surface Sampler
+RP-1	RO-TwoChannelIR	IR03 - Two-Channel Infrared Radiometer
+RP-1	RO-UVSpectrometer	IS02 - Ultraviolet Spectrometer
+RP-1	RO-VIMS	IS04 - Advanced Infrared Mapping Spectrometer (AIMS)
+RP-1	RP-1-CommunicationSat	Communication Contract Satellite Bus
+RP-1	RP-1-NavigationSat	Navigation Contract Satellite Bus
+RP-1	RP0-SampleReturnCapsule	Science Sample Return Capsule (DEPRECATED)
+RP-1	RP0-SampleReturnCommand	Sample Return Command Module (DEPRECATED)
+RP-1	RP0Cherenkov	CD01 - Cherenkov Cosmic Ray Detector
+ReStockPlus	RO-RestockPlus-RCS-Block-Dual-138	RCS Dual [138/223 N Class]
+ReStockPlus	RO-RestockPlus-RCS-Block-Dual-28	RCS Dual [28/45 N Class]
+ReStockPlus	RO-RestockPlus-RCS-Block-Quad-138	RCS Quad Angled [138/223 N Class]
+ReStockPlus	RO-RestockPlus-RCS-Block-Quad-28	RCS Quad [28/45 N Class]
+ReStockPlus	RO-RestockPlus-RCS-Block-Quad-Angled-28	RCS Quad Angled [28/45 N Class]
+ReStockPlus	RO-RestockPlus-RCS-Block-Quint-138	RCS 5-Way [138/223 N Class]
+ReStockPlus	RO-RestockPlus-RCS-Block-Quint-28	RCS 5-Way [28/45 N Class]
+ReStockPlus	RO-RestockPlus-RCS-Block-Triple-Angled-138	RCS Triple Angled [138/223 N Class]
+ReStockPlus	RO-RestockPlus-RCS-Block-Triple-Angled-28	RCS Triple Angled [28/45 N Class]
+ReStockPlus	RO-RestockPlus-RCS-Linear-28	RCS Thruster [28/45 N Class]
+ReStockPlus	RO-SaturnI-IU	Saturn I Instrument Unit [3.9 m]
+ReStockPlus	RO_RCSBlock_restock_1100	Angled RCS Block [1100/1780 N Class]
+ReStockPlus	RO_RCSBlock_restock_138	Angled RCS Block [ 138/223 N Class]
+ReStockPlus	RO_RCSBlock_restock_2200	Angled RCS Block [2200/3560 N Class]
+ReStockPlus	RO_RCSBlock_restock_275	Angled RCS Block [ 275/445 N Class]
+ReStockPlus	RO_RCSBlock_restock_28	Angled RCS Block [  28/45 N Class]
+ReStockPlus	RO_RCSBlock_restock_413	Angled RCS Block [ 413/668 N Class]
+ReStockPlus	RO_RCSBlock_restock_550	Angled RCS Block [ 550/890 N Class]
+ReStockPlus	RO_RCSBlock_restock_69	Angled RCS Block [  69/111 N Class]
+ReStockPlus	RO_RCSBlock_restock_825	Angled RCS Block [ 825/1335 N Class]
+ReStockPlus	RO_RCSBlock_restock_mini_138	Angled RCS Block [ 138/223 N Class] (elbows)
+ReStockPlus	RO_RCSBlock_restock_mini_28	Angled RCS Block [  28/45 N Class] (elbows)
+ReStockPlus	RO_RCSBlock_restock_mini_69	Angled RCS Block [  69/111 N Class] (elbows)
+ReStockPlus	restock-airlock-1	AL-1 'Lychee' Inflatable Docking Airlock
+ReStockPlus	restock-antenna-stack-2	Communotron DTS-J1
+ReStockPlus	restock-antenna-stack-3	Communotron HG-61
+ReStockPlus	restock-decoupler-1875-1	TD-18 Decoupler
+ReStockPlus	restock-decoupler-radial-tiny-1	TT-14 Radial Decoupler
+ReStockPlus	restock-drone-core-375-1	Saturn IB/V Instrument Unit [6.6 m]
+ReStockPlus	restock-engine-125-pug	Aestus
+ReStockPlus	restock-engine-cherenkov	RD-0410
+ReStockPlus	restock-nosecone-1875-1	Protective Rocket Nose Mk18
+ReStockPlus	restock-rcs-block-dual-1	RCS Dual [275/445 N Class]
+ReStockPlus	restock-rcs-block-dual-mini-1	RCS Dual [69/111 N Class]
+ReStockPlus	restock-rcs-block-quad-angled-1	RCS Quad Angled [275/445 N Class]
+ReStockPlus	restock-rcs-block-quad-angled-mini-1	RCS Quad Angled [69/111 N Class]
+ReStockPlus	restock-rcs-block-quad-mini-1	RCS Quad [69/111 N Class]
+ReStockPlus	restock-rcs-block-quint-1	RCS 5-Way [275/445 N Class]
+ReStockPlus	restock-rcs-block-qunit-mini-1	RCS 5-Way [69/111 N Class]
+ReStockPlus	restock-rcs-block-triple-angled-1	RCS Triple Angled [275/445 N Class]
+ReStockPlus	restock-rcs-block-triple-angled-mini-1	RCS Triple Angled [69/111 N Class]
+ReStockPlus	restock-rcs-single-mini-1	RCS Thruster [69/111 N Class]
+ReStockPlus	restock-reactionwheel-radial-1	Radial Reaction Wheel (Large)
+ReStockPlus	restock-relay-radial-2	HG-20 High Gain Antenna
+ReStockPlus	restock-separator-1875-1	TS-18 Separator
+ReStockPlus	restock-srb-anvil-1	RSRM
+RealChute	RC_cone	Parachute - Cone
+RealChute	RC_cone_double	Parachute - Cone (Double)
+RealChute	RC_radial	Parachute [Radial]
+RealChute	RC_stack	Parachute - Stack (Double)
+RealismOverhaul	RO-FighterInlineCockpit	Jet Trainer Cockpit
+RealismOverhaul	RO-OldFighterCockpit	P-40 Cockpit
+RealismOverhaul	RO-X1Cockpit	X-1 Cockpit
+RealismOverhaul	RO-rangerSolarPanel	Ranger Solar Panel
+RealismOverhaul	ROAdvCapsule	Advanced Command Pod
+RealismOverhaul	TinyTim	Tiny Tim Booster
+RocketMotorMenagerie	rmm_arenysaurus	LRBE
+RocketMotorMenagerie	rmm_arsia	RS-25-650 (SSME-650)
+RocketMotorMenagerie	rmm_dugong	SSBE
+RocketMotorMenagerie	rmm_ishtar	RS-25-50X (SSME-50X)
+RocketMotorMenagerie	rmm_rainier	Space Transportation Main Engine (STME)
+RocketMotorMenagerie	rmm_turiasaurus	STBE (Pratt & Whitney)
+SXT	25mKossak	Boeing 737 cockpit
+SXT	625mBonny	Bonanza Cabin
+SXT	BioCapsule	Advanced Biological Capsule
+SXT	L25mSci	Station Science Module (Early)
+SXT	LFUELM3	PPD-SM1600 Service Module
+SXT	LMiniAircaftTail	Bonanza Tail
+SXT	LMkIIAircaftTail	Narrow-body airliner Tail
+SXT	LMkIIIAircaftFus	Narrow-body airliner fuselage
+SXT	LRadialAirIntake	XM-C200 Radial Pitot Intake
+SXT	LSVCM3	PPD-SM400 Service Module
+SXT	LSmallFuelMod	PPD-SM555 Service Module
+SXT	RCSBoonExt	RCS Quad, Extensible (138/223 N class)
+SXT	RO-Atar101D	Atar 101 Turbojet
+SXT	RO-DerwentV	Derwent Turbojet
+SXT	RO-J35	J35 Turbojet
+SXT	RO-J47	J47 Turbojet
+SXT	RO-SXT-R79	R-79 Turbofan
+SXT	RO-VK1	VK-1 Turbojet
+SXT	STXCANIOT	PPD-H Crew Cabin
+SXT	SXTAirbag	Mk10-XL Inflatable Airbag
+SXT	SXTAirbagSmall	Mk-10 Inflatable Airbag
+SXT	SXTAlouetteI	Alouette Core
+SXT	SXTAntenna	Sputnik PS-1 Antenna
+SXT	SXTBuzzard	Junkers Ju 87 cockpit
+SXT	SXTClyde	DHC-3 Otter cockpit
+SXT	SXTCrewCabSSP10	PPD-4 Crew Cabin
+SXT	SXTCrewCabSSP20	PPD-6 Crew Cabin
+SXT	SXTDLK83EHabitat	Ares LK-S3E Heavy Planetary Habitat
+SXT	SXTDepolyRTGI	GPHS-RTG
+SXT	SXTDepolyRTGII	GPHS-RTG [Shielded]
+SXT	SXTEntenteCordiale	Concorde cockpit
+SXT	SXTISSHabISK30	Skylab Orbital Workshop
+SXT	SXTInlineAirIntake	XM-600 1.25m Pitot Intake
+SXT	SXTJ213	Junkers Jumo 213E
+SXT	SXTK1Decoupler	N-1 Block B/V Interstage
+SXT	SXTK1Decoupler2	N-1 Block A/B Decoupler
+SXT	SXTKO211Dprop	Junkers Jumo 211F
+SXT	SXTKe90TurboJet	D-18 High-Bypass Turbofan
+SXT	SXTMTVGirder	Strongback Truss (Closed Long)
+SXT	SXTMTVGirderBasic	Strongback Truss (Closed Short)
+SXT	SXTMTVGirderOpen	Strongback Truss (Open Long)
+SXT	SXTMTVGirderOpenMedium	Strongback Truss (Open Medium)
+SXT	SXTMTVGirderOpenSmall	Strongback Truss (Open Short)
+SXT	SXTMerlin46Prop	Rolls-Royce Merlin 46
+SXT	SXTMerlin66prop	Rolls-Royce Merlin 66
+SXT	SXTMiniJet	Williams/Rolls-Royce FJ44-2A turbofan
+SXT	SXTNK12M	NK-12 Turboprop
+SXT	SXTNK21BlockV	N1 Block V
+SXT	SXTOsaulNoseCockpitAn225	An-124 Cockpit
+SXT	SXTOsaulTail	An-124 Tail Section
+SXT	SXTOsualHullLarge	An-124 Hull section
+SXT	SXTOsualRadCockpit	An-124 Cockpit Radial
+SXT	SXTOsualRadHull	An-124 Hull section Radial
+SXT	SXTOsualRadHullEnd	An-124 Hull section Radial End
+SXT	SXTPWPT6	PT6A Turboprop
+SXT	SXTPWR2800	Pratt & Whitney R-2800-63W Double Wasp
+SXT	SXTProbeGooo	Biological Sample Capsule
+SXT	SXTProtonlikeNoseCone	Conformal Rocket Cone Mk3
+SXT	SXTR280018WProp	Pratt & Whitney R-2800-18W Double Wasp
+SXT	SXTR280021Prop	Pratt & Whitney R-2800-21 Double Wasp
+SXT	SXTRCSRack	Attitude Jet 3x (1.24/2 kN class)
+SXT	SXTRadialAirIntakeShockCone	XF-104 Radial Shock Cone Intake
+SXT	SXTSPKTRCabin	SPKTR-10 Lacuga Storage Container
+SXT	SXTSmallFuselage	0.625m Fuselage (Pressurized)
+SXT	SXTSputnik	Sputnik PS-1
+SXT	SXTTinyprop	IO-550-B Piston Engine
+SXT	SXTVTOLturboFan	F135 Low-Bypass Turbofan
+SXT	SXTWaxWing	Waxwing
+SXT	SXT_Jumo213A	Junkers Jumo 213A
+SXT	SXTke111	Heinkel He 111 cockpit
+SXT	SXTlaunchclamp1	TT06-A Launch Stability Enhancer
+SXT	SXTmk3Cockpit52	B-52 Stratofortress cockpit
+SXT	SXTradialWindow	Airliner Window
+SXT	SXTsciencenosecone	GC-MS + Antenna
+SXT	SXTsolarPanelLarge	OX-VL Photovoltaic Array
+SXT	SXTsolarPanelhex	OX-HEX Photovoltaic Panels
+Squad	APAS89-95	APAS-89/95
+Squad	AdvancedCanard	Advanced Canard
+Squad	CanardController	Standard Canard
+Squad	CircularIntake	Pitot Intake
+Squad	Decoupler_0	TD-06 Decoupler
+Squad	Decoupler_1	TD-12 Decoupler
+Squad	Decoupler_2	TD-25 Decoupler
+Squad	FuelCell	Fuel Cell
+Squad	FuelCellArray	Fuel Cell Array
+Squad	GearFixed	LY-01 Fixed Landing Gear
+Squad	GearFree	LY-05 Steerable Landing Gear
+Squad	GearLarge	LY-99 Extra Large Landing Gear
+Squad	GearLargeSpaceplane	LY-99 Extra Large Landing Gear (Spaceplane)
+Squad	GearMedium	LY-60 Large Landing Gear
+Squad	GearMediumSpaceplane	LY-60 Large Landing Gear (Spaceplane)
+Squad	GearSmall	LY-35 Medium Landing Gear
+Squad	GearSmallSpaceplane	LY-35 Medium Landing Gear (Spaceplane)
+Squad	GooExperiment	Biological Sample Capsule
+Squad	GrapplingDevice	Advanced Grabbing Unit
+Squad	HighGainAntenna	1.25m Retractable Parabolic Antenna
+Squad	HighGainAntenna5	HG-5 Retractable Parabolic Antenna (DEPRECATED)
+Squad	HighGainAntenna5_v2	HG-5 Retractable Parabolic Antenna
+Squad	IntakeRadialLong	Adjustable Ramp Intake (Radial)
+Squad	JetEngine	TF/CF34 High-Bypass Turbofan
+Squad	KIWIA24	Kiwi A3 Atomic Rocket Motor
+Squad	KIWIB48	Kiwi B4E Atomic Rocket Motor
+Squad	Large_Crewed_Lab	Mobile Processing Lab MPL-LG-2
+Squad	LaunchEscapeSystem	Launch Escape System (Apollo)
+Squad	LgRadialSolarPanel	ST3 Solar Panel
+Squad	MK1CrewCabin	Mk1 Crew Cabin
+Squad	MK1IntakeFuselage	1.25m Fuselage (Diverterless Intake)
+Squad	Mark1Cockpit	X-15 Cockpit
+Squad	Mark2Cockpit	X-15 Inline Cockpit
+Squad	MassiveBooster	RSRMV
+Squad	NERVA_NRX	NERVA NRX
+Squad	OrbitalScanner	M4435 Narrow-Band Scanner
+Squad	PEWEE100	Peewee 100 Atomic Rocket Motor
+Squad	Phoebus1N50	Phoebus 1B Atomic Rocket Motor
+Squad	Phoebus2N100	Phoebus 2A Atomic Rocket Motor
+Squad	PotatoComet	A potato like comet
+Squad	PotatoRoid	A potato like rock
+Squad	R8winglet	AV-R8 Winglet
+Squad	RAPIER	CR-7 R.A.P.I.E.R.
+Squad	RCSBlockQuarter	RCS Quad [69/111 N class] (DEPRECATED)
+Squad	RCSBlockSmall_138	RCS Block [ 138/223 N Class] (elbows)
+Squad	RCSBlockSmall_28	RCS Block [  28/45 N Class] (elbows)
+Squad	RCSBlockSmall_69	RCS Block [  69/111 N Class] (elbows)
+Squad	RCSBlock_1100	RCS Block [1100/1780 N Class]
+Squad	RCSBlock_138	RCS Block [ 138/223 N Class]
+Squad	RCSBlock_2200	RCS Block [2200/3560 N Class]
+Squad	RCSBlock_275	RCS Block [ 275/445 N Class]
+Squad	RCSBlock_28	RCS Block [  28/45 N Class]
+Squad	RCSBlock_413	RCS Block [ 413/668 N Class]
+Squad	RCSBlock_550	RCS Block [ 550/890 N Class]
+Squad	RCSBlock_69	RCS Block [  69/111 N Class]
+Squad	RCSBlock_825	RCS Block [ 825/1335 N Class]
+Squad	RCSLinearSmall_28	RCS Thruster [28/45 N Class]
+Squad	RCSLinearSmall_69	RCS Thruster [69/111 N Class]
+Squad	RD0410MID	RD-0410
+Squad	RO-2kN-Thruster	2.2/3.6kN Thruster
+Squad	RO-A136	A-136 Nuclear Turbo-Ramjet
+Squad	RO-AL7F	AL-7 Turbojet
+Squad	RO-ApolloDockingPort	Apollo Docking System
+Squad	RO-D30F6	D-30 Low-Bypass Turbofan
+Squad	RO-IntakeRadialLongPitot	Pitot Intake (Radial)
+Squad	RO-J48	J48/Tay Turbojet
+Squad	RO-J85GE5	J85 Turbojet
+Squad	RO-JT3C	J57 Turbojet (No Afterburner)
+Squad	RO-KDU414	S5.19
+Squad	RO-KTDU417	KTDU-417
+Squad	RO-KTDU5A	KTDU-5A
+Squad	RO-LifeSupport-DummyEngine	Life Support Config Engine
+Squad	RO-MMRTG	Multi-Mission RTG
+Squad	RO-Mk1Cockpit	Mk1 Cockpit
+Squad	RO-Mk1CockpitInline	Mk 1 Inline Cockpit
+Squad	RO-Mk1Fuselage	Mk1 Fuselage
+Squad	RO-Mk1FuselagePres	Mk1 Fuselage (Pressurized)
+Squad	RO-Nord1500	Nord 1500/Atar Combined Cycle Ramjet
+Squad	RO-Olympus593	Olympus 593 Turbojet
+Squad	RO-R11F	R-11 Turbojet
+Squad	RO-R13	R-13 Turbojet
+Squad	RO-R15BD	R-15 Turbojet
+Squad	RO-R25F	R-25 Turbojet
+Squad	RO-RD012	RD-012 Ramjet
+Squad	RO-RD9B	RD-9 Turbojet
+Squad	RO-RJ43	RJ43 Ramjet
+Squad	RO-RJ47	RJ47 Ramjet
+Squad	RO-RJ55	RJ55/J67 Combined Cycle Ramjet
+Squad	RO-RJ59	RJ59 Ramjet
+Squad	RO-RSRM	RSRM
+Squad	RO-Sapphire203	Sapphire Turbojet
+Squad	RO-WS10	WS-10 Low-Bypass Turbofan
+Squad	RO-ionSPT60	SPT-60 Hall Effect Thruster
+Squad	RO-model304	Model 304 Turbojet
+Squad	RO-shockConeIntake125	1.25m Shock Cone Intake
+Squad	RO-shockConeIntakeBomarc	0.70m Shock Cone Intake
+Squad	RO-shockConeIntakeMig	0.86m Shock Cone Intake
+Squad	ROMeteoSustainer	U-1250
+Squad	ROSmallSpinMotor	Spin Motor (Small)
+Squad	RO_EarlyMediumSolarPanel	ST1 Medium Solar Panel
+Squad	RO_EarlyTinySolarPanel	ST1 Tiny Solar Panel
+Squad	RO_FASA_ExplorerRCS	Attitude Jet (69/111 N class)
+Squad	RO_FASA_MercuryPodRCS	Attitude Jet (138/223 N class)
+Squad	RO_KVD1	RD-56/KVD-1/CE-7.5
+Squad	RO_ServiceBay_300	Service Bay [3m]
+Squad	RO_boeing702	Boeing 702 Large Satellite Bus
+Squad	RO_linearRcs_tenth	Attitude Jet (28/45 N class)
+Squad	RO_mk1_LES	Launch Escape System (Mercury)
+Squad	RP0HumanRatedFlag	Human Rated Flag
+Squad	RP0aerobeeSounding	Aerobee Sounding Rocket Telemetry Unit (DEPRECATED)
+Squad	RP0probeSounding0-3m	WAC-Corporal Sounding Rocket Telemetry Unit (DEPRECATED)
+Squad	RP0probeVanguardXray	20in X-Ray Detector (DEPRECATED)
+Squad	RelayAntenna100	RA-100 Parabolic Antenna (4m)
+Squad	RelayAntenna3m	3m Parabolic Antenna
+Squad	RelayAntenna5	RA-2 Parabolic Antenna (1m)
+Squad	RelayAntenna50	RA-15 Parabolic Antenna (2m)
+Squad	ReleaseValve	FTE-1 Drain Valve
+Squad	ScienceBoxUpgrade	Hard Drive Upgrade
+Squad	ServiceBay_125_v2	Service Bay [2m]
+Squad	ServiceBay_250_v2	Service Bay [4m]
+Squad	SmallGearBay	LY-10 Small Landing Gear
+Squad	SmallGearBaySpaceplane	LY-10 Small Landing Gear (Spaceplane)
+Squad	SquadRCSBlockHalf	RCS Quad [138/223 N class] (DEPRECATED)
+Squad	SquadRCSBlockTenth	RCS Quad (28/45 N class) (DEPRECATED)
+Squad	StandardCtrlSrf	Elevon 1
+Squad	SurfAntenna	Communotron 16-S
+Squad	SurfaceScanner	Surface Scanning Module
+Squad	SurveyScanner	M700 Survey Scanner
+Squad	adapterSize2-Size1	C7 Brand Adapter - 2.5m to 1.25m
+Squad	adapterSize2-Size1Slant	C7 Brand Adapter Slanted - 2.5m to 1.25m
+Squad	advSasModule	Advanced Inline Stabilizer
+Squad	airScoop	XM-G50 Radial Pitot Intake
+Squad	airbrake1	A.I.R.B.R.A.K.E.S
+Squad	airplaneTail	Tail Connector A
+Squad	airplaneTailB	Tail Connector B
+Squad	aje_al31	AL-31 Low-Bypass Turbofan
+Squad	aje_atar	Atar 09 Turbojet
+Squad	aje_avon	Avon Turbojet
+Squad	aje_f404	F404 Low-Bypass Turbofan
+Squad	aje_j57	J57 Turbojet
+Squad	aje_j75	J75 Turbojet
+Squad	aje_j79	J79 Turbojet
+Squad	aje_ramjet	CR2 Ramjet
+Squad	aje_solarPanels	ST4 Solar Panel
+Squad	asasmodule1-2	Advanced Reaction Wheel Module, Large
+Squad	basicFin	Basic Fin
+Squad	crewCabin	Habitation Module
+Squad	cupola	Cupola Observatory Module
+Squad	deltaWing	Delta Wing
+Squad	delta_small	Small Delta Wing
+Squad	dockingPort1	NASA Docking System (Shielded)
+Squad	dockingPort2	NASA Docking System
+Squad	dockingPort3	Docking Port (propellant only)
+Squad	dockingPortLarge	Common Berthing Mechanism
+Squad	dockingPortLateral	NASA Docking System
+Squad	domeLight1	Domelight Mk1
+Squad	elevon2	Elevon 2
+Squad	elevon3	Elevon 3
+Squad	elevon5	Elevon 5
+Squad	evaChute	Personal Parachute
+Squad	evaCylinder	EVA Fuel Cylinders
+Squad	evaJetpack	EVA Jetpack
+Squad	flag	
+Squad	foldingRadLarge	EATCS Retractable Radiator (Large)
+Squad	foldingRadMed	EATCS Retractable Radiator (Medium)
+Squad	foldingRadSmall	EATCS Retractable Radiator (Small)
+Squad	fuelLine	FTX-2 External Fuel Duct
+Squad	groundAnchor	Stamp-O-Tron Ground Anchor
+Squad	groundLight1	Work Lamp (Small)
+Squad	groundLight2	Work Lamp (Stand)
+Squad	ionEngine	NSTAR Gridded Ion Thruster
+Squad	kerbalism-drill	Regolith Harvester
+Squad	kerbalism-large-drill	Large Regolith Harvester
+Squad	ladder1	Pegasus I Mobility Enhancer
+Squad	landerCabinMedium	Mk1 Lander Can Advanced
+Squad	landerCabinSmall	Mk1 Lander Can
+Squad	landingLeg1	LT-1 Landing Struts
+Squad	landingLeg1-2	LT-2 Landing Strut
+Squad	largeSolarPanel	XT4 Solar Panel Array Mk1
+Squad	largeSolarPanelEarly	XT3 Solar Panel Array Mk1
+Squad	launchClamp1	TT18-A Launch Stability Enhancer
+Squad	linearRcs	Attitude Jet [550/890 N class]
+Squad	longAntenna	Communotron 16
+Squad	mediumDishAntenna	Communotron DTS-M1
+Squad	microEngine	1.1/1.78kN Thruster
+Squad	miniIntake	Small Pitot Intake
+Squad	miniJetEngine	J85 Turbojet (No Afterburner)
+Squad	miniLandingLeg	LT-05 Micro Landing Strut (DEPRECATED)
+Squad	mk1-3pod	Mk1-3 Command Pod (4m)
+Squad	mk1pod_v2	Mk1 Pod (2m)
+Squad	mk2CargoBayL	Mk2 Cargo Bay CRG-08
+Squad	mk2CargoBayS	Mk2 Cargo Bay CRG-04
+Squad	mk2Cockpit_Inline	Mk2 Inline Cockpit
+Squad	mk2Cockpit_Standard	Mk2 Cockpit
+Squad	mk2CrewCabin	MK2 Crew Cabin
+Squad	mk2DockingPort	Mk2 Clamp-O-Tron
+Squad	mk2DroneCore	MK2 Drone Core
+Squad	mk2LanderCabin_v2	Mk2 Lander Can
+Squad	mk3CargoBayL	Mk3 Cargo Bay CRG-100
+Squad	mk3CargoBayM	Mk3 Cargo Bay CRG-50
+Squad	mk3CargoBayS	Mk3 Cargo Bay CRG-25
+Squad	mk3CargoRamp	Mk3 Cargo Ramp
+Squad	mk3Cockpit_Shuttle	Mk3 Cockpit
+Squad	mk3CrewCabin	Mk3 Passenger Module
+Squad	nacelleBody	Engine Nacelle (DEPRECATED)
+Squad	navLight1	Navigation Light Mk1
+Squad	noseCone	Aerodynamic Nose Cone
+Squad	parachuteDrogue	Mk25 Parachute
+Squad	parachuteLarge	Mk16-XL Parachute
+Squad	parachuteRadial	Mk2-R Radial-Mount Parachute
+Squad	parachuteSingle	Mk16 Parachute
+Squad	pointyNoseConeA	Advanced Nose Cone - Type A
+Squad	pointyNoseConeB	Advanced Nose Cone - Type B
+Squad	probeCoreSphere_v2	Sputnik PS-1
+Squad	radPanelEdge	EATCS Radiator Panel (Fin)
+Squad	radPanelLg	EATCS Radiator Panel (Long)
+Squad	radPanelSm	EATCS Radiator Panel (Short)
+Squad	radialDecoupler	TT-38K Radial Decoupler
+Squad	radialDecoupler1-2	Hydraulic Detachment Manifold
+Squad	radialDecoupler2	TT-70 Radial Decoupler
+Squad	radialEngineBody	Engine Pre-cooler (DEPRECATED)
+Squad	ramAirIntake	Adjustable Ramp Intake
+Squad	rocketNoseCone_v2	Protective Rocket Nose Cone Mk7
+Squad	roverBody_v2	Probodobodyne RoveMate
+Squad	roverWheel1	RoveMax Model M1
+Squad	roverWheel2	RoveMax Model S2
+Squad	roverWheel3	RoveMax Model XL3
+Squad	rtg	Multi-Hundred Watt RTG
+Squad	sasModule	Small Inline Reaction Wheel
+Squad	science_module	PH01 - Early Film Camera
+Squad	seatExternalCmd	EAS-1 External Command Seat
+Squad	sensorAtmosphere	MS04 - Gas Chromatograph-Mass Spectrometer (GC/MS)
+Squad	sensorBarometer	Barometer
+Squad	sensorGravimeter	Orbital Perturbation Experiment
+Squad	sensorThermometer	Thermometer
+Squad	sepMotor1	Radial Separation Motor (Medium)
+Squad	sepMotorLarge	Radial Separation Motor (Large)
+Squad	sepMotorSmall	Radial Separation Motor (Small)
+Squad	shockConeIntake	Shock Cone Intake
+Squad	smallCtrlSrf	Elevon 4
+Squad	smallHardpoint	Small Hardpoint
+Squad	solarPanels1	XT2 Solar Panel Array Mk2
+Squad	solarPanels2	XT2 Solar Panel Array Mk1
+Squad	solarPanels3	XT1 Solar Panel Array Mk2
+Squad	solarPanels4	XT1 Solar Panel Array Mk1
+Squad	solarPanels5	ST1 Solar Panel
+Squad	solarPanels5HiTech	ST2 Solar Panel
+Squad	spotLight1	Illuminator Mk1
+Squad	spotLight1_v2	Illuminator Mk1
+Squad	spotLight2	Illuminator Mk2
+Squad	spotLight2_v2	Illuminator Mk2
+Squad	spotLight3	Spotlight Mk1
+Squad	stackBiCoupler_v2	TVR-200 Stack Bi-Coupler
+Squad	stackPoint1	BZ-52 Radial Attachment Point
+Squad	stackTriCoupler_v2	TVR-1180C Mk1 Stack Tri-Coupler
+Squad	standardNoseCone	Small Nose Cone
+Squad	stationHub	Rockomax HubMax Multi-Point Connector
+Squad	stripLight1	Lightstrip Mk1
+Squad	structuralIBeam1	M-Beam 650 I-Beam
+Squad	structuralIBeam2	M-Beam 200 I-Beam
+Squad	structuralIBeam3	M-Beam 200 I-Beam Pocket Edition
+Squad	structuralMiniNode	The Not-Rockomax Micronode
+Squad	structuralPanel1	M-1x1 Structural Panel
+Squad	structuralPanel2	M-2x2 Structural Panel
+Squad	structuralPylon	Structural Pylon
+Squad	structuralWing	Structural Wing Type A
+Squad	structuralWing2	Structural Wing Type B
+Squad	structuralWing3	Structural Wing Type C
+Squad	structuralWing4	Structural Wing Type D
+Squad	strutConnector	EAS-4 Strut Connector
+Squad	strutCube	Cubic Octagonal Strut
+Squad	strutOcto	Octagonal Strut
+Squad	sweptWing	Swept Wings
+Squad	sweptWing1	Swept Wing Type A
+Squad	sweptWing2	Swept Wing Type B
+Squad	tailfin	Tail Fin
+Squad	telescopicLadder	Kelus Mobility Enhancer
+Squad	telescopicLadderBay	Kelus-LV Bay Mobility Enhancer
+Squad	trussAdapter	Modular Girder Adapter
+Squad	trussPiece1x	Modular Girder Segment
+Squad	trussPiece3x	Modular Girder Segment XL
+Squad	turboFanEngine	J58 Turbojet
+Squad	turboFanSize2	CF6 High-Bypass Turbofan
+Squad	turboJet	F100 Low-Bypass Turbofan
+Squad	vernierEngine	Attitude Jet, Conformal (275/445 N class)
+Squad	wheelMed	TR-2L Ruggedized Vehicular Wheel
+Squad	wingConnector	Wing Connector Type A
+Squad	wingConnector2	Wing Connector Type B
+Squad	wingConnector3	Wing Connector Type C
+Squad	wingConnector4	Wing Connector Type D
+Squad	wingConnector5	Wing Connector Type E
+Squad	wingStrake	Wing Strake
+Squad	winglet	AV-T1 Winglet
+Squad	winglet3	Delta-Deluxe Winglet
+SquadExpansion	controller1000	KAL-1000 Controller
+SquadExpansion	hinge_01	G-11 Hinge
+SquadExpansion	hinge_01_s	G-00 Hinge
+SquadExpansion	hinge_03	G-12L Alligator Hinge
+SquadExpansion	hinge_03_s	G-01L Alligator Hinge
+SquadExpansion	hinge_04	G-32W Hinge
+SquadExpansion	kerbalEVA	
+SquadExpansion	kerbalEVAFuture	
+SquadExpansion	kerbalEVASlimSuit	
+SquadExpansion	kerbalEVASlimSuitFemale	
+SquadExpansion	kerbalEVAVintage	
+SquadExpansion	kerbalEVAfemale	
+SquadExpansion	kerbalEVAfemaleFuture	
+SquadExpansion	kerbalEVAfemaleVintage	
+SquadExpansion	piston_01	3P6 Hydraulic Cylinder
+SquadExpansion	piston_02	1P2 Hydraulic Cylinder
+SquadExpansion	piston_03	3PT Telescoping Hydraulic Cylinder
+SquadExpansion	piston_04	1P4 Telescoping Hydraulic Cylinder
+SquadExpansion	rotoServo_00	Rotation Servo M-06
+SquadExpansion	rotoServo_02	Rotation Servo F-12
+SquadExpansion	rotoServo_03	Rotation Servo M-12
+SquadExpansion	rotoServo_04	Rotation Servo M-25
+SquadExpansion	rotor_01	EM-16 Light Duty Rotor
+SquadExpansion	rotor_01s	EM-16S Light Duty Rotor
+SquadExpansion	rotor_02	EM-32 Standard Rotor
+SquadExpansion	rotor_02s	EM-32S Standard Rotor
+SquadExpansion	rotor_03	EM-64 Heavy Rotor
+SquadExpansion	rotor_03s	EM-64S Heavy Rotor
+StationPartsExpansionRedux	sspx-adapter-0625-125-1	Station Flat Adapter [2.25m to 1.125m]
+StationPartsExpansionRedux	sspx-adapter-125-25-1	Station Flat Adapter [4.5m to 2.25m]
+StationPartsExpansionRedux	sspx-adapter-125-25-2	Station Conical Adapter [4.5m to 2.25m]
+StationPartsExpansionRedux	sspx-adapter-1875-0625-1	Station Flat Adapter [3.38m to 1.125m]
+StationPartsExpansionRedux	sspx-adapter-1875-125-1	Station Flat Adapter [3.38m to 2.25m]
+StationPartsExpansionRedux	sspx-adapter-1875-125-2	Station Conical Adapter [3.38m to 2.25m]
+StationPartsExpansionRedux	sspx-adapter-25-1875-1	Station Conical Adapter [4.5m to 3.38m]
+StationPartsExpansionRedux	sspx-adapter-25-375-1	Station Conical Adapter [6.75m to 4.5m]
+StationPartsExpansionRedux	sspx-adapter-25-375-2	Station Flat Adapter [6.75m to 4.5m]
+StationPartsExpansionRedux	sspx-adapter-375-5-1	Station Conical Adapter [6.75m to 9m]
+StationPartsExpansionRedux	sspx-adapter-375-5-2	Station Flat Adapter [6.75m to 9m]
+StationPartsExpansionRedux	sspx-adjusting-base-125-1	2.25m Adjustable Base Frame
+StationPartsExpansionRedux	sspx-adjusting-base-25-1	4.5m Adjustable Base Frame
+StationPartsExpansionRedux	sspx-adjusting-base-375-1	6.75m Adjustable Base Frame
+StationPartsExpansionRedux	sspx-adjusting-base-cradle-125-1	2.25m Adjustable Base Cradle
+StationPartsExpansionRedux	sspx-adjusting-base-cradle-25-1	4.5m Adjustable Base Cradle
+StationPartsExpansionRedux	sspx-adjusting-base-cradle-375-1	6.75m Adjustable Base Cradle
+StationPartsExpansionRedux	sspx-adjusting-stairs-1	Extensible Stairs
+StationPartsExpansionRedux	sspx-airlock-125-1	2.25m Service Airlock
+StationPartsExpansionRedux	sspx-airlock-25-1	4.5m Service Airlock w/ Extendable NASA Docking System
+StationPartsExpansionRedux	sspx-aquaculture-375-1	6.75m Aquaculture Module
+StationPartsExpansionRedux	sspx-attach-125-1	2.25m Pressurized Radial Attachment Point
+StationPartsExpansionRedux	sspx-attach-1875-1	3.38m Pressurized Radial Attachment Point
+StationPartsExpansionRedux	sspx-attach-25-1	4.5m Pressurized Radial Attachment Point
+StationPartsExpansionRedux	sspx-attach-375-1	6.75m Pressurized Radial Attachment Point
+StationPartsExpansionRedux	sspx-cargo-125-1	2.25m Storage Module
+StationPartsExpansionRedux	sspx-cargo-25-1	4.5m Storage Module
+StationPartsExpansionRedux	sspx-cargo-25-2	4.5m Storage Module (Short)
+StationPartsExpansionRedux	sspx-cargo-container-25-1	4.5m Storage Module (Long)
+StationPartsExpansionRedux	sspx-cargo-container-25-2	4.5m Storage Module (Medium)
+StationPartsExpansionRedux	sspx-cargo-container-25-3	4.5m Storage Module (Short)
+StationPartsExpansionRedux	sspx-cargo-container-375-1	6.75m Storage Module (Long)
+StationPartsExpansionRedux	sspx-cargo-container-375-2	6.225m Storage Module (Medium)
+StationPartsExpansionRedux	sspx-cargo-container-375-3	6.75m Storage Module (Short)
+StationPartsExpansionRedux	sspx-cargo-container-radial-huge-1	Large Radial Cargo Container (Long)
+StationPartsExpansionRedux	sspx-cargo-container-radial-huge-2	Large Radial Cargo Container (Short)
+StationPartsExpansionRedux	sspx-cargo-container-radial-medium-1	Twin Radial Cargo Container (Long)
+StationPartsExpansionRedux	sspx-cargo-container-radial-medium-2	Twin Radial Cargo Container (Medium)
+StationPartsExpansionRedux	sspx-cargo-container-radial-medium-3	Twin Radial Cargo Container (Short)
+StationPartsExpansionRedux	sspx-cargo-container-radial-small-1	Radial Cargo Container (Long)
+StationPartsExpansionRedux	sspx-cargo-container-radial-small-2	Radial Cargo Container (Medium)
+StationPartsExpansionRedux	sspx-cargo-container-radial-small-3	Radial Cargo Container (Small)
+StationPartsExpansionRedux	sspx-core-125-1	2.25m Station Core
+StationPartsExpansionRedux	sspx-core-1875-1	3.38m Station Core
+StationPartsExpansionRedux	sspx-core-25-1	4.5m Station Core
+StationPartsExpansionRedux	sspx-core-375-1	6.75m Station Core
+StationPartsExpansionRedux	sspx-core-5-1	9m Station Core
+StationPartsExpansionRedux	sspx-cupola-125-1	2.25m Cupola
+StationPartsExpansionRedux	sspx-cupola-1875-1	3.38m Observation Module
+StationPartsExpansionRedux	sspx-cupola-375-1	6.75m Cupola
+StationPartsExpansionRedux	sspx-cupola-greenhouse-125-1	2.25m Greenhouse Dome
+StationPartsExpansionRedux	sspx-cupola-telescope-125-1	2.25m Telescope Dome
+StationPartsExpansionRedux	sspx-docking-125-1	Extendable NASA Docking System
+StationPartsExpansionRedux	sspx-dome-5-1	9m Dome
+StationPartsExpansionRedux	sspx-dome-cupola-5-1	9m Observation Dome
+StationPartsExpansionRedux	sspx-dome-greenhouse-5-1	9m Greenhouse Dome
+StationPartsExpansionRedux	sspx-dome-habitation-5-1	9m Habitation Dome
+StationPartsExpansionRedux	sspx-expandable-centrifuge-375-1	6.75m Expandable Centrifuge (43m Diameter)
+StationPartsExpansionRedux	sspx-expandable-centrifuge-375-2	6.75m Expandable Centrifuge (36m Diameter)
+StationPartsExpansionRedux	sspx-expandable-centrifuge-5-1	9m Extendable Centrifuge (43m Diameter)
+StationPartsExpansionRedux	sspx-extendable-tube-125-1	2.25m Extendable Crew Tube
+StationPartsExpansionRedux	sspx-extendable-tube-25-1	4.5m Extendable Crew Tube
+StationPartsExpansionRedux	sspx-greenhouse-25-1	4.5m Greenhouse Module
+StationPartsExpansionRedux	sspx-greenhouse-375-1	6.75m Greenhouse Module
+StationPartsExpansionRedux	sspx-greenhouse-5-1	9m Greenhouse
+StationPartsExpansionRedux	sspx-habitation-125-1	2.25m Habitation Module
+StationPartsExpansionRedux	sspx-habitation-1875-1	3.38m Habitation Module (Long)
+StationPartsExpansionRedux	sspx-habitation-1875-2	3.38m Habitation Module (Short)
+StationPartsExpansionRedux	sspx-habitation-25-1	4.5m Habitation Module Long
+StationPartsExpansionRedux	sspx-habitation-375-1	6.75m Habitation Module (Large)
+StationPartsExpansionRedux	sspx-habitation-375-2	6.75m Habitation Module (Small)
+StationPartsExpansionRedux	sspx-habitation-375-3	6.75m Habitation Module (Shielded)
+StationPartsExpansionRedux	sspx-habitation-5-1	9m Habitation Module (Large)
+StationPartsExpansionRedux	sspx-habitation-5-2	9m Habitation Module (Small)
+StationPartsExpansionRedux	sspx-hub-125-1	2.25m Station Hub
+StationPartsExpansionRedux	sspx-hub-1875-1	3.38m Station Hub
+StationPartsExpansionRedux	sspx-hub-25-1	4.5m Station Hub
+StationPartsExpansionRedux	sspx-inflatable-centrifuge-125-1	2.25m Inflatable Centrifuge (16m Diameter)
+StationPartsExpansionRedux	sspx-inflatable-centrifuge-125-2	2.25m Inflatable Centrifuge (13m Diameter)
+StationPartsExpansionRedux	sspx-inflatable-centrifuge-25-1	4.5m Inflatable Centrifuge (25m Diameter)
+StationPartsExpansionRedux	sspx-inflatable-hab-125-1	2.25m Inflatable Habitat (Long)
+StationPartsExpansionRedux	sspx-inflatable-hab-125-2	2.25m Inflatable Habitat (Medium)
+StationPartsExpansionRedux	sspx-inflatable-hab-125-3	2.25m Inflatable Habitat (Short)
+StationPartsExpansionRedux	sspx-inflatable-hab-25-1	4.5m Inflatable Habitat (Long)
+StationPartsExpansionRedux	sspx-inflatable-hab-25-2	4.5m Inflatable Habitat (Short)
+StationPartsExpansionRedux	sspx-lab-375-1	6.75m Station Science Lab
+StationPartsExpansionRedux	sspx-lab-5-1	9m Station Science Lab
+StationPartsExpansionRedux	sspx-lab-pallet-1	External Stowage Platform (3.6m x 3.6m)
+StationPartsExpansionRedux	sspx-lab-pallet-2	External Stowage Platform (1.8m x 1.8m)
+StationPartsExpansionRedux	sspx-logistics-5-1	9m Logistics Module (Long)
+StationPartsExpansionRedux	sspx-logistics-5-2	9m Logistics Module (Short)
+StationPartsExpansionRedux	sspx-observation-25-1	4.5m Cupola (Large)
+StationPartsExpansionRedux	sspx-science-1875-1	3.38m Science Module
+StationPartsExpansionRedux	sspx-tube-125-1	2.25m Pressurized Crew Tube (Long)
+StationPartsExpansionRedux	sspx-tube-125-2	2.25m Pressurized Crew Tube (Medium)
+StationPartsExpansionRedux	sspx-tube-125-3	2.25m Pressurized Crew Tube (Short)
+StationPartsExpansionRedux	sspx-tube-1875-1	3.38m Pressurized Crew Tube (Long)
+StationPartsExpansionRedux	sspx-tube-1875-2	3.38m Pressurized Crew Tube (Medium)
+StationPartsExpansionRedux	sspx-tube-1875-3	3.38m Pressurized Crew Tube (Short)
+StationPartsExpansionRedux	sspx-tube-1875-angled-1	3.38m Pressurized Crew Tube (Angled)
+StationPartsExpansionRedux	sspx-tube-25-1	4.5m Pressurized Crew Tube (Long)
+StationPartsExpansionRedux	sspx-tube-25-2	4.5m Pressurized Crew Tube (Medium)
+StationPartsExpansionRedux	sspx-tube-25-3	4.5m Pressurized Crew Tube (Short)
+StationPartsExpansionRedux	sspx-tube-375-1	6.75m Pressurized Crew Tube (Long)
+StationPartsExpansionRedux	sspx-tube-375-2	6.75m Pressurized Crew Tube (Medium)
+StationPartsExpansionRedux	sspx-tube-375-3	6.75m Pressurized Crew Tube (Short)
+StationPartsExpansionRedux	sspx-utility-125-1	2.25m Utility Module
+StationPartsExpansionRedux	sspx-utility-1875-1	3.38m Utility Module
+Tantares	acamar_adapter_s2_s0p5_1	Kvant-1 Crew Compartment 1
+Tantares	acamar_crew_s2_1	Kvant-1 Crew Compartment 2
+Tantares	acamar_science_processor_s2_1	Kvant-1 Laboratory
+Tantares	alnair_les_s0_2	TKS VA Capsule LES
+Tantares	aquarius_crew_s1p5_1	LK-700 Capsule
+Tantares	aquarius_drogue_parachute_s0_1	LK-700 Capsule Drogue Parachute
+Tantares	aquarius_heatshield_s1p5_1	LK-700 Capulse Heat Shield
+Tantares	aquarius_parachute_s0p5_1	LK-700 Capsule Parachute
+Tantares	aquila_adapter_s1p5_1	Kristall Crew Compartment Adapter
+Tantares	aquila_adapter_s2_s0p5_1	Kristall Crew Compartment 1
+Tantares	aquila_adapter_s2_s1p5_1	Kristall Crew Compartment 2
+Tantares	aquila_control_s2_1	FGB Control Block
+Tantares	aquila_crew_s1_1	Kristall Crew Compartment 4
+Tantares	aquila_crew_s1_3	Kvant-2 Airlock
+Tantares	aquila_crew_s1p5_2	Kristall Crew Compartment 3
+Tantares	aquila_experiment_rack_s1p5_1	Priroda Experiment Platform
+Tantares	aquila_lab_s1_1	Kvant-2 Laboratory
+Tantares	aquila_lab_s1p5_1	Spektr Laboratory
+Tantares	aquila_lab_s1p5_2	Priroda Laboratory
+Tantares	aquila_node_adapter_s1_1	Kristall Docking Node Adapter
+Tantares	aquila_node_s0p5_1	Mir Core Docking Node
+Tantares	aquila_node_s0p5_2	Kristall Docking Node
+Tantares	aquila_sensor_synthetic_aperture_radar_srf_1	Travers Synthetic Aperture Radar
+Tantares	aquila_sensor_visible_light_telescope_s0_1	Priroda 5 Earth Resources Camera
+Tantares	aquila_structural_cone_s1p5_1	Spektr Top Cone
+Tantares	eridani_crew_s1p5_1	Mir Core Crew Compartment 3
+Tantares	eridani_crew_s2_1	Mir Core Crew Compartment 1
+Tantares	eridani_crew_s2_s1p5_1	Mir Core Crew Compartment 2
+Tantares	eridani_node_adapter_s1p5_s0p5_1	Mir Core Docking Node Adapter
+Tantares	rana_mount_srf_1	Sofora / Rapana Girder Mount
+Tantares	rana_truss_srf_1	Sofora / Rapana Girder A
+Tantares	rana_truss_srf_2	Sofora / Rapana Girder B
+Tantares	ro_TKS_adapter_s2_s0p5_1	TKS Crew Compartment 1
+Tantares	ro_TKS_adapter_s2_s1p5_1	TKS Crew Compartment 2
+Tantares	ro_TKS_crew_s1p5_2	TKS Crew Compartment 3
+Tantares	ro_kvant-2_adapter_s2_s0p5_1	Kvant-2 Crew Compartment 1
+Tantares	ro_kvant-2_adapter_s2_s1p5_1	Kvant-2 Crew Compartment 2
+Tantares	ro_kvant-2_crew_s1p5_2	Kvant-2 Crew Compartment 3
+Tantares	ro_priroda_adapter_s2_s0p5_1	Priroda Crew Compartment 1
+Tantares	ro_priroda_adapter_s2_s1p5_1	Priroda Crew Compartment 2
+Tantares	ro_priroda_crew_s1p5_2	Priroda Crew Compartment 3
+Tantares	ro_spektr_adapter_s2_s0p5_1	Spektr Crew Compartment 1
+Tantares	ro_spektr_adapter_s2_s1p5_1	Spektr Crew Compartment 2
+Tantares	ro_spektr_crew_s1p5_2	Spektr Crew Compartment 3
+Tantares	sargas_decoupler_s1p5_1	TKS VA Capsule Decoupler
+Tantares	vela_high_gain_antenna_srf_1	LK-700 High Gain Antenna
+Tantares	vela_landing_leg_srf_1	LK-700 Landing Leg
+Tantares	vela_landing_leg_srf_2	LK-700 Landing Leg
+UniversalStorage2	USAccelGravWedge	Orbital Science Unit
+UniversalStorage2	USFluidSpectroWedge	Mass Spectrometer Unit
+UniversalStorage2	USFuelCellMedium	Universal Storage: 1500W Fuel Cell
+UniversalStorage2	USFuelCellSmal	Universal Storage: 1000W Fuel Cell
+UniversalStorage2	USGooBayWedge	Biological Sample Capsule
+UniversalStorage2	USMatBayWedge	Crewed Experiment Bay
+UniversalStorage2	USRTGWedge	Universal Storage: Multi-hundred Watt RTG
+UniversalStorage2	USRTGWedgeMM	Universal Storage: Multi-Mission RTG
+UniversalStorage2	USRadialTanks	Universal Storage: Radial Tank
+UniversalStorage2	USThermoBaroWedge	Atmospheric Science Unit
+VenStockRevamp	1x3SPanels	OX-2L 1x3 Photovoltaic Panels
+VenStockRevamp	1x3WPanels	OX-4M 2x3 Photovoltaic Panels
+VenStockRevamp	45DegreeRCS	RCS Quad, 45deg (275/445 N class)
+VenStockRevamp	Angledpanel	M-1x1T Structural Panel
+VenStockRevamp	HeavyRcs	RCS Quad (550/890 N class)
+VenStockRevamp	InflatableHAB	IKU-03 Kerbal Safety Bubble
+VenStockRevamp	InlineRCS	Inline RCS block (138/223 N class)
+VenStockRevamp	KerbCan	1.25m Crew Carrier
+VenStockRevamp	LGLadderUtility	MK III Mobility Enhancer
+VenStockRevamp	LargeOMS	Astris
+VenStockRevamp	LongLadder	Pegasus III Mobility Enhancer
+VenStockRevamp	MK1Cargobay	1.25m Cargo Bay
+VenStockRevamp	MK2VApod	TKS VA Command Module
+VenStockRevamp	MedLadder	Pegasus II Mobility Enhancer
+VenStockRevamp	MedLadderUtility	MK II Mobility Enhancer
+VenStockRevamp	RO-MK1Cargobay	Mk1 Cargo Bay
+VenStockRevamp	RO-Mk1CrewModule	Mk1 Crew Carrier
+VenStockRevamp	RO-SNAP-19-RTG	SNAP-19 Series RTG
+VenStockRevamp	RO-SNAP-3-RTGPo210	SNAP-3A Series RTG (Po210)
+VenStockRevamp	RO-SNAP-9-RTG	SNAP-9 Series RTG
+VenStockRevamp	SMLadderUtility	MK I Mobility Enhancer
+VenStockRevamp	ShieldCapLarge	Mk2 Pod Protective Cover
+VenStockRevamp	SmallPointLight	MK 4 Point Light
+VenStockRevamp	SmallSpotLight	MK 3 Mini Spotlight
+VenStockRevamp	SmallStripLight	MK 5 Strip Light
+VenStockRevamp	SnubOtron	Separation Motor (Small)
+VenStockRevamp	largeLandingLeg	LT-5 Macro Super Landing Strut
+VenStockRevamp	microIbeam	M-Beam 100 I-Beam
+VenStockRevamp	rtgMini	SNAP-3B Series RTG (Pu238)
+VenStockRevamp	shortDecoupler1-2	Shorter Rockomax Brand Decoupler
+VenStockRevamp	smallRadialDecoupler	TR-8A Radial Decoupler
+VenStockRevamp	stationHubLarge	Extra-Large Rockomax HubMax Multi-Point Connector
+VenStockRevamp	strutCube3way	Cubic Octagonal Strut Three Way Connector
+VenStockRevamp	strutCube90	Cubic Octagonal Strut Angle Connector
+VenStockRevamp	strutCubeLarge	Cubic Octagonal Strut Mk IV
+VenStockRevamp	strutCubeMedium	Cubic Octagonal Strut Mk III
+VenStockRevamp	strutCubeMountingPlate	Cubic Octagonal Strut Slim Mounting Plate
+VenStockRevamp	strutCubeOCTOAdapter	Cubic Octagonal Strut Octagonal Adapter
+VenStockRevamp	strutCubeS0Adapter	Cubic Octagonal Strut 0.625m Adapter
+VenStockRevamp	strutCubeSmall	Cubic Octagonal Strut Mk II
