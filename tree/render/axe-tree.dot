@@ -8,7 +8,7 @@ digraph AXE {
   "pc_keroseneHydrotreating" [label="Hydrotreated Narrow-Cut Kerosene (RP-1)\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
   "pc_apcpGrain" [label="Aluminized AP/HTPB Composite Grain\nPropellantChemistry T3 · 400",fillcolor="#e07a5f",fontcolor="#111111"];
   "pc_hypergolicChemistry" [label="Self-Igniting Amine-Nitrate Hypergolics\nPropellantChemistry T3 · 400",fillcolor="#e07a5f",fontcolor="#111111"];
-  "pc_cryoLiquefaction" [label="Claude-Cycle H2/O2 Liquefaction\nPropellantChemistry T4 · 900",fillcolor="#e07a5f",fontcolor="#111111"];
+  "pc_cryoLiquefaction" [label="Claude-Cycle H2/O2 Liquefaction\nPropellantChemistry T3 · 400",fillcolor="#e07a5f",fontcolor="#111111"];
   "pc_storableOxidizers" [label="Passivated MON/NTO Storable Oxidizers\nPropellantChemistry T5 · 1500",fillcolor="#e07a5f",fontcolor="#111111"];
   "met_earlyAlloys" [label="Aluminum Isogrid & Maraging-Steel Cases\nMetallurgy T2 · 90",fillcolor="#8d99ae",fontcolor="#111111"];
   "met_oxRichSuperalloys" [label="Oxidizer-Rich Preburner Superalloys\nMetallurgy T4 · 900",fillcolor="#8d99ae",fontcolor="#111111"];
@@ -28,8 +28,8 @@ digraph AXE {
   { rank=same; "start" }
   { rank=same; "soundingRocketry" "tel_pcmTelemetry" }
   { rank=same; "pc_ethanolLox" "pc_keroseneHydrotreating" "met_earlyAlloys" "tel_helicalDirectional" }
-  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" }
-  { rank=same; "pc_cryoLiquefaction" "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" }
+  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "pc_cryoLiquefaction" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" }
+  { rank=same; "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" }
   { rank=same; "pc_storableOxidizers" "cryo_stagedHydrolox" "tel_phasedArray" "ext_powerGrid" }
   { rank=same; "cryo_zbo" }
   "start" -> "soundingRocketry" [style=solid];

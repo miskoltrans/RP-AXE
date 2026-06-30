@@ -19,8 +19,9 @@ OUTD = os.path.join(REPO, "GameData", "RP-AXE", "design", "Tree")
 REND = os.path.join(TREE, "render")
 
 X0, TIERW = 0, 430              # x = X0 + tier*TIERW (X anchored to MARGIN_X below)
-Y0, DISCH, SUBH = 300, 100, 34  # y = Y0 + (order-1)*DISCH + sub-stack (original; NOT normalized)
-MARGIN_X = -2568                # anchor leftmost node's X to the editor's stock-tree origin
+Y0, DISCH, SUBH = 300, 100, 34  # y = Y0 + (order-1)*DISCH + sub-stack (lane-grid fallback)
+MARGIN_X, MARGIN_Y = -2568, 711 # anchor top-left to the editor's stock-tree origin
+SPACING_Y = 80                  # delta layout: vertical px per within-tier row
 MULTI_ENTRY_COLOR = "#f4d35e"   # dashed-edge color for anyToUnlock (shared: graphviz render + html viewer)
 
 def die(msg):
@@ -77,6 +78,68 @@ def resolve(disc, meta, nodes, by):
     minx = min(n["_x"] for n in nodes)
     for n in nodes:
         n["_x"] += MARGIN_X - minx
+
+def delta_layout(disc, nodes, by, sweeps=12):
+    """Layered 'delta' layout: tier = column (x); within-tier order minimized for edge crossings
+    (barycenter/Sugiyama), then coordinate assignment pulls each node toward its neighbours' mean.
+    Overrides _x/_y. Pure-Python — graphviz text exporters (-Tplain) are dead on this box."""
+    tiers = collections.defaultdict(list)
+    for n in nodes: tiers[n["tier"]].append(n["id"])
+    par = {n["id"]: [p for p in (n.get("parents") or []) if p in by] for n in nodes}
+    chl = collections.defaultdict(list)
+    for nid, ps in par.items():
+        for p in ps: chl[p].append(nid)
+    neigh = lambda i: par[i] + chl[i]
+    y = {}
+    for ids in tiers.values():                      # seed by discipline order for a sensible start
+        for k, i in enumerate(sorted(ids, key=lambda i: (disc[by[i]["discipline"]]["order"], i))):
+            y[i] = float(k)
+    for phase in ("order", "coord"):                # phase 1 reduces crossings; phase 2 places coords
+        for _ in range(sweeps):
+            ny = {i: (sum(y[j] for j in neigh(i)) / len(neigh(i)) if neigh(i) else y[i]) for i in y}
+            for ids in tiers.values():
+                if phase == "order":                # re-rank to integers (decross)
+                    for k, i in enumerate(sorted(ids, key=lambda i: ny[i])): ny[i] = float(k)
+                else:                               # enforce min spacing in the settled order
+                    last = -1e9
+                    for i in sorted(ids, key=lambda i: ny[i]):
+                        if ny[i] < last + 1: ny[i] = last + 1
+                        last = ny[i]
+            y = ny
+    gmean = sum(y.values()) / len(y)                # center each column on the global mean
+    for ids in tiers.values():
+        c = sum(y[i] for i in ids) / len(ids)
+        for i in ids: y[i] += gmean - c
+    miny = min(y.values())
+    for n in nodes:
+        n["_x"] = MARGIN_X + n["tier"] * TIERW
+        n["_y"] = int(MARGIN_Y + (y[n["id"]] - miny) * SPACING_Y)
+
+def validate_design(disc, nodes, by):
+    """Non-fatal structural sanity checks (warn, don't die). Hook for domain consistency rules
+    (e.g. 'regen-cooled engine must have a cooling parent') once parts carry that metadata."""
+    warns = []
+    chl = collections.defaultdict(list)
+    for n in nodes:
+        for p in n.get("parents", []) or []: chl[p].append(n["id"])
+    roots = [n["id"] for n in nodes if not (n.get("parents") or [])]
+    seen, stack = set(), list(roots)               # reachability from the roots
+    while stack:
+        i = stack.pop()
+        if i in seen: continue
+        seen.add(i); stack += chl[i]
+    for n in nodes:
+        if n["id"] not in seen: warns.append(f"unreachable from any root: {n['id']}")
+        for p in n.get("parents", []) or []:       # edges must go forward in tier
+            if p in by and by[p]["tier"] >= n["tier"]:
+                warns.append(f"non-forward edge: {p} (T{by[p]['tier']}) -> {n['id']} (T{n['tier']})")
+        if n.get("anyToUnlock") and len(n.get("parents") or []) < 2:
+            warns.append(f"anyToUnlock with <2 parents (no-op): {n['id']}")
+    for r in roots:
+        if r != "start": warns.append(f"extra root (no parents besides start): {r}")
+    print(f"design checks: {'clean' if not warns else str(len(warns))+' warning(s)'}")
+    for w in warns: print(f"   ! {w}")
+    return warns
 
 def node_block(disc, n, indent="\t"):
     L = []; a = L.append
@@ -321,7 +384,9 @@ def main():
     disc, meta, nodes = load()
     by = {n["id"]: n for n in nodes}
     validate(disc, nodes, by)
-    resolve(disc, meta, nodes, by)
+    resolve(disc, meta, nodes, by)       # cost, parent defaults, lane-grid fallback positions
+    delta_layout(disc, nodes, by)        # override positions with the delta (layered) layout
+    validate_design(disc, nodes, by)
     emit_cfg(disc, nodes)
     emit_render(disc, meta, nodes, by)
     emit_html(disc, nodes, by)

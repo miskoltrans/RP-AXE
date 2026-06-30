@@ -74,7 +74,7 @@ nodes:
   - id: pc_cryoLiquefaction
     title: "Claude-Cycle H2/O2 Liquefaction"
     discipline: PropellantChemistry
-    tier: 4
+    tier: 3
     parents: [pc_ethanolLox]
     flavor: "Industrial Claude-cycle plants liquefy hydrogen and oxygen by the ton. You can now MAKE deep cryogens; STORING and flying them is Cryogenics' problem next door (a convergence)."
   - id: pc_storableOxidizers
