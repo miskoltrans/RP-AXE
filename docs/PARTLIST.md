@@ -109,7 +109,7 @@ solar covers them); **mod-specific science instruments** (→ DMagic); **part-sp
 | NearFutureSpacecraft | 3 | **0** | The 3 RO-supported parts are just RCS thrusters (the pods were non-RO, already deleted) → redundant with RO/stock RCS. **Mod removed from `../expansion modpack.ckan`** (nothing to keep). |
 | UniversalStorage2 | 34 | **10** | inherit RP-1's distilled set: 5 science wedges (goo/materials/mass-spec/atmospheric/orbital — unique science, RP-1-authored, ride with the science port) + 2 fuel cells + 2 RTGs + 1 radial tank. Cut 29 modular bulk (service cores/fairings/bulk tanks/batteries/ACDs/electrolysis/avionics → procedural). US2 stays a dependency for the wedge models. |
 | StationPartsExpansionRedux | 108 | **108** | inherit RP-1 — keep all. The only generic modular station + surface-base system: cores/hubs/crew-tubes/habitats/inflatables/centrifuges/cupolas/cargo/base-frames at 4 sizes. Carries the 20 unique station experiments. Complements Tantares (generic vs recognizable Mir). |
-| DMagicOrbitalScience | 12 | **0–5 (redundant)** | RP-1 cuts all 12 standalone instruments; its 5 US2-wedge reskins add 0 unique science. **KerbalismLab does NOT rescue it** (lab experiments gate on base-experiment carriers + crew, not DMagic probe instruments). Lean: drop, or keep only as an optional dependency. |
+| DMagicOrbitalScience | 12 | **DROPPED** | Fully redundant (0 unique science; RP-1's RO-* instruments cover it; KerbalismLab gates on base-experiment carriers, not DMagic). **Removed from `../expansion modpack.ckan`.** |
 
 ## Curated keep-lists (exact part names, manifest-ready)
 ### Tantares — 48 kept
