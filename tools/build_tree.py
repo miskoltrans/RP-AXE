@@ -3,12 +3,13 @@
   1. GameData/RP-AXE/design/Tree/AxeTechTree.cfg        game form (MM @TechTree patch, wipes stock)
   2. GameData/RP-AXE/design/Tree/AxeTechTree.editor.cfg  plain TechTree{} form for ETT KSPTechtreeEditor
   3. tree/render/axe-tree.{dot,svg,png}                  review render (delta preview, colored by discipline)
+  4. tree/render/axe-tree.html                           interactive viewer: click a node -> its parts (read-only)
 
 One source of truth (YAML) -> the game cfg, the editor-openable cfg (Q1 "open without KSP"), and a
 picture. Validates: unique ids, known disciplines, parents exist, no cycles. Cost = node.cost or
 meta.tier_cost[tier]*scalar. Layout pos auto-derived from (discipline order, tier).
 """
-import os, sys, subprocess, collections
+import os, sys, subprocess, collections, json
 import yaml
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -146,6 +147,168 @@ def emit_render(disc, meta, nodes, by):
         except Exception as e:
             print(f"  (render {fmt} skipped: {e})")
 
+def load_part_titles():
+    """name -> (mod, title) from manifest/curated-parts.tsv (header: mod\tname\ttitle)."""
+    path = os.path.join(REPO, "manifest", "curated-parts.tsv")
+    out = {}
+    try:
+        with open(path, encoding="utf-8") as f:
+            next(f, None)  # skip header
+            for line in f:
+                cols = line.rstrip("\n").split("\t")
+                if len(cols) >= 3:
+                    out[cols[1]] = (cols[0], cols[2])  # name -> (mod, title)
+    except FileNotFoundError:
+        pass
+    return out
+
+def _esc(s):
+    return (s or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
+
+def _trunc(s, n=27):
+    s = s or ""
+    return s if len(s) <= n else s[:n - 1] + "…"
+
+def emit_html(disc, meta, nodes, by):
+    """Self-contained read-only viewer: renders its OWN inline SVG from the node
+    positions resolve() already computed (no graphviz dependency), then click a
+    node to list the parts (and upgrades) that live there."""
+    PAD, COLW, YS, NW, NH = 44, 232, 1.5, 188, 44   # layout geometry (px)
+    miny = min(n["_y"] for n in nodes)
+    def X(n): return PAD + n["tier"] * COLW
+    def Y(n): return PAD + (n["_y"] - miny) * YS
+    width = max(X(n) for n in nodes) + NW + PAD
+    height = max(Y(n) for n in nodes) + NH + PAD + 20  # +20 for tier header row
+    maxtier = max(n["tier"] for n in nodes)
+
+    edges, boxes = [], []
+    for n in nodes:                                  # edges first (drawn under nodes)
+        x2, y2 = X(n), Y(n) + NH / 2
+        for pid in n.get("parents", []) or []:
+            p = by.get(pid)
+            if not p: continue
+            x1, y1 = X(p) + NW, Y(p) + NH / 2
+            dash = ' stroke-dasharray="5 4" stroke="#f4d35e"' if n.get("anyToUnlock") else ' stroke="#777"'
+            edges.append(f'<path d="M{x1:.0f},{y1:.0f} C{x1+46:.0f},{y1:.0f} {x2-46:.0f},{y2:.0f} {x2:.0f},{y2:.0f}" fill="none"{dash} stroke-width="1.5"/>')
+    for t in range(maxtier + 1):                     # tier column headers
+        boxes.append(f'<text x="{PAD + t*COLW:.0f}" y="20" fill="#888" font-size="12" font-weight="600">T{t}</text>')
+    for n in nodes:
+        d = disc[n["discipline"]]; x, y = X(n), Y(n)
+        np = len(n.get("parts") or []); nu = len(n.get("upgrades") or [])
+        badge = (f"{np}p" + (f"+{nu}u" if nu else "")) if (np or nu) else "—"
+        boxes.append(
+            f'<g class="node" data-id="{_esc(n["id"])}" tabindex="0">'
+            f'<rect x="{x:.0f}" y="{y:.0f}" width="{NW}" height="{NH}" rx="7" fill="{d["color"]}"/>'
+            f'<text x="{x+10:.0f}" y="{y+18:.0f}" fill="#15212b" font-size="12" font-weight="600">{_esc(_trunc(n["title"]))}</text>'
+            f'<text x="{x+10:.0f}" y="{y+34:.0f}" fill="#2c3e50" font-size="10.5">T{n["tier"]} · {n["cost"]}◈ · {badge}</text>'
+            f'</g>')
+    svg = (f'<svg id="tree" width="{width:.0f}" height="{height:.0f}" viewBox="0 0 {width:.0f} {height:.0f}" '
+           f'xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Helvetica,Arial,sans-serif">'
+           + "".join(edges) + "".join(boxes) + "</svg>")
+
+    titles = load_part_titles()
+    data = {}
+    for n in nodes:
+        parts = [{"name": p, "mod": titles.get(p, ("", ""))[0], "title": titles.get(p, ("", ""))[1]}
+                 for p in (n.get("parts") or [])]
+        data[n["id"]] = {
+            "title": n["title"], "discipline": disc[n["discipline"]]["title"],
+            "color": disc[n["discipline"]]["color"], "tier": n["tier"], "cost": n["cost"],
+            "anyToUnlock": bool(n.get("anyToUnlock")), "flavor": (n.get("flavor") or "").strip(),
+            "parts": parts, "upgrades": list(n.get("upgrades") or []),
+        }
+    npart = sum(len(d["parts"]) for d in data.values())
+    sub = f"{len(nodes)} nodes · {npart} parts placed · click a node"
+    html = (HTML_TEMPLATE.replace("__SUBTITLE__", sub)
+                         .replace("__DATA__", json.dumps(data, ensure_ascii=False))
+                         .replace("__SVG__", svg))
+    with open(os.path.join(REND, "axe-tree.html"), "w", encoding="utf-8") as f:
+        f.write(html)
+
+HTML_TEMPLATE = r"""<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>RP-AXE tech tree</title>
+<style>
+  :root{--bg:#1a1a1a;--panel:#222;--ink:#eee;--mut:#9aa;--line:#333}
+  *{box-sizing:border-box} html,body{margin:0;height:100%}
+  body{display:flex;font-family:Segoe UI,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  #canvas{flex:1;overflow:auto;position:relative}
+  #canvas svg{display:block}
+  g.node{cursor:pointer} g.node text{pointer-events:none;user-select:none}
+  g.node rect{transition:stroke .1s;stroke:#0000;stroke-width:0}
+  g.node:hover rect{stroke:#ffffffcc;stroke-width:2}
+  g.node.sel rect{stroke:#fff;stroke-width:3}
+  #bar{position:fixed;top:8px;left:8px;display:flex;gap:6px;align-items:center;
+       background:#000a;padding:5px 8px;border-radius:6px;font-size:12px}
+  #bar input{background:#111;border:1px solid #444;color:#eee;border-radius:4px;padding:3px 6px;width:150px}
+  #bar button{background:#333;border:1px solid #555;color:#eee;border-radius:4px;padding:2px 8px;cursor:pointer}
+  #bar button:hover{background:#444}
+  #panel{width:360px;min-width:360px;background:var(--panel);border-left:1px solid var(--line);
+         overflow:auto;padding:16px}
+  #panel .hint{color:var(--mut);margin-top:40px;text-align:center;font-style:italic}
+  .ttl{font-size:19px;font-weight:600;line-height:1.2}
+  .meta{color:var(--mut);font-size:13px;margin:6px 0 12px;display:flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .flav{font-style:italic;color:#cdd;font-size:13px;line-height:1.45;
+        border-left:3px solid var(--line);padding-left:10px;margin-bottom:14px}
+  .sec{text-transform:uppercase;letter-spacing:.06em;font-size:11px;color:var(--mut);
+       border-bottom:1px solid var(--line);padding-bottom:4px;margin:16px 0 8px}
+  ul.parts{list-style:none;margin:0;padding:0}
+  ul.parts li{padding:6px 0;border-bottom:1px solid #2a2a2a}
+  .pt{font-size:14px}
+  .pn{font-size:12px;color:var(--mut);font-family:Consolas,monospace}
+  .mod{color:#7aa2c4}
+  .empty{color:#777;font-style:italic;padding:6px 0}
+  #sub{position:fixed;bottom:8px;left:8px;color:var(--mut);font-size:11px;background:#000a;padding:3px 8px;border-radius:5px}
+</style></head><body>
+<div id="canvas">__SVG__</div>
+<div id="bar">
+  <input id="q" placeholder="find node / part…" autocomplete="off">
+  <button id="zo">−</button><span id="zl">100%</span><button id="zi">+</button>
+</div>
+<div id="sub">__SUBTITLE__</div>
+<div id="panel"><div class="hint">Click any node to see the parts that live there.</div></div>
+<script>
+const DATA=__DATA__;
+const panel=document.getElementById('panel');
+const nodeG={};let cur=null;
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function select(id,scroll){
+  if(cur)cur.classList.remove('sel');
+  const g=nodeG[id];if(g){g.classList.add('sel');cur=g;if(scroll)g.scrollIntoView({block:'center',inline:'center'});}
+  const d=DATA[id];if(!d){return;}
+  let h=`<div class="ttl">${esc(d.title)}</div>`;
+  h+=`<div class="meta"><span class="dot" style="background:${d.color}"></span>${esc(d.discipline)} · T${d.tier} · ${d.cost}◈${d.anyToUnlock?' · any-parent':''}</div>`;
+  if(d.flavor)h+=`<div class="flav">${esc(d.flavor)}</div>`;
+  h+=`<div class="sec">Parts (${d.parts.length})</div>`;
+  if(d.parts.length){h+='<ul class="parts">';
+    for(const p of d.parts)h+=`<li><div class="pt">${esc(p.title||p.name)}</div><div class="pn">${esc(p.name)}${p.mod?' · <span class="mod">'+esc(p.mod)+'</span>':''}</div></li>`;
+    h+='</ul>';}
+  else h+='<div class="empty">— no parts assigned —</div>';
+  if(d.upgrades.length){h+=`<div class="sec">Upgrades (${d.upgrades.length})</div><ul class="parts">`;
+    for(const u of d.upgrades)h+=`<li><div class="pn">${esc(u)}</div></li>`;h+='</ul>';}
+  panel.innerHTML=h;
+}
+document.querySelectorAll('#canvas g.node').forEach(g=>{
+  const id=g.getAttribute('data-id');if(!id)return;nodeG[id]=g;
+  g.addEventListener('click',()=>select(id,false));
+});
+// search: first node whose id/title or any part name/title matches
+document.getElementById('q').addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  const q=e.target.value.trim().toLowerCase();if(!q)return;
+  for(const id in DATA){const d=DATA[id];
+    if(id.toLowerCase().includes(q)||d.title.toLowerCase().includes(q)||
+       d.parts.some(p=>p.name.toLowerCase().includes(q)||(p.title||'').toLowerCase().includes(q))){
+      select(id,true);break;}}
+});
+// zoom (scale svg width/height; viewBox keeps it crisp, scroll container handles pan)
+const svg=document.querySelector('#canvas svg');
+const bw=parseFloat(svg.getAttribute('width')),bh=parseFloat(svg.getAttribute('height'));let z=1;
+function zoom(nz){z=Math.max(.2,Math.min(4,nz));svg.setAttribute('width',(bw*z)+'pt');svg.setAttribute('height',(bh*z)+'pt');document.getElementById('zl').textContent=Math.round(z*100)+'%';}
+document.getElementById('zi').onclick=()=>zoom(z*1.2);
+document.getElementById('zo').onclick=()=>zoom(z/1.2);
+</script></body></html>"""
+
 def main():
     disc, meta, nodes = load()
     by = {n["id"]: n for n in nodes}
@@ -153,6 +316,7 @@ def main():
     resolve(disc, meta, nodes, by)
     emit_cfg(disc, nodes)
     emit_render(disc, meta, nodes, by)
+    emit_html(disc, meta, nodes, by)
     # summary
     print(f"OK  {len(nodes)} nodes / {len(set(n['discipline'] for n in nodes))} disciplines")
     perd = collections.Counter(n["discipline"] for n in nodes)
@@ -163,6 +327,6 @@ def main():
     for n in nodes: cbt[n["tier"]] += n["cost"]
     for t in sorted(cbt): print(f"   T{t}: {cbt[t]:>6}")
     print(f"   total: {sum(n['cost'] for n in nodes)}")
-    print("-> GameData/RP-AXE/design/Tree/AxeTechTree.cfg (+ .editor.cfg), tree/render/axe-tree.svg|png")
+    print("-> GameData/RP-AXE/design/Tree/AxeTechTree.cfg (+ .editor.cfg), tree/render/axe-tree.svg|png|html")
 
 if __name__ == "__main__": main()
