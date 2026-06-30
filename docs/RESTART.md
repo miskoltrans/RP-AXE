@@ -72,6 +72,13 @@ Every part-mod curated (per-mod rationale + exact keep-lists in `docs/PARTLIST.m
   probe instruments.
 - **Modpack** `../expansion modpack.ckan` trimmed to **28 mods** (dropped NF-Spacecraft, DMagic, TantaresLV).
 - **Flag for P2:** `ModularLaunchPads` = 233 parts (biggest inherited block) — a tree-placement trim target.
+- **Part upgrades (added post-T1, preliminary — separate agent owns):** `manifest/upgrades-live.tsv` (71
+  live PartUpgrades: `name/techRequired/mod/title`) + `manifest/upgrades-absent.tsv` (626 RP-1-defined,
+  not live here, `disposition=REVIEW-capability`, from `Tree/*.cfg`). **Upgrades also need tree homes** and
+  are the *mechanism* for discipline-scatter: one part, breakthrough-gated config improvements (RP-1's ~81
+  yearly engine-increment *nodes* collapse into *upgrades* unlocked across the enabling-discipline nodes;
+  a pure-process node like "Vacuum Induction Melting" can pay off purely in upgrades). **Schema impact:** a
+  node's payload = `unlocks:{parts:[…], upgrades:[…]}`. → P1 schema + P2 placement input.
 
 ### T2 — Science-budget audit (with KerbalismLab) ✅ AUDIT DONE → full writeup in [`SCIENCE.md`](SCIENCE.md)
 Budget measured before setting node costs. Tools: `tools/science_budget.py` (probe),
