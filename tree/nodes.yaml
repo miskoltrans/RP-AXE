@@ -722,3 +722,349 @@ nodes:
     parents: [nuc_nuclearElectric, res_heliumMining]
     anyToUnlock: false
     flavor: "Confine and burn a fusion plasma for both power and thrust — the endgame drive, gated on the fuel you had to go mine from a gas giant."
+
+  # ======================= STAGE 3 — Flight, Structure, Control cluster =======================
+  # ---------- Aerodynamics (airfoils, supersonic, reentry, recovery) ----------
+  - id: aero_subsonicAirfoils
+    title: "Subsonic Airfoils & Empennage"
+    discipline: Aerodynamics
+    tier: 1
+    parents: [start]
+    flavor: "Wings, tails and control surfaces that fly stably below the speed of sound — the X-plane root of the tree."
+    parts: [AdvancedCanard]
+  - id: aero_parachuteRecovery
+    title: "Drogue & Main Parachute Recovery"
+    discipline: Aerodynamics
+    tier: 2
+    parents: [aero_subsonicAirfoils]
+    flavor: "Stage a drogue then a main canopy to bring a capsule or booster down intact — the oldest way home from space."
+  - id: aero_transonicArea
+    title: "Transonic Area-Rule Shaping"
+    discipline: Aerodynamics
+    tier: 3
+    parents: [aero_subsonicAirfoils]
+    flavor: "Smooth the cross-sectional area through Mach 1 — the coke-bottle waist that lets an airframe punch through the sound barrier."
+  - id: aero_sweptWing
+    title: "Swept & Delta Wings"
+    discipline: Aerodynamics
+    tier: 3
+    parents: [aero_subsonicAirfoils]
+    flavor: "Sweep the wing to delay shock-stall and you can cruise supersonic — the planform of every fast aircraft and spaceplane."
+    parts: [B9_Aero_Wing_Procedural_TypeA, B9_Aero_Wing_Procedural_TypeC]
+  - id: aero_supersonicInlets
+    title: "Supersonic Inlet Design"
+    discipline: Aerodynamics
+    tier: 4
+    parents: [aero_transonicArea]
+    flavor: "Decelerate intake air through controlled shocks so a jet keeps breathing past Mach 2."
+  - id: aero_reentryBluntBody
+    title: "Blunt-Body Reentry Aerodynamics"
+    discipline: Aerodynamics
+    tier: 4
+    parents: [aero_parachuteRecovery]
+    flavor: "A blunt shape stands the shock off the vehicle, dumping reentry heat into the air instead of the skin — the counter-intuitive key to survival."
+  - id: aero_proceduralFairings
+    title: "Payload Fairings & Separation"
+    discipline: Aerodynamics
+    tier: 4
+    parents: [aero_transonicArea]
+    flavor: "Shroud the payload through ascent then jettison cleanly — aerodynamic protection that must vanish on command."
+  - id: aero_hypersonicWaverider
+    title: "Hypersonic Waverider Forebodies"
+    discipline: Aerodynamics
+    tier: 5
+    parents: [aero_supersonicInlets]
+    flavor: "Ride your own shock wave for lift at hypersonic speed — the forebody shape of a Mach-6 cruiser."
+  - id: aero_liftingBody
+    title: "Lifting-Body Reentry"
+    discipline: Aerodynamics
+    tier: 5
+    parents: [aero_reentryBluntBody]
+    flavor: "Generate lift from the fuselage itself for a cross-range, runway-capable return with no wings to shield from the heat."
+  - id: aero_gridFins
+    title: "Grid Fins & Aerodynamic Actuators"
+    discipline: Aerodynamics
+    tier: 5
+    parents: [aero_reentryBluntBody]
+    flavor: "Stow flat, deploy into the airstream for crisp control authority on a descending booster — the steering of a reusable first stage."
+  - id: aero_supersonicRetropropulsion
+    title: "Supersonic Retropropulsion"
+    discipline: Aerodynamics
+    tier: 6
+    parents: [aero_reentryBluntBody]
+    flavor: "Fire engines into a supersonic oncoming flow to brake — the only practical way to land heavy payloads on Mars or recover a stage."
+  - id: aero_iad
+    title: "Inflatable Aerodynamic Decelerators"
+    discipline: Aerodynamics
+    tier: 6
+    parents: [aero_reentryBluntBody]
+    flavor: "Inflate a giant drag cone to slow a heavy entry where a rigid heatshield would be impossibly large."
+  - id: aero_scramjet
+    title: "Scramjet Airframe Integration"
+    discipline: Aerodynamics
+    tier: 6
+    parents: [aero_hypersonicWaverider]
+    flavor: "Burn fuel in a supersonic airstream with the whole underside as the engine — air-breathing flight to the edge of space."
+  - id: aero_activeFlowControl
+    title: "Active Flow Control"
+    discipline: Aerodynamics
+    tier: 7
+    parents: [aero_scramjet]
+    flavor: "Blow, suck or pulse the boundary layer to command lift and drag without moving a surface."
+  - id: aero_morphingWing
+    title: "Morphing Adaptive Wings"
+    discipline: Aerodynamics
+    tier: 8
+    parents: [aero_activeFlowControl]
+    flavor: "Change the wing's shape continuously in flight for optimal performance across every regime."
+  # ---------- Structures & Mechanisms (load paths, deployables, docking, landing) ----------
+  - id: str_pyroSeparation
+    title: "Pyrotechnic Staging & Separation"
+    discipline: StructuresMechanisms
+    tier: 1
+    parents: [start]
+    flavor: "Explosive bolts and shaped charges that cut a vehicle apart on a millisecond's command — staging begins here."
+  - id: str_stageSeparation
+    title: "Stage Separation & Ullage"
+    discipline: StructuresMechanisms
+    tier: 2
+    parents: [str_pyroSeparation]
+    flavor: "Push stages cleanly apart and settle propellant for the next ignition — the choreography between cutting and lighting."
+  - id: str_interstageTruss
+    title: "Trusses & Interstage Structures"
+    discipline: StructuresMechanisms
+    tier: 2
+    parents: [str_pyroSeparation]
+    flavor: "Carry launch loads through open trusswork at minimum mass — the skeleton between tanks and engines."
+  - id: str_landingLegs
+    title: "Shock-Absorbing Landing Legs"
+    discipline: StructuresMechanisms
+    tier: 3
+    parents: [str_interstageTruss]
+    flavor: "Crushable or damped legs that catch a lander's touchdown without bouncing or tipping."
+  - id: str_deployableBooms
+    title: "Deployable Booms & Masts"
+    discipline: StructuresMechanisms
+    tier: 4
+    parents: [str_interstageTruss]
+    flavor: "Stow a long boom for launch and extend it on orbit for magnetometers, arrays and antennas held clear of the bus."
+  - id: str_dockingProbeDrogue
+    title: "Probe-and-Drogue Docking"
+    discipline: StructuresMechanisms
+    tier: 4
+    parents: [str_stageSeparation]
+    flavor: "A probe captures a drogue cone and reels two craft together — the first hard mechanical mating in space."
+  - id: str_androgynousDocking
+    title: "Androgynous Docking (APAS)"
+    discipline: StructuresMechanisms
+    tier: 5
+    parents: [str_dockingProbeDrogue]
+    flavor: "Identical, genderless interfaces so any two vehicles can mate either way — the diplomacy of hardware."
+    parts: [RO-ApolloDockingPort, APAS89-95]
+  - id: str_deployableTruss
+    title: "Deployable & Erectable Trusses"
+    discipline: StructuresMechanisms
+    tier: 5
+    parents: [str_deployableBooms]
+    flavor: "Fold a large truss for launch and unfold it into a rigid backbone — the spine of a modular station."
+  - id: str_berthingMechanism
+    title: "Berthing Mechanisms (CBM)"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_androgynousDocking]
+    flavor: "Capture a module gently with an arm and bolt it down with a structural ring — the strong, permanent joints of a station."
+  - id: str_actuatedMechanisms
+    title: "High-Reliability Actuators & Latches"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_landingLegs]
+    flavor: "Single-fault-tolerant motors, latches and release mechanisms that simply must not jam after years in vacuum."
+  - id: str_reusableLandingGear
+    title: "Reusable Landing Gear"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_landingLegs]
+    flavor: "Legs and gear that absorb landing after landing and fly again with inspection only — the structures of reusability."
+  - id: str_inflatableHab
+    title: "Inflatable Structures"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_deployableTruss]
+    flavor: "Pack a large pressurised volume small for launch and inflate it on orbit — more habitat per fairing than any rigid can."
+  - id: str_largeDeployableReflectors
+    title: "Large Deployable Reflectors"
+    discipline: StructuresMechanisms
+    tier: 7
+    parents: [str_deployableBooms]
+    flavor: "Unfurl mesh dishes and apertures far larger than any fairing — the structures behind big antennas and telescopes."
+  - id: str_inSpaceAssembly
+    title: "Autonomous In-Space Assembly"
+    discipline: StructuresMechanisms
+    tier: 8
+    parents: [str_largeDeployableReflectors]
+    flavor: "Join trusses and modules on orbit by robot, not by folding — structures too big to launch in one piece."
+  # ---------- Robotics (rovers, manipulators, surface autonomy) ----------
+  - id: rob_servoActuators
+    title: "Electric Servo Actuators"
+    discipline: Robotics
+    tier: 3
+    parents: [start]
+    flavor: "Precise, repeatable electric motion — the joints, hinges and gimbals every machine that moves itself depends on."
+    parts: [hinge_01, controller1000]
+  - id: rob_roverChassis
+    title: "Wheeled Rover Chassis"
+    discipline: Robotics
+    tier: 4
+    parents: [rob_servoActuators]
+    flavor: "Drive, steer and survive thermal cycling on another world — the mobile platform that takes instruments to the science."
+  - id: rob_roboticArm
+    title: "Teleoperated Robotic Arms"
+    discipline: Robotics
+    tier: 5
+    parents: [rob_servoActuators]
+    flavor: "A multi-jointed arm to berth modules, inspect, and move cargo — hands in space, driven from the ground or the flight deck."
+  - id: rob_suspension
+    title: "Rocker-Bogie Suspension"
+    discipline: Robotics
+    tier: 5
+    parents: [rob_roverChassis]
+    flavor: "A passive linkage that keeps six wheels on rough ground without springs — the gait of a planetary rover."
+  - id: rob_sampleHandling
+    title: "Sample Acquisition & Handling"
+    discipline: Robotics
+    tier: 6
+    parents: [rob_roboticArm]
+    flavor: "Scoop, drill, seal and cache material without contaminating it — the front end of sample return."
+  - id: rob_autonomousNav
+    title: "Autonomous Surface Navigation"
+    discipline: Robotics
+    tier: 6
+    parents: [rob_suspension]
+    flavor: "Pick a safe path across terrain faster than the light-speed delay allows a driver to — the rover that thinks for itself."
+  - id: rob_dexterousManipulation
+    title: "Dexterous Manipulators"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_roboticArm]
+    flavor: "Fine, force-controlled hands for servicing, refuelling and repair on orbit."
+  - id: rob_skyCrane
+    title: "Powered-Descent Sky-Crane Delivery"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_autonomousNav]
+    flavor: "Hover on rockets and lower a rover on a tether to the surface — landing something too heavy and delicate for airbags."
+  - id: rob_rotorcraft
+    title: "Extraterrestrial Rotorcraft"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_autonomousNav]
+    flavor: "Fly a coaxial rotor in a thin alien atmosphere — scouting from the air where wheels can't reach."
+  - id: rob_roboticAssembly
+    title: "Robotic Assembly & Servicing"
+    discipline: Robotics
+    tier: 8
+    parents: [rob_dexterousManipulation]
+    flavor: "Build, refuel and repair satellites and structures by robot — infrastructure that maintains itself."
+  - id: rob_subsurfaceAccess
+    title: "Subsurface Drilling & Cryobots"
+    discipline: Robotics
+    tier: 8
+    parents: [rob_sampleHandling]
+    flavor: "Bore meters into regolith or melt through ice to reach what's buried — access to the most interesting real estate."
+  - id: rob_swarmRobotics
+    title: "Cooperative Robot Swarms"
+    discipline: Robotics
+    tier: 9
+    parents: [rob_autonomousNav]
+    flavor: "Many small autonomous units coordinating on survey and construction — resilience and coverage through numbers."
+  # ---------- Microelectronics (semiconductors, sensors, probe brains) ----------
+  - id: mic_vacuumTubes
+    title: "Vacuum-Tube Electronics"
+    discipline: Microelectronics
+    tier: 1
+    parents: [start]
+    flavor: "Hot-cathode tubes for the first sequencers and amplifiers — bulky, power-hungry, and the only logic there was."
+  - id: mic_transistor
+    title: "Discrete Transistors"
+    discipline: Microelectronics
+    tier: 2
+    parents: [mic_vacuumTubes]
+    flavor: "Solid-state switching shrinks avionics from a rack to a box and stops burning out filaments."
+  - id: mic_instrumentation
+    title: "Telemetry Instrumentation Sensors"
+    discipline: Microelectronics
+    tier: 2
+    parents: [mic_vacuumTubes]
+    flavor: "Pressure, temperature, strain and acceleration transducers — turning a vehicle's state into numbers you can downlink."
+  - id: mic_integratedCircuit
+    title: "Integrated Circuits"
+    discipline: Microelectronics
+    tier: 3
+    parents: [mic_transistor]
+    flavor: "Many transistors on one chip — the leap that made a real flight computer light enough to fly."
+  - id: mic_radHardening
+    title: "Radiation-Hardened Electronics"
+    discipline: Microelectronics
+    tier: 4
+    parents: [mic_integratedCircuit]
+    flavor: "Shield and design against single-event upsets so electronics survive the belts and deep space without latching up."
+  - id: mic_mosLSI
+    title: "MOS Large-Scale Integration"
+    discipline: Microelectronics
+    tier: 4
+    parents: [mic_integratedCircuit]
+    flavor: "Thousands of gates per chip at low power — microprocessors and memory dense enough for a spacecraft to think."
+  - id: mic_probeAvionics
+    title: "Integrated Probe Avionics"
+    discipline: Microelectronics
+    tier: 4
+    parents: [mic_integratedCircuit]
+    flavor: "Command, data handling and power management on a compact bus — the electronic core a probe is built around."
+  - id: mic_photolithography
+    title: "UV Photolithography (VLSI)"
+    discipline: Microelectronics
+    tier: 5
+    parents: [mic_mosLSI]
+    flavor: "Project ever-finer patterns onto silicon to pack millions of devices per chip — the process that drives all of modern computing. (Cross-links to precision Optics.)"
+  - id: mic_ccdSensors
+    title: "CCD & Active-Pixel Imagers"
+    discipline: Microelectronics
+    tier: 5
+    parents: [mic_radHardening]
+    flavor: "Convert photons to charge across a pixel array — the electronic retina behind every digital camera and star tracker."
+  - id: mic_memsSensors
+    title: "MEMS Inertial & Pressure Sensors"
+    discipline: Microelectronics
+    tier: 5
+    parents: [mic_mosLSI]
+    flavor: "Etch gyros and accelerometers into silicon — a full inertial sensor on a chip for pennies and milligrams."
+  - id: mic_powerElectronics
+    title: "Solid-State Power Electronics"
+    discipline: Microelectronics
+    tier: 5
+    parents: [mic_mosLSI]
+    flavor: "Switch and convert spacecraft power efficiently with solid-state devices — the silicon behind the power bus."
+  - id: mic_systemOnChip
+    title: "Radiation-Tolerant System-on-Chip"
+    discipline: Microelectronics
+    tier: 6
+    parents: [mic_photolithography]
+    flavor: "A whole rad-tolerant computer — processor, memory, IO — on a single die for a small, capable avionics core."
+  - id: mic_fpga
+    title: "Reconfigurable FPGAs"
+    discipline: Microelectronics
+    tier: 6
+    parents: [mic_photolithography]
+    flavor: "Rewire the logic after launch to fix bugs and repurpose hardware in flight — software-defined silicon."
+  - id: mic_deepSubmicron
+    title: "Deep-Submicron Process Nodes"
+    discipline: Microelectronics
+    tier: 7
+    parents: [mic_systemOnChip]
+    flavor: "Nanometre-scale features for orders more compute per watt — the brains for autonomy and on-board data reduction."
+  - id: mic_neuromorphic
+    title: "Neuromorphic & Edge-AI Processors"
+    discipline: Microelectronics
+    tier: 9
+    parents: [mic_deepSubmicron]
+    flavor: "Brain-inspired silicon that perceives and decides on milliwatts — autonomy that doesn't wait for the ground."

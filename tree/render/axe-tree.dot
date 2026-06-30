@@ -107,16 +107,72 @@ digraph AXE {
   "nuc_nervaImproved" [label="Particle-Bed Nuclear-Thermal\nNuclearEngineering T9 · 1700",fillcolor="#90be6d",fontcolor="#111111"];
   "nuc_gasCoreNTR" [label="Gas-Core Nuclear-Thermal\nNuclearEngineering T10 · 1300",fillcolor="#90be6d",fontcolor="#111111"];
   "nuc_fusionTorch" [label="Fusion Propulsion\nNuclearEngineering T10 · 1300",fillcolor="#90be6d",fontcolor="#111111"];
+  "aero_subsonicAirfoils" [label="Subsonic Airfoils & Empennage\nAerodynamics T1 · 20",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_parachuteRecovery" [label="Drogue & Main Parachute Recovery\nAerodynamics T2 · 90",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_transonicArea" [label="Transonic Area-Rule Shaping\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_sweptWing" [label="Swept & Delta Wings\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_supersonicInlets" [label="Supersonic Inlet Design\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_reentryBluntBody" [label="Blunt-Body Reentry Aerodynamics\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_proceduralFairings" [label="Payload Fairings & Separation\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_hypersonicWaverider" [label="Hypersonic Waverider Forebodies\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_liftingBody" [label="Lifting-Body Reentry\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_gridFins" [label="Grid Fins & Aerodynamic Actuators\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_supersonicRetropropulsion" [label="Supersonic Retropropulsion\nAerodynamics T6 · 2000",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_iad" [label="Inflatable Aerodynamic Decelerators\nAerodynamics T6 · 2000",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_scramjet" [label="Scramjet Airframe Integration\nAerodynamics T6 · 2000",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_activeFlowControl" [label="Active Flow Control\nAerodynamics T7 · 2300",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_morphingWing" [label="Morphing Adaptive Wings\nAerodynamics T8 · 2100",fillcolor="#48cae4",fontcolor="#111111"];
+  "str_pyroSeparation" [label="Pyrotechnic Staging & Separation\nStructuresMechanisms T1 · 20",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_stageSeparation" [label="Stage Separation & Ullage\nStructuresMechanisms T2 · 90",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_interstageTruss" [label="Trusses & Interstage Structures\nStructuresMechanisms T2 · 90",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_landingLegs" [label="Shock-Absorbing Landing Legs\nStructuresMechanisms T3 · 400",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_deployableBooms" [label="Deployable Booms & Masts\nStructuresMechanisms T4 · 900",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_dockingProbeDrogue" [label="Probe-and-Drogue Docking\nStructuresMechanisms T4 · 900",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_androgynousDocking" [label="Androgynous Docking (APAS)\nStructuresMechanisms T5 · 1500",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_deployableTruss" [label="Deployable & Erectable Trusses\nStructuresMechanisms T5 · 1500",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_berthingMechanism" [label="Berthing Mechanisms (CBM)\nStructuresMechanisms T6 · 2000",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_actuatedMechanisms" [label="High-Reliability Actuators & Latches\nStructuresMechanisms T6 · 2000",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_reusableLandingGear" [label="Reusable Landing Gear\nStructuresMechanisms T6 · 2000",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_inflatableHab" [label="Inflatable Structures\nStructuresMechanisms T6 · 2000",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_largeDeployableReflectors" [label="Large Deployable Reflectors\nStructuresMechanisms T7 · 2300",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_inSpaceAssembly" [label="Autonomous In-Space Assembly\nStructuresMechanisms T8 · 2100",fillcolor="#adb5bd",fontcolor="#111111"];
+  "rob_servoActuators" [label="Electric Servo Actuators\nRobotics T3 · 400",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_roverChassis" [label="Wheeled Rover Chassis\nRobotics T4 · 900",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_roboticArm" [label="Teleoperated Robotic Arms\nRobotics T5 · 1500",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_suspension" [label="Rocker-Bogie Suspension\nRobotics T5 · 1500",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_sampleHandling" [label="Sample Acquisition & Handling\nRobotics T6 · 2000",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_autonomousNav" [label="Autonomous Surface Navigation\nRobotics T6 · 2000",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_dexterousManipulation" [label="Dexterous Manipulators\nRobotics T7 · 2300",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_skyCrane" [label="Powered-Descent Sky-Crane Delivery\nRobotics T7 · 2300",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_rotorcraft" [label="Extraterrestrial Rotorcraft\nRobotics T7 · 2300",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_roboticAssembly" [label="Robotic Assembly & Servicing\nRobotics T8 · 2100",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_subsurfaceAccess" [label="Subsurface Drilling & Cryobots\nRobotics T8 · 2100",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_swarmRobotics" [label="Cooperative Robot Swarms\nRobotics T9 · 1700",fillcolor="#bc6c25",fontcolor="#111111"];
+  "mic_vacuumTubes" [label="Vacuum-Tube Electronics\nMicroelectronics T1 · 20",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_transistor" [label="Discrete Transistors\nMicroelectronics T2 · 90",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_instrumentation" [label="Telemetry Instrumentation Sensors\nMicroelectronics T2 · 90",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_integratedCircuit" [label="Integrated Circuits\nMicroelectronics T3 · 400",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_radHardening" [label="Radiation-Hardened Electronics\nMicroelectronics T4 · 900",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_mosLSI" [label="MOS Large-Scale Integration\nMicroelectronics T4 · 900",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_probeAvionics" [label="Integrated Probe Avionics\nMicroelectronics T4 · 900",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_photolithography" [label="UV Photolithography (VLSI)\nMicroelectronics T5 · 1500",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_ccdSensors" [label="CCD & Active-Pixel Imagers\nMicroelectronics T5 · 1500",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_memsSensors" [label="MEMS Inertial & Pressure Sensors\nMicroelectronics T5 · 1500",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_powerElectronics" [label="Solid-State Power Electronics\nMicroelectronics T5 · 1500",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_systemOnChip" [label="Radiation-Tolerant System-on-Chip\nMicroelectronics T6 · 2000",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_fpga" [label="Reconfigurable FPGAs\nMicroelectronics T6 · 2000",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_deepSubmicron" [label="Deep-Submicron Process Nodes\nMicroelectronics T7 · 2300",fillcolor="#cdb4db",fontcolor="#111111"];
+  "mic_neuromorphic" [label="Neuromorphic & Edge-AI Processors\nMicroelectronics T9 · 1700",fillcolor="#cdb4db",fontcolor="#111111"];
   { rank=same; "start" }
-  { rank=same; "soundingRocketry" "tel_pcmTelemetry" "met_weldedSteel" "pc_blackPowder" "fd_pressureFed" "elec_silverZinc" }
-  { rank=same; "pc_ethanolLox" "pc_keroseneHydrotreating" "met_earlyAlloys" "tel_helicalDirectional" "cmp_glassFiber" "pc_doubleBaseSolid" "fd_gasGenerator" "th_filmCooling" "cryo_basicCryoStorage" }
-  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "pc_cryoLiquefaction" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" "met_chemMilling" "cmp_ablativeTPS" "pc_hydrogenPeroxide" "th_ablativeCooling" "elec_fuelCell" "elec_siliconPV" }
-  { rank=same; "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" "met_vacuumInductionMelting" "cmp_filamentWinding" "pc_castableComposite" "res_electrolysis" "th_passiveRadiators" "elec_bodyMountedArrays" }
-  { rank=same; "pc_storableOxidizers" "cryo_stagedHydrolox" "tel_phasedArray" "ext_powerGrid" "met_titaniumForming" "met_vacuumArcRemelting" "cmp_carbonCarbon" "cmp_carbonFiberComposite" "pc_greenMonoprop" "res_regolithExcavation" "res_cryoLiquefactionISRU" "fd_expanderCycle" "fd_tapOffCycle" "fd_stagedCombustion" "th_heatPipes" "cryo_subcooling" "elec_trackingArrays" "nuc_rtg" }
-  { rank=same; "cryo_zbo" "met_powderMetallurgyHIP" "met_singleCrystalTurbine" "cmp_pica" "cmp_copv" "cmp_ceramicTiles" "pc_gelledPropellant" "pc_methalox" "res_sabatier" "res_oreBeneficiation" "fd_aerospike" "fd_deepThrottle" "th_pumpedLoop" "th_deployableRadiators" "cryo_orbitalTransfer" "elec_lithiumIon" "elec_tripleJunction" "nuc_rtgAdvanced" "nuc_fissionReactor" }
-  { rank=same; "met_refractoryMetals" "cmp_ceramicMatrixComposite" "pc_subcooledDensified" "res_metalExtraction" "res_propellantDepot" "fd_fullFlowStaged" "fd_dualBell" "th_cryocooler" "cryo_longDuration" "cryo_slush" "elec_concentratorPV" "elec_regenFuelCell" "nuc_thermionic" "nuc_braytonReactor" }
-  { rank=same; "met_additiveManufacturing" "cmp_metalMatrixComposite" "cmp_transpirationTPS" "res_atmosphericMining" "elec_flexibleArrays" "nuc_nuclearThermal" "nuc_nuclearElectric" }
-  { rank=same; "met_amorphousAlloys" "res_closedLoopFab" "res_heliumMining" "fd_rotatingDetonation" "th_dropletRadiator" "nuc_nervaImproved" }
+  { rank=same; "soundingRocketry" "tel_pcmTelemetry" "met_weldedSteel" "pc_blackPowder" "fd_pressureFed" "elec_silverZinc" "aero_subsonicAirfoils" "str_pyroSeparation" "mic_vacuumTubes" }
+  { rank=same; "pc_ethanolLox" "pc_keroseneHydrotreating" "met_earlyAlloys" "tel_helicalDirectional" "cmp_glassFiber" "pc_doubleBaseSolid" "fd_gasGenerator" "th_filmCooling" "cryo_basicCryoStorage" "aero_parachuteRecovery" "str_stageSeparation" "str_interstageTruss" "mic_transistor" "mic_instrumentation" }
+  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "pc_cryoLiquefaction" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" "met_chemMilling" "cmp_ablativeTPS" "pc_hydrogenPeroxide" "th_ablativeCooling" "elec_fuelCell" "elec_siliconPV" "aero_transonicArea" "aero_sweptWing" "str_landingLegs" "rob_servoActuators" "mic_integratedCircuit" }
+  { rank=same; "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" "met_vacuumInductionMelting" "cmp_filamentWinding" "pc_castableComposite" "res_electrolysis" "th_passiveRadiators" "elec_bodyMountedArrays" "aero_supersonicInlets" "aero_reentryBluntBody" "aero_proceduralFairings" "str_deployableBooms" "str_dockingProbeDrogue" "rob_roverChassis" "mic_radHardening" "mic_mosLSI" "mic_probeAvionics" }
+  { rank=same; "pc_storableOxidizers" "cryo_stagedHydrolox" "tel_phasedArray" "ext_powerGrid" "met_titaniumForming" "met_vacuumArcRemelting" "cmp_carbonCarbon" "cmp_carbonFiberComposite" "pc_greenMonoprop" "res_regolithExcavation" "res_cryoLiquefactionISRU" "fd_expanderCycle" "fd_tapOffCycle" "fd_stagedCombustion" "th_heatPipes" "cryo_subcooling" "elec_trackingArrays" "nuc_rtg" "aero_hypersonicWaverider" "aero_liftingBody" "aero_gridFins" "str_androgynousDocking" "str_deployableTruss" "rob_roboticArm" "rob_suspension" "mic_photolithography" "mic_ccdSensors" "mic_memsSensors" "mic_powerElectronics" }
+  { rank=same; "cryo_zbo" "met_powderMetallurgyHIP" "met_singleCrystalTurbine" "cmp_pica" "cmp_copv" "cmp_ceramicTiles" "pc_gelledPropellant" "pc_methalox" "res_sabatier" "res_oreBeneficiation" "fd_aerospike" "fd_deepThrottle" "th_pumpedLoop" "th_deployableRadiators" "cryo_orbitalTransfer" "elec_lithiumIon" "elec_tripleJunction" "nuc_rtgAdvanced" "nuc_fissionReactor" "aero_supersonicRetropropulsion" "aero_iad" "aero_scramjet" "str_berthingMechanism" "str_actuatedMechanisms" "str_reusableLandingGear" "str_inflatableHab" "rob_sampleHandling" "rob_autonomousNav" "mic_systemOnChip" "mic_fpga" }
+  { rank=same; "met_refractoryMetals" "cmp_ceramicMatrixComposite" "pc_subcooledDensified" "res_metalExtraction" "res_propellantDepot" "fd_fullFlowStaged" "fd_dualBell" "th_cryocooler" "cryo_longDuration" "cryo_slush" "elec_concentratorPV" "elec_regenFuelCell" "nuc_thermionic" "nuc_braytonReactor" "aero_activeFlowControl" "str_largeDeployableReflectors" "rob_dexterousManipulation" "rob_skyCrane" "rob_rotorcraft" "mic_deepSubmicron" }
+  { rank=same; "met_additiveManufacturing" "cmp_metalMatrixComposite" "cmp_transpirationTPS" "res_atmosphericMining" "elec_flexibleArrays" "nuc_nuclearThermal" "nuc_nuclearElectric" "aero_morphingWing" "str_inSpaceAssembly" "rob_roboticAssembly" "rob_subsurfaceAccess" }
+  { rank=same; "met_amorphousAlloys" "res_closedLoopFab" "res_heliumMining" "fd_rotatingDetonation" "th_dropletRadiator" "nuc_nervaImproved" "rob_swarmRobotics" "mic_neuromorphic" }
   { rank=same; "nuc_gasCoreNTR" "nuc_fusionTorch" }
   "start" -> "soundingRocketry" [style=solid];
   "soundingRocketry" -> "pc_ethanolLox" [style=solid];
@@ -235,6 +291,62 @@ digraph AXE {
   "nuc_nervaImproved" -> "nuc_gasCoreNTR" [style=solid];
   "nuc_nuclearElectric" -> "nuc_fusionTorch" [style=solid];
   "res_heliumMining" -> "nuc_fusionTorch" [style=solid];
+  "start" -> "aero_subsonicAirfoils" [style=solid];
+  "aero_subsonicAirfoils" -> "aero_parachuteRecovery" [style=solid];
+  "aero_subsonicAirfoils" -> "aero_transonicArea" [style=solid];
+  "aero_subsonicAirfoils" -> "aero_sweptWing" [style=solid];
+  "aero_transonicArea" -> "aero_supersonicInlets" [style=solid];
+  "aero_parachuteRecovery" -> "aero_reentryBluntBody" [style=solid];
+  "aero_transonicArea" -> "aero_proceduralFairings" [style=solid];
+  "aero_supersonicInlets" -> "aero_hypersonicWaverider" [style=solid];
+  "aero_reentryBluntBody" -> "aero_liftingBody" [style=solid];
+  "aero_reentryBluntBody" -> "aero_gridFins" [style=solid];
+  "aero_reentryBluntBody" -> "aero_supersonicRetropropulsion" [style=solid];
+  "aero_reentryBluntBody" -> "aero_iad" [style=solid];
+  "aero_hypersonicWaverider" -> "aero_scramjet" [style=solid];
+  "aero_scramjet" -> "aero_activeFlowControl" [style=solid];
+  "aero_activeFlowControl" -> "aero_morphingWing" [style=solid];
+  "start" -> "str_pyroSeparation" [style=solid];
+  "str_pyroSeparation" -> "str_stageSeparation" [style=solid];
+  "str_pyroSeparation" -> "str_interstageTruss" [style=solid];
+  "str_interstageTruss" -> "str_landingLegs" [style=solid];
+  "str_interstageTruss" -> "str_deployableBooms" [style=solid];
+  "str_stageSeparation" -> "str_dockingProbeDrogue" [style=solid];
+  "str_dockingProbeDrogue" -> "str_androgynousDocking" [style=solid];
+  "str_deployableBooms" -> "str_deployableTruss" [style=solid];
+  "str_androgynousDocking" -> "str_berthingMechanism" [style=solid];
+  "str_landingLegs" -> "str_actuatedMechanisms" [style=solid];
+  "str_landingLegs" -> "str_reusableLandingGear" [style=solid];
+  "str_deployableTruss" -> "str_inflatableHab" [style=solid];
+  "str_deployableBooms" -> "str_largeDeployableReflectors" [style=solid];
+  "str_largeDeployableReflectors" -> "str_inSpaceAssembly" [style=solid];
+  "start" -> "rob_servoActuators" [style=solid];
+  "rob_servoActuators" -> "rob_roverChassis" [style=solid];
+  "rob_servoActuators" -> "rob_roboticArm" [style=solid];
+  "rob_roverChassis" -> "rob_suspension" [style=solid];
+  "rob_roboticArm" -> "rob_sampleHandling" [style=solid];
+  "rob_suspension" -> "rob_autonomousNav" [style=solid];
+  "rob_roboticArm" -> "rob_dexterousManipulation" [style=solid];
+  "rob_autonomousNav" -> "rob_skyCrane" [style=solid];
+  "rob_autonomousNav" -> "rob_rotorcraft" [style=solid];
+  "rob_dexterousManipulation" -> "rob_roboticAssembly" [style=solid];
+  "rob_sampleHandling" -> "rob_subsurfaceAccess" [style=solid];
+  "rob_autonomousNav" -> "rob_swarmRobotics" [style=solid];
+  "start" -> "mic_vacuumTubes" [style=solid];
+  "mic_vacuumTubes" -> "mic_transistor" [style=solid];
+  "mic_vacuumTubes" -> "mic_instrumentation" [style=solid];
+  "mic_transistor" -> "mic_integratedCircuit" [style=solid];
+  "mic_integratedCircuit" -> "mic_radHardening" [style=solid];
+  "mic_integratedCircuit" -> "mic_mosLSI" [style=solid];
+  "mic_integratedCircuit" -> "mic_probeAvionics" [style=solid];
+  "mic_mosLSI" -> "mic_photolithography" [style=solid];
+  "mic_radHardening" -> "mic_ccdSensors" [style=solid];
+  "mic_mosLSI" -> "mic_memsSensors" [style=solid];
+  "mic_mosLSI" -> "mic_powerElectronics" [style=solid];
+  "mic_photolithography" -> "mic_systemOnChip" [style=solid];
+  "mic_photolithography" -> "mic_fpga" [style=solid];
+  "mic_systemOnChip" -> "mic_deepSubmicron" [style=solid];
+  "mic_deepSubmicron" -> "mic_neuromorphic" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;
   label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";
 }
