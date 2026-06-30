@@ -118,30 +118,38 @@ from RP-1's actual `BodyAllowed`/`BodyNotAllowed` (`manifest/experiment-bodies.t
 `tools/lab_inventory.py` → `manifest/lab-experiments.tsv`. **71 experiments** (65 fork + 6 base),
 science `value` **10–500, median 25, raw per-run sum 3,653**.
 
-**Cross-body budget (fixed-value model — value taken as literal science, no body multiplier):**
+**These scale with the body, exactly like probe science** (`value` is a Kerbalism `baseValue`:
+`science = value × bodyDataValue(situation) × biome`). A value=50 `InSpaceLow` experiment = 50 at Earth,
+150 at Mars, 500 at Jupiter, 1,500 at Pluto. And the fork **deliberately gates ~30 of the 65 off Earth**
+(`BodyNotAllowed = HomeBody`, or `Gaseous`/`Suns`/`Moons`-only, e.g. the `JUNO-*` gas-giant set) — the
+design *wants* crewed labs flown to distant bodies.
+
+**Realistic crewed-lab budget** (where you actually build stations — *not* "every body"):
 
 | scenario | crewed-lab science |
 |---|---|
-| one fully-equipped station/base, 1 body, 1 biome | ~3,653 |
-| realistic ~8 crewed bodies (Earth/Moon/Mars/Venus/4 moons) | **~51,000** |
-| theoretical 32 bodies | ~204,576 |
+| one big **Earth-orbit station** (27 of 65 exp runnable, Earth ×~1) | **~3,600** |
+| + a Moon surface base (the `SrfLanded` set, ×3) | ~+4–8k |
+| + Mars / a few interplanetary labs | tens of k |
+| the **30 off-Earth-only exp**, deployed deep (overpowered tail) | scales ×10–30 |
 
-- Magnitude check: realistic crewed-lab (~51k) **exceeds home-system probe science (~49k)** and is
-  ~44% of a full tree (~115k) — a **meaningful mid-game stream that more than doubles home-system
-  science** and specifically rewards the station/base era (where probe science is thin until you can
-  reach other planets). It is **not** a primary funder globally (~2% of probe max).
+- **Correction:** my first pass said "~51k realistic (8 bodies)" — that flat-value × bodies estimate was
+  **wrong** (ignored situation/body multipliers and assumed labs at 8 bodies). Mechanism-correct realistic
+  is **~4k (LEO) to ~10–15k (LEO + Moon + a couple interplanetary)** for a typical player; only a deep
+  deep-space lab campaign pushes higher.
 - High-value items cluster in the `Space` telescopes / high-energy bucket (HaloSat 500, CALET 350,
-  NICER/CXBN-2/ASTERIA 300). Biome experiments are individually small (10–15) but multiply.
+  NICER/CXBN-2/ASTERIA 300) — but several of *those* are `Gaseous`/`Suns`-gated (not Earth-orbit).
 - Tier funding: UnlockTechs cluster at `basicScience / scienceTech / spaceExploration /
   advExploration` — i.e. **early-mid tiers**, exactly the station era. All gates use **stock node
   names → must be remapped to AXE nodes** at integration.
 
-**⚠️ Key uncertainty (why the cache-read still matters):** the above assumes Kerbalism treats
-`value` as literal science. **If** Kerbalism applies celestial-body science multipliers to lab
-experiments (as it does for probe science), the theoretical scales 3–30× toward **0.6–6M**, making
-crewed-lab a *major* stream and likely **overpowered at outer planets**. Resolving this needs an
-in-game **merged-cache read**, which is **blocked until the framework (§1) is restored**. For P1
-tree *architecture* the fixed-value estimate is sufficient; for final *balance* (P3) we read the cache.
+**✅ Resolved (the earlier "do they scale?" uncertainty):** they **do** scale by body — same Kerbalism
+subject mechanism as probes. No cache read needed; it's visible in the experiment defs (stock situations
++ body-type gates). The consequence is a **re-author design lever** (§4): the as-shipped design has an
+**overpowered deep-space tail** (value-500 telescope × gas-giant ×10) and assumes deployments players
+rarely make (you build in LEO). RP-1's *own* crewed experiments dodge this by being `HomeBody`/`Moon`-
+restricted (don't scale). **Re-author choice:** flatten most lab exp to home-system (matches reality,
+no tail) vs. keep a deliberate handful as high-value deep-space targets (JUNO/solar) for ambition.
 
 ---
 
@@ -167,12 +175,10 @@ ScienceRework framework, and the two science streams then balance against each o
 lab-slot machinery + its RP-1-coexistence risk, values stay author-defaults; *drop KerbalismLab* —
 loses the 71-experiment breadth, falls back on RP0\*'s own ~25–30 crewed experiments.)
 
-**Body-multiplier question — resolved by construction.** Because we re-author (not run the fork as-is),
-lab experiments scale like RP0\* (baseValue × situation × body × biome — the model behind §2). We *set*
-the values and situations against that known model, so there is **no need for an in-game cache read**.
-The §3 fixed-value crewed-lab budget (~51k realistic) is the **floor**; with body multipliers the real
-figure is higher and is a **calibration dial** (set baseValues / restrict situations so an outer-planet
-station isn't overpowered) rather than an unknown.
+**Body-multiplier question — resolved.** Lab experiments scale like RP0\* (baseValue × situation × body ×
+biome — the §2 model); confirmed from the experiment defs, no cache read needed. The fork's *as-shipped*
+scope is wide (only ~10 are Earth-only; ~30 are gated *off* Earth to gas-giants/sun/"not-home") and the
+deep-space tail is overpowered. Because we re-author, body-scope is **ours to set** — see step 4.
 
 **P3 re-author plan (turnkey once P1 nodes exist):**
 1. Generator: `lab-experiments.tsv` + the 65 cfgs → plain `Experiment`/`EXPERIMENT_DEFINITION` configs.
@@ -180,4 +186,7 @@ station isn't overpowered) rather than an unknown.
    AXE part; decide whether to keep the DLL tags or hardcode `requirements = Part:<name>` (prefer the
    latter — no compiled dependency, precise control).
 3. Remap the ~22 stock `UnlockTech` names → AXE nodes (blocked on P1; ship a remap table now).
-4. Calibrate baseValues against the body-multiplier model so the crewed-lab budget lands where intended.
+4. **Set body scope + calibrate baseValues** so the budget lands where intended. Default lean: restrict
+   most to home-system (`HomeBody`/`HomeBodyAndMoons`/`Moon`, like RP-1's own crewed exp) → matches the
+   "stations live in LEO" reality and kills the runaway tail; keep a deliberate **handful** as high-value
+   deep-space targets (JUNO=gas-giant, SOLAR=sun) so there's a reason to fly an ambitious lab out.
