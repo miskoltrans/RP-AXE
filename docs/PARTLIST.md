@@ -110,6 +110,8 @@ solar covers them); **mod-specific science instruments** (→ DMagic); **part-sp
 | UniversalStorage2 | 34 | **10** | inherit RP-1's distilled set: 5 science wedges (goo/materials/mass-spec/atmospheric/orbital — unique science, RP-1-authored, ride with the science port) + 2 fuel cells + 2 RTGs + 1 radial tank. Cut 29 modular bulk (service cores/fairings/bulk tanks/batteries/ACDs/electrolysis/avionics → procedural). US2 stays a dependency for the wedge models. |
 | StationPartsExpansionRedux | 108 | **108** | inherit RP-1 — keep all. The only generic modular station + surface-base system: cores/hubs/crew-tubes/habitats/inflatables/centrifuges/cupolas/cargo/base-frames at 4 sizes. Carries the 20 unique station experiments. Complements Tantares (generic vs recognizable Mir). |
 | DMagicOrbitalScience | 12 | **DROPPED** | Fully redundant (0 unique science; RP-1's RO-* instruments cover it; KerbalismLab gates on base-experiment carriers, not DMagic). **Removed from `../expansion modpack.ckan`.** |
+| SXT *(RP-1 base)* | 78 | **76** | Keep — real aircraft engines/cockpits (Atar/Derwent/F135 turbojets+fans, An-124/B-52 cockpits) = the **X-plane start** RO doesn't cover; + Sputnik PS-1 antenna, N-1 Block decouplers, GPHS-RTG, biological capsules. Drop the 2 DEPRECATED Apollo-LM parts. |
+| VenStockRevamp *(RP-1 base)* | 40 | **40** | Keep — real RTGs (SNAP-3A/3B/19), `Astris` engine, **`TKS VA Command Module` (completes the Tantares TKS ferry)**, + cubic struts/lights/cargo/RCS utility. |
 
 ## Curated keep-lists (exact part names, manifest-ready)
 ### Tantares — 48 kept
@@ -130,5 +132,14 @@ solar covers them); **mod-specific science instruments** (→ DMagic); **part-sp
 - **Large rigid array:** `nfs-panel-deploying-advanced-2x20-hub-1` (K55-A 'Megalador')
 - **Curved expanding:** `nfs-panel-deploying-curved-375-1` (NIV-75-R)
 
+## Status: PART CURATION COMPLETE ✅
+Every part-mod in the stack is decided (table + keep-lists above). Dropped from `../expansion modpack.ckan`:
+**NearFutureSpacecraft, DMagicOrbitalScience** (28 mods remain).
+
 ## Next
-- Continue mod-by-mod **hardware** curation: Kerwis (Chinese), NearFuture suite, US2, SSPX, SXT/VenStock, the rest.
+1. **Consolidate the canonical manifest** — extract the exact kept-part name list (RP-1 base set + the curated
+   additions above) into a machine-readable manifest = the SSOT for tree placement, balance math, and the
+   RAM-trim submod. Build the "what's new / unplaced / non-RO" diff tool on it.
+2. **P1 — tree architecture** can now begin (the part list it gates is locked).
+3. **P3 science integration** (deferred): add KerbalismLab to deps + regen cache + test-load; remap its 66
+   `UnlockTech` gates to AXE nodes; rebalance the 66 science values; wire SCANsat when added.
