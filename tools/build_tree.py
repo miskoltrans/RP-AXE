@@ -17,8 +17,9 @@ TREE = os.path.join(REPO, "tree")
 OUTD = os.path.join(REPO, "GameData", "RP-AXE", "design", "Tree")
 REND = os.path.join(TREE, "render")
 
-X0, TIERW = -3600, 430          # x = X0 + tier*TIERW
-Y0, DISCH, SUBH = 300, 100, 34  # y = Y0 + (order-1)*DISCH + sub-stack
+X0, TIERW = 0, 430              # x = X0 + tier*TIERW (normalized to MARGIN below)
+Y0, DISCH, SUBH = 0, 100, 34    # y = Y0 + (order-1)*DISCH + sub-stack
+MARGIN_X, MARGIN_Y = 120, 120   # keep the whole tree in positive/in-bounds coords (start not off-canvas)
 
 def die(msg):
     print("ERROR:", msg); sys.exit(1)
@@ -70,6 +71,11 @@ def resolve(disc, meta, nodes, by):
         for k, n in enumerate(group):
             n["_x"] = X0 + tier * TIERW
             n["_y"] = Y0 + (order - 1) * DISCH + int((k - (len(group) - 1) / 2) * SUBH)
+    # normalize so the leftmost/topmost node sits at a positive margin (start never off-canvas)
+    minx = min(n["_x"] for n in nodes); miny = min(n["_y"] for n in nodes)
+    for n in nodes:
+        n["_x"] += MARGIN_X - minx
+        n["_y"] += MARGIN_Y - miny
 
 def node_block(disc, n, indent="\t"):
     L = []; a = L.append
