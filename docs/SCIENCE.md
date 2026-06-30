@@ -113,35 +113,43 @@ from RP-1's actual `BodyAllowed`/`BodyNotAllowed` (`manifest/experiment-bodies.t
 - *Still modeled (not read):* "theoretical max" = every experiment at every allowed body/biome (real
   collection is a fraction); Charon biomesum reads 0 (cache artifact). Body-assignment is now exact.
 
-## 3. Crewed-lab science (KerbalismLab) — a mid-game station stream
+## 3. Crewed-lab science (KerbalismLab) — counted on the same basis as probes
 
-`tools/lab_inventory.py` → `manifest/lab-experiments.tsv`. **71 experiments** (65 fork + 6 base),
-science `value` **10–500, median 25, raw per-run sum 3,653**.
+`tools/lab_budget.py` (inventory: `tools/lab_inventory.py` → `manifest/lab-experiments.tsv`).
+**71 experiments** (65 fork + 6 base), `value` 10–500. **They scale with the body exactly like probe
+science** (`value` is a Kerbalism `baseValue`: `science = value × bodyDataValue(situation) × biome`) —
+a value=50 `InSpaceLow` exp = 50 @Earth, 150 @Mars, 500 @Jupiter, 1,500 @Pluto. And the fork **gates
+~30 of 65 off Earth** (`BodyNotAllowed=HomeBody`, or `Gaseous`/`Suns`/`Moons`-only, e.g. `JUNO-*` gas
+giants) — the design *wants* crewed labs at distant bodies. So the budget MUST count all allowed bodies:
 
-**These scale with the body, exactly like probe science** (`value` is a Kerbalism `baseValue`:
-`science = value × bodyDataValue(situation) × biome`). A value=50 `InSpaceLow` experiment = 50 at Earth,
-150 at Mars, 500 at Jupiter, 1,500 at Pluto. And the fork **deliberately gates ~30 of the 65 off Earth**
-(`BodyNotAllowed = HomeBody`, or `Gaseous`/`Suns`/`Moons`-only, e.g. the `JUNO-*` gas-giant set) — the
-design *wants* crewed labs flown to distant bodies.
+**Crewed-lab theoretical max (all allowed bodies, same basis as §2) = 1,365,760.**
+Dominated by `SrfLanded@Biomes` experiments deliberately gated off Earth → run on all 31 other bodies
+with full body+biome multipliers (RELAX alone 164k; ChemCam/GV-SSPB/PPME-1 ~70k each).
 
-**Realistic crewed-lab budget** (where you actually build stations — *not* "every body"):
+- **Realizability caveat (the catch):** this is the *least* collectable third of the budget — those
+  totals need **crewed surface bases on other bodies' biomes**, the hardest thing in the game. Probe
+  theoretical-max you approach with flybys; crewed you basically never reach. *Realistic* crewed-lab is
+  far lower — an Earth-orbit station runs only 27 of 65 (~3.6k); LEO + a Moon/Mars base ~10–15k. (My
+  earlier "~51k realistic" was a flat-value × bodies error — superseded by both numbers here.)
+- Tier funding: UnlockTechs cluster early-mid (`basicScience`/`scienceTech`/`spaceExploration`); stock
+  node names → remap to AXE nodes at integration.
 
-| scenario | crewed-lab science |
-|---|---|
-| one big **Earth-orbit station** (27 of 65 exp runnable, Earth ×~1) | **~3,600** |
-| + a Moon surface base (the `SrfLanded` set, ×3) | ~+4–8k |
-| + Mars / a few interplanetary labs | tens of k |
-| the **30 off-Earth-only exp**, deployed deep (overpowered tail) | scales ×10–30 |
+## 3b. T2 TOTAL BUDGET (the deliverable) — combined, per era
 
-- **Correction:** my first pass said "~51k realistic (8 bodies)" — that flat-value × bodies estimate was
-  **wrong** (ignored situation/body multipliers and assumed labs at 8 bodies). Mechanism-correct realistic
-  is **~4k (LEO) to ~10–15k (LEO + Moon + a couple interplanetary)** for a typical player; only a deep
-  deep-space lab campaign pushes higher.
-- High-value items cluster in the `Space` telescopes / high-energy bucket (HaloSat 500, CALET 350,
-  NICER/CXBN-2/ASTERIA 300) — but several of *those* are `Gaseous`/`Suns`-gated (not Earth-orbit).
-- Tier funding: UnlockTechs cluster at `basicScience / scienceTech / spaceExploration /
-  advExploration` — i.e. **early-mid tiers**, exactly the station era. All gates use **stock node
-  names → must be remapped to AXE nodes** at integration.
+| era (cumulative) | probe | crewed-lab | **combined** |
+|---|---|---|---|
+| orbit ~1958 | 48,575 | 9,277 | **57,852** |
+| inner planets ~1961 | 133,415 | 48,238 | **181,653** |
+| crewed + landing ~1964 | 257,846 | 113,122 | **370,968** |
+| adv probes ~1967 | 423,191 | 199,927 | **623,118** |
+| Jupiter ~1970 | 812,279 | 408,452 | **1,220,731** |
+| Saturn ~1972 | 1,475,750 | 769,777 | **2,245,527** |
+| Uranus ~1986 | 1,963,473 | 1,041,392 | **3,004,865** |
+| **Pluto / total** | **2,568,951** | **1,365,760** | **3,934,711** |
+
+**Total collectable science ≈ 3.93M; split ≈ 65% probe / 35% crewed-lab.** This is the per-tier budget
+the tree is costed against (§4). Theoretical ceiling — realistic collection is lower and probe-weighted
+(crewed third is hardest to realize). Both regenerate: `science_budget.py` + `lab_budget.py`.
 
 **✅ Resolved (the earlier "do they scale?" uncertainty):** they **do** scale by body — same Kerbalism
 subject mechanism as probes. No cache read needed; it's visible in the experiment defs (stock situations
@@ -155,15 +163,15 @@ no tail) vs. keep a deliberate handful as high-value deep-space targets (JUNO/so
 
 ## 4. Tree-budget implications + decision needed
 
-**For P1 (tree architecture):** two competing anchors to resolve —
-- **RP-1 anchor (completable):** ~115k baseline → a 200–500 node AXE tree at **~150k–400k** total cost
-  is fundable by realistic collection (~0.5–1.0M probe + ~50k lab) but requires genuine interplanetary
-  exploration to finish; early game (Earth+Moon ≈ 49k probe + early lab) stays tight.
-- **VISION anchor (not completable in one playthrough):** "tree cost ≈ total science" → ~2.5M, i.e. a
-  much costlier tree you can't finish. These pull opposite directions — **a P1 call**, not settled here.
-- Either way, per-tier budgeting must mirror availability: cheap early nodes (paid by thin home-system
-  science), costlier late nodes (paid by interplanetary science). Crewed-lab fills the **mid-game
-  station valley** between home-system probes and interplanetary probes.
+Total budget (§3b): **~3.93M theoretical (65% probe / 35% crewed-lab)**; realistic collection lower and
+probe-weighted. Two competing anchors for total tree cost —
+- **RP-1 anchor (completable):** ~115k baseline → a 200–500 node tree at **~150k–400k** is funded by
+  mid-game (≥371k combined by the early-crewed era) but needs interplanetary work to finish; early game
+  (≈58k combined at first orbit) stays tight.
+- **VISION anchor (not completable in one playthrough):** "tree cost ≈ total science" → **~3.93M** — a
+  much costlier tree you can't finish. Opposite directions — **a P1 call**, not settled here.
+- Either way, per-tier budgeting mirrors the §3b table: cheap early nodes (paid by the thin ~58–182k
+  home/inner-system tiers), costlier late nodes (paid by the interplanetary millions).
 
 **For P3 (KerbalismLab integration) — DECIDED: re-author as plain `Experiment` modules.**
 Reimplement the 65 experiments as plain Kerbalism `Experiment` + `EXPERIMENT_DEFINITION` configs wired

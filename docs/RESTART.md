@@ -64,11 +64,13 @@ Budget measured before setting node costs. Tools: `tools/science_budget.py` (pro
 - **Probe science (RP0\*, 98 exp):** ~2.57M theoretical max across RSS (fully ground-truthed: cache
   biome weights + RP-1's real `BodyAllowed` body restrictions — 49 exp Earth-only incl. `photos4`@10k).
   Back-loaded — Earth+Moon only **49k**, outer planets ~1.8M. Realistic ~0.5–1.0M. (RP-1 full tree ≈ **115k**.)
-- **Crewed-lab science (KerbalismLab, 71 exp):** values 10–500 (median 25); **~51k** realistic (~8 crewed
-  bodies), ~205k theoretical-max — a mid-game **station stream** ~= home-system probe science, funding the
-  early-mid "station valley". UnlockTechs cluster early-mid (stock names → remap to AXE).
-- **Tree-budget target → ~150k–400k total node cost** (anchored on RP-1's 115k); per-tier must mirror the
-  back-loaded availability (cheap early, expensive late). Drives P1.
+- **Crewed-lab science (KerbalismLab, 71 exp, `tools/lab_budget.py`):** values 10–500; they **scale by
+  body like probes** and the fork gates ~30 off-Earth → **~1.37M theoretical** across all allowed bodies.
+  BUT it's the least-realizable third (needs crewed surface bases on other bodies' biomes); realistic is
+  ~4k (LEO) … ~10–15k (LEO+Moon/Mars). UnlockTechs cluster early-mid (stock names → remap to AXE).
+- **T2 TOTAL BUDGET = ~3.93M** (probe 2.57M + crewed-lab 1.37M; **65% / 35%**), per-era table in SCIENCE.md
+  §3b. **Tree-cost = OPEN P1 call:** RP-1-anchor ~150–400k (completable) vs VISION ~3.93M (not completable);
+  per-tier must mirror the era table (cheap early ~58k, costly late).
 - **⚠️ Blocker DIAGNOSED (fix deferred to P3):** the "Continued" fork is an *add-on*; it omits the
   **Kerbalism ScienceRework lab framework** (`KERBALISM_GROUP_SETTINGS`/`LAB_EXPERIMENTS` root node +
   `LabDataRateMultiplier` + the "Laboratory Experiments" `Configure` host) that lives in
