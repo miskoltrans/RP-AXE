@@ -17,6 +17,13 @@ deploy/rebuild tooling (improve).
 - **Parts mix** — procedural is the workhorse; layer in **curated iconic historical/stockish** parts
   where they teach a design or carry an aha-moment (key probes, iconic capsules/engines), cut filler
   variants. Education pillar earns its place without bloat. Sets the manifest's composition.
+- **Tooling — REMOVED (not husked).** RP-1's in-game build-time **tooling** system is cut entirely
+  from AXE. Consequence for vendored RP-1 parts: strip `ModuleTooling*` (`ModuleToolingPTank`,
+  `ModuleToolingProcAvionics`, …) and don't vendor `ToolingDefinitions.cfg` / `Tooling/`.
+- **Avionics — REWRITTEN by AXE (we author our own).** AXE ships its own avionics
+  (`design/Tree/AxeAvionicsCore.cfg`, `Source/AXE/Avionics/`); RP-1's `ModuleAvionics` /
+  `ModuleProceduralAvionics` on vendored parts are dropped/replaced by AXE's modules in a design-pass
+  patch (this is the P4 axis). In the meantime vendored parts still load — KSP strips unknown modules.
 
 ## Roadmap (critical path)
 Each phase gates the next; avionics + contracts ride alongside, off the critical path.
