@@ -58,6 +58,21 @@ Every part-mod curated (per-mod rationale + exact keep-lists in `docs/PARTLIST.m
 - **Modpack** `../expansion modpack.ckan` trimmed to **28 mods** (dropped NF-Spacecraft, DMagic, TantaresLV).
 - **Flag for P2:** `ModularLaunchPads` = 233 parts (biggest inherited block) — a tree-placement trim target.
 
+### T2 — Science-budget audit (with KerbalismLab) ⬅ DO BEFORE P1 tree architecture
+The tree's total cost ≈ total collectable science (VISION), so **measure the budget before setting node costs.**
+- **Two science streams (drive node tiering):** uncrewed **probe science** (RP-1's RP0* instruments) funds
+  early/mid; **crewed-lab science** (KerbalismLab's 66 — all need Scientists + a lab + a base-experiment
+  carrier) funds mid/late + stations/colonization.
+- **Method (no rp1_expanded cache needed — it's gone):** rebuild the deleted `science_audit.py` (recover a
+  starting point from git: `git show pre-restart-mvp:tools/science_audit.py`). Compute total collectable
+  science = **base** (RP0* + stock + SSPX/US2 uniques — from `ksp_rp1_clean` cache + RSS body `ScienceValues`)
+  **+ KerbalismLab's 66** (from raw configs in
+  `ksp_rp1_expanded/GameData/KerbalismLabExperimentsExpandedContinued/*.cfg`; values 10–500, baseValue 180,
+  all crewed, situations + UnlockTech in each cfg).
+- **Deliverables:** total budget + per-era/stream split → the tree's total-cost target + per-tier budgets;
+  AND a read on how much KerbalismLab's author-default values need rebalancing.
+- **Then:** P1 tree architecture, designed against the real numbers.
+
 ## Reference instances (outside the repo — never nuke)
 - `../ksp_instance_clean` — pristine rebuild base; copy it to spin up a fresh test instance.
 - `../ksp_rp1_clean`, `../ksp_ro_clean` (+ `_expanded`) — clean RP-1 / RO references (used for the part diff).
