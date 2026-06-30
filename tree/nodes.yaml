@@ -96,8 +96,8 @@ nodes:
     title: "Oxidizer-Rich Preburner Superalloys"
     discipline: Metallurgy
     tier: 4
-    parents: [met_earlyAlloys, fd_turbopumps]
-    anyToUnlock: false               # CONVERGENCE: alloys + turbomachinery (kerosene was routine, NOT a gate)
+    parents: [met_earlyAlloys, fd_turbopumps, th_regenCooling]
+    anyToUnlock: false               # CONVERGENCE: alloys + turbomachinery + regen cooling (RD-170 is regen-cooled, like F-1/J-2; kerosene was routine, NOT a gate)
     flavor: "For decades the West held that an oxygen-rich preburner would simply burn through any turbine. Soviet metallurgy disproved it: chrome-nickel alloys with burn-passivated surfaces survive hot, oxygen-rich gas, unlocking the most efficient kerolox engines ever flown. THE engine that metallurgy unlocks."
     parts: [ROE-RD170, ROE-RD180, ROE-NK33]
 
