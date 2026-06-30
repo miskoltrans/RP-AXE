@@ -60,18 +60,22 @@ Every part-mod curated (per-mod rationale + exact keep-lists in `docs/PARTLIST.m
 
 ### T2 — Science-budget audit (with KerbalismLab) ⬅ DO BEFORE P1 tree architecture
 The tree's total cost ≈ total collectable science (VISION), so **measure the budget before setting node costs.**
-- **Science backbone = RP-1's RP0\* alone** (96 tiered real-instrument experiments; mods are hardware, not
-  science). **KerbalismLab was DROPPED** — it shipped broken: missing its `KERBALISM_GROUP_SETTINGS` /
-  lab-host base framework, so every experiment's value lookup failed → **132 MM errors that blocked the
-  ConfigCache from ever writing**. User deleted it from `ksp_rp1_expanded` (2026-06-30). To revisit later:
-  clone its GitHub repo as a sibling (like the RealismOverhaul/ETT/LRTR reference clones) **and install the
-  base lab-experiments dependency first**.
-- **Method:** rebuild the deleted `science_audit.py` (start from `git show pre-restart-mvp:tools/science_audit.py`).
-  Source = **`ksp_rp1_clean`'s cache** — it has all 96 RP0* + stock experiments + the RSS body `ScienceValues`
-  multipliers, sufficient since science is RP0* (no rp1_expanded cache needed; it regenerates cleanly now that
-  KerbalismLab is removed, but adds only hardware).
-- **Deliverables:** total budget + the early-vs-late distribution (probe science vs crewed station science) →
-  the tree's total-cost target + per-tier budgets.
+- **Science backbone = RP-1's RP0\* (96) + KerbalismLab (66 crewed-station experiments).** Mods are hardware,
+  not science. **AXE builds WITH KerbalismLab** — it's the science value-add.
+- **⚠️ Blocker to fix: KerbalismLab's missing base dependency.** As installed it errors (132 MM:
+  `Can't find nodeType:KERBALISM_GROUP_SETTINGS` → value lookups fail → MM won't write the cache). The
+  "Expanded Continued" fork is **missing its base lab-experiments framework** (whatever defines
+  `KERBALISM_GROUP_SETTINGS`/`LAB_EXPERIMENTS` + the "Laboratory Experiments" Configure host). **TODO: find +
+  add that base dependency** — clone the KerbalismLab GitHub as a sibling (README/netkan lists its deps) — so
+  it loads clean. *(User removed it from the `ksp_rp1_expanded` reference instance ONLY, to get a clean cache
+  for the manifest/audit — it stays in the AXE design.)*
+- **Two science streams (drive node tiering):** uncrewed **probe science** (RP0* instruments) funds early/mid;
+  **crewed-lab science** (KerbalismLab's 66 + RP0*'s crewed experiments) funds mid/late + stations/colonization.
+- **Method:** rebuild the deleted `science_audit.py` (`git show pre-restart-mvp:tools/science_audit.py`).
+  Base RP0* + stock + RSS body `ScienceValues` from `ksp_rp1_clean`'s cache; **+ KerbalismLab's 66** from its
+  configs (re-clone the repo, or once the base dep is fixed + rp1_expanded re-cached, read off the merged cache).
+- **Deliverables:** total budget + probe-vs-crewed split → tree total-cost target + per-tier budgets; AND how
+  much KerbalismLab's author-default values (10–500) need rebalancing.
 - **Then:** P1 tree architecture, designed against the real numbers.
 
 ## Reference instances (outside the repo — never nuke)
