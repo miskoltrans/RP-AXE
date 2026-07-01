@@ -12,6 +12,7 @@
   #bar label{display:flex;align-items:center;gap:4px;cursor:pointer;white-space:nowrap}
   #bar .sep{width:1px;height:18px;background:#444}
   #bar input[type=text]{background:#111;border:1px solid #444;color:#eee;border-radius:4px;padding:3px 6px;width:150px}
+  #bar select{background:#111;border:1px solid #444;color:#eee;border-radius:4px;padding:2px 4px;font-size:12px}
   #bar button{background:#333;border:1px solid #555;color:#eee;border-radius:4px;padding:3px 9px;cursor:pointer}
   #bar button:hover{background:#444}
   #bar button.k{background:#3a2f10;border-color:#6a5514}
@@ -50,7 +51,9 @@
     <label><input type="checkbox" id="c_fan">Fan endpoints</label>
     <label><input type="checkbox" id="c_lane">Lane routing</label>
     <label><input type="checkbox" id="c_square">KSP square tiles</label>
-    <label><input type="checkbox" id="c_mylayout">Prototype layout</label>
+    <label>Layout <select id="s_layout"><option value="compiler">Compiler</option><option value="sugiyama">Sugiyama</option><option value="bands">Discipline bands</option></select></label>
+    <label>Spacing <select id="s_spacing"><option value="compact">Compact</option><option value="normal">Normal</option><option value="airy">Airy</option></select></label>
+    <label><input type="checkbox" id="c_diff">Spread by cost</label>
     <label><input type="checkbox" id="c_arr">Arrowheads</label>
     <label><input type="checkbox" id="c_icon">Icons</label>
     <label><input type="checkbox" id="c_disc">Colour edges by discipline</label>
