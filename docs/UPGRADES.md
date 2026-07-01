@@ -10,7 +10,7 @@ They are also AXE's **discipline-scatter mechanism** — one part, breakthrough-
 improvements unlocked across enabling-discipline nodes (RESTART.md T1 note). A node's payload is
 `unlocks:{parts:[…], upgrades:[…]}`.
 
-## Result — 553 KEEP · 45 REFERENCE · 28 DROP
+## Result — 553 KEEP · 45 REFERENCE · 28 DROP (+32 addendum below → 576 KEEP / 658 total)
 
 | Disposition | N | Bucket | Meaning |
 |---|---:|---|---|
@@ -177,3 +177,35 @@ python tools/curate_upgrades.py    # -> manifest/upgrades-curated.tsv
 
 Columns: `name · techRequired · sourcefile · disposition · companion_patch · reason · title`. This
 is the input to **P2** tree-placement + the `techRequired → AXE-node` remap.
+
+## Addendum (2026-07-01) — 32 more, found outside RP-1's own folder
+
+T3's scope was "RP-1-authored PARTUPGRADEs" (`upgrade_audit.py` walks only `GameData/RP-1`). That
+missed upgrades that are **live under AXE already** (they ship from a kept dependency) but hardcode
+or get patched onto an RP-1 techRequired id — found investigating `[not-in-curated]` tags in
+`manifest/human-orbital-partlist.md`. Two shapes:
+
+1. **Baked in directly** — RealismOverhaul's `RO_RealFuels.cfg` per-tank-**TYPE** ladder (21: Sep/Iso/
+   Balloon/ServiceModule/Battery/WetWing material & capacity tiers + AddLifeSupport/AddOxygenGas) sets
+   `techRequired` to an RP-1 node id in its own definition — no RP-1 folder involvement, so
+   `upgrade_audit.py`'s RP-1-only walk could never see it. New disposition **`KEEP-tank-typelevel`**
+   (sibling of `KEEP-engine-typelevel`) — 21.
+2. **Patched, not defined, by RP-1** — ROHeatshields' material presets (6: Heatsink/MercuryHS/
+   GeminiHS/EarlyLunarHS/LunarHS/Inflatable) and RealFuels' MLI-wrapping tiers (5: MLI.Upgrade1-5) are
+   defined against a **stock** techRequired (`engineering101`/`generalConstruction`) by their own mod,
+   then re-gated by an `@PARTUPGRADE[name]{ %techRequired = ... }` **patch** inside RP-1's folder —
+   `upgrade_audit.py`'s regex only matches fresh `PARTUPGRADE {` headers, not patch blocks, so these
+   were invisible too. `KEEP-capability` — 11.
+
+Ground-truthed against the compiled reference cache (not source-text guessing): 4 similarly-named
+RP-1 patch targets (`RFTech-Tank-Iso-Al`, `RFTech-Tank-Balloon-SteelAl`, and RP-1's own
+`-Tank-`-missing typo `RFTech-Balloon-SteelAlCu/Li`) compile to nothing and were correctly excluded.
+
+**Deliberately still out of scope** (has its own mechanism / different milestone): `commsTL1-10` /
+`solarTL*` already carry a `KEEP-techlevel-TODO` placeholder in the `extract_*_partlist.py` scripts
+(prior user note) — folding them in here would fork that decision. `Upgrade-Colony` (Kerbalism
+Sickbay, `techRequired=improvedHabitats`) is a single different-mod one-off far past current milestone
+scope.
+
+**Result: 626 → 658 rows** (553 → 576 KEEP). Reproduce: `python tools/curate_upgrades_addendum.py`
+(run after `curate_upgrades.py`; merges + re-sorts `upgrades-curated.tsv` in place).

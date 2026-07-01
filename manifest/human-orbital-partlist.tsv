@@ -68,12 +68,12 @@ stabilityRP0	Stability	part	ROE-RangerRetro	yes	MC-4-610
 entryDescentLanding	Entry, Descent and Landing	part	ROH-AdjustableHS	yes	Adjustable Heatshield
 entryDescentLanding	Entry, Descent and Landing	part	RP0-SampleReturnCapsule	yes	Science Sample Return Capsule (DEPRECATED)
 entryDescentLanding	Entry, Descent and Landing	part	RP0-SampleReturnCommand	yes	Sample Return Command Module (DEPRECATED)
-entryDescentLanding	Entry, Descent and Landing	upgrade	Heatsink	not-in-curated	
+entryDescentLanding	Entry, Descent and Landing	upgrade	Heatsink	KEEP-capability	
 humanRatedEDL	Human Rated EDL	part	SXTAirbag	yes	Mk10-XL Inflatable Airbag
 humanRatedEDL	Human Rated EDL	part	SXTAirbagSmall	yes	Mk-10 Inflatable Airbag
 humanRatedEDL	Human Rated EDL	part	landingLeg1	yes	LT-1 Landing Struts
 humanRatedEDL	Human Rated EDL	part	miniLandingLeg	yes	LT-05 Micro Landing Strut (DEPRECATED)
-humanRatedEDL	Human Rated EDL	upgrade	MercuryHS	not-in-curated	
+humanRatedEDL	Human Rated EDL	upgrade	MercuryHS	KEEP-capability	
 orbitalRocketry1958	1958 Orbital Rocketry	part	ROE-Agena	yes	XLR81 (Agena) Vacuum Engine
 orbitalRocketry1958	1958 Orbital Rocketry	part	ROE-Gamma2	yes	Gamma 2
 orbitalRocketry1958	1958 Orbital Rocketry	part	ROE-Gamma8	yes	Gamma 8
@@ -171,15 +171,15 @@ solids1959	1959-1960 Solid Rocket Engines	part	ROE-Antares1_Inline	yes	Antares I
 solids1959	1959-1960 Solid Rocket Engines	upgrade	RFUpgrade_Castor-1-SL	KEEP-engine	
 solids1959	1959-1960 Solid Rocket Engines	upgrade	RFUpgrade_Castor-1-Vac	KEEP-engine	
 crewSurvivability	Crew Survivability	part	RO-LifeSupport-DummyEngine	yes	Life Support Config Engine
-crewSurvivability	Crew Survivability	upgrade	RFTech-AddLifeSupport	not-in-curated	
+crewSurvivability	Crew Survivability	upgrade	RFTech-AddLifeSupport	KEEP-tank-typelevel	
 materialsScienceHuman	Early Human Spaceflight Materials Science	part	RO_ServiceBay_300	yes	Service Bay [3m]
 materialsScienceHuman	Early Human Spaceflight Materials Science	part	ServiceBay_250_v2	yes	Service Bay [4m]
 materialsScienceHuman	Early Human Spaceflight Materials Science	part	USRadialTanks	yes	Universal Storage: Radial Tank
 materialsScienceHuman	Early Human Spaceflight Materials Science	part	restock-nosecone-1875-1	yes	Protective Rocket Nose Mk18
 materialsScienceHuman	Early Human Spaceflight Materials Science	upgrade	PFTech-Fairing-II	KEEP-capability	
-materialsScienceHuman	Early Human Spaceflight Materials Science	upgrade	RFTech-SM-II	not-in-curated	
+materialsScienceHuman	Early Human Spaceflight Materials Science	upgrade	RFTech-SM-II	KEEP-tank-typelevel	
 materialsScienceHuman	Early Human Spaceflight Materials Science	upgrade	rp0EngineerUpgradeHuman	DROP-axed-career	
-electronicsHuman	Early Human Spaceflight Electronics Research	upgrade	RFTech-Battery-II	not-in-curated	
+electronicsHuman	Early Human Spaceflight Electronics Research	upgrade	RFTech-Battery-II	KEEP-tank-typelevel	
 electronicsHuman	Early Human Spaceflight Electronics Research	upgrade	rp0ResearcherUpgradeHuman	DROP-axed-career	
 earlyAvionics	Early Avionics and Probes	part	RP0probeVanguardXray	yes	20in X-Ray Detector (DEPRECATED)
 earlyAvionics	Early Avionics and Probes	part	pioneer_0_1_2	yes	Pioneer 0/1/2
