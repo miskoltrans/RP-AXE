@@ -79,41 +79,101 @@ def resolve(disc, meta, nodes, by):
     for n in nodes:
         n["_x"] += MARGIN_X - minx
 
-def delta_layout(disc, nodes, by, sweeps=12):
-    """Layered 'delta' layout: tier = column (x); within-tier order minimized for edge crossings
-    (barycenter/Sugiyama), then coordinate assignment pulls each node toward its neighbours' mean.
-    Overrides _x/_y. Pure-Python — graphviz text exporters (-Tplain) are dead on this box."""
-    tiers = collections.defaultdict(list)
-    for n in nodes: tiers[n["tier"]].append(n["id"])
-    par = {n["id"]: [p for p in (n.get("parents") or []) if p in by] for n in nodes}
-    chl = collections.defaultdict(list)
-    for nid, ps in par.items():
-        for p in ps: chl[p].append(nid)
-    neigh = lambda i: par[i] + chl[i]
-    y = {}
-    for ids in tiers.values():                      # seed by discipline order for a sensible start
-        for k, i in enumerate(sorted(ids, key=lambda i: (disc[by[i]["discipline"]]["order"], i))):
-            y[i] = float(k)
-    for phase in ("order", "coord"):                # phase 1 reduces crossings; phase 2 places coords
-        for _ in range(sweeps):
-            ny = {i: (sum(y[j] for j in neigh(i)) / len(neigh(i)) if neigh(i) else y[i]) for i in y}
-            for ids in tiers.values():
-                if phase == "order":                # re-rank to integers (decross)
-                    for k, i in enumerate(sorted(ids, key=lambda i: ny[i])): ny[i] = float(k)
-                else:                               # enforce min spacing in the settled order
-                    last = -1e9
-                    for i in sorted(ids, key=lambda i: ny[i]):
-                        if ny[i] < last + 1: ny[i] = last + 1
-                        last = ny[i]
-            y = ny
-    gmean = sum(y.values()) / len(y)                # center each column on the global mean
-    for ids in tiers.values():
-        c = sum(y[i] for i in ids) / len(ids)
-        for i in ids: y[i] += gmean - c
-    miny = min(y.values())
+def sugiyama_layout(disc, nodes, by, sweeps=8):
+    """Proper layered (Sugiyama) layout. Phase 1 (layer assignment) is given: tier = column.
+    Adds the phases that make a layered DAG legible:
+      * DUMMY NODES on every edge spanning >1 tier, so long edges get their own lane and take
+        part in ordering (instead of shooting across everything);
+      * CROSSING MINIMISATION by the median heuristic, alternating up/down sweeps, keeping the
+        best ordering seen;
+      * COORDINATE ASSIGNMENT that pulls each vertex (real + dummy) toward its neighbours' mean
+        under a minimum gap, which straightens the dummy chains into clean routes.
+    Sets n['_x'],n['_y'] (px, for the game cfg + render) on real nodes and RETURNS edge routes
+    [(parentId, childId, [(tier, y_px), ...]), ...] tracing each edge through its dummies
+    (adjacent-tier edges = 2 points = straight)."""
+    tier = {n["id"]: n["tier"] for n in nodes}
+    layers = collections.defaultdict(list)              # tier -> [vertex keys] (real ids + dummies)
+    for n in nodes: layers[tier[n["id"]]].append(n["id"])
+    prev, nxt = collections.defaultdict(list), collections.defaultdict(list)
+    vtier = {n["id"]: tier[n["id"]] for n in nodes}
+    seed = {n["id"]: float(disc[n["discipline"]]["order"]) for n in nodes}  # cluster by discipline
+    chains, dcount = [], 0
     for n in nodes:
-        n["_x"] = MARGIN_X + n["tier"] * TIERW
-        n["_y"] = int(MARGIN_Y + (y[n["id"]] - miny) * SPACING_Y)
+        cid, ct = n["id"], tier[n["id"]]
+        for pid in n.get("parents") or []:
+            if pid not in by: continue
+            chain = [pid]
+            for t in range(tier[pid] + 1, ct):          # one dummy per skipped tier
+                dk = f"__d{dcount}"; dcount += 1
+                vtier[dk] = t; layers[t].append(dk); seed[dk] = seed[pid]
+                chain.append(dk)
+            chain.append(cid)
+            for a, b in zip(chain, chain[1:]): nxt[a].append(b); prev[b].append(a)
+            chains.append((pid, cid, chain))
+    order = sorted(layers)                               # tiers ascending
+    rank = {}
+    def reindex(t, key):
+        layers[t].sort(key=key)
+        for i, v in enumerate(layers[t]): rank[v] = i
+    for t in order: reindex(t, lambda v: (seed[v], str(v)))
+    def median(ids):
+        vs = sorted(rank[w] for w in ids)
+        if not vs: return -1.0
+        m = len(vs) // 2
+        return vs[m] if len(vs) % 2 else (vs[m - 1] + vs[m]) / 2.0
+    def crossings():
+        c = 0
+        for t in order[:-1]:
+            es = sorted((rank[u], rank[w]) for u in layers[t] for w in nxt[u] if vtier[w] == t + 1)
+            seq = [w for _, w in es]
+            for i in range(len(seq)):                    # count inversions in the lower endpoints
+                for j in range(i + 1, len(seq)):
+                    if seq[i] > seq[j]: c += 1
+        return c
+    best = None
+    for s in range(sweeps):                             # median sweeps, keep the least-crossing order
+        for t in (order if s % 2 == 0 else order[::-1]):
+            adj = prev if s % 2 == 0 else nxt
+            keep = dict(rank)
+            reindex(t, lambda v: (median(adj[v]) if adj[v] else float(keep[v]), keep[v]))
+        c = crossings()
+        if best is None or c < best[0]:
+            best = (c, {t: list(layers[t]) for t in order})
+    for t in order:                                     # restore best ordering
+        layers[t] = best[1][t]
+        for i, v in enumerate(layers[t]): rank[v] = i
+    isd = lambda v: v.startswith("__d")                 # dummies are thin waypoints, not tiles:
+    def gap(a, b):                                       # only real<->real needs a full row of space
+        if isd(a) and isd(b): return 0.12
+        return 0.45 if (isd(a) or isd(b)) else 1.0
+    def pav(a):                                          # isotonic regression (pool adjacent violators):
+        vals, cnts = [], []                             # nearest non-decreasing fit to targets a (unit wt)
+        for x in a:
+            vals.append(float(x)); cnts.append(1)
+            while len(vals) > 1 and vals[-2] >= vals[-1]:
+                v2, c2 = vals.pop(), cnts.pop(); v1, c1 = vals.pop(), cnts.pop()
+                vals.append((v1 * c1 + v2 * c2) / (c1 + c2)); cnts.append(c1 + c2)
+        out = []
+        for v, c in zip(vals, cnts): out.extend([v] * c)
+        return out
+    y = {v: float(rank[v]) for t in order for v in layers[t]}   # coordinate assignment
+    for _ in range(30):                                 # place each layer as near neighbour-mean as the
+        des = {v: (sum(y[w] for w in prev[v] + nxt[v]) / len(prev[v] + nxt[v])   # gaps allow (exact, compacts)
+                   if (prev[v] or nxt[v]) else y[v]) for v in y}
+        for t in order:
+            row = layers[t]
+            if not row: continue
+            c, acc = [0.0] * len(row), 0.0              # cumulative min-gap offset along the layer
+            for i in range(1, len(row)):
+                acc += gap(row[i - 1], row[i]); c[i] = acc
+            z = pav([des[row[i]] - c[i] for i in range(len(row))])   # y = z + offset, z non-decreasing
+            for i, v in enumerate(row): y[v] = z[i] + c[i]
+    miny = min(y.values())
+    Y = lambda v: int(MARGIN_Y + (y[v] - miny) * SPACING_Y)
+    for n in nodes:
+        n["_x"] = MARGIN_X + tier[n["id"]] * TIERW
+        n["_y"] = Y(n["id"])
+    return [(pid, cid, [(vtier[v], Y(v)) for v in chain]) for pid, cid, chain in chains]
 
 def validate_design(disc, nodes, by):
     """Non-fatal structural sanity checks (warn, don't die). Hook for domain consistency rules
@@ -255,12 +315,84 @@ def _wrap(s, width=15, maxlines=2):
     lines = [ln if len(ln) <= width else ln[:width - 1].rstrip() + "…" for ln in lines]
     return lines[:maxlines]
 
-def emit_html(disc, nodes, by):
-    """Self-contained read-only viewer: renders its OWN inline SVG from the node
-    positions resolve() already computed (no graphviz dependency), then click a
-    node to list the parts (and upgrades) that live there."""
+def _lum(hexcolor):
+    """Rough perceived luminance 0..255 of a #rrggbb color (to pick dark/light tile text)."""
+    h = hexcolor.lstrip("#")
+    r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+def _dotesc(s):
+    return (s or "").replace("\\", "\\\\").replace('"', '\\"')
+
+def _dot_exe():
+    """Prefer a STANDALONE Graphviz (it ships gvplugin_core -> semantic <g class='node'> svg).
+    GIMP's bundled dot is usually first on PATH but lacks that plugin, so it only emits
+    cairo picture-svg (no clickable groups). Fall back to PATH `dot` if no standalone found."""
+    for c in (r"C:\Program Files\Graphviz\bin\dot.exe",
+              r"C:\Program Files (x86)\Graphviz\bin\dot.exe",
+              os.path.expandvars(r"%LOCALAPPDATA%\Programs\Graphviz\bin\dot.exe")):
+        if os.path.exists(c):
+            return c
+    return "dot"
+
+def _dot_svg(disc, nodes, by):
+    """Primary interactive canvas: graphviz `dot` lays out AND orthogonally routes the DAG
+    (splines=ortho — obstacle-avoiding right-angle lines) as uniform square KSP-style tiles.
+    Returns the routed <svg>…</svg> with data-id wired onto each node <g>, or None if dot
+    is unavailable / fails (emit_html then falls back to the pure-Python inline renderer)."""
+    L = ['digraph AXE {',
+         '  rankdir=LR; bgcolor="transparent"; splines=ortho; nodesep=0.22; ranksep=1.5;',
+         '  node[shape=box,style=filled,fixedsize=true,width=1.55,height=1.05,'
+         'fontname="Helvetica,Arial,sans-serif",fontsize=8,color="#00000000"];',
+         '  edge[arrowsize=0.5];']
+    for n in nodes:                                  # uniform square tiles, dark/light text by luminance
+        d = disc[n["discipline"]]
+        fc = "#0d0d0d" if _lum(d["color"]) > 140 else "#f0f0f0"
+        lbl = "\\n".join(_dotesc(ln) for ln in _wrap(n["title"], width=13, maxlines=3))
+        L.append(f'  "{n["id"]}" [label="{lbl}",fillcolor="{d["color"]}",fontcolor="{fc}"];')
+    tiers = collections.defaultdict(list)            # tier = column (rank)
+    for n in nodes: tiers[n["tier"]].append(n["id"])
+    for t in sorted(tiers):
+        L.append("  { rank=same; " + " ".join(f'"{i}"' for i in tiers[t]) + " }")
+    for n in nodes:
+        dashed = n.get("anyToUnlock")
+        for p in n.get("parents", []) or []:
+            style = f'color="{MULTI_ENTRY_COLOR}",style=dashed' if dashed else 'color="#8a8f98"'
+            L.append(f'  "{p}" -> "{n["id"]}" [{style}];')
+    L.append("}")
+    try:
+        proc = subprocess.run([_dot_exe(), "-Tsvg"], input="\n".join(L),
+                              capture_output=True, text=True, encoding="utf-8", timeout=180)
+    except Exception as e:
+        print(f"  (html: dot ortho unavailable, using inline fallback: {e})")
+        return None
+    raw = proc.stdout or ""
+    if "<svg" not in raw:
+        print(f"  (html: dot produced no svg, inline fallback; {proc.stderr.strip()[:120]})")
+        return None
+    raw = raw[raw.index("<svg"):]                    # drop xml/doctype preamble
+    m = re.search(r'viewBox="([\d.\- ]+)"', raw)     # rewrite <svg>: id + numeric px size so zoom JS works
+    vb = m.group(1) if m else "0 0 2000 2000"
+    p = vb.split(); w, h = (p[2], p[3]) if len(p) == 4 else ("2000", "2000")
+    raw = re.sub(r'<svg[^>]*>',
+                 f'<svg id="tree" width="{float(w):.0f}" height="{float(h):.0f}" viewBox="{vb}" '
+                 f'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
+                 f'font-family="Segoe UI,Helvetica,Arial,sans-serif">', raw, count=1)
+    # wire click targets: derive data-id/tabindex from each node <g>'s <title> (the node id)
+    raw, n_wired = re.subn(r'<g\b[^>]*\bclass="node"[^>]*>\s*<title>([^<]+)</title>',
+                 lambda mm: f'<g class="node" data-id="{mm.group(1)}" tabindex="0"><title>{mm.group(1)}</title>',
+                 raw)
+    if n_wired == 0:   # picture-only cairo svg (no semantic node groups) — unusable interactively
+        print("  (html: dot svg has no clickable node groups — missing gvplugin_core? inline fallback)")
+        return None
+    return raw
+
+def _inline_svg(disc, nodes, by, routes):
+    """Interactive canvas: the pure-Python Sugiyama result — square tiles on the tier grid, edges
+    drawn as polylines through the layout's dummy waypoints (adjacent-tier edges = straight).
+    Emits the <g class="node" data-id> contract the viewer's click/search/zoom JS expects."""
     PAD, COLW, YS, NW, NH = 44, 196, 1.4, 88, 88    # layout geometry (px) — square KSP-style tiles
-    miny = min(n["_y"] for n in nodes)
+    miny = min([n["_y"] for n in nodes] + [yv for _, _, ch in routes for _, yv in ch])
     def X(n): return PAD + n["tier"] * COLW
     def Y(n): return PAD + (n["_y"] - miny) * YS
     width = max(X(n) for n in nodes) + NW + PAD
@@ -268,15 +400,18 @@ def emit_html(disc, nodes, by):
     maxtier = max(n["tier"] for n in nodes)
 
     edges, boxes = [], []
-    for n in nodes:                                  # edges first (drawn under nodes)
-        x2, y2 = X(n), Y(n) + NH / 2                 # child left-edge midpoint
-        for pid in n.get("parents", []) or []:
-            p = by.get(pid)
-            if not p: continue
-            x1, y1 = X(p) + NW, Y(p) + NH / 2         # parent right-edge midpoint
-            dash = f' stroke-dasharray="5 4" stroke="{MULTI_ENTRY_COLOR}"' if n.get("anyToUnlock") else ' stroke="#777"'
-            # KSP-style: a single straight segment anchor->anchor, no routing (crossings allowed)
-            edges.append(f'<line x1="{x1:.0f}" y1="{y1:.0f}" x2="{x2:.0f}" y2="{y2:.0f}"{dash} stroke-width="1.5"/>')
+    for pid, cid, chain in routes:                   # edges first (drawn under nodes): routed polylines
+        dashed = by[cid].get("anyToUnlock")
+        stroke = f'stroke="{MULTI_ENTRY_COLOR}" stroke-dasharray="5 4"' if dashed else 'stroke="#8a8f98"'
+        pts, n = [], len(chain)
+        for i, (t, yv) in enumerate(chain):
+            cy = PAD + (yv - miny) * YS + NH / 2
+            cx = (PAD + t * COLW + NW if i == 0 else          # parent right anchor
+                  PAD + t * COLW if i == n - 1 else            # child left anchor
+                  PAD + t * COLW + NW / 2)                     # dummy waypoint (column centre)
+            pts.append(f"{cx:.0f},{cy:.0f}")
+        edges.append(f'<polyline points="{" ".join(pts)}" fill="none" {stroke} '
+                     f'stroke-width="1.5" stroke-linejoin="round"/>')
     for t in range(maxtier + 1):                     # tier column headers
         boxes.append(f'<text x="{PAD + t*COLW:.0f}" y="20" fill="#888" font-size="12" font-weight="600">T{t}</text>')
     for n in nodes:
@@ -296,10 +431,16 @@ def emit_html(disc, nodes, by):
             f'<text x="{cx:.0f}" y="{y+NH-9:.0f}" text-anchor="middle" fill="#2c3e50" '
             f'font-size="9">T{n["tier"]} · {badge}</text>'
             f'</g>')
-    svg = (f'<svg id="tree" width="{width:.0f}" height="{height:.0f}" viewBox="0 0 {width:.0f} {height:.0f}" '
-           f'xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Helvetica,Arial,sans-serif">'
-           f'<g fill="none">' + "".join(edges) + '</g>'
-           + "".join(boxes) + "</svg>")
+    return (f'<svg id="tree" width="{width:.0f}" height="{height:.0f}" viewBox="0 0 {width:.0f} {height:.0f}" '
+            f'xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Helvetica,Arial,sans-serif">'
+            f'<g fill="none">' + "".join(edges) + '</g>'
+            + "".join(boxes) + "</svg>")
+
+def emit_html(disc, nodes, by, routes):
+    """Self-contained read-only viewer: renders the pure-Python Sugiyama layout (layered +
+    dummy-routed edges) as square tiles; click a node to list the parts (and upgrades) that live
+    there. (_dot_svg stays available if a full Graphviz with gvplugin_core is ever installed.)"""
+    svg = _inline_svg(disc, nodes, by, routes)
 
     titles = load_part_titles()
     data = {}
@@ -334,10 +475,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
   #canvas{flex:1;overflow:auto;position:relative}
   #canvas svg{display:block}
   g.node{cursor:pointer} g.node text{pointer-events:none;user-select:none}
-  g.node rect{transition:stroke .1s;stroke:#0000;stroke-width:0}
-  g.node:hover rect{stroke:#ffffffcc;stroke-width:2}
-  g.node.sel rect{stroke:#fff;stroke-width:3}
-  g.node:focus{outline:none} g.node:focus rect{stroke:#ffd166;stroke-width:3}
+  g.node rect,g.node polygon{transition:stroke .1s;stroke:#0000;stroke-width:0}
+  g.node:hover rect,g.node:hover polygon{stroke:#ffffffcc;stroke-width:2}
+  g.node.sel rect,g.node.sel polygon{stroke:#fff;stroke-width:3}
+  g.node:focus{outline:none} g.node:focus rect,g.node:focus polygon{stroke:#ffd166;stroke-width:3}
   #bar{position:fixed;top:8px;left:8px;display:flex;gap:6px;align-items:center;
        background:#000a;padding:5px 8px;border-radius:6px;font-size:12px}
   #bar input{background:#111;border:1px solid #444;color:#eee;border-radius:4px;padding:3px 6px;width:150px}
@@ -454,12 +595,12 @@ def main():
     by = {n["id"]: n for n in nodes}
     validate(disc, nodes, by)
     resolve(disc, meta, nodes, by)       # cost, parent defaults, lane-grid fallback positions
-    delta_layout(disc, nodes, by)        # override positions with the delta (layered) layout
+    routes = sugiyama_layout(disc, nodes, by)   # layered (Sugiyama) layout + dummy-routed edges
     validate_design(disc, nodes, by)
     p2n, u2n = merge_placement(nodes, by)  # fold P2 part placement into node unlocks
     emit_cfg(disc, nodes)
     emit_render(disc, meta, nodes, by)
-    emit_html(disc, nodes, by)
+    emit_html(disc, nodes, by, routes)
     emit_placement_patch(p2n, u2n)
     print(f"placement: {len(p2n)} parts + {len(u2n)} upgrades homed onto "
           f"{len(set(p2n.values())|set(u2n.values()))} nodes -> AxePartPlacement.cfg")
