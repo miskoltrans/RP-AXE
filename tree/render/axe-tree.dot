@@ -9,7 +9,7 @@ digraph AXE {
   "fd_turbopumpFeed" [label="Turbopump Feed\nFluidDynamics T1 · 20",fillcolor="#ee9b00",fontcolor="#111111"];
   "fd_multiChamber" [label="Multi-Chamber Combustion\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
   "fd_baffledInjector" [label="Baffled-Injector Stabilization\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
-  "fd_verniers" [label="Vernier Trim Engines\nGuidanceControl T1 · 20",fillcolor="#7209b7",fontcolor="#111111"];
+  "fd_verniers" [label="Vernier Trim Chambers\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
   "pc_hypergolics" [label="Amine-Nitrate Hypergolics\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
   "cryo_hydrogen" [label="Cryogenic Hydrogen Handling\nCryogenics T1 · 20",fillcolor="#4cc9f0",fontcolor="#111111"];
   "fd_expanderCycle" [label="Expander-Cycle Combustion\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
@@ -45,15 +45,15 @@ digraph AXE {
   "aero_ramjet" [label="Ram Compression\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_rocketplane" [label="Rocket-Boosted Airframes\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
-  { rank=same; "fd_turbopumpFeed" "fd_verniers" "cryo_hydrogen" "pc_solidGrains" "met_weldedTank" "str_staging" "gnc_pitchProgram" "aero_fairings" "aero_recovery" "th_radiativeControl" "elec_siliconPV" "tel_telemetry" "nuc_geiger" "met_exposurePanels" "opt_filmReturn" "opt_vidicon" "mic_massSpec" "xplaneStart" }
-  { rank=same; "fd_multiChamber" "fd_baffledInjector" "pc_hypergolics" "fd_expanderCycle" "met_isogrid" "str_balloonTank" "gnc_rcs" "str_booms" "th_hermeticBus" "nuc_rtg" "met_turbineAlloys" }
+  { rank=same; "fd_turbopumpFeed" "cryo_hydrogen" "pc_solidGrains" "met_weldedTank" "str_staging" "gnc_pitchProgram" "aero_fairings" "aero_recovery" "th_radiativeControl" "elec_siliconPV" "tel_telemetry" "nuc_geiger" "met_exposurePanels" "opt_filmReturn" "opt_vidicon" "mic_massSpec" "xplaneStart" }
+  { rank=same; "fd_multiChamber" "fd_baffledInjector" "fd_verniers" "pc_hypergolics" "fd_expanderCycle" "met_isogrid" "str_balloonTank" "gnc_rcs" "str_booms" "th_hermeticBus" "nuc_rtg" "met_turbineAlloys" }
   { rank=same; "fd_orbitalThrust" "str_orbitalMassFraction" "aero_areaRule" "aero_rocketplane" }
   { rank=same; "int_orbitalInsertion" "aero_shockInlets" "aero_afterburner" }
   { rank=same; "int_applicationsSat" "aero_ramjet" }
   "start" -> "fd_turbopumpFeed" [style=solid];
   "fd_turbopumpFeed" -> "fd_multiChamber" [style=solid];
   "fd_turbopumpFeed" -> "fd_baffledInjector" [style=solid];
-  "start" -> "fd_verniers" [style=solid];
+  "fd_turbopumpFeed" -> "fd_verniers" [style=solid];
   "start" -> "pc_hypergolics" [style=solid];
   "start" -> "cryo_hydrogen" [style=solid];
   "cryo_hydrogen" -> "fd_expanderCycle" [style=solid];

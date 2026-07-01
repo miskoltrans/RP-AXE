@@ -75,11 +75,11 @@ nodes:
     flavor: "The Western answer to the same instability: keep the single big chamber, but break up the spinning tangential modes with injector-face baffles and tuned cavities. Harder to get right, but it scales — the path that ends at the F-1."
     parts: [ROE-LR89_2, ROE-LR79, ROE-LR105_2, ROE-X405, ROE-Gamma301, ROE-Stentor]
   - id: fd_verniers
-    title: "Vernier Trim Engines"
-    discipline: GuidanceControl
-    tier: 1
-    parents: [start]
-    flavor: "Small, gimballed trim chambers that steer and roll the stack while the main engines just push — the R-7's vernier motors, the fine hand on a heavy rocket."
+    title: "Vernier Trim Chambers"
+    discipline: FluidDynamics
+    tier: 2
+    parents: [fd_turbopumpFeed]
+    flavor: "Small, gimballed trim chambers that steer and roll the stack while the main engines just push — the Atlas and Jupiter vernier motors, co-developed with the big engines they trim. The fine hand on a heavy rocket."
     parts: [ROE-LR101_2, ROE-LR101Inline_2, ROE-JupiterVernier]
   - id: pc_hypergolics
     title: "Amine-Nitrate Hypergolics"

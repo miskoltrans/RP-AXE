@@ -225,7 +225,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1396
+    1404
    ]
   },
   {
@@ -240,7 +240,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1316
+    1324
    ]
   },
   {
@@ -616,7 +616,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1156
+    1164
    ]
   },
   {
@@ -747,7 +747,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1236
+    1244
    ]
   },
   {
@@ -778,7 +778,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1099
+    1145
    ]
   },
   {
@@ -875,12 +875,12 @@ window.TREE = {
   },
   {
    "id": "fd_verniers",
-   "title": "Vernier Trim Engines",
-   "discipline": "GuidanceControl",
-   "tier": 1,
-   "cost": 20,
+   "title": "Vernier Trim Chambers",
+   "discipline": "FluidDynamics",
+   "tier": 2,
+   "cost": 90,
    "anyToUnlock": false,
-   "flavor": "Small, gimballed trim chambers that steer and roll the stack while the main engines just push — the R-7's vernier motors, the fine hand on a heavy rocket.",
+   "flavor": "Small, gimballed trim chambers that steer and roll the stack while the main engines just push — the Atlas and Jupiter vernier motors, co-developed with the big engines they trim. The fine hand on a heavy rocket.",
    "parts": [
     {
      "name": "ROE-JupiterVernier",
@@ -900,8 +900,8 @@ window.TREE = {
    ],
    "upgrades": [],
    "pos": [
-    -2138,
-    1901
+    -1708,
+    1103
    ]
   },
   {
@@ -927,7 +927,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1540
+    1585
    ]
   },
   {
@@ -942,7 +942,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1019
+    1065
    ]
   },
   {
@@ -978,7 +978,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1118
+    1109
    ]
   },
   {
@@ -1039,7 +1039,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    939
+    985
    ]
   },
   {
@@ -1080,7 +1080,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    859
+    905
    ]
   },
   {
@@ -1172,7 +1172,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    983
+    973
    ]
   },
   {
@@ -1228,7 +1228,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1659
+    1705
    ]
   },
   {
@@ -1243,7 +1243,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1741
+    1786
    ]
   },
   {
@@ -1284,7 +1284,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1700
+    1745
    ]
   },
   {
@@ -1305,7 +1305,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1460
+    1505
    ]
   },
   {
@@ -1351,7 +1351,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1499
+    1545
    ]
   },
   {
@@ -1412,7 +1412,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1579
+    1625
    ]
   },
   {
@@ -1443,7 +1443,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1179
+    1225
    ]
   },
   {
@@ -1474,7 +1474,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1103
+    1183
    ]
   },
   {
@@ -1505,7 +1505,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1259
+    1305
    ]
   },
   {
@@ -1541,7 +1541,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1620
+    1665
    ]
   },
   {
@@ -1567,7 +1567,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1981
+    1946
    ]
   },
   {
@@ -1593,7 +1593,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1419
+    1465
    ]
   },
   {
@@ -1634,7 +1634,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    779
+    825
    ]
   },
   {
@@ -1660,7 +1660,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2061
+    2026
    ]
   },
   {
@@ -1681,7 +1681,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2141
+    2106
    ]
   },
   {
@@ -1707,7 +1707,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1821
+    1866
    ]
   },
   {
@@ -1722,7 +1722,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    881
+    879
    ]
   },
   {
@@ -1748,7 +1748,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1098
+    1083
    ]
   },
   {
@@ -1849,7 +1849,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1339
+    1385
    ]
   },
   {
@@ -1880,7 +1880,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1204
+    1263
    ]
   },
   {
@@ -1931,7 +1931,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1490
+    1526
    ]
   },
   {
@@ -1972,7 +1972,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1342
+    1393
    ]
   },
   {
@@ -2008,7 +2008,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1262
+    1313
    ]
   },
   {
@@ -2044,7 +2044,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1581
+    1614
    ]
   },
   {
@@ -2090,7 +2090,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1333
+    1350
    ]
   }
  ],
@@ -2102,11 +2102,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1099
+     1145
     ]
    ]
   },
@@ -2117,7 +2117,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1099
+     1145
     ],
     [
      -1708,
@@ -2132,7 +2132,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1099
+     1145
     ],
     [
      -1708,
@@ -2141,17 +2141,17 @@ window.TREE = {
    ]
   },
   {
-   "from": "start",
+   "from": "fd_turbopumpFeed",
    "to": "fd_verniers",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2568,
-     1396
+     -2138,
+     1145
     ],
     [
-     -2138,
-     1901
+     -1708,
+     1103
     ]
    ]
   },
@@ -2162,15 +2162,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1695
+     1741
     ],
     [
      -1708,
-     1540
+     1585
     ]
    ]
   },
@@ -2181,11 +2181,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1019
+     1065
     ]
    ]
   },
@@ -2196,7 +2196,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1019
+     1065
     ],
     [
      -1708,
@@ -2215,7 +2215,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1118
+     1109
     ]
    ]
   },
@@ -2230,7 +2230,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1118
+     1109
     ]
    ]
   },
@@ -2245,7 +2245,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1118
+     1109
     ]
    ]
   },
@@ -2256,11 +2256,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     939
+     985
     ]
    ]
   },
@@ -2271,11 +2271,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     859
+     905
     ]
    ]
   },
@@ -2286,7 +2286,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     859
+     905
     ],
     [
      -1708,
@@ -2301,7 +2301,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     859
+     905
     ],
     [
      -1708,
@@ -2320,7 +2320,7 @@ window.TREE = {
     ],
     [
      -1278,
-     983
+     973
     ]
    ]
   },
@@ -2335,7 +2335,7 @@ window.TREE = {
     ],
     [
      -1278,
-     983
+     973
     ]
    ]
   },
@@ -2346,11 +2346,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1659
+     1705
     ]
    ]
   },
@@ -2361,11 +2361,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1741
+     1786
     ]
    ]
   },
@@ -2376,11 +2376,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1741
+     1786
     ],
     [
      -1708,
-     1700
+     1745
     ]
    ]
   },
@@ -2391,11 +2391,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1659
+     1705
     ],
     [
      -1708,
-     1460
+     1505
     ]
    ]
   },
@@ -2406,11 +2406,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1499
+     1545
     ]
    ]
   },
@@ -2421,11 +2421,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1579
+     1625
     ]
    ]
   },
@@ -2436,11 +2436,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1179
+     1225
     ]
    ]
   },
@@ -2451,11 +2451,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1179
+     1225
     ],
     [
      -1708,
-     1103
+     1183
     ]
    ]
   },
@@ -2466,11 +2466,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1259
+     1305
     ]
    ]
   },
@@ -2481,15 +2481,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1705
+     1750
     ],
     [
      -1708,
-     1620
+     1665
     ]
    ]
   },
@@ -2500,11 +2500,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1981
+     1946
     ]
    ]
   },
@@ -2515,11 +2515,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1419
+     1465
     ]
    ]
   },
@@ -2530,11 +2530,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     779
+     825
     ]
    ]
   },
@@ -2545,11 +2545,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     2061
+     2026
     ]
    ]
   },
@@ -2560,11 +2560,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     2141
+     2106
     ]
    ]
   },
@@ -2575,11 +2575,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1821
+     1866
     ]
    ]
   },
@@ -2590,11 +2590,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1118
+     1109
     ],
     [
      -848,
-     881
+     879
     ]
    ]
   },
@@ -2605,11 +2605,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     983
+     973
     ],
     [
      -848,
-     881
+     879
     ]
    ]
   },
@@ -2620,11 +2620,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     881
+     879
     ],
     [
      -418,
-     1098
+     1083
     ]
    ]
   },
@@ -2635,11 +2635,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1396
+     1404
     ],
     [
      -2138,
-     1339
+     1385
     ]
    ]
   },
@@ -2650,11 +2650,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1339
+     1385
     ],
     [
      -1708,
-     1204
+     1263
     ]
    ]
   },
@@ -2665,11 +2665,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1204
+     1263
     ],
     [
      -1278,
-     1490
+     1526
     ]
    ]
   },
@@ -2680,11 +2680,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1490
+     1526
     ],
     [
      -848,
-     1342
+     1393
     ]
    ]
   },
@@ -2695,11 +2695,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1490
+     1526
     ],
     [
      -848,
-     1262
+     1313
     ]
    ]
   },
@@ -2710,11 +2710,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1342
+     1393
     ],
     [
      -418,
-     1581
+     1614
     ]
    ]
   },
@@ -2725,15 +2725,15 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1339
+     1385
     ],
     [
      -1708,
-     1240
+     1299
     ],
     [
      -1278,
-     1333
+     1350
     ]
    ]
   },
@@ -2744,7 +2744,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1099
+     1145
     ],
     [
      -1708,
@@ -2752,7 +2752,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1333
+     1350
     ]
    ]
   }
