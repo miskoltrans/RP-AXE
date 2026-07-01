@@ -18,14 +18,16 @@ NuclearEngineering:    { title: "Nuclear Engineering",   order: 9,  color: "#90b
 # --- cluster 3: Flight, Structure, Control ---
 Aerodynamics:          { title: "Aerodynamics",          order: 10, color: "#48cae4", icon: RDicon_aerodynamics }
 StructuresMechanisms:  { title: "Structures & Mechanisms", order: 11, color: "#adb5bd", icon: RDicon_construction }
-Robotics:              { title: "Robotics",              order: 12, color: "#bc6c25", icon: RDicon_robotics }
-Microelectronics:      { title: "Microelectronics",      order: 13, color: "#cdb4db", icon: RDicon_electronics }
-# --- cluster 4: Guidance, Comms, Optics, Crew ---
-Computing:             { title: "Computing",             order: 14, color: "#b5179e", icon: RDicon_electronics }
-GuidanceControl:       { title: "Guidance & Control",    order: 15, color: "#7209b7", icon: RDicon_flightControl }
-Telecommunications:    { title: "Telecommunications",    order: 16, color: "#4361ee", icon: RDicon_unmanned }
-OpticsPhotonics:       { title: "Optics & Photonics",    order: 17, color: "#3a0ca3", icon: RDicon_science }
-LifeSupport:           { title: "Life Support",          order: 18, color: "#f72585", icon: RDicon_commandmodules }
 # --- convergence layer (NOT a science discipline): where whole vehicles come together from 3-4 disciplines.
-#     Also the home for integrated composite parts (probes, capsules) that can't be single-discipline-homed. ---
-SystemsIntegration:    { title: "Systems Integration",    order: 19, color: "#e8e8e8", icon: RDicon_generic }
+#     Ordered mid-lane (not last) so its many cross-links stay short — it is the render's hub (measured ~28%
+#     less edge length here than at the bottom). Also home for integrated composite parts (probes, capsules)
+#     that can't be single-discipline-homed. ---
+SystemsIntegration:    { title: "Systems Integration",    order: 12, color: "#e8e8e8", icon: RDicon_generic }
+Robotics:              { title: "Robotics",              order: 13, color: "#bc6c25", icon: RDicon_robotics }
+Microelectronics:      { title: "Microelectronics",      order: 14, color: "#cdb4db", icon: RDicon_electronics }
+# --- cluster 4: Guidance, Comms, Optics, Crew ---
+Computing:             { title: "Computing",             order: 15, color: "#b5179e", icon: RDicon_electronics }
+GuidanceControl:       { title: "Guidance & Control",    order: 16, color: "#7209b7", icon: RDicon_flightControl }
+Telecommunications:    { title: "Telecommunications",    order: 17, color: "#4361ee", icon: RDicon_unmanned }
+OpticsPhotonics:       { title: "Optics & Photonics",    order: 18, color: "#3a0ca3", icon: RDicon_science }
+LifeSupport:           { title: "Life Support",          order: 19, color: "#f72585", icon: RDicon_commandmodules }
