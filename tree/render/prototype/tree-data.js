@@ -225,7 +225,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1348
+    1396
    ]
   },
   {
@@ -240,7 +240,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1268
+    1316
    ]
   },
   {
@@ -616,7 +616,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1108
+    1156
    ]
   },
   {
@@ -747,7 +747,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1188
+    1236
    ]
   },
   {
@@ -778,7 +778,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1114
+    1099
    ]
   },
   {
@@ -901,7 +901,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1916
+    1901
    ]
   },
   {
@@ -927,7 +927,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1599
+    1540
    ]
   },
   {
@@ -942,7 +942,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1034
+    1019
    ]
   },
   {
@@ -978,7 +978,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1216
+    1118
    ]
   },
   {
@@ -1039,7 +1039,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    954
+    939
    ]
   },
   {
@@ -1080,7 +1080,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    874
+    859
    ]
   },
   {
@@ -1172,7 +1172,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1098
+    983
    ]
   },
   {
@@ -1228,7 +1228,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1514
+    1659
    ]
   },
   {
@@ -1243,7 +1243,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1754
+    1741
    ]
   },
   {
@@ -1284,7 +1284,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1519
+    1700
    ]
   },
   {
@@ -1305,7 +1305,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1301
+    1460
    ]
   },
   {
@@ -1351,7 +1351,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1434
+    1499
    ]
   },
   {
@@ -1412,7 +1412,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1594
+    1579
    ]
   },
   {
@@ -1443,7 +1443,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1194
+    1179
    ]
   },
   {
@@ -1505,7 +1505,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1274
+    1259
    ]
   },
   {
@@ -1541,7 +1541,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1679
+    1620
    ]
   },
   {
@@ -1567,7 +1567,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1996
+    1981
    ]
   },
   {
@@ -1593,7 +1593,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1354
+    1419
    ]
   },
   {
@@ -1634,7 +1634,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    794
+    779
    ]
   },
   {
@@ -1660,7 +1660,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2076
+    2061
    ]
   },
   {
@@ -1681,7 +1681,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2156
+    2141
    ]
   },
   {
@@ -1707,7 +1707,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1836
+    1821
    ]
   },
   {
@@ -1717,12 +1717,12 @@ window.TREE = {
    "tier": 4,
    "cost": 900,
    "anyToUnlock": false,
-   "flavor": "Orbital-class thrust, a tank light enough to close the rocket equation, staging, and a pitch program converge. Build your own satellite from the bus, power and antenna beside it. Beep. Beep. Beep.",
+   "flavor": "The two axes of spaceflight meet: enough thrust, and a tank light enough to close the rocket equation. Stage if you need to — almost everyone does — or chase a single-stage climb if your engine and tank are good enough; the tree won't stop you. Build your own satellite from the bus, power and antenna beside it. Beep. Beep. Beep.",
    "parts": [],
    "upgrades": [],
    "pos": [
     -848,
-    1108
+    881
    ]
   },
   {
@@ -1748,7 +1748,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1354
+    1098
    ]
   },
   {
@@ -1849,7 +1849,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1674
+    1339
    ]
   },
   {
@@ -1880,7 +1880,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1381
+    1204
    ]
   },
   {
@@ -1931,7 +1931,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1537
+    1490
    ]
   },
   {
@@ -1972,7 +1972,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1371
+    1342
    ]
   },
   {
@@ -2008,7 +2008,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1291
+    1262
    ]
   },
   {
@@ -2044,7 +2044,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1620
+    1581
    ]
   },
   {
@@ -2090,7 +2090,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1457
+    1333
    ]
   }
  ],
@@ -2102,11 +2102,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1114
+     1099
     ]
    ]
   },
@@ -2117,7 +2117,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1114
+     1099
     ],
     [
      -1708,
@@ -2132,7 +2132,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1114
+     1099
     ],
     [
      -1708,
@@ -2147,11 +2147,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1916
+     1901
     ]
    ]
   },
@@ -2162,15 +2162,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1790
+     1695
     ],
     [
      -1708,
-     1599
+     1540
     ]
    ]
   },
@@ -2181,11 +2181,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1034
+     1019
     ]
    ]
   },
@@ -2196,7 +2196,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1034
+     1019
     ],
     [
      -1708,
@@ -2215,7 +2215,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1216
+     1118
     ]
    ]
   },
@@ -2230,7 +2230,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1216
+     1118
     ]
    ]
   },
@@ -2245,7 +2245,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1216
+     1118
     ]
    ]
   },
@@ -2256,11 +2256,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     954
+     939
     ]
    ]
   },
@@ -2271,11 +2271,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     874
+     859
     ]
    ]
   },
@@ -2286,7 +2286,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     874
+     859
     ],
     [
      -1708,
@@ -2301,7 +2301,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     874
+     859
     ],
     [
      -1708,
@@ -2320,7 +2320,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1098
+     983
     ]
    ]
   },
@@ -2335,7 +2335,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1098
+     983
     ]
    ]
   },
@@ -2346,11 +2346,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1514
+     1659
     ]
    ]
   },
@@ -2361,11 +2361,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1754
+     1741
     ]
    ]
   },
@@ -2376,11 +2376,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1754
+     1741
     ],
     [
      -1708,
-     1519
+     1700
     ]
    ]
   },
@@ -2391,11 +2391,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1514
+     1659
     ],
     [
      -1708,
-     1301
+     1460
     ]
    ]
   },
@@ -2406,11 +2406,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1434
+     1499
     ]
    ]
   },
@@ -2421,11 +2421,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1594
+     1579
     ]
    ]
   },
@@ -2436,11 +2436,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1194
+     1179
     ]
    ]
   },
@@ -2451,7 +2451,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1194
+     1179
     ],
     [
      -1708,
@@ -2466,11 +2466,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1274
+     1259
     ]
    ]
   },
@@ -2481,15 +2481,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1800
+     1705
     ],
     [
      -1708,
-     1679
+     1620
     ]
    ]
   },
@@ -2500,11 +2500,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1996
+     1981
     ]
    ]
   },
@@ -2515,11 +2515,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1354
+     1419
     ]
    ]
   },
@@ -2530,11 +2530,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     794
+     779
     ]
    ]
   },
@@ -2545,11 +2545,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     2076
+     2061
     ]
    ]
   },
@@ -2560,11 +2560,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     2156
+     2141
     ]
    ]
   },
@@ -2575,11 +2575,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1836
+     1821
     ]
    ]
   },
@@ -2590,11 +2590,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1216
+     1118
     ],
     [
      -848,
-     1108
+     881
     ]
    ]
   },
@@ -2605,57 +2605,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1098
+     983
     ],
     [
      -848,
-     1108
-    ]
-   ]
-  },
-  {
-   "from": "str_staging",
-   "to": "int_orbitalInsertion",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -2138,
-     1514
-    ],
-    [
-     -1708,
-     1263
-    ],
-    [
-     -1278,
-     1419
-    ],
-    [
-     -848,
-     1108
-    ]
-   ]
-  },
-  {
-   "from": "gnc_pitchProgram",
-   "to": "int_orbitalInsertion",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -2138,
-     1754
-    ],
-    [
-     -1708,
-     1461
-    ],
-    [
-     -1278,
-     1573
-    ],
-    [
-     -848,
-     1108
+     881
     ]
    ]
   },
@@ -2666,11 +2620,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1108
+     881
     ],
     [
      -418,
-     1354
+     1098
     ]
    ]
   },
@@ -2681,11 +2635,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1348
+     1396
     ],
     [
      -2138,
-     1674
+     1339
     ]
    ]
   },
@@ -2696,11 +2650,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1674
+     1339
     ],
     [
      -1708,
-     1381
+     1204
     ]
    ]
   },
@@ -2711,11 +2665,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1381
+     1204
     ],
     [
      -1278,
-     1537
+     1490
     ]
    ]
   },
@@ -2726,11 +2680,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1537
+     1490
     ],
     [
      -848,
-     1371
+     1342
     ]
    ]
   },
@@ -2741,11 +2695,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1537
+     1490
     ],
     [
      -848,
-     1291
+     1262
     ]
    ]
   },
@@ -2756,11 +2710,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1371
+     1342
     ],
     [
      -418,
-     1620
+     1581
     ]
    ]
   },
@@ -2771,15 +2725,15 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1674
+     1339
     ],
     [
      -1708,
-     1417
+     1240
     ],
     [
      -1278,
-     1457
+     1333
     ]
    ]
   },
@@ -2790,7 +2744,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1114
+     1099
     ],
     [
      -1708,
@@ -2798,7 +2752,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1457
+     1333
     ]
    ]
   }

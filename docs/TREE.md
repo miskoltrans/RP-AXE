@@ -152,7 +152,8 @@ Integration lane) → naming passes (`72cbd2a`, `e0a73d4`, `67eee0f`) → `62a40
 convergence parents = limiting only · compile-from-YAML pipeline · delta/bands layout · HTML-render editor + in-game render port · ~300k cost /
 scalar-tuned at P3 · experimental off-tree catch-all · fuel-as-usability-gate parked · engines spread by
 capability (thrust/Isp) where data exists · **rocketry-default single-root** (aviation opt-in, rewarded by
-x-plane contracts not science; §3B).
+x-plane contracts not science; §3B) · **relaxed convergence** (milestone/integration `int_*` nodes gate ONLY
+on irreducible physics — this is a what-if sim, so don't hard-gate on route-around-able enablers; §8).
 
 ## 8. EARLY-TREE REVIEW PASS (2026-07-01) — applied + open
 3-lens review of the to-orbit spine (game-design / vision-fidelity / plausibility; all Opus). Verdict: bones
@@ -168,6 +169,13 @@ strong, issues few + concentrated. **Applied to `tree/nodes.yaml`:**
 - **Polish:** `met_isogrid` "Chemical Milling"→"Machined Isogrid Stiffening" (isogrid is machined, not etched);
   `aero_afterburner` reparented off `aero_areaRule` @T4 (reheat predates Mach-2 shock inlets); `opt_vidicon`
   →T1 (equal-cost sidegrade to film, was dominated); header multi-entry claim tightened.
+- **Relaxed the orbit convergence (what-if principle, user call):** `int_orbitalInsertion` now gates on ONLY the
+  irreducible axes — `fd_orbitalThrust` (an engine) + `str_orbitalMassFraction` (a light tank). Dropped `str_staging`
+  and `gnc_pitchProgram` as hard parents: "no chemical SSTO exists" is a fact about *our* timeline, not a law, and
+  this is a what-if sim — if your engine+tank can single-stage it, the tree must not block you "for no reason."
+  Staging/guidance stay expected-but-optional (the probe-style soft checklist is the home for "you'll want X"
+  nudges, not tree edges). **General rule for the SystemsIntegration lane:** convergence/milestone nodes gate on
+  irreducible physics only; keep their inputs relaxed.
 - **Settled (no edit):** aviation-as-roleplay + x-plane contracts (§3B); rocketry-default (§3B).
 - **OPEN — the engine axis (user: "engines feel weakest"):** to-orbit engines are coarse (multi-entry paths carry
   no opportunity cost; a lot of engines pile into few nodes) while `library.yaml` already holds a far more granular

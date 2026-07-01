@@ -10,6 +10,10 @@
 # ‖ hydrolox) and orbital mass-fraction (isogrid ‖ balloon) are the true multi-entry gates, feeding
 # `Orbital-Class Thrust` and `Orbital-Class Mass Fraction`. Imaging (film ‖ vidicon, equal-cost) is a peer
 # sidegrade; solar is the early default and RTG a dormant dark-specialist (not an early choice).
+# RELAXED CONVERGENCE (what-if): milestone/integration nodes (int_*) gate ONLY on the irreducible physics —
+# orbit = enough thrust + a light-enough tank, nothing more. Staging and a guidance autopilot are the practical
+# path, NOT hard gates: a good-enough engine+tank may single-stage it, and this is a what-if sim, so the tree
+# won't block that "for no reason." Expected-but-optional enablers ride the probe-style soft checklist, not edges.
 
 meta:
   scalar: 1.0
@@ -269,9 +273,9 @@ nodes:
     title: "Orbital Insertion"
     discipline: SystemsIntegration
     tier: 4
-    parents: [fd_orbitalThrust, str_orbitalMassFraction, str_staging, gnc_pitchProgram]
+    parents: [fd_orbitalThrust, str_orbitalMassFraction]
     anyToUnlock: false
-    flavor: "Orbital-class thrust, a tank light enough to close the rocket equation, staging, and a pitch program converge. Build your own satellite from the bus, power and antenna beside it. Beep. Beep. Beep."
+    flavor: "The two axes of spaceflight meet: enough thrust, and a tank light enough to close the rocket equation. Stage if you need to — almost everyone does — or chase a single-stage climb if your engine and tank are good enough; the tree won't stop you. Build your own satellite from the bus, power and antenna beside it. Beep. Beep. Beep."
   - id: int_applicationsSat
     title: "Applications Satellite Bus"
     discipline: SystemsIntegration

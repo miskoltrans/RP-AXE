@@ -84,8 +84,6 @@ digraph AXE {
   "start" -> "mic_massSpec" [style=solid];
   "fd_orbitalThrust" -> "int_orbitalInsertion" [style=solid];
   "str_orbitalMassFraction" -> "int_orbitalInsertion" [style=solid];
-  "str_staging" -> "int_orbitalInsertion" [style=solid];
-  "gnc_pitchProgram" -> "int_orbitalInsertion" [style=solid];
   "int_orbitalInsertion" -> "int_applicationsSat" [style=solid];
   "start" -> "xplaneStart" [style=solid];
   "xplaneStart" -> "met_turbineAlloys" [style=solid];
