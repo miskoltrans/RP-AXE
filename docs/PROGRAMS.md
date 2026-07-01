@@ -69,12 +69,20 @@ sibling tiers:
 free and unlimited. Consequence: **money can never be a time-driven scarcity engine** — any per-time
 income is farmable by warping. So the economy rests on two invariants:
 
-1. **Funds are action-gated.** Every fund reward is paid for *doing a discrete thing* (a mission /
-   milestone), never for elapsed time — timewarp stays economically inert.
-2. **Nothing profitable repeats.** One-shot contracts (`maxCompletions = 1`); any repeatable contract
-   must pay ≤ its flight cost. Total career income is therefore a *finite, effort-gated budget*, not a
-   treadmill. Money is a solvency/efficiency layer (it punishes overbuilding and failed missions), not
-   the point — the tech tree + contract objectives are the progression spine.
+1. **The launch is the gate.** A fund reward is legitimate iff earning it — and earning it *again* —
+   requires flying hardware. Effort = building and launching a vehicle is the real cost; money tracks
+   missions actually flown, and timewarp buys you nothing.
+2. **Repeatable is fine; idle income is not.** A contract may repeat freely ("spinning content") —
+   each completion consumes a new launch. A one-shot "operate / maintain X for N days" reward is also
+   fine: a durability achievement, still gated by a launch. The *only* forbidden shape is **income you
+   can re-collect from already-deployed assets without launching anything** — because under free
+   timewarp "wait" is free, so any no-launch repeat is infinite money. (This, not repetition, is why
+   Skopos's perpetual `maintenance_*` contracts had to go: monthly reputation from a network already in
+   orbit, collected by warping.)
+
+Income is therefore **effort-gated, not finite** — you can always earn more by flying more, never by
+waiting. Money is a solvency/efficiency layer (it punishes overbuilding and failed missions), not the
+point — the tech tree + contract objectives are the progression spine.
 
 **Currencies are fungible via the stock Administration building.** RP-AXE keeps the stock strategies
 (Fundraising Campaign rep→funds, Patents Licensing science→funds, Outsourced R&D / Unpaid Research
