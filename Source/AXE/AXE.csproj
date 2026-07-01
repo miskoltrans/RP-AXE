@@ -40,6 +40,14 @@
       <HintPath>$(KSPRoot)\GameData\ContractConfigurator\ContractConfigurator.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(ReferencePath)\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(KSPRoot)\GameData\000_Harmony\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 
   <!-- Drop the built DLL straight into the shipping GameData folder. -->
