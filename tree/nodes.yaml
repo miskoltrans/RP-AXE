@@ -624,7 +624,7 @@ nodes:
     parents: [elec_bodyMountedArrays, rob_servoActuators]
     flavor: "Gimbal the arrays to face the sun continuously, multiplying usable power — and adding the first always-moving mechanism to fail."
   - id: elec_lithiumIon
-    title: "Lithium-Ion Energy Storage"
+    title: "Lithium-Ion Secondary Cells"
     discipline: ElectricalPower
     tier: 6
     parents: [elec_fuelCell]
@@ -831,7 +831,7 @@ nodes:
     parents: [str_pyroSeparation]
     flavor: "Push stages cleanly apart and settle propellant for the next ignition — the choreography between cutting and lighting."
   - id: str_interstageTruss
-    title: "Trusses & Interstage Structures"
+    title: "Semi-Monocoque Interstage Structures"
     discipline: StructuresMechanisms
     tier: 2
     parents: [str_pyroSeparation]
@@ -843,7 +843,7 @@ nodes:
     parents: [str_interstageTruss]
     flavor: "Crushable or damped legs that catch a lander's touchdown without bouncing or tipping."
   - id: str_deployableBooms
-    title: "Deployable Booms & Masts"
+    title: "Stacer & Astromast Booms"
     discipline: StructuresMechanisms
     tier: 4
     parents: [str_interstageTruss]
@@ -886,7 +886,7 @@ nodes:
     parents: [str_landingLegs]
     flavor: "Legs and gear that absorb landing after landing and fly again with inspection only — the structures of reusability."
   - id: str_inflatableHab
-    title: "Inflatable Structures"
+    title: "Restraint-Layer Inflatable Modules"
     discipline: StructuresMechanisms
     tier: 6
     parents: [str_deployableTruss]
@@ -898,7 +898,7 @@ nodes:
     parents: [str_deployableBooms]
     flavor: "Unfurl mesh dishes and apertures far larger than any fairing — the structures behind big antennas and telescopes."
   - id: str_inSpaceAssembly
-    title: "Autonomous In-Space Assembly"
+    title: "Robotic On-Orbit Truss Assembly"
     discipline: StructuresMechanisms
     tier: 8
     parents: [str_largeDeployableReflectors]
@@ -912,7 +912,7 @@ nodes:
     flavor: "Precise, repeatable electric motion — the joints, hinges and gimbals every machine that moves itself depends on."
     parts: [hinge_01, controller1000]
   - id: rob_roverChassis
-    title: "Wheeled Rover Chassis"
+    title: "Independently-Sprung Rover Chassis"
     discipline: Robotics
     tier: 4
     parents: [rob_servoActuators]
@@ -960,7 +960,7 @@ nodes:
     parents: [rob_autonomousNav]
     flavor: "Fly a coaxial rotor in a thin alien atmosphere — scouting from the air where wheels can't reach."
   - id: rob_roboticAssembly
-    title: "Robotic Assembly & Servicing"
+    title: "On-Orbit Robotic Servicing (OSAM)"
     discipline: Robotics
     tier: 8
     parents: [rob_dexterousManipulation]
@@ -1078,13 +1078,13 @@ nodes:
     parents: [mic_vacuumTubes]
     flavor: "A timed drum or relay chain that fires events in order — open-loop automation before there was a computer to close the loop."
   - id: comp_digitalFlightComputer
-    title: "Digital Flight Computer"
+    title: "Core-Rope Guidance Computer"
     discipline: Computing
     tier: 4
     parents: [mic_integratedCircuit]
     flavor: "A stored-program machine in the loop — the leap from sequenced events to computed guidance, navigation and control."
   - id: comp_dataStorage
-    title: "Onboard Data Storage"
+    title: "Magnetic-Core & Tape Recorders"
     discipline: Computing
     tier: 5
     parents: [comp_digitalFlightComputer]
@@ -1120,7 +1120,7 @@ nodes:
     parents: [comp_simulation]
     flavor: "A live simulation shadowing the real vehicle for what-if analysis and anomaly diagnosis in flight."
   - id: comp_autonomousFaultMgmt
-    title: "Autonomous Fault Management"
+    title: "Onboard Fault-Protection Logic"
     discipline: Computing
     tier: 7
     parents: [comp_faultTolerant]
@@ -1163,7 +1163,7 @@ nodes:
     parents: [gnc_rateGyros]
     flavor: "A gyro-stabilised platform integrates acceleration into position — knowing where you are with no outside reference."
   - id: gnc_reactionWheels
-    title: "Reaction Wheels & Momentum Storage"
+    title: "Reaction Wheels & Momentum Desaturation"
     discipline: GuidanceControl
     tier: 3
     parents: [gnc_reactionControl]
@@ -1244,7 +1244,7 @@ nodes:
     parents: [tel_phasedArray]
     flavor: "Climb to higher frequency for far more bandwidth — orders more science return per pass."
   - id: tel_relayConstellation
-    title: "Relay Satellite Constellations"
+    title: "Store-and-Forward Relay Constellation"
     discipline: Telecommunications
     tier: 6
     parents: [tel_phasedArray]
@@ -1316,7 +1316,7 @@ nodes:
     parents: [opt_precisionOptics]
     flavor: "Time a laser pulse's round trip to map terrain and rendezvous range to the centimetre."
   - id: opt_spaceTelescope
-    title: "Space Telescopes"
+    title: "Ritchey-Chretien Space Telescopes"
     discipline: OpticsPhotonics
     tier: 6
     parents: [opt_precisionOptics, mic_ccdSensors]
@@ -1347,7 +1347,7 @@ nodes:
     flavor: "Combine light from separated apertures for the resolution of a telescope kilometres across."
   # ---------- Life Support & Habitation (ECLSS, crew, habitats) ----------
   - id: life_pressurizedCabin
-    title: "Pressurised Crew Cabin"
+    title: "Two-Gas Pressurised Cabin"
     discipline: LifeSupport
     tier: 3
     parents: [met_earlyAlloys]
@@ -1384,7 +1384,7 @@ nodes:
     parents: [life_co2Removal]
     flavor: "Distil and purify humidity, wash water and urine back to potable — the first big loop closure of a station."
   - id: life_galleyWaste
-    title: "Food, Galley & Waste Management"
+    title: "Metabolic Consumables & Waste Cycling"
     discipline: LifeSupport
     tier: 6
     parents: [life_co2Removal]
@@ -1414,7 +1414,7 @@ nodes:
     parents: [life_o2Generation]
     flavor: "Recover nearly all air and water in a tight physico-chemical loop — resupply mass falls toward zero."
   - id: life_planetaryHab
-    title: "Surface Habitats & Airlocks"
+    title: "Dust-Tolerant Surface Airlocks"
     discipline: LifeSupport
     tier: 8
     parents: [life_longDurationHab]
@@ -1426,7 +1426,7 @@ nodes:
     parents: [life_closedLoopECLSS]
     flavor: "Grow plants to recycle air, water and food — a partly living loop for journeys too long to pack for."
   - id: life_closedEcology
-    title: "Closed Ecological Systems"
+    title: "Closed Ecological Life-Support (CELSS)"
     discipline: LifeSupport
     tier: 10
     parents: [life_bioregenerative]
