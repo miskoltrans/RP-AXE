@@ -58,7 +58,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Drive the propellants with a turbine-spun pump instead of tank pressure: the tank no longer has to be a heavy pressure vessel, and the chamber can run far harder than any pressure-fed sounding motor reaches. This is the real step from a powder dart to the turbopump-fed V-2 — a large liquid rocket at last. (Its chamber was film-cooled; regenerative cooling you already fly on the ORM-65.)"
-    parts: [ROE-RD100, ROE-A4, ROE-A7]
+    parts: [ROE-RD100, ROE-A4, ROE-A7, ROE-RD0105, ROE-RD0110, ROE-RD109]
   # --- two solutions to combustion instability (a multi-entry pair, per VISION) ---
   - id: fd_multiChamber
     title: "Multi-Chamber Combustion"
@@ -72,15 +72,15 @@ nodes:
     discipline: FluidDynamics
     tier: 2
     parents: [fd_turbopumpFeed]
-    flavor: "The Western answer to the same instability: don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales. The LR89/LR79 boosters, the Atlas and Thor."
-    parts: [ROE-LR89_2, ROE-LR79, ROE-LR105_2, ROE-X405, ROE-Gamma301, ROE-Stentor, ROE-RZ, ROE-X405H, ROE-LR87, ROE-LR87_11, ROE-LR87_Single, ROE-LR91, ROE-LR91-4V, ROE-RD0105, ROE-RD0110, ROE-RD109, ROE-RD111]
+    flavor: "Don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales, and it isn't a Western monopoly: the LR89/LR79/LR87/LR91 boosters (Atlas, Thor, Titan), Britain's licensed RZ, Vanguard's X-405 family — and the Soviets' own RD-111 (Desna), fast-fuelled with supercooled kerolox to match a storable rival's readiness, solving the identical problem without clustering."
+    parts: [ROE-LR89_2, ROE-LR79, ROE-LR105_2, ROE-X405, ROE-Gamma301, ROE-Stentor, ROE-RZ, ROE-X405H, ROE-LR87, ROE-LR87_11, ROE-LR87_Single, ROE-LR91, ROE-LR91-4V, ROE-RD111]
   - id: fd_verniers
     title: "Vernier Trim Chambers"
     discipline: FluidDynamics
     tier: 2
     parents: [fd_turbopumpFeed]
     flavor: "Small, gimballed trim chambers that steer and roll the stack while the main engines just push — the Atlas and Jupiter vernier motors, co-developed with the big engines they trim. The fine hand on a heavy rocket."
-    parts: [ROE-LR101_2, ROE-LR101Inline_2, ROE-JupiterVernier, ROE-RD0110Vernier]
+    parts: [ROE-LR101_2, ROE-LR101Inline_2, ROE-JupiterVernier, ROE-RD0110Vernier, YF23_Engine]
   - id: pc_hypergolics
     title: "Amine-Nitrate Hypergolics"
     discipline: PropellantChemistry
@@ -380,7 +380,7 @@ nodes:
     flavor: "The irreducible list to fly a person to orbit and bring them home alive: an orbit-capable booster, attitude control to keep the heatshield forward, the heatshield itself, a way to decelerate, and air to breathe. Nothing else is physics — everything else is a practical-path nicety, kept off the gate."
     parts: [ROC-MercuryCMBDB, ROC-VostokCapsule, ROC-ZenitCapsule, mk1pod_v2, ROC-MercuryNoseCapBDB, ROC-MercuryAirbrakeBDB, ROC-VostokService, RP0HumanRatedFlag]
   - id: str_launchEscape
-    title: "Pad/Ascent Abort Escape"
+    title: "Powered Abort Escape"
     discipline: StructuresMechanisms
     tier: 6
     parents: [int_crewedCapsule]
@@ -390,7 +390,7 @@ nodes:
     title: "Touchdown Energy Absorption"
     discipline: StructuresMechanisms
     tier: 2
-    parents: [str_staging]
+    parents: [start]
     flavor: "Crushable or damped legs — or a cushioning airbag — that catch a touchdown without bouncing or tipping."
     parts: [landingLeg1, miniLandingLeg, SXTAirbag, SXTAirbagSmall]
   - id: fd_deepThrottleEarly
@@ -420,7 +420,7 @@ nodes:
     tier: 3
     parents: [pc_hypergolics]
     flavor: "Corrosive, toxic storables scaled from a small hypergolic trim engine up to full first-stage thrust — the Yangel-bureau approach of repurposing an ICBM's always-ready propellants for a space launcher."
-    parts: [ROE-RD215, ROE-RD215_Single, ROE-RD219, ROE-RD855, ROE-RD856, ROE-Viking2, ROE-Viking4, ROE-Viking5, YF3_Engine, YF3_with_shell, YF20_Engine, YF21_Engine, YF21_with_shell_CZ-2, YF21_with_shell_CZ-2C, YF21_with_shell_CZ-2D, YF22_Engine, YF23_Engine, YF25K_Engine]
+    parts: [ROE-RD215, ROE-RD215_Single, ROE-RD219, ROE-RD855, ROE-RD856, ROE-Viking2, ROE-Viking4, ROE-Viking5, YF3_Engine, YF3_with_shell, YF20_Engine, YF21_Engine, YF21_with_shell_CZ-2, YF21_with_shell_CZ-2C, YF21_with_shell_CZ-2D, YF22_Engine, YF25K_Engine]
   - id: str_engineClustering
     title: "Engine-Cluster Heavy Lift"
     discipline: StructuresMechanisms

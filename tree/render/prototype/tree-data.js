@@ -410,7 +410,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1500
+    1507
    ]
   },
   {
@@ -425,7 +425,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1307
+    1313
    ]
   },
   {
@@ -801,7 +801,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1147
+    1153
    ]
   },
   {
@@ -932,7 +932,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1227
+    1233
    ]
   },
   {
@@ -955,15 +955,30 @@ window.TREE = {
      "title": "NAA-75-110 A-Series"
     },
     {
+     "name": "ROE-RD0105",
+     "mod": "ROEngines",
+     "title": "RD-0105/0109"
+    },
+    {
+     "name": "ROE-RD0110",
+     "mod": "ROEngines",
+     "title": "RD-0107/0110"
+    },
+    {
      "name": "ROE-RD100",
      "mod": "ROEngines",
      "title": "RD-100"
+    },
+    {
+     "name": "ROE-RD109",
+     "mod": "ROEngines",
+     "title": "RD-109/119"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    1332
+    1354
    ]
   },
   {
@@ -1019,7 +1034,7 @@ window.TREE = {
    "tier": 2,
    "cost": 90,
    "anyToUnlock": false,
-   "flavor": "The Western answer to the same instability: don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales. The LR89/LR79 boosters, the Atlas and Thor.",
+   "flavor": "Don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales, and it isn't a Western monopoly: the LR89/LR79/LR87/LR91 boosters (Atlas, Thor, Titan), Britain's licensed RZ, Vanguard's X-405 family — and the Soviets' own RD-111 (Desna), fast-fuelled with supercooled kerolox to match a storable rival's readiness, solving the identical problem without clustering.",
    "parts": [
     {
      "name": "ROE-Gamma301",
@@ -1065,21 +1080,6 @@ window.TREE = {
      "name": "ROE-LR91-4V",
      "mod": "ROEngines",
      "title": "LR91 (4 Vernier)"
-    },
-    {
-     "name": "ROE-RD0105",
-     "mod": "ROEngines",
-     "title": "RD-0105/0109"
-    },
-    {
-     "name": "ROE-RD0110",
-     "mod": "ROEngines",
-     "title": "RD-0107/0110"
-    },
-    {
-     "name": "ROE-RD109",
-     "mod": "ROEngines",
-     "title": "RD-109/119"
     },
     {
      "name": "ROE-RD111",
@@ -1141,6 +1141,11 @@ window.TREE = {
      "name": "ROE-RD0110Vernier",
      "mod": "ROEngines",
      "title": "RD-0110 Vernier (DEPRECATED)"
+    },
+    {
+     "name": "YF23_Engine",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-23"
     }
    ],
    "upgrades": [],
@@ -1208,7 +1213,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    2096
+    2045
    ]
   },
   {
@@ -1223,7 +1228,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1172
+    1194
    ]
   },
   {
@@ -1259,7 +1264,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1275
+    1302
    ]
   },
   {
@@ -1345,7 +1350,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1252
+    1274
    ]
   },
   {
@@ -1461,7 +1466,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1092
+    1114
    ]
   },
   {
@@ -1593,7 +1598,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1090
+    1117
    ]
   },
   {
@@ -1719,7 +1724,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1966
+    1988
    ]
   },
   {
@@ -1734,7 +1739,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1894
+    1916
    ]
   },
   {
@@ -2137,7 +2142,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1732
+    1754
    ]
   },
   {
@@ -2198,7 +2203,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1492
+    1514
    ]
   },
   {
@@ -2229,7 +2234,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1572
+    1594
    ]
   },
   {
@@ -2296,7 +2301,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1412
+    1434
    ]
   },
   {
@@ -2368,7 +2373,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2129
+    2161
    ]
   },
   {
@@ -2394,7 +2399,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1652
+    1674
    ]
   },
   {
@@ -2435,7 +2440,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1012
+    1034
    ]
   },
   {
@@ -2461,7 +2466,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2209
+    2241
    ]
   },
   {
@@ -2482,7 +2487,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2289
+    2321
    ]
   },
   {
@@ -2508,7 +2513,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2047
+    2089
    ]
   },
   {
@@ -2549,7 +2554,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1008
+    1009
    ]
   },
   {
@@ -2575,7 +2580,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1261
+    1288
    ]
   },
   {
@@ -2906,7 +2911,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1814
+    1836
    ]
   },
   {
@@ -3003,7 +3008,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1772
+    1799
    ]
   },
   {
@@ -3044,7 +3049,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1424
+    1425
    ]
   },
   {
@@ -3080,7 +3085,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1504
+    1505
    ]
   },
   {
@@ -3116,7 +3121,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1677
+    1704
    ]
   },
   {
@@ -3177,7 +3182,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1552
+    1579
    ]
   },
   {
@@ -3285,12 +3290,12 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1567
+    1594
    ]
   },
   {
    "id": "str_launchEscape",
-   "title": "Pad/Ascent Abort Escape",
+   "title": "Powered Abort Escape",
    "discipline": "StructuresMechanisms",
    "tier": 6,
    "cost": 2000,
@@ -3311,7 +3316,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     12,
-    1330
+    1331
    ]
   },
   {
@@ -3347,7 +3352,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1807
+    1798
    ]
   },
   {
@@ -3368,7 +3373,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1364
+    1391
    ]
   },
   {
@@ -3435,7 +3440,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1940
+    1965
    ]
   },
   {
@@ -3518,11 +3523,6 @@ window.TREE = {
      "title": "YF-22"
     },
     {
-     "name": "YF23_Engine",
-     "mod": "KerwisChineseAerospacePack",
-     "title": "YF-23"
-    },
-    {
      "name": "YF25K_Engine",
      "mod": "KerwisChineseAerospacePack",
      "title": "YF-20 with Boattail (no gimbal)"
@@ -3541,7 +3541,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1860
+    1885
    ]
   },
   {
@@ -3572,7 +3572,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1088
+    1089
    ]
   },
   {
@@ -3655,7 +3655,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1692
+    1719
    ]
   }
  ],
@@ -3667,11 +3667,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1332
+     1354
     ]
    ]
   },
@@ -3682,7 +3682,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1332
+     1354
     ],
     [
      -1708,
@@ -3697,7 +3697,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1332
+     1354
     ],
     [
      -1708,
@@ -3712,7 +3712,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1332
+     1354
     ],
     [
      -1708,
@@ -3727,11 +3727,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1930
+     1952
     ],
     [
      -1708,
@@ -3746,19 +3746,19 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     2002
+     2024
     ],
     [
      -1708,
-     1843
+     1763
     ],
     [
      -1278,
-     2096
+     2045
     ]
    ]
   },
@@ -3769,11 +3769,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1172
+     1194
     ]
    ]
   },
@@ -3784,7 +3784,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1172
+     1194
     ],
     [
      -1708,
@@ -3803,7 +3803,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1275
+     1302
     ]
    ]
   },
@@ -3818,7 +3818,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1275
+     1302
     ]
    ]
   },
@@ -3833,7 +3833,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1275
+     1302
     ]
    ]
   },
@@ -3844,11 +3844,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1252
+     1274
     ]
    ]
   },
@@ -3859,11 +3859,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1092
+     1114
     ]
    ]
   },
@@ -3874,7 +3874,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1092
+     1114
     ],
     [
      -1708,
@@ -3889,7 +3889,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1092
+     1114
     ],
     [
      -1708,
@@ -3908,7 +3908,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1090
+     1117
     ]
    ]
   },
@@ -3923,7 +3923,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1090
+     1117
     ]
    ]
   },
@@ -3934,11 +3934,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1966
+     1988
     ]
    ]
   },
@@ -3949,11 +3949,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1894
+     1916
     ]
    ]
   },
@@ -3964,7 +3964,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1894
+     1916
     ],
     [
      -1708,
@@ -3979,7 +3979,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1966
+     1988
     ],
     [
      -1708,
@@ -3994,11 +3994,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1732
+     1754
     ]
    ]
   },
@@ -4009,11 +4009,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1492
+     1514
     ]
    ]
   },
@@ -4024,11 +4024,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1572
+     1594
     ]
    ]
   },
@@ -4039,7 +4039,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1572
+     1594
     ],
     [
      -1708,
@@ -4054,11 +4054,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1412
+     1434
     ]
    ]
   },
@@ -4069,11 +4069,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     2083
+     2053
     ],
     [
      -1708,
@@ -4088,11 +4088,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     2129
+     2161
     ]
    ]
   },
@@ -4103,11 +4103,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1652
+     1674
     ]
    ]
   },
@@ -4118,11 +4118,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1012
+     1034
     ]
    ]
   },
@@ -4133,11 +4133,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     2209
+     2241
     ]
    ]
   },
@@ -4148,11 +4148,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     2289
+     2321
     ]
    ]
   },
@@ -4163,11 +4163,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     2047
+     2089
     ]
    ]
   },
@@ -4178,11 +4178,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     2093
+     2125
     ],
     [
      -1708,
@@ -4197,11 +4197,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1275
+     1302
     ],
     [
      -848,
-     1008
+     1009
     ]
    ]
   },
@@ -4212,11 +4212,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1090
+     1117
     ],
     [
      -848,
-     1008
+     1009
     ]
    ]
   },
@@ -4227,11 +4227,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1008
+     1009
     ],
     [
      -418,
-     1261
+     1288
     ]
    ]
   },
@@ -4242,11 +4242,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1814
+     1836
     ]
    ]
   },
@@ -4257,7 +4257,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1814
+     1836
     ],
     [
      -1708,
@@ -4276,7 +4276,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1772
+     1799
     ]
    ]
   },
@@ -4287,11 +4287,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1772
+     1799
     ],
     [
      -848,
-     1424
+     1425
     ]
    ]
   },
@@ -4302,11 +4302,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1772
+     1799
     ],
     [
      -848,
-     1504
+     1505
     ]
    ]
   },
@@ -4317,11 +4317,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1424
+     1425
     ],
     [
      -418,
-     1677
+     1704
     ]
    ]
   },
@@ -4332,7 +4332,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1814
+     1836
     ],
     [
      -1708,
@@ -4340,7 +4340,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1552
+     1579
     ]
    ]
   },
@@ -4351,7 +4351,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1332
+     1354
     ],
     [
      -1708,
@@ -4359,7 +4359,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1552
+     1579
     ]
    ]
   },
@@ -4370,11 +4370,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1768
+     1790
     ],
     [
      -1708,
@@ -4389,11 +4389,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     1778
+     1800
     ],
     [
      -1708,
@@ -4408,11 +4408,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1008
+     1009
     ],
     [
      -418,
-     1567
+     1594
     ]
    ]
   },
@@ -4427,15 +4427,15 @@ window.TREE = {
     ],
     [
      -1278,
-     1808
+     1835
     ],
     [
      -848,
-     1540
+     1541
     ],
     [
      -418,
-     1567
+     1594
     ]
    ]
   },
@@ -4446,7 +4446,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1492
+     1514
     ],
     [
      -1708,
@@ -4454,7 +4454,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1513
+     1540
     ],
     [
      -848,
@@ -4462,7 +4462,7 @@ window.TREE = {
     ],
     [
      -418,
-     1567
+     1594
     ]
    ]
   },
@@ -4477,15 +4477,15 @@ window.TREE = {
     ],
     [
      -1278,
-     1590
+     1617
     ],
     [
      -848,
-     1341
+     1342
     ],
     [
      -418,
-     1567
+     1594
     ]
    ]
   },
@@ -4500,15 +4500,15 @@ window.TREE = {
     ],
     [
      -1278,
-     1644
+     1671
     ],
     [
      -848,
-     1368
+     1369
     ],
     [
      -418,
-     1567
+     1594
     ]
    ]
   },
@@ -4519,26 +4519,30 @@ window.TREE = {
    "waypoints": [
     [
      -418,
-     1567
+     1594
     ],
     [
      12,
-     1330
+     1331
     ]
    ]
   },
   {
-   "from": "str_staging",
+   "from": "start",
    "to": "str_landingLegs",
    "anyToUnlock": false,
    "waypoints": [
     [
+     -2568,
+     1507
+    ],
+    [
      -2138,
-     1966
+     2033
     ],
     [
      -1708,
-     1807
+     1798
     ]
    ]
   },
@@ -4553,7 +4557,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1364
+     1391
     ]
    ]
   },
@@ -4564,11 +4568,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1500
+     1507
     ],
     [
      -2138,
-     2011
+     2043
     ],
     [
      -1708,
@@ -4587,7 +4591,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1940
+     1965
     ]
    ]
   },
@@ -4602,7 +4606,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1860
+     1885
     ]
    ]
   },
@@ -4613,11 +4617,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1275
+     1302
     ],
     [
      -848,
-     1088
+     1089
     ]
    ]
   },
@@ -4628,7 +4632,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1252
+     1274
     ],
     [
      -1708,
@@ -4643,7 +4647,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     2129
+     2161
     ],
     [
      -1708,
@@ -4662,7 +4666,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1692
+     1719
     ]
    ]
   }
