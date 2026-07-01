@@ -48,8 +48,8 @@ nodes:
     discipline: SystemsIntegration
     tier: 0
     parents: []
-    flavor: "1950. A united Kerbalkind turns its eyes upward — no missiles to inherit, no doctrine to obey. Here is the common toolbox: procedural structure, tankage, nosecones and avionics that any vehicle needs. There are two ways off the ground — the rocket and the wing. Choose either. Choose both."
-    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics]
+    flavor: "1950. A united Kerbalkind turns its eyes upward — no missiles to inherit, no doctrine to obey. Here is the common toolbox: procedural structure, tankage, nosecones and avionics that any vehicle needs, and the first two instruments — a barometer and a thermometer — to turn a flight into a measurement. There are two ways off the ground — the rocket and the wing. Choose either. Choose both."
+    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer]
 
   # ============================================ ROCKET TRACK ============================================
   # Unified by propulsion. The root IS rocket propulsion — crude sounding motors that expand through a
