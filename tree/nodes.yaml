@@ -2,28 +2,32 @@
 # ============================ SPINE-FIRST REBUILD (2026-07) ============================
 # The tree is grown along the EXPLORATION CRITICAL PATH: a chain of milestone convergence nodes
 # (root -> first orbit -> crewed orbit -> applications -> rendezvous -> lunar), each anchored by an
-# ICONIC part. The 18 engineering disciplines are TRIBUTARIES that feed those milestones — they
-# emerge and taper, they are not full-height era lanes. Names/flavour are pulled from
-# tree/library.yaml (the preserved 235-node P1 tree = the flavour/part-home bank).
+# ICONIC part. The 18 engineering disciplines are TRIBUTARIES that feed those milestones. Names/
+# flavour are pulled from tree/library.yaml (the preserved 235-node P1 tree = the flavour bank).
 #
-# AHISTORICAL PRINCIPLE: 1950, Kerbalkind is united; there is no ICBM legacy and no military doctrine
-# forcing a kerolox-first path. After a VERY THIN start you CHOOSE your propulsion philosophy
-# (kerolox / hydrolox / solid) as a multi-entry fork (anyToUnlock:true). Milestones are propulsion-
-# AGNOSTIC: they gate on the systems-integration breakthroughs (staging, guidance, telemetry, probe
-# brain), and you fly whatever engine you invested in. Committing early to hydrolox is allowed — it
-# just costs more program (deeper, pricier climb) than the cheap kerolox/solid start.
+# TWO PARALLEL TRACKS, ROOTED BY WHAT UNIFIES THEM (validated against real RO engine data):
+#  * The ROCKET track is unified by its PROPULSION — every early motor carries its own oxidiser,
+#    works in vacuum, expands through a de Laval nozzle. So its root IS rocket propulsion.
+#  * The AVIATION track is NOT unified by one engine (piston radials and turbojets are utterly
+#    different machines) — it is unified by the AIRFRAME: they all breathe air and need a wing. So
+#    its root is aerodynamics, and the turbojet is a later, METALLURGY-gated leap (turbine superalloys).
+#  * Universal procedural parts (nosecone, structure, tank, avionics) live at the shared `start` hinge.
+# KSP anchors a tree on a single id=start node (RP-1 and ETT both do this); `start` is that thin hinge
+# and the common toolbox. It forks into two equal FREE tracks that cross at the rocketplane and later
+# converge at orbit. Pursue either or both; science scarcity enforces commitment.
 #
-# HOMING = scatter-by-difficulty: a part lives at the discipline of its SIGNATURE breakthrough (the
-# bottleneck that kept it from existing earlier), not its fuel/function. Convergence PARENTS carry the
-# other enabling breakthroughs. anyToUnlock:false = convergence (need ALL parents); true = multi-entry.
+# AHISTORICAL: 1950, Kerbalkind united; no ICBM legacy forcing a kerolox-first path. Propulsion is your
+# CHOICE (solid / turbopump-liquid / hydrolox multi-entry). Milestones are propulsion-AGNOSTIC: they
+# gate on systems-integration (staging, guidance, telemetry, probe brain); you fly whatever you built.
 #
-# STATUS: FOUNDATION SLICE — two thin roots + the propulsion fork + milestone (1) First Orbit.
-# Extends milestone-by-milestone toward crewed lunar. (Full P1 tree preserved in tree/library.yaml.)
+# HOMING = scatter-by-difficulty: a part lives at its SIGNATURE breakthrough (the bottleneck), not its
+# fuel/function — hence the jet homes in Metallurgy. anyToUnlock:false = convergence (ALL parents);
+# true = multi-entry (ANY). STATUS: FOUNDATION SLICE (thin start + two parallel tracks to first orbit).
 # node: id / title / discipline / tier / [parents] / [anyToUnlock] / [cost] / flavor / [parts] / [upgrades]
 
 meta:
   scalar: 1.0                       # global science-cost dial (SCIENCE.md §4); tune at P3 play-session
-  auto_placement: false             # spine rebuild: parts come ONLY from explicit `parts:` seeds (P2 auto-placement rejected)
+  auto_placement: false             # spine rebuild: parts come ONLY from explicit `parts:` seeds
   tier_cost:                        # base cost per tier (pre-scalar) — front-loaded bite
     0: 0
     1: 20
@@ -38,71 +42,63 @@ meta:
     10: 1300
 
 nodes:
-  # ================================= ORIGIN =================================
+  # ================================= START HINGE — the shared procedural toolbox =================================
   - id: start
-    title: "United Kerbalkind"
+    title: "Start"
     discipline: SystemsIntegration
     tier: 0
     parents: []
-    flavor: "1950. Kerbalkind is united under one world government; they understand that the universe is blind without us. No missiles to repurpose, no doctrine to obey — only the choice of how to begin."
+    flavor: "1950. A united Kerbalkind turns its eyes upward — no missiles to inherit, no doctrine to obey. Here is the common toolbox: procedural structure, tankage, nosecones and avionics that any vehicle needs. There are two ways off the ground — the rocket and the wing. Choose either. Choose both."
+    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics]
 
-  # ===================== TWO THIN ROOTS (soft fork; both free at start) =====================
+  # ============================================ ROCKET TRACK ============================================
+  # Unified by propulsion. The root IS rocket propulsion — crude sounding motors that expand through a
+  # de Laval nozzle. Data check: these span 3-244 kN, Isp 222-315, all pressure-fed or solid.
   - id: rocketryStart
-    title: "Sounding-Rocket Program"
-    discipline: PropellantChemistry
+    title: "Rocket Propulsion & the de Laval Nozzle"
+    discipline: FluidDynamics
     tier: 1
+    cost: 0
     parents: [start]
-    flavor: "The rocketry beginning, kept deliberately bare: a procedural airframe, a simple solid motor, and an instrument package to loft above the Karman line. Everything else — how you push, how you steer, how you talk home — you will choose."
-    parts: [proceduralAvionics, RO-RFTank-Separate, proceduralStructural, proceduralNoseCone, B9_Aero_Wing_Procedural_TypeA, ROE-BabySergeant]
-  - id: xplaneStart
-    title: "Experimental Aircraft Program"
-    discipline: Aerodynamics
-    tier: 1
-    parents: [start]
-    flavor: "The aeroplane beginning: a cockpit, wings, undercarriage, and both an air-breathing jet and a propeller. The runway route to the edge of space — the rocketplane and, one day, the spaceplane."
-    parts: [RO-X1Cockpit, RO-OldFighterCockpit, B9_Aero_Wing_Procedural_TypeA, B9_Aero_Wing_Procedural_TypeB, GearFixed, RO-J35, SXTNK12M, proceduralNoseCone, proceduralStructural]
-
-  # ===================== AHISTORICAL PROPULSION FORK (your choice) =====================
-  # Three philosophies branch from the rocketry start. Kerolox = cheapest to orbit; solids = cheap but
-  # single-shot; hydrolox = pricier, deeper climb, highest Isp. None is forced. Each is the head of a
-  # discipline ladder that continues later (turbopumps -> combustion stability -> F-1, etc.).
+    flavor: "Choke the exhaust to Mach 1 at the throat and expand it supersonically through the diverging bell — de Laval's steam-turbine nozzle, repurposed to turn a controlled chemical fire into directed thrust. With that, plus fins to fly straight, a crude pressure-fed or solid motor lofts an instrument package above the Karman line. The difference between a firework and a rocket."
+    parts: [ROE-ORM65, ROE-Aerobee, ROE-VeroniqueAK, TinyTim, ROMeteoSustainer, B9_Aero_Wing_Procedural_TypeA]
+  - id: fd_turbopumpLiquid
+    title: "Turbopump-Fed Liquid Propulsion (A-4)"
+    discipline: FluidDynamics
+    tier: 2
+    parents: [rocketryStart]
+    flavor: "A turbine-driven pump feeds propellant by the tonne, unshackling chamber pressure from tank pressure. The A-4/V-2's Model 39 puts out 400 kN — five times any sounding motor and regeneratively cooled. The single most advanced starting rocket, and the leap from sounding rocket to launch vehicle."
+    parts: [ROE-A4]
   - id: pc_solidGrain
     title: "Cast Composite Solid Grains"
     discipline: PropellantChemistry
     tier: 2
     parents: [rocketryStart]
-    flavor: "Ammonium-perchlorate oxidiser and powdered aluminium bound in a rubbery binder, cast and cured into a structural grain. Cheap, dense, storable — you light it once and it does not stop. The cheapest way up, and the strap-on that boosts everything else."
-    parts: [ROE-Aerobee, ROE-Castor1, ROE-Star13]
-  - id: pc_ethanolLox
-    title: "Ethanol/LOX Film-Cooled Combustion"
-    discipline: PropellantChemistry
-    tier: 2
-    parents: [rocketryStart]
-    flavor: "75% ethanol against liquid oxygen, the chamber wall protected by a deliberately fuel-rich boundary film. Crude, sooty, and enough to reach space — the A-4/V-2 chemistry, and the gateway to kerosene."
-    parts: [ROE-A4]
+    flavor: "Ammonium-perchlorate oxidiser and powdered aluminium bound in a rubbery binder, cast and cured into a large structural grain. Cheap, dense, storable — you light it once and it does not stop. The strap-on that boosts everything else."
+    parts: [ROE-BabySergeant, ROE-Castor1, ROE-Star13]
   - id: pc_kerosene
     title: "Hydrotreated Narrow-Cut Kerosene (RP-1)"
     discipline: PropellantChemistry
     tier: 3
-    parents: [pc_ethanolLox]
-    flavor: "Catalytic hydrotreating strips sulfur and heavy aromatics to a narrow distillation cut that won't coke a cooling jacket — the dense, storable kerosene every kerolox engine burns. The cheap, forgiving road to orbit."
+    parents: [fd_turbopumpLiquid]
+    flavor: "Catalytic hydrotreating strips sulfur and heavy aromatics to a narrow distillation cut that won't coke a cooling jacket — the dense, storable kerosene every high-thrust kerolox engine burns. The cheap, forgiving road to orbit."
     parts: [ROE-A7, ROE-Merlin1A]
   - id: fd_gasGenerator
     title: "Gas-Generator (Open) Cycle"
     discipline: FluidDynamics
     tier: 3
-    parents: [pc_ethanolLox]
-    flavor: "Burn a little propellant in a side chamber to spin the turbopump, then dump the turbine exhaust overboard. Simple, proven, slightly wasteful — the pump-fed workhorse that puts real mass in orbit."
+    parents: [fd_turbopumpLiquid]
+    flavor: "Burn a little propellant in a side chamber to spin the turbopump, then dump the turbine exhaust overboard. Simple, proven, slightly wasteful — the pump-fed workhorse cycle that puts real mass in orbit."
   - id: cryo_earlyHydrolox
     title: "Early Hydrogen/Oxygen Upper Stages"
     discipline: Cryogenics
     tier: 3
-    parents: [rocketryStart, pc_ethanolLox]
-    anyToUnlock: true                # MULTI-ENTRY: the early-hydrogen gamble, reachable from the bare start
+    parents: [rocketryStart, fd_turbopumpLiquid]
+    anyToUnlock: true                # MULTI-ENTRY: the early-hydrogen gamble
     flavor: "No doctrine says you must burn kerosene first. Commit early to hydrogen — vacuum-jacketed tanks, insulation, boil-off you fight every hour on the pad — and you buy the highest specific impulse chemistry there is, years ahead of history. It simply costs more program to get there."
     parts: [ROE-RL10Fixed]
 
-  # ===================== SYSTEMS TRIBUTARIES that converge into milestone (1) =====================
+  # ---- rocket systems tributaries that converge into milestone (1) ----
   - id: str_stageSeparation
     title: "Staging & Ullage Separation"
     discipline: StructuresMechanisms
@@ -119,17 +115,17 @@ nodes:
   - id: tel_pcmTelemetry
     title: "PCM/FM Telemetry Downlink"
     discipline: Telecommunications
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [rocketryStart]
     flavor: "Pulse-code-modulated vehicle health, FM-keyed to the ground. Without it a failure tells you nothing about why — and an orbit you cannot hear is an orbit you cannot prove."
   - id: mic_probeAvionics
     title: "Vacuum-Tube Sequencers & Sensors"
     discipline: Microelectronics
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [rocketryStart]
     flavor: "Hot-cathode tubes and simple transducers turn a satellite's state into numbers and its timeline into relay clicks — the minimum brain a spacecraft needs to be more than ballast."
 
-  # ===================== MILESTONE (1): FIRST ORBIT =====================
+  # ---- MILESTONE (1): FIRST ORBIT (rocket side; aviation converges later at crewed flight) ----
   - id: int_firstOrbit
     title: "First Orbital Capability"
     discipline: SystemsIntegration
@@ -138,3 +134,39 @@ nodes:
     anyToUnlock: false               # CONVERGENCE: staging + guidance + telemetry + a probe brain (propulsion is your soft choice, not a gate)
     flavor: "Staging, guidance, telemetry and a probe brain converge — and whatever engine you chose to build now has somewhere to go. The first artificial moon. Beep. Beep. Beep."
     parts: [sputnik1, sputnik2, vanguard-1, explorer_6]
+
+  # =========================================== AVIATION TRACK ===========================================
+  # Unified by the airframe, not the engine. The root is aerodynamics + a lifting wing + control surfaces
+  # + the piston props of the age. The turbojet is a separate leap gated by turbine METALLURGY.
+  - id: xplaneStart
+    title: "Cambered Airfoil & Three-Axis Control"
+    discipline: Aerodynamics
+    tier: 1
+    cost: 0
+    parents: [start]
+    flavor: "A cambered wing makes lift; ailerons, elevator and rudder make it obey. Hang a lightweight piston engine and a propeller on the nose and you have controlled, powered flight — the runway route that chases altitude and speed records now, and reaches for the rocketplane and the spaceplane later."
+    parts: [RO-X1Cockpit, RO-OldFighterCockpit, B9_Aero_Wing_Procedural_TypeC, B9_Aero_Wing_Procedural_TypeB, GearFixed, SXTTinyprop, SXTMerlin66prop, SXTPWR2800, SXT_Jumo213A]
+  - id: met_turbojet
+    title: "Gas-Turbine Propulsion & Turbine Superalloys"
+    discipline: Metallurgy
+    tier: 2
+    parents: [xplaneStart]
+    flavor: "The turbojet's cycle — compressor, continuous combustor, turbine — was understood by the late 1930s; what gated it for years was the turbine, sitting in an 800-1000 C gas stream under load. Nickel-base superalloys (Nimonic), grown for exactly this, made a durable blade. So the jet, an aircraft engine, is really unlocked by METALLURGY — the same 'materials unlock the engine' story as the RD-170, on the aviation side."
+    parts: [RO-DerwentV, RO-J35, RO-J47, RO-Atar101D]
+  - id: aero_transonicFlight
+    title: "Transonic Area-Rule Shaping"
+    discipline: Aerodynamics
+    tier: 3
+    parents: [met_turbojet]
+    flavor: "Smooth the cross-sectional area through Mach 1 — the coke-bottle waist that lets a jet airframe punch through the sound barrier instead of shaking apart against it."
+    parts: [GearFree, nfa-turbojet-25-1]
+
+  # ---- CROSS-TRACK CONVERGENCE: the rocketplane (aviation airframe + rocket engine) ----
+  - id: aero_rocketplane
+    title: "Rocket-Powered Research Aircraft"
+    discipline: Aerodynamics
+    tier: 2
+    parents: [xplaneStart, rocketryStart]
+    anyToUnlock: false               # CONVERGENCE across the two tracks: a clean airframe + a rocket engine
+    flavor: "Hang a throttleable rocket engine in a clean airframe, drop it from altitude, and ride a ballistic arc to the edge of the atmosphere. The X-1 broke the sound barrier; the X-15 touched space and came home on a runway. Where the aircraft and rocket tracks first meet."
+    parts: [ROE-XLR11, ROE-XLR99, Mark1Cockpit, Mark2Cockpit]
