@@ -44,6 +44,10 @@
       <HintPath>$(ReferencePath)\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(ReferencePath)\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="ContractConfigurator">
       <HintPath>$(KSPRoot)\GameData\ContractConfigurator\ContractConfigurator.dll</HintPath>
       <Private>false</Private>

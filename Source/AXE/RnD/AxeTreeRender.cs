@@ -4,6 +4,7 @@ using System.Reflection;
 using HarmonyLib;
 using KSP.UI.Screens;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace RPAxe.RnD
 {
@@ -280,6 +281,39 @@ namespace RPAxe.RnD
                 }
             }
             catch (Exception e) { Debug.LogException(e); }
+        }
+
+        // Click empty background to deselect. Stock R&D only deselects when you re-click the node; a click
+        // (not a drag/pan) that lands on no node calls ShowNothingPanel (which also fires the highlight Clear).
+        private Vector3 _downPos;
+        private bool _dragged;
+        private static readonly List<RaycastResult> _rayHits = new List<RaycastResult>();
+
+        private void Update()
+        {
+            if (RDController.Instance == null) return;
+            if (Input.GetMouseButtonDown(0)) { _downPos = Input.mousePosition; _dragged = false; }
+            else if (Input.GetMouseButton(0) && !_dragged && (Input.mousePosition - _downPos).sqrMagnitude > 25f) _dragged = true;
+            else if (Input.GetMouseButtonUp(0) && !_dragged)
+            {
+                try
+                {
+                    if (RDController.Instance.node_selected != null && !PointerOverNode())
+                        RDController.Instance.ShowNothingPanel();
+                }
+                catch (Exception e) { Debug.LogException(e); }
+            }
+        }
+
+        private static bool PointerOverNode()
+        {
+            if (EventSystem.current == null) return false;
+            var ped = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
+            _rayHits.Clear();
+            EventSystem.current.RaycastAll(ped, _rayHits);
+            for (int i = 0; i < _rayHits.Count; i++)
+                if (_rayHits[i].gameObject != null && _rayHits[i].gameObject.GetComponentInParent<RDNode>() != null) return true;
+            return false;
         }
 
         // Discipline colour legend, shown while R&D is open (RDController.Instance != null).
