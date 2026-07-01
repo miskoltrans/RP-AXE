@@ -1068,3 +1068,366 @@ nodes:
     tier: 9
     parents: [mic_deepSubmicron]
     flavor: "Brain-inspired silicon that perceives and decides on milliwatts — autonomy that doesn't wait for the ground."
+
+  # ======================= STAGE 4 — Guidance, Comms, Optics, Crew cluster =======================
+  # ---------- Computing (flight software, data, autonomy, simulation) ----------
+  - id: comp_sequencer
+    title: "Programmed Flight Sequencers"
+    discipline: Computing
+    tier: 2
+    parents: [mic_vacuumTubes]
+    flavor: "A timed drum or relay chain that fires events in order — open-loop automation before there was a computer to close the loop."
+  - id: comp_digitalFlightComputer
+    title: "Digital Flight Computer"
+    discipline: Computing
+    tier: 4
+    parents: [mic_integratedCircuit]
+    flavor: "A stored-program machine in the loop — the leap from sequenced events to computed guidance, navigation and control."
+  - id: comp_dataStorage
+    title: "Onboard Data Storage"
+    discipline: Computing
+    tier: 5
+    parents: [comp_digitalFlightComputer]
+    flavor: "Tape recorders to solid-state memory — hold science and telemetry through the long gap until the next ground pass."
+  - id: comp_realTimeOS
+    title: "Real-Time Flight Software"
+    discipline: Computing
+    tier: 5
+    parents: [comp_digitalFlightComputer]
+    flavor: "Deterministic, scheduled, verified software where a missed deadline loses the vehicle — engineering rigour as code."
+  - id: comp_simulation
+    title: "Hardware-in-the-Loop Simulation"
+    discipline: Computing
+    tier: 6
+    parents: [comp_realTimeOS]
+    flavor: "Fly the whole mission against a simulated vehicle and world before bending metal — test the design, not the launch. (The 'simulate before you fly' unlock.)"
+  - id: comp_faultTolerant
+    title: "Fault-Tolerant Redundant Computing"
+    discipline: Computing
+    tier: 6
+    parents: [comp_realTimeOS]
+    flavor: "Vote across redundant computers so a single upset never commands the vehicle — crewed-rating in silicon."
+  - id: comp_dataCompression
+    title: "Onboard Data Compression & Reduction"
+    discipline: Computing
+    tier: 6
+    parents: [comp_dataStorage]
+    flavor: "Squeeze and pre-process data on board so a thin deep-space link still returns the science that matters."
+  - id: comp_digitalTwin
+    title: "Operational Digital Twins"
+    discipline: Computing
+    tier: 7
+    parents: [comp_simulation]
+    flavor: "A live simulation shadowing the real vehicle for what-if analysis and anomaly diagnosis in flight."
+  - id: comp_autonomousFaultMgmt
+    title: "Autonomous Fault Management"
+    discipline: Computing
+    tier: 7
+    parents: [comp_faultTolerant]
+    flavor: "Detect, isolate and recover from failures without waiting for the ground — survival at light-hours' distance."
+  - id: comp_machineVision
+    title: "Machine-Vision Navigation"
+    discipline: Computing
+    tier: 7
+    parents: [mic_systemOnChip]
+    flavor: "Turn camera frames into position and hazard maps in real time — eyes that steer the spacecraft."
+  - id: comp_onboardAI
+    title: "Onboard Autonomy & Planning"
+    discipline: Computing
+    tier: 8
+    parents: [comp_machineVision]
+    flavor: "Plan, schedule and re-plan a mission on board — a probe that decides what to do next by itself."
+  - id: comp_quantumComputing
+    title: "Spaceborne Quantum Computing"
+    discipline: Computing
+    tier: 10
+    parents: [comp_onboardAI]
+    flavor: "Quantum coprocessors for optimisation and simulation no classical machine can match — a far-future brain."
+  # ---------- Guidance & Control (GN&C — sensing, attitude, navigation) ----------
+  - id: gnc_rateGyros
+    title: "Rate Gyros & Analog Autopilot"
+    discipline: GuidanceControl
+    tier: 1
+    parents: [start]
+    flavor: "Spinning-mass gyros sense rotation and an analog loop holds attitude — the autopilot that keeps a rocket pointing up."
+  - id: gnc_reactionControl
+    title: "Reaction Control & Attitude Hold"
+    discipline: GuidanceControl
+    tier: 2
+    parents: [gnc_rateGyros]
+    flavor: "Small thrusters in opposed pairs to point and hold a vehicle in vacuum — the first three-axis control in space."
+  - id: gnc_inertialNav
+    title: "Gimballed Inertial Navigation"
+    discipline: GuidanceControl
+    tier: 3
+    parents: [gnc_rateGyros]
+    flavor: "A gyro-stabilised platform integrates acceleration into position — knowing where you are with no outside reference."
+  - id: gnc_reactionWheels
+    title: "Reaction Wheels & Momentum Storage"
+    discipline: GuidanceControl
+    tier: 3
+    parents: [gnc_reactionControl]
+    flavor: "Spin a flywheel to turn the spacecraft the other way — precise, propellant-free pointing for instruments."
+  - id: gnc_strapdownINS
+    title: "Strapdown Inertial Navigation"
+    discipline: GuidanceControl
+    tier: 4
+    parents: [gnc_inertialNav]
+    flavor: "Bolt the sensors to the frame and do the gimballing in software — lighter, cheaper, and reliant on real computing."
+  - id: gnc_digitalGuidance
+    title: "Digital Closed-Loop Ascent Guidance"
+    discipline: GuidanceControl
+    tier: 5
+    parents: [gnc_strapdownINS, comp_digitalFlightComputer]
+    anyToUnlock: false
+    flavor: "Compute the optimal path to orbit in real time and steer to it — guidance that adapts to winds and engine dispersions. Needs strapdown INS and a flight computer at once."
+  - id: gnc_cmg
+    title: "Control-Moment Gyros"
+    discipline: GuidanceControl
+    tier: 5
+    parents: [gnc_reactionWheels]
+    flavor: "Gimbal a spinning rotor for huge control torque — how a heavy station slews without burning propellant."
+  - id: gnc_opticalNav
+    title: "Optical & Star-Field Navigation"
+    discipline: GuidanceControl
+    tier: 6
+    parents: [gnc_strapdownINS]
+    flavor: "Fix attitude and position against catalogued stars and landmarks — autonomy independent of the radio link. (Pairs with star trackers in Optics.)"
+  - id: gnc_ringLaserGyro
+    title: "Ring-Laser & Fiber-Optic Gyros"
+    discipline: GuidanceControl
+    tier: 6
+    parents: [gnc_strapdownINS]
+    flavor: "Measure rotation from the interference of counter-propagating light — no moving mass, no drift to spin up."
+  - id: gnc_autonomousRendezvous
+    title: "Autonomous Rendezvous & Proximity Ops"
+    discipline: GuidanceControl
+    tier: 6
+    parents: [gnc_digitalGuidance]
+    flavor: "Close, match and dock with another vehicle by computer — the maneuver that builds stations and refuels ships."
+  - id: gnc_precisionLanding
+    title: "Terrain-Relative Precision Landing"
+    discipline: GuidanceControl
+    tier: 7
+    parents: [gnc_autonomousRendezvous]
+    flavor: "Match live imagery to a map and divert to a safe spot meters wide — landing where you meant to, not where you drift."
+  - id: gnc_propulsiveLanding
+    title: "Propulsive Landing Guidance"
+    discipline: GuidanceControl
+    tier: 8
+    parents: [gnc_precisionLanding, fd_deepThrottle]
+    anyToUnlock: false
+    flavor: "Solve the fuel-optimal powered descent in real time and ride a throttling engine to the pad — guidance plus deep-throttle, together."
+  - id: gnc_coldAtomIMU
+    title: "Cold-Atom Inertial Sensors"
+    discipline: GuidanceControl
+    tier: 9
+    parents: [gnc_ringLaserGyro]
+    flavor: "Interfere matter waves of laser-cooled atoms for inertial sensing of extraordinary stability — navigation with almost no drift."
+  # ---------- Telecommunications (additions) ----------
+  - id: tel_sBandTransponder
+    title: "Unified S-Band Transponder"
+    discipline: Telecommunications
+    tier: 3
+    parents: [tel_helicalDirectional]
+    flavor: "One coherent link carries tracking, voice, telemetry and command together — the Apollo-era backbone radio."
+  - id: tel_dsnArraying
+    title: "DSN Antenna Arraying"
+    discipline: Telecommunications
+    tier: 5
+    parents: [tel_dsnRanging]
+    flavor: "Combine several ground dishes into one virtual aperture to wring more bits from a fading distant signal."
+  - id: tel_kaBand
+    title: "Ka-Band High-Rate Downlink"
+    discipline: Telecommunications
+    tier: 6
+    parents: [tel_phasedArray]
+    flavor: "Climb to higher frequency for far more bandwidth — orders more science return per pass."
+  - id: tel_relayConstellation
+    title: "Relay Satellite Constellations"
+    discipline: Telecommunications
+    tier: 6
+    parents: [tel_phasedArray]
+    flavor: "A network of relays gives near-continuous coverage instead of waiting for a ground station to rise."
+  - id: tel_opticalComms
+    title: "Laser Optical Communications"
+    discipline: Telecommunications
+    tier: 7
+    parents: [tel_kaBand]
+    flavor: "Carry data on a tight laser beam for gigabit links from deep space — bandwidth radio can't touch, if you can point it."
+  - id: tel_dtnNetworking
+    title: "Delay-Tolerant Networking"
+    discipline: Telecommunications
+    tier: 7
+    parents: [tel_relayConstellation]
+    flavor: "Store-and-forward protocols that route data across light-minute gaps and intermittent links."
+  - id: tel_interplanetaryInternet
+    title: "Interplanetary Internet"
+    discipline: Telecommunications
+    tier: 8
+    parents: [tel_dtnNetworking, tel_opticalComms]
+    anyToUnlock: false
+    flavor: "A standing, multi-hop network spanning the solar system — always-on connectivity between worlds."
+  # ---------- Optics & Photonics (imaging, telescopes, ranging, lasers) ----------
+  - id: opt_filmCameras
+    title: "Film-Return Cameras"
+    discipline: OpticsPhotonics
+    tier: 2
+    parents: [mic_vacuumTubes]
+    flavor: "Expose film in orbit and physically return or scan-and-transmit it — the first detailed eyes on other worlds."
+    parts: [RO-BasicFilmCamera]
+  - id: opt_tvImaging
+    title: "Vidicon TV Imaging"
+    discipline: OpticsPhotonics
+    tier: 3
+    parents: [opt_filmCameras]
+    flavor: "Scan an image off a photoconductive tube and send it down as video — live pictures from a probe, no film to recover."
+    parts: [RO-EarlyTVCamera, RO-BasicTVCamera]
+  - id: opt_precisionOptics
+    title: "Precision Optical Fabrication"
+    discipline: OpticsPhotonics
+    tier: 4
+    parents: [opt_filmCameras]
+    flavor: "Grind, polish and figure mirrors and lenses to fractions of a wavelength — the craft beneath every telescope and star tracker."
+  - id: opt_starTracker
+    title: "Star Trackers"
+    discipline: OpticsPhotonics
+    tier: 4
+    parents: [opt_tvImaging]
+    flavor: "Photograph the star field and match it to a catalogue for absolute attitude — the optical alternative to radio navigation."
+  - id: opt_digitalImaging
+    title: "Digital CCD Imaging"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_tvImaging, mic_ccdSensors]
+    anyToUnlock: false
+    flavor: "Electronic sensors replace film and tubes for sharp, calibrated, instantly-downlinked imagery — optics meeting microelectronics."
+    parts: [RO-DigitalCamera, RO-AdvancedImager]
+  - id: opt_spectrometry
+    title: "Imaging Spectrometers"
+    discipline: OpticsPhotonics
+    tier: 5
+    parents: [opt_precisionOptics]
+    flavor: "Split light into its spectrum at every pixel to read composition from orbit — chemistry at a distance."
+  - id: opt_laserRanging
+    title: "Laser Altimetry & LIDAR"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_precisionOptics]
+    flavor: "Time a laser pulse's round trip to map terrain and rendezvous range to the centimetre."
+  - id: opt_spaceTelescope
+    title: "Space Telescopes"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_precisionOptics]
+    flavor: "Put the aperture above the atmosphere for a diffraction-limited view of the universe."
+  - id: opt_segmentedMirrors
+    title: "Segmented Deployable Mirrors"
+    discipline: OpticsPhotonics
+    tier: 7
+    parents: [opt_spaceTelescope]
+    flavor: "Fold many phased mirror segments to launch an aperture far larger than any fairing."
+  - id: opt_adaptiveOptics
+    title: "Active & Adaptive Optics"
+    discipline: OpticsPhotonics
+    tier: 7
+    parents: [opt_spaceTelescope]
+    flavor: "Deform the mirror in real time to cancel distortion and hold a perfect figure — sharper images on demand."
+  - id: opt_coronagraphy
+    title: "Coronagraphy & Exoplanet Imaging"
+    discipline: OpticsPhotonics
+    tier: 8
+    parents: [opt_adaptiveOptics]
+    flavor: "Null a star's glare to image the faint worlds beside it — the optics of finding another Earth."
+  - id: opt_interferometry
+    title: "Optical Interferometry"
+    discipline: OpticsPhotonics
+    tier: 8
+    parents: [opt_segmentedMirrors]
+    flavor: "Combine light from separated apertures for the resolution of a telescope kilometres across."
+  # ---------- Life Support & Habitation (ECLSS, crew, habitats) ----------
+  - id: life_pressurizedCabin
+    title: "Pressurised Crew Cabin"
+    discipline: LifeSupport
+    tier: 3
+    parents: [met_earlyAlloys]
+    flavor: "A sealed, pressure-regulated volume that keeps a crew alive in vacuum for hours — the minimum viable spacecraft for a person."
+    parts: [MK2VApod]
+  - id: life_openLoopECLSS
+    title: "Open-Loop Oxygen & CO2 Scrubbing"
+    discipline: LifeSupport
+    tier: 4
+    parents: [life_pressurizedCabin]
+    flavor: "Bleed stored oxygen and scrub CO2 with lithium hydroxide — consumables-limited air for short missions."
+  - id: life_suitEVA
+    title: "Pressure Suits & EVA"
+    discipline: LifeSupport
+    tier: 4
+    parents: [life_pressurizedCabin]
+    flavor: "A wearable spacecraft for working outside — mobility, thermal control and air in a vacuum, on the body."
+  - id: life_co2Removal
+    title: "Regenerable CO2 Removal"
+    discipline: LifeSupport
+    tier: 5
+    parents: [life_openLoopECLSS]
+    flavor: "Swing-bed sorbents that bake out CO2 and reuse — air revitalisation that doesn't run out of cartridges."
+  - id: life_radiationShelter
+    title: "Radiation Shelters & Dosimetry"
+    discipline: LifeSupport
+    tier: 5
+    parents: [life_pressurizedCabin]
+    flavor: "Mass-shielded storm shelters and dose monitoring to ride out solar particle events beyond the magnetosphere."
+  - id: life_waterRecovery
+    title: "Water Recovery & Recycling"
+    discipline: LifeSupport
+    tier: 6
+    parents: [life_co2Removal]
+    flavor: "Distil and purify humidity, wash water and urine back to potable — the first big loop closure of a station."
+  - id: life_galleyWaste
+    title: "Food, Galley & Waste Management"
+    discipline: LifeSupport
+    tier: 6
+    parents: [life_co2Removal]
+    flavor: "Store, prepare and dispose for a crew over months — the unglamorous logistics of living in space."
+  - id: life_o2Generation
+    title: "Oxygen Generation Assembly"
+    discipline: LifeSupport
+    tier: 7
+    parents: [life_waterRecovery]
+    flavor: "Electrolyse recovered water for breathing oxygen — air made on board instead of carried up."
+  - id: life_longDurationHab
+    title: "Long-Duration Habitation Modules"
+    discipline: LifeSupport
+    tier: 7
+    parents: [life_galleyWaste]
+    flavor: "Pressurised modules sized and outfitted for crews to live and work for months — the rooms of a station."
+  - id: life_crewHealth
+    title: "Crew Health & Countermeasures"
+    discipline: LifeSupport
+    tier: 7
+    parents: [life_radiationShelter]
+    flavor: "Exercise, medicine and monitoring against bone loss, muscle wasting and isolation — keeping a crew flightworthy."
+  - id: life_closedLoopECLSS
+    title: "Closed-Loop Air & Water"
+    discipline: LifeSupport
+    tier: 8
+    parents: [life_o2Generation]
+    flavor: "Recover nearly all air and water in a tight physico-chemical loop — resupply mass falls toward zero."
+  - id: life_planetaryHab
+    title: "Surface Habitats & Airlocks"
+    discipline: LifeSupport
+    tier: 8
+    parents: [life_longDurationHab]
+    flavor: "Dust-tolerant airlocks and shielded habitats for living on a planetary surface, not just orbiting it."
+  - id: life_bioregenerative
+    title: "Bioregenerative Life Support"
+    discipline: LifeSupport
+    tier: 9
+    parents: [life_closedLoopECLSS]
+    flavor: "Grow plants to recycle air, water and food — a partly living loop for journeys too long to pack for."
+  - id: life_closedEcology
+    title: "Closed Ecological Systems"
+    discipline: LifeSupport
+    tier: 10
+    parents: [life_bioregenerative]
+    flavor: "A self-sustaining miniature biosphere — the life support of a colony that never resupplies."

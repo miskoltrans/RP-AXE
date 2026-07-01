@@ -163,17 +163,75 @@ digraph AXE {
   "mic_fpga" [label="Reconfigurable FPGAs\nMicroelectronics T6 · 2000",fillcolor="#cdb4db",fontcolor="#111111"];
   "mic_deepSubmicron" [label="Deep-Submicron Process Nodes\nMicroelectronics T7 · 2300",fillcolor="#cdb4db",fontcolor="#111111"];
   "mic_neuromorphic" [label="Neuromorphic & Edge-AI Processors\nMicroelectronics T9 · 1700",fillcolor="#cdb4db",fontcolor="#111111"];
+  "comp_sequencer" [label="Programmed Flight Sequencers\nComputing T2 · 90",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_digitalFlightComputer" [label="Digital Flight Computer\nComputing T4 · 900",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_dataStorage" [label="Onboard Data Storage\nComputing T5 · 1500",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_realTimeOS" [label="Real-Time Flight Software\nComputing T5 · 1500",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_simulation" [label="Hardware-in-the-Loop Simulation\nComputing T6 · 2000",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_faultTolerant" [label="Fault-Tolerant Redundant Computing\nComputing T6 · 2000",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_dataCompression" [label="Onboard Data Compression & Reduction\nComputing T6 · 2000",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_digitalTwin" [label="Operational Digital Twins\nComputing T7 · 2300",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_autonomousFaultMgmt" [label="Autonomous Fault Management\nComputing T7 · 2300",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_machineVision" [label="Machine-Vision Navigation\nComputing T7 · 2300",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_onboardAI" [label="Onboard Autonomy & Planning\nComputing T8 · 2100",fillcolor="#b5179e",fontcolor="#111111"];
+  "comp_quantumComputing" [label="Spaceborne Quantum Computing\nComputing T10 · 1300",fillcolor="#b5179e",fontcolor="#111111"];
+  "gnc_rateGyros" [label="Rate Gyros & Analog Autopilot\nGuidanceControl T1 · 20",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_reactionControl" [label="Reaction Control & Attitude Hold\nGuidanceControl T2 · 90",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_inertialNav" [label="Gimballed Inertial Navigation\nGuidanceControl T3 · 400",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_reactionWheels" [label="Reaction Wheels & Momentum Storage\nGuidanceControl T3 · 400",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_strapdownINS" [label="Strapdown Inertial Navigation\nGuidanceControl T4 · 900",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_digitalGuidance" [label="Digital Closed-Loop Ascent Guidance\nGuidanceControl T5 · 1500",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_cmg" [label="Control-Moment Gyros\nGuidanceControl T5 · 1500",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_opticalNav" [label="Optical & Star-Field Navigation\nGuidanceControl T6 · 2000",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_ringLaserGyro" [label="Ring-Laser & Fiber-Optic Gyros\nGuidanceControl T6 · 2000",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_autonomousRendezvous" [label="Autonomous Rendezvous & Proximity Ops\nGuidanceControl T6 · 2000",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_precisionLanding" [label="Terrain-Relative Precision Landing\nGuidanceControl T7 · 2300",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_propulsiveLanding" [label="Propulsive Landing Guidance\nGuidanceControl T8 · 2100",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_coldAtomIMU" [label="Cold-Atom Inertial Sensors\nGuidanceControl T9 · 1700",fillcolor="#7209b7",fontcolor="#111111"];
+  "tel_sBandTransponder" [label="Unified S-Band Transponder\nTelecommunications T3 · 400",fillcolor="#4361ee",fontcolor="#111111"];
+  "tel_dsnArraying" [label="DSN Antenna Arraying\nTelecommunications T5 · 1500",fillcolor="#4361ee",fontcolor="#111111"];
+  "tel_kaBand" [label="Ka-Band High-Rate Downlink\nTelecommunications T6 · 2000",fillcolor="#4361ee",fontcolor="#111111"];
+  "tel_relayConstellation" [label="Relay Satellite Constellations\nTelecommunications T6 · 2000",fillcolor="#4361ee",fontcolor="#111111"];
+  "tel_opticalComms" [label="Laser Optical Communications\nTelecommunications T7 · 2300",fillcolor="#4361ee",fontcolor="#111111"];
+  "tel_dtnNetworking" [label="Delay-Tolerant Networking\nTelecommunications T7 · 2300",fillcolor="#4361ee",fontcolor="#111111"];
+  "tel_interplanetaryInternet" [label="Interplanetary Internet\nTelecommunications T8 · 2100",fillcolor="#4361ee",fontcolor="#111111"];
+  "opt_filmCameras" [label="Film-Return Cameras\nOpticsPhotonics T2 · 90",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_tvImaging" [label="Vidicon TV Imaging\nOpticsPhotonics T3 · 400",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_precisionOptics" [label="Precision Optical Fabrication\nOpticsPhotonics T4 · 900",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_starTracker" [label="Star Trackers\nOpticsPhotonics T4 · 900",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_digitalImaging" [label="Digital CCD Imaging\nOpticsPhotonics T6 · 2000",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_spectrometry" [label="Imaging Spectrometers\nOpticsPhotonics T5 · 1500",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_laserRanging" [label="Laser Altimetry & LIDAR\nOpticsPhotonics T6 · 2000",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_spaceTelescope" [label="Space Telescopes\nOpticsPhotonics T6 · 2000",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_segmentedMirrors" [label="Segmented Deployable Mirrors\nOpticsPhotonics T7 · 2300",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_adaptiveOptics" [label="Active & Adaptive Optics\nOpticsPhotonics T7 · 2300",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_coronagraphy" [label="Coronagraphy & Exoplanet Imaging\nOpticsPhotonics T8 · 2100",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_interferometry" [label="Optical Interferometry\nOpticsPhotonics T8 · 2100",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "life_pressurizedCabin" [label="Pressurised Crew Cabin\nLifeSupport T3 · 400",fillcolor="#f72585",fontcolor="#111111"];
+  "life_openLoopECLSS" [label="Open-Loop Oxygen & CO2 Scrubbing\nLifeSupport T4 · 900",fillcolor="#f72585",fontcolor="#111111"];
+  "life_suitEVA" [label="Pressure Suits & EVA\nLifeSupport T4 · 900",fillcolor="#f72585",fontcolor="#111111"];
+  "life_co2Removal" [label="Regenerable CO2 Removal\nLifeSupport T5 · 1500",fillcolor="#f72585",fontcolor="#111111"];
+  "life_radiationShelter" [label="Radiation Shelters & Dosimetry\nLifeSupport T5 · 1500",fillcolor="#f72585",fontcolor="#111111"];
+  "life_waterRecovery" [label="Water Recovery & Recycling\nLifeSupport T6 · 2000",fillcolor="#f72585",fontcolor="#111111"];
+  "life_galleyWaste" [label="Food, Galley & Waste Management\nLifeSupport T6 · 2000",fillcolor="#f72585",fontcolor="#111111"];
+  "life_o2Generation" [label="Oxygen Generation Assembly\nLifeSupport T7 · 2300",fillcolor="#f72585",fontcolor="#111111"];
+  "life_longDurationHab" [label="Long-Duration Habitation Modules\nLifeSupport T7 · 2300",fillcolor="#f72585",fontcolor="#111111"];
+  "life_crewHealth" [label="Crew Health & Countermeasures\nLifeSupport T7 · 2300",fillcolor="#f72585",fontcolor="#111111"];
+  "life_closedLoopECLSS" [label="Closed-Loop Air & Water\nLifeSupport T8 · 2100",fillcolor="#f72585",fontcolor="#111111"];
+  "life_planetaryHab" [label="Surface Habitats & Airlocks\nLifeSupport T8 · 2100",fillcolor="#f72585",fontcolor="#111111"];
+  "life_bioregenerative" [label="Bioregenerative Life Support\nLifeSupport T9 · 1700",fillcolor="#f72585",fontcolor="#111111"];
+  "life_closedEcology" [label="Closed Ecological Systems\nLifeSupport T10 · 1300",fillcolor="#f72585",fontcolor="#111111"];
   { rank=same; "start" }
-  { rank=same; "soundingRocketry" "tel_pcmTelemetry" "met_weldedSteel" "pc_blackPowder" "fd_pressureFed" "elec_silverZinc" "aero_subsonicAirfoils" "str_pyroSeparation" "mic_vacuumTubes" }
-  { rank=same; "pc_ethanolLox" "pc_keroseneHydrotreating" "met_earlyAlloys" "tel_helicalDirectional" "cmp_glassFiber" "pc_doubleBaseSolid" "fd_gasGenerator" "th_filmCooling" "cryo_basicCryoStorage" "aero_parachuteRecovery" "str_stageSeparation" "str_interstageTruss" "mic_transistor" "mic_instrumentation" }
-  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "pc_cryoLiquefaction" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" "met_chemMilling" "cmp_ablativeTPS" "pc_hydrogenPeroxide" "th_ablativeCooling" "elec_fuelCell" "elec_siliconPV" "aero_transonicArea" "aero_sweptWing" "str_landingLegs" "rob_servoActuators" "mic_integratedCircuit" }
-  { rank=same; "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" "met_vacuumInductionMelting" "cmp_filamentWinding" "pc_castableComposite" "res_electrolysis" "th_passiveRadiators" "elec_bodyMountedArrays" "aero_supersonicInlets" "aero_reentryBluntBody" "aero_proceduralFairings" "str_deployableBooms" "str_dockingProbeDrogue" "rob_roverChassis" "mic_radHardening" "mic_mosLSI" "mic_probeAvionics" }
-  { rank=same; "pc_storableOxidizers" "cryo_stagedHydrolox" "tel_phasedArray" "ext_powerGrid" "met_titaniumForming" "met_vacuumArcRemelting" "cmp_carbonCarbon" "cmp_carbonFiberComposite" "pc_greenMonoprop" "res_regolithExcavation" "res_cryoLiquefactionISRU" "fd_expanderCycle" "fd_tapOffCycle" "fd_stagedCombustion" "th_heatPipes" "cryo_subcooling" "elec_trackingArrays" "nuc_rtg" "aero_hypersonicWaverider" "aero_liftingBody" "aero_gridFins" "str_androgynousDocking" "str_deployableTruss" "rob_roboticArm" "rob_suspension" "mic_photolithography" "mic_ccdSensors" "mic_memsSensors" "mic_powerElectronics" }
-  { rank=same; "cryo_zbo" "met_powderMetallurgyHIP" "met_singleCrystalTurbine" "cmp_pica" "cmp_copv" "cmp_ceramicTiles" "pc_gelledPropellant" "pc_methalox" "res_sabatier" "res_oreBeneficiation" "fd_aerospike" "fd_deepThrottle" "th_pumpedLoop" "th_deployableRadiators" "cryo_orbitalTransfer" "elec_lithiumIon" "elec_tripleJunction" "nuc_rtgAdvanced" "nuc_fissionReactor" "aero_supersonicRetropropulsion" "aero_iad" "aero_scramjet" "str_berthingMechanism" "str_actuatedMechanisms" "str_reusableLandingGear" "str_inflatableHab" "rob_sampleHandling" "rob_autonomousNav" "mic_systemOnChip" "mic_fpga" }
-  { rank=same; "met_refractoryMetals" "cmp_ceramicMatrixComposite" "pc_subcooledDensified" "res_metalExtraction" "res_propellantDepot" "fd_fullFlowStaged" "fd_dualBell" "th_cryocooler" "cryo_longDuration" "cryo_slush" "elec_concentratorPV" "elec_regenFuelCell" "nuc_thermionic" "nuc_braytonReactor" "aero_activeFlowControl" "str_largeDeployableReflectors" "rob_dexterousManipulation" "rob_skyCrane" "rob_rotorcraft" "mic_deepSubmicron" }
-  { rank=same; "met_additiveManufacturing" "cmp_metalMatrixComposite" "cmp_transpirationTPS" "res_atmosphericMining" "elec_flexibleArrays" "nuc_nuclearThermal" "nuc_nuclearElectric" "aero_morphingWing" "str_inSpaceAssembly" "rob_roboticAssembly" "rob_subsurfaceAccess" }
-  { rank=same; "met_amorphousAlloys" "res_closedLoopFab" "res_heliumMining" "fd_rotatingDetonation" "th_dropletRadiator" "nuc_nervaImproved" "rob_swarmRobotics" "mic_neuromorphic" }
-  { rank=same; "nuc_gasCoreNTR" "nuc_fusionTorch" }
+  { rank=same; "soundingRocketry" "tel_pcmTelemetry" "met_weldedSteel" "pc_blackPowder" "fd_pressureFed" "elec_silverZinc" "aero_subsonicAirfoils" "str_pyroSeparation" "mic_vacuumTubes" "gnc_rateGyros" }
+  { rank=same; "pc_ethanolLox" "pc_keroseneHydrotreating" "met_earlyAlloys" "tel_helicalDirectional" "cmp_glassFiber" "pc_doubleBaseSolid" "fd_gasGenerator" "th_filmCooling" "cryo_basicCryoStorage" "aero_parachuteRecovery" "str_stageSeparation" "str_interstageTruss" "mic_transistor" "mic_instrumentation" "comp_sequencer" "gnc_reactionControl" "opt_filmCameras" }
+  { rank=same; "pc_apcpGrain" "pc_hypergolicChemistry" "pc_cryoLiquefaction" "fd_turbopumps" "th_regenCooling" "cryo_loxHandling" "tel_cassegrainHGA" "met_chemMilling" "cmp_ablativeTPS" "pc_hydrogenPeroxide" "th_ablativeCooling" "elec_fuelCell" "elec_siliconPV" "aero_transonicArea" "aero_sweptWing" "str_landingLegs" "rob_servoActuators" "mic_integratedCircuit" "gnc_inertialNav" "gnc_reactionWheels" "tel_sBandTransponder" "opt_tvImaging" "life_pressurizedCabin" }
+  { rank=same; "met_oxRichSuperalloys" "fd_combustionStability" "cryo_lh2Insulation" "tel_dsnRanging" "met_vacuumInductionMelting" "cmp_filamentWinding" "pc_castableComposite" "res_electrolysis" "th_passiveRadiators" "elec_bodyMountedArrays" "aero_supersonicInlets" "aero_reentryBluntBody" "aero_proceduralFairings" "str_deployableBooms" "str_dockingProbeDrogue" "rob_roverChassis" "mic_radHardening" "mic_mosLSI" "mic_probeAvionics" "comp_digitalFlightComputer" "gnc_strapdownINS" "opt_precisionOptics" "opt_starTracker" "life_openLoopECLSS" "life_suitEVA" }
+  { rank=same; "pc_storableOxidizers" "cryo_stagedHydrolox" "tel_phasedArray" "ext_powerGrid" "met_titaniumForming" "met_vacuumArcRemelting" "cmp_carbonCarbon" "cmp_carbonFiberComposite" "pc_greenMonoprop" "res_regolithExcavation" "res_cryoLiquefactionISRU" "fd_expanderCycle" "fd_tapOffCycle" "fd_stagedCombustion" "th_heatPipes" "cryo_subcooling" "elec_trackingArrays" "nuc_rtg" "aero_hypersonicWaverider" "aero_liftingBody" "aero_gridFins" "str_androgynousDocking" "str_deployableTruss" "rob_roboticArm" "rob_suspension" "mic_photolithography" "mic_ccdSensors" "mic_memsSensors" "mic_powerElectronics" "comp_dataStorage" "comp_realTimeOS" "gnc_digitalGuidance" "gnc_cmg" "tel_dsnArraying" "opt_spectrometry" "life_co2Removal" "life_radiationShelter" }
+  { rank=same; "cryo_zbo" "met_powderMetallurgyHIP" "met_singleCrystalTurbine" "cmp_pica" "cmp_copv" "cmp_ceramicTiles" "pc_gelledPropellant" "pc_methalox" "res_sabatier" "res_oreBeneficiation" "fd_aerospike" "fd_deepThrottle" "th_pumpedLoop" "th_deployableRadiators" "cryo_orbitalTransfer" "elec_lithiumIon" "elec_tripleJunction" "nuc_rtgAdvanced" "nuc_fissionReactor" "aero_supersonicRetropropulsion" "aero_iad" "aero_scramjet" "str_berthingMechanism" "str_actuatedMechanisms" "str_reusableLandingGear" "str_inflatableHab" "rob_sampleHandling" "rob_autonomousNav" "mic_systemOnChip" "mic_fpga" "comp_simulation" "comp_faultTolerant" "comp_dataCompression" "gnc_opticalNav" "gnc_ringLaserGyro" "gnc_autonomousRendezvous" "tel_kaBand" "tel_relayConstellation" "opt_digitalImaging" "opt_laserRanging" "opt_spaceTelescope" "life_waterRecovery" "life_galleyWaste" }
+  { rank=same; "met_refractoryMetals" "cmp_ceramicMatrixComposite" "pc_subcooledDensified" "res_metalExtraction" "res_propellantDepot" "fd_fullFlowStaged" "fd_dualBell" "th_cryocooler" "cryo_longDuration" "cryo_slush" "elec_concentratorPV" "elec_regenFuelCell" "nuc_thermionic" "nuc_braytonReactor" "aero_activeFlowControl" "str_largeDeployableReflectors" "rob_dexterousManipulation" "rob_skyCrane" "rob_rotorcraft" "mic_deepSubmicron" "comp_digitalTwin" "comp_autonomousFaultMgmt" "comp_machineVision" "gnc_precisionLanding" "tel_opticalComms" "tel_dtnNetworking" "opt_segmentedMirrors" "opt_adaptiveOptics" "life_o2Generation" "life_longDurationHab" "life_crewHealth" }
+  { rank=same; "met_additiveManufacturing" "cmp_metalMatrixComposite" "cmp_transpirationTPS" "res_atmosphericMining" "elec_flexibleArrays" "nuc_nuclearThermal" "nuc_nuclearElectric" "aero_morphingWing" "str_inSpaceAssembly" "rob_roboticAssembly" "rob_subsurfaceAccess" "comp_onboardAI" "gnc_propulsiveLanding" "tel_interplanetaryInternet" "opt_coronagraphy" "opt_interferometry" "life_closedLoopECLSS" "life_planetaryHab" }
+  { rank=same; "met_amorphousAlloys" "res_closedLoopFab" "res_heliumMining" "fd_rotatingDetonation" "th_dropletRadiator" "nuc_nervaImproved" "rob_swarmRobotics" "mic_neuromorphic" "gnc_coldAtomIMU" "life_bioregenerative" }
+  { rank=same; "nuc_gasCoreNTR" "nuc_fusionTorch" "comp_quantumComputing" "life_closedEcology" }
   "start" -> "soundingRocketry" [style=solid];
   "soundingRocketry" -> "pc_ethanolLox" [style=solid];
   "soundingRocketry" -> "pc_keroseneHydrotreating" [style=solid];
@@ -347,6 +405,68 @@ digraph AXE {
   "mic_photolithography" -> "mic_fpga" [style=solid];
   "mic_systemOnChip" -> "mic_deepSubmicron" [style=solid];
   "mic_deepSubmicron" -> "mic_neuromorphic" [style=solid];
+  "mic_vacuumTubes" -> "comp_sequencer" [style=solid];
+  "mic_integratedCircuit" -> "comp_digitalFlightComputer" [style=solid];
+  "comp_digitalFlightComputer" -> "comp_dataStorage" [style=solid];
+  "comp_digitalFlightComputer" -> "comp_realTimeOS" [style=solid];
+  "comp_realTimeOS" -> "comp_simulation" [style=solid];
+  "comp_realTimeOS" -> "comp_faultTolerant" [style=solid];
+  "comp_dataStorage" -> "comp_dataCompression" [style=solid];
+  "comp_simulation" -> "comp_digitalTwin" [style=solid];
+  "comp_faultTolerant" -> "comp_autonomousFaultMgmt" [style=solid];
+  "mic_systemOnChip" -> "comp_machineVision" [style=solid];
+  "comp_machineVision" -> "comp_onboardAI" [style=solid];
+  "comp_onboardAI" -> "comp_quantumComputing" [style=solid];
+  "start" -> "gnc_rateGyros" [style=solid];
+  "gnc_rateGyros" -> "gnc_reactionControl" [style=solid];
+  "gnc_rateGyros" -> "gnc_inertialNav" [style=solid];
+  "gnc_reactionControl" -> "gnc_reactionWheels" [style=solid];
+  "gnc_inertialNav" -> "gnc_strapdownINS" [style=solid];
+  "gnc_strapdownINS" -> "gnc_digitalGuidance" [style=solid];
+  "comp_digitalFlightComputer" -> "gnc_digitalGuidance" [style=solid];
+  "gnc_reactionWheels" -> "gnc_cmg" [style=solid];
+  "gnc_strapdownINS" -> "gnc_opticalNav" [style=solid];
+  "gnc_strapdownINS" -> "gnc_ringLaserGyro" [style=solid];
+  "gnc_digitalGuidance" -> "gnc_autonomousRendezvous" [style=solid];
+  "gnc_autonomousRendezvous" -> "gnc_precisionLanding" [style=solid];
+  "gnc_precisionLanding" -> "gnc_propulsiveLanding" [style=solid];
+  "fd_deepThrottle" -> "gnc_propulsiveLanding" [style=solid];
+  "gnc_ringLaserGyro" -> "gnc_coldAtomIMU" [style=solid];
+  "tel_helicalDirectional" -> "tel_sBandTransponder" [style=solid];
+  "tel_dsnRanging" -> "tel_dsnArraying" [style=solid];
+  "tel_phasedArray" -> "tel_kaBand" [style=solid];
+  "tel_phasedArray" -> "tel_relayConstellation" [style=solid];
+  "tel_kaBand" -> "tel_opticalComms" [style=solid];
+  "tel_relayConstellation" -> "tel_dtnNetworking" [style=solid];
+  "tel_dtnNetworking" -> "tel_interplanetaryInternet" [style=solid];
+  "tel_opticalComms" -> "tel_interplanetaryInternet" [style=solid];
+  "mic_vacuumTubes" -> "opt_filmCameras" [style=solid];
+  "opt_filmCameras" -> "opt_tvImaging" [style=solid];
+  "opt_filmCameras" -> "opt_precisionOptics" [style=solid];
+  "opt_tvImaging" -> "opt_starTracker" [style=solid];
+  "opt_tvImaging" -> "opt_digitalImaging" [style=solid];
+  "mic_ccdSensors" -> "opt_digitalImaging" [style=solid];
+  "opt_precisionOptics" -> "opt_spectrometry" [style=solid];
+  "opt_precisionOptics" -> "opt_laserRanging" [style=solid];
+  "opt_precisionOptics" -> "opt_spaceTelescope" [style=solid];
+  "opt_spaceTelescope" -> "opt_segmentedMirrors" [style=solid];
+  "opt_spaceTelescope" -> "opt_adaptiveOptics" [style=solid];
+  "opt_adaptiveOptics" -> "opt_coronagraphy" [style=solid];
+  "opt_segmentedMirrors" -> "opt_interferometry" [style=solid];
+  "met_earlyAlloys" -> "life_pressurizedCabin" [style=solid];
+  "life_pressurizedCabin" -> "life_openLoopECLSS" [style=solid];
+  "life_pressurizedCabin" -> "life_suitEVA" [style=solid];
+  "life_openLoopECLSS" -> "life_co2Removal" [style=solid];
+  "life_pressurizedCabin" -> "life_radiationShelter" [style=solid];
+  "life_co2Removal" -> "life_waterRecovery" [style=solid];
+  "life_co2Removal" -> "life_galleyWaste" [style=solid];
+  "life_waterRecovery" -> "life_o2Generation" [style=solid];
+  "life_galleyWaste" -> "life_longDurationHab" [style=solid];
+  "life_radiationShelter" -> "life_crewHealth" [style=solid];
+  "life_o2Generation" -> "life_closedLoopECLSS" [style=solid];
+  "life_longDurationHab" -> "life_planetaryHab" [style=solid];
+  "life_closedLoopECLSS" -> "life_bioregenerative" [style=solid];
+  "life_bioregenerative" -> "life_closedEcology" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;
   label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";
 }
