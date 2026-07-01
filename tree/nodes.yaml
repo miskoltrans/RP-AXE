@@ -545,7 +545,7 @@ nodes:
     title: "Deployable Panel Radiators"
     discipline: Thermodynamics
     tier: 6
-    parents: [th_heatPipes]
+    parents: [th_heatPipes, str_deployableTruss]
     flavor: "Fold large radiating area for launch, deploy it on orbit — the only way to reject the tens of kilowatts a reactor or big array produces."
   - id: th_cryocooler
     title: "Mechanical Cryocoolers"
@@ -621,7 +621,7 @@ nodes:
     title: "Sun-Tracking Array Drives"
     discipline: ElectricalPower
     tier: 5
-    parents: [elec_bodyMountedArrays]
+    parents: [elec_bodyMountedArrays, rob_servoActuators]
     flavor: "Gimbal the arrays to face the sun continuously, multiplying usable power — and adding the first always-moving mechanism to fail."
   - id: elec_lithiumIon
     title: "Lithium-Ion Energy Storage"
@@ -785,7 +785,7 @@ nodes:
     title: "Grid Fins & Aerodynamic Actuators"
     discipline: Aerodynamics
     tier: 5
-    parents: [aero_reentryBluntBody]
+    parents: [aero_reentryBluntBody, rob_servoActuators]
     flavor: "Stow flat, deploy into the airstream for crisp control authority on a descending booster — the steering of a reusable first stage."
   - id: aero_supersonicRetropropulsion
     title: "Supersonic Retropropulsion"
@@ -1129,7 +1129,7 @@ nodes:
     title: "Machine-Vision Navigation"
     discipline: Computing
     tier: 7
-    parents: [mic_systemOnChip]
+    parents: [mic_systemOnChip, opt_digitalImaging]
     flavor: "Turn camera frames into position and hazard maps in real time — eyes that steer the spacecraft."
   - id: comp_onboardAI
     title: "Onboard Autonomy & Planning"
@@ -1191,7 +1191,7 @@ nodes:
     title: "Optical & Star-Field Navigation"
     discipline: GuidanceControl
     tier: 6
-    parents: [gnc_strapdownINS]
+    parents: [gnc_strapdownINS, opt_starTracker]
     flavor: "Fix attitude and position against catalogued stars and landmarks — autonomy independent of the radio link. (Pairs with star trackers in Optics.)"
   - id: gnc_ringLaserGyro
     title: "Ring-Laser & Fiber-Optic Gyros"
@@ -1203,7 +1203,7 @@ nodes:
     title: "Autonomous Rendezvous & Proximity Ops"
     discipline: GuidanceControl
     tier: 6
-    parents: [gnc_digitalGuidance]
+    parents: [gnc_digitalGuidance, tel_sBandTransponder]
     flavor: "Close, match and dock with another vehicle by computer — the maneuver that builds stations and refuels ships."
   - id: gnc_precisionLanding
     title: "Terrain-Relative Precision Landing"
@@ -1319,13 +1319,13 @@ nodes:
     title: "Space Telescopes"
     discipline: OpticsPhotonics
     tier: 6
-    parents: [opt_precisionOptics]
+    parents: [opt_precisionOptics, mic_ccdSensors]
     flavor: "Put the aperture above the atmosphere for a diffraction-limited view of the universe."
   - id: opt_segmentedMirrors
     title: "Segmented Deployable Mirrors"
     discipline: OpticsPhotonics
     tier: 7
-    parents: [opt_spaceTelescope]
+    parents: [opt_spaceTelescope, str_deployableBooms]
     flavor: "Fold many phased mirror segments to launch an aperture far larger than any fairing."
   - id: opt_adaptiveOptics
     title: "Active & Adaptive Optics"
@@ -1431,3 +1431,120 @@ nodes:
     tier: 10
     parents: [life_bioregenerative]
     flavor: "A self-sustaining miniature biosphere — the life support of a colony that never resupplies."
+
+  # ======================= SYSTEMS INTEGRATION — vehicles as convergence points =======================
+  # Each requires 3-4 disciplines to have matured (anyToUnlock=False). These are where the tree becomes a
+  # web, where the interesting multi-discipline gates live, and where integrated composite parts home.
+  - id: int_satelliteBus
+    title: "Uncrewed Satellite Bus"
+    discipline: SystemsIntegration
+    tier: 3
+    parents: [mic_transistor, elec_silverZinc, gnc_reactionControl]
+    anyToUnlock: false
+    flavor: "Power, control and a radio wrapped around a payload — the first thing humans ever put in orbit, and the ancestor of every uncrewed spacecraft."
+  - id: int_crewedCapsule
+    title: "Crewed Reentry Capsule"
+    discipline: SystemsIntegration
+    tier: 4
+    parents: [life_pressurizedCabin, gnc_reactionControl, cmp_ablativeTPS, elec_silverZinc]
+    anyToUnlock: false
+    flavor: "A pressure vessel, an attitude system, a heatshield and power — integrated tightly enough to carry a person up and bring them home alive."
+    parts: [ROC-ApolloCMBDB]
+  - id: int_comsatBus
+    title: "Communications Satellite Bus"
+    discipline: SystemsIntegration
+    tier: 5
+    parents: [int_satelliteBus, tel_sBandTransponder, elec_bodyMountedArrays, gnc_reactionWheels]
+    anyToUnlock: false
+    flavor: "A pointed, powered, station-kept platform whose whole reason to exist is the antenna it carries."
+  - id: int_orbitalLab
+    title: "Crewed Orbital Laboratory"
+    discipline: SystemsIntegration
+    tier: 5
+    parents: [int_crewedCapsule, life_openLoopECLSS, str_dockingProbeDrogue]
+    anyToUnlock: false
+    flavor: "Dock a habitable volume to a capsule and you have the first place to live and work in orbit for more than a day."
+  - id: int_deepSpaceProbe
+    title: "Deep-Space Probe"
+    discipline: SystemsIntegration
+    tier: 6
+    parents: [int_satelliteBus, tel_dsnRanging, nuc_rtg, mic_probeAvionics]
+    anyToUnlock: false
+    flavor: "Nuclear power, a deep-space radio and enough autonomy to run itself light-hours from help — the emissary to the outer planets."
+  - id: int_sampleReturn
+    title: "Sample-Return Vehicle"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [rob_sampleHandling, cmp_pica, gnc_autonomousRendezvous]
+    anyToUnlock: false
+    flavor: "Grab material from a surface, launch it, rendezvous and survive a high-speed entry home — several missions in one, each of which must not fail."
+  - id: int_lunarLander
+    title: "Crewed Lunar Lander"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [int_crewedCapsule, str_landingLegs, fd_deepThrottle, gnc_autonomousRendezvous]
+    anyToUnlock: false
+    flavor: "Throttle to a soft touchdown, keep a crew alive on the surface, then rendezvous in orbit with no second chances — the hardest thing anyone has flown."
+  - id: int_spaceStation
+    title: "Modular Space Station"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [str_berthingMechanism, life_waterRecovery, elec_trackingArrays, th_pumpedLoop]
+    anyToUnlock: false
+    flavor: "Assemble pressurised modules, recycle the air and water, power and cool it all — a permanent human foothold that grows one launch at a time."
+  - id: int_crewedRover
+    title: "Pressurised Crewed Rover"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [rob_roverChassis, life_pressurizedCabin, elec_lithiumIon]
+    anyToUnlock: false
+    flavor: "A habitat on wheels that extends a crew's reach from the landing site to the horizon and back."
+  - id: int_reusableBooster
+    title: "Reusable First Stage"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [aero_gridFins, str_reusableLandingGear, fd_deepThrottle, gnc_precisionLanding]
+    anyToUnlock: false
+    flavor: "Fly back, steer through the atmosphere, relight and land on a mark meters wide — the convergence that turned rockets from expendable to reusable."
+  - id: int_reusableSpaceplane
+    title: "Reusable Spaceplane"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [aero_scramjet, cmp_ceramicTiles, cryo_lh2Insulation, gnc_digitalGuidance]
+    anyToUnlock: false
+    flavor: "Wings, reusable TPS, cryogenic propulsion and digital guidance in one airframe — the runway-to-orbit dream, and its brutal integration bill."
+  - id: int_orbitalObservatory
+    title: "Great Space Observatory"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [opt_segmentedMirrors, str_largeDeployableReflectors, th_cryocooler, gnc_ringLaserGyro]
+    anyToUnlock: false
+    flavor: "A folded mirror, a rigid structure, cryogenic detectors and arcsecond pointing — an instrument the size of a bus that sees the beginning of time."
+  - id: int_marsAscentVehicle
+    title: "In-Situ Ascent Vehicle"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [res_sabatier, int_crewedCapsule, gnc_precisionLanding]
+    anyToUnlock: false
+    flavor: "Land empty, make your propellant from the atmosphere, and fly home on it — the keystone that makes a crewed Mars return close."
+  - id: int_surfaceBase
+    title: "Permanent Surface Base"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [life_planetaryHab, res_metalExtraction, nuc_braytonReactor, str_inflatableHab]
+    anyToUnlock: false
+    flavor: "Habitats, local resources, nuclear power and shielding — the difference between visiting a world and living on it."
+  - id: int_nuclearCruiser
+    title: "Nuclear Deep-Space Cruiser"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [nuc_nuclearElectric, cryo_longDuration, comp_autonomousFaultMgmt, life_closedLoopECLSS]
+    anyToUnlock: false
+    flavor: "Reactor power, years of cryo storage, self-repairing autonomy and a closed cabin — a ship that carries a crew across the solar system and keeps them alive."
+  - id: int_interstellarPrecursor
+    title: "Interstellar Precursor"
+    discipline: SystemsIntegration
+    tier: 10
+    parents: [int_nuclearCruiser, nuc_nervaImproved, comp_onboardAI]
+    anyToUnlock: false
+    flavor: "Everything, matured and pushed to its limit, aimed at the nearest star's doorstep — the endgame the whole program was quietly building toward."

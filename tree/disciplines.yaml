@@ -26,3 +26,6 @@ GuidanceControl:       { title: "Guidance & Control",    order: 15, color: "#720
 Telecommunications:    { title: "Telecommunications",    order: 16, color: "#4361ee", icon: RDicon_unmanned }
 OpticsPhotonics:       { title: "Optics & Photonics",    order: 17, color: "#3a0ca3", icon: RDicon_science }
 LifeSupport:           { title: "Life Support",          order: 18, color: "#f72585", icon: RDicon_commandmodules }
+# --- convergence layer (NOT a science discipline): where whole vehicles come together from 3-4 disciplines.
+#     Also the home for integrated composite parts (probes, capsules) that can't be single-discipline-homed. ---
+SystemsIntegration:    { title: "Systems Integration",    order: 19, color: "#e8e8e8", icon: RDicon_generic }
