@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:true, icons:true, square:true, layout:'bands', spacingF:0.7, diffspread:false };
+const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:true, icons:true, square:true, layout:'bands', spacingF:0.7, diffspread:false, lanePitch:13 };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
@@ -307,7 +307,7 @@ function buildLaneRoutes(){
   }
   // tight, fixed pitch between lanes (centred in the gutter), not spread across the whole gutter;
   // clamps down only if a very busy gutter would otherwise overflow ~80% of its width.
-  const LANE_PITCH=13;
+  const LANE_PITCH=opt.lanePitch;   // px between parallel lanes (live-tunable in the bar)
   const laneX=(g,l)=>{ const n=lanesN[g], gw=TW-NW(), pitch=Math.min(LANE_PITCH,(gw*0.8)/Math.max(1,n)), cx=tierX(g)+NW()+gw/2;
     return cx+(l-(n-1)/2)*pitch; };
   const built=[];
@@ -561,6 +561,7 @@ function init(){
   if(P0.get('layout')) opt.layout=P0.get('layout'); else if(P0.has('mylayout')) opt.layout='sugiyama';
   if(P0.get('spacing')==='compact') opt.spacingF=0.7; else if(P0.get('spacing')==='airy') opt.spacingF=1.6;
   if(P0.has('diffspread')) opt.diffspread=true;
+  if(P0.get('lanePitch')) opt.lanePitch=+P0.get('lanePitch')||opt.lanePitch;
   buildModel(); restore();
   const rq=new URLSearchParams(location.search).get('research');   // ?research=id,id — shareable snapshot / demo
   if(rq) rq.split(',').forEach(x=>{ if(byId[x]) researched.add(x); });
@@ -617,6 +618,9 @@ function init(){
   selS.addEventListener('change',()=>{ opt.spacingF=selS.value==='compact'?0.7:(selS.value==='airy'?1.6:1); relayout(); });
   const cd=document.getElementById('c_diff'); cd.checked=opt.diffspread;
   cd.addEventListener('change',()=>{ opt.diffspread=cd.checked; relayout(); });
+  const rl=document.getElementById('r_lane'), rlv=document.getElementById('r_lane_v');
+  rl.value=opt.lanePitch; rlv.textContent=opt.lanePitch+'px';
+  rl.addEventListener('input',()=>{ opt.lanePitch=+rl.value; rlv.textContent=opt.lanePitch+'px'; if(opt.lane)rebuild(); });
   const sync=()=>{ document.getElementById('c_fan').checked=opt.fan; document.getElementById('c_arr').checked=opt.arrows;
     document.getElementById('c_disc').checked=opt.discEdges; document.getElementById('c_hi').checked=opt.highlight;
     document.getElementById('c_lane').checked=opt.lane; };
