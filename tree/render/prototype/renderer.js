@@ -73,35 +73,65 @@ function reachable(id, adj){                       // BFS closure (ancestors via
 // per-edge waypoints through each spanned tier. applyLayout() swaps pos+waypoints in/out so ALL the
 // downstream code (anchors, routing, lane assignment, fit, hit-test) works unchanged either way.
 function computeMyLayout(){
-  const COLW=380, ROWH=92;
-  const tiers={}; let maxT=0;
-  for(const n of D.nodes){ (tiers[n.tier]=tiers[n.tier]||[]).push(n); if(n.tier>maxT)maxT=n.tier; }
-  const dord=id=>(D.disciplines[byId[id].discipline]||{}).order||99;
-  for(const t in tiers) tiers[t].sort((a,b)=>(dord(a.id)-dord(b.id))||(a.id<b.id?-1:1));
-  const rank={}; for(const t in tiers) tiers[t].forEach((n,i)=>rank[n.id]=i);
-  for(let s=0;s<6;s++){ const up=s%2===0;                     // alternate up/down median sweeps
-    for(let t=0;t<=maxT;t++){ const arr=tiers[t]; if(!arr)continue;
-      for(const n of arr){ const ns=up?(parents[n.id]||[]):(children[n.id]||[]);
-        n._bc = ns.length ? ns.reduce((x,id)=>x+(rank[id]??0),0)/ns.length : (rank[n.id]??0); }
-      arr.sort((a,b)=>(a._bc-b._bc)||(rank[a.id]-rank[b.id]));
-      arr.forEach((n,i)=>rank[n.id]=i);
+  const COLW=380, SPACING_Y=94;
+  // --- layered graph with DUMMY nodes on every >1-tier edge (so long edges join the ordering) ---
+  const vtier={}, seed={}, layers={}, prev={}, nxt={}, chains=[];
+  for(const n of D.nodes){ vtier[n.id]=n.tier; seed[n.id]=(D.disciplines[n.discipline]||{}).order||99;
+    (layers[n.tier]=layers[n.tier]||[]).push(n.id); }
+  const addAdj=(a,b)=>{ (nxt[a]=nxt[a]||[]).push(b); (prev[b]=prev[b]||[]).push(a); };
+  let dc=0;
+  for(const n of D.nodes){ const cid=n.id, ct=n.tier;
+    for(const pid of (parents[cid]||[])){ if(!(pid in byId)) continue;
+      const pt=byId[pid].tier;
+      if(pt>=ct){ addAdj(pid,cid); chains.push([pid,cid,[pid,cid]]); continue; }   // non-forward: straight
+      const chain=[pid];
+      for(let t=pt+1;t<ct;t++){ const dk='__d'+(dc++); vtier[dk]=t; seed[dk]=seed[pid];
+        (layers[t]=layers[t]||[]).push(dk); chain.push(dk); }
+      chain.push(cid);
+      for(let i=0;i<chain.length-1;i++) addAdj(chain[i],chain[i+1]);
+      chains.push([pid,cid,chain]);
     } }
-  let maxRows=0; for(const t in tiers) if(tiers[t].length>maxRows) maxRows=tiers[t].length;
-  for(const t in tiers){ const arr=tiers[t], off=(maxRows-arr.length)*ROWH/2;
-    arr.forEach((n,i)=>{ n._lx=n.tier*COLW; n._ly=i*ROWH+off; }); }
-  for(let it=0; it<12; it++)                                  // straighten: pull to neighbour mean, keep order+gap
-    for(let t=0;t<=maxT;t++){ const arr=tiers[t]; if(!arr)continue; let prev=-1e9;
-      for(const n of arr){ const ns=(parents[n.id]||[]).concat(children[n.id]||[]);
-        const des=ns.length ? ns.reduce((y,id)=>y+byId[id]._ly,0)/ns.length : n._ly;
-        n._ly=Math.max(des, prev+ROWH); prev=n._ly; } }
-  for(const e of edges){                                      // waypoints: one per spanned tier, y interpolated
-    if(!(e.from in byId)||!(e.to in byId)){ e._mywp=null; continue; }
-    const p=byId[e.from], c=byId[e.to], tp=p.tier, tc=c.tier;
-    if(tc<=tp){ e._mywp=[[p._lx,p._ly],[c._lx,c._ly]]; continue; }
-    const wp=[]; for(let t=tp;t<=tc;t++){ const f=(t-tp)/(tc-tp);
-      wp.push([t*COLW, t===tp?p._ly:(t===tc?c._ly:p._ly+(c._ly-p._ly)*f)]); }
-    e._mywp=wp;
-  }
+  const order=Object.keys(layers).map(Number).sort((a,b)=>a-b);
+  const rank={};
+  const reindex=(t,key)=>{ layers[t].sort(key); layers[t].forEach((v,i)=>rank[v]=i); };
+  for(const t of order) reindex(t,(a,b)=>(seed[a]-seed[b])||(String(a)<String(b)?-1:1));
+  const median=ids=>{ if(!ids||!ids.length) return -1; const vs=ids.map(w=>rank[w]).sort((a,b)=>a-b);
+    const m=vs.length>>1; return vs.length%2 ? vs[m] : (vs[m-1]+vs[m])/2; };
+  const crossings=()=>{ let c=0;
+    for(let oi=0;oi<order.length-1;oi++){ const t=order[oi], es=[];
+      for(const u of layers[t]) for(const w of (nxt[u]||[])) if(vtier[w]===t+1) es.push([rank[u],rank[w]]);
+      es.sort((a,b)=>a[0]-b[0]||a[1]-b[1]); const seq=es.map(e=>e[1]);
+      for(let i=0;i<seq.length;i++) for(let j=i+1;j<seq.length;j++) if(seq[i]>seq[j]) c++; }
+    return c; };
+  let best=null;                                             // median sweeps; keep least-crossing order
+  for(let s=0;s<8;s++){ const asc=s%2===0, adj=asc?prev:nxt, seq=asc?order:order.slice().reverse();
+    for(const t of seq){ const keep=Object.assign({},rank);
+      reindex(t,(a,b)=>{ const ma=(adj[a]&&adj[a].length)?median(adj[a]):keep[a],
+                               mb=(adj[b]&&adj[b].length)?median(adj[b]):keep[b];
+                         return (ma-mb)||(keep[a]-keep[b]); }); }
+    const c=crossings(); if(best===null||c<best.c){ best={c,ord:{}}; for(const t of order) best.ord[t]=layers[t].slice(); } }
+  for(const t of order){ layers[t]=best.ord[t]; layers[t].forEach((v,i)=>rank[v]=i); }
+  // --- coordinate assignment: isotonic (PAV) pull toward neighbour mean under a min gap ---
+  const isd=v=>String(v).startsWith('__d');
+  const gap=(a,b)=>(isd(a)&&isd(b))?0.12:((isd(a)||isd(b))?0.45:1.0);   // dummies are thin
+  const pav=a=>{ const vals=[],cnts=[];
+    for(const x of a){ vals.push(x); cnts.push(1);
+      while(vals.length>1 && vals[vals.length-2]>=vals[vals.length-1]){
+        const v2=vals.pop(),c2=cnts.pop(),v1=vals.pop(),c1=cnts.pop(); vals.push((v1*c1+v2*c2)/(c1+c2)); cnts.push(c1+c2); } }
+    const out=[]; for(let i=0;i<vals.length;i++) for(let k=0;k<cnts[i];k++) out.push(vals[i]); return out; };
+  const y={}; for(const t of order) for(const v of layers[t]) y[v]=rank[v];
+  for(let it=0;it<30;it++){
+    const des={}; for(const t of order) for(const v of layers[t]){ const ns=(prev[v]||[]).concat(nxt[v]||[]);
+      des[v]= ns.length ? ns.reduce((s,w)=>s+y[w],0)/ns.length : y[v]; }
+    for(const t of order){ const row=layers[t]; if(!row.length) continue;
+      const c=[0]; let acc=0; for(let i=1;i<row.length;i++){ acc+=gap(row[i-1],row[i]); c[i]=acc; }
+      const z=pav(row.map((v,i)=>des[v]-c[i])); for(let i=0;i<row.length;i++) y[row[i]]=z[i]+c[i]; } }
+  let miny=Infinity; for(const v in y) if(y[v]<miny) miny=y[v];
+  const Y=v=>(y[v]-miny)*SPACING_Y;
+  for(const n of D.nodes){ n._lx=n.tier*COLW; n._ly=Y(n.id); }
+  const eByKey={}; for(const e of edges) eByKey[e.from+'>'+e.to]=e;   // route each edge through its chain
+  for(const [pid,cid,chain] of chains){ const e=eByKey[pid+'>'+cid]; if(e) e._mywp=chain.map(v=>[vtier[v]*COLW, Y(v)]); }
+  for(const e of edges) if(!e._mywp) e._mywp=(e.from in byId&&e.to in byId)?[[byId[e.from]._lx,byId[e.from]._ly],[byId[e.to]._lx,byId[e.to]._ly]]:null;
 }
 function applyLayout(useMine){
   for(const n of D.nodes) n.pos = useMine ? [n._lx, n._ly] : n._opos;
