@@ -8,7 +8,9 @@ RO-RSRM	RSRM	Squad	pc_castableComposite	4	heavyRocketry	SolidFuel;PBAN	ModuleEng
 ROC-ApolloLESBDB	Apollo Launch Escape System (LES)	ROCapsules	pc_castableComposite	4	unlockParts	HTPB;SolidFuel;PSPC	ModuleEngineText;ModuleEnginesRF;EngineGroupModule	med
 ROC-BigGeminiLES	Big G Launch Escape System	ROCapsules	pc_castableComposite	4	unlockParts	HTPB	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule	med
 ROC-D2Block1LES	D-2 Block I Abort Motor	ROCapsules	pc_castableComposite	4	unlockParts	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule	med
+ROC-D2Block2LES	D-2 Block II Launch Escape System	ROCapsules	pc_castableComposite	4	unlockParts	PBAN	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule	med
 ROC-GeminiBEquipmentSection	Gemini B Adapter Module	ROCapsules	pc_castableComposite	4	unlockParts	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule	med
+ROC-GeminiRetroBDB	Gemini Retro Rocket (Star-13E) (DEPRECATED)	ROCapsules	pc_castableComposite	4	unlockParts	CTPB	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
 ROC-GeminiRetroMECBDB	Gemini Retro Rocket (Star-13E)	ROCapsules	pc_castableComposite	4	unlockParts	PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROC-MercuryLESBDB	Mercury Launch Escape System	ROCapsules	pc_castableComposite	4	engineering101	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule	med
 ROC-MercuryPosigradeBDB	Mercury Posigrade Kick Motor	ROCapsules	pc_castableComposite	4	engineering101	PSPC	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;EngineGr	med
@@ -26,19 +28,35 @@ ROE-1207sepMotor	UA1207 Nosecone & Separation Motor	ROEngines	pc_castableComposi
 ROE-1208sepMotor	UA1208 Nosecone & Separation Motor	ROEngines	pc_castableComposite	4	start	PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
 ROE-18KS7800	Aerojet 1.8KS-7800	ROEngines	pc_castableComposite	4	start	NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-25KS18000	Aerojet 2.5KS-18000	ROEngines	pc_castableComposite	4	start	NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-AJ260FLA	AJ-260 FL Radial Solid Rocket Booster	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-AJ260FLF	AJ-260 FL	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-AJ260SLA	AJ-260 SL Radial Solid Rocket Booster	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-AJ260SLF	AJ-260 SL	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-AJ60	AJ-60A	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Agena_Retro_TypeIII	Agena Retrorocket Type III	ROEngines	pc_castableComposite	4		PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
 ROE-Agena_Spinrocket	Agena 1KS30HA Spin Rocket	ROEngines	pc_castableComposite	4		PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
 ROE-Alcyone1	Alcyone 1 BE-3	ROEngines	pc_castableComposite	4		NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Algol1	Algol IB	ROEngines	pc_castableComposite	4	start	PUPE	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Algol1_Inline	Algol IB	ROEngines	pc_castableComposite	4	start	PUPE	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Algol2	Algol II	ROEngines	pc_castableComposite	4	start	PUPE	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Algol2_Inline	Algol II	ROEngines	pc_castableComposite	4	start	PUPE	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Algol3	Algol III	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Algol3_Inline	Algol III	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Altair	Altair X-248	ROEngines	pc_castableComposite	4	start	PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-AltairII	Altair II X-258	ROEngines	pc_castableComposite	4	start	PBAA	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-AltairIII	Altair III FW-4S	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Antares1	Antares I X-254	ROEngines	pc_castableComposite	4	start	PBAA	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Antares2	Antares IIA X-259	ROEngines	pc_castableComposite	4	start	PBAA	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Antares3	Antares III (STAR 31)	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-BabySergeant	Baby Sergeant (5.4KS-1975)	ROEngines	pc_castableComposite	4	start	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule;ModuleEngi	med
 ROE-BabySergeantX11	Baby Sergeant 11x Cluster	ROEngines	pc_castableComposite	4	start	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule;ModuleEngi	med
 ROE-BabySergeantX3	Baby Sergeant 3x Cluster	ROEngines	pc_castableComposite	4	start	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule;ModuleEngi	med
 ROE-Castor1	Castor 1	ROEngines	pc_castableComposite	4	start	PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Castor120	Castor 120	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Castor2	Castor 2	ROEngines	pc_castableComposite	4	start	PBAA	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Castor30	Castor 30A	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Castor30XL	Castor 30XL	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Castor4	Castor 4	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Castor4A	Castor 4A	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Castor4AXL	Castor 4AXL	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-GCRC	GCRC 33KS-2800	ROEngines	pc_castableComposite	4	start	PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
@@ -46,16 +64,28 @@ ROE-GEM40	GEM 40	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;Eng
 ROE-GEM46	GEM 46	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-GEM60	GEM 60	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-GEM63	GEM 63	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-M55	M55 (Minuteman)	ROEngines	pc_castableComposite	4		PBAA	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-NikeM5E1	Nike M5E1	ROEngines	pc_castableComposite	4	start	NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-R103	R-103 Booster	ROEngines	pc_castableComposite	4	start	NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-SR73	SR73	ROEngines	pc_castableComposite	4		CTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-SRMU	SRMU	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star13	STAR 13	ROEngines	pc_castableComposite	4		PUPE	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star13A	STAR 13A	ROEngines	pc_castableComposite	4		CTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Star13D	STAR 13D	ROEngines	pc_castableComposite	4		PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star17	STAR 17	ROEngines	pc_castableComposite	4		CTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star17A	STAR 17A	ROEngines	pc_castableComposite	4		CTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star37	STAR 37	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Star37E	STAR 37E	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Star37FM	STAR 37FM	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Star48B	STAR 48B	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Star5D	STAR 5D	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-Star8	STAR 8 (RAD)	ROEngines	pc_castableComposite	4	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROE-TX280	S-IV TX-280 Ullage Motor	ROEngines	pc_castableComposite	4		PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-UA1204	UA1204	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-UA1205	UA1205	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-UA1206	UA1206	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-UA1207	UA1207	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-UA1208	UA1208	ROEngines	pc_castableComposite	4	start	PBAN	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
 ROSmallSpinMotor	Spin Motor (Small)	Squad	pc_castableComposite	4	precisionPropulsion	SolidFuel;PSPC	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;FlightDa	med
 RO_mk1_LES	Launch Escape System (Mercury)	Squad	pc_castableComposite	4	landing	SolidFuel	ModuleEnginesRF;ModuleFuelTanks	med
 SXTWaxWing	Waxwing	SXT	pc_castableComposite	4	start	SolidFuel;CTPB	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;FlightDa	med

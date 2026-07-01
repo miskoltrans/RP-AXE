@@ -1,0 +1,72 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+AM_MLP_GeneralHoldSRB	General Hold-Down Type SRB	ModularLaunchPads	str_stageSeparation	2	generalLaunchPad			med
+AM_MLP_LaunchRailLarge	Launch Rail 4 - Large Size	ModularLaunchPads	str_stageSeparation	2	start			med
+AM_MLP_LaunchRailMedium	Launch Rail 3 - Medium Size	ModularLaunchPads	str_stageSeparation	2	start			med
+AM_MLP_LaunchRailMini	Launch Rail 1 - Mini Size	ModularLaunchPads	str_stageSeparation	2	start			med
+AM_MLP_LaunchRailSmall	Launch Rail 2 - Small Size	ModularLaunchPads	str_stageSeparation	2	start			med
+AM_MLP_MilkstoolMini1S	Mini Milkstool Decoupler Size 1 Short	ModularLaunchPads	str_stageSeparation	2	launchPlates			med
+AM_MLP_MilkstoolMini1T	Mini Milkstool Decoupler Size 1 Tall	ModularLaunchPads	str_stageSeparation	2	launchPlates			med
+AM_MLP_MilkstoolMini2S	Mini Milkstool Decoupler Size 2 Short	ModularLaunchPads	str_stageSeparation	2	launchPlates			med
+AM_MLP_MilkstoolMini2T	Mini Milkstool Decoupler Size 2 Tall	ModularLaunchPads	str_stageSeparation	2	launchPlates			med
+AM_MLP_MilkstoolMini3M	Mini Milkstool Decoupler Size 3 Medium	ModularLaunchPads	str_stageSeparation	2	launchPlates			med
+AM_MLP_MilkstoolMini3S	Mini Milkstool Decoupler Size 3 Short	ModularLaunchPads	str_stageSeparation	2	launchPlates			med
+AM_MLP_MilkstoolMini3T	Mini Milkstool Decoupler Size 3 Tall	ModularLaunchPads	str_stageSeparation	2	launchPlates			med
+AM_MLP_SaturnLauncherMilkstool	Saturn Launcher Milkstool	ModularLaunchPads	str_stageSeparation	2	saturnLaunchPad			med
+Decoupler_0	TD-06 Decoupler	Squad	str_stageSeparation	2	precisionEngineering			med
+Decoupler_1	TD-12 Decoupler	Squad	str_stageSeparation	2	engineering101			med
+Decoupler_2	TD-25 Decoupler	Squad	str_stageSeparation	2	generalConstruction			med
+RO-BasicFilmCamera	PH02 - Basic Film Camera	RP-1	str_stageSeparation	2	spaceExploration			med
+RO-ImprovedFilmCamera	PH03 - Improved Film Camera	RP-1	str_stageSeparation	2	spaceExploration			med
+ROC-AgenaFairing	Agena Target Vehicle Nose Cone	ROCapsules	str_stageSeparation	2	generalRocketry			med
+ROC-ApolloDecouplerBDB	Apollo Command/Service Module Decoupler	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-ApolloForwardHSBDB	Apollo Command Module Forward Heat Shield	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-BigGeminiDecoupler	Big G Service Module Decoupler	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-D2Adaptor	D-2 Heatshield Adapter	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-D2Block1LESDecoupler	D-2 Block I Abort Motor Decoupler	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-D2Interstage	D-2 Block I Interstage	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-D2Interstage2	D-2 3m Interstage	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-D2Interstage3	D-2 4m Interstage	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-DynaShieldMoroz	Dynasoar Windows Cover	ROCapsules	str_stageSeparation	2	OrphanParts			med
+ROC-GeminiBRetrogradeSection	Gemini B Retro Module	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-GeminiFlightPack	Gemini Flight Pack	ROCapsules	str_stageSeparation	2	aerospaceTech			med
+ROC-LEMDecouplerBDB	Apollo LM Decoupler	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-MercuryDecouplerAtlasBDB	Mercury-Atlas Adapter	ROCapsules	str_stageSeparation	2	engineering101			med
+ROC-MercuryDecouplerBDB	Mercury Redstone Adapter	ROCapsules	str_stageSeparation	2	engineering101			med
+ROC-MercuryRetropackBDB	Mercury Retropack	ROCapsules	str_stageSeparation	2	engineering101			med
+ROC-OrionEUSDecoupler	Orion Decoupler	ROCapsules	str_stageSeparation	2	generalRocketry			med
+ROC-RetrogradeDecouplerBDB	Gemini Retrograde Section Decoupler	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-VoskhodRetroDecoupler	Voskhod Retro Decoupler	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROC-VostokDecoupler	Vostok/Voskhod Decoupler	ROCapsules	str_stageSeparation	2	unlockParts			med
+ROE-120XDecoupler	UA120X Radial Decoupler	ROEngines	str_stageSeparation	2				med
+ROE-BabySergeantX11Dec	Baby Sergeant 11x Cluster Decoupler	ROEngines	str_stageSeparation	2				med
+ROE-BabySergeantX3Dec	Baby Sergeant 3x Cluster Decoupler	ROEngines	str_stageSeparation	2				med
+ROE-CastorDecoupler	Castor I & II Radial Decoupler	ROEngines	str_stageSeparation	2				med
+ROH-AdjustableHIAD	Adjustable HIAD	ROHeatshields	str_stageSeparation	2	start			med
+ROT-AtlasDecoupler	Atlas Skirt Decoupler	ROTanks	str_stageSeparation	2	unlockParts			med
+ROT-OpenInterstage	Hollow Interstage	ROTanks	str_stageSeparation	2	unlockParts			med
+ROT-RingDecoupler	Ring Decoupler	ROTanks	str_stageSeparation	2	unlockParts			med
+SXTAirbag	Mk10-XL Inflatable Airbag	SXT	str_stageSeparation	2	advLanding			med
+SXTAirbagSmall	Mk-10 Inflatable Airbag	SXT	str_stageSeparation	2	landing			med
+SXTK1Decoupler	N-1 Block B/V Interstage	SXT	str_stageSeparation	2	advMetalworks			med
+SXTK1Decoupler2	N-1 Block A/B Decoupler	SXT	str_stageSeparation	2	advMetalworks			med
+ca_draco_as	Huygens Aeroshell	CoatlAerospace	str_stageSeparation	2	advLanding			med
+ca_vor_sep1	Venera Reentry Module Decoupler	CoatlAerospace	str_stageSeparation	2	advConstruction			med
+ius_dec_fs	IUS First Stage Decoupler	RN_US_Probes	str_stageSeparation	2	generalRocketry			med
+ius_dec_ss	IUS Second Stage Decoupler	RN_US_Probes	str_stageSeparation	2	generalRocketry			med
+l11_astro	Luna 11 Astro	RN_Soviet_Probes	str_stageSeparation	2	generalRocketry			med
+luna_astro	Luna 9/10/13 Astro	RN_Soviet_Probes	str_stageSeparation	2	generalRocketry			med
+mer_ringDecoupler	Huygens Structural Adapter	CoatlAerospace	str_stageSeparation	2	advLanding			med
+p1_decoupler	Pioneer 0/1/2 Booster Decoupler	RN_US_Probes	str_stageSeparation	2	engineering101			med
+proceduralStackDecoupler	Decoupler [Procedural]	ProceduralParts	str_stageSeparation	2	engineering101			med
+radialDecoupler	TT-38K Radial Decoupler	Squad	str_stageSeparation	2	stability			med
+radialDecoupler1-2	Hydraulic Detachment Manifold	Squad	str_stageSeparation	2	advConstruction			med
+radialDecoupler2	TT-70 Radial Decoupler	Squad	str_stageSeparation	2	advConstruction			med
+restock-decoupler-1875-1	TD-18 Decoupler	ReStockPlus	str_stageSeparation	2	advConstruction			med
+restock-decoupler-radial-tiny-1	TT-14 Radial Decoupler	ReStockPlus	str_stageSeparation	2	stability			med
+restock-separator-1875-1	TS-18 Separator	ReStockPlus	str_stageSeparation	2	advConstruction			med
+rn_huygen_hs_top	Huygens Heatshield Top	RN_US_Probes	str_stageSeparation	2	generalRocketry			med
+sargas_decoupler_s1p5_1	TKS VA Capsule Decoupler	Tantares	str_stageSeparation	2	spaceExploration			med
+shortDecoupler1-2	Shorter Rockomax Brand Decoupler	VenStockRevamp	str_stageSeparation	2	generalConstruction			med
+smallHardpoint	Small Hardpoint	Squad	str_stageSeparation	2	advAerodynamics			med
+smallRadialDecoupler	TR-8A Radial Decoupler	VenStockRevamp	str_stageSeparation	2	precisionEngineering			med
+structuralPylon	Structural Pylon	Squad	str_stageSeparation	2	highAltitudeFlight			med

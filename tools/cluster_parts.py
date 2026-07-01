@@ -31,14 +31,15 @@ def keymods(mods):
     return ";".join(m for m in mods.split(";") if any(k in m for k in KEY_MODS))[:60]
 
 def cluster_key(method):
-    """collapse the placement method into a review-cluster label."""
-    if method.startswith("engine:"):      return "engine-" + method.split(":")[1]
-    if method.startswith("science:"):     return "science-" + method.split(":")[1]
-    if method.startswith("clean:"):       return "clean-" + method.split(":")[1]
-    return method
+    """collapse the placement method into a review-cluster label (filename-safe: no ':')."""
+    for pre in ("engine", "science", "clean", "struct", "probe"):
+        if method.startswith(pre + ":"): return pre + "-" + method.split(":", 1)[1]
+    return method.replace(":", "-")
 
 def main():
     os.makedirs(OUT, exist_ok=True)
+    for fn in os.listdir(OUT):                       # clear stale clusters (methods change between runs)
+        if fn.endswith(".tsv"): os.remove(os.path.join(OUT, fn))
     node_tier = {n["id"]: n["tier"] for n in yaml.safe_load(open(NODES, encoding="utf-8"))["nodes"]}
     cap = {r["name"]: r for r in read_tsv("part-capabilities.tsv")}
     place = read_tsv("part-placement.tsv")

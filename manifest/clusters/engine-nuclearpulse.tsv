@@ -1,0 +1,6 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+RO-fft20mMMO	20 m "Mini-Mag" Orion Drive	FarFutureTechnologies	nuc_gasCoreNTR	10	nuclearPropulsion	FissionPellets	ModuleEnginesRF;ModuleSystemHeatEngine;ModuleChargeableEngin	med
+RO-fftorion12	12 Meter Orion Drive	FarFutureTechnologies	nuc_gasCoreNTR	10	nuclearPropulsion	FissionPulses	ModuleEnginesRF;ModulePulseEngineAnimator;ModuleEngineExhaus	med
+RO-fftorion8	8 Meter Orion Drive	FarFutureTechnologies	nuc_gasCoreNTR	10	nuclearPropulsion	FissionPulses	ModuleEnginesRF;ModulePulseEngineAnimator;ModuleEngineExhaus	med
+fft-fission-orion-5-1	10 Meter Orion Drive	FarFutureTechnologies	nuc_gasCoreNTR	10	nuclearPropulsion	FissionPulses	ModuleEnginesRF;ModulePulseEngineAnimator;ModuleEngineExhaus	med
+fft-fission-zpinch-1	10 m "Mini-Mag" Orion Drive	FarFutureTechnologies	nuc_gasCoreNTR	10	nuclearPropulsion	FissionPellets	ModuleEnginesRF;ModuleSystemHeatEngine;ModuleChargeableEngin	med

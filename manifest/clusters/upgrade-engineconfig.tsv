@@ -1,99 +1,100 @@
 part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
-RFUpgrade_AJ10-133-Hylas			REVIEW				engine-config:ROC-D2AJ10-133,ROE-AJ10Adv	
-RFUpgrade_AJ10-133-LH			REVIEW				engine-config:ROC-D2AJ10-133,ROE-AJ10Adv	
-RFUpgrade_AJ10-138A			REVIEW				engine-config:ROC-D2AJ10-133,ROE-AJ10Adv	
-RFUpgrade_AJ260-SL3			REVIEW				engine-config:ROE-AJ260SLA,ROE-AJ260SLF	
-RFUpgrade_ASCENT			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_Aerozine50+NTO			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_Atar101E-3			REVIEW				engine-config:RO-Atar101D,RO-Nord1500	
-RFUpgrade_CH4+O2			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_Castor-1-SL			REVIEW				engine-config:ROE-Castor1,ROE-Castor1_Inline	
-RFUpgrade_Castor-1-Vac			REVIEW				engine-config:ROE-Castor1,ROE-Castor1_Inline	
-RFUpgrade_Cavea-B			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_Ethanol+O2			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_FWC-SRM			REVIEW				engine-config:RO-RSRM,restock-srb-anvil-1	
-RFUpgrade_H-1-188K			REVIEW				engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
-RFUpgrade_H-1-200K			REVIEW				engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
-RFUpgrade_H-1-205K			REVIEW				engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
-RFUpgrade_H-1-250K			REVIEW				engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
-RFUpgrade_H-2-250K			REVIEW				engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
-RFUpgrade_H-2-300K			REVIEW				engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
-RFUpgrade_H2+O2			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_HTP			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_Hydrazine			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_JPL-532A			REVIEW				engine-config:ROE-BabySergeant,ROE-BabySergeantX11,ROE-BabySergeantX3	
-RFUpgrade_LMDE-J			REVIEW				engine-config:ROC-LEMLMDEBDB,ROE-LMDE	
-RFUpgrade_LR101-NA-11			REVIEW				engine-config:ROE-LR101,ROE-LR101Inline,ROE-LR101Inline_2	
-RFUpgrade_LR101-NA-15			REVIEW				engine-config:ROE-LR101,ROE-LR101Inline,ROE-LR101Inline_2	
-RFUpgrade_LR105-NA-3			REVIEW				engine-config:ROE-LR105,ROE-LR105_2	
-RFUpgrade_LR105-NA-5			REVIEW				engine-config:ROE-LR105,ROE-LR105_2	
-RFUpgrade_LR105-NA-6			REVIEW				engine-config:ROE-LR105,ROE-LR105_2	
-RFUpgrade_LR105-NA-7.1			REVIEW				engine-config:ROE-LR105,ROE-LR105_2	
-RFUpgrade_LR105-NA-7.2			REVIEW				engine-config:ROE-LR105,ROE-LR105_2	
-RFUpgrade_LR43-NA-3			REVIEW				engine-config:ROE-LR89,ROE-LR89_2	
-RFUpgrade_LR87-AJ-11			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR87-AJ-11-Kero			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR87-AJ-11A			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR87-AJ-11A-Kero			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR87-AJ-3			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR87-AJ-5			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR87-AJ-5-Kero			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR87-AJ-7			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR87-AJ-7-Kero			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR87-AJ-9			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR87-AJ-9-Kero			REVIEW				engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
-RFUpgrade_LR89-NA-3			REVIEW				engine-config:ROE-LR89,ROE-LR89_2	
-RFUpgrade_LR89-NA-5			REVIEW				engine-config:ROE-LR89,ROE-LR89_2	
-RFUpgrade_LR89-NA-6			REVIEW				engine-config:ROE-LR89,ROE-LR89_2	
-RFUpgrade_LR89-NA-7.1			REVIEW				engine-config:ROE-LR89,ROE-LR89_2	
-RFUpgrade_LR89-NA-7.2			REVIEW				engine-config:ROE-LR89,ROE-LR89_2	
-RFUpgrade_LR91-AJ-11			REVIEW				engine-config:ROE-LR91,ROE-LR91-4V	
-RFUpgrade_LR91-AJ-11A			REVIEW				engine-config:ROE-LR91,ROE-LR91-4V	
-RFUpgrade_LR91-AJ-11A-Kero			REVIEW				engine-config:ROE-LR91,ROE-LR91-4V	
-RFUpgrade_LR91-AJ-3			REVIEW				engine-config:ROE-LR91,ROE-LR91-4V	
-RFUpgrade_LR91-AJ-5			REVIEW				engine-config:ROE-LR91,ROE-LR91-4V	
-RFUpgrade_LR91-AJ-5-Kero			REVIEW				engine-config:ROE-LR91,ROE-LR91-4V	
-RFUpgrade_LR91-AJ-7			REVIEW				engine-config:ROE-LR91,ROE-LR91-4V	
-RFUpgrade_LR91-AJ-7-Kero			REVIEW				engine-config:ROE-LR91,ROE-LR91-4V	
-RFUpgrade_LR91-AJ-9			REVIEW				engine-config:ROE-LR91,ROE-LR91-4V	
-RFUpgrade_LR91-AJ-9-Kero			REVIEW				engine-config:ROE-LR91,ROE-LR91-4V	
-RFUpgrade_MMH+MON10			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_MMH+MON3			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_MMH+NTO			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_NitrousOxide			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_RB162-4D			REVIEW				engine-config:nfa-vtol-0625-1,nfa-vtol-125-1	
-RFUpgrade_RB162-81			REVIEW				engine-config:nfa-vtol-0625-1,nfa-vtol-125-1	
-RFUpgrade_RD-215M-8D613			REVIEW				engine-config:ROE-RD215,ROE-RD215_Single	
-RFUpgrade_RD-217-8D515			REVIEW				engine-config:ROE-RD215,ROE-RD215_Single	
-RFUpgrade_RD-225-8D721			REVIEW				engine-config:ROE-RD215,ROE-RD215_Single	
-RFUpgrade_RD-250-8D518			REVIEW				engine-config:ROE-RD215,ROE-RD215_Single	
-RFUpgrade_RD-250PM			REVIEW				engine-config:ROE-RD215,ROE-RD215_Single	
-RFUpgrade_RP-1+O2			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_RS-18			REVIEW				engine-config:ROC-LEMLMAEBDB,ROE-LMAE	
-RFUpgrade_RS-27			REVIEW				engine-config:ROE-H1D,ROE-RS27	
-RFUpgrade_RS-27A			REVIEW				engine-config:ROE-H1D,ROE-RS27	
-RFUpgrade_RS-56-OBA			REVIEW				engine-config:ROE-LR89,ROE-LR89_2	
-RFUpgrade_RS-56-OSA			REVIEW				engine-config:ROE-LR105,ROE-LR105_2	
-RFUpgrade_RSRM-1986			REVIEW				engine-config:RO-RSRM,restock-srb-anvil-1	
-RFUpgrade_Syntin+O2			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_TR-201			REVIEW				engine-config:ROC-LEMLMDEBDB,ROE-LMDE	
-RFUpgrade_UDMH+NTO			REVIEW				engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
-RFUpgrade_Veronique61			REVIEW				engine-config:ROE-Veronique,ROE-VeroniqueAK	
-RFUpgrade_VeroniqueAGI			REVIEW				engine-config:ROE-Veronique,ROE-VeroniqueAK	
-RFUpgrade_Vinci-180			REVIEW				engine-config:cryoengine-pavonis-1,cryoengine-tharsis-1	
-RFUpgrade_YF-100K			REVIEW				engine-config:YF100_Engine-double-withShell2,YF100_Engine_S	
-RFUpgrade_YF-1A			REVIEW				engine-config:YF2_Engine,YF2_with_shell	
-RFUpgrade_YF-1B			REVIEW				engine-config:YF2_Engine,YF2_with_shell	
-RFUpgrade_YF-20B			REVIEW				engine-config:YF20_Engine,YF21_Engine,YF21_with_shell_CZ-2	
-RFUpgrade_YF-20C			REVIEW				engine-config:YF20_Engine,YF21_Engine,YF21_with_shell_CZ-2	
-RFUpgrade_YF-25K			REVIEW				engine-config:YF20_Engine,YF21_Engine,YF21_with_shell_CZ-2	
-RFUpgrade_YF-3A			REVIEW				engine-config:YF3_Engine,YF3_with_shell	
-RFUpgrade_YF-75D			REVIEW				engine-config:YF75D_Engine,YF75_Engine	
-RFUpgrade_YF-75E			REVIEW				engine-config:YF75D_Engine,YF75_Engine	
+RFUpgrade_AJ10-133-Hylas			experimental	1			engine-config:ROC-D2AJ10-133,ROE-AJ10Adv	
+RFUpgrade_AJ10-133-LH			experimental	1			engine-config:ROC-D2AJ10-133,ROE-AJ10Adv	
+RFUpgrade_AJ10-138A			experimental	1			engine-config:ROC-D2AJ10-133,ROE-AJ10Adv	
+RFUpgrade_AJ260-SL3			experimental	1			engine-config:ROE-AJ260SLA,ROE-AJ260SLF	
+RFUpgrade_ASCENT			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_Aerozine50+NTO			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_Atar101E-3			experimental	1			engine-config:RO-Atar101D,RO-Nord1500	
+RFUpgrade_CH4+O2			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_Castor-1-SL			experimental	1			engine-config:ROE-Castor1,ROE-Castor1_Inline	
+RFUpgrade_Castor-1-Vac			experimental	1			engine-config:ROE-Castor1,ROE-Castor1_Inline	
+RFUpgrade_Cavea-B			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_Ethanol+O2			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_FWC-SRM			experimental	1			engine-config:RO-RSRM,restock-srb-anvil-1	
+RFUpgrade_H-1-188K			experimental	1			engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
+RFUpgrade_H-1-200K			experimental	1			engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
+RFUpgrade_H-1-205K			experimental	1			engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
+RFUpgrade_H-1-250K			experimental	1			engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
+RFUpgrade_H-2-250K			experimental	1			engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
+RFUpgrade_H-2-300K			experimental	1			engine-config:ROE-H1C,ROE-H1D,ROE-RS27	
+RFUpgrade_H2+O2			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_HTP			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_Hydrazine			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_JPL-532A			experimental	1			engine-config:ROE-BabySergeant,ROE-BabySergeantX11,ROE-BabySergeantX3	
+RFUpgrade_LMDE-J			experimental	1			engine-config:ROC-LEMLMDEBDB,ROE-LMDE	
+RFUpgrade_LR101-NA-11			experimental	1			engine-config:ROE-LR101,ROE-LR101Inline,ROE-LR101Inline_2	
+RFUpgrade_LR101-NA-15			experimental	1			engine-config:ROE-LR101,ROE-LR101Inline,ROE-LR101Inline_2	
+RFUpgrade_LR105-NA-3			experimental	1			engine-config:ROE-LR105,ROE-LR105_2	
+RFUpgrade_LR105-NA-5			experimental	1			engine-config:ROE-LR105,ROE-LR105_2	
+RFUpgrade_LR105-NA-6			experimental	1			engine-config:ROE-LR105,ROE-LR105_2	
+RFUpgrade_LR105-NA-7.1			experimental	1			engine-config:ROE-LR105,ROE-LR105_2	
+RFUpgrade_LR105-NA-7.2			experimental	1			engine-config:ROE-LR105,ROE-LR105_2	
+RFUpgrade_LR43-NA-3			experimental	1			engine-config:ROE-LR89,ROE-LR89_2	
+RFUpgrade_LR87-AJ-11			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR87-AJ-11-Kero			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR87-AJ-11A			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR87-AJ-11A-Kero			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR87-AJ-3			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR87-AJ-5			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR87-AJ-5-Kero			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR87-AJ-7			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR87-AJ-7-Kero			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR87-AJ-9			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR87-AJ-9-Kero			experimental	1			engine-config:ROE-LR87,ROE-LR87_11,ROE-LR87_Single	
+RFUpgrade_LR89-NA-3			experimental	1			engine-config:ROE-LR89,ROE-LR89_2	
+RFUpgrade_LR89-NA-5			experimental	1			engine-config:ROE-LR89,ROE-LR89_2	
+RFUpgrade_LR89-NA-6			experimental	1			engine-config:ROE-LR89,ROE-LR89_2	
+RFUpgrade_LR89-NA-7.1			experimental	1			engine-config:ROE-LR89,ROE-LR89_2	
+RFUpgrade_LR89-NA-7.2			experimental	1			engine-config:ROE-LR89,ROE-LR89_2	
+RFUpgrade_LR91-AJ-11			experimental	1			engine-config:ROE-LR91,ROE-LR91-4V	
+RFUpgrade_LR91-AJ-11A			experimental	1			engine-config:ROE-LR91,ROE-LR91-4V	
+RFUpgrade_LR91-AJ-11A-Kero			experimental	1			engine-config:ROE-LR91,ROE-LR91-4V	
+RFUpgrade_LR91-AJ-3			experimental	1			engine-config:ROE-LR91,ROE-LR91-4V	
+RFUpgrade_LR91-AJ-5			experimental	1			engine-config:ROE-LR91,ROE-LR91-4V	
+RFUpgrade_LR91-AJ-5-Kero			experimental	1			engine-config:ROE-LR91,ROE-LR91-4V	
+RFUpgrade_LR91-AJ-7			experimental	1			engine-config:ROE-LR91,ROE-LR91-4V	
+RFUpgrade_LR91-AJ-7-Kero			experimental	1			engine-config:ROE-LR91,ROE-LR91-4V	
+RFUpgrade_LR91-AJ-9			experimental	1			engine-config:ROE-LR91,ROE-LR91-4V	
+RFUpgrade_LR91-AJ-9-Kero			experimental	1			engine-config:ROE-LR91,ROE-LR91-4V	
+RFUpgrade_MMH+MON10			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_MMH+MON3			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_MMH+NTO			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_NitrousOxide			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_RB162-4D			experimental	1			engine-config:nfa-vtol-0625-1,nfa-vtol-125-1	
+RFUpgrade_RB162-81			experimental	1			engine-config:nfa-vtol-0625-1,nfa-vtol-125-1	
+RFUpgrade_RD-215M-8D613			experimental	1			engine-config:ROE-RD215,ROE-RD215_Single	
+RFUpgrade_RD-217-8D515			experimental	1			engine-config:ROE-RD215,ROE-RD215_Single	
+RFUpgrade_RD-225-8D721			experimental	1			engine-config:ROE-RD215,ROE-RD215_Single	
+RFUpgrade_RD-250-8D518			experimental	1			engine-config:ROE-RD215,ROE-RD215_Single	
+RFUpgrade_RD-250PM			experimental	1			engine-config:ROE-RD215,ROE-RD215_Single	
+RFUpgrade_RP-1+O2			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_RS-18			experimental	1			engine-config:ROC-LEMLMAEBDB,ROE-LMAE	
+RFUpgrade_RS-27			experimental	1			engine-config:ROE-H1D,ROE-RS27	
+RFUpgrade_RS-27A			experimental	1			engine-config:ROE-H1D,ROE-RS27	
+RFUpgrade_RS-56-OBA			experimental	1			engine-config:ROE-LR89,ROE-LR89_2	
+RFUpgrade_RS-56-OSA			experimental	1			engine-config:ROE-LR105,ROE-LR105_2	
+RFUpgrade_RSRM-1986			experimental	1			engine-config:RO-RSRM,restock-srb-anvil-1	
+RFUpgrade_Syntin+O2			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_TR-201			experimental	1			engine-config:ROC-LEMLMDEBDB,ROE-LMDE	
+RFUpgrade_UDMH+NTO			experimental	1			engine-config:45DegreeRCS,HeavyRcs,InlineRCS	
+RFUpgrade_Veronique61			experimental	1			engine-config:ROE-Veronique,ROE-VeroniqueAK	
+RFUpgrade_VeroniqueAGI			experimental	1			engine-config:ROE-Veronique,ROE-VeroniqueAK	
+RFUpgrade_Vinci-180			experimental	1			engine-config:cryoengine-pavonis-1,cryoengine-tharsis-1	
+RFUpgrade_YF-100K			experimental	1			engine-config:YF100_Engine-double-withShell2,YF100_Engine_S	
+RFUpgrade_YF-1A			experimental	1			engine-config:YF2_Engine,YF2_with_shell	
+RFUpgrade_YF-1B			experimental	1			engine-config:YF2_Engine,YF2_with_shell	
+RFUpgrade_YF-20B			experimental	1			engine-config:YF20_Engine,YF21_Engine,YF21_with_shell_CZ-2	
+RFUpgrade_YF-20C			experimental	1			engine-config:YF20_Engine,YF21_Engine,YF21_with_shell_CZ-2	
+RFUpgrade_YF-25K			experimental	1			engine-config:YF20_Engine,YF21_Engine,YF21_with_shell_CZ-2	
+RFUpgrade_YF-3A			experimental	1			engine-config:YF3_Engine,YF3_with_shell	
+RFUpgrade_YF-75D			experimental	1			engine-config:YF75D_Engine,YF75_Engine	
+RFUpgrade_YF-75E			experimental	1			engine-config:YF75D_Engine,YF75_Engine	
 RFUpgrade_LPNTR-3600HP			nuc_gasCoreNTR	10			engine-config:ntr-gc-25-1	
 RFUpgrade_11D33			fd_gasGenerator	2			engine-config:ROE-RD58	
 RFUpgrade_11D33M			fd_gasGenerator	2			engine-config:ROE-RD58	
 RFUpgrade_17D12			fd_gasGenerator	2			engine-config:ROE-RD58	
+RFUpgrade_4x_NK-39			fd_gasGenerator	2			engine-config:SXTNK21BlockV	
 RFUpgrade_AL-31FM			fd_gasGenerator	2			engine-config:aje_al31	
 RFUpgrade_AL-41F-1S			fd_gasGenerator	2			engine-config:aje_al31	
 RFUpgrade_AL-7F-1			fd_gasGenerator	2			engine-config:RO-AL7F	
@@ -149,6 +150,10 @@ RFUpgrade_JT3C-6			fd_gasGenerator	2			engine-config:RO-JT3C
 RFUpgrade_MA20S-4			fd_gasGenerator	2			engine-config:RO-RJ43	
 RFUpgrade_Merlin1C			fd_gasGenerator	2			engine-config:ROE-Merlin1C	
 RFUpgrade_Merlin1CVac			fd_gasGenerator	2			engine-config:ROE-Merlin1CV	
+RFUpgrade_NK-19			fd_gasGenerator	2			engine-config:ROE-NK9V	
+RFUpgrade_NK-21			fd_gasGenerator	2			engine-config:ROE-NK9V	
+RFUpgrade_NK-31			fd_gasGenerator	2			engine-config:ROE-NK9V	
+RFUpgrade_NK-39			fd_gasGenerator	2			engine-config:ROE-NK9V	
 RFUpgrade_PT6A-11AG			fd_gasGenerator	2			engine-config:SXTPWPT6	
 RFUpgrade_PT6A-135			fd_gasGenerator	2			engine-config:SXTPWPT6	
 RFUpgrade_PT6A-15AG			fd_gasGenerator	2			engine-config:SXTPWPT6	
@@ -172,6 +177,8 @@ RFUpgrade_RD-0108			fd_gasGenerator	2			engine-config:ROE-RD0110
 RFUpgrade_RD-0109			fd_gasGenerator	2			engine-config:ROE-RD0105	
 RFUpgrade_RD-0110			fd_gasGenerator	2			engine-config:ROE-RD0110	
 RFUpgrade_RD-111-8D716A			fd_gasGenerator	2			engine-config:ROE-RD111	
+RFUpgrade_RD-120F			fd_gasGenerator	2			engine-config:ROE-RD120	
+RFUpgrade_RD-120K			fd_gasGenerator	2			engine-config:ROE-RD120	
 RFUpgrade_RD-58			fd_gasGenerator	2			engine-config:ROE-RD58	
 RFUpgrade_RD-58M			fd_gasGenerator	2			engine-config:ROE-RD58	
 RFUpgrade_RD-58M-CCN			fd_gasGenerator	2			engine-config:ROE-RD58	
@@ -198,15 +205,11 @@ RFUpgrade_WP-7B			fd_gasGenerator	2			engine-config:RO-R11F
 RFUpgrade_WP-7BM			fd_gasGenerator	2			engine-config:RO-R11F	
 RFUpgrade_WS-10B			fd_gasGenerator	2			engine-config:RO-WS10	
 RFUpgrade_WS-10B-III			fd_gasGenerator	2			engine-config:RO-WS10	
-RFUpgrade_457M-V1-K			pc_hypergolicChemistry	3			engine-config:RO-457M	
-RFUpgrade_457M-V2			pc_hypergolicChemistry	3			engine-config:RO-457M	
-RFUpgrade_4x_NK-39			pc_hypergolicChemistry	3			engine-config:SXTNK21BlockV	
 RFUpgrade_5D60			pc_hypergolicChemistry	3			engine-config:ROE-RD100	
 RFUpgrade_A-6			pc_hypergolicChemistry	3			engine-config:ROE-A7	
 RFUpgrade_A-6H			pc_hypergolicChemistry	3			engine-config:ROE-A7	
 RFUpgrade_A-7			pc_hypergolicChemistry	3			engine-config:ROE-A7	
 RFUpgrade_A-9			pc_hypergolicChemistry	3			engine-config:ROE-A4	
-RFUpgrade_AEPS			pc_hypergolicChemistry	3			engine-config:ionArgon-0625	
 RFUpgrade_AJ10-101A			pc_hypergolicChemistry	3			engine-config:ROE-AJ10Early	
 RFUpgrade_AJ10-118			pc_hypergolicChemistry	3			engine-config:ROE-AJ10Early	
 RFUpgrade_AJ10-118D			pc_hypergolicChemistry	3			engine-config:ROE-AJ10Early	
@@ -217,10 +220,6 @@ RFUpgrade_AJ10-27			pc_hypergolicChemistry	3			engine-config:ROE-Aerobee
 RFUpgrade_AJ10-42			pc_hypergolicChemistry	3			engine-config:ROE-AJ10Early	
 RFUpgrade_Aestus-II			pc_hypergolicChemistry	3			engine-config:restock-engine-125-pug	
 RFUpgrade_AestusMod			pc_hypergolicChemistry	3			engine-config:restock-engine-125-pug	
-RFUpgrade_DS4G-25-hi			pc_hypergolicChemistry	3			engine-config:ionXenon-0625-3	
-RFUpgrade_DS4G-25-mid			pc_hypergolicChemistry	3			engine-config:ionXenon-0625-3	
-RFUpgrade_DS4G-50-hi			pc_hypergolicChemistry	3			engine-config:ionXenon-0625-3	
-RFUpgrade_DS4G-50-low			pc_hypergolicChemistry	3			engine-config:ionXenon-0625-3	
 RFUpgrade_G-1A			pc_hypergolicChemistry	3			engine-config:ROE-G1	
 RFUpgrade_Gamma-301			pc_hypergolicChemistry	3			engine-config:ROE-Gamma301	
 RFUpgrade_ISPS			pc_hypergolicChemistry	3			engine-config:ROE-AgenaSPS	
@@ -239,11 +238,6 @@ RFUpgrade_Larch-4			pc_hypergolicChemistry	3			engine-config:ROE-Gamma301
 RFUpgrade_Larch-8			pc_hypergolicChemistry	3			engine-config:ROE-Gamma8	
 RFUpgrade_Model39c			pc_hypergolicChemistry	3			engine-config:ROE-A4	
 RFUpgrade_Model39cI			pc_hypergolicChemistry	3			engine-config:ROE-A4	
-RFUpgrade_NK-19			pc_hypergolicChemistry	3			engine-config:ROE-NK9V	
-RFUpgrade_NK-21			pc_hypergolicChemistry	3			engine-config:ROE-NK9V	
-RFUpgrade_NK-31			pc_hypergolicChemistry	3			engine-config:ROE-NK9V	
-RFUpgrade_NK-39			pc_hypergolicChemistry	3			engine-config:ROE-NK9V	
-RFUpgrade_NuPIT-7000			pc_hypergolicChemistry	3			engine-config:RO-nupit	
 RFUpgrade_PITV-Ammonia-1200			pc_hypergolicChemistry	3			engine-config:pit-125	
 RFUpgrade_PITV-Hydrazine-1200			pc_hypergolicChemistry	3			engine-config:pit-125	
 RFUpgrade_PITV-Hydrazine-40			pc_hypergolicChemistry	3			engine-config:pit-125	
@@ -285,8 +279,6 @@ RFUpgrade_RD-108-8D75PS			pc_hypergolicChemistry	3			engine-config:ROE-RD108
 RFUpgrade_RD-108-8D77			pc_hypergolicChemistry	3			engine-config:ROE-RD108	
 RFUpgrade_RD-108A-14D21			pc_hypergolicChemistry	3			engine-config:ROE-RD108	
 RFUpgrade_RD-119-8D710			pc_hypergolicChemistry	3			engine-config:ROE-RD109	
-RFUpgrade_RD-120F			pc_hypergolicChemistry	3			engine-config:ROE-RD120	
-RFUpgrade_RD-120K			pc_hypergolicChemistry	3			engine-config:ROE-RD120	
 RFUpgrade_RD-212-8D41			pc_hypergolicChemistry	3			engine-config:ROE-RD211	
 RFUpgrade_RD-213-8D13			pc_hypergolicChemistry	3			engine-config:ROE-RD211	
 RFUpgrade_RD-214-8D59			pc_hypergolicChemistry	3			engine-config:ROE-RD211	
@@ -301,17 +293,8 @@ RFUpgrade_S-3D			pc_hypergolicChemistry	3			engine-config:ROE-LR79
 RFUpgrade_S-3FH			pc_hypergolicChemistry	3			engine-config:ROE-LR79	
 RFUpgrade_S3.42T			pc_hypergolicChemistry	3			engine-config:ROE-S2253	
 RFUpgrade_S5.2			pc_hypergolicChemistry	3			engine-config:ROE-S2253	
-RFUpgrade_SPT-100B			pc_hypergolicChemistry	3			engine-config:RO-SPT100	
-RFUpgrade_SPT-100D			pc_hypergolicChemistry	3			engine-config:RO-SPT100	
-RFUpgrade_SPT-100M			pc_hypergolicChemistry	3			engine-config:RO-SPT100	
-RFUpgrade_SPT-140D			pc_hypergolicChemistry	3			engine-config:RO-SPT140	
-RFUpgrade_SPT-50M			pc_hypergolicChemistry	3			engine-config:RO-SPT50	
-RFUpgrade_SPT-70M			pc_hypergolicChemistry	3			engine-config:RO-SPT70	
-RFUpgrade_SPT-70MK			pc_hypergolicChemistry	3			engine-config:RO-SPT70	
 RFUpgrade_U-1700			pc_hypergolicChemistry	3			engine-config:ROMeteoSustainer	
 RFUpgrade_U-2000			pc_hypergolicChemistry	3			engine-config:ROMeteoSustainer	
-RFUpgrade_VF-200-Kr			pc_hypergolicChemistry	3			engine-config:vasimr-125	
-RFUpgrade_VX-200SS-Kr			pc_hypergolicChemistry	3			engine-config:vasimr-0625	
 RFUpgrade_Viking-4			pc_hypergolicChemistry	3			engine-config:ROE-Viking4	
 RFUpgrade_Viking-4B			pc_hypergolicChemistry	3			engine-config:ROE-Viking4	
 RFUpgrade_Viking-4C			pc_hypergolicChemistry	3			engine-config:ROE-Viking4	
@@ -323,8 +306,6 @@ RFUpgrade_X-405H			pc_hypergolicChemistry	3			engine-config:ROE-X405H
 RFUpgrade_X-405H-2			pc_hypergolicChemistry	3			engine-config:ROE-X405H	
 RFUpgrade_X-405H-3			pc_hypergolicChemistry	3			engine-config:ROE-X405H	
 RFUpgrade_X-405H-4			pc_hypergolicChemistry	3			engine-config:ROE-X405H	
-RFUpgrade_X3-HV			pc_hypergolicChemistry	3			engine-config:ionArgon-0625-3	
-RFUpgrade_X3-HV-K			pc_hypergolicChemistry	3			engine-config:ionArgon-0625-3	
 RFUpgrade_XASR-1			pc_hypergolicChemistry	3			engine-config:ROE-Aerobee	
 RFUpgrade_XASR-2			pc_hypergolicChemistry	3			engine-config:ROE-Aerobee	
 RFUpgrade_XLR11-RM-13-10K			pc_hypergolicChemistry	3			engine-config:ROE-XLR11	
@@ -459,5 +440,24 @@ RFUpgrade_Merlin1D+			fd_deepThrottle	6			engine-config:ROE-Merlin1D
 RFUpgrade_Merlin1D++			fd_deepThrottle	6			engine-config:ROE-Merlin1D	
 RFUpgrade_Merlin1DVac			fd_deepThrottle	6			engine-config:ROE-Merlin1DV	
 RFUpgrade_Merlin1DVac+			fd_deepThrottle	6			engine-config:ROE-Merlin1DV	
+RFUpgrade_457M-V1-K			elec_ionThrusters	7			engine-config:RO-457M	
+RFUpgrade_457M-V2			elec_ionThrusters	7			engine-config:RO-457M	
+RFUpgrade_AEPS			elec_ionThrusters	7			engine-config:ionArgon-0625	
+RFUpgrade_DS4G-25-hi			elec_ionThrusters	7			engine-config:ionXenon-0625-3	
+RFUpgrade_DS4G-25-mid			elec_ionThrusters	7			engine-config:ionXenon-0625-3	
+RFUpgrade_DS4G-50-hi			elec_ionThrusters	7			engine-config:ionXenon-0625-3	
+RFUpgrade_DS4G-50-low			elec_ionThrusters	7			engine-config:ionXenon-0625-3	
+RFUpgrade_NuPIT-7000			elec_ionThrusters	7			engine-config:RO-nupit	
+RFUpgrade_SPT-100B			elec_ionThrusters	7			engine-config:RO-SPT100	
+RFUpgrade_SPT-100D			elec_ionThrusters	7			engine-config:RO-SPT100	
+RFUpgrade_SPT-100M			elec_ionThrusters	7			engine-config:RO-SPT100	
+RFUpgrade_SPT-140D			elec_ionThrusters	7			engine-config:RO-SPT140	
+RFUpgrade_SPT-50M			elec_ionThrusters	7			engine-config:RO-SPT50	
+RFUpgrade_SPT-70M			elec_ionThrusters	7			engine-config:RO-SPT70	
+RFUpgrade_SPT-70MK			elec_ionThrusters	7			engine-config:RO-SPT70	
+RFUpgrade_VF-200-Kr			elec_ionThrusters	7			engine-config:vasimr-125	
+RFUpgrade_VX-200SS-Kr			elec_ionThrusters	7			engine-config:vasimr-0625	
+RFUpgrade_X3-HV			elec_ionThrusters	7			engine-config:ionArgon-0625-3	
+RFUpgrade_X3-HV-K			elec_ionThrusters	7			engine-config:ionArgon-0625-3	
 RFUpgrade_PrincetonLNTR-WCH			nuc_nuclearThermal	8			engine-config:RO-KA-PrincetonLNTR	
 RFUpgrade_SNTPPFE100-Hydrogen			nuc_nuclearThermal	8			engine-config:ROE-SNTPPFE100	

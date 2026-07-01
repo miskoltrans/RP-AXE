@@ -653,6 +653,18 @@ nodes:
     tier: 8
     parents: [elec_tripleJunction]
     flavor: "Unroll a thin-film blanket for tens of kilowatts at a fraction of rigid-panel mass — the power wings of large modern stations."
+  - id: elec_ionThrusters
+    title: "Gridded-Ion & Hall-Effect Thrusters"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_tripleJunction]
+    flavor: "Accelerate xenon ions electrostatically for exhaust velocities ten times a chemical engine's — feeble thrust, miserly propellant, and utterly dependent on kilowatts of power."
+  - id: elec_mpdThrusters
+    title: "Magnetoplasmadynamic Thrusters"
+    discipline: ElectricalPower
+    tier: 9
+    parents: [elec_ionThrusters]
+    flavor: "Drive a self-induced magnetic field through a plasma arc for high-power electric thrust — the megawatt-class propulsion of a serious deep-space tug."
   # ---------- Nuclear Engineering (radioisotopes, fission, nuclear propulsion) ----------
   - id: nuc_rtg
     title: "Radioisotope Thermoelectric Generators"
@@ -1433,6 +1445,14 @@ nodes:
     flavor: "A self-sustaining miniature biosphere — the life support of a colony that never resupplies."
 
   # ======================= SYSTEMS INTEGRATION — vehicles as convergence points =======================
+  - id: experimental
+    title: "Experimental & Ground Support"
+    discipline: SystemsIntegration
+    tier: 1
+    parents: [start]
+    cost: 5
+    flavor: "Off-tree catch-all: launch-pad/ground-support hardware and uncurated or unclassified parts. Visible but off the critical path and excluded from the science balance."
+
   # Each requires 3-4 disciplines to have matured (anyToUnlock=False). These are where the tree becomes a
   # web, where the interesting multi-discipline gates live, and where integrated composite parts home.
   - id: int_satelliteBus

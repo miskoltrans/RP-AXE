@@ -42,25 +42,39 @@ def route(p):
     if disc.startswith("engine:"):                                     # home each fuel-family at its WORKHORSE cycle
         if has(props, "Uranium"):     return ("NODE:nuc_nuclearThermal", "engine:nuclear", "med")
         if has(props, "IntakeAir"):   return ("NODE:aero_supersonicInlets", "engine:airbreather", "low")
+        if disc == "engine:other":                                     # grab-bag: sub-route by propellant
+            if has(props, "Xenon", "Argon", "Krypton"):                   return ("NODE:elec_ionThrusters", "engine:electric", "med")
+            if has(props, "FissionPulse", "FissionPellet"):              return ("NODE:nuc_gasCoreNTR", "engine:nuclearpulse", "med")
+            if has(props, "PBAN", "PUPE", "PBAA", "CTPB", "HTPB", "NGNC"): return ("NODE:pc_castableComposite", "engine:solid", "med")
+            if has(props, "LqdMethane"):                                  return ("NODE:pc_methalox", "engine:methalox", "med")
+            if has(props, "RG-1", "Kerosene", "RP-1"):                    return ("NODE:fd_gasGenerator", "engine:kerolox", "med")
+            if has(props, "AvGas", "Gasoline"):                           return ("NODE:aero_subsonicAirfoils", "engine:piston", "low")
+            return ("NODE:pc_hypergolicChemistry", "engine:other", "low")
         return {"engine:cryo":       ("NODE:cryo_lh2Insulation", "engine:hydrolox", "med"),
                 "engine:hypergolic": ("NODE:pc_hypergolicChemistry", "engine:hypergolic", "med"),
                 "engine:kerolox":    ("NODE:fd_gasGenerator", "engine:kerolox", "med"),
-                "engine:solid":      ("NODE:pc_castableComposite", "engine:solid", "med"),
-                "engine:other":      ("NODE:pc_hypergolicChemistry", "engine:other", "low")}[disc]
+                "engine:solid":      ("NODE:pc_castableComposite", "engine:solid", "med")}[disc]
     if disc == "tank":
         return ("SPREAD:Cryogenics" if has(props, "LqdHydrogen", "LqdMethane") else "SPREAD:Metallurgy", "tank", "med")
-    if disc == "structure":  return ("SPREAD:StructuresMechanisms", "structure", "med")
+    if disc == "structure":                                            # sub-route by mechanism
+        if has(mods, "DockingNode"):                       return ("NODE:str_androgynousDocking", "struct:docking", "med")
+        if has(mods, "Decouple", "AnchoredDecoupler"):     return ("NODE:str_stageSeparation", "struct:decoupler", "med")
+        if has(mods, "Wheel", "Leg", "Suspension"):        return ("NODE:str_landingLegs", "struct:legs", "med")
+        return ("NODE:str_interstageTruss", "struct:adapter", "med")   # adapters / trusses / generic
     if disc == "rcs":        return ("NODE:gnc_reactionControl", "rcs", "low")
     if disc == "probe:integrated":
-        return ("NODE:int_deepSpaceProbe" if has(name+mods, "RTG", "Radioisotope") else "NODE:int_satelliteBus",
-                "integrated-probe", "med")
+        if has(name + mods, "RTG", "Radioisotope"):        return ("NODE:int_deepSpaceProbe", "probe:deepspace", "med")
+        if has(name, "comsat", "Comsat", "Molniya", "TDRS", "Relay", "Syncom", "Intelsat"):
+            return ("NODE:int_comsatBus", "probe:comsat", "med")
+        return ("NODE:int_satelliteBus", "probe:satellite", "med")
     if disc == "science:scattered":
         if has(mods, "Imag", "Camera", "Scope", "Optical"):     return ("SPREAD:OpticsPhotonics", "science:optical", "med")
         if has(mods, "Antenna", "Transmitter"):                 return ("SPREAD:Telecommunications", "science:comms", "low")
         if has(mods, "Seismic", "Surface", "GroundExperiment"): return ("SPREAD:Robotics", "science:surface", "low")
         return ("SPREAD:Microelectronics", "science:instrument", "low")
     if disc == "unclassified":
-        return ("EXPERIMENTAL", "ground-support", "high") if mod == "ModularLaunchPads" else ("REVIEW", "unclassified", "low")
+        return ("NODE:experimental", "ground-support", "high") if mod == "ModularLaunchPads" \
+               else ("NODE:experimental", "unclassified", "low")
     # ---- CLEAN parts ----
     if disc == "Aerodynamics":
         if has(mods, "Parachute", "RealChute"):  return ("NODE:aero_parachuteRecovery", "clean:chute", "high")
@@ -125,6 +139,14 @@ def main():
         for r in rows: f.write("\t".join(r) + "\n")
 
     place = {r[0]: r[1] for r in rows}
+    def route_upgrade(name):                                            # capability upgrades -> function node
+        n = name.lower()
+        if any(k in n for k in ("hdd", "data", "tape", "recorder")):  return "comp_dataStorage"
+        if "fairing" in n:                                            return "aero_proceduralFairings"
+        if "heatshield" in n or n.endswith("hs"):                     return "cmp_ablativeTPS"
+        if "cockpit" in n:                                            return "life_pressurizedCabin"
+        if "avionic" in n:                                            return "comp_digitalFlightComputer"
+        return "experimental"                                         # airlaunch/misc -> off-tree
     up_rows = []
     with open(os.path.join(MAN, "upgrades-curated.tsv"), encoding="utf-8") as f:
         h = f.readline().rstrip("\n").split("\t"); di, ri, ni = h.index("disposition"), h.index("reason"), h.index("name")
@@ -133,7 +155,8 @@ def main():
             if di >= len(c) or not c[di].startswith("KEEP"): continue
             reason = c[ri] if ri < len(c) else ""
             src = reason.split(":")[-1].strip() if "curated engine" in reason else ""
-            up_rows.append((c[ni], place.get(src, "REVIEW"), ("engine-config:" + src) if src else "capability"))
+            node = place.get(src, "experimental") if src else route_upgrade(c[ni])
+            up_rows.append((c[ni], node, ("engine-config:" + src) if src else "capability"))
     with open(os.path.join(MAN, "upgrade-placement.tsv"), "w", encoding="utf-8") as f:
         f.write("upgrade\tnode\tmethod\n")
         for r in up_rows: f.write("\t".join(r) + "\n")

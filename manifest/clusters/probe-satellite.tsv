@@ -31,7 +31,6 @@ ca_landv_orbiter_core	Surveyor Orbiter Core	CoatlAerospace	int_satelliteBus	3	su
 ca_vor_core	4MV Spacecraft Bus	CoatlAerospace	int_satelliteBus	3	advConstruction		ModuleCommand;ModuleFuelTanks;ModuleRealAntenna	med
 eos_aqua	Aqua	RN_US_Probes	int_satelliteBus	3	generalRocketry	Hydrazine	ModuleCommand;ModuleReactionWheel;ModuleScienceContainer;Mod	med
 eos_aura	Aura	RN_US_Probes	int_satelliteBus	3	generalRocketry	Hydrazine	ModuleCommand;ModuleReactionWheel;ModuleScienceContainer;Mod	med
-eos_tdrs	Tracking and Data Relay Satellite H-N	RN_US_Probes	int_satelliteBus	3	generalRocketry		ModuleCommand;ModuleReactionWheel;ModuleRealAntenna;ModuleFu	med
 eos_terra	Terra	RN_US_Probes	int_satelliteBus	3	generalRocketry	Hydrazine	ModuleCommand;ModuleReactionWheel;ModuleScienceContainer;Mod	med
 explorer_6	Explorer 6	RN_US_Probes	int_satelliteBus	3	engineering101		ModuleCommand;ModuleDeployableSolarPanel;ModuleScienceExperi	med
 galileo_aprobe	Galileo Atmospheric Probe	RN_US_Probes	int_satelliteBus	3	generalRocketry		ModuleCommand;ModuleScienceExperiment;ModuleRealAntenna;Modu	med
@@ -74,7 +73,6 @@ rn_protonn6_4	Proton 4 N-6 Satellite	RN_Soviet_Probes	int_satelliteBus	3	general
 rn_sphinx_t3e	Sphinx	RN_US_Probes	int_satelliteBus	3	engineering101		ModuleCommand;ModuleDeployableSolarPanel;ModuleScienceExperi	med
 rn_strela3_gonets	Strela-3/Gonets-D1 Satellite Bus	RN_Soviet_Probes	int_satelliteBus	3	generalRocketry		ModuleCommand;ModuleScienceContainer;ModuleScienceExperiment	med
 rn_surveyor3	Surveyor Lunar Probe	RN_US_Probes	int_satelliteBus	3	basicScience		ModuleCommand;ModuleScienceContainer;ModuleScienceExperiment	med
-rn_tdrs_ag	Tracking and Data Relay Satellite A-G	RN_US_Probes	int_satelliteBus	3	generalRocketry		ModuleCommand;ModuleReactionWheel;ModuleRealAntenna;ModuleFu	med
 rn_voyager	Voyager 1/2 Probe	RN_US_Probes	int_satelliteBus	3	flightControl	Hydrazine	ModuleCommand;ModuleScienceExperiment;ModuleRCSFX;ModuleReal	med
 ro_TKS_adapter_s2_s0p5_1	TKS Crew Compartment 1	Tantares	int_satelliteBus	3	advFlightControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
 ro_TKS_adapter_s2_s1p5_1	TKS Crew Compartment 2	Tantares	int_satelliteBus	3	advFlightControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
