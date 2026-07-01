@@ -130,7 +130,7 @@ namespace RPAxe.RnD
                 if (AxeTreeMeta.Render.LaneRouting)
                 {
                     AxeTreeLayout.ComputeSlots(edges, byId, AxeTreeMeta.Render.Fan);
-                    AxeTreeLayout.BuildLaneRoutes(lnodes, edges, nodeSz, nodeSz);
+                    AxeTreeLayout.BuildLaneRoutes(lnodes, edges, nodeSz, nodeSz, AxeTreeMeta.Render.LanePitch);
                     foreach (AxeTreeLayout.LEdge e in edges)
                         if (e.LaneGeom != null) Routes[e.From + ">" + e.To] = e.LaneGeom;
                 }

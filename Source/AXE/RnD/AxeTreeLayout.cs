@@ -18,7 +18,7 @@ namespace RPAxe.RnD
         internal class LNode { public string Id; public string Discipline; public int Tier; public int Cost; public float X, Y; }
         internal class LEdge { public string From, To; public List<Vector2> Waypoints; public float TF = 0.5f, TT = 0.5f; public List<Vector2> LaneGeom; }
 
-        private const float LANE_PITCH = 13f, HGAP = 6f, FAN_LO = 0.18f, FAN_HI = 0.82f, CORNER_R = 15f;
+        private const float HGAP = 6f, FAN_LO = 0.18f, FAN_HI = 0.82f, CORNER_R = 15f;   // lane pitch is now a param (config)
         private const int CORNER_SEGS = 3;
 
         // ---- discipline-banded layout: each discipline is a horizontal band (by order); x=tier;
@@ -113,7 +113,7 @@ namespace RPAxe.RnD
 
         // ---- lane routing: one flat polyline per edge; vertical legs spread into per-gutter lanes
         // (interval-graph colouring) + lane-order by barycentre + horizontal-track separation + rounding.
-        internal static void BuildLaneRoutes(List<LNode> nodes, List<LEdge> edges, float nodeW, float nodeH)
+        internal static void BuildLaneRoutes(List<LNode> nodes, List<LEdge> edges, float nodeW, float nodeH, float lanePitch)
         {
             var xsSet = new SortedSet<float>();
             foreach (var n in nodes) xsSet.Add(n.X);
@@ -175,7 +175,7 @@ namespace RPAxe.RnD
             Func<int, int, float> laneX = (g, l) =>
             {
                 int n = lanesN[g]; float gw = TW - nodeW;
-                float pitch = Mathf.Min(LANE_PITCH, gw * 0.8f / Mathf.Max(1, n));
+                float pitch = Mathf.Min(lanePitch, gw * 0.8f / Mathf.Max(1, n));   // clamp only if a busy gutter overflows
                 float cx = tierX(g) + nodeW + gw / 2f;
                 return cx + (l - (n - 1) / 2f) * pitch;
             };
