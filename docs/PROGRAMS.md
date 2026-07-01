@@ -63,6 +63,39 @@ sibling tiers:
 (35 programs funded in `Programs.cfg`; 40 distinct programs referenced by contracts. RP-1 also has 4
 `RP0_PROGRAM_MODIFIER` variant-funding blocks we ignore.)
 
+## Economy model — the ground rules M3 sits inside
+
+**Time is not gated (by design):** no KCT / build time, no program deadlines, no upkeep. Timewarp is
+free and unlimited. Consequence: **money can never be a time-driven scarcity engine** — any per-time
+income is farmable by warping. So the economy rests on two invariants:
+
+1. **Funds are action-gated.** Every fund reward is paid for *doing a discrete thing* (a mission /
+   milestone), never for elapsed time — timewarp stays economically inert.
+2. **Nothing profitable repeats.** One-shot contracts (`maxCompletions = 1`); any repeatable contract
+   must pay ≤ its flight cost. Total career income is therefore a *finite, effort-gated budget*, not a
+   treadmill. Money is a solvency/efficiency layer (it punishes overbuilding and failed missions), not
+   the point — the tech tree + contract objectives are the progression spine.
+
+**Currencies are fungible via the stock Administration building.** RP-AXE keeps the stock strategies
+(Fundraising Campaign rep→funds, Patents Licensing science→funds, Outsourced R&D / Unpaid Research
+funds→science) — we simply don't re-suppress them (`RP0.dll`, which repurposed Admin for Programs /
+Leaders, is gone). Reputation and science both cash out to funds at the player's discretion, so M3
+need not agonise over *which* currency a contract pays — total value per era is what matters.
+
+**Already actioned — Skopos recurring disabled.** Because rep→funds conversion is live, Skopos's
+perpetual `maintenance_*` contracts (auto-accept, monthly reputation) were the one time-farmable
+currency source = a warp-for-money exploit. Deleted in
+`design/Contracts/DisableSkoposMaintenance.cfg`; the one-shot "establish the network" masters stay.
+
+### ⚠ TODO (balance) — rescale stock strategies to RP-AXE magnitudes
+The stock strategies are tuned for **stock-KSP** currency magnitudes (thousands of funds, single-digit
+science). At RP-AXE / RSS scale (millions of funds, RP-1 science values) the default conversion rates
+and per-Admin-level commitment caps will be near-useless or absurd. Rebalance them — conversion
+percentages, min/max commitment, and the per-Admin-level active-strategy limits — against real per-era
+income and launch costs. Hook already present: `GameData/Squad/Strategies/StrategiesCustom._cfg`
+(disabled template; enable/patch via `:FOR[RP-AXE]`). Do this **after** M3 sets per-era income, so the
+conversion rates can be sanity-checked against actual numbers.
+
 ## M3 — Pass C reward distribution (plan)
 
 For each program, spread `baseFunding` across its gated contracts as per-contract `rewardFunds`:
