@@ -90,11 +90,11 @@ more solar panels, bigger landing gear).
   and the small satellite-attitude engines it spawned as the same breakthrough at different scales.*
 
 - **Storable-Propellant Orbital-Class Boosters** `pc_storableBoosters` `[PropellantChemistry, T3]` —
-  parents: `pc_hypergolics`. ⭐`ROE-RD215`. ride: `ROE-RD215_Single`, `ROE-RD219`.
+  parents: `pc_hypergolics`. ⭐`ROE-RD215`. ride: `ROE-RD215_Single`, `ROE-RD219`, `ROE-RD855`, `ROE-RD856`
+  (verified: UDMH/AK27 and UDMH/NTO respectively — vernier/trim engines for the same Yangel-bureau R-16/R-36
+  storable ICBM-derived family, confirmed via `RealismOverhaul/Engine_Configs/RD855_Config.cfg`).
   *Corrosive, toxic storables scaled from a small hypergolic trim engine up to full first-stage thrust —
-  the Yangel-bureau approach of repurposing an ICBM's always-ready propellants for a space launcher.
-  (`ROE-RD855`/`RD856` look like the same family but I haven't verified their propellant — check before
-  riding them here.)*
+  the Yangel-bureau approach of repurposing an ICBM's always-ready propellants for a space launcher.*
 
 - **Engine-Cluster Heavy Lift** `str_engineClustering` `[StructuresMechanisms, T4]` — parents:
   `fd_orbitalThrust`. ⭐`ROE-H1C`. ride: `ROE-H1D`, `ROE-RS27`.
@@ -109,7 +109,10 @@ more solar panels, bigger landing gear).
 
 - **Helical Directional Arrays** `tel_helicalDirectional` `[Telecommunications, T2]` — parents: `tel_telemetry`.
   ⭐`antenna_cone_toggle` (`digitalComms`). *Axial-mode helix gives circularly-polarized gain that tolerates
-  a tumbling spacecraft. Reuses the id/flavor already seeded in `library.yaml`.*
+  a tumbling spacecraft. Reuses the id/flavor already seeded in `library.yaml`.* Confirmed via
+  `RP0TechTree.cfg`: `digitalComms`'s own `Parent{parentID}` IS `lunarRangeComms` (1957-58 vs 1959-60 in
+  RP-1's node descriptions) — so `longAntenna`'s ride-along tier-bump on `tel_telemetry` must sit strictly
+  *before* this node, not beside it.
 
 ## Ride-alongs only — extend an existing node, don't mint one
 
@@ -156,19 +159,32 @@ coast-then-restart upper stage needing propellant settled.
 
 ## Open calls
 
+Two of the original four resolved against ground truth (`RP0TechTree.cfg` + the RO engine configs) and are
+folded into the node descriptions above: `lunarRangeComms`→`digitalComms` ordering, and `RD855`/`RD856`'s
+propellant. Two remain genuine judgment calls — nothing in the data settles these, they're design choices:
+
 1. **`str_engineClustering` (H-1/Saturn I) — this batch or a future heavy-lift/lunar one?** It's a real
-   breakthrough and it's genuinely in this partlist, but Saturn-class heavy lift arguably belongs to a
-   later "humans to the Moon" milestone rather than "humans in orbit." Included above; your call whether
-   to build it now or park it.
-2. **`lunarRangeComms` vs `digitalComms` ordering** — `longAntenna` (Communotron 16) and `antenna_cone_toggle`
-   (helical) are both single-part categories; which comes first (cost/tier) depends on which RP-1 places
-   earlier in-game. Didn't verify tier order from the ConfigCache — check before wiring parents.
-3. **`ROE-RD855`/`ROE-RD856` propellant** — tentatively rode onto `pc_storableBoosters` alongside RD215/219
-   by family resemblance, not verified. Check before committing.
-4. **`str_launchEscape`'s tier/parent** — proposed as a T4 child of `int_crewedCapsule`. Could equally be
-   pulled forward to gate the capsule (if "no one would actually fly without one" outweighs the what-if
-   principle) — see the relaxed-convergence note. Recommend keeping it a refinement, consistent with how
-   `int_orbitalInsertion` already treats staging/guidance as optional.
+   breakthrough (8 orbital-class engines on a common structure, synchronized ignition) and it's genuinely
+   in this partlist's `orbitalRocketry1961` category, so it's not a data question — RP-1 places it here.
+   The judgment call is about *our* tree's narrative arc: does "humans in orbit" earn a heavy-lift node, or
+   does heavy lift belong with the lunar-landing milestone it actually enabled? Arguments for building it
+   here: it's ground-truthed as present, and H-1 clustering predates and is independent of the lunar
+   mission profile — Saturn I flew Earth-orbit-only test flights first. Arguments for deferring: it adds a
+   4th discipline-spanning node to an otherwise tight, focused milestone, and its *payoff* (enough thrust
+   for translunar injection) doesn't matter until the lunar batch exists — building it now means a node
+   that's real but unused for a while. No data resolves this; it's about how tightly you want each batch's
+   node set to map to what that milestone's *player* actually needs next turn.
+2. **`str_launchEscape`'s tier/parent** — proposed as a T4 child of `int_crewedCapsule` (a refinement, not
+   a gate). The alternative is pulling it forward to gate the capsule itself, i.e. "you cannot unlock a
+   crewed capsule until you've also solved abort." That's a philosophical call about what "relaxed
+   convergence" means for *safety* specifically, not propulsion physics: `int_orbitalInsertion` dropped
+   staging/guidance as gates because a good-enough engine+tank really can single-stage to orbit — the
+   physics doesn't force it. But no real program flew crew without a documented abort capability; that's a
+   procedural/political constraint, not a law of physics, which is exactly the distinction the what-if
+   principle turns on. I lean refinement (keep the gate about physics only, let escape systems be an
+   available-but-optional upgrade), but this is the one place in the milestone where "reckless but
+   physically possible" and "no real program would ever do this" diverge sharply enough to be worth your
+   explicit sign-off rather than my default.
 
 ## Node count
 13 new nodes: the milestone (`int_crewedCapsule`) + its 2 new-discipline inputs (`life_openLoopECLSS`,
