@@ -147,6 +147,99 @@ RealAntennas, ROSolar…), present via their mods.
   actual installed mods (`ls GameData` / `CKAN/registry.json`) before trusting any non-`*_clean` folder.**
 
 ## Parked ideas (later threads)
+- **X-plane program contracts** (decided direction, 2026-07-01, early-tree review) — the aviation track is
+  deliberately roleplay/side-content and is NOT expected to recoup science (it flies the SCIENCE.md-zeroed
+  sub-40 km regime). Its reward loop is a set of **special x-plane-program contracts** paying MONEY (the
+  VISION "money abstracts non-simulated tradeoffs" lever) — sound-barrier / altitude / speed-record milestones,
+  X-plane research flights, etc. This is why the tree does NOT try to make the aviation ladder science-solvent.
+  Contract authoring rides the contracts thread (port-and-strip from RP-1). See [`TREE.md`](TREE.md) §3B/§8.
+- **Procedural-part mass/cost tax audit** (economy design, 2026-07-01) — ground-truthed whether AXE's
+  workhorse procedural parts (`Parts mix` decision above) are penalized vs. named/stock counterparts for
+  the flexibility of not picking a fixed real hardware analog. Audited all curated procedural part types
+  against RO's actual configs + the mod's own source comments. **Mixed picture, not a blanket tax** — 3 of
+  8 categories are genuinely taxed, one looks like an RO patch-ordering bug, and two already favor custom
+  design:
+  - **`proceduralStackDecoupler` — REVISED: not a magnitude tax, but has no upgrade path.** Initial
+    read (below) called this TAXED off the "arbitrary coefficients" comment alone; computing the actual
+    formula against matched diameters overturns that. Real formula (`KSP-RO/ProceduralParts`
+    `Source/DecouplerTweaker.cs`, `usePFStyleMass` branch): `mass = (x·d³ + y·d² + z·d + w) ×
+    decouplerMassMult` with RO's `(x,y,z,w) = (0.0002, 0.0075, 0.005, 0)`, `decouplerMassMult = 4`.
+    Evaluated at the named decouplers' own diameters: TD-06 0.625m 20kg vs proc 24.4kg (+22%); TD-12
+    1.25m 80kg vs proc 73.4kg (**−8%**); TD-25 2.5m 350kg vs proc 250kg (**−29%**); TD-37 3.75m 500kg vs
+    proc 539kg (+8%). That's noise around parity, not a systematic tax — procedural is sometimes lighter.
+    (TD-18 1.875m 12kg vs proc 148kg looks catastrophic but is TD-18 itself being an outlier-light real
+    part, not procedural being punitive.) **Real standing issue: no tech-tier improvement curve** — the
+    formula is permanently flat regardless of era, unlike real isogrid tanks which get lighter with
+    research (below). RO also deletes the stock size-tier `UPGRADE` blocks entirely (full size range
+    unlocked from tech `start`), so there's no path to improve it over a career at all. **DECISION
+    (2026-07-01): no action.** Mass is already roughly at parity with real parts (not taxed), so a
+    tech-tier improvement curve would be solving a problem that isn't actually costing anything
+    competitively — documented for reference only, not queued as work.
+  - **`proceduralStructural` — REVISED AGAIN: comparing against RO's cited "isogrid" ideal was
+    misleading; against real competing parts, procedural wins.** Resolved `dryDensity = 0.03` (30 kg/m³)
+    is still accurate, but the isogrid ladder (16→6.5 kg/m³) it was checked against turns out to be a
+    red herring: **no actual named part in this modlist uses the isogrid RF type** — it's not something
+    you'd really be choosing between. Checking what stock/named cylindrical hulls actually use instead
+    (`mk2Fuselage`, `mk2FuselageShortLiquid`, `rocketNoseCone`, and even `Mk1FuselageStructural` — which
+    RO silently renames to "Fuselage (Pressurized)" and reassigns `type=Fuselage`, since RO never leaves
+    a stock cylindrical hull as dead structure) all resolve to RF's `Structural`/`Fuselage` types, both
+    `basemass = 0.000039/L` = **39 kg/m³** (`RealFuels/Resources/RealTankTypes.cfg`). Procedural
+    structural (30 kg/m³) is **23% lighter** than this real, currently-active reference — the opposite
+    of taxed. Zero upgrade path still stands (`RO_ProceduralParts.cfg` line 1:
+    `!PARTUPGRADE[ProceduralParts*]:BEFORE[RealismOverhaul] {}`, blanket-deletes every ProceduralParts
+    upgrade), but that's now a moot/neutral point rather than a fix target — there's no real-part
+    tech-ladder it's failing to keep pace with. **No action needed.**
+  - **`proceduralCrewTube` — density is roughly at PARITY against real competition (not taxed, not
+    rewarded); the cost premium is separate and still real.**
+    1. **Density:** checked against 3 sizes of `StationPartsExpansionRedux` `sspx-tube-*` ("Pressurized
+       Crew Tube," explicitly bare/fixture-less, a fair match), correcting for RO's 1.8x rescale:
+       2.25m → 68.9 kg/m³, 4.5m → 46.7 kg/m³, 6.75m → 47.4 kg/m³. Procedural's 50 kg/m³ beats the
+       smallest but is **5-7% heavier** than the two larger, more representative sizes — call it parity.
+       The internal inconsistency vs. its own sibling Structural (0.05 vs. 0.03, from being cloned in a
+       `:BEFORE[RealismOverhaul]` pass before the later density-reduction patch, which never lists
+       CrewTube) is a real, cheap (one-line), zero-risk fix if ever revisited — but **DECISION
+       (2026-07-01): no action**, documented for reference only.
+    2. **Cost (still a deliberate RP-1 design choice, unaffected by the density finding):** resolved
+       `costPerkL = 24.5` vs. Structural's `0.5` (49x) traces to `RP-1/GameData/RP-1/ProcCosts.cfg`,
+       vendored verbatim into `RP-AXE/seed/ProcCosts.cfg` — pricing crew tubes far above plain structural
+       (pressure-vessel/life-support-grade construction cost). Its `ModuleToolingPTank` (further 3x)
+       is already correctly stripped per the Tooling-REMOVED decision. **DECISION (2026-07-01): no
+       action** — keep RP-1's pricing as-is, documented for reference only.
+  - **Standing lesson, reinforced twice now:** when RO's own comment cites a comparison ("equivalent to
+    isogrid tanks"), verify that comparison is to something a real part actually uses — not an idealized
+    RF type nobody is assigned to. Two separate "TAXED" verdicts in this audit turned out to rest on
+    exactly that mistake.
+  - **`proceduralNoseCone` — REWARDED, no fix needed.** 30 kg/m³ vs. the named nose cone's own
+    RealFuels-assigned 39 kg/m³ density — ~23% *lighter* than picking the stock part.
+  - **Procedural tanks (curated `RO-RFTank-Integral/Separate/BalloonNew/SM/Spaceplane`) —
+    PARITY-to-REWARDED, no fix needed.** Share the exact same tech-progressive RO tank-type system
+    (`RO_RealFuels_PartConfigs.cfg`) that RO's own dedicated named-tank mod (ROTanks) uses — procedural
+    tank builders have strictly *more* options than stock-tank users frozen on legacy tank types.
+  - **`proceduralHeatshield` — N/A for AXE, and confirmed why.** ProceduralParts' native heatshield part
+    does carry a ~6.4x tax (never wired into RO's shared heatshield mass formula), but it **isn't in the
+    curated manifest** — AXE already uses `ROH-AdjustableHS` (ROHeatshields), which achieves full parity
+    with named heatshields by design. Root-caused (2026-07-01): RO itself sets `%RSSROConfig = False` on
+    it (`RO_ProceduralParts.cfg:112-122` — every *other* procedural part gets `= True`), which RO's
+    `HardRemoveNonRO` mechanism then hard-deletes. Confirmed live in the current instance: zero
+    `proceduralHeatshield` entries in `ModuleManager.ConfigCache`, delete logged in `MMPatch.log`. Not an
+    AXE curation call and not RP-1's doing either (RP-1's own redundant delete in
+    `Tree/StartNodeRemoval.cfg` never even applies — no RP-1/RP-0 folder in this instance) — it's RO's
+    own upstream plausibility judgment, already covered by the T1 curation rule that treats RO's
+    plausibility floor as inherited. No action needed.
+  - **`proceduralTankOre` — divergence flag.** That same RP-1 `StartNodeRemoval.cfg` also deletes
+    `proceduralTankOre` and `proceduralTankTAC`. TankTAC is independently gone anyway (its own RO
+    plausibility flag). But **TankOre is alive in the current instance and sits in the curated manifest**
+    — confirmed via `ModuleManager.ConfigCache` — purely because AXE doesn't install RP-1 and so never
+    inherits that specific deletion. Concrete instance of the general "re-cut RP-1's cuts" risk from
+    [[axe-replaces-not-depends-rp1]]. **DECISION (2026-07-01): no action** — keep it curated as-is,
+    documented for reference only.
+  - **`proceduralBattery`** — deleted outright by RO (`-PART[proceduralBattery]`); moot, not curated.
+  - **Bottom line (2026-07-01): no action taken on any of the above.** The audit's real value was
+    correcting the verdicts, not generating a work list — decoupler/structural/nose cone/tanks came back
+    fine-to-favorable once checked against real competing parts instead of RO's own cited (and
+    misleading) comparisons; the two remaining loose ends (crew-tube density bug, crew-tube cost premium,
+    TankOre divergence) were reviewed and deliberately left as-is. Kept here as reference in case any of
+    it becomes relevant again, not as queued P2/P3 work.
 - **Airlaunch** — RP-1's airlaunch is an interesting feature we **sacked** with the KCT/RP0.dll
   career layer (T3, 2026-07-01). It is not a part: you build a vessel, KCT "mounts" it on a notional
   carrier aircraft (time + funds), and it **spawns already airborne** inside an unlocked envelope.

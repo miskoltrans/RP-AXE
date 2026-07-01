@@ -6,8 +6,10 @@
 # ROCKETRY IS THE DEFAULT: `start` carries the sounding-rocket loadout (fly turn 1). Aviation is opt-in.
 # A node depends ONLY on what it genuinely derives from — everything is a peer off `start` otherwise.
 # TWO-SOLUTIONS PATTERN (multi-entry, anyToUnlock:true) where a problem had two real answers — the choice
-# makes the player feel smart even when obvious: combustion instability (multi-chamber ‖ baffled-injector)
-# feeds `Orbital-Class Thrust`; power (solar ‖ RTG) and imaging (film ‖ vidicon) are peer choices.
+# makes the player feel smart even when obvious: combustion instability (multi-chamber ‖ baffled-injector
+# ‖ hydrolox) and orbital mass-fraction (isogrid ‖ balloon) are the true multi-entry gates, feeding
+# `Orbital-Class Thrust` and `Orbital-Class Mass Fraction`. Imaging (film ‖ vidicon, equal-cost) is a peer
+# sidegrade; solar is the early default and RTG a dormant dark-specialist (not an early choice).
 
 meta:
   scalar: 1.0
@@ -46,26 +48,26 @@ nodes:
     flavor: "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. (Soviet-probe pack only.)"
 
   # ============================ ROCKET PROPULSION (the engine line) ============================
-  - id: th_regenCooling
-    title: "Regenerative Wall Cooling"
-    discipline: Thermodynamics
+  - id: fd_turbopumpFeed
+    title: "Turbopump Feed"
+    discipline: FluidDynamics
     tier: 1
     parents: [start]
-    flavor: "Route the fuel through the chamber wall before burning it, carrying away a heat flux that would melt any uncooled metal — the chamber runs hotter than its own melting point. The turbopump-fed V-2, a real engine at last, a large step up from a dumb sounding motor."
+    flavor: "Drive the propellants with a turbine-spun pump instead of tank pressure: the tank no longer has to be a heavy pressure vessel, and the chamber can run far harder than any pressure-fed sounding motor reaches. This is the real step from a powder dart to the turbopump-fed V-2 — a large liquid rocket at last. (Its chamber was film-cooled; regenerative cooling you already fly on the ORM-65.)"
     parts: [ROE-RD100, ROE-A4, ROE-A7]
   # --- two solutions to combustion instability (a multi-entry pair, per VISION) ---
   - id: fd_multiChamber
     title: "Multi-Chamber Combustion"
     discipline: FluidDynamics
     tier: 2
-    parents: [th_regenCooling]
+    parents: [fd_turbopumpFeed]
     flavor: "Combustion instability tears a single large chamber apart in milliseconds. The Soviet answer was to not build one: four smaller chambers per engine, each below the acoustic threshold, fed by a common turbopump. The R-7 that launched Sputnik."
     parts: [ROE-RD107, ROE-RD108, ROE-RD211, ROE-S155, YF2_Engine, YF2_with_shell]
   - id: fd_baffledInjector
     title: "Baffled-Injector Stabilization"
     discipline: FluidDynamics
     tier: 2
-    parents: [th_regenCooling]
+    parents: [fd_turbopumpFeed]
     flavor: "The Western answer to the same instability: keep the single big chamber, but break up the spinning tangential modes with injector-face baffles and tuned cavities. Harder to get right, but it scales — the path that ends at the F-1."
     parts: [ROE-LR89_2, ROE-LR79, ROE-LR105_2, ROE-X405, ROE-Gamma301, ROE-Stentor]
   - id: fd_verniers
@@ -122,11 +124,11 @@ nodes:
     flavor: "Roll, fusion-weld and proof-test a cylinder that holds pressure without bursting — the first tank that flies. Heavy, but honest."
     parts: [ROT-ServiceModule, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-GenericTank-Separate, ROT-BoosterTank-Separate]
   - id: met_isogrid
-    title: "Isogrid Chemical Milling"
+    title: "Machined Isogrid Stiffening"
     discipline: Metallurgy
     tier: 2
     parents: [met_weldedTank]
-    flavor: "Etch away everything that isn't load-path, leaving a triangular-rib isogrid skin — the same stiffness at a fraction of the mass."
+    flavor: "Machine a triangular-rib isogrid into thick plate — cutting metal away everywhere the load path doesn't run, leaving only the ribs that carry it. The same stiffness at a fraction of the mass; the light conventional tankage that flies most orbital rockets."
     parts: [ROT-GenericTank-Integral, ROT-AtlasTank-Integral, ROT-BoosterTank-Integral, ROT-SphericalTank-Integral, ROT-ToroidalTank-Integral, RO-RFTank-Integral]
   - id: str_balloonTank
     title: "Pressure-Stabilized Monocoque"
@@ -135,6 +137,13 @@ nodes:
     parents: [met_weldedTank]
     flavor: "Make the wall so thin it only holds shape under pressure — the Atlas 'steel balloon' reached orbit weighing almost nothing empty, and would crumple if you ever let it depressurise. As much an orbital enabler as any engine."
     parts: [ROT-AtlasTank-Balloon, RO-RFTank-BalloonNew, ROT-BalloonTank-New]
+  - id: str_orbitalMassFraction
+    title: "Orbital-Class Mass Fraction"
+    discipline: StructuresMechanisms
+    tier: 3
+    parents: [met_isogrid, str_balloonTank]
+    anyToUnlock: true
+    flavor: "Either road closes the rocket equation: chemically-milled isogrid that keeps its shape unpressurised, or the pressure-stabilised steel balloon that weighs almost nothing empty. The R-7 flew conventional-light, Atlas flew the balloon — orbit doesn't care which tank you built, only that it's empty-light enough to leave propellant for the last of the climb."
 
   # ============================ LAUNCH-VEHICLE MECHANISMS & GUIDANCE ============================
   - id: str_staging
@@ -243,7 +252,7 @@ nodes:
   - id: opt_vidicon
     title: "Vidicon Imaging"
     discipline: OpticsPhotonics
-    tier: 2
+    tier: 1
     parents: [start]
     flavor: "Scan an image off a photoconductive vidicon tube and send it down as live video — no film to recover, but coarser than film. The other way to see: film returns the detail, the vidicon returns the immediacy."
     parts: [RO-EarlyTVCamera]
@@ -260,7 +269,7 @@ nodes:
     title: "Orbital Insertion"
     discipline: SystemsIntegration
     tier: 4
-    parents: [fd_orbitalThrust, str_balloonTank, str_staging, gnc_pitchProgram]
+    parents: [fd_orbitalThrust, str_orbitalMassFraction, str_staging, gnc_pitchProgram]
     anyToUnlock: false
     flavor: "Orbital-class thrust, a tank light enough to close the rocket equation, staging, and a pitch program converge. Build your own satellite from the bus, power and antenna beside it. Beep. Beep. Beep."
   - id: int_applicationsSat
@@ -303,9 +312,9 @@ nodes:
   - id: aero_afterburner
     title: "Afterburning Turbojets"
     discipline: Aerodynamics
-    tier: 5
-    parents: [aero_shockInlets]
-    flavor: "Inject and burn fuel in the exhaust downstream of the turbine for a burst of extra thrust — the Mach-2 interceptor's dash and climb."
+    tier: 4
+    parents: [aero_areaRule]
+    flavor: "Inject and burn fuel in the exhaust downstream of the turbine for a burst of extra thrust — reheat for the transonic dash and climb, flown years before any sustained-Mach-2 inlet existed."
     parts: [aje_j79, aje_j75, RO-AL7F, RO-Atar101D]
   - id: aero_ramjet
     title: "Ram Compression"
@@ -318,7 +327,7 @@ nodes:
     title: "Rocket-Boosted Airframes"
     discipline: Aerodynamics
     tier: 3
-    parents: [xplaneStart, th_regenCooling]
+    parents: [xplaneStart, fd_turbopumpFeed]
     anyToUnlock: false
     flavor: "Hang a throttleable rocket engine in a clean airframe, drop it from altitude and ride a ballistic arc to the edge of the atmosphere. The X-1 broke the sound barrier; the X-15 touched space and came home on a runway. Where the aircraft and rocket lines first meet."
     parts: [ROE-XLR11, ROE-XLR10, ROE-XLR25, ROE-XLR41, Mark1Cockpit, Mark2Cockpit]

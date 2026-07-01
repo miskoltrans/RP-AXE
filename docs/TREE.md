@@ -47,7 +47,7 @@ vehicle-function/era lanes (that's RP-1/ETT).
 ### Pipeline (compile-from-source)
 `tree/nodes.yaml` + `tree/disciplines.yaml` → **`tools/build_tree.py`** →
 1. `GameData/RP-AXE/design/Tree/AxeTechTree.cfg` — game form (`@TechTree:FOR[ZZZZZ-AXE-Tree]{ !RDNode,*{} … }`).
-2. `AxeTechTree.editor.cfg` — plain `TechTree{}` for the editor (opens without KSP).
+2. `AxeTreeMeta.cfg` — `id→{discipline,tier,cost}` + the discipline table, read by the in-game render plugin.
 3. `AxePartPlacement.cfg` — `@PART{%TechRequired}` / `@PARTUPGRADE{%techRequired}` (how parts attach in-game).
 4. `tree/render/axe-tree.{svg,png}` (graphviz) + `axe-tree.html` (interactive: click node → its parts).
 
@@ -56,12 +56,21 @@ non-fatal checks (unreachable, non-forward edge, no-op anyToUnlock, stray roots 
 bugs**); `delta_layout()` = barycenter/Sugiyama layered layout (tier=column); merges the placement TSVs into
 node unlocks (inline `parts:` seeds win as hand overrides).
 
-### Editor
-`linuxgurugamer/ksp-techtree-edit` cloned at `C:\git\ksp\ksp-techtree-edit`, **built** =
-`...\bin\Release\KSP Tech Tree Editor v0.5.exe` (v0.5.4; both csprojs retargeted to net48 — LOCAL
-uncommitted edits, reapply if reset). Reads `AxeTechTree.editor.cfg`. Layout geometry decided = **delta**
-(bake-off in `tree/render/layouts/`; lanes vs pinwheel vs delta vs force). graphviz text exporters (`-Tplain`)
-are dead on this box (missing core plugin); only `-Tpng/-Tsvg` work → delta layout is computed pure-Python.
+### Editor — the HTML render (`tree/render/`)
+The tree editor/viewer is the **HTML render** emitted by `build_tree.py`, not an external tool:
+- `tree/render/prototype/` — the Canvas-2D renderer (`index.html` + `renderer.js` + generated `tree-data.js`):
+  discipline bands, lane-routed arrows, fan endpoints, research-state toggles. This is the **canonical editor**
+  and the layout/routing design bench (bands vs sugiyama, lane vs stock elbow).
+- `tree/render/axe-tree.html` — lightweight click-a-node → its-parts viewer; `axe-tree.{svg,png}` = graphviz
+  review render.
+
+Both are **generated snapshots**: edit `tree/nodes.yaml` → `python tools/build_tree.py` → refresh the browser
+(no auto-rebuild / no watcher). The same build emits `AxeTreeMeta.cfg`, so the **in-game R&D render** (the AXE
+plugin ports this exact layout into KSP — see [`RENDER-PORT.md`](RENDER-PORT.md)) never drifts from the HTML.
+
+> **Sacked:** the old `linuxgurugamer/ksp-techtree-edit` + `AxeTechTree.editor.cfg` path. A standalone editor
+> `TechTree{}` shipped in GameData was aggregated by KSP's `GetConfigNodes("TechTree")` and **doubled every
+> node in-game** (54 → 108). The HTML render is the editor now; `build_tree.py` no longer emits `.editor.cfg`.
 
 ---
 
@@ -87,11 +96,13 @@ earn their place"):**
 - Keep the *useful* placement tooling (`cluster_parts.py` review families; `extract_capability.py` thrust/Isp;
   the capability-ladder idea for engines — that part worked). Discard the "auto-route everything" ambition.
 
-### B. TWO TREE ENTRIES (rocketry + x-plane) — not built
-Design requirement from VISION ("choose x-plane or rocket start"). Currently everything roots from a single
-`start` node. Fix = structural edit: create **two roots** (e.g. `start_rocketry`, `start_xplane`), reparent the
-early Propellant-Chemistry/Fluid-Dynamics lanes under rocketry and the early Aerodynamics lane under x-plane,
-converging at first-orbital-capability. Soft fork (both reachable; science scarcity enforces commitment). ~20 min.
+### B. TWO TREE ENTRIES (rocketry + x-plane) — ✅ SETTLED: single-root rocketry-default (won't build two roots)
+VISION mused about a symmetric "choose x-plane or rocket start"; the DECISION (2026-07-01, early-tree review) is
+**rocketry is the default and aviation is an opt-in branch off `start`** — this supersedes the symmetric-choice
+idea. Aviation is deliberately roleplay/side-content: it is NOT expected to pay for itself in science (its regime
+is the SCIENCE.md-zeroed sub-40 km band), and its reward loop is **special x-plane-program contracts** (money, not
+science — see RESTART parked ideas), not a tree change. So `start`'s flavor promise of "whether to fly aeroplanes at
+all, is yours to choose" stands as-is. No two-root fork.
 
 ### C. LINE CLUTTER — convergence web too dense
 The convergence pass raised cross-discipline edges 11→35 (great for the VISION web) but the render/editor read
@@ -105,6 +116,13 @@ length) — a layout lever that helped.
 
 ## 4. TOOLING INVENTORY (`tools/`)
 - **`build_tree.py`** — the compiler (§2). The one that matters.
+- `build_part_origin.py` → `GameData/RP-AXE/design/Tree/AxePartOrigin.cfg` — tags every installed part's
+  description with its source mod (`From <mod>[/<sub-pack>] mod`, green), RP-1 parity. Reads the **live
+  Instance ConfigCache** (`Instance/GameData/ModuleManager.ConfigCache`) — not the frozen 1820-part manifest,
+  which misses ~500 installed parts (e.g. RN_US_Probes/KH9) — deriving origin from each part's `parentUrl`
+  path (root folder + meaningful sub-pack; generic `Parts/` collapses to the mod). Skips parts under
+  `RP-AXE/seed` and any part a seed cfg already tags, so RP-1's own tags aren't doubled. Needs a built
+  instance (deploy + launch KSP once so the cache exists).
 - `tree_inventory.py` → `manifest/part-capabilities.tsv` — per-part modules/propellants/category/RP-1-tech +
   coarse discipline classification (the inverse rubric: derive nodes from real parts).
 - `extract_capability.py` → `manifest/part-capability.tsv` — peak maxThrust + vac Isp (+ solar rate) from the
@@ -114,12 +132,12 @@ length) — a layout lever that helped.
 - `cluster_parts.py` → `manifest/clusters/*.tsv` — groups placed parts into review families. **Keep** (the
   review surface for hand-placing the iconic set).
 - `node_density.py` — dense-pile vs empty-node report by discipline.
-- `tree_layouts.py` → `tree/render/layouts/compare.html` — the geometry bake-off (delta won).
+- `tree_layouts.py` — the geometry bake-off that picked delta/bands (concluded; `tree/render/layouts/` pruned).
 - `manifest/part-overrides.tsv` — hand placement overrides (28 engine notables). Extend for iconic placement.
 
 ## 5. KEY FILES
 - `tree/nodes.yaml`, `tree/disciplines.yaml` — the tree source (KEEP).
-- `GameData/RP-AXE/design/Tree/AxeTechTree.cfg` / `.editor.cfg` / `AxePartPlacement.cfg` — generated.
+- `GameData/RP-AXE/design/Tree/AxeTechTree.cfg` / `AxeTreeMeta.cfg` / `AxePartPlacement.cfg` / `AxePartOrigin.cfg` — generated.
 - `manifest/curated-parts.tsv` (1820), `upgrades-curated.tsv` (553 KEEP), `part-capabilities.tsv`,
   `part-capability.tsv`, `part-placement.tsv`, `upgrade-placement.tsv`, `part-overrides.tsv`, `clusters/`.
 
@@ -131,6 +149,29 @@ Integration lane) → naming passes (`72cbd2a`, `e0a73d4`, `67eee0f`) → `62a40
 
 ## 7. SETTLED DECISIONS (do not re-litigate)
 18 disciplines (+Integration) · scatter-by-difficulty · research-paper names (breakthrough not artifact) ·
-convergence parents = limiting only · compile-from-YAML pipeline · delta layout · lgg editor · ~300k cost /
+convergence parents = limiting only · compile-from-YAML pipeline · delta/bands layout · HTML-render editor + in-game render port · ~300k cost /
 scalar-tuned at P3 · experimental off-tree catch-all · fuel-as-usability-gate parked · engines spread by
-capability (thrust/Isp) where data exists.
+capability (thrust/Isp) where data exists · **rocketry-default single-root** (aviation opt-in, rewarded by
+x-plane contracts not science; §3B).
+
+## 8. EARLY-TREE REVIEW PASS (2026-07-01) — applied + open
+3-lens review of the to-orbit spine (game-design / vision-fidelity / plausibility; all Opus). Verdict: bones
+strong, issues few + concentrated. **Applied to `tree/nodes.yaml`:**
+- **Orbital mass-fraction is now multi-entry** (unanimous top finding): new `str_orbitalMassFraction` gate
+  (`met_isogrid` ‖ `str_balloonTank`, anyToUnlock) feeds `int_orbitalInsertion`, mirroring `fd_orbitalThrust`.
+  Fixes the Atlas-balloon railroad (R-7/Sputnik flew conventional-light, not a balloon) and gives `met_isogrid`
+  a critical-path role instead of being an orphan side-grade.
+- **`th_regenCooling` → `fd_turbopumpFeed`** (plausibility): the V-2's real breakthrough vs a sounding motor was
+  the turbopump breaking the tank-pressure ceiling, not regen cooling (V-2 was film-cooled; ORM-65 in `start` is
+  already regen-cooled). Re-homed Thermodynamics→FluidDynamics, matching EARLY-TREE.md + library `fd_turbopumps`;
+  also resolves the spine/library `th_regenCooling` id collision.
+- **Polish:** `met_isogrid` "Chemical Milling"→"Machined Isogrid Stiffening" (isogrid is machined, not etched);
+  `aero_afterburner` reparented off `aero_areaRule` @T4 (reheat predates Mach-2 shock inlets); `opt_vidicon`
+  →T1 (equal-cost sidegrade to film, was dominated); header multi-entry claim tightened.
+- **Settled (no edit):** aviation-as-roleplay + x-plane contracts (§3B); rocketry-default (§3B).
+- **OPEN — the engine axis (user: "engines feel weakest"):** to-orbit engines are coarse (multi-entry paths carry
+  no opportunity cost; a lot of engines pile into few nodes) while `library.yaml` already holds a far more granular
+  propulsion design (fd cycle ladder + engine-homing convergences: F-1/RD-170/J-2/RS-25). Next session: decide how
+  much of the library ladder to pull into the spine + give each engine path a persistent downstream advantage.
+  Also parked from the review: reward-desert at the orbit milestone (part-less `fd_orbitalThrust`+`int_orbitalInsertion`);
+  `fd_verniers` home/tier + id/tag mismatch; `mic_massSpec` discipline home — all fold into the engine pass.

@@ -124,7 +124,7 @@ window.TREE = {
    "tier": 0,
    "cost": 0,
    "anyToUnlock": false,
-   "flavor": "1950. A united Kerbalkind turns its eyes upward — no missiles to inherit, no doctrine to obey. Here is the common toolbox: procedural structure, tankage, nosecones and avionics that any vehicle needs, and the first two instruments — a barometer and a thermometer — to turn a flight into a measurement. There are two ways off the ground — the rocket and the wing. Choose either. Choose both.",
+   "flavor": "1950, Kerbalkind united. Rocketry is where a space program begins — you start with the de Laval nozzle, a procedural airframe, avionics, the first instruments, and a handful of sounding motors: enough to fly above the Karman line turn one. Everything past that, including whether to fly aeroplanes at all, is yours to choose.",
    "parts": [
     {
      "name": "B9_Aero_Wing_Procedural_TypeA",
@@ -135,6 +135,41 @@ window.TREE = {
      "name": "RO-RFTank-Separate",
      "mod": "ProceduralParts",
      "title": "Procedural Tank (Conventional Structure)"
+    },
+    {
+     "name": "ROE-Aerobee",
+     "mod": "ROEngines",
+     "title": "Aerobee"
+    },
+    {
+     "name": "ROE-ORM65",
+     "mod": "ROEngines",
+     "title": "ORM-65"
+    },
+    {
+     "name": "ROE-R103",
+     "mod": "ROEngines",
+     "title": "R-103 Booster"
+    },
+    {
+     "name": "ROE-VeroniqueAK",
+     "mod": "ROEngines",
+     "title": "Véronique"
+    },
+    {
+     "name": "ROMeteoSustainer",
+     "mod": "Squad",
+     "title": "U-1250"
+    },
+    {
+     "name": "TinyTim",
+     "mod": "RealismOverhaul",
+     "title": "Tiny Tim Booster"
+    },
+    {
+     "name": "basicFin",
+     "mod": "Squad",
+     "title": "Basic Fin"
     },
     {
      "name": "proceduralAvionics",
@@ -160,12 +195,37 @@ window.TREE = {
      "name": "sensorThermometer",
      "mod": "Squad",
      "title": "Thermometer"
+    },
+    {
+     "name": "structuralIBeam1",
+     "mod": "Squad",
+     "title": "M-Beam 650 I-Beam"
+    },
+    {
+     "name": "structuralPanel1",
+     "mod": "Squad",
+     "title": "M-1x1 Structural Panel"
+    },
+    {
+     "name": "strutConnector",
+     "mod": "Squad",
+     "title": "EAS-4 Strut Connector"
+    },
+    {
+     "name": "strutCube",
+     "mod": "Squad",
+     "title": "Cubic Octagonal Strut"
+    },
+    {
+     "name": "trussPiece1x",
+     "mod": "Squad",
+     "title": "Modular Girder Segment"
     }
    ],
    "upgrades": [],
    "pos": [
     -2568,
-    1782
+    1348
    ]
   },
   {
@@ -175,673 +235,12 @@ window.TREE = {
    "tier": 0,
    "cost": 999,
    "anyToUnlock": false,
-   "flavor": "Everything not yet given a home on the tree lands here — uncurated, third-party and not-yet-placed parts. A development holding pen, and later the opt-in Experimental node. Off the main tree; excluded from balance.",
+   "flavor": "Everything unplaced or purely cosmetic — lights, cameras, decals, ladders, launch clamps, uncurated parts. A dev holding pen; cheat-unlock when needed. Off the main tree.",
    "parts": [],
    "upgrades": [],
    "pos": [
     -2568,
-    871
-   ]
-  },
-  {
-   "id": "rocketryStart",
-   "title": "Rocket Propulsion & the de Laval Nozzle",
-   "discipline": "FluidDynamics",
-   "tier": 1,
-   "cost": 20,
-   "anyToUnlock": false,
-   "flavor": "Choke the exhaust to Mach 1 at the throat and expand it supersonically through the diverging bell — de Laval's steam-turbine nozzle, repurposed to turn a controlled chemical fire into directed thrust. With that, plus fins to fly straight, a crude pressure-fed or solid motor lofts an instrument package above the Karman line. The difference between a firework and a rocket.",
-   "parts": [
-    {
-     "name": "ROE-Aerobee",
-     "mod": "ROEngines",
-     "title": "Aerobee"
-    },
-    {
-     "name": "ROE-ORM65",
-     "mod": "ROEngines",
-     "title": "ORM-65"
-    },
-    {
-     "name": "ROE-VeroniqueAK",
-     "mod": "ROEngines",
-     "title": "Véronique"
-    },
-    {
-     "name": "ROMeteoSustainer",
-     "mod": "Squad",
-     "title": "U-1250"
-    },
-    {
-     "name": "TinyTim",
-     "mod": "RealismOverhaul",
-     "title": "Tiny Tim Booster"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -2138,
-    1469
-   ]
-  },
-  {
-   "id": "fd_turbopumpLiquid",
-   "title": "Turbopump-Fed Liquid Propulsion (A-4)",
-   "discipline": "FluidDynamics",
-   "tier": 2,
-   "cost": 90,
-   "anyToUnlock": false,
-   "flavor": "A turbine-driven pump feeds propellant by the tonne, unshackling chamber pressure from tank pressure. The A-4/V-2's Model 39 puts out 400 kN — five times any sounding motor and regeneratively cooled. The single most advanced starting rocket, and the leap from sounding rocket to launch vehicle.",
-   "parts": [
-    {
-     "name": "ROE-A4",
-     "mod": "ROEngines",
-     "title": "Model 39"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -1708,
-    1519
-   ]
-  },
-  {
-   "id": "pc_solidGrain",
-   "title": "Cast Composite Solid Grains",
-   "discipline": "PropellantChemistry",
-   "tier": 2,
-   "cost": 90,
-   "anyToUnlock": false,
-   "flavor": "Ammonium-perchlorate oxidiser and powdered aluminium bound in a rubbery binder, cast and cured into a large structural grain. Cheap, dense, storable — you light it once and it does not stop. The strap-on that boosts everything else.",
-   "parts": [
-    {
-     "name": "ROE-BabySergeant",
-     "mod": "ROEngines",
-     "title": "Baby Sergeant (5.4KS-1975)"
-    },
-    {
-     "name": "ROE-Castor1",
-     "mod": "ROEngines",
-     "title": "Castor 1"
-    },
-    {
-     "name": "ROE-Star13",
-     "mod": "ROEngines",
-     "title": "STAR 13"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -1708,
-    1367
-   ]
-  },
-  {
-   "id": "pc_kerosene",
-   "title": "Hydrotreated Narrow-Cut Kerosene (RP-1)",
-   "discipline": "PropellantChemistry",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "Catalytic hydrotreating strips sulfur and heavy aromatics to a narrow distillation cut that won't coke a cooling jacket — the dense, storable kerosene every high-thrust kerolox engine burns. The cheap, forgiving road to orbit.",
-   "parts": [
-    {
-     "name": "ROE-A7",
-     "mod": "ROEngines",
-     "title": "NAA-75-110 A-Series"
-    },
-    {
-     "name": "ROE-Merlin1A",
-     "mod": "ROEngines",
-     "title": "Merlin 1A"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1178
-   ]
-  },
-  {
-   "id": "fd_gasGenerator",
-   "title": "Gas-Generator (Open) Cycle",
-   "discipline": "FluidDynamics",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "Burn a little propellant in a side chamber to spin the turbopump, then dump the turbine exhaust overboard. Simple, proven, slightly wasteful — the pump-fed workhorse cycle that puts real mass in orbit. The R-7, Atlas and Thor engines that reach it.",
-   "parts": [
-    {
-     "name": "ROE-LR105_2",
-     "mod": "ROEngines",
-     "title": "LR105"
-    },
-    {
-     "name": "ROE-LR79",
-     "mod": "ROEngines",
-     "title": "LR79"
-    },
-    {
-     "name": "ROE-LR89_2",
-     "mod": "ROEngines",
-     "title": "LR43/LR89"
-    },
-    {
-     "name": "ROE-RD107",
-     "mod": "ROEngines",
-     "title": "RD-107/117"
-    },
-    {
-     "name": "ROE-RD108",
-     "mod": "ROEngines",
-     "title": "RD-108/118"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1258
-   ]
-  },
-  {
-   "id": "cryo_earlyHydrolox",
-   "title": "Early Hydrogen/Oxygen Upper Stages",
-   "discipline": "Cryogenics",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": true,
-   "flavor": "No doctrine says you must burn kerosene first. Commit early to hydrogen — vacuum-jacketed tanks, insulation, boil-off you fight every hour on the pad — and you buy the highest specific impulse chemistry there is, years ahead of history. It simply costs more program to get there.",
-   "parts": [
-    {
-     "name": "ROE-RL10Fixed",
-     "mod": "ROEngines",
-     "title": "RL-10 Series (Non-Extendable Nozzle)"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1098
-   ]
-  },
-  {
-   "id": "str_stageSeparation",
-   "title": "Staging & Ullage Separation",
-   "discipline": "StructuresMechanisms",
-   "tier": 2,
-   "cost": 90,
-   "anyToUnlock": false,
-   "flavor": "Explosive bolts cut a spent stage away on a millisecond's command; small motors settle the propellant so the next stage lights clean. Multi-stage flight — the only way to the orbital velocities chemistry can't reach in one go — begins here.",
-   "parts": [
-    {
-     "name": "ROE-BabySergeantX3Dec",
-     "mod": "ROEngines",
-     "title": "Baby Sergeant 3x Cluster Decoupler"
-    },
-    {
-     "name": "ROE-CastorDecoupler",
-     "mod": "ROEngines",
-     "title": "Castor I & II Radial Decoupler"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -1708,
-    1679
-   ]
-  },
-  {
-   "id": "gnc_rateGyros",
-   "title": "Rate-Gyro Attitude Guidance",
-   "discipline": "GuidanceControl",
-   "tier": 2,
-   "cost": 90,
-   "anyToUnlock": false,
-   "flavor": "Spinning-mass gyroscopes sense the vehicle's turn rates and drive the fins and gimbals to hold a programmed pitch. The first machine that flies itself uphill instead of tumbling.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1708,
-    1839
-   ]
-  },
-  {
-   "id": "tel_pcmTelemetry",
-   "title": "PCM/FM Telemetry Downlink",
-   "discipline": "Telecommunications",
-   "tier": 2,
-   "cost": 90,
-   "anyToUnlock": false,
-   "flavor": "Pulse-code-modulated vehicle health, FM-keyed to the ground. Without it a failure tells you nothing about why — and an orbit you cannot hear is an orbit you cannot prove.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1708,
-    1919
-   ]
-  },
-  {
-   "id": "mic_vacuumTubes",
-   "title": "Vacuum-Tube Sequencers & Sensors",
-   "discipline": "Microelectronics",
-   "tier": 2,
-   "cost": 90,
-   "anyToUnlock": false,
-   "flavor": "Hot-cathode tubes and simple transducers turn a satellite's state into numbers and its timeline into relay clicks — the minimum brain a spacecraft needs to be more than ballast.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1708,
-    1759
-   ]
-  },
-  {
-   "id": "met_weldedSteel",
-   "title": "Welded Steel Pressure Vessels",
-   "discipline": "Metallurgy",
-   "tier": 2,
-   "cost": 90,
-   "anyToUnlock": false,
-   "flavor": "Roll, weld and proof-test mild-steel cylinders and spheres that hold pressure without bursting — the first flight tank, and the sealed shell of the first satellite.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1708,
-    1287
-   ]
-  },
-  {
-   "id": "elec_silverZinc",
-   "title": "Silver-Zinc Primary Batteries",
-   "discipline": "ElectricalPower",
-   "tier": 2,
-   "cost": 90,
-   "anyToUnlock": false,
-   "flavor": "High energy density for a single mission's hours — the battery that powered the first satellites and the shortest crewed flights.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1708,
-    1599
-   ]
-  },
-  {
-   "id": "elec_siliconPV",
-   "title": "Silicon Photovoltaics",
-   "discipline": "ElectricalPower",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "Doped silicon turns sunlight into watts indefinitely — the breakthrough that freed satellites from their batteries. Vanguard 1 flew the first cells.",
-   "parts": [
-    {
-     "name": "RO-rangerSolarPanel",
-     "mod": "RealismOverhaul",
-     "title": "Ranger Solar Panel"
-    },
-    {
-     "name": "ROS-StaticSolarPanel",
-     "mod": "ROSolar",
-     "title": "Static Solar Panel"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1338
-   ]
-  },
-  {
-   "id": "elec_bodyMountedArrays",
-   "title": "Body-Mounted & Deployable Arrays",
-   "discipline": "ElectricalPower",
-   "tier": 4,
-   "cost": 900,
-   "anyToUnlock": false,
-   "flavor": "Tile a spacecraft's skin or fold out fixed panels for hundreds of watts — the workhorse power source of the satellite age.",
-   "parts": [
-    {
-     "name": "ROS-BlanketSolarPanel",
-     "mod": "ROSolar",
-     "title": "Blanket Solar Panel"
-    },
-    {
-     "name": "ROS-FoldingSolarPanel",
-     "mod": "ROSolar",
-     "title": "Folding Solar Panel"
-    },
-    {
-     "name": "ROS-HingedSolarPanel",
-     "mod": "ROSolar",
-     "title": "Hinged Solar Panel"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -848,
-    1431
-   ]
-  },
-  {
-   "id": "mic_transistor",
-   "title": "Discrete Transistors",
-   "discipline": "Microelectronics",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "Solid-state switching shrinks avionics from a rack to a box and stops burning out filaments.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1498
-   ]
-  },
-  {
-   "id": "mic_integratedCircuit",
-   "title": "Integrated Circuits",
-   "discipline": "Microelectronics",
-   "tier": 4,
-   "cost": 900,
-   "anyToUnlock": false,
-   "flavor": "Many transistors on one chip — the leap that made a real flight computer light enough to fly.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -848,
-    1628
-   ]
-  },
-  {
-   "id": "mic_radHardening",
-   "title": "Radiation-Hardened Electronics",
-   "discipline": "Microelectronics",
-   "tier": 5,
-   "cost": 1500,
-   "anyToUnlock": false,
-   "flavor": "Shield and design against single-event upsets so electronics survive the belts and deep space without latching up — the difference between a probe that reaches Jupiter and one that reboots there.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -418,
-    1410
-   ]
-  },
-  {
-   "id": "tel_helicalDirectional",
-   "title": "Helical Directional Arrays",
-   "discipline": "Telecommunications",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "Axial-mode helices give circularly-polarized gain that tolerates a tumbling spacecraft — range and data rate, at the cost of having to point.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1898
-   ]
-  },
-  {
-   "id": "tel_cassegrainHGA",
-   "title": "Cassegrain Parabolic High-Gain Reflector",
-   "discipline": "Telecommunications",
-   "tier": 4,
-   "cost": 900,
-   "anyToUnlock": false,
-   "flavor": "A subreflector folds the feed back through the dish vertex, shortening the assembly and closing the link from lunar and planetary distance.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -848,
-    1960
-   ]
-  },
-  {
-   "id": "tel_dsnRanging",
-   "title": "Coherent Two-Way Doppler & Ranging",
-   "discipline": "Telecommunications",
-   "tier": 5,
-   "cost": 1500,
-   "anyToUnlock": false,
-   "flavor": "Phase-coherent ground dishes pull a few bits per second out of interplanetary noise and, from the round-trip Doppler, fix the spacecraft's state vector to meters.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -418,
-    1757
-   ]
-  },
-  {
-   "id": "tel_xBandDownlink",
-   "title": "X-Band Deep-Space Downlink",
-   "discipline": "Telecommunications",
-   "tier": 6,
-   "cost": 2000,
-   "anyToUnlock": false,
-   "flavor": "Move the downlink up to X-band: a shorter wavelength focuses into a tighter beam from the same dish, multiplying data rate across interplanetary distance. Voyager's science return rode this jump from S-band — the link that makes the outer planets legible.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    12,
-    1888
-   ]
-  },
-  {
-   "id": "gnc_reactionControl",
-   "title": "Reaction Control & Attitude Hold",
-   "discipline": "GuidanceControl",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "Small thrusters in opposed pairs to point and hold a vehicle in vacuum — the first three-axis control in space.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1818
-   ]
-  },
-  {
-   "id": "gnc_inertialNav",
-   "title": "Gimballed Inertial Navigation",
-   "discipline": "GuidanceControl",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "A gyro-stabilised platform integrates acceleration into position — knowing where you are with no outside reference.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1738
-   ]
-  },
-  {
-   "id": "gnc_digitalGuidance",
-   "title": "Digital Closed-Loop Guidance",
-   "discipline": "GuidanceControl",
-   "tier": 5,
-   "cost": 1500,
-   "anyToUnlock": false,
-   "flavor": "Compute the trajectory in real time and steer to it — guidance that adapts to dispersions instead of following a fixed program. Needs inertial navigation and an integrated-circuit computer at once.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -418,
-    1570
-   ]
-  },
-  {
-   "id": "gnc_opticalNav",
-   "title": "Optical & Star-Field Navigation",
-   "discipline": "GuidanceControl",
-   "tier": 6,
-   "cost": 2000,
-   "anyToUnlock": false,
-   "flavor": "Fix attitude and position against catalogued stars and landmarks — autonomy independent of the radio link, and the only way to aim a camera precisely a light-hour from home.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    12,
-    1694
-   ]
-  },
-  {
-   "id": "opt_filmCameras",
-   "title": "Film-Return Cameras",
-   "discipline": "OpticsPhotonics",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "Expose film in flight and scan-and-transmit it — the first detailed eyes on other worlds, from Luna 3's look at the far side of the Moon.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1578
-   ]
-  },
-  {
-   "id": "opt_tvImaging",
-   "title": "Vidicon TV Imaging",
-   "discipline": "OpticsPhotonics",
-   "tier": 4,
-   "cost": 900,
-   "anyToUnlock": false,
-   "flavor": "Scan an image off a photoconductive tube and send it down as video — live pictures from a probe, no film to recover.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -848,
-    1713
-   ]
-  },
-  {
-   "id": "opt_precisionOptics",
-   "title": "Precision Optical Fabrication",
-   "discipline": "OpticsPhotonics",
-   "tier": 5,
-   "cost": 1500,
-   "anyToUnlock": false,
-   "flavor": "Grind, polish and figure mirrors and lenses to fractions of a wavelength — the craft beneath every telescope, spectrometer and star tracker.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -418,
-    1490
-   ]
-  },
-  {
-   "id": "opt_spectrometry",
-   "title": "Imaging Spectrometers",
-   "discipline": "OpticsPhotonics",
-   "tier": 6,
-   "cost": 2000,
-   "anyToUnlock": false,
-   "flavor": "Split light into its spectrum at every pixel to read composition from orbit — chemistry at a distance.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    12,
-    1614
-   ]
-  },
-  {
-   "id": "th_passiveRadiators",
-   "title": "Passive Radiative Cooling",
-   "discipline": "Thermodynamics",
-   "tier": 2,
-   "cost": 90,
-   "anyToUnlock": false,
-   "flavor": "Reject waste heat to space with coatings, louvers and surface geometry alone — the baseline thermal balance of every spacecraft.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1708,
-    1447
-   ]
-  },
-  {
-   "id": "nuc_rtg",
-   "title": "Radioisotope Thermoelectric Generators",
-   "discipline": "NuclearEngineering",
-   "tier": 4,
-   "cost": 900,
-   "anyToUnlock": false,
-   "flavor": "A plutonium pellet's decay heat across a thermocouple gives steady watts for decades, anywhere, sunlight or not — the power of the outer planets, where the sun is a bright star.",
-   "parts": [
-    {
-     "name": "RO-SNAP-19-RTG",
-     "mod": "VenStockRevamp",
-     "title": "SNAP-19 Series RTG"
-    },
-    {
-     "name": "RO-SNAP-3-RTGPo210",
-     "mod": "VenStockRevamp",
-     "title": "SNAP-3A Series RTG (Po210)"
-    },
-    {
-     "name": "RO-SNAP-9-RTG",
-     "mod": "VenStockRevamp",
-     "title": "SNAP-9 Series RTG"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -848,
-    1511
-   ]
-  },
-  {
-   "id": "nuc_rtgAdvanced",
-   "title": "GPHS Multi-Mission RTGs",
-   "discipline": "NuclearEngineering",
-   "tier": 5,
-   "cost": 1500,
-   "anyToUnlock": false,
-   "flavor": "Modular general-purpose heat-source blocks make a rugged, standardised RTG — the quiet, reliable heartbeat of flagship deep-space probes from Voyager to Cassini.",
-   "parts": [
-    {
-     "name": "RO-MMRTG",
-     "mod": "Squad",
-     "title": "Multi-Mission RTG"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -418,
-    1330
-   ]
-  },
-  {
-   "id": "str_deployableBooms",
-   "title": "Stored-Strain Deployable Booms",
-   "discipline": "StructuresMechanisms",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "Stow a long boom for launch and extend it on orbit for magnetometers, arrays and antennas held clear of the bus — the spindly limbs of every science probe.",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1418
-   ]
-  },
-  {
-   "id": "int_firstOrbit",
-   "title": "First Orbital Capability",
-   "discipline": "SystemsIntegration",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "Staging, guidance, telemetry and a probe brain converge — and whatever engine you chose to build now has somewhere to go. You can place your own satellite in orbit. The first artificial moon. (The iconic historical satellites are blueprints in the probe subtree — build your own, or chase theirs.)",
-   "parts": [],
-   "upgrades": [],
-   "pos": [
-    -1278,
-    1658
+    1268
    ]
   },
   {
@@ -851,7 +250,7 @@ window.TREE = {
    "tier": 0,
    "cost": 0,
    "anyToUnlock": false,
-   "flavor": "Stand up a jet-propulsion laboratory — a home for the integrated robotic spacecraft that no single discipline builds. Vanguard, Mariner, Voyager: their blueprints are chartered here, but each flies only once you have independently mastered the scattered technologies it needs. (US-probe pack only.)",
+   "flavor": "Stand up a jet-propulsion lab — the home of integrated US robotic spacecraft, each gated by the technologies you must first master. (US-probe pack only.)",
    "parts": [
     {
      "name": "eos_aqua",
@@ -1217,7 +616,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    711
+    1108
    ]
   },
   {
@@ -1227,7 +626,7 @@ window.TREE = {
    "tier": 0,
    "cost": 0,
    "anyToUnlock": false,
-   "flavor": "Establish an experimental design bureau — the home of the integrated deep-space craft. Sputnik, Luna, Venera: their blueprints are chartered here, each gated by the underlying technologies you must first master across the tree. (Soviet-probe pack only.)",
+   "flavor": "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. (Soviet-probe pack only.)",
    "parts": [
     {
      "name": "l11_astro",
@@ -1348,32 +747,1043 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
+    1188
+   ]
+  },
+  {
+   "id": "fd_turbopumpFeed",
+   "title": "Turbopump Feed",
+   "discipline": "FluidDynamics",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Drive the propellants with a turbine-spun pump instead of tank pressure: the tank no longer has to be a heavy pressure vessel, and the chamber can run far harder than any pressure-fed sounding motor reaches. This is the real step from a powder dart to the turbopump-fed V-2 — a large liquid rocket at last. (Its chamber was film-cooled; regenerative cooling you already fly on the ORM-65.)",
+   "parts": [
+    {
+     "name": "ROE-A4",
+     "mod": "ROEngines",
+     "title": "Model 39"
+    },
+    {
+     "name": "ROE-A7",
+     "mod": "ROEngines",
+     "title": "NAA-75-110 A-Series"
+    },
+    {
+     "name": "ROE-RD100",
+     "mod": "ROEngines",
+     "title": "RD-100"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1114
+   ]
+  },
+  {
+   "id": "fd_multiChamber",
+   "title": "Multi-Chamber Combustion",
+   "discipline": "FluidDynamics",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "Combustion instability tears a single large chamber apart in milliseconds. The Soviet answer was to not build one: four smaller chambers per engine, each below the acoustic threshold, fed by a common turbopump. The R-7 that launched Sputnik.",
+   "parts": [
+    {
+     "name": "ROE-RD107",
+     "mod": "ROEngines",
+     "title": "RD-107/117"
+    },
+    {
+     "name": "ROE-RD108",
+     "mod": "ROEngines",
+     "title": "RD-108/118"
+    },
+    {
+     "name": "ROE-RD211",
+     "mod": "ROEngines",
+     "title": "RD-211"
+    },
+    {
+     "name": "ROE-S155",
+     "mod": "ROEngines",
+     "title": "S-155"
+    },
+    {
+     "name": "YF2_Engine",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-2 (no gimbal)"
+    },
+    {
+     "name": "YF2_with_shell",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-2 with Boattail"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
+    1031
+   ]
+  },
+  {
+   "id": "fd_baffledInjector",
+   "title": "Baffled-Injector Stabilization",
+   "discipline": "FluidDynamics",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "The Western answer to the same instability: keep the single big chamber, but break up the spinning tangential modes with injector-face baffles and tuned cavities. Harder to get right, but it scales — the path that ends at the F-1.",
+   "parts": [
+    {
+     "name": "ROE-Gamma301",
+     "mod": "ROEngines",
+     "title": "Gamma-201/301"
+    },
+    {
+     "name": "ROE-LR105_2",
+     "mod": "ROEngines",
+     "title": "LR105"
+    },
+    {
+     "name": "ROE-LR79",
+     "mod": "ROEngines",
+     "title": "LR79"
+    },
+    {
+     "name": "ROE-LR89_2",
+     "mod": "ROEngines",
+     "title": "LR43/LR89"
+    },
+    {
+     "name": "ROE-Stentor",
+     "mod": "ROEngines",
+     "title": "Stentor Booster"
+    },
+    {
+     "name": "ROE-X405",
+     "mod": "ROEngines",
+     "title": "X-405 (XLR50-GE-2)"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
+    951
+   ]
+  },
+  {
+   "id": "fd_verniers",
+   "title": "Vernier Trim Engines",
+   "discipline": "GuidanceControl",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Small, gimballed trim chambers that steer and roll the stack while the main engines just push — the R-7's vernier motors, the fine hand on a heavy rocket.",
+   "parts": [
+    {
+     "name": "ROE-JupiterVernier",
+     "mod": "ROEngines",
+     "title": "S-3D Vernier Exhaust"
+    },
+    {
+     "name": "ROE-LR101Inline_2",
+     "mod": "ROEngines",
+     "title": "LR101"
+    },
+    {
+     "name": "ROE-LR101_2",
+     "mod": "ROEngines",
+     "title": "LR101"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1916
+   ]
+  },
+  {
+   "id": "pc_hypergolics",
+   "title": "Amine-Nitrate Hypergolics",
+   "discipline": "PropellantChemistry",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "An amine fuel and a nitric-acid oxidiser that ignite on contact — no igniter, indefinite restarts, storable for years. Pure chemistry: a simple ablative engine that needs neither cooling jacket nor ignition system. The propulsion of upper stages and spacecraft.",
+   "parts": [
+    {
+     "name": "ROE-AJ10Early",
+     "mod": "ROEngines",
+     "title": "AJ10 Series (Early)"
+    },
+    {
+     "name": "ROE-RD200",
+     "mod": "ROEngines",
+     "title": "RD-200"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
+    1599
+   ]
+  },
+  {
+   "id": "cryo_hydrogen",
+   "title": "Cryogenic Hydrogen Handling",
+   "discipline": "Cryogenics",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "No doctrine says burn kerosene first. Bet early on hydrogen — vacuum-jacketed tanks, multilayer insulation, boil-off you fight every hour on the pad — for the highest specific impulse chemistry there is, years ahead of history. It just costs more program to get there.",
+   "parts": [],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1034
+   ]
+  },
+  {
+   "id": "fd_expanderCycle",
+   "title": "Expander-Cycle Combustion",
+   "discipline": "FluidDynamics",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, thrust-limited by heat pickup. The RL-10, and the highest specific impulse a chemical engine reaches.",
+   "parts": [
+    {
+     "name": "ROE-RL10Fixed",
+     "mod": "ROEngines",
+     "title": "RL-10 Series (Non-Extendable Nozzle)"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
+    871
+   ]
+  },
+  {
+   "id": "fd_orbitalThrust",
+   "title": "Orbital-Class Thrust",
+   "discipline": "FluidDynamics",
+   "tier": 3,
+   "cost": 400,
+   "anyToUnlock": true,
+   "flavor": "Enough thrust, stable enough, to burn all the way to orbital velocity — reached by whichever engine you chose to perfect: Soviet multi-chamber, Western baffled injector, or a hydrolox upper stage. The rocket equation doesn't care how you got here.",
+   "parts": [],
+   "upgrades": [],
+   "pos": [
+    -1278,
+    1216
+   ]
+  },
+  {
+   "id": "pc_solidGrains",
+   "title": "Ammonium-Perchlorate Composite Grains",
+   "discipline": "PropellantChemistry",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Ammonium-perchlorate oxidiser bound in a rubbery binder, cast and cured into a structural grain with an integral nozzle — cheap, dense, storable. You light it once and it does not stop.",
+   "parts": [
+    {
+     "name": "ROE-18KS7800",
+     "mod": "ROEngines",
+     "title": "Aerojet 1.8KS-7800"
+    },
+    {
+     "name": "ROE-25KS18000",
+     "mod": "ROEngines",
+     "title": "Aerojet 2.5KS-18000"
+    },
+    {
+     "name": "ROE-BabySergeant",
+     "mod": "ROEngines",
+     "title": "Baby Sergeant (5.4KS-1975)"
+    },
+    {
+     "name": "ROE-BabySergeantX11",
+     "mod": "ROEngines",
+     "title": "Baby Sergeant 11x Cluster"
+    },
+    {
+     "name": "ROE-BabySergeantX3",
+     "mod": "ROEngines",
+     "title": "Baby Sergeant 3x Cluster"
+    },
+    {
+     "name": "ROE-Castor1",
+     "mod": "ROEngines",
+     "title": "Castor 1"
+    },
+    {
+     "name": "ROE-GCRC",
+     "mod": "ROEngines",
+     "title": "GCRC 33KS-2800"
+    },
+    {
+     "name": "ROE-NikeM5E1",
+     "mod": "ROEngines",
+     "title": "Nike M5E1"
+    },
+    {
+     "name": "ROE-Star13",
+     "mod": "ROEngines",
+     "title": "STAR 13"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    954
+   ]
+  },
+  {
+   "id": "met_weldedTank",
+   "title": "Fusion-Welded Pressure Vessels",
+   "discipline": "Metallurgy",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Roll, fusion-weld and proof-test a cylinder that holds pressure without bursting — the first tank that flies. Heavy, but honest.",
+   "parts": [
+    {
+     "name": "ROT-BoosterTank-Separate",
+     "mod": "ROTanks",
+     "title": "Modular Booster Tank (Conventional Structure)"
+    },
+    {
+     "name": "ROT-GenericTank-Separate",
+     "mod": "ROTanks",
+     "title": "Modular Tank (Conventional Structure)"
+    },
+    {
+     "name": "ROT-MiscTank-ServiceModule",
+     "mod": "ROTanks",
+     "title": "Another Modular Tank (Service Module)"
+    },
+    {
+     "name": "ROT-Nose-ServiceModule",
+     "mod": "ROTanks",
+     "title": "Modular Nose Tank (Service Module)"
+    },
+    {
+     "name": "ROT-ServiceModule",
+     "mod": "ROTanks",
+     "title": "Modular Tank (Service Module)"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    874
+   ]
+  },
+  {
+   "id": "met_isogrid",
+   "title": "Machined Isogrid Stiffening",
+   "discipline": "Metallurgy",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "Machine a triangular-rib isogrid into thick plate — cutting metal away everywhere the load path doesn't run, leaving only the ribs that carry it. The same stiffness at a fraction of the mass; the light conventional tankage that flies most orbital rockets.",
+   "parts": [
+    {
+     "name": "RO-RFTank-Integral",
+     "mod": "ProceduralParts",
+     "title": "Procedural Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-AtlasTank-Integral",
+     "mod": "ROTanks",
+     "title": "Atlas Modular Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-BoosterTank-Integral",
+     "mod": "ROTanks",
+     "title": "Modular Booster Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-GenericTank-Integral",
+     "mod": "ROTanks",
+     "title": "Modular Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-SphericalTank-Integral",
+     "mod": "ROTanks",
+     "title": "Spherical Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-ToroidalTank-Integral",
+     "mod": "ROTanks",
+     "title": "Modular Toroidal Tank (Isogrid Structure)"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
+    711
+   ]
+  },
+  {
+   "id": "str_balloonTank",
+   "title": "Pressure-Stabilized Monocoque",
+   "discipline": "StructuresMechanisms",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "Make the wall so thin it only holds shape under pressure — the Atlas 'steel balloon' reached orbit weighing almost nothing empty, and would crumple if you ever let it depressurise. As much an orbital enabler as any engine.",
+   "parts": [
+    {
+     "name": "RO-RFTank-BalloonNew",
+     "mod": "ProceduralParts",
+     "title": "Procedural Tank (Balloon)"
+    },
+    {
+     "name": "ROT-AtlasTank-Balloon",
+     "mod": "ROTanks",
+     "title": "Atlas Modular Tank (Balloon)"
+    },
+    {
+     "name": "ROT-BalloonTank-New",
+     "mod": "ROTanks",
+     "title": "Modular Tank (Balloon)"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
     791
    ]
   },
   {
-   "id": "xplaneStart",
-   "title": "Cambered Airfoil & Three-Axis Control",
+   "id": "str_orbitalMassFraction",
+   "title": "Orbital-Class Mass Fraction",
+   "discipline": "StructuresMechanisms",
+   "tier": 3,
+   "cost": 400,
+   "anyToUnlock": true,
+   "flavor": "Either road closes the rocket equation: chemically-milled isogrid that keeps its shape unpressurised, or the pressure-stabilised steel balloon that weighs almost nothing empty. The R-7 flew conventional-light, Atlas flew the balloon — orbit doesn't care which tank you built, only that it's empty-light enough to leave propellant for the last of the climb.",
+   "parts": [],
+   "upgrades": [],
+   "pos": [
+    -1278,
+    1098
+   ]
+  },
+  {
+   "id": "str_staging",
+   "title": "Pyrotechnic Frangible Separation",
+   "discipline": "StructuresMechanisms",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one go.",
+   "parts": [
+    {
+     "name": "Decoupler_1",
+     "mod": "Squad",
+     "title": "TD-12 Decoupler"
+    },
+    {
+     "name": "Decoupler_2",
+     "mod": "Squad",
+     "title": "TD-25 Decoupler"
+    },
+    {
+     "name": "KzThrustPlate",
+     "mod": "ProceduralFairings",
+     "title": "Thrust Plate [Procedural]"
+    },
+    {
+     "name": "ROE-CastorDecoupler",
+     "mod": "ROEngines",
+     "title": "Castor I & II Radial Decoupler"
+    },
+    {
+     "name": "SnubOtron",
+     "mod": "VenStockRevamp",
+     "title": "Separation Motor (Small)"
+    },
+    {
+     "name": "proceduralStackDecoupler",
+     "mod": "ProceduralParts",
+     "title": "Decoupler [Procedural]"
+    },
+    {
+     "name": "radialDecoupler",
+     "mod": "Squad",
+     "title": "TT-38K Radial Decoupler"
+    },
+    {
+     "name": "sepMotor1",
+     "mod": "Squad",
+     "title": "Radial Separation Motor (Medium)"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1514
+   ]
+  },
+  {
+   "id": "gnc_pitchProgram",
+   "title": "Open-Loop Pitch Programming",
+   "discipline": "GuidanceControl",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "A timed, pre-computed pitch schedule flown open-loop off a gyro reference — the first machine that flies itself uphill on a fixed program, no feedback, no corrections.",
+   "parts": [],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1754
+   ]
+  },
+  {
+   "id": "gnc_rcs",
+   "title": "Cold-Gas Reaction Control",
+   "discipline": "GuidanceControl",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "Bleed stored gas through opposed thruster pairs to point and hold a vehicle in vacuum — the first three-axis control where there is no air to push against.",
+   "parts": [
+    {
+     "name": "InlineRCS",
+     "mod": "VenStockRevamp",
+     "title": "Inline RCS block (138/223 N class)"
+    },
+    {
+     "name": "RCSBlock_138",
+     "mod": "Squad",
+     "title": "RCS Block [ 138/223 N Class]"
+    },
+    {
+     "name": "RCSBlock_28",
+     "mod": "Squad",
+     "title": "RCS Block [  28/45 N Class]"
+    },
+    {
+     "name": "RCSBlock_69",
+     "mod": "Squad",
+     "title": "RCS Block [  69/111 N Class]"
+    },
+    {
+     "name": "ROE-ModularRCS",
+     "mod": "ROEngines",
+     "title": "Modular RCS"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
+    1519
+   ]
+  },
+  {
+   "id": "str_booms",
+   "title": "Stored-Strain Deployable Booms",
+   "discipline": "StructuresMechanisms",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "Stow a coilable tubular mast under strain for launch and let it spring out on orbit — and hold a magnetometer far enough from the bus to read a field the spacecraft's own metal would otherwise drown.",
+   "parts": [
+    {
+     "name": "RO-EarlyMagnet",
+     "mod": "RP-1",
+     "title": "MG01 - Early Magnetometer"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
+    1301
+   ]
+  },
+  {
+   "id": "aero_fairings",
+   "title": "Jettisonable Payload Fairings",
    "discipline": "Aerodynamics",
    "tier": 1,
    "cost": 20,
    "anyToUnlock": false,
-   "flavor": "A cambered wing makes lift; ailerons, elevator and rudder make it obey. Hang a lightweight piston engine and a propeller on the nose and you have controlled, powered flight — the runway route that chases altitude and speed records now, and reaches for the rocketplane and the spaceplane later.",
+   "flavor": "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command.",
    "parts": [
     {
-     "name": "B9_Aero_Wing_Procedural_TypeB",
-     "mod": "B9_Aerospace_ProceduralWings",
-     "title": "B9 Procedural Control Surface (Spaceplane)"
+     "name": "KzInterstageAdapter2",
+     "mod": "ProceduralFairings",
+     "title": "IB - Procedural Interstage Fairing Adapter"
     },
     {
-     "name": "B9_Aero_Wing_Procedural_TypeC",
-     "mod": "B9_Aerospace_ProceduralWings",
-     "title": "B9 Procedural Wing, All-Moving (Spaceplane)"
+     "name": "KzProcFairingSide1",
+     "mod": "ProceduralFairings",
+     "title": "Procedural Fairing"
+    },
+    {
+     "name": "KzResizableFairingBase",
+     "mod": "ProceduralFairings",
+     "title": "FB - Procedural Fairing Base"
+    },
+    {
+     "name": "KzResizableFairingBaseRing",
+     "mod": "ProceduralFairings",
+     "title": "FB - Procedural Fairing Base Ring"
+    },
+    {
+     "name": "RSBRibbedBase",
+     "mod": "ProceduralFairings",
+     "title": "FB - Procedural Ribbed Payload Adapter"
+    },
+    {
+     "name": "SSTUBase",
+     "mod": "ProceduralFairings",
+     "title": "FB - Procedural Hollow Truss Payload Adapter"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1434
+   ]
+  },
+  {
+   "id": "aero_recovery",
+   "title": "Drogue-Stabilized Deceleration",
+   "discipline": "Aerodynamics",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Stage a small drogue to stabilise and slow a falling body, then a main canopy to bring it down intact — the oldest way home from space, and the prerequisite for anything you want back.",
+   "parts": [
+    {
+     "name": "RC_cone",
+     "mod": "RealChute",
+     "title": "Parachute - Cone"
+    },
+    {
+     "name": "RC_cone_double",
+     "mod": "RealChute",
+     "title": "Parachute - Cone (Double)"
+    },
+    {
+     "name": "RC_radial",
+     "mod": "RealChute",
+     "title": "Parachute [Radial]"
+    },
+    {
+     "name": "RC_stack",
+     "mod": "RealChute",
+     "title": "Parachute - Stack (Double)"
+    },
+    {
+     "name": "evaChute",
+     "mod": "Squad",
+     "title": "Personal Parachute"
+    },
+    {
+     "name": "parachuteDrogue",
+     "mod": "Squad",
+     "title": "Mk25 Parachute"
+    },
+    {
+     "name": "parachuteLarge",
+     "mod": "Squad",
+     "title": "Mk16-XL Parachute"
+    },
+    {
+     "name": "parachuteRadial",
+     "mod": "Squad",
+     "title": "Mk2-R Radial-Mount Parachute"
+    },
+    {
+     "name": "parachuteSingle",
+     "mod": "Squad",
+     "title": "Mk16 Parachute"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1594
+   ]
+  },
+  {
+   "id": "th_radiativeControl",
+   "title": "Passive Radiative Control",
+   "discipline": "Thermodynamics",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Reject waste heat to space with coatings, finishes and bimetallic louvers that open and close with temperature — the baseline thermal balance of every spacecraft, before you can afford anything active.",
+   "parts": [
+    {
+     "name": "ca_louver_m",
+     "mod": "CoatlAerospace",
+     "title": "CA-TCL8 Thermal Control Louver"
+    },
+    {
+     "name": "ca_louver_s",
+     "mod": "CoatlAerospace",
+     "title": "CA-TCL4 Thermal Control Louver"
+    },
+    {
+     "name": "ca_louver_s2",
+     "mod": "CoatlAerospace",
+     "title": "CA-TCL4-B Thermal Control Louver"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1194
+   ]
+  },
+  {
+   "id": "th_hermeticBus",
+   "title": "Hermetic Thermal-Control Bus",
+   "discipline": "Thermodynamics",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "A sealed, pressurised, fan-stirred vessel that keeps electronics alive through the orbital hot-cold cycle and runs its own timeline unattended. Sputnik was little more than this — and that sealed sphere WAS the engineering.",
+   "parts": [
+    {
+     "name": "ROT-ProbeCore",
+     "mod": "ROTanks",
+     "title": "Procedural Probe Core"
+    },
+    {
+     "name": "SXTSputnik",
+     "mod": "SXT",
+     "title": "Sputnik PS-1"
+    },
+    {
+     "name": "probeCoreSphere_v2",
+     "mod": "Squad",
+     "title": "Sputnik PS-1"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
+    1103
+   ]
+  },
+  {
+   "id": "elec_siliconPV",
+   "title": "Diffused-Junction Photovoltaics",
+   "discipline": "ElectricalPower",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Diffuse a shallow p-n junction into silicon and sunlight drives a current across it indefinitely — the breakthrough that freed satellites from their batteries. Vanguard 1 flew the first cells. The obvious power for anywhere the sun reaches.",
+   "parts": [
+    {
+     "name": "RO-rangerSolarPanel",
+     "mod": "RealismOverhaul",
+     "title": "Ranger Solar Panel"
+    },
+    {
+     "name": "ROS-StaticSolarPanel",
+     "mod": "ROSolar",
+     "title": "Static Solar Panel"
+    },
+    {
+     "name": "RO_EarlyTinySolarPanel",
+     "mod": "Squad",
+     "title": "ST1 Tiny Solar Panel"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1274
+   ]
+  },
+  {
+   "id": "nuc_rtg",
+   "title": "Radioisotope Thermoelectrics",
+   "discipline": "NuclearEngineering",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "A decaying isotope's heat across a thermocouple gives steady watts for decades, anywhere, sunlight or not. Absurd to fly to a sunlit orbit when solar is cheaper and lighter — but the only power there is for the Moon's 14-day night and the outer dark.",
+   "parts": [
+    {
+     "name": "RO-MMRTG",
+     "mod": "Squad",
+     "title": "Multi-Mission RTG"
+    },
+    {
+     "name": "RO-SNAP-19-RTG",
+     "mod": "VenStockRevamp",
+     "title": "SNAP-19 Series RTG"
+    },
+    {
+     "name": "RO-SNAP-3-RTGPo210",
+     "mod": "VenStockRevamp",
+     "title": "SNAP-3A Series RTG (Po210)"
+    },
+    {
+     "name": "RO-SNAP-9-RTG",
+     "mod": "VenStockRevamp",
+     "title": "SNAP-9 Series RTG"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
+    1679
+   ]
+  },
+  {
+   "id": "tel_telemetry",
+   "title": "Pulse-Interval Telemetry",
+   "discipline": "Telecommunications",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Encode temperature and pressure in the spacing between radio pulses and key it to the ground — Sputnik's beacon turned a satellite's state into something you could hear from another continent.",
+   "parts": [
+    {
+     "name": "SXTAntenna",
+     "mod": "SXT",
+     "title": "Sputnik PS-1 Antenna"
+    },
+    {
+     "name": "SurfAntenna",
+     "mod": "Squad",
+     "title": "Communotron 16-S"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1996
+   ]
+  },
+  {
+   "id": "nuc_geiger",
+   "title": "Geiger-Müller Ionization Counting",
+   "discipline": "NuclearEngineering",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "A gas-discharge tube that clicks once per ionising particle — cheap, rugged, and the first satellites' sharpest sense. Explorer 1 carried one and found the Van Allen belts. (Its early tier is a science-pacing dial.)",
+   "parts": [
+    {
+     "name": "RO-GeigerMuller",
+     "mod": "RP-1",
+     "title": "CR01 - Geiger-Muller Counter"
+    },
+    {
+     "name": "RP0probeVanguardXray",
+     "mod": "Squad",
+     "title": "20in X-Ray Detector (DEPRECATED)"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1354
+   ]
+  },
+  {
+   "id": "met_exposurePanels",
+   "title": "Materials Exposure Panels",
+   "discipline": "Metallurgy",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Heavy sealed boxes that expose a material, a microbe colony or an impact grid to launch, vacuum and radiation and bring it home — science that rides in a structural can, not a delicate instrument. (Mystery Goo lives here in Metallurgy.)",
+   "parts": [
+    {
+     "name": "BioCapsule",
+     "mod": "SXT",
+     "title": "Advanced Biological Capsule"
+    },
+    {
+     "name": "GooExperiment",
+     "mod": "Squad",
+     "title": "Biological Sample Capsule"
+    },
+    {
+     "name": "RO-Micrometeorite",
+     "mod": "RP-1",
+     "title": "MM01 - Micrometeorite Detector"
+    },
+    {
+     "name": "SXTProbeGooo",
+     "mod": "SXT",
+     "title": "Biological Sample Capsule"
+    },
+    {
+     "name": "USGooBayWedge",
+     "mod": "UniversalStorage2",
+     "title": "Biological Sample Capsule"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    794
+   ]
+  },
+  {
+   "id": "opt_filmReturn",
+   "title": "Film-Return Imaging",
+   "discipline": "OpticsPhotonics",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Expose film in flight and scan-and-transmit or physically return it — the highest resolution there is, if you can get it home. Luna 3's look at the far side of the Moon.",
+   "parts": [
+    {
+     "name": "RO-BasicFilmCamera",
+     "mod": "RP-1",
+     "title": "PH02 - Basic Film Camera"
+    },
+    {
+     "name": "science_module",
+     "mod": "Squad",
+     "title": "PH01 - Early Film Camera"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    2076
+   ]
+  },
+  {
+   "id": "opt_vidicon",
+   "title": "Vidicon Imaging",
+   "discipline": "OpticsPhotonics",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Scan an image off a photoconductive vidicon tube and send it down as live video — no film to recover, but coarser than film. The other way to see: film returns the detail, the vidicon returns the immediacy.",
+   "parts": [
+    {
+     "name": "RO-EarlyTVCamera",
+     "mod": "RP-1",
+     "title": "VI01 - Early Television Camera"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    2156
+   ]
+  },
+  {
+   "id": "mic_massSpec",
+   "title": "Magnetic-Sector Mass Spectrometry",
+   "discipline": "Microelectronics",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "Bend a beam of ions through a magnetic sector to sort them by mass — read the composition of an upper atmosphere or ionosphere in situ, chemistry sampled where the spacecraft flies.",
+   "parts": [
+    {
+     "name": "RO-IonMassSpectrometer",
+     "mod": "RP-1",
+     "title": "MS01 - Ion Mass Spectrometer"
+    },
+    {
+     "name": "USFluidSpectroWedge",
+     "mod": "UniversalStorage2",
+     "title": "Mass Spectrometer Unit"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -2138,
+    1836
+   ]
+  },
+  {
+   "id": "int_orbitalInsertion",
+   "title": "Orbital Insertion",
+   "discipline": "SystemsIntegration",
+   "tier": 4,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Orbital-class thrust, a tank light enough to close the rocket equation, staging, and a pitch program converge. Build your own satellite from the bus, power and antenna beside it. Beep. Beep. Beep.",
+   "parts": [],
+   "upgrades": [],
+   "pos": [
+    -848,
+    1108
+   ]
+  },
+  {
+   "id": "int_applicationsSat",
+   "title": "Applications Satellite Bus",
+   "discipline": "SystemsIntegration",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "The turn from 'science probe' to 'useful satellite' — a standard bus for communications and navigation payloads. It flies contracts, and a fleet in orbit is a steady science and revenue farm.",
+   "parts": [
+    {
+     "name": "RP-1-CommunicationSat",
+     "mod": "RP-1",
+     "title": "Communication Contract Satellite Bus"
+    },
+    {
+     "name": "RP-1-NavigationSat",
+     "mod": "RP-1",
+     "title": "Navigation Contract Satellite Bus"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -418,
+    1354
+   ]
+  },
+  {
+   "id": "xplaneStart",
+   "title": "Three-Axis Aerodynamic Control",
+   "discipline": "Aerodynamics",
+   "tier": 1,
+   "cost": 20,
+   "anyToUnlock": false,
+   "flavor": "A cambered wing makes lift; the real breakthrough was making it OBEY — roll, pitch and yaw commanded together. Hang a piston and a propeller on it and you have controlled, powered flight.",
+   "parts": [
+    {
+     "name": "CircularIntake",
+     "mod": "Squad",
+     "title": "Pitot Intake"
     },
     {
      "name": "GearFixed",
      "mod": "Squad",
      "title": "LY-01 Fixed Landing Gear"
+    },
+    {
+     "name": "GearFree",
+     "mod": "Squad",
+     "title": "LY-05 Steerable Landing Gear"
+    },
+    {
+     "name": "RO-B9ProcCS-Early",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Control Surface (Early)"
+    },
+    {
+     "name": "RO-B9ProcWing-Early",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Wing (Early)"
     },
     {
      "name": "RO-OldFighterCockpit",
@@ -1386,6 +1796,21 @@ window.TREE = {
      "title": "X-1 Cockpit"
     },
     {
+     "name": "SXTJ213",
+     "mod": "SXT",
+     "title": "Junkers Jumo 213E"
+    },
+    {
+     "name": "SXTKO211Dprop",
+     "mod": "SXT",
+     "title": "Junkers Jumo 211F"
+    },
+    {
+     "name": "SXTMerlin46Prop",
+     "mod": "SXT",
+     "title": "Rolls-Royce Merlin 46"
+    },
+    {
      "name": "SXTMerlin66prop",
      "mod": "SXT",
      "title": "Rolls-Royce Merlin 66"
@@ -1396,6 +1821,16 @@ window.TREE = {
      "title": "Pratt & Whitney R-2800-63W Double Wasp"
     },
     {
+     "name": "SXTR280018WProp",
+     "mod": "SXT",
+     "title": "Pratt & Whitney R-2800-18W Double Wasp"
+    },
+    {
+     "name": "SXTR280021Prop",
+     "mod": "SXT",
+     "title": "Pratt & Whitney R-2800-21 Double Wasp"
+    },
+    {
      "name": "SXTTinyprop",
      "mod": "SXT",
      "title": "IO-550-B Piston Engine"
@@ -1404,22 +1839,27 @@ window.TREE = {
      "name": "SXT_Jumo213A",
      "mod": "SXT",
      "title": "Junkers Jumo 213A"
+    },
+    {
+     "name": "noseCone",
+     "mod": "Squad",
+     "title": "Aerodynamic Nose Cone"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    1823
+    1674
    ]
   },
   {
-   "id": "met_turbojet",
-   "title": "Gas-Turbine Propulsion & Turbine Superalloys",
+   "id": "met_turbineAlloys",
+   "title": "Nimonic Turbine Alloys",
    "discipline": "Metallurgy",
    "tier": 2,
    "cost": 90,
    "anyToUnlock": false,
-   "flavor": "The turbojet's cycle — compressor, continuous combustor, turbine — was understood by the late 1930s; what gated it for years was the turbine, sitting in an 800-1000 C gas stream under load. Nickel-base superalloys (Nimonic), grown for exactly this, made a durable blade. So the jet, an aircraft engine, is really unlocked by METALLURGY — the same 'materials unlock the engine' story as the RD-170, on the aviation side.",
+   "flavor": "The turbojet's cycle was understood in the 1930s; what gated it was a turbine blade that wouldn't creep in an 800-plus-degree stream. Nimonic — a nickel-chromium superalloy grown for exactly this — made a durable blade. The jet is unlocked by METALLURGY, not aerodynamics.",
    "parts": [
     {
      "name": "RO-DerwentV",
@@ -1430,79 +1870,191 @@ window.TREE = {
      "name": "RO-J35",
      "mod": "SXT",
      "title": "J35 Turbojet"
+    },
+    {
+     "name": "RO-VK1",
+     "mod": "SXT",
+     "title": "VK-1 Turbojet"
     }
    ],
    "upgrades": [],
    "pos": [
     -1708,
-    2079
+    1381
    ]
   },
   {
-   "id": "aero_transonicFlight",
-   "title": "Transonic Area-Rule Shaping",
+   "id": "aero_areaRule",
+   "title": "Transonic Area-Ruling",
    "discipline": "Aerodynamics",
    "tier": 3,
    "cost": 400,
    "anyToUnlock": false,
-   "flavor": "Smooth the cross-sectional area through Mach 1 — the coke-bottle waist that lets a jet airframe punch through the sound barrier instead of shaking apart against it.",
+   "flavor": "Smooth the total cross-sectional area through Mach 1 — the coke-bottle waist that lets an airframe punch through the sound barrier instead of shaking apart against it.",
    "parts": [
-    {
-     "name": "GearFree",
-     "mod": "Squad",
-     "title": "LY-05 Steerable Landing Gear"
-    },
     {
      "name": "RO-J47",
      "mod": "SXT",
      "title": "J47 Turbojet"
+    },
+    {
+     "name": "RO-J48",
+     "mod": "Squad",
+     "title": "J48/Tay Turbojet"
+    },
+    {
+     "name": "RO-JT3C",
+     "mod": "Squad",
+     "title": "J57 Turbojet (No Afterburner)"
+    },
+    {
+     "name": "RO-RD9B",
+     "mod": "Squad",
+     "title": "RD-9 Turbojet"
+    },
+    {
+     "name": "RO-Sapphire203",
+     "mod": "Squad",
+     "title": "Sapphire Turbojet"
+    },
+    {
+     "name": "aje_avon",
+     "mod": "Squad",
+     "title": "Avon Turbojet"
+    },
+    {
+     "name": "aje_j57",
+     "mod": "Squad",
+     "title": "J57 Turbojet"
     }
    ],
    "upgrades": [],
    "pos": [
     -1278,
-    1970
+    1537
    ]
   },
   {
-   "id": "aero_supersonicCruise",
-   "title": "Supersonic Cruise Aerodynamics",
+   "id": "aero_shockInlets",
+   "title": "Oblique-Shock Inlets",
    "discipline": "Aerodynamics",
    "tier": 4,
    "cost": 900,
    "anyToUnlock": false,
-   "flavor": "Swept and delta planforms delay shock-stall while a shock-controlled inlet keeps the compressor breathing past Mach 2. Together they turn a transonic dash into sustained supersonic cruise — the aerodynamics of the fast jet, and one day of the air-breathing first stage of a spaceplane.",
+   "flavor": "Decelerate intake air through a controlled train of oblique shocks so the compressor keeps breathing past Mach 2 — sustained supersonic cruise, not just a dash.",
    "parts": [
+    {
+     "name": "RO-B9ProcWing-Supersonic",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Wing (Supersonic)"
+    },
+    {
+     "name": "RO-shockConeIntake125",
+     "mod": "Squad",
+     "title": "1.25m Shock Cone Intake"
+    },
+    {
+     "name": "RO-shockConeIntakeBomarc",
+     "mod": "Squad",
+     "title": "0.70m Shock Cone Intake"
+    },
+    {
+     "name": "RO-shockConeIntakeMig",
+     "mod": "Squad",
+     "title": "0.86m Shock Cone Intake"
+    },
+    {
+     "name": "shockConeIntake",
+     "mod": "Squad",
+     "title": "Shock Cone Intake"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -848,
+    1371
+   ]
+  },
+  {
+   "id": "aero_afterburner",
+   "title": "Afterburning Turbojets",
+   "discipline": "Aerodynamics",
+   "tier": 4,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Inject and burn fuel in the exhaust downstream of the turbine for a burst of extra thrust — reheat for the transonic dash and climb, flown years before any sustained-Mach-2 inlet existed.",
+   "parts": [
+    {
+     "name": "RO-AL7F",
+     "mod": "Squad",
+     "title": "AL-7 Turbojet"
+    },
     {
      "name": "RO-Atar101D",
      "mod": "SXT",
      "title": "Atar 101 Turbojet"
     },
     {
-     "name": "nfa-turbofan-25-2",
-     "mod": "NearFutureAeronautics",
-     "title": "Olympus 593 Turbojet"
+     "name": "aje_j75",
+     "mod": "Squad",
+     "title": "J75 Turbojet"
     },
     {
-     "name": "nfa-turbojet-25-1",
-     "mod": "NearFutureAeronautics",
-     "title": "GE4 Turbojet"
+     "name": "aje_j79",
+     "mod": "Squad",
+     "title": "J79 Turbojet"
     }
    ],
    "upgrades": [],
    "pos": [
     -848,
-    2076
+    1291
+   ]
+  },
+  {
+   "id": "aero_ramjet",
+   "title": "Ram Compression",
+   "discipline": "Aerodynamics",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "Above Mach 2 the inlet does all the compressing and you can discard the turbine entirely — a ramjet, or a turbo-ramjet that hands off between the two.",
+   "parts": [
+    {
+     "name": "RO-Nord1500",
+     "mod": "Squad",
+     "title": "Nord 1500/Atar Combined Cycle Ramjet"
+    },
+    {
+     "name": "RO-RJ43",
+     "mod": "Squad",
+     "title": "RJ43 Ramjet"
+    },
+    {
+     "name": "RO-RJ47",
+     "mod": "Squad",
+     "title": "RJ47 Ramjet"
+    },
+    {
+     "name": "RO-RJ55",
+     "mod": "Squad",
+     "title": "RJ55/J67 Combined Cycle Ramjet"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -418,
+    1620
    ]
   },
   {
    "id": "aero_rocketplane",
-   "title": "Rocket-Powered Research Aircraft",
+   "title": "Rocket-Boosted Airframes",
    "discipline": "Aerodynamics",
-   "tier": 2,
-   "cost": 90,
+   "tier": 3,
+   "cost": 400,
    "anyToUnlock": false,
-   "flavor": "Hang a throttleable rocket engine in a clean airframe, drop it from altitude, and ride a ballistic arc to the edge of the atmosphere. The X-1 broke the sound barrier; the X-15 touched space and came home on a runway. Where the aircraft and rocket tracks first meet.",
+   "flavor": "Hang a throttleable rocket engine in a clean airframe, drop it from altitude and ride a ballistic arc to the edge of the atmosphere. The X-1 broke the sound barrier; the X-15 touched space and came home on a runway. Where the aircraft and rocket lines first meet.",
    "parts": [
     {
      "name": "Mark1Cockpit",
@@ -1515,257 +2067,106 @@ window.TREE = {
      "title": "X-15 Inline Cockpit"
     },
     {
+     "name": "ROE-XLR10",
+     "mod": "ROEngines",
+     "title": "XLR10"
+    },
+    {
      "name": "ROE-XLR11",
      "mod": "ROEngines",
      "title": "XLR11"
     },
     {
-     "name": "ROE-XLR99",
+     "name": "ROE-XLR25",
      "mod": "ROEngines",
-     "title": "XLR99"
+     "title": "XLR25"
+    },
+    {
+     "name": "ROE-XLR41",
+     "mod": "ROEngines",
+     "title": "XLR41"
     }
    ],
-   "upgrades": [],
-   "pos": [
-    -1708,
-    1999
-   ]
-  },
-  {
-   "id": "life_pressurizedCabin",
-   "title": "Cabin Pressurization",
-   "discipline": "LifeSupport",
-   "tier": 3,
-   "cost": 400,
-   "anyToUnlock": false,
-   "flavor": "Seal the cockpit and hold a breathable pressure as the air outside thins to nothing — the difference between a pilot who flies to the edge of space and one who blacks out on the way up. The first life-support system, and the prerequisite for putting a crew anywhere high.",
-   "parts": [],
    "upgrades": [],
    "pos": [
     -1278,
-    2050
-   ]
-  },
-  {
-   "id": "int_crewedSuborbital",
-   "title": "Crewed Suborbital Flight",
-   "discipline": "SystemsIntegration",
-   "tier": 4,
-   "cost": 900,
-   "anyToUnlock": false,
-   "flavor": "A rocket-powered airframe, a pressurized cockpit, and a pilot willing to ride a ballistic arc above the Karman line and glide home. The X-15 did it decades before anyone called it spaceflight. The aviation track's first taste of space — and, unlike a capsule, a runway back. Now build a purpose-made boost-glider.",
-   "parts": [
-    {
-     "name": "ROC-DynaCockpitAltMoroz",
-     "mod": "ROCapsules",
-     "title": "Dynasoar Cockpit (Alt)"
-    },
-    {
-     "name": "ROC-DynaCockpitMoroz",
-     "mod": "ROCapsules",
-     "title": "Dynasoar Cockpit"
-    }
-   ],
-   "upgrades": [],
-   "pos": [
-    -848,
-    2156
+    1457
    ]
   }
  ],
  "edges": [
   {
    "from": "start",
-   "to": "rocketryStart",
+   "to": "fd_turbopumpFeed",
    "anyToUnlock": false,
    "waypoints": [
     [
      -2568,
-     1782
+     1348
     ],
     [
      -2138,
-     1469
+     1114
     ]
    ]
   },
   {
-   "from": "rocketryStart",
-   "to": "fd_turbopumpLiquid",
+   "from": "fd_turbopumpFeed",
+   "to": "fd_multiChamber",
    "anyToUnlock": false,
    "waypoints": [
     [
      -2138,
-     1469
+     1114
     ],
     [
      -1708,
-     1519
+     1031
     ]
    ]
   },
   {
-   "from": "rocketryStart",
-   "to": "pc_solidGrain",
+   "from": "fd_turbopumpFeed",
+   "to": "fd_baffledInjector",
    "anyToUnlock": false,
    "waypoints": [
     [
      -2138,
-     1469
+     1114
     ],
     [
      -1708,
-     1367
+     951
     ]
    ]
   },
   {
-   "from": "fd_turbopumpLiquid",
-   "to": "pc_kerosene",
+   "from": "start",
+   "to": "fd_verniers",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1708,
-     1519
+     -2568,
+     1348
     ],
-    [
-     -1278,
-     1178
-    ]
-   ]
-  },
-  {
-   "from": "fd_turbopumpLiquid",
-   "to": "fd_gasGenerator",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1519
-    ],
-    [
-     -1278,
-     1258
-    ]
-   ]
-  },
-  {
-   "from": "rocketryStart",
-   "to": "cryo_earlyHydrolox",
-   "anyToUnlock": true,
-   "waypoints": [
     [
      -2138,
-     1469
-    ],
-    [
-     -1708,
-     1483
-    ],
-    [
-     -1278,
-     1098
+     1916
     ]
    ]
   },
   {
-   "from": "fd_turbopumpLiquid",
-   "to": "cryo_earlyHydrolox",
-   "anyToUnlock": true,
-   "waypoints": [
-    [
-     -1708,
-     1519
-    ],
-    [
-     -1278,
-     1098
-    ]
-   ]
-  },
-  {
-   "from": "rocketryStart",
-   "to": "str_stageSeparation",
+   "from": "start",
+   "to": "pc_hypergolics",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2138,
-     1469
+     -2568,
+     1348
     ],
     [
-     -1708,
-     1679
-    ]
-   ]
-  },
-  {
-   "from": "rocketryStart",
-   "to": "gnc_rateGyros",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
      -2138,
-     1469
-    ],
-    [
-     -1708,
-     1839
-    ]
-   ]
-  },
-  {
-   "from": "rocketryStart",
-   "to": "tel_pcmTelemetry",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -2138,
-     1469
-    ],
-    [
-     -1708,
-     1919
-    ]
-   ]
-  },
-  {
-   "from": "rocketryStart",
-   "to": "mic_vacuumTubes",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -2138,
-     1469
-    ],
-    [
-     -1708,
-     1759
-    ]
-   ]
-  },
-  {
-   "from": "rocketryStart",
-   "to": "met_weldedSteel",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -2138,
-     1469
-    ],
-    [
-     -1708,
-     1287
-    ]
-   ]
-  },
-  {
-   "from": "rocketryStart",
-   "to": "elec_silverZinc",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -2138,
-     1469
+     1790
     ],
     [
      -1708,
@@ -1774,423 +2175,502 @@ window.TREE = {
    ]
   },
   {
-   "from": "elec_silverZinc",
+   "from": "start",
+   "to": "cryo_hydrogen",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     1034
+    ]
+   ]
+  },
+  {
+   "from": "cryo_hydrogen",
+   "to": "fd_expanderCycle",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1034
+    ],
+    [
+     -1708,
+     871
+    ]
+   ]
+  },
+  {
+   "from": "fd_multiChamber",
+   "to": "fd_orbitalThrust",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     -1708,
+     1031
+    ],
+    [
+     -1278,
+     1216
+    ]
+   ]
+  },
+  {
+   "from": "fd_baffledInjector",
+   "to": "fd_orbitalThrust",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     -1708,
+     951
+    ],
+    [
+     -1278,
+     1216
+    ]
+   ]
+  },
+  {
+   "from": "fd_expanderCycle",
+   "to": "fd_orbitalThrust",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     -1708,
+     871
+    ],
+    [
+     -1278,
+     1216
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "pc_solidGrains",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     954
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "met_weldedTank",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     874
+    ]
+   ]
+  },
+  {
+   "from": "met_weldedTank",
+   "to": "met_isogrid",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     874
+    ],
+    [
+     -1708,
+     711
+    ]
+   ]
+  },
+  {
+   "from": "met_weldedTank",
+   "to": "str_balloonTank",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     874
+    ],
+    [
+     -1708,
+     791
+    ]
+   ]
+  },
+  {
+   "from": "met_isogrid",
+   "to": "str_orbitalMassFraction",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     -1708,
+     711
+    ],
+    [
+     -1278,
+     1098
+    ]
+   ]
+  },
+  {
+   "from": "str_balloonTank",
+   "to": "str_orbitalMassFraction",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     -1708,
+     791
+    ],
+    [
+     -1278,
+     1098
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "str_staging",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     1514
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "gnc_pitchProgram",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     1754
+    ]
+   ]
+  },
+  {
+   "from": "gnc_pitchProgram",
+   "to": "gnc_rcs",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1754
+    ],
+    [
+     -1708,
+     1519
+    ]
+   ]
+  },
+  {
+   "from": "str_staging",
+   "to": "str_booms",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1514
+    ],
+    [
+     -1708,
+     1301
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "aero_fairings",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     1434
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "aero_recovery",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     1594
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "th_radiativeControl",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     1194
+    ]
+   ]
+  },
+  {
+   "from": "th_radiativeControl",
+   "to": "th_hermeticBus",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1194
+    ],
+    [
+     -1708,
+     1103
+    ]
+   ]
+  },
+  {
+   "from": "start",
    "to": "elec_siliconPV",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1708,
-     1599
+     -2568,
+     1348
     ],
-    [
-     -1278,
-     1338
-    ]
-   ]
-  },
-  {
-   "from": "elec_siliconPV",
-   "to": "elec_bodyMountedArrays",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1278,
-     1338
-    ],
-    [
-     -848,
-     1431
-    ]
-   ]
-  },
-  {
-   "from": "mic_vacuumTubes",
-   "to": "mic_transistor",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1759
-    ],
-    [
-     -1278,
-     1498
-    ]
-   ]
-  },
-  {
-   "from": "mic_transistor",
-   "to": "mic_integratedCircuit",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1278,
-     1498
-    ],
-    [
-     -848,
-     1628
-    ]
-   ]
-  },
-  {
-   "from": "mic_integratedCircuit",
-   "to": "mic_radHardening",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -848,
-     1628
-    ],
-    [
-     -418,
-     1410
-    ]
-   ]
-  },
-  {
-   "from": "tel_pcmTelemetry",
-   "to": "tel_helicalDirectional",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1919
-    ],
-    [
-     -1278,
-     1898
-    ]
-   ]
-  },
-  {
-   "from": "tel_helicalDirectional",
-   "to": "tel_cassegrainHGA",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1278,
-     1898
-    ],
-    [
-     -848,
-     1960
-    ]
-   ]
-  },
-  {
-   "from": "tel_cassegrainHGA",
-   "to": "tel_dsnRanging",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -848,
-     1960
-    ],
-    [
-     -418,
-     1757
-    ]
-   ]
-  },
-  {
-   "from": "tel_dsnRanging",
-   "to": "tel_xBandDownlink",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -418,
-     1757
-    ],
-    [
-     12,
-     1888
-    ]
-   ]
-  },
-  {
-   "from": "gnc_rateGyros",
-   "to": "gnc_reactionControl",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1839
-    ],
-    [
-     -1278,
-     1818
-    ]
-   ]
-  },
-  {
-   "from": "gnc_rateGyros",
-   "to": "gnc_inertialNav",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1839
-    ],
-    [
-     -1278,
-     1738
-    ]
-   ]
-  },
-  {
-   "from": "gnc_inertialNav",
-   "to": "gnc_digitalGuidance",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1278,
-     1738
-    ],
-    [
-     -848,
-     1789
-    ],
-    [
-     -418,
-     1570
-    ]
-   ]
-  },
-  {
-   "from": "mic_integratedCircuit",
-   "to": "gnc_digitalGuidance",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -848,
-     1628
-    ],
-    [
-     -418,
-     1570
-    ]
-   ]
-  },
-  {
-   "from": "gnc_inertialNav",
-   "to": "gnc_opticalNav",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1278,
-     1738
-    ],
-    [
-     -848,
-     1807
-    ],
-    [
-     -418,
-     1606
-    ],
-    [
-     12,
-     1694
-    ]
-   ]
-  },
-  {
-   "from": "opt_precisionOptics",
-   "to": "gnc_opticalNav",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -418,
-     1490
-    ],
-    [
-     12,
-     1694
-    ]
-   ]
-  },
-  {
-   "from": "mic_vacuumTubes",
-   "to": "opt_filmCameras",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1759
-    ],
-    [
-     -1278,
-     1578
-    ]
-   ]
-  },
-  {
-   "from": "opt_filmCameras",
-   "to": "opt_tvImaging",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1278,
-     1578
-    ],
-    [
-     -848,
-     1713
-    ]
-   ]
-  },
-  {
-   "from": "opt_filmCameras",
-   "to": "opt_precisionOptics",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1278,
-     1578
-    ],
-    [
-     -848,
-     1669
-    ],
-    [
-     -418,
-     1490
-    ]
-   ]
-  },
-  {
-   "from": "opt_precisionOptics",
-   "to": "opt_spectrometry",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -418,
-     1490
-    ],
-    [
-     12,
-     1614
-    ]
-   ]
-  },
-  {
-   "from": "rocketryStart",
-   "to": "th_passiveRadiators",
-   "anyToUnlock": false,
-   "waypoints": [
     [
      -2138,
-     1469
-    ],
-    [
-     -1708,
-     1447
+     1274
     ]
    ]
   },
   {
-   "from": "elec_siliconPV",
+   "from": "start",
    "to": "nuc_rtg",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1278,
-     1338
+     -2568,
+     1348
     ],
     [
-     -848,
-     1511
+     -2138,
+     1800
+    ],
+    [
+     -1708,
+     1679
     ]
    ]
   },
   {
-   "from": "nuc_rtg",
-   "to": "nuc_rtgAdvanced",
+   "from": "start",
+   "to": "tel_telemetry",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     1996
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "nuc_geiger",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     1354
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "met_exposurePanels",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     794
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "opt_filmReturn",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     2076
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "opt_vidicon",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     2156
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "mic_massSpec",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1348
+    ],
+    [
+     -2138,
+     1836
+    ]
+   ]
+  },
+  {
+   "from": "fd_orbitalThrust",
+   "to": "int_orbitalInsertion",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1278,
+     1216
+    ],
+    [
+     -848,
+     1108
+    ]
+   ]
+  },
+  {
+   "from": "str_orbitalMassFraction",
+   "to": "int_orbitalInsertion",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1278,
+     1098
+    ],
+    [
+     -848,
+     1108
+    ]
+   ]
+  },
+  {
+   "from": "str_staging",
+   "to": "int_orbitalInsertion",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1514
+    ],
+    [
+     -1708,
+     1263
+    ],
+    [
+     -1278,
+     1419
+    ],
+    [
+     -848,
+     1108
+    ]
+   ]
+  },
+  {
+   "from": "gnc_pitchProgram",
+   "to": "int_orbitalInsertion",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1754
+    ],
+    [
+     -1708,
+     1461
+    ],
+    [
+     -1278,
+     1573
+    ],
+    [
+     -848,
+     1108
+    ]
+   ]
+  },
+  {
+   "from": "int_orbitalInsertion",
+   "to": "int_applicationsSat",
    "anyToUnlock": false,
    "waypoints": [
     [
      -848,
-     1511
+     1108
     ],
     [
      -418,
-     1330
-    ]
-   ]
-  },
-  {
-   "from": "str_stageSeparation",
-   "to": "str_deployableBooms",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1679
-    ],
-    [
-     -1278,
-     1418
-    ]
-   ]
-  },
-  {
-   "from": "str_stageSeparation",
-   "to": "int_firstOrbit",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1679
-    ],
-    [
-     -1278,
-     1658
-    ]
-   ]
-  },
-  {
-   "from": "gnc_rateGyros",
-   "to": "int_firstOrbit",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1839
-    ],
-    [
-     -1278,
-     1658
-    ]
-   ]
-  },
-  {
-   "from": "tel_pcmTelemetry",
-   "to": "int_firstOrbit",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1919
-    ],
-    [
-     -1278,
-     1658
-    ]
-   ]
-  },
-  {
-   "from": "mic_vacuumTubes",
-   "to": "int_firstOrbit",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1759
-    ],
-    [
-     -1278,
-     1658
+     1354
     ]
    ]
   },
@@ -2201,56 +2681,86 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1782
+     1348
     ],
     [
      -2138,
-     1823
+     1674
     ]
    ]
   },
   {
    "from": "xplaneStart",
-   "to": "met_turbojet",
+   "to": "met_turbineAlloys",
    "anyToUnlock": false,
    "waypoints": [
     [
      -2138,
-     1823
+     1674
     ],
     [
      -1708,
-     2079
+     1381
     ]
    ]
   },
   {
-   "from": "met_turbojet",
-   "to": "aero_transonicFlight",
+   "from": "met_turbineAlloys",
+   "to": "aero_areaRule",
    "anyToUnlock": false,
    "waypoints": [
     [
      -1708,
-     2079
+     1381
     ],
     [
      -1278,
-     1970
+     1537
     ]
    ]
   },
   {
-   "from": "aero_transonicFlight",
-   "to": "aero_supersonicCruise",
+   "from": "aero_areaRule",
+   "to": "aero_shockInlets",
    "anyToUnlock": false,
    "waypoints": [
     [
      -1278,
-     1970
+     1537
     ],
     [
      -848,
-     2076
+     1371
+    ]
+   ]
+  },
+  {
+   "from": "aero_areaRule",
+   "to": "aero_afterburner",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1278,
+     1537
+    ],
+    [
+     -848,
+     1291
+    ]
+   ]
+  },
+  {
+   "from": "aero_shockInlets",
+   "to": "aero_ramjet",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -848,
+     1371
+    ],
+    [
+     -418,
+     1620
     ]
    ]
   },
@@ -2261,79 +2771,34 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1823
+     1674
     ],
     [
      -1708,
-     1999
+     1417
+    ],
+    [
+     -1278,
+     1457
     ]
    ]
   },
   {
-   "from": "rocketryStart",
+   "from": "fd_turbopumpFeed",
    "to": "aero_rocketplane",
    "anyToUnlock": false,
    "waypoints": [
     [
      -2138,
-     1469
+     1114
     ],
     [
      -1708,
-     1999
-    ]
-   ]
-  },
-  {
-   "from": "xplaneStart",
-   "to": "life_pressurizedCabin",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -2138,
-     1823
-    ],
-    [
-     -1708,
-     2115
+     1067
     ],
     [
      -1278,
-     2050
-    ]
-   ]
-  },
-  {
-   "from": "aero_rocketplane",
-   "to": "int_crewedSuborbital",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1708,
-     1999
-    ],
-    [
-     -1278,
-     1934
-    ],
-    [
-     -848,
-     2156
-    ]
-   ]
-  },
-  {
-   "from": "life_pressurizedCabin",
-   "to": "int_crewedSuborbital",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1278,
-     2050
-    ],
-    [
-     -848,
-     2156
+     1457
     ]
    ]
   }
