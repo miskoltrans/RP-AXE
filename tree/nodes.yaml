@@ -152,14 +152,21 @@ nodes:
     tier: 2
     parents: [xplaneStart]
     flavor: "The turbojet's cycle — compressor, continuous combustor, turbine — was understood by the late 1930s; what gated it for years was the turbine, sitting in an 800-1000 C gas stream under load. Nickel-base superalloys (Nimonic), grown for exactly this, made a durable blade. So the jet, an aircraft engine, is really unlocked by METALLURGY — the same 'materials unlock the engine' story as the RD-170, on the aviation side."
-    parts: [RO-DerwentV, RO-J35, RO-J47, RO-Atar101D]
+    parts: [RO-DerwentV, RO-J35]
   - id: aero_transonicFlight
     title: "Transonic Area-Rule Shaping"
     discipline: Aerodynamics
     tier: 3
     parents: [met_turbojet]
     flavor: "Smooth the cross-sectional area through Mach 1 — the coke-bottle waist that lets a jet airframe punch through the sound barrier instead of shaking apart against it."
-    parts: [GearFree, nfa-turbojet-25-1]
+    parts: [RO-J47, GearFree]
+  - id: aero_supersonicCruise
+    title: "Supersonic Cruise Aerodynamics"
+    discipline: Aerodynamics
+    tier: 4
+    parents: [aero_transonicFlight]
+    flavor: "Swept and delta planforms delay shock-stall while a shock-controlled inlet keeps the compressor breathing past Mach 2. Together they turn a transonic dash into sustained supersonic cruise — the aerodynamics of the fast jet, and one day of the air-breathing first stage of a spaceplane."
+    parts: [RO-Atar101D, nfa-turbofan-25-2, nfa-turbojet-25-1]
 
   # ---- CROSS-TRACK CONVERGENCE: the rocketplane (aviation airframe + rocket engine) ----
   - id: aero_rocketplane
@@ -170,3 +177,19 @@ nodes:
     anyToUnlock: false               # CONVERGENCE across the two tracks: a clean airframe + a rocket engine
     flavor: "Hang a throttleable rocket engine in a clean airframe, drop it from altitude, and ride a ballistic arc to the edge of the atmosphere. The X-1 broke the sound barrier; the X-15 touched space and came home on a runway. Where the aircraft and rocket tracks first meet."
     parts: [ROE-XLR11, ROE-XLR99, Mark1Cockpit, Mark2Cockpit]
+
+  # ---- AVIATION LIFE SUPPORT + MILESTONE: crewed to the edge of space (also feeds rocketry crewed orbit) ----
+  - id: life_pressurizedCabin
+    title: "Cabin Pressurization"
+    discipline: LifeSupport
+    tier: 3
+    parents: [xplaneStart]
+    flavor: "Seal the cockpit and hold a breathable pressure as the air outside thins to nothing — the difference between a pilot who flies to the edge of space and one who blacks out on the way up. The first life-support system, and the prerequisite for putting a crew anywhere high."
+  - id: int_crewedSuborbital
+    title: "Crewed Suborbital Flight"
+    discipline: SystemsIntegration
+    tier: 4
+    parents: [aero_rocketplane, life_pressurizedCabin]
+    anyToUnlock: false               # CONVERGENCE: a rocketplane + a crew that can survive the altitude
+    flavor: "A rocket-powered airframe, a pressurized cockpit, and a pilot willing to ride a ballistic arc above the Karman line and glide home. The X-15 did it decades before anyone called it spaceflight. The aviation track's first taste of space — and, unlike a capsule, a runway back. Now build a purpose-made boost-glider."
+    parts: [ROC-DynaCockpitMoroz, ROC-DynaCockpitAltMoroz]

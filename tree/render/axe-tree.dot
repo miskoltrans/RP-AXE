@@ -17,11 +17,15 @@ digraph AXE {
   "xplaneStart" [label="Cambered Airfoil & Three-Axis Control\nAerodynamics T1 · 0",fillcolor="#48cae4",fontcolor="#111111"];
   "met_turbojet" [label="Gas-Turbine Propulsion & Turbine Superalloys\nMetallurgy T2 · 90",fillcolor="#8d99ae",fontcolor="#111111"];
   "aero_transonicFlight" [label="Transonic Area-Rule Shaping\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_supersonicCruise" [label="Supersonic Cruise Aerodynamics\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_rocketplane" [label="Rocket-Powered Research Aircraft\nAerodynamics T2 · 90",fillcolor="#48cae4",fontcolor="#111111"];
+  "life_pressurizedCabin" [label="Cabin Pressurization\nLifeSupport T3 · 400",fillcolor="#f72585",fontcolor="#111111"];
+  "int_crewedSuborbital" [label="Crewed Suborbital Flight\nSystemsIntegration T4 · 900",fillcolor="#e8e8e8",fontcolor="#111111"];
   { rank=same; "start" }
   { rank=same; "rocketryStart" "xplaneStart" }
   { rank=same; "fd_turbopumpLiquid" "pc_solidGrain" "str_stageSeparation" "gnc_earlyGuidance" "tel_pcmTelemetry" "mic_probeAvionics" "met_turbojet" "aero_rocketplane" }
-  { rank=same; "pc_kerosene" "fd_gasGenerator" "cryo_earlyHydrolox" "int_firstOrbit" "aero_transonicFlight" }
+  { rank=same; "pc_kerosene" "fd_gasGenerator" "cryo_earlyHydrolox" "int_firstOrbit" "aero_transonicFlight" "life_pressurizedCabin" }
+  { rank=same; "aero_supersonicCruise" "int_crewedSuborbital" }
   "start" -> "rocketryStart" [style=solid];
   "rocketryStart" -> "fd_turbopumpLiquid" [style=solid];
   "rocketryStart" -> "pc_solidGrain" [style=solid];
@@ -40,8 +44,12 @@ digraph AXE {
   "start" -> "xplaneStart" [style=solid];
   "xplaneStart" -> "met_turbojet" [style=solid];
   "met_turbojet" -> "aero_transonicFlight" [style=solid];
+  "aero_transonicFlight" -> "aero_supersonicCruise" [style=solid];
   "xplaneStart" -> "aero_rocketplane" [style=solid];
   "rocketryStart" -> "aero_rocketplane" [style=solid];
+  "xplaneStart" -> "life_pressurizedCabin" [style=solid];
+  "aero_rocketplane" -> "int_crewedSuborbital" [style=solid];
+  "life_pressurizedCabin" -> "int_crewedSuborbital" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;
   label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";
 }
