@@ -1,18 +1,14 @@
 part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
-KIWIA24	Kiwi A3 Atomic Rocket Motor	Squad	nuc_rtg	5	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-KIWIB48	Kiwi B4E Atomic Rocket Motor	Squad	nuc_rtg	5	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-NERVA_NRX	NERVA NRX	Squad	nuc_rtg	5	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-PEWEE100	Peewee 100 Atomic Rocket Motor	Squad	nuc_rtg	5	nuclearPropulsion	LqdHydrogen;EnrichedUranium;LqdAmmonia;LqdMethane	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-Phoebus1N50	Phoebus 1B Atomic Rocket Motor	Squad	nuc_rtg	5	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-Phoebus2N100	Phoebus 2A Atomic Rocket Motor	Squad	nuc_rtg	5	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-RD0410MID	RD-0410	Squad	nuc_rtg	5	nuclearPropulsion	LqdHydrogen;EnrichedUranium;LqdMethane;LqdAmmonia	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-RO-A136	A-136 Nuclear Turbo-Ramjet	Squad	nuc_rtg	5	hypersonicFlight	Kerosene;EnrichedUranium;PlaceholderAir	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
-RO-KA-LRCNTR	Lewis Research Center LNTR	KerbalAtomics	nuc_rtg	5	nuclearPropulsion	LqdHydrogen;EnrichedUranium;CoreModerator;TungstenPowder	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-RO-KA-PrincetonLNTR	Princeton LNTR	KerbalAtomics	nuc_rtg	5	nuclearPropulsion	LqdHydrogen;EnrichedUranium;CoreModerator	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-BNTR	Bimodal NTR	ROEngines	nuc_rtg	5	start	LqdHydrogen;EnrichedUranium;LqdOxygen;LqdAmmonia;LqdMethane	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
-ROE-NERVA	NERVA I	ROEngines	nuc_rtg	5	start	LqdHydrogen;EnrichedUranium;LqdAmmonia;LqdMethane	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-NERVAII	NERVA II	ROEngines	nuc_rtg	5	start	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-NERVAXE	Nerva XE-Prime	ROEngines	nuc_rtg	5	start	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-SNTPPFE100	SNTP-PFE100 Atomic Rocket Motor	ROEngines	nuc_rtg	5	start	LqdHydrogen;EnrichedUranium;LqdAmmonia;LqdMethane	ModuleEnginesRF;ROEDeployableEngine;EngineGroupModule;Module	med
-ntr-gc-25-1	Low-Pressure NTR	KerbalAtomics	nuc_rtg	5	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;ModuleDeployableEngine;EngineGroupModule;Mod	med
-restock-engine-cherenkov	RD-0410	ReStockPlus	nuc_rtg	5	nuclearPropulsion	LiquidFuel;LqdHydrogen;EnrichedUranium;LqdMethane;LqdAmmonia	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+KIWIA24	Kiwi A3 Atomic Rocket Motor	Squad	nuc_nuclearThermal	8	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+KIWIB48	Kiwi B4E Atomic Rocket Motor	Squad	nuc_nuclearThermal	8	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+NERVA_NRX	NERVA NRX	Squad	nuc_nuclearThermal	8	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+PEWEE100	Peewee 100 Atomic Rocket Motor	Squad	nuc_nuclearThermal	8	nuclearPropulsion	LqdHydrogen;EnrichedUranium;LqdAmmonia;LqdMethane	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+Phoebus1N50	Phoebus 1B Atomic Rocket Motor	Squad	nuc_nuclearThermal	8	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+Phoebus2N100	Phoebus 2A Atomic Rocket Motor	Squad	nuc_nuclearThermal	8	nuclearPropulsion	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RD0410MID	RD-0410	Squad	nuc_nuclearThermal	8	nuclearPropulsion	LqdHydrogen;EnrichedUranium;LqdMethane;LqdAmmonia	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-KA-LRCNTR	Lewis Research Center LNTR	KerbalAtomics	nuc_nuclearThermal	8	nuclearPropulsion	LqdHydrogen;EnrichedUranium;CoreModerator;TungstenPowder	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-KA-PrincetonLNTR	Princeton LNTR	KerbalAtomics	nuc_nuclearThermal	8	nuclearPropulsion	LqdHydrogen;EnrichedUranium;CoreModerator	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-NERVA	NERVA I	ROEngines	nuc_nuclearThermal	8	start	LqdHydrogen;EnrichedUranium;LqdAmmonia;LqdMethane	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-NERVAXE	Nerva XE-Prime	ROEngines	nuc_nuclearThermal	8	start	LqdHydrogen;EnrichedUranium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-SNTPPFE100	SNTP-PFE100 Atomic Rocket Motor	ROEngines	nuc_nuclearThermal	8	start	LqdHydrogen;EnrichedUranium;LqdAmmonia;LqdMethane	ModuleEnginesRF;ROEDeployableEngine;EngineGroupModule;Module	med
+restock-engine-cherenkov	RD-0410	ReStockPlus	nuc_nuclearThermal	8	nuclearPropulsion	LiquidFuel;LqdHydrogen;EnrichedUranium;LqdMethane;LqdAmmonia	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med

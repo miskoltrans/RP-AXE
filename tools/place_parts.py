@@ -39,14 +39,14 @@ def has(s, *subs): return any(x.lower() in (s or "").lower() for x in subs)
 def route(p):
     """-> (target, method, confidence). target: NODE:<id> | SPREAD:<disc> | EXPERIMENTAL | REVIEW."""
     disc, mods, props, mod, name = p["disc"], p["modules"], p["propellants"], p["mod"], p["name"]
-    if disc.startswith("engine:"):                                     # scatter engines to the bottleneck
-        if has(props, "Uranium"):     return ("SPREAD:NuclearEngineering", "engine:nuclear", "med")
-        if has(props, "IntakeAir"):   return ("SPREAD:Aerodynamics", "engine:airbreather", "low")
-        return {"engine:cryo":       ("SPREAD:Cryogenics", "engine:hydrolox", "med"),
-                "engine:hypergolic": ("SPREAD:PropellantChemistry", "engine:hypergolic", "med"),
-                "engine:kerolox":    ("SPREAD:FluidDynamics", "engine:kerolox", "med"),
-                "engine:solid":      ("SPREAD:PropellantChemistry", "engine:solid", "med"),
-                "engine:other":      ("SPREAD:PropellantChemistry", "engine:other", "low")}[disc]
+    if disc.startswith("engine:"):                                     # home each fuel-family at its WORKHORSE cycle
+        if has(props, "Uranium"):     return ("NODE:nuc_nuclearThermal", "engine:nuclear", "med")
+        if has(props, "IntakeAir"):   return ("NODE:aero_supersonicInlets", "engine:airbreather", "low")
+        return {"engine:cryo":       ("NODE:cryo_lh2Insulation", "engine:hydrolox", "med"),
+                "engine:hypergolic": ("NODE:pc_hypergolicChemistry", "engine:hypergolic", "med"),
+                "engine:kerolox":    ("NODE:fd_gasGenerator", "engine:kerolox", "med"),
+                "engine:solid":      ("NODE:pc_castableComposite", "engine:solid", "med"),
+                "engine:other":      ("NODE:pc_hypergolicChemistry", "engine:other", "low")}[disc]
     if disc == "tank":
         return ("SPREAD:Cryogenics" if has(props, "LqdHydrogen", "LqdMethane") else "SPREAD:Metallurgy", "tank", "med")
     if disc == "structure":  return ("SPREAD:StructuresMechanisms", "structure", "med")
@@ -66,10 +66,12 @@ def route(p):
         if has(mods, "Parachute", "RealChute"):  return ("NODE:aero_parachuteRecovery", "clean:chute", "high")
         if has(mods, "Fairing"):                 return ("NODE:aero_proceduralFairings", "clean:fairing", "high")
         return ("SPREAD:Aerodynamics", "clean:aero", "high")
-    if disc == "LifeSupport":
-        try: crewed = int(float(p["crew"])) > 0
-        except: crewed = False
-        return ("NODE:int_crewedCapsule", "clean:capsule", "high") if crewed else ("SPREAD:LifeSupport", "clean:life", "med")
+    if disc == "LifeSupport":                                          # split space capsules from aircraft cockpits
+        if mod == "ROCapsules" or has(mods, "Ablator", "HeatShield"):
+            return ("NODE:int_crewedCapsule", "clean:capsule", "high")
+        return ("SPREAD:LifeSupport", "clean:cabin", "med")
+    if disc == "ElectricalPower" and has(name + mods, "RTG", "Radioisotope", "SNAP"):
+        return ("NODE:nuc_rtg", "clean:rtg-in-elec", "high")           # radioisotope = Nuclear, not Electrical
     if disc == "StructuresMechanisms":
         if has(mods, "DockingNode"):  return ("NODE:str_androgynousDocking", "clean:docking", "high")
         return ("SPREAD:StructuresMechanisms", "clean:struct", "med")
@@ -99,12 +101,25 @@ def main():
             c = ln.rstrip("\n").split("\t")
             parts.append({h: (c[ix[h]] if ix[h] < len(c) else "") for h in hdr})
 
+    overrides = {}                                                      # hand-overrides win over auto-routing
+    op = os.path.join(MAN, "part-overrides.tsv")
+    if os.path.exists(op):
+        with open(op, encoding="utf-8") as f:
+            next(f, None)
+            for ln in f:
+                c = ln.rstrip("\n").split("\t")
+                if len(c) >= 2 and c[0] and not c[0].startswith("#"): overrides[c[0]] = c[1]
+
     rows = []
     for p in parts:
-        target, method, conf = route(p)
-        node = resolve(target, RP1T.get(p["rp1_tech"], 3))
+        if p["name"] in overrides:
+            node, method, conf = overrides[p["name"]], "override", "high"
+        else:
+            target, method, conf = route(p)
+            node = resolve(target, RP1T.get(p["rp1_tech"], 3))
         if node not in node_ids: node = "REVIEW"
         rows.append((p["name"], node, method, conf))
+    print(f"overrides applied: {sum(1 for r in rows if r[3]=='high' and r[2]=='override')}")
     with open(os.path.join(MAN, "part-placement.tsv"), "w", encoding="utf-8") as f:
         f.write("part\tnode\tmethod\tconfidence\n")
         for r in rows: f.write("\t".join(r) + "\n")

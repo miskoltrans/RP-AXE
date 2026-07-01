@@ -1,0 +1,20 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+RO-MMRTG	Multi-Mission RTG	Squad	nuc_rtg	5	experimentalElectrics			high
+RO-SNAP-19-RTG	SNAP-19 Series RTG	VenStockRevamp	nuc_rtg	5	experimentalElectrics			high
+RO-SNAP-3-RTGPo210	SNAP-3A Series RTG (Po210)	VenStockRevamp	nuc_rtg	5	experimentalElectrics			high
+RO-SNAP-9-RTG	SNAP-9 Series RTG	VenStockRevamp	nuc_rtg	5	experimentalElectrics			high
+ROC-LEMFoldingSNAP27BDB	SNAP-27 Series RTG	ROCapsules	nuc_rtg	5	unlockParts			high
+ROC-LEMRackSNAP9BDB	Quad SNAP-9 Series RTG	ROCapsules	nuc_rtg	5	unlockParts			high
+SXTDepolyRTGI	GPHS-RTG	SXT	nuc_rtg	5	specializedElectrics			high
+SXTDepolyRTGII	GPHS-RTG [Shielded]	SXT	nuc_rtg	5	specializedElectrics			high
+USRTGWedge	Universal Storage: Multi-hundred Watt RTG	UniversalStorage2	nuc_rtg	5	experimentalElectrics			high
+USRTGWedgeMM	Universal Storage: Multi-Mission RTG	UniversalStorage2	nuc_rtg	5	experimentalElectrics			high
+ca_mer_rtg	GPHS-RTG	CoatlAerospace	nuc_rtg	5	experimentalElectrics			high
+ca_rtg2000	Pioneer SNAP-19 RTG	CoatlAerospace	nuc_rtg	5	largeElectrics			high
+ca_rtg3900	Voyager MHW-RTG	CoatlAerospace	nuc_rtg	5	specializedElectrics			high
+nfe-rtg-asrg-1	NASA & DOE Advanced Sterling RG	NearFutureElectrical	nuc_rtg	5	experimentalElectrics			high
+nfe-rtg-gphs-1	GPHS-RTG	NearFutureElectrical	nuc_rtg	5	experimentalElectrics			high
+nfe-rtg-mmrtg-1	Multi-Mission RTG	NearFutureElectrical	nuc_rtg	5	experimentalElectrics			high
+nfe-rtg-snap27-1	SNAP-27 Series RTG	NearFutureElectrical	nuc_rtg	5	specializedElectrics			high
+rtg	Multi-Hundred Watt RTG	Squad	nuc_rtg	5	experimentalElectrics			high
+rtgMini	SNAP-3B Series RTG (Pu238)	VenStockRevamp	nuc_rtg	5	experimentalElectrics			high

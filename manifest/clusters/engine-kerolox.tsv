@@ -1,83 +1,72 @@
 part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
-ROE-E1	E-1	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-F1	F-1	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-F1B	F-1B	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-H1C	H-1C Series	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-H1D	H-1D Series	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-LR101	LR101 (DEPRECATED)	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen;Nitrogen	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
-ROE-LR101Inline	LR101 (DEPRECATED)	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen;Nitrogen	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
-ROE-LR101Inline_2	LR101	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen;Nitrogen	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
-ROE-LR101_2	LR101	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen;Nitrogen	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
-ROE-LR105	LR105 (DEPRECATED)	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-LR105_2	LR105	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-LR89	LR43/LR89 (DEPRECATED)	ROEngines	fd_pressureFed	1	start	Ethanol90;LqdOxygen;RP-1	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-LR89_2	LR43/LR89	ROEngines	fd_pressureFed	1	start	Ethanol90;LqdOxygen;RP-1	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-Merlin1A	Merlin 1A	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-Merlin1C	Merlin 1C	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-Merlin1CV	Merlin 1C Vacuum	ROEngines	fd_pressureFed	1	start	Kerosene;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-Merlin1D	Merlin 1D	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen;CooledRP-1;CooledLqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-Merlin1DV	Merlin 1D Vacuum	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen;CooledRP-1;CooledLqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RD0105	RD-0105/0109	ROEngines	fd_pressureFed	1	start	Kerosene;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RD0110	RD-0107/0110	ROEngines	fd_pressureFed	1	start	Kerosene;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RD0110Vernier	RD-0110 Vernier (DEPRECATED)	ROEngines	fd_pressureFed	1	start	Kerosene;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RD111	RD-111	ROEngines	fd_pressureFed	1	start	Kerosene;LqdOxygen;CooledLqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RD180	RD-180	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RD191	RD-191	ROEngines	fd_pressureFed	1	start	RG-1;LqdOxygen;RP-1	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RD58	S1.5400/RD-58 Series	ROEngines	fd_pressureFed	1	start	Kerosene;LqdOxygen;RG-1;Syntin	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RS27	H-1/RS-27	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RZ	RZ.1/RZ.2	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-Rutherford	Rutherford	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen;ElectricCharge	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RutherfordVac	Rutherford Vacuum	ROEngines	fd_pressureFed	1	start	RP-1;LqdOxygen;ElectricCharge	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-JetEngine	TF/CF34 High-Bypass Turbofan	Squad	fd_turbopumps	3	aerodynamicSystems	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-AL7F	AL-7 Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-Atar101D	Atar 101 Turbojet	SXT	fd_turbopumps	3	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-D30F6	D-30 Low-Bypass Turbofan	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-DerwentV	Derwent Turbojet	SXT	fd_turbopumps	3	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-J35	J35 Turbojet	SXT	fd_turbopumps	3	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-J47	J47 Turbojet	SXT	fd_turbopumps	3	stability	Kerosene;Water	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
-RO-J48	J48/Tay Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-J85GE5	J85 Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-JT3C	J57 Turbojet (No Afterburner)	Squad	fd_turbopumps	3	aviation	Kerosene;Water	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
-RO-Nord1500	Nord 1500/Atar Combined Cycle Ramjet	Squad	fd_turbopumps	3	hypersonicFlight	Kerosene	EngineGroupModule;ModuleEnginesAJEJet;ModuleEnginesAJERamjet	med
-RO-Olympus593	Olympus 593 Turbojet	Squad	fd_turbopumps	3	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-R11F	R-11 Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-R13	R-13 Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-R15BD	R-15 Turbojet	Squad	fd_turbopumps	3	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-R25F	R-25 Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-RD012	RD-012 Ramjet	Squad	fd_turbopumps	3	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
-RO-RD9B	RD-9 Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-RJ43	RJ43 Ramjet	Squad	fd_turbopumps	3	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
-RO-RJ47	RJ47 Ramjet	Squad	fd_turbopumps	3	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
-RO-RJ55	RJ55/J67 Combined Cycle Ramjet	Squad	fd_turbopumps	3	hypersonicFlight	Kerosene	EngineGroupModule;ModuleEnginesAJEJet;ModuleEnginesAJERamjet	med
-RO-RJ59	RJ59 Ramjet	Squad	fd_turbopumps	3	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
-RO-SXT-R79	R-79 Turbofan	SXT	fd_turbopumps	3	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-Sapphire203	Sapphire Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-VK1	VK-1 Turbojet	SXT	fd_turbopumps	3	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-WS10	WS-10 Low-Bypass Turbofan	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-RO-nfa-RD41	2x RD-41 Turbojet	NearFutureAeronautics	fd_turbopumps	3	aerospaceTech	Kerosene	ModuleEnginesAJEJet;ModuleDeployableEngine;EngineGroupModule	med
-SXTKe90TurboJet	D-18 High-Bypass Turbofan	SXT	fd_turbopumps	3		Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-SXTMiniJet	Williams/Rolls-Royce FJ44-2A turbofan	SXT	fd_turbopumps	3	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule	med
-SXTNK12M	NK-12 Turboprop	SXT	fd_turbopumps	3	advAerodynamics	Kerosene	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
-SXTPWPT6	PT6A Turboprop	SXT	fd_turbopumps	3	aerodynamicSystems	Kerosene	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
-SXTVTOLturboFan	F135 Low-Bypass Turbofan	SXT	fd_turbopumps	3	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-YF100_Engine-double-withShell2	YF-100 with CZ-5 Boattail	KerwisChineseAerospacePack	fd_turbopumps	3	advRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-YF100_Engine_S	YF-100	KerwisChineseAerospacePack	fd_turbopumps	3	advRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-aje_al31	AL-31 Low-Bypass Turbofan	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-aje_atar	Atar 09 Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-aje_avon	Avon Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-aje_f404	F404 Low-Bypass Turbofan	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-aje_j57	J57 Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-aje_j75	J75 Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene;Water	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
-aje_j79	J79 Turbojet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-aje_ramjet	CR2 Ramjet	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule	med
-miniJetEngine	J85 Turbojet (No Afterburner)	Squad	fd_turbopumps	3	aviation	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-nfa-turbofan-25-2	Olympus 593 Turbojet	NearFutureAeronautics	fd_turbopumps	3	highAltitudeFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-nfa-turbojet-25-1	GE4 Turbojet	NearFutureAeronautics	fd_turbopumps	3	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-nfa-vtol-0625-1	RB.162 Turbojet	NearFutureAeronautics	fd_turbopumps	3	aerospaceTech	Kerosene	ModuleEnginesAJEJet;ModuleDeployableEngine;EngineGroupModule	med
-nfa-vtol-125-1	2x RB.162 Turbojet	NearFutureAeronautics	fd_turbopumps	3	aerospaceTech	Kerosene	ModuleEnginesAJEJet;ModuleDeployableEngine;EngineGroupModule	med
-nflv-engine-ar1-1	AR-1	NearFutureLaunchVehicles	fd_turbopumps	3	heavierRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-nflv-engine-ar1c-1	AR-1	NearFutureLaunchVehicles	fd_turbopumps	3	veryHeavyRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-nflv-engine-rs84-1	RS-84	NearFutureLaunchVehicles	fd_turbopumps	3	veryHeavyRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-turboFanEngine	J58 Turbojet	Squad	fd_turbopumps	3	hypersonicFlight	Kerosene;NitrousOxide	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
-turboFanSize2	CF6 High-Bypass Turbofan	Squad	fd_turbopumps	3	heavyAerodynamics	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-turboJet	F100 Low-Bypass Turbofan	Squad	fd_turbopumps	3	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+JetEngine	TF/CF34 High-Bypass Turbofan	Squad	fd_gasGenerator	2	aerodynamicSystems	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-AL7F	AL-7 Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-Atar101D	Atar 101 Turbojet	SXT	fd_gasGenerator	2	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-D30F6	D-30 Low-Bypass Turbofan	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-DerwentV	Derwent Turbojet	SXT	fd_gasGenerator	2	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-J35	J35 Turbojet	SXT	fd_gasGenerator	2	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-J47	J47 Turbojet	SXT	fd_gasGenerator	2	stability	Kerosene;Water	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
+RO-J48	J48/Tay Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-J85GE5	J85 Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-JT3C	J57 Turbojet (No Afterburner)	Squad	fd_gasGenerator	2	aviation	Kerosene;Water	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
+RO-Nord1500	Nord 1500/Atar Combined Cycle Ramjet	Squad	fd_gasGenerator	2	hypersonicFlight	Kerosene	EngineGroupModule;ModuleEnginesAJEJet;ModuleEnginesAJERamjet	med
+RO-Olympus593	Olympus 593 Turbojet	Squad	fd_gasGenerator	2	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-R11F	R-11 Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-R13	R-13 Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-R15BD	R-15 Turbojet	Squad	fd_gasGenerator	2	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-R25F	R-25 Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-RD012	RD-012 Ramjet	Squad	fd_gasGenerator	2	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
+RO-RD9B	RD-9 Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-RJ43	RJ43 Ramjet	Squad	fd_gasGenerator	2	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
+RO-RJ47	RJ47 Ramjet	Squad	fd_gasGenerator	2	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
+RO-RJ55	RJ55/J67 Combined Cycle Ramjet	Squad	fd_gasGenerator	2	hypersonicFlight	Kerosene	EngineGroupModule;ModuleEnginesAJEJet;ModuleEnginesAJERamjet	med
+RO-RJ59	RJ59 Ramjet	Squad	fd_gasGenerator	2	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
+RO-SXT-R79	R-79 Turbofan	SXT	fd_gasGenerator	2	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-Sapphire203	Sapphire Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-VK1	VK-1 Turbojet	SXT	fd_gasGenerator	2	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-WS10	WS-10 Low-Bypass Turbofan	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-nfa-RD41	2x RD-41 Turbojet	NearFutureAeronautics	fd_gasGenerator	2	aerospaceTech	Kerosene	ModuleEnginesAJEJet;ModuleDeployableEngine;EngineGroupModule	med
+ROE-E1	E-1	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-H1C	H-1C Series	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-H1D	H-1D Series	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR105	LR105 (DEPRECATED)	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR105_2	LR105	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR89	LR43/LR89 (DEPRECATED)	ROEngines	fd_gasGenerator	2	start	Ethanol90;LqdOxygen;RP-1	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR89_2	LR43/LR89	ROEngines	fd_gasGenerator	2	start	Ethanol90;LqdOxygen;RP-1	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Merlin1A	Merlin 1A	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Merlin1C	Merlin 1C	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Merlin1CV	Merlin 1C Vacuum	ROEngines	fd_gasGenerator	2	start	Kerosene;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD0105	RD-0105/0109	ROEngines	fd_gasGenerator	2	start	Kerosene;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD0110	RD-0107/0110	ROEngines	fd_gasGenerator	2	start	Kerosene;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD111	RD-111	ROEngines	fd_gasGenerator	2	start	Kerosene;LqdOxygen;CooledLqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD58	S1.5400/RD-58 Series	ROEngines	fd_gasGenerator	2	start	Kerosene;LqdOxygen;RG-1;Syntin	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RS27	H-1/RS-27	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RZ	RZ.1/RZ.2	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Rutherford	Rutherford	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen;ElectricCharge	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RutherfordVac	Rutherford Vacuum	ROEngines	fd_gasGenerator	2	start	RP-1;LqdOxygen;ElectricCharge	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+SXTKe90TurboJet	D-18 High-Bypass Turbofan	SXT	fd_gasGenerator	2		Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+SXTMiniJet	Williams/Rolls-Royce FJ44-2A turbofan	SXT	fd_gasGenerator	2	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule	med
+SXTNK12M	NK-12 Turboprop	SXT	fd_gasGenerator	2	advAerodynamics	Kerosene	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTPWPT6	PT6A Turboprop	SXT	fd_gasGenerator	2	aerodynamicSystems	Kerosene	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTVTOLturboFan	F135 Low-Bypass Turbofan	SXT	fd_gasGenerator	2	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+YF100_Engine-double-withShell2	YF-100 with CZ-5 Boattail	KerwisChineseAerospacePack	fd_gasGenerator	2	advRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF100_Engine_S	YF-100	KerwisChineseAerospacePack	fd_gasGenerator	2	advRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+aje_al31	AL-31 Low-Bypass Turbofan	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_atar	Atar 09 Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_avon	Avon Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_f404	F404 Low-Bypass Turbofan	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_j57	J57 Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_j75	J75 Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene;Water	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
+aje_j79	J79 Turbojet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_ramjet	CR2 Ramjet	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule	med
+miniJetEngine	J85 Turbojet (No Afterburner)	Squad	fd_gasGenerator	2	aviation	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+nfa-turbofan-25-2	Olympus 593 Turbojet	NearFutureAeronautics	fd_gasGenerator	2	highAltitudeFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+nfa-turbojet-25-1	GE4 Turbojet	NearFutureAeronautics	fd_gasGenerator	2	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+nfa-vtol-0625-1	RB.162 Turbojet	NearFutureAeronautics	fd_gasGenerator	2	aerospaceTech	Kerosene	ModuleEnginesAJEJet;ModuleDeployableEngine;EngineGroupModule	med
+nfa-vtol-125-1	2x RB.162 Turbojet	NearFutureAeronautics	fd_gasGenerator	2	aerospaceTech	Kerosene	ModuleEnginesAJEJet;ModuleDeployableEngine;EngineGroupModule	med
+nflv-engine-ar1-1	AR-1	NearFutureLaunchVehicles	fd_gasGenerator	2	heavierRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+nflv-engine-ar1c-1	AR-1	NearFutureLaunchVehicles	fd_gasGenerator	2	veryHeavyRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+nflv-engine-rs84-1	RS-84	NearFutureLaunchVehicles	fd_gasGenerator	2	veryHeavyRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+turboFanEngine	J58 Turbojet	Squad	fd_gasGenerator	2	hypersonicFlight	Kerosene;NitrousOxide	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
+turboFanSize2	CF6 High-Bypass Turbofan	Squad	fd_gasGenerator	2	heavyAerodynamics	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+turboJet	F100 Low-Bypass Turbofan	Squad	fd_gasGenerator	2	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med

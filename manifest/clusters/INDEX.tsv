@@ -1,28 +1,31 @@
 cluster	parts	nodes	nodes_sample
-upgrade-engineconfig	462	8	REVIEW, cryo_basicCryoStorage, cryo_loxHandling, fd_pressureFed …
+upgrade-engineconfig	462	11	REVIEW, cryo_lh2Insulation, cryo_stagedHydrolox, fd_combustionStability …
 ground-support	212	1	EXPERIMENTAL
 structure	206	2	str_landingLegs, str_pyroSeparation
 unclassified	177	1	REVIEW
-engine-hypergolic	142	2	pc_apcpGrain, soundingRocketry
+engine-hypergolic	135	1	pc_hypergolicChemistry
 tank	110	2	met_chemMilling, met_weldedSteel
 integrated-probe	96	1	int_satelliteBus
 upgrade-capability	91	1	REVIEW
 rcs	85	1	gnc_reactionControl
-engine-kerolox	82	2	fd_pressureFed, fd_turbopumps
-engine-other	81	2	pc_apcpGrain, soundingRocketry
+engine-other	78	1	pc_hypergolicChemistry
 clean-aero	77	2	aero_subsonicAirfoils, aero_transonicArea
 clean-Telecommunications	76	3	tel_cassegrainHGA, tel_pcmTelemetry, tel_phasedArray
-clean-ElectricalPower	74	3	elec_fuelCell, elec_silverZinc, ext_powerGrid
-engine-solid	74	2	pc_apcpGrain, soundingRocketry
-clean-life	58	1	life_pressurizedCabin
-engine-hydrolox	54	2	cryo_basicCryoStorage, cryo_loxHandling
+engine-solid	74	1	pc_castableComposite
+engine-kerolox	71	1	fd_gasGenerator
+clean-ElectricalPower	55	3	elec_fuelCell, elec_silverZinc, ext_powerGrid
 science-instrument	51	3	mic_integratedCircuit, mic_photolithography, mic_vacuumTubes
+engine-hydrolox	51	1	cryo_lh2Insulation
+clean-cabin	38	1	life_pressurizedCabin
 clean-docking	34	1	str_androgynousDocking
 clean-chute	30	1	aero_parachuteRecovery
+override	28	8	aero_scramjet, cryo_stagedHydrolox, fd_combustionStability, fd_deepThrottle …
 clean-fairing	24	1	aero_proceduralFairings
+clean-capsule	20	1	int_crewedCapsule
+clean-rtg-in-elec	19	1	nuc_rtg
 clean-Robotics	18	1	rob_servoActuators
-engine-nuclear	17	1	nuc_rtg
 clean-reactor	15	1	nuc_fissionReactor
+engine-nuclear	13	1	nuc_nuclearThermal
 clean-CompositeMaterials	13	2	cmp_ablativeTPS, cmp_glassFiber
 clean-GuidanceControl	9	1	gnc_inertialNav
 clean-Thermodynamics	3	1	th_regenCooling
