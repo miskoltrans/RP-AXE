@@ -66,7 +66,7 @@ nodes:
     tier: 2
     parents: [fd_turbopumpFeed]
     flavor: "Combustion instability tears a single large chamber apart in milliseconds. The Soviet answer was to not build one: four smaller chambers per engine, each below the acoustic threshold, fed by a common turbopump. The R-7 that launched Sputnik."
-    parts: [ROE-RD107, ROE-RD108, ROE-RD211, ROE-S155, YF2_Engine, YF2_with_shell]
+    parts: [ROE-RD107, ROE-RD108, ROE-RD211, ROE-S155, YF2_Engine, YF2_with_shell, ROE-E1]
   - id: fd_baffledInjector
     title: "Single Large-Chamber Combustion"
     discipline: FluidDynamics
@@ -108,7 +108,7 @@ nodes:
     tier: 2
     parents: [cryo_hydrogen]
     flavor: "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, thrust-limited by heat pickup. The RL-10, and the highest specific impulse a chemical engine reaches."
-    parts: [ROE-RL10Fixed]
+    parts: [ROE-RL10Fixed, ROE-LR87_LH2, ROE-RZ20]
   # --- the multi-entry orbital-thrust gate: reach it by ANY engine you built ---
   - id: fd_orbitalThrust
     title: "Orbital-Class Thrust"
@@ -124,7 +124,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Ammonium-perchlorate oxidiser bound in a rubbery binder, cast and cured into a structural grain with an integral nozzle — cheap, dense, storable. You light it once and it does not stop."
-    parts: [ROE-BabySergeant, ROE-BabySergeantX3, ROE-BabySergeantX11, ROE-GCRC, ROE-25KS18000, ROE-18KS7800, ROE-NikeM5E1, ROE-Castor1, ROE-Star13, ROE-Algol1, ROE-Algol1_Inline, ROE-Altair, ROE-Antares1, ROE-Antares1_Inline]
+    parts: [ROE-BabySergeant, ROE-BabySergeantX3, ROE-BabySergeantX11, ROE-GCRC, ROE-25KS18000, ROE-18KS7800, ROE-NikeM5E1, ROE-Castor1, ROE-Star13, ROE-Algol1, ROE-Algol1_Inline, ROE-Altair, ROE-Antares1, ROE-Antares1_Inline, ROE-Castor1_Inline, ROE-Alcyone1, ROE-Algol2, ROE-Algol2_Inline, ROE-AltairII, ROE-Antares2, ROE-Antares2_Inline, ROE-M55, ROE-Star13D, ROE-AltairIII, ROE-Castor2, ROE-Castor2_Inline, ROE-Star13A, ROE-Star37, ROE-Star37E]
 
   # ============================ STRUCTURAL MASS-FRACTION ============================
   - id: met_weldedTank
@@ -163,7 +163,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one go."
-    parts: [proceduralStackDecoupler, Decoupler_1, Decoupler_2, radialDecoupler, ROE-CastorDecoupler, sepMotor1, SnubOtron, KzThrustPlate, Decoupler_0, ROE-BabySergeantX11Dec, ROE-BabySergeantX3Dec, ROT-AtlasDecoupler, ROT-RingDecoupler, radialDecoupler1-2, radialDecoupler2, restock-decoupler-1875-1, restock-decoupler-radial-tiny-1, restock-separator-1875-1, sepMotorLarge, sepMotorSmall, shortDecoupler1-2, smallRadialDecoupler]
+    parts: [proceduralStackDecoupler, Decoupler_1, Decoupler_2, radialDecoupler, ROE-CastorDecoupler, sepMotor1, SnubOtron, KzThrustPlate, Decoupler_0, ROE-BabySergeantX11Dec, ROE-BabySergeantX3Dec, ROT-AtlasDecoupler, ROT-RingDecoupler, radialDecoupler1-2, radialDecoupler2, restock-decoupler-1875-1, restock-decoupler-radial-tiny-1, restock-separator-1875-1, sepMotorLarge, sepMotorSmall, shortDecoupler1-2, smallRadialDecoupler, PioneerVernier, ROE-120XDecoupler, ROE-1204sepMotor, ROE-1205sepMotor]
   - id: gnc_pitchProgram
     title: "Open-Loop Pitch Programming"
     discipline: GuidanceControl
@@ -176,14 +176,14 @@ nodes:
     tier: 2
     parents: [gnc_pitchProgram]
     flavor: "Bleed stored gas through opposed thruster pairs to point and hold a vehicle in vacuum — the first three-axis control where there is no air to push against."
-    parts: [ROE-ModularRCS, RCSBlock_138, RCSBlock_28, RCSBlock_69, InlineRCS, ROE-generic-full, ROE-generic-half, ROE-generic-quarter, ca_jib, microEngine, RCSBlockSmall_138, RCSBlockSmall_28, RCSBlockSmall_69, RCSBoonExt, RCSLinearSmall_28, RCSLinearSmall_69, RO-RestockPlus-RCS-Block-Dual-138, RO-RestockPlus-RCS-Block-Dual-28, RO-RestockPlus-RCS-Block-Quad-138, RO-RestockPlus-RCS-Block-Quad-28, RO-RestockPlus-RCS-Block-Quad-Angled-28, RO-RestockPlus-RCS-Block-Quint-138, RO-RestockPlus-RCS-Block-Quint-28, RO-RestockPlus-RCS-Block-Triple-Angled-138, RO-RestockPlus-RCS-Block-Triple-Angled-28, RO-RestockPlus-RCS-Linear-28, RO-nflv-rcs-aero-heavy-1-half, RO-nflv-rcs-aero-heavy-1-quarter, RO-nflv-rcs-aero-heavy-2-half, RO-nflv-rcs-aero-heavy-2-quarter, RO_FASA_ExplorerRCS, RO_FASA_MercuryPodRCS, RO_RCSBlock_restock_138, RO_RCSBlock_restock_28, RO_RCSBlock_restock_69, RO_RCSBlock_restock_mini_138, RO_RCSBlock_restock_mini_28, RO_RCSBlock_restock_mini_69, RO_linearRcs_tenth, ca_RM01, ca_rs01, ca_rs04, restock-rcs-block-dual-mini-1, restock-rcs-block-quad-angled-mini-1, restock-rcs-block-quad-mini-1, restock-rcs-block-qunit-mini-1, restock-rcs-block-triple-angled-mini-1, restock-rcs-single-mini-1]
+    parts: [ROE-ModularRCS, RCSBlock_138, RCSBlock_28, RCSBlock_69, InlineRCS, ROE-generic-full, ROE-generic-half, ROE-generic-quarter, ca_jib, microEngine, RCSBlockSmall_138, RCSBlockSmall_28, RCSBlockSmall_69, RCSBoonExt, RCSLinearSmall_28, RCSLinearSmall_69, RO-RestockPlus-RCS-Block-Dual-138, RO-RestockPlus-RCS-Block-Dual-28, RO-RestockPlus-RCS-Block-Quad-138, RO-RestockPlus-RCS-Block-Quad-28, RO-RestockPlus-RCS-Block-Quad-Angled-28, RO-RestockPlus-RCS-Block-Quint-138, RO-RestockPlus-RCS-Block-Quint-28, RO-RestockPlus-RCS-Block-Triple-Angled-138, RO-RestockPlus-RCS-Block-Triple-Angled-28, RO-RestockPlus-RCS-Linear-28, RO-nflv-rcs-aero-heavy-1-half, RO-nflv-rcs-aero-heavy-1-quarter, RO-nflv-rcs-aero-heavy-2-half, RO-nflv-rcs-aero-heavy-2-quarter, RO_FASA_ExplorerRCS, RO_FASA_MercuryPodRCS, RO_RCSBlock_restock_138, RO_RCSBlock_restock_28, RO_RCSBlock_restock_69, RO_RCSBlock_restock_mini_138, RO_RCSBlock_restock_mini_28, RO_RCSBlock_restock_mini_69, RO_linearRcs_tenth, ca_RM01, ca_rs01, ca_rs04, restock-rcs-block-dual-mini-1, restock-rcs-block-quad-angled-mini-1, restock-rcs-block-quad-mini-1, restock-rcs-block-qunit-mini-1, restock-rcs-block-triple-angled-mini-1, restock-rcs-single-mini-1, 45DegreeRCS, RCSBlock_275, RO-2kN-Thruster, RO_RCSBlock_restock_275, SXTRCSRack, ca_RM02, linearRcs, nflv-rcs-aero-heavy-1, nflv-rcs-aero-heavy-2, restock-rcs-block-dual-1, restock-rcs-block-quad-angled-1, restock-rcs-block-quint-1, restock-rcs-block-triple-angled-1, ROC-ApolloRCS, ROC-D2RCS]
   - id: str_booms
     title: "Stored-Strain Deployable Booms"
     discipline: StructuresMechanisms
     tier: 2
     parents: [str_staging]
     flavor: "Stow a coilable tubular mast under strain for launch and let it spring out on orbit — and hold a magnetometer far enough from the bus to read a field the spacecraft's own metal would otherwise drown."
-    parts: [RO-EarlyMagnet]
+    parts: [RO-EarlyMagnet, RO-HeliumMagnet]
   - id: aero_fairings
     title: "Jettisonable Payload Fairings"
     discipline: Aerodynamics
@@ -213,7 +213,7 @@ nodes:
     tier: 2
     parents: [th_radiativeControl]
     flavor: "A sealed, pressurised, fan-stirred vessel that keeps electronics alive through the orbital hot-cold cycle and runs its own timeline unattended. Sputnik was little more than this — and that sealed sphere WAS the engineering."
-    parts: [ROT-ProbeCore, probeCoreSphere_v2, SXTSputnik]
+    parts: [ROT-ProbeCore, probeCoreSphere_v2, SXTSputnik, SXTAlouetteI]
   # --- power: two solutions (solar obvious for orbit; RTG the dark-specialist) ---
   - id: elec_siliconPV
     title: "Diffused-Junction Photovoltaics"
@@ -228,7 +228,7 @@ nodes:
     tier: 2
     parents: [start]
     flavor: "A decaying isotope's heat across a thermocouple gives steady watts for decades, anywhere, sunlight or not. Absurd to fly to a sunlit orbit when solar is cheaper and lighter — but the only power there is for the Moon's 14-day night and the outer dark."
-    parts: [RO-SNAP-3-RTGPo210, RO-SNAP-9-RTG, RO-SNAP-19-RTG, RO-MMRTG]
+    parts: [RO-SNAP-3-RTGPo210, RO-SNAP-9-RTG, RO-SNAP-19-RTG, RO-MMRTG, rtgMini]
   - id: tel_telemetry
     title: "Pulse-Interval Telemetry"
     discipline: Telecommunications
@@ -244,14 +244,14 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "A gas-discharge tube that clicks once per ionising particle — cheap, rugged, and the first satellites' sharpest sense. Explorer 1 carried one and found the Van Allen belts. (Its early tier is a science-pacing dial.)"
-    parts: [RO-GeigerMuller, RP0probeVanguardXray]
+    parts: [RO-GeigerMuller, RP0probeVanguardXray, RP0Cherenkov, RO-ScintillationCounter]
   - id: met_exposurePanels
     title: "Materials Exposure Panels"
     discipline: Metallurgy
     tier: 1
     parents: [start]
     flavor: "Heavy sealed boxes that expose a material, a microbe colony or an impact grid to launch, vacuum and radiation and bring it home — science that rides in a structural can, not a delicate instrument. (Mystery Goo lives here in Metallurgy.)"
-    parts: [GooExperiment, BioCapsule, USGooBayWedge, SXTProbeGooo, RO-Micrometeorite]
+    parts: [GooExperiment, BioCapsule, USGooBayWedge, SXTProbeGooo, RO-Micrometeorite, USMatBayWedge]
   # --- imaging: two solutions (film hi-res but must recover; vidicon live but coarse) ---
   - id: opt_filmReturn
     title: "Film-Return Imaging"
@@ -259,21 +259,21 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Expose film in flight and scan-and-transmit or physically return it — the highest resolution there is, if you can get it home. Luna 3's look at the far side of the Moon."
-    parts: [RO-BasicFilmCamera, science_module]
+    parts: [RO-BasicFilmCamera, science_module, RO-ImprovedFilmCamera]
   - id: opt_vidicon
     title: "Vidicon Imaging"
     discipline: OpticsPhotonics
     tier: 1
     parents: [start]
     flavor: "Scan an image off a photoconductive vidicon tube and send it down as live video — no film to recover, but coarser than film. The other way to see: film returns the detail, the vidicon returns the immediacy."
-    parts: [RO-EarlyTVCamera]
+    parts: [RO-EarlyTVCamera, RO-BasicTVCamera]
   - id: mic_massSpec
     title: "Magnetic-Sector Mass Spectrometry"
     discipline: Microelectronics
     tier: 1
     parents: [start]
     flavor: "Bend a beam of ions through a magnetic sector to sort them by mass — read the composition of an upper atmosphere or ionosphere in situ, chemistry sampled where the spacecraft flies."
-    parts: [RO-IonMassSpectrometer, USFluidSpectroWedge]
+    parts: [RO-IonMassSpectrometer, USFluidSpectroWedge, USAccelGravWedge, sensorGravimeter, RO-MIMS]
 
   # ============================ ROBOTICS (lane opens here) ============================
   - id: rob_rotorActuation
@@ -299,6 +299,186 @@ nodes:
     parents: [int_orbitalInsertion]
     flavor: "The turn from 'science probe' to 'useful satellite' — a standard bus for communications and navigation payloads. It flies contracts, and a fleet in orbit is a steady science and revenue farm."
     parts: [RP-1-CommunicationSat, RP-1-NavigationSat]
+
+
+  # ============================ INTERPLANETARY + LUNAR PROBES BATCH ============================
+  # Two milestones — interplanetary flyby (int_deepSpaceProbe) + moon-landing probe (int_roboticLander,
+  # a forked two-solutions gate). Named US/Soviet craft fly from the charter labs (hire_JPL/hire_OKB) ON TOP
+  # of these breakthroughs; the main tree carries the enabling tech. See manifest/interplanetary-lunar-kings.md.
+
+  # --- propulsion ---
+  - id: met_oxRichSuperalloys
+    title: "Oxidizer-Rich Preburner Superalloys"
+    discipline: Metallurgy
+    tier: 6
+    parents: [met_isogrid, fd_turbopumpFeed]
+    flavor: "Run the preburner oxidiser-rich and its exhaust is a torch of hot oxygen that eats ordinary steel; the closed staged-combustion cycle only exists once metallurgy delivers an alloy that survives it. The Soviet answer Western engineers thought impossible — the RD-58 and the Proton's RD-0210 chambers, where the hardest part was never the plumbing but the metal."
+    parts: [ROE-RD58, ROE-RD0203, ROE-RD0212, ROE-RD0213, ROE-RD0214]
+  - id: pc_pressureFedService
+    title: "Storable Pressure-Fed Service Engines"
+    discipline: PropellantChemistry
+    tier: 6
+    parents: [pc_hypergolics]
+    flavor: "A hypergolic engine that needs no turbopump and no igniter, restarts on command after days in coast, and is trusted to light every single time — the propulsion of a spacecraft's own service module. The Apollo SPS entered and left lunar orbit on one engine that simply could not be allowed to fail."
+    parts: [ROE-AJ10-137, ROE-AJ10Adv, RO-KTDU5A, ROE-KTDU35, ROE-S523]
+  - id: fd_deepThrottle
+    title: "Deep-Throttle Terminal Descent"
+    discipline: FluidDynamics
+    tier: 6
+    parents: [fd_verniers]
+    flavor: "Hold stable combustion from full thrust down to a tenth of it and back, closed-loop, against a falling vehicle and a rising surface — the throttleable engine that flies a controlled hover to a soft touchdown. Surveyor's vernier trio, feeling for the Moon in the last hundred metres."
+    parts: [ROE-TD339]
+  - id: fd_propellantSettling
+    title: "Zero-G Propellant Settling"
+    discipline: FluidDynamics
+    tier: 5
+    parents: [str_staging]
+    flavor: "In freefall the propellant floats off the outlet and an engine restart swallows gas and dies. Fire a small settling motor to nudge the stack forward and the liquid falls back onto the pumps — the unglamorous trick that turns a single burn into a parking orbit, a coast, and a second light toward another world."
+    parts: [ROE-TX280]
+  - id: str_segmentedSolids
+    title: "Segmented Solid-Motor Cases"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [pc_solidGrains]
+    flavor: "Cast a solid grain too large to ship in one piece, then bolt the segments together with joints that must seal a thousand-tonne pressure with no path to the outside. The case, not the chemistry, is the breakthrough — the Titan III strap-ons and the monstrous AJ-260, the largest solid motor ever fired."
+    parts: [ROE-UA1205, ROE-UA1204, ROE-SR19, ROE-SR73, ROE-AJ260SLA, ROE-AJ260SLF]
+
+  # --- power ---
+  - id: elec_fuelCell
+    title: "Alkaline Fuel Cells"
+    discipline: ElectricalPower
+    tier: 5
+    parents: [start]
+    flavor: "React hydrogen and oxygen across a potassium-hydroxide electrolyte and draw kilowatts straight from the reaction, with drinkable water as the only exhaust — power for a crewed craft that needs more than batteries and cannot wait on the sun. Gemini and Apollo ran on them."
+    parts: [FuelCell, FuelCellArray, USFuelCellMedium, USFuelCellSmal, kerbalism-fuelcell]
+  - id: elec_deployableArray
+    title: "Deployable Articulated Solar Arrays"
+    discipline: ElectricalPower
+    tier: 5
+    parents: [elec_siliconPV, str_booms]
+    flavor: "Fold the cells flat for launch, spring them out on orbit and hinge them to face the sun as the craft turns — hundreds of watts from a wing that stows in a fairing. The step from a satellite skinned in cells to a probe that spreads its arrays and cruises to another planet."
+    parts: [ca_argo-mk2-solar, ROS-HingedSolarPanel, ROS-FoldingSolarPanel, solarPanels5, solarPanels4, sp_mariner_a, sp_mariner_b, ca_landv_sp, 1x3SPanels]
+  - id: elec_deepSpacePower
+    title: "Deep-Space Power"
+    discipline: ElectricalPower
+    tier: 6
+    parents: [elec_deployableArray, nuc_rtg]
+    anyToUnlock: true
+    flavor: "Keep a spacecraft alive light-hours from home, for years, however far the sun recedes — deployed arrays where sunlight still reaches, a decaying isotope's warmth where it does not. Two answers to the same question of where the watts come from out in the dark; the flyby chooses by how far it is going."
+
+  # --- guidance & control ---
+  - id: gnc_reactionWheels
+    title: "Momentum-Exchange Attitude Control"
+    discipline: GuidanceControl
+    tier: 4
+    parents: [gnc_pitchProgram]
+    flavor: "Spin a flywheel one way and the spacecraft turns the other — point and hold without spending a gram of propellant, indefinitely. The propellant-free half of attitude control, paid for in electricity and the patience of a slow slew."
+    parts: [sasModule, ca_rw_small, ca_rw_xsmall]
+  - id: gnc_attitude3axis
+    title: "Three-Axis Pointing"
+    discipline: GuidanceControl
+    tier: 5
+    parents: [gnc_rcs, gnc_reactionWheels]
+    anyToUnlock: true
+    flavor: "Hold a chosen orientation in all three axes and slew to a new one on command — the stable platform every camera, dish and star sensor is bolted to. Reach it by spending propellant through thrusters or by trading momentum with wheels; the payload only cares that it stays pointed."
+  - id: gnc_starTracker
+    title: "Stellar Attitude Determination"
+    discipline: GuidanceControl
+    tier: 6
+    parents: [gnc_attitude3axis, opt_filmReturn]
+    flavor: "Photograph a patch of sky, match the pattern to a catalogue, and know exactly which way you face with no help from the ground — absolute orientation from the stars themselves. Mariner locked onto Canopus and held its aim across months and hundreds of millions of kilometres."
+    parts: [ca_startrack]
+
+  # --- telecommunications ---
+  - id: tel_parabolicHGA
+    title: "Steerable Parabolic High-Gain Link"
+    discipline: Telecommunications
+    tier: 6
+    parents: [tel_telemetry, gnc_attitude3axis]
+    flavor: "Focus the downlink into a pencil beam with a parabolic dish and aim it back at a single point on a planet shrinking behind you — the only way to pull a few bits per second out of interplanetary distance. Gain bought with area and paid for in pointing."
+    parts: [ca_argo-mk2-hga, HighGainAntenna, HighGainAntenna5_v2, RelayAntenna100, RelayAntenna3m, RelayAntenna5, RelayAntenna50, antenna_quetzal, ca_argo-mk2-mast, dish_deploy_S, dish_deploy_S2, mediumDishAntenna, ROC-D2Antenna, ROC-DynaAntenna, ROC-GeminiAntenna, ROC-GeminiAntennaBDB, ca_landv_hga, ca_landv_omni, ca_landv_orbiter_HGA, nfex-antenna-deploy-wv3-1, nfex-antenna-feeder-direct-1, nfex-antenna-reflector-side-1, nfex-antenna-reflector-side-2, nfex-antenna-reflector-side-3, nfex-antenna-relay-tiny-1, nfex-antenna-static-mini-1, nfex-antenna-top-dish-1, nfex-antenna-top-dish-2, nfex-antenna-relay-tdrs-1, nfex-antenna-relay-tdrs-2, nfex-antenna-rover-3, restock-antenna-stack-2, restock-antenna-stack-3, restock-relay-radial-2]
+
+  # --- structures & mechanisms ---
+  - id: str_docking
+    title: "Orbital Docking Mechanism"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [gnc_rcs, str_staging]
+    flavor: "Bring two vehicles together at centimetres a second, catch, latch and rigidise a structural connection in orbit — the mechanism that lets spacecraft be assembled and refuelled rather than flown whole. Gemini VIII caught its Agena, the first time two craft ever became one."
+    parts: [ROC-AgenaPort, ROC-GeminiNoseconeBDB, ROC-AgenaFairing, dockingPort3, HeavyRcs, RCSBlock_413, RCSBlock_550, RO_RCSBlock_restock_413, RO_RCSBlock_restock_550]
+  - id: str_touchdownAbsorption
+    title: "Touchdown Energy Absorption"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_staging]
+    flavor: "Meet the surface at a survivable speed and turn the last of the kinetic energy into crushed metal, compressed strut or a bounced airbag instead of a wreck — legs for a controlled settle, a crushable shell or an inflated cushion for a harder arrival. The difference between landing and impacting."
+    parts: [landerCabinSmall, ShieldCapLarge]
+
+  # --- robotics ---
+  - id: rob_servos
+    title: "Electric Servo Actuators"
+    discipline: Robotics
+    tier: 5
+    parents: [start]
+    flavor: "A motor, a gearbox and a position feedback loop in one sealed can — command an angle and the shaft holds it against load. The root of every deployed boom, gimballed dish, hinged panel and jointed arm a spacecraft carries; robotics begins here."
+    parts: [rotoServo_03, rotoServo_00, rotoServo_02, rotoServo_04, rotor_02, rotor_02s, rotor_03, rotor_03s, hinge_01, hinge_01_s, hinge_03, hinge_03_s, hinge_04, piston_01, piston_02, piston_03, piston_04, controller1000]
+  - id: rob_roverWheels
+    title: "Powered Rover Wheels"
+    discipline: Robotics
+    tier: 6
+    parents: [rob_servos]
+    flavor: "Independently driven wheels with their own motors and suspension, carrying a machine across a surface no one has driven on — traction, steering and survival on regolith. The lineage of every rover from Lunokhod onward."
+    parts: [roverWheel1, roverWheel2, KF-WheelSmall, KF-WheelTiny]
+  - id: rob_surfaceSampler
+    title: "Robotic Surface Sampling"
+    discipline: Robotics
+    tier: 6
+    parents: [rob_servos]
+    flavor: "Reach out a jointed arm, scrape, scoop or press the surface, and read back what a world is made of and how it bears a load — the first hands on another body. Surveyor's scoop dug the trench that proved the Moon would hold a lander's weight."
+    parts: [RO-SurfaceSampleScoop]
+
+  # --- thermal protection ---
+  - id: cmp_ablativeHeatshield
+    title: "Ablative Reentry Heatshields"
+    discipline: CompositeMaterials
+    tier: 6
+    parents: [aero_recovery]
+    flavor: "Line the windward face with a char-forming resin that carries heat away by burning itself off, slowly and on purpose — the shield that survives an entry too hot for any passive coating. The Apollo AVCOAT that brought a crew home from the Moon at eleven kilometres a second."
+    parts: [ROC-ApolloHSBDB, ROC-GeminiHSBDB, ROC-GeminiHSLunarBDB]
+
+  # --- science (interplanetary-era instruments) ---
+  - id: opt_irRadiometry
+    title: "Infrared Radiometry"
+    discipline: OpticsPhotonics
+    tier: 5
+    parents: [opt_vidicon]
+    flavor: "Measure the heat a surface or atmosphere radiates rather than the light it reflects, and read temperature from across space — the sense that works on the night side and sees through the visible haze. Mariner 2 swept its radiometers across Venus and found a surface far too hot for oceans."
+    parts: [RO-IRRadiometer, RO-HRIRRadiometer]
+  - id: opt_spectrometry
+    title: "Infrared Interferometer Spectrometry"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_irRadiometry]
+    flavor: "Split the incoming light into its full spectrum and read the absorption lines of the gases and minerals that imprinted it — composition itself, measured from orbit. The interferometer-spectrometer that identifies what a world is made of without ever touching it."
+    parts: [RO-IRIS]
+
+  # --- milestones (convergence) ---
+  - id: int_deepSpaceProbe
+    title: "Interplanetary Cruise Bus"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [tel_parabolicHGA, elec_deepSpacePower]
+    anyToUnlock: false
+    flavor: "A spacecraft that closes the link across the void and keeps itself powered and pointed for the months it takes to reach another planet — the emissary bus every flyby and orbiter is built on. Everything else it carries is payload; these two are what make it interplanetary. (The US/Soviet probe packs fly their named craft from the charter labs on top of this.)"
+    parts: [ca_argo-mk2]
+  - id: int_roboticLander
+    title: "Robotic Soft-Lander"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [fd_deepThrottle, str_touchdownAbsorption]
+    anyToUnlock: true
+    flavor: "Arrive at a surface slow enough to survive it — either fly a controlled hover down on a throttled engine and settle onto legs, or brake hard and let a crushable shell or airbag take the blow. Two roads to the same first footprint: Surveyor rode its verniers down, Luna 9 bounced. (The named landers fly from the charter labs; this is the capability they need.)"
+    parts: [ca_landv_core, ca_landv_orbiter_core]
 
   # ============================ AVIATION TRACK (opt-in; unchanged this pass) ============================
   - id: xplaneStart

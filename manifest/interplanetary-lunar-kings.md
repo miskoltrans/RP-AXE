@@ -106,7 +106,7 @@ Main-tree SystemsIntegration convergence nodes (the *generic* bus/lander, Coatl 
 ---
 
 ## Tally (this batch, to author)
-**~19 main-tree breakthroughs** after deferrals. The 14 named US/Soviet probes → **charter subtree**;
+**~21 main-tree breakthroughs** after deferrals (incl. `str_docking` + `rob_roverWheels` as own nodes). The 14 named US/Soviet probes → **charter subtree**;
 Gemini/Voskhod capsules + EVA + J58 jet → **DEFERRED** to crewed-orbit / aviation. Of the ~19: several are
 NEW; ~9 **⟳ extend existing spine nodes** (hydrolox, kick-solids, RTG, RCS, magnetometer, cosmic-ray,
 TV/film/mass-spec).
@@ -118,5 +118,49 @@ TV/film/mass-spec).
 - **Soft-lander** → **FORKED** two-solutions gate (throttled `ROE-TD339` ‖ solid-retro+airbag `ROE-Star37`).
 - **Ullage** → its **own tech breakthrough** ("Zero-G Propellant Settling", FluidDynamics), NOT propellant chem.
 - **Gemini/Voskhod capsules + EVA + J58** → **DEFERRED** to crewed-orbit / aviation batches.
+- **Docking** (`str_docking`, ROC-AgenaPort) → **stays in this batch** (not deferred).
+- **Rover wheels** (`rob_roverWheels`, roverWheel1) → **own node** (not folded into `rob_servos`).
 
-## Next: author the ~19 breakthroughs into `tree/nodes.yaml` (needs a tier + parent skeleton first).
+## Node skeleton v2 (to author — HOLD until user says go)
+
+Revised 2026-07-02 to fix v1's linear parent-chaining: real convergences + peers replace same-discipline
+laddering; fork reframed; milestone relaxed; segmented solids → Structures; `pc_kickSolids` dropped (Star-37
+rides `pc_solidGrains`); two multi-entry gates added (attitude, deep-space power). `‖` = multi-entry
+(`anyToUnlock:true`); `+` = convergence (all parents).
+
+| id | disc | tier | parents | KING / note |
+|---|---|--:|---|---|
+| `met_oxRichSuperalloys` | Metallurgy | 6 | `met_isogrid` + `fd_turbopumpFeed` | RD-58 (ORSC) — alloy + cycle |
+| `pc_pressureFedService` | PropChem | 6 | `pc_hypergolics` | AJ10-137 (Apollo SPS) |
+| `fd_deepThrottle` | FluidDyn | 6 | `fd_verniers` | TD-339 (throttle descent) |
+| `fd_propellantSettling` | FluidDyn | 5 | `str_staging` | TX-280 (coast + restart) |
+| `str_segmentedSolids` | Structures | 6 | `pc_solidGrains` | UA1205/AJ-260 (case joints) |
+| `elec_fuelCell` | ElecPower | 5 | `start` (peer) | FuelCell (alkaline) |
+| `elec_deployableArray` | ElecPower | 5 | `elec_siliconPV` + `str_booms` | Mariner SAW |
+| `gnc_reactionWheels` | GNC | 4 | `gnc_pitchProgram` (peer to `gnc_rcs`) | sasModule |
+| `gnc_attitude3axis` ⑂ | GNC | 5 | `gnc_rcs` ‖ `gnc_reactionWheels` | *multi-entry marker (3-axis pointing)* |
+| `gnc_starTracker` | GNC | 6 | `gnc_attitude3axis` + `opt_filmReturn` | ca_startrack (control + optics) |
+| `tel_parabolicHGA` | Telecom | 6 | `tel_telemetry` + `gnc_attitude3axis` | Mariner HGA (dish must point) |
+| `str_docking` | Structures | 6 | `gnc_attitude3axis` + `str_staging` | ROC-AgenaPort (prox-ops) |
+| `rob_servos` | Robotics | 5 | `start` (Robotics root) | rotoServo_03 (abstracts 20 BG) |
+| `rob_roverWheels` | Robotics | 6 | `rob_servos` | roverWheel1 |
+| `rob_surfaceSampler` | Robotics | 6 | `rob_servos` | Surveyor scoop |
+| `str_touchdownAbsorption` | Structures | 6 | `str_staging` | landerCabinSmall (crushable+legs+charter airbag) |
+| `cmp_ablativeHeatshield` | CompMat | 6 | `aero_recovery` | Apollo AVCOAT (lunar-return) |
+| `opt_irRadiometry` | Optics | 5 | `opt_vidicon` | RO-IRRadiometer |
+| `opt_spectrometry` | Optics | 6 | `opt_irRadiometry` | RO-IRIS |
+| `elec_deepSpacePower` ⑂ | ElecPower | 6 | `elec_deployableArray` ‖ `nuc_rtg` | *multi-entry (solar ‖ RTG)* |
+| **`int_deepSpaceProbe`** ★ | SysInt | 7 | `tel_parabolicHGA` + `elec_deepSpacePower` | ca_argo-mk2 — **interplanetary-flyby milestone** |
+| **`int_roboticLander`** ★⑂ | SysInt | 7 | `fd_deepThrottle` ‖ `str_touchdownAbsorption` | ca_landv_core — **moon-landing milestone** |
+
+**22 new nodes.** Convergence edges: 8 cross-discipline. Multi-entry gates: 3 (attitude, power, soft-lander).
+Peers off `start`: 2 (fuel cell, robotics root).
+
+**⟳ Extend existing spine nodes (add parts, no new node):** `nuc_rtg`+rtgMini · `fd_expanderCycle`+RZ.20/LR87-LH2
+· `str_booms`+HeliumMagnet · `nuc_geiger`+Scintillation/Cherenkov · `opt_vidicon`+BasicTVCamera ·
+`opt_filmReturn`+ImprovedFilmCamera · `mic_massSpec`+MIMS · `pc_solidGrains`+Star-37 & kick/sep solids.
+
+**Author-time note:** tiers get a final forward-edge pass (multi-entry gates must sit above their highest-tier
+parent); tiers are the P3 cost dial, not fixed here.
+
+## Next: author the 22 breakthroughs + 8 extensions into `tree/nodes.yaml` — HOLD until user says go.
