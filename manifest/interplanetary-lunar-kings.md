@@ -23,15 +23,15 @@ Main-tree SystemsIntegration convergence nodes (the *generic* bus/lander, Coatl 
 | Breakthrough | KING(s) | ride-along tail | notes |
 |---|---|---|---|
 | **Interplanetary Cruise Bus** | `ca_argo-mk2` (Coatl Mariner bus) | — (subsystems scatter to B–I) | convergence node: deep-space dish + articulated solar + star-tracker cruise attitude + midcourse burn. The RN Mariner sits in hire_JPL and requires this. |
-| **Robotic Lunar Soft-Lander** | `ca_landv_core` (Coatl Surveyor core) | ca_landv_orbiter_core | convergence: terminal-descent propulsion + landing legs + radar. **Two-solutions lives at the descent breakthrough** (throttled vernier ‖ solid-retro+airbag), not here — see B/F. |
+| **Robotic Lunar Soft-Lander** ⑂ | `ca_landv_core` (Coatl Surveyor core) | ca_landv_orbiter_core | **FORKED gate** (`anyToUnlock:true`): reach via throttled-descent (`ROE-TD339`) ‖ solid-retro+airbag (`ROE-Star37` + charter Luna-9 airbag). Otherwise converges: landing legs + radar. |
+| ~~Two-Crew Maneuvering Capsule~~ **DEFERRED** | `ROC-GeminiCMBDB` (Gemini) + 16 sections | — | → **crewed-orbit** batch, not authored here. |
+| ~~Multi-Crew Capsule + Airlock~~ **DEFERRED** | `ROC-VoskhodCapsule` + `ROC-VoskhodAirlock` | — | → crewed-orbit batch. |
 
 > **⚠ TODO (user, 2026-07-01): Coatl `ca_*` cores = generic buses, KEPT on main tree — but VERIFY avionics
 > support in-game.** Do these integrated cores carry a command module + accept RP-AXE core probe avionics
 > (`ModuleAxeAvionics` / the procedural `ROT-ProbeCore` path)? The 3 to check: `ca_argo-mk2` (Mariner bus),
 > `ca_landv_core` (Surveyor lander core), `ca_landv_orbiter_core` (Surveyor orbiter core). If unsupported →
 > reconsider (patch avionics onto them, or cut in favor of the procedural probe core + charter probes).
-| **Two-Crew Maneuvering Capsule** (crewed) | `ROC-GeminiCMBDB` (Gemini) | Gemini equipment/OAMS/retro/parachute/RCS/nose sections (16) | ⚠ belongs to the **crewed-orbit** milestone, not these two — home it but flag scope. |
-| **Multi-Crew Capsule + Airlock** (crewed) | `ROC-VoskhodCapsule` + `ROC-VoskhodAirlock` (first EVA) | Voskhod retro/decoupler; `ROAdvCapsule` | ⚠ crewed-orbit scope. |
 
 ## B. Propulsion (scatter-by-difficulty by cycle)
 
@@ -40,11 +40,12 @@ Main-tree SystemsIntegration convergence nodes (the *generic* bus/lander, Coatl 
 | **Oxidizer-Rich Staged Combustion** | `ROE-RD58` (RD-58/Block D, first ORSC) | RD-0203/0212/0213/0214 (RD-0210 Proton family), `ROE-E1` | `disc: Metallurgy` (ox-rich preburner superalloys = the bottleneck). The Soviet closed-cycle hero. |
 | **Pressure-Fed Service/Kick Engine** | `ROE-AJ10-137` (Apollo SPS) | AJ10-118/-118D/-Adv, KTDU-5A/35, S5.23 | `disc: PropellantChemistry` (storable hypergolics). SPS = into/out of lunar orbit. Successor to spine `pc_hypergolics`. |
 | **Throttleable Terminal-Descent Engine** | `ROE-TD339` (Surveyor vernier, throttleable+restart) | — | `disc: FluidDynamics` (deep throttle). The moon-landing enabler; **one arm of the soft-lander two-solutions** (throttled-descent ‖ solid-retro+airbag → the airbag/retro side is `ROE-Star37` + the charter-subtree Luna 9 airbag). |
+| **Zero-G Propellant Settling (Ullage & Restart)** | `ROE-TX280` (S-IV ullage motor) | — | `disc: FluidDynamics` (alt: Structures). **A real tech breakthrough, NOT propellant chemistry** (user): the ability to settle propellant in freefall and RESTART an upper stage after a coast — enables parking orbits, multi-burn missions, GTO/escape injections. |
 | **Operational Hydrolox** ⟳ | *(RL-10 already king in `fd_expanderCycle`)* | `ROE-RZ20` (RZ.20), `ROE-LR87_LH2` (AJ23-65) | extends the spine hydrolox line; no new king. |
 | **Segmented Large Solid Boosters** | `ROE-UA1205` (Titan III solid) + `ROE-AJ260SLF` (AJ-260, largest solid ever) | UA1204, SR19, SR73, M55 (Minuteman), 1204/1205 sepmotors | `disc: Structures` (segmented case) or PropChem. The big-thrust solids. |
 | **Apogee-Kick Solid Motors** ⟳ | `ROE-Star37` (STAR 37 — Surveyor retro + ubiquitous kick) | STAR 13/13A/13D/37E, Altair II/III, Antares II, Algol II, Castor 2, Alcyone | extends spine `pc_solidGrains`; STAR-37 earns its own successor node (the workhorse kick). |
-| *(utility solids — NOT kings)* ⟳ | — | **ullage** `ROE-TX280` (S-IV settling); **sep** `ROE-1204/1205sepMotor`; **retro** Gemini/Voskhod (Star-13E); **vernier** `PioneerVernier` | ride-alongs on the STAGING concept (spine `str_staging`), defined by FUNCTION not chemistry. **No spin-up motor in this batch** (those were in first-orbit). |
-| **Mach-3 Turbojet** (aviation) | `turboFanEngine` (J58, SR-71) | Olympus 593, R-13, R-15, RB.162 | ⚠ **aviation** track, not probes. `disc: Aerodynamics`/Metallurgy. Home but flag scope. |
+| *(sep/retro/vernier solids — NOT kings)* ⟳ | — | **sep** `ROE-1204/1205sepMotor`; **retro** Gemini/Voskhod (Star-13E, → deferred crewed); **vernier** `PioneerVernier` (→ charter) | ride-alongs on the STAGING concept (spine `str_staging`). Ullage split OUT to its own breakthrough (above). No spin-up motor in this batch. |
+| ~~Mach-3 Turbojet~~ **DEFERRED** | `turboFanEngine` (J58, SR-71) | Olympus 593, R-13, R-15, RB.162 | → **aviation** pass, not authored here. |
 
 ## C. Electrical Power
 
@@ -89,7 +90,7 @@ Main-tree SystemsIntegration convergence nodes (the *generic* bus/lander, Coatl 
 
 | Breakthrough | KING(s) | ride-along tail | notes |
 |---|---|---|---|
-| **EVA Mobility** | `evaJetpack` | evaCylinder; kerbalism ECLSS/lifesupport modules | `disc: LifeSupport` (library `life_suitEVA`). ⚠ crewed scope. |
+| ~~EVA Mobility~~ **DEFERRED** | `evaJetpack` | evaCylinder; kerbalism ECLSS/lifesupport | → **crewed-orbit** batch. |
 
 ## I. Science instruments (the interplanetary-era science — education heroes)
 
@@ -104,21 +105,18 @@ Main-tree SystemsIntegration convergence nodes (the *generic* bus/lander, Coatl 
 
 ---
 
-## Tally
-~**23 breakthroughs**, ~**28 king parts** (main tree). The 14 named US/Soviet probes route to the
-**charter subtree** (hire_JPL/hire_OKB), NOT counted here. Of the main-tree kings: **~14 new**; **~9 extend
-existing spine nodes** (⟳ hydrolox, kick-solids, RTG, RCS, magnetometer, cosmic-ray, TV/film/mass-spec).
-**Scope flags:** Gemini/Voskhod capsules, EVA, J58 jet are in the x-band but belong to the **crewed-orbit /
-aviation** milestones — home or defer.
+## Tally (this batch, to author)
+**~19 main-tree breakthroughs** after deferrals. The 14 named US/Soviet probes → **charter subtree**;
+Gemini/Voskhod capsules + EVA + J58 jet → **DEFERRED** to crewed-orbit / aviation. Of the ~19: several are
+NEW; ~9 **⟳ extend existing spine nodes** (hydrolox, kick-solids, RTG, RCS, magnetometer, cosmic-ray,
+TV/film/mass-spec).
 
-## Resolved (2026-07-01)
+## Resolved (2026-07-01 → 07-02)
 - **US/Soviet probes** → charter subtree (special rule); main tree = the enabling breakthroughs only.
 - **Phased-array antennas** → DROPPED (NearFuture, anachronistic) → REFERENCE on the HGA node.
 - **ORSC home** → **Metallurgy** (ox-rich preburner superalloys).
+- **Soft-lander** → **FORKED** two-solutions gate (throttled `ROE-TD339` ‖ solid-retro+airbag `ROE-Star37`).
+- **Ullage** → its **own tech breakthrough** ("Zero-G Propellant Settling", FluidDynamics), NOT propellant chem.
+- **Gemini/Voskhod capsules + EVA + J58** → **DEFERRED** to crewed-orbit / aviation batches.
 
-## Open review questions
-1. **Soft-lander two-solutions** now framed at the *descent breakthrough*: `ROE-TD339` throttled vernier ‖
-   `ROE-Star37` solid-retro (+ charter Luna-9 airbag). OK, or model it at the mission level instead?
-2. **Crewed capsules + EVA + J58 jet** — home now (they're in the x-band) or hold for their own milestones?
-3. **Coatl `ca_*` bus/lander cores** vs the RN charter probes — do we even keep the Coatl integrated cores on
-   the main tree (as generic buses), or are they redundant with the charter subtree and better cut/parked?
+## Next: author the ~19 breakthroughs into `tree/nodes.yaml` (needs a tier + parent skeleton first).
