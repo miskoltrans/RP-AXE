@@ -28,7 +28,7 @@ nodes:
     tier: 0
     parents: []
     flavor: "1950, Kerbalkind united. Rocketry is where a space program begins — you start with the de Laval nozzle, a procedural airframe, avionics, the first instruments, and a handful of sounding motors: enough to fly above the Karman line turn one. Everything past that, including whether to fly aeroplanes at all, is yours to choose."
-    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, B9_Aero_Wing_Procedural_TypeA, sensorBarometer, sensorThermometer, strutConnector, strutCube, structuralIBeam1, structuralPanel1, trussPiece1x, ROE-Aerobee, ROE-ORM65, ROE-VeroniqueAK, TinyTim, ROMeteoSustainer, ROE-R103, basicFin]
+    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, B9_Aero_Wing_Procedural_TypeA, sensorBarometer, sensorThermometer, strutConnector, strutCube, structuralIBeam1, structuralPanel1, trussPiece1x, ROE-Aerobee, ROE-ORM65, ROE-VeroniqueAK, TinyTim, ROMeteoSustainer, ROE-R103, basicFin, ROSmallSpinMotor, ROE-Agena_Spinrocket, restock-nosecone-1875-1]
   - id: parking
     title: "Unsorted Parts (Parking)"
     discipline: SystemsIntegration
@@ -117,7 +117,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Ammonium-perchlorate oxidiser bound in a rubbery binder, cast and cured into a structural grain with an integral nozzle — cheap, dense, storable. You light it once and it does not stop."
-    parts: [ROE-BabySergeant, ROE-BabySergeantX3, ROE-BabySergeantX11, ROE-GCRC, ROE-25KS18000, ROE-18KS7800, ROE-NikeM5E1, ROE-Castor1, ROE-Star13]
+    parts: [ROE-BabySergeant, ROE-BabySergeantX3, ROE-BabySergeantX11, ROE-GCRC, ROE-25KS18000, ROE-18KS7800, ROE-NikeM5E1, ROE-Castor1, ROE-Star13, ROE-Algol1, ROE-Algol1_Inline, ROE-Altair, ROE-Antares1, ROE-Antares1_Inline]
 
   # ============================ STRUCTURAL MASS-FRACTION ============================
   - id: met_weldedTank
@@ -126,7 +126,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Roll, fusion-weld and proof-test a cylinder that holds pressure without bursting — the first tank that flies. Heavy, but honest."
-    parts: [ROT-ServiceModule, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-GenericTank-Separate, ROT-BoosterTank-Separate]
+    parts: [ROT-ServiceModule, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-GenericTank-Separate, ROT-BoosterTank-Separate, RO_ServiceBay_300, ServiceBay_250_v2, USRadialTanks]
   - id: met_isogrid
     title: "Machined Isogrid Stiffening"
     discipline: Metallurgy
@@ -169,7 +169,7 @@ nodes:
     tier: 2
     parents: [gnc_pitchProgram]
     flavor: "Bleed stored gas through opposed thruster pairs to point and hold a vehicle in vacuum — the first three-axis control where there is no air to push against."
-    parts: [ROE-ModularRCS, RCSBlock_138, RCSBlock_28, RCSBlock_69, InlineRCS]
+    parts: [ROE-ModularRCS, RCSBlock_138, RCSBlock_28, RCSBlock_69, InlineRCS, ROE-generic-full, ROE-generic-half, ROE-generic-quarter, ca_jib, microEngine]
   - id: str_booms
     title: "Stored-Strain Deployable Booms"
     discipline: StructuresMechanisms
@@ -214,7 +214,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Diffuse a shallow p-n junction into silicon and sunlight drives a current across it indefinitely — the breakthrough that freed satellites from their batteries. Vanguard 1 flew the first cells. The obvious power for anywhere the sun reaches."
-    parts: [ROS-StaticSolarPanel, RO_EarlyTinySolarPanel, RO-rangerSolarPanel]
+    parts: [ROS-StaticSolarPanel, RO_EarlyTinySolarPanel, RO-rangerSolarPanel, RO_EarlyMediumSolarPanel]
   - id: nuc_rtg
     title: "Radioisotope Thermoelectrics"
     discipline: NuclearEngineering
@@ -228,7 +228,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Encode temperature and pressure in the spacing between radio pulses and key it to the ground — Sputnik's beacon turned a satellite's state into something you could hear from another continent."
-    parts: [SXTAntenna, SurfAntenna]
+    parts: [SXTAntenna, SurfAntenna, longAntenna]
 
   # ============================ SCIENCE — scattered by difficulty (six lanes) ============================
   - id: nuc_geiger
@@ -334,4 +334,102 @@ nodes:
     parents: [xplaneStart, fd_turbopumpFeed]
     anyToUnlock: false
     flavor: "Hang a throttleable rocket engine in a clean airframe, drop it from altitude and ride a ballistic arc to the edge of the atmosphere. The X-1 broke the sound barrier; the X-15 touched space and came home on a runway. Where the aircraft and rocket lines first meet."
-    parts: [ROE-XLR11, ROE-XLR10, ROE-XLR25, ROE-XLR41, Mark1Cockpit, Mark2Cockpit]
+    parts: [ROE-XLR11, ROE-XLR10, ROE-XLR25, ROE-XLR41, Mark1Cockpit, Mark2Cockpit, MK1Cargobay, SXTSmallFuselage, vernierEngine]
+
+  # ================= HUMAN ORBITAL SPACEFLIGHT — 13 new nodes (docs/HUMAN-ORBITAL-TREE.md) =================
+  # "Can it fly someone, and get them back alive." A small, sharp layer on top of int_orbitalInsertion:
+  # a sealed cabin (LifeSupport, first use), a heatshield (CompositeMaterials, first use), and the
+  # attitude control + recovery the early tree already built. Plus scatter-ahas the orbitalRocketry1958-61
+  # engine block turned out to hide (peroxide chemistry, storable boosters, restart-in-vacuum, clustering).
+  - id: life_openLoopECLSS
+    title: "Open-Loop Life Support"
+    discipline: LifeSupport
+    tier: 2
+    parents: [start]
+    flavor: "Bleed stored oxygen, scrub CO2 with lithium hydroxide, pack water and food for the mission's exact duration — the minimum a human needs to survive a sealed can for a day. First use of the Life Support lane."
+    parts: [RO-LifeSupport-DummyEngine]
+  - id: cmp_ablativeTPS
+    title: "Ballistic Ablative Reentry"
+    discipline: CompositeMaterials
+    tier: 2
+    parents: [start]
+    flavor: "Proved uncrewed first: a spinning film-return capsule with a phenolic char heatshield, snagged out of the air off a coastline, years before it ever carried a person. First use of the Composite Materials lane."
+    parts: [RP0-SampleReturnCapsule, RP0-SampleReturnCommand, ROH-AdjustableHS]
+  - id: int_crewedCapsule
+    title: "Crewed Reentry Capsule"
+    discipline: SystemsIntegration
+    tier: 5
+    parents: [int_orbitalInsertion, gnc_rcs, aero_recovery, life_openLoopECLSS, cmp_ablativeTPS]
+    anyToUnlock: false
+    flavor: "The irreducible list to fly a person to orbit and bring them home alive: an orbit-capable booster, attitude control to keep the heatshield forward, the heatshield itself, a way to decelerate, and air to breathe. Nothing else is physics — everything else is a practical-path nicety, kept off the gate."
+    parts: [ROC-MercuryCMBDB, ROC-VostokCapsule, ROC-ZenitCapsule, mk1pod_v2, ROC-MercuryNoseCapBDB, ROC-MercuryAirbrakeBDB, ROC-VostokService, RP0HumanRatedFlag]
+  - id: str_launchEscape
+    title: "Pad/Ascent Abort Escape"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [int_crewedCapsule]
+    flavor: "A solid tractor motor that yanks the capsule clear of a failing booster on explosive-bolt command — abort sensing, jettison logic and its own propulsion, not free with the capsule. A refinement, not a gate: the tree doesn't force a program to have solved abort before it can fly crew, same principle that kept staging optional for orbit."
+    parts: [ROC-MercuryLESBDB, RO_mk1_LES]
+  - id: str_landingLegs
+    title: "Touchdown Energy Absorption"
+    discipline: StructuresMechanisms
+    tier: 2
+    parents: [str_staging]
+    flavor: "Crushable or damped legs — or a cushioning airbag — that catch a touchdown without bouncing or tipping."
+    parts: [landingLeg1, miniLandingLeg, SXTAirbag, SXTAirbagSmall]
+  - id: fd_deepThrottleEarly
+    title: "Throttleable Restart Combustion"
+    discipline: FluidDynamics
+    tier: 3
+    parents: [fd_baffledInjector]
+    flavor: "The world's first large, deeply throttleable, restartable liquid engine — the X-15's XLR99, riding the same single-large-chamber tradition years before deep throttling becomes routine."
+    parts: [ROE-XLR99]
+  - id: pc_hydrogenPeroxide
+    title: "High-Test Peroxide Combustion"
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [start]
+    flavor: "Concentrated peroxide decomposed over a silver catalyst into hot steam and oxygen — British rocketry's signature chemistry (Black Knight, Blue Streak's Gamma engines), and a genuinely different oxidiser path from kerolox or storable hypergolics."
+    parts: [ROE-Gamma2, ROE-Gamma8]
+  - id: fd_restartableHypergolics
+    title: "Restart-in-Vacuum Hypergolic Ignition"
+    discipline: FluidDynamics
+    tier: 3
+    parents: [pc_hypergolics]
+    flavor: "Reignite in vacuum on command, not just once at launch — the Agena upper stage, the platform that became Corona's bus and Gemini's docking target, and the small satellite-attitude engines the same restart trick spawned at a smaller scale."
+    parts: [ROE-Agena, ROE-AgenaSPS, RO-KDU414, ROE-Agena_EquipmentRack]
+  - id: pc_storableBoosters
+    title: "Storable-Propellant Orbital-Class Boosters"
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [pc_hypergolics]
+    flavor: "Corrosive, toxic storables scaled from a small hypergolic trim engine up to full first-stage thrust — the Yangel-bureau approach of repurposing an ICBM's always-ready propellants for a space launcher."
+    parts: [ROE-RD215, ROE-RD215_Single, ROE-RD219, ROE-RD855, ROE-RD856]
+  - id: str_engineClustering
+    title: "Engine-Cluster Heavy Lift"
+    discipline: StructuresMechanisms
+    tier: 4
+    parents: [fd_orbitalThrust]
+    flavor: "Eight first-generation orbital-class engines on a common structure and manifold, synchronized to light together — Saturn I, the first heavy-lift booster, built by clustering an engine you already had rather than inventing a bigger one."
+    parts: [ROE-H1C, ROE-H1D, ROE-RS27]
+  - id: pc_solidRetrofire
+    title: "Solid Retrofire"
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [pc_solidGrains]
+    flavor: "A one-shot solid burn, precisely timed, to drop out of orbit or push a spent stage safely clear — deorbit and separation with no restart requirement."
+    parts: [ROC-MercuryRetroBDB, ROC-MercuryPosigradeBDB, ROE-Agena_Retro_TypeIII, ROE-RangerRetro]
+  - id: tel_helicalDirectional
+    title: "Helical Directional Arrays"
+    discipline: Telecommunications
+    tier: 2
+    parents: [tel_telemetry]
+    flavor: "Axial-mode helix gives circularly-polarized gain that tolerates a tumbling spacecraft."
+    parts: [antenna_cone_toggle]
+  - id: aero_turboshaftProp
+    title: "Free-Turbine Propeller Drive"
+    discipline: Aerodynamics
+    tier: 3
+    parents: [met_turbineAlloys]
+    flavor: "A power turbine geared down to spin a propeller instead of shoving exhaust out the back — the NK-12, still the most powerful turboprop ever built, driving the Tu-95's contra-rotating props at near-supersonic tip speed."
+    parts: [SXTNK12M, SXTPWPT6]
