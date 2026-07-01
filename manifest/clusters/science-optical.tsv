@@ -1,0 +1,3 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+rn_galileo_scanner	Galileo Orbital Scanner	RN_US_Probes	opt_tvImaging	3	generalRocketry			med
+rn_magellan_scanner	Magellan Orbital Scanner	RN_US_Probes	opt_tvImaging	3	generalRocketry			med

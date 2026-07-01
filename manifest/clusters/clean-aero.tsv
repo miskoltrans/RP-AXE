@@ -1,0 +1,78 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+LMiniAircaftTail	Bonanza Tail	SXT	aero_subsonicAirfoils	1	start		ModuleFuelTanks	high
+ROC-CSTNoseCone	CST-100 Nose Cone	ROCapsules	aero_subsonicAirfoils	1	unlockParts			high
+ROC-D2Block2Nosecone	D-2 Block II Nose Cone	ROCapsules	aero_subsonicAirfoils	1	unlockParts			high
+ROC-GeminiNoseCapBDB	Gemini Aerodynamic Nose Cover	ROCapsules	aero_subsonicAirfoils	1	unlockParts			high
+basicFin	Basic Fin	Squad	aero_subsonicAirfoils	1	start			high
+galileo_hs_bot	Galileo Atmospheric Probe Heatshield Bottom	RN_US_Probes	aero_subsonicAirfoils	1	start		ModuleAblator	high
+AdvancedCanard	Advanced Canard	Squad	aero_transonicArea	3	hypersonicFlight			high
+B9_Aero_Wing_Procedural_TypeA	B9 Procedural Wing (Spaceplane)	B9_Aerospace_ProceduralWings	aero_transonicArea	3	advAerodynamics		ModuleFuelTanks	high
+B9_Aero_Wing_Procedural_TypeB	B9 Procedural Control Surface (Spaceplane)	B9_Aerospace_ProceduralWings	aero_transonicArea	3	advAerodynamics			high
+B9_Aero_Wing_Procedural_TypeC	B9 Procedural Wing, All-Moving (Spaceplane)	B9_Aerospace_ProceduralWings	aero_transonicArea	3	advAerodynamics			high
+CanardController	Standard Canard	Squad	aero_transonicArea	3	advAerodynamics			high
+CircularIntake	Pitot Intake	Squad	aero_transonicArea	3	aerodynamicSystems			high
+IntakeRadialLong	Adjustable Ramp Intake (Radial)	Squad	aero_transonicArea	3	highAltitudeFlight			high
+LMkIIAircaftTail	Narrow-body airliner Tail	SXT	aero_transonicArea	3	advConstruction		ModuleFuelTanks	high
+LRadialAirIntake	XM-C200 Radial Pitot Intake	SXT	aero_transonicArea	3	highAltitudeFlight			high
+MK1IntakeFuselage	1.25m Fuselage (Diverterless Intake)	Squad	aero_transonicArea	3	highAltitudeFlight		ModuleFuelTanks	high
+R8winglet	AV-R8 Winglet	Squad	aero_transonicArea	3	flightControl			high
+RO-B9ProcAMWing-Early	B9 Procedural Wing, All-Moving (Early)	B9_Aerospace_ProceduralWings	aero_transonicArea	3	advAerodynamics			high
+RO-B9ProcAMWing-Supersonic	B9 Procedural Wing, All-Moving (Supersonic)	B9_Aerospace_ProceduralWings	aero_transonicArea	3	advAerodynamics			high
+RO-B9ProcCS-Early	B9 Procedural Control Surface (Early)	B9_Aerospace_ProceduralWings	aero_transonicArea	3	advAerodynamics			high
+RO-B9ProcCS-Supersonic	B9 Procedural Control Surface (Supersonic)	B9_Aerospace_ProceduralWings	aero_transonicArea	3	advAerodynamics			high
+RO-B9ProcWing-Early	B9 Procedural Wing (Early)	B9_Aerospace_ProceduralWings	aero_transonicArea	3	advAerodynamics		ModuleFuelTanks	high
+RO-B9ProcWing-Supersonic	B9 Procedural Wing (Supersonic)	B9_Aerospace_ProceduralWings	aero_transonicArea	3	advAerodynamics		ModuleFuelTanks	high
+RO-IntakeRadialLongPitot	Pitot Intake (Radial)	Squad	aero_transonicArea	3	highAltitudeFlight			high
+RO-shockConeIntake125	1.25m Shock Cone Intake	Squad	aero_transonicArea	3	hypersonicFlight			high
+RO-shockConeIntakeBomarc	0.70m Shock Cone Intake	Squad	aero_transonicArea	3	hypersonicFlight			high
+RO-shockConeIntakeMig	0.86m Shock Cone Intake	Squad	aero_transonicArea	3	hypersonicFlight			high
+ROC-DynaElevonMoroz	Dynasoar Elevon	ROCapsules	aero_transonicArea	3	OrphanParts			high
+ROC-DynaRudderMoroz	Dynasoar Vertical Stabilizer	ROCapsules	aero_transonicArea	3	OrphanParts			high
+ROC-DynaWingMoroz	Dynasoar Wing	ROCapsules	aero_transonicArea	3	OrphanParts	HTP;Helium	ModuleRCSFX	high
+ROC-GeminiFlightPackContSurf	Gemini Flight Pack Control Surface	ROCapsules	aero_transonicArea	3	aerospaceTech			high
+ROC-GeminiWing	Gemini Wings	ROCapsules	aero_transonicArea	3	aerospaceTech	MMH;NTO;Helium	ModuleRCSFX;ModuleFuelTanks;ModuleAblator	high
+ROC-GeminiWingContSurf	Gemini Wing Control Surface	ROCapsules	aero_transonicArea	3	aerospaceTech			high
+ROC-MercuryAirbrakeBDB	Mercury M-ASF Destabilizing Flap	ROCapsules	aero_transonicArea	3	engineering101			high
+SXTInlineAirIntake	XM-600 1.25m Pitot Intake	SXT	aero_transonicArea	3	supersonicFlight			high
+SXTOsaulTail	An-124 Tail Section	SXT	aero_transonicArea	3	advConstruction		ModuleFuelTanks	high
+SXTProtonlikeNoseCone	Conformal Rocket Cone Mk3	SXT	aero_transonicArea	3	stability			high
+SXTRadialAirIntakeShockCone	XF-104 Radial Shock Cone Intake	SXT	aero_transonicArea	3	hypersonicFlight			high
+ShieldCapLarge	Mk2 Pod Protective Cover	VenStockRevamp	aero_transonicArea	3	commandModules			high
+StandardCtrlSrf	Elevon 1	Squad	aero_transonicArea	3	aviation			high
+airScoop	XM-G50 Radial Pitot Intake	Squad	aero_transonicArea	3	aerodynamicSystems			high
+airbrake1	A.I.R.B.R.A.K.E.S	Squad	aero_transonicArea	3	advAerodynamics			high
+airplaneTail	Tail Connector A	Squad	aero_transonicArea	3	aviation			high
+airplaneTailB	Tail Connector B	Squad	aero_transonicArea	3	aerodynamicSystems			high
+ca_draco_hs	Huygens Heat Shield	CoatlAerospace	aero_transonicArea	3	advLanding		ModuleAblator	high
+ca_fom_heatS	Venera Lander Aeroshell (Heat Shield)	CoatlAerospace	aero_transonicArea	3	aerodynamicSystems		ModuleAblator	high
+deltaWing	Delta Wing	Squad	aero_transonicArea	3	advAerodynamics			high
+delta_small	Small Delta Wing	Squad	aero_transonicArea	3	advAerodynamics			high
+elevon2	Elevon 2	Squad	aero_transonicArea	3	advAerodynamics			high
+elevon3	Elevon 3	Squad	aero_transonicArea	3	advAerodynamics			high
+elevon5	Elevon 5	Squad	aero_transonicArea	3	advAerodynamics			high
+galileo_hs_top	Galileo Atmospheric Probe Heatshield Top	RN_US_Probes	aero_transonicArea	3	generalRocketry		ModuleAblator	high
+miniIntake	Small Pitot Intake	Squad	aero_transonicArea	3	aviation			high
+noseCone	Aerodynamic Nose Cone	Squad	aero_transonicArea	3	stability			high
+pointyNoseConeA	Advanced Nose Cone - Type A	Squad	aero_transonicArea	3	advConstruction			high
+pointyNoseConeB	Advanced Nose Cone - Type B	Squad	aero_transonicArea	3	specializedConstruction			high
+proceduralNoseCone	Nose Cone [Procedural]	ProceduralParts	aero_transonicArea	3	stability			high
+ramAirIntake	Adjustable Ramp Intake	Squad	aero_transonicArea	3	highAltitudeFlight			high
+shockConeIntake	Shock Cone Intake	Squad	aero_transonicArea	3	hypersonicFlight			high
+smallCtrlSrf	Elevon 4	Squad	aero_transonicArea	3	advAerodynamics			high
+standardNoseCone	Small Nose Cone	Squad	aero_transonicArea	3	aerodynamicSystems			high
+structuralWing	Structural Wing Type A	Squad	aero_transonicArea	3	supersonicFlight			high
+structuralWing2	Structural Wing Type B	Squad	aero_transonicArea	3	aerodynamicSystems			high
+structuralWing3	Structural Wing Type C	Squad	aero_transonicArea	3	aviation			high
+structuralWing4	Structural Wing Type D	Squad	aero_transonicArea	3	advAerodynamics			high
+sweptWing	Swept Wings	Squad	aero_transonicArea	3	aviation			high
+sweptWing1	Swept Wing Type A	Squad	aero_transonicArea	3	advAerodynamics			high
+sweptWing2	Swept Wing Type B	Squad	aero_transonicArea	3	aerodynamicSystems			high
+tailfin	Tail Fin	Squad	aero_transonicArea	3	aviation			high
+wingConnector	Wing Connector Type A	Squad	aero_transonicArea	3	aerodynamicSystems			high
+wingConnector2	Wing Connector Type B	Squad	aero_transonicArea	3	aviation			high
+wingConnector3	Wing Connector Type C	Squad	aero_transonicArea	3	aerodynamicSystems			high
+wingConnector4	Wing Connector Type D	Squad	aero_transonicArea	3	advAerodynamics			high
+wingConnector5	Wing Connector Type E	Squad	aero_transonicArea	3	aviation			high
+wingStrake	Wing Strake	Squad	aero_transonicArea	3	supersonicFlight			high
+winglet	AV-T1 Winglet	Squad	aero_transonicArea	3	stability			high
+winglet3	Delta-Deluxe Winglet	Squad	aero_transonicArea	3	flightControl			high

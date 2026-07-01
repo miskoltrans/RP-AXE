@@ -1,0 +1,213 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+AM_MLP_AerobeeLaunchStand	Aerobee Launch Stand	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_AgenaServiceTower	Atlas-Agena Service Tower	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_Atlas2UmbilicalArm1	Atlas-Centaur I/II Umbilical Arm 1	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_Atlas2UmbilicalArm2	Atlas-Centaur I/II Umbilical Arm 2	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_Atlas2UmbilicalArm3	Atlas-Centaur I/II Wind Damper Arm 3	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_AtlasLaunchStand	Atlas Launch Stand	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_AtlasLaunchStandAlt	Atlas Launch Stand Alternate	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_AtlasSepClampArm	Atlas Side Clamp Arm	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_AtlasSepSideUmb	Atlas Side Umbilical	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_AtlasUmbilicalArmAgena	Atlas-Agena Umbilical Arm	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_AtlasUmbilicalArmCentaur	Atlas-Centaur D Umbilical Arms	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_AtlasUmbilicalArmCentaur1	Centaur Separate Umbilical Arm 1 - Tall	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_AtlasUmbilicalArmCentaur2	Centaur Separate Umbilical Arm 2 - Short	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_CentaurServiceTower1	Atlas-Centaur D Service Tower	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_CentaurServiceTower2	Atlas-Centaur I/II Service Tower	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_CrewElevatorAtlasUmbilical	Crew Elevator Mercury-Atlas Umbilical	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_CrewElevatorLargeExt	Crew Elevator Large Side Extension	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_CrewElevatorLargeSec1	Crew Elevator Large Section	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_CrewElevatorLargeTop	Crew Elevator Large Top	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_CrewElevatorSmallSec1	Crew Elevator Small Section	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_CrewElevatorSmallTop	Crew Elevator Small Top	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_CrewElevatorXLargeSec	Crew Elevator Extra Large Section	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_Delta4ModTowerCore	Delta IV Modular Service Tower Core	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_Delta4ModTowerTop	Delta IV Modular Service Tower Top	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_Delta4ServiceTower	Delta IV Service Tower - Single Piece	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_Delta4TowerArm1	Delta IV Swing Arm 1 - Core Tanks	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_Delta4TowerArm2	Delta IV Swing Arm 2 - DCSS	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_Delta4TowerArm3	Delta IV Swing Arm 3 - Fairing	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_FlatLaunchBaseMini	Flat Launch Base 1 - Mini Frame	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_FlatLaunchBaseSmall	Flat Launch Base 2 - Small Frame	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_FlatSlabServiceTower	Ariane V Service Mast	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GenBaseLarge	Launch Base 5 - Large	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GenBaseMedium	Launch Base 4 - Medium	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GenBaseMicro	Launch Base 1 - Micro	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GenBaseMini	Launch Base 2 - Mini	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GenBaseSmall	Launch Base 3 - Small	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GenBaseXLarge	Launch Base 6 - Extra Large	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralCrewArm	Crew Access Arm Large - Large Mount	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralCrewArmSmallMount	Crew Access Arm Large - Small Mount	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralCrewElevator	Crew Elevator Large Base - 70m with Hatch	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralCrewElevator2	Crew Elevator Extra Large Base - 130m with Hatch	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralCrewElevatorMini	Crew Elevator Mini Core with Hatch	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_GeneralCrewElevatorMiniArm	Crew Access Arm Small - Mini Mount	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_GeneralCrewElevatorMiniArmS	Crew Access Arm Small - Small Mount	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_GeneralCrewElevatorMiniSec1	Crew Elevator Mini Section	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_GeneralCrewElevatorSmall	Crew Elevator Small Base with Hatch	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralFallbackUmbilicalTower	General Fallback Umbilical Tower	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralHold1	General Hold-Down Type 1: Side-Arm	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralHold2	General Hold-Down Type 2: Drop-Arm	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralHold3	General Hold-Down Type 3: Vert Bolt Flat	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralHold4	General Hold-Down Type 4: Vert Bolt Tripod	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralHold5	General Hold-Down Type 5: Vert Bolt Arm	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralHold6	General Hold-Down Type 6: Clamp Arm Small	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralHold7	General Hold-Down Type 7: Clamp Arm Large	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralLaunchBase	Old Launch Base 3 *** DEPRECATED ***	ModularLaunchPads	EXPERIMENTAL		none			high
+AM_MLP_GeneralLaunchBaseMedium	Old Launch Base 2 *** DEPRECATED ***	ModularLaunchPads	EXPERIMENTAL		none			high
+AM_MLP_GeneralLaunchBaseSmall	Old Launch Base 1 *** DEPRECATED ***	ModularLaunchPads	EXPERIMENTAL		none			high
+AM_MLP_GeneralLaunchPlate	Flat Launch Base 3 - Medium Frame	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralModularMultiTowerLarge	Modular Multi Tower 3 - Large	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralModularMultiTowerMast	Modular Multi Tower Top Mast	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralModularMultiTowerMedium	Modular Multi Tower 2 - Medium	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralModularMultiTowerSmall	Modular Multi Tower 1 - Small	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralModularMultiTowerTop	Modular Multi Tower Top	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralServiceTowerLargeSec1	General Service Tower Large Section	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralServiceTowerLargeTop	General Service Tower Large Top	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralServiceTowerMedium	General Service Tower Medium Core	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralServiceTowerMediumSec1	General Service Tower Medium Section	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralServiceTowerMediumTop	General Service Tower Medium Top	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralServiceTowerSmall	General Service Tower Small Core	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralServiceTowerSmallSec1	General Service Tower Small Section	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralServiceTowerSmallTop	General Service Tower Small Top	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralServiceTowerXLBase	Titan III Modular Service Tower Core	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_GeneralServiceTowerXLSec1	Titan III Modular Service Tower Section	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_GeneralServiceTowerXLTop	Titan III Modular Service Tower Top	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_GeneralStrongbackTowerFull	General Strongback Tower 1 - Large	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralStrongbackTowerMicro	Generaral Strongback Tower 4 - Micro	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralStrongbackTowerMini	Generaral Strongback Tower 3 - Mini	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralStrongbackTowerSmall	General Strongback Tower 2 - Small	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralTowerAtlasV	Atlas V Service Mast - Single Piece	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralTowerDeltaII	Delta II Service Tower - Single Piece	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralTowerMulti	General Service Tower Large Core	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralTowerSwingArm	Tower Swing Arm Full 1 - Small	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralTowerSwingArmLarge	Tower Swing Arm Full 3 - Large	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralTowerSwingArmMedium	Tower Swing Arm Full 2 - Medium	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_GeneralUmbilicalDroopA	Tower Umbilical Droop 1A - Mini	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDroopA4	Tower Umbilical Droop 1B - Mini	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDroopAtlas2	Atlas-Centaur I/II Umbilical Droop	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDroopB	Tower Umbilical Droop 2A - Small	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDroopB4	Tower Umbilical Droop 2B - Small	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDroopC	Tower Umbilical Droop 3A - Medium	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDroopC4	Tower Umbilical Droop 3B - Medium	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDroopD	Tower Umbilical Droop 4A - Large	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDroopD4	Tower Umbilical Droop 4B - Large	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDroopE	Tower Umbilical Droop 5A - Extra Large	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDroopE4	Tower Umbilical Droop 5B - Extra Large	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDrop	Tower Umbilical Straight 2 - Medium	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_GeneralUmbilicalDropLarge	Tower Umbilical Straight 3 - Large	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_HoldArmSaturnIB	Saturn Launcher Hold-Down - Saturn IB	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_HoldArmSaturnV	Saturn Launcher Hold-Down - Saturn V	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_JupiterPetalCover	Redstone Launch Stand Petal Cover / 1.5m	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_LargeLaunchStand	Saturn IB Launch Stand	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_LaunchPlateEnergia	Launch Plate Energia	ModularLaunchPads	EXPERIMENTAL		launchPlates			high
+AM_MLP_LaunchPlateFalcon9	Falcon 9 Launch Plate	ModularLaunchPads	EXPERIMENTAL		launchPlates			high
+AM_MLP_LaunchPlateN1	Launch Plate N1	ModularLaunchPads	EXPERIMENTAL		launchPlates			high
+AM_MLP_LaunchPlateRnd1	Launch Plate Size 1 Round	ModularLaunchPads	EXPERIMENTAL		launchPlates			high
+AM_MLP_LaunchPlateRnd2	Launch Plate Size 2 Round	ModularLaunchPads	EXPERIMENTAL		launchPlates			high
+AM_MLP_LaunchPlateRnd3	Launch Plate Size 3 Round	ModularLaunchPads	EXPERIMENTAL		launchPlates			high
+AM_MLP_LaunchPlateSqr1	Launch Plate Size 1 Square	ModularLaunchPads	EXPERIMENTAL		launchPlates			high
+AM_MLP_LaunchPlateSqr2	Launch Plate Size 2 Square	ModularLaunchPads	EXPERIMENTAL		launchPlates			high
+AM_MLP_LaunchPlateSqr3	Launch Plate Size 3 Square	ModularLaunchPads	EXPERIMENTAL		launchPlates			high
+AM_MLP_LaunchStandCrewElevatorAtlas	Crew Elevator Mercury-Atlas, with Hatch	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_LaunchStandCrewElevatorGemini	Crew Elevator Gemini, with Hatch	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_LaunchStandCrewElevatorMercury	Crew Elevator Mercury-Redstone, with Hatch	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_LaunchStandCrewWalkwayMercury	Crew Elevator Walkway Mercury-Atlas	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_LaunchStandCrewWalkwayMini	Crew Elevator Walkway Mini	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_LaunchStandServiceTower1	Mini Modular Service Tower Type 1	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_LaunchStandServiceTower2	Mini Modular Service Tower Type 2	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_LaunchStandServiceTower3	Mini Modular Service Tower Type 3	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_LaunchStandServiceTower4	Mini Modular Service Tower Type 4	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_LaunchStandSmallPole	Redstone Umbilical Pole	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_LaunchStandSmallUmbilical	Tower Umbilical Straight 1- Small	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_MilkstoolLaunchStand1	Mini Milkstool Launch Stand 1 / 0.3125m, 0.625m	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_MilkstoolLaunchStand2	Mini Milkstool Launch Stand 2 / 0.9375m, 1.25m, 1.5m	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_MilkstoolLaunchStand3	Mini Milkstool Launch Stand 3 / 1.875m, 2.5m	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_N1ModularTower	N1 Basic Modular Tower	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_N1TowerPlatform	N1 Tower Platform	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_RedstoneLaunchStand	Redstone Launch Stand / 1.25m, 1.5m	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_SaturnHammerheadCrane	Saturn Tower Hammerhead Crane	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnLaunchStandPedestal	Saturn IB Launch Stand Tower Pedestal	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_SaturnLauncherTSM	Saturn Launcher Tail Service Mast	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnLightningMast	Saturn Tower Lightning Mast	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnLightningMastAlt	Shuttle Tower Lightning Mast	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_SaturnMilkstoolClamp	Saturn Milkstool Launch Stand	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_SaturnMobileLauncherClampBase	Saturn Launcher Base	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerBase	Saturn Modular Tower Base - Angled, with Hatches	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerBaseSquare	Saturn Modular Tower Base - Square, with Hatches	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerCrewArm	Saturn Tower Crew Access Arm	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerCrewFloor	Saturn Tower Crew Section Floor	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerCrewSection	Saturn Modular Tower Crew Section	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerDamperArm	Saturn Tower Damper Arm	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerMultiSection	Saturn Modular Tower Core Section	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerSwingArm0	Swing Arm Saturn IB S-IB	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerSwingArm2	Swing Arm Saturn V #2 S-IC Forward	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerSwingArm3	Swing Arm Saturn V #3 S-II Aft	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerSwingArm4	Swing Arm Saturn V #4 S-II Intermediate	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerSwingArm5	Swing Arm Saturn V #5 S-II Forward	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerSwingArm6	Swing Arm Saturn V #6 S-IVB Aft	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerSwingArm7	Swing Arm Saturn V #7 S-IVB Forward	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerSwingArm8	Swing Arm Saturn V #8 Serv Mod	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerSwingArmBDB	Swing Arm Saturn V #1 S-IC Intertank	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerSwingArmGen	Saturn Tower Swing Arm - General	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_SaturnTowerTopSection	Saturn Modular Tower Top Section	ModularLaunchPads	EXPERIMENTAL		saturnLaunchPad			high
+AM_MLP_ScissorArmUmbilical	Ariane V Scissor Arm Umbilical	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_ShuttleLauncherBaseClamp	Shuttle Launcher Platform Base	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleLauncherFSSBase	Shuttle Modular FSS Tower Base, with Hatches	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleLauncherRSS	Shuttle Rotating Service Structure	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleLauncherRSSHinge	Shuttle Rotating Service Structure Hinge	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleLauncherSRBHold	Shuttle Launcher SRB Hold-Down	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleSLC6LaunchMount	SLC-6 Shuttle Launch Mount	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleSLC6TowerCore	SLC-6 Shuttle Tower Core Section	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleSLC6TowerCrew	SLC-6 Shuttle Tower Crew Section	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleSLC6TowerCrewArm	SLC-6 Shuttle Tower Crew Access Arm	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleSLC6TowerIntertank	SLC-6 Shuttle Tower Intertank Structure	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleSLC6TowerLOXArm	SLC-6 Shuttle Tower Arm: LOX Vent	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleSLC6TowerMast	SLC-6 Shuttle Tower Top Mast	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleSLC6TowerTop	SLC-6 Shuttle Tower Top	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleTowerArmHydrogen	Shuttle Tower Arm: Hydrogen Vent	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleTowerArmIntertank	Shuttle Tower Arm: Intertank Access	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleTowerArmLOX	Shuttle Tower Arm: LOX Vent	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleTowerCrewArm	Shuttle Tower Crew Access Arm: Orbiter	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleTowerCrewFloor	Shuttle Modular FSS Tower Crew Section Floor	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleTowerCrewSection	Shuttle Modular FSS Tower Crew Section	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleTowerIntertankStructure	Shuttle Tower Intertank Structure	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleTowerMultiSection	Shuttle Modular FSS Tower Core Section	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_ShuttleTowerRodanCrewArm	Shuttle Tower Crew Access Arm: Rodan	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_ShuttleTowerTopSection	Shuttle Modular FSS Tower Top Section	ModularLaunchPads	EXPERIMENTAL		shuttleLaunchPad			high
+AM_MLP_SmallLaunchStand	General Round Launch Stand	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_SmallLaunchStandRect	General Rectangular Launch Stand	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_SmallTowerSwingArm	Tower Swing Arm Basic 1 - Small	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_SmallTowerSwingArmLarge	Tower Swing Arm Basic 3 - Large	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_SmallTowerSwingArmMedium	Tower Swing Arm Basic 2 - Medium	ModularLaunchPads	EXPERIMENTAL		start			high
+AM_MLP_SoyuzLaunchBase	Soyuz Launch Base	ModularLaunchPads	EXPERIMENTAL		soyuzLaunchBase			high
+AM_MLP_SoyuzLaunchBaseArmLG	Soyuz Launch Base Large Fuel Arm	ModularLaunchPads	EXPERIMENTAL		soyuzLaunchBase			high
+AM_MLP_SoyuzLaunchBaseArmSM	Soyuz Launch Base Small Fuel Arm	ModularLaunchPads	EXPERIMENTAL		soyuzLaunchBase			high
+AM_MLP_SoyuzLaunchBaseClampArm	Soyuz Launch Base Clamp Arm	ModularLaunchPads	EXPERIMENTAL		soyuzLaunchBase			high
+AM_MLP_SoyuzLaunchBaseElevator	Soyuz Solo Crew Elevator with Hatches	ModularLaunchPads	EXPERIMENTAL		soyuzLaunchBase			high
+AM_MLP_SoyuzLaunchBaseGantry	Soyuz Launch Base Gantry with Hatches	ModularLaunchPads	EXPERIMENTAL		soyuzLaunchBase			high
+AM_MLP_SpecialServiceTowerAtlasVBase	Atlas V Modular Service Mast Base	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_SpecialServiceTowerAtlasVSec1	Atlas V Modular Service Mast Short Section	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_SpecialServiceTowerAtlasVSec2	Atlas V Modular Service Mast Core	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_SpecialServiceTowerAtlasVTop	Atlas V Modular Service Mast Top	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_SpecialServiceTowerDeltaIIBase	Delta II Modular Service Tower Base	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_SpecialServiceTowerDeltaIISec1	Delta II Modular Service Tower Detail Section	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_SpecialServiceTowerDeltaIISec2	Delta II Modular Service Tower Core Section	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_SpecialServiceTowerDeltaIITop	Delta II Modular Service Tower Top	ModularLaunchPads	EXPERIMENTAL		generalLaunchPad			high
+AM_MLP_ThorLaunchStand	Thor/Delta Launch Stand / 1.5m	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_ThorServiceTowerFallback	Thor/Delta Service Tower - Fallback Type	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_Titan3LaunchStand	Titan III Launch Stand / 1.875m	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIITowerMast	Titan III Mast	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIServiceTowerMast	Titan II Service Tower Mast	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIServiceTowerModBase	Titan II Modular Service Tower Base	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIServiceTowerModSec1	Titan II Modular Service Tower Detail Section	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIServiceTowerModSec2	Titan II Modular Service Tower Core Section	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIServiceTowerModTop	Titan II Modular Service Tower Top	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIServiceTowerSingle	Titan II Service Tower - Single Piece	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIServiceTowerUmbilical	Titan II Umbilical - Straight Style	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIServiceTowerUmbilical2	Titan II Umbilical - Droop Style	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIServiceTowerUmbilicalGem	Titan II Umbilical Gemini - Straight Style	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_TitanIIServiceTowerUmbilicalGem2	Titan II Umbilical Gemini - Droop Style	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_VanguardLaunchStand	Vanguard Launch Stand / 0.9375m	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+AM_MLP_VanguardServiceTower	Vanguard Service Tower	ModularLaunchPads	EXPERIMENTAL		launchStands			high
+MountPlatform_MLP	General Mounting Platform	ModularLaunchPads	EXPERIMENTAL		generalConstruction			high

@@ -1,0 +1,59 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+25mKossak	Boeing 737 cockpit	SXT	life_pressurizedCabin	3	advFlightControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+625mBonny	Bonanza Cabin	SXT	life_pressurizedCabin	3	start		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+MK2VApod	TKS VA Command Module	VenStockRevamp	life_pressurizedCabin	3	commandModules		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+Mark1Cockpit	X-15 Cockpit	Squad	life_pressurizedCabin	3	aviation		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+Mark2Cockpit	X-15 Inline Cockpit	Squad	life_pressurizedCabin	3	aerodynamicSystems		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+RO-FighterInlineCockpit	Jet Trainer Cockpit	RealismOverhaul	life_pressurizedCabin	3	flightControl		ModuleCommand;ModuleFuelTanks;ModuleScienceExperiment;Module	med
+RO-Mk1Cockpit	Mk1 Cockpit	Squad	life_pressurizedCabin	3	aviation		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+RO-Mk1CockpitInline	Mk 1 Inline Cockpit	Squad	life_pressurizedCabin	3	aerodynamicSystems		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+RO-OldFighterCockpit	P-40 Cockpit	RealismOverhaul	life_pressurizedCabin	3	flightControl		ModuleCommand;ModuleFuelTanks;ModuleScienceExperiment;Module	med
+RO-X1Cockpit	X-1 Cockpit	RealismOverhaul	life_pressurizedCabin	3	flightControl		ModuleCommand;ModuleFuelTanks;ModuleScienceExperiment;Module	med
+ROAdvCapsule	Advanced Command Pod	RealismOverhaul	life_pressurizedCabin	3	flightControl	MMH;NTO	ModuleCommand;ModuleScienceContainer;ModuleAblator;ModuleRCS	med
+ROC-ApolloCMBDB	Apollo Command Module (CM)	ROCapsules	life_pressurizedCabin	3	unlockParts	MMH;MON1;Helium	ModuleAblator;ModuleCommand;ModuleScienceContainer;ModuleRCS	med
+ROC-ApolloCMBDBBlockIII	Apollo Block III+ Command Module (CM)	ROCapsules	life_pressurizedCabin	3	unlockParts	MMH;MON1;Helium	ModuleAblator;ModuleCommand;ModuleScienceContainer;ModuleRCS	med
+ROC-BigGeminiCabinBDB	Big G Crew Module	ROCapsules	life_pressurizedCabin	3	unlockParts		ModuleCommand;ModuleFuelTanks;ModuleScienceExperiment;Module	med
+ROC-BigGeminiSM	Big G Service Module	ROCapsules	life_pressurizedCabin	3	unlockParts		ModuleCommand;ModuleFuelTanks;ModuleRealAntenna	med
+ROC-CSTCM	CST-100 Command Module	ROCapsules	life_pressurizedCabin	3	unlockParts	Hydrazine;Helium	ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+ROC-D2CM	D-2 Descent Module	ROCapsules	life_pressurizedCabin	3	unlockParts	MMH;MON1;Helium	ModuleCommand;ModuleScienceContainer;ModuleScienceExperiment	med
+ROC-DynaCockpitAltMoroz	Dynasoar Cockpit (Alt)	ROCapsules	life_pressurizedCabin	3	OrphanParts	HTP;Helium	ModuleCommand;ModuleFuelTanks;ModuleRCSFX;ModuleScienceExper	med
+ROC-DynaCockpitMoroz	Dynasoar Cockpit	ROCapsules	life_pressurizedCabin	3	OrphanParts	HTP;Helium	ModuleCommand;ModuleFuelTanks;ModuleRCSFX;ModuleScienceExper	med
+ROC-GeminiCMBDB	Gemini Cabin	ROCapsules	life_pressurizedCabin	3	unlockParts		ModuleAblator;ModuleCommand;ModuleFuelTanks;ModuleScienceExp	med
+ROC-GeminiLCMBDB	Gemini L Cabin	ROCapsules	life_pressurizedCabin	3	unlockParts		ModuleAblator;ModuleCommand;ModuleFuelTanks;ModuleScienceExp	med
+ROC-LEMAscentBDB	Apollo LM Ascent Stage	ROCapsules	life_pressurizedCabin	3	unlockParts	Aerozine50;MON1;Helium	ModuleCommand;ModuleScienceContainer;ModuleRCSFX;ModuleFuelT	med
+ROC-LEMAscentTaxiBDB	AES LM Taxi Ascent Stage	ROCapsules	life_pressurizedCabin	3	unlockParts	Aerozine50;MON1;Helium	ModuleCommand;ModuleScienceContainer;ModuleRCSFX;ModuleFuelT	med
+ROC-LEMShelterBDB	AES LM Shelter	ROCapsules	life_pressurizedCabin	3	unlockParts	Aerozine50;MON1;Helium	ModuleCommand;ModuleScienceContainer;ModuleRCSFX;ModuleFuelT	med
+ROC-MercuryCMBDB	Mercury Capsule	ROCapsules	life_pressurizedCabin	3	engineering101	HTP;Helium	ModuleAblator;ModuleRCSFX;ModuleCommand;ModuleScienceContain	med
+ROC-OrionCM	Orion Command Module	ROCapsules	life_pressurizedCabin	3	generalRocketry	Hydrazine;Helium	ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+ROC-VostokCapsule	Vostok Descent Module	ROCapsules	life_pressurizedCabin	3	unlockParts		ModuleCommand;ModuleScienceContainer;ModuleFuelTanks;ModuleR	med
+SXTBuzzard	Junkers Ju 87 cockpit	SXT	life_pressurizedCabin	3	engineering101		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+SXTClyde	DHC-3 Otter cockpit	SXT	life_pressurizedCabin	3	stability		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+SXTEntenteCordiale	Concorde cockpit	SXT	life_pressurizedCabin	3	advFlightControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+SXTISSHabISK30	Skylab Orbital Workshop	SXT	life_pressurizedCabin	3	specializedConstruction		ModuleScienceContainer;ModuleScienceExperiment;ModuleCommand	med
+SXTOsaulNoseCockpitAn225	An-124 Cockpit	SXT	life_pressurizedCabin	3	advFlightControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+SXTOsualRadCockpit	An-124 Cockpit Radial	SXT	life_pressurizedCabin	3	metaMaterials		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+SXTke111	Heinkel He 111 cockpit	SXT	life_pressurizedCabin	3	advFlightControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+SXTmk3Cockpit52	B-52 Stratofortress cockpit	SXT	life_pressurizedCabin	3	heavyAerodynamics		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+aquarius_crew_s1p5_1	LK-700 Capsule	Tantares	life_pressurizedCabin	3	advLanding	UDMH;NTO;Helium	ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+aquila_crew_s1_3	Kvant-2 Airlock	Tantares	life_pressurizedCabin	3	advFlightControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+aquila_node_s0p5_2	Kristall Docking Node	Tantares	life_pressurizedCabin	3	advFlightControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+cupola	Cupola Observatory Module	Squad	life_pressurizedCabin	3	commandModules		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+eridani_crew_s1p5_1	Mir Core Crew Compartment 3	Tantares	life_pressurizedCabin	3	composites		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+eridani_node_adapter_s1p5_s0p5_1	Mir Core Docking Node Adapter	Tantares	life_pressurizedCabin	3	composites		ModuleCommand;ModuleFuelTanks;ModuleRealAntenna	med
+landerCabinMedium	Mk1 Lander Can Advanced	Squad	life_pressurizedCabin	3	advFlightControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+landerCabinSmall	Mk1 Lander Can	Squad	life_pressurizedCabin	3	advFlightControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+mk1-3pod	Mk1-3 Command Pod (4m)	Squad	life_pressurizedCabin	3	commandModules	MMH;NTO	ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+mk1pod_v2	Mk1 Pod (2m)	Squad	life_pressurizedCabin	3	start	HTP;Helium	ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+mk2Cockpit_Inline	Mk2 Inline Cockpit	Squad	life_pressurizedCabin	3	highAltitudeFlight		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+mk2Cockpit_Standard	Mk2 Cockpit	Squad	life_pressurizedCabin	3	supersonicFlight		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+mk2LanderCabin_v2	Mk2 Lander Can	Squad	life_pressurizedCabin	3	commandModules		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+mk3Cockpit_Shuttle	Mk3 Cockpit	Squad	life_pressurizedCabin	3	heavyAerodynamics		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+sspx-core-125-1	2.25m Station Core	StationPartsExpansionRedux	life_pressurizedCabin	3	advFlightControl		ModuleCommand;ModuleScienceContainer;ModuleFuelTanks;ModuleR	med
+sspx-core-1875-1	3.38m Station Core	StationPartsExpansionRedux	life_pressurizedCabin	3	advFlightControl		ModuleCommand;ModuleReactionWheel;ModuleScienceContainer;Mod	med
+sspx-core-25-1	4.5m Station Core	StationPartsExpansionRedux	life_pressurizedCabin	3	specializedControl		ModuleCommand;ModuleScienceExperiment;ModuleScienceContainer	med
+sspx-core-375-1	6.75m Station Core	StationPartsExpansionRedux	life_pressurizedCabin	3	metaMaterials		ModuleCommand;ModuleReactionWheel;ModuleScienceExperiment;Mo	med
+sspx-core-5-1	9m Station Core	StationPartsExpansionRedux	life_pressurizedCabin	3	metaMaterials		ModuleCommand;ModuleReactionWheel;ModuleScienceExperiment;Mo	med
+sspx-cupola-125-1	2.25m Cupola	StationPartsExpansionRedux	life_pressurizedCabin	3	advExploration		ModuleCommand;ModuleScienceContainer;ModuleRealAntenna	med
+sspx-cupola-1875-1	3.38m Observation Module	StationPartsExpansionRedux	life_pressurizedCabin	3	advExploration		ModuleCommand;ModuleScienceContainer;ModuleRealAntenna	med
+sspx-cupola-375-1	6.75m Cupola	StationPartsExpansionRedux	life_pressurizedCabin	3	advScienceTech		ModuleCommand;ModuleScienceContainer;ModuleRealAntenna	med
+sspx-dome-cupola-5-1	9m Observation Dome	StationPartsExpansionRedux	life_pressurizedCabin	3	advScienceTech		ModuleCommand;ModuleScienceContainer;ModuleRealAntenna	med

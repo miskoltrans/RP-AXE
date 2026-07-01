@@ -1,0 +1,75 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+PioneerVernier	Pioneer Adjustment Motor	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROC-ApolloLESBDB	Apollo Launch Escape System (LES)	ROCapsules	soundingRocketry	1	unlockParts	HTPB;SolidFuel;PSPC	ModuleEngineText;ModuleEnginesRF;EngineGroupModule	med
+ROC-BigGeminiLES	Big G Launch Escape System	ROCapsules	soundingRocketry	1	unlockParts	HTPB	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule	med
+ROC-D2Block1LES	D-2 Block I Abort Motor	ROCapsules	soundingRocketry	1	unlockParts	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule	med
+ROC-GeminiBEquipmentSection	Gemini B Adapter Module	ROCapsules	soundingRocketry	1	unlockParts	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule	med
+ROC-GeminiRetroMECBDB	Gemini Retro Rocket (Star-13E)	ROCapsules	soundingRocketry	1	unlockParts	PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROC-VoskhodAirlock	Voskhod Airlock	ROCapsules	soundingRocketry	1	unlockParts	PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
+ROC-VoskhodCapsule	Voskhod Descent Module	ROCapsules	soundingRocketry	1	unlockParts	SolidFuel	ModuleCommand;ModuleScienceContainer;ModuleFuelTanks;ModuleE	med
+ROC-VoskhodRetroBooster	Voskhod Retro Package	ROCapsules	soundingRocketry	1	unlockParts	HTPB	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
+ROE-1204sepMotor	UA1204 Nosecone & Separation Motor	ROEngines	soundingRocketry	1	start	SolidFuel;PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
+ROE-1205sepMotor	UA1205 Nosecone & Separation Motor	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
+ROE-1206sepMotor	UA1206 Nosecone & Separation Motor	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
+ROE-1207sepMotor	UA1207 Nosecone & Separation Motor	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
+ROE-1208sepMotor	UA1208 Nosecone & Separation Motor	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
+ROE-18KS7800	Aerojet 1.8KS-7800	ROEngines	soundingRocketry	1	start	NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-25KS18000	Aerojet 2.5KS-18000	ROEngines	soundingRocketry	1	start	NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-AJ60	AJ-60A	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Altair	Altair X-248	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Antares3	Antares III (STAR 31)	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-BabySergeant	Baby Sergeant (5.4KS-1975)	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule;ModuleEngi	med
+ROE-BabySergeantX11	Baby Sergeant 11x Cluster	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule;ModuleEngi	med
+ROE-BabySergeantX3	Baby Sergeant 3x Cluster	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule;ModuleEngi	med
+ROE-Castor1	Castor 1	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Castor120	Castor 120	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Castor30	Castor 30A	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Castor30XL	Castor 30XL	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Castor4A	Castor 4A	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Castor4AXL	Castor 4AXL	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-GCRC	GCRC 33KS-2800	ROEngines	soundingRocketry	1	start	PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-GEM40	GEM 40	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-GEM46	GEM 46	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-GEM60	GEM 60	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-GEM63	GEM 63	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-NikeM5E1	Nike M5E1	ROEngines	soundingRocketry	1	start	NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-R103	R-103 Booster	ROEngines	soundingRocketry	1	start	NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-SRMU	SRMU	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star37E	STAR 37E	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star37FM	STAR 37FM	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star48B	STAR 48B	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star5D	STAR 5D	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star8	STAR 8 (RAD)	ROEngines	soundingRocketry	1	start	HTPB	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+SXTWaxWing	Waxwing	SXT	soundingRocketry	1	start	SolidFuel;CTPB	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;FlightDa	med
+TinyTim	Tiny Tim Booster	RealismOverhaul	soundingRocketry	1	start	NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+AM_MLP_GeneralROFI	Multi ROFI Sparker	ModularLaunchPads	pc_apcpGrain	3	generalLaunchPad	SolidFuel	ModuleEnginesRF;EngineGroupModule	med
+AM_MLP_ShuttleLauncherTSM	Shuttle Launcher Tail Service Mast	ModularLaunchPads	pc_apcpGrain	3	shuttleLaunchPad	SolidFuel	ModuleEnginesRF;EngineGroupModule	med
+LaunchEscapeSystem	Launch Escape System (Apollo)	Squad	pc_apcpGrain	3	landing	SolidFuel	ModuleEnginesRF;ModuleFuelTanks	med
+MassiveBooster	RSRMV	Squad	pc_apcpGrain	3	heavyRocketry	SolidFuel;PBAN	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;FlightDa	med
+RO-RSRM	RSRM	Squad	pc_apcpGrain	3	heavyRocketry	SolidFuel;PBAN	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;FlightDa	med
+ROC-MercuryLESBDB	Mercury Launch Escape System	ROCapsules	pc_apcpGrain	3	engineering101	PSPC	ModuleEnginesRF;ModuleFuelTanks;EngineGroupModule	med
+ROC-MercuryPosigradeBDB	Mercury Posigrade Kick Motor	ROCapsules	pc_apcpGrain	3	engineering101	PSPC	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;EngineGr	med
+ROC-MercuryRetroBDB	Mercury Retro (TE-M-316)	ROCapsules	pc_apcpGrain	3	engineering101	PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROC-OrionCover1	Orion SM Fairing - 1	ROCapsules	pc_apcpGrain	3	generalRocketry	SolidFuel	ModuleEnginesRF	med
+ROC-OrionCover2	Orion SM Fairing - 2	ROCapsules	pc_apcpGrain	3	generalRocketry	SolidFuel	ModuleEnginesRF	med
+ROC-OrionCover3	Orion ESM Fairing - 3	ROCapsules	pc_apcpGrain	3	generalRocketry	SolidFuel	ModuleEnginesRF	med
+ROE-Agena_Retro_TypeIII	Agena Retrorocket Type III	ROEngines	pc_apcpGrain	3		PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
+ROE-Agena_Spinrocket	Agena 1KS30HA Spin Rocket	ROEngines	pc_apcpGrain	3		PSPC	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks;EngineGr	med
+ROE-Alcyone1	Alcyone 1 BE-3	ROEngines	pc_apcpGrain	3		NGNC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-Star13D	STAR 13D	ROEngines	pc_apcpGrain	3		PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROE-TX280	S-IV TX-280 Ullage Motor	ROEngines	pc_apcpGrain	3		PSPC	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleEngi	med
+ROSmallSpinMotor	Spin Motor (Small)	Squad	pc_apcpGrain	3	precisionPropulsion	SolidFuel;PSPC	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;FlightDa	med
+RO_mk1_LES	Launch Escape System (Mercury)	Squad	pc_apcpGrain	3	landing	SolidFuel	ModuleEnginesRF;ModuleFuelTanks	med
+SnubOtron	Separation Motor (Small)	VenStockRevamp	pc_apcpGrain	3	precisionPropulsion	SolidFuel;PSPC	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs	med
+alnair_les_s0_2	TKS VA Capsule LES	Tantares	pc_apcpGrain	3	landing	SolidFuel;HTPB	ModuleEnginesRF;ModuleEngineConfigs	med
+aquarius_parachute_s0p5_1	LK-700 Capsule Parachute	Tantares	pc_apcpGrain	3	advLanding	SolidFuel	ModuleEnginesRF	med
+ius_bottom	IUS Booster First Stage	RN_US_Probes	pc_apcpGrain	3	generalRocketry	HTPB	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks	med
+pioneer1_booster	Pioneer 0/1/2 Top Boosters	RN_US_Probes	pc_apcpGrain	3	engineering101	SolidFuel;PSPC	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs	med
+pioneer_0_1_2	Pioneer 0/1/2	RN_US_Probes	pc_apcpGrain	3	engineering101	SolidFuel;PSPC	ModuleCommand;ModuleScienceExperiment;ModuleRealAntenna;Modu	med
+restock-srb-anvil-1	RSRM	ReStockPlus	pc_apcpGrain	3	heavierRocketry	SolidFuel;PBAN	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;FlightDa	med
+rn_surveyor_retro	Surveyor Star 37 Solid Retro Booster	RN_US_Probes	pc_apcpGrain	3	basicScience	HTPB	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks	med
+rn_vpam	DEPRECATED DO NOT USE (RN Voyager PAM) (DEPRECATED)	RN_US_Probes	pc_apcpGrain	3	flightControl	HTPB	ModuleEnginesRF;ModuleEngineConfigs;ModuleFuelTanks	med
+sepMotor1	Radial Separation Motor (Medium)	Squad	pc_apcpGrain	3	precisionPropulsion	SolidFuel;PSPC	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;FlightDa	med
+sepMotorLarge	Radial Separation Motor (Large)	Squad	pc_apcpGrain	3	precisionPropulsion	SolidFuel;PSPC	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;FlightDa	med
+sepMotorSmall	Radial Separation Motor (Small)	Squad	pc_apcpGrain	3	precisionPropulsion	SolidFuel;PSPC	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;FlightDa	med
+tiros-1	Tiros-1 Satellite	RN_US_Probes	pc_apcpGrain	3	engineering101	SolidFuel	ModuleCommand;ModuleEnginesRF;ModuleScienceExperiment;Module	med

@@ -1,0 +1,143 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+ROC-CSTRS88	CST-100 Launch Abort Engines (LAE)	ROCapsules	soundingRocketry	1	unlockParts	MMH;MON3;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+ROC-GeminiOAMSBDB	Gemini Orbit Attitude and Maneuvering System (SE-7-100)	ROCapsules	soundingRocketry	1	unlockParts	MMH;NTO;Helium	ModuleEnginesRF;ModuleEngineConfigs;EngineGroupModule	med
+ROC-LEMLMDEBDB	Lunar Module Descent Engine (LMDE)	ROCapsules	soundingRocketry	1	unlockParts	Aerozine50;MON1;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROC-LFVBDB	Lunar Flying Vehicle	ROCapsules	soundingRocketry	1	start	Aerozine50;MON1;Helium	ModuleEnginesRF;ModuleFuelTanks;ModuleEngineConfigs;ModuleCo	med
+ROC-VostokService	Vostok/Voskhod/Zenit Service Module	ROCapsules	soundingRocketry	1	unlockParts	AK20;Tonka250;Nitrogen	ModuleCommand;ModuleEnginesRF;ModuleRCSFX;ModuleFuelTanks;En	med
+ROE-A4	Model 39	ROEngines	soundingRocketry	1	start	Ethanol75;LqdOxygen;HTP;Hydyne;Visol;Salbei	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-A7	NAA-75-110 A-Series	ROEngines	soundingRocketry	1	start	Ethanol75;LqdOxygen;HTP;Hydyne	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-AJ10-137	AJ10-137 (Service Propulsion System)	ROEngines	soundingRocketry	1	start	Aerozine50;MON1;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-AJ10-190	AJ10-190	ROEngines	soundingRocketry	1	start	MMH;MON3;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-AJ10AdvLong	AJ10 Series (Advanced Long Nozzle)	ROEngines	soundingRocketry	1	start	Aerozine50;MON1;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-AJ10Early	AJ10 Series (Early)	ROEngines	soundingRocketry	1	start	UDMH;IWFNA;Helium;IRFNA-III	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-AJ10Mid	AJ10 Series (Mid)	ROEngines	soundingRocketry	1	start	UDMH;IRFNA-III;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Aerobee	Aerobee	ROEngines	soundingRocketry	1	start	ANFA22;IRFNA-III;Nitrogen;ANFA37;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-AgenaSPS	Agena-D Secondary Propulsion System	ROEngines	soundingRocketry	1	start	UDMH;MON3;Helium;IRFNA-III;ElectricCharge;IRFNA-IV;HTP;Hydrazine;NitrousOxide;Nitrogen;MMH;NTO;MON10;Aerozine50;RP-1;Oxygen;Syntin;Ethanol75;Methane;Hydrogen;ASCENT;CaveaB	ModuleRCSFX;ModuleEnginesRF;ModuleFuelTanks;EngineGroupModul	med
+ROE-Antares1_Inline	Antares I X-254	ROEngines	soundingRocketry	1	start	HTP;Helium;PBAA	ModuleRCSFX;ModuleEnginesRF;EngineGroupModule;ModuleEngineCo	med
+ROE-Antares2_Inline	Antares IIA X-259	ROEngines	soundingRocketry	1	start	HTP;Helium;PBAA	ModuleRCSFX;ModuleEnginesRF;EngineGroupModule;ModuleEngineCo	med
+ROE-Antares3_Inline	Antares III (STAR 31)	ROEngines	soundingRocketry	1	start	HTP;Helium;HTPB	ModuleRCSFX;ModuleEnginesRF;EngineGroupModule;ModuleEngineCo	med
+ROE-C1	C-1	ROEngines	soundingRocketry	1	start	Aerozine50;MON1;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Castor1_Inline	Castor 1	ROEngines	soundingRocketry	1	start	HTP;Helium;PSPC	ModuleRCSFX;ModuleEnginesRF;EngineGroupModule;ModuleEngineCo	med
+ROE-Castor2_Inline	Castor 2	ROEngines	soundingRocketry	1	start	HTP;Helium;PBAA	ModuleRCSFX;ModuleEnginesRF;EngineGroupModule;ModuleEngineCo	med
+ROE-G1	G-1	ROEngines	soundingRocketry	1	start	Hydrazine;LqdFluorine;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Gamma2	Gamma 2	ROEngines	soundingRocketry	1	start	RP-1;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Gamma301	Gamma-201/301	ROEngines	soundingRocketry	1	start	RP-1;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Gamma8	Gamma 8	ROEngines	soundingRocketry	1	start	RP-1;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-HiPAT	R-4D	ROEngines	soundingRocketry	1	start	MMH;MON3;Helium;Hydrazine	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Juno45K	Juno IVB JPL 45K Engine	ROEngines	soundingRocketry	1	start	Hydrazine;NTO;Helium;ClF3	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Juno6K	Juno IV 6k Engine	ROEngines	soundingRocketry	1	start	Hydrazine;NTO;Helium;ClF3	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-JupiterVernier	S-3D Vernier Exhaust	ROEngines	soundingRocketry	1	start	RP-1;LqdOxygen;UDMH	ModuleEnginesRF;ModuleEngineConfigs;EngineGroupModule	med
+ROE-KTDU35	KTDU-35	ROEngines	soundingRocketry	1	start	UDMH;AK27	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-KTDU425A	KTDU-425	ROEngines	soundingRocketry	1	start	UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LEROS1B	LEROS-1b (635N)	ROEngines	soundingRocketry	1	start	Hydrazine;MON1;Helium;MMH;MON3	ModuleEnginesRF;ModuleEngineConfigs;EngineGroupModule;Flight	med
+ROE-LEROS4	LEROS-4 (1100N)	ROEngines	soundingRocketry	1	start	MMH;MON3;Helium	ModuleEnginesRF;ModuleEngineConfigs;EngineGroupModule;Flight	med
+ROE-LMDE	Lunar Module Descent Engine (LMDE)	ROEngines	soundingRocketry	1	start	Aerozine50;MON1;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR79	LR79	ROEngines	soundingRocketry	1	start	RP-1;LqdOxygen;UDMH	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR87	LR87	ROEngines	soundingRocketry	1	start	RP-1;LqdOxygen;Aerozine50;NTO;CooledAerozine50;CooledNTO;CooledRP-1;CooledLqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR87_11	LR87 Booster (Shielded)	ROEngines	soundingRocketry	1	start	RP-1;LqdOxygen;Aerozine50;NTO;CooledAerozine50;CooledNTO;CooledRP-1;CooledLqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR87_Single	LR87	ROEngines	soundingRocketry	1	start	RP-1;LqdOxygen;Aerozine50;NTO;CooledAerozine50;CooledNTO;CooledRP-1;CooledLqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR91	LR91	ROEngines	soundingRocketry	1	start	RP-1;LqdOxygen;Aerozine50;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR91-4V	LR91 (4 Vernier)	ROEngines	soundingRocketry	1	start	RP-1;LqdOxygen;Aerozine50;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-MR80B	MR-80B (MLE)	ROEngines	soundingRocketry	1	start	Hydrazine;Helium	ModuleEnginesRF;ModuleEngineConfigs;EngineGroupModule;Flight	med
+ROE-MR80TDE	MR-80 (TDE)	ROEngines	soundingRocketry	1	start	Hydrazine;Helium	ModuleEnginesRF;ModuleEngineConfigs;EngineGroupModule;Flight	med
+ROE-ORM65	ORM-65	ROEngines	soundingRocketry	1	start	Kerosene;AK20;Nitrogen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-R40B	R-40	ROEngines	soundingRocketry	1	start	MMH;MON3;Helium;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-R42	R-42	ROEngines	soundingRocketry	1	start	MMH;MON3;Helium;NTO;Hydrazine	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD0203	RD-0203/0204	ROEngines	soundingRocketry	1	start	UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD0210	RD-0208/0210	ROEngines	soundingRocketry	1	start	UDMH;NTO;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD0212	RD-0205/0212	ROEngines	soundingRocketry	1	start	UDMH;NTO;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD0213	RD-0206/0213	ROEngines	soundingRocketry	1	start	UDMH;NTO;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD0214	RD-0207/0214	ROEngines	soundingRocketry	1	start	UDMH;NTO;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD100	RD-100	ROEngines	soundingRocketry	1	start	Ethanol75;LqdOxygen;HTP;Ethanol90	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD107	RD-107/117	ROEngines	soundingRocketry	1	start	Kerosene;LqdOxygen;HTP;CooledKerosene;CooledLqdOxygen;CooledSyntin	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD108	RD-108/118	ROEngines	soundingRocketry	1	start	Kerosene;LqdOxygen;HTP;CooledKerosene;CooledLqdOxygen;CooledSyntin	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD109	RD-109/119	ROEngines	soundingRocketry	1	start	UDMH;LqdOxygen	ModuleEnginesRF;ModuleRCSFX;EngineGroupModule;ModuleEngineCo	med
+ROE-RD200	RD-200	ROEngines	soundingRocketry	1	start	Kerosene;AK20;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD211	RD-211	ROEngines	soundingRocketry	1	start	Kerosene;AK20;HTP;AK27	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD215	RD-216 (2x RD-215)	ROEngines	soundingRocketry	1	start	UDMH;AK27;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD215_Single	RD-215	ROEngines	soundingRocketry	1	start	UDMH;AK27;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD219	RD-219	ROEngines	soundingRocketry	1	start	UDMH;AK27;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD254	RD-254	ROEngines	soundingRocketry	1	start	UDMH;NTO;AK27;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD270	RD-270	ROEngines	soundingRocketry	1	start	UDMH;NTO;PB-1;HTP;RG-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD270M	RD-270M (DEPRECATED)	ROEngines	soundingRocketry	1	start	Pentaborane;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD275	RD-253/RD-275	ROEngines	soundingRocketry	1	start	UDMH;NTO;AK27;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD855	RD-851/855	ROEngines	soundingRocketry	1	start	UDMH;AK27;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD856	RD-852/856	ROEngines	soundingRocketry	1	start	UDMH;AK27;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RangerRetro	MC-4-610	ROEngines	soundingRocketry	1	start	Hydrazine;Nitrogen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Module	med
+ROE-S155	S-155	ROEngines	soundingRocketry	1	start	Tonka250;AK20;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-S2253	S2.253/S3.42/S5.2	ROEngines	soundingRocketry	1	start	Kerosene;AK20;Nitrogen;AK27;UDMH	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-S523	S5.23	ROEngines	soundingRocketry	1	start	UDMH;AK27	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-S592	S5.92	ROEngines	soundingRocketry	1	start	UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-S598M	S5.98M	ROEngines	soundingRocketry	1	start	UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Stentor	Stentor Booster	ROEngines	soundingRocketry	1	start	RP-1;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-SuperDraco	SuperDraco	ROEngines	soundingRocketry	1	start	MMH;NTO;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-SuperDracoDouble	Twin SuperDraco	ROEngines	soundingRocketry	1	start	MMH;NTO;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-TD339	TD-339	ROEngines	soundingRocketry	1	start	MMH;MON10;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Veronique	Véronique (DEPRECATED)	ROEngines	soundingRocketry	1	start	Kerosene;IRFNA-III;Water;Turpentine;IWFNA	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-VeroniqueAK	Véronique	ROEngines	soundingRocketry	1	start	Kerosene;IRFNA-III;Water;Turpentine;IWFNA	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Viking2	Viking 2	ROEngines	soundingRocketry	1	start	UDMH;NTO;Water	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Viking4	Viking (4/4B)	ROEngines	soundingRocketry	1	start	UDMH;NTO;Water;UH25	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Viking5	Viking (5/6)	ROEngines	soundingRocketry	1	start	UDMH;NTO;Water;UH25	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-X405	X-405 (XLR50-GE-2)	ROEngines	soundingRocketry	1	start	Kerosene;LqdOxygen;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-X405H	X-405H	ROEngines	soundingRocketry	1	start	RP-1;LqdOxygen;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-XLR10	XLR10	ROEngines	soundingRocketry	1	start	Ethanol90;LqdOxygen;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-XLR11	XLR11	ROEngines	soundingRocketry	1	start	Ethanol75;LqdOxygen;Nitrogen;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-XLR25	XLR25	ROEngines	soundingRocketry	1	start	Ethanol75;LqdOxygen;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-XLR41	XLR41	ROEngines	soundingRocketry	1	start	Ethanol75;LqdOxygen;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-XLR99	XLR99	ROEngines	soundingRocketry	1	start	LqdAmmonia;LqdOxygen;HTP	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-generic-full	1.1/1.78kN Thruster	ROEngines	soundingRocketry	1	start	HTP;Helium;Hydrazine;NitrousOxide;Nitrogen;MMH;NTO;MON3;MON10;UDMH;Aerozine50;RP-1;Oxygen;Syntin;Ethanol75;Methane;Hydrogen;ASCENT;CaveaB	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+ROE-generic-half	550/890N Thruster	ROEngines	soundingRocketry	1	start	HTP;Helium;Hydrazine;NitrousOxide;Nitrogen;MMH;NTO;MON3;MON10;UDMH;Aerozine50;RP-1;Oxygen;Syntin;Ethanol75;Methane;Hydrogen;ASCENT;CaveaB	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+ROE-generic-quarter	275/445N Thruster	ROEngines	soundingRocketry	1	start	HTP;Helium;Hydrazine;NitrousOxide;Nitrogen;MMH;NTO;MON3;MON10;UDMH;Aerozine50;RP-1;Oxygen;Syntin;Ethanol75;Methane;Hydrogen;ASCENT;CaveaB	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+LargeOMS	Astris	VenStockRevamp	pc_apcpGrain	3	precisionPropulsion	MonoPropellant;Aerozine50;NTO;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-2kN-Thruster	2.2/3.6kN Thruster	Squad	pc_apcpGrain	3	propulsionSystems	LiquidFuel;Oxidizer;HTP;Helium;Hydrazine;NitrousOxide;Nitrogen;MMH;NTO;MON3;MON10;UDMH;Aerozine50;RP-1;Oxygen;Syntin;Ethanol75;Methane;Hydrogen;ASCENT;CaveaB	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+RO-KDU414	S5.19	Squad	pc_apcpGrain	3	propulsionSystems	LiquidFuel;Oxidizer;UDMH;AK20;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-KTDU417	KTDU-417	Squad	pc_apcpGrain	3	heavierRocketry	LiquidFuel;Oxidizer;UDMH;NTO;AK27;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-KTDU5A	KTDU-5A	Squad	pc_apcpGrain	3	heavierRocketry	LiquidFuel;Oxidizer;Tonka250;AK27	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROC-OrionESM	Orion European Service Module	ROCapsules	pc_apcpGrain	3	generalRocketry	MMH;MON3;Helium	ModuleCommand;ModuleEnginesRF;ModuleEngineConfigs;EngineGrou	med
+ROC-OrionLAS	Orion LAS and BPC	ROCapsules	pc_apcpGrain	3	generalRocketry	HTPB;Hydrazine	ModuleEnginesRF;ModuleEngineConfigs;ModuleRCSFX;ModuleFuelTa	med
+ROE-SR19	SR19	ROEngines	pc_apcpGrain	3		Hydrazine;Helium;CTPB	ModuleEnginesRF;ModuleRCSFX;EngineGroupModule;ModuleEngineCo	med
+ROMeteoSustainer	U-1250	Squad	pc_apcpGrain	3	propulsionSystems	LiquidFuel;Oxidizer;Kerosene;AK20;Nitrogen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF20_Engine	YF-20	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	LiquidFuel;Oxidizer;UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF21_Engine	YF-21	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	LiquidFuel;Oxidizer;UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF21_with_shell_CZ-2	YF-21 with CZ-2 Boattail	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF21_with_shell_CZ-2C	YF-21 with CZ-2C Boattail	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	LiquidFuel;Oxidizer;UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF21_with_shell_CZ-2D	YF-21 with CZ-2D Boattail	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	LiquidFuel;Oxidizer;UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF22_Engine	YF-22	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	LiquidFuel;Oxidizer;UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF23_Engine	YF-23	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	LiquidFuel;Oxidizer;UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF25K_Engine	YF-20 with Boattail (no gimbal)	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	LiquidFuel;Oxidizer;UDMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF2_Engine	YF-2 (no gimbal)	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	UDMH;AK27;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF2_with_shell	YF-2 with Boattail	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	UDMH;AK27;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF3_Engine	YF-3 (no gimbal)	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	UDMH;AK27;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF3_with_shell	YF-3 with Boattail	KerwisChineseAerospacePack	pc_apcpGrain	3	advRocketry	UDMH;AK27;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ca_jib	Generic 0.5 kN Thruster	CoatlAerospace	pc_apcpGrain	3	generalRocketry	Hydrazine;HTP;Helium;NitrousOxide;Nitrogen;MMH;NTO;MON3;MON10;UDMH;Aerozine50;RP-1;Oxygen;Syntin;Ethanol75;Methane;Hydrogen;ASCENT;CaveaB	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+ca_lahar	R-40	CoatlAerospace	pc_apcpGrain	3	propulsionSystems	MMH;MON3;Helium;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ca_trident	Bi-Propellant Apogee Engine	CoatlAerospace	pc_apcpGrain	3	precisionPropulsion	MON3;MMH;NTO	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+galileo_mb	Galileo Spacecraft	RN_US_Probes	pc_apcpGrain	3	generalRocketry	MonoPropellant;MMH;MON3	ModuleCommand;ModuleReactionWheel;ModuleEnginesRF;ModuleRCSF	med
+ius_top	IUS Booster Second Stage	RN_US_Probes	pc_apcpGrain	3	generalRocketry	HTPB;Hydrazine	ModuleCommand;ModuleEnginesRF;AnimatedEngine;ModuleEngineCon	med
+luna_ktdu	Luna 9/10/13 KTDU	RN_Soviet_Probes	pc_apcpGrain	3	generalRocketry	AK27;Tonka250;Nitrogen	ModuleEnginesRF;EngineGroupModule;ModuleFuelTanks;ModuleRCSF	med
+luna_vernier	Luna Vernier	RN_Soviet_Probes	pc_apcpGrain	3	generalRocketry	AK27;Tonka250	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+magellan	Magellan	RN_US_Probes	pc_apcpGrain	3	generalRocketry	Hydrazine	ModuleCommand;ModuleReactionWheel;ModuleEnginesRF;ModuleScie	med
+microEngine	1.1/1.78kN Thruster	Squad	pc_apcpGrain	3	propulsionSystems	LiquidFuel;Oxidizer;HTP;Helium;Hydrazine;NitrousOxide;Nitrogen;MMH;NTO;MON3;MON10;UDMH;Aerozine50;RP-1;Oxygen;Syntin;Ethanol75;Methane;Hydrogen;ASCENT;CaveaB	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+molniya1	Molniya-1	RN_Soviet_Probes	pc_apcpGrain	3	generalRocketry	LiquidFuel;Tonka250;Oxidizer;AK20;Nitrogen	ModuleCommand;ModuleReactionWheel;ModuleEnginesRF;ModuleScie	med
+neo_dawn	Dawn	RN_US_Probes	pc_apcpGrain	3	generalRocketry	Hydrazine;XenonGas	ModuleCommand;ModuleReactionWheel;ModuleRCSFX;ModuleEnginesR	med
+neo_ds1	Deep Space 1	RN_US_Probes	pc_apcpGrain	3	generalRocketry	Hydrazine;XenonGas	ModuleCommand;ModuleReactionWheel;ModuleRCSFX;ModuleEnginesR	med
+neo_near	NEAR - Shoemaker	RN_US_Probes	pc_apcpGrain	3	generalRocketry	MonoPropellant;Hydrazine;NTO	ModuleCommand;ModuleReactionWheel;ModuleEnginesRF;ModuleRCSF	med
+pit-125	PIT Mk Va Pulsed Inductive Thruster	NearFuturePropulsion	pc_apcpGrain	3	experimentalScience	ElectricCharge;ArgonGas;Ammonia;Hydrazine;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+polyot	Polyot	RN_Soviet_Probes	pc_apcpGrain	3	generalRocketry	AK20;Tonka250;Nitrogen	ModuleCommand;ModuleEnginesRF;ModuleScienceContainer;ModuleS	med
+polyot_side_engine	Polyot Side Engine	RN_Soviet_Probes	pc_apcpGrain	3	generalRocketry	AK20;Tonka250	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+restock-engine-125-pug	Aestus	ReStockPlus	pc_apcpGrain	3	basicRocketry	LiquidFuel;Oxidizer;MMH;MON3;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Module	med
+rn_cassini	Cassini Spacecraft	RN_US_Probes	pc_apcpGrain	3	generalRocketry	MonoPropellant;Hydrazine;MMH;MON3	ModuleCommand;ModuleReactionWheel;ModuleEnginesRF;ModuleRCSF	med
+rn_juno_spacecraft	Juno	RN_US_Probes	pc_apcpGrain	3	generalRocketry	MonoPropellant;MON3;Hydrazine	ModuleCommand;ModuleEnginesRF;ModuleRCSFX;ModuleScienceConta	med
+rn_ladee	Lunar Atmosphere Dust and Environment Explorer	RN_US_Probes	pc_apcpGrain	3	generalRocketry	MonoPropellant;MMH;NTO	ModuleCommand;ModuleReactionWheel;ModuleEnginesRF;ModuleRCSF	med
+rn_lro	Lunar Reconnaissance Orbiter	RN_US_Probes	pc_apcpGrain	3	generalRocketry	MonoPropellant;Hydrazine;NTO	ModuleCommand;ModuleReactionWheel;ModuleEnginesRF;ModuleRCSF	med
+rn_mariner10	Mariner 10	RN_US_Probes	pc_apcpGrain	3	generalRocketry	Hydrazine;Nitrogen	ModuleCommand;ModuleEnginesRF;ModuleRCSFX;ModuleScienceConta	med
+rn_mariner1_2	Mariner 1/2	RN_US_Probes	pc_apcpGrain	3	generalRocketry	Hydrazine;Nitrogen	ModuleCommand;ModuleEnginesRF;ModuleScienceContainer;ModuleS	med
+rn_mariner3-4	Mariner 3/4	RN_US_Probes	pc_apcpGrain	3	generalRocketry	Hydrazine;Nitrogen	ModuleCommand;ModuleEnginesRF;ModuleRCSFX;ModuleScienceConta	med
+rn_mariner5	Mariner 5	RN_US_Probes	pc_apcpGrain	3	generalRocketry	Hydrazine;Nitrogen	ModuleCommand;ModuleEnginesRF;ModuleRCSFX;ModuleScienceConta	med
+rn_mariner6-7	Mariner 6/7	RN_US_Probes	pc_apcpGrain	3	generalRocketry	Hydrazine;Nitrogen	ModuleCommand;ModuleEnginesRF;ModuleRCSFX;ModuleScienceConta	med
+rn_mariner8-9	Mariner 8/9	RN_US_Probes	pc_apcpGrain	3	generalRocketry	MMH;NTO;Nitrogen	ModuleCommand;ModuleEnginesRF;ModuleRCSFX;ModuleScienceConta	med
+rn_mars_observer	Mars Observer	RN_US_Probes	pc_apcpGrain	3	generalRocketry	MonoPropellant;Hydrazine;MMH;NTO	ModuleCommand;ModuleReactionWheel;ModuleEnginesRF;ModuleRCSF	med
+rn_messenger	MESSENGER	RN_US_Probes	pc_apcpGrain	3	generalRocketry	MonoPropellant;Hydrazine;NTO	ModuleCommand;ModuleReactionWheel;ModuleEnginesRF;ModuleRCSF	med
+rn_surveyor_engines	Surveyor Engines	RN_US_Probes	pc_apcpGrain	3	basicScience	MMH;MON10	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+rn_surveyor_s_engine	TD-339	RN_US_Probes	pc_apcpGrain	3	basicScience	MMH;MON10	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs	med
+rn_venera1	Venera 1/Mars 1M	RN_Soviet_Probes	pc_apcpGrain	3	generalRocketry	LiquidFuel;Tonka250;Oxidizer;AK20	ModuleCommand;ModuleEnginesRF;ModuleScienceContainer;ModuleS	med

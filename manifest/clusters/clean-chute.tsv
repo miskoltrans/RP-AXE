@@ -1,0 +1,31 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+RC_cone	Parachute - Cone	RealChute	aero_parachuteRecovery	2	start			high
+RC_cone_double	Parachute - Cone (Double)	RealChute	aero_parachuteRecovery	2	specializedControl			high
+RC_radial	Parachute [Radial]	RealChute	aero_parachuteRecovery	2	survivability			high
+RC_stack	Parachute - Stack (Double)	RealChute	aero_parachuteRecovery	2	specializedControl			high
+ROC-ApolloDrogueParachuteBDB	Apollo Command Module Drogue Parachute Pack	ROCapsules	aero_parachuteRecovery	2	unlockParts			high
+ROC-ApolloParachuteBDB	Apollo Command Module Main Parachute Pack	ROCapsules	aero_parachuteRecovery	2	unlockParts			high
+ROC-BigGeminiParachute	Big G Landing Parachute System	ROCapsules	aero_parachuteRecovery	2	unlockParts			high
+ROC-BigGeminiParachuteDrogue	Big G Drogue Parachute	ROCapsules	aero_parachuteRecovery	2	unlockParts			high
+ROC-CSTParachute	CST-100 Parachute Pack	ROCapsules	aero_parachuteRecovery	2	unlockParts			high
+ROC-D2Parachute	D-2 Parachute	ROCapsules	aero_parachuteRecovery	2	unlockParts		ModuleAblator	high
+ROC-GeminiParachuteBDB	Gemini Landing Parachute System	ROCapsules	aero_parachuteRecovery	2	unlockParts			high
+ROC-GeminiParachuteDrogueBDB	Gemini Drogue Parachute	ROCapsules	aero_parachuteRecovery	2	unlockParts			high
+ROC-MercuryParachuteBDB	Mercury M-ASD Main Parachute	ROCapsules	aero_parachuteRecovery	2	start			high
+ROC-MercuryRCSBDB	Mercury Landing and Control Module (DEPRECATED)	ROCapsules	aero_parachuteRecovery	2	engineering101	HTP;Helium	ModuleRCSFX	high
+ROC-OrionParachute	Orion Main Parachute	ROCapsules	aero_parachuteRecovery	2	specializedControl			high
+ROC-VostokParachute	Vostok/Voskhod Parachute	ROCapsules	aero_parachuteRecovery	2	unlockParts			high
+aquarius_drogue_parachute_s0_1	LK-700 Capsule Drogue Parachute	Tantares	aero_parachuteRecovery	2	advLanding			high
+ca_draco_drogue	Huygens Drogue Parachute	CoatlAerospace	aero_parachuteRecovery	2	advLanding			high
+ca_draco_parachute	Huygens Main Parachute	CoatlAerospace	aero_parachuteRecovery	2	advLanding			high
+ca_fom_drogue	Venera Lander Aeroshell (Drogue Parachute)	CoatlAerospace	aero_parachuteRecovery	2	landing			high
+ca_fom_parachute	Venera Lander Aeroshell (Main Parachute)	CoatlAerospace	aero_parachuteRecovery	2	landing			high
+galileo_probe_hs_parachute	Galileo Probe Heatshield Parachute	RN_US_Probes	aero_parachuteRecovery	2	generalRocketry			high
+galileo_probe_parachute	Galileo Probe Parachute	RN_US_Probes	aero_parachuteRecovery	2	generalRocketry			high
+neo_stardust_para	Stardust Return Capsule Parachute	RN_US_Probes	aero_parachuteRecovery	2	generalRocketry			high
+parachuteDrogue	Mk25 Parachute	Squad	aero_parachuteRecovery	2	advLanding			high
+parachuteLarge	Mk16-XL Parachute	Squad	aero_parachuteRecovery	2	landing			high
+parachuteRadial	Mk2-R Radial-Mount Parachute	Squad	aero_parachuteRecovery	2	survivability			high
+parachuteSingle	Mk16 Parachute	Squad	aero_parachuteRecovery	2	start			high
+rn_huygen_hs_chute	Huygens Heatshield Parachute	RN_US_Probes	aero_parachuteRecovery	2	generalRocketry			high
+rn_huygens_chute	Huygens Lander Parachute	RN_US_Probes	aero_parachuteRecovery	2	generalRocketry			high

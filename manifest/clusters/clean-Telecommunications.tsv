@@ -1,0 +1,77 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+ROC-ApolloASTPVHFBDB	Apollo-Soyuz Test Project VHF-FM Antenna	ROCapsules	tel_pcmTelemetry	1	unlockParts		ModuleRealAntenna	high
+ROC-ApolloDipoleBDB	Apollo 17 HF Dipole Radar Antenna	ROCapsules	tel_pcmTelemetry	1	unlockParts		ModuleRealAntenna	high
+ROC-ApolloHGABDB	Apollo High Gain Antenna (HGA)	ROCapsules	tel_pcmTelemetry	1	unlockParts		ModuleDeployableAntenna;ModuleRealAntenna	high
+ROC-ApolloScimitarBDB	Apollo Scimitar Antenna	ROCapsules	tel_pcmTelemetry	1	start		ModuleRealAntenna	high
+ROC-ApolloVHFBDB	Apollo 17 VHF Yagi Antenna	ROCapsules	tel_pcmTelemetry	1	unlockParts		ModuleRealAntenna	high
+ROC-D2Antenna	D-2 High Gain Antenna	ROCapsules	tel_pcmTelemetry	1	unlockParts		ModuleRealAntenna	high
+ROC-D2ServiceModule	D-2 Service Module	ROCapsules	tel_pcmTelemetry	1	unlockParts		ModuleFuelTanks;ModuleRealAntenna	high
+ROC-LEMRover	Apollo Lunar Roving Vehicle (LRV)	ROCapsules	tel_pcmTelemetry	1	unlockParts		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	high
+SXTAntenna	Sputnik PS-1 Antenna	SXT	tel_pcmTelemetry	1	start		ModuleRealAntenna	high
+HighGainAntenna	1.25m Retractable Parabolic Antenna	Squad	tel_cassegrainHGA	3	electronics		ModuleDeployableAntenna;ModuleRealAntenna	high
+HighGainAntenna5	HG-5 Retractable Parabolic Antenna (DEPRECATED)	Squad	tel_cassegrainHGA	3	basicScience		ModuleDeployableAntenna;ModuleRealAntenna	high
+HighGainAntenna5_v2	HG-5 Retractable Parabolic Antenna	Squad	tel_cassegrainHGA	3	basicScience		ModuleDeployableAntenna;ModuleRealAntenna	high
+MK1CrewCabin	Mk1 Crew Cabin	Squad	tel_cassegrainHGA	3	generalConstruction		ModuleScienceExperiment;ModuleScienceContainer;ModuleRealAnt	high
+ROC-DynaAntenna	DynaSoar Telemetry Antenna	ROCapsules	tel_cassegrainHGA	3	electrics		ModuleRealAntenna	high
+ROC-GeminiAntenna	Gemini Antenna	ROCapsules	tel_cassegrainHGA	3	electrics		ModuleRealAntenna	high
+ROC-GeminiAntennaBDB	Gemini UHF Whip Antenna	ROCapsules	tel_cassegrainHGA	3	flightControl		ModuleRealAntenna	high
+ROC-MercuryNoseCapBDB	Mercury M-DCAM Nose Unit	ROCapsules	tel_cassegrainHGA	3	engineering101		ModuleRealAntenna	high
+RelayAntenna100	RA-100 Parabolic Antenna (4m)	Squad	tel_cassegrainHGA	3	automation		ModuleRealAntenna	high
+RelayAntenna3m	3m Parabolic Antenna	Squad	tel_cassegrainHGA	3	automation		ModuleRealAntenna	high
+RelayAntenna5	RA-2 Parabolic Antenna (1m)	Squad	tel_cassegrainHGA	3	precisionEngineering		ModuleRealAntenna	high
+RelayAntenna50	RA-15 Parabolic Antenna (2m)	Squad	tel_cassegrainHGA	3	electronics		ModuleRealAntenna	high
+SXTsciencenosecone	GC-MS + Antenna	SXT	tel_cassegrainHGA	3	advScienceTech		ModuleScienceExperiment;ModuleRealAntenna	high
+SurfAntenna	Communotron 16-S	Squad	tel_cassegrainHGA	3	engineering101		ModuleRealAntenna	high
+antenna_cone_toggle	CA-A02 Helical Omnidirectional Antenna	CoatlAerospace	tel_cassegrainHGA	3	engineering101		ModuleRealAntenna	high
+antenna_quetzal	CA-A06 Omnidirectional Antenna	CoatlAerospace	tel_cassegrainHGA	3	flightControl		ModuleRealAntenna	high
+ca_ant_gps	CA-GPS Omnidirectional Antenna	CoatlAerospace	tel_cassegrainHGA	3	flightControl			high
+ca_argo-mk2-hga	Mariner Mars & Venus High Gain Antenna (HGA)	CoatlAerospace	tel_cassegrainHGA	3	basicScience			high
+ca_argo-mk2-mast	Mariner Mars & Venus Low Gain Antenna (LGA)	CoatlAerospace	tel_cassegrainHGA	3	engineering101		ModuleScienceExperiment	high
+ca_landv_hga	Surveyor Planar Antenna and Solar Array	CoatlAerospace	tel_cassegrainHGA	3	engineering101		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+ca_landv_omni	Surveyor Low Gain Antenna (LGA)	CoatlAerospace	tel_cassegrainHGA	3	engineering101		ModuleDeployableAntenna;ModuleRealAntenna	high
+ca_landv_orbiter_HGA	Surveyor Orbiter High Gain Antenna	CoatlAerospace	tel_cassegrainHGA	3	engineering101		ModuleDeployableAntenna;ModuleRealAntenna	high
+ca_vor_comm	4MV Spacecraft Bus Antenna Array	CoatlAerospace	tel_cassegrainHGA	3	engineering101		ModuleDeployableAntenna	high
+ca_vor_dish	4MV-1 Spacecraft Bus Parabolic Antenna	CoatlAerospace	tel_cassegrainHGA	3	advConstruction		ModuleRealAntenna	high
+dish_L	Voyager 1 & 2 Parabolic Antenna	CoatlAerospace	tel_cassegrainHGA	3	specializedConstruction		ModuleRealAntenna	high
+dish_S	Ulysses Parabolic Antenna	CoatlAerospace	tel_cassegrainHGA	3	miniaturization		ModuleRealAntenna	high
+dish_deploy_S	CA-A10 Folding Dish Antenna	CoatlAerospace	tel_cassegrainHGA	3	precisionEngineering		ModuleDeployableAntenna;ModuleRealAntenna	high
+dish_deploy_S2	Mariner Mars High Gain Antenna (HGA)	CoatlAerospace	tel_cassegrainHGA	3	engineering101		ModuleDeployableAntenna;ModuleRealAntenna	high
+dish_hera	Juno Parabolic Antenna	CoatlAerospace	tel_cassegrainHGA	3	advScienceTech		ModuleRealAntenna	high
+dish_quetzal	Pioneer 10 & 11 Parabolic Antenna	CoatlAerospace	tel_cassegrainHGA	3	advConstruction	Hydrazine	ModuleRCSFX;ModuleScienceExperiment;ModuleRealAntenna	high
+dish_tatsujin	MAVEN Parabolic Antenna	CoatlAerospace	tel_cassegrainHGA	3	advScienceTech		ModuleRealAntenna	high
+dish_xihe	STEREO Parabolic Antenna	CoatlAerospace	tel_cassegrainHGA	3	precisionEngineering		ModuleDeployableAntenna;ModuleRealAntenna	high
+gdish_actual	Galileo Dish "Actual"	RN_US_Probes	tel_cassegrainHGA	3	generalRocketry		ModuleRealAntenna	high
+gdish_intended	Galileo Dish "Intended"	RN_US_Probes	tel_cassegrainHGA	3	generalRocketry		ModuleRealAntenna	high
+l11_radio	Luna 11 Radio	RN_Soviet_Probes	tel_cassegrainHGA	3	generalRocketry		ModuleScienceExperiment;ModuleRealAntenna	high
+longAntenna	Communotron 16	Squad	tel_cassegrainHGA	3	engineering101		ModuleDeployableAntenna;ModuleRealAntenna	high
+luna_radio	Luna 9/10/13 Radio	RN_Soviet_Probes	tel_cassegrainHGA	3	generalRocketry		ModuleScienceExperiment;ModuleRealAntenna	high
+mediumDishAntenna	Communotron DTS-M1	Squad	tel_cassegrainHGA	3	precisionEngineering		ModuleDeployableAntenna;ModuleRealAntenna	high
+mer_dish	Cassini Parabolic Antenna	CoatlAerospace	tel_cassegrainHGA	3	composites		ModuleRealAntenna	high
+nfex-antenna-deploy-wv3-1	DR-3 Deployable High Gain Antenna	NearFutureExploration	tel_cassegrainHGA	3	spaceExploration		ModuleDeployableAntenna;ModuleRealAntenna	high
+nfex-antenna-feeder-direct-1	F-DA Direct Antenna Feed	NearFutureExploration	tel_cassegrainHGA	3	precisionEngineering		ModuleRealAntenna	high
+nfex-antenna-phased-array-1	RA-X1 Phased Relay Antenna	NearFutureExploration	tel_cassegrainHGA	3	precisionEngineering		ModuleDeployableAntenna;ModuleRealAntenna	high
+nfex-antenna-phased-array-2	RA-X2 Phased Relay Antenna	NearFutureExploration	tel_cassegrainHGA	3	unmannedTech		ModuleDeployableAntenna;ModuleRealAntenna	high
+nfex-antenna-phased-array-3	RA-X3 Phased Relay Antenna	NearFutureExploration	tel_cassegrainHGA	3	advUnmanned		ModuleRealAntenna	high
+nfex-antenna-phased-single-3	PH-3 Phased Array Antenna Element	NearFutureExploration	tel_cassegrainHGA	3	unmannedTech		ModuleRealAntenna	high
+nfex-antenna-reflector-giant-1	RFL-2000 Dish Reflector Array	NearFutureExploration	tel_cassegrainHGA	3	largeUnmanned		ModuleRealAntenna	high
+nfex-antenna-reflector-huge-1	RFL-100 Giant Dish Reflector	NearFutureExploration	tel_cassegrainHGA	3	largeUnmanned		ModuleRealAntenna	high
+nfex-antenna-reflector-large-1	RFL-50 Large Dish Reflector	NearFutureExploration	tel_cassegrainHGA	3	advUnmanned		ModuleRealAntenna	high
+nfex-antenna-reflector-side-1	RFL-1 Dish Reflector	NearFutureExploration	tel_cassegrainHGA	3	precisionEngineering		ModuleRealAntenna	high
+nfex-antenna-reflector-side-2	RFL-2 Medium Dish Reflector	NearFutureExploration	tel_cassegrainHGA	3	electronics		ModuleRealAntenna	high
+nfex-antenna-reflector-side-3	RFL-3 Dish Reflector Array	NearFutureExploration	tel_cassegrainHGA	3	automation		ModuleRealAntenna	high
+nfex-antenna-relay-tdrs-1	RA-0-8 Relay Antenna	NearFutureExploration	tel_cassegrainHGA	3	precisionEngineering		ModuleDeployableAntenna;ModuleRealAntenna	high
+nfex-antenna-relay-tdrs-2	RA-5B Advanced Relay Antenna	NearFutureExploration	tel_cassegrainHGA	3	unmannedTech		ModuleDeployableAntenna;ModuleRealAntenna	high
+nfex-antenna-relay-tiny-1	RA-00-2 Micro-Relay Antenna	NearFutureExploration	tel_cassegrainHGA	3	miniaturization		ModuleRealAntenna	high
+nfex-antenna-rover-2	AX-5 Aerial Micro-Antenna	NearFutureExploration	tel_cassegrainHGA	3	basicScience		ModuleDeployableAntenna;ModuleRealAntenna	high
+nfex-antenna-rover-3	AX-30 High Gain Micro-Antenna	NearFutureExploration	tel_cassegrainHGA	3	miniaturization		ModuleDeployableAntenna;ModuleRealAntenna	high
+nfex-antenna-static-mini-1	DR-1 High Gain Antenna	NearFutureExploration	tel_cassegrainHGA	3	basicScience		ModuleRealAntenna	high
+nfex-antenna-top-dish-1	D-2 Spot Antenna	NearFutureExploration	tel_cassegrainHGA	3	precisionEngineering		ModuleRealAntenna	high
+nfex-antenna-top-dish-2	D-50 Large Spot Antenna	NearFutureExploration	tel_cassegrainHGA	3	unmannedTech		ModuleRealAntenna	high
+restock-antenna-stack-2	Communotron DTS-J1	ReStockPlus	tel_cassegrainHGA	3	precisionEngineering		ModuleRealAntenna	high
+restock-antenna-stack-3	Communotron HG-61	ReStockPlus	tel_cassegrainHGA	3	electronics		ModuleDeployableAntenna;ModuleRealAntenna	high
+restock-relay-radial-2	HG-20 High Gain Antenna	ReStockPlus	tel_cassegrainHGA	3	electrics		ModuleDeployableAntenna;ModuleRealAntenna	high
+rn_surveyor_solar	Surveyor Solar Panels	RN_US_Probes	tel_cassegrainHGA	3	basicScience		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleRealAntenna	high
+sspx-observation-25-1	4.5m Cupola (Large)	StationPartsExpansionRedux	tel_cassegrainHGA	3	advExploration		ModuleScienceContainer;ModuleRealAntenna	high
+vela_high_gain_antenna_srf_1	LK-700 High Gain Antenna	Tantares	tel_cassegrainHGA	3	advLanding		ModuleRealAntenna	high
+ROC-ApolloHGABlockIII	Apollo Block III High Gain Antenna	ROCapsules	tel_phasedArray	5	improvedCapsules		ModuleDeployableAntenna;ModuleRealAntenna	high
+ROC-ApolloHGABlockV	Apollo Block V High Gain Antenna	ROCapsules	tel_phasedArray	5	improvedCapsules		ModuleDeployableAntenna;ModuleRealAntenna	high

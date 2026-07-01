@@ -1,0 +1,19 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+controller1000	KAL-1000 Controller	SquadExpansion	rob_servoActuators	3	advElectrics			high
+hinge_01	G-11 Hinge	SquadExpansion	rob_servoActuators	3	actuators			high
+hinge_01_s	G-00 Hinge	SquadExpansion	rob_servoActuators	3	advConstruction			high
+hinge_03	G-12L Alligator Hinge	SquadExpansion	rob_servoActuators	3	actuators			high
+hinge_03_s	G-01L Alligator Hinge	SquadExpansion	rob_servoActuators	3	advConstruction			high
+hinge_04	G-32W Hinge	SquadExpansion	rob_servoActuators	3	actuators			high
+largeLandingLeg	LT-5 Macro Super Landing Strut	VenStockRevamp	rob_servoActuators	3	heavyLanding		ModuleWheelBase;ModuleWheelSuspension;ModuleWheelDeployment;	high
+miniLandingLeg	LT-05 Micro Landing Strut (DEPRECATED)	Squad	rob_servoActuators	3	survivability		ModuleWheelBase;ModuleWheelSuspension;ModuleWheelDeployment;	high
+piston_01	3P6 Hydraulic Cylinder	SquadExpansion	rob_servoActuators	3	advConstruction			high
+piston_02	1P2 Hydraulic Cylinder	SquadExpansion	rob_servoActuators	3	advConstruction			high
+piston_03	3PT Telescoping Hydraulic Cylinder	SquadExpansion	rob_servoActuators	3	actuators			high
+piston_04	1P4 Telescoping Hydraulic Cylinder	SquadExpansion	rob_servoActuators	3	actuators			high
+rotor_01	EM-16 Light Duty Rotor	SquadExpansion	rob_servoActuators	3	advLanding			high
+rotor_01s	EM-16S Light Duty Rotor	SquadExpansion	rob_servoActuators	3	advLanding			high
+rotor_02	EM-32 Standard Rotor	SquadExpansion	rob_servoActuators	3	fieldScience			high
+rotor_02s	EM-32S Standard Rotor	SquadExpansion	rob_servoActuators	3	fieldScience			high
+rotor_03	EM-64 Heavy Rotor	SquadExpansion	rob_servoActuators	3	advancedMotors			high
+rotor_03s	EM-64S Heavy Rotor	SquadExpansion	rob_servoActuators	3	advancedMotors			high

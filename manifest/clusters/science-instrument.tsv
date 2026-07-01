@@ -1,0 +1,52 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+USFluidSpectroWedge	Mass Spectrometer Unit	UniversalStorage2	mic_vacuumTubes	1	earlyScience		ModuleScienceExperiment	low
+BioCapsule	Advanced Biological Capsule	SXT	mic_integratedCircuit	3	engineering101		ModuleScienceExperiment	low
+InflatableHAB	IKU-03 Kerbal Safety Bubble	VenStockRevamp	mic_integratedCircuit	3	advExploration		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+LMkIIIAircaftFus	Narrow-body airliner fuselage	SXT	mic_integratedCircuit	3	advConstruction		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+RO-FluxgateMagnet	MG03 - Fluxgate Magnetometer Boom	RP-1	mic_integratedCircuit	3	engineering101		DMModuleScienceAnimate	low
+RO-HIRES	VI05 - High Resolution Imaging Device	RP-1	mic_integratedCircuit	3	basicScience		DMModuleScienceAnimate	low
+RO-PMIRR	IR04 - Pressure Modulated Infrared Radiometer (PMIRR)	RP-1	mic_integratedCircuit	3	precisionEngineering		DMModuleScienceAnimate	low
+RO-RPWS	RPWS03 - Radio and Plasma Wave Science (RPWS)	RP-1	mic_integratedCircuit	3	electrics		DMModuleScienceAnimate	low
+RO-VIMS	IS04 - Advanced Infrared Mapping Spectrometer (AIMS)	RP-1	mic_integratedCircuit	3	advExploration		DMModuleScienceAnimate	low
+ROC-DynaCabinMoroz	Dynasoar Crew Cabin	ROCapsules	mic_integratedCircuit	3	OrphanParts		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+SXTProbeGooo	Biological Sample Capsule	SXT	mic_integratedCircuit	3	engineering101		ModuleScienceExperiment	low
+SurveyScanner	M700 Survey Scanner	Squad	mic_integratedCircuit	3	scienceTech			low
+acamar_science_processor_s2_1	Kvant-1 Laboratory	Tantares	mic_integratedCircuit	3	metaMaterials		ModuleScienceContainer;ModuleScienceLab;ModuleScienceConvert	low
+aquila_crew_s1_1	Kristall Crew Compartment 4	Tantares	mic_integratedCircuit	3	advFlightControl		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+aquila_crew_s1p5_2	Kristall Crew Compartment 3	Tantares	mic_integratedCircuit	3	advFlightControl		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+aquila_lab_s1_1	Kvant-2 Laboratory	Tantares	mic_integratedCircuit	3	advFlightControl		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+aquila_lab_s1p5_1	Spektr Laboratory	Tantares	mic_integratedCircuit	3	advFlightControl		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+aquila_lab_s1p5_2	Priroda Laboratory	Tantares	mic_integratedCircuit	3	advFlightControl		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+aquila_sensor_visible_light_telescope_s0_1	Priroda 5 Earth Resources Camera	Tantares	mic_integratedCircuit	3	advExploration		ModuleScienceExperiment	low
+crewCabin	Habitation Module	Squad	mic_integratedCircuit	3	spaceExploration		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+eridani_crew_s2_1	Mir Core Crew Compartment 1	Tantares	mic_integratedCircuit	3	composites		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+mk2CrewCabin	MK2 Crew Cabin	Squad	mic_integratedCircuit	3	highAltitudeFlight		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+mk3CrewCabin	Mk3 Passenger Module	Squad	mic_integratedCircuit	3	heavyAerodynamics		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+rn_ladee_scanner	Ladee/LRO Orbital Scanner	RN_US_Probes	mic_integratedCircuit	3	generalRocketry			low
+ro_TKS_crew_s1p5_2	TKS Crew Compartment 3	Tantares	mic_integratedCircuit	3	advFlightControl		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+ro_kvant-2_crew_s1p5_2	Kvant-2 Crew Compartment 3	Tantares	mic_integratedCircuit	3	advFlightControl		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+ro_priroda_crew_s1p5_2	Priroda Crew Compartment 3	Tantares	mic_integratedCircuit	3	advFlightControl		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+ro_spektr_crew_s1p5_2	Spektr Crew Compartment 3	Tantares	mic_integratedCircuit	3	advFlightControl		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+science_module	PH01 - Early Film Camera	Squad	mic_integratedCircuit	3	basicScience		DMModuleScienceAnimateGeneric	low
+sensorBarometer	Barometer	Squad	mic_integratedCircuit	3	survivability		ModuleScienceExperiment	low
+sensorGravimeter	Orbital Perturbation Experiment	Squad	mic_integratedCircuit	3	advScienceTech		ModuleScienceExperiment	low
+sensorThermometer	Thermometer	Squad	mic_integratedCircuit	3	engineering101		ModuleScienceExperiment	low
+sspx-aquaculture-375-1	6.75m Aquaculture Module	StationPartsExpansionRedux	mic_integratedCircuit	3	advScienceTech		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-expandable-centrifuge-375-1	6.75m Expandable Centrifuge (43m Diameter)	StationPartsExpansionRedux	mic_integratedCircuit	3	metaMaterials		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-expandable-centrifuge-375-2	6.75m Expandable Centrifuge (36m Diameter)	StationPartsExpansionRedux	mic_integratedCircuit	3	metaMaterials		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-expandable-centrifuge-5-1	9m Extendable Centrifuge (43m Diameter)	StationPartsExpansionRedux	mic_integratedCircuit	3	metaMaterials		ModuleScienceLab;ModuleScienceConverter;ModuleScienceExperim	low
+sspx-greenhouse-25-1	4.5m Greenhouse Module	StationPartsExpansionRedux	mic_integratedCircuit	3	scienceTech		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-greenhouse-375-1	6.75m Greenhouse Module	StationPartsExpansionRedux	mic_integratedCircuit	3	advScienceTech		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-greenhouse-5-1	9m Greenhouse	StationPartsExpansionRedux	mic_integratedCircuit	3	experimentalScience		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-inflatable-centrifuge-125-1	2.25m Inflatable Centrifuge (16m Diameter)	StationPartsExpansionRedux	mic_integratedCircuit	3	advExploration		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-inflatable-centrifuge-125-2	2.25m Inflatable Centrifuge (13m Diameter)	StationPartsExpansionRedux	mic_integratedCircuit	3	advExploration		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-inflatable-centrifuge-25-1	4.5m Inflatable Centrifuge (25m Diameter)	StationPartsExpansionRedux	mic_integratedCircuit	3	advMetalworks		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-inflatable-hab-125-1	2.25m Inflatable Habitat (Long)	StationPartsExpansionRedux	mic_integratedCircuit	3	advExploration		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-inflatable-hab-125-2	2.25m Inflatable Habitat (Medium)	StationPartsExpansionRedux	mic_integratedCircuit	3	advExploration		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-inflatable-hab-125-3	2.25m Inflatable Habitat (Short)	StationPartsExpansionRedux	mic_integratedCircuit	3	advExploration		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-inflatable-hab-25-1	4.5m Inflatable Habitat (Long)	StationPartsExpansionRedux	mic_integratedCircuit	3	advMetalworks		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	low
+sspx-lab-375-1	6.75m Station Science Lab	StationPartsExpansionRedux	mic_integratedCircuit	3	advScienceTech		ModuleScienceContainer;ModuleScienceLab;ModuleScienceConvert	low
+sspx-lab-5-1	9m Station Science Lab	StationPartsExpansionRedux	mic_integratedCircuit	3	experimentalScience		ModuleScienceContainer;ModuleScienceExperiment;ModuleScience	low
+sspx-science-1875-1	3.38m Science Module	StationPartsExpansionRedux	mic_integratedCircuit	3	spaceExploration		ModuleScienceContainer;ModuleScienceLab;ModuleScienceConvert	low
+ROC-ApolloMissionModule	Apollo Block III+ Mission Module	ROCapsules	mic_photolithography	5	improvedCapsules		ModuleFuelTanks;ModuleScienceExperiment;ModuleScienceContain	low
+ROC-ApolloMissionModule4	Apollo Block IV Mission Module	ROCapsules	mic_photolithography	5	improvedCapsules		ModuleFuelTanks;ModuleScienceExperiment;ModuleScienceContain	low

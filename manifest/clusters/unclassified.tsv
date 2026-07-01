@@ -1,0 +1,178 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+GearFixed	LY-01 Fixed Landing Gear	Squad	REVIEW		start		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	low
+GearFree	LY-05 Steerable Landing Gear	Squad	REVIEW		start		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelSte	low
+GearLarge	LY-99 Extra Large Landing Gear	Squad	REVIEW		heavyLanding		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	low
+GearLargeSpaceplane	LY-99 Extra Large Landing Gear (Spaceplane)	Squad	REVIEW		heavyLanding		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	low
+GearMedium	LY-60 Large Landing Gear	Squad	REVIEW		heavyLanding		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	low
+GearMediumSpaceplane	LY-60 Large Landing Gear (Spaceplane)	Squad	REVIEW		heavyLanding		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	low
+GearSmall	LY-35 Medium Landing Gear	Squad	REVIEW		advLanding		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelSte	low
+GearSmallSpaceplane	LY-35 Medium Landing Gear (Spaceplane)	Squad	REVIEW		advLanding		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelSte	low
+GooExperiment	Biological Sample Capsule	Squad	REVIEW		start			low
+KF-ALG-Large	Adjustable Landing Gear (Large)	KerbalFoundries	REVIEW		heavyLanding		KSPWheelBase;KSPWheelAdjustableGear;KSPWheelSteering;KSPWhee	low
+KF-ALG-Large-Spaceplane	Adjustable Landing Gear (Large) (Spaceplane)	KerbalFoundries	REVIEW		heavyLanding		KSPWheelBase;KSPWheelAdjustableGear;KSPWheelSteering;KSPWhee	low
+KF-ALG-Medium	Adjustable Landing Gear (Medium)	KerbalFoundries	REVIEW		advLanding		KSPWheelBase;KSPWheelAdjustableGear;KSPWheelSteering;KSPWhee	low
+KF-ALG-Medium-Spaceplane	Adjustable Landing Gear (Medium) (Spaceplane)	KerbalFoundries	REVIEW		advLanding		KSPWheelBase;KSPWheelAdjustableGear;KSPWheelSteering;KSPWhee	low
+KF-ALG-Small	Adjustable Landing Gear (Small)	KerbalFoundries	REVIEW		landing		KSPWheelBase;KSPWheelAdjustableGear;KSPWheelSteering;KSPWhee	low
+KF-ALG-Small-Spaceplane	Adjustable Landing Gear (Small) (Spaceplane)	KerbalFoundries	REVIEW		landing		KSPWheelBase;KSPWheelAdjustableGear;KSPWheelSteering;KSPWhee	low
+KF-ALG-SmallSide	Adjustable Landing Gear (Small - Side)	KerbalFoundries	REVIEW		landing		KSPWheelBase;KSPWheelAdjustableGear;KSPWheelSteering;KSPWhee	low
+KF-ALG-SmallSide-Spaceplane	Adjustable Landing Gear (Small - Side) (Spaceplane)	KerbalFoundries	REVIEW		landing		KSPWheelBase;KSPWheelAdjustableGear;KSPWheelSteering;KSPWhee	low
+KF-ScrewDrive	KF Screw Drive	KerbalFoundries	REVIEW		advancedMotors		KSPWheelSidedModel;KSPWheelBase;KSPWheelRotation;KSPWheelBra	low
+KF-Skid	KF Skid	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelSuspension;KSPWheelDamage;KSPWheelDustE	low
+KF-TrackInverting	KF-RBI Inverting Track	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	low
+KF-TrackLong	KF Long Track	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	low
+KF-TrackMedium	KF Medium track	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	low
+KF-TrackMole	KF-RBI Mole Track	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	low
+KF-TrackSimple	KF Simple Track	KerbalFoundries	REVIEW		advancedMotors		KSPWheelSidedModel;KSPWheelBase;KSPWheelRotation;KSPWheelSus	low
+KF-TrackSmall	KF Small track	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelBra	low
+KF-TrackSurface	KF Surface track	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSteering;KSPWheelSuspe	low
+KF-TrackTiny	KF RBI Tiny Track	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelTra	low
+KF-WheelLarge	KF Large Wheel	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelSte	low
+KF-WheelMedium	KF Medium Wheel	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelSte	low
+KF-WheelSmall	KF Small Rover Wheel	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelSte	low
+KF-WheelTiny	KF  Tiny Rover Wheel	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelMot	low
+KF-WheelTruck-Dual	KF Truck Wheel - Dual	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelSte	low
+KF-WheelTruck-Single	KF Truck Wheel - Single	KerbalFoundries	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelSte	low
+LGLadderUtility	MK III Mobility Enhancer	VenStockRevamp	REVIEW		spaceExploration			low
+LiquefactionArray	Liquefaction Array	KerbalismConfig	REVIEW		lifeSupportNF			low
+Liquifier	Liquifier	KerbalismConfig	REVIEW		advancedLifeSupport			low
+LongLadder	Pegasus III Mobility Enhancer	VenStockRevamp	REVIEW		spaceExploration			low
+MK1Cargobay	1.25m Cargo Bay	VenStockRevamp	REVIEW		aerodynamicSystems			low
+MedLadder	Pegasus II Mobility Enhancer	VenStockRevamp	REVIEW		spaceExploration			low
+MedLadderUtility	MK II Mobility Enhancer	VenStockRevamp	REVIEW		spaceExploration			low
+OrbitalScanner	M4435 Narrow-Band Scanner	Squad	REVIEW		experimentalScience			low
+PotatoComet	A potato like comet	Squad	REVIEW		Unresearcheable			low
+PotatoRoid	A potato like rock	Squad	REVIEW		Unresearcheable			low
+RO-AdvancedImager	VI04 - Advanced Visible Imaging Device	RP-1	REVIEW		earlyScience			low
+RO-BasicTVCamera	VI02 - Basic TV Camera	RP-1	REVIEW		earlyScience			low
+RO-DigitalCamera	PH05 - Ultra Resolution Digital Imaging Camera	RP-1	REVIEW		specializedElectrics			low
+RO-EarlyMagnet	MG01 - Early Magnetometer	RP-1	REVIEW		earlyScience			low
+RO-EarlyTVCamera	VI01 - Early Television Camera	RP-1	REVIEW		earlyScience			low
+RO-GeigerMuller	CR01 - Geiger-Muller Counter	RP-1	REVIEW		earlyScience			low
+RO-HRIRRadiometer	IR02 - High-Resolution Infrared Radiometer	RP-1	REVIEW		basicScience			low
+RO-HeliumMagnet	MG02 - Helium Magnetometer Boom	RP-1	REVIEW		earlyScience			low
+RO-HighResFilmCamera	PH04 - High Resolution Film Camera	RP-1	REVIEW		specializedElectrics			low
+RO-IRIS	IS01 - Infrared Interferometer Spectrometer (IRIS)	RP-1	REVIEW		basicScience			low
+RO-IRRadiometer	IR01 - Infrared Radiometer	RP-1	REVIEW		basicScience			low
+RO-ImprovedTVCamera	VI03 - Improved TV Camera	RP-1	REVIEW		earlyScience			low
+RO-IonMassSpectrometer	MS01 - Ion Mass Spectrometer	RP-1	REVIEW		basicScience			low
+RO-MIMS	MS02 - Magnetic Ion-Mass Spectrometer (MIMS)	RP-1	REVIEW		basicScience			low
+RO-MK1Cargobay	Mk1 Cargo Bay	VenStockRevamp	REVIEW		aerodynamicSystems			low
+RO-Micrometeorite	MM01 - Micrometeorite Detector	RP-1	REVIEW		basicScience			low
+RO-NIMS	IS03 - Near Infrared Mapping Spectrometer (NIMS) and Ultraviolet Spectrometer (UVS)	RP-1	REVIEW		basicScience			low
+RO-PlasmaWave	RPWS01 - Plasma Wave Detector	RP-1	REVIEW		earlyScience			low
+RO-QuadropoleMassSpectrometer	MS03 - Quadropole Mass Spectrometer	RP-1	REVIEW		basicScience			low
+RO-SWPlasmaAnalyzer	RPWS02 - Solar Wind Plasma Analyzer	RP-1	REVIEW		earlyScience			low
+RO-ScintillationCounter	CR02 - Scintillation Counter Cosmic Ray Telescope	RP-1	REVIEW		earlyScience			low
+RO-SurfaceSampleScoop	Soil Mechanics Surface Sampler	RP-1	REVIEW		earlyScience			low
+RO-TwoChannelIR	IR03 - Two-Channel Infrared Radiometer	RP-1	REVIEW		basicScience			low
+RO-UVSpectrometer	IS02 - Ultraviolet Spectrometer	RP-1	REVIEW		basicScience			low
+ROC-ApolloDockingLightBDB	Apollo Docking Spotlight	ROCapsules	REVIEW		start			low
+ROC-ApolloEVALightBDB	Apollo EVA Spotlight	ROCapsules	REVIEW		start			low
+ROC-DynaBayMoroz	Dynasoar Cargo Bay	ROCapsules	REVIEW		OrphanParts			low
+ROC-DynaCrewTubeMoroz	Dyna Crew Tube	ROCapsules	REVIEW		OrphanParts			low
+ROC-DynaSkidFront	Dynasoar Fore Skid	ROCapsules	REVIEW		landing		KSPWheelBase;KSPWheelDeployment;KSPWheelSuspension;KSPWheelS	low
+ROC-DynaSkidRear	Dynasoar Aft Skid	ROCapsules	REVIEW		landing		KSPWheelBase;KSPWheelDeployment;KSPWheelSuspension;KSPWheelB	low
+ROE-UpgradeIcon-Coatl	Upgrades	ROEngines	REVIEW		HIDDEN			low
+RO_ServiceBay_300	Service Bay [3m]	Squad	REVIEW		commandModules			low
+RP0-SampleReturnCapsule	Science Sample Return Capsule (DEPRECATED)	RP-1	REVIEW		unlockParts		ModuleScienceContainer	low
+RP0Cherenkov	CD01 - Cherenkov Cosmic Ray Detector	RP-1	REVIEW		basicScience			low
+RP0HumanRatedFlag	Human Rated Flag	Squad	REVIEW		composites			low
+SMLadderUtility	MK I Mobility Enhancer	VenStockRevamp	REVIEW		spaceExploration			low
+SXTradialWindow	Airliner Window	SXT	REVIEW		generalConstruction			low
+ScienceBoxUpgrade	Hard Drive Upgrade	Squad	REVIEW		HIDDEN		ModuleScienceContainer	low
+ServiceBay_125_v2	Service Bay [2m]	Squad	REVIEW		survivability			low
+ServiceBay_250_v2	Service Bay [4m]	Squad	REVIEW		commandModules			low
+SmallGearBay	LY-10 Small Landing Gear	Squad	REVIEW		landing		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelSte	low
+SmallGearBaySpaceplane	LY-10 Small Landing Gear (Spaceplane)	Squad	REVIEW		landing		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelSte	low
+SmallPointLight	MK 4 Point Light	VenStockRevamp	REVIEW		miniaturization			low
+SmallSpotLight	MK 3 Mini Spotlight	VenStockRevamp	REVIEW		miniaturization			low
+SmallStripLight	MK 5 Strip Light	VenStockRevamp	REVIEW		miniaturization			low
+SurfaceScanner	Surface Scanning Module	Squad	REVIEW		scienceTech			low
+USAccelGravWedge	Orbital Science Unit	UniversalStorage2	REVIEW		scienceHuman		USSimpleScience	low
+USGooBayWedge	Biological Sample Capsule	UniversalStorage2	REVIEW		earlyScience		USAdvancedScience	low
+USMatBayWedge	Crewed Experiment Bay	UniversalStorage2	REVIEW		scienceHuman		USAdvancedScience	low
+USThermoBaroWedge	Atmospheric Science Unit	UniversalStorage2	REVIEW		earlyScience		USSimpleScience	low
+aerocam	Aerocam	HullCameraVDS	REVIEW		start			low
+aerocam180	Aerocam 180	HullCameraVDS	REVIEW		start			low
+aquila_sensor_synthetic_aperture_radar_srf_1	Travers Synthetic Aperture Radar	Tantares	REVIEW		advExploration			low
+ca_aacs	CA-AACS Advanced Attitude Control System	CoatlAerospace	REVIEW		electronics			low
+ca_mer_leu	Cassini Lower Equipment Unit	CoatlAerospace	REVIEW		specializedConstruction			low
+ca_startrack	CA-ACS 'StarTrack' Attitude Control System	CoatlAerospace	REVIEW		specializedControl			low
+domeLight1	Domelight Mk1	Squad	REVIEW		electrics			low
+evaChute	Personal Parachute	Squad	REVIEW		start			low
+evaCylinder	EVA Fuel Cylinders	Squad	REVIEW		advExploration			low
+evaJetpack	EVA Jetpack	Squad	REVIEW		start			low
+flag		Squad	REVIEW					low
+foldingRadLarge	EATCS Retractable Radiator (Large)	Squad	REVIEW		largeElectrics		ModuleDeployableRadiator;ModuleSystemHeatRadiator	low
+foldingRadMed	EATCS Retractable Radiator (Medium)	Squad	REVIEW		advElectrics		ModuleDeployableRadiator;ModuleSystemHeatRadiator	low
+foldingRadSmall	EATCS Retractable Radiator (Small)	Squad	REVIEW		electrics		ModuleDeployableRadiator;ModuleSystemHeatRadiator	low
+galileo_aprobe_bot	DEPRECATED - Galileo Atmospheric Probe Bottom (DEPRECATED)	RN_US_Probes	REVIEW		generalRocketry			low
+groundAnchor	Stamp-O-Tron Ground Anchor	Squad	REVIEW		specializedConstruction			low
+groundLight1	Work Lamp (Small)	Squad	REVIEW		spaceExploration			low
+groundLight2	Work Lamp (Stand)	Squad	REVIEW		spaceExploration			low
+hc_booster	BoosterCam	HullCameraVDS	REVIEW		start			low
+hc_kazzelblad	BoosterCam	HullCameraVDS	REVIEW		start			low
+hc_launchcam	KSC Launchpad Camera	HullCameraVDS	REVIEW		start			low
+hc_navcam	NavCam	HullCameraVDS	REVIEW		start			low
+hc_nightvision	Nightvisioncam	HullCameraVDS	REVIEW		start			low
+hc_scicam	ScienceCam	HullCameraVDS	REVIEW		start			low
+hc_wideangle	Wide Angle Cam	HullCameraVDS	REVIEW		start			low
+kerbalism-ISRU	ISRU	KerbalismConfig	REVIEW		lifesupportNF			low
+kerbalism-chemicalplant	Chemical Plant	KerbalismConfig	REVIEW		spaceExploration			low
+kerbalism-drill	Regolith Harvester	Squad	REVIEW		longTermLifeSupport			low
+kerbalism-large-drill	Large Regolith Harvester	Squad	REVIEW		efficientLifeSupport			low
+kerbalism-lifesupportmodule	External ECLSS Module	KerbalismConfig	REVIEW		basicScience			low
+kerbalism-miniISRU	Mini ISRU	KerbalismConfig	REVIEW		advancedLifeSupport			low
+kerbpro	KerbPro	HullCameraVDS	REVIEW		start			low
+ladder1	Pegasus I Mobility Enhancer	Squad	REVIEW		spaceExploration			low
+landingLeg1	LT-1 Landing Struts	Squad	REVIEW		landing		KSPWheelBase;KSPWheelSuspension;KSPWheelBrakes;KSPWheelDeplo	low
+landingLeg1-2	LT-2 Landing Strut	Squad	REVIEW		advLanding		KSPWheelBase;KSPWheelSuspension;KSPWheelBrakes;KSPWheelDeplo	low
+luna9_airbag_cvr	Luna 9/13 Airbag Cover	RN_Soviet_Probes	REVIEW		generalRocketry			low
+mk2CargoBayL	Mk2 Cargo Bay CRG-08	Squad	REVIEW		highAltitudeFlight			low
+mk2CargoBayS	Mk2 Cargo Bay CRG-04	Squad	REVIEW		supersonicFlight			low
+mk3CargoBayL	Mk3 Cargo Bay CRG-100	Squad	REVIEW		experimentalAerodynamics			low
+mk3CargoBayM	Mk3 Cargo Bay CRG-50	Squad	REVIEW		heavyAerodynamics			low
+mk3CargoBayS	Mk3 Cargo Bay CRG-25	Squad	REVIEW		heavyAerodynamics			low
+mk3CargoRamp	Mk3 Cargo Ramp	Squad	REVIEW		heavyAerodynamics			low
+mumech_hullcam	Basic Hull Camera Deluxe	HullCameraVDS	REVIEW		start			low
+navLight1	Navigation Light Mk1	Squad	REVIEW		aviation			low
+radPanelEdge	EATCS Radiator Panel (Fin)	Squad	REVIEW		basicScience		ModuleSystemHeatRadiator	low
+radPanelLg	EATCS Radiator Panel (Long)	Squad	REVIEW		basicScience		ModuleSystemHeatRadiator	low
+radPanelSm	EATCS Radiator Panel (Short)	Squad	REVIEW		survivability		ModuleSystemHeatRadiator	low
+restock-nosecone-1875-1	Protective Rocket Nose Mk18	ReStockPlus	REVIEW		aerodynamicSystems			low
+rocketNoseCone_v2	Protective Rocket Nose Cone Mk7	Squad	REVIEW		advConstruction			low
+rotoServo_00	Rotation Servo M-06	SquadExpansion	REVIEW		advConstruction			low
+rotoServo_02	Rotation Servo F-12	SquadExpansion	REVIEW		actuators			low
+rotoServo_03	Rotation Servo M-12	SquadExpansion	REVIEW		actuators			low
+rotoServo_04	Rotation Servo M-25	SquadExpansion	REVIEW		actuators			low
+roverWheel1	RoveMax Model M1	Squad	REVIEW		fieldScience		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelDam	low
+roverWheel2	RoveMax Model S2	Squad	REVIEW		spaceExploration		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelDam	low
+roverWheel3	RoveMax Model XL3	Squad	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelDam	low
+rtg-0625	DEPRECATED (DEPRECATED)	NearFutureElectrical	REVIEW		experimentalElectrics			low
+seatExternalCmd	EAS-1 External Command Seat	Squad	REVIEW		fieldScience			low
+sensorAtmosphere	MS04 - Gas Chromatograph-Mass Spectrometer (GC/MS)	Squad	REVIEW		scienceTech			low
+spotLight1	Illuminator Mk1	Squad	REVIEW		electrics			low
+spotLight1_v2	Illuminator Mk1	Squad	REVIEW		electrics			low
+spotLight2	Illuminator Mk2	Squad	REVIEW		electrics			low
+spotLight2_v2	Illuminator Mk2	Squad	REVIEW		electrics			low
+spotLight3	Spotlight Mk1	Squad	REVIEW		electrics			low
+sspx-adjusting-base-125-1	2.25m Adjustable Base Frame	StationPartsExpansionRedux	REVIEW		advLanding			low
+sspx-adjusting-base-25-1	4.5m Adjustable Base Frame	StationPartsExpansionRedux	REVIEW		heavyLanding			low
+sspx-adjusting-base-375-1	6.75m Adjustable Base Frame	StationPartsExpansionRedux	REVIEW		heavyLanding			low
+sspx-adjusting-base-cradle-125-1	2.25m Adjustable Base Cradle	StationPartsExpansionRedux	REVIEW		advMetalworks			low
+sspx-adjusting-base-cradle-25-1	4.5m Adjustable Base Cradle	StationPartsExpansionRedux	REVIEW		advMetalworks			low
+sspx-adjusting-base-cradle-375-1	6.75m Adjustable Base Cradle	StationPartsExpansionRedux	REVIEW		advMetalworks			low
+sspx-adjusting-stairs-1	Extensible Stairs	StationPartsExpansionRedux	REVIEW		advLanding			low
+sspx-airlock-125-1	2.25m Service Airlock	StationPartsExpansionRedux	REVIEW		spaceExploration		ModuleScienceContainer	low
+sspx-cargo-125-1	2.25m Storage Module	StationPartsExpansionRedux	REVIEW		specializedConstruction			low
+sspx-cargo-25-1	4.5m Storage Module	StationPartsExpansionRedux	REVIEW		advMetalworks			low
+sspx-cargo-25-2	4.5m Storage Module (Short)	StationPartsExpansionRedux	REVIEW		advMetalworks			low
+sspx-cupola-greenhouse-125-1	2.25m Greenhouse Dome	StationPartsExpansionRedux	REVIEW		advScienceTech		ModuleScienceContainer	low
+sspx-cupola-telescope-125-1	2.25m Telescope Dome	StationPartsExpansionRedux	REVIEW		advScienceTech		ModuleScienceContainer	low
+sspx-dome-5-1	9m Dome	StationPartsExpansionRedux	REVIEW		advScienceTech			low
+stripLight1	Lightstrip Mk1	Squad	REVIEW		advElectrics			low
+telescopicLadder	Kelus Mobility Enhancer	Squad	REVIEW		advExploration			low
+telescopicLadderBay	Kelus-LV Bay Mobility Enhancer	Squad	REVIEW		advExploration			low
+vela_landing_leg_srf_1	LK-700 Landing Leg	Tantares	REVIEW		advLanding			low
+vela_landing_leg_srf_2	LK-700 Landing Leg	Tantares	REVIEW		advLanding			low
+wheelMed	TR-2L Ruggedized Vehicular Wheel	Squad	REVIEW		advancedMotors		KSPWheelBase;KSPWheelRotation;KSPWheelSuspension;KSPWheelDam	low

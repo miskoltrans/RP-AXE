@@ -1,0 +1,16 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+RO-reactor-BES5	BES-5 Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	experimentalElectrics		ModuleSystemHeatFissionReactor	high
+RO-reactor-RAPIDL	RAPID-L Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	experimentalElectrics		ModuleSystemHeatFissionReactor	high
+RO-reactor-SAFE400	NASA SAFE-400 Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	experimentalElectrics		ModuleSystemHeatFissionReactor	high
+RO-reactor-TOPAZI	TOPAZ-I Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	experimentalElectrics		ModuleSystemHeatFissionReactor	high
+RO-reactor-TOPAZII	TOPAZ-II Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	experimentalElectrics		ModuleSystemHeatFissionReactor	high
+RO-reactor-kilopower	NASA Kilopower 10kWe Reactor	NearFutureElectrical	nuc_fissionReactor	6	experimentalElectrics		ModuleSystemHeatFissionReactor	high
+RO-reactor-prometheus	Prometheus 200 KWe Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	veryHeavyRocketry		ModuleSystemHeatFissionReactor	high
+RO-reactor-snap10a	NASA SNAP-10A Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	experimentalElectrics		ModuleSystemHeatFissionReactor	high
+RO-reactor-snap2	NASA SNAP-2 Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	experimentalElectrics		ModuleSystemHeatFissionReactor	high
+RO-reactor-snap50	NASA SNAP-50 35 kWe Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	veryHeavyRocketry		ModuleSystemHeatFissionReactor	high
+RO-reactor-snap50-300	NASA SNAP-50 300 kWe Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	veryHeavyRocketry		ModuleSystemHeatFissionReactor	high
+RO-reactor-snap8	NASA SNAP-8 Nuclear Reactor	NearFutureElectrical	nuc_fissionReactor	6	nuclearPropulsion		ModuleSystemHeatFissionReactor	high
+reactor-0625	DEPRECATED (DEPRECATED)	NearFutureElectrical	nuc_fissionReactor	6	experimentalElectrics		ModuleSystemHeatFissionReactor	high
+reactor-125	DEPRECATED (DEPRECATED)	NearFutureElectrical	nuc_fissionReactor	6	nuclearPropulsion		ModuleSystemHeatFissionReactor	high
+reactor-25	DEPRECATED (DEPRECATED)	NearFutureElectrical	nuc_fissionReactor	6	veryHeavyRocketry		ModuleSystemHeatFissionReactor	high

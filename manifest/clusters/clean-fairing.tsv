@@ -1,0 +1,25 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+KzFlatAdapter	Interstage Fairing Adapter (Flat)	ProceduralFairings	aero_proceduralFairings	4	advConstruction			high
+KzFlatBoattail	Boattail Adapter (Flat)	ProceduralFairings	aero_proceduralFairings	4	advConstruction			high
+KzInterstageAdapter2	IB - Procedural Interstage Fairing Adapter	ProceduralFairings	aero_proceduralFairings	4	advConstruction			high
+KzProcFairingSide1	Procedural Fairing	ProceduralFairings	aero_proceduralFairings	4	start			high
+KzProcFairingSide1_TU	Procedural Fairing (Recolorable)	ProceduralFairings	aero_proceduralFairings	4	start			high
+KzProcFairingSide2	Procedural Fairing (Conic) (Deprecated)	ProceduralFairings	aero_proceduralFairings	4	start			high
+KzProcFairingSide2_TU	Procedural Fairing (Conic) (Deprecated) (Recolorable)	ProceduralFairings	aero_proceduralFairings	4	start			high
+KzResizableFairingBase	FB - Procedural Fairing Base	ProceduralFairings	aero_proceduralFairings	4	aviation			high
+KzResizableFairingBaseRing	FB - Procedural Fairing Base Ring	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+KzThrustPlate	Thrust Plate [Procedural]	ProceduralFairings	aero_proceduralFairings	4	advConstruction			high
+RSBRibbedBase	FB - Procedural Ribbed Payload Adapter	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+RSBRibbedBase_Boattail	Boattail Adapter (Ribbed)	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+RSBRibbedBase_Interstage	IB - Procedural Ribbed Interstage Adapter	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+RSBTrussBase	FB - Procedural Truss Payload Adapter	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+RSBTrussBase_Boattail	Boattail Adapter (Truss)	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+RSBTrussBase_Interstage	IB - Procedural Truss Interstage Adapter	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+SSTUBase	FB - Procedural Hollow Truss Payload Adapter	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+SSTUBase_Boattail	Boattail Adapter (Hollow Truss)	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+SSTUBase_Interstage	IB - Procedural Hollow Truss Interstage Adapter	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+SSTUHollowRing	FB - Procedural Hollow Payload Adapter Ring	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+SSTUHollowRing_Boattail	Boattail Adapter (Hollow Ring)	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+SSTUHollowRing_Interstage	IB - Procedural Hollow Interstage Ring	ProceduralFairings	aero_proceduralFairings	4	aerodynamicSystems			high
+acamar_adapter_s2_s0p5_1	Kvant-1 Crew Compartment 1	Tantares	aero_proceduralFairings	4	metaMaterials		ModuleFuelTanks	high
+eridani_crew_s2_s1p5_1	Mir Core Crew Compartment 2	Tantares	aero_proceduralFairings	4	composites		ModuleFuelTanks	high

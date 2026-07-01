@@ -1,0 +1,10 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+acamar_crew_s2_1	Kvant-1 Crew Compartment 2	Tantares	gnc_inertialNav	3	metaMaterials		ModuleScienceContainer;ModuleReactionWheel;ModuleFuelTanks	high
+advSasModule	Advanced Inline Stabilizer	Squad	gnc_inertialNav	3	advFlightControl		ModuleReactionWheel	high
+asasmodule1-2	Advanced Reaction Wheel Module, Large	Squad	gnc_inertialNav	3	specializedControl		ModuleReactionWheel	high
+ca_rw_large	RW-4A Radial Reaction Wheel Assembly	CoatlAerospace	gnc_inertialNav	3	specializedControl		ModuleReactionWheel	high
+ca_rw_medium	RW-2A Radial Reaction Wheel Assembly	CoatlAerospace	gnc_inertialNav	3	advFlightControl		ModuleReactionWheel	high
+ca_rw_small	RW4 Radial Reaction Wheel	CoatlAerospace	gnc_inertialNav	3	flightControl		ModuleReactionWheel	high
+ca_rw_xsmall	RW1 Radial Reaction Wheel	CoatlAerospace	gnc_inertialNav	3	miniaturization		ModuleReactionWheel	high
+restock-reactionwheel-radial-1	Radial Reaction Wheel (Large)	ReStockPlus	gnc_inertialNav	3	flightControl		ModuleReactionWheel	high
+sasModule	Small Inline Reaction Wheel	Squad	gnc_inertialNav	3	flightControl		ModuleReactionWheel	high

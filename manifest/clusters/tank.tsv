@@ -1,0 +1,111 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+ROC-ApolloSMB2BDB	Apollo Service Module (SM)	ROCapsules	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROC-ApolloSMBlockIII	Apollo Block III+ Service Module	ROCapsules	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROC-ApolloSMDBDBlockIV	Apollo Block IV Service Module	ROCapsules	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROC-D2MissionModule1	D-2 Block I Mission Module	ROCapsules	met_weldedSteel	1	unlockParts		ModuleScienceContainer;ModuleFuelTanks	med
+ROC-D2MissionModule2	D-2 Block II Mission Module	ROCapsules	met_weldedSteel	1	unlockParts		ModuleScienceContainer;ModuleFuelTanks	med
+ROC-LEMDescentBDB	Apollo LM Descent Stage	ROCapsules	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-AtlasTank-Balloon	Atlas Modular Tank (Balloon)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-AtlasTank-Integral	Atlas Modular Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-AtlasTank-Separate	Atlas Modular Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-BalloonTank-New	Modular Tank (Balloon)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-BoosterTank-Integral	Modular Booster Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-BoosterTank-Separate	Modular Booster Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-GenericTank-Integral	Modular Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-GenericTank-Separate	Modular Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-KatnissTank-Balloon	Katniss Parts Pack Tank (Balloon)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-KatnissTank-Integral	Katniss Parts Pack Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-KatnissTank-Separate	Katniss Parts Pack Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-LanderTank-Integral	Modular Landing Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-LanderTank-SM	Modular Landing Tank (Service Module)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-LanderTank-Separate	Modular Landing Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-MiscTank-Balloon	Another Modular Tank (Balloon)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-MiscTank-Integral	Another Modular Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-MiscTank-Radial-Integral	Another Modular Radial Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-MiscTank-Radial-Separate	Another Modular Radial Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-MiscTank-Separate	Another Modular Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-MiscTank-ServiceModule	Another Modular Tank (Service Module)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-MiscTank-Shielded	Another Modular Tank (Shielded)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-Nose-Integral	Modular Nose Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-Nose-Separate	Modular Nose Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-Nose-ServiceModule	Modular Nose Tank (Service Module)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-RadialTank-Integral	Radial Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-RadialTank-Separate	Radial Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-ServiceModule	Modular Tank (Service Module)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-SphericalTank-Integral	Spherical Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-SphericalTank-Separate	Spherical Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-ToroidalTank-Integral	Modular Toroidal Tank (Isogrid Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+ROT-ToroidalTank-Separate	Modular Toroidal Tank (Conventional Structure)	ROTanks	met_weldedSteel	1	unlockParts		ModuleFuelTanks	med
+LFUELM3	PPD-SM1600 Service Module	SXT	met_chemMilling	3	fuelSystems		ModuleFuelTanks	med
+LSVCM3	PPD-SM400 Service Module	SXT	met_chemMilling	3	specializedControl		ModuleFuelTanks	med
+LSmallFuelMod	PPD-SM555 Service Module	SXT	met_chemMilling	3	fuelSystems		ModuleFuelTanks	med
+RO-Mk1Fuselage	Mk1 Fuselage	Squad	met_chemMilling	3	aviation		ModuleFuelTanks	med
+RO-Mk1FuselagePres	Mk1 Fuselage (Pressurized)	Squad	met_chemMilling	3	generalConstruction		ModuleFuelTanks	med
+RO-ProcTankSpaceplane	Tank [Procedural, Shielded]	ProceduralParts	met_chemMilling	3	basicRocketry		ModuleFuelTanks	med
+RO-RFTank-BalloonNew	Procedural Tank (Balloon)	ProceduralParts	met_chemMilling	3	basicRocketry		ModuleFuelTanks	med
+RO-RFTank-Integral	Procedural Tank (Isogrid Structure)	ProceduralParts	met_chemMilling	3	basicRocketry		ModuleFuelTanks	med
+RO-RFTank-SM	Procedural Tank (Service Module)	ProceduralParts	met_chemMilling	3	basicRocketry		ModuleFuelTanks	med
+RO-RFTank-Separate	Procedural Tank (Conventional Structure)	ProceduralParts	met_chemMilling	3	basicRocketry		ModuleFuelTanks	med
+RO-fft20mMMOtank	20 m "Mini-Mag" Orion Pulse Unit Magazine	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems		ModuleFuelTanks	med
+ROC-DynaAdapterBigMoroz	Dynasoar Aft Bay	ROCapsules	met_chemMilling	3	OrphanParts		ModuleFuelTanks	med
+ReleaseValve	FTE-1 Drain Valve	Squad	met_chemMilling	3	fuelSystems			med
+SXTOsualHullLarge	An-124 Hull section	SXT	met_chemMilling	3	advConstruction		ModuleFuelTanks	med
+SXTOsualRadHull	An-124 Hull section Radial	SXT	met_chemMilling	3	metaMaterials		ModuleFuelTanks	med
+SXTOsualRadHullEnd	An-124 Hull section Radial End	SXT	met_chemMilling	3	metaMaterials		ModuleFuelTanks	med
+SXTSmallFuselage	0.625m Fuselage (Pressurized)	SXT	met_chemMilling	3			ModuleFuelTanks	med
+USRadialTanks	Universal Storage: Radial Tank	UniversalStorage2	met_chemMilling	3	survivability		ModuleFuelTanks	med
+adapterSize2-Size1	C7 Brand Adapter - 2.5m to 1.25m	Squad	met_chemMilling	3	advFuelSystems		ModuleFuelTanks	med
+adapterSize2-Size1Slant	C7 Brand Adapter Slanted - 2.5m to 1.25m	Squad	met_chemMilling	3	advFuelSystems		ModuleFuelTanks	med
+aquila_node_adapter_s1_1	Kristall Docking Node Adapter	Tantares	met_chemMilling	3	advFlightControl		ModuleFuelTanks	med
+aquila_node_s0p5_1	Mir Core Docking Node	Tantares	met_chemMilling	3	advFlightControl		ModuleFuelTanks	med
+aquila_structural_cone_s1p5_1	Spektr Top Cone	Tantares	met_chemMilling	3	advFlightControl		ModuleFuelTanks	med
+ca_tank_mp_s	CA-MT10 Propellant Tank (Pressurized)	CoatlAerospace	met_chemMilling	3	generalRocketry		ModuleFuelTanks	med
+ca_vor_mptank	CAE-MT12 Propellant Tank (Pressurized)	CoatlAerospace	met_chemMilling	3	generalRocketry		ModuleFuelTanks	med
+ca_vor_tank	4MV-1/2 Spacecraft Bus Propellant Tank	CoatlAerospace	met_chemMilling	3	fuelSystems		ModuleFuelTanks	med
+fft-fueltank-fission-25-1	10 m Fissiles Tank (Long)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems		ModuleFuelTanks	med
+fft-fueltank-fission-25-2	10 m Fissiles Tank (Medium)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems		ModuleFuelTanks	med
+fft-fueltank-fission-25-3	10 m Fissiles Tank (Short)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems		ModuleFuelTanks	med
+fft-fueltank-fission-5-1	20 m Fissiles Tank (Long)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems		ModuleFuelTanks	med
+fft-fueltank-fission-5-2	20 m Fissiles Tank (Short)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems		ModuleFuelTanks	med
+fft-fueltank-fission-radial-1	3.2 m Fissiles Tank (Long)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems		ModuleFuelTanks	med
+fft-fueltank-fission-radial-2	3.2 m Fissiles Tank (Medium)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems		ModuleFuelTanks	med
+fft-fueltank-fission-radial-3	3.2 m Fissiles Tank (Short)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems		ModuleFuelTanks	med
+fft-fueltank-pulseunits-5-1	Orion Pulse Unit Magazine (Small)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems			med
+fft-fueltank-pulseunits-5-2	Orion Pulse Unit Magazine (Medium)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems			med
+fft-fueltank-pulseunits-5-3	Orion Pulse Unit Magazine (Large)	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems			med
+fft-fueltank-targets-5-1	10 m "Mini-Mag" Orion Pulse Unit Magazine	FarFutureTechnologies	met_chemMilling	3	highPerformanceFuelSystems		ModuleFuelTanks	med
+fuelLine	FTX-2 External Fuel Duct	Squad	met_chemMilling	3	fuelSystems			med
+nacelleBody	Engine Nacelle (DEPRECATED)	Squad	met_chemMilling	3	aerodynamicSystems		ModuleFuelTanks	med
+proceduralTankOre	Tank - Ore [Procedural]	ProceduralParts	met_chemMilling	3	advScienceTech			med
+radialEngineBody	Engine Pre-cooler (DEPRECATED)	Squad	met_chemMilling	3	hypersonicFlight		ModuleFuelTanks	med
+restock-airlock-1	AL-1 'Lychee' Inflatable Docking Airlock	ReStockPlus	met_chemMilling	3	advMetalworks		ModuleFuelTanks	med
+sspx-cargo-container-25-1	4.5m Storage Module (Long)	StationPartsExpansionRedux	met_chemMilling	3	largeVolumeContainment		ModuleFuelTanks	med
+sspx-cargo-container-25-2	4.5m Storage Module (Medium)	StationPartsExpansionRedux	met_chemMilling	3	largeVolumeContainment		ModuleFuelTanks	med
+sspx-cargo-container-25-3	4.5m Storage Module (Short)	StationPartsExpansionRedux	met_chemMilling	3	largeVolumeContainment		ModuleFuelTanks	med
+sspx-cargo-container-375-1	6.75m Storage Module (Long)	StationPartsExpansionRedux	met_chemMilling	3	largeVolumeContainment		ModuleFuelTanks	med
+sspx-cargo-container-375-2	6.225m Storage Module (Medium)	StationPartsExpansionRedux	met_chemMilling	3	largeVolumeContainment		ModuleFuelTanks	med
+sspx-cargo-container-375-3	6.75m Storage Module (Short)	StationPartsExpansionRedux	met_chemMilling	3	largeVolumeContainment		ModuleFuelTanks	med
+sspx-cargo-container-radial-huge-1	Large Radial Cargo Container (Long)	StationPartsExpansionRedux	met_chemMilling	3	largeVolumeContainment		ModuleFuelTanks	med
+sspx-cargo-container-radial-huge-2	Large Radial Cargo Container (Short)	StationPartsExpansionRedux	met_chemMilling	3	largeVolumeContainment		ModuleFuelTanks	med
+sspx-cargo-container-radial-medium-1	Twin Radial Cargo Container (Long)	StationPartsExpansionRedux	met_chemMilling	3	advFuelSystems		ModuleFuelTanks	med
+sspx-cargo-container-radial-medium-2	Twin Radial Cargo Container (Medium)	StationPartsExpansionRedux	met_chemMilling	3	advFuelSystems		ModuleFuelTanks	med
+sspx-cargo-container-radial-medium-3	Twin Radial Cargo Container (Short)	StationPartsExpansionRedux	met_chemMilling	3	fuelSystems		ModuleFuelTanks	med
+sspx-cargo-container-radial-small-1	Radial Cargo Container (Long)	StationPartsExpansionRedux	met_chemMilling	3	advFuelSystems		ModuleFuelTanks	med
+sspx-cargo-container-radial-small-2	Radial Cargo Container (Medium)	StationPartsExpansionRedux	met_chemMilling	3	fuelSystems		ModuleFuelTanks	med
+sspx-cargo-container-radial-small-3	Radial Cargo Container (Small)	StationPartsExpansionRedux	met_chemMilling	3	fuelSystems		ModuleFuelTanks	med
+sspx-dome-greenhouse-5-1	9m Greenhouse Dome	StationPartsExpansionRedux	met_chemMilling	3	advScienceTech		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-dome-habitation-5-1	9m Habitation Dome	StationPartsExpansionRedux	met_chemMilling	3	advScienceTech		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-habitation-125-1	2.25m Habitation Module	StationPartsExpansionRedux	met_chemMilling	3	spaceExploration		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-habitation-1875-1	3.38m Habitation Module (Long)	StationPartsExpansionRedux	met_chemMilling	3	spaceExploration		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-habitation-1875-2	3.38m Habitation Module (Short)	StationPartsExpansionRedux	met_chemMilling	3	spaceExploration		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-habitation-25-1	4.5m Habitation Module Long	StationPartsExpansionRedux	met_chemMilling	3	advExploration		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-habitation-375-1	6.75m Habitation Module (Large)	StationPartsExpansionRedux	met_chemMilling	3	nanolathing		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-habitation-375-2	6.75m Habitation Module (Small)	StationPartsExpansionRedux	met_chemMilling	3	nanolathing		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-habitation-375-3	6.75m Habitation Module (Shielded)	StationPartsExpansionRedux	met_chemMilling	3	metaMaterials		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-habitation-5-1	9m Habitation Module (Large)	StationPartsExpansionRedux	met_chemMilling	3	nanolathing		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-habitation-5-2	9m Habitation Module (Small)	StationPartsExpansionRedux	met_chemMilling	3	nanolathing		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-inflatable-hab-25-2	4.5m Inflatable Habitat (Short)	StationPartsExpansionRedux	met_chemMilling	3	advMetalworks		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-logistics-5-1	9m Logistics Module (Long)	StationPartsExpansionRedux	met_chemMilling	3	largeVolumeContainment		ModuleFuelTanks	med
+sspx-logistics-5-2	9m Logistics Module (Short)	StationPartsExpansionRedux	met_chemMilling	3	largeVolumeContainment		ModuleFuelTanks	med
+sspx-utility-125-1	2.25m Utility Module	StationPartsExpansionRedux	met_chemMilling	3	spaceExploration		ModuleScienceContainer;ModuleFuelTanks	med
+sspx-utility-1875-1	3.38m Utility Module	StationPartsExpansionRedux	met_chemMilling	3	spaceExploration		ModuleScienceContainer;ModuleFuelTanks	med

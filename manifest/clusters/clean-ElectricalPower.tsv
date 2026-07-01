@@ -1,0 +1,75 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+RO-rangerSolarPanel	Ranger Solar Panel	RealismOverhaul	elec_silverZinc	1	earlyPower		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+ROC-CSTSM	CST-100 Service Module	ROCapsules	elec_silverZinc	1	unlockParts	MMH;MON3;Helium	ModuleRCSFX;ModuleDeployableSolarPanel;ModuleFuelTanks;Solar	high
+ROC-D2Solar	D-2 Solar Array	ROCapsules	elec_silverZinc	1	unlockParts		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+ROC-LEMFoldingSNAP27BDB	SNAP-27 Series RTG	ROCapsules	elec_silverZinc	1	unlockParts			high
+ROC-LEMRackSNAP9BDB	Quad SNAP-9 Series RTG	ROCapsules	elec_silverZinc	1	unlockParts			high
+ROS-BlanketSolarPanel	Blanket Solar Panel	ROSolar	elec_silverZinc	1	start		ModuleROSolarPanel;SolarPanelFixer	high
+ROS-FoldingSolarPanel	Folding Solar Panel	ROSolar	elec_silverZinc	1	start		ModuleROSolarPanel;SolarPanelFixer	high
+ROS-HingedSolarPanel	Hinged Solar Panel	ROSolar	elec_silverZinc	1	start		ModuleROSolarPanel;SolarPanelFixer	high
+ROS-StaticSolarPanel	Static Solar Panel	ROSolar	elec_silverZinc	1	start		ModuleROSolarPanel;SolarPanelFixer	high
+1x3SPanels	OX-2L 1x3 Photovoltaic Panels	VenStockRevamp	elec_fuelCell	3	electrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+1x3WPanels	OX-4M 2x3 Photovoltaic Panels	VenStockRevamp	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+AM_MLP_SaturnMobileLauncherBaseFree	Saturn Mobile Launcher Base - Free-Standing	ModularLaunchPads	elec_fuelCell	3	saturnLaunchPad			high
+FuelCell	Fuel Cell	Squad	elec_fuelCell	3	largeElectrics			high
+FuelCellArray	Fuel Cell Array	Squad	elec_fuelCell	3	specializedElectrics			high
+KerbCan	1.25m Crew Carrier	VenStockRevamp	elec_fuelCell	3	engineering101		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	high
+L25mSci	Station Science Module (Early)	SXT	elec_fuelCell	3	spaceExploration		ModuleScienceExperiment;ModuleScienceContainer;ModuleScience	high
+Large_Crewed_Lab	Mobile Processing Lab MPL-LG-2	Squad	elec_fuelCell	3	advExploration		ModuleScienceContainer;ModuleScienceLab;ModuleScienceConvert	high
+LgRadialSolarPanel	ST3 Solar Panel	Squad	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+RO-MMRTG	Multi-Mission RTG	Squad	elec_fuelCell	3	experimentalElectrics			high
+RO-Mk1CrewModule	Mk1 Crew Carrier	VenStockRevamp	elec_fuelCell	3	engineering101		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	high
+RO-SNAP-19-RTG	SNAP-19 Series RTG	VenStockRevamp	elec_fuelCell	3	experimentalElectrics			high
+RO-SNAP-3-RTGPo210	SNAP-3A Series RTG (Po210)	VenStockRevamp	elec_fuelCell	3	experimentalElectrics			high
+RO-SNAP-9-RTG	SNAP-9 Series RTG	VenStockRevamp	elec_fuelCell	3	experimentalElectrics			high
+ROC-OrionSolar	Orion Solar Panels	ROCapsules	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+RO_EarlyMediumSolarPanel	ST1 Medium Solar Panel	Squad	elec_fuelCell	3	electrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+RO_EarlyTinySolarPanel	ST1 Tiny Solar Panel	Squad	elec_fuelCell	3	electrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+STXCANIOT	PPD-H Crew Cabin	SXT	elec_fuelCell	3	specializedConstruction		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	high
+SXTCrewCabSSP10	PPD-4 Crew Cabin	SXT	elec_fuelCell	3	specializedConstruction		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	high
+SXTCrewCabSSP20	PPD-6 Crew Cabin	SXT	elec_fuelCell	3	specializedConstruction		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	high
+SXTDLK83EHabitat	Ares LK-S3E Heavy Planetary Habitat	SXT	elec_fuelCell	3	specializedConstruction		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	high
+SXTDepolyRTGI	GPHS-RTG	SXT	elec_fuelCell	3	specializedElectrics			high
+SXTDepolyRTGII	GPHS-RTG [Shielded]	SXT	elec_fuelCell	3	specializedElectrics			high
+SXTSPKTRCabin	SPKTR-10 Lacuga Storage Container	SXT	elec_fuelCell	3	specializedConstruction		ModuleScienceExperiment;ModuleScienceContainer;ModuleFuelTan	high
+SXTsolarPanelLarge	OX-VL Photovoltaic Array	SXT	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+SXTsolarPanelhex	OX-HEX Photovoltaic Panels	SXT	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+USFuelCellMedium	Universal Storage: 1500W Fuel Cell	UniversalStorage2	elec_fuelCell	3	specializedElectrics			high
+USFuelCellSmal	Universal Storage: 1000W Fuel Cell	UniversalStorage2	elec_fuelCell	3	largeElectrics			high
+USRTGWedge	Universal Storage: Multi-hundred Watt RTG	UniversalStorage2	elec_fuelCell	3	experimentalElectrics			high
+USRTGWedgeMM	Universal Storage: Multi-Mission RTG	UniversalStorage2	elec_fuelCell	3	experimentalElectrics			high
+aje_solarPanels	ST4 Solar Panel	Squad	elec_fuelCell	3	electrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+ca_argo-mk2-solar	Mariner Mars Solar Array Wing (SAW)	CoatlAerospace	elec_fuelCell	3	survivability	Nitrogen	ModuleDeployableSolarPanel;ModuleRCSFX;SolarPanelFixer;Modul	high
+ca_explorer_solar	IUE Solar Array Wing (SAW)	CoatlAerospace	elec_fuelCell	3	spaceExploration		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+ca_fom_sp	Venera Lander Bus Solar Array	CoatlAerospace	elec_fuelCell	3	electrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+ca_landv_sp	Surveyor Orbiter Solar Array Wing	CoatlAerospace	elec_fuelCell	3	basicScience		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+ca_mer_rtg	GPHS-RTG	CoatlAerospace	elec_fuelCell	3	experimentalElectrics			high
+ca_rtg2000	Pioneer SNAP-19 RTG	CoatlAerospace	elec_fuelCell	3	largeElectrics			high
+ca_rtg3900	Voyager MHW-RTG	CoatlAerospace	elec_fuelCell	3	specializedElectrics			high
+ca_vor_sp	4MV Spacecraft Bus SAW & TCS (Standard)	CoatlAerospace	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;ModuleActiveRadiator;SolarPanelFi	high
+ca_vor_sp2	4MV Spacecraft Bus SAW & TCS (Small)	CoatlAerospace	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;ModuleActiveRadiator;SolarPanelFi	high
+eos_terraalt	DEPRECATED - Terra Side Solar Panel	RN_US_Probes	elec_fuelCell	3	generalRocketry		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+kerbalism-fuelcell	External Fuel Cell	KerbalismConfig	elec_fuelCell	3	basicScience			high
+largeSolarPanel	XT4 Solar Panel Array Mk1	Squad	elec_fuelCell	3	largeElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+largeSolarPanelEarly	XT3 Solar Panel Array Mk1	Squad	elec_fuelCell	3	largeElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+nfe-rtg-asrg-1	NASA & DOE Advanced Sterling RG	NearFutureElectrical	elec_fuelCell	3	experimentalElectrics			high
+nfe-rtg-gphs-1	GPHS-RTG	NearFutureElectrical	elec_fuelCell	3	experimentalElectrics			high
+nfe-rtg-mmrtg-1	Multi-Mission RTG	NearFutureElectrical	elec_fuelCell	3	experimentalElectrics			high
+nfe-rtg-snap27-1	SNAP-27 Series RTG	NearFutureElectrical	elec_fuelCell	3	specializedElectrics			high
+nfs-panel-deploying-advanced-2x20-hub-1	K55-A 'Megalador' Advanced Solar Array	NearFutureSolar	elec_fuelCell	3	experimentalElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+nfs-panel-deploying-blanket-arm-1	OKEB-150R 'Halo' Circular Blanket Photovoltaic Array	NearFutureSolar	elec_fuelCell	3	specializedElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+nfs-panel-deploying-blanket-dsg-1	OKEB-100 'Gateway' Blanket Photovoltaic Array	NearFutureSolar	elec_fuelCell	3	experimentalElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+nfs-panel-deploying-blanket-starship-1	OKEB-25R 'Starship' Blanket Photovoltaic Array	NearFutureSolar	elec_fuelCell	3	specializedElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+nfs-panel-deploying-concentrator-1x4-juno-1	K12-K 1x4 Concentrating Photovoltaic Panels	NearFutureSolar	elec_fuelCell	3	specializedElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+nfs-panel-deploying-curved-375-1	NIV-75-R Expanding Curved Solar Array	NearFutureSolar	elec_fuelCell	3	specializedElectrics		ModuleCurvedSolarPanel;SolarPanelFixer	high
+rtg	Multi-Hundred Watt RTG	Squad	elec_fuelCell	3	experimentalElectrics			high
+rtgMini	SNAP-3B Series RTG (Pu238)	VenStockRevamp	elec_fuelCell	3	experimentalElectrics			high
+solarPanels1	XT2 Solar Panel Array Mk2	Squad	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+solarPanels2	XT2 Solar Panel Array Mk1	Squad	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+solarPanels3	XT1 Solar Panel Array Mk2	Squad	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+solarPanels4	XT1 Solar Panel Array Mk1	Squad	elec_fuelCell	3	advElectrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+solarPanels5	ST1 Solar Panel	Squad	elec_fuelCell	3	electrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+solarPanels5HiTech	ST2 Solar Panel	Squad	elec_fuelCell	3	electrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+sp_mariner_a	CA-E100 1x2 Solar Panel	CoatlAerospace	elec_fuelCell	3	electrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+sp_mariner_b	CA-E100-SPV 1x2 Solar Panel	CoatlAerospace	elec_fuelCell	3	electrics		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high
+ROC-ApolloSolarBlockV	Apollo Block V Solar Array	ROCapsules	ext_powerGrid	5	spaceStationSolarPanels		ModuleDeployableSolarPanel;SolarPanelFixer;ModuleROSolarPane	high

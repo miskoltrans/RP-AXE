@@ -1,0 +1,14 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+ROC-ApolloHSBDB	Apollo Command Module Heatshield	ROCapsules	cmp_glassFiber	2	start		ModuleAblator	high
+ROC-ApolloHSBDBBlockIII	Apollo Block III+ Heatshield	ROCapsules	cmp_glassFiber	2	start		ModuleAblator	high
+ROC-BigGeminiHS	Big G Heat Shield	ROCapsules	cmp_glassFiber	2	unlockParts		ModuleAblator	high
+ROC-BigGeminiHSLunar	Big G Lunar Heat Shield	ROCapsules	cmp_glassFiber	2	unlockParts		ModuleAblator	high
+ROC-CSTHS	CST-100 Heat Shield	ROCapsules	cmp_glassFiber	2	unlockParts		ModuleAblator	high
+ROC-GeminiHSBDB	Gemini Heatshield	ROCapsules	cmp_glassFiber	2	unlockParts		ModuleAblator	high
+ROC-GeminiHSLunarBDB	Gemini Lunar Heatshield	ROCapsules	cmp_glassFiber	2	unlockParts		ModuleAblator	high
+ROH-AdjustableHS	Adjustable Heatshield	ROHeatshields	cmp_glassFiber	2	entryDescentLanding		ModuleAblator	high
+rn_huygen_hs_bottom	Huygens Heatshield Bottom	RN_US_Probes	cmp_glassFiber	2	start		ModuleAblator	high
+ROC-MercuryHS	Mercury Heatshield	ROCapsules	cmp_ablativeTPS	3	engineering101		ModuleAblator	high
+ROC-OrionHS	Orion Heatshield	ROCapsules	cmp_ablativeTPS	3	generalRocketry		ModuleAblator	high
+aquarius_heatshield_s1p5_1	LK-700 Capulse Heat Shield	Tantares	cmp_ablativeTPS	3	advLanding		ModuleAblator	high
+galileo_hs_mid	Galileo Atmospheric Probe Heatshield Middle	RN_US_Probes	cmp_ablativeTPS	3	generalRocketry		ModuleAblator	high

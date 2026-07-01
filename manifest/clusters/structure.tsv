@@ -1,0 +1,207 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+AM_MLP_LaunchRailLarge	Launch Rail 4 - Large Size	ModularLaunchPads	str_pyroSeparation	1	start			med
+AM_MLP_LaunchRailMedium	Launch Rail 3 - Medium Size	ModularLaunchPads	str_pyroSeparation	1	start			med
+AM_MLP_LaunchRailMini	Launch Rail 1 - Mini Size	ModularLaunchPads	str_pyroSeparation	1	start			med
+AM_MLP_LaunchRailSmall	Launch Rail 2 - Small Size	ModularLaunchPads	str_pyroSeparation	1	start			med
+ROC-ApolloASTPAdapterBDB	Apollo-Soyuz Test Project Docking Module	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-ApolloASTPUVXBDB	Apollo-Soyuz Test Project UV Absorbtion Experiment	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-ApolloDecouplerBDB	Apollo Command/Service Module Decoupler	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-ApolloEngineMountBDB	Apollo Service Module Engine Mount	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-ApolloForwardHSBDB	Apollo Command Module Forward Heat Shield	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-ApolloNoseconeBDB	Apollo Block I Nosecone	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-BigGeminiDecoupler	Big G Service Module Decoupler	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-BigGeminiDockingAdapter	Big G Docking Adapter	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-BigGeminiNose	Big G Nose Fairing	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-D2Adaptor	D-2 Heatshield Adapter	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-D2Block1LESDecoupler	D-2 Block I Abort Motor Decoupler	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-D2Interstage	D-2 Block I Interstage	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-D2Interstage2	D-2 3m Interstage	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-D2Interstage3	D-2 4m Interstage	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-GeminiBRetrogradeSection	Gemini B Retro Module	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-GeminiNoseconeAeroBDB	Gemini Nose Fairing	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-LEMDecouplerBDB	Apollo LM Decoupler	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-LEMLegsBDB	Apollo LM Legs	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-LEMMESABDB	Apollo LM Material Experiment Stowage Assembly	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-LEMTruckPlatformBDB	AES LM Truck Payload Platform	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-RetrogradeDecouplerBDB	Gemini Retrograde Section Decoupler	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-VoskhodRetroDecoupler	Voskhod Retro Decoupler	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROC-VostokDecoupler	Vostok/Voskhod Decoupler	ROCapsules	str_pyroSeparation	1	unlockParts			med
+ROE-LargeApolloLC	Large Apollo Style Launch Clamp	ROEngines	str_pyroSeparation	1	unlockParts			med
+ROE-LargeLC	Large Launch Clamp (3.0 m)	ROEngines	str_pyroSeparation	1	unlockParts			med
+ROE-LargeRadialLC	Large Radial Launch Clamp	ROEngines	str_pyroSeparation	1	unlockParts			med
+ROE-MediumApolloLC	Medium Apollo Style Launch Clamp	ROEngines	str_pyroSeparation	1	unlockParts			med
+ROE-MediumLC	Medium Launch Clamp (1.65m)	ROEngines	str_pyroSeparation	1	unlockParts			med
+ROE-MediumRadialLC	Medium Radial Launch Clamp	ROEngines	str_pyroSeparation	1	unlockParts			med
+ROE-SmallApolloLC	Small Apollo Style Launch Clamp	ROEngines	str_pyroSeparation	1	unlockParts			med
+ROE-SmallLC	Small Launch Clamp (0.375 m)	ROEngines	str_pyroSeparation	1	unlockParts			med
+ROE-SmallRadialLC	Small Radial Launch Clamp	ROEngines	str_pyroSeparation	1	unlockParts			med
+ROE-UmbilicalTower	Umbilical Tower	ROEngines	str_pyroSeparation	1	unlockParts			med
+ROH-AdjustableHIAD	Adjustable HIAD	ROHeatshields	str_pyroSeparation	1	start			med
+ROT-AtlasDecoupler	Atlas Skirt Decoupler	ROTanks	str_pyroSeparation	1	unlockParts			med
+ROT-ModularCargoBay	Modular Cargo Bay	ROTanks	str_pyroSeparation	1	unlockParts			med
+ROT-Mount	Modular Mount (Structural)	ROTanks	str_pyroSeparation	1	unlockParts			med
+ROT-OpenInterstage	Hollow Interstage	ROTanks	str_pyroSeparation	1	unlockParts			med
+ROT-RingDecoupler	Ring Decoupler	ROTanks	str_pyroSeparation	1	unlockParts			med
+SXTlaunchclamp1	TT06-A Launch Stability Enhancer	SXT	str_pyroSeparation	1	start			med
+conformaldecals-flag	CDL-F Flag Decal	ConformalDecals	str_pyroSeparation	1	start			med
+conformaldecals-generic	CDL-1 Generic Decal	ConformalDecals	str_pyroSeparation	1	start			med
+conformaldecals-munar	CDL-3 Surface Base Decal	ConformalDecals	str_pyroSeparation	1	start			med
+conformaldecals-semiotic	CDL-2 Semiotic Standard Decal	ConformalDecals	str_pyroSeparation	1	start			med
+conformaldecals-text	CDL-T Text Decal	ConformalDecals	str_pyroSeparation	1	start			med
+trussPiece1x	Modular Girder Segment	Squad	str_pyroSeparation	1	start			med
+AM_MLP_GeneralHoldSRB	General Hold-Down Type SRB	ModularLaunchPads	str_landingLegs	3	generalLaunchPad			med
+AM_MLP_MilkstoolMini1S	Mini Milkstool Decoupler Size 1 Short	ModularLaunchPads	str_landingLegs	3	launchPlates			med
+AM_MLP_MilkstoolMini1T	Mini Milkstool Decoupler Size 1 Tall	ModularLaunchPads	str_landingLegs	3	launchPlates			med
+AM_MLP_MilkstoolMini2S	Mini Milkstool Decoupler Size 2 Short	ModularLaunchPads	str_landingLegs	3	launchPlates			med
+AM_MLP_MilkstoolMini2T	Mini Milkstool Decoupler Size 2 Tall	ModularLaunchPads	str_landingLegs	3	launchPlates			med
+AM_MLP_MilkstoolMini3M	Mini Milkstool Decoupler Size 3 Medium	ModularLaunchPads	str_landingLegs	3	launchPlates			med
+AM_MLP_MilkstoolMini3S	Mini Milkstool Decoupler Size 3 Short	ModularLaunchPads	str_landingLegs	3	launchPlates			med
+AM_MLP_MilkstoolMini3T	Mini Milkstool Decoupler Size 3 Tall	ModularLaunchPads	str_landingLegs	3	launchPlates			med
+AM_MLP_SaturnLauncherMilkstool	Saturn Launcher Milkstool	ModularLaunchPads	str_landingLegs	3	saturnLaunchPad			med
+Angledpanel	M-1x1T Structural Panel	VenStockRevamp	str_landingLegs	3	composites			med
+Decoupler_0	TD-06 Decoupler	Squad	str_landingLegs	3	precisionEngineering			med
+Decoupler_1	TD-12 Decoupler	Squad	str_landingLegs	3	engineering101			med
+Decoupler_2	TD-25 Decoupler	Squad	str_landingLegs	3	generalConstruction			med
+GrapplingDevice	Advanced Grabbing Unit	Squad	str_landingLegs	3	actuators			med
+RO-BasicFilmCamera	PH02 - Basic Film Camera	RP-1	str_landingLegs	3	spaceExploration			med
+RO-ImprovedFilmCamera	PH03 - Improved Film Camera	RP-1	str_landingLegs	3	spaceExploration			med
+ROC-AgenaFairing	Agena Target Vehicle Nose Cone	ROCapsules	str_landingLegs	3	generalRocketry			med
+ROC-DynaShieldMoroz	Dynasoar Windows Cover	ROCapsules	str_landingLegs	3	OrphanParts			med
+ROC-GeminiFlightPack	Gemini Flight Pack	ROCapsules	str_landingLegs	3	aerospaceTech			med
+ROC-MercuryDecouplerAtlasBDB	Mercury-Atlas Adapter	ROCapsules	str_landingLegs	3	engineering101			med
+ROC-MercuryDecouplerBDB	Mercury Redstone Adapter	ROCapsules	str_landingLegs	3	engineering101			med
+ROC-MercuryRetropackBDB	Mercury Retropack	ROCapsules	str_landingLegs	3	engineering101			med
+ROC-OrionEUSDecoupler	Orion Decoupler	ROCapsules	str_landingLegs	3	generalRocketry			med
+ROE-120XDecoupler	UA120X Radial Decoupler	ROEngines	str_landingLegs	3				med
+ROE-BabySergeantX11Dec	Baby Sergeant 11x Cluster Decoupler	ROEngines	str_landingLegs	3				med
+ROE-BabySergeantX3Dec	Baby Sergeant 3x Cluster Decoupler	ROEngines	str_landingLegs	3				med
+ROE-CastorDecoupler	Castor I & II Radial Decoupler	ROEngines	str_landingLegs	3				med
+SXTAirbag	Mk10-XL Inflatable Airbag	SXT	str_landingLegs	3	advLanding			med
+SXTAirbagSmall	Mk-10 Inflatable Airbag	SXT	str_landingLegs	3	landing			med
+SXTK1Decoupler	N-1 Block B/V Interstage	SXT	str_landingLegs	3	advMetalworks			med
+SXTK1Decoupler2	N-1 Block A/B Decoupler	SXT	str_landingLegs	3	advMetalworks			med
+SXTMTVGirder	Strongback Truss (Closed Long)	SXT	str_landingLegs	3				med
+SXTMTVGirderBasic	Strongback Truss (Closed Short)	SXT	str_landingLegs	3				med
+SXTMTVGirderOpen	Strongback Truss (Open Long)	SXT	str_landingLegs	3				med
+SXTMTVGirderOpenMedium	Strongback Truss (Open Medium)	SXT	str_landingLegs	3				med
+SXTMTVGirderOpenSmall	Strongback Truss (Open Short)	SXT	str_landingLegs	3				med
+TOWER_SV	Saturn V Launch Tower	ROCapsules	str_landingLegs	3	generalConstruction			med
+aquila_adapter_s1p5_1	Kristall Crew Compartment Adapter	Tantares	str_landingLegs	3	advFlightControl			med
+aquila_experiment_rack_s1p5_1	Priroda Experiment Platform	Tantares	str_landingLegs	3	advFlightControl			med
+ca_draco_as	Huygens Aeroshell	CoatlAerospace	str_landingLegs	3	advLanding			med
+ca_vor_sep1	Venera Reentry Module Decoupler	CoatlAerospace	str_landingLegs	3	advConstruction			med
+ius_dec_fs	IUS First Stage Decoupler	RN_US_Probes	str_landingLegs	3	generalRocketry			med
+ius_dec_ss	IUS Second Stage Decoupler	RN_US_Probes	str_landingLegs	3	generalRocketry			med
+l11_astro	Luna 11 Astro	RN_Soviet_Probes	str_landingLegs	3	generalRocketry			med
+launchClamp1	TT18-A Launch Stability Enhancer	Squad	str_landingLegs	3	generalConstruction			med
+luna_astro	Luna 9/10/13 Astro	RN_Soviet_Probes	str_landingLegs	3	generalRocketry			med
+mer_ringDecoupler	Huygens Structural Adapter	CoatlAerospace	str_landingLegs	3	advLanding			med
+microIbeam	M-Beam 100 I-Beam	VenStockRevamp	str_landingLegs	3	composites			med
+p1_decoupler	Pioneer 0/1/2 Booster Decoupler	RN_US_Probes	str_landingLegs	3	engineering101			med
+proceduralCrewTube	Crew Tube [Procedural]	ProceduralParts	str_landingLegs	3	advConstruction			med
+proceduralStackDecoupler	Decoupler [Procedural]	ProceduralParts	str_landingLegs	3	engineering101			med
+proceduralStructural	Structure [Procedural]	ProceduralParts	str_landingLegs	3	advConstruction			med
+radialDecoupler	TT-38K Radial Decoupler	Squad	str_landingLegs	3	stability			med
+radialDecoupler1-2	Hydraulic Detachment Manifold	Squad	str_landingLegs	3	advConstruction			med
+radialDecoupler2	TT-70 Radial Decoupler	Squad	str_landingLegs	3	advConstruction			med
+rana_mount_srf_1	Sofora / Rapana Girder Mount	Tantares	str_landingLegs	3	composites			med
+rana_truss_srf_1	Sofora / Rapana Girder A	Tantares	str_landingLegs	3	composites			med
+rana_truss_srf_2	Sofora / Rapana Girder B	Tantares	str_landingLegs	3	composites			med
+restock-decoupler-1875-1	TD-18 Decoupler	ReStockPlus	str_landingLegs	3	advConstruction			med
+restock-decoupler-radial-tiny-1	TT-14 Radial Decoupler	ReStockPlus	str_landingLegs	3	stability			med
+restock-separator-1875-1	TS-18 Separator	ReStockPlus	str_landingLegs	3	advConstruction			med
+rn_huygen_hs_top	Huygens Heatshield Top	RN_US_Probes	str_landingLegs	3	generalRocketry			med
+sargas_decoupler_s1p5_1	TKS VA Capsule Decoupler	Tantares	str_landingLegs	3	spaceExploration			med
+shortDecoupler1-2	Shorter Rockomax Brand Decoupler	VenStockRevamp	str_landingLegs	3	generalConstruction			med
+smallHardpoint	Small Hardpoint	Squad	str_landingLegs	3	advAerodynamics			med
+smallRadialDecoupler	TR-8A Radial Decoupler	VenStockRevamp	str_landingLegs	3	precisionEngineering			med
+sspx-adapter-0625-125-1	Station Flat Adapter [2.25m to 1.125m]	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-adapter-125-25-1	Station Flat Adapter [4.5m to 2.25m]	StationPartsExpansionRedux	str_landingLegs	3	specializedConstruction			med
+sspx-adapter-125-25-2	Station Conical Adapter [4.5m to 2.25m]	StationPartsExpansionRedux	str_landingLegs	3	specializedConstruction			med
+sspx-adapter-1875-0625-1	Station Flat Adapter [3.38m to 1.125m]	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-adapter-1875-125-1	Station Flat Adapter [3.38m to 2.25m]	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-adapter-1875-125-2	Station Conical Adapter [3.38m to 2.25m]	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-adapter-25-1875-1	Station Conical Adapter [4.5m to 3.38m]	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-adapter-25-375-1	Station Conical Adapter [6.75m to 4.5m]	StationPartsExpansionRedux	str_landingLegs	3	nanolathing			med
+sspx-adapter-25-375-2	Station Flat Adapter [6.75m to 4.5m]	StationPartsExpansionRedux	str_landingLegs	3	nanolathing			med
+sspx-adapter-375-5-1	Station Conical Adapter [6.75m to 9m]	StationPartsExpansionRedux	str_landingLegs	3	nanolathing			med
+sspx-adapter-375-5-2	Station Flat Adapter [6.75m to 9m]	StationPartsExpansionRedux	str_landingLegs	3	nanolathing			med
+sspx-attach-125-1	2.25m Pressurized Radial Attachment Point	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-attach-1875-1	3.38m Pressurized Radial Attachment Point	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-attach-25-1	4.5m Pressurized Radial Attachment Point	StationPartsExpansionRedux	str_landingLegs	3	specializedConstruction			med
+sspx-attach-375-1	6.75m Pressurized Radial Attachment Point	StationPartsExpansionRedux	str_landingLegs	3	advMetalworks			med
+sspx-extendable-tube-125-1	2.25m Extendable Crew Tube	StationPartsExpansionRedux	str_landingLegs	3	actuators			med
+sspx-extendable-tube-25-1	4.5m Extendable Crew Tube	StationPartsExpansionRedux	str_landingLegs	3	actuators			med
+sspx-hub-125-1	2.25m Station Hub	StationPartsExpansionRedux	str_landingLegs	3	metaMaterials			med
+sspx-hub-1875-1	3.38m Station Hub	StationPartsExpansionRedux	str_landingLegs	3	metaMaterials			med
+sspx-hub-25-1	4.5m Station Hub	StationPartsExpansionRedux	str_landingLegs	3	metaMaterials			med
+sspx-lab-pallet-1	External Stowage Platform (3.6m x 3.6m)	StationPartsExpansionRedux	str_landingLegs	3	composites			med
+sspx-lab-pallet-2	External Stowage Platform (1.8m x 1.8m)	StationPartsExpansionRedux	str_landingLegs	3	composites			med
+sspx-tube-125-1	2.25m Pressurized Crew Tube (Long)	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-tube-125-2	2.25m Pressurized Crew Tube (Medium)	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-tube-125-3	2.25m Pressurized Crew Tube (Short)	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-tube-1875-1	3.38m Pressurized Crew Tube (Long)	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-tube-1875-2	3.38m Pressurized Crew Tube (Medium)	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-tube-1875-3	3.38m Pressurized Crew Tube (Short)	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-tube-1875-angled-1	3.38m Pressurized Crew Tube (Angled)	StationPartsExpansionRedux	str_landingLegs	3	advConstruction			med
+sspx-tube-25-1	4.5m Pressurized Crew Tube (Long)	StationPartsExpansionRedux	str_landingLegs	3	specializedConstruction			med
+sspx-tube-25-2	4.5m Pressurized Crew Tube (Medium)	StationPartsExpansionRedux	str_landingLegs	3	specializedConstruction			med
+sspx-tube-25-3	4.5m Pressurized Crew Tube (Short)	StationPartsExpansionRedux	str_landingLegs	3	specializedConstruction			med
+sspx-tube-375-1	6.75m Pressurized Crew Tube (Long)	StationPartsExpansionRedux	str_landingLegs	3	advMetalworks			med
+sspx-tube-375-2	6.75m Pressurized Crew Tube (Medium)	StationPartsExpansionRedux	str_landingLegs	3	advMetalworks			med
+sspx-tube-375-3	6.75m Pressurized Crew Tube (Short)	StationPartsExpansionRedux	str_landingLegs	3	advMetalworks			med
+stackBiCoupler_v2	TVR-200 Stack Bi-Coupler	Squad	str_landingLegs	3	specializedConstruction			med
+stackPoint1	BZ-52 Radial Attachment Point	Squad	str_landingLegs	3	specializedConstruction			med
+stackTriCoupler_v2	TVR-1180C Mk1 Stack Tri-Coupler	Squad	str_landingLegs	3	advConstruction			med
+stationHub	Rockomax HubMax Multi-Point Connector	Squad	str_landingLegs	3	metaMaterials			med
+stationHubLarge	Extra-Large Rockomax HubMax Multi-Point Connector	VenStockRevamp	str_landingLegs	3	metaMaterials			med
+structuralIBeam1	M-Beam 650 I-Beam	Squad	str_landingLegs	3	composites			med
+structuralIBeam2	M-Beam 200 I-Beam	Squad	str_landingLegs	3	composites			med
+structuralIBeam3	M-Beam 200 I-Beam Pocket Edition	Squad	str_landingLegs	3	composites			med
+structuralMiniNode	The Not-Rockomax Micronode	Squad	str_landingLegs	3	precisionEngineering			med
+structuralPanel1	M-1x1 Structural Panel	Squad	str_landingLegs	3	composites			med
+structuralPanel2	M-2x2 Structural Panel	Squad	str_landingLegs	3	composites			med
+structuralPylon	Structural Pylon	Squad	str_landingLegs	3	highAltitudeFlight			med
+strutConnector	EAS-4 Strut Connector	Squad	str_landingLegs	3	generalConstruction			med
+strutCube	Cubic Octagonal Strut	Squad	str_landingLegs	3	precisionEngineering			med
+strutCube3way	Cubic Octagonal Strut Three Way Connector	VenStockRevamp	str_landingLegs	3	precisionEngineering			med
+strutCube90	Cubic Octagonal Strut Angle Connector	VenStockRevamp	str_landingLegs	3	precisionEngineering			med
+strutCubeLarge	Cubic Octagonal Strut Mk IV	VenStockRevamp	str_landingLegs	3	precisionEngineering			med
+strutCubeMedium	Cubic Octagonal Strut Mk III	VenStockRevamp	str_landingLegs	3	precisionEngineering			med
+strutCubeMountingPlate	Cubic Octagonal Strut Slim Mounting Plate	VenStockRevamp	str_landingLegs	3	precisionEngineering			med
+strutCubeOCTOAdapter	Cubic Octagonal Strut Octagonal Adapter	VenStockRevamp	str_landingLegs	3	precisionEngineering			med
+strutCubeS0Adapter	Cubic Octagonal Strut 0.625m Adapter	VenStockRevamp	str_landingLegs	3	precisionEngineering			med
+strutCubeSmall	Cubic Octagonal Strut Mk II	VenStockRevamp	str_landingLegs	3	precisionEngineering			med
+strutOcto	Octagonal Strut	Squad	str_landingLegs	3	precisionEngineering			med
+truss-circular-01	Annular Modular Truss XL	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-circular-02	Annular Modular Truss	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-circular-03	Annular Modular Truss Mini	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-circular-04	Annular Modular Truss Micro	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-circular-adapter-01	Annular Truss Adapter	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-circular-adapter-02	Annular Truss Adapter V2	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-hex-01	Hexa-Girder Modular Truss L1	NearFutureConstruction	str_landingLegs	3	advMetalworks			med
+truss-hex-02	Hexa-Girder Modular Truss M1	NearFutureConstruction	str_landingLegs	3	advMetalworks			med
+truss-hex-03	Hexa-Girder Modular Truss S1	NearFutureConstruction	str_landingLegs	3	advMetalworks			med
+truss-hex-adapter-01	Hexa-Girder Truss Adapter	NearFutureConstruction	str_landingLegs	3	advMetalworks			med
+truss-micro-01	Cubic-Family Large Strut	NearFutureConstruction	str_landingLegs	3	advMetalworks			med
+truss-micro-02	Cubic-Family Medium Strut	NearFutureConstruction	str_landingLegs	3	precisionEngineering			med
+truss-octo-01	Octo-Girder Modular Truss XL	NearFutureConstruction	str_landingLegs	3	advMetalworks			med
+truss-octo-02	Octo-Girder Modular Truss	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-octo-03	Octo-Girder Modular Truss Mini	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-octo-04	Octo-Girder Modular Truss Micro	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-octo-adapter-crew-01	Octo-Girder Pressurized Adapter	NearFutureConstruction	str_landingLegs	3	advMetalworks			med
+truss-octo-angled-01	Octo-Girder Modular Angular Connector	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-octo-angled-crew-01	Octo-Girder Pressurized Angular Connector	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-octo-attach-01	Octo-Girder Radial Attach Node	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-octo-crew-01	Octo-Girder Pressurized Truss XL	NearFutureConstruction	str_landingLegs	3	advMetalworks			med
+truss-octo-crew-02	Octo-Girder Pressurized Truss	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-octo-crew-03	Octo-Girder Pressurized Truss Mini	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-octo-hub-01	Octo-Girder Modular Hub	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-octo-hub-crew-01	Octo-Girder Pressurized Hub	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-spinal-01	Spinal Modular Truss	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-spinal-02	Spinal Modular Truss Mini	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-spinal-03	Spinal Modular Truss Micro	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-spinal-adapter-01	Spinal Truss Series-3 Adapter	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+truss-spinal-adapter-02	Spinal Truss Series-2 Adapter	NearFutureConstruction	str_landingLegs	3	nanolathing			med
+trussAdapter	Modular Girder Adapter	Squad	str_landingLegs	3	specializedConstruction			med
+trussPiece3x	Modular Girder Segment XL	Squad	str_landingLegs	3	advMetalworks			med
