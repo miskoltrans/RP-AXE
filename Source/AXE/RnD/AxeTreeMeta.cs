@@ -18,14 +18,14 @@ namespace RPAxe.RnD
     {
         internal struct NodeMeta { public string Discipline; public int Tier; public int Cost; }
         internal struct DiscMeta { public int Order; public Color Color; public string Icon; public string Title; }
-        internal struct Settings { public string Layout; public bool LaneRouting; public bool Fan; public float LanePitch; public bool DiscColor; public bool Legend; }
+        internal struct Settings { public string Layout; public bool LaneRouting; public bool Fan; public float LanePitch; public bool DiscColor; public bool Legend; public bool Hover; }
 
         // Layout constants (shared with build_tree.py; fallbacks match its X0/TIERW/MARGIN defaults).
         internal static float MarginX = -2568f, MarginY = 711f, TierWidth = 430f, NodeSize = 58f;
         internal static readonly Dictionary<string, NodeMeta> Nodes = new Dictionary<string, NodeMeta>();
         internal static readonly Dictionary<string, DiscMeta> Disciplines = new Dictionary<string, DiscMeta>();
         // Default = stock (feature off) so a missing/absent cfg can never brick the scene.
-        internal static Settings Render = new Settings { Layout = "stock", LaneRouting = true, Fan = true, LanePitch = 13f, DiscColor = true, Legend = true };
+        internal static Settings Render = new Settings { Layout = "stock", LaneRouting = true, Fan = true, LanePitch = 13f, DiscColor = true, Legend = true, Hover = true };
         internal static bool Loaded { get; private set; }
 
         internal static void EnsureLoaded()
@@ -85,6 +85,7 @@ namespace RPAxe.RnD
                 Render.LanePitch = lp;   // 0 = all lanes collapse to the gutter centre (single line)
             Render.DiscColor = ParseBool(r.GetValue("discColor"), true);
             Render.Legend = ParseBool(r.GetValue("legend"), true);
+            Render.Hover = ParseBool(r.GetValue("hover"), true);
         }
 
         private static void ParseFloat(ConfigNode n, string key, ref float dst)

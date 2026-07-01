@@ -283,37 +283,55 @@ namespace RPAxe.RnD
             catch (Exception e) { Debug.LogException(e); }
         }
 
-        // Click empty background to deselect. Stock R&D only deselects when you re-click the node; a click
-        // (not a drag/pan) that lands on no node calls ShowNothingPanel (which also fires the highlight Clear).
+        // Hover-trace lineage (like the HTML) + click empty background to deselect. Both key off the node
+        // under the pointer (UI raycast). Stock R&D only deselects when you re-click the node.
         private Vector3 _downPos;
         private bool _dragged;
+        private RDNode _hoverNode;
         private static readonly List<RaycastResult> _rayHits = new List<RaycastResult>();
 
         private void Update()
         {
-            if (RDController.Instance == null) return;
-            if (Input.GetMouseButtonDown(0)) { _downPos = Input.mousePosition; _dragged = false; }
-            else if (Input.GetMouseButton(0) && !_dragged && (Input.mousePosition - _downPos).sqrMagnitude > 25f) _dragged = true;
-            else if (Input.GetMouseButtonUp(0) && !_dragged)
+            RDController ctrl = RDController.Instance;
+            if (ctrl == null) { _hoverNode = null; return; }
+            RDNode over = NodeUnderPointer();
+
+            // Hover: highlight the hovered node's lineage; on hover-out revert to the pinned selection (or
+            // stock). Only re-highlight when the hovered node changes. Click still pins via ShowNodePanel.
+            if (AxeTreeMeta.Render.Hover && over != _hoverNode)
             {
+                _hoverNode = over;
                 try
                 {
-                    if (RDController.Instance.node_selected != null && !PointerOverNode())
-                        RDController.Instance.ShowNothingPanel();
+                    if (over != null) AxeHighlighter.Apply(ctrl, over);
+                    else if (ctrl.node_selected != null) AxeHighlighter.Apply(ctrl, ctrl.node_selected);
+                    else AxeHighlighter.Clear(ctrl);
                 }
                 catch (Exception e) { Debug.LogException(e); }
             }
+
+            // Click (not drag/pan) on empty background -> deselect.
+            if (Input.GetMouseButtonDown(0)) { _downPos = Input.mousePosition; _dragged = false; }
+            else if (Input.GetMouseButton(0) && !_dragged && (Input.mousePosition - _downPos).sqrMagnitude > 25f) _dragged = true;
+            else if (Input.GetMouseButtonUp(0) && !_dragged && over == null && ctrl.node_selected != null)
+            {
+                try { ctrl.ShowNothingPanel(); } catch (Exception e) { Debug.LogException(e); }
+            }
         }
 
-        private static bool PointerOverNode()
+        private static RDNode NodeUnderPointer()
         {
-            if (EventSystem.current == null) return false;
+            if (EventSystem.current == null) return null;
             var ped = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
             _rayHits.Clear();
             EventSystem.current.RaycastAll(ped, _rayHits);
             for (int i = 0; i < _rayHits.Count; i++)
-                if (_rayHits[i].gameObject != null && _rayHits[i].gameObject.GetComponentInParent<RDNode>() != null) return true;
-            return false;
+            {
+                if (_rayHits[i].gameObject == null) continue;
+                RDNode n = _rayHits[i].gameObject.GetComponentInParent<RDNode>();
+                if (n != null) return n;
+            }
+            return null;
         }
 
         // Discipline colour legend, shown while R&D is open (RDController.Instance != null).
