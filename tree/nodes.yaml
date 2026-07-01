@@ -117,7 +117,7 @@ nodes:
     parents: [rocketryStart]
     flavor: "Explosive bolts cut a spent stage away on a millisecond's command; small motors settle the propellant so the next stage lights clean. Multi-stage flight — the only way to the orbital velocities chemistry can't reach in one go — begins here."
     parts: [ROE-BabySergeantX3Dec, ROE-CastorDecoupler]
-  - id: gnc_earlyGuidance
+  - id: gnc_rateGyros
     title: "Rate-Gyro Attitude Guidance"
     discipline: GuidanceControl
     tier: 2
@@ -129,19 +129,173 @@ nodes:
     tier: 2
     parents: [rocketryStart]
     flavor: "Pulse-code-modulated vehicle health, FM-keyed to the ground. Without it a failure tells you nothing about why — and an orbit you cannot hear is an orbit you cannot prove."
-  - id: mic_probeAvionics
+  - id: mic_vacuumTubes
     title: "Vacuum-Tube Sequencers & Sensors"
     discipline: Microelectronics
     tier: 2
     parents: [rocketryStart]
     flavor: "Hot-cathode tubes and simple transducers turn a satellite's state into numbers and its timeline into relay clicks — the minimum brain a spacecraft needs to be more than ballast."
 
+  # ===================== DEEP-SPACE DISCIPLINE LADDERS (pulled from library to support the probe subtree) =====================
+  # These are the breakthroughs the historical probes (probe-requirements.tsv) need, folded in from the
+  # library vocabulary. Capability gates for now (parts placed later). They extend the systems tributaries
+  # up into the deep-space era: power, electronics, telecom, guidance, optics, thermal, radioisotope power.
+  # ---- Metallurgy ----
+  - id: met_weldedSteel
+    title: "Welded Steel Pressure Vessels"
+    discipline: Metallurgy
+    tier: 2
+    parents: [rocketryStart]
+    flavor: "Roll, weld and proof-test mild-steel cylinders and spheres that hold pressure without bursting — the first flight tank, and the sealed shell of the first satellite."
+  # ---- Electrical Power ----
+  - id: elec_silverZinc
+    title: "Silver-Zinc Primary Batteries"
+    discipline: ElectricalPower
+    tier: 2
+    parents: [rocketryStart]
+    flavor: "High energy density for a single mission's hours — the battery that powered the first satellites and the shortest crewed flights."
+  - id: elec_siliconPV
+    title: "Silicon Photovoltaics"
+    discipline: ElectricalPower
+    tier: 3
+    parents: [elec_silverZinc]
+    flavor: "Doped silicon turns sunlight into watts indefinitely — the breakthrough that freed satellites from their batteries. Vanguard 1 flew the first cells."
+  - id: elec_bodyMountedArrays
+    title: "Body-Mounted & Deployable Arrays"
+    discipline: ElectricalPower
+    tier: 4
+    parents: [elec_siliconPV]
+    flavor: "Tile a spacecraft's skin or fold out fixed panels for hundreds of watts — the workhorse power source of the satellite age."
+  # ---- Microelectronics (extends mic_vacuumTubes) ----
+  - id: mic_transistor
+    title: "Discrete Transistors"
+    discipline: Microelectronics
+    tier: 3
+    parents: [mic_vacuumTubes]
+    flavor: "Solid-state switching shrinks avionics from a rack to a box and stops burning out filaments."
+  - id: mic_integratedCircuit
+    title: "Integrated Circuits"
+    discipline: Microelectronics
+    tier: 4
+    parents: [mic_transistor]
+    flavor: "Many transistors on one chip — the leap that made a real flight computer light enough to fly."
+  - id: mic_radHardening
+    title: "Radiation-Hardened Electronics"
+    discipline: Microelectronics
+    tier: 5
+    parents: [mic_integratedCircuit]
+    flavor: "Shield and design against single-event upsets so electronics survive the belts and deep space without latching up — the difference between a probe that reaches Jupiter and one that reboots there."
+  # ---- Telecommunications (extends tel_pcmTelemetry) ----
+  - id: tel_helicalDirectional
+    title: "Helical Directional Arrays"
+    discipline: Telecommunications
+    tier: 3
+    parents: [tel_pcmTelemetry]
+    flavor: "Axial-mode helices give circularly-polarized gain that tolerates a tumbling spacecraft — range and data rate, at the cost of having to point."
+  - id: tel_cassegrainHGA
+    title: "Cassegrain Parabolic High-Gain Reflector"
+    discipline: Telecommunications
+    tier: 4
+    parents: [tel_helicalDirectional]
+    flavor: "A subreflector folds the feed back through the dish vertex, shortening the assembly and closing the link from lunar and planetary distance."
+  - id: tel_dsnRanging
+    title: "Coherent Two-Way Doppler & Ranging"
+    discipline: Telecommunications
+    tier: 5
+    parents: [tel_cassegrainHGA]
+    flavor: "Phase-coherent ground dishes pull a few bits per second out of interplanetary noise and, from the round-trip Doppler, fix the spacecraft's state vector to meters."
+  - id: tel_xBandDownlink
+    title: "X-Band Deep-Space Downlink"
+    discipline: Telecommunications
+    tier: 6
+    parents: [tel_dsnRanging]
+    flavor: "Move the downlink up to X-band: a shorter wavelength focuses into a tighter beam from the same dish, multiplying data rate across interplanetary distance. Voyager's science return rode this jump from S-band — the link that makes the outer planets legible."
+  # ---- Guidance & Control (extends gnc_rateGyros) ----
+  - id: gnc_reactionControl
+    title: "Reaction Control & Attitude Hold"
+    discipline: GuidanceControl
+    tier: 3
+    parents: [gnc_rateGyros]
+    flavor: "Small thrusters in opposed pairs to point and hold a vehicle in vacuum — the first three-axis control in space."
+  - id: gnc_inertialNav
+    title: "Gimballed Inertial Navigation"
+    discipline: GuidanceControl
+    tier: 3
+    parents: [gnc_rateGyros]
+    flavor: "A gyro-stabilised platform integrates acceleration into position — knowing where you are with no outside reference."
+  - id: gnc_digitalGuidance
+    title: "Digital Closed-Loop Guidance"
+    discipline: GuidanceControl
+    tier: 5
+    parents: [gnc_inertialNav, mic_integratedCircuit]
+    anyToUnlock: false               # CONVERGENCE: inertial navigation + an integrated-circuit computer
+    flavor: "Compute the trajectory in real time and steer to it — guidance that adapts to dispersions instead of following a fixed program. Needs inertial navigation and an integrated-circuit computer at once."
+  - id: gnc_opticalNav
+    title: "Optical & Star-Field Navigation"
+    discipline: GuidanceControl
+    tier: 6
+    parents: [gnc_inertialNav, opt_precisionOptics]
+    anyToUnlock: false               # CONVERGENCE: inertial navigation + precision optics (star fields)
+    flavor: "Fix attitude and position against catalogued stars and landmarks — autonomy independent of the radio link, and the only way to aim a camera precisely a light-hour from home."
+  # ---- Optics & Photonics (roots off the electronics needed to read a sensor) ----
+  - id: opt_filmCameras
+    title: "Film-Return Cameras"
+    discipline: OpticsPhotonics
+    tier: 3
+    parents: [mic_vacuumTubes]
+    flavor: "Expose film in flight and scan-and-transmit it — the first detailed eyes on other worlds, from Luna 3's look at the far side of the Moon."
+  - id: opt_tvImaging
+    title: "Vidicon TV Imaging"
+    discipline: OpticsPhotonics
+    tier: 4
+    parents: [opt_filmCameras]
+    flavor: "Scan an image off a photoconductive tube and send it down as video — live pictures from a probe, no film to recover."
+  - id: opt_precisionOptics
+    title: "Precision Optical Fabrication"
+    discipline: OpticsPhotonics
+    tier: 5
+    parents: [opt_filmCameras]
+    flavor: "Grind, polish and figure mirrors and lenses to fractions of a wavelength — the craft beneath every telescope, spectrometer and star tracker."
+  - id: opt_spectrometry
+    title: "Imaging Spectrometers"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_precisionOptics]
+    flavor: "Split light into its spectrum at every pixel to read composition from orbit — chemistry at a distance."
+  # ---- Thermodynamics ----
+  - id: th_passiveRadiators
+    title: "Passive Radiative Cooling"
+    discipline: Thermodynamics
+    tier: 2
+    parents: [rocketryStart]
+    flavor: "Reject waste heat to space with coatings, louvers and surface geometry alone — the baseline thermal balance of every spacecraft."
+  # ---- Nuclear Engineering (radioisotope power, off the electrical line) ----
+  - id: nuc_rtg
+    title: "Radioisotope Thermoelectric Generators"
+    discipline: NuclearEngineering
+    tier: 4
+    parents: [elec_siliconPV]
+    flavor: "A plutonium pellet's decay heat across a thermocouple gives steady watts for decades, anywhere, sunlight or not — the power of the outer planets, where the sun is a bright star."
+  - id: nuc_rtgAdvanced
+    title: "GPHS Multi-Mission RTGs"
+    discipline: NuclearEngineering
+    tier: 5
+    parents: [nuc_rtg]
+    flavor: "Modular general-purpose heat-source blocks make a rugged, standardised RTG — the quiet, reliable heartbeat of flagship deep-space probes from Voyager to Cassini."
+  # ---- Structures & Mechanisms (extends str_stageSeparation) ----
+  - id: str_deployableBooms
+    title: "Stored-Strain Deployable Booms"
+    discipline: StructuresMechanisms
+    tier: 3
+    parents: [str_stageSeparation]
+    flavor: "Stow a long boom for launch and extend it on orbit for magnetometers, arrays and antennas held clear of the bus — the spindly limbs of every science probe."
+
   # ---- MILESTONE (1): FIRST ORBIT (rocket side; aviation converges later at crewed flight) ----
   - id: int_firstOrbit
     title: "First Orbital Capability"
     discipline: SystemsIntegration
     tier: 3
-    parents: [str_stageSeparation, gnc_earlyGuidance, tel_pcmTelemetry, mic_probeAvionics]
+    parents: [str_stageSeparation, gnc_rateGyros, tel_pcmTelemetry, mic_vacuumTubes]
     anyToUnlock: false               # CONVERGENCE: staging + guidance + telemetry + a probe brain (propulsion is your soft choice, not a gate)
     flavor: "Staging, guidance, telemetry and a probe brain converge — and whatever engine you chose to build now has somewhere to go. You can place your own satellite in orbit. The first artificial moon. (The iconic historical satellites are blueprints in the probe subtree — build your own, or chase theirs.)"
 
