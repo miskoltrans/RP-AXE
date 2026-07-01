@@ -411,7 +411,12 @@ AXE_AUTOTEST
             if (!_ok) { Debug.LogError("[AXE][AutoTest] " + s.Key + " did not open."); yield break; }
 
             Debug.Log("[AXE][AutoTest] " + s.Key + " open. Dwelling " + AutoTestConfig.DwellSeconds + "s...");
-            yield return AutoTestUtil.Dwell(AutoTestConfig.DwellSeconds);
+            // Let nodes/arrows settle, clear any scene-triggered popups (e.g. ToolbarController first-run),
+            // THEN grab a clean frame (e.g. the R&D render port) for a visual pass.
+            yield return AutoTestUtil.Dwell(Mathf.Max(1f, AutoTestConfig.DwellSeconds - 1f));
+            AutoTestUtil.DismissPopups();
+            CaptureShot(s.Key);
+            yield return AutoTestUtil.Dwell(1f);   // let the async screenshot land
 
             // Exit via the facility's scene despawner (same as clicking its Exit button).
             Debug.Log("[AXE][AutoTest] Exiting " + s.Key + "...");
@@ -425,6 +430,20 @@ AXE_AUTOTEST
         private static bool IsOpen(ScreenDef s)
         {
             return UnityEngine.Object.FindObjectOfType(s.Despawner) != null;
+        }
+
+        // Request a full-frame screenshot into the Instance root (async, lands next frame during the dwell).
+        // Only ever runs under the autotest, so it never affects normal play.
+        private static void CaptureShot(string key)
+        {
+            try
+            {
+                string safe = new string(key.Where(char.IsLetterOrDigit).ToArray());
+                string file = KSPUtil.ApplicationRootPath + "axe-shot-" + safe + ".png";
+                ScreenCapture.CaptureScreenshot(file);
+                Debug.Log("[AXE][AutoTest] screenshot requested -> " + file);
+            }
+            catch (Exception e) { Debug.LogWarning("[AXE][AutoTest] screenshot failed: " + e.Message); }
         }
 
         private static bool InvokeDespawnerExit(Type despawnerType)

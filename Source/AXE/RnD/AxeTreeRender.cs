@@ -19,6 +19,10 @@ namespace RPAxe.RnD
     /// Colour/width are left to stock (per the prototype ledger: never vary width -> Vectrosity rebuild).
     /// Everything is guarded + try/catch'd; layout=stock (or any failure) falls back to the stock tree.
     ///
+    /// KSP's EventData does `evt.Target.GetType()` on subscribe and drops subscribers whose originator
+    /// is null, so the handler MUST be an instance method on an object that survives the session — hence
+    /// the DontDestroyOnLoad host below (a static handler NREs in EvtDelegate's ctor).
+    ///
     /// Vertical convention: stock puts RDNode.pos.y at the node TOP with the body toward smaller y
     /// (Unity UI y-up); the prototype is y-down. FlipY() mirrors the prototype coords into KSP space,
     /// applied consistently to node positions AND route points so geometry stays connected.
@@ -26,38 +30,49 @@ namespace RPAxe.RnD
     [KSPAddon(KSPAddon.Startup.MainMenu, true)]
     public class AxeTreeRenderBootstrap : MonoBehaviour
     {
-        private void Awake() => AxeTreeRender.Apply();
+        private static bool created;
+        private void Awake()
+        {
+            if (created) return;
+            created = true;
+            var go = new GameObject("RPAxe.AxeTreeRenderHost");
+            DontDestroyOnLoad(go);
+            go.AddComponent<AxeTreeRenderHost>();
+        }
     }
 
-    internal static class AxeTreeRender
+    public class AxeTreeRenderHost : MonoBehaviour
     {
         private const float SPACING_F = 0.7f;          // compact (prototype default)
         private const bool FLIP_Y = true;              // prototype y-down -> KSP y-up (flip if bands look inverted)
 
-        private static bool applied;
+        private static bool installed;
         private static bool ready;
         private static readonly Dictionary<string, List<Vector2>> Routes = new Dictionary<string, List<Vector2>>();
         private static readonly FieldInfo PosField = AccessTools.Field(typeof(RDNode), "pos");
 
-        internal static void Apply()
+        private void Awake()
         {
-            if (applied) return;
-            applied = true;
+            if (installed) return;
+            installed = true;
             try
             {
-                RDTechTree.OnTechTreeSpawn.Add(OnTreeSpawn);
-                // Manual patch (no [HarmonyPatch] attribute) so AxeTreeHighlight's assembly-wide PatchAll
-                // does not also grab it -> applied exactly once.
+                RDTechTree.OnTechTreeSpawn.Add(OnTreeSpawn);   // INSTANCE method -> non-null delegate Target
                 var h = new Harmony("rpaxe.tree.render");
+                // Manual patch (no [HarmonyPatch] attr) so AxeTreeHighlight's assembly-wide PatchAll
+                // can't also grab it -> applied exactly once.
                 MethodInfo orig = AccessTools.Method(typeof(RDNode), "GetVectorArray", new[] { typeof(RDNode.Parent) });
-                h.Patch(orig, prefix: new HarmonyMethod(typeof(AxeTreeRender), nameof(GetVectorArray_Prefix)));
+                if (orig == null)
+                    Debug.LogError("[AXE] render-port: RDNode.GetVectorArray(Parent) not found; lane routing disabled (reposition still active).");
+                else
+                    h.Patch(orig, prefix: new HarmonyMethod(typeof(AxeTreeRenderHost), nameof(GetVectorArray_Prefix)));
                 Debug.Log("[AXE] R&D render-port patches applied.");
             }
             catch (Exception e) { Debug.LogError("[AXE] render-port apply failed: " + e); }
         }
 
         // Compute layout + reposition + precompute routes, once per tree spawn (before the nodes' Setup).
-        private static void OnTreeSpawn(RDTechTree tree)
+        private void OnTreeSpawn(RDTechTree tree)
         {
             ready = false;
             Routes.Clear();
@@ -68,19 +83,22 @@ namespace RPAxe.RnD
                 RDController ctrl = RDController.Instance;
                 if (ctrl == null || ctrl.nodes == null || ctrl.nodes.Count == 0) return;
 
+                // The in-game tree can contain DUPLICATE RDNodes per techID (e.g. a stray editor TechTree
+                // in the DB). Build the layout model on UNIQUE ids only, else duplicates inflate the band
+                // stacking; then apply the computed position to EVERY RDNode of that id so dups stack.
                 var lnodes = new List<AxeTreeLayout.LNode>();
                 var byId = new Dictionary<string, AxeTreeLayout.LNode>();
-                var rdById = new Dictionary<string, RDNode>();
                 foreach (RDNode rd in ctrl.nodes)
                 {
                     string id = rd?.tech?.techID;
-                    if (string.IsNullOrEmpty(id) || !AxeTreeMeta.Nodes.TryGetValue(id, out AxeTreeMeta.NodeMeta m)) continue;
+                    if (string.IsNullOrEmpty(id) || byId.ContainsKey(id) || !AxeTreeMeta.Nodes.TryGetValue(id, out AxeTreeMeta.NodeMeta m)) continue;
                     var ln = new AxeTreeLayout.LNode { Id = id, Discipline = m.Discipline, Tier = m.Tier, Cost = m.Cost };
-                    lnodes.Add(ln); byId[id] = ln; rdById[id] = rd;
+                    lnodes.Add(ln); byId[id] = ln;
                 }
                 if (lnodes.Count == 0) { Debug.LogWarning("[AXE] render-port: no RDNodes matched the metadata; skipping."); return; }
 
                 var edges = new List<AxeTreeLayout.LEdge>();
+                var seenEdge = new HashSet<string>();
                 foreach (RDNode rd in ctrl.nodes)
                 {
                     string to = rd?.tech?.techID;
@@ -88,7 +106,7 @@ namespace RPAxe.RnD
                     foreach (RDNode.Parent par in rd.parents)
                     {
                         string from = par?.parent?.node?.tech?.techID;
-                        if (!string.IsNullOrEmpty(from) && byId.ContainsKey(from))
+                        if (!string.IsNullOrEmpty(from) && byId.ContainsKey(from) && seenEdge.Add(from + ">" + to))
                             edges.Add(new AxeTreeLayout.LEdge { From = from, To = to });
                     }
                 }
@@ -100,7 +118,14 @@ namespace RPAxe.RnD
                 AxeTreeLayout.LayoutBands(lnodes, edges, byId, discOrder, AxeTreeMeta.TierWidth,
                     AxeTreeMeta.MarginX, AxeTreeMeta.MarginY, nodeSz, SPACING_F, false);
 
-                foreach (AxeTreeLayout.LNode ln in lnodes) SetPos(rdById[ln.Id], ln.X, ln.Y);
+                var posById = new Dictionary<string, Vector2>(lnodes.Count);
+                foreach (AxeTreeLayout.LNode ln in lnodes) posById[ln.Id] = new Vector2(ln.X, ln.Y);
+                int placed = 0;
+                foreach (RDNode rd in ctrl.nodes)
+                {
+                    string id = rd?.tech?.techID;
+                    if (id != null && posById.TryGetValue(id, out Vector2 p)) { SetPos(rd, p.x, p.y); placed++; }
+                }
 
                 if (AxeTreeMeta.Render.LaneRouting)
                 {
@@ -111,7 +136,7 @@ namespace RPAxe.RnD
                 }
 
                 ready = true;
-                Debug.Log($"[AXE] render-port: {lnodes.Count} nodes repositioned, {Routes.Count} edges lane-routed " +
+                Debug.Log($"[AXE] render-port: {lnodes.Count} unique nodes ({placed} RDNodes placed), {Routes.Count} edges lane-routed " +
                           $"(layout={AxeTreeMeta.Render.Layout} lane={AxeTreeMeta.Render.LaneRouting} fan={AxeTreeMeta.Render.Fan})");
             }
             catch (Exception e) { Debug.LogError("[AXE] render-port OnTreeSpawn failed: " + e); ready = false; }
