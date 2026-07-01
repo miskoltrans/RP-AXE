@@ -8,7 +8,7 @@ digraph AXE {
   "hire_OKB" [label="Charter a Design Bureau (OKB)\nSystemsIntegration T0 · 0",fillcolor="#e8e8e8",fontcolor="#111111"];
   "fd_turbopumpFeed" [label="Turbopump Feed\nFluidDynamics T1 · 20",fillcolor="#ee9b00",fontcolor="#111111"];
   "fd_multiChamber" [label="Multi-Chamber Combustion\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
-  "fd_baffledInjector" [label="Baffled-Injector Stabilization\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
+  "fd_baffledInjector" [label="Single Large-Chamber Combustion\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
   "fd_verniers" [label="Vernier Trim Chambers\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
   "pc_hypergolics" [label="Amine-Nitrate Hypergolics\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
   "cryo_hydrogen" [label="Cryogenic Hydrogen Handling\nCryogenics T1 · 20",fillcolor="#4cc9f0",fontcolor="#111111"];

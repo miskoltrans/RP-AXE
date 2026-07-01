@@ -829,12 +829,12 @@ window.TREE = {
   },
   {
    "id": "fd_baffledInjector",
-   "title": "Baffled-Injector Stabilization",
+   "title": "Single Large-Chamber Combustion",
    "discipline": "FluidDynamics",
    "tier": 2,
    "cost": 90,
    "anyToUnlock": false,
-   "flavor": "The Western answer to the same instability: keep the single big chamber, but break up the spinning tangential modes with injector-face baffles and tuned cavities. Harder to get right, but it scales — the path that ends at the F-1.",
+   "flavor": "The Western answer to the same instability: don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales. The LR89/LR79 boosters, the Atlas and Thor.",
    "parts": [
     {
      "name": "ROE-Gamma301",

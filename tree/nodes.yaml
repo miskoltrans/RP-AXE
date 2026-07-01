@@ -68,11 +68,11 @@ nodes:
     flavor: "Combustion instability tears a single large chamber apart in milliseconds. The Soviet answer was to not build one: four smaller chambers per engine, each below the acoustic threshold, fed by a common turbopump. The R-7 that launched Sputnik."
     parts: [ROE-RD107, ROE-RD108, ROE-RD211, ROE-S155, YF2_Engine, YF2_with_shell]
   - id: fd_baffledInjector
-    title: "Baffled-Injector Stabilization"
+    title: "Single Large-Chamber Combustion"
     discipline: FluidDynamics
     tier: 2
     parents: [fd_turbopumpFeed]
-    flavor: "The Western answer to the same instability: keep the single big chamber, but break up the spinning tangential modes with injector-face baffles and tuned cavities. Harder to get right, but it scales — the path that ends at the F-1."
+    flavor: "The Western answer to the same instability: don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales. The LR89/LR79 boosters, the Atlas and Thor."
     parts: [ROE-LR89_2, ROE-LR79, ROE-LR105_2, ROE-X405, ROE-Gamma301, ROE-Stentor]
   - id: fd_verniers
     title: "Vernier Trim Chambers"
