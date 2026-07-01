@@ -50,14 +50,19 @@ namespace RPAxe.RnD
         public static void Apply(RDController ctrl, RDNode sel)
         {
             if (ctrl == null || sel == null || ctrl.nodes == null) return;
-            HashSet<RDNode> lineage = Lineage(sel);
             List<RDNode> nodes = ctrl.nodes;
+            // Reset to stock colours FIRST. Selecting another node calls ShowNodePanel -> Apply again
+            // WITHOUT a Clear in between, so without this reset previously-dimmed in-lineage edges stay
+            // dim and the highlight decays after the first click.
+            for (int i = 0; i < nodes.Count; i++)
+                if (nodes[i] != null) nodes[i].UpdateGraphics();
+            HashSet<RDNode> lineage = Lineage(sel);
             for (int i = 0; i < nodes.Count; i++)
             {
                 RDNode n = nodes[i];
                 if (n == null) continue;
                 bool inLineage = lineage.Contains(n);
-                if (n.graphics != null) n.graphics.SetIconColor(inLineage ? Color.white : DimIcon);
+                if (!inLineage && n.graphics != null) n.graphics.SetIconColor(DimIcon);   // lit nodes keep stock colour
                 if (n.parents == null) continue;
                 for (int p = 0; p < n.parents.Length; p++)
                 {

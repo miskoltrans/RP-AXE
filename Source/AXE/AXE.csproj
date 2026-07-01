@@ -40,6 +40,10 @@
       <HintPath>$(ReferencePath)\UnityEngine.ScreenCaptureModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(ReferencePath)\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="ContractConfigurator">
       <HintPath>$(KSPRoot)\GameData\ContractConfigurator\ContractConfigurator.dll</HintPath>
       <Private>false</Private>
