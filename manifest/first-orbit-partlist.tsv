@@ -1,0 +1,206 @@
+node	node_title	kind	name	curated	title
+rocketryTesting	Post-War Rocketry Testing	part	ROE-RD100	yes	RD-100
+rocketryTesting	Post-War Rocketry Testing	part	ROE-XLR10	yes	XLR10
+rocketryTesting	Post-War Rocketry Testing	part	ROE-XLR11	yes	XLR11
+rocketryTesting	Post-War Rocketry Testing	part	ROE-XLR41	yes	XLR41
+rocketryTesting	Post-War Rocketry Testing	upgrade	RFUpgrade_A-9	KEEP-engine	
+rocketryTesting	Post-War Rocketry Testing	upgrade	RFUpgrade_Model39c	KEEP-engine	
+rocketryTesting	Post-War Rocketry Testing	upgrade	RFUpgrade_RDA-1-150	KEEP-engine	
+rocketryTesting	Post-War Rocketry Testing	upgrade	RFUpgrade_U-1700	KEEP-engine	
+rocketryTesting	Post-War Rocketry Testing	upgrade	RFUpgrade_VeroniqueAGI	KEEP-engine	
+rocketryTesting	Post-War Rocketry Testing	upgrade	RFUpgrade_XASR-1	KEEP-engine	
+earlyRocketry	Early Rocketry	part	ROE-A7	yes	NAA-75-110 A-Series
+earlyRocketry	Early Rocketry	part	ROE-RD200	yes	RD-200
+earlyRocketry	Early Rocketry	upgrade	RFUpgrade_AJ10-27	KEEP-engine	
+earlyRocketry	Early Rocketry	upgrade	RFUpgrade_HTP	KEEP-engine	
+earlyRocketry	Early Rocketry	upgrade	RFUpgrade_Model39cI	KEEP-engine	
+earlyRocketry	Early Rocketry	upgrade	RFUpgrade_RD-101	KEEP-engine	
+earlyRocketry	Early Rocketry	upgrade	RFUpgrade_RDA-1-300	KEEP-engine	
+earlyRocketry	Early Rocketry	upgrade	RFUpgrade_U-2000	KEEP-engine	
+earlyRocketry	Early Rocketry	upgrade	RFUpgrade_XASR-2	KEEP-engine	
+earlyRocketry	Early Rocketry	upgrade	RFUpgrade_XLR11-RM-5	KEEP-engine	
+earlyRocketry	Early Rocketry	upgrade	RFUpgrade_XLR35-RM-1	KEEP-engine	
+basicRocketryRP0	Basic Rocketry	part	ROE-LR89	yes	LR43/LR89 (DEPRECATED)
+basicRocketryRP0	Basic Rocketry	part	ROE-LR89_2	yes	LR43/LR89
+basicRocketryRP0	Basic Rocketry	part	ROE-S2253	yes	S2.253/S3.42/S5.2
+basicRocketryRP0	Basic Rocketry	part	ROE-Stentor	yes	Stentor Booster
+basicRocketryRP0	Basic Rocketry	part	ROE-XLR25	yes	XLR25
+basicRocketryRP0	Basic Rocketry	upgrade	RFUpgrade_5D60	KEEP-engine	
+basicRocketryRP0	Basic Rocketry	upgrade	RFUpgrade_A-6	KEEP-engine	
+basicRocketryRP0	Basic Rocketry	upgrade	RFUpgrade_RD-102	KEEP-engine	
+basicRocketryRP0	Basic Rocketry	upgrade	RFUpgrade_RD-103	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-AJ10Early	yes	AJ10 Series (Early)
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-Gamma301	yes	Gamma-201/301
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-JupiterVernier	yes	S-3D Vernier Exhaust
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR101	yes	LR101 (DEPRECATED)
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR101Inline	yes	LR101 (DEPRECATED)
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR101Inline_2	yes	LR101
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR101_2	yes	LR101
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR105	yes	LR105 (DEPRECATED)
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR105_2	yes	LR105
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR79	yes	LR79
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-RD107	yes	RD-107/117
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-RD108	yes	RD-108/118
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-RD211	yes	RD-211
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-S155	yes	S-155
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-X405	yes	X-405 (XLR50-GE-2)
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	YF2_Engine	yes	YF-2 (no gimbal)
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	YF2_with_shell	yes	YF-2 with Boattail
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_A-6H	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_A-7	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_LR43-NA-3	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_NitrousOxide	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_RD-103M	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_RD-107-8D74PS	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_RD-108-8D75PS	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_RD-212-8D41	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_RD-213-8D13	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_S3.42T	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_Veronique61	KEEP-engine	
+orbitalRocketry1956	1956-1957 Orbital Rocketry	upgrade	RFUpgrade_XLR11-RM-13-8K	KEEP-engine	
+earlySolids	Early Solid Rocket Engines	part	ROE-25KS18000	yes	Aerojet 2.5KS-18000
+earlySolids	Early Solid Rocket Engines	part	SnubOtron	yes	Separation Motor (Small)
+earlySolids	Early Solid Rocket Engines	part	sepMotor1	yes	Radial Separation Motor (Medium)
+earlySolids	Early Solid Rocket Engines	part	sepMotorLarge	yes	Radial Separation Motor (Large)
+earlySolids	Early Solid Rocket Engines	part	sepMotorSmall	yes	Radial Separation Motor (Small)
+basicSolids	Basic Solid Rocket Engines	part	ROE-18KS7800	yes	Aerojet 1.8KS-7800
+basicSolids	Basic Solid Rocket Engines	part	ROE-NikeM5E1	yes	Nike M5E1
+solids1956	1956-1957 Solid Rocket Engines	part	ROE-BabySergeant	yes	Baby Sergeant (5.4KS-1975)
+solids1956	1956-1957 Solid Rocket Engines	part	ROE-BabySergeantX11	yes	Baby Sergeant 11x Cluster
+solids1956	1956-1957 Solid Rocket Engines	part	ROE-BabySergeantX11Dec	yes	Baby Sergeant 11x Cluster Decoupler
+solids1956	1956-1957 Solid Rocket Engines	part	ROE-BabySergeantX3	yes	Baby Sergeant 3x Cluster
+solids1956	1956-1957 Solid Rocket Engines	part	ROE-BabySergeantX3Dec	yes	Baby Sergeant 3x Cluster Decoupler
+solids1956	1956-1957 Solid Rocket Engines	part	ROE-GCRC	yes	GCRC 33KS-2800
+postWarMaterialsScience	Post-War Materials Science	part	RO-RFTank-SM	yes	Procedural Tank (Service Module)
+postWarMaterialsScience	Post-War Materials Science	part	ROT-MiscTank-ServiceModule	yes	Another Modular Tank (Service Module)
+postWarMaterialsScience	Post-War Materials Science	part	ROT-Nose-ServiceModule	yes	Modular Nose Tank (Service Module)
+postWarMaterialsScience	Post-War Materials Science	part	ROT-ServiceModule	yes	Modular Tank (Service Module)
+postWarMaterialsScience	Post-War Materials Science	part	radialDecoupler1-2	yes	Hydraulic Detachment Manifold
+postWarMaterialsScience	Post-War Materials Science	upgrade	RFTech-Tank-Sep-Al	not-in-curated	
+postWarMaterialsScience	Post-War Materials Science	upgrade	rp0EngineerUpgradePostWar	DROP-axed-career	
+earlyMaterialsScience	Early Materials Science	part	Decoupler_1	yes	TD-12 Decoupler
+earlyMaterialsScience	Early Materials Science	part	restock-decoupler-1875-1	yes	TD-18 Decoupler
+earlyMaterialsScience	Early Materials Science	part	restock-separator-1875-1	yes	TS-18 Separator
+earlyMaterialsScience	Early Materials Science	upgrade	PFTech-Fairing-I	KEEP-capability	
+earlyMaterialsScience	Early Materials Science	upgrade	RFTech-Tank-Sep-Al2	not-in-curated	
+earlyMaterialsScience	Early Materials Science	upgrade	rp0EngineerUpgradeEarly	DROP-axed-career	
+materialsScienceSatellite	Satellite Era Materials Science	part	Decoupler_2	yes	TD-25 Decoupler
+materialsScienceSatellite	Satellite Era Materials Science	part	RO-RFTank-BalloonNew	yes	Procedural Tank (Balloon)
+materialsScienceSatellite	Satellite Era Materials Science	part	RO-RFTank-Integral	yes	Procedural Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROE-CastorDecoupler	yes	Castor I & II Radial Decoupler
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-AtlasDecoupler	yes	Atlas Skirt Decoupler
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-AtlasTank-Balloon	yes	Atlas Modular Tank (Balloon)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-AtlasTank-Integral	yes	Atlas Modular Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-AtlasTank-Separate	yes	Atlas Modular Tank (Conventional Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-BalloonTank-New	yes	Modular Tank (Balloon)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-BoosterTank-Integral	yes	Modular Booster Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-GenericTank-Integral	yes	Modular Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-KatnissTank-Balloon	yes	Katniss Parts Pack Tank (Balloon)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-KatnissTank-Integral	yes	Katniss Parts Pack Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-KatnissTank-Separate	yes	Katniss Parts Pack Tank (Conventional Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-LanderTank-Integral	yes	Modular Landing Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-LanderTank-SM	yes	Modular Landing Tank (Service Module)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-LanderTank-Separate	yes	Modular Landing Tank (Conventional Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-MiscTank-Balloon	yes	Another Modular Tank (Balloon)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-MiscTank-Integral	yes	Another Modular Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-MiscTank-Radial-Integral	yes	Another Modular Radial Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-Nose-Integral	yes	Modular Nose Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-RadialTank-Integral	yes	Radial Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-SphericalTank-Integral	yes	Spherical Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ROT-ToroidalTank-Integral	yes	Modular Toroidal Tank (Isogrid Structure)
+materialsScienceSatellite	Satellite Era Materials Science	part	ServiceBay_125_v2	yes	Service Bay [2m]
+materialsScienceSatellite	Satellite Era Materials Science	part	adapterSize2-Size1	yes	C7 Brand Adapter - 2.5m to 1.25m
+materialsScienceSatellite	Satellite Era Materials Science	part	adapterSize2-Size1Slant	yes	C7 Brand Adapter Slanted - 2.5m to 1.25m
+materialsScienceSatellite	Satellite Era Materials Science	part	ca_tank_mp_s	yes	CA-MT10 Propellant Tank (Pressurized)
+materialsScienceSatellite	Satellite Era Materials Science	part	radialDecoupler2	yes	TT-70 Radial Decoupler
+materialsScienceSatellite	Satellite Era Materials Science	part	rotor_01	yes	EM-16 Light Duty Rotor
+materialsScienceSatellite	Satellite Era Materials Science	part	rotor_01s	yes	EM-16S Light Duty Rotor
+materialsScienceSatellite	Satellite Era Materials Science	part	shortDecoupler1-2	yes	Shorter Rockomax Brand Decoupler
+materialsScienceSatellite	Satellite Era Materials Science	part	stackBiCoupler_v2	yes	TVR-200 Stack Bi-Coupler
+materialsScienceSatellite	Satellite Era Materials Science	part	stackPoint1	yes	BZ-52 Radial Attachment Point
+materialsScienceSatellite	Satellite Era Materials Science	part	stackTriCoupler_v2	yes	TVR-1180C Mk1 Stack Tri-Coupler
+materialsScienceSatellite	Satellite Era Materials Science	upgrade	rp0EngineerUpgradeSatellites	DROP-axed-career	
+electronicsSatellite	Satellite Era Electronics Research	part	ROS-StaticSolarPanel	yes	Static Solar Panel
+electronicsSatellite	Satellite Era Electronics Research	part	RO_EarlyTinySolarPanel	yes	ST1 Tiny Solar Panel
+electronicsSatellite	Satellite Era Electronics Research	part	RP-1-CommunicationSat	yes	Communication Contract Satellite Bus
+electronicsSatellite	Satellite Era Electronics Research	part	RP-1-NavigationSat	yes	Navigation Contract Satellite Bus
+electronicsSatellite	Satellite Era Electronics Research	upgrade	rp0ResearcherUpgradeSatellites	DROP-axed-career	
+electronicsSatellite	Satellite Era Electronics Research	upgrade	solarTL0	not-in-curated	
+postWarAvionics	Early Tracking Systems	part	GooExperiment	yes	Biological Sample Capsule
+postWarAvionics	Early Tracking Systems	part	SXTProbeGooo	yes	Biological Sample Capsule
+postWarAvionics	Early Tracking Systems	upgrade	Science-Core-postWarAvionics	REFERENCE-avionics	
+avionicsPrototypes	Avionics Prototypes	part	SXTSputnik	yes	Sputnik PS-1
+avionicsPrototypes	Avionics Prototypes	part	probeCoreSphere_v2	yes	Sputnik PS-1
+avionicsPrototypes	Avionics Prototypes	part	sputnik1	yes	Sputnik 1
+avionicsPrototypes	Avionics Prototypes	upgrade	Near-Earth-avionicsPrototypes	REFERENCE-avionics	
+avionicsPrototypes	Avionics Prototypes	upgrade	Science-Core-avionicsPrototypes	REFERENCE-avionics	
+earlyAvionics	Early Avionics and Probes	part	RP0probeVanguardXray	yes	20in X-Ray Detector (DEPRECATED)
+earlyAvionics	Early Avionics and Probes	part	pioneer_0_1_2	yes	Pioneer 0/1/2
+earlyAvionics	Early Avionics and Probes	part	pioneer_3_4	yes	Pioneer 3/4
+earlyAvionics	Early Avionics and Probes	part	sputnik2	yes	Sputnik 2
+earlyAvionics	Early Avionics and Probes	part	sputnik3	yes	Sputnik 3 "Object D"
+earlyAvionics	Early Avionics and Probes	part	vanguard-1	yes	Vanguard 1
+earlyAvionics	Early Avionics and Probes	upgrade	HDD-Upgrade-Early	KEEP-capability	
+earlyAvionics	Early Avionics and Probes	upgrade	Near-Earth-earlyAvionics	REFERENCE-avionics	
+earlyAvionics	Early Avionics and Probes	upgrade	RP-1-PayloadTech-EarlyAvionics	KEEP-capability	
+earlyAvionics	Early Avionics and Probes	upgrade	Science-Core-earlyAvionics	REFERENCE-avionics	
+earlyScience	Early Science	part	BioCapsule	yes	Advanced Biological Capsule
+earlyScience	Early Science	part	RO-IonMassSpectrometer	yes	MS01 - Ion Mass Spectrometer
+earlyScience	Early Science	part	USFluidSpectroWedge	yes	Mass Spectrometer Unit
+earlyScience	Early Science	part	USGooBayWedge	yes	Biological Sample Capsule
+earlyScience	Early Science	part	USThermoBaroWedge	yes	Atmospheric Science Unit
+scienceSatellite	Satellite Era Science	part	RO-BasicFilmCamera	yes	PH02 - Basic Film Camera
+scienceSatellite	Satellite Era Science	part	RO-EarlyMagnet	yes	MG01 - Early Magnetometer
+scienceSatellite	Satellite Era Science	part	RO-EarlyTVCamera	yes	VI01 - Early Television Camera
+scienceSatellite	Satellite Era Science	part	RO-GeigerMuller	yes	CR01 - Geiger-Muller Counter
+scienceSatellite	Satellite Era Science	part	RO-Micrometeorite	yes	MM01 - Micrometeorite Detector
+scienceSatellite	Satellite Era Science	part	dmUS2MagBoom	no	Univ. Storage 2 - Magnetometer Boom
+scienceSatellite	Satellite Era Science	part	dmUS2Scope	no	Univ. Storage 2 - Orbital Telescope
+supersonicDev	Supersonic Plane Development	part	RO-B9ProcAMWing-Supersonic	yes	B9 Procedural Wing, All-Moving (Supersonic)
+supersonicDev	Supersonic Plane Development	part	RO-B9ProcCS-Supersonic	yes	B9 Procedural Control Surface (Supersonic)
+supersonicDev	Supersonic Plane Development	part	RO-B9ProcWing-Supersonic	yes	B9 Procedural Wing (Supersonic)
+supersonicDev	Supersonic Plane Development	part	RO-J35	yes	J35 Turbojet
+supersonicDev	Supersonic Plane Development	part	RO-VK1	yes	VK-1 Turbojet
+supersonicDev	Supersonic Plane Development	part	RO-X1Cockpit	yes	X-1 Cockpit
+supersonicDev	Supersonic Plane Development	upgrade	airlaunchTL1	DROP-axed-career	
+supersonicFlightRP0	Supersonic Flight	part	RO-FighterInlineCockpit	yes	Jet Trainer Cockpit
+supersonicFlightRP0	Supersonic Flight	part	RO-J47	yes	J47 Turbojet
+supersonicFlightRP0	Supersonic Flight	part	RO-J48	yes	J48/Tay Turbojet
+supersonicFlightRP0	Supersonic Flight	part	RO-JT3C	yes	J57 Turbojet (No Afterburner)
+supersonicFlightRP0	Supersonic Flight	part	RO-RD9B	yes	RD-9 Turbojet
+supersonicFlightRP0	Supersonic Flight	part	RO-Sapphire203	yes	Sapphire Turbojet
+supersonicFlightRP0	Supersonic Flight	part	RO-shockConeIntake125	yes	1.25m Shock Cone Intake
+supersonicFlightRP0	Supersonic Flight	part	RO-shockConeIntakeBomarc	yes	0.70m Shock Cone Intake
+supersonicFlightRP0	Supersonic Flight	part	RO-shockConeIntakeMig	yes	0.86m Shock Cone Intake
+supersonicFlightRP0	Supersonic Flight	part	SXTClyde	yes	DHC-3 Otter cockpit
+supersonicFlightRP0	Supersonic Flight	part	SXTRadialAirIntakeShockCone	yes	XF-104 Radial Shock Cone Intake
+supersonicFlightRP0	Supersonic Flight	part	aje_avon	yes	Avon Turbojet
+supersonicFlightRP0	Supersonic Flight	part	aje_j57	yes	J57 Turbojet
+supersonicFlightRP0	Supersonic Flight	part	shockConeIntake	yes	Shock Cone Intake
+supersonicFlightRP0	Supersonic Flight	upgrade	RFUpgrade_J35-A-17	KEEP-engine	
+supersonicFlightRP0	Supersonic Flight	upgrade	X2CockpitUpgrade	KEEP-capability	
+supersonicFlightRP0	Supersonic Flight	upgrade	airlaunchTL2	DROP-axed-career	
+matureSupersonic	Mature Supersonic Flight	part	KF-ALG-Medium	yes	Adjustable Landing Gear (Medium)
+matureSupersonic	Mature Supersonic Flight	part	RO-AL7F	yes	AL-7 Turbojet
+matureSupersonic	Mature Supersonic Flight	part	RO-Atar101D	yes	Atar 101 Turbojet
+matureSupersonic	Mature Supersonic Flight	part	RO-Nord1500	yes	Nord 1500/Atar Combined Cycle Ramjet
+matureSupersonic	Mature Supersonic Flight	part	RO-RJ43	yes	RJ43 Ramjet
+matureSupersonic	Mature Supersonic Flight	part	RO-RJ47	yes	RJ47 Ramjet
+matureSupersonic	Mature Supersonic Flight	part	RO-RJ55	yes	RJ55/J67 Combined Cycle Ramjet
+matureSupersonic	Mature Supersonic Flight	part	SXTmk3Cockpit52	yes	B-52 Stratofortress cockpit
+matureSupersonic	Mature Supersonic Flight	part	airbrake1	yes	A.I.R.B.R.A.K.E.S
+matureSupersonic	Mature Supersonic Flight	part	aje_j75	yes	J75 Turbojet
+matureSupersonic	Mature Supersonic Flight	part	aje_j79	yes	J79 Turbojet
+matureSupersonic	Mature Supersonic Flight	part	nacelleBody	yes	Engine Nacelle (DEPRECATED)
+matureSupersonic	Mature Supersonic Flight	part	radialEngineBody	yes	Engine Pre-cooler (DEPRECATED)
+matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_Avon114R	KEEP-engine	
+matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_J47-GE-25A	KEEP-engine	
+matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_J47-GE-27	KEEP-engine	
+matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_J48-P-8	KEEP-engine	
+matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_J57-P-21	KEEP-engine	
+matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_J57-P-43WA	KEEP-engine	
+matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_J57-P-7A	KEEP-engine	
+matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_JT3C-6	KEEP-engine	
+matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_RD-9BF-811	KEEP-engine	
+matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_Sapphire203	KEEP-engine	
+matureSupersonic	Mature Supersonic Flight	upgrade	airlaunchTL3	DROP-axed-career	
