@@ -79,7 +79,7 @@ digraph AXE {
   "th_passiveRadiators" [label="Passive Radiative Cooling\nThermodynamics T4 · 900",fillcolor="#f4a261",fontcolor="#111111"];
   "th_heatPipes" [label="Heat-Pipe Thermal Transport\nThermodynamics T5 · 1500",fillcolor="#f4a261",fontcolor="#111111"];
   "th_pumpedLoop" [label="Pumped Fluid-Loop Cooling\nThermodynamics T6 · 2000",fillcolor="#f4a261",fontcolor="#111111"];
-  "th_deployableRadiators" [label="Deployable Panel Radiators\nThermodynamics T6 · 2000",fillcolor="#f4a261",fontcolor="#111111"];
+  "th_deployableRadiators" [label="Deployable Heat Rejection\nThermodynamics T6 · 2000",fillcolor="#f4a261",fontcolor="#111111"];
   "th_cryocooler" [label="Mechanical Cryocoolers\nThermodynamics T7 · 2300",fillcolor="#f4a261",fontcolor="#111111"];
   "th_dropletRadiator" [label="Liquid-Droplet Radiators\nThermodynamics T9 · 1700",fillcolor="#f4a261",fontcolor="#111111"];
   "cryo_basicCryoStorage" [label="Vacuum-Jacketed Cryo Storage\nCryogenics T2 · 90",fillcolor="#4cc9f0",fontcolor="#111111"];
@@ -91,7 +91,7 @@ digraph AXE {
   "elec_fuelCell" [label="Alkaline Fuel Cells\nElectricalPower T3 · 400",fillcolor="#ffd166",fontcolor="#111111"];
   "elec_siliconPV" [label="Silicon Photovoltaics\nElectricalPower T3 · 400",fillcolor="#ffd166",fontcolor="#111111"];
   "elec_bodyMountedArrays" [label="Body-Mounted & Deployable Arrays\nElectricalPower T4 · 900",fillcolor="#ffd166",fontcolor="#111111"];
-  "elec_trackingArrays" [label="Sun-Tracking Array Drives\nElectricalPower T5 · 1500",fillcolor="#ffd166",fontcolor="#111111"];
+  "elec_trackingArrays" [label="Solar Array Gimballing\nElectricalPower T5 · 1500",fillcolor="#ffd166",fontcolor="#111111"];
   "elec_lithiumIon" [label="Lithium-Ion Secondary Cells\nElectricalPower T6 · 2000",fillcolor="#ffd166",fontcolor="#111111"];
   "elec_tripleJunction" [label="Triple-Junction GaAs Cells\nElectricalPower T6 · 2000",fillcolor="#ffd166",fontcolor="#111111"];
   "elec_concentratorPV" [label="Concentrator Photovoltaics\nElectricalPower T7 · 2300",fillcolor="#ffd166",fontcolor="#111111"];
@@ -108,7 +108,7 @@ digraph AXE {
   "nuc_gasCoreNTR" [label="Gas-Core Nuclear-Thermal\nNuclearEngineering T10 · 1300",fillcolor="#90be6d",fontcolor="#111111"];
   "nuc_fusionTorch" [label="Fusion Propulsion\nNuclearEngineering T10 · 1300",fillcolor="#90be6d",fontcolor="#111111"];
   "aero_subsonicAirfoils" [label="Subsonic Airfoils & Empennage\nAerodynamics T1 · 20",fillcolor="#48cae4",fontcolor="#111111"];
-  "aero_parachuteRecovery" [label="Drogue & Main Parachute Recovery\nAerodynamics T2 · 90",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_parachuteRecovery" [label="Staged Canopy Deceleration\nAerodynamics T2 · 90",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_transonicArea" [label="Transonic Area-Rule Shaping\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_sweptWing" [label="Swept & Delta Wings\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_supersonicInlets" [label="Supersonic Inlet Design\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
@@ -116,7 +116,7 @@ digraph AXE {
   "aero_proceduralFairings" [label="Payload Fairings & Separation\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_hypersonicWaverider" [label="Hypersonic Waverider Forebodies\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_liftingBody" [label="Lifting-Body Reentry\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
-  "aero_gridFins" [label="Grid Fins & Aerodynamic Actuators\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_gridFins" [label="Lattice-Fin Flight Control\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_supersonicRetropropulsion" [label="Supersonic Retropropulsion\nAerodynamics T6 · 2000",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_iad" [label="Inflatable Aerodynamic Decelerators\nAerodynamics T6 · 2000",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_scramjet" [label="Scramjet Airframe Integration\nAerodynamics T6 · 2000",fillcolor="#48cae4",fontcolor="#111111"];
@@ -125,8 +125,8 @@ digraph AXE {
   "str_pyroSeparation" [label="Pyrotechnic Staging & Separation\nStructuresMechanisms T1 · 20",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_stageSeparation" [label="Stage Separation & Ullage\nStructuresMechanisms T2 · 90",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_interstageTruss" [label="Semi-Monocoque Interstage Structures\nStructuresMechanisms T2 · 90",fillcolor="#adb5bd",fontcolor="#111111"];
-  "str_landingLegs" [label="Shock-Absorbing Landing Legs\nStructuresMechanisms T3 · 400",fillcolor="#adb5bd",fontcolor="#111111"];
-  "str_deployableBooms" [label="Stacer & Astromast Booms\nStructuresMechanisms T4 · 900",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_landingLegs" [label="Touchdown Energy Absorption\nStructuresMechanisms T3 · 400",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_deployableBooms" [label="Stored-Strain Deployable Booms\nStructuresMechanisms T4 · 900",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_dockingProbeDrogue" [label="Probe-and-Drogue Docking\nStructuresMechanisms T4 · 900",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_androgynousDocking" [label="Androgynous Docking (APAS)\nStructuresMechanisms T5 · 1500",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_deployableTruss" [label="Deployable & Erectable Trusses\nStructuresMechanisms T5 · 1500",fillcolor="#adb5bd",fontcolor="#111111"];
@@ -138,7 +138,7 @@ digraph AXE {
   "str_inSpaceAssembly" [label="Robotic On-Orbit Truss Assembly\nStructuresMechanisms T8 · 2100",fillcolor="#adb5bd",fontcolor="#111111"];
   "rob_servoActuators" [label="Electric Servo Actuators\nRobotics T3 · 400",fillcolor="#bc6c25",fontcolor="#111111"];
   "rob_roverChassis" [label="Independently-Sprung Rover Chassis\nRobotics T4 · 900",fillcolor="#bc6c25",fontcolor="#111111"];
-  "rob_roboticArm" [label="Teleoperated Robotic Arms\nRobotics T5 · 1500",fillcolor="#bc6c25",fontcolor="#111111"];
+  "rob_roboticArm" [label="Force-Reflecting Teleoperation\nRobotics T5 · 1500",fillcolor="#bc6c25",fontcolor="#111111"];
   "rob_suspension" [label="Rocker-Bogie Suspension\nRobotics T5 · 1500",fillcolor="#bc6c25",fontcolor="#111111"];
   "rob_sampleHandling" [label="Sample Acquisition & Handling\nRobotics T6 · 2000",fillcolor="#bc6c25",fontcolor="#111111"];
   "rob_autonomousNav" [label="Autonomous Surface Navigation\nRobotics T6 · 2000",fillcolor="#bc6c25",fontcolor="#111111"];
@@ -178,7 +178,7 @@ digraph AXE {
   "gnc_rateGyros" [label="Rate Gyros & Analog Autopilot\nGuidanceControl T1 · 20",fillcolor="#7209b7",fontcolor="#111111"];
   "gnc_reactionControl" [label="Reaction Control & Attitude Hold\nGuidanceControl T2 · 90",fillcolor="#7209b7",fontcolor="#111111"];
   "gnc_inertialNav" [label="Gimballed Inertial Navigation\nGuidanceControl T3 · 400",fillcolor="#7209b7",fontcolor="#111111"];
-  "gnc_reactionWheels" [label="Reaction Wheels & Momentum Desaturation\nGuidanceControl T3 · 400",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_reactionWheels" [label="Momentum-Exchange Attitude Control\nGuidanceControl T3 · 400",fillcolor="#7209b7",fontcolor="#111111"];
   "gnc_strapdownINS" [label="Strapdown Inertial Navigation\nGuidanceControl T4 · 900",fillcolor="#7209b7",fontcolor="#111111"];
   "gnc_digitalGuidance" [label="Digital Closed-Loop Ascent Guidance\nGuidanceControl T5 · 1500",fillcolor="#7209b7",fontcolor="#111111"];
   "gnc_cmg" [label="Control-Moment Gyros\nGuidanceControl T5 · 1500",fillcolor="#7209b7",fontcolor="#111111"];
@@ -198,11 +198,11 @@ digraph AXE {
   "opt_filmCameras" [label="Film-Return Cameras\nOpticsPhotonics T2 · 90",fillcolor="#3a0ca3",fontcolor="#111111"];
   "opt_tvImaging" [label="Vidicon TV Imaging\nOpticsPhotonics T3 · 400",fillcolor="#3a0ca3",fontcolor="#111111"];
   "opt_precisionOptics" [label="Precision Optical Fabrication\nOpticsPhotonics T4 · 900",fillcolor="#3a0ca3",fontcolor="#111111"];
-  "opt_starTracker" [label="Star Trackers\nOpticsPhotonics T4 · 900",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_starTracker" [label="Stellar Attitude Determination\nOpticsPhotonics T4 · 900",fillcolor="#3a0ca3",fontcolor="#111111"];
   "opt_digitalImaging" [label="Digital CCD Imaging\nOpticsPhotonics T6 · 2000",fillcolor="#3a0ca3",fontcolor="#111111"];
   "opt_spectrometry" [label="Imaging Spectrometers\nOpticsPhotonics T5 · 1500",fillcolor="#3a0ca3",fontcolor="#111111"];
   "opt_laserRanging" [label="Laser Altimetry & LIDAR\nOpticsPhotonics T6 · 2000",fillcolor="#3a0ca3",fontcolor="#111111"];
-  "opt_spaceTelescope" [label="Ritchey-Chretien Space Telescopes\nOpticsPhotonics T6 · 2000",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_spaceTelescope" [label="Ritchey-Chretien Reflectors\nOpticsPhotonics T6 · 2000",fillcolor="#3a0ca3",fontcolor="#111111"];
   "opt_segmentedMirrors" [label="Segmented Deployable Mirrors\nOpticsPhotonics T7 · 2300",fillcolor="#3a0ca3",fontcolor="#111111"];
   "opt_adaptiveOptics" [label="Active & Adaptive Optics\nOpticsPhotonics T7 · 2300",fillcolor="#3a0ca3",fontcolor="#111111"];
   "opt_coronagraphy" [label="Coronagraphy & Exoplanet Imaging\nOpticsPhotonics T8 · 2100",fillcolor="#3a0ca3",fontcolor="#111111"];
@@ -466,6 +466,7 @@ digraph AXE {
   "opt_filmCameras" -> "opt_tvImaging" [style=solid];
   "opt_filmCameras" -> "opt_precisionOptics" [style=solid];
   "opt_tvImaging" -> "opt_starTracker" [style=solid];
+  "mic_integratedCircuit" -> "opt_starTracker" [style=solid];
   "opt_tvImaging" -> "opt_digitalImaging" [style=solid];
   "mic_ccdSensors" -> "opt_digitalImaging" [style=solid];
   "opt_precisionOptics" -> "opt_spectrometry" [style=solid];

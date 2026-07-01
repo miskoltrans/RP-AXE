@@ -542,7 +542,7 @@ nodes:
     parents: [th_passiveRadiators]
     flavor: "Circulate coolant to gather waste heat from across a large vehicle and dump it at the radiators — the thermal circulatory system of a station."
   - id: th_deployableRadiators
-    title: "Deployable Panel Radiators"
+    title: "Deployable Heat Rejection"
     discipline: Thermodynamics
     tier: 6
     parents: [th_heatPipes, str_deployableTruss]
@@ -618,7 +618,7 @@ nodes:
     parents: [elec_siliconPV]
     flavor: "Tile a spacecraft's skin or fold out fixed panels for hundreds of watts — the workhorse power source of the satellite age."
   - id: elec_trackingArrays
-    title: "Sun-Tracking Array Drives"
+    title: "Solar Array Gimballing"
     discipline: ElectricalPower
     tier: 5
     parents: [elec_bodyMountedArrays, rob_servoActuators]
@@ -733,7 +733,7 @@ nodes:
     flavor: "Wings, tails and control surfaces that fly stably below the speed of sound — the X-plane root of the tree."
     parts: [AdvancedCanard]
   - id: aero_parachuteRecovery
-    title: "Drogue & Main Parachute Recovery"
+    title: "Staged Canopy Deceleration"
     discipline: Aerodynamics
     tier: 2
     parents: [aero_subsonicAirfoils]
@@ -782,7 +782,7 @@ nodes:
     parents: [aero_reentryBluntBody]
     flavor: "Generate lift from the fuselage itself for a cross-range, runway-capable return with no wings to shield from the heat."
   - id: aero_gridFins
-    title: "Grid Fins & Aerodynamic Actuators"
+    title: "Lattice-Fin Flight Control"
     discipline: Aerodynamics
     tier: 5
     parents: [aero_reentryBluntBody, rob_servoActuators]
@@ -837,13 +837,13 @@ nodes:
     parents: [str_pyroSeparation]
     flavor: "Carry launch loads through open trusswork at minimum mass — the skeleton between tanks and engines."
   - id: str_landingLegs
-    title: "Shock-Absorbing Landing Legs"
+    title: "Touchdown Energy Absorption"
     discipline: StructuresMechanisms
     tier: 3
     parents: [str_interstageTruss]
     flavor: "Crushable or damped legs that catch a lander's touchdown without bouncing or tipping."
   - id: str_deployableBooms
-    title: "Stacer & Astromast Booms"
+    title: "Stored-Strain Deployable Booms"
     discipline: StructuresMechanisms
     tier: 4
     parents: [str_interstageTruss]
@@ -918,7 +918,7 @@ nodes:
     parents: [rob_servoActuators]
     flavor: "Drive, steer and survive thermal cycling on another world — the mobile platform that takes instruments to the science."
   - id: rob_roboticArm
-    title: "Teleoperated Robotic Arms"
+    title: "Force-Reflecting Teleoperation"
     discipline: Robotics
     tier: 5
     parents: [rob_servoActuators]
@@ -1163,7 +1163,7 @@ nodes:
     parents: [gnc_rateGyros]
     flavor: "A gyro-stabilised platform integrates acceleration into position — knowing where you are with no outside reference."
   - id: gnc_reactionWheels
-    title: "Reaction Wheels & Momentum Desaturation"
+    title: "Momentum-Exchange Attitude Control"
     discipline: GuidanceControl
     tier: 3
     parents: [gnc_reactionControl]
@@ -1290,10 +1290,10 @@ nodes:
     parents: [opt_filmCameras]
     flavor: "Grind, polish and figure mirrors and lenses to fractions of a wavelength — the craft beneath every telescope and star tracker."
   - id: opt_starTracker
-    title: "Star Trackers"
+    title: "Stellar Attitude Determination"
     discipline: OpticsPhotonics
     tier: 4
-    parents: [opt_tvImaging]
+    parents: [opt_tvImaging, mic_integratedCircuit]
     flavor: "Photograph the star field and match it to a catalogue for absolute attitude — the optical alternative to radio navigation."
   - id: opt_digitalImaging
     title: "Digital CCD Imaging"
@@ -1316,7 +1316,7 @@ nodes:
     parents: [opt_precisionOptics]
     flavor: "Time a laser pulse's round trip to map terrain and rendezvous range to the centimetre."
   - id: opt_spaceTelescope
-    title: "Ritchey-Chretien Space Telescopes"
+    title: "Ritchey-Chretien Reflectors"
     discipline: OpticsPhotonics
     tier: 6
     parents: [opt_precisionOptics, mic_ccdSensors]
