@@ -28,7 +28,7 @@ nodes:
     tier: 0
     parents: []
     flavor: "1950, Kerbalkind united. Rocketry is where a space program begins — you start with the de Laval nozzle, a procedural airframe, avionics, the first instruments, and a handful of sounding motors: enough to fly above the Karman line turn one. Everything past that, including whether to fly aeroplanes at all, is yours to choose."
-    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, B9_Aero_Wing_Procedural_TypeA, sensorBarometer, sensorThermometer, strutConnector, strutCube, structuralIBeam1, structuralPanel1, trussPiece1x, ROE-Aerobee, ROE-ORM65, ROE-VeroniqueAK, TinyTim, ROMeteoSustainer, ROE-R103, basicFin, ROSmallSpinMotor, ROE-Agena_Spinrocket, restock-nosecone-1875-1]
+    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, B9_Aero_Wing_Procedural_TypeA, sensorBarometer, sensorThermometer, strutConnector, strutCube, structuralIBeam1, structuralPanel1, trussPiece1x, ROE-Aerobee, ROE-ORM65, ROE-VeroniqueAK, TinyTim, ROMeteoSustainer, ROE-R103, basicFin, ROSmallSpinMotor, ROE-Agena_Spinrocket, restock-nosecone-1875-1, Angledpanel, ROT-Mount, SXTProtonlikeNoseCone, ServiceBay_125_v2, USThermoBaroWedge, adapterSize2-Size1, adapterSize2-Size1Slant, microIbeam, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, smallHardpoint, stackBiCoupler_v2, stackPoint1, stackTriCoupler_v2, standardNoseCone, structuralIBeam2, structuralIBeam3, structuralMiniNode, structuralPanel2, structuralPylon, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeMountingPlate, strutCubeOCTOAdapter, strutCubeS0Adapter, strutCubeSmall, strutOcto, truss-micro-01, truss-micro-02, trussAdapter, trussPiece3x]
   - id: parking
     title: "Unsorted Parts (Parking)"
     discipline: SystemsIntegration
@@ -73,21 +73,28 @@ nodes:
     tier: 2
     parents: [fd_turbopumpFeed]
     flavor: "The Western answer to the same instability: don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales. The LR89/LR79 boosters, the Atlas and Thor."
-    parts: [ROE-LR89_2, ROE-LR79, ROE-LR105_2, ROE-X405, ROE-Gamma301, ROE-Stentor]
+    parts: [ROE-LR89_2, ROE-LR79, ROE-LR105_2, ROE-X405, ROE-Gamma301, ROE-Stentor, ROE-RZ, ROE-X405H, ROE-LR87, ROE-LR87_11, ROE-LR87_Single, ROE-LR91, ROE-LR91-4V, ROE-RD0105, ROE-RD0110, ROE-RD109, ROE-RD111]
   - id: fd_verniers
     title: "Vernier Trim Chambers"
     discipline: FluidDynamics
     tier: 2
     parents: [fd_turbopumpFeed]
     flavor: "Small, gimballed trim chambers that steer and roll the stack while the main engines just push — the Atlas and Jupiter vernier motors, co-developed with the big engines they trim. The fine hand on a heavy rocket."
-    parts: [ROE-LR101_2, ROE-LR101Inline_2, ROE-JupiterVernier]
+    parts: [ROE-LR101_2, ROE-LR101Inline_2, ROE-JupiterVernier, ROE-RD0110Vernier]
   - id: pc_hypergolics
     title: "Amine-Nitrate Hypergolics"
     discipline: PropellantChemistry
     tier: 2
     parents: [start]
     flavor: "An amine fuel and a nitric-acid oxidiser that ignite on contact — no igniter, indefinite restarts, storable for years. Pure chemistry: a simple ablative engine that needs neither cooling jacket nor ignition system. The propulsion of upper stages and spacecraft."
-    parts: [ROE-AJ10Early, ROE-RD200]
+    parts: [ROE-AJ10Early, ROE-RD200, ROE-AJ10Mid, ROE-Juno45K, ROE-Juno6K]
+  - id: pc_fluorineOxidizer
+    title: "Liquid Fluorine Oxidizer Chemistry"
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [start]
+    flavor: "The most reactive element there is, chilled to a liquid and burned with hydrazine for storable-propellant performance nothing else touches — tested on stands, never flown operationally, because everything downstream of the tank tends to ignite or dissolve on contact. NOMAD's engine, a real dead end kept in the tree for the story it tells."
+    parts: [ROE-G1]
   # --- the early hydrogen gamble (a parallel, pricier line) ---
   - id: cryo_hydrogen
     title: "Cryogenic Hydrogen Handling"
@@ -126,21 +133,21 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Roll, fusion-weld and proof-test a cylinder that holds pressure without bursting — the first tank that flies. Heavy, but honest."
-    parts: [ROT-ServiceModule, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-GenericTank-Separate, ROT-BoosterTank-Separate, RO_ServiceBay_300, ServiceBay_250_v2, USRadialTanks]
+    parts: [ROT-ServiceModule, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-GenericTank-Separate, ROT-BoosterTank-Separate, RO_ServiceBay_300, ServiceBay_250_v2, USRadialTanks, RO-RFTank-SM, ROT-AtlasTank-Separate, ROT-KatnissTank-Separate, ROT-LanderTank-SM, ROT-LanderTank-Separate, ROT-MiscTank-Radial-Separate, ROT-MiscTank-Separate, ROT-Nose-Separate, ROT-RadialTank-Separate, ROT-SphericalTank-Separate, ROT-ToroidalTank-Separate, ca_tank_mp_s]
   - id: met_isogrid
     title: "Machined Isogrid Stiffening"
     discipline: Metallurgy
     tier: 2
     parents: [met_weldedTank]
     flavor: "Machine a triangular-rib isogrid into thick plate — cutting metal away everywhere the load path doesn't run, leaving only the ribs that carry it. The same stiffness at a fraction of the mass; the light conventional tankage that flies most orbital rockets."
-    parts: [ROT-GenericTank-Integral, ROT-AtlasTank-Integral, ROT-BoosterTank-Integral, ROT-SphericalTank-Integral, ROT-ToroidalTank-Integral, RO-RFTank-Integral]
+    parts: [ROT-GenericTank-Integral, ROT-AtlasTank-Integral, ROT-BoosterTank-Integral, ROT-SphericalTank-Integral, ROT-ToroidalTank-Integral, RO-RFTank-Integral, ROT-KatnissTank-Integral, ROT-LanderTank-Integral, ROT-MiscTank-Integral, ROT-MiscTank-Radial-Integral, ROT-Nose-Integral, ROT-RadialTank-Integral]
   - id: str_balloonTank
     title: "Pressure-Stabilized Monocoque"
     discipline: StructuresMechanisms
     tier: 2
     parents: [met_weldedTank]
     flavor: "Make the wall so thin it only holds shape under pressure — the Atlas 'steel balloon' reached orbit weighing almost nothing empty, and would crumple if you ever let it depressurise. As much an orbital enabler as any engine."
-    parts: [ROT-AtlasTank-Balloon, RO-RFTank-BalloonNew, ROT-BalloonTank-New]
+    parts: [ROT-AtlasTank-Balloon, RO-RFTank-BalloonNew, ROT-BalloonTank-New, ROT-KatnissTank-Balloon, ROT-MiscTank-Balloon]
   - id: str_orbitalMassFraction
     title: "Orbital-Class Mass Fraction"
     discipline: StructuresMechanisms
@@ -156,7 +163,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one go."
-    parts: [proceduralStackDecoupler, Decoupler_1, Decoupler_2, radialDecoupler, ROE-CastorDecoupler, sepMotor1, SnubOtron, KzThrustPlate]
+    parts: [proceduralStackDecoupler, Decoupler_1, Decoupler_2, radialDecoupler, ROE-CastorDecoupler, sepMotor1, SnubOtron, KzThrustPlate, Decoupler_0, ROE-BabySergeantX11Dec, ROE-BabySergeantX3Dec, ROT-AtlasDecoupler, ROT-RingDecoupler, radialDecoupler1-2, radialDecoupler2, restock-decoupler-1875-1, restock-decoupler-radial-tiny-1, restock-separator-1875-1, sepMotorLarge, sepMotorSmall, shortDecoupler1-2, smallRadialDecoupler]
   - id: gnc_pitchProgram
     title: "Open-Loop Pitch Programming"
     discipline: GuidanceControl
@@ -169,7 +176,7 @@ nodes:
     tier: 2
     parents: [gnc_pitchProgram]
     flavor: "Bleed stored gas through opposed thruster pairs to point and hold a vehicle in vacuum — the first three-axis control where there is no air to push against."
-    parts: [ROE-ModularRCS, RCSBlock_138, RCSBlock_28, RCSBlock_69, InlineRCS, ROE-generic-full, ROE-generic-half, ROE-generic-quarter, ca_jib, microEngine]
+    parts: [ROE-ModularRCS, RCSBlock_138, RCSBlock_28, RCSBlock_69, InlineRCS, ROE-generic-full, ROE-generic-half, ROE-generic-quarter, ca_jib, microEngine, RCSBlockSmall_138, RCSBlockSmall_28, RCSBlockSmall_69, RCSBoonExt, RCSLinearSmall_28, RCSLinearSmall_69, RO-RestockPlus-RCS-Block-Dual-138, RO-RestockPlus-RCS-Block-Dual-28, RO-RestockPlus-RCS-Block-Quad-138, RO-RestockPlus-RCS-Block-Quad-28, RO-RestockPlus-RCS-Block-Quad-Angled-28, RO-RestockPlus-RCS-Block-Quint-138, RO-RestockPlus-RCS-Block-Quint-28, RO-RestockPlus-RCS-Block-Triple-Angled-138, RO-RestockPlus-RCS-Block-Triple-Angled-28, RO-RestockPlus-RCS-Linear-28, RO-nflv-rcs-aero-heavy-1-half, RO-nflv-rcs-aero-heavy-1-quarter, RO-nflv-rcs-aero-heavy-2-half, RO-nflv-rcs-aero-heavy-2-quarter, RO_FASA_ExplorerRCS, RO_FASA_MercuryPodRCS, RO_RCSBlock_restock_138, RO_RCSBlock_restock_28, RO_RCSBlock_restock_69, RO_RCSBlock_restock_mini_138, RO_RCSBlock_restock_mini_28, RO_RCSBlock_restock_mini_69, RO_linearRcs_tenth, ca_RM01, ca_rs01, ca_rs04, restock-rcs-block-dual-mini-1, restock-rcs-block-quad-angled-mini-1, restock-rcs-block-quad-mini-1, restock-rcs-block-qunit-mini-1, restock-rcs-block-triple-angled-mini-1, restock-rcs-single-mini-1]
   - id: str_booms
     title: "Stored-Strain Deployable Booms"
     discipline: StructuresMechanisms
@@ -183,7 +190,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
-    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, RSBRibbedBase, SSTUBase]
+    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, RSBRibbedBase, SSTUBase, KzFlatAdapter, KzFlatBoattail, KzProcFairingSide1_TU, KzProcFairingSide2, KzProcFairingSide2_TU, ROT-OpenInterstage, RSBRibbedBase_Boattail, RSBRibbedBase_Interstage, RSBTrussBase, RSBTrussBase_Boattail, RSBTrussBase_Interstage, SSTUBase_Boattail, SSTUBase_Interstage, SSTUHollowRing, SSTUHollowRing_Boattail, SSTUHollowRing_Interstage]
   - id: aero_recovery
     title: "Drogue-Stabilized Deceleration"
     discipline: Aerodynamics
@@ -228,7 +235,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Encode temperature and pressure in the spacing between radio pulses and key it to the ground — Sputnik's beacon turned a satellite's state into something you could hear from another continent."
-    parts: [SXTAntenna, SurfAntenna, longAntenna]
+    parts: [SXTAntenna, SurfAntenna, longAntenna, nfex-antenna-rover-2]
 
   # ============================ SCIENCE — scattered by difficulty (six lanes) ============================
   - id: nuc_geiger
@@ -268,6 +275,15 @@ nodes:
     flavor: "Bend a beam of ions through a magnetic sector to sort them by mass — read the composition of an upper atmosphere or ionosphere in situ, chemistry sampled where the spacecraft flies."
     parts: [RO-IonMassSpectrometer, USFluidSpectroWedge]
 
+  # ============================ ROBOTICS (lane opens here) ============================
+  - id: rob_rotorActuation
+    title: "Electric Rotor Actuation"
+    discipline: Robotics
+    tier: 2
+    parents: [start]
+    flavor: "Drive a high-torque electric motor as a controllable rotary joint — the first powered actuation that is neither a rocket nor a piston. A rotor you can command opens the Robotics lane: spun lift and electric props now; hinges, servos, deployable masts and manipulator arms as the discipline fills out later. Two parts is enough — it is a genuinely new capability, not a bigger version of something the tree already has."
+    parts: [rotor_01, rotor_01s]
+
   # ============================ MILESTONES ============================
   - id: int_orbitalInsertion
     title: "Orbital Insertion"
@@ -291,7 +307,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "A cambered wing makes lift; the real breakthrough was making it OBEY — roll, pitch and yaw commanded together. Hang a piston and a propeller on it and you have controlled, powered flight."
-    parts: [SXTMerlin66prop, SXTMerlin46Prop, SXTPWR2800, SXTR280018WProp, SXTR280021Prop, SXT_Jumo213A, SXTJ213, SXTKO211Dprop, SXTTinyprop, RO-OldFighterCockpit, RO-X1Cockpit, RO-B9ProcWing-Early, RO-B9ProcCS-Early, GearFixed, GearFree, CircularIntake, noseCone]
+    parts: [SXTMerlin66prop, SXTMerlin46Prop, SXTPWR2800, SXTR280018WProp, SXTR280021Prop, SXT_Jumo213A, SXTJ213, SXTKO211Dprop, SXTTinyprop, RO-OldFighterCockpit, RO-X1Cockpit, RO-B9ProcWing-Early, RO-B9ProcCS-Early, GearFixed, GearFree, CircularIntake, noseCone, 625mBonny, CanardController, GearSmall, KF-ALG-Medium, KF-ALG-Small, KF-ALG-SmallSide, LMiniAircaftTail, LRadialAirIntake, R8winglet, RO-B9ProcAMWing-Early, RO-FighterInlineCockpit, RO-IntakeRadialLongPitot, SXTBuzzard, SXTClyde, SXTInlineAirIntake, SXTke111, SXTmk3Cockpit52, SmallGearBay, StandardCtrlSrf, airScoop, airbrake1, airplaneTail, airplaneTailB, deltaWing, delta_small, elevon2, elevon3, elevon5, miniIntake, smallCtrlSrf, structuralWing, structuralWing2, structuralWing3, structuralWing4, sweptWing, sweptWing1, sweptWing2, tailfin, wingConnector, wingConnector2, wingConnector3, wingConnector4, wingConnector5, wingStrake, winglet, winglet3]
   - id: met_turbineAlloys
     title: "Nimonic Turbine Alloys"
     discipline: Metallurgy
@@ -305,7 +321,7 @@ nodes:
     tier: 3
     parents: [met_turbineAlloys]
     flavor: "Smooth the total cross-sectional area through Mach 1 — the coke-bottle waist that lets an airframe punch through the sound barrier instead of shaking apart against it."
-    parts: [RO-J47, RO-J48, RO-JT3C, aje_j57, RO-Sapphire203, aje_avon, RO-RD9B]
+    parts: [RO-J47, RO-J48, RO-JT3C, aje_j57, RO-Sapphire203, aje_avon, RO-RD9B, RO-B9ProcAMWing-Supersonic, RO-B9ProcCS-Supersonic, SXTRadialAirIntakeShockCone]
   - id: aero_shockInlets
     title: "Oblique-Shock Inlets"
     discipline: Aerodynamics
@@ -390,7 +406,7 @@ nodes:
     tier: 2
     parents: [start]
     flavor: "Concentrated peroxide decomposed over a silver catalyst into hot steam and oxygen — British rocketry's signature chemistry (Black Knight, Blue Streak's Gamma engines), and a genuinely different oxidiser path from kerolox or storable hypergolics."
-    parts: [ROE-Gamma2, ROE-Gamma8]
+    parts: [ROE-Gamma2, ROE-Gamma8, ROE-S2253]
   - id: fd_restartableHypergolics
     title: "Restart-in-Vacuum Hypergolic Ignition"
     discipline: FluidDynamics
@@ -404,7 +420,7 @@ nodes:
     tier: 3
     parents: [pc_hypergolics]
     flavor: "Corrosive, toxic storables scaled from a small hypergolic trim engine up to full first-stage thrust — the Yangel-bureau approach of repurposing an ICBM's always-ready propellants for a space launcher."
-    parts: [ROE-RD215, ROE-RD215_Single, ROE-RD219, ROE-RD855, ROE-RD856]
+    parts: [ROE-RD215, ROE-RD215_Single, ROE-RD219, ROE-RD855, ROE-RD856, ROE-Viking2, ROE-Viking4, ROE-Viking5, YF3_Engine, YF3_with_shell, YF20_Engine, YF21_Engine, YF21_with_shell_CZ-2, YF21_with_shell_CZ-2C, YF21_with_shell_CZ-2D, YF22_Engine, YF23_Engine, YF25K_Engine]
   - id: str_engineClustering
     title: "Engine-Cluster Heavy Lift"
     discipline: StructuresMechanisms

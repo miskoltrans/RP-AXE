@@ -11,6 +11,7 @@ digraph AXE {
   "fd_baffledInjector" [label="Single Large-Chamber Combustion\nFluidDynamics T2 · 90",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_verniers" [label="Vernier Trim Chambers\nFluidDynamics T2 · 90",fillcolor="#23b9a0",fontcolor="#111111"];
   "pc_hypergolics" [label="Amine-Nitrate Hypergolics\nPropellantChemistry T2 · 90",fillcolor="#e5533b",fontcolor="#111111"];
+  "pc_fluorineOxidizer" [label="Liquid Fluorine Oxidizer Chemistry\nPropellantChemistry T3 · 400",fillcolor="#e5533b",fontcolor="#111111"];
   "cryo_hydrogen" [label="Cryogenic Hydrogen Handling\nCryogenics T1 · 20",fillcolor="#37c6e8",fontcolor="#111111"];
   "fd_expanderCycle" [label="Expander-Cycle Combustion\nFluidDynamics T2 · 90",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_orbitalThrust" [label="Orbital-Class Thrust\nFluidDynamics T3 · 400",fillcolor="#23b9a0",fontcolor="#111111"];
@@ -35,6 +36,7 @@ digraph AXE {
   "opt_filmReturn" [label="Film-Return Imaging\nOpticsPhotonics T1 · 20",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_vidicon" [label="Vidicon Imaging\nOpticsPhotonics T1 · 20",fillcolor="#7c8cff",fontcolor="#111111"];
   "mic_massSpec" [label="Magnetic-Sector Mass Spectrometry\nMicroelectronics T1 · 20",fillcolor="#c2a0e0",fontcolor="#111111"];
+  "rob_rotorActuation" [label="Electric Rotor Actuation\nRobotics T2 · 90",fillcolor="#d98c2b",fontcolor="#111111"];
   "int_orbitalInsertion" [label="Orbital Insertion\nSystemsIntegration T4 · 900",fillcolor="#ededed",fontcolor="#111111"];
   "int_applicationsSat" [label="Applications Satellite Bus\nSystemsIntegration T5 · 1500",fillcolor="#ededed",fontcolor="#111111"];
   "xplaneStart" [label="Three-Axis Aerodynamic Control\nAerodynamics T1 · 20",fillcolor="#5aa0e2",fontcolor="#111111"];
@@ -59,8 +61,8 @@ digraph AXE {
   "aero_turboshaftProp" [label="Free-Turbine Propeller Drive\nAerodynamics T3 · 400",fillcolor="#5aa0e2",fontcolor="#111111"];
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydrogen" "pc_solidGrains" "met_weldedTank" "str_staging" "gnc_pitchProgram" "aero_fairings" "aero_recovery" "th_radiativeControl" "elec_siliconPV" "tel_telemetry" "nuc_geiger" "met_exposurePanels" "opt_filmReturn" "opt_vidicon" "mic_massSpec" "xplaneStart" }
-  { rank=same; "fd_multiChamber" "fd_baffledInjector" "fd_verniers" "pc_hypergolics" "fd_expanderCycle" "met_isogrid" "str_balloonTank" "gnc_rcs" "str_booms" "th_hermeticBus" "nuc_rtg" "met_turbineAlloys" "life_openLoopECLSS" "cmp_ablativeTPS" "str_landingLegs" "pc_hydrogenPeroxide" "pc_solidRetrofire" "tel_helicalDirectional" }
-  { rank=same; "fd_orbitalThrust" "str_orbitalMassFraction" "aero_areaRule" "aero_rocketplane" "fd_deepThrottleEarly" "fd_restartableHypergolics" "pc_storableBoosters" "aero_turboshaftProp" }
+  { rank=same; "fd_multiChamber" "fd_baffledInjector" "fd_verniers" "pc_hypergolics" "fd_expanderCycle" "met_isogrid" "str_balloonTank" "gnc_rcs" "str_booms" "th_hermeticBus" "nuc_rtg" "rob_rotorActuation" "met_turbineAlloys" "life_openLoopECLSS" "cmp_ablativeTPS" "str_landingLegs" "pc_hydrogenPeroxide" "pc_solidRetrofire" "tel_helicalDirectional" }
+  { rank=same; "pc_fluorineOxidizer" "fd_orbitalThrust" "str_orbitalMassFraction" "aero_areaRule" "aero_rocketplane" "fd_deepThrottleEarly" "fd_restartableHypergolics" "pc_storableBoosters" "aero_turboshaftProp" }
   { rank=same; "int_orbitalInsertion" "aero_shockInlets" "aero_afterburner" "str_engineClustering" }
   { rank=same; "int_applicationsSat" "aero_ramjet" "int_crewedCapsule" }
   { rank=same; "str_launchEscape" }
@@ -69,6 +71,7 @@ digraph AXE {
   "fd_turbopumpFeed" -> "fd_baffledInjector" [style=solid];
   "fd_turbopumpFeed" -> "fd_verniers" [style=solid];
   "start" -> "pc_hypergolics" [style=solid];
+  "start" -> "pc_fluorineOxidizer" [style=solid];
   "start" -> "cryo_hydrogen" [style=solid];
   "cryo_hydrogen" -> "fd_expanderCycle" [style=solid];
   "fd_multiChamber" -> "fd_orbitalThrust" [style=dashed,color="#f4d35e"];
@@ -96,6 +99,7 @@ digraph AXE {
   "start" -> "opt_filmReturn" [style=solid];
   "start" -> "opt_vidicon" [style=solid];
   "start" -> "mic_massSpec" [style=solid];
+  "start" -> "rob_rotorActuation" [style=solid];
   "fd_orbitalThrust" -> "int_orbitalInsertion" [style=solid];
   "str_orbitalMassFraction" -> "int_orbitalInsertion" [style=solid];
   "int_orbitalInsertion" -> "int_applicationsSat" [style=solid];

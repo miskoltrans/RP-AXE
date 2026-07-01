@@ -127,6 +127,11 @@ window.TREE = {
    "flavor": "1950, Kerbalkind united. Rocketry is where a space program begins — you start with the de Laval nozzle, a procedural airframe, avionics, the first instruments, and a handful of sounding motors: enough to fly above the Karman line turn one. Everything past that, including whether to fly aeroplanes at all, is yours to choose.",
    "parts": [
     {
+     "name": "Angledpanel",
+     "mod": "VenStockRevamp",
+     "title": "M-1x1T Structural Panel"
+    },
+    {
      "name": "B9_Aero_Wing_Procedural_TypeA",
      "mod": "B9_Aerospace_ProceduralWings",
      "title": "B9 Procedural Wing (Spaceplane)"
@@ -172,14 +177,59 @@ window.TREE = {
      "title": "Spin Motor (Small)"
     },
     {
+     "name": "ROT-Mount",
+     "mod": "ROTanks",
+     "title": "Modular Mount (Structural)"
+    },
+    {
+     "name": "SXTProtonlikeNoseCone",
+     "mod": "SXT",
+     "title": "Conformal Rocket Cone Mk3"
+    },
+    {
+     "name": "ServiceBay_125_v2",
+     "mod": "Squad",
+     "title": "Service Bay [2m]"
+    },
+    {
      "name": "TinyTim",
      "mod": "RealismOverhaul",
      "title": "Tiny Tim Booster"
     },
     {
+     "name": "USThermoBaroWedge",
+     "mod": "UniversalStorage2",
+     "title": "Atmospheric Science Unit"
+    },
+    {
+     "name": "adapterSize2-Size1",
+     "mod": "Squad",
+     "title": "C7 Brand Adapter - 2.5m to 1.25m"
+    },
+    {
+     "name": "adapterSize2-Size1Slant",
+     "mod": "Squad",
+     "title": "C7 Brand Adapter Slanted - 2.5m to 1.25m"
+    },
+    {
      "name": "basicFin",
      "mod": "Squad",
      "title": "Basic Fin"
+    },
+    {
+     "name": "microIbeam",
+     "mod": "VenStockRevamp",
+     "title": "M-Beam 100 I-Beam"
+    },
+    {
+     "name": "pointyNoseConeA",
+     "mod": "Squad",
+     "title": "Advanced Nose Cone - Type A"
+    },
+    {
+     "name": "pointyNoseConeB",
+     "mod": "Squad",
+     "title": "Advanced Nose Cone - Type B"
     },
     {
      "name": "proceduralAvionics",
@@ -202,6 +252,11 @@ window.TREE = {
      "title": "Protective Rocket Nose Mk18"
     },
     {
+     "name": "rocketNoseCone_v2",
+     "mod": "Squad",
+     "title": "Protective Rocket Nose Cone Mk7"
+    },
+    {
      "name": "sensorBarometer",
      "mod": "Squad",
      "title": "Barometer"
@@ -212,14 +267,64 @@ window.TREE = {
      "title": "Thermometer"
     },
     {
+     "name": "smallHardpoint",
+     "mod": "Squad",
+     "title": "Small Hardpoint"
+    },
+    {
+     "name": "stackBiCoupler_v2",
+     "mod": "Squad",
+     "title": "TVR-200 Stack Bi-Coupler"
+    },
+    {
+     "name": "stackPoint1",
+     "mod": "Squad",
+     "title": "BZ-52 Radial Attachment Point"
+    },
+    {
+     "name": "stackTriCoupler_v2",
+     "mod": "Squad",
+     "title": "TVR-1180C Mk1 Stack Tri-Coupler"
+    },
+    {
+     "name": "standardNoseCone",
+     "mod": "Squad",
+     "title": "Small Nose Cone"
+    },
+    {
      "name": "structuralIBeam1",
      "mod": "Squad",
      "title": "M-Beam 650 I-Beam"
     },
     {
+     "name": "structuralIBeam2",
+     "mod": "Squad",
+     "title": "M-Beam 200 I-Beam"
+    },
+    {
+     "name": "structuralIBeam3",
+     "mod": "Squad",
+     "title": "M-Beam 200 I-Beam Pocket Edition"
+    },
+    {
+     "name": "structuralMiniNode",
+     "mod": "Squad",
+     "title": "The Not-Rockomax Micronode"
+    },
+    {
      "name": "structuralPanel1",
      "mod": "Squad",
      "title": "M-1x1 Structural Panel"
+    },
+    {
+     "name": "structuralPanel2",
+     "mod": "Squad",
+     "title": "M-2x2 Structural Panel"
+    },
+    {
+     "name": "structuralPylon",
+     "mod": "Squad",
+     "title": "Structural Pylon"
     },
     {
      "name": "strutConnector",
@@ -232,15 +337,80 @@ window.TREE = {
      "title": "Cubic Octagonal Strut"
     },
     {
+     "name": "strutCube3way",
+     "mod": "VenStockRevamp",
+     "title": "Cubic Octagonal Strut Three Way Connector"
+    },
+    {
+     "name": "strutCube90",
+     "mod": "VenStockRevamp",
+     "title": "Cubic Octagonal Strut Angle Connector"
+    },
+    {
+     "name": "strutCubeLarge",
+     "mod": "VenStockRevamp",
+     "title": "Cubic Octagonal Strut Mk IV"
+    },
+    {
+     "name": "strutCubeMedium",
+     "mod": "VenStockRevamp",
+     "title": "Cubic Octagonal Strut Mk III"
+    },
+    {
+     "name": "strutCubeMountingPlate",
+     "mod": "VenStockRevamp",
+     "title": "Cubic Octagonal Strut Slim Mounting Plate"
+    },
+    {
+     "name": "strutCubeOCTOAdapter",
+     "mod": "VenStockRevamp",
+     "title": "Cubic Octagonal Strut Octagonal Adapter"
+    },
+    {
+     "name": "strutCubeS0Adapter",
+     "mod": "VenStockRevamp",
+     "title": "Cubic Octagonal Strut 0.625m Adapter"
+    },
+    {
+     "name": "strutCubeSmall",
+     "mod": "VenStockRevamp",
+     "title": "Cubic Octagonal Strut Mk II"
+    },
+    {
+     "name": "strutOcto",
+     "mod": "Squad",
+     "title": "Octagonal Strut"
+    },
+    {
+     "name": "truss-micro-01",
+     "mod": "NearFutureConstruction",
+     "title": "Cubic-Family Large Strut"
+    },
+    {
+     "name": "truss-micro-02",
+     "mod": "NearFutureConstruction",
+     "title": "Cubic-Family Medium Strut"
+    },
+    {
+     "name": "trussAdapter",
+     "mod": "Squad",
+     "title": "Modular Girder Adapter"
+    },
+    {
      "name": "trussPiece1x",
      "mod": "Squad",
      "title": "Modular Girder Segment"
+    },
+    {
+     "name": "trussPiece3x",
+     "mod": "Squad",
+     "title": "Modular Girder Segment XL"
     }
    ],
    "upgrades": [],
    "pos": [
     -2568,
-    1448
+    1500
    ]
   },
   {
@@ -255,7 +425,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1344
+    1307
    ]
   },
   {
@@ -631,7 +801,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1184
+    1147
    ]
   },
   {
@@ -762,7 +932,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1264
+    1227
    ]
   },
   {
@@ -793,7 +963,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1274
+    1332
    ]
   },
   {
@@ -867,9 +1037,59 @@ window.TREE = {
      "title": "LR79"
     },
     {
+     "name": "ROE-LR87",
+     "mod": "ROEngines",
+     "title": "LR87"
+    },
+    {
+     "name": "ROE-LR87_11",
+     "mod": "ROEngines",
+     "title": "LR87 Booster (Shielded)"
+    },
+    {
+     "name": "ROE-LR87_Single",
+     "mod": "ROEngines",
+     "title": "LR87"
+    },
+    {
      "name": "ROE-LR89_2",
      "mod": "ROEngines",
      "title": "LR43/LR89"
+    },
+    {
+     "name": "ROE-LR91",
+     "mod": "ROEngines",
+     "title": "LR91"
+    },
+    {
+     "name": "ROE-LR91-4V",
+     "mod": "ROEngines",
+     "title": "LR91 (4 Vernier)"
+    },
+    {
+     "name": "ROE-RD0105",
+     "mod": "ROEngines",
+     "title": "RD-0105/0109"
+    },
+    {
+     "name": "ROE-RD0110",
+     "mod": "ROEngines",
+     "title": "RD-0107/0110"
+    },
+    {
+     "name": "ROE-RD109",
+     "mod": "ROEngines",
+     "title": "RD-109/119"
+    },
+    {
+     "name": "ROE-RD111",
+     "mod": "ROEngines",
+     "title": "RD-111"
+    },
+    {
+     "name": "ROE-RZ",
+     "mod": "ROEngines",
+     "title": "RZ.1/RZ.2"
     },
     {
      "name": "ROE-Stentor",
@@ -880,6 +1100,11 @@ window.TREE = {
      "name": "ROE-X405",
      "mod": "ROEngines",
      "title": "X-405 (XLR50-GE-2)"
+    },
+    {
+     "name": "ROE-X405H",
+     "mod": "ROEngines",
+     "title": "X-405H"
     }
    ],
    "upgrades": [],
@@ -911,6 +1136,11 @@ window.TREE = {
      "name": "ROE-LR101_2",
      "mod": "ROEngines",
      "title": "LR101"
+    },
+    {
+     "name": "ROE-RD0110Vernier",
+     "mod": "ROEngines",
+     "title": "RD-0110 Vernier (DEPRECATED)"
     }
    ],
    "upgrades": [],
@@ -934,6 +1164,21 @@ window.TREE = {
      "title": "AJ10 Series (Early)"
     },
     {
+     "name": "ROE-AJ10Mid",
+     "mod": "ROEngines",
+     "title": "AJ10 Series (Mid)"
+    },
+    {
+     "name": "ROE-Juno45K",
+     "mod": "ROEngines",
+     "title": "Juno IVB JPL 45K Engine"
+    },
+    {
+     "name": "ROE-Juno6K",
+     "mod": "ROEngines",
+     "title": "Juno IV 6k Engine"
+    },
+    {
      "name": "ROE-RD200",
      "mod": "ROEngines",
      "title": "RD-200"
@@ -943,6 +1188,27 @@ window.TREE = {
    "pos": [
     -1708,
     1647
+   ]
+  },
+  {
+   "id": "pc_fluorineOxidizer",
+   "title": "Liquid Fluorine Oxidizer Chemistry",
+   "discipline": "PropellantChemistry",
+   "tier": 3,
+   "cost": 400,
+   "anyToUnlock": false,
+   "flavor": "The most reactive element there is, chilled to a liquid and burned with hydrazine for storable-propellant performance nothing else touches — tested on stands, never flown operationally, because everything downstream of the tank tends to ignite or dissolve on contact. NOMAD's engine, a real dead end kept in the tree for the story it tells.",
+   "parts": [
+    {
+     "name": "ROE-G1",
+     "mod": "ROEngines",
+     "title": "G-1"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1278,
+    2096
    ]
   },
   {
@@ -957,7 +1223,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1114
+    1172
    ]
   },
   {
@@ -993,7 +1259,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1250
+    1275
    ]
   },
   {
@@ -1079,7 +1345,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1194
+    1252
    ]
   },
   {
@@ -1092,6 +1358,16 @@ window.TREE = {
    "flavor": "Roll, fusion-weld and proof-test a cylinder that holds pressure without bursting — the first tank that flies. Heavy, but honest.",
    "parts": [
     {
+     "name": "RO-RFTank-SM",
+     "mod": "ProceduralParts",
+     "title": "Procedural Tank (Service Module)"
+    },
+    {
+     "name": "ROT-AtlasTank-Separate",
+     "mod": "ROTanks",
+     "title": "Atlas Modular Tank (Conventional Structure)"
+    },
+    {
      "name": "ROT-BoosterTank-Separate",
      "mod": "ROTanks",
      "title": "Modular Booster Tank (Conventional Structure)"
@@ -1102,9 +1378,39 @@ window.TREE = {
      "title": "Modular Tank (Conventional Structure)"
     },
     {
+     "name": "ROT-KatnissTank-Separate",
+     "mod": "ROTanks",
+     "title": "Katniss Parts Pack Tank (Conventional Structure)"
+    },
+    {
+     "name": "ROT-LanderTank-SM",
+     "mod": "ROTanks",
+     "title": "Modular Landing Tank (Service Module)"
+    },
+    {
+     "name": "ROT-LanderTank-Separate",
+     "mod": "ROTanks",
+     "title": "Modular Landing Tank (Conventional Structure)"
+    },
+    {
+     "name": "ROT-MiscTank-Radial-Separate",
+     "mod": "ROTanks",
+     "title": "Another Modular Radial Tank (Conventional Structure)"
+    },
+    {
+     "name": "ROT-MiscTank-Separate",
+     "mod": "ROTanks",
+     "title": "Another Modular Tank (Conventional Structure)"
+    },
+    {
      "name": "ROT-MiscTank-ServiceModule",
      "mod": "ROTanks",
      "title": "Another Modular Tank (Service Module)"
+    },
+    {
+     "name": "ROT-Nose-Separate",
+     "mod": "ROTanks",
+     "title": "Modular Nose Tank (Conventional Structure)"
     },
     {
      "name": "ROT-Nose-ServiceModule",
@@ -1112,9 +1418,24 @@ window.TREE = {
      "title": "Modular Nose Tank (Service Module)"
     },
     {
+     "name": "ROT-RadialTank-Separate",
+     "mod": "ROTanks",
+     "title": "Radial Tank (Conventional Structure)"
+    },
+    {
      "name": "ROT-ServiceModule",
      "mod": "ROTanks",
      "title": "Modular Tank (Service Module)"
+    },
+    {
+     "name": "ROT-SphericalTank-Separate",
+     "mod": "ROTanks",
+     "title": "Spherical Tank (Conventional Structure)"
+    },
+    {
+     "name": "ROT-ToroidalTank-Separate",
+     "mod": "ROTanks",
+     "title": "Modular Toroidal Tank (Conventional Structure)"
     },
     {
      "name": "RO_ServiceBay_300",
@@ -1130,12 +1451,17 @@ window.TREE = {
      "name": "USRadialTanks",
      "mod": "UniversalStorage2",
      "title": "Universal Storage: Radial Tank"
+    },
+    {
+     "name": "ca_tank_mp_s",
+     "mod": "CoatlAerospace",
+     "title": "CA-MT10 Propellant Tank (Pressurized)"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    1034
+    1092
    ]
   },
   {
@@ -1166,6 +1492,36 @@ window.TREE = {
      "name": "ROT-GenericTank-Integral",
      "mod": "ROTanks",
      "title": "Modular Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-KatnissTank-Integral",
+     "mod": "ROTanks",
+     "title": "Katniss Parts Pack Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-LanderTank-Integral",
+     "mod": "ROTanks",
+     "title": "Modular Landing Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-MiscTank-Integral",
+     "mod": "ROTanks",
+     "title": "Another Modular Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-MiscTank-Radial-Integral",
+     "mod": "ROTanks",
+     "title": "Another Modular Radial Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-Nose-Integral",
+     "mod": "ROTanks",
+     "title": "Modular Nose Tank (Isogrid Structure)"
+    },
+    {
+     "name": "ROT-RadialTank-Integral",
+     "mod": "ROTanks",
+     "title": "Radial Tank (Isogrid Structure)"
     },
     {
      "name": "ROT-SphericalTank-Integral",
@@ -1207,6 +1563,16 @@ window.TREE = {
      "name": "ROT-BalloonTank-New",
      "mod": "ROTanks",
      "title": "Modular Tank (Balloon)"
+    },
+    {
+     "name": "ROT-KatnissTank-Balloon",
+     "mod": "ROTanks",
+     "title": "Katniss Parts Pack Tank (Balloon)"
+    },
+    {
+     "name": "ROT-MiscTank-Balloon",
+     "mod": "ROTanks",
+     "title": "Another Modular Tank (Balloon)"
     }
    ],
    "upgrades": [],
@@ -1227,7 +1593,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1064
+    1090
    ]
   },
   {
@@ -1239,6 +1605,11 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one go.",
    "parts": [
+    {
+     "name": "Decoupler_0",
+     "mod": "Squad",
+     "title": "TD-06 Decoupler"
+    },
     {
      "name": "Decoupler_1",
      "mod": "Squad",
@@ -1255,9 +1626,29 @@ window.TREE = {
      "title": "Thrust Plate [Procedural]"
     },
     {
+     "name": "ROE-BabySergeantX11Dec",
+     "mod": "ROEngines",
+     "title": "Baby Sergeant 11x Cluster Decoupler"
+    },
+    {
+     "name": "ROE-BabySergeantX3Dec",
+     "mod": "ROEngines",
+     "title": "Baby Sergeant 3x Cluster Decoupler"
+    },
+    {
      "name": "ROE-CastorDecoupler",
      "mod": "ROEngines",
      "title": "Castor I & II Radial Decoupler"
+    },
+    {
+     "name": "ROT-AtlasDecoupler",
+     "mod": "ROTanks",
+     "title": "Atlas Skirt Decoupler"
+    },
+    {
+     "name": "ROT-RingDecoupler",
+     "mod": "ROTanks",
+     "title": "Ring Decoupler"
     },
     {
      "name": "SnubOtron",
@@ -1275,15 +1666,60 @@ window.TREE = {
      "title": "TT-38K Radial Decoupler"
     },
     {
+     "name": "radialDecoupler1-2",
+     "mod": "Squad",
+     "title": "Hydraulic Detachment Manifold"
+    },
+    {
+     "name": "radialDecoupler2",
+     "mod": "Squad",
+     "title": "TT-70 Radial Decoupler"
+    },
+    {
+     "name": "restock-decoupler-1875-1",
+     "mod": "ReStockPlus",
+     "title": "TD-18 Decoupler"
+    },
+    {
+     "name": "restock-decoupler-radial-tiny-1",
+     "mod": "ReStockPlus",
+     "title": "TT-14 Radial Decoupler"
+    },
+    {
+     "name": "restock-separator-1875-1",
+     "mod": "ReStockPlus",
+     "title": "TS-18 Separator"
+    },
+    {
      "name": "sepMotor1",
      "mod": "Squad",
      "title": "Radial Separation Motor (Medium)"
+    },
+    {
+     "name": "sepMotorLarge",
+     "mod": "Squad",
+     "title": "Radial Separation Motor (Large)"
+    },
+    {
+     "name": "sepMotorSmall",
+     "mod": "Squad",
+     "title": "Radial Separation Motor (Small)"
+    },
+    {
+     "name": "shortDecoupler1-2",
+     "mod": "VenStockRevamp",
+     "title": "Shorter Rockomax Brand Decoupler"
+    },
+    {
+     "name": "smallRadialDecoupler",
+     "mod": "VenStockRevamp",
+     "title": "TR-8A Radial Decoupler"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    1908
+    1966
    ]
   },
   {
@@ -1298,7 +1734,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1836
+    1894
    ]
   },
   {
@@ -1316,6 +1752,21 @@ window.TREE = {
      "title": "Inline RCS block (138/223 N class)"
     },
     {
+     "name": "RCSBlockSmall_138",
+     "mod": "Squad",
+     "title": "RCS Block [ 138/223 N Class] (elbows)"
+    },
+    {
+     "name": "RCSBlockSmall_28",
+     "mod": "Squad",
+     "title": "RCS Block [  28/45 N Class] (elbows)"
+    },
+    {
+     "name": "RCSBlockSmall_69",
+     "mod": "Squad",
+     "title": "RCS Block [  69/111 N Class] (elbows)"
+    },
+    {
      "name": "RCSBlock_138",
      "mod": "Squad",
      "title": "RCS Block [ 138/223 N Class]"
@@ -1329,6 +1780,91 @@ window.TREE = {
      "name": "RCSBlock_69",
      "mod": "Squad",
      "title": "RCS Block [  69/111 N Class]"
+    },
+    {
+     "name": "RCSBoonExt",
+     "mod": "SXT",
+     "title": "RCS Quad, Extensible (138/223 N class)"
+    },
+    {
+     "name": "RCSLinearSmall_28",
+     "mod": "Squad",
+     "title": "RCS Thruster [28/45 N Class]"
+    },
+    {
+     "name": "RCSLinearSmall_69",
+     "mod": "Squad",
+     "title": "RCS Thruster [69/111 N Class]"
+    },
+    {
+     "name": "RO-RestockPlus-RCS-Block-Dual-138",
+     "mod": "ReStockPlus",
+     "title": "RCS Dual [138/223 N Class]"
+    },
+    {
+     "name": "RO-RestockPlus-RCS-Block-Dual-28",
+     "mod": "ReStockPlus",
+     "title": "RCS Dual [28/45 N Class]"
+    },
+    {
+     "name": "RO-RestockPlus-RCS-Block-Quad-138",
+     "mod": "ReStockPlus",
+     "title": "RCS Quad Angled [138/223 N Class]"
+    },
+    {
+     "name": "RO-RestockPlus-RCS-Block-Quad-28",
+     "mod": "ReStockPlus",
+     "title": "RCS Quad [28/45 N Class]"
+    },
+    {
+     "name": "RO-RestockPlus-RCS-Block-Quad-Angled-28",
+     "mod": "ReStockPlus",
+     "title": "RCS Quad Angled [28/45 N Class]"
+    },
+    {
+     "name": "RO-RestockPlus-RCS-Block-Quint-138",
+     "mod": "ReStockPlus",
+     "title": "RCS 5-Way [138/223 N Class]"
+    },
+    {
+     "name": "RO-RestockPlus-RCS-Block-Quint-28",
+     "mod": "ReStockPlus",
+     "title": "RCS 5-Way [28/45 N Class]"
+    },
+    {
+     "name": "RO-RestockPlus-RCS-Block-Triple-Angled-138",
+     "mod": "ReStockPlus",
+     "title": "RCS Triple Angled [138/223 N Class]"
+    },
+    {
+     "name": "RO-RestockPlus-RCS-Block-Triple-Angled-28",
+     "mod": "ReStockPlus",
+     "title": "RCS Triple Angled [28/45 N Class]"
+    },
+    {
+     "name": "RO-RestockPlus-RCS-Linear-28",
+     "mod": "ReStockPlus",
+     "title": "RCS Thruster [28/45 N Class]"
+    },
+    {
+     "name": "RO-nflv-rcs-aero-heavy-1-half",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "Aerodynamic RCS 4-Way [138/223 N Class]"
+    },
+    {
+     "name": "RO-nflv-rcs-aero-heavy-1-quarter",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "Aerodynamic RCS 4-Way [69/111 N Class]"
+    },
+    {
+     "name": "RO-nflv-rcs-aero-heavy-2-half",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "Aerodynamic RCS 4-Way [138/223 N Class]"
+    },
+    {
+     "name": "RO-nflv-rcs-aero-heavy-2-quarter",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "Aerodynamic RCS 4-Way [69/111 N Class]"
     },
     {
      "name": "ROE-ModularRCS",
@@ -1351,14 +1887,104 @@ window.TREE = {
      "title": "275/445N Thruster"
     },
     {
+     "name": "RO_FASA_ExplorerRCS",
+     "mod": "Squad",
+     "title": "Attitude Jet (69/111 N class)"
+    },
+    {
+     "name": "RO_FASA_MercuryPodRCS",
+     "mod": "Squad",
+     "title": "Attitude Jet (138/223 N class)"
+    },
+    {
+     "name": "RO_RCSBlock_restock_138",
+     "mod": "ReStockPlus",
+     "title": "Angled RCS Block [ 138/223 N Class]"
+    },
+    {
+     "name": "RO_RCSBlock_restock_28",
+     "mod": "ReStockPlus",
+     "title": "Angled RCS Block [  28/45 N Class]"
+    },
+    {
+     "name": "RO_RCSBlock_restock_69",
+     "mod": "ReStockPlus",
+     "title": "Angled RCS Block [  69/111 N Class]"
+    },
+    {
+     "name": "RO_RCSBlock_restock_mini_138",
+     "mod": "ReStockPlus",
+     "title": "Angled RCS Block [ 138/223 N Class] (elbows)"
+    },
+    {
+     "name": "RO_RCSBlock_restock_mini_28",
+     "mod": "ReStockPlus",
+     "title": "Angled RCS Block [  28/45 N Class] (elbows)"
+    },
+    {
+     "name": "RO_RCSBlock_restock_mini_69",
+     "mod": "ReStockPlus",
+     "title": "Angled RCS Block [  69/111 N Class] (elbows)"
+    },
+    {
+     "name": "RO_linearRcs_tenth",
+     "mod": "Squad",
+     "title": "Attitude Jet (28/45 N class)"
+    },
+    {
+     "name": "ca_RM01",
+     "mod": "CoatlAerospace",
+     "title": "CAE-RM01 RCS Thruster Block"
+    },
+    {
      "name": "ca_jib",
      "mod": "CoatlAerospace",
      "title": "Generic 0.5 kN Thruster"
     },
     {
+     "name": "ca_rs01",
+     "mod": "CoatlAerospace",
+     "title": "CA-RS01 RCS Thruster Block"
+    },
+    {
+     "name": "ca_rs04",
+     "mod": "CoatlAerospace",
+     "title": "CA-RS04 RCS Thruster Block"
+    },
+    {
      "name": "microEngine",
      "mod": "Squad",
      "title": "1.1/1.78kN Thruster"
+    },
+    {
+     "name": "restock-rcs-block-dual-mini-1",
+     "mod": "ReStockPlus",
+     "title": "RCS Dual [69/111 N Class]"
+    },
+    {
+     "name": "restock-rcs-block-quad-angled-mini-1",
+     "mod": "ReStockPlus",
+     "title": "RCS Quad Angled [69/111 N Class]"
+    },
+    {
+     "name": "restock-rcs-block-quad-mini-1",
+     "mod": "ReStockPlus",
+     "title": "RCS Quad [69/111 N Class]"
+    },
+    {
+     "name": "restock-rcs-block-qunit-mini-1",
+     "mod": "ReStockPlus",
+     "title": "RCS 5-Way [69/111 N Class]"
+    },
+    {
+     "name": "restock-rcs-block-triple-angled-mini-1",
+     "mod": "ReStockPlus",
+     "title": "RCS Triple Angled [69/111 N Class]"
+    },
+    {
+     "name": "restock-rcs-single-mini-1",
+     "mod": "ReStockPlus",
+     "title": "RCS Thruster [69/111 N Class]"
     }
    ],
    "upgrades": [],
@@ -1398,6 +2024,16 @@ window.TREE = {
    "flavor": "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command.",
    "parts": [
     {
+     "name": "KzFlatAdapter",
+     "mod": "ProceduralFairings",
+     "title": "Interstage Fairing Adapter (Flat)"
+    },
+    {
+     "name": "KzFlatBoattail",
+     "mod": "ProceduralFairings",
+     "title": "Boattail Adapter (Flat)"
+    },
+    {
      "name": "KzInterstageAdapter2",
      "mod": "ProceduralFairings",
      "title": "IB - Procedural Interstage Fairing Adapter"
@@ -1406,6 +2042,21 @@ window.TREE = {
      "name": "KzProcFairingSide1",
      "mod": "ProceduralFairings",
      "title": "Procedural Fairing"
+    },
+    {
+     "name": "KzProcFairingSide1_TU",
+     "mod": "ProceduralFairings",
+     "title": "Procedural Fairing (Recolorable)"
+    },
+    {
+     "name": "KzProcFairingSide2",
+     "mod": "ProceduralFairings",
+     "title": "Procedural Fairing (Conic) (Deprecated)"
+    },
+    {
+     "name": "KzProcFairingSide2_TU",
+     "mod": "ProceduralFairings",
+     "title": "Procedural Fairing (Conic) (Deprecated) (Recolorable)"
     },
     {
      "name": "KzResizableFairingBase",
@@ -1418,20 +2069,75 @@ window.TREE = {
      "title": "FB - Procedural Fairing Base Ring"
     },
     {
+     "name": "ROT-OpenInterstage",
+     "mod": "ROTanks",
+     "title": "Hollow Interstage"
+    },
+    {
      "name": "RSBRibbedBase",
      "mod": "ProceduralFairings",
      "title": "FB - Procedural Ribbed Payload Adapter"
     },
     {
+     "name": "RSBRibbedBase_Boattail",
+     "mod": "ProceduralFairings",
+     "title": "Boattail Adapter (Ribbed)"
+    },
+    {
+     "name": "RSBRibbedBase_Interstage",
+     "mod": "ProceduralFairings",
+     "title": "IB - Procedural Ribbed Interstage Adapter"
+    },
+    {
+     "name": "RSBTrussBase",
+     "mod": "ProceduralFairings",
+     "title": "FB - Procedural Truss Payload Adapter"
+    },
+    {
+     "name": "RSBTrussBase_Boattail",
+     "mod": "ProceduralFairings",
+     "title": "Boattail Adapter (Truss)"
+    },
+    {
+     "name": "RSBTrussBase_Interstage",
+     "mod": "ProceduralFairings",
+     "title": "IB - Procedural Truss Interstage Adapter"
+    },
+    {
      "name": "SSTUBase",
      "mod": "ProceduralFairings",
      "title": "FB - Procedural Hollow Truss Payload Adapter"
+    },
+    {
+     "name": "SSTUBase_Boattail",
+     "mod": "ProceduralFairings",
+     "title": "Boattail Adapter (Hollow Truss)"
+    },
+    {
+     "name": "SSTUBase_Interstage",
+     "mod": "ProceduralFairings",
+     "title": "IB - Procedural Hollow Truss Interstage Adapter"
+    },
+    {
+     "name": "SSTUHollowRing",
+     "mod": "ProceduralFairings",
+     "title": "FB - Procedural Hollow Payload Adapter Ring"
+    },
+    {
+     "name": "SSTUHollowRing_Boattail",
+     "mod": "ProceduralFairings",
+     "title": "Boattail Adapter (Hollow Ring)"
+    },
+    {
+     "name": "SSTUHollowRing_Interstage",
+     "mod": "ProceduralFairings",
+     "title": "IB - Procedural Hollow Interstage Ring"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    1674
+    1732
    ]
   },
   {
@@ -1492,7 +2198,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1434
+    1492
    ]
   },
   {
@@ -1523,7 +2229,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1514
+    1572
    ]
   },
   {
@@ -1590,7 +2296,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1354
+    1412
    ]
   },
   {
@@ -1626,7 +2332,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1887
+    1958
    ]
   },
   {
@@ -1652,12 +2358,17 @@ window.TREE = {
      "name": "longAntenna",
      "mod": "Squad",
      "title": "Communotron 16"
+    },
+    {
+     "name": "nfex-antenna-rover-2",
+     "mod": "NearFutureExploration",
+     "title": "AX-5 Aerial Micro-Antenna"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    2069
+    2129
    ]
   },
   {
@@ -1683,7 +2394,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1594
+    1652
    ]
   },
   {
@@ -1724,7 +2435,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    954
+    1012
    ]
   },
   {
@@ -1750,7 +2461,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2149
+    2209
    ]
   },
   {
@@ -1771,7 +2482,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2229
+    2289
    ]
   },
   {
@@ -1797,7 +2508,33 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1988
+    2047
+   ]
+  },
+  {
+   "id": "rob_rotorActuation",
+   "title": "Electric Rotor Actuation",
+   "discipline": "Robotics",
+   "tier": 2,
+   "cost": 90,
+   "anyToUnlock": false,
+   "flavor": "Drive a high-torque electric motor as a controllable rotary joint — the first powered actuation that is neither a rocket nor a piston. A rotor you can command opens the Robotics lane: spun lift and electric props now; hinges, servos, deployable masts and manipulator arms as the discipline fills out later. Two parts is enough — it is a genuinely new capability, not a bigger version of something the tree already has.",
+   "parts": [
+    {
+     "name": "rotor_01",
+     "mod": "SquadExpansion",
+     "title": "EM-16 Light Duty Rotor"
+    },
+    {
+     "name": "rotor_01s",
+     "mod": "SquadExpansion",
+     "title": "EM-16S Light Duty Rotor"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -1708,
+    2038
    ]
   },
   {
@@ -1812,7 +2549,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1015
+    1008
    ]
   },
   {
@@ -1838,7 +2575,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1240
+    1261
    ]
   },
   {
@@ -1850,6 +2587,16 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "A cambered wing makes lift; the real breakthrough was making it OBEY — roll, pitch and yaw commanded together. Hang a piston and a propeller on it and you have controlled, powered flight.",
    "parts": [
+    {
+     "name": "625mBonny",
+     "mod": "SXT",
+     "title": "Bonanza Cabin"
+    },
+    {
+     "name": "CanardController",
+     "mod": "Squad",
+     "title": "Standard Canard"
+    },
     {
      "name": "CircularIntake",
      "mod": "Squad",
@@ -1866,6 +2613,46 @@ window.TREE = {
      "title": "LY-05 Steerable Landing Gear"
     },
     {
+     "name": "GearSmall",
+     "mod": "Squad",
+     "title": "LY-35 Medium Landing Gear"
+    },
+    {
+     "name": "KF-ALG-Medium",
+     "mod": "KerbalFoundries",
+     "title": "Adjustable Landing Gear (Medium)"
+    },
+    {
+     "name": "KF-ALG-Small",
+     "mod": "KerbalFoundries",
+     "title": "Adjustable Landing Gear (Small)"
+    },
+    {
+     "name": "KF-ALG-SmallSide",
+     "mod": "KerbalFoundries",
+     "title": "Adjustable Landing Gear (Small - Side)"
+    },
+    {
+     "name": "LMiniAircaftTail",
+     "mod": "SXT",
+     "title": "Bonanza Tail"
+    },
+    {
+     "name": "LRadialAirIntake",
+     "mod": "SXT",
+     "title": "XM-C200 Radial Pitot Intake"
+    },
+    {
+     "name": "R8winglet",
+     "mod": "Squad",
+     "title": "AV-R8 Winglet"
+    },
+    {
+     "name": "RO-B9ProcAMWing-Early",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Wing, All-Moving (Early)"
+    },
+    {
      "name": "RO-B9ProcCS-Early",
      "mod": "B9_Aerospace_ProceduralWings",
      "title": "B9 Procedural Control Surface (Early)"
@@ -1876,6 +2663,16 @@ window.TREE = {
      "title": "B9 Procedural Wing (Early)"
     },
     {
+     "name": "RO-FighterInlineCockpit",
+     "mod": "RealismOverhaul",
+     "title": "Jet Trainer Cockpit"
+    },
+    {
+     "name": "RO-IntakeRadialLongPitot",
+     "mod": "Squad",
+     "title": "Pitot Intake (Radial)"
+    },
+    {
      "name": "RO-OldFighterCockpit",
      "mod": "RealismOverhaul",
      "title": "P-40 Cockpit"
@@ -1884,6 +2681,21 @@ window.TREE = {
      "name": "RO-X1Cockpit",
      "mod": "RealismOverhaul",
      "title": "X-1 Cockpit"
+    },
+    {
+     "name": "SXTBuzzard",
+     "mod": "SXT",
+     "title": "Junkers Ju 87 cockpit"
+    },
+    {
+     "name": "SXTClyde",
+     "mod": "SXT",
+     "title": "DHC-3 Otter cockpit"
+    },
+    {
+     "name": "SXTInlineAirIntake",
+     "mod": "SXT",
+     "title": "XM-600 1.25m Pitot Intake"
     },
     {
      "name": "SXTJ213",
@@ -1931,15 +2743,170 @@ window.TREE = {
      "title": "Junkers Jumo 213A"
     },
     {
+     "name": "SXTke111",
+     "mod": "SXT",
+     "title": "Heinkel He 111 cockpit"
+    },
+    {
+     "name": "SXTmk3Cockpit52",
+     "mod": "SXT",
+     "title": "B-52 Stratofortress cockpit"
+    },
+    {
+     "name": "SmallGearBay",
+     "mod": "Squad",
+     "title": "LY-10 Small Landing Gear"
+    },
+    {
+     "name": "StandardCtrlSrf",
+     "mod": "Squad",
+     "title": "Elevon 1"
+    },
+    {
+     "name": "airScoop",
+     "mod": "Squad",
+     "title": "XM-G50 Radial Pitot Intake"
+    },
+    {
+     "name": "airbrake1",
+     "mod": "Squad",
+     "title": "A.I.R.B.R.A.K.E.S"
+    },
+    {
+     "name": "airplaneTail",
+     "mod": "Squad",
+     "title": "Tail Connector A"
+    },
+    {
+     "name": "airplaneTailB",
+     "mod": "Squad",
+     "title": "Tail Connector B"
+    },
+    {
+     "name": "deltaWing",
+     "mod": "Squad",
+     "title": "Delta Wing"
+    },
+    {
+     "name": "delta_small",
+     "mod": "Squad",
+     "title": "Small Delta Wing"
+    },
+    {
+     "name": "elevon2",
+     "mod": "Squad",
+     "title": "Elevon 2"
+    },
+    {
+     "name": "elevon3",
+     "mod": "Squad",
+     "title": "Elevon 3"
+    },
+    {
+     "name": "elevon5",
+     "mod": "Squad",
+     "title": "Elevon 5"
+    },
+    {
+     "name": "miniIntake",
+     "mod": "Squad",
+     "title": "Small Pitot Intake"
+    },
+    {
      "name": "noseCone",
      "mod": "Squad",
      "title": "Aerodynamic Nose Cone"
+    },
+    {
+     "name": "smallCtrlSrf",
+     "mod": "Squad",
+     "title": "Elevon 4"
+    },
+    {
+     "name": "structuralWing",
+     "mod": "Squad",
+     "title": "Structural Wing Type A"
+    },
+    {
+     "name": "structuralWing2",
+     "mod": "Squad",
+     "title": "Structural Wing Type B"
+    },
+    {
+     "name": "structuralWing3",
+     "mod": "Squad",
+     "title": "Structural Wing Type C"
+    },
+    {
+     "name": "structuralWing4",
+     "mod": "Squad",
+     "title": "Structural Wing Type D"
+    },
+    {
+     "name": "sweptWing",
+     "mod": "Squad",
+     "title": "Swept Wings"
+    },
+    {
+     "name": "sweptWing1",
+     "mod": "Squad",
+     "title": "Swept Wing Type A"
+    },
+    {
+     "name": "sweptWing2",
+     "mod": "Squad",
+     "title": "Swept Wing Type B"
+    },
+    {
+     "name": "tailfin",
+     "mod": "Squad",
+     "title": "Tail Fin"
+    },
+    {
+     "name": "wingConnector",
+     "mod": "Squad",
+     "title": "Wing Connector Type A"
+    },
+    {
+     "name": "wingConnector2",
+     "mod": "Squad",
+     "title": "Wing Connector Type B"
+    },
+    {
+     "name": "wingConnector3",
+     "mod": "Squad",
+     "title": "Wing Connector Type C"
+    },
+    {
+     "name": "wingConnector4",
+     "mod": "Squad",
+     "title": "Wing Connector Type D"
+    },
+    {
+     "name": "wingConnector5",
+     "mod": "Squad",
+     "title": "Wing Connector Type E"
+    },
+    {
+     "name": "wingStrake",
+     "mod": "Squad",
+     "title": "Wing Strake"
+    },
+    {
+     "name": "winglet",
+     "mod": "Squad",
+     "title": "AV-T1 Winglet"
+    },
+    {
+     "name": "winglet3",
+     "mod": "Squad",
+     "title": "Delta-Deluxe Winglet"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    1756
+    1814
    ]
   },
   {
@@ -1983,6 +2950,16 @@ window.TREE = {
    "flavor": "Smooth the total cross-sectional area through Mach 1 — the coke-bottle waist that lets an airframe punch through the sound barrier instead of shaking apart against it.",
    "parts": [
     {
+     "name": "RO-B9ProcAMWing-Supersonic",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Wing, All-Moving (Supersonic)"
+    },
+    {
+     "name": "RO-B9ProcCS-Supersonic",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Control Surface (Supersonic)"
+    },
+    {
      "name": "RO-J47",
      "mod": "SXT",
      "title": "J47 Turbojet"
@@ -2008,6 +2985,11 @@ window.TREE = {
      "title": "Sapphire Turbojet"
     },
     {
+     "name": "SXTRadialAirIntakeShockCone",
+     "mod": "SXT",
+     "title": "XF-104 Radial Shock Cone Intake"
+    },
+    {
      "name": "aje_avon",
      "mod": "Squad",
      "title": "Avon Turbojet"
@@ -2021,7 +3003,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1747
+    1772
    ]
   },
   {
@@ -2062,7 +3044,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1432
+    1424
    ]
   },
   {
@@ -2098,7 +3080,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1512
+    1504
    ]
   },
   {
@@ -2134,7 +3116,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1657
+    1677
    ]
   },
   {
@@ -2195,7 +3177,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1525
+    1552
    ]
   },
   {
@@ -2303,7 +3285,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1549
+    1567
    ]
   },
   {
@@ -2329,7 +3311,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     12,
-    1342
+    1330
    ]
   },
   {
@@ -2386,7 +3368,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1336
+    1364
    ]
   },
   {
@@ -2407,12 +3389,17 @@ window.TREE = {
      "name": "ROE-Gamma8",
      "mod": "ROEngines",
      "title": "Gamma 8"
+    },
+    {
+     "name": "ROE-S2253",
+     "mod": "ROEngines",
+     "title": "S2.253/S3.42/S5.2"
     }
    ],
    "upgrades": [],
    "pos": [
     -1708,
-    1967
+    1878
    ]
   },
   {
@@ -2448,7 +3435,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1912
+    1940
    ]
   },
   {
@@ -2484,12 +3471,77 @@ window.TREE = {
      "name": "ROE-RD856",
      "mod": "ROEngines",
      "title": "RD-852/856"
+    },
+    {
+     "name": "ROE-Viking2",
+     "mod": "ROEngines",
+     "title": "Viking 2"
+    },
+    {
+     "name": "ROE-Viking4",
+     "mod": "ROEngines",
+     "title": "Viking (4/4B)"
+    },
+    {
+     "name": "ROE-Viking5",
+     "mod": "ROEngines",
+     "title": "Viking (5/6)"
+    },
+    {
+     "name": "YF20_Engine",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-20"
+    },
+    {
+     "name": "YF21_Engine",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-21"
+    },
+    {
+     "name": "YF21_with_shell_CZ-2",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-21 with CZ-2 Boattail"
+    },
+    {
+     "name": "YF21_with_shell_CZ-2C",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-21 with CZ-2C Boattail"
+    },
+    {
+     "name": "YF21_with_shell_CZ-2D",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-21 with CZ-2D Boattail"
+    },
+    {
+     "name": "YF22_Engine",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-22"
+    },
+    {
+     "name": "YF23_Engine",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-23"
+    },
+    {
+     "name": "YF25K_Engine",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-20 with Boattail (no gimbal)"
+    },
+    {
+     "name": "YF3_Engine",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-3 (no gimbal)"
+    },
+    {
+     "name": "YF3_with_shell",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-3 with Boattail"
     }
    ],
    "upgrades": [],
    "pos": [
     -1278,
-    1832
+    1860
    ]
   },
   {
@@ -2520,7 +3572,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1095
+    1088
    ]
   },
   {
@@ -2577,7 +3629,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    2047
+    2119
    ]
   },
   {
@@ -2603,7 +3655,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1667
+    1692
    ]
   }
  ],
@@ -2615,11 +3667,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1274
+     1332
     ]
    ]
   },
@@ -2630,7 +3682,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1274
+     1332
     ],
     [
      -1708,
@@ -2645,7 +3697,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1274
+     1332
     ],
     [
      -1708,
@@ -2660,7 +3712,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1274
+     1332
     ],
     [
      -1708,
@@ -2675,15 +3727,38 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1872
+     1930
     ],
     [
      -1708,
      1647
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "pc_fluorineOxidizer",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1500
+    ],
+    [
+     -2138,
+     2002
+    ],
+    [
+     -1708,
+     1843
+    ],
+    [
+     -1278,
+     2096
     ]
    ]
   },
@@ -2694,11 +3769,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1114
+     1172
     ]
    ]
   },
@@ -2709,7 +3784,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1114
+     1172
     ],
     [
      -1708,
@@ -2728,7 +3803,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1250
+     1275
     ]
    ]
   },
@@ -2743,7 +3818,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1250
+     1275
     ]
    ]
   },
@@ -2758,7 +3833,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1250
+     1275
     ]
    ]
   },
@@ -2769,11 +3844,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1194
+     1252
     ]
    ]
   },
@@ -2784,11 +3859,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1034
+     1092
     ]
    ]
   },
@@ -2799,7 +3874,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1034
+     1092
     ],
     [
      -1708,
@@ -2814,7 +3889,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1034
+     1092
     ],
     [
      -1708,
@@ -2833,7 +3908,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1064
+     1090
     ]
    ]
   },
@@ -2848,7 +3923,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1064
+     1090
     ]
    ]
   },
@@ -2859,11 +3934,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1908
+     1966
     ]
    ]
   },
@@ -2874,11 +3949,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1836
+     1894
     ]
    ]
   },
@@ -2889,7 +3964,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1836
+     1894
     ],
     [
      -1708,
@@ -2904,7 +3979,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1908
+     1966
     ],
     [
      -1708,
@@ -2919,11 +3994,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1674
+     1732
     ]
    ]
   },
@@ -2934,11 +4009,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1434
+     1492
     ]
    ]
   },
@@ -2949,11 +4024,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1514
+     1572
     ]
    ]
   },
@@ -2964,7 +4039,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1514
+     1572
     ],
     [
      -1708,
@@ -2979,11 +4054,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1354
+     1412
     ]
    ]
   },
@@ -2994,15 +4069,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     2024
+     2083
     ],
     [
      -1708,
-     1887
+     1958
     ]
    ]
   },
@@ -3013,11 +4088,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     2069
+     2129
     ]
    ]
   },
@@ -3028,11 +4103,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1594
+     1652
     ]
    ]
   },
@@ -3043,11 +4118,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     954
+     1012
     ]
    ]
   },
@@ -3058,11 +4133,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     2149
+     2209
     ]
    ]
   },
@@ -3073,11 +4148,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     2229
+     2289
     ]
    ]
   },
@@ -3088,11 +4163,30 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1988
+     2047
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "rob_rotorActuation",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1500
+    ],
+    [
+     -2138,
+     2093
+    ],
+    [
+     -1708,
+     2038
     ]
    ]
   },
@@ -3103,11 +4197,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1250
+     1275
     ],
     [
      -848,
-     1015
+     1008
     ]
    ]
   },
@@ -3118,11 +4212,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1064
+     1090
     ],
     [
      -848,
-     1015
+     1008
     ]
    ]
   },
@@ -3133,11 +4227,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1015
+     1008
     ],
     [
      -418,
-     1240
+     1261
     ]
    ]
   },
@@ -3148,11 +4242,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1756
+     1814
     ]
    ]
   },
@@ -3163,7 +4257,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1756
+     1814
     ],
     [
      -1708,
@@ -3182,7 +4276,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1747
+     1772
     ]
    ]
   },
@@ -3193,11 +4287,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1747
+     1772
     ],
     [
      -848,
-     1432
+     1424
     ]
    ]
   },
@@ -3208,11 +4302,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1747
+     1772
     ],
     [
      -848,
-     1512
+     1504
     ]
    ]
   },
@@ -3223,11 +4317,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1432
+     1424
     ],
     [
      -418,
-     1657
+     1677
     ]
    ]
   },
@@ -3238,7 +4332,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1756
+     1814
     ],
     [
      -1708,
@@ -3246,7 +4340,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1525
+     1552
     ]
    ]
   },
@@ -3257,7 +4351,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1274
+     1332
     ],
     [
      -1708,
@@ -3265,7 +4359,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1525
+     1552
     ]
    ]
   },
@@ -3276,11 +4370,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1710
+     1768
     ],
     [
      -1708,
@@ -3295,11 +4389,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     1720
+     1778
     ],
     [
      -1708,
@@ -3314,11 +4408,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1015
+     1008
     ],
     [
      -418,
-     1549
+     1567
     ]
    ]
   },
@@ -3333,15 +4427,15 @@ window.TREE = {
     ],
     [
      -1278,
-     1783
+     1808
     ],
     [
      -848,
-     1548
+     1540
     ],
     [
      -418,
-     1549
+     1567
     ]
    ]
   },
@@ -3352,7 +4446,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1492
     ],
     [
      -1708,
@@ -3360,15 +4454,15 @@ window.TREE = {
     ],
     [
      -1278,
-     1489
+     1513
     ],
     [
      -848,
-     1312
+     1303
     ],
     [
      -418,
-     1549
+     1567
     ]
    ]
   },
@@ -3383,15 +4477,15 @@ window.TREE = {
     ],
     [
      -1278,
-     1568
+     1590
     ],
     [
      -848,
-     1351
+     1341
     ],
     [
      -418,
-     1549
+     1567
     ]
    ]
   },
@@ -3406,15 +4500,15 @@ window.TREE = {
     ],
     [
      -1278,
-     1621
+     1644
     ],
     [
      -848,
-     1378
+     1368
     ],
     [
      -418,
-     1549
+     1567
     ]
    ]
   },
@@ -3425,11 +4519,11 @@ window.TREE = {
    "waypoints": [
     [
      -418,
-     1549
+     1567
     ],
     [
      12,
-     1342
+     1330
     ]
    ]
   },
@@ -3440,7 +4534,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1908
+     1966
     ],
     [
      -1708,
@@ -3459,7 +4553,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1336
+     1364
     ]
    ]
   },
@@ -3470,15 +4564,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1448
+     1500
     ],
     [
      -2138,
-     2033
+     2011
     ],
     [
      -1708,
-     1967
+     1878
     ]
    ]
   },
@@ -3493,7 +4587,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1912
+     1940
     ]
    ]
   },
@@ -3508,7 +4602,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1832
+     1860
     ]
    ]
   },
@@ -3519,11 +4613,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1250
+     1275
     ],
     [
      -848,
-     1095
+     1088
     ]
    ]
   },
@@ -3534,7 +4628,7 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1194
+     1252
     ],
     [
      -1708,
@@ -3549,11 +4643,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     2069
+     2129
     ],
     [
      -1708,
-     2047
+     2119
     ]
    ]
   },
@@ -3568,7 +4662,7 @@ window.TREE = {
     ],
     [
      -1278,
-     1667
+     1692
     ]
    ]
   }
