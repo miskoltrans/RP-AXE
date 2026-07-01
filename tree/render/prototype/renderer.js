@@ -26,7 +26,7 @@ const CORNER_R = 15, CORNER_SEGS = 3;   // stock UIGridArea.roundedCornerRadius 
 const EDGE_W = 2;                        // uniform stroke width (stock lineThickness=2); NEVER varied per state — width change = VectorLine.Draw rebuild
 const ARROW = 9;                        // arrowhead size (screen px here; KSP arrow sprite scales with the grid transform)
 const GOLD = '#f4d35e', GRAY = '#8a8f98';
-const DIM_EDGE = 0.10, DIM_NODE = 0.24; // alpha for de-emphasised elements when a lineage is focused
+const DIM_EDGE = 0.10, DIM_NODE = 0.10; // alpha for de-emphasised (ghosted) elements when a lineage is focused
 const FAN_LO = 0.18, FAN_HI = 0.82;     // fraction range along a node side for distributed endpoints
 
 // ---- vec helpers ----
@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:true, icons:true, square:true, layout:'bands', spacingF:0.7, diffspread:false, lanePitch:13 };
+const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:true, icons:true, square:true, layout:'bands', spacingF:0.7, diffspread:false, lanePitch:13, halo:false };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
@@ -367,7 +367,9 @@ function draw(){
     const lit = !focusing || (litEdges && litEdges.has(e));
     const parentDone = researched.has(e.from);
     let color;
-    if(opt.progress && !parentDone) color = e.anyToUnlock ? GOLD_DIM : EDGE_LOCK;   // prereq not researched yet (stock gray)
+    if(focusing && lit)                                                              // focused path: full discipline
+      color = e.anyToUnlock ? GOLD : ((opt.discEdges && !opt.baseline) ? e.discColor : GRAY);   // colour so it pops
+    else if(opt.progress && !parentDone) color = e.anyToUnlock ? GOLD_DIM : EDGE_LOCK;   // prereq not researched (stock gray)
     else color = e.anyToUnlock ? GOLD : ((opt.discEdges && !opt.baseline) ? e.discColor : GRAY);
     ctx.globalAlpha = focusing ? (lit?1:DIM_EDGE) : 1;
     ctx.strokeStyle = color;
@@ -396,21 +398,39 @@ function drawArrow(ar, color, alpha){
   ctx.closePath(); ctx.fill();
 }
 
+// desaturate a hex colour toward its own grey (amt 0..1) — used to "grey out" locked nodes.
+function desat(hex, amt){
+  const c=(hex||'').replace('#',''); if(c.length<6) return hex;
+  const r=parseInt(c.slice(0,2),16), g=parseInt(c.slice(2,4),16), b=parseInt(c.slice(4,6),16);
+  const l=0.3*r+0.59*g+0.11*b, m=v=>Math.round(v+(l-v)*amt);
+  return `rgb(${m(r)},${m(g)},${m(b)})`;
+}
+
 function drawNode(n, focusing){
   const b=box(n), x=SX(b.x), y=SY(b.y), w=b.w*cam.s, h=b.h*cam.s;
   const disc=D.disciplines[n.discipline]||{color:'#888',title:n.discipline};
   const st = opt.progress ? stateOf(n.id) : null;
-  const dimFocus = focusing && !focusSet.has(n.id);
-  const alpha = dimFocus ? DIM_NODE : (st===LOCKED ? 0.5 : 1);   // locked = faded (stock FADED)
+  const inFocus = focusing && focusSet.has(n.id);       // on the highlighted lineage
+  const dimFocus = focusing && !inFocus;                // off it -> ghost (DIM_NODE)
+  // 3-state read (portable: tint + alpha + badge). LOCKED = desaturated + dim; RESEARCHABLE = glow ring;
+  // RESEARCHED = ✓ badge. But a LOCKED node ON the focused lineage pops at full colour (not desaturated).
+  const lockedRest = opt.progress && st===LOCKED && !inFocus;
+  const alpha = dimFocus ? DIM_NODE : (lockedRest ? 0.42 : 1);
+  const fill = lockedRest ? desat(disc.color, 0.8) : disc.color;
   ctx.globalAlpha = alpha;
 
-  // NOTE(port): tile = a node Image tinted by discipline colour; title/badge = child TMP labels
-  // (stock draws only the RD icon here); contrast ink below = the TMP colour.
-  roundRect(x,y,w,h,Math.max(2,3*cam.s)); ctx.fillStyle=disc.color; ctx.fill();
+  roundRect(x,y,w,h,Math.max(2,3*cam.s)); ctx.fillStyle=fill; ctx.fill();
 
-  if(opt.progress && !dimFocus){                 // state ring — colour only (portable Image/line tint, no rebuild)
-    const ring = st===RESEARCHED ? C_DONE : (st===RESEARCHABLE ? C_AVAIL : null);
-    if(ring){ ctx.strokeStyle=ring; ctx.lineWidth=2.5; ctx.stroke(); }
+  if(opt.progress && !dimFocus){
+    if(st===RESEARCHABLE){                         // AVAILABLE: bright glow ring — the actionable frontier
+      ctx.save(); ctx.shadowColor=C_AVAIL; ctx.shadowBlur=Math.max(4,9*cam.s);
+      ctx.strokeStyle=C_AVAIL; ctx.lineWidth=Math.max(2,3*cam.s); ctx.stroke(); ctx.restore();
+    } else if(st===RESEARCHED){                     // DONE: subtle green ring (+ ✓ badge below)
+      ctx.strokeStyle=C_DONE; ctx.lineWidth=2; ctx.stroke();
+    }
+  }
+  if(focusing && opt.halo && inFocus && n.id!==selId){   // HALO: white outline pops the lineage over the ghost
+    ctx.globalAlpha=1; ctx.strokeStyle='#fff'; ctx.lineWidth=Math.max(1.5,2.4*cam.s); ctx.stroke();
   }
   if(n.id===selId){ ctx.strokeStyle='#fff'; ctx.lineWidth=3; ctx.stroke(); }
   else if(n.id===hoverId){ ctx.strokeStyle='rgba(255,255,255,.85)'; ctx.lineWidth=2; ctx.stroke(); }
@@ -437,9 +457,11 @@ function drawNode(n, focusing){
       ctx.fillText(`T${n.tier} · ${np?np+'p':'—'}${nu?'+'+nu+'u':''}`, x+w/2, y+h-8*cam.s);
     }
   }
-  if(opt.progress && !dimFocus && st===RESEARCHED && cam.s>0.2){    // ✓ researched
-    ctx.globalAlpha=alpha; ctx.textBaseline='top'; ctx.fillStyle=C_DONE; ctx.textAlign='right';
-    ctx.font=`bold ${Math.max(9,12*cam.s)}px Segoe UI`; ctx.fillText('✓', x+w-3, y+2);
+  if(opt.progress && !dimFocus && st===RESEARCHED && cam.s>0.18){    // ✓ researched badge: green disc + tick
+    const r=Math.max(4.5,6.5*cam.s), cx=x+w-r-1.5, cy=y+r+1.5;
+    ctx.globalAlpha=alpha; ctx.fillStyle=C_DONE; ctx.beginPath(); ctx.arc(cx,cy,r,0,6.2832); ctx.fill();
+    ctx.strokeStyle='#08140a'; ctx.lineWidth=Math.max(1.2,1.6*cam.s); ctx.lineCap='round'; ctx.lineJoin='round';
+    ctx.beginPath(); ctx.moveTo(cx-r*0.42,cy+r*0.04); ctx.lineTo(cx-r*0.08,cy+r*0.4); ctx.lineTo(cx+r*0.48,cy-r*0.4); ctx.stroke();
   }
   if(opt.square && n.id===hoverId){                 // square tiles have no in-tile name -> label on hover
     ctx.globalAlpha=1; ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='top';
@@ -608,7 +630,7 @@ function init(){
   // controls
   const cb=(id,key,geom)=>{ const el=document.getElementById(id); el.checked=opt[key];
     el.addEventListener('change',()=>{ opt[key]=el.checked; if(key==='highlight')setFocus(activeFocus()); geom?rebuild():draw(); }); };
-  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_lane','lane',true); cb('c_icon','icons',false); cb('c_square','square',true);
+  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_lane','lane',true); cb('c_icon','icons',false); cb('c_square','square',true); cb('c_halo','halo',false);
   const cp=document.getElementById('c_prog'); cp.checked=opt.progress;
   cp.addEventListener('change',()=>{ opt.progress=cp.checked; afterStateChange(); });
   const relayout=()=>{ if(opt.layout!=='compiler') computeLayout(); applyLayout(); buildGeometry(); fit(); draw(); };
