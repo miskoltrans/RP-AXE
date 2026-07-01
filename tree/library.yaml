@@ -1,0 +1,1573 @@
+# RP-AXE tech tree — LIBRARY / FLAVOUR BANK (NOT compiled). Preserved copy of the P1 235-node tree.
+# The spine-first rebuild (tree/nodes.yaml) pulls node NAMES, FLAVOUR TEXT and PART-HOMES from here.
+# Provenance: this was tree/nodes.yaml through commit on branch `restart` (P1 full tree). Do not compile.
+# ---
+# VERTICAL SLICE v2 (P1 prototype) — SCATTER-BY-DIFFICULTY + research-paper node names.
+# Each engine is homed at the discipline of its SIGNATURE BREAKTHROUGH (the bottleneck that kept it
+# from existing earlier), NOT its fuel. So the slice spans the engine-relevant disciplines:
+#   Propellant Chemistry · Fluid Dynamics · Thermodynamics · Metallurgy · Cryogenics · Telecommunications
+# Proves: scatter-by-difficulty (F-1->Fluids combustion instability; RD-170->Metallurgy ox-rich
+# superalloys; J-2->Cryo LH2 insulation; AJ10->Chemistry storables; RS-25->Cryo n Metallurgy),
+# PARENT RULE: convergence parents = LIMITING breakthroughs only, not routine consumed inputs. A
+# propellant-production node gates an engine ONLY when that production was itself hard (cryogen
+# liquefaction -> hydrolox YES; kerosene refining -> F-1/RD-170 NO — kerosene was routine). Keeps the
+# tree from sprouting "true but boring" fuel-hub edges. (Parked: fuels as a separate USABILITY gate.)
+# emergence, convergence (anyToUnlock:false = ALL parents), multi-entry (true = ANY parent),
+# upgrade-scatter, and a clean ladder (Telecom) for contrast.
+#
+# node: id / title / discipline / tier / [parents] / [anyToUnlock] / [cost] / flavor / [parts] / [upgrades]
+
+meta:
+  scalar: 1.0                       # global science-cost dial (SCIENCE.md §4); tune at P3 play-session
+  tier_cost:                        # base cost per tier (pre-scalar) — front-loaded bite
+    0: 0
+    1: 20
+    2: 90
+    3: 400
+    4: 900
+    5: 1500
+    6: 2000
+    7: 2300
+    8: 2100
+    9: 1700
+    10: 1300
+
+nodes:
+  # ---------- bootstrap ----------
+  - id: start
+    title: Start
+    discipline: PropellantChemistry
+    tier: 0
+    parents: []
+    flavor: "1950. Kerbalkind is united; the universe is blind without us."
+  - id: soundingRocketry
+    title: "Spin-Stabilized Sounding Rockets"
+    discipline: PropellantChemistry
+    tier: 1
+    parents: [start]
+    flavor: "Fin-and-spin powder rockets loft the first instrument packages above the Karman line. (Rocket start; the X-plane root lives in Aerodynamics, off-slice.)"
+    parts: [PioneerVernier]
+
+  # ---------- Propellant Chemistry (homes chemistry-bottlenecked: storables, grains, fuel production) ----------
+  - id: pc_ethanolLox
+    title: "Ethanol/LOX Film-Cooled Combustion"
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [soundingRocketry]
+    flavor: "75% ethanol against liquid oxygen, the chamber wall protected by a deliberately fuel-rich boundary film. Crude, sooty, and enough to reach space — the A-4/V-2 chemistry."
+  - id: pc_keroseneHydrotreating
+    title: "Hydrotreated Narrow-Cut Kerosene (RP-1)"
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [soundingRocketry]
+    flavor: "Catalytic hydrotreating strips sulfur and heavy aromatics to a narrow distillation cut that won't coke a cooling jacket — the dense, storable kerosene every kerolox engine burns. Homes the simplest early kerolox; the harder kerolox engines mature in Fluid Dynamics and Metallurgy."
+    parts: [ROE-Merlin1A]
+  - id: pc_apcpGrain
+    title: "Aluminized AP/HTPB Composite Grain"
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [soundingRocketry]
+    flavor: "Ammonium-perchlorate oxidizer and aluminum powder bound in hydroxyl-terminated polybutadiene, cast and cured into a structural grain. The propellant chemistry, not the casing, is the headline here."
+    parts: [MassiveBooster]
+  - id: pc_hypergolicChemistry
+    title: "Self-Igniting Amine-Nitrate Hypergolics"
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [pc_ethanolLox, pc_keroseneHydrotreating]
+    anyToUnlock: true                # MULTI-ENTRY: storables build on either prior liquid line
+    flavor: "Fuels that detonate on contact with their oxidizer — no igniter, indefinite restarts, storable for years. The entire difficulty is chemistry and corrosion: handling hydrazines and nitric oxidizers that attack everything. The chemistry of upper stages and spacecraft."
+    parts: [ROE-AJ10Early, ROE-AJ10Mid, ROE-AJ10-137]
+  - id: pc_cryoLiquefaction
+    title: "Claude-Cycle H2/O2 Liquefaction"
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [pc_ethanolLox]
+    flavor: "Industrial Claude-cycle plants liquefy hydrogen and oxygen by the ton. You can now MAKE deep cryogens; STORING and flying them is Cryogenics' problem next door (a convergence)."
+  - id: pc_storableOxidizers
+    title: "Passivated MON/NTO Storable Oxidizers"
+    discipline: PropellantChemistry
+    tier: 5
+    parents: [pc_hypergolicChemistry]
+    flavor: "Mixed oxides of nitrogen and passivated dinitrogen tetroxide: denser, higher-performing, marginally less murderous storables for mature service propulsion."
+    parts: [ROE-AJ10Adv, ROE-AJ10-190]
+
+  # ---------- Metallurgy (homes materials-bottlenecked engines — the "metallurgy unlocks an engine" aha) ----------
+  - id: met_earlyAlloys
+    title: "Aluminum Isogrid & Maraging-Steel Cases"
+    discipline: Metallurgy
+    tier: 2
+    parents: [met_weldedSteel]
+    flavor: "Chemically-milled isogrid aluminum for light pressure vessels; ultra-high-strength maraging steel for solid-motor cases and pump housings. The structural backbone everything else bolts to."
+  - id: met_oxRichSuperalloys
+    title: "Oxidizer-Rich Preburner Superalloys"
+    discipline: Metallurgy
+    tier: 4
+    parents: [met_earlyAlloys, fd_turbopumps, th_regenCooling]
+    anyToUnlock: false               # CONVERGENCE: alloys + turbomachinery + regen cooling (RD-170 is regen-cooled, like F-1/J-2; kerosene was routine, NOT a gate)
+    flavor: "For decades the West held that an oxygen-rich preburner would simply burn through any turbine. Soviet metallurgy disproved it: chrome-nickel alloys with burn-passivated surfaces survive hot, oxygen-rich gas, unlocking the most efficient kerolox engines ever flown. THE engine that metallurgy unlocks."
+    parts: [ROE-RD170, ROE-RD180, ROE-NK33]
+
+  # ---------- Fluid Dynamics (homes flow/combustion-bottlenecked engines — F-1) ----------
+  - id: fd_turbopumps
+    title: "Inducer-Stabilized Cryogenic Turbopumps"
+    discipline: FluidDynamics
+    tier: 3
+    parents: [fd_gasGenerator]
+    flavor: "Move propellant by the ton per second without cavitating the pump. An axial inducer ahead of the centrifugal impeller suppresses cavitation at low inlet pressure — the enabling piece of every high-thrust engine."
+  - id: fd_combustionStability
+    title: "Baffled-Injector Combustion-Instability Suppression"
+    discipline: FluidDynamics
+    tier: 4
+    parents: [fd_turbopumps, th_regenCooling]
+    anyToUnlock: false               # CONVERGENCE: turbopumps + cooling (kerosene was routine, NOT a gate)
+    flavor: "Tangential acoustic modes can couple to combustion and tear a large chamber apart in milliseconds. Injector baffles and tuned cavities damp them. Taming this — not the fuel — is why the F-1 took years and why it lives in Fluid Dynamics."
+    parts: [ROE-F1, ROE-F1B]
+    upgrades: [RFUpgrade_F-1-1.52M, RFUpgrade_F-1A]
+
+  # ---------- Thermodynamics (homes cooling-bottlenecked breakthroughs) ----------
+  - id: th_regenCooling
+    title: "Regenerative Forced-Convection Wall Cooling"
+    discipline: Thermodynamics
+    tier: 3
+    parents: [th_filmCooling]
+    flavor: "Route the fuel through milled channels in the chamber wall before burning it, carrying away heat flux that would melt any uncooled metal. The thermodynamics that lets a chamber run hotter than its own melting point."
+
+  # ---------- Cryogenics (homes cryo-bottlenecked engines — J-2, RS-25, BE-3) ----------
+  - id: cryo_loxHandling
+    title: "Subcooled LOX Densification"
+    discipline: Cryogenics
+    tier: 3
+    parents: [cryo_basicCryoStorage]
+    flavor: "Hold oxygen below its boiling point: vacuum-jacketed lines, careful materials, and the operational discipline to load minutes before launch. Subcooling buys density — more propellant in the same tank."
+  - id: cryo_lh2Insulation
+    title: "Multilayer Vacuum Insulation for LH2"
+    discipline: Cryogenics
+    tier: 4
+    parents: [cryo_loxHandling, pc_cryoLiquefaction, fd_turbopumps, th_regenCooling]
+    anyToUnlock: false               # CONVERGENCE: cryo handling + cryogen supply + pumps + cooling
+    flavor: "Hydrogen boils at -253 C and diffuses through metal lattices. Dozens of radiation-shield layers under vacuum make hydrolox — the highest specific impulse chemistry there is — actually flyable. The J-2 lives here, fed by Chemistry's cryogen supply."
+    parts: [ROE-J2, ROE-BE3]
+  - id: cryo_stagedHydrolox
+    title: "Fuel-Rich Staged-Combustion Hydrolox"
+    discipline: Cryogenics
+    tier: 5
+    parents: [cryo_lh2Insulation, met_oxRichSuperalloys]
+    anyToUnlock: false               # CONVERGENCE across TWO home disciplines: Cryo n Metallurgy
+    flavor: "Burn every gram twice: a fuel-rich preburner drives the turbopumps, then the exhaust is fully combusted in the chamber. The RS-25 needs both deep-cryo hydrogen handling AND reusable hot-section superalloys — a convergence of Cryogenics and Metallurgy."
+    parts: [ROE-RS25]
+  - id: cryo_zbo
+    title: "Reverse-Brayton Zero-Boiloff Cryocooling"
+    discipline: Cryogenics
+    tier: 6
+    parents: [cryo_lh2Insulation, ext_powerGrid]
+    anyToUnlock: false               # CONVERGENCE: needs a real power grid to run the coolers
+    flavor: "A closed reverse-Brayton cryocooler actively pumps heat out of the tank, driving boiloff to zero — if you can spare the kilowatts. Multi-year outer-planet cryo stages stop bleeding propellant."
+
+  # ---------- Telecommunications (clean single-discipline ladder, for contrast) ----------
+  - id: tel_pcmTelemetry
+    title: "PCM/FM Telemetry Downlink"
+    discipline: Telecommunications
+    tier: 1
+    parents: [start]
+    flavor: "Pulse-code-modulated vehicle health, FM-keyed to the ground. Without it, a failure tells you nothing about why."
+  - id: tel_helicalDirectional
+    title: "Helical Directional Arrays"
+    discipline: Telecommunications
+    tier: 2
+    parents: [tel_pcmTelemetry]
+    flavor: "Axial-mode helices give circularly-polarized gain that tolerates a tumbling spacecraft — range and data rate at the cost of having to point."
+    parts: [HighGainAntenna5_v2]
+  - id: tel_cassegrainHGA
+    title: "Cassegrain Parabolic High-Gain Reflector"
+    discipline: Telecommunications
+    tier: 3
+    parents: [tel_helicalDirectional]
+    flavor: "A subreflector folds the feed back through the dish vertex, shortening the assembly and closing the link from lunar distance. Apollo talked home through one."
+    parts: [HighGainAntenna, ROC-ApolloHGABDB]
+  - id: tel_dsnRanging
+    title: "Coherent Two-Way Doppler & Ranging"
+    discipline: Telecommunications
+    tier: 4
+    parents: [tel_cassegrainHGA]
+    flavor: "Phase-coherent ground dishes pull a few bits per second out of interplanetary noise and, from the round-trip Doppler, fix the spacecraft's state vector to meters."
+  - id: tel_phasedArray
+    title: "Electronically-Steered Phased Arrays"
+    discipline: Telecommunications
+    tier: 5
+    parents: [tel_dsnRanging]
+    flavor: "Steer the beam by element phasing, no moving parts. Higher rates, graceful degradation, the backbone of a relay constellation."
+
+  # ---------- external stub (off-slice; full node lives in Electrical Power) ----------
+  - id: ext_powerGrid
+    title: "Kilowatt-Class Regulated Power Bus"
+    discipline: ElectricalPower
+    tier: 5
+    parents: [elec_bodyMountedArrays]
+    flavor: "High-voltage regulated distribution that turns raw array watts into the kilowatts cryocoolers and electric thrusters actually demand. The grid that gates heavy payloads."
+
+  # ======================= STAGE 1 — Materials & Chemistry cluster =======================
+  # ---------- Metallurgy (metals, casting, forming) ----------
+  - id: met_weldedSteel
+    title: "Welded Steel Pressure Vessels"
+    discipline: Metallurgy
+    tier: 1
+    parents: [start]
+    flavor: "Roll, weld and proof-test mild-steel cylinders that hold pressure without bursting. The first tank that flies."
+  - id: met_chemMilling
+    title: "Chemical Milling & Isogrid"
+    discipline: Metallurgy
+    tier: 3
+    parents: [met_earlyAlloys]
+    flavor: "Etch away everything that isn't load path, leaving a triangular-rib isogrid skin — stiffness at a fraction of the mass."
+  - id: met_vacuumInductionMelting
+    title: "Vacuum Induction Melting"
+    discipline: Metallurgy
+    tier: 4
+    parents: [met_chemMilling]
+    flavor: "Melt under vacuum to strip dissolved gases and inclusions, casting the clean nickel-base superalloys that hot sections demand."
+  - id: met_titaniumForming
+    title: "Superplastic Titanium Forming"
+    discipline: Metallurgy
+    tier: 5
+    parents: [met_chemMilling]
+    flavor: "Heat titanium until it flows like taffy and form one-piece, diffusion-bonded structures — strong, light, corrosion-proof."
+  - id: met_vacuumArcRemelting
+    title: "Vacuum Arc Remelting"
+    discipline: Metallurgy
+    tier: 5
+    parents: [met_vacuumInductionMelting]
+    flavor: "A consumable-electrode second melt homogenises the ingot grain by grain — the pedigree steel of turbine discs and gun-pressure cases."
+  - id: met_powderMetallurgyHIP
+    title: "Powder Metallurgy & Hot Isostatic Pressing"
+    discipline: Metallurgy
+    tier: 6
+    parents: [met_vacuumInductionMelting]
+    flavor: "Consolidate atomised powder under heat and pressure into near-net shapes with no casting porosity — complex parts, full density."
+  - id: met_singleCrystalTurbine
+    title: "Single-Crystal Turbine Castings"
+    discipline: Metallurgy
+    tier: 6
+    parents: [met_vacuumArcRemelting]
+    flavor: "Grow a turbine blade as one crystal with no grain boundaries to creep — it runs hotter and lasts longer than any equiaxed casting."
+  - id: met_refractoryMetals
+    title: "Refractory Metal Hot Sections"
+    discipline: Metallurgy
+    tier: 7
+    parents: [met_vacuumArcRemelting]
+    flavor: "Niobium, tantalum and tungsten alloys that stay strong red-hot — radiation-cooled nozzles and nuclear-thermal cores."
+  - id: met_additiveManufacturing
+    title: "Laser Powder-Bed Additive Manufacturing"
+    discipline: Metallurgy
+    tier: 8
+    parents: [met_powderMetallurgyHIP]
+    flavor: "Print a regen-cooled chamber as a single part with internal channels no machine could cut. Geometry becomes free; the alloy becomes the limit."
+  - id: met_amorphousAlloys
+    title: "Bulk Metallic Glasses"
+    discipline: Metallurgy
+    tier: 9
+    parents: [met_additiveManufacturing]
+    flavor: "Quench fast enough that the metal never crystallises — glassy alloys with spring-like elasticity and extreme strength-to-weight."
+  # ---------- Composite Materials (non-metallic structures & thermal protection) ----------
+  - id: cmp_glassFiber
+    title: "Glass-Fiber Laminates"
+    discipline: CompositeMaterials
+    tier: 2
+    parents: [met_weldedSteel]
+    flavor: "Glass cloth in cured resin: light, transparent to radio, and the gateway to every structural composite that follows."
+  - id: cmp_ablativeTPS
+    title: "Ablative Heatshields"
+    discipline: CompositeMaterials
+    tier: 3
+    parents: [cmp_glassFiber]
+    flavor: "A phenolic char layer that burns away on purpose, carrying reentry heat with it. The only thing between a capsule and a meteor's fate."
+    parts: [ROC-ApolloHSBDB]
+  - id: cmp_filamentWinding
+    title: "Filament-Wound Cases"
+    discipline: CompositeMaterials
+    tier: 4
+    parents: [cmp_glassFiber]
+    flavor: "Wind continuous fiber under tension around a mandrel for pressure vessels and solid-motor cases far lighter than steel."
+  - id: cmp_carbonCarbon
+    title: "Carbon-Carbon Hot Structures"
+    discipline: CompositeMaterials
+    tier: 5
+    parents: [cmp_ablativeTPS]
+    flavor: "Carbon fiber in a carbon matrix that gets STRONGER as it heats — reusable wing leading edges and throat inserts."
+  - id: cmp_carbonFiberComposite
+    title: "Carbon-Fiber Airframes"
+    discipline: CompositeMaterials
+    tier: 5
+    parents: [cmp_filamentWinding]
+    flavor: "Tailored carbon-epoxy laminates lay stiffness exactly along the load paths — the modern lightweight airframe and interstage."
+  - id: cmp_pica
+    title: "PICA / AVCOAT Reentry Ablators"
+    discipline: CompositeMaterials
+    tier: 6
+    parents: [cmp_ablativeTPS]
+    flavor: "Ultralight phenolic-impregnated carbon ablators survive lunar- and Mars-return entry velocities at a fraction of the mass."
+  - id: cmp_copv
+    title: "Composite Overwrapped Pressure Vessels"
+    discipline: CompositeMaterials
+    tier: 6
+    parents: [cmp_carbonFiberComposite]
+    flavor: "A thin metal liner overwrapped in carbon fiber holds helium at hundreds of bar for a tiny mass — the modern pressurant bottle."
+  - id: cmp_ceramicTiles
+    title: "Reusable Ceramic Tile TPS"
+    discipline: CompositeMaterials
+    tier: 6
+    parents: [cmp_carbonCarbon]
+    flavor: "Silica tiles so insulating you can hold one glowing at the edges — the Shuttle's reusable skin, fragile but flyable again."
+  - id: cmp_ceramicMatrixComposite
+    title: "Ceramic-Matrix Composites"
+    discipline: CompositeMaterials
+    tier: 7
+    parents: [cmp_carbonCarbon]
+    flavor: "Ceramic fibers in a ceramic matrix add toughness to refractory ceramics — uncooled nozzle extensions and turbine shrouds."
+  - id: cmp_metalMatrixComposite
+    title: "Metal-Matrix Composites"
+    discipline: CompositeMaterials
+    tier: 8
+    parents: [cmp_copv]
+    flavor: "Silicon-carbide whiskers in an aluminum or titanium matrix: stiffer, more dimensionally stable struts and booms."
+  - id: cmp_transpirationTPS
+    title: "Transpiration-Cooled TPS"
+    discipline: CompositeMaterials
+    tier: 8
+    parents: [cmp_ceramicMatrixComposite]
+    flavor: "Sweat coolant through a porous skin to hold a fully reusable surface below its limit through repeated high-energy entries."
+  # ---------- Propellant Chemistry (additions to the fuel-timeline ladder) ----------
+  - id: pc_blackPowder
+    title: "Pressed Black-Powder Grains"
+    discipline: PropellantChemistry
+    tier: 1
+    parents: [start]
+    flavor: "Charcoal, sulfur and saltpetre pressed into a grain — the oldest rocket propellant, and where solids begin."
+  - id: pc_doubleBaseSolid
+    title: "Double-Base Solid Propellant"
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [pc_blackPowder]
+    flavor: "Nitrocellulose gelled with nitroglycerine burns hotter and cleaner than powder — the smokeless propellant of early missiles."
+  - id: pc_hydrogenPeroxide
+    title: "High-Test Peroxide (HTP)"
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [pc_ethanolLox]
+    flavor: "Concentrated peroxide decomposes over a silver catalyst into hot steam and oxygen — monopropellant gas generators and soft-start oxidiser."
+  - id: pc_castableComposite
+    title: "Castable AP/Al Composite Grains"
+    discipline: PropellantChemistry
+    tier: 4
+    parents: [pc_apcpGrain]
+    flavor: "Cast and cure a meganewton-class grain directly into a segmented case — the chemistry of the largest boosters ever flown."
+    parts: [RO-RSRM]
+  - id: pc_greenMonoprop
+    title: "Green Monopropellants"
+    discipline: PropellantChemistry
+    tier: 5
+    parents: [pc_hypergolicChemistry]
+    flavor: "Ionic-liquid blends (LMP-103S, AF-M315E) match hydrazine's performance without the lethal toxicity — safer satellite propulsion."
+  - id: pc_gelledPropellant
+    title: "Gelled Hypergolic Propellants"
+    discipline: PropellantChemistry
+    tier: 6
+    parents: [pc_storableOxidizers]
+    flavor: "Thicken storables to a gel that won't slosh or leak yet still flows when throttled — restartable, safer high-density propulsion."
+  - id: pc_methalox
+    title: "Methane Liquefaction & Methalox"
+    discipline: PropellantChemistry
+    tier: 6
+    parents: [pc_cryoLiquefaction]
+    flavor: "Liquid methane: clean-burning, coke-free, dense enough for deep throttling and — crucially — makeable from CO2 on Mars."
+  - id: pc_subcooledDensified
+    title: "Densified Sub-cooled Propellants"
+    discipline: PropellantChemistry
+    tier: 7
+    parents: [pc_methalox]
+    flavor: "Chill propellant below its boiling point and pack more mass in the same tank — the last few percent of performance, at operational cost."
+  # ---------- Resource Engineering (ISRU — emerges mid-tree) ----------
+  - id: res_electrolysis
+    title: "Water Electrolysis"
+    discipline: ResourceEngineering
+    tier: 4
+    parents: [pc_cryoLiquefaction]
+    flavor: "Split water into hydrogen and oxygen with electricity — life-support oxygen now, in-situ propellant later."
+  - id: res_regolithExcavation
+    title: "Regolith Excavation & Augering"
+    discipline: ResourceEngineering
+    tier: 5
+    parents: [met_earlyAlloys]
+    flavor: "Dig and convey abrasive regolith in vacuum and low gravity — the unglamorous front end of every off-world supply chain."
+    parts: [kerbalism-drill]
+  - id: res_cryoLiquefactionISRU
+    title: "In-Situ Cryogenic Liquefaction"
+    discipline: ResourceEngineering
+    tier: 5
+    parents: [res_electrolysis]
+    flavor: "Liquefy and store electrolysis products as flight cryogens on the surface — close the loop from water to propellant."
+  - id: res_sabatier
+    title: "Sabatier Methane Synthesis"
+    discipline: ResourceEngineering
+    tier: 6
+    parents: [res_electrolysis]
+    flavor: "React CO2 with hydrogen over a catalyst to make methane and water — the reaction that fuels the trip home from Mars."
+    parts: [kerbalism-chemicalplant]
+  - id: res_oreBeneficiation
+    title: "Ore Beneficiation & Sintering"
+    discipline: ResourceEngineering
+    tier: 6
+    parents: [res_regolithExcavation]
+    flavor: "Concentrate and sinter raw regolith into feedstock and bricks — the first step from dirt toward parts and shielding."
+  - id: res_metalExtraction
+    title: "In-Situ Metal Extraction"
+    discipline: ResourceEngineering
+    tier: 7
+    parents: [res_oreBeneficiation]
+    flavor: "Molten-regolith electrolysis pulls iron, aluminium and oxygen out of the dirt itself — structural metal without a launch."
+    parts: [kerbalism-ISRU]
+  - id: res_propellantDepot
+    title: "Orbital Propellant Depots"
+    discipline: ResourceEngineering
+    tier: 7
+    parents: [res_sabatier]
+    flavor: "Aggregate, store and transfer cryogens on orbit so missions launch dry and tank up — the logistics keystone of deep space."
+  - id: res_atmosphericMining
+    title: "Atmospheric & Gas-Giant Mining"
+    discipline: ResourceEngineering
+    tier: 8
+    parents: [res_metalExtraction]
+    flavor: "Scoop and separate gases from a planet's air on the fly — hydrogen and helium harvested without ever landing."
+  - id: res_closedLoopFab
+    title: "Closed-Loop In-Situ Fabrication"
+    discipline: ResourceEngineering
+    tier: 9
+    parents: [res_metalExtraction]
+    flavor: "Mine, refine, print and assemble entirely off-world, recycling scrap — a foothold that builds the next foothold."
+  - id: res_heliumMining
+    title: "Helium-3 Extraction"
+    discipline: ResourceEngineering
+    tier: 9
+    parents: [res_atmosphericMining]
+    flavor: "Separate the rare fusion isotope from regolith or gas-giant atmosphere — the propellant of an ambitious, far-future endgame."
+
+  # ======================= STAGE 2 — Energy & Propulsion-physics cluster =======================
+  # ---------- Fluid Dynamics (engine cycles, turbomachinery, nozzle flow) ----------
+  - id: fd_pressureFed
+    title: "Pressure-Fed Feed Systems"
+    discipline: FluidDynamics
+    tier: 1
+    parents: [start]
+    flavor: "Push propellant with tank pressure alone — no pump, no turbine. Simple, restartable, and limited to low chamber pressure."
+  - id: fd_gasGenerator
+    title: "Gas-Generator (Open) Cycle"
+    discipline: FluidDynamics
+    tier: 2
+    parents: [fd_pressureFed]
+    flavor: "Burn a little propellant in a side chamber to spin the turbopump, then dump the turbine exhaust overboard. Simple, proven, slightly wasteful."
+  - id: fd_expanderCycle
+    title: "Expander Cycle"
+    discipline: FluidDynamics
+    tier: 5
+    parents: [fd_turbopumps]
+    flavor: "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, thrust-limited by heat pickup."
+  - id: fd_tapOffCycle
+    title: "Combustion Tap-Off Cycle"
+    discipline: FluidDynamics
+    tier: 5
+    parents: [fd_gasGenerator]
+    flavor: "Bleed hot gas straight from the main chamber to spin the turbine — one combustion zone, no separate gas generator."
+  - id: fd_stagedCombustion
+    title: "Staged-Combustion (Closed) Cycle"
+    discipline: FluidDynamics
+    tier: 5
+    parents: [fd_turbopumps]
+    flavor: "Burn the turbine drive gas, then route it into the main chamber to burn again — nothing wasted, chamber pressure soars, plumbing turns brutal."
+  - id: fd_aerospike
+    title: "Altitude-Compensating Aerospike Nozzles"
+    discipline: FluidDynamics
+    tier: 6
+    parents: [fd_stagedCombustion]
+    flavor: "Let the exhaust's outer edge follow ambient pressure so one engine stays efficient from sea level to vacuum."
+  - id: fd_deepThrottle
+    title: "Deep-Throttle & Reliable Restart"
+    discipline: FluidDynamics
+    tier: 6
+    parents: [fd_stagedCombustion]
+    flavor: "Hold stable combustion from full thrust down to a fraction of it, and relight on demand — the prerequisite for propulsive landing."
+  - id: fd_fullFlowStaged
+    title: "Full-Flow Staged Combustion"
+    discipline: FluidDynamics
+    tier: 7
+    parents: [fd_stagedCombustion]
+    flavor: "Two preburners, oxidiser-rich and fuel-rich, drive separate turbopumps and feed only warm gas to the seals. The highest-pressure, most reusable cycle there is."
+  - id: fd_dualBell
+    title: "Dual-Bell & Extendible Nozzles"
+    discipline: FluidDynamics
+    tier: 7
+    parents: [fd_aerospike]
+    flavor: "A two-mode bell or a deployable extension recovers altitude performance without an aerospike's cooling headache."
+  - id: fd_rotatingDetonation
+    title: "Rotating Detonation Engines"
+    discipline: FluidDynamics
+    tier: 9
+    parents: [fd_fullFlowStaged]
+    flavor: "Replace steady deflagration with a detonation wave chasing itself around an annulus — a theoretical efficiency jump, a practical nightmare to cool."
+  # ---------- Thermodynamics (cooling, heat transport, radiators) ----------
+  - id: th_filmCooling
+    title: "Film & Curtain Cooling"
+    discipline: Thermodynamics
+    tier: 2
+    parents: [met_weldedSteel]
+    flavor: "Run a fuel-rich boundary layer along the chamber wall as a sacrificial cool film — the crude cooling that made the first big engines survivable."
+  - id: th_ablativeCooling
+    title: "Ablative Chamber Liners"
+    discipline: Thermodynamics
+    tier: 3
+    parents: [th_filmCooling]
+    flavor: "Let a silica-phenolic liner char and erode away, carrying heat with it — cheap, disposable, and good for one burn."
+  - id: th_passiveRadiators
+    title: "Passive Radiative Cooling"
+    discipline: Thermodynamics
+    tier: 4
+    parents: [th_regenCooling]
+    flavor: "Reject waste heat to space with coatings, louvers and surface geometry alone — the baseline thermal balance of every spacecraft."
+    parts: [ca_louver_m]
+  - id: th_heatPipes
+    title: "Heat-Pipe Thermal Transport"
+    discipline: Thermodynamics
+    tier: 5
+    parents: [th_passiveRadiators]
+    flavor: "Move heat passively across a vehicle on a capillary evaporation-condensation loop — no pump, no power, no moving parts."
+  - id: th_pumpedLoop
+    title: "Pumped Fluid-Loop Cooling"
+    discipline: Thermodynamics
+    tier: 6
+    parents: [th_passiveRadiators]
+    flavor: "Circulate coolant to gather waste heat from across a large vehicle and dump it at the radiators — the thermal circulatory system of a station."
+  - id: th_deployableRadiators
+    title: "Deployable Heat Rejection"
+    discipline: Thermodynamics
+    tier: 6
+    parents: [th_heatPipes, str_deployableTruss]
+    flavor: "Fold large radiating area for launch, deploy it on orbit — the only way to reject the tens of kilowatts a reactor or big array produces."
+  - id: th_cryocooler
+    title: "Mechanical Cryocoolers"
+    discipline: Thermodynamics
+    tier: 7
+    parents: [th_pumpedLoop]
+    flavor: "Actively pump heat down to cryogenic temperatures for detectors and zero-boiloff tanks — refrigeration where passive cooling can't reach."
+  - id: th_dropletRadiator
+    title: "Liquid-Droplet Radiators"
+    discipline: Thermodynamics
+    tier: 9
+    parents: [th_deployableRadiators]
+    flavor: "Spray a sheet of hot droplets through space and recollect them cooled — megawatts of heat rejection at a fraction of panel mass."
+  # ---------- Cryogenics (additions) ----------
+  - id: cryo_basicCryoStorage
+    title: "Vacuum-Jacketed Cryo Storage"
+    discipline: Cryogenics
+    tier: 2
+    parents: [met_weldedSteel]
+    flavor: "A double-walled, vacuum-jacketed dewar that keeps a cryogen liquid for hours — the first step from a chemistry-lab curiosity to a propellant."
+  - id: cryo_subcooling
+    title: "Propellant Sub-cooling Operations"
+    discipline: Cryogenics
+    tier: 5
+    parents: [cryo_lh2Insulation]
+    flavor: "Chill below the boiling point on the pad for density and margin — the operational craft of flying colder than equilibrium."
+  - id: cryo_orbitalTransfer
+    title: "Zero-g Cryo Propellant Transfer"
+    discipline: Cryogenics
+    tier: 6
+    parents: [cryo_lh2Insulation]
+    flavor: "Settle, gauge and pump cryogens between tanks in free fall without vapour locking — the hard fluid mechanics behind depots and refuelling."
+  - id: cryo_longDuration
+    title: "Long-Duration Cryo Storage"
+    discipline: Cryogenics
+    tier: 7
+    parents: [cryo_zbo]
+    flavor: "Combine insulation, vapour cooling and active refrigeration to hold cryogens for years — the enabler of outer-planet cryo stages."
+  - id: cryo_slush
+    title: "Slush-Hydrogen Handling"
+    discipline: Cryogenics
+    tier: 7
+    parents: [cryo_zbo]
+    flavor: "A solid-liquid hydrogen slurry packs more mass and absorbs more heat before it boils — the densest practical hydrogen there is."
+  # ---------- Electrical Power (batteries, fuel cells, photovoltaics, distribution) ----------
+  - id: elec_silverZinc
+    title: "Silver-Zinc Primary Batteries"
+    discipline: ElectricalPower
+    tier: 1
+    parents: [start]
+    flavor: "High energy density for a single mission's hours — the battery that powered the first satellites and short crewed flights."
+  - id: elec_fuelCell
+    title: "Alkaline Fuel Cells"
+    discipline: ElectricalPower
+    tier: 3
+    parents: [elec_silverZinc]
+    flavor: "React hydrogen and oxygen to make electricity and drinkable water — days of power for crewed flight, no sunlight required."
+    parts: [FuelCell]
+  - id: elec_siliconPV
+    title: "Silicon Photovoltaics"
+    discipline: ElectricalPower
+    tier: 3
+    parents: [elec_silverZinc]
+    flavor: "Doped silicon turns sunlight into watts indefinitely — the breakthrough that freed satellites from their batteries."
+    parts: [1x3SPanels]
+  - id: elec_bodyMountedArrays
+    title: "Body-Mounted & Deployable Arrays"
+    discipline: ElectricalPower
+    tier: 4
+    parents: [elec_siliconPV]
+    flavor: "Tile a spacecraft's skin or fold out fixed panels for hundreds of watts — the workhorse power source of the satellite age."
+  - id: elec_trackingArrays
+    title: "Solar Array Gimballing"
+    discipline: ElectricalPower
+    tier: 5
+    parents: [elec_bodyMountedArrays]
+    flavor: "Gimbal the arrays to face the sun continuously, multiplying usable power — and adding the first always-moving mechanism to fail."
+  - id: elec_lithiumIon
+    title: "Lithium-Ion Secondary Cells"
+    discipline: ElectricalPower
+    tier: 6
+    parents: [elec_fuelCell]
+    flavor: "Rechargeable high-density cells that survive thousands of eclipse cycles — the modern storage behind every station and rover night."
+  - id: elec_tripleJunction
+    title: "Triple-Junction GaAs Cells"
+    discipline: ElectricalPower
+    tier: 6
+    parents: [elec_trackingArrays]
+    flavor: "Stack three bandgaps to catch more of the spectrum — nearly twice silicon's efficiency for power-hungry deep-space craft."
+  - id: elec_concentratorPV
+    title: "Concentrator Photovoltaics"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_tripleJunction]
+    flavor: "Focus sunlight onto small high-efficiency cells with mirrors or lenses — more watts per kilogram far from the sun."
+  - id: elec_regenFuelCell
+    title: "Regenerative Fuel Cells"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_lithiumIon]
+    flavor: "Run the fuel cell backwards on solar power to re-split the water — closed-loop energy storage for long lunar nights."
+  - id: elec_flexibleArrays
+    title: "Flexible Roll-Out Solar Arrays"
+    discipline: ElectricalPower
+    tier: 8
+    parents: [elec_tripleJunction]
+    flavor: "Unroll a thin-film blanket for tens of kilowatts at a fraction of rigid-panel mass — the power wings of large modern stations."
+  - id: elec_ionThrusters
+    title: "Gridded-Ion & Hall-Effect Thrusters"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_tripleJunction]
+    flavor: "Accelerate xenon ions electrostatically for exhaust velocities ten times a chemical engine's — feeble thrust, miserly propellant, and utterly dependent on kilowatts of power."
+  - id: elec_mpdThrusters
+    title: "Magnetoplasmadynamic Thrusters"
+    discipline: ElectricalPower
+    tier: 9
+    parents: [elec_ionThrusters]
+    flavor: "Drive a self-induced magnetic field through a plasma arc for high-power electric thrust — the megawatt-class propulsion of a serious deep-space tug."
+  # ---------- Nuclear Engineering (radioisotopes, fission, nuclear propulsion) ----------
+  - id: nuc_rtg
+    title: "Radioisotope Thermoelectric Generators"
+    discipline: NuclearEngineering
+    tier: 5
+    parents: [elec_siliconPV]
+    flavor: "A plutonium pellet's decay heat across a thermocouple gives steady watts for decades, anywhere, sunlight or not — the power of the outer planets."
+    parts: [RO-SNAP-3-RTGPo210]
+  - id: nuc_rtgAdvanced
+    title: "GPHS Multi-Mission RTGs"
+    discipline: NuclearEngineering
+    tier: 6
+    parents: [nuc_rtg]
+    flavor: "Modular general-purpose heat-source blocks make a rugged, standardised RTG — the quiet, reliable heartbeat of flagship deep-space probes."
+    parts: [RO-MMRTG]
+  - id: nuc_fissionReactor
+    title: "Compact Fission Reactors"
+    discipline: NuclearEngineering
+    tier: 6
+    parents: [nuc_rtg, met_vacuumInductionMelting]
+    anyToUnlock: false
+    flavor: "A controllable critical core gives kilowatts to megawatts where the sun is too faint and RTGs too feeble — and demands superalloys and radiators to match."
+    parts: [RO-reactor-BES5, RO-reactor-SAFE400]
+  - id: nuc_thermionic
+    title: "Thermionic Reactor Conversion"
+    discipline: NuclearEngineering
+    tier: 7
+    parents: [nuc_fissionReactor]
+    flavor: "Boil electrons straight off a hot reactor electrode into electricity with no moving parts — the TOPAZ approach to space fission power."
+    parts: [RO-reactor-TOPAZI]
+  - id: nuc_braytonReactor
+    title: "Closed-Brayton Reactor Power"
+    discipline: NuclearEngineering
+    tier: 7
+    parents: [nuc_fissionReactor]
+    flavor: "Spin a turbine on reactor-heated inert gas for efficient high-power conversion — the dynamic powerplant of a crewed surface base."
+  - id: nuc_nuclearThermal
+    title: "Solid-Core Nuclear-Thermal Rocket"
+    discipline: NuclearEngineering
+    tier: 8
+    parents: [nuc_fissionReactor, cryo_lh2Insulation, met_refractoryMetals]
+    anyToUnlock: false
+    flavor: "Heat hydrogen through a refractory reactor core for double a chemical engine's exhaust velocity. Needs the reactor, deep-cryo hydrogen, AND refractory metals at once — the NERVA convergence."
+    parts: [NERVA_NRX, PEWEE100]
+  - id: nuc_nuclearElectric
+    title: "Nuclear-Electric Propulsion"
+    discipline: NuclearEngineering
+    tier: 8
+    parents: [nuc_braytonReactor]
+    flavor: "Run a high-power reactor into electric thrusters for patient, fuel-thrifty thrust across the solar system — power and propulsion decoupled."
+  - id: nuc_nervaImproved
+    title: "Particle-Bed Nuclear-Thermal"
+    discipline: NuclearEngineering
+    tier: 9
+    parents: [nuc_nuclearThermal]
+    flavor: "Flow hydrogen through a bed of coated fuel particles for far higher power density and thrust-to-weight than a solid core."
+  - id: nuc_gasCoreNTR
+    title: "Gas-Core Nuclear-Thermal"
+    discipline: NuclearEngineering
+    tier: 10
+    parents: [nuc_nervaImproved]
+    flavor: "Let the fissioning fuel itself go gaseous and heat hydrogen to it directly — exhaust velocities chemical rockets can only dream of. Far-future."
+  - id: nuc_fusionTorch
+    title: "Fusion Propulsion"
+    discipline: NuclearEngineering
+    tier: 10
+    parents: [nuc_nuclearElectric, res_heliumMining]
+    anyToUnlock: false
+    flavor: "Confine and burn a fusion plasma for both power and thrust — the endgame drive, gated on the fuel you had to go mine from a gas giant."
+
+  # ======================= STAGE 3 — Flight, Structure, Control cluster =======================
+  # ---------- Aerodynamics (airfoils, supersonic, reentry, recovery) ----------
+  - id: aero_subsonicAirfoils
+    title: "Subsonic Airfoils & Empennage"
+    discipline: Aerodynamics
+    tier: 1
+    parents: [start]
+    flavor: "Wings, tails and control surfaces that fly stably below the speed of sound — the X-plane root of the tree."
+    parts: [AdvancedCanard]
+  - id: aero_parachuteRecovery
+    title: "Staged Canopy Deceleration"
+    discipline: Aerodynamics
+    tier: 2
+    parents: [aero_subsonicAirfoils]
+    flavor: "Stage a drogue then a main canopy to bring a capsule or booster down intact — the oldest way home from space."
+  - id: aero_transonicArea
+    title: "Transonic Area-Rule Shaping"
+    discipline: Aerodynamics
+    tier: 3
+    parents: [aero_subsonicAirfoils]
+    flavor: "Smooth the cross-sectional area through Mach 1 — the coke-bottle waist that lets an airframe punch through the sound barrier."
+  - id: aero_sweptWing
+    title: "Swept & Delta Wings"
+    discipline: Aerodynamics
+    tier: 3
+    parents: [aero_subsonicAirfoils]
+    flavor: "Sweep the wing to delay shock-stall and you can cruise supersonic — the planform of every fast aircraft and spaceplane."
+    parts: [B9_Aero_Wing_Procedural_TypeA, B9_Aero_Wing_Procedural_TypeC]
+  - id: aero_supersonicInlets
+    title: "Supersonic Inlet Design"
+    discipline: Aerodynamics
+    tier: 4
+    parents: [aero_transonicArea]
+    flavor: "Decelerate intake air through controlled shocks so a jet keeps breathing past Mach 2."
+  - id: aero_reentryBluntBody
+    title: "Blunt-Body Reentry Aerodynamics"
+    discipline: Aerodynamics
+    tier: 4
+    parents: [aero_parachuteRecovery]
+    flavor: "A blunt shape stands the shock off the vehicle, dumping reentry heat into the air instead of the skin — the counter-intuitive key to survival."
+  - id: aero_proceduralFairings
+    title: "Jettisonable Aeroshells"
+    discipline: Aerodynamics
+    tier: 4
+    parents: [aero_transonicArea]
+    flavor: "Shroud the payload through ascent then jettison cleanly — aerodynamic protection that must vanish on command."
+  - id: aero_hypersonicWaverider
+    title: "Hypersonic Waverider Forebodies"
+    discipline: Aerodynamics
+    tier: 5
+    parents: [aero_supersonicInlets]
+    flavor: "Ride your own shock wave for lift at hypersonic speed — the forebody shape of a Mach-6 cruiser."
+  - id: aero_liftingBody
+    title: "Lifting-Body Reentry"
+    discipline: Aerodynamics
+    tier: 5
+    parents: [aero_reentryBluntBody]
+    flavor: "Generate lift from the fuselage itself for a cross-range, runway-capable return with no wings to shield from the heat."
+  - id: aero_gridFins
+    title: "Lattice-Fin Flight Control"
+    discipline: Aerodynamics
+    tier: 5
+    parents: [aero_reentryBluntBody]
+    flavor: "Stow flat, deploy into the airstream for crisp control authority on a descending booster — the steering of a reusable first stage."
+  - id: aero_supersonicRetropropulsion
+    title: "Supersonic Retropropulsion"
+    discipline: Aerodynamics
+    tier: 6
+    parents: [aero_reentryBluntBody]
+    flavor: "Fire engines into a supersonic oncoming flow to brake — the only practical way to land heavy payloads on Mars or recover a stage."
+  - id: aero_iad
+    title: "Inflatable Aerodynamic Decelerators"
+    discipline: Aerodynamics
+    tier: 6
+    parents: [aero_reentryBluntBody]
+    flavor: "Inflate a giant drag cone to slow a heavy entry where a rigid heatshield would be impossibly large."
+  - id: aero_scramjet
+    title: "Scramjet Airframe Integration"
+    discipline: Aerodynamics
+    tier: 6
+    parents: [aero_hypersonicWaverider]
+    flavor: "Burn fuel in a supersonic airstream with the whole underside as the engine — air-breathing flight to the edge of space."
+  - id: aero_activeFlowControl
+    title: "Active Flow Control"
+    discipline: Aerodynamics
+    tier: 7
+    parents: [aero_scramjet]
+    flavor: "Blow, suck or pulse the boundary layer to command lift and drag without moving a surface."
+  - id: aero_morphingWing
+    title: "Morphing Adaptive Wings"
+    discipline: Aerodynamics
+    tier: 8
+    parents: [aero_activeFlowControl]
+    flavor: "Change the wing's shape continuously in flight for optimal performance across every regime."
+  # ---------- Structures & Mechanisms (load paths, deployables, docking, landing) ----------
+  - id: str_pyroSeparation
+    title: "Pyrotechnic Staging & Separation"
+    discipline: StructuresMechanisms
+    tier: 1
+    parents: [start]
+    flavor: "Explosive bolts and shaped charges that cut a vehicle apart on a millisecond's command — staging begins here."
+  - id: str_stageSeparation
+    title: "Stage Separation & Ullage"
+    discipline: StructuresMechanisms
+    tier: 2
+    parents: [str_pyroSeparation]
+    flavor: "Push stages cleanly apart and settle propellant for the next ignition — the choreography between cutting and lighting."
+  - id: str_interstageTruss
+    title: "Semi-Monocoque Interstage Structures"
+    discipline: StructuresMechanisms
+    tier: 2
+    parents: [str_pyroSeparation]
+    flavor: "Carry launch loads through open trusswork at minimum mass — the skeleton between tanks and engines."
+  - id: str_landingLegs
+    title: "Touchdown Energy Absorption"
+    discipline: StructuresMechanisms
+    tier: 3
+    parents: [str_interstageTruss]
+    flavor: "Crushable or damped legs that catch a lander's touchdown without bouncing or tipping."
+  - id: str_deployableBooms
+    title: "Stored-Strain Deployable Booms"
+    discipline: StructuresMechanisms
+    tier: 4
+    parents: [str_interstageTruss]
+    flavor: "Stow a long boom for launch and extend it on orbit for magnetometers, arrays and antennas held clear of the bus."
+  - id: str_dockingProbeDrogue
+    title: "Probe-and-Drogue Docking"
+    discipline: StructuresMechanisms
+    tier: 4
+    parents: [str_stageSeparation]
+    flavor: "A probe captures a drogue cone and reels two craft together — the first hard mechanical mating in space."
+  - id: str_androgynousDocking
+    title: "Androgynous Docking"
+    discipline: StructuresMechanisms
+    tier: 5
+    parents: [str_dockingProbeDrogue]
+    flavor: "Identical, genderless interfaces so any two vehicles can mate either way — the diplomacy of hardware."
+    parts: [RO-ApolloDockingPort, APAS89-95]
+  - id: str_deployableTruss
+    title: "Deployable & Erectable Trusses"
+    discipline: StructuresMechanisms
+    tier: 5
+    parents: [str_deployableBooms]
+    flavor: "Fold a large truss for launch and unfold it into a rigid backbone — the spine of a modular station."
+  - id: str_berthingMechanism
+    title: "Low-Energy Berthing"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_androgynousDocking]
+    flavor: "Capture a module gently with an arm and bolt it down with a structural ring — the strong, permanent joints of a station."
+  - id: str_actuatedMechanisms
+    title: "High-Reliability Actuators & Latches"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_landingLegs]
+    flavor: "Single-fault-tolerant motors, latches and release mechanisms that simply must not jam after years in vacuum."
+  - id: str_reusableLandingGear
+    title: "Reflight-Rated Recovery Structures"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_landingLegs]
+    flavor: "Legs and gear that absorb landing after landing and fly again with inspection only — the structures of reusability."
+  - id: str_inflatableHab
+    title: "Restraint-Layer Inflatable Modules"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_deployableTruss]
+    flavor: "Pack a large pressurised volume small for launch and inflate it on orbit — more habitat per fairing than any rigid can."
+  - id: str_largeDeployableReflectors
+    title: "Large Deployable Reflectors"
+    discipline: StructuresMechanisms
+    tier: 7
+    parents: [str_deployableBooms]
+    flavor: "Unfurl mesh dishes and apertures far larger than any fairing — the structures behind big antennas and telescopes."
+  - id: str_inSpaceAssembly
+    title: "Robotic On-Orbit Truss Assembly"
+    discipline: StructuresMechanisms
+    tier: 8
+    parents: [str_largeDeployableReflectors]
+    flavor: "Join trusses and modules on orbit by robot, not by folding — structures too big to launch in one piece."
+  # ---------- Robotics (rovers, manipulators, surface autonomy) ----------
+  - id: rob_servoActuators
+    title: "Electric Servo Actuators"
+    discipline: Robotics
+    tier: 3
+    parents: [start]
+    flavor: "Precise, repeatable electric motion — the joints, hinges and gimbals every machine that moves itself depends on."
+    parts: [hinge_01, controller1000]
+  - id: rob_roverChassis
+    title: "Independently-Sprung Rover Chassis"
+    discipline: Robotics
+    tier: 4
+    parents: [rob_servoActuators]
+    flavor: "Drive, steer and survive thermal cycling on another world — the mobile platform that takes instruments to the science."
+  - id: rob_roboticArm
+    title: "Force-Reflecting Teleoperation"
+    discipline: Robotics
+    tier: 5
+    parents: [rob_servoActuators]
+    flavor: "A multi-jointed arm to berth modules, inspect, and move cargo — hands in space, driven from the ground or the flight deck."
+  - id: rob_suspension
+    title: "Rocker-Bogie Suspension"
+    discipline: Robotics
+    tier: 5
+    parents: [rob_roverChassis]
+    flavor: "A passive linkage that keeps six wheels on rough ground without springs — the gait of a planetary rover."
+  - id: rob_sampleHandling
+    title: "Sample Acquisition & Handling"
+    discipline: Robotics
+    tier: 6
+    parents: [rob_roboticArm]
+    flavor: "Scoop, drill, seal and cache material without contaminating it — the front end of sample return."
+  - id: rob_autonomousNav
+    title: "Autonomous Surface Navigation"
+    discipline: Robotics
+    tier: 6
+    parents: [rob_suspension]
+    flavor: "Pick a safe path across terrain faster than the light-speed delay allows a driver to — the rover that thinks for itself."
+  - id: rob_dexterousManipulation
+    title: "Dexterous Manipulators"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_roboticArm]
+    flavor: "Fine, force-controlled hands for servicing, refuelling and repair on orbit."
+  - id: rob_skyCrane
+    title: "Powered-Descent Sky-Crane Delivery"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_autonomousNav]
+    flavor: "Hover on rockets and lower a rover on a tether to the surface — landing something too heavy and delicate for airbags."
+  - id: rob_rotorcraft
+    title: "Extraterrestrial Rotorcraft"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_autonomousNav]
+    flavor: "Fly a coaxial rotor in a thin alien atmosphere — scouting from the air where wheels can't reach."
+  - id: rob_roboticAssembly
+    title: "On-Orbit Robotic Servicing (OSAM)"
+    discipline: Robotics
+    tier: 8
+    parents: [rob_dexterousManipulation]
+    flavor: "Build, refuel and repair satellites and structures by robot — infrastructure that maintains itself."
+  - id: rob_subsurfaceAccess
+    title: "Subsurface Drilling & Cryobots"
+    discipline: Robotics
+    tier: 8
+    parents: [rob_sampleHandling]
+    flavor: "Bore meters into regolith or melt through ice to reach what's buried — access to the most interesting real estate."
+  - id: rob_swarmRobotics
+    title: "Cooperative Robot Swarms"
+    discipline: Robotics
+    tier: 9
+    parents: [rob_autonomousNav]
+    flavor: "Many small autonomous units coordinating on survey and construction — resilience and coverage through numbers."
+  # ---------- Microelectronics (semiconductors, sensors, probe brains) ----------
+  - id: mic_vacuumTubes
+    title: "Vacuum-Tube Electronics"
+    discipline: Microelectronics
+    tier: 1
+    parents: [start]
+    flavor: "Hot-cathode tubes for the first sequencers and amplifiers — bulky, power-hungry, and the only logic there was."
+  - id: mic_transistor
+    title: "Discrete Transistors"
+    discipline: Microelectronics
+    tier: 2
+    parents: [mic_vacuumTubes]
+    flavor: "Solid-state switching shrinks avionics from a rack to a box and stops burning out filaments."
+  - id: mic_instrumentation
+    title: "Telemetry Instrumentation Sensors"
+    discipline: Microelectronics
+    tier: 2
+    parents: [mic_vacuumTubes]
+    flavor: "Pressure, temperature, strain and acceleration transducers — turning a vehicle's state into numbers you can downlink."
+  - id: mic_integratedCircuit
+    title: "Integrated Circuits"
+    discipline: Microelectronics
+    tier: 3
+    parents: [mic_transistor]
+    flavor: "Many transistors on one chip — the leap that made a real flight computer light enough to fly."
+  - id: mic_radHardening
+    title: "Radiation-Hardened Electronics"
+    discipline: Microelectronics
+    tier: 4
+    parents: [mic_integratedCircuit]
+    flavor: "Shield and design against single-event upsets so electronics survive the belts and deep space without latching up."
+  - id: mic_mosLSI
+    title: "MOS Large-Scale Integration"
+    discipline: Microelectronics
+    tier: 4
+    parents: [mic_integratedCircuit]
+    flavor: "Thousands of gates per chip at low power — microprocessors and memory dense enough for a spacecraft to think."
+  - id: mic_probeAvionics
+    title: "Integrated Probe Avionics"
+    discipline: Microelectronics
+    tier: 4
+    parents: [mic_integratedCircuit]
+    flavor: "Command, data handling and power management on a compact bus — the electronic core a probe is built around."
+  - id: mic_photolithography
+    title: "UV Photolithography (VLSI)"
+    discipline: Microelectronics
+    tier: 5
+    parents: [mic_mosLSI]
+    flavor: "Project ever-finer patterns onto silicon to pack millions of devices per chip — the process that drives all of modern computing. (Cross-links to precision Optics.)"
+  - id: mic_ccdSensors
+    title: "CCD & Active-Pixel Imagers"
+    discipline: Microelectronics
+    tier: 5
+    parents: [mic_radHardening]
+    flavor: "Convert photons to charge across a pixel array — the electronic retina behind every digital camera and star tracker."
+  - id: mic_memsSensors
+    title: "MEMS Inertial & Pressure Sensors"
+    discipline: Microelectronics
+    tier: 5
+    parents: [mic_mosLSI]
+    flavor: "Etch gyros and accelerometers into silicon — a full inertial sensor on a chip for pennies and milligrams."
+  - id: mic_powerElectronics
+    title: "Solid-State Power Electronics"
+    discipline: Microelectronics
+    tier: 5
+    parents: [mic_mosLSI]
+    flavor: "Switch and convert spacecraft power efficiently with solid-state devices — the silicon behind the power bus."
+  - id: mic_systemOnChip
+    title: "Radiation-Tolerant System-on-Chip"
+    discipline: Microelectronics
+    tier: 6
+    parents: [mic_photolithography]
+    flavor: "A whole rad-tolerant computer — processor, memory, IO — on a single die for a small, capable avionics core."
+  - id: mic_fpga
+    title: "Reconfigurable FPGAs"
+    discipline: Microelectronics
+    tier: 6
+    parents: [mic_photolithography]
+    flavor: "Rewire the logic after launch to fix bugs and repurpose hardware in flight — software-defined silicon."
+  - id: mic_deepSubmicron
+    title: "Deep-Submicron Process Nodes"
+    discipline: Microelectronics
+    tier: 7
+    parents: [mic_systemOnChip]
+    flavor: "Nanometre-scale features for orders more compute per watt — the brains for autonomy and on-board data reduction."
+  - id: mic_neuromorphic
+    title: "Neuromorphic & Edge-AI Processors"
+    discipline: Microelectronics
+    tier: 9
+    parents: [mic_deepSubmicron]
+    flavor: "Brain-inspired silicon that perceives and decides on milliwatts — autonomy that doesn't wait for the ground."
+
+  # ======================= STAGE 4 — Guidance, Comms, Optics, Crew cluster =======================
+  # ---------- Computing (flight software, data, autonomy, simulation) ----------
+  - id: comp_sequencer
+    title: "Programmed Flight Sequencers"
+    discipline: Computing
+    tier: 2
+    parents: [mic_vacuumTubes]
+    flavor: "A timed drum or relay chain that fires events in order — open-loop automation before there was a computer to close the loop."
+  - id: comp_digitalFlightComputer
+    title: "Core-Rope Guidance Computer"
+    discipline: Computing
+    tier: 4
+    parents: [mic_integratedCircuit]
+    flavor: "A stored-program machine in the loop — the leap from sequenced events to computed guidance, navigation and control."
+  - id: comp_dataStorage
+    title: "Magnetic-Core & Tape Recorders"
+    discipline: Computing
+    tier: 5
+    parents: [comp_digitalFlightComputer]
+    flavor: "Tape recorders to solid-state memory — hold science and telemetry through the long gap until the next ground pass."
+  - id: comp_realTimeOS
+    title: "Real-Time Flight Software"
+    discipline: Computing
+    tier: 5
+    parents: [comp_digitalFlightComputer]
+    flavor: "Deterministic, scheduled, verified software where a missed deadline loses the vehicle — engineering rigour as code."
+  - id: comp_simulation
+    title: "Hardware-in-the-Loop Simulation"
+    discipline: Computing
+    tier: 6
+    parents: [comp_realTimeOS]
+    flavor: "Fly the whole mission against a simulated vehicle and world before bending metal — test the design, not the launch. (The 'simulate before you fly' unlock.)"
+  - id: comp_faultTolerant
+    title: "Fault-Tolerant Redundant Computing"
+    discipline: Computing
+    tier: 6
+    parents: [comp_realTimeOS]
+    flavor: "Vote across redundant computers so a single upset never commands the vehicle — crewed-rating in silicon."
+  - id: comp_dataCompression
+    title: "Onboard Data Compression & Reduction"
+    discipline: Computing
+    tier: 6
+    parents: [comp_dataStorage]
+    flavor: "Squeeze and pre-process data on board so a thin deep-space link still returns the science that matters."
+  - id: comp_digitalTwin
+    title: "Operational Digital Twins"
+    discipline: Computing
+    tier: 7
+    parents: [comp_simulation]
+    flavor: "A live simulation shadowing the real vehicle for what-if analysis and anomaly diagnosis in flight."
+  - id: comp_autonomousFaultMgmt
+    title: "Onboard Fault-Protection Logic"
+    discipline: Computing
+    tier: 7
+    parents: [comp_faultTolerant]
+    flavor: "Detect, isolate and recover from failures without waiting for the ground — survival at light-hours' distance."
+  - id: comp_machineVision
+    title: "Machine-Vision Navigation"
+    discipline: Computing
+    tier: 7
+    parents: [mic_systemOnChip, opt_digitalImaging]
+    flavor: "Turn camera frames into position and hazard maps in real time — eyes that steer the spacecraft."
+  - id: comp_onboardAI
+    title: "Onboard Autonomy & Planning"
+    discipline: Computing
+    tier: 8
+    parents: [comp_machineVision]
+    flavor: "Plan, schedule and re-plan a mission on board — a probe that decides what to do next by itself."
+  - id: comp_quantumComputing
+    title: "Spaceborne Quantum Computing"
+    discipline: Computing
+    tier: 10
+    parents: [comp_onboardAI]
+    flavor: "Quantum coprocessors for optimisation and simulation no classical machine can match — a far-future brain."
+  # ---------- Guidance & Control (GN&C — sensing, attitude, navigation) ----------
+  - id: gnc_rateGyros
+    title: "Rate Gyros & Analog Autopilot"
+    discipline: GuidanceControl
+    tier: 1
+    parents: [start]
+    flavor: "Spinning-mass gyros sense rotation and an analog loop holds attitude — the autopilot that keeps a rocket pointing up."
+  - id: gnc_reactionControl
+    title: "Reaction Control & Attitude Hold"
+    discipline: GuidanceControl
+    tier: 2
+    parents: [gnc_rateGyros]
+    flavor: "Small thrusters in opposed pairs to point and hold a vehicle in vacuum — the first three-axis control in space."
+  - id: gnc_inertialNav
+    title: "Gimballed Inertial Navigation"
+    discipline: GuidanceControl
+    tier: 3
+    parents: [gnc_rateGyros]
+    flavor: "A gyro-stabilised platform integrates acceleration into position — knowing where you are with no outside reference."
+  - id: gnc_reactionWheels
+    title: "Momentum-Exchange Attitude Control"
+    discipline: GuidanceControl
+    tier: 3
+    parents: [gnc_reactionControl]
+    flavor: "Spin a flywheel to turn the spacecraft the other way — precise, propellant-free pointing for instruments."
+  - id: gnc_strapdownINS
+    title: "Strapdown Inertial Navigation"
+    discipline: GuidanceControl
+    tier: 4
+    parents: [gnc_inertialNav]
+    flavor: "Bolt the sensors to the frame and do the gimballing in software — lighter, cheaper, and reliant on real computing."
+  - id: gnc_digitalGuidance
+    title: "Digital Closed-Loop Ascent Guidance"
+    discipline: GuidanceControl
+    tier: 5
+    parents: [gnc_strapdownINS, comp_digitalFlightComputer]
+    anyToUnlock: false
+    flavor: "Compute the optimal path to orbit in real time and steer to it — guidance that adapts to winds and engine dispersions. Needs strapdown INS and a flight computer at once."
+  - id: gnc_cmg
+    title: "Torque-Amplified Momentum Control"
+    discipline: GuidanceControl
+    tier: 5
+    parents: [gnc_reactionWheels]
+    flavor: "Gimbal a spinning rotor for huge control torque — how a heavy station slews without burning propellant."
+  - id: gnc_opticalNav
+    title: "Optical & Star-Field Navigation"
+    discipline: GuidanceControl
+    tier: 6
+    parents: [gnc_strapdownINS, opt_starTracker]
+    flavor: "Fix attitude and position against catalogued stars and landmarks — autonomy independent of the radio link. (Pairs with star trackers in Optics.)"
+  - id: gnc_ringLaserGyro
+    title: "Ring-Laser & Fiber-Optic Gyros"
+    discipline: GuidanceControl
+    tier: 6
+    parents: [gnc_strapdownINS]
+    flavor: "Measure rotation from the interference of counter-propagating light — no moving mass, no drift to spin up."
+  - id: gnc_autonomousRendezvous
+    title: "Autonomous Rendezvous & Proximity Ops"
+    discipline: GuidanceControl
+    tier: 6
+    parents: [gnc_digitalGuidance]
+    flavor: "Close, match and dock with another vehicle by computer — the maneuver that builds stations and refuels ships."
+  - id: gnc_precisionLanding
+    title: "Terrain-Relative Precision Landing"
+    discipline: GuidanceControl
+    tier: 7
+    parents: [gnc_autonomousRendezvous]
+    flavor: "Match live imagery to a map and divert to a safe spot meters wide — landing where you meant to, not where you drift."
+  - id: gnc_propulsiveLanding
+    title: "Propulsive Landing Guidance"
+    discipline: GuidanceControl
+    tier: 8
+    parents: [gnc_precisionLanding, fd_deepThrottle]
+    anyToUnlock: false
+    flavor: "Solve the fuel-optimal powered descent in real time and ride a throttling engine to the pad — guidance plus deep-throttle, together."
+  - id: gnc_coldAtomIMU
+    title: "Cold-Atom Inertial Sensors"
+    discipline: GuidanceControl
+    tier: 9
+    parents: [gnc_ringLaserGyro]
+    flavor: "Interfere matter waves of laser-cooled atoms for inertial sensing of extraordinary stability — navigation with almost no drift."
+  # ---------- Telecommunications (additions) ----------
+  - id: tel_sBandTransponder
+    title: "Unified S-Band Transponder"
+    discipline: Telecommunications
+    tier: 3
+    parents: [tel_helicalDirectional]
+    flavor: "One coherent link carries tracking, voice, telemetry and command together — the Apollo-era backbone radio."
+  - id: tel_dsnArraying
+    title: "DSN Antenna Arraying"
+    discipline: Telecommunications
+    tier: 5
+    parents: [tel_dsnRanging]
+    flavor: "Combine several ground dishes into one virtual aperture to wring more bits from a fading distant signal."
+  - id: tel_kaBand
+    title: "Ka-Band High-Rate Downlink"
+    discipline: Telecommunications
+    tier: 6
+    parents: [tel_phasedArray]
+    flavor: "Climb to higher frequency for far more bandwidth — orders more science return per pass."
+  - id: tel_relayConstellation
+    title: "Store-and-Forward Relay Constellation"
+    discipline: Telecommunications
+    tier: 6
+    parents: [tel_phasedArray]
+    flavor: "A network of relays gives near-continuous coverage instead of waiting for a ground station to rise."
+  - id: tel_opticalComms
+    title: "Laser Optical Communications"
+    discipline: Telecommunications
+    tier: 7
+    parents: [tel_kaBand]
+    flavor: "Carry data on a tight laser beam for gigabit links from deep space — bandwidth radio can't touch, if you can point it."
+  - id: tel_dtnNetworking
+    title: "Delay-Tolerant Networking"
+    discipline: Telecommunications
+    tier: 7
+    parents: [tel_relayConstellation]
+    flavor: "Store-and-forward protocols that route data across light-minute gaps and intermittent links."
+  - id: tel_interplanetaryInternet
+    title: "Interplanetary Internet"
+    discipline: Telecommunications
+    tier: 8
+    parents: [tel_dtnNetworking, tel_opticalComms]
+    anyToUnlock: false
+    flavor: "A standing, multi-hop network spanning the solar system — always-on connectivity between worlds."
+  # ---------- Optics & Photonics (imaging, telescopes, ranging, lasers) ----------
+  - id: opt_filmCameras
+    title: "Film-Return Cameras"
+    discipline: OpticsPhotonics
+    tier: 2
+    parents: [mic_vacuumTubes]
+    flavor: "Expose film in orbit and physically return or scan-and-transmit it — the first detailed eyes on other worlds."
+    parts: [RO-BasicFilmCamera]
+  - id: opt_tvImaging
+    title: "Vidicon TV Imaging"
+    discipline: OpticsPhotonics
+    tier: 3
+    parents: [opt_filmCameras]
+    flavor: "Scan an image off a photoconductive tube and send it down as video — live pictures from a probe, no film to recover."
+    parts: [RO-EarlyTVCamera, RO-BasicTVCamera]
+  - id: opt_precisionOptics
+    title: "Precision Optical Fabrication"
+    discipline: OpticsPhotonics
+    tier: 4
+    parents: [opt_filmCameras]
+    flavor: "Grind, polish and figure mirrors and lenses to fractions of a wavelength — the craft beneath every telescope and star tracker."
+  - id: opt_starTracker
+    title: "Stellar Attitude Determination"
+    discipline: OpticsPhotonics
+    tier: 4
+    parents: [opt_tvImaging, mic_integratedCircuit]
+    flavor: "Photograph the star field and match it to a catalogue for absolute attitude — the optical alternative to radio navigation."
+  - id: opt_digitalImaging
+    title: "Digital CCD Imaging"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_tvImaging, mic_ccdSensors]
+    anyToUnlock: false
+    flavor: "Electronic sensors replace film and tubes for sharp, calibrated, instantly-downlinked imagery — optics meeting microelectronics."
+    parts: [RO-DigitalCamera, RO-AdvancedImager]
+  - id: opt_spectrometry
+    title: "Imaging Spectrometers"
+    discipline: OpticsPhotonics
+    tier: 5
+    parents: [opt_precisionOptics]
+    flavor: "Split light into its spectrum at every pixel to read composition from orbit — chemistry at a distance."
+  - id: opt_laserRanging
+    title: "Laser Altimetry & LIDAR"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_precisionOptics]
+    flavor: "Time a laser pulse's round trip to map terrain and rendezvous range to the centimetre."
+  - id: opt_spaceTelescope
+    title: "Ritchey-Chretien Reflectors"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_precisionOptics, mic_ccdSensors]
+    flavor: "Put the aperture above the atmosphere for a diffraction-limited view of the universe."
+  - id: opt_segmentedMirrors
+    title: "Segmented Deployable Mirrors"
+    discipline: OpticsPhotonics
+    tier: 7
+    parents: [opt_spaceTelescope, str_deployableBooms]
+    flavor: "Fold many phased mirror segments to launch an aperture far larger than any fairing."
+  - id: opt_adaptiveOptics
+    title: "Active & Adaptive Optics"
+    discipline: OpticsPhotonics
+    tier: 7
+    parents: [opt_spaceTelescope]
+    flavor: "Deform the mirror in real time to cancel distortion and hold a perfect figure — sharper images on demand."
+  - id: opt_coronagraphy
+    title: "Coronagraphy & Exoplanet Imaging"
+    discipline: OpticsPhotonics
+    tier: 8
+    parents: [opt_adaptiveOptics]
+    flavor: "Null a star's glare to image the faint worlds beside it — the optics of finding another Earth."
+  - id: opt_interferometry
+    title: "Optical Interferometry"
+    discipline: OpticsPhotonics
+    tier: 8
+    parents: [opt_segmentedMirrors]
+    flavor: "Combine light from separated apertures for the resolution of a telescope kilometres across."
+  # ---------- Life Support & Habitation (ECLSS, crew, habitats) ----------
+  - id: life_pressurizedCabin
+    title: "Two-Gas Pressurised Cabin"
+    discipline: LifeSupport
+    tier: 3
+    parents: [met_earlyAlloys]
+    flavor: "A sealed, pressure-regulated volume that keeps a crew alive in vacuum for hours — the minimum viable spacecraft for a person."
+    parts: [MK2VApod]
+  - id: life_openLoopECLSS
+    title: "Open-Loop Oxygen & CO2 Scrubbing"
+    discipline: LifeSupport
+    tier: 4
+    parents: [life_pressurizedCabin]
+    flavor: "Bleed stored oxygen and scrub CO2 with lithium hydroxide — consumables-limited air for short missions."
+  - id: life_suitEVA
+    title: "Pressurized EVA Mobility"
+    discipline: LifeSupport
+    tier: 4
+    parents: [life_pressurizedCabin]
+    flavor: "A wearable spacecraft for working outside — mobility, thermal control and air in a vacuum, on the body."
+  - id: life_co2Removal
+    title: "Regenerable CO2 Removal"
+    discipline: LifeSupport
+    tier: 5
+    parents: [life_openLoopECLSS]
+    flavor: "Swing-bed sorbents that bake out CO2 and reuse — air revitalisation that doesn't run out of cartridges."
+  - id: life_radiationShelter
+    title: "Radiation Shielding & Dosimetry"
+    discipline: LifeSupport
+    tier: 5
+    parents: [life_pressurizedCabin]
+    flavor: "Mass-shielded storm shelters and dose monitoring to ride out solar particle events beyond the magnetosphere."
+  - id: life_waterRecovery
+    title: "Water Recovery & Recycling"
+    discipline: LifeSupport
+    tier: 6
+    parents: [life_co2Removal]
+    flavor: "Distil and purify humidity, wash water and urine back to potable — the first big loop closure of a station."
+  - id: life_galleyWaste
+    title: "Metabolic Consumables & Waste Cycling"
+    discipline: LifeSupport
+    tier: 6
+    parents: [life_co2Removal]
+    flavor: "Store, prepare and dispose for a crew over months — the unglamorous logistics of living in space."
+  - id: life_o2Generation
+    title: "Oxygen Generation Assembly"
+    discipline: LifeSupport
+    tier: 7
+    parents: [life_waterRecovery]
+    flavor: "Electrolyse recovered water for breathing oxygen — air made on board instead of carried up."
+  - id: life_longDurationHab
+    title: "Long-Duration Habitation Modules"
+    discipline: LifeSupport
+    tier: 7
+    parents: [life_galleyWaste]
+    flavor: "Pressurised modules sized and outfitted for crews to live and work for months — the rooms of a station."
+  - id: life_crewHealth
+    title: "Crew Health & Countermeasures"
+    discipline: LifeSupport
+    tier: 7
+    parents: [life_radiationShelter]
+    flavor: "Exercise, medicine and monitoring against bone loss, muscle wasting and isolation — keeping a crew flightworthy."
+  - id: life_closedLoopECLSS
+    title: "Closed-Loop Air & Water"
+    discipline: LifeSupport
+    tier: 8
+    parents: [life_o2Generation]
+    flavor: "Recover nearly all air and water in a tight physico-chemical loop — resupply mass falls toward zero."
+  - id: life_planetaryHab
+    title: "Dust-Tolerant Surface Airlocks"
+    discipline: LifeSupport
+    tier: 8
+    parents: [life_longDurationHab]
+    flavor: "Dust-tolerant airlocks and shielded habitats for living on a planetary surface, not just orbiting it."
+  - id: life_bioregenerative
+    title: "Bioregenerative Life Support"
+    discipline: LifeSupport
+    tier: 9
+    parents: [life_closedLoopECLSS]
+    flavor: "Grow plants to recycle air, water and food — a partly living loop for journeys too long to pack for."
+  - id: life_closedEcology
+    title: "Closed Ecological Life-Support (CELSS)"
+    discipline: LifeSupport
+    tier: 10
+    parents: [life_bioregenerative]
+    flavor: "A self-sustaining miniature biosphere — the life support of a colony that never resupplies."
+
+  # ======================= SYSTEMS INTEGRATION — vehicles as convergence points =======================
+  - id: experimental
+    title: "Experimental & Ground Support"
+    discipline: SystemsIntegration
+    tier: 1
+    parents: [start]
+    cost: 5
+    flavor: "Off-tree catch-all: launch-pad/ground-support hardware and uncurated or unclassified parts. Visible but off the critical path and excluded from the science balance."
+
+  # Each requires 3-4 disciplines to have matured (anyToUnlock=False). These are where the tree becomes a
+  # web, where the interesting multi-discipline gates live, and where integrated composite parts home.
+  - id: int_satelliteBus
+    title: "Uncrewed Satellite Bus"
+    discipline: SystemsIntegration
+    tier: 3
+    parents: [mic_transistor, elec_silverZinc, gnc_reactionControl]
+    anyToUnlock: false
+    flavor: "Power, control and a radio wrapped around a payload — the first thing humans ever put in orbit, and the ancestor of every uncrewed spacecraft."
+  - id: int_crewedCapsule
+    title: "Crewed Reentry Capsule"
+    discipline: SystemsIntegration
+    tier: 4
+    parents: [life_pressurizedCabin, gnc_reactionControl, cmp_ablativeTPS, elec_silverZinc]
+    anyToUnlock: false
+    flavor: "A pressure vessel, an attitude system, a heatshield and power — integrated tightly enough to carry a person up and bring them home alive."
+    parts: [ROC-ApolloCMBDB]
+  - id: int_comsatBus
+    title: "Communications Satellite Bus"
+    discipline: SystemsIntegration
+    tier: 5
+    parents: [int_satelliteBus, tel_sBandTransponder, elec_bodyMountedArrays, gnc_reactionWheels]
+    anyToUnlock: false
+    flavor: "A pointed, powered, station-kept platform whose whole reason to exist is the antenna it carries."
+  - id: int_orbitalLab
+    title: "Crewed Orbital Laboratory"
+    discipline: SystemsIntegration
+    tier: 5
+    parents: [int_crewedCapsule, life_openLoopECLSS, str_dockingProbeDrogue]
+    anyToUnlock: false
+    flavor: "Dock a habitable volume to a capsule and you have the first place to live and work in orbit for more than a day."
+  - id: int_deepSpaceProbe
+    title: "Deep-Space Probe"
+    discipline: SystemsIntegration
+    tier: 6
+    parents: [int_satelliteBus, tel_dsnRanging, nuc_rtg, mic_probeAvionics]
+    anyToUnlock: false
+    flavor: "Nuclear power, a deep-space radio and enough autonomy to run itself light-hours from help — the emissary to the outer planets."
+  - id: int_sampleReturn
+    title: "Sample-Return Vehicle"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [rob_sampleHandling, cmp_pica, gnc_autonomousRendezvous]
+    anyToUnlock: false
+    flavor: "Grab material from a surface, launch it, rendezvous and survive a high-speed entry home — several missions in one, each of which must not fail."
+  - id: int_lunarLander
+    title: "Crewed Lunar Lander"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [int_crewedCapsule, str_landingLegs, fd_deepThrottle, gnc_autonomousRendezvous]
+    anyToUnlock: false
+    flavor: "Throttle to a soft touchdown, keep a crew alive on the surface, then rendezvous in orbit with no second chances — the hardest thing anyone has flown."
+  - id: int_spaceStation
+    title: "Modular Space Station"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [str_berthingMechanism, life_waterRecovery, elec_trackingArrays, th_pumpedLoop]
+    anyToUnlock: false
+    flavor: "Assemble pressurised modules, recycle the air and water, power and cool it all — a permanent human foothold that grows one launch at a time."
+  - id: int_crewedRover
+    title: "Pressurised Crewed Rover"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [rob_roverChassis, life_pressurizedCabin, elec_lithiumIon]
+    anyToUnlock: false
+    flavor: "A habitat on wheels that extends a crew's reach from the landing site to the horizon and back."
+  - id: int_reusableBooster
+    title: "Reusable First Stage"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [aero_gridFins, str_reusableLandingGear, fd_deepThrottle, gnc_precisionLanding]
+    anyToUnlock: false
+    flavor: "Fly back, steer through the atmosphere, relight and land on a mark meters wide — the convergence that turned rockets from expendable to reusable."
+  - id: int_reusableSpaceplane
+    title: "Reusable Spaceplane"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [aero_scramjet, cmp_ceramicTiles, cryo_lh2Insulation, gnc_digitalGuidance]
+    anyToUnlock: false
+    flavor: "Wings, reusable TPS, cryogenic propulsion and digital guidance in one airframe — the runway-to-orbit dream, and its brutal integration bill."
+  - id: int_orbitalObservatory
+    title: "Great Space Observatory"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [opt_segmentedMirrors, str_largeDeployableReflectors, th_cryocooler, gnc_ringLaserGyro]
+    anyToUnlock: false
+    flavor: "A folded mirror, a rigid structure, cryogenic detectors and arcsecond pointing — an instrument the size of a bus that sees the beginning of time."
+  - id: int_marsAscentVehicle
+    title: "In-Situ Ascent Vehicle"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [res_sabatier, int_crewedCapsule, gnc_precisionLanding]
+    anyToUnlock: false
+    flavor: "Land empty, make your propellant from the atmosphere, and fly home on it — the keystone that makes a crewed Mars return close."
+  - id: int_surfaceBase
+    title: "Permanent Surface Base"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [life_planetaryHab, res_metalExtraction, nuc_braytonReactor, str_inflatableHab]
+    anyToUnlock: false
+    flavor: "Habitats, local resources, nuclear power and shielding — the difference between visiting a world and living on it."
+  - id: int_nuclearCruiser
+    title: "Nuclear Deep-Space Cruiser"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [nuc_nuclearElectric, cryo_longDuration, comp_autonomousFaultMgmt, life_closedLoopECLSS]
+    anyToUnlock: false
+    flavor: "Reactor power, years of cryo storage, self-repairing autonomy and a closed cabin — a ship that carries a crew across the solar system and keeps them alive."
+  - id: int_interstellarPrecursor
+    title: "Interstellar Precursor"
+    discipline: SystemsIntegration
+    tier: 10
+    parents: [int_nuclearCruiser, nuc_nervaImproved, comp_onboardAI]
+    anyToUnlock: false
+    flavor: "Everything, matured and pushed to its limit, aimed at the nearest star's doorstep — the endgame the whole program was quietly building toward."

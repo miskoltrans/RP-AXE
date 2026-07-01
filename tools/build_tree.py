@@ -583,12 +583,13 @@ def load_placement():
         return out
     return read("part-placement.tsv"), read("upgrade-placement.tsv")
 
-def merge_placement(nodes, by):
+def merge_placement(nodes, by, use_auto=True):
     """Fold the placement TSVs into node unlocks; inline nodes.yaml seeds win as hand overrides so each
-    part/upgrade gets exactly one home. Returns merged part->node, upgrade->node (for the game patch)."""
+    part/upgrade gets exactly one home. Returns merged part->node, upgrade->node (for the game patch).
+    use_auto=False (meta.auto_placement) => parts come ONLY from explicit `parts:` seeds (spine rebuild)."""
     hand_p = {p: n["id"] for n in nodes for p in (n.get("parts") or [])}
     hand_u = {u: n["id"] for n in nodes for u in (n.get("upgrades") or [])}
-    p2n, u2n = load_placement()
+    p2n, u2n = load_placement() if use_auto else ({}, {})
     p2n.update(hand_p); u2n.update(hand_u)          # hand seeds override the auto placement
     for n in nodes: n["parts"] = []; n["upgrades"] = []
     for part, node in sorted(p2n.items()):
@@ -615,7 +616,7 @@ def main():
     resolve(disc, meta, nodes, by)       # cost, parent defaults, lane-grid fallback positions
     routes = sugiyama_layout(disc, nodes, by)   # layered (Sugiyama) layout + dummy-routed edges
     validate_design(disc, nodes, by)
-    p2n, u2n = merge_placement(nodes, by)  # fold P2 part placement into node unlocks
+    p2n, u2n = merge_placement(nodes, by, meta.get("auto_placement", True))  # P2 auto-placement (meta-gated)
     emit_cfg(disc, nodes)
     emit_render(disc, meta, nodes, by)
     emit_html(disc, nodes, by, routes)
