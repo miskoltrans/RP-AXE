@@ -188,13 +188,40 @@ function buildLaneRoutes(){
   for(const g in seg){ const s=seg[g].sort((a,b)=>a[0]-b[0]), ends=[];
     for(const [lo,hi,key] of s){ let l=ends.findIndex(h=>h<=lo+1e-6); if(l<0){ l=ends.length; ends.push(hi); } else ends[l]=hi; lane[key]=l; }
     lanesN[g]=ends.length; }
+  // LANE-ORDER: reassign each gutter's lane x-slots by leg barycentre so tracks run monotonically
+  // top->bottom — the horizontal connectors then cross far less than first-fit order.
+  const laneRank={};
+  for(const g in seg){
+    const sum=[], cnt=[];
+    for(const [lo,hi,key] of seg[g]){ const l=lane[key]; sum[l]=(sum[l]||0)+(lo+hi)/2; cnt[l]=(cnt[l]||0)+1; }
+    const order=[...Array(lanesN[g]).keys()].sort((a,b)=>(sum[a]/cnt[a])-(sum[b]/cnt[b]));
+    const m={}; order.forEach((oldL,newL)=>m[oldL]=newL); laneRank[g]=m;
+  }
   const laneX=(g,l)=>tierX(g)+NW()+(l+1)/(lanesN[g]+1)*(TW-NW());
+  const built=[];
   for(const [e,ts,ys] of chains){
     const pts=[[tierX(ts[0])+NW(), ys[0]]];
-    for(let i=0;i<ts.length-1;i++){ const lx=laneX(ts[i], lane[e.from+'>'+e.to+'#'+i]); pts.push([lx,ys[i]],[lx,ys[i+1]]); }
+    for(let i=0;i<ts.length-1;i++){ const g=ts[i]; const lx=laneX(g, laneRank[g][lane[e.from+'>'+e.to+'#'+i]]); pts.push([lx,ys[i]],[lx,ys[i+1]]); }
     pts.push([tierX(ts[ts.length-1]), ys[ys.length-1]]);
-    e.laneGeom=roundPolyline(pts, CORNER_R, CORNER_SEGS);   // smooth the right-angle jogs
+    built.push(pts);
+    e.laneGeom=pts;   // rounded below, after horizontal-track separation
   }
+  // HORIZONTAL TRACKS: interior horizontal runs that overlap on the same row get bumped to separate
+  // tracks (offset y on BOTH endpoints; the adjoining vertical legs just change length, so the path
+  // stays orthogonal + continuous). Skip the first/last segment (node-touching — handled by the fan).
+  const rows={};
+  for(const pts of built)
+    for(let i=1;i<pts.length-2;i++)
+      if(Math.abs(pts[i][1]-pts[i+1][1])<0.5 && Math.abs(pts[i][0]-pts[i+1][0])>0.5){
+        const y=Math.round(pts[i][1]); (rows[y]=rows[y]||[]).push([Math.min(pts[i][0],pts[i+1][0]), Math.max(pts[i][0],pts[i+1][0]), pts, i]);
+      }
+  const HGAP=6;
+  for(const y in rows){ const ends=[];
+    for(const s of rows[y].sort((a,b)=>a[0]-b[0])){
+      let tk=ends.findIndex(x=>x<=s[0]+1e-6); if(tk<0){ tk=ends.length; ends.push(s[1]); } else ends[tk]=s[1];
+      if(tk>0){ const off=tk*HGAP; s[2][s[3]][1]+=off; s[2][s[3]+1][1]+=off; }
+    } }
+  for(const [e] of chains) e.laneGeom=roundPolyline(e.laneGeom, CORNER_R, CORNER_SEGS);   // smooth the jogs
 }
 
 function buildGeometry(){
