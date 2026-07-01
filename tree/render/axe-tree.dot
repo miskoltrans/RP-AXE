@@ -38,8 +38,8 @@ digraph AXE {
   "nuc_rtgAdvanced" [label="GPHS Multi-Mission RTGs\nNuclearEngineering T5 · 1500",fillcolor="#90be6d",fontcolor="#111111"];
   "str_deployableBooms" [label="Stored-Strain Deployable Booms\nStructuresMechanisms T3 · 400",fillcolor="#adb5bd",fontcolor="#111111"];
   "int_firstOrbit" [label="First Orbital Capability\nSystemsIntegration T3 · 400",fillcolor="#e8e8e8",fontcolor="#111111"];
-  "hire_JPL" [label="Charter a Deep-Space Probe Lab (JPL)\nSystemsIntegration T4 · 900",fillcolor="#e8e8e8",fontcolor="#111111"];
-  "hire_OKB" [label="Charter a Design Bureau (OKB)\nSystemsIntegration T4 · 900",fillcolor="#e8e8e8",fontcolor="#111111"];
+  "hire_JPL" [label="Charter a Deep-Space Probe Lab (JPL)\nSystemsIntegration T0 · 0",fillcolor="#e8e8e8",fontcolor="#111111"];
+  "hire_OKB" [label="Charter a Design Bureau (OKB)\nSystemsIntegration T0 · 0",fillcolor="#e8e8e8",fontcolor="#111111"];
   "xplaneStart" [label="Cambered Airfoil & Three-Axis Control\nAerodynamics T1 · 20",fillcolor="#48cae4",fontcolor="#111111"];
   "met_turbojet" [label="Gas-Turbine Propulsion & Turbine Superalloys\nMetallurgy T2 · 90",fillcolor="#8d99ae",fontcolor="#111111"];
   "aero_transonicFlight" [label="Transonic Area-Rule Shaping\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
@@ -47,11 +47,11 @@ digraph AXE {
   "aero_rocketplane" [label="Rocket-Powered Research Aircraft\nAerodynamics T2 · 90",fillcolor="#48cae4",fontcolor="#111111"];
   "life_pressurizedCabin" [label="Cabin Pressurization\nLifeSupport T3 · 400",fillcolor="#f72585",fontcolor="#111111"];
   "int_crewedSuborbital" [label="Crewed Suborbital Flight\nSystemsIntegration T4 · 900",fillcolor="#e8e8e8",fontcolor="#111111"];
-  { rank=same; "start" "parking" }
+  { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "rocketryStart" "xplaneStart" }
   { rank=same; "fd_turbopumpLiquid" "pc_solidGrain" "str_stageSeparation" "gnc_rateGyros" "tel_pcmTelemetry" "mic_vacuumTubes" "met_weldedSteel" "elec_silverZinc" "th_passiveRadiators" "met_turbojet" "aero_rocketplane" }
   { rank=same; "pc_kerosene" "fd_gasGenerator" "cryo_earlyHydrolox" "elec_siliconPV" "mic_transistor" "tel_helicalDirectional" "gnc_reactionControl" "gnc_inertialNav" "opt_filmCameras" "str_deployableBooms" "int_firstOrbit" "aero_transonicFlight" "life_pressurizedCabin" }
-  { rank=same; "elec_bodyMountedArrays" "mic_integratedCircuit" "tel_cassegrainHGA" "opt_tvImaging" "nuc_rtg" "hire_JPL" "hire_OKB" "aero_supersonicCruise" "int_crewedSuborbital" }
+  { rank=same; "elec_bodyMountedArrays" "mic_integratedCircuit" "tel_cassegrainHGA" "opt_tvImaging" "nuc_rtg" "aero_supersonicCruise" "int_crewedSuborbital" }
   { rank=same; "mic_radHardening" "tel_dsnRanging" "gnc_digitalGuidance" "opt_precisionOptics" "nuc_rtgAdvanced" }
   { rank=same; "tel_xBandDownlink" "gnc_opticalNav" "opt_spectrometry" }
   "start" -> "rocketryStart" [style=solid];
@@ -94,8 +94,6 @@ digraph AXE {
   "gnc_rateGyros" -> "int_firstOrbit" [style=solid];
   "tel_pcmTelemetry" -> "int_firstOrbit" [style=solid];
   "mic_vacuumTubes" -> "int_firstOrbit" [style=solid];
-  "int_firstOrbit" -> "hire_JPL" [style=solid];
-  "int_firstOrbit" -> "hire_OKB" [style=solid];
   "start" -> "xplaneStart" [style=solid];
   "xplaneStart" -> "met_turbojet" [style=solid];
   "met_turbojet" -> "aero_transonicFlight" [style=solid];

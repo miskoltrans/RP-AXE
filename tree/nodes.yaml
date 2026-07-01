@@ -99,7 +99,8 @@ nodes:
     discipline: FluidDynamics
     tier: 3
     parents: [fd_turbopumpLiquid]
-    flavor: "Burn a little propellant in a side chamber to spin the turbopump, then dump the turbine exhaust overboard. Simple, proven, slightly wasteful — the pump-fed workhorse cycle that puts real mass in orbit."
+    flavor: "Burn a little propellant in a side chamber to spin the turbopump, then dump the turbine exhaust overboard. Simple, proven, slightly wasteful — the pump-fed workhorse cycle that puts real mass in orbit. The R-7, Atlas and Thor engines that reach it."
+    parts: [ROE-RD107, ROE-RD108, ROE-LR79, ROE-LR89_2, ROE-LR105_2]
   - id: cryo_earlyHydrolox
     title: "Early Hydrogen/Oxygen Upper Stages"
     discipline: Cryogenics
@@ -160,12 +161,14 @@ nodes:
     tier: 3
     parents: [elec_silverZinc]
     flavor: "Doped silicon turns sunlight into watts indefinitely — the breakthrough that freed satellites from their batteries. Vanguard 1 flew the first cells."
+    parts: [ROS-StaticSolarPanel, RO-rangerSolarPanel]
   - id: elec_bodyMountedArrays
     title: "Body-Mounted & Deployable Arrays"
     discipline: ElectricalPower
     tier: 4
     parents: [elec_siliconPV]
     flavor: "Tile a spacecraft's skin or fold out fixed panels for hundreds of watts — the workhorse power source of the satellite age."
+    parts: [ROS-FoldingSolarPanel, ROS-HingedSolarPanel, ROS-BlanketSolarPanel]
   # ---- Microelectronics (extends mic_vacuumTubes) ----
   - id: mic_transistor
     title: "Discrete Transistors"
@@ -276,12 +279,14 @@ nodes:
     tier: 4
     parents: [elec_siliconPV]
     flavor: "A plutonium pellet's decay heat across a thermocouple gives steady watts for decades, anywhere, sunlight or not — the power of the outer planets, where the sun is a bright star."
+    parts: [RO-SNAP-3-RTGPo210, RO-SNAP-9-RTG, RO-SNAP-19-RTG]
   - id: nuc_rtgAdvanced
     title: "GPHS Multi-Mission RTGs"
     discipline: NuclearEngineering
     tier: 5
     parents: [nuc_rtg]
     flavor: "Modular general-purpose heat-source blocks make a rugged, standardised RTG — the quiet, reliable heartbeat of flagship deep-space probes from Voyager to Cassini."
+    parts: [RO-MMRTG]
   # ---- Structures & Mechanisms (extends str_stageSeparation) ----
   - id: str_deployableBooms
     title: "Stored-Strain Deployable Booms"
@@ -307,15 +312,15 @@ nodes:
   - id: hire_JPL
     title: "Charter a Deep-Space Probe Lab (JPL)"
     discipline: SystemsIntegration
-    tier: 4
-    parents: [int_firstOrbit]
+    tier: 0
+    parents: []
     hide_empty: true
     flavor: "Stand up a jet-propulsion laboratory — a home for the integrated robotic spacecraft that no single discipline builds. Vanguard, Mariner, Voyager: their blueprints are chartered here, but each flies only once you have independently mastered the scattered technologies it needs. (US-probe pack only.)"
   - id: hire_OKB
     title: "Charter a Design Bureau (OKB)"
     discipline: SystemsIntegration
-    tier: 4
-    parents: [int_firstOrbit]
+    tier: 0
+    parents: []
     hide_empty: true
     flavor: "Establish an experimental design bureau — the home of the integrated deep-space craft. Sputnik, Luna, Venera: their blueprints are chartered here, each gated by the underlying technologies you must first master across the tree. (Soviet-probe pack only.)"
 

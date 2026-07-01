@@ -214,7 +214,8 @@ def validate_design(disc, nodes, by):
                 warns.append(f"redundant (transitively-implied) edge: {p} -> {n['id']} "
                              f"(reaches it via another parent)")
     for r in roots:
-        if r not in ("start", "parking"): warns.append(f"extra root (no parents besides start): {r}")
+        if r not in ("start", "parking") and not r.startswith("hire_"):
+            warns.append(f"extra root (no parents besides start): {r}")
     print(f"design checks: {'clean' if not warns else str(len(warns))+' warning(s)'}")
     for w in warns: print(f"   ! {w}")
     return warns
