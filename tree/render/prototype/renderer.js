@@ -144,12 +144,13 @@ function layoutBands(){
   const discs=Object.keys(D.disciplines).sort((a,b)=>(D.disciplines[a].order||99)-(D.disciplines[b].order||99));
   const med=medianCost();
   const byDisc={}; for(const n of D.nodes)(byDisc[n.discipline]=byDisc[n.discipline]||[]).push(n);
-  const BANDH=140*opt.spacingF, SUBH=30*opt.spacingF;
+  const TH=Math.max(NODE_SQ,NODE_H);        // size spacing to the tile so tiles never overlap (either mode)
+  const SUBH=TH+26*opt.spacingF, BANDH=TH+96*opt.spacingF;   // scale the GAP, not the tile (Compact stays clear)
   const bandCy={}; let acc=0;
   for(const d of discs){ const ns=byDisc[d]||[]; const perTier={};
     for(const n of ns) perTier[n.tier]=(perTier[n.tier]||0)+1;
     let maxStack=1; for(const k in perTier) if(perTier[k]>maxStack) maxStack=perTier[k];
-    let h=Math.max(BANDH, maxStack*SUBH+50*opt.spacingF);
+    let h=Math.max(BANDH, maxStack*SUBH+40*opt.spacingF);
     if(opt.diffspread && ns.length){ const mc=ns.reduce((s,n)=>s+(n.cost||0),0)/ns.length; h*=(0.7+0.9*Math.min(2,mc/med)); }
     bandCy[d]=acc+h/2; acc+=h;
   }
