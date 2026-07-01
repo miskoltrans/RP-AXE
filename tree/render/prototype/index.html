@@ -31,10 +31,20 @@
   .pt{font-size:14px}.pn{font-size:12px;color:var(--mut);font-family:Consolas,monospace}.mod{color:#7aa2c4}
   .empty{color:#777;font-style:italic;padding:6px 0}
   #foot{position:absolute;bottom:8px;left:8px;color:var(--mut);font-size:11px;background:#000a;padding:3px 8px;border-radius:5px}
+  #hud{position:absolute;right:8px;bottom:8px;background:#000b;padding:5px 11px;border-radius:6px;font-size:12px;color:#cdd}
+  #hud b{color:#fff;font-size:13px}
+  .acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0 14px}
+  .acts button{background:#2c333b;border:1px solid #3f4750;color:#e8e8e8;border-radius:4px;padding:4px 10px;cursor:pointer;font-size:12px}
+  .acts button:hover{background:#39424c}
+  .acts button.go{background:#14532d;border-color:#1d7a41}
+  .acts button.go:hover{background:#1a6638}
+  .st{font-size:11px;color:#9aa;text-transform:capitalize;margin-left:2px}
 </style></head><body>
 <div id="stage">
   <canvas id="cv"></canvas>
   <div id="bar">
+    <label><input type="checkbox" id="c_prog">Research state</label>
+    <span class="sep"></span>
     <label><input type="checkbox" id="c_fan">Fan endpoints</label>
     <label><input type="checkbox" id="c_arr">Arrowheads</label>
     <label><input type="checkbox" id="c_disc">Colour edges by discipline</label>
@@ -45,10 +55,12 @@
     <span class="sep"></span>
     <button id="zo">−</button><span id="zl">100%</span><button id="zi">+</button>
     <button id="b_fit">Fit</button>
+    <button id="b_reset">Reset</button>
     <span class="sep"></span>
     <input type="text" id="q" placeholder="find node / part…" autocomplete="off">
   </div>
-  <div id="foot">drag = pan · wheel = zoom · hover = trace lineage · click = pin</div>
+  <div id="hud"></div>
+  <div id="foot">drag pan · wheel zoom · hover trace lineage · click pin · double-click research (locked = complete path) · r/u keys</div>
 </div>
 <div id="panel"></div>
 <script src="tree-data.js"></script>

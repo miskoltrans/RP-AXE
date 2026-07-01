@@ -165,7 +165,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1764
+    1782
    ]
   },
   {
@@ -180,7 +180,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    711
+    871
    ]
   },
   {
@@ -221,7 +221,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1434
+    1469
    ]
   },
   {
@@ -242,7 +242,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1501
+    1519
    ]
   },
   {
@@ -273,7 +273,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1349
+    1367
    ]
   },
   {
@@ -299,7 +299,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1142
+    1178
    ]
   },
   {
@@ -309,12 +309,38 @@ window.TREE = {
    "tier": 3,
    "cost": 400,
    "anyToUnlock": false,
-   "flavor": "Burn a little propellant in a side chamber to spin the turbopump, then dump the turbine exhaust overboard. Simple, proven, slightly wasteful — the pump-fed workhorse cycle that puts real mass in orbit.",
-   "parts": [],
+   "flavor": "Burn a little propellant in a side chamber to spin the turbopump, then dump the turbine exhaust overboard. Simple, proven, slightly wasteful — the pump-fed workhorse cycle that puts real mass in orbit. The R-7, Atlas and Thor engines that reach it.",
+   "parts": [
+    {
+     "name": "ROE-LR105_2",
+     "mod": "ROEngines",
+     "title": "LR105"
+    },
+    {
+     "name": "ROE-LR79",
+     "mod": "ROEngines",
+     "title": "LR79"
+    },
+    {
+     "name": "ROE-LR89_2",
+     "mod": "ROEngines",
+     "title": "LR43/LR89"
+    },
+    {
+     "name": "ROE-RD107",
+     "mod": "ROEngines",
+     "title": "RD-107/117"
+    },
+    {
+     "name": "ROE-RD108",
+     "mod": "ROEngines",
+     "title": "RD-108/118"
+    }
+   ],
    "upgrades": [],
    "pos": [
     -1278,
-    1222
+    1258
    ]
   },
   {
@@ -335,7 +361,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1062
+    1098
    ]
   },
   {
@@ -361,7 +387,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1661
+    1679
    ]
   },
   {
@@ -376,7 +402,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1821
+    1839
    ]
   },
   {
@@ -391,7 +417,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1901
+    1919
    ]
   },
   {
@@ -406,7 +432,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1741
+    1759
    ]
   },
   {
@@ -421,7 +447,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1269
+    1287
    ]
   },
   {
@@ -436,7 +462,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1581
+    1599
    ]
   },
   {
@@ -447,11 +473,22 @@ window.TREE = {
    "cost": 400,
    "anyToUnlock": false,
    "flavor": "Doped silicon turns sunlight into watts indefinitely — the breakthrough that freed satellites from their batteries. Vanguard 1 flew the first cells.",
-   "parts": [],
+   "parts": [
+    {
+     "name": "RO-rangerSolarPanel",
+     "mod": "RealismOverhaul",
+     "title": "Ranger Solar Panel"
+    },
+    {
+     "name": "ROS-StaticSolarPanel",
+     "mod": "ROSolar",
+     "title": "Static Solar Panel"
+    }
+   ],
    "upgrades": [],
    "pos": [
     -1278,
-    1302
+    1338
    ]
   },
   {
@@ -462,11 +499,27 @@ window.TREE = {
    "cost": 900,
    "anyToUnlock": false,
    "flavor": "Tile a spacecraft's skin or fold out fixed panels for hundreds of watts — the workhorse power source of the satellite age.",
-   "parts": [],
+   "parts": [
+    {
+     "name": "ROS-BlanketSolarPanel",
+     "mod": "ROSolar",
+     "title": "Blanket Solar Panel"
+    },
+    {
+     "name": "ROS-FoldingSolarPanel",
+     "mod": "ROSolar",
+     "title": "Folding Solar Panel"
+    },
+    {
+     "name": "ROS-HingedSolarPanel",
+     "mod": "ROSolar",
+     "title": "Hinged Solar Panel"
+    }
+   ],
    "upgrades": [],
    "pos": [
     -848,
-    1413
+    1431
    ]
   },
   {
@@ -481,7 +534,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1462
+    1498
    ]
   },
   {
@@ -496,7 +549,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1576
+    1628
    ]
   },
   {
@@ -511,7 +564,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1374
+    1410
    ]
   },
   {
@@ -526,7 +579,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1862
+    1898
    ]
   },
   {
@@ -541,7 +594,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1943
+    1960
    ]
   },
   {
@@ -556,7 +609,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1722
+    1757
    ]
   },
   {
@@ -571,7 +624,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     12,
-    1871
+    1888
    ]
   },
   {
@@ -586,7 +639,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1782
+    1818
    ]
   },
   {
@@ -601,7 +654,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1702
+    1738
    ]
   },
   {
@@ -616,7 +669,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1534
+    1570
    ]
   },
   {
@@ -631,7 +684,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     12,
-    1678
+    1694
    ]
   },
   {
@@ -646,7 +699,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1542
+    1578
    ]
   },
   {
@@ -661,7 +714,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1648
+    1713
    ]
   },
   {
@@ -676,7 +729,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1454
+    1490
    ]
   },
   {
@@ -691,7 +744,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     12,
-    1598
+    1614
    ]
   },
   {
@@ -706,7 +759,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1429
+    1447
    ]
   },
   {
@@ -717,11 +770,27 @@ window.TREE = {
    "cost": 900,
    "anyToUnlock": false,
    "flavor": "A plutonium pellet's decay heat across a thermocouple gives steady watts for decades, anywhere, sunlight or not — the power of the outer planets, where the sun is a bright star.",
-   "parts": [],
+   "parts": [
+    {
+     "name": "RO-SNAP-19-RTG",
+     "mod": "VenStockRevamp",
+     "title": "SNAP-19 Series RTG"
+    },
+    {
+     "name": "RO-SNAP-3-RTGPo210",
+     "mod": "VenStockRevamp",
+     "title": "SNAP-3A Series RTG (Po210)"
+    },
+    {
+     "name": "RO-SNAP-9-RTG",
+     "mod": "VenStockRevamp",
+     "title": "SNAP-9 Series RTG"
+    }
+   ],
    "upgrades": [],
    "pos": [
     -848,
-    1493
+    1511
    ]
   },
   {
@@ -732,11 +801,17 @@ window.TREE = {
    "cost": 1500,
    "anyToUnlock": false,
    "flavor": "Modular general-purpose heat-source blocks make a rugged, standardised RTG — the quiet, reliable heartbeat of flagship deep-space probes from Voyager to Cassini.",
-   "parts": [],
+   "parts": [
+    {
+     "name": "RO-MMRTG",
+     "mod": "Squad",
+     "title": "Multi-Mission RTG"
+    }
+   ],
    "upgrades": [],
    "pos": [
     -418,
-    1294
+    1330
    ]
   },
   {
@@ -751,7 +826,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1382
+    1418
    ]
   },
   {
@@ -766,15 +841,15 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1622
+    1658
    ]
   },
   {
    "id": "hire_JPL",
    "title": "Charter a Deep-Space Probe Lab (JPL)",
    "discipline": "SystemsIntegration",
-   "tier": 4,
-   "cost": 900,
+   "tier": 0,
+   "cost": 0,
    "anyToUnlock": false,
    "flavor": "Stand up a jet-propulsion laboratory — a home for the integrated robotic spacecraft that no single discipline builds. Vanguard, Mariner, Voyager: their blueprints are chartered here, but each flies only once you have independently mastered the scattered technologies it needs. (US-probe pack only.)",
    "parts": [
@@ -1141,16 +1216,16 @@ window.TREE = {
    ],
    "upgrades": [],
    "pos": [
-    -848,
-    1728
+    -2568,
+    711
    ]
   },
   {
    "id": "hire_OKB",
    "title": "Charter a Design Bureau (OKB)",
    "discipline": "SystemsIntegration",
-   "tier": 4,
-   "cost": 900,
+   "tier": 0,
+   "cost": 0,
    "anyToUnlock": false,
    "flavor": "Establish an experimental design bureau — the home of the integrated deep-space craft. Sputnik, Luna, Venera: their blueprints are chartered here, each gated by the underlying technologies you must first master across the tree. (Soviet-probe pack only.)",
    "parts": [
@@ -1272,8 +1347,8 @@ window.TREE = {
    ],
    "upgrades": [],
    "pos": [
-    -848,
-    1808
+    -2568,
+    791
    ]
   },
   {
@@ -1334,7 +1409,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1788
+    1823
    ]
   },
   {
@@ -1360,7 +1435,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    2061
+    2079
    ]
   },
   {
@@ -1386,7 +1461,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1934
+    1970
    ]
   },
   {
@@ -1417,7 +1492,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    2058
+    2076
    ]
   },
   {
@@ -1453,7 +1528,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1981
+    1999
    ]
   },
   {
@@ -1468,7 +1543,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    2014
+    2050
    ]
   },
   {
@@ -1494,7 +1569,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    2138
+    2156
    ]
   }
  ],
@@ -1506,11 +1581,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1764
+     1782
     ],
     [
      -2138,
-     1434
+     1469
     ]
    ]
   },
@@ -1521,11 +1596,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1501
+     1519
     ]
    ]
   },
@@ -1536,11 +1611,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1349
+     1367
     ]
    ]
   },
@@ -1551,11 +1626,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1501
+     1519
     ],
     [
      -1278,
-     1142
+     1178
     ]
    ]
   },
@@ -1566,11 +1641,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1501
+     1519
     ],
     [
      -1278,
-     1222
+     1258
     ]
    ]
   },
@@ -1581,15 +1656,15 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1465
+     1483
     ],
     [
      -1278,
-     1062
+     1098
     ]
    ]
   },
@@ -1600,11 +1675,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1501
+     1519
     ],
     [
      -1278,
-     1062
+     1098
     ]
    ]
   },
@@ -1615,11 +1690,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1661
+     1679
     ]
    ]
   },
@@ -1630,11 +1705,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1821
+     1839
     ]
    ]
   },
@@ -1645,11 +1720,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1901
+     1919
     ]
    ]
   },
@@ -1660,11 +1735,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1741
+     1759
     ]
    ]
   },
@@ -1675,11 +1750,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1269
+     1287
     ]
    ]
   },
@@ -1690,11 +1765,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1581
+     1599
     ]
    ]
   },
@@ -1705,11 +1780,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1581
+     1599
     ],
     [
      -1278,
-     1302
+     1338
     ]
    ]
   },
@@ -1720,11 +1795,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1302
+     1338
     ],
     [
      -848,
-     1413
+     1431
     ]
    ]
   },
@@ -1735,11 +1810,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1741
+     1759
     ],
     [
      -1278,
-     1462
+     1498
     ]
    ]
   },
@@ -1750,11 +1825,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1462
+     1498
     ],
     [
      -848,
-     1576
+     1628
     ]
    ]
   },
@@ -1765,11 +1840,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1576
+     1628
     ],
     [
      -418,
-     1374
+     1410
     ]
    ]
   },
@@ -1780,11 +1855,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1901
+     1919
     ],
     [
      -1278,
-     1862
+     1898
     ]
    ]
   },
@@ -1795,11 +1870,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1862
+     1898
     ],
     [
      -848,
-     1943
+     1960
     ]
    ]
   },
@@ -1810,11 +1885,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1943
+     1960
     ],
     [
      -418,
-     1722
+     1757
     ]
    ]
   },
@@ -1825,11 +1900,11 @@ window.TREE = {
    "waypoints": [
     [
      -418,
-     1722
+     1757
     ],
     [
      12,
-     1871
+     1888
     ]
    ]
   },
@@ -1840,11 +1915,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1821
+     1839
     ],
     [
      -1278,
-     1782
+     1818
     ]
    ]
   },
@@ -1855,11 +1930,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1821
+     1839
     ],
     [
      -1278,
-     1702
+     1738
     ]
    ]
   },
@@ -1870,15 +1945,15 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1702
+     1738
     ],
     [
      -848,
-     1844
+     1789
     ],
     [
      -418,
-     1534
+     1570
     ]
    ]
   },
@@ -1889,11 +1964,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1576
+     1628
     ],
     [
      -418,
-     1534
+     1570
     ]
    ]
   },
@@ -1904,19 +1979,19 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1702
+     1738
     ],
     [
      -848,
-     1854
+     1807
     ],
     [
      -418,
-     1578
+     1606
     ],
     [
      12,
-     1678
+     1694
     ]
    ]
   },
@@ -1927,11 +2002,11 @@ window.TREE = {
    "waypoints": [
     [
      -418,
-     1454
+     1490
     ],
     [
      12,
-     1678
+     1694
     ]
    ]
   },
@@ -1942,11 +2017,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1741
+     1759
     ],
     [
      -1278,
-     1542
+     1578
     ]
    ]
   },
@@ -1957,11 +2032,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1542
+     1578
     ],
     [
      -848,
-     1648
+     1713
     ]
    ]
   },
@@ -1972,15 +2047,15 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1542
+     1578
     ],
     [
      -848,
-     1612
+     1669
     ],
     [
      -418,
-     1454
+     1490
     ]
    ]
   },
@@ -1991,11 +2066,11 @@ window.TREE = {
    "waypoints": [
     [
      -418,
-     1454
+     1490
     ],
     [
      12,
-     1598
+     1614
     ]
    ]
   },
@@ -2006,11 +2081,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1429
+     1447
     ]
    ]
   },
@@ -2021,11 +2096,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1302
+     1338
     ],
     [
      -848,
-     1493
+     1511
     ]
    ]
   },
@@ -2036,11 +2111,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1493
+     1511
     ],
     [
      -418,
-     1294
+     1330
     ]
    ]
   },
@@ -2051,11 +2126,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1661
+     1679
     ],
     [
      -1278,
-     1382
+     1418
     ]
    ]
   },
@@ -2066,11 +2141,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1661
+     1679
     ],
     [
      -1278,
-     1622
+     1658
     ]
    ]
   },
@@ -2081,11 +2156,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1821
+     1839
     ],
     [
      -1278,
-     1622
+     1658
     ]
    ]
   },
@@ -2096,11 +2171,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1901
+     1919
     ],
     [
      -1278,
-     1622
+     1658
     ]
    ]
   },
@@ -2111,41 +2186,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1741
+     1759
     ],
     [
      -1278,
-     1622
-    ]
-   ]
-  },
-  {
-   "from": "int_firstOrbit",
-   "to": "hire_JPL",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1278,
-     1622
-    ],
-    [
-     -848,
-     1728
-    ]
-   ]
-  },
-  {
-   "from": "int_firstOrbit",
-   "to": "hire_OKB",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1278,
-     1622
-    ],
-    [
-     -848,
-     1808
+     1658
     ]
    ]
   },
@@ -2156,11 +2201,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1764
+     1782
     ],
     [
      -2138,
-     1788
+     1823
     ]
    ]
   },
@@ -2171,11 +2216,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1788
+     1823
     ],
     [
      -1708,
-     2061
+     2079
     ]
    ]
   },
@@ -2186,11 +2231,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     2061
+     2079
     ],
     [
      -1278,
-     1934
+     1970
     ]
    ]
   },
@@ -2201,11 +2246,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1934
+     1970
     ],
     [
      -848,
-     2058
+     2076
     ]
    ]
   },
@@ -2216,11 +2261,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1788
+     1823
     ],
     [
      -1708,
-     1981
+     1999
     ]
    ]
   },
@@ -2231,11 +2276,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1434
+     1469
     ],
     [
      -1708,
-     1981
+     1999
     ]
    ]
   },
@@ -2246,15 +2291,15 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1788
+     1823
     ],
     [
      -1708,
-     2097
+     2115
     ],
     [
      -1278,
-     2014
+     2050
     ]
    ]
   },
@@ -2265,15 +2310,15 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1981
+     1999
     ],
     [
      -1278,
-     1898
+     1934
     ],
     [
      -848,
-     2138
+     2156
     ]
    ]
   },
@@ -2284,11 +2329,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     2014
+     2050
     ],
     [
      -848,
-     2138
+     2156
     ]
    ]
   }
