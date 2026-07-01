@@ -141,6 +141,21 @@ function chamfer(inP, cor, outP, r, segs){
   return pts;
 }
 
+// round every interior corner of an orthogonal polyline (reuses stock chamfer), clamping the radius
+// to the shorter adjacent segment so tight lane jogs don't self-overlap. Keeps it a flat point list.
+function roundPolyline(pts, r, segs){
+  if(pts.length<3) return pts;
+  const out=[pts[0]];
+  for(let i=1;i<pts.length-1;i++){
+    const a=pts[i-1], v=pts[i], b=pts[i+1];
+    const rr=Math.min(r, 0.45*Math.min(hyp(sub(a,v)), hyp(sub(b,v))));
+    if(rr<0.5){ out.push(v); continue; }
+    for(const p of chamfer(a,v,b,rr,segs)) out.push(p);
+  }
+  out.push(pts[pts.length-1]);
+  return out;
+}
+
 // kspStock routing: RIGHT anchor of parent -> LEFT anchor of child (the stock L/R->L/R case):
 // straight if same row, else an S with two rounded corners at the mid-X split.
 function routeEdge(e){
@@ -162,7 +177,9 @@ function buildLaneRoutes(){
   const seg={}, chains=[];
   for(const e of edges){
     if(!e.waypoints || e.waypoints.length<2){ e.laneGeom=null; continue; }
-    const ts=e.waypoints.map(p=>tierOf(p[0])), ys=e.waypoints.map(p=>p[1]+NH()/2);
+    // endpoints use the fan slot (spread along the node side); interior dummies stay centred
+    const ts=e.waypoints.map(p=>tierOf(p[0]));
+    const ys=e.waypoints.map((p,i)=>p[1]+(i===0?e._tF:(i===e.waypoints.length-1?e._tT:0.5))*NH());
     chains.push([e,ts,ys]);
     for(let i=0;i<ts.length-1;i++)
       (seg[ts[i]]=seg[ts[i]]||[]).push([Math.min(ys[i],ys[i+1]),Math.max(ys[i],ys[i+1]),e.from+'>'+e.to+'#'+i]);
@@ -176,7 +193,7 @@ function buildLaneRoutes(){
     const pts=[[tierX(ts[0])+NW(), ys[0]]];
     for(let i=0;i<ts.length-1;i++){ const lx=laneX(ts[i], lane[e.from+'>'+e.to+'#'+i]); pts.push([lx,ys[i]],[lx,ys[i+1]]); }
     pts.push([tierX(ts[ts.length-1]), ys[ys.length-1]]);
-    e.laneGeom=pts;
+    e.laneGeom=roundPolyline(pts, CORNER_R, CORNER_SEGS);   // smooth the right-angle jogs
   }
 }
 
