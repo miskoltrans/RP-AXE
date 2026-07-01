@@ -143,8 +143,27 @@ nodes:
     tier: 3
     parents: [str_stageSeparation, gnc_earlyGuidance, tel_pcmTelemetry, mic_probeAvionics]
     anyToUnlock: false               # CONVERGENCE: staging + guidance + telemetry + a probe brain (propulsion is your soft choice, not a gate)
-    flavor: "Staging, guidance, telemetry and a probe brain converge — and whatever engine you chose to build now has somewhere to go. The first artificial moon. Beep. Beep. Beep."
-    parts: [sputnik1, sputnik2, vanguard-1, explorer_6]
+    flavor: "Staging, guidance, telemetry and a probe brain converge — and whatever engine you chose to build now has somewhere to go. You can place your own satellite in orbit. The first artificial moon. (The iconic historical satellites are blueprints in the probe subtree — build your own, or chase theirs.)"
+
+  # ================================= PROBE SUBTREE (optional; off the main tree) =================================
+  # Integrated deep-space probes don't fit a single discipline — each is a bundle of scattered technologies.
+  # They live in a charter subtree, gated (later) by a per-part prerequisite-tech CHECKLIST = the requirements
+  # engine (deferred to a plugin). For now the packs' parts route here via build_tree.route_probe_mods();
+  # hide_empty hides a charter when its pack isn't installed. Requirements seeded in manifest/probe-requirements.tsv.
+  - id: hire_JPL
+    title: "Charter a Deep-Space Probe Lab (JPL)"
+    discipline: SystemsIntegration
+    tier: 4
+    parents: [int_firstOrbit]
+    hide_empty: true
+    flavor: "Stand up a jet-propulsion laboratory — a home for the integrated robotic spacecraft that no single discipline builds. Vanguard, Mariner, Voyager: their blueprints are chartered here, but each flies only once you have independently mastered the scattered technologies it needs. (US-probe pack only.)"
+  - id: hire_OKB
+    title: "Charter a Design Bureau (OKB)"
+    discipline: SystemsIntegration
+    tier: 4
+    parents: [int_firstOrbit]
+    hide_empty: true
+    flavor: "Establish an experimental design bureau — the home of the integrated deep-space craft. Sputnik, Luna, Venera: their blueprints are chartered here, each gated by the underlying technologies you must first master across the tree. (Soviet-probe pack only.)"
 
   # =========================================== AVIATION TRACK ===========================================
   # Unified by the airframe, not the engine. The root is aerodynamics + a lifting wing + control surfaces

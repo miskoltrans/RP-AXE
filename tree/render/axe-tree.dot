@@ -15,6 +15,8 @@ digraph AXE {
   "tel_pcmTelemetry" [label="PCM/FM Telemetry Downlink\nTelecommunications T2 · 90",fillcolor="#4361ee",fontcolor="#111111"];
   "mic_probeAvionics" [label="Vacuum-Tube Sequencers & Sensors\nMicroelectronics T2 · 90",fillcolor="#cdb4db",fontcolor="#111111"];
   "int_firstOrbit" [label="First Orbital Capability\nSystemsIntegration T3 · 400",fillcolor="#e8e8e8",fontcolor="#111111"];
+  "hire_JPL" [label="Charter a Deep-Space Probe Lab (JPL)\nSystemsIntegration T4 · 900",fillcolor="#e8e8e8",fontcolor="#111111"];
+  "hire_OKB" [label="Charter a Design Bureau (OKB)\nSystemsIntegration T4 · 900",fillcolor="#e8e8e8",fontcolor="#111111"];
   "xplaneStart" [label="Cambered Airfoil & Three-Axis Control\nAerodynamics T1 · 20",fillcolor="#48cae4",fontcolor="#111111"];
   "met_turbojet" [label="Gas-Turbine Propulsion & Turbine Superalloys\nMetallurgy T2 · 90",fillcolor="#8d99ae",fontcolor="#111111"];
   "aero_transonicFlight" [label="Transonic Area-Rule Shaping\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
@@ -26,7 +28,7 @@ digraph AXE {
   { rank=same; "rocketryStart" "xplaneStart" }
   { rank=same; "fd_turbopumpLiquid" "pc_solidGrain" "str_stageSeparation" "gnc_earlyGuidance" "tel_pcmTelemetry" "mic_probeAvionics" "met_turbojet" "aero_rocketplane" }
   { rank=same; "pc_kerosene" "fd_gasGenerator" "cryo_earlyHydrolox" "int_firstOrbit" "aero_transonicFlight" "life_pressurizedCabin" }
-  { rank=same; "aero_supersonicCruise" "int_crewedSuborbital" }
+  { rank=same; "hire_JPL" "hire_OKB" "aero_supersonicCruise" "int_crewedSuborbital" }
   "start" -> "rocketryStart" [style=solid];
   "rocketryStart" -> "fd_turbopumpLiquid" [style=solid];
   "rocketryStart" -> "pc_solidGrain" [style=solid];
@@ -42,6 +44,8 @@ digraph AXE {
   "gnc_earlyGuidance" -> "int_firstOrbit" [style=solid];
   "tel_pcmTelemetry" -> "int_firstOrbit" [style=solid];
   "mic_probeAvionics" -> "int_firstOrbit" [style=solid];
+  "int_firstOrbit" -> "hire_JPL" [style=solid];
+  "int_firstOrbit" -> "hire_OKB" [style=solid];
   "start" -> "xplaneStart" [style=solid];
   "xplaneStart" -> "met_turbojet" [style=solid];
   "met_turbojet" -> "aero_transonicFlight" [style=solid];

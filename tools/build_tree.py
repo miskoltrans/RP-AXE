@@ -227,7 +227,7 @@ def node_block(disc, n, indent="\t"):
     a(f"{indent}\ttitle = {n['title']}")
     a(f"{indent}\tdescription = {n.get('flavor','').strip()}")
     a(f"{indent}\tcost = {n['cost']}")
-    a(f"{indent}\thideEmpty = False")
+    a(f"{indent}\thideEmpty = {'True' if n.get('hide_empty') else 'False'}")
     a(f"{indent}\tnodeName = node_{n['id']}")
     a(f"{indent}\tanyToUnlock = {'True' if n.get('anyToUnlock') else 'False'}")
     a(f"{indent}\ticon = {disc[n['discipline']]['icon']}")
@@ -632,6 +632,56 @@ def emit_placement_patch(p2n, u2n, parking="parking"):
     with open(os.path.join(OUTD, "AxePartPlacement.cfg"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
 
+PROBE_SUBTREE = {"RN_US_Probes": "hire_JPL", "RN_Soviet_Probes": "hire_OKB"}
+
+def route_probe_mods(by, p2n):
+    """Route every part from the OPTIONAL US/Soviet probe packs into its charter subtree node
+    (hire_JPL / hire_OKB) instead of parking. Config-only containment; the per-probe prerequisite-tech
+    checklist is the deferred requirements engine. Skips DEPRECATED parts and absent subtree nodes."""
+    path = os.path.join(REPO, "manifest", "curated-parts.tsv")
+    if not os.path.exists(path): return
+    n = 0
+    with open(path, encoding="utf-8") as f:
+        next(f, None)
+        for line in f:
+            c = line.rstrip("\n").split("\t")
+            if len(c) < 3 or c[0] not in PROBE_SUBTREE: continue
+            node = PROBE_SUBTREE[c[0]]
+            if node not in by or "DEPRECATED" in c[2].upper(): continue
+            p2n[c[1]] = node
+            by[node].setdefault("parts", []).append(c[1]); n += 1
+    if n: print(f"probe subtree: routed {n} US/Soviet probe parts -> hire_JPL / hire_OKB")
+
+def check_probe_requirements(nodes):
+    """Cross-check manifest/probe-requirements.tsv against the spine + library.yaml vocabulary: each
+    required breakthrough is classified in-spine / library-only (pull-list) / MISSING (real tree gap).
+    This turns each historical probe into a pull-list that grows the spine (and exposes missing techs)."""
+    path = os.path.join(REPO, "manifest", "probe-requirements.tsv")
+    if not os.path.exists(path): return
+    spine = {n["id"] for n in nodes}
+    lib = set()
+    libpath = os.path.join(TREE, "library.yaml")
+    if os.path.exists(libpath):
+        with open(libpath, encoding="utf-8") as f:
+            lib = set(re.findall(r'^\s*-\s*id:\s*(\S+)', f.read(), re.M))
+    req = collections.Counter(); nprobes = 0
+    with open(path, encoding="utf-8") as f:
+        next(f, None)
+        for line in f:
+            c = line.rstrip("\n").split("\t")
+            if len(c) < 6 or not c[0].strip(): continue
+            nprobes += 1
+            for nid in c[5].split(";"):
+                nid = nid.strip()
+                if nid: req[nid] += 1
+    pull = sorted((n for n in req if n not in spine and n in lib), key=lambda x: -req[x])
+    gaps = sorted(n for n in req if n not in spine and n not in lib)
+    in_spine = [n for n in req if n in spine]
+    print(f"probe requirements: {nprobes} probes -> {len(req)} distinct breakthroughs "
+          f"({len(in_spine)} in spine / {len(pull)} to pull from library / {len(gaps)} gaps)")
+    if pull: print("   pull into spine: " + ", ".join(f"{n}(x{req[n]})" for n in pull))
+    if gaps: print("   ! TREE GAPS (no node anywhere): " + ", ".join(gaps))
+
 def main():
     disc, meta, nodes = load()
     by = {n["id"]: n for n in nodes}
@@ -640,6 +690,7 @@ def main():
     routes = sugiyama_layout(disc, nodes, by)   # layered (Sugiyama) layout + dummy-routed edges
     validate_design(disc, nodes, by)
     p2n, u2n = merge_placement(nodes, by, meta.get("auto_placement", True))  # P2 auto-placement (meta-gated)
+    route_probe_mods(by, p2n)            # optional US/Soviet probe packs -> their charter subtree nodes
     emit_cfg(disc, nodes)
     emit_render(disc, meta, nodes, by)
     emit_html(disc, nodes, by, routes)
@@ -657,5 +708,6 @@ def main():
     for t in sorted(cbt): print(f"   T{t}: {cbt[t]:>6}")
     print(f"   total: {sum(n['cost'] for n in nodes)}")
     print("-> GameData/RP-AXE/design/Tree/AxeTechTree.cfg (+ .editor.cfg), tree/render/axe-tree.svg|png|html")
+    check_probe_requirements(nodes)
 
 if __name__ == "__main__": main()
