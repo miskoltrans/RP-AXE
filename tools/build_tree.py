@@ -195,6 +195,24 @@ def validate_design(disc, nodes, by):
                 warns.append(f"non-forward edge: {p} (T{by[p]['tier']}) -> {n['id']} (T{n['tier']})")
         if n.get("anyToUnlock") and len(n.get("parents") or []) < 2:
             warns.append(f"anyToUnlock with <2 parents (no-op): {n['id']}")
+    # TRANSITIVE REDUCTION: on a convergence node, a parent that is ALSO an ancestor of another parent
+    # is a redundant edge (the longer path already connects them) — clutter. (Skip anyToUnlock nodes:
+    # there a "shortcut" parent is an intentional earlier/alternate entry, not redundancy.)
+    def reaches(a, b):
+        st, sn = list(chl[a]), set()
+        while st:
+            x = st.pop()
+            if x == b: return True
+            if x in sn: continue
+            sn.add(x); st += chl[x]
+        return False
+    for n in nodes:
+        if n.get("anyToUnlock"): continue
+        ps = [p for p in (n.get("parents") or []) if p in by]
+        for p in ps:
+            if any(p2 != p and reaches(p, p2) for p2 in ps):
+                warns.append(f"redundant (transitively-implied) edge: {p} -> {n['id']} "
+                             f"(reaches it via another parent)")
     for r in roots:
         if r not in ("start", "parking"): warns.append(f"extra root (no parents besides start): {r}")
     print(f"design checks: {'clean' if not warns else str(len(warns))+' warning(s)'}")

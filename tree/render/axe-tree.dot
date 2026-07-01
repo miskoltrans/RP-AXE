@@ -3,7 +3,7 @@ digraph AXE {
   node[shape=box,style="filled,rounded",fontname="Helvetica",fontsize=10,color="#00000000"];
   edge[color="#888888",arrowsize=0.6];
   "start" [label="Start\nSystemsIntegration T0 · 0",fillcolor="#e8e8e8",fontcolor="#111111"];
-  "parking" [label="Unsorted Parts (Parking)\nSystemsIntegration T0 · 0",fillcolor="#e8e8e8",fontcolor="#111111"];
+  "parking" [label="Unsorted Parts (Parking)\nSystemsIntegration T0 · 999",fillcolor="#e8e8e8",fontcolor="#111111"];
   "rocketryStart" [label="Rocket Propulsion & the de Laval Nozzle\nFluidDynamics T1 · 20",fillcolor="#ee9b00",fontcolor="#111111"];
   "fd_turbopumpLiquid" [label="Turbopump-Fed Liquid Propulsion (A-4)\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
   "pc_solidGrain" [label="Cast Composite Solid Grains\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
