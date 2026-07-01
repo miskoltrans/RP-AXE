@@ -266,21 +266,33 @@ namespace RPAxe.RnD
             {
                 string id = __instance?.tech?.techID;
                 if (id == null || !AxeTreeMeta.Nodes.TryGetValue(id, out AxeTreeMeta.NodeMeta m)) return;
+                // 3-state read (stock's button frame already distinguishes researchable vs researched):
+                //   locked (FADED) -> desaturated + dim (recedes); available/done -> full discipline colour.
                 if (AxeTreeMeta.Disciplines.TryGetValue(m.Discipline, out AxeTreeMeta.DiscMeta d))
-                    __instance.graphics?.SetIconColor(d.Color);
+                    __instance.graphics?.SetIconColor(StateTint(d.Color, __instance.state == RDNode.State.FADED));
                 if (__instance.parents == null) return;
                 foreach (RDNode.Parent par in __instance.parents)   // edge coloured by its SOURCE discipline
                 {
-                    string from = par?.parent?.node?.tech?.techID;
+                    RDNode src = par?.parent?.node;
+                    string from = src?.tech?.techID;
                     if (from != null && AxeTreeMeta.Nodes.TryGetValue(from, out AxeTreeMeta.NodeMeta pm)
                         && AxeTreeMeta.Disciplines.TryGetValue(pm.Discipline, out AxeTreeMeta.DiscMeta pd))
                     {
-                        if (par.line != null) par.line.color = pd.Color;
-                        if (par.arrowHead != null) par.arrowHead.color = pd.Color;
+                        Color ec = StateTint(pd.Color, src.state != RDNode.State.RESEARCHED);   // lit once source researched
+                        if (par.line != null) par.line.color = ec;
+                        if (par.arrowHead != null) par.arrowHead.color = ec;
                     }
                 }
             }
             catch (Exception e) { Debug.LogException(e); }
+        }
+
+        // Recede = desaturate the colour toward its own grey + dim the alpha (locked nodes / un-researched edges).
+        private static Color StateTint(Color c, bool recede)
+        {
+            if (!recede) return c;
+            float l = 0.3f * c.r + 0.59f * c.g + 0.11f * c.b;
+            return new Color(c.r + (l - c.r) * 0.8f, c.g + (l - c.g) * 0.8f, c.b + (l - c.b) * 0.8f, 0.5f);
         }
 
         // Hover-trace lineage (like the HTML) + click empty background to deselect. Both key off the node

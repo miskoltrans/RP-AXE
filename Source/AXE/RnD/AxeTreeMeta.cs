@@ -38,6 +38,15 @@ namespace RPAxe.RnD
                       $"render layout={Render.Layout} lane={Render.LaneRouting} fan={Render.Fan}");
         }
 
+        // Full (un-tinted) discipline colour for a tech id — used by the lineage highlight to pop the lineage.
+        internal static bool TryDisciplineColor(string techID, out Color color)
+        {
+            color = Color.white;
+            if (!string.IsNullOrEmpty(techID) && Nodes.TryGetValue(techID, out NodeMeta m)
+                && Disciplines.TryGetValue(m.Discipline, out DiscMeta d)) { color = d.Color; return true; }
+            return false;
+        }
+
         private static void LoadMeta()
         {
             ConfigNode[] roots = GameDatabase.Instance.GetConfigNodes("RPAXE_TREEMETA");

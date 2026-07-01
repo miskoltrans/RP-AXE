@@ -43,37 +43,47 @@ namespace RPAxe.RnD
 
     internal static class AxeHighlighter
     {
-        private static readonly Color32 DimLine = new Color32(90, 95, 105, 45);
-        private static readonly Color DimIcon = new Color(1f, 1f, 1f, 0.25f);
+        private static readonly Color32 DimLine = new Color32(96, 101, 110, 28);        // ghost off-lineage edges
+        private static readonly Color DimIcon = new Color(0.72f, 0.75f, 0.80f, 0.13f);   // ghost off-lineage nodes
         private static bool active;
 
         public static void Apply(RDController ctrl, RDNode sel)
         {
             if (ctrl == null || sel == null || ctrl.nodes == null) return;
             List<RDNode> nodes = ctrl.nodes;
-            // Reset to stock colours FIRST. Selecting another node calls ShowNodePanel -> Apply again
-            // WITHOUT a Clear in between, so without this reset previously-dimmed in-lineage edges stay
-            // dim and the highlight decays after the first click.
-            for (int i = 0; i < nodes.Count; i++)
-                if (nodes[i] != null) nodes[i].UpdateGraphics();
             HashSet<RDNode> lineage = Lineage(sel);
+            // Colour-only, every node set explicitly each call (no UpdateGraphics reset -> cheap for hover +
+            // no decay): ghost everything OFF the lineage; the lineage nodes + edges POP at full discipline
+            // colour (locked-on-path included), matching the HTML prototype. Clear() restores via UpdateGraphics.
             for (int i = 0; i < nodes.Count; i++)
             {
                 RDNode n = nodes[i];
                 if (n == null) continue;
                 bool inLineage = lineage.Contains(n);
-                if (!inLineage && n.graphics != null) n.graphics.SetIconColor(DimIcon);   // lit nodes keep stock colour
+                if (n.graphics != null)
+                {
+                    if (!inLineage) n.graphics.SetIconColor(DimIcon);                                       // ghost
+                    else if (AxeTreeMeta.TryDisciplineColor(n.tech?.techID, out Color dc)) n.graphics.SetIconColor(dc);  // pop
+                    else n.graphics.SetIconColor(Color.white);
+                }
                 if (n.parents == null) continue;
                 for (int p = 0; p < n.parents.Length; p++)
                 {
                     RDNode.Parent par = n.parents[p];
                     if (par == null) continue;
                     RDNode parentNode = par.parent != null ? par.parent.node : null;
-                    // an edge is "in the lineage" only if BOTH ends are (the chain to/from the selection)
+                    // an edge is "on the lineage" only if BOTH ends are (the chain to/from the selection)
                     bool edgeIn = inLineage && parentNode != null && lineage.Contains(parentNode);
-                    if (edgeIn) continue;
-                    if (par.line != null) par.line.color = DimLine;
-                    if (par.arrowHead != null) par.arrowHead.color = DimLine;
+                    if (edgeIn && AxeTreeMeta.TryDisciplineColor(parentNode.tech?.techID, out Color ec))
+                    {
+                        if (par.line != null) par.line.color = ec;                  // path edge pops at source discipline
+                        if (par.arrowHead != null) par.arrowHead.color = ec;
+                    }
+                    else if (!edgeIn)
+                    {
+                        if (par.line != null) par.line.color = DimLine;             // off-path edge ghosts
+                        if (par.arrowHead != null) par.arrowHead.color = DimLine;
+                    }
                 }
             }
             active = true;
