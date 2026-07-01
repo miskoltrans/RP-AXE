@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>RP-AXE tree — rendering prototype</title>
+<style>
+  :root{--bg:#1a1a1a;--panel:#222;--ink:#eee;--mut:#9aa;--line:#333}
+  *{box-sizing:border-box} html,body{margin:0;height:100%}
+  body{display:flex;font-family:Segoe UI,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  #stage{flex:1;position:relative;min-width:0}
+  #cv{width:100%;height:100%;display:block;cursor:grab}
+  #bar{position:absolute;top:8px;left:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+       background:#000b;padding:6px 10px;border-radius:7px;font-size:12px;max-width:calc(100% - 16px)}
+  #bar label{display:flex;align-items:center;gap:4px;cursor:pointer;white-space:nowrap}
+  #bar .sep{width:1px;height:18px;background:#444}
+  #bar input[type=text]{background:#111;border:1px solid #444;color:#eee;border-radius:4px;padding:3px 6px;width:150px}
+  #bar button{background:#333;border:1px solid #555;color:#eee;border-radius:4px;padding:3px 9px;cursor:pointer}
+  #bar button:hover{background:#444}
+  #bar button.k{background:#3a2f10;border-color:#6a5514}
+  #bar button.e{background:#132a1a;border-color:#1d5a34}
+  #zl{min-width:38px;text-align:center;color:var(--mut)}
+  #panel{width:360px;min-width:360px;background:var(--panel);border-left:1px solid var(--line);overflow:auto;padding:16px}
+  #panel .hint{color:var(--mut);margin:8px 0 18px;font-style:italic}
+  .ttl{font-size:19px;font-weight:600;line-height:1.2}
+  .meta{color:var(--mut);font-size:13px;margin:6px 0 4px;display:flex;align-items:center;gap:6px}
+  .rel{color:#8fa;font-size:12px;margin:2px 0 12px}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;flex:none}
+  .flav{font-style:italic;color:#cdd;font-size:13px;line-height:1.45;border-left:3px solid var(--line);padding-left:10px;margin-bottom:14px}
+  .sec{text-transform:uppercase;letter-spacing:.06em;font-size:11px;color:var(--mut);border-bottom:1px solid var(--line);padding-bottom:4px;margin:16px 0 8px}
+  ul.parts,ul.legend{list-style:none;margin:0;padding:0}
+  ul.parts li{padding:6px 0;border-bottom:1px solid #2a2a2a}
+  ul.legend li{padding:3px 0;display:flex;align-items:center;gap:8px;font-size:13px;color:#cdd}
+  .pt{font-size:14px}.pn{font-size:12px;color:var(--mut);font-family:Consolas,monospace}.mod{color:#7aa2c4}
+  .empty{color:#777;font-style:italic;padding:6px 0}
+  #foot{position:absolute;bottom:8px;left:8px;color:var(--mut);font-size:11px;background:#000a;padding:3px 8px;border-radius:5px}
+</style></head><body>
+<div id="stage">
+  <canvas id="cv"></canvas>
+  <div id="bar">
+    <label><input type="checkbox" id="c_fan">Fan endpoints</label>
+    <label><input type="checkbox" id="c_arr">Arrowheads</label>
+    <label><input type="checkbox" id="c_disc">Colour edges by discipline</label>
+    <label><input type="checkbox" id="c_hi">Highlight lineage</label>
+    <span class="sep"></span>
+    <button id="b_base" class="k">Stock baseline</button>
+    <button id="b_enh" class="e">Enhanced</button>
+    <span class="sep"></span>
+    <button id="zo">−</button><span id="zl">100%</span><button id="zi">+</button>
+    <button id="b_fit">Fit</button>
+    <span class="sep"></span>
+    <input type="text" id="q" placeholder="find node / part…" autocomplete="off">
+  </div>
+  <div id="foot">drag = pan · wheel = zoom · hover = trace lineage · click = pin</div>
+</div>
+<div id="panel"></div>
+<script src="tree-data.js"></script>
+<script src="renderer.js"></script>
+</body></html>
