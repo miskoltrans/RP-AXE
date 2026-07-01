@@ -1,5 +1,12 @@
 # In-game R&D render port — plan / handoff
 
+> **STATUS: IMPLEMENTED** (branch `restart`). Ported into `Source/AXE/RnD/`:
+> `AxeTreeMeta.cs` (loads `RPAXE_TREEMETA` + `RPAXE_RENDER`), `AxeTreeLayout.cs` (KSP-free port of
+> layoutBands + computeSlots + buildLaneRoutes + chamfer), `AxeTreeRender.cs` (reposition via
+> `RDTechTree.OnTechTreeSpawn` + a Harmony prefix on `RDNode.GetVectorArray`). Config in
+> `GameData/RP-AXE/RenderSettings.cfg` (`layout`/`laneRouting`/`fan`/`lanePitch`). In-game smoke-tested via
+> `-axe-autotest`. The notes below are the original design/handoff, kept for reference.
+
 Port the HTML rendering prototype into the **KSP R&D scene** via the AXE Harmony plugin,
 **config-toggleable**. This is the next big task (written before a context clear).
 
