@@ -39,6 +39,28 @@ digraph AXE {
   "rob_rotorActuation" [label="Electric Rotor Actuation\nRobotics T2 · 90",fillcolor="#d98c2b",fontcolor="#111111"];
   "int_orbitalInsertion" [label="Orbital Insertion\nSystemsIntegration T4 · 900",fillcolor="#ededed",fontcolor="#111111"];
   "int_applicationsSat" [label="Applications Satellite Bus\nSystemsIntegration T5 · 1500",fillcolor="#ededed",fontcolor="#111111"];
+  "met_oxRichSuperalloys" [label="Oxidizer-Rich Preburner Superalloys\nMetallurgy T6 · 2000",fillcolor="#8dadcc",fontcolor="#111111"];
+  "pc_pressureFedService" [label="Storable Pressure-Fed Service Engines\nPropellantChemistry T6 · 2000",fillcolor="#e5533b",fontcolor="#111111"];
+  "fd_deepThrottle" [label="Deep-Throttle Terminal Descent\nFluidDynamics T6 · 2000",fillcolor="#23b9a0",fontcolor="#111111"];
+  "fd_propellantSettling" [label="Zero-G Propellant Settling\nFluidDynamics T5 · 1500",fillcolor="#23b9a0",fontcolor="#111111"];
+  "str_segmentedSolids" [label="Segmented Solid-Motor Cases\nStructuresMechanisms T6 · 2000",fillcolor="#bfb08d",fontcolor="#111111"];
+  "elec_fuelCell" [label="Alkaline Fuel Cells\nElectricalPower T5 · 1500",fillcolor="#ffd23f",fontcolor="#111111"];
+  "elec_deployableArray" [label="Deployable Articulated Solar Arrays\nElectricalPower T5 · 1500",fillcolor="#ffd23f",fontcolor="#111111"];
+  "elec_deepSpacePower" [label="Deep-Space Power\nElectricalPower T6 · 2000",fillcolor="#ffd23f",fontcolor="#111111"];
+  "gnc_reactionWheels" [label="Momentum-Exchange Attitude Control\nGuidanceControl T4 · 900",fillcolor="#8a5cd6",fontcolor="#111111"];
+  "gnc_attitude3axis" [label="Three-Axis Pointing\nGuidanceControl T5 · 1500",fillcolor="#8a5cd6",fontcolor="#111111"];
+  "gnc_starTracker" [label="Stellar Attitude Determination\nGuidanceControl T6 · 2000",fillcolor="#8a5cd6",fontcolor="#111111"];
+  "tel_parabolicHGA" [label="Steerable Parabolic High-Gain Link\nTelecommunications T6 · 2000",fillcolor="#3f7bf5",fontcolor="#111111"];
+  "str_docking" [label="Orbital Docking Mechanism\nStructuresMechanisms T6 · 2000",fillcolor="#bfb08d",fontcolor="#111111"];
+  "str_touchdownAbsorption" [label="Touchdown Energy Absorption\nStructuresMechanisms T6 · 2000",fillcolor="#bfb08d",fontcolor="#111111"];
+  "rob_servos" [label="Electric Servo Actuators\nRobotics T5 · 1500",fillcolor="#d98c2b",fontcolor="#111111"];
+  "rob_roverWheels" [label="Powered Rover Wheels\nRobotics T6 · 2000",fillcolor="#d98c2b",fontcolor="#111111"];
+  "rob_surfaceSampler" [label="Robotic Surface Sampling\nRobotics T6 · 2000",fillcolor="#d98c2b",fontcolor="#111111"];
+  "cmp_ablativeHeatshield" [label="Ablative Reentry Heatshields\nCompositeMaterials T6 · 2000",fillcolor="#9caf6a",fontcolor="#111111"];
+  "opt_irRadiometry" [label="Infrared Radiometry\nOpticsPhotonics T5 · 1500",fillcolor="#7c8cff",fontcolor="#111111"];
+  "opt_spectrometry" [label="Infrared Interferometer Spectrometry\nOpticsPhotonics T6 · 2000",fillcolor="#7c8cff",fontcolor="#111111"];
+  "int_deepSpaceProbe" [label="Interplanetary Cruise Bus\nSystemsIntegration T7 · 2300",fillcolor="#ededed",fontcolor="#111111"];
+  "int_roboticLander" [label="Robotic Soft-Lander\nSystemsIntegration T7 · 2300",fillcolor="#ededed",fontcolor="#111111"];
   "xplaneStart" [label="Three-Axis Aerodynamic Control\nAerodynamics T1 · 20",fillcolor="#5aa0e2",fontcolor="#111111"];
   "met_turbineAlloys" [label="Nimonic Turbine Alloys\nMetallurgy T2 · 90",fillcolor="#8dadcc",fontcolor="#111111"];
   "aero_areaRule" [label="Transonic Area-Ruling\nAerodynamics T3 · 400",fillcolor="#5aa0e2",fontcolor="#111111"];
@@ -63,9 +85,10 @@ digraph AXE {
   { rank=same; "fd_turbopumpFeed" "cryo_hydrogen" "pc_solidGrains" "met_weldedTank" "str_staging" "gnc_pitchProgram" "aero_fairings" "aero_recovery" "th_radiativeControl" "elec_siliconPV" "tel_telemetry" "nuc_geiger" "met_exposurePanels" "opt_filmReturn" "opt_vidicon" "mic_massSpec" "xplaneStart" }
   { rank=same; "fd_multiChamber" "fd_baffledInjector" "fd_verniers" "pc_hypergolics" "fd_expanderCycle" "met_isogrid" "str_balloonTank" "gnc_rcs" "str_booms" "th_hermeticBus" "nuc_rtg" "rob_rotorActuation" "met_turbineAlloys" "life_openLoopECLSS" "cmp_ablativeTPS" "str_landingLegs" "pc_hydrogenPeroxide" "pc_solidRetrofire" "tel_helicalDirectional" }
   { rank=same; "pc_fluorineOxidizer" "fd_orbitalThrust" "str_orbitalMassFraction" "aero_areaRule" "aero_rocketplane" "fd_deepThrottleEarly" "fd_restartableHypergolics" "pc_storableBoosters" "aero_turboshaftProp" }
-  { rank=same; "int_orbitalInsertion" "aero_shockInlets" "aero_afterburner" "str_engineClustering" }
-  { rank=same; "int_applicationsSat" "aero_ramjet" "int_crewedCapsule" }
-  { rank=same; "str_launchEscape" }
+  { rank=same; "int_orbitalInsertion" "gnc_reactionWheels" "aero_shockInlets" "aero_afterburner" "str_engineClustering" }
+  { rank=same; "int_applicationsSat" "fd_propellantSettling" "elec_fuelCell" "elec_deployableArray" "gnc_attitude3axis" "rob_servos" "opt_irRadiometry" "aero_ramjet" "int_crewedCapsule" }
+  { rank=same; "met_oxRichSuperalloys" "pc_pressureFedService" "fd_deepThrottle" "str_segmentedSolids" "elec_deepSpacePower" "gnc_starTracker" "tel_parabolicHGA" "str_docking" "str_touchdownAbsorption" "rob_roverWheels" "rob_surfaceSampler" "cmp_ablativeHeatshield" "opt_spectrometry" "str_launchEscape" }
+  { rank=same; "int_deepSpaceProbe" "int_roboticLander" }
   "start" -> "fd_turbopumpFeed" [style=solid];
   "fd_turbopumpFeed" -> "fd_multiChamber" [style=solid];
   "fd_turbopumpFeed" -> "fd_baffledInjector" [style=solid];
@@ -103,6 +126,37 @@ digraph AXE {
   "fd_orbitalThrust" -> "int_orbitalInsertion" [style=solid];
   "str_orbitalMassFraction" -> "int_orbitalInsertion" [style=solid];
   "int_orbitalInsertion" -> "int_applicationsSat" [style=solid];
+  "met_isogrid" -> "met_oxRichSuperalloys" [style=solid];
+  "fd_turbopumpFeed" -> "met_oxRichSuperalloys" [style=solid];
+  "pc_hypergolics" -> "pc_pressureFedService" [style=solid];
+  "fd_verniers" -> "fd_deepThrottle" [style=solid];
+  "str_staging" -> "fd_propellantSettling" [style=solid];
+  "pc_solidGrains" -> "str_segmentedSolids" [style=solid];
+  "start" -> "elec_fuelCell" [style=solid];
+  "elec_siliconPV" -> "elec_deployableArray" [style=solid];
+  "str_booms" -> "elec_deployableArray" [style=solid];
+  "elec_deployableArray" -> "elec_deepSpacePower" [style=dashed,color="#f4d35e"];
+  "nuc_rtg" -> "elec_deepSpacePower" [style=dashed,color="#f4d35e"];
+  "gnc_pitchProgram" -> "gnc_reactionWheels" [style=solid];
+  "gnc_rcs" -> "gnc_attitude3axis" [style=dashed,color="#f4d35e"];
+  "gnc_reactionWheels" -> "gnc_attitude3axis" [style=dashed,color="#f4d35e"];
+  "gnc_attitude3axis" -> "gnc_starTracker" [style=solid];
+  "opt_filmReturn" -> "gnc_starTracker" [style=solid];
+  "tel_telemetry" -> "tel_parabolicHGA" [style=solid];
+  "gnc_attitude3axis" -> "tel_parabolicHGA" [style=solid];
+  "gnc_rcs" -> "str_docking" [style=solid];
+  "str_staging" -> "str_docking" [style=solid];
+  "str_staging" -> "str_touchdownAbsorption" [style=solid];
+  "start" -> "rob_servos" [style=solid];
+  "rob_servos" -> "rob_roverWheels" [style=solid];
+  "rob_servos" -> "rob_surfaceSampler" [style=solid];
+  "aero_recovery" -> "cmp_ablativeHeatshield" [style=solid];
+  "opt_vidicon" -> "opt_irRadiometry" [style=solid];
+  "opt_irRadiometry" -> "opt_spectrometry" [style=solid];
+  "tel_parabolicHGA" -> "int_deepSpaceProbe" [style=solid];
+  "elec_deepSpacePower" -> "int_deepSpaceProbe" [style=solid];
+  "fd_deepThrottle" -> "int_roboticLander" [style=dashed,color="#f4d35e"];
+  "str_touchdownAbsorption" -> "int_roboticLander" [style=dashed,color="#f4d35e"];
   "start" -> "xplaneStart" [style=solid];
   "xplaneStart" -> "met_turbineAlloys" [style=solid];
   "met_turbineAlloys" -> "aero_areaRule" [style=solid];

@@ -113,6 +113,13 @@ for n in sorted(ADD):
     elif n not in manifest: missing.append(n)
 
 os.makedirs(OUTDIR,exist_ok=True)
+# Sack every DEPRECATED-titled part from curation: RP-1/RO keep them loadable so old saves don't break,
+# but each is a hidden, superseded dupe of a part we already carry — we don't need them. (User call.)
+# EXCEPT parts that are deprecated-but-UNIQUE (no non-deprecated counterpart exists): the sample-return
+# capsule is the only buildable film/sample-return craft (closes opt_filmReturn's Corona/Discoverer loop;
+# kings cmp_ablativeTPS). Nuking it would remove a capability, not a dupe.
+KEEP_DEPRECATED={"RP0-SampleReturnCapsule","RP0-SampleReturnCommand"}
+manifest={n:mt for n,mt in manifest.items() if n in KEEP_DEPRECATED or "DEPRECATED" not in mt[1].upper()}
 rows=sorted(manifest.items(),key=lambda kv:(kv[1][0],kv[0]))
 with open(os.path.join(OUTDIR,"curated-parts.tsv"),"w",encoding="utf-8") as f:
     f.write("mod\tname\ttitle\n")

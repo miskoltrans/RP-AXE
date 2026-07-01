@@ -235,9 +235,6 @@ ModularLaunchPads	AM_MLP_GeneralHold5	General Hold-Down Type 5: Vert Bolt Arm
 ModularLaunchPads	AM_MLP_GeneralHold6	General Hold-Down Type 6: Clamp Arm Small
 ModularLaunchPads	AM_MLP_GeneralHold7	General Hold-Down Type 7: Clamp Arm Large
 ModularLaunchPads	AM_MLP_GeneralHoldSRB	General Hold-Down Type SRB
-ModularLaunchPads	AM_MLP_GeneralLaunchBase	Old Launch Base 3 *** DEPRECATED ***
-ModularLaunchPads	AM_MLP_GeneralLaunchBaseMedium	Old Launch Base 2 *** DEPRECATED ***
-ModularLaunchPads	AM_MLP_GeneralLaunchBaseSmall	Old Launch Base 1 *** DEPRECATED ***
 ModularLaunchPads	AM_MLP_GeneralLaunchPlate	Flat Launch Base 3 - Medium Frame
 ModularLaunchPads	AM_MLP_GeneralModularMultiTowerLarge	Modular Multi Tower 3 - Large
 ModularLaunchPads	AM_MLP_GeneralModularMultiTowerMast	Modular Multi Tower Top Mast
@@ -469,10 +466,6 @@ NearFutureElectrical	nfe-rtg-asrg-1	NASA & DOE Advanced Sterling RG
 NearFutureElectrical	nfe-rtg-gphs-1	GPHS-RTG
 NearFutureElectrical	nfe-rtg-mmrtg-1	Multi-Mission RTG
 NearFutureElectrical	nfe-rtg-snap27-1	SNAP-27 Series RTG
-NearFutureElectrical	reactor-0625	DEPRECATED (DEPRECATED)
-NearFutureElectrical	reactor-125	DEPRECATED (DEPRECATED)
-NearFutureElectrical	reactor-25	DEPRECATED (DEPRECATED)
-NearFutureElectrical	rtg-0625	DEPRECATED (DEPRECATED)
 NearFutureExploration	nfex-antenna-deploy-wv3-1	DR-3 Deployable High Gain Antenna
 NearFutureExploration	nfex-antenna-feeder-direct-1	F-DA Direct Antenna Feed
 NearFutureExploration	nfex-antenna-phased-array-1	RA-X1 Phased Relay Antenna
@@ -536,8 +529,6 @@ ProceduralFairings	KzFlatBoattail	Boattail Adapter (Flat)
 ProceduralFairings	KzInterstageAdapter2	IB - Procedural Interstage Fairing Adapter
 ProceduralFairings	KzProcFairingSide1	Procedural Fairing
 ProceduralFairings	KzProcFairingSide1_TU	Procedural Fairing (Recolorable)
-ProceduralFairings	KzProcFairingSide2	Procedural Fairing (Conic) (Deprecated)
-ProceduralFairings	KzProcFairingSide2_TU	Procedural Fairing (Conic) (Deprecated) (Recolorable)
 ProceduralFairings	KzResizableFairingBase	FB - Procedural Fairing Base
 ProceduralFairings	KzResizableFairingBaseRing	FB - Procedural Fairing Base Ring
 ProceduralFairings	KzThrustPlate	Thrust Plate [Procedural]
@@ -591,10 +582,8 @@ RN_US_Probes	eos_aqua	Aqua
 RN_US_Probes	eos_aura	Aura
 RN_US_Probes	eos_tdrs	Tracking and Data Relay Satellite H-N
 RN_US_Probes	eos_terra	Terra
-RN_US_Probes	eos_terraalt	DEPRECATED - Terra Side Solar Panel
 RN_US_Probes	explorer_6	Explorer 6
 RN_US_Probes	galileo_aprobe	Galileo Atmospheric Probe
-RN_US_Probes	galileo_aprobe_bot	DEPRECATED - Galileo Atmospheric Probe Bottom (DEPRECATED)
 RN_US_Probes	galileo_hs_bot	Galileo Atmospheric Probe Heatshield Bottom
 RN_US_Probes	galileo_hs_mid	Galileo Atmospheric Probe Heatshield Middle
 RN_US_Probes	galileo_hs_top	Galileo Atmospheric Probe Heatshield Top
@@ -656,15 +645,12 @@ RN_US_Probes	rn_surveyor_s_engine	TD-339
 RN_US_Probes	rn_surveyor_solar	Surveyor Solar Panels
 RN_US_Probes	rn_tdrs_ag	Tracking and Data Relay Satellite A-G
 RN_US_Probes	rn_voyager	Voyager 1/2 Probe
-RN_US_Probes	rn_vpam	DEPRECATED DO NOT USE (RN Voyager PAM) (DEPRECATED)
 RN_US_Probes	tiros-1	Tiros-1 Satellite
 RN_US_Probes	transit2a	Transit-2A Satellite
 RN_US_Probes	vanguard-1	Vanguard 1
 RN_US_Probes	vanguard-2	Vanguard 2
 RN_US_Probes	vanguard-3	Vanguard 3
-ROCapsules	ROC-APAS8995A	APAS 89/95 Active Docking Port (Deprecated) (DEPRECATED)
 ROCapsules	ROC-APAS8995Av2	APAS 89/95 Active Docking Port
-ROCapsules	ROC-APAS8995P	APAS 89/95 Passive Docking Port (Deprecated) (DEPRECATED)
 ROCapsules	ROC-APAS8995Pv2	APAS 89/95 Passive Docking Port
 ROCapsules	ROC-AgenaFairing	Agena Target Vehicle Nose Cone
 ROCapsules	ROC-AgenaPort	Gemini Agena Target Vehicle Docking Port
@@ -776,7 +762,6 @@ ROCapsules	ROC-GeminiOAMSBDB	Gemini Orbit Attitude and Maneuvering System (SE-7-
 ROCapsules	ROC-GeminiOAMSRCSBDB	Gemini Orbit Attitude and Maneuvering System (SE-7-100) (RCS)
 ROCapsules	ROC-GeminiParachuteBDB	Gemini Landing Parachute System
 ROCapsules	ROC-GeminiParachuteDrogueBDB	Gemini Drogue Parachute
-ROCapsules	ROC-GeminiRetroBDB	Gemini Retro Rocket (Star-13E) (DEPRECATED)
 ROCapsules	ROC-GeminiRetroMECBDB	Gemini Retro Rocket (Star-13E)
 ROCapsules	ROC-GeminiRetrogradeSectionBDB	Gemini Retrograde Section
 ROCapsules	ROC-GeminiWing	Gemini Wings
@@ -807,7 +792,6 @@ ROCapsules	ROC-MercuryNoseCapBDB	Mercury M-DCAM Nose Unit
 ROCapsules	ROC-MercuryParachuteBDB	Mercury M-ASD Main Parachute
 ROCapsules	ROC-MercuryPosigradeBDB	Mercury Posigrade Kick Motor
 ROCapsules	ROC-MercuryRCS2BDB	Mercury Landing and Control Module
-ROCapsules	ROC-MercuryRCSBDB	Mercury Landing and Control Module (DEPRECATED)
 ROCapsules	ROC-MercuryRetroBDB	Mercury Retro (TE-M-316)
 ROCapsules	ROC-MercuryRetropackBDB	Mercury Retropack
 ROCapsules	ROC-OrionCM	Orion Command Module
@@ -930,11 +914,8 @@ ROEngines	ROE-LEROS1B	LEROS-1b (635N)
 ROEngines	ROE-LEROS4	LEROS-4 (1100N)
 ROEngines	ROE-LMAE	Lunar Module Ascent Engine (LMAE)
 ROEngines	ROE-LMDE	Lunar Module Descent Engine (LMDE)
-ROEngines	ROE-LR101	LR101 (DEPRECATED)
-ROEngines	ROE-LR101Inline	LR101 (DEPRECATED)
 ROEngines	ROE-LR101Inline_2	LR101
 ROEngines	ROE-LR101_2	LR101
-ROEngines	ROE-LR105	LR105 (DEPRECATED)
 ROEngines	ROE-LR105_2	LR105
 ROEngines	ROE-LR129	LR129
 ROEngines	ROE-LR79	LR79
@@ -942,7 +923,6 @@ ROEngines	ROE-LR87	LR87
 ROEngines	ROE-LR87_11	LR87 Booster (Shielded)
 ROEngines	ROE-LR87_LH2	AJ23-65
 ROEngines	ROE-LR87_Single	LR87
-ROEngines	ROE-LR89	LR43/LR89 (DEPRECATED)
 ROEngines	ROE-LR89_2	LR43/LR89
 ROEngines	ROE-LR91	LR91
 ROEngines	ROE-LR91-4V	LR91 (4 Vernier)
@@ -979,7 +959,6 @@ ROEngines	ROE-R42	R-42
 ROEngines	ROE-RD0105	RD-0105/0109
 ROEngines	ROE-RD0110	RD-0107/0110
 ROEngines	ROE-RD0110R	RD-0110R
-ROEngines	ROE-RD0110Vernier	RD-0110 Vernier (DEPRECATED)
 ROEngines	ROE-RD0120	RD-0120
 ROEngines	ROE-RD0124	RD-0124
 ROEngines	ROE-RD0146	RD-0146
@@ -1004,7 +983,6 @@ ROEngines	ROE-RD215_Single	RD-215
 ROEngines	ROE-RD219	RD-219
 ROEngines	ROE-RD254	RD-254
 ROEngines	ROE-RD270	RD-270
-ROEngines	ROE-RD270M	RD-270M (DEPRECATED)
 ROEngines	ROE-RD275	RD-253/RD-275
 ROEngines	ROE-RD301	RD-301
 ROEngines	ROE-RD57	RD-57
@@ -1060,7 +1038,6 @@ ROEngines	ROE-UA1207	UA1207
 ROEngines	ROE-UA1208	UA1208
 ROEngines	ROE-UmbilicalTower	Umbilical Tower
 ROEngines	ROE-UpgradeIcon-Coatl	Upgrades
-ROEngines	ROE-Veronique	Véronique (DEPRECATED)
 ROEngines	ROE-VeroniqueAK	Véronique
 ROEngines	ROE-Viking2	Viking 2
 ROEngines	ROE-Viking4	Viking (4/4B)
@@ -1311,7 +1288,6 @@ Squad	GearSmallSpaceplane	LY-35 Medium Landing Gear (Spaceplane)
 Squad	GooExperiment	Biological Sample Capsule
 Squad	GrapplingDevice	Advanced Grabbing Unit
 Squad	HighGainAntenna	1.25m Retractable Parabolic Antenna
-Squad	HighGainAntenna5	HG-5 Retractable Parabolic Antenna (DEPRECATED)
 Squad	HighGainAntenna5_v2	HG-5 Retractable Parabolic Antenna
 Squad	IntakeRadialLong	Adjustable Ramp Intake (Radial)
 Squad	JetEngine	TF/CF34 High-Bypass Turbofan
@@ -1334,7 +1310,6 @@ Squad	PotatoComet	A potato like comet
 Squad	PotatoRoid	A potato like rock
 Squad	R8winglet	AV-R8 Winglet
 Squad	RAPIER	CR-7 R.A.P.I.E.R.
-Squad	RCSBlockQuarter	RCS Quad [69/111 N class] (DEPRECATED)
 Squad	RCSBlockSmall_138	RCS Block [ 138/223 N Class] (elbows)
 Squad	RCSBlockSmall_28	RCS Block [  28/45 N Class] (elbows)
 Squad	RCSBlockSmall_69	RCS Block [  69/111 N Class] (elbows)
@@ -1400,9 +1375,6 @@ Squad	RO_boeing702	Boeing 702 Large Satellite Bus
 Squad	RO_linearRcs_tenth	Attitude Jet (28/45 N class)
 Squad	RO_mk1_LES	Launch Escape System (Mercury)
 Squad	RP0HumanRatedFlag	Human Rated Flag
-Squad	RP0aerobeeSounding	Aerobee Sounding Rocket Telemetry Unit (DEPRECATED)
-Squad	RP0probeSounding0-3m	WAC-Corporal Sounding Rocket Telemetry Unit (DEPRECATED)
-Squad	RP0probeVanguardXray	20in X-Ray Detector (DEPRECATED)
 Squad	RelayAntenna100	RA-100 Parabolic Antenna (4m)
 Squad	RelayAntenna3m	3m Parabolic Antenna
 Squad	RelayAntenna5	RA-2 Parabolic Antenna (1m)
@@ -1413,8 +1385,6 @@ Squad	ServiceBay_125_v2	Service Bay [2m]
 Squad	ServiceBay_250_v2	Service Bay [4m]
 Squad	SmallGearBay	LY-10 Small Landing Gear
 Squad	SmallGearBaySpaceplane	LY-10 Small Landing Gear (Spaceplane)
-Squad	SquadRCSBlockHalf	RCS Quad [138/223 N class] (DEPRECATED)
-Squad	SquadRCSBlockTenth	RCS Quad (28/45 N class) (DEPRECATED)
 Squad	StandardCtrlSrf	Elevon 1
 Squad	SurfAntenna	Communotron 16-S
 Squad	SurfaceScanner	Surface Scanning Module
@@ -1478,7 +1448,6 @@ Squad	mediumDishAntenna	Communotron DTS-M1
 Squad	microEngine	1.1/1.78kN Thruster
 Squad	miniIntake	Small Pitot Intake
 Squad	miniJetEngine	J85 Turbojet (No Afterburner)
-Squad	miniLandingLeg	LT-05 Micro Landing Strut (DEPRECATED)
 Squad	mk1-3pod	Mk1-3 Command Pod (4m)
 Squad	mk1pod_v2	Mk1 Pod (2m)
 Squad	mk2CargoBayL	Mk2 Cargo Bay CRG-08
@@ -1495,7 +1464,6 @@ Squad	mk3CargoBayS	Mk3 Cargo Bay CRG-25
 Squad	mk3CargoRamp	Mk3 Cargo Ramp
 Squad	mk3Cockpit_Shuttle	Mk3 Cockpit
 Squad	mk3CrewCabin	Mk3 Passenger Module
-Squad	nacelleBody	Engine Nacelle (DEPRECATED)
 Squad	navLight1	Navigation Light Mk1
 Squad	noseCone	Aerodynamic Nose Cone
 Squad	parachuteDrogue	Mk25 Parachute
@@ -1511,7 +1479,6 @@ Squad	radPanelSm	EATCS Radiator Panel (Short)
 Squad	radialDecoupler	TT-38K Radial Decoupler
 Squad	radialDecoupler1-2	Hydraulic Detachment Manifold
 Squad	radialDecoupler2	TT-70 Radial Decoupler
-Squad	radialEngineBody	Engine Pre-cooler (DEPRECATED)
 Squad	ramAirIntake	Adjustable Ramp Intake
 Squad	rocketNoseCone_v2	Protective Rocket Nose Cone Mk7
 Squad	roverBody_v2	Probodobodyne RoveMate

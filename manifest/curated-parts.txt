@@ -234,9 +234,6 @@ AM_MLP_GeneralHold5
 AM_MLP_GeneralHold6
 AM_MLP_GeneralHold7
 AM_MLP_GeneralHoldSRB
-AM_MLP_GeneralLaunchBase
-AM_MLP_GeneralLaunchBaseMedium
-AM_MLP_GeneralLaunchBaseSmall
 AM_MLP_GeneralLaunchPlate
 AM_MLP_GeneralModularMultiTowerLarge
 AM_MLP_GeneralModularMultiTowerMast
@@ -468,10 +465,6 @@ nfe-rtg-asrg-1
 nfe-rtg-gphs-1
 nfe-rtg-mmrtg-1
 nfe-rtg-snap27-1
-reactor-0625
-reactor-125
-reactor-25
-rtg-0625
 nfex-antenna-deploy-wv3-1
 nfex-antenna-feeder-direct-1
 nfex-antenna-phased-array-1
@@ -535,8 +528,6 @@ KzFlatBoattail
 KzInterstageAdapter2
 KzProcFairingSide1
 KzProcFairingSide1_TU
-KzProcFairingSide2
-KzProcFairingSide2_TU
 KzResizableFairingBase
 KzResizableFairingBaseRing
 KzThrustPlate
@@ -590,10 +581,8 @@ eos_aqua
 eos_aura
 eos_tdrs
 eos_terra
-eos_terraalt
 explorer_6
 galileo_aprobe
-galileo_aprobe_bot
 galileo_hs_bot
 galileo_hs_mid
 galileo_hs_top
@@ -655,15 +644,12 @@ rn_surveyor_s_engine
 rn_surveyor_solar
 rn_tdrs_ag
 rn_voyager
-rn_vpam
 tiros-1
 transit2a
 vanguard-1
 vanguard-2
 vanguard-3
-ROC-APAS8995A
 ROC-APAS8995Av2
-ROC-APAS8995P
 ROC-APAS8995Pv2
 ROC-AgenaFairing
 ROC-AgenaPort
@@ -775,7 +761,6 @@ ROC-GeminiOAMSBDB
 ROC-GeminiOAMSRCSBDB
 ROC-GeminiParachuteBDB
 ROC-GeminiParachuteDrogueBDB
-ROC-GeminiRetroBDB
 ROC-GeminiRetroMECBDB
 ROC-GeminiRetrogradeSectionBDB
 ROC-GeminiWing
@@ -806,7 +791,6 @@ ROC-MercuryNoseCapBDB
 ROC-MercuryParachuteBDB
 ROC-MercuryPosigradeBDB
 ROC-MercuryRCS2BDB
-ROC-MercuryRCSBDB
 ROC-MercuryRetroBDB
 ROC-MercuryRetropackBDB
 ROC-OrionCM
@@ -929,11 +913,8 @@ ROE-LEROS1B
 ROE-LEROS4
 ROE-LMAE
 ROE-LMDE
-ROE-LR101
-ROE-LR101Inline
 ROE-LR101Inline_2
 ROE-LR101_2
-ROE-LR105
 ROE-LR105_2
 ROE-LR129
 ROE-LR79
@@ -941,7 +922,6 @@ ROE-LR87
 ROE-LR87_11
 ROE-LR87_LH2
 ROE-LR87_Single
-ROE-LR89
 ROE-LR89_2
 ROE-LR91
 ROE-LR91-4V
@@ -978,7 +958,6 @@ ROE-R42
 ROE-RD0105
 ROE-RD0110
 ROE-RD0110R
-ROE-RD0110Vernier
 ROE-RD0120
 ROE-RD0124
 ROE-RD0146
@@ -1003,7 +982,6 @@ ROE-RD215_Single
 ROE-RD219
 ROE-RD254
 ROE-RD270
-ROE-RD270M
 ROE-RD275
 ROE-RD301
 ROE-RD57
@@ -1059,7 +1037,6 @@ ROE-UA1207
 ROE-UA1208
 ROE-UmbilicalTower
 ROE-UpgradeIcon-Coatl
-ROE-Veronique
 ROE-VeroniqueAK
 ROE-Viking2
 ROE-Viking4
@@ -1310,7 +1287,6 @@ GearSmallSpaceplane
 GooExperiment
 GrapplingDevice
 HighGainAntenna
-HighGainAntenna5
 HighGainAntenna5_v2
 IntakeRadialLong
 JetEngine
@@ -1333,7 +1309,6 @@ PotatoComet
 PotatoRoid
 R8winglet
 RAPIER
-RCSBlockQuarter
 RCSBlockSmall_138
 RCSBlockSmall_28
 RCSBlockSmall_69
@@ -1399,9 +1374,6 @@ RO_boeing702
 RO_linearRcs_tenth
 RO_mk1_LES
 RP0HumanRatedFlag
-RP0aerobeeSounding
-RP0probeSounding0-3m
-RP0probeVanguardXray
 RelayAntenna100
 RelayAntenna3m
 RelayAntenna5
@@ -1412,8 +1384,6 @@ ServiceBay_125_v2
 ServiceBay_250_v2
 SmallGearBay
 SmallGearBaySpaceplane
-SquadRCSBlockHalf
-SquadRCSBlockTenth
 StandardCtrlSrf
 SurfAntenna
 SurfaceScanner
@@ -1477,7 +1447,6 @@ mediumDishAntenna
 microEngine
 miniIntake
 miniJetEngine
-miniLandingLeg
 mk1-3pod
 mk1pod_v2
 mk2CargoBayL
@@ -1494,7 +1463,6 @@ mk3CargoBayS
 mk3CargoRamp
 mk3Cockpit_Shuttle
 mk3CrewCabin
-nacelleBody
 navLight1
 noseCone
 parachuteDrogue
@@ -1510,7 +1478,6 @@ radPanelSm
 radialDecoupler
 radialDecoupler1-2
 radialDecoupler2
-radialEngineBody
 ramAirIntake
 rocketNoseCone_v2
 roverBody_v2

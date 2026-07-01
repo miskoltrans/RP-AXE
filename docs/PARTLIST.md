@@ -37,7 +37,11 @@ RO and RP-1 reference installs. Tooling: `tools/ro_coverage.py` parser; diff scr
 
 ### Build notes carried forward
 - Kept Saturn IUs (and historical avionics generally) get the **AXE avionics module/tag** at placement.
-- Sacking the procedural SRB → **RocketMotorMenagerie becomes the solids workhorse** (likely dependency).
+- Sacking the procedural SRB → **ROEngines' named-motor catalog (Castor/GEM/STAR/Algol/Antares/Altair/
+  AJ-260/GCRC families) + ReStockPlus's RSRM become the solids workhorse.** (Correction: RocketMotorMenagerie
+  was assumed to fill this role at T1 time but is entirely liquid hydrolox/kerolox/methalox engines —
+  RS-25/STME/SSBE analogues, zero SolidFuel parts — so it's unrelated to this cut; it was curated in
+  separately, 6 of its 10 parts kept, per `manifest/curated-parts.tsv`.)
 - **Park for the avionics phase (P4):** RealismOverhaul ships its own historical avionics parts
   (`RealismOverhaul/Parts/Avionics/Able/Agena/Centaur/Delta` + Saturn) that RP-1 drops — strong
   keep-and-tag candidates.

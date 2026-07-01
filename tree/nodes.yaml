@@ -80,7 +80,7 @@ nodes:
     tier: 2
     parents: [fd_turbopumpFeed]
     flavor: "Small, gimballed trim chambers that steer and roll the stack while the main engines just push — the Atlas and Jupiter vernier motors, co-developed with the big engines they trim. The fine hand on a heavy rocket."
-    parts: [ROE-LR101_2, ROE-LR101Inline_2, ROE-JupiterVernier, ROE-RD0110Vernier, YF23_Engine]
+    parts: [ROE-LR101_2, ROE-LR101Inline_2, ROE-JupiterVernier, YF23_Engine]
   - id: pc_hypergolics
     title: "Amine-Nitrate Hypergolics"
     discipline: PropellantChemistry
@@ -190,7 +190,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
-    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, RSBRibbedBase, SSTUBase, KzFlatAdapter, KzFlatBoattail, KzProcFairingSide1_TU, KzProcFairingSide2, KzProcFairingSide2_TU, ROT-OpenInterstage, RSBRibbedBase_Boattail, RSBRibbedBase_Interstage, RSBTrussBase, RSBTrussBase_Boattail, RSBTrussBase_Interstage, SSTUBase_Boattail, SSTUBase_Interstage, SSTUHollowRing, SSTUHollowRing_Boattail, SSTUHollowRing_Interstage]
+    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, RSBRibbedBase, SSTUBase, KzFlatAdapter, KzFlatBoattail, KzProcFairingSide1_TU, ROT-OpenInterstage, RSBRibbedBase_Boattail, RSBRibbedBase_Interstage, RSBTrussBase, RSBTrussBase_Boattail, RSBTrussBase_Interstage, SSTUBase_Boattail, SSTUBase_Interstage, SSTUHollowRing, SSTUHollowRing_Boattail, SSTUHollowRing_Interstage]
   - id: aero_recovery
     title: "Drogue-Stabilized Deceleration"
     discipline: Aerodynamics
@@ -244,7 +244,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "A gas-discharge tube that clicks once per ionising particle — cheap, rugged, and the first satellites' sharpest sense. Explorer 1 carried one and found the Van Allen belts. (Its early tier is a science-pacing dial.)"
-    parts: [RO-GeigerMuller, RP0probeVanguardXray, RP0Cherenkov, RO-ScintillationCounter]
+    parts: [RO-GeigerMuller, RP0Cherenkov, RO-ScintillationCounter]
   - id: met_exposurePanels
     title: "Materials Exposure Panels"
     discipline: Metallurgy
@@ -572,7 +572,7 @@ nodes:
     tier: 2
     parents: [start]
     flavor: "Crushable or damped legs — or a cushioning airbag — that catch a touchdown without bouncing or tipping."
-    parts: [landingLeg1, miniLandingLeg, SXTAirbag, SXTAirbagSmall]
+    parts: [landingLeg1, SXTAirbag, SXTAirbagSmall]
   - id: fd_deepThrottleEarly
     title: "Throttleable Restart Combustion"
     discipline: FluidDynamics

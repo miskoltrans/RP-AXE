@@ -410,7 +410,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1507
+    1981
    ]
   },
   {
@@ -425,7 +425,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1313
+    871
    ]
   },
   {
@@ -801,7 +801,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1153
+    711
    ]
   },
   {
@@ -932,7 +932,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2568,
-    1233
+    791
    ]
   },
   {
@@ -978,7 +978,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1354
+    1814
    ]
   },
   {
@@ -990,6 +990,11 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Combustion instability tears a single large chamber apart in milliseconds. The Soviet answer was to not build one: four smaller chambers per engine, each below the acoustic threshold, fed by a common turbopump. The R-7 that launched Sputnik.",
    "parts": [
+    {
+     "name": "ROE-E1",
+     "mod": "ROEngines",
+     "title": "E-1"
+    },
     {
      "name": "ROE-RD107",
      "mod": "ROEngines",
@@ -1024,7 +1029,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1031
+    1658
    ]
   },
   {
@@ -1110,7 +1115,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1111
+    1586
    ]
   },
   {
@@ -1138,11 +1143,6 @@ window.TREE = {
      "title": "LR101"
     },
     {
-     "name": "ROE-RD0110Vernier",
-     "mod": "ROEngines",
-     "title": "RD-0110 Vernier (DEPRECATED)"
-    },
-    {
      "name": "YF23_Engine",
      "mod": "KerwisChineseAerospacePack",
      "title": "YF-23"
@@ -1151,7 +1151,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1183
+    1514
    ]
   },
   {
@@ -1192,7 +1192,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1647
+    2124
    ]
   },
   {
@@ -1213,7 +1213,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    2045
+    2529
    ]
   },
   {
@@ -1228,7 +1228,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1194
+    2054
    ]
   },
   {
@@ -1241,15 +1241,25 @@ window.TREE = {
    "flavor": "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, thrust-limited by heat pickup. The RL-10, and the highest specific impulse a chemical engine reaches.",
    "parts": [
     {
+     "name": "ROE-LR87_LH2",
+     "mod": "ROEngines",
+     "title": "AJ23-65"
+    },
+    {
      "name": "ROE-RL10Fixed",
      "mod": "ROEngines",
      "title": "RL-10 Series (Non-Extendable Nozzle)"
+    },
+    {
+     "name": "ROE-RZ20",
+     "mod": "ROEngines",
+     "title": "RZ.20"
     }
    ],
    "upgrades": [],
    "pos": [
     -1708,
-    871
+    1812
    ]
   },
   {
@@ -1264,7 +1274,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1302
+    1745
    ]
   },
   {
@@ -1287,6 +1297,11 @@ window.TREE = {
      "title": "Aerojet 2.5KS-18000"
     },
     {
+     "name": "ROE-Alcyone1",
+     "mod": "ROEngines",
+     "title": "Alcyone 1 BE-3"
+    },
+    {
      "name": "ROE-Algol1",
      "mod": "ROEngines",
      "title": "Algol IB"
@@ -1297,9 +1312,29 @@ window.TREE = {
      "title": "Algol IB"
     },
     {
+     "name": "ROE-Algol2",
+     "mod": "ROEngines",
+     "title": "Algol II"
+    },
+    {
+     "name": "ROE-Algol2_Inline",
+     "mod": "ROEngines",
+     "title": "Algol II"
+    },
+    {
      "name": "ROE-Altair",
      "mod": "ROEngines",
      "title": "Altair X-248"
+    },
+    {
+     "name": "ROE-AltairII",
+     "mod": "ROEngines",
+     "title": "Altair II X-258"
+    },
+    {
+     "name": "ROE-AltairIII",
+     "mod": "ROEngines",
+     "title": "Altair III FW-4S"
     },
     {
      "name": "ROE-Antares1",
@@ -1310,6 +1345,16 @@ window.TREE = {
      "name": "ROE-Antares1_Inline",
      "mod": "ROEngines",
      "title": "Antares I X-254"
+    },
+    {
+     "name": "ROE-Antares2",
+     "mod": "ROEngines",
+     "title": "Antares IIA X-259"
+    },
+    {
+     "name": "ROE-Antares2_Inline",
+     "mod": "ROEngines",
+     "title": "Antares IIA X-259"
     },
     {
      "name": "ROE-BabySergeant",
@@ -1332,9 +1377,29 @@ window.TREE = {
      "title": "Castor 1"
     },
     {
+     "name": "ROE-Castor1_Inline",
+     "mod": "ROEngines",
+     "title": "Castor 1"
+    },
+    {
+     "name": "ROE-Castor2",
+     "mod": "ROEngines",
+     "title": "Castor 2"
+    },
+    {
+     "name": "ROE-Castor2_Inline",
+     "mod": "ROEngines",
+     "title": "Castor 2"
+    },
+    {
      "name": "ROE-GCRC",
      "mod": "ROEngines",
      "title": "GCRC 33KS-2800"
+    },
+    {
+     "name": "ROE-M55",
+     "mod": "ROEngines",
+     "title": "M55 (Minuteman)"
     },
     {
      "name": "ROE-NikeM5E1",
@@ -1345,12 +1410,32 @@ window.TREE = {
      "name": "ROE-Star13",
      "mod": "ROEngines",
      "title": "STAR 13"
+    },
+    {
+     "name": "ROE-Star13A",
+     "mod": "ROEngines",
+     "title": "STAR 13A"
+    },
+    {
+     "name": "ROE-Star13D",
+     "mod": "ROEngines",
+     "title": "STAR 13D"
+    },
+    {
+     "name": "ROE-Star37",
+     "mod": "ROEngines",
+     "title": "STAR 37"
+    },
+    {
+     "name": "ROE-Star37E",
+     "mod": "ROEngines",
+     "title": "STAR 37E"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    1274
+    1342
    ]
   },
   {
@@ -1466,7 +1551,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1114
+    2134
    ]
   },
   {
@@ -1542,7 +1627,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    711
+    1892
    ]
   },
   {
@@ -1583,7 +1668,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    791
+    1972
    ]
   },
   {
@@ -1598,7 +1683,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1117
+    1971
    ]
   },
   {
@@ -1629,6 +1714,26 @@ window.TREE = {
      "name": "KzThrustPlate",
      "mod": "ProceduralFairings",
      "title": "Thrust Plate [Procedural]"
+    },
+    {
+     "name": "PioneerVernier",
+     "mod": "ROEngines",
+     "title": "Pioneer Adjustment Motor"
+    },
+    {
+     "name": "ROE-1204sepMotor",
+     "mod": "ROEngines",
+     "title": "UA1204 Nosecone & Separation Motor"
+    },
+    {
+     "name": "ROE-1205sepMotor",
+     "mod": "ROEngines",
+     "title": "UA1205 Nosecone & Separation Motor"
+    },
+    {
+     "name": "ROE-120XDecoupler",
+     "mod": "ROEngines",
+     "title": "UA120X Radial Decoupler"
     },
     {
      "name": "ROE-BabySergeantX11Dec",
@@ -1724,7 +1829,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1988
+    1894
    ]
   },
   {
@@ -1739,7 +1844,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1916
+    2286
    ]
   },
   {
@@ -1751,6 +1856,11 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Bleed stored gas through opposed thruster pairs to point and hold a vehicle in vacuum — the first three-axis control where there is no air to push against.",
    "parts": [
+    {
+     "name": "45DegreeRCS",
+     "mod": "VenStockRevamp",
+     "title": "RCS Quad, 45deg (275/445 N class)"
+    },
     {
      "name": "InlineRCS",
      "mod": "VenStockRevamp",
@@ -1777,6 +1887,11 @@ window.TREE = {
      "title": "RCS Block [ 138/223 N Class]"
     },
     {
+     "name": "RCSBlock_275",
+     "mod": "Squad",
+     "title": "RCS Block [ 275/445 N Class]"
+    },
+    {
      "name": "RCSBlock_28",
      "mod": "Squad",
      "title": "RCS Block [  28/45 N Class]"
@@ -1800,6 +1915,11 @@ window.TREE = {
      "name": "RCSLinearSmall_69",
      "mod": "Squad",
      "title": "RCS Thruster [69/111 N Class]"
+    },
+    {
+     "name": "RO-2kN-Thruster",
+     "mod": "Squad",
+     "title": "2.2/3.6kN Thruster"
     },
     {
      "name": "RO-RestockPlus-RCS-Block-Dual-138",
@@ -1872,6 +1992,16 @@ window.TREE = {
      "title": "Aerodynamic RCS 4-Way [69/111 N Class]"
     },
     {
+     "name": "ROC-ApolloRCS",
+     "mod": "ROCapsules",
+     "title": "Apollo Service Module RCS Block"
+    },
+    {
+     "name": "ROC-D2RCS",
+     "mod": "ROCapsules",
+     "title": "D-2 Service Module RCS block"
+    },
+    {
      "name": "ROE-ModularRCS",
      "mod": "ROEngines",
      "title": "Modular RCS"
@@ -1907,6 +2037,11 @@ window.TREE = {
      "title": "Angled RCS Block [ 138/223 N Class]"
     },
     {
+     "name": "RO_RCSBlock_restock_275",
+     "mod": "ReStockPlus",
+     "title": "Angled RCS Block [ 275/445 N Class]"
+    },
+    {
      "name": "RO_RCSBlock_restock_28",
      "mod": "ReStockPlus",
      "title": "Angled RCS Block [  28/45 N Class]"
@@ -1937,9 +2072,19 @@ window.TREE = {
      "title": "Attitude Jet (28/45 N class)"
     },
     {
+     "name": "SXTRCSRack",
+     "mod": "SXT",
+     "title": "Attitude Jet 3x (1.24/2 kN class)"
+    },
+    {
      "name": "ca_RM01",
      "mod": "CoatlAerospace",
      "title": "CAE-RM01 RCS Thruster Block"
+    },
+    {
+     "name": "ca_RM02",
+     "mod": "CoatlAerospace",
+     "title": "CAE-RM02 RCS Thruster Block"
     },
     {
      "name": "ca_jib",
@@ -1957,14 +2102,39 @@ window.TREE = {
      "title": "CA-RS04 RCS Thruster Block"
     },
     {
+     "name": "linearRcs",
+     "mod": "Squad",
+     "title": "Attitude Jet [550/890 N class]"
+    },
+    {
      "name": "microEngine",
      "mod": "Squad",
      "title": "1.1/1.78kN Thruster"
     },
     {
+     "name": "nflv-rcs-aero-heavy-1",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "Aerodynamic RCS 4-Way [275/445 N Class]"
+    },
+    {
+     "name": "nflv-rcs-aero-heavy-2",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "Aerodynamic RCS 4-Way [275/445 N Class]"
+    },
+    {
+     "name": "restock-rcs-block-dual-1",
+     "mod": "ReStockPlus",
+     "title": "RCS Dual [275/445 N Class]"
+    },
+    {
      "name": "restock-rcs-block-dual-mini-1",
      "mod": "ReStockPlus",
      "title": "RCS Dual [69/111 N Class]"
+    },
+    {
+     "name": "restock-rcs-block-quad-angled-1",
+     "mod": "ReStockPlus",
+     "title": "RCS Quad Angled [275/445 N Class]"
     },
     {
      "name": "restock-rcs-block-quad-angled-mini-1",
@@ -1977,9 +2147,19 @@ window.TREE = {
      "title": "RCS Quad [69/111 N Class]"
     },
     {
+     "name": "restock-rcs-block-quint-1",
+     "mod": "ReStockPlus",
+     "title": "RCS 5-Way [275/445 N Class]"
+    },
+    {
      "name": "restock-rcs-block-qunit-mini-1",
      "mod": "ReStockPlus",
      "title": "RCS 5-Way [69/111 N Class]"
+    },
+    {
+     "name": "restock-rcs-block-triple-angled-1",
+     "mod": "ReStockPlus",
+     "title": "RCS Triple Angled [275/445 N Class]"
     },
     {
      "name": "restock-rcs-block-triple-angled-mini-1",
@@ -1995,7 +2175,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1567
+    2196
    ]
   },
   {
@@ -2011,12 +2191,17 @@ window.TREE = {
      "name": "RO-EarlyMagnet",
      "mod": "RP-1",
      "title": "MG01 - Early Magnetometer"
+    },
+    {
+     "name": "RO-HeliumMagnet",
+     "mod": "RP-1",
+     "title": "MG02 - Helium Magnetometer Boom"
     }
    ],
    "upgrades": [],
    "pos": [
     -1708,
-    1727
+    1730
    ]
   },
   {
@@ -2052,16 +2237,6 @@ window.TREE = {
      "name": "KzProcFairingSide1_TU",
      "mod": "ProceduralFairings",
      "title": "Procedural Fairing (Recolorable)"
-    },
-    {
-     "name": "KzProcFairingSide2",
-     "mod": "ProceduralFairings",
-     "title": "Procedural Fairing (Conic) (Deprecated)"
-    },
-    {
-     "name": "KzProcFairingSide2_TU",
-     "mod": "ProceduralFairings",
-     "title": "Procedural Fairing (Conic) (Deprecated) (Recolorable)"
     },
     {
      "name": "KzResizableFairingBase",
@@ -2142,7 +2317,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1754
+    1654
    ]
   },
   {
@@ -2203,7 +2378,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1514
+    2366
    ]
   },
   {
@@ -2234,7 +2409,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1594
+    1422
    ]
   },
   {
@@ -2252,6 +2427,11 @@ window.TREE = {
      "title": "Procedural Probe Core"
     },
     {
+     "name": "SXTAlouetteI",
+     "mod": "SXT",
+     "title": "Alouette Core"
+    },
+    {
      "name": "SXTSputnik",
      "mod": "SXT",
      "title": "Sputnik PS-1"
@@ -2265,7 +2445,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1255
+    1273
    ]
   },
   {
@@ -2301,7 +2481,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1434
+    1574
    ]
   },
   {
@@ -2332,12 +2512,17 @@ window.TREE = {
      "name": "RO-SNAP-9-RTG",
      "mod": "VenStockRevamp",
      "title": "SNAP-9 Series RTG"
+    },
+    {
+     "name": "rtgMini",
+     "mod": "VenStockRevamp",
+     "title": "SNAP-3B Series RTG (Pu238)"
     }
    ],
    "upgrades": [],
    "pos": [
     -1708,
-    1958
+    1353
    ]
   },
   {
@@ -2373,7 +2558,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2161
+    2214
    ]
   },
   {
@@ -2391,15 +2576,20 @@ window.TREE = {
      "title": "CR01 - Geiger-Muller Counter"
     },
     {
-     "name": "RP0probeVanguardXray",
-     "mod": "Squad",
-     "title": "20in X-Ray Detector (DEPRECATED)"
+     "name": "RO-ScintillationCounter",
+     "mod": "RP-1",
+     "title": "CR02 - Scintillation Counter Cosmic Ray Telescope"
+    },
+    {
+     "name": "RP0Cherenkov",
+     "mod": "RP-1",
+     "title": "CD01 - Cherenkov Cosmic Ray Detector"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    1674
+    1502
    ]
   },
   {
@@ -2435,12 +2625,17 @@ window.TREE = {
      "name": "USGooBayWedge",
      "mod": "UniversalStorage2",
      "title": "Biological Sample Capsule"
+    },
+    {
+     "name": "USMatBayWedge",
+     "mod": "UniversalStorage2",
+     "title": "Crewed Experiment Bay"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    1034
+    1262
    ]
   },
   {
@@ -2458,6 +2653,11 @@ window.TREE = {
      "title": "PH02 - Basic Film Camera"
     },
     {
+     "name": "RO-ImprovedFilmCamera",
+     "mod": "RP-1",
+     "title": "PH03 - Improved Film Camera"
+    },
+    {
      "name": "science_module",
      "mod": "Squad",
      "title": "PH01 - Early Film Camera"
@@ -2466,7 +2666,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2241
+    2457
    ]
   },
   {
@@ -2479,6 +2679,11 @@ window.TREE = {
    "flavor": "Scan an image off a photoconductive vidicon tube and send it down as live video — no film to recover, but coarser than film. The other way to see: film returns the detail, the vidicon returns the immediacy.",
    "parts": [
     {
+     "name": "RO-BasicTVCamera",
+     "mod": "RP-1",
+     "title": "VI02 - Basic TV Camera"
+    },
+    {
      "name": "RO-EarlyTVCamera",
      "mod": "RP-1",
      "title": "VI01 - Early Television Camera"
@@ -2487,7 +2692,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    2321
+    2548
    ]
   },
   {
@@ -2505,15 +2710,30 @@ window.TREE = {
      "title": "MS01 - Ion Mass Spectrometer"
     },
     {
+     "name": "RO-MIMS",
+     "mod": "RP-1",
+     "title": "MS02 - Magnetic Ion-Mass Spectrometer (MIMS)"
+    },
+    {
+     "name": "USAccelGravWedge",
+     "mod": "UniversalStorage2",
+     "title": "Orbital Science Unit"
+    },
+    {
      "name": "USFluidSpectroWedge",
      "mod": "UniversalStorage2",
      "title": "Mass Spectrometer Unit"
+    },
+    {
+     "name": "sensorGravimeter",
+     "mod": "Squad",
+     "title": "Orbital Perturbation Experiment"
     }
    ],
    "upgrades": [],
    "pos": [
     -2138,
-    2089
+    1974
    ]
   },
   {
@@ -2539,7 +2759,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    2038
+    2278
    ]
   },
   {
@@ -2554,7 +2774,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1009
+    1804
    ]
   },
   {
@@ -2580,7 +2800,922 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1288
+    1824
+   ]
+  },
+  {
+   "id": "met_oxRichSuperalloys",
+   "title": "Oxidizer-Rich Preburner Superalloys",
+   "discipline": "Metallurgy",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Run the preburner oxidiser-rich and its exhaust is a torch of hot oxygen that eats ordinary steel; the closed staged-combustion cycle only exists once metallurgy delivers an alloy that survives it. The Soviet answer Western engineers thought impossible — the RD-58 and the Proton's RD-0210 chambers, where the hardest part was never the plumbing but the metal.",
+   "parts": [
+    {
+     "name": "ROE-RD0203",
+     "mod": "ROEngines",
+     "title": "RD-0203/0204"
+    },
+    {
+     "name": "ROE-RD0212",
+     "mod": "ROEngines",
+     "title": "RD-0205/0212"
+    },
+    {
+     "name": "ROE-RD0213",
+     "mod": "ROEngines",
+     "title": "RD-0206/0213"
+    },
+    {
+     "name": "ROE-RD0214",
+     "mod": "ROEngines",
+     "title": "RD-0207/0214"
+    },
+    {
+     "name": "ROE-RD58",
+     "mod": "ROEngines",
+     "title": "S1.5400/RD-58 Series"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    1702
+   ]
+  },
+  {
+   "id": "pc_pressureFedService",
+   "title": "Storable Pressure-Fed Service Engines",
+   "discipline": "PropellantChemistry",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "A hypergolic engine that needs no turbopump and no igniter, restarts on command after days in coast, and is trusted to light every single time — the propulsion of a spacecraft's own service module. The Apollo SPS entered and left lunar orbit on one engine that simply could not be allowed to fail.",
+   "parts": [
+    {
+     "name": "RO-KTDU5A",
+     "mod": "Squad",
+     "title": "KTDU-5A"
+    },
+    {
+     "name": "ROE-AJ10-137",
+     "mod": "ROEngines",
+     "title": "AJ10-137 (Service Propulsion System)"
+    },
+    {
+     "name": "ROE-AJ10Adv",
+     "mod": "ROEngines",
+     "title": "AJ10 Series (Advanced Short Nozzle)"
+    },
+    {
+     "name": "ROE-KTDU35",
+     "mod": "ROEngines",
+     "title": "KTDU-35"
+    },
+    {
+     "name": "ROE-S523",
+     "mod": "ROEngines",
+     "title": "S5.23"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    1862
+   ]
+  },
+  {
+   "id": "fd_deepThrottle",
+   "title": "Deep-Throttle Terminal Descent",
+   "discipline": "FluidDynamics",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Hold stable combustion from full thrust down to a tenth of it and back, closed-loop, against a falling vehicle and a rising surface — the throttleable engine that flies a controlled hover to a soft touchdown. Surveyor's vernier trio, feeling for the Moon in the last hundred metres.",
+   "parts": [
+    {
+     "name": "ROE-TD339",
+     "mod": "ROEngines",
+     "title": "TD-339"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    1542
+   ]
+  },
+  {
+   "id": "fd_propellantSettling",
+   "title": "Zero-G Propellant Settling",
+   "discipline": "FluidDynamics",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "In freefall the propellant floats off the outlet and an engine restart swallows gas and dies. Fire a small settling motor to nudge the stack forward and the liquid falls back onto the pumps — the unglamorous trick that turns a single burn into a parking orbit, a coast, and a second light toward another world.",
+   "parts": [
+    {
+     "name": "ROE-TX280",
+     "mod": "ROEngines",
+     "title": "S-IV TX-280 Ullage Motor"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -418,
+    1904
+   ]
+  },
+  {
+   "id": "str_segmentedSolids",
+   "title": "Segmented Solid-Motor Cases",
+   "discipline": "StructuresMechanisms",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Cast a solid grain too large to ship in one piece, then bolt the segments together with joints that must seal a thousand-tonne pressure with no path to the outside. The case, not the chemistry, is the breakthrough — the Titan III strap-ons and the monstrous AJ-260, the largest solid motor ever fired.",
+   "parts": [
+    {
+     "name": "ROE-AJ260SLA",
+     "mod": "ROEngines",
+     "title": "AJ-260 SL Radial Solid Rocket Booster"
+    },
+    {
+     "name": "ROE-AJ260SLF",
+     "mod": "ROEngines",
+     "title": "AJ-260 SL"
+    },
+    {
+     "name": "ROE-SR19",
+     "mod": "ROEngines",
+     "title": "SR19"
+    },
+    {
+     "name": "ROE-SR73",
+     "mod": "ROEngines",
+     "title": "SR73"
+    },
+    {
+     "name": "ROE-UA1204",
+     "mod": "ROEngines",
+     "title": "UA1204"
+    },
+    {
+     "name": "ROE-UA1205",
+     "mod": "ROEngines",
+     "title": "UA1205"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    1072
+   ]
+  },
+  {
+   "id": "elec_fuelCell",
+   "title": "Alkaline Fuel Cells",
+   "discipline": "ElectricalPower",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "React hydrogen and oxygen across a potassium-hydroxide electrolyte and draw kilowatts straight from the reaction, with drinkable water as the only exhaust — power for a crewed craft that needs more than batteries and cannot wait on the sun. Gemini and Apollo ran on them.",
+   "parts": [
+    {
+     "name": "FuelCell",
+     "mod": "Squad",
+     "title": "Fuel Cell"
+    },
+    {
+     "name": "FuelCellArray",
+     "mod": "Squad",
+     "title": "Fuel Cell Array"
+    },
+    {
+     "name": "USFuelCellMedium",
+     "mod": "UniversalStorage2",
+     "title": "Universal Storage: 1500W Fuel Cell"
+    },
+    {
+     "name": "USFuelCellSmal",
+     "mod": "UniversalStorage2",
+     "title": "Universal Storage: 1000W Fuel Cell"
+    },
+    {
+     "name": "kerbalism-fuelcell",
+     "mod": "KerbalismConfig",
+     "title": "External Fuel Cell"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -418,
+    2659
+   ]
+  },
+  {
+   "id": "elec_deployableArray",
+   "title": "Deployable Articulated Solar Arrays",
+   "discipline": "ElectricalPower",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "Fold the cells flat for launch, spring them out on orbit and hinge them to face the sun as the craft turns — hundreds of watts from a wing that stows in a fairing. The step from a satellite skinned in cells to a probe that spreads its arrays and cruises to another planet.",
+   "parts": [
+    {
+     "name": "1x3SPanels",
+     "mod": "VenStockRevamp",
+     "title": "OX-2L 1x3 Photovoltaic Panels"
+    },
+    {
+     "name": "ROS-FoldingSolarPanel",
+     "mod": "ROSolar",
+     "title": "Folding Solar Panel"
+    },
+    {
+     "name": "ROS-HingedSolarPanel",
+     "mod": "ROSolar",
+     "title": "Hinged Solar Panel"
+    },
+    {
+     "name": "ca_argo-mk2-solar",
+     "mod": "CoatlAerospace",
+     "title": "Mariner Mars Solar Array Wing (SAW)"
+    },
+    {
+     "name": "ca_landv_sp",
+     "mod": "CoatlAerospace",
+     "title": "Surveyor Orbiter Solar Array Wing"
+    },
+    {
+     "name": "solarPanels4",
+     "mod": "Squad",
+     "title": "XT1 Solar Panel Array Mk1"
+    },
+    {
+     "name": "solarPanels5",
+     "mod": "Squad",
+     "title": "ST1 Solar Panel"
+    },
+    {
+     "name": "sp_mariner_a",
+     "mod": "CoatlAerospace",
+     "title": "CA-E100 1x2 Solar Panel"
+    },
+    {
+     "name": "sp_mariner_b",
+     "mod": "CoatlAerospace",
+     "title": "CA-E100-SPV 1x2 Solar Panel"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -418,
+    1621
+   ]
+  },
+  {
+   "id": "elec_deepSpacePower",
+   "title": "Deep-Space Power",
+   "discipline": "ElectricalPower",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": true,
+   "flavor": "Keep a spacecraft alive light-hours from home, for years, however far the sun recedes — deployed arrays where sunlight still reaches, a decaying isotope's warmth where it does not. Two answers to the same question of where the watts come from out in the dark; the flyby chooses by how far it is going.",
+   "parts": [],
+   "upgrades": [],
+   "pos": [
+    12,
+    1462
+   ]
+  },
+  {
+   "id": "gnc_reactionWheels",
+   "title": "Momentum-Exchange Attitude Control",
+   "discipline": "GuidanceControl",
+   "tier": 4,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Spin a flywheel one way and the spacecraft turns the other — point and hold without spending a gram of propellant, indefinitely. The propellant-free half of attitude control, paid for in electricity and the patience of a slow slew.",
+   "parts": [
+    {
+     "name": "ca_rw_small",
+     "mod": "CoatlAerospace",
+     "title": "RW4 Radial Reaction Wheel"
+    },
+    {
+     "name": "ca_rw_xsmall",
+     "mod": "CoatlAerospace",
+     "title": "RW1 Radial Reaction Wheel"
+    },
+    {
+     "name": "sasModule",
+     "mod": "Squad",
+     "title": "Small Inline Reaction Wheel"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -848,
+    2034
+   ]
+  },
+  {
+   "id": "gnc_attitude3axis",
+   "title": "Three-Axis Pointing",
+   "discipline": "GuidanceControl",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": true,
+   "flavor": "Hold a chosen orientation in all three axes and slew to a new one on command — the stable platform every camera, dish and star sensor is bolted to. Reach it by spending propellant through thrusters or by trading momentum with wheels; the payload only cares that it stays pointed.",
+   "parts": [],
+   "upgrades": [],
+   "pos": [
+    -418,
+    2107
+   ]
+  },
+  {
+   "id": "gnc_starTracker",
+   "title": "Stellar Attitude Determination",
+   "discipline": "GuidanceControl",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Photograph a patch of sky, match the pattern to a catalogue, and know exactly which way you face with no help from the ground — absolute orientation from the stars themselves. Mariner locked onto Canopus and held its aim across months and hundreds of millions of kilometres.",
+   "parts": [
+    {
+     "name": "ca_startrack",
+     "mod": "CoatlAerospace",
+     "title": "CA-ACS 'StarTrack' Attitude Control System"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    2102
+   ]
+  },
+  {
+   "id": "tel_parabolicHGA",
+   "title": "Steerable Parabolic High-Gain Link",
+   "discipline": "Telecommunications",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Focus the downlink into a pencil beam with a parabolic dish and aim it back at a single point on a planet shrinking behind you — the only way to pull a few bits per second out of interplanetary distance. Gain bought with area and paid for in pointing.",
+   "parts": [
+    {
+     "name": "HighGainAntenna",
+     "mod": "Squad",
+     "title": "1.25m Retractable Parabolic Antenna"
+    },
+    {
+     "name": "HighGainAntenna5_v2",
+     "mod": "Squad",
+     "title": "HG-5 Retractable Parabolic Antenna"
+    },
+    {
+     "name": "ROC-D2Antenna",
+     "mod": "ROCapsules",
+     "title": "D-2 High Gain Antenna"
+    },
+    {
+     "name": "ROC-DynaAntenna",
+     "mod": "ROCapsules",
+     "title": "DynaSoar Telemetry Antenna"
+    },
+    {
+     "name": "ROC-GeminiAntenna",
+     "mod": "ROCapsules",
+     "title": "Gemini Antenna"
+    },
+    {
+     "name": "ROC-GeminiAntennaBDB",
+     "mod": "ROCapsules",
+     "title": "Gemini UHF Whip Antenna"
+    },
+    {
+     "name": "RelayAntenna100",
+     "mod": "Squad",
+     "title": "RA-100 Parabolic Antenna (4m)"
+    },
+    {
+     "name": "RelayAntenna3m",
+     "mod": "Squad",
+     "title": "3m Parabolic Antenna"
+    },
+    {
+     "name": "RelayAntenna5",
+     "mod": "Squad",
+     "title": "RA-2 Parabolic Antenna (1m)"
+    },
+    {
+     "name": "RelayAntenna50",
+     "mod": "Squad",
+     "title": "RA-15 Parabolic Antenna (2m)"
+    },
+    {
+     "name": "antenna_quetzal",
+     "mod": "CoatlAerospace",
+     "title": "CA-A06 Omnidirectional Antenna"
+    },
+    {
+     "name": "ca_argo-mk2-hga",
+     "mod": "CoatlAerospace",
+     "title": "Mariner Mars & Venus High Gain Antenna (HGA)"
+    },
+    {
+     "name": "ca_argo-mk2-mast",
+     "mod": "CoatlAerospace",
+     "title": "Mariner Mars & Venus Low Gain Antenna (LGA)"
+    },
+    {
+     "name": "ca_landv_hga",
+     "mod": "CoatlAerospace",
+     "title": "Surveyor Planar Antenna and Solar Array"
+    },
+    {
+     "name": "ca_landv_omni",
+     "mod": "CoatlAerospace",
+     "title": "Surveyor Low Gain Antenna (LGA)"
+    },
+    {
+     "name": "ca_landv_orbiter_HGA",
+     "mod": "CoatlAerospace",
+     "title": "Surveyor Orbiter High Gain Antenna"
+    },
+    {
+     "name": "dish_deploy_S",
+     "mod": "CoatlAerospace",
+     "title": "CA-A10 Folding Dish Antenna"
+    },
+    {
+     "name": "dish_deploy_S2",
+     "mod": "CoatlAerospace",
+     "title": "Mariner Mars High Gain Antenna (HGA)"
+    },
+    {
+     "name": "mediumDishAntenna",
+     "mod": "Squad",
+     "title": "Communotron DTS-M1"
+    },
+    {
+     "name": "nfex-antenna-deploy-wv3-1",
+     "mod": "NearFutureExploration",
+     "title": "DR-3 Deployable High Gain Antenna"
+    },
+    {
+     "name": "nfex-antenna-feeder-direct-1",
+     "mod": "NearFutureExploration",
+     "title": "F-DA Direct Antenna Feed"
+    },
+    {
+     "name": "nfex-antenna-reflector-side-1",
+     "mod": "NearFutureExploration",
+     "title": "RFL-1 Dish Reflector"
+    },
+    {
+     "name": "nfex-antenna-reflector-side-2",
+     "mod": "NearFutureExploration",
+     "title": "RFL-2 Medium Dish Reflector"
+    },
+    {
+     "name": "nfex-antenna-reflector-side-3",
+     "mod": "NearFutureExploration",
+     "title": "RFL-3 Dish Reflector Array"
+    },
+    {
+     "name": "nfex-antenna-relay-tdrs-1",
+     "mod": "NearFutureExploration",
+     "title": "RA-0-8 Relay Antenna"
+    },
+    {
+     "name": "nfex-antenna-relay-tdrs-2",
+     "mod": "NearFutureExploration",
+     "title": "RA-5B Advanced Relay Antenna"
+    },
+    {
+     "name": "nfex-antenna-relay-tiny-1",
+     "mod": "NearFutureExploration",
+     "title": "RA-00-2 Micro-Relay Antenna"
+    },
+    {
+     "name": "nfex-antenna-rover-3",
+     "mod": "NearFutureExploration",
+     "title": "AX-30 High Gain Micro-Antenna"
+    },
+    {
+     "name": "nfex-antenna-static-mini-1",
+     "mod": "NearFutureExploration",
+     "title": "DR-1 High Gain Antenna"
+    },
+    {
+     "name": "nfex-antenna-top-dish-1",
+     "mod": "NearFutureExploration",
+     "title": "D-2 Spot Antenna"
+    },
+    {
+     "name": "nfex-antenna-top-dish-2",
+     "mod": "NearFutureExploration",
+     "title": "D-50 Large Spot Antenna"
+    },
+    {
+     "name": "restock-antenna-stack-2",
+     "mod": "ReStockPlus",
+     "title": "Communotron DTS-J1"
+    },
+    {
+     "name": "restock-antenna-stack-3",
+     "mod": "ReStockPlus",
+     "title": "Communotron HG-61"
+    },
+    {
+     "name": "restock-relay-radial-2",
+     "mod": "ReStockPlus",
+     "title": "HG-20 High Gain Antenna"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    1942
+   ]
+  },
+  {
+   "id": "str_docking",
+   "title": "Orbital Docking Mechanism",
+   "discipline": "StructuresMechanisms",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Bring two vehicles together at centimetres a second, catch, latch and rigidise a structural connection in orbit — the mechanism that lets spacecraft be assembled and refuelled rather than flown whole. Gemini VIII caught its Agena, the first time two craft ever became one.",
+   "parts": [
+    {
+     "name": "HeavyRcs",
+     "mod": "VenStockRevamp",
+     "title": "RCS Quad (550/890 N class)"
+    },
+    {
+     "name": "RCSBlock_413",
+     "mod": "Squad",
+     "title": "RCS Block [ 413/668 N Class]"
+    },
+    {
+     "name": "RCSBlock_550",
+     "mod": "Squad",
+     "title": "RCS Block [ 550/890 N Class]"
+    },
+    {
+     "name": "ROC-AgenaFairing",
+     "mod": "ROCapsules",
+     "title": "Agena Target Vehicle Nose Cone"
+    },
+    {
+     "name": "ROC-AgenaPort",
+     "mod": "ROCapsules",
+     "title": "Gemini Agena Target Vehicle Docking Port"
+    },
+    {
+     "name": "ROC-GeminiNoseconeBDB",
+     "mod": "ROCapsules",
+     "title": "Gemini Nose Docking Mechanism"
+    },
+    {
+     "name": "RO_RCSBlock_restock_413",
+     "mod": "ReStockPlus",
+     "title": "Angled RCS Block [ 413/668 N Class]"
+    },
+    {
+     "name": "RO_RCSBlock_restock_550",
+     "mod": "ReStockPlus",
+     "title": "Angled RCS Block [ 550/890 N Class]"
+    },
+    {
+     "name": "dockingPort3",
+     "mod": "Squad",
+     "title": "Docking Port (propellant only)"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    1782
+   ]
+  },
+  {
+   "id": "str_touchdownAbsorption",
+   "title": "Touchdown Energy Absorption",
+   "discipline": "StructuresMechanisms",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Meet the surface at a survivable speed and turn the last of the kinetic energy into crushed metal, compressed strut or a bounced airbag instead of a wreck — legs for a controlled settle, a crushable shell or an inflated cushion for a harder arrival. The difference between landing and impacting.",
+   "parts": [
+    {
+     "name": "ShieldCapLarge",
+     "mod": "VenStockRevamp",
+     "title": "Mk2 Pod Protective Cover"
+    },
+    {
+     "name": "landerCabinSmall",
+     "mod": "Squad",
+     "title": "Mk1 Lander Can"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    1622
+   ]
+  },
+  {
+   "id": "rob_servos",
+   "title": "Electric Servo Actuators",
+   "discipline": "Robotics",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "A motor, a gearbox and a position feedback loop in one sealed can — command an angle and the shaft holds it against load. The root of every deployed boom, gimballed dish, hinged panel and jointed arm a spacecraft carries; robotics begins here.",
+   "parts": [
+    {
+     "name": "controller1000",
+     "mod": "SquadExpansion",
+     "title": "KAL-1000 Controller"
+    },
+    {
+     "name": "hinge_01",
+     "mod": "SquadExpansion",
+     "title": "G-11 Hinge"
+    },
+    {
+     "name": "hinge_01_s",
+     "mod": "SquadExpansion",
+     "title": "G-00 Hinge"
+    },
+    {
+     "name": "hinge_03",
+     "mod": "SquadExpansion",
+     "title": "G-12L Alligator Hinge"
+    },
+    {
+     "name": "hinge_03_s",
+     "mod": "SquadExpansion",
+     "title": "G-01L Alligator Hinge"
+    },
+    {
+     "name": "hinge_04",
+     "mod": "SquadExpansion",
+     "title": "G-32W Hinge"
+    },
+    {
+     "name": "piston_01",
+     "mod": "SquadExpansion",
+     "title": "3P6 Hydraulic Cylinder"
+    },
+    {
+     "name": "piston_02",
+     "mod": "SquadExpansion",
+     "title": "1P2 Hydraulic Cylinder"
+    },
+    {
+     "name": "piston_03",
+     "mod": "SquadExpansion",
+     "title": "3PT Telescoping Hydraulic Cylinder"
+    },
+    {
+     "name": "piston_04",
+     "mod": "SquadExpansion",
+     "title": "1P4 Telescoping Hydraulic Cylinder"
+    },
+    {
+     "name": "rotoServo_00",
+     "mod": "SquadExpansion",
+     "title": "Rotation Servo M-06"
+    },
+    {
+     "name": "rotoServo_02",
+     "mod": "SquadExpansion",
+     "title": "Rotation Servo F-12"
+    },
+    {
+     "name": "rotoServo_03",
+     "mod": "SquadExpansion",
+     "title": "Rotation Servo M-12"
+    },
+    {
+     "name": "rotoServo_04",
+     "mod": "SquadExpansion",
+     "title": "Rotation Servo M-25"
+    },
+    {
+     "name": "rotor_02",
+     "mod": "SquadExpansion",
+     "title": "EM-32 Standard Rotor"
+    },
+    {
+     "name": "rotor_02s",
+     "mod": "SquadExpansion",
+     "title": "EM-32S Standard Rotor"
+    },
+    {
+     "name": "rotor_03",
+     "mod": "SquadExpansion",
+     "title": "EM-64 Heavy Rotor"
+    },
+    {
+     "name": "rotor_03s",
+     "mod": "SquadExpansion",
+     "title": "EM-64S Heavy Rotor"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -418,
+    2472
+   ]
+  },
+  {
+   "id": "rob_roverWheels",
+   "title": "Powered Rover Wheels",
+   "discipline": "Robotics",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Independently driven wheels with their own motors and suspension, carrying a machine across a surface no one has driven on — traction, steering and survival on regolith. The lineage of every rover from Lunokhod onward.",
+   "parts": [
+    {
+     "name": "KF-WheelSmall",
+     "mod": "KerbalFoundries",
+     "title": "KF Small Rover Wheel"
+    },
+    {
+     "name": "KF-WheelTiny",
+     "mod": "KerbalFoundries",
+     "title": "KF  Tiny Rover Wheel"
+    },
+    {
+     "name": "roverWheel1",
+     "mod": "Squad",
+     "title": "RoveMax Model M1"
+    },
+    {
+     "name": "roverWheel2",
+     "mod": "Squad",
+     "title": "RoveMax Model S2"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    2339
+   ]
+  },
+  {
+   "id": "rob_surfaceSampler",
+   "title": "Robotic Surface Sampling",
+   "discipline": "Robotics",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Reach out a jointed arm, scrape, scoop or press the surface, and read back what a world is made of and how it bears a load — the first hands on another body. Surveyor's scoop dug the trench that proved the Moon would hold a lander's weight.",
+   "parts": [
+    {
+     "name": "RO-SurfaceSampleScoop",
+     "mod": "RP-1",
+     "title": "Soil Mechanics Surface Sampler"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    2419
+   ]
+  },
+  {
+   "id": "cmp_ablativeHeatshield",
+   "title": "Ablative Reentry Heatshields",
+   "discipline": "CompositeMaterials",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Line the windward face with a char-forming resin that carries heat away by burning itself off, slowly and on purpose — the shield that survives an entry too hot for any passive coating. The Apollo AVCOAT that brought a crew home from the Moon at eleven kilometres a second.",
+   "parts": [
+    {
+     "name": "ROC-ApolloHSBDB",
+     "mod": "ROCapsules",
+     "title": "Apollo Command Module Heatshield"
+    },
+    {
+     "name": "ROC-GeminiHSBDB",
+     "mod": "ROCapsules",
+     "title": "Gemini Heatshield"
+    },
+    {
+     "name": "ROC-GeminiHSLunarBDB",
+     "mod": "ROCapsules",
+     "title": "Gemini Lunar Heatshield"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    2022
+   ]
+  },
+  {
+   "id": "opt_irRadiometry",
+   "title": "Infrared Radiometry",
+   "discipline": "OpticsPhotonics",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "Measure the heat a surface or atmosphere radiates rather than the light it reflects, and read temperature from across space — the sense that works on the night side and sees through the visible haze. Mariner 2 swept its radiometers across Venus and found a surface far too hot for oceans.",
+   "parts": [
+    {
+     "name": "RO-HRIRRadiometer",
+     "mod": "RP-1",
+     "title": "IR02 - High-Resolution Infrared Radiometer"
+    },
+    {
+     "name": "RO-IRRadiometer",
+     "mod": "RP-1",
+     "title": "IR01 - Infrared Radiometer"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    -418,
+    2579
+   ]
+  },
+  {
+   "id": "opt_spectrometry",
+   "title": "Infrared Interferometer Spectrometry",
+   "discipline": "OpticsPhotonics",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Split the incoming light into its full spectrum and read the absorption lines of the gases and minerals that imprinted it — composition itself, measured from orbit. The interferometer-spectrometer that identifies what a world is made of without ever touching it.",
+   "parts": [
+    {
+     "name": "RO-IRIS",
+     "mod": "RP-1",
+     "title": "IS01 - Infrared Interferometer Spectrometer (IRIS)"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    12,
+    2499
+   ]
+  },
+  {
+   "id": "int_deepSpaceProbe",
+   "title": "Interplanetary Cruise Bus",
+   "discipline": "SystemsIntegration",
+   "tier": 7,
+   "cost": 2300,
+   "anyToUnlock": false,
+   "flavor": "A spacecraft that closes the link across the void and keeps itself powered and pointed for the months it takes to reach another planet — the emissary bus every flyby and orbiter is built on. Everything else it carries is payload; these two are what make it interplanetary. (The US/Soviet probe packs fly their named craft from the charter labs on top of this.)",
+   "parts": [
+    {
+     "name": "ca_argo-mk2",
+     "mod": "CoatlAerospace",
+     "title": "Mariner Mars & Venus Spacecraft Bus"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    442,
+    1773
+   ]
+  },
+  {
+   "id": "int_roboticLander",
+   "title": "Robotic Soft-Lander",
+   "discipline": "SystemsIntegration",
+   "tier": 7,
+   "cost": 2300,
+   "anyToUnlock": true,
+   "flavor": "Arrive at a surface slow enough to survive it — either fly a controlled hover down on a throttled engine and settle onto legs, or brake hard and let a crushable shell or airbag take the blow. Two roads to the same first footprint: Surveyor rode its verniers down, Luna 9 bounced. (The named landers fly from the charter labs; this is the capability they need.)",
+   "parts": [
+    {
+     "name": "ca_landv_core",
+     "mod": "CoatlAerospace",
+     "title": "Surveyor Lander Core"
+    },
+    {
+     "name": "ca_landv_orbiter_core",
+     "mod": "CoatlAerospace",
+     "title": "Surveyor Orbiter Core"
+    }
+   ],
+   "upgrades": [],
+   "pos": [
+    442,
+    1653
    ]
   },
   {
@@ -2911,7 +4046,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -2138,
-    1836
+    1734
    ]
   },
   {
@@ -2942,7 +4077,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1487
+    1434
    ]
   },
   {
@@ -3008,7 +4143,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1799
+    1521
    ]
   },
   {
@@ -3049,7 +4184,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1425
+    1495
    ]
   },
   {
@@ -3085,7 +4220,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1505
+    1415
    ]
   },
   {
@@ -3121,7 +4256,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1704
+    1549
    ]
   },
   {
@@ -3182,7 +4317,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1579
+    1601
    ]
   },
   {
@@ -3203,7 +4338,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1335
+    2358
    ]
   },
   {
@@ -3234,7 +4369,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1415
+    2438
    ]
   },
   {
@@ -3290,7 +4425,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -418,
-    1594
+    2179
    ]
   },
   {
@@ -3316,7 +4451,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     12,
-    1331
+    2182
    ]
   },
   {
@@ -3342,17 +4477,12 @@ window.TREE = {
      "name": "landingLeg1",
      "mod": "Squad",
      "title": "LT-1 Landing Struts"
-    },
-    {
-     "name": "miniLandingLeg",
-     "mod": "Squad",
-     "title": "LT-05 Micro Landing Strut (DEPRECATED)"
     }
    ],
    "upgrades": [],
    "pos": [
     -1708,
-    1798
+    2529
    ]
   },
   {
@@ -3373,7 +4503,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1391
+    1673
    ]
   },
   {
@@ -3404,7 +4534,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    1878
+    2601
    ]
   },
   {
@@ -3440,7 +4570,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1965
+    2186
    ]
   },
   {
@@ -3541,7 +4671,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1885
+    2106
    ]
   },
   {
@@ -3572,7 +4702,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -848,
-    1089
+    1627
    ]
   },
   {
@@ -3608,7 +4738,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    951
+    1201
    ]
   },
   {
@@ -3629,7 +4759,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1708,
-    2119
+    2044
    ]
   },
   {
@@ -3655,7 +4785,7 @@ window.TREE = {
    "upgrades": [],
    "pos": [
     -1278,
-    1719
+    1441
    ]
   }
  ],
@@ -3667,11 +4797,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1354
+     1814
     ]
    ]
   },
@@ -3682,11 +4812,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1354
+     1814
     ],
     [
      -1708,
-     1031
+     1658
     ]
    ]
   },
@@ -3697,11 +4827,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1354
+     1814
     ],
     [
      -1708,
-     1111
+     1586
     ]
    ]
   },
@@ -3712,11 +4842,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1354
+     1814
     ],
     [
      -1708,
-     1183
+     1514
     ]
    ]
   },
@@ -3727,15 +4857,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1952
+     2250
     ],
     [
      -1708,
-     1647
+     2124
     ]
    ]
   },
@@ -3746,19 +4876,19 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     2024
+     2493
     ],
     [
      -1708,
-     1763
+     2483
     ],
     [
      -1278,
-     2045
+     2529
     ]
    ]
   },
@@ -3769,11 +4899,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1194
+     2054
     ]
    ]
   },
@@ -3784,11 +4914,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1194
+     2054
     ],
     [
      -1708,
-     871
+     1812
     ]
    ]
   },
@@ -3799,11 +4929,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1031
+     1658
     ],
     [
      -1278,
-     1302
+     1745
     ]
    ]
   },
@@ -3814,11 +4944,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1111
+     1586
     ],
     [
      -1278,
-     1302
+     1745
     ]
    ]
   },
@@ -3829,11 +4959,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     871
+     1812
     ],
     [
      -1278,
-     1302
+     1745
     ]
    ]
   },
@@ -3844,11 +4974,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1274
+     1342
     ]
    ]
   },
@@ -3859,11 +4989,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1114
+     2134
     ]
    ]
   },
@@ -3874,11 +5004,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1114
+     2134
     ],
     [
      -1708,
-     711
+     1892
     ]
    ]
   },
@@ -3889,11 +5019,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1114
+     2134
     ],
     [
      -1708,
-     791
+     1972
     ]
    ]
   },
@@ -3904,11 +5034,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     711
+     1892
     ],
     [
      -1278,
-     1117
+     1971
     ]
    ]
   },
@@ -3919,11 +5049,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     791
+     1972
     ],
     [
      -1278,
-     1117
+     1971
     ]
    ]
   },
@@ -3934,11 +5064,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1988
+     1894
     ]
    ]
   },
@@ -3949,11 +5079,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1916
+     2286
     ]
    ]
   },
@@ -3964,11 +5094,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1916
+     2286
     ],
     [
      -1708,
-     1567
+     2196
     ]
    ]
   },
@@ -3979,11 +5109,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1988
+     1894
     ],
     [
      -1708,
-     1727
+     1730
     ]
    ]
   },
@@ -3994,11 +5124,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1754
+     1654
     ]
    ]
   },
@@ -4009,11 +5139,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1514
+     2366
     ]
    ]
   },
@@ -4024,11 +5154,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1594
+     1422
     ]
    ]
   },
@@ -4039,11 +5169,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1594
+     1422
     ],
     [
      -1708,
-     1255
+     1273
     ]
    ]
   },
@@ -4054,11 +5184,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1434
+     1574
     ]
    ]
   },
@@ -4069,15 +5199,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     2053
+     1538
     ],
     [
      -1708,
-     1958
+     1353
     ]
    ]
   },
@@ -4088,11 +5218,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     2161
+     2214
     ]
    ]
   },
@@ -4103,11 +5233,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1674
+     1502
     ]
    ]
   },
@@ -4118,11 +5248,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1034
+     1262
     ]
    ]
   },
@@ -4133,11 +5263,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     2241
+     2457
     ]
    ]
   },
@@ -4148,11 +5278,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     2321
+     2548
     ]
    ]
   },
@@ -4163,11 +5293,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     2089
+     1974
     ]
    ]
   },
@@ -4178,15 +5308,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     2125
+     2402
     ],
     [
      -1708,
-     2038
+     2278
     ]
    ]
   },
@@ -4197,11 +5327,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1302
+     1745
     ],
     [
      -848,
-     1009
+     1804
     ]
    ]
   },
@@ -4212,11 +5342,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1117
+     1971
     ],
     [
      -848,
-     1009
+     1804
     ]
    ]
   },
@@ -4227,11 +5357,740 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1009
+     1804
     ],
     [
      -418,
-     1288
+     1824
+    ]
+   ]
+  },
+  {
+   "from": "met_isogrid",
+   "to": "met_oxRichSuperalloys",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1708,
+     1892
+    ],
+    [
+     -1278,
+     1935
+    ],
+    [
+     -848,
+     1850
+    ],
+    [
+     -418,
+     1940
+    ],
+    [
+     12,
+     1702
+    ]
+   ]
+  },
+  {
+   "from": "fd_turbopumpFeed",
+   "to": "met_oxRichSuperalloys",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1814
+    ],
+    [
+     -1708,
+     1622
+    ],
+    [
+     -1278,
+     1709
+    ],
+    [
+     -848,
+     1591
+    ],
+    [
+     -418,
+     1712
+    ],
+    [
+     12,
+     1702
+    ]
+   ]
+  },
+  {
+   "from": "pc_hypergolics",
+   "to": "pc_pressureFedService",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1708,
+     2124
+    ],
+    [
+     -1278,
+     2070
+    ],
+    [
+     -848,
+     1942
+    ],
+    [
+     -418,
+     1992
+    ],
+    [
+     12,
+     1862
+    ]
+   ]
+  },
+  {
+   "from": "fd_verniers",
+   "to": "fd_deepThrottle",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1708,
+     1514
+    ],
+    [
+     -1278,
+     1637
+    ],
+    [
+     -848,
+     1531
+    ],
+    [
+     -418,
+     1585
+    ],
+    [
+     12,
+     1542
+    ]
+   ]
+  },
+  {
+   "from": "str_staging",
+   "to": "fd_propellantSettling",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1894
+    ],
+    [
+     -1708,
+     1776
+    ],
+    [
+     -1278,
+     1881
+    ],
+    [
+     -848,
+     1840
+    ],
+    [
+     -418,
+     1904
+    ]
+   ]
+  },
+  {
+   "from": "pc_solidGrains",
+   "to": "str_segmentedSolids",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1342
+    ],
+    [
+     -1708,
+     1237
+    ],
+    [
+     -1278,
+     1247
+    ],
+    [
+     -848,
+     1115
+    ],
+    [
+     -418,
+     1160
+    ],
+    [
+     12,
+     1072
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "elec_fuelCell",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1981
+    ],
+    [
+     -2138,
+     2594
+    ],
+    [
+     -1708,
+     2637
+    ],
+    [
+     -1278,
+     2685
+    ],
+    [
+     -848,
+     2588
+    ],
+    [
+     -418,
+     2659
+    ]
+   ]
+  },
+  {
+   "from": "elec_siliconPV",
+   "to": "elec_deployableArray",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1574
+    ],
+    [
+     -1708,
+     1389
+    ],
+    [
+     -1278,
+     1405
+    ],
+    [
+     -848,
+     1379
+    ],
+    [
+     -418,
+     1621
+    ]
+   ]
+  },
+  {
+   "from": "str_booms",
+   "to": "elec_deployableArray",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1708,
+     1730
+    ],
+    [
+     -1278,
+     1790
+    ],
+    [
+     -848,
+     1673
+    ],
+    [
+     -418,
+     1621
+    ]
+   ]
+  },
+  {
+   "from": "elec_deployableArray",
+   "to": "elec_deepSpacePower",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     -418,
+     1621
+    ],
+    [
+     12,
+     1462
+    ]
+   ]
+  },
+  {
+   "from": "nuc_rtg",
+   "to": "elec_deepSpacePower",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     -1708,
+     1353
+    ],
+    [
+     -1278,
+     1395
+    ],
+    [
+     -848,
+     1347
+    ],
+    [
+     -418,
+     1476
+    ],
+    [
+     12,
+     1462
+    ]
+   ]
+  },
+  {
+   "from": "gnc_pitchProgram",
+   "to": "gnc_reactionWheels",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     2286
+    ],
+    [
+     -1708,
+     2160
+    ],
+    [
+     -1278,
+     2222
+    ],
+    [
+     -848,
+     2034
+    ]
+   ]
+  },
+  {
+   "from": "gnc_rcs",
+   "to": "gnc_attitude3axis",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     -1708,
+     2196
+    ],
+    [
+     -1278,
+     2241
+    ],
+    [
+     -848,
+     2086
+    ],
+    [
+     -418,
+     2107
+    ]
+   ]
+  },
+  {
+   "from": "gnc_reactionWheels",
+   "to": "gnc_attitude3axis",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     -848,
+     2034
+    ],
+    [
+     -418,
+     2107
+    ]
+   ]
+  },
+  {
+   "from": "gnc_attitude3axis",
+   "to": "gnc_starTracker",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -418,
+     2107
+    ],
+    [
+     12,
+     2102
+    ]
+   ]
+  },
+  {
+   "from": "opt_filmReturn",
+   "to": "gnc_starTracker",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     2457
+    ],
+    [
+     -1708,
+     2474
+    ],
+    [
+     -1278,
+     2438
+    ],
+    [
+     -848,
+     2256
+    ],
+    [
+     -418,
+     2251
+    ],
+    [
+     12,
+     2102
+    ]
+   ]
+  },
+  {
+   "from": "tel_telemetry",
+   "to": "tel_parabolicHGA",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     2214
+    ],
+    [
+     -1708,
+     2008
+    ],
+    [
+     -1278,
+     2038
+    ],
+    [
+     -848,
+     1922
+    ],
+    [
+     -418,
+     1982
+    ],
+    [
+     12,
+     1942
+    ]
+   ]
+  },
+  {
+   "from": "gnc_attitude3axis",
+   "to": "tel_parabolicHGA",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -418,
+     2107
+    ],
+    [
+     12,
+     1942
+    ]
+   ]
+  },
+  {
+   "from": "gnc_rcs",
+   "to": "str_docking",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1708,
+     2196
+    ],
+    [
+     -1278,
+     2231
+    ],
+    [
+     -848,
+     2070
+    ],
+    [
+     -418,
+     2001
+    ],
+    [
+     12,
+     1782
+    ]
+   ]
+  },
+  {
+   "from": "str_staging",
+   "to": "str_docking",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1894
+    ],
+    [
+     -1708,
+     1766
+    ],
+    [
+     -1278,
+     1812
+    ],
+    [
+     -848,
+     1711
+    ],
+    [
+     -418,
+     1788
+    ],
+    [
+     12,
+     1782
+    ]
+   ]
+  },
+  {
+   "from": "str_staging",
+   "to": "str_touchdownAbsorption",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     1894
+    ],
+    [
+     -1708,
+     1694
+    ],
+    [
+     -1278,
+     1781
+    ],
+    [
+     -848,
+     1663
+    ],
+    [
+     -418,
+     1721
+    ],
+    [
+     12,
+     1622
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "rob_servos",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2568,
+     1981
+    ],
+    [
+     -2138,
+     2502
+    ],
+    [
+     -1708,
+     2493
+    ],
+    [
+     -1278,
+     2565
+    ],
+    [
+     -848,
+     2429
+    ],
+    [
+     -418,
+     2472
+    ]
+   ]
+  },
+  {
+   "from": "rob_servos",
+   "to": "rob_roverWheels",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -418,
+     2472
+    ],
+    [
+     12,
+     2339
+    ]
+   ]
+  },
+  {
+   "from": "rob_servos",
+   "to": "rob_surfaceSampler",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -418,
+     2472
+    ],
+    [
+     12,
+     2419
+    ]
+   ]
+  },
+  {
+   "from": "aero_recovery",
+   "to": "cmp_ablativeHeatshield",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     2366
+    ],
+    [
+     -1708,
+     2232
+    ],
+    [
+     -1278,
+     2260
+    ],
+    [
+     -848,
+     2125
+    ],
+    [
+     -418,
+     2143
+    ],
+    [
+     12,
+     2022
+    ]
+   ]
+  },
+  {
+   "from": "opt_vidicon",
+   "to": "opt_irRadiometry",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2138,
+     2548
+    ],
+    [
+     -1708,
+     2565
+    ],
+    [
+     -1278,
+     2610
+    ],
+    [
+     -848,
+     2505
+    ],
+    [
+     -418,
+     2579
+    ]
+   ]
+  },
+  {
+   "from": "opt_irRadiometry",
+   "to": "opt_spectrometry",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -418,
+     2579
+    ],
+    [
+     12,
+     2499
+    ]
+   ]
+  },
+  {
+   "from": "tel_parabolicHGA",
+   "to": "int_deepSpaceProbe",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     12,
+     1942
+    ],
+    [
+     442,
+     1773
+    ]
+   ]
+  },
+  {
+   "from": "elec_deepSpacePower",
+   "to": "int_deepSpaceProbe",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     12,
+     1462
+    ],
+    [
+     442,
+     1773
+    ]
+   ]
+  },
+  {
+   "from": "fd_deepThrottle",
+   "to": "int_roboticLander",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     12,
+     1542
+    ],
+    [
+     442,
+     1653
+    ]
+   ]
+  },
+  {
+   "from": "str_touchdownAbsorption",
+   "to": "int_roboticLander",
+   "anyToUnlock": true,
+   "waypoints": [
+    [
+     12,
+     1622
+    ],
+    [
+     442,
+     1653
     ]
    ]
   },
@@ -4242,11 +6101,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1836
+     1734
     ]
    ]
   },
@@ -4257,11 +6116,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1836
+     1734
     ],
     [
      -1708,
-     1487
+     1434
     ]
    ]
   },
@@ -4272,11 +6131,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1487
+     1434
     ],
     [
      -1278,
-     1799
+     1521
     ]
    ]
   },
@@ -4287,11 +6146,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1799
+     1521
     ],
     [
      -848,
-     1425
+     1495
     ]
    ]
   },
@@ -4302,11 +6161,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1799
+     1521
     ],
     [
      -848,
-     1505
+     1415
     ]
    ]
   },
@@ -4317,11 +6176,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1425
+     1495
     ],
     [
      -418,
-     1704
+     1549
     ]
    ]
   },
@@ -4332,15 +6191,15 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1836
+     1734
     ],
     [
      -1708,
-     1451
+     1398
     ],
     [
      -1278,
-     1579
+     1601
     ]
    ]
   },
@@ -4351,15 +6210,15 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1354
+     1814
     ],
     [
      -1708,
-     1147
+     1550
     ],
     [
      -1278,
-     1579
+     1601
     ]
    ]
   },
@@ -4370,15 +6229,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1790
+     2411
     ],
     [
      -1708,
-     1335
+     2358
     ]
    ]
   },
@@ -4389,15 +6248,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     1800
+     2421
     ],
     [
      -1708,
-     1415
+     2438
     ]
    ]
   },
@@ -4408,11 +6267,11 @@ window.TREE = {
    "waypoints": [
     [
      -848,
-     1009
+     1804
     ],
     [
      -418,
-     1594
+     2179
     ]
    ]
   },
@@ -4423,19 +6282,19 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1567
+     2196
     ],
     [
      -1278,
-     1835
+     2250
     ],
     [
      -848,
-     1541
+     2115
     ],
     [
      -418,
-     1594
+     2179
     ]
    ]
   },
@@ -4446,23 +6305,23 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1514
+     2366
     ],
     [
      -1708,
-     1219
+     2242
     ],
     [
      -1278,
-     1540
+     2270
     ],
     [
      -848,
-     1303
+     2136
     ],
     [
      -418,
-     1594
+     2179
     ]
    ]
   },
@@ -4473,19 +6332,19 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1335
+     2358
     ],
     [
      -1278,
-     1617
+     2337
     ],
     [
      -848,
-     1342
+     2170
     ],
     [
      -418,
-     1594
+     2179
     ]
    ]
   },
@@ -4496,19 +6355,19 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1415
+     2438
     ],
     [
      -1278,
-     1671
+     2390
     ],
     [
      -848,
-     1369
+     2196
     ],
     [
      -418,
-     1594
+     2179
     ]
    ]
   },
@@ -4519,11 +6378,11 @@ window.TREE = {
    "waypoints": [
     [
      -418,
-     1594
+     2179
     ],
     [
      12,
-     1331
+     2182
     ]
    ]
   },
@@ -4534,15 +6393,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     2033
+     2512
     ],
     [
      -1708,
-     1798
+     2529
     ]
    ]
   },
@@ -4553,11 +6412,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1111
+     1586
     ],
     [
      -1278,
-     1391
+     1673
     ]
    ]
   },
@@ -4568,15 +6427,15 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     1507
+     1981
     ],
     [
      -2138,
-     2043
+     2584
     ],
     [
      -1708,
-     1878
+     2601
     ]
    ]
   },
@@ -4587,11 +6446,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1647
+     2124
     ],
     [
      -1278,
-     1965
+     2186
     ]
    ]
   },
@@ -4602,11 +6461,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1647
+     2124
     ],
     [
      -1278,
-     1885
+     2106
     ]
    ]
   },
@@ -4617,11 +6476,11 @@ window.TREE = {
    "waypoints": [
     [
      -1278,
-     1302
+     1745
     ],
     [
      -848,
-     1089
+     1627
     ]
    ]
   },
@@ -4632,11 +6491,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     1274
+     1342
     ],
     [
      -1708,
-     951
+     1201
     ]
    ]
   },
@@ -4647,11 +6506,11 @@ window.TREE = {
    "waypoints": [
     [
      -2138,
-     2161
+     2214
     ],
     [
      -1708,
-     2119
+     2044
     ]
    ]
   },
@@ -4662,11 +6521,11 @@ window.TREE = {
    "waypoints": [
     [
      -1708,
-     1487
+     1434
     ],
     [
      -1278,
-     1719
+     1441
     ]
    ]
   }

@@ -21,17 +21,29 @@ So i wanna start with RO part list + RP1 added parts. then see what rp1 blacklis
 Dmagic orbital science - probably hard dependency and we will balance sicence with this in mind. since it's not maintained but works on latest ksp version might have to bundle in
 SCansat - gives you more reasons to send probes, but we will have to fork it and create work hard to fix ram consumption. still want it as hard dependency
 raider nick probes - recomended but optional
-tantares/tantares lv - if they make meaningfull aditions - many parts don't have ro config, and they should not have like tanks and shiet. ro engines might be good enoguh for engines.
+tantares - if they make meaningfull aditions - many parts don't have ro config, and they should not have like tanks and shiet. ro engines might be good enoguh for engines.
 coatl airpsace redux - ro has configs for some parts like antenas and shit, we might do it we might not if it plays well with the tree
 nerteas mods - kerbal atomics, near future solar/constructin/electrica/propulsion/spacecraft - maybe ro is to restritive and we willl look for inspiration here to add parts for later stages
 far future technologies - same as above but lower priority.
 universal storage 2 - didnt try it but it being modular might mesh well with procedural parts to give more possibilities.
 sspx - for station builders
 stockish project orion - looks recomended by ro, complete alt history, which makes it a good fit - does not exist on ckan we will have to bundle it with our mod.
+Kerwis Chinese Aerospace Pack  - maybe for china flavor
+
+to check might be redundant or not needed:
+cryo Engines
+
+rocket motor managerie
+near future launch vehicles
+near future exploration
+
 
 visual:
 firefly - recomend
 z theme - recomend
+hullcam - recomend
+vab organizer - recommend
+milky way - recomend
 
 we will need a "simulation" mod, rp1 includes something that seems highly integrated with RP1 mechanics like reliability data gathering which we will sack, but i think id recomend to players to have a testing mod to test shit it various orbits or plantes before launching a mission makes the design process easier. maybe even gamify it, unlock simulation after researching computers.
 
@@ -89,3 +101,8 @@ we need to figure out better workflows for things. like i need a way to test add
 I will need you help me make all of this this actionable.
 
 I have many more things in my head that i have worked out but i forgot to write them down.
+
+you should be able to change the location of KSC to wherever you like, whenever you like. this is part of the game. 
+
+
+Note science: kerbalism lab experiments expanded
