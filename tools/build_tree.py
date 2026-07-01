@@ -233,11 +233,33 @@ def _trunc(s, n=27):
     s = s or ""
     return s if len(s) <= n else s[:n - 1] + "…"
 
+def _wrap(s, width=15, maxlines=2):
+    """Greedy word-wrap a title into <=maxlines lines of <=width chars, ellipsizing overflow.
+    Used for the square node tiles, which are too narrow for the old single-line title."""
+    words = (s or "").strip().split()
+    lines, cur = [], ""
+    while words:
+        w = words[0]
+        cand = (cur + " " + w).strip()
+        if not cur or len(cand) <= width:
+            cur = cand; words.pop(0)
+        else:
+            lines.append(cur); cur = ""
+            if len(lines) == maxlines - 1:
+                break                                # remainder goes on the final line
+    if cur or not lines:
+        lines.append(cur)
+    if words:                                        # words left over -> pack onto last line + ellipsize
+        combined = (lines[-1] + " " + " ".join(words)).strip()
+        lines[-1] = combined
+    lines = [ln if len(ln) <= width else ln[:width - 1].rstrip() + "…" for ln in lines]
+    return lines[:maxlines]
+
 def emit_html(disc, nodes, by):
     """Self-contained read-only viewer: renders its OWN inline SVG from the node
     positions resolve() already computed (no graphviz dependency), then click a
     node to list the parts (and upgrades) that live there."""
-    PAD, COLW, YS, NW, NH = 44, 232, 1.5, 188, 44   # layout geometry (px)
+    PAD, COLW, YS, NW, NH = 44, 196, 1.4, 88, 88    # layout geometry (px) — square KSP-style tiles
     miny = min(n["_y"] for n in nodes)
     def X(n): return PAD + n["tier"] * COLW
     def Y(n): return PAD + (n["_y"] - miny) * YS
@@ -247,28 +269,37 @@ def emit_html(disc, nodes, by):
 
     edges, boxes = [], []
     for n in nodes:                                  # edges first (drawn under nodes)
-        x2, y2 = X(n), Y(n) + NH / 2
+        x2, y2 = X(n), Y(n) + NH / 2                 # child left-edge midpoint
         for pid in n.get("parents", []) or []:
             p = by.get(pid)
             if not p: continue
-            x1, y1 = X(p) + NW, Y(p) + NH / 2
+            x1, y1 = X(p) + NW, Y(p) + NH / 2         # parent right-edge midpoint
+            xm = (x1 + x2) / 2                         # vertical leg runs in the gutter between the columns
             dash = f' stroke-dasharray="5 4" stroke="{MULTI_ENTRY_COLOR}"' if n.get("anyToUnlock") else ' stroke="#777"'
-            edges.append(f'<path d="M{x1:.0f},{y1:.0f} C{x1+46:.0f},{y1:.0f} {x2-46:.0f},{y2:.0f} {x2:.0f},{y2:.0f}" fill="none"{dash} stroke-width="1.5"/>')
+            edges.append(f'<path d="M{x1:.0f},{y1:.0f} H{xm:.0f} V{y2:.0f} H{x2:.0f}"{dash} stroke-width="1.6"/>')
     for t in range(maxtier + 1):                     # tier column headers
         boxes.append(f'<text x="{PAD + t*COLW:.0f}" y="20" fill="#888" font-size="12" font-weight="600">T{t}</text>')
     for n in nodes:
-        d = disc[n["discipline"]]; x, y = X(n), Y(n)
+        d = disc[n["discipline"]]; x, y = X(n), Y(n); cx = x + NW / 2
         np = len(n.get("parts") or []); nu = len(n.get("upgrades") or [])
         badge = (f"{np}p" + (f"+{nu}u" if nu else "")) if (np or nu) else "—"
+        lines = _wrap(n["title"], width=13, maxlines=3)   # small title inside the square; full detail on click
+        starts = {1: [40], 2: [32, 46], 3: [24, 38, 52]}[len(lines)]
+        tspans = "".join(
+            f'<text x="{cx:.0f}" y="{y+dy:.0f}" text-anchor="middle" fill="#15212b" '
+            f'font-size="10.5" font-weight="600">{_esc(ln)}</text>'
+            for dy, ln in zip(starts, lines))
         boxes.append(
             f'<g class="node" data-id="{_esc(n["id"])}" tabindex="0">'
-            f'<rect x="{x:.0f}" y="{y:.0f}" width="{NW}" height="{NH}" rx="7" fill="{d["color"]}"/>'
-            f'<text x="{x+10:.0f}" y="{y+18:.0f}" fill="#15212b" font-size="12" font-weight="600">{_esc(_trunc(n["title"]))}</text>'
-            f'<text x="{x+10:.0f}" y="{y+34:.0f}" fill="#2c3e50" font-size="10.5">T{n["tier"]} · {n["cost"]}◈ · {badge}</text>'
+            f'<rect x="{x:.0f}" y="{y:.0f}" width="{NW}" height="{NH}" rx="2" fill="{d["color"]}"/>'
+            f'{tspans}'
+            f'<text x="{cx:.0f}" y="{y+NH-9:.0f}" text-anchor="middle" fill="#2c3e50" '
+            f'font-size="9">T{n["tier"]} · {badge}</text>'
             f'</g>')
     svg = (f'<svg id="tree" width="{width:.0f}" height="{height:.0f}" viewBox="0 0 {width:.0f} {height:.0f}" '
            f'xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Helvetica,Arial,sans-serif">'
-           + "".join(edges) + "".join(boxes) + "</svg>")
+           f'<g fill="none" shape-rendering="crispEdges">' + "".join(edges) + '</g>'
+           + "".join(boxes) + "</svg>")
 
     titles = load_part_titles()
     data = {}
