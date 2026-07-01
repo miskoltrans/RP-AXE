@@ -274,9 +274,9 @@ def emit_html(disc, nodes, by):
             p = by.get(pid)
             if not p: continue
             x1, y1 = X(p) + NW, Y(p) + NH / 2         # parent right-edge midpoint
-            xm = (x1 + x2) / 2                         # vertical leg runs in the gutter between the columns
             dash = f' stroke-dasharray="5 4" stroke="{MULTI_ENTRY_COLOR}"' if n.get("anyToUnlock") else ' stroke="#777"'
-            edges.append(f'<path d="M{x1:.0f},{y1:.0f} H{xm:.0f} V{y2:.0f} H{x2:.0f}"{dash} stroke-width="1.6"/>')
+            # KSP-style: a single straight segment anchor->anchor, no routing (crossings allowed)
+            edges.append(f'<line x1="{x1:.0f}" y1="{y1:.0f}" x2="{x2:.0f}" y2="{y2:.0f}"{dash} stroke-width="1.5"/>')
     for t in range(maxtier + 1):                     # tier column headers
         boxes.append(f'<text x="{PAD + t*COLW:.0f}" y="20" fill="#888" font-size="12" font-weight="600">T{t}</text>')
     for n in nodes:
@@ -298,7 +298,7 @@ def emit_html(disc, nodes, by):
             f'</g>')
     svg = (f'<svg id="tree" width="{width:.0f}" height="{height:.0f}" viewBox="0 0 {width:.0f} {height:.0f}" '
            f'xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Helvetica,Arial,sans-serif">'
-           f'<g fill="none" shape-rendering="crispEdges">' + "".join(edges) + '</g>'
+           f'<g fill="none">' + "".join(edges) + '</g>'
            + "".join(boxes) + "</svg>")
 
     titles = load_part_titles()
