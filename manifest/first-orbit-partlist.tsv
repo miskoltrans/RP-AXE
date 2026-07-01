@@ -1,4 +1,488 @@
 node	node_title	kind	name	curated	title
+unlockParts	Starting Parts (RP-1)	part	625mBonny	yes	Bonanza Cabin
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_AerobeeLaunchStand	yes	Aerobee Launch Stand
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_AgenaServiceTower	yes	Atlas-Agena Service Tower
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Atlas2UmbilicalArm1	yes	Atlas-Centaur I/II Umbilical Arm 1
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Atlas2UmbilicalArm2	yes	Atlas-Centaur I/II Umbilical Arm 2
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Atlas2UmbilicalArm3	yes	Atlas-Centaur I/II Wind Damper Arm 3
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_AtlasLaunchStand	yes	Atlas Launch Stand
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_AtlasLaunchStandAlt	yes	Atlas Launch Stand Alternate
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_AtlasSepClampArm	yes	Atlas Side Clamp Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_AtlasSepSideUmb	yes	Atlas Side Umbilical
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_AtlasUmbilicalArmAgena	yes	Atlas-Agena Umbilical Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_AtlasUmbilicalArmCentaur	yes	Atlas-Centaur D Umbilical Arms
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_AtlasUmbilicalArmCentaur1	yes	Centaur Separate Umbilical Arm 1 - Tall
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_AtlasUmbilicalArmCentaur2	yes	Centaur Separate Umbilical Arm 2 - Short
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_CentaurServiceTower1	yes	Atlas-Centaur D Service Tower
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_CentaurServiceTower2	yes	Atlas-Centaur I/II Service Tower
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_CrewElevatorAtlasUmbilical	yes	Crew Elevator Mercury-Atlas Umbilical
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_CrewElevatorLargeExt	yes	Crew Elevator Large Side Extension
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_CrewElevatorLargeSec1	yes	Crew Elevator Large Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_CrewElevatorLargeTop	yes	Crew Elevator Large Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_CrewElevatorSmallSec1	yes	Crew Elevator Small Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_CrewElevatorSmallTop	yes	Crew Elevator Small Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_CrewElevatorXLargeSec	yes	Crew Elevator Extra Large Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Delta4LaunchStand	yes	Delta IV Launch Stand / 3.125m-2.5m
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Delta4ModTowerCore	yes	Delta IV Modular Service Tower Core
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Delta4ModTowerTop	yes	Delta IV Modular Service Tower Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Delta4ServiceTower	yes	Delta IV Service Tower - Single Piece
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Delta4TowerArm1	yes	Delta IV Swing Arm 1 - Core Tanks
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Delta4TowerArm2	yes	Delta IV Swing Arm 2 - DCSS
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Delta4TowerArm3	yes	Delta IV Swing Arm 3 - Fairing
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_FlatLaunchBaseMini	yes	Flat Launch Base 1 - Mini Frame
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_FlatLaunchBaseSmall	yes	Flat Launch Base 2 - Small Frame
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_FlatSlabServiceTower	yes	Ariane V Service Mast
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GenBaseLarge	yes	Launch Base 5 - Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GenBaseMedium	yes	Launch Base 4 - Medium
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GenBaseMicro	yes	Launch Base 1 - Micro
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GenBaseMini	yes	Launch Base 2 - Mini
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GenBaseSmall	yes	Launch Base 3 - Small
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GenBaseXLarge	yes	Launch Base 6 - Extra Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralCrewArm	yes	Crew Access Arm Large - Large Mount
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralCrewArmSmallMount	yes	Crew Access Arm Large - Small Mount
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralCrewElevator	yes	Crew Elevator Large Base - 70m with Hatch
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralCrewElevator2	yes	Crew Elevator Extra Large Base - 130m with Hatch
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralCrewElevatorMini	yes	Crew Elevator Mini Core with Hatch
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralCrewElevatorMiniArm	yes	Crew Access Arm Small - Mini Mount
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralCrewElevatorMiniArmS	yes	Crew Access Arm Small - Small Mount
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralCrewElevatorMiniSec1	yes	Crew Elevator Mini Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralCrewElevatorSmall	yes	Crew Elevator Small Base with Hatch
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralFallbackUmbilicalTower	yes	General Fallback Umbilical Tower
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralHold1	yes	General Hold-Down Type 1: Side-Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralHold2	yes	General Hold-Down Type 2: Drop-Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralHold3	yes	General Hold-Down Type 3: Vert Bolt Flat
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralHold4	yes	General Hold-Down Type 4: Vert Bolt Tripod
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralHold5	yes	General Hold-Down Type 5: Vert Bolt Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralHold6	yes	General Hold-Down Type 6: Clamp Arm Small
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralHold7	yes	General Hold-Down Type 7: Clamp Arm Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralHoldSRB	yes	General Hold-Down Type SRB
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralLaunchBase	yes	Old Launch Base 3 *** DEPRECATED ***
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralLaunchBaseMedium	yes	Old Launch Base 2 *** DEPRECATED ***
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralLaunchBaseSmall	yes	Old Launch Base 1 *** DEPRECATED ***
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralLaunchPlate	yes	Flat Launch Base 3 - Medium Frame
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralModularMultiTowerLarge	yes	Modular Multi Tower 3 - Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralModularMultiTowerMast	yes	Modular Multi Tower Top Mast
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralModularMultiTowerMedium	yes	Modular Multi Tower 2 - Medium
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralModularMultiTowerSmall	yes	Modular Multi Tower 1 - Small
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralModularMultiTowerTop	yes	Modular Multi Tower Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralROFI	yes	Multi ROFI Sparker
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerLargeSec1	yes	General Service Tower Large Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerLargeTop	yes	General Service Tower Large Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerMedium	yes	General Service Tower Medium Core
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerMediumSec1	yes	General Service Tower Medium Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerMediumTop	yes	General Service Tower Medium Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerSmall	yes	General Service Tower Small Core
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerSmallSec1	yes	General Service Tower Small Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerSmallTop	yes	General Service Tower Small Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerXLBase	yes	Titan III Modular Service Tower Core
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerXLSec1	yes	Titan III Modular Service Tower Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralServiceTowerXLTop	yes	Titan III Modular Service Tower Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralStrongbackTowerFull	yes	General Strongback Tower 1 - Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralStrongbackTowerMicro	yes	Generaral Strongback Tower 4 - Micro
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralStrongbackTowerMini	yes	Generaral Strongback Tower 3 - Mini
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralStrongbackTowerSmall	yes	General Strongback Tower 2 - Small
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralTowerAtlasV	yes	Atlas V Service Mast - Single Piece
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralTowerDeltaII	yes	Delta II Service Tower - Single Piece
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralTowerMulti	yes	General Service Tower Large Core
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralTowerSwingArm	yes	Tower Swing Arm Full 1 - Small
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralTowerSwingArmLarge	yes	Tower Swing Arm Full 3 - Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralTowerSwingArmMedium	yes	Tower Swing Arm Full 2 - Medium
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopA	yes	Tower Umbilical Droop 1A - Mini
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopA4	yes	Tower Umbilical Droop 1B - Mini
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopAtlas2	yes	Atlas-Centaur I/II Umbilical Droop
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopB	yes	Tower Umbilical Droop 2A - Small
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopB4	yes	Tower Umbilical Droop 2B - Small
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopC	yes	Tower Umbilical Droop 3A - Medium
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopC4	yes	Tower Umbilical Droop 3B - Medium
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopD	yes	Tower Umbilical Droop 4A - Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopD4	yes	Tower Umbilical Droop 4B - Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopE	yes	Tower Umbilical Droop 5A - Extra Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDroopE4	yes	Tower Umbilical Droop 5B - Extra Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDrop	yes	Tower Umbilical Straight 2 - Medium
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_GeneralUmbilicalDropLarge	yes	Tower Umbilical Straight 3 - Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_HoldArmSaturnIB	yes	Saturn Launcher Hold-Down - Saturn IB
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_HoldArmSaturnV	yes	Saturn Launcher Hold-Down - Saturn V
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_JupiterPetalCover	yes	Redstone Launch Stand Petal Cover / 1.5m
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LargeLaunchStand	yes	Saturn IB Launch Stand
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchPlateEnergia	yes	Launch Plate Energia
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchPlateFalcon9	yes	Falcon 9 Launch Plate
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchPlateN1	yes	Launch Plate N1
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchPlateRnd1	yes	Launch Plate Size 1 Round
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchPlateRnd2	yes	Launch Plate Size 2 Round
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchPlateRnd3	yes	Launch Plate Size 3 Round
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchPlateSqr1	yes	Launch Plate Size 1 Square
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchPlateSqr2	yes	Launch Plate Size 2 Square
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchPlateSqr3	yes	Launch Plate Size 3 Square
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchRailLarge	yes	Launch Rail 4 - Large Size
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchRailMedium	yes	Launch Rail 3 - Medium Size
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchRailMini	yes	Launch Rail 1 - Mini Size
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchRailSmall	yes	Launch Rail 2 - Small Size
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandCrewElevatorAtlas	yes	Crew Elevator Mercury-Atlas, with Hatch
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandCrewElevatorGemini	yes	Crew Elevator Gemini, with Hatch
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandCrewElevatorMercury	yes	Crew Elevator Mercury-Redstone, with Hatch
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandCrewWalkwayMercury	yes	Crew Elevator Walkway Mercury-Atlas
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandCrewWalkwayMini	yes	Crew Elevator Walkway Mini
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandServiceTower1	yes	Mini Modular Service Tower Type 1
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandServiceTower2	yes	Mini Modular Service Tower Type 2
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandServiceTower3	yes	Mini Modular Service Tower Type 3
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandServiceTower4	yes	Mini Modular Service Tower Type 4
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandSmallPole	yes	Redstone Umbilical Pole
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_LaunchStandSmallUmbilical	yes	Tower Umbilical Straight 1- Small
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_MilkstoolLaunchStand1	yes	Mini Milkstool Launch Stand 1 / 0.3125m, 0.625m
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_MilkstoolLaunchStand2	yes	Mini Milkstool Launch Stand 2 / 0.9375m, 1.25m, 1.5m
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_MilkstoolLaunchStand3	yes	Mini Milkstool Launch Stand 3 / 1.875m, 2.5m
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_MilkstoolMini1S	yes	Mini Milkstool Decoupler Size 1 Short
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_MilkstoolMini1T	yes	Mini Milkstool Decoupler Size 1 Tall
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_MilkstoolMini2S	yes	Mini Milkstool Decoupler Size 2 Short
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_MilkstoolMini2T	yes	Mini Milkstool Decoupler Size 2 Tall
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_MilkstoolMini3M	yes	Mini Milkstool Decoupler Size 3 Medium
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_MilkstoolMini3S	yes	Mini Milkstool Decoupler Size 3 Short
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_MilkstoolMini3T	yes	Mini Milkstool Decoupler Size 3 Tall
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_N1ModularTower	yes	N1 Basic Modular Tower
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_N1TowerPlatform	yes	N1 Tower Platform
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_RedstoneLaunchStand	yes	Redstone Launch Stand / 1.25m, 1.5m
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnHammerheadCrane	yes	Saturn Tower Hammerhead Crane
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnLaunchStandPedestal	yes	Saturn IB Launch Stand Tower Pedestal
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnLauncherMilkstool	yes	Saturn Launcher Milkstool
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnLauncherTSM	yes	Saturn Launcher Tail Service Mast
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnLightningMast	yes	Saturn Tower Lightning Mast
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnLightningMastAlt	yes	Shuttle Tower Lightning Mast
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnMilkstoolClamp	yes	Saturn Milkstool Launch Stand
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnMobileLauncherBaseFree	yes	Saturn Mobile Launcher Base - Free-Standing
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnMobileLauncherClampBase	yes	Saturn Launcher Base
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerBase	yes	Saturn Modular Tower Base - Angled, with Hatches
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerBaseSquare	yes	Saturn Modular Tower Base - Square, with Hatches
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerCrewArm	yes	Saturn Tower Crew Access Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerCrewFloor	yes	Saturn Tower Crew Section Floor
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerCrewSection	yes	Saturn Modular Tower Crew Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerDamperArm	yes	Saturn Tower Damper Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerMultiSection	yes	Saturn Modular Tower Core Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerSwingArm0	yes	Swing Arm Saturn IB S-IB
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerSwingArm2	yes	Swing Arm Saturn V #2 S-IC Forward
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerSwingArm3	yes	Swing Arm Saturn V #3 S-II Aft
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerSwingArm4	yes	Swing Arm Saturn V #4 S-II Intermediate
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerSwingArm5	yes	Swing Arm Saturn V #5 S-II Forward
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerSwingArm6	yes	Swing Arm Saturn V #6 S-IVB Aft
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerSwingArm7	yes	Swing Arm Saturn V #7 S-IVB Forward
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerSwingArm8	yes	Swing Arm Saturn V #8 Serv Mod
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerSwingArmBDB	yes	Swing Arm Saturn V #1 S-IC Intertank
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerSwingArmGen	yes	Saturn Tower Swing Arm - General
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SaturnTowerTopSection	yes	Saturn Modular Tower Top Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ScissorArmUmbilical	yes	Ariane V Scissor Arm Umbilical
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleLauncherBaseClamp	yes	Shuttle Launcher Platform Base
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleLauncherFSSBase	yes	Shuttle Modular FSS Tower Base, with Hatches
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleLauncherRSS	yes	Shuttle Rotating Service Structure
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleLauncherRSSHinge	yes	Shuttle Rotating Service Structure Hinge
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleLauncherSRBHold	yes	Shuttle Launcher SRB Hold-Down
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleLauncherTSM	yes	Shuttle Launcher Tail Service Mast
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleSLC6LaunchMount	yes	SLC-6 Shuttle Launch Mount
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleSLC6TowerCore	yes	SLC-6 Shuttle Tower Core Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleSLC6TowerCrew	yes	SLC-6 Shuttle Tower Crew Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleSLC6TowerCrewArm	yes	SLC-6 Shuttle Tower Crew Access Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleSLC6TowerIntertank	yes	SLC-6 Shuttle Tower Intertank Structure
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleSLC6TowerLOXArm	yes	SLC-6 Shuttle Tower Arm: LOX Vent
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleSLC6TowerMast	yes	SLC-6 Shuttle Tower Top Mast
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleSLC6TowerTop	yes	SLC-6 Shuttle Tower Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleTowerArmHydrogen	yes	Shuttle Tower Arm: Hydrogen Vent
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleTowerArmIntertank	yes	Shuttle Tower Arm: Intertank Access
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleTowerArmLOX	yes	Shuttle Tower Arm: LOX Vent
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleTowerCrewArm	yes	Shuttle Tower Crew Access Arm: Orbiter
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleTowerCrewFloor	yes	Shuttle Modular FSS Tower Crew Section Floor
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleTowerCrewSection	yes	Shuttle Modular FSS Tower Crew Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleTowerIntertankStructure	yes	Shuttle Tower Intertank Structure
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleTowerMultiSection	yes	Shuttle Modular FSS Tower Core Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleTowerRodanCrewArm	yes	Shuttle Tower Crew Access Arm: Rodan
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ShuttleTowerTopSection	yes	Shuttle Modular FSS Tower Top Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SmallLaunchStand	yes	General Round Launch Stand
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SmallLaunchStandRect	yes	General Rectangular Launch Stand
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SmallTowerSwingArm	yes	Tower Swing Arm Basic 1 - Small
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SmallTowerSwingArmLarge	yes	Tower Swing Arm Basic 3 - Large
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SmallTowerSwingArmMedium	yes	Tower Swing Arm Basic 2 - Medium
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SoyuzLaunchBase	yes	Soyuz Launch Base
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SoyuzLaunchBaseArmLG	yes	Soyuz Launch Base Large Fuel Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SoyuzLaunchBaseArmSM	yes	Soyuz Launch Base Small Fuel Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SoyuzLaunchBaseClampArm	yes	Soyuz Launch Base Clamp Arm
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SoyuzLaunchBaseElevator	yes	Soyuz Solo Crew Elevator with Hatches
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SoyuzLaunchBaseGantry	yes	Soyuz Launch Base Gantry with Hatches
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SpecialServiceTowerAtlasVBase	yes	Atlas V Modular Service Mast Base
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SpecialServiceTowerAtlasVSec1	yes	Atlas V Modular Service Mast Short Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SpecialServiceTowerAtlasVSec2	yes	Atlas V Modular Service Mast Core
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SpecialServiceTowerAtlasVTop	yes	Atlas V Modular Service Mast Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SpecialServiceTowerDeltaIIBase	yes	Delta II Modular Service Tower Base
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SpecialServiceTowerDeltaIISec1	yes	Delta II Modular Service Tower Detail Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SpecialServiceTowerDeltaIISec2	yes	Delta II Modular Service Tower Core Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_SpecialServiceTowerDeltaIITop	yes	Delta II Modular Service Tower Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TestStandEngine	yes	Static Test Stand - Engine Type
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TestStandSmall	yes	Static Test Stand - Cradle Type
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TestStandTower	yes	Static Test Stand - Tower Type
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ThorLaunchStand	yes	Thor/Delta Launch Stand / 1.5m
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_ThorServiceTowerFallback	yes	Thor/Delta Service Tower - Fallback Type
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_Titan3LaunchStand	yes	Titan III Launch Stand / 1.875m
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIITowerMast	yes	Titan III Mast
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIILaunchStand	yes	Titan II Launch Stand / 1.875m
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIServiceTowerMast	yes	Titan II Service Tower Mast
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIServiceTowerModBase	yes	Titan II Modular Service Tower Base
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIServiceTowerModSec1	yes	Titan II Modular Service Tower Detail Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIServiceTowerModSec2	yes	Titan II Modular Service Tower Core Section
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIServiceTowerModTop	yes	Titan II Modular Service Tower Top
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIServiceTowerSingle	yes	Titan II Service Tower - Single Piece
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIServiceTowerUmbilical	yes	Titan II Umbilical - Straight Style
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIServiceTowerUmbilical2	yes	Titan II Umbilical - Droop Style
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIServiceTowerUmbilicalGem	yes	Titan II Umbilical Gemini - Straight Style
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_TitanIIServiceTowerUmbilicalGem2	yes	Titan II Umbilical Gemini - Droop Style
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_VanguardLaunchStand	yes	Vanguard Launch Stand / 0.9375m
+unlockParts	Starting Parts (RP-1)	part	AM_MLP_VanguardServiceTower	yes	Vanguard Service Tower
+unlockParts	Starting Parts (RP-1)	part	Angledpanel	yes	M-1x1T Structural Panel
+unlockParts	Starting Parts (RP-1)	part	CanardController	yes	Standard Canard
+unlockParts	Starting Parts (RP-1)	part	CircularIntake	yes	Pitot Intake
+unlockParts	Starting Parts (RP-1)	part	Decoupler_0	yes	TD-06 Decoupler
+unlockParts	Starting Parts (RP-1)	part	GearFixed	yes	LY-01 Fixed Landing Gear
+unlockParts	Starting Parts (RP-1)	part	GearFree	yes	LY-05 Steerable Landing Gear
+unlockParts	Starting Parts (RP-1)	part	GearSmall	yes	LY-35 Medium Landing Gear
+unlockParts	Starting Parts (RP-1)	part	InlineRCS	yes	Inline RCS block (138/223 N class)
+unlockParts	Starting Parts (RP-1)	part	KF-ALG-Small	yes	Adjustable Landing Gear (Small)
+unlockParts	Starting Parts (RP-1)	part	KF-ALG-SmallSide	yes	Adjustable Landing Gear (Small - Side)
+unlockParts	Starting Parts (RP-1)	part	KzFlatAdapter	yes	Interstage Fairing Adapter (Flat)
+unlockParts	Starting Parts (RP-1)	part	KzFlatBoattail	yes	Boattail Adapter (Flat)
+unlockParts	Starting Parts (RP-1)	part	KzInterstageAdapter2	yes	IB - Procedural Interstage Fairing Adapter
+unlockParts	Starting Parts (RP-1)	part	KzProcFairingSide1	yes	Procedural Fairing
+unlockParts	Starting Parts (RP-1)	part	KzProcFairingSide1_TU	yes	Procedural Fairing (Recolorable)
+unlockParts	Starting Parts (RP-1)	part	KzProcFairingSide2	yes	Procedural Fairing (Conic) (Deprecated)
+unlockParts	Starting Parts (RP-1)	part	KzProcFairingSide2_TU	yes	Procedural Fairing (Conic) (Deprecated) (Recolorable)
+unlockParts	Starting Parts (RP-1)	part	KzResizableFairingBase	yes	FB - Procedural Fairing Base
+unlockParts	Starting Parts (RP-1)	part	KzResizableFairingBaseRing	yes	FB - Procedural Fairing Base Ring
+unlockParts	Starting Parts (RP-1)	part	KzThrustPlate	yes	Thrust Plate [Procedural]
+unlockParts	Starting Parts (RP-1)	part	LGLadderUtility	yes	MK III Mobility Enhancer
+unlockParts	Starting Parts (RP-1)	part	LMiniAircaftTail	yes	Bonanza Tail
+unlockParts	Starting Parts (RP-1)	part	LRadialAirIntake	yes	XM-C200 Radial Pitot Intake
+unlockParts	Starting Parts (RP-1)	part	LongLadder	yes	Pegasus III Mobility Enhancer
+unlockParts	Starting Parts (RP-1)	part	MedLadder	yes	Pegasus II Mobility Enhancer
+unlockParts	Starting Parts (RP-1)	part	MedLadderUtility	yes	MK II Mobility Enhancer
+unlockParts	Starting Parts (RP-1)	part	MountPlatform_MLP	yes	General Mounting Platform
+unlockParts	Starting Parts (RP-1)	part	R8winglet	yes	AV-R8 Winglet
+unlockParts	Starting Parts (RP-1)	part	RCSBlockQuarter	yes	RCS Quad [69/111 N class] (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	RCSBlockSmall_138	yes	RCS Block [ 138/223 N Class] (elbows)
+unlockParts	Starting Parts (RP-1)	part	RCSBlockSmall_28	yes	RCS Block [  28/45 N Class] (elbows)
+unlockParts	Starting Parts (RP-1)	part	RCSBlockSmall_69	yes	RCS Block [  69/111 N Class] (elbows)
+unlockParts	Starting Parts (RP-1)	part	RCSBlock_138	yes	RCS Block [ 138/223 N Class]
+unlockParts	Starting Parts (RP-1)	part	RCSBlock_28	yes	RCS Block [  28/45 N Class]
+unlockParts	Starting Parts (RP-1)	part	RCSBlock_69	yes	RCS Block [  69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	RCSBoonExt	yes	RCS Quad, Extensible (138/223 N class)
+unlockParts	Starting Parts (RP-1)	part	RCSLinearSmall_28	yes	RCS Thruster [28/45 N Class]
+unlockParts	Starting Parts (RP-1)	part	RCSLinearSmall_69	yes	RCS Thruster [69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	RC_cone	yes	Parachute - Cone
+unlockParts	Starting Parts (RP-1)	part	RC_cone_double	yes	Parachute - Cone (Double)
+unlockParts	Starting Parts (RP-1)	part	RC_radial	yes	Parachute [Radial]
+unlockParts	Starting Parts (RP-1)	part	RC_stack	yes	Parachute - Stack (Double)
+unlockParts	Starting Parts (RP-1)	part	RO-B9ProcAMWing-Early	yes	B9 Procedural Wing, All-Moving (Early)
+unlockParts	Starting Parts (RP-1)	part	RO-B9ProcCS-Early	yes	B9 Procedural Control Surface (Early)
+unlockParts	Starting Parts (RP-1)	part	RO-B9ProcWing-Early	yes	B9 Procedural Wing (Early)
+unlockParts	Starting Parts (RP-1)	part	RO-DerwentV	yes	Derwent Turbojet
+unlockParts	Starting Parts (RP-1)	part	RO-IntakeRadialLongPitot	yes	Pitot Intake (Radial)
+unlockParts	Starting Parts (RP-1)	part	RO-OldFighterCockpit	yes	P-40 Cockpit
+unlockParts	Starting Parts (RP-1)	part	RO-RestockPlus-RCS-Block-Dual-138	yes	RCS Dual [138/223 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-RestockPlus-RCS-Block-Dual-28	yes	RCS Dual [28/45 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-RestockPlus-RCS-Block-Quad-138	yes	RCS Quad Angled [138/223 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-RestockPlus-RCS-Block-Quad-28	yes	RCS Quad [28/45 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-RestockPlus-RCS-Block-Quad-Angled-28	yes	RCS Quad Angled [28/45 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-RestockPlus-RCS-Block-Quint-138	yes	RCS 5-Way [138/223 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-RestockPlus-RCS-Block-Quint-28	yes	RCS 5-Way [28/45 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-RestockPlus-RCS-Block-Triple-Angled-138	yes	RCS Triple Angled [138/223 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-RestockPlus-RCS-Block-Triple-Angled-28	yes	RCS Triple Angled [28/45 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-RestockPlus-RCS-Linear-28	yes	RCS Thruster [28/45 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-nflv-rcs-aero-heavy-1-half	yes	Aerodynamic RCS 4-Way [138/223 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-nflv-rcs-aero-heavy-1-quarter	yes	Aerodynamic RCS 4-Way [69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-nflv-rcs-aero-heavy-2-half	yes	Aerodynamic RCS 4-Way [138/223 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO-nflv-rcs-aero-heavy-2-quarter	yes	Aerodynamic RCS 4-Way [69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	ROE-A4	yes	Model 39
+unlockParts	Starting Parts (RP-1)	part	ROE-Aerobee	yes	Aerobee
+unlockParts	Starting Parts (RP-1)	part	ROE-LargeApolloLC	yes	Large Apollo Style Launch Clamp
+unlockParts	Starting Parts (RP-1)	part	ROE-LargeLC	yes	Large Launch Clamp (3.0 m)
+unlockParts	Starting Parts (RP-1)	part	ROE-LargeRadialLC	yes	Large Radial Launch Clamp
+unlockParts	Starting Parts (RP-1)	part	ROE-MediumApolloLC	yes	Medium Apollo Style Launch Clamp
+unlockParts	Starting Parts (RP-1)	part	ROE-MediumLC	yes	Medium Launch Clamp (1.65m)
+unlockParts	Starting Parts (RP-1)	part	ROE-MediumRadialLC	yes	Medium Radial Launch Clamp
+unlockParts	Starting Parts (RP-1)	part	ROE-ModularRCS	yes	Modular RCS
+unlockParts	Starting Parts (RP-1)	part	ROE-ORM65	yes	ORM-65
+unlockParts	Starting Parts (RP-1)	part	ROE-R103	yes	R-103 Booster
+unlockParts	Starting Parts (RP-1)	part	ROE-SmallApolloLC	yes	Small Apollo Style Launch Clamp
+unlockParts	Starting Parts (RP-1)	part	ROE-SmallLC	yes	Small Launch Clamp (0.375 m)
+unlockParts	Starting Parts (RP-1)	part	ROE-SmallRadialLC	yes	Small Radial Launch Clamp
+unlockParts	Starting Parts (RP-1)	part	ROE-UmbilicalTower	yes	Umbilical Tower
+unlockParts	Starting Parts (RP-1)	part	ROE-Veronique	yes	Véronique (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	ROE-VeroniqueAK	yes	Véronique
+unlockParts	Starting Parts (RP-1)	part	ROMeteoSustainer	yes	U-1250
+unlockParts	Starting Parts (RP-1)	part	ROSmallSpinMotor	yes	Spin Motor (Small)
+unlockParts	Starting Parts (RP-1)	part	ROT-BoosterTank-Separate	yes	Modular Booster Tank (Conventional Structure)
+unlockParts	Starting Parts (RP-1)	part	ROT-GenericTank-Separate	yes	Modular Tank (Conventional Structure)
+unlockParts	Starting Parts (RP-1)	part	ROT-MiscTank-Radial-Separate	yes	Another Modular Radial Tank (Conventional Structure)
+unlockParts	Starting Parts (RP-1)	part	ROT-MiscTank-Separate	yes	Another Modular Tank (Conventional Structure)
+unlockParts	Starting Parts (RP-1)	part	ROT-Mount	yes	Modular Mount (Structural)
+unlockParts	Starting Parts (RP-1)	part	ROT-Nose-Separate	yes	Modular Nose Tank (Conventional Structure)
+unlockParts	Starting Parts (RP-1)	part	ROT-OpenInterstage	yes	Hollow Interstage
+unlockParts	Starting Parts (RP-1)	part	ROT-ProbeCore	yes	Procedural Probe Core
+unlockParts	Starting Parts (RP-1)	part	ROT-RadialTank-Separate	yes	Radial Tank (Conventional Structure)
+unlockParts	Starting Parts (RP-1)	part	ROT-RingDecoupler	yes	Ring Decoupler
+unlockParts	Starting Parts (RP-1)	part	ROT-SphericalTank-Separate	yes	Spherical Tank (Conventional Structure)
+unlockParts	Starting Parts (RP-1)	part	ROT-ToroidalTank-Separate	yes	Modular Toroidal Tank (Conventional Structure)
+unlockParts	Starting Parts (RP-1)	part	RO_FASA_ExplorerRCS	yes	Attitude Jet (69/111 N class)
+unlockParts	Starting Parts (RP-1)	part	RO_FASA_MercuryPodRCS	yes	Attitude Jet (138/223 N class)
+unlockParts	Starting Parts (RP-1)	part	RO_RCSBlock_restock_138	yes	Angled RCS Block [ 138/223 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO_RCSBlock_restock_28	yes	Angled RCS Block [  28/45 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO_RCSBlock_restock_69	yes	Angled RCS Block [  69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	RO_RCSBlock_restock_mini_138	yes	Angled RCS Block [ 138/223 N Class] (elbows)
+unlockParts	Starting Parts (RP-1)	part	RO_RCSBlock_restock_mini_28	yes	Angled RCS Block [  28/45 N Class] (elbows)
+unlockParts	Starting Parts (RP-1)	part	RO_RCSBlock_restock_mini_69	yes	Angled RCS Block [  69/111 N Class] (elbows)
+unlockParts	Starting Parts (RP-1)	part	RO_linearRcs_tenth	yes	Attitude Jet (28/45 N class)
+unlockParts	Starting Parts (RP-1)	part	RP0aerobeeSounding	yes	Aerobee Sounding Rocket Telemetry Unit (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	RP0probeSounding0-3m	yes	WAC-Corporal Sounding Rocket Telemetry Unit (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	RSBRibbedBase	yes	FB - Procedural Ribbed Payload Adapter
+unlockParts	Starting Parts (RP-1)	part	RSBRibbedBase_Boattail	yes	Boattail Adapter (Ribbed)
+unlockParts	Starting Parts (RP-1)	part	RSBRibbedBase_Interstage	yes	IB - Procedural Ribbed Interstage Adapter
+unlockParts	Starting Parts (RP-1)	part	RSBTrussBase	yes	FB - Procedural Truss Payload Adapter
+unlockParts	Starting Parts (RP-1)	part	RSBTrussBase_Boattail	yes	Boattail Adapter (Truss)
+unlockParts	Starting Parts (RP-1)	part	RSBTrussBase_Interstage	yes	IB - Procedural Truss Interstage Adapter
+unlockParts	Starting Parts (RP-1)	part	ReleaseValve	yes	FTE-1 Drain Valve
+unlockParts	Starting Parts (RP-1)	part	SMLadderUtility	yes	MK I Mobility Enhancer
+unlockParts	Starting Parts (RP-1)	part	SSTUBase	yes	FB - Procedural Hollow Truss Payload Adapter
+unlockParts	Starting Parts (RP-1)	part	SSTUBase_Boattail	yes	Boattail Adapter (Hollow Truss)
+unlockParts	Starting Parts (RP-1)	part	SSTUBase_Interstage	yes	IB - Procedural Hollow Truss Interstage Adapter
+unlockParts	Starting Parts (RP-1)	part	SSTUHollowRing	yes	FB - Procedural Hollow Payload Adapter Ring
+unlockParts	Starting Parts (RP-1)	part	SSTUHollowRing_Boattail	yes	Boattail Adapter (Hollow Ring)
+unlockParts	Starting Parts (RP-1)	part	SSTUHollowRing_Interstage	yes	IB - Procedural Hollow Interstage Ring
+unlockParts	Starting Parts (RP-1)	part	SXTAntenna	yes	Sputnik PS-1 Antenna
+unlockParts	Starting Parts (RP-1)	part	SXTBuzzard	yes	Junkers Ju 87 cockpit
+unlockParts	Starting Parts (RP-1)	part	SXTInlineAirIntake	yes	XM-600 1.25m Pitot Intake
+unlockParts	Starting Parts (RP-1)	part	SXTJ213	yes	Junkers Jumo 213E
+unlockParts	Starting Parts (RP-1)	part	SXTKO211Dprop	yes	Junkers Jumo 211F
+unlockParts	Starting Parts (RP-1)	part	SXTMerlin46Prop	yes	Rolls-Royce Merlin 46
+unlockParts	Starting Parts (RP-1)	part	SXTMerlin66prop	yes	Rolls-Royce Merlin 66
+unlockParts	Starting Parts (RP-1)	part	SXTPWR2800	yes	Pratt & Whitney R-2800-63W Double Wasp
+unlockParts	Starting Parts (RP-1)	part	SXTProtonlikeNoseCone	yes	Conformal Rocket Cone Mk3
+unlockParts	Starting Parts (RP-1)	part	SXTR280018WProp	yes	Pratt & Whitney R-2800-18W Double Wasp
+unlockParts	Starting Parts (RP-1)	part	SXTR280021Prop	yes	Pratt & Whitney R-2800-21 Double Wasp
+unlockParts	Starting Parts (RP-1)	part	SXTTinyprop	yes	IO-550-B Piston Engine
+unlockParts	Starting Parts (RP-1)	part	SXT_Jumo213A	yes	Junkers Jumo 213A
+unlockParts	Starting Parts (RP-1)	part	SXTke111	yes	Heinkel He 111 cockpit
+unlockParts	Starting Parts (RP-1)	part	SXTlaunchclamp1	yes	TT06-A Launch Stability Enhancer
+unlockParts	Starting Parts (RP-1)	part	SXTradialWindow	yes	Airliner Window
+unlockParts	Starting Parts (RP-1)	part	SmallGearBay	yes	LY-10 Small Landing Gear
+unlockParts	Starting Parts (RP-1)	part	SmallPointLight	yes	MK 4 Point Light
+unlockParts	Starting Parts (RP-1)	part	SmallSpotLight	yes	MK 3 Mini Spotlight
+unlockParts	Starting Parts (RP-1)	part	SmallStripLight	yes	MK 5 Strip Light
+unlockParts	Starting Parts (RP-1)	part	SquadRCSBlockHalf	yes	RCS Quad [138/223 N class] (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	SquadRCSBlockTenth	yes	RCS Quad (28/45 N class) (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	StandardCtrlSrf	yes	Elevon 1
+unlockParts	Starting Parts (RP-1)	part	SurfAntenna	yes	Communotron 16-S
+unlockParts	Starting Parts (RP-1)	part	TinyTim	yes	Tiny Tim Booster
+unlockParts	Starting Parts (RP-1)	part	aerocam	yes	Aerocam
+unlockParts	Starting Parts (RP-1)	part	aerocam180	yes	Aerocam 180
+unlockParts	Starting Parts (RP-1)	part	airScoop	yes	XM-G50 Radial Pitot Intake
+unlockParts	Starting Parts (RP-1)	part	airplaneTail	yes	Tail Connector A
+unlockParts	Starting Parts (RP-1)	part	airplaneTailB	yes	Tail Connector B
+unlockParts	Starting Parts (RP-1)	part	basicFin	yes	Basic Fin
+unlockParts	Starting Parts (RP-1)	part	ca_RM01	yes	CAE-RM01 RCS Thruster Block
+unlockParts	Starting Parts (RP-1)	part	ca_rs01	yes	CA-RS01 RCS Thruster Block
+unlockParts	Starting Parts (RP-1)	part	ca_rs04	yes	CA-RS04 RCS Thruster Block
+unlockParts	Starting Parts (RP-1)	part	conformaldecals-flag	yes	CDL-F Flag Decal
+unlockParts	Starting Parts (RP-1)	part	conformaldecals-generic	yes	CDL-1 Generic Decal
+unlockParts	Starting Parts (RP-1)	part	conformaldecals-munar	yes	CDL-3 Surface Base Decal
+unlockParts	Starting Parts (RP-1)	part	conformaldecals-semiotic	yes	CDL-2 Semiotic Standard Decal
+unlockParts	Starting Parts (RP-1)	part	conformaldecals-text	yes	CDL-T Text Decal
+unlockParts	Starting Parts (RP-1)	part	deltaWing	yes	Delta Wing
+unlockParts	Starting Parts (RP-1)	part	delta_small	yes	Small Delta Wing
+unlockParts	Starting Parts (RP-1)	part	domeLight1	yes	Domelight Mk1
+unlockParts	Starting Parts (RP-1)	part	elevon2	yes	Elevon 2
+unlockParts	Starting Parts (RP-1)	part	elevon3	yes	Elevon 3
+unlockParts	Starting Parts (RP-1)	part	elevon5	yes	Elevon 5
+unlockParts	Starting Parts (RP-1)	part	evaChute	yes	Personal Parachute
+unlockParts	Starting Parts (RP-1)	part	groundAnchor	yes	Stamp-O-Tron Ground Anchor
+unlockParts	Starting Parts (RP-1)	part	groundLight1	yes	Work Lamp (Small)
+unlockParts	Starting Parts (RP-1)	part	groundLight2	yes	Work Lamp (Stand)
+unlockParts	Starting Parts (RP-1)	part	hc_booster	yes	BoosterCam
+unlockParts	Starting Parts (RP-1)	part	hc_kazzelblad	yes	BoosterCam
+unlockParts	Starting Parts (RP-1)	part	hc_launchcam	yes	KSC Launchpad Camera
+unlockParts	Starting Parts (RP-1)	part	hc_navcam	yes	NavCam
+unlockParts	Starting Parts (RP-1)	part	hc_nightvision	yes	Nightvisioncam
+unlockParts	Starting Parts (RP-1)	part	hc_scicam	yes	ScienceCam
+unlockParts	Starting Parts (RP-1)	part	hc_wideangle	yes	Wide Angle Cam
+unlockParts	Starting Parts (RP-1)	part	kerbpro	yes	KerbPro
+unlockParts	Starting Parts (RP-1)	part	ladder1	yes	Pegasus I Mobility Enhancer
+unlockParts	Starting Parts (RP-1)	part	launchClamp1	yes	TT18-A Launch Stability Enhancer
+unlockParts	Starting Parts (RP-1)	part	microIbeam	yes	M-Beam 100 I-Beam
+unlockParts	Starting Parts (RP-1)	part	miniIntake	yes	Small Pitot Intake
+unlockParts	Starting Parts (RP-1)	part	mumech_hullcam	yes	Basic Hull Camera Deluxe
+unlockParts	Starting Parts (RP-1)	part	navLight1	yes	Navigation Light Mk1
+unlockParts	Starting Parts (RP-1)	part	nfex-antenna-rover-2	yes	AX-5 Aerial Micro-Antenna
+unlockParts	Starting Parts (RP-1)	part	noseCone	yes	Aerodynamic Nose Cone
+unlockParts	Starting Parts (RP-1)	part	parachuteDrogue	yes	Mk25 Parachute
+unlockParts	Starting Parts (RP-1)	part	parachuteLarge	yes	Mk16-XL Parachute
+unlockParts	Starting Parts (RP-1)	part	parachuteRadial	yes	Mk2-R Radial-Mount Parachute
+unlockParts	Starting Parts (RP-1)	part	parachuteSingle	yes	Mk16 Parachute
+unlockParts	Starting Parts (RP-1)	part	pointyNoseConeA	yes	Advanced Nose Cone - Type A
+unlockParts	Starting Parts (RP-1)	part	pointyNoseConeB	yes	Advanced Nose Cone - Type B
+unlockParts	Starting Parts (RP-1)	part	proceduralStackDecoupler	yes	Decoupler [Procedural]
+unlockParts	Starting Parts (RP-1)	part	radialDecoupler	yes	TT-38K Radial Decoupler
+unlockParts	Starting Parts (RP-1)	part	restock-decoupler-radial-tiny-1	yes	TT-14 Radial Decoupler
+unlockParts	Starting Parts (RP-1)	part	restock-rcs-block-dual-mini-1	yes	RCS Dual [69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	restock-rcs-block-quad-angled-mini-1	yes	RCS Quad Angled [69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	restock-rcs-block-quad-mini-1	yes	RCS Quad [69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	restock-rcs-block-qunit-mini-1	yes	RCS 5-Way [69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	restock-rcs-block-triple-angled-mini-1	yes	RCS Triple Angled [69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	restock-rcs-single-mini-1	yes	RCS Thruster [69/111 N Class]
+unlockParts	Starting Parts (RP-1)	part	rocketNoseCone_v2	yes	Protective Rocket Nose Cone Mk7
+unlockParts	Starting Parts (RP-1)	part	science_module	yes	PH01 - Early Film Camera
+unlockParts	Starting Parts (RP-1)	part	smallCtrlSrf	yes	Elevon 4
+unlockParts	Starting Parts (RP-1)	part	smallHardpoint	yes	Small Hardpoint
+unlockParts	Starting Parts (RP-1)	part	smallRadialDecoupler	yes	TR-8A Radial Decoupler
+unlockParts	Starting Parts (RP-1)	part	spotLight1	yes	Illuminator Mk1
+unlockParts	Starting Parts (RP-1)	part	spotLight1_v2	yes	Illuminator Mk1
+unlockParts	Starting Parts (RP-1)	part	spotLight2	yes	Illuminator Mk2
+unlockParts	Starting Parts (RP-1)	part	spotLight2_v2	yes	Illuminator Mk2
+unlockParts	Starting Parts (RP-1)	part	spotLight3	yes	Spotlight Mk1
+unlockParts	Starting Parts (RP-1)	part	standardNoseCone	yes	Small Nose Cone
+unlockParts	Starting Parts (RP-1)	part	stripLight1	yes	Lightstrip Mk1
+unlockParts	Starting Parts (RP-1)	part	structuralIBeam1	yes	M-Beam 650 I-Beam
+unlockParts	Starting Parts (RP-1)	part	structuralIBeam2	yes	M-Beam 200 I-Beam
+unlockParts	Starting Parts (RP-1)	part	structuralIBeam3	yes	M-Beam 200 I-Beam Pocket Edition
+unlockParts	Starting Parts (RP-1)	part	structuralMiniNode	yes	The Not-Rockomax Micronode
+unlockParts	Starting Parts (RP-1)	part	structuralPanel1	yes	M-1x1 Structural Panel
+unlockParts	Starting Parts (RP-1)	part	structuralPanel2	yes	M-2x2 Structural Panel
+unlockParts	Starting Parts (RP-1)	part	structuralPylon	yes	Structural Pylon
+unlockParts	Starting Parts (RP-1)	part	structuralWing	yes	Structural Wing Type A
+unlockParts	Starting Parts (RP-1)	part	structuralWing2	yes	Structural Wing Type B
+unlockParts	Starting Parts (RP-1)	part	structuralWing3	yes	Structural Wing Type C
+unlockParts	Starting Parts (RP-1)	part	structuralWing4	yes	Structural Wing Type D
+unlockParts	Starting Parts (RP-1)	part	strutConnector	yes	EAS-4 Strut Connector
+unlockParts	Starting Parts (RP-1)	part	strutCube	yes	Cubic Octagonal Strut
+unlockParts	Starting Parts (RP-1)	part	strutCube3way	yes	Cubic Octagonal Strut Three Way Connector
+unlockParts	Starting Parts (RP-1)	part	strutCube90	yes	Cubic Octagonal Strut Angle Connector
+unlockParts	Starting Parts (RP-1)	part	strutCubeLarge	yes	Cubic Octagonal Strut Mk IV
+unlockParts	Starting Parts (RP-1)	part	strutCubeMedium	yes	Cubic Octagonal Strut Mk III
+unlockParts	Starting Parts (RP-1)	part	strutCubeMountingPlate	yes	Cubic Octagonal Strut Slim Mounting Plate
+unlockParts	Starting Parts (RP-1)	part	strutCubeOCTOAdapter	yes	Cubic Octagonal Strut Octagonal Adapter
+unlockParts	Starting Parts (RP-1)	part	strutCubeS0Adapter	yes	Cubic Octagonal Strut 0.625m Adapter
+unlockParts	Starting Parts (RP-1)	part	strutCubeSmall	yes	Cubic Octagonal Strut Mk II
+unlockParts	Starting Parts (RP-1)	part	strutOcto	yes	Octagonal Strut
+unlockParts	Starting Parts (RP-1)	part	sweptWing	yes	Swept Wings
+unlockParts	Starting Parts (RP-1)	part	sweptWing1	yes	Swept Wing Type A
+unlockParts	Starting Parts (RP-1)	part	sweptWing2	yes	Swept Wing Type B
+unlockParts	Starting Parts (RP-1)	part	tailfin	yes	Tail Fin
+unlockParts	Starting Parts (RP-1)	part	telescopicLadder	yes	Kelus Mobility Enhancer
+unlockParts	Starting Parts (RP-1)	part	telescopicLadderBay	yes	Kelus-LV Bay Mobility Enhancer
+unlockParts	Starting Parts (RP-1)	part	truss-micro-01	yes	Cubic-Family Large Strut
+unlockParts	Starting Parts (RP-1)	part	truss-micro-02	yes	Cubic-Family Medium Strut
+unlockParts	Starting Parts (RP-1)	part	trussAdapter	yes	Modular Girder Adapter
+unlockParts	Starting Parts (RP-1)	part	trussPiece1x	yes	Modular Girder Segment
+unlockParts	Starting Parts (RP-1)	part	trussPiece3x	yes	Modular Girder Segment XL
+unlockParts	Starting Parts (RP-1)	part	wingConnector	yes	Wing Connector Type A
+unlockParts	Starting Parts (RP-1)	part	wingConnector2	yes	Wing Connector Type B
+unlockParts	Starting Parts (RP-1)	part	wingConnector3	yes	Wing Connector Type C
+unlockParts	Starting Parts (RP-1)	part	wingConnector4	yes	Wing Connector Type D
+unlockParts	Starting Parts (RP-1)	part	wingConnector5	yes	Wing Connector Type E
+unlockParts	Starting Parts (RP-1)	part	wingStrake	yes	Wing Strake
+unlockParts	Starting Parts (RP-1)	part	winglet	yes	AV-T1 Winglet
+unlockParts	Starting Parts (RP-1)	part	winglet3	yes	Delta-Deluxe Winglet
 rocketryTesting	Post-War Rocketry Testing	part	ROE-RD100	yes	RD-100
 rocketryTesting	Post-War Rocketry Testing	part	ROE-XLR10	yes	XLR10
 rocketryTesting	Post-War Rocketry Testing	part	ROE-XLR11	yes	XLR11
@@ -125,7 +609,7 @@ electronicsSatellite	Satellite Era Electronics Research	part	RO_EarlyTinySolarPa
 electronicsSatellite	Satellite Era Electronics Research	part	RP-1-CommunicationSat	yes	Communication Contract Satellite Bus
 electronicsSatellite	Satellite Era Electronics Research	part	RP-1-NavigationSat	yes	Navigation Contract Satellite Bus
 electronicsSatellite	Satellite Era Electronics Research	upgrade	rp0ResearcherUpgradeSatellites	DROP-axed-career	
-electronicsSatellite	Satellite Era Electronics Research	upgrade	solarTL0	not-in-curated	
+electronicsSatellite	Satellite Era Electronics Research	upgrade	solarTL0	KEEP-techlevel-TODO	
 postWarAvionics	Early Tracking Systems	part	GooExperiment	yes	Biological Sample Capsule
 postWarAvionics	Early Tracking Systems	part	SXTProbeGooo	yes	Biological Sample Capsule
 postWarAvionics	Early Tracking Systems	upgrade	Science-Core-postWarAvionics	REFERENCE-avionics	

@@ -11,6 +11,8 @@ OUT_TSV = os.path.join(REPO, "manifest", "first-orbit-partlist.tsv")
 OUT_MD  = os.path.join(REPO, "manifest", "first-orbit-partlist.md")
 
 NODES = [  # ordered
+ ("start","Start (RP-1)"),
+ ("unlockParts","Starting Parts (RP-1)"),
  ("rocketryTesting","Post-War Rocketry Testing"),
  ("earlyRocketry","Early Rocketry"),
  ("basicRocketryRP0","Basic Rocketry"),
@@ -33,6 +35,10 @@ NODES = [  # ordered
 ]
 NSET = {k for k, _ in NODES}
 TITLE = dict(NODES)
+# We deliberately keep OUR start smaller than RP-1's (don't overwhelm the player): RP-1 start/unlockParts
+# parts already in our startlist drop out; the rest are added to the list to be homed deeper in the tree.
+OUR_START = {"proceduralNoseCone", "proceduralStructural", "RO-RFTank-Separate", "proceduralAvionics",
+             "B9_Aero_Wing_Procedural_TypeA", "sensorBarometer", "sensorThermometer"}
 
 def load_tsv(path):
     with open(path, encoding="utf-8") as f:
@@ -92,6 +98,8 @@ md = ["# First-Orbit Milestone Partlist (extracted from RP-1 @ rp1_expanded)\n",
 tsv = ["node\tnode_title\tkind\tname\tcurated\ttitle"]
 for nid, ntitle in NODES:
     parts = sorted(set(part_nodes.get(nid, [])))
+    if nid in ("start", "unlockParts"):
+        parts = [p for p in parts if p not in OUR_START]   # smaller start: drop what we already give at our start
     ups = sorted(set(up_nodes.get(nid, [])))
     if not parts and not ups: continue
     nc = sum(1 for p in parts if p in curated_title)
@@ -103,7 +111,9 @@ for nid, ntitle in NODES:
         tsv.append(f"{nid}\t{ntitle}\tpart\t{p}\t{'yes' if c else 'no'}\t{t}")
         tot_p += 1; tot_pc += c
     for u in ups:
-        disp = curated_up.get(u, "not-in-curated")
+        disp = curated_up.get(u)
+        if disp is None:  # solarTL*/commsTL* = tech-level ladders to INCLUDE later (user note), not drop
+            disp = "KEEP-techlevel-TODO" if u.startswith(("solarTL", "commsTL")) else "not-in-curated"
         md.append(f"  - ⬆ `{u}`  [{disp}]")
         tsv.append(f"{nid}\t{ntitle}\tupgrade\t{u}\t{disp}\t")
         tot_u += 1
@@ -114,6 +124,7 @@ print(f"\nTOTAL: {tot_p} parts ({tot_pc} curated / {tot_p-tot_pc} uncurated), {t
 print("per-node parts (curated/total):")
 for nid, ntitle in NODES:
     parts = sorted(set(part_nodes.get(nid, [])))
+    if nid in ("start", "unlockParts"): parts = [p for p in parts if p not in OUR_START]
     if parts:
         nc = sum(1 for p in parts if p in curated_title)
         print(f"  {nc:>3}/{len(parts):<3}  {nid:<26} {ntitle}")
