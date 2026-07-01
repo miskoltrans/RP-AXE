@@ -1,9 +1,13 @@
 # RP-AXE tech tree — SOURCE OF TRUTH (compiled by tools/build_tree.py).
 # ================= EARLY TREE — parts-first, brainstormed fresh (to first orbit) =================
 # Every node = one non-obvious enabling breakthrough (no "X & Y"), named for the real process/physics.
-# Each carries a ⭐KING part it enables + ride-alongs; node COST abstracts the R&D for the unnamed rest.
-# Science is SCATTERED by difficulty (six lanes, never a science branch). Cosmetics -> parking.
-# Design doc: docs/EARLY-TREE.md. Ride-along placement of the long tails is a follow-up (kings shown now).
+# Each carries a KING part it enables + ride-alongs; node COST abstracts the R&D for the unnamed rest.
+#
+# NO FORCED "rockets vs planes" PATHS. You start at `start` and pick whatever you want — the nozzle,
+# a welded tank, a radiation counter, an airframe — they are mix-and-match. A node ONLY depends on what
+# it GENUINELY derives from: the nozzle parents the engine line; it does NOT parent welded tanks / Geiger
+# tubes / solar cells — those are their own foundational breakthroughs off `start`.
+# Science is SCATTERED by difficulty (six lanes). Cosmetics -> parking. Design doc: docs/EARLY-TREE.md.
 
 meta:
   scalar: 1.0
@@ -17,7 +21,7 @@ nodes:
     discipline: SystemsIntegration
     tier: 0
     parents: []
-    flavor: "1950, Kerbalkind united. The shared toolbox — procedural structure, tankage, avionics, a wing, and the first two instruments. Deliberately tiny; everything else you earn."
+    flavor: "1950, Kerbalkind united. The shared toolbox — procedural structure, tankage, avionics, a wing, and the first two instruments. From here every breakthrough is yours to pick, in whatever order you like."
     parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, B9_Aero_Wing_Procedural_TypeA, sensorBarometer, sensorThermometer, strutConnector, strutCube, structuralIBeam1, structuralPanel1, trussPiece1x]
   - id: parking
     title: "Unsorted Parts (Parking)"
@@ -41,7 +45,8 @@ nodes:
     hide_empty: true
     flavor: "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. (Soviet-probe pack only.)"
 
-  # ============================ ROCKETRY TRACK — propulsion (Isp axis) ============================
+  # ============ FOUNDATIONAL BREAKTHROUGHS — all off `start`, pick any (mix-and-match) ============
+  # ---- rocket propulsion (the nozzle; only THIS line derives from it) ----
   - id: rocketryStart
     title: "de Laval Nozzle Flow"
     discipline: FluidDynamics
@@ -77,163 +82,153 @@ nodes:
     parents: [fd_combustionStability]
     flavor: "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, thrust-limited by heat pickup. The RL-10 and the highest specific impulse there is."
     parts: [ROE-RL10Fixed]
+  # ---- solid propulsion (its own chemistry; self-contained motor) ----
   - id: pc_solidGrains
     title: "Ammonium-Perchlorate Composite Grains"
     discipline: PropellantChemistry
-    tier: 2
-    parents: [rocketryStart]
-    flavor: "Ammonium-perchlorate oxidiser bound in a rubbery binder, cast and cured into a structural grain — cheap, dense, storable. You light it once and it does not stop."
+    tier: 1
+    parents: [start]
+    flavor: "Ammonium-perchlorate oxidiser bound in a rubbery binder, cast and cured into a structural grain with an integral nozzle — cheap, dense, storable. You light it once and it does not stop."
     parts: [ROE-BabySergeant, ROE-BabySergeantX3, ROE-BabySergeantX11, ROE-GCRC, ROE-25KS18000, ROE-18KS7800, ROE-NikeM5E1, ROE-Castor1, ROE-Star13]
-
-  # ---------------------------- mass-fraction (structure axis) ----------------------------
+  # ---- structural mass-fraction (metallurgy/structures; independent of propulsion) ----
   - id: met_weldedTank
     title: "Fusion-Welded Pressure Vessels"
     discipline: Metallurgy
-    tier: 2
-    parents: [rocketryStart]
+    tier: 1
+    parents: [start]
     flavor: "Roll, fusion-weld and proof-test a cylinder that holds pressure without bursting — the first tank that flies. Heavy, but honest."
     parts: [ROT-ServiceModule, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-GenericTank-Separate, ROT-BoosterTank-Separate]
   - id: met_isogrid
     title: "Isogrid Chemical Milling"
     discipline: Metallurgy
-    tier: 3
+    tier: 2
     parents: [met_weldedTank]
     flavor: "Etch away everything that isn't load-path, leaving a triangular-rib isogrid skin — the same stiffness at a fraction of the mass."
     parts: [ROT-GenericTank-Integral, ROT-AtlasTank-Integral, ROT-BoosterTank-Integral, ROT-SphericalTank-Integral, ROT-ToroidalTank-Integral, RO-RFTank-Integral]
   - id: str_balloonTank
     title: "Pressure-Stabilized Monocoque"
     discipline: StructuresMechanisms
-    tier: 3
+    tier: 2
     parents: [met_weldedTank]
     flavor: "Make the wall so thin it only holds shape under pressure — the Atlas 'steel balloon' reached orbit weighing almost nothing empty, and would crumple if you ever let it depressurise. As much an orbital enabler as any engine."
     parts: [ROT-AtlasTank-Balloon, RO-RFTank-BalloonNew, ROT-BalloonTank-New]
-
-  # ---------------------------- launch-vehicle systems ----------------------------
+  # ---- launch-vehicle mechanisms & guidance (independent) ----
   - id: str_staging
     title: "Pyrotechnic Frangible Separation"
     discipline: StructuresMechanisms
-    tier: 2
-    parents: [rocketryStart]
+    tier: 1
+    parents: [start]
     flavor: "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one go."
     parts: [proceduralStackDecoupler, Decoupler_1, Decoupler_2, radialDecoupler, ROE-CastorDecoupler, sepMotor1, SnubOtron, KzThrustPlate]
   - id: gnc_pitchProgram
     title: "Open-Loop Pitch Programming"
     discipline: GuidanceControl
-    tier: 2
-    parents: [rocketryStart]
+    tier: 1
+    parents: [start]
     flavor: "A timed, pre-computed pitch schedule flown open-loop off a gyro reference — the first machine that flies itself uphill on a fixed program, no feedback, no corrections."
-  - id: int_orbitalInsertion
-    title: "Orbital Insertion"
-    discipline: SystemsIntegration
-    tier: 4
-    parents: [fd_combustionStability, str_balloonTank, str_staging, gnc_pitchProgram]
-    anyToUnlock: false
-    flavor: "A stable high-thrust engine, a tank light enough to close the rocket equation, staging, and a pitch program converge. Build your own satellite from the bus, power and antenna beside it. Beep. Beep. Beep."
+  - id: gnc_rcs
+    title: "Cold-Gas Reaction Control"
+    discipline: GuidanceControl
+    tier: 2
+    parents: [gnc_pitchProgram]
+    flavor: "Bleed stored gas through opposed thruster pairs to point and hold a vehicle in vacuum — the first three-axis control where there is no air to push against."
+    parts: [ROE-ModularRCS, RCSBlock_138, RCSBlock_28, RCSBlock_69, InlineRCS]
+  - id: str_booms
+    title: "Stored-Strain Deployable Booms"
+    discipline: StructuresMechanisms
+    tier: 2
+    parents: [str_staging]
+    flavor: "Stow a coilable tubular mast under strain for launch and let it spring out on orbit — and hold a magnetometer far enough from the bus to read a field the spacecraft's own metal would otherwise drown."
+    parts: [RO-EarlyMagnet]
+  - id: aero_fairings
+    title: "Jettisonable Payload Fairings"
+    discipline: Aerodynamics
+    tier: 1
+    parents: [start]
+    flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
+    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, RSBRibbedBase, SSTUBase]
+  - id: aero_recovery
+    title: "Drogue-Stabilized Deceleration"
+    discipline: Aerodynamics
+    tier: 1
+    parents: [start]
+    flavor: "Stage a small drogue to stabilise and slow a falling body, then a main canopy to bring it down intact — the oldest way home from space, and the prerequisite for anything you want back."
+    parts: [RC_cone, RC_radial, RC_cone_double, RC_stack, parachuteSingle, parachuteLarge, parachuteDrogue, parachuteRadial, evaChute]
 
-  # ============================ SPACECRAFT — the payload systems ============================
+  # ---- spacecraft power, thermal, comms (independent foundational lines) ----
   - id: th_radiativeControl
     title: "Passive Radiative Control"
     discipline: Thermodynamics
-    tier: 2
-    parents: [rocketryStart]
+    tier: 1
+    parents: [start]
     flavor: "Reject waste heat to space with coatings, finishes and surface geometry alone — the baseline thermal balance of every spacecraft, before you can afford anything active."
   - id: th_hermeticBus
     title: "Hermetic Thermal-Control Bus"
     discipline: Thermodynamics
-    tier: 3
+    tier: 2
     parents: [th_radiativeControl]
     flavor: "A sealed, pressurised, fan-stirred vessel that keeps electronics alive through the orbital hot-cold cycle and runs its own timeline unattended. Sputnik was little more than this — and that sealed sphere WAS the engineering."
     parts: [ROT-ProbeCore, probeCoreSphere_v2, SXTSputnik]
   - id: elec_siliconPV
     title: "Diffused-Junction Photovoltaics"
     discipline: ElectricalPower
-    tier: 3
-    parents: [rocketryStart]
+    tier: 1
+    parents: [start]
     flavor: "Diffuse a shallow p-n junction into silicon and sunlight drives a current across it indefinitely — the breakthrough that freed satellites from their batteries. Vanguard 1 flew the first cells."
     parts: [ROS-StaticSolarPanel, RO_EarlyTinySolarPanel, RO-rangerSolarPanel]
   - id: nuc_rtg
     title: "Radioisotope Thermoelectrics"
     discipline: NuclearEngineering
-    tier: 4
+    tier: 2
     parents: [elec_siliconPV]
     flavor: "A decaying isotope's heat across a thermocouple gives steady watts for decades, anywhere, sunlight or not — the power of the outer planets, where the sun is a bright star."
     parts: [RO-SNAP-3-RTGPo210, RO-SNAP-9-RTG, RO-SNAP-19-RTG, RO-MMRTG]
   - id: tel_telemetry
     title: "Pulse-Interval Telemetry"
     discipline: Telecommunications
-    tier: 3
-    parents: [rocketryStart]
+    tier: 1
+    parents: [start]
     flavor: "Encode temperature and pressure in the spacing between radio pulses and key it to the ground — Sputnik's beacon turned a satellite's state into something you could hear from another continent."
     parts: [SXTAntenna, SurfAntenna]
-  - id: gnc_rcs
-    title: "Cold-Gas Reaction Control"
-    discipline: GuidanceControl
-    tier: 3
-    parents: [gnc_pitchProgram]
-    flavor: "Bleed stored gas through opposed thruster pairs to point and hold a vehicle in vacuum — the first three-axis control where there is no air to push against."
-    parts: [ROE-ModularRCS, RCSBlock_138, RCSBlock_28, RCSBlock_69, InlineRCS]
-  - id: aero_recovery
-    title: "Drogue-Stabilized Deceleration"
-    discipline: Aerodynamics
-    tier: 3
-    parents: [rocketryStart]
-    flavor: "Stage a small drogue to stabilise and slow a falling body, then a main canopy to bring it down intact — the oldest way home from space, and the prerequisite for anything you want back."
-    parts: [RC_cone, RC_radial, RC_cone_double, RC_stack, parachuteSingle, parachuteLarge, parachuteDrogue, parachuteRadial, evaChute]
 
-  # ============================ SCIENCE — scattered by difficulty (six lanes) ============================
+  # ============ SCIENCE — scattered by difficulty (six lanes), each off `start` ============
   - id: nuc_geiger
     title: "Geiger-Müller Ionization Counting"
     discipline: NuclearEngineering
-    tier: 2
-    parents: [rocketryStart]
+    tier: 1
+    parents: [start]
     flavor: "A gas-discharge tube that clicks once per ionising particle — cheap, rugged, and the first satellites' sharpest sense. Explorer 1 carried one and found the Van Allen belts. (Its early tier is a science-pacing dial.)"
     parts: [RO-GeigerMuller, RP0probeVanguardXray]
   - id: met_exposurePanels
     title: "Materials Exposure Panels"
     discipline: Metallurgy
-    tier: 2
-    parents: [rocketryStart]
+    tier: 1
+    parents: [start]
     flavor: "Heavy sealed boxes that expose a material, a microbe colony or an impact grid to launch, vacuum and radiation and bring it home — science that rides in a structural can, not a delicate instrument. (Mystery Goo lives here in Metallurgy.)"
     parts: [GooExperiment, BioCapsule, USGooBayWedge, SXTProbeGooo, RO-Micrometeorite]
   - id: opt_filmReturn
     title: "Film-Return Imaging"
     discipline: OpticsPhotonics
-    tier: 3
-    parents: [rocketryStart]
+    tier: 1
+    parents: [start]
     flavor: "Expose film in flight and scan-and-transmit it — the first detailed eyes on other worlds, from Luna 3's look at the far side of the Moon."
     parts: [RO-BasicFilmCamera, science_module]
   - id: opt_vidicon
     title: "Vidicon Imaging"
     discipline: OpticsPhotonics
-    tier: 4
+    tier: 2
     parents: [opt_filmReturn]
     flavor: "Scan an image off a photoconductive vidicon tube and send it down as video — live pictures from a probe, no film to recover."
     parts: [RO-EarlyTVCamera]
   - id: mic_massSpec
     title: "Magnetic-Sector Mass Spectrometry"
     discipline: Microelectronics
-    tier: 3
-    parents: [rocketryStart]
+    tier: 1
+    parents: [start]
     flavor: "Bend a beam of ions through a magnetic sector to sort them by mass — read the composition of an upper atmosphere or ionosphere in situ, chemistry sampled where the spacecraft flies."
     parts: [RO-IonMassSpectrometer, USFluidSpectroWedge]
-  - id: str_booms
-    title: "Stored-Strain Deployable Booms"
-    discipline: StructuresMechanisms
-    tier: 3
-    parents: [str_staging]
-    flavor: "Stow a coilable tubular mast under strain for launch and let it spring out on orbit — and hold a magnetometer far enough from the bus to read a field the spacecraft's own metal would otherwise drown."
-    parts: [RO-EarlyMagnet]
 
-  # ============================ APPLICATIONS ============================
-  - id: int_applicationsSat
-    title: "Applications Satellite Bus"
-    discipline: SystemsIntegration
-    tier: 4
-    parents: [tel_telemetry]
-    flavor: "The turn from 'science probe' to 'useful satellite' — a standard bus for communications and navigation payloads. It flies contracts, and a fleet in orbit is a steady science and revenue farm."
-    parts: [RP-1-CommunicationSat, RP-1-NavigationSat]
-
-  # ============================ AVIATION TRACK ============================
+  # ============ AVIATION — the airframe line (its own foundational breakthrough) ============
   - id: xplaneStart
     title: "Three-Axis Aerodynamic Control"
     discipline: Aerodynamics
@@ -282,14 +277,21 @@ nodes:
     tier: 3
     parents: [xplaneStart, th_regenCooling]
     anyToUnlock: false
-    flavor: "Hang a throttleable rocket engine in a clean airframe, drop it from altitude and ride a ballistic arc to the edge of the atmosphere. The X-1 broke the sound barrier; the X-15 touched space and came home on a runway. Where the aircraft and rocket tracks first meet."
+    flavor: "Hang a throttleable rocket engine in a clean airframe, drop it from altitude and ride a ballistic arc to the edge of the atmosphere. The X-1 broke the sound barrier; the X-15 touched space and came home on a runway. Where the aircraft and rocket lines first meet."
     parts: [ROE-XLR11, ROE-XLR10, ROE-XLR25, ROE-XLR41, Mark1Cockpit, Mark2Cockpit]
 
-  # ============================ TAIL ============================
-  - id: aero_fairings
-    title: "Jettisonable Payload Fairings"
-    discipline: Aerodynamics
-    tier: 2
-    parents: [rocketryStart]
-    flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
-    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, RSBRibbedBase, SSTUBase]
+  # ============ MILESTONES ============
+  - id: int_orbitalInsertion
+    title: "Orbital Insertion"
+    discipline: SystemsIntegration
+    tier: 4
+    parents: [fd_combustionStability, str_balloonTank, str_staging, gnc_pitchProgram]
+    anyToUnlock: false
+    flavor: "A stable high-thrust engine, a tank light enough to close the rocket equation, staging, and a pitch program converge. Build your own satellite from the bus, power and antenna beside it. Beep. Beep. Beep."
+  - id: int_applicationsSat
+    title: "Applications Satellite Bus"
+    discipline: SystemsIntegration
+    tier: 5
+    parents: [int_orbitalInsertion]
+    flavor: "The turn from 'science probe' to 'useful satellite' — a standard bus for communications and navigation payloads. It flies contracts, and a fleet in orbit is a steady science and revenue farm."
+    parts: [RP-1-CommunicationSat, RP-1-NavigationSat]

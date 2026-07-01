@@ -11,27 +11,26 @@ digraph AXE {
   "fd_combustionStability" [label="Tangential-Mode Instability Suppression\nFluidDynamics T3 · 400",fillcolor="#ee9b00",fontcolor="#111111"];
   "pc_hypergolics" [label="Amine-Nitrate Hypergolics\nPropellantChemistry T3 · 400",fillcolor="#e07a5f",fontcolor="#111111"];
   "fd_expanderCycle" [label="Expander-Cycle Combustion\nFluidDynamics T4 · 900",fillcolor="#ee9b00",fontcolor="#111111"];
-  "pc_solidGrains" [label="Ammonium-Perchlorate Composite Grains\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
-  "met_weldedTank" [label="Fusion-Welded Pressure Vessels\nMetallurgy T2 · 90",fillcolor="#8d99ae",fontcolor="#111111"];
-  "met_isogrid" [label="Isogrid Chemical Milling\nMetallurgy T3 · 400",fillcolor="#8d99ae",fontcolor="#111111"];
-  "str_balloonTank" [label="Pressure-Stabilized Monocoque\nStructuresMechanisms T3 · 400",fillcolor="#adb5bd",fontcolor="#111111"];
-  "str_staging" [label="Pyrotechnic Frangible Separation\nStructuresMechanisms T2 · 90",fillcolor="#adb5bd",fontcolor="#111111"];
-  "gnc_pitchProgram" [label="Open-Loop Pitch Programming\nGuidanceControl T2 · 90",fillcolor="#7209b7",fontcolor="#111111"];
-  "int_orbitalInsertion" [label="Orbital Insertion\nSystemsIntegration T4 · 900",fillcolor="#e8e8e8",fontcolor="#111111"];
-  "th_radiativeControl" [label="Passive Radiative Control\nThermodynamics T2 · 90",fillcolor="#f4a261",fontcolor="#111111"];
-  "th_hermeticBus" [label="Hermetic Thermal-Control Bus\nThermodynamics T3 · 400",fillcolor="#f4a261",fontcolor="#111111"];
-  "elec_siliconPV" [label="Diffused-Junction Photovoltaics\nElectricalPower T3 · 400",fillcolor="#ffd166",fontcolor="#111111"];
-  "nuc_rtg" [label="Radioisotope Thermoelectrics\nNuclearEngineering T4 · 900",fillcolor="#90be6d",fontcolor="#111111"];
-  "tel_telemetry" [label="Pulse-Interval Telemetry\nTelecommunications T3 · 400",fillcolor="#4361ee",fontcolor="#111111"];
-  "gnc_rcs" [label="Cold-Gas Reaction Control\nGuidanceControl T3 · 400",fillcolor="#7209b7",fontcolor="#111111"];
-  "aero_recovery" [label="Drogue-Stabilized Deceleration\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
-  "nuc_geiger" [label="Geiger-Müller Ionization Counting\nNuclearEngineering T2 · 90",fillcolor="#90be6d",fontcolor="#111111"];
-  "met_exposurePanels" [label="Materials Exposure Panels\nMetallurgy T2 · 90",fillcolor="#8d99ae",fontcolor="#111111"];
-  "opt_filmReturn" [label="Film-Return Imaging\nOpticsPhotonics T3 · 400",fillcolor="#3a0ca3",fontcolor="#111111"];
-  "opt_vidicon" [label="Vidicon Imaging\nOpticsPhotonics T4 · 900",fillcolor="#3a0ca3",fontcolor="#111111"];
-  "mic_massSpec" [label="Magnetic-Sector Mass Spectrometry\nMicroelectronics T3 · 400",fillcolor="#cdb4db",fontcolor="#111111"];
-  "str_booms" [label="Stored-Strain Deployable Booms\nStructuresMechanisms T3 · 400",fillcolor="#adb5bd",fontcolor="#111111"];
-  "int_applicationsSat" [label="Applications Satellite Bus\nSystemsIntegration T4 · 900",fillcolor="#e8e8e8",fontcolor="#111111"];
+  "pc_solidGrains" [label="Ammonium-Perchlorate Composite Grains\nPropellantChemistry T1 · 20",fillcolor="#e07a5f",fontcolor="#111111"];
+  "met_weldedTank" [label="Fusion-Welded Pressure Vessels\nMetallurgy T1 · 20",fillcolor="#8d99ae",fontcolor="#111111"];
+  "met_isogrid" [label="Isogrid Chemical Milling\nMetallurgy T2 · 90",fillcolor="#8d99ae",fontcolor="#111111"];
+  "str_balloonTank" [label="Pressure-Stabilized Monocoque\nStructuresMechanisms T2 · 90",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_staging" [label="Pyrotechnic Frangible Separation\nStructuresMechanisms T1 · 20",fillcolor="#adb5bd",fontcolor="#111111"];
+  "gnc_pitchProgram" [label="Open-Loop Pitch Programming\nGuidanceControl T1 · 20",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_rcs" [label="Cold-Gas Reaction Control\nGuidanceControl T2 · 90",fillcolor="#7209b7",fontcolor="#111111"];
+  "str_booms" [label="Stored-Strain Deployable Booms\nStructuresMechanisms T2 · 90",fillcolor="#adb5bd",fontcolor="#111111"];
+  "aero_fairings" [label="Jettisonable Payload Fairings\nAerodynamics T1 · 20",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_recovery" [label="Drogue-Stabilized Deceleration\nAerodynamics T1 · 20",fillcolor="#48cae4",fontcolor="#111111"];
+  "th_radiativeControl" [label="Passive Radiative Control\nThermodynamics T1 · 20",fillcolor="#f4a261",fontcolor="#111111"];
+  "th_hermeticBus" [label="Hermetic Thermal-Control Bus\nThermodynamics T2 · 90",fillcolor="#f4a261",fontcolor="#111111"];
+  "elec_siliconPV" [label="Diffused-Junction Photovoltaics\nElectricalPower T1 · 20",fillcolor="#ffd166",fontcolor="#111111"];
+  "nuc_rtg" [label="Radioisotope Thermoelectrics\nNuclearEngineering T2 · 90",fillcolor="#90be6d",fontcolor="#111111"];
+  "tel_telemetry" [label="Pulse-Interval Telemetry\nTelecommunications T1 · 20",fillcolor="#4361ee",fontcolor="#111111"];
+  "nuc_geiger" [label="Geiger-Müller Ionization Counting\nNuclearEngineering T1 · 20",fillcolor="#90be6d",fontcolor="#111111"];
+  "met_exposurePanels" [label="Materials Exposure Panels\nMetallurgy T1 · 20",fillcolor="#8d99ae",fontcolor="#111111"];
+  "opt_filmReturn" [label="Film-Return Imaging\nOpticsPhotonics T1 · 20",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "opt_vidicon" [label="Vidicon Imaging\nOpticsPhotonics T2 · 90",fillcolor="#3a0ca3",fontcolor="#111111"];
+  "mic_massSpec" [label="Magnetic-Sector Mass Spectrometry\nMicroelectronics T1 · 20",fillcolor="#cdb4db",fontcolor="#111111"];
   "xplaneStart" [label="Three-Axis Aerodynamic Control\nAerodynamics T1 · 20",fillcolor="#48cae4",fontcolor="#111111"];
   "met_turbineAlloys" [label="Nimonic Turbine Alloys\nMetallurgy T2 · 90",fillcolor="#8d99ae",fontcolor="#111111"];
   "aero_areaRule" [label="Transonic Area-Ruling\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
@@ -39,42 +38,39 @@ digraph AXE {
   "aero_afterburner" [label="Afterburning Turbojets\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_ramjet" [label="Ram Compression\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_rocketplane" [label="Rocket-Boosted Airframes\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
-  "aero_fairings" [label="Jettisonable Payload Fairings\nAerodynamics T2 · 90",fillcolor="#48cae4",fontcolor="#111111"];
+  "int_orbitalInsertion" [label="Orbital Insertion\nSystemsIntegration T4 · 900",fillcolor="#e8e8e8",fontcolor="#111111"];
+  "int_applicationsSat" [label="Applications Satellite Bus\nSystemsIntegration T5 · 1500",fillcolor="#e8e8e8",fontcolor="#111111"];
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
-  { rank=same; "rocketryStart" "xplaneStart" }
-  { rank=same; "th_regenCooling" "pc_solidGrains" "met_weldedTank" "str_staging" "gnc_pitchProgram" "th_radiativeControl" "nuc_geiger" "met_exposurePanels" "met_turbineAlloys" "aero_fairings" }
-  { rank=same; "fd_combustionStability" "pc_hypergolics" "met_isogrid" "str_balloonTank" "th_hermeticBus" "elec_siliconPV" "tel_telemetry" "gnc_rcs" "aero_recovery" "opt_filmReturn" "mic_massSpec" "str_booms" "aero_areaRule" "aero_rocketplane" }
-  { rank=same; "fd_expanderCycle" "int_orbitalInsertion" "nuc_rtg" "opt_vidicon" "int_applicationsSat" "aero_shockInlets" }
-  { rank=same; "aero_afterburner" "aero_ramjet" }
+  { rank=same; "rocketryStart" "pc_solidGrains" "met_weldedTank" "str_staging" "gnc_pitchProgram" "aero_fairings" "aero_recovery" "th_radiativeControl" "elec_siliconPV" "tel_telemetry" "nuc_geiger" "met_exposurePanels" "opt_filmReturn" "mic_massSpec" "xplaneStart" }
+  { rank=same; "th_regenCooling" "met_isogrid" "str_balloonTank" "gnc_rcs" "str_booms" "th_hermeticBus" "nuc_rtg" "opt_vidicon" "met_turbineAlloys" }
+  { rank=same; "fd_combustionStability" "pc_hypergolics" "aero_areaRule" "aero_rocketplane" }
+  { rank=same; "fd_expanderCycle" "aero_shockInlets" "int_orbitalInsertion" }
+  { rank=same; "aero_afterburner" "aero_ramjet" "int_applicationsSat" }
   "start" -> "rocketryStart" [style=solid];
   "rocketryStart" -> "th_regenCooling" [style=solid];
   "th_regenCooling" -> "fd_combustionStability" [style=solid];
   "th_regenCooling" -> "pc_hypergolics" [style=solid];
   "fd_combustionStability" -> "fd_expanderCycle" [style=solid];
-  "rocketryStart" -> "pc_solidGrains" [style=solid];
-  "rocketryStart" -> "met_weldedTank" [style=solid];
+  "start" -> "pc_solidGrains" [style=solid];
+  "start" -> "met_weldedTank" [style=solid];
   "met_weldedTank" -> "met_isogrid" [style=solid];
   "met_weldedTank" -> "str_balloonTank" [style=solid];
-  "rocketryStart" -> "str_staging" [style=solid];
-  "rocketryStart" -> "gnc_pitchProgram" [style=solid];
-  "fd_combustionStability" -> "int_orbitalInsertion" [style=solid];
-  "str_balloonTank" -> "int_orbitalInsertion" [style=solid];
-  "str_staging" -> "int_orbitalInsertion" [style=solid];
-  "gnc_pitchProgram" -> "int_orbitalInsertion" [style=solid];
-  "rocketryStart" -> "th_radiativeControl" [style=solid];
-  "th_radiativeControl" -> "th_hermeticBus" [style=solid];
-  "rocketryStart" -> "elec_siliconPV" [style=solid];
-  "elec_siliconPV" -> "nuc_rtg" [style=solid];
-  "rocketryStart" -> "tel_telemetry" [style=solid];
+  "start" -> "str_staging" [style=solid];
+  "start" -> "gnc_pitchProgram" [style=solid];
   "gnc_pitchProgram" -> "gnc_rcs" [style=solid];
-  "rocketryStart" -> "aero_recovery" [style=solid];
-  "rocketryStart" -> "nuc_geiger" [style=solid];
-  "rocketryStart" -> "met_exposurePanels" [style=solid];
-  "rocketryStart" -> "opt_filmReturn" [style=solid];
-  "opt_filmReturn" -> "opt_vidicon" [style=solid];
-  "rocketryStart" -> "mic_massSpec" [style=solid];
   "str_staging" -> "str_booms" [style=solid];
-  "tel_telemetry" -> "int_applicationsSat" [style=solid];
+  "start" -> "aero_fairings" [style=solid];
+  "start" -> "aero_recovery" [style=solid];
+  "start" -> "th_radiativeControl" [style=solid];
+  "th_radiativeControl" -> "th_hermeticBus" [style=solid];
+  "start" -> "elec_siliconPV" [style=solid];
+  "elec_siliconPV" -> "nuc_rtg" [style=solid];
+  "start" -> "tel_telemetry" [style=solid];
+  "start" -> "nuc_geiger" [style=solid];
+  "start" -> "met_exposurePanels" [style=solid];
+  "start" -> "opt_filmReturn" [style=solid];
+  "opt_filmReturn" -> "opt_vidicon" [style=solid];
+  "start" -> "mic_massSpec" [style=solid];
   "start" -> "xplaneStart" [style=solid];
   "xplaneStart" -> "met_turbineAlloys" [style=solid];
   "met_turbineAlloys" -> "aero_areaRule" [style=solid];
@@ -83,7 +79,11 @@ digraph AXE {
   "aero_shockInlets" -> "aero_ramjet" [style=solid];
   "xplaneStart" -> "aero_rocketplane" [style=solid];
   "th_regenCooling" -> "aero_rocketplane" [style=solid];
-  "rocketryStart" -> "aero_fairings" [style=solid];
+  "fd_combustionStability" -> "int_orbitalInsertion" [style=solid];
+  "str_balloonTank" -> "int_orbitalInsertion" [style=solid];
+  "str_staging" -> "int_orbitalInsertion" [style=solid];
+  "gnc_pitchProgram" -> "int_orbitalInsertion" [style=solid];
+  "int_orbitalInsertion" -> "int_applicationsSat" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;
   label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";
 }
