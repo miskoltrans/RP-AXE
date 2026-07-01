@@ -1,122 +1,96 @@
-# Early Tree — Breakthrough Map (parts-first, to the first-orbit milestone)
+# Early Tree — Optimal Node Design (parts-first, to first orbit)
 
-Re-developing the early nodes from the **actual part subset** RP-1 uses up to first orbit
-(`manifest/first-orbit-partlist.tsv`, 144 parts + 61 upgrades), on OUR terms — not a 1:1 copy of
-RP-1's era×function grid.
+Derived from the 395-part first-orbit partlist (`manifest/first-orbit-partlist.tsv`, MLP + cosmetics
+set aside), on our terms. Node = one **non-obvious enabling breakthrough** (zero `&`), carrying a **⭐king**
+part + ride-alongs; **cost abstracts the R&D** for the unnamed rest.
 
-**Philosophy (from the user):** a node is a **tech breakthrough**. It carries **1 or a few KING parts**
-it directly enables — the hero(es) that *are* the breakthrough — plus a tail of **ride-along** parts
-("…and here's more we found along the way"). The node's **science cost abstracts the R&D** for all the
-unnamed parts/tech. So: pick the kings, hang the rest, let cost do the rest.
+## The framing that shapes it
+Reaching orbit is **two axes at once**, and the optimal tree makes both load-bearing:
+1. **Propulsion** — exhaust velocity × thrust (the engine line).
+2. **Structural mass-fraction** — how empty-light you can build (the tank line). *Atlas reached orbit because
+   of its balloon tank as much as its engine.* So tankage is a first-class breakthrough line, not filler.
+First Orbit is where those two lines meet **staging** and **guidance**. Everything else (the spacecraft, its
+power, its senses) is a parallel spread you also grow. **Science is scattered by difficulty, never a branch.**
 
-Legend: **★ king** · ride-alongs listed after · `[have]` = node exists in spine · `[NEW]` = to add ·
-`[?]` = judgment call I want you to confirm. Probes (Sputnik/Vanguard/Pioneer) go to the `hire_*`
-charters, off the main tree.
-
----
-
-## Propulsion — liquid
-
-- **Turbopump-Fed Liquid Propulsion** `[have: fd_turbopumpLiquid]`
-  ★ `ROE-RD100` (V-2/RD-100) · ride: `ROE-A7` (Redstone), `ROE-RD200` (peroxide)
-- **Rocket-Powered Research Aircraft** `[have: aero_rocketplane]`
-  ★ `ROE-XLR11` (X-1) · ride: `ROE-XLR10`, `ROE-XLR25`, `ROE-XLR41`
-- **Orbital Kerolox Booster (gas-generator)** `[have: fd_gasGenerator]`
-  ★ `ROE-RD107`/`ROE-RD108` (R-7) · ride: `ROE-LR89(_2)` (Atlas), `ROE-LR79` (Thor), `ROE-LR105(_2)`,
-  `ROE-LR101*` (verniers), `ROE-RD211`, `ROE-S155`, `ROE-Gamma301`, `ROE-S2253`, `ROE-Stentor`,
-  `ROE-X405` (Vanguard), `ROE-JupiterVernier`, `YF2_Engine`, `YF2_with_shell`
-- **Storable Hypergolic Upper Stage** `[NEW — Propellant Chemistry]` `[?]`
-  ★ `ROE-AJ10Early` (AJ10) — the storable-propellant chemistry breakthrough; upper stages & spacecraft
-  propulsion. *Missing from the spine entirely; AJ10 is a genuine king with no home.*
-
-## Propulsion — solid
-
-- **Cast Solid Rocket Motors** `[have: pc_solidGrain]`
-  ★ `ROE-BabySergeant` (Explorer 1's spin-up upper) · ride: `ROE-BabySergeantX3(Dec)`, `…X11(Dec)`,
-  `ROE-GCRC`, `ROE-25KS18000`, `ROE-18KS7800`, `ROE-NikeM5E1`
-
-## Materials & Structures
-
-- **Welded Pressure-Vessel Tankage** `[have: met_weldedSteel]`
-  ★ `ROT-ServiceModule` · ride: `RO-RFTank-SM`, `ROT-MiscTank-ServiceModule`, `ROT-Nose-ServiceModule`
-- **Isogrid Machined Tankage** `[NEW — Metallurgy, ~chem-milling]` `[?]`
-  ★ `ROT-GenericTank-Integral` ("Isogrid Structure") · ride: every `ROT-*-Integral` (~15 modular tanks:
-  Atlas/Booster/Katniss/Lander/Misc/Nose/Radial/Spherical/Toroidal), `RO-RFTank-Integral`
-- **Steel Balloon Tankage (Atlas)** `[NEW — Metallurgy]` `[?]`
-  ★ `ROT-AtlasTank-Balloon` (Atlas "steel balloon") · ride: `RO-RFTank-BalloonNew`, `ROT-BalloonTank-New`,
-  `ROT-KatnissTank-Balloon`
-- **Staging & Separation** `[have: str_stageSeparation]`
-  ★ `Decoupler_1` (TD-12) · ride: `Decoupler_2`, `restock-decoupler/separator-1875-1`, `radialDecoupler1-2`,
-  `radialDecoupler2`, `shortDecoupler1-2`, `ROE-CastorDecoupler`, `ROT-AtlasDecoupler`, sep motors
-  (`sepMotor1/Large/Small`, `SnubOtron`)
-- **Adapters, Couplers & Bays** `[ride-along → start/structures]` `[?]`
-  `adapterSize2-Size1(Slant)`, `stackBiCoupler_v2`, `stackTriCoupler_v2`, `stackPoint1`, `ServiceBay_125_v2`,
-  `ca_tank_mp_s` · plus oddballs `rotor_01`/`rotor_01s` (light rotors → Robotics later, or off)
-
-## Avionics & Guidance
-
-- **Spin-Stabilized Probe Core** `[have: mic_vacuumTubes — maybe rename]` `[?]`
-  ★ `probeCoreSphere_v2` (Sputnik PS-1 core) · ride: `SXTSputnik`. *(The modular-Sputnik brain.)*
-  — `gnc_rateGyros` and `tel_pcmTelemetry` already exist as the guidance/telemetry capability gates.
-
-## Science instruments — the big gap (scatter by difficulty, per VISION)
-
-- **Cosmic-Ray & Radiation Detection** `[NEW]` `[?]`
-  ★ `RO-GeigerMuller` (Explorer 1 → the Van Allen belts) · ride: `RO-Micrometeorite`, `RP0probeVanguardXray`
-- **Spaceborne Magnetometry** `[NEW]` `[?]` ★ `RO-EarlyMagnet`
-- **Mass Spectrometry** `[NEW]` `[?]` ★ `RO-IonMassSpectrometer` · ride: `USFluidSpectroWedge`
-- **Film & TV Imaging** `[have: opt_filmCameras, opt_tvImaging]` ★ `RO-BasicFilmCamera`, `RO-EarlyTVCamera`
-- **Biological Sampling / Mystery Goo** `[NEW]` `[?]` — VISION says Goo scatters to **Metallurgy**
-  (heavy structural sample box under thermal/atmo stress). ★ `GooExperiment` · ride: `BioCapsule`,
-  `USGooBayWedge`, `SXTProbeGooo`, `BioCapsule`
-- **Atmospheric Sounding** `[have-ish: barometer/thermometer at start]` ★ `USThermoBaroWedge` (wedge form)
-
-## Power
-
-- **Silicon Photovoltaics** `[have: elec_siliconPV]`
-  ★ `ROS-StaticSolarPanel` · ride: `RO_EarlyTinySolarPanel`, `RO-rangerSolarPanel`
-  — primary battery has no part (EC lives in the procedural avionics).
-
-## Comms / Applications
-
-- **Applications Satellite Bus** `[NEW]` `[?]`
-  ★ `RP-1-CommunicationSat`, `RP-1-NavigationSat` — the first comsat/navsat buses (contract hardware).
-
-## Aviation
-
-- **Early Turbojet** `[have: met_turbojet]` ★ `RO-J35` · ride: `RO-VK1`
-- **Axial Turbojet & Swept Wing** `[have: aero_transonicFlight]`
-  ★ `RO-J47` · ride: `RO-J48`, `RO-JT3C`/`aje_j57`, `RO-Sapphire203`, `aje_avon`, `RO-RD9B`, cockpits
-  (`RO-FighterInlineCockpit`, `SXTClyde`)
-- **Supersonic Inlet & Airframe** `[have: aero_supersonicCruise]`
-  ★ `RO-shockConeIntake125` + `RO-B9ProcWing-Supersonic` · ride: other shock-cone intakes, `RO-B9ProcAMWing/CS-Supersonic`,
-  `SXTRadialAirIntakeShockCone`, `shockConeIntake`, `RO-X1Cockpit`, `SXTmk3Cockpit52`
-- **Mach-2 Turbojet** `[have: aero_supersonicCruise, or split]` `[?]`
-  ★ `aje_j79` (J79) · ride: `aje_j75`, `RO-AL7F`, `RO-Atar101D`
-- **Ramjet Propulsion** `[NEW]` `[?]`
-  ★ `RO-RJ43` / `RO-Nord1500` (combined-cycle) · ride: `RO-RJ47`, `RO-RJ55`
-- **Reflight Structures** `[ride-along]` `KF-ALG-Medium` (gear), `airbrake1`, `nacelleBody`, `radialEngineBody`
-
-## Upgrades (61)
-Mostly `KEEP-engine` — the RFUpgrade config ladder rides its engine's node (A-9, Model39c, RD-101/102/103,
-A-6/A-7, RD-107-8D74PS, J47/J57/J79 variants, …). Capability ones (`PFTech-Fairing-I`, `X2CockpitUpgrade`,
-`HDD-Upgrade-Early`, `RP-1-PayloadTech`) ride their host node. `REFERENCE-avionics` (Science-Core / Near-Earth)
-map to our avionics module. `DROP-axed-career` (rp0Engineer/Researcher, airlaunchTL) are already dropped.
+Tiers run **T0→T4** (deliberate 3–4-tier depth to orbit). `[NEW]` = didn't exist / re-derived.
 
 ---
 
-## What this changes vs the current spine
-**Kings with no home today → NEW nodes to add:** Storable Hypergolic Upper Stage (AJ10) · Isogrid Tankage ·
-Balloon Tankage · Spin-Stabilized Probe Core · Radiation Detection · Magnetometry · Mass Spectrometry ·
-Biological Sampling/Goo · Applications Satellite Bus · Mach-2 Turbojet · Ramjet. (~11 new breakthroughs.)
-**Already right:** turbopump/rocketplane/gas-generator/solid propulsion, welded tankage, staging, PV,
-early/swept/supersonic jets, film+TV imaging.
+## T0 — roots (parallel, thin)
+- `start` — the shared toolbox (7 parts: proc structure/tank/nosecone/avionics/wing + barometer + thermometer). **Deliberately tiny.**
+- `parking` (cost 999) · `hire_JPL` / `hire_OKB` (probe charters) — parallel roots, off the spine.
 
-## Judgment calls for you (the `[?]`s)
-1. **Science instruments** — separate breakthroughs per sensor (Geiger / magnetometer / mass-spec / Goo)?
-   And does **Goo → Metallurgy** (VISION) or a Life-Support/Chem home?
-2. **Tank materials** — are **isogrid** and **balloon** two distinct breakthroughs, or one "satellite-era
-   tankage"? (RP-1 lumps all 35 at one node; I'd rather split by the real materials trick.)
-3. **Applications satellite bus** — a real node, or does the comsat/navsat bus ride an integration node?
-4. **AJ10 hypergolic upper stage** — confirm it earns its own Propellant-Chemistry node (I think yes).
-5. Anything I mis-flagged as king vs ride-along.
+## T1 — the two programs
+- **Sounding Rocketry** `[FluidDynamics]` — ⭐`ROE-Aerobee`; the de Laval nozzle + a spin-stabilised powder/liquid dart. ride: `ROE-ORM65`, `TinyTim`, `ROE-Veronique*`, `ROMeteoSustainer`, `basicFin`.
+- **Cambered-Airfoil Flight** `[Aerodynamics]` — ⭐`SXTMerlin66prop`; the aviation start — a wing that flies and a piston to pull it. ride: **all props** (`SXT*Prop`, `SXTTinyprop`, Jumo/R-2800), early cockpits (`RO-OldFighterCockpit`, `RO-X1Cockpit`), `RO-B9ProcWing-Early`+CS, `Gear*`/`KF-ALG-*`, pitot intakes, tails, nose cones.
+
+## T2 — first real breakthroughs
+**Propulsion (Isp line)**
+- **Turbopump Feed** `[FluidDynamics]` — ⭐`ROE-RD100` (V-2), ride `ROE-A4`, `ROE-A7`. *The pump breaks the tank-pressure ceiling — the first engine that can be big.* (RD-100 king, per redline.)
+- **Composite Solid Grains** `[PropellantChemistry]` — ⭐`ROE-BabySergeant`; cast AP/Al grain. ride: Sergeant clusters, `ROE-GCRC`, `ROE-25KS18000`, `ROE-NikeM5E1`, `ROE-Aerobee`(solid var).
+
+**Structure (mass-fraction line)**
+- **Welded Pressure Vessels** `[Metallurgy]` — ⭐`ROT-ServiceModule`; the first tank that holds pressure and flies. ride: `ROT-*-SM`, `RO-RFTank-*`, `ROT-*-Separate` tanks.
+- **Pyrotechnic Separation** `[StructuresMechanisms]` — ⭐`proceduralStackDecoupler`; cut a stage on command. ride: all decouplers/separators, `sepMotor*`, sep-motor solids, `KzThrustPlate`.
+
+**Control**
+- **Rate-Gyro Steering** `[GuidanceControl]` — capability + a programmed autopilot; steer the ascent.
+
+**Aviation**
+- **Turbine Superalloys** `[Metallurgy]` — ⭐`RO-DerwentV`; *the jet is unlocked by materials, not aero* — Nimonic blades survive the hot turbine. ride: `RO-J35`, `RO-VK1`. (scatter aha)
+
+**Science (scattered)**
+- **Exposure Sample Boxes** `[Metallurgy]` — ⭐`GooExperiment`; a heavy stress-box, not a delicate instrument (VISION). ride: `BioCapsule`, `USGooBayWedge`, `SXTProbeGooo`, **`RO-Micrometeorite`** (impact panel).
+- **Ionization Counters** `[NuclearEngineering, early]` — ⭐`RO-GeigerMuller`; a gas-discharge tube that reads radiation. *Explorer 1 → Van Allen belts.* Homes early in the otherwise-empty Nuclear lane. ride: `RP0probeVanguardXray`.
+
+## T3 — refinement to orbital class
+**Propulsion**
+- **Gas-Generator Cycle** `[FluidDynamics]` — ⭐`ROE-RD107`/`RD108` (R-7); bleed gas spins the pump, thrust at orbital scale. ride: `ROE-LR79`/`LR89`/`LR105`, verniers, `ROE-RD211`/`S155`/`Gamma301`/`X405`/`YF2*`/`Stentor`/`S2253`.
+- **Hypergolic Ignition** `[PropellantChemistry]` — ⭐`ROE-AJ10Early`; contact-igniting storables → restartable upper stages. ride: `ROE-RD200`.
+
+**Structure (mass-fraction)**
+- **Chemical Milling** `[Metallurgy]` — ⭐`ROT-GenericTank-Integral`; etch away all non-load-path → isogrid at a fraction of the mass. ride: every `ROT-*-Integral`, `RO-RFTank-Integral`.
+- **Pressure-Stabilized Monocoque** `[Metallurgy]` — ⭐`ROT-AtlasTank-Balloon`; a wall so thin it only holds shape under pressure. **The orbital enabler.** ride: `RO-RFTank-BalloonNew`, `ROT-*-Balloon`.
+- **Stored-Strain Booms** `[StructuresMechanisms]` — ⭐`str_deployableBooms` part; a mast that springs out on orbit — **and the only way to read a clean magnetic field**, so ⭐`RO-EarlyMagnet` (magnetometry) rides here (scatter).
+
+**Spacecraft systems**
+- **Sealed Spacecraft Bus** `[Microelectronics]` — ⭐`ROT-ProbeCore` (king), ride `probeCoreSphere_v2` (Sputnik), `SXTSputnik`; a sealed, thermally-managed vessel that runs its own timeline unattended.
+- **Reaction-Control Thrusters** `[GuidanceControl]` — ⭐`ROE-ModularRCS`; opposed cold-gas pairs. ride: the ~40 RCS blocks.
+- **Photovoltaic Conversion** `[ElectricalPower]` — ⭐`ROS-StaticSolarPanel`; sunlight → watts, indefinitely. ride: `RO_EarlyTinySolarPanel`, `RO-rangerSolarPanel`.
+- **Radiative Thermal Balance** `[Thermodynamics]` — reject heat with coatings/louvers alone (capability).
+- **Directional Telemetry** `[Telecommunications]` — ⭐`SXTAntenna` (Sputnik beacon); ride `SurfAntenna`.
+- **Staged Canopy Descent** `[Aerodynamics]` — ⭐`RC_cone` (king), ride `RC_radial`, `RC_cone_double`, `RC_stack`, `parachute*`. *Recovery — a real gap, now filled.*
+
+**Science (scattered)**
+- **Film-Return Optics** `[OpticsPhotonics]` — ⭐`RO-BasicFilmCamera`; expose + scan-transmit. ride `science_module`.
+- **In-Situ Mass Spectrometry** `[Microelectronics]` — ⭐`RO-IonMassSpectrometer`; sort ions by mass. ride `USFluidSpectroWedge`. *(dedicated — no clean host.)*
+
+**Aviation**
+- **Transonic Area-Ruling** `[Aerodynamics]` — ⭐`RO-J47`; the coke-bottle waist through Mach 1. ride `RO-J48`/`JT3C`/`Sapphire`/`Avon`/`RD9B`, `aje_j57`, swept wings.
+- **Shock-Compression Inlets** `[Aerodynamics]` — ⭐`RO-shockConeIntake125`; controlled shock train past Mach 2. ride the other shock cones, supersonic B9 wings.
+
+## T4 — the milestone and its neighbours
+- **First Orbital Capability** `[SystemsIntegration]` — CONVERGENCE of **Gas-Generator Cycle** (or your chosen engine) + **Pressure-Stabilized Monocoque** (mass fraction) + **Pyrotechnic Separation** + **Rate-Gyro Steering**. *You build your own satellite from the bus, power and antenna above.*
+- **Applications Satellite Bus** `[SystemsIntegration]` — ⭐`RP-1-CommunicationSat`/`NavigationSat`; comsat/navsat that flies contracts and farms science. (branches off First Orbit.)
+- **Vidicon Imaging** `[OpticsPhotonics]` — ⭐`RO-EarlyTVCamera`; live video, no film to recover.
+- **Cryogenic Hydrogen Handling** `[Cryogenics]` — ⭐`ROE-RL10Fixed`; the LH2 problem → highest-Isp upper stage.
+- **Afterburning Turbojets** `[Aerodynamics]` — ⭐`aje_j79`; ride `aje_j75`, `RO-AL7F`, `RO-Atar101D`.
+- **Ram Compression** `[Aerodynamics]` — ⭐`RO-Nord1500`; discard the turbine above Mach 2. ride `RO-RJ43/47/55`.
+- **Rocket-Boosted Airframes** `[Aerodynamics]` — ⭐`ROE-XLR11` (X-1); ride `XLR10/25/41`, X-15 cockpits → edge of space.
+
+---
+
+## Where the bulk goes (not breakthrough nodes)
+- **Modular structure** (struts, I-beams, panels, trusses, adapters, couplers, wing connectors, winglets, tail fins) → ride-along on `start`'s procedural structure + `Pyrotechnic Separation`; not their own nodes.
+- **Jettisonable fairings** (`Kz*`, `RSB*`, `SSTU*`) → one node **Fairing Jettison** `[Aerodynamics, T2]`, ⭐`KzResizableFairingBase`.
+- **Cosmetics** (lights, hull-cameras, decals, ladders, non-MLP launch clamps) → **parking** (off-tree). Pure bloat, like the MLP set.
+
+## Node count
+~30 breakthrough nodes for the whole early game (both tracks + spacecraft + scattered science), across T1–T4,
+vs RP-1's ~19 era×function nodes for the same parts. Kings assigned per your redlines. Names are a first pass —
+redline any.
+
+## Open calls
+1. **Ionization Counters in the Nuclear lane** (early scatter) vs Microelectronics — I chose Nuclear.
+2. **Magnetometer rolled onto the boom node** — good, or should magnetometry be dedicated?
+3. **Turbine Superalloys** puts the first jet in Metallurgy — keep that scatter, or home jets in Aerodynamics?
