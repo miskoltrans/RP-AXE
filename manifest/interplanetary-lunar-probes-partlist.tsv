@@ -146,7 +146,7 @@ materialsScienceAdvCapsules	Advanced Capsules Era Materials Science	-2697	part	r
 materialsScienceAdvCapsules	Advanced Capsules Era Materials Science	-2697	part	rotor_02s	yes	no	EM-32S Standard Rotor
 materialsScienceAdvCapsules	Advanced Capsules Era Materials Science	-2697	part	rotor_03	yes	no	EM-64 Heavy Rotor
 materialsScienceAdvCapsules	Advanced Capsules Era Materials Science	-2697	part	rotor_03s	yes	no	EM-64S Heavy Rotor
-materialsScienceAdvCapsules	Advanced Capsules Era Materials Science	-2697	upgrade	MLI.Upgrade1	not-in-curated		
+materialsScienceAdvCapsules	Advanced Capsules Era Materials Science	-2697	upgrade	MLI.Upgrade1	KEEP-capability		
 materialsScienceAdvCapsules	Advanced Capsules Era Materials Science	-2697	upgrade	RFTech-SM-III	KEEP-tank-typelevel		
 materialsScienceAdvCapsules	Advanced Capsules Era Materials Science	-2697	upgrade	RFTech-Tank-Sep-AlCu	KEEP-tank-typelevel		
 materialsScienceAdvCapsules	Advanced Capsules Era Materials Science	-2697	upgrade	rp0EngineerUpgradeAdvC	DROP-axed-career		
@@ -266,7 +266,7 @@ earlyDocking	Early Docking Procedures	-2612	upgrade	RFUpgrade_UDMH+NTO	KEEP-engi
 earlyLanding	Early Landing	-2612	part	ROC-GeminiHSBDB	yes	no	Gemini Heatshield
 earlyLanding	Early Landing	-2612	part	ROE-TD339	yes	no	TD-339
 earlyLanding	Early Landing	-2612	part	rn_surveyor_s_engine	yes	no	TD-339
-earlyLanding	Early Landing	-2612	upgrade	GeminiHS	not-in-curated		
+earlyLanding	Early Landing	-2612	upgrade	GeminiHS	KEEP-capability		
 earlyLifeSupport	Early Life Support and ISRU	-2612	part	evaCylinder	yes	no	EVA Fuel Cylinders
 earlyLifeSupport	Early Life Support and ISRU	-2612	part	evaJetpack	yes	no	EVA Jetpack
 earlyLifeSupport	Early Life Support and ISRU	-2612	part	kerbalism-lifesupportmodule	yes	no	External ECLSS Module
@@ -296,7 +296,7 @@ lunarRatedHeatshields	Lunar Rated Heatshields	-2442	part	luna9_airbag_cvr	yes	no
 lunarRatedHeatshields	Lunar Rated Heatshields	-2442	part	luna9_als	yes	no	Luna 9 ALS
 lunarRatedHeatshields	Lunar Rated Heatshields	-2442	part	roverWheel1	yes	no	RoveMax Model M1
 lunarRatedHeatshields	Lunar Rated Heatshields	-2442	part	roverWheel2	yes	no	RoveMax Model S2
-lunarRatedHeatshields	Lunar Rated Heatshields	-2442	upgrade	EarlyLunarHS	not-in-curated		
+lunarRatedHeatshields	Lunar Rated Heatshields	-2442	upgrade	EarlyLunarHS	KEEP-capability		
 solids1966	1966 Solid Rocket Engines	-2442	part	ROE-AJ260SLA	yes	no	AJ-260 SL Radial Solid Rocket Booster
 solids1966	1966 Solid Rocket Engines	-2442	part	ROE-AJ260SLF	yes	no	AJ-260 SL
 solids1966	1966 Solid Rocket Engines	-2442	part	ROE-Star13	yes	no	STAR 13
