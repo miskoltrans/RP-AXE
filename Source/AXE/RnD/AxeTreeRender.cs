@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
+using KSP.UI;
 using KSP.UI.Screens;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -46,7 +47,7 @@ namespace RPAxe.RnD
     {
         private const float SPACING_F = 0.7f;          // compact (prototype default)
         private const bool FLIP_Y = true;              // top-to-bottom discipline order (flip if bands look inverted)
-        private const float NODE_W = 42f, NODE_H = 39f;   // real node size at scale 0.6 (measured in-game) — routing + stacking
+        private const float NODE_W = 70f, NODE_H = 65f;   // real node size at scale 1.0 (prefab ~70x65) — routing + stacking
 
         private const bool DEBUG_DUMP = false;         // flip on to log coordinate-space numbers 1.5s after tree spawn
 
@@ -148,9 +149,17 @@ namespace RPAxe.RnD
                 }
                 float ax = mMaxX > mMinX ? (sMaxX - sMinX) / (mMaxX - mMinX) : 1f;
                 float bx = sMinX - ax * mMinX;
-                float ay = mMaxY > mMinY ? (sMaxY - sMinY) / (mMaxY - mMinY) : 1f;
-                if (FLIP_Y) ay = -ay;
-                float by = (FLIP_Y ? sMaxY : sMinY) - ay * mMinY;
+                // Y fit: STRETCH a short tree to fill the envelope, but NEVER compress a tall one below its
+                // natural spacing (compression overlaps stacks). When the natural layout is taller than the
+                // envelope we keep ayMag=1 and grow scrollRect.content (below) so the extra height scrolls.
+                // Anchor the bottom band at ENV_BOT and build upward.
+                const float ENV_BOT = 80f, ENV_TOP = 2255f;
+                float envH = ENV_TOP - ENV_BOT, naturalH = Mathf.Max(1f, mMaxY - mMinY);
+                float ayMag = naturalH <= envH ? envH / naturalH : 1f;
+                float ay = FLIP_Y ? -ayMag : ayMag;
+                float by = FLIP_Y ? ENV_BOT + ayMag * mMaxY : ENV_BOT - ayMag * mMinY;
+                float layoutTopY = ENV_BOT + ayMag * naturalH;   // highest node centre (drives the content-height grow)
+                Debug.Log($"[AXE] FIT naturalH={naturalH:F0} ayMag={ayMag:F3} env={envH:F0} topY={layoutTopY:F0}");
                 foreach (AxeTreeLayout.LNode ln in lnodes) { ln.X = ax * ln.X + bx; ln.Y = ay * ln.Y + by; }
                 foreach (AxeTreeLayout.LEdge e in edges)
                     if (e.Waypoints != null)
@@ -173,6 +182,17 @@ namespace RPAxe.RnD
                     AxeTreeLayout.BuildLaneRoutes(lnodes, edges, NODE_W, NODE_H * Mathf.Sign(ay), AxeTreeMeta.Render.LanePitch);
                     foreach (AxeTreeLayout.LEdge e in edges)
                         if (e.LaneGeom != null) Routes[e.From + ">" + e.To] = e.LaneGeom;
+                }
+
+                // RDNodeRoot IS scrollRect.content (verified) -> node localPos is content-local. When the
+                // layout is taller than the stock scroll rect, grow the content height (+ a half-node margin
+                // above the top centre) so the top row stays reachable by scrolling instead of clipping.
+                RectTransform content = ctrl.gridArea != null && ctrl.gridArea.scrollRect != null ? ctrl.gridArea.scrollRect.content : null;
+                if (content != null)
+                {
+                    float need = layoutTopY + ENV_BOT;
+                    if (content.sizeDelta.y < need)
+                        content.sizeDelta = new Vector2(content.sizeDelta.x, need);
                 }
 
                 ready = true;
@@ -219,6 +239,9 @@ namespace RPAxe.RnD
                 Debug.Log($"[AXE] DUMP node0 anchorR={s.GetPosition(RDNode.Anchor.RIGHT, Vector3.zero)} anchorL={s.GetPosition(RDNode.Anchor.LEFT, Vector3.zero)}");
                 Transform root = ctrl.RDNodeRoot;
                 if (root != null) Debug.Log($"[AXE] DUMP RDNodeRoot pos={root.position} localScale={root.localScale} euler={root.eulerAngles}");
+                RectTransform content = ga != null && ga.scrollRect != null ? ga.scrollRect.content : null;
+                if (root != null && content != null)
+                    Debug.Log($"[AXE] DUMP root==content? {ReferenceEquals(root, content)} rootLocalY={root.localPosition.y:F0} rootParent={(root.parent != null ? root.parent.name : "null")} contentWorldY={content.position.y:F0} contentParent={(content.parent != null ? content.parent.name : "null")}");
             }
             catch (Exception e) { Debug.LogError("[AXE] DUMP failed: " + e); }
         }
@@ -261,15 +284,17 @@ namespace RPAxe.RnD
         // discipline colour is the persistent base the highlight dims relative to.
         private static void UpdateGraphics_Postfix(RDNode __instance)
         {
-            if (!ready || !AxeTreeMeta.Render.DiscColor) return;
+            if (!ready) return;
             try
             {
                 string id = __instance?.tech?.techID;
                 if (id == null || !AxeTreeMeta.Nodes.TryGetValue(id, out AxeTreeMeta.NodeMeta m)) return;
-                // 3-state read (stock's button frame already distinguishes researchable vs researched):
-                //   locked (FADED) -> desaturated + dim (recedes); available/done -> full discipline colour.
+                StateRing(__instance);   // per-node state halo (researchable / researched / locked = off)
+                if (!AxeTreeMeta.Render.DiscColor) return;
+                // The discipline tile overrides stock's state frame, so the ring above carries the state read;
+                // the tile adds discipline colour (locked = desaturated + dim).
                 if (AxeTreeMeta.Disciplines.TryGetValue(m.Discipline, out AxeTreeMeta.DiscMeta d))
-                    __instance.graphics?.SetIconColor(StateTint(d.Color, __instance.state == RDNode.State.FADED));
+                    PaintTile(__instance, StateTint(d.Color, __instance.state == RDNode.State.FADED));
                 if (__instance.parents == null) return;
                 foreach (RDNode.Parent par in __instance.parents)   // edge coloured by its SOURCE discipline
                 {
@@ -295,11 +320,41 @@ namespace RPAxe.RnD
             return new Color(c.r + (l - c.r) * 0.8f, c.g + (l - c.g) * 0.8f, c.b + (l - c.b) * 0.8f, 0.5f);
         }
 
+        // Paint the whole node TILE (the UIStateButton frame) the given colour + a contrast-ink icon on top,
+        // so a node reads like the prototype's coloured tiles instead of stock's grey frame + tinted icon.
+        // Runs after stock SetButtonState (in the postfix / the highlight), overriding the state frame colour.
+        internal static void PaintTile(RDNode rd, Color tile)
+        {
+            if (rd == null || rd.graphics == null) return;
+            UIStateButton btn = rd.graphics.button;
+            if (btn != null && btn.Image != null) btn.Image.color = tile;
+            float lum = 0.30f * tile.r + 0.59f * tile.g + 0.11f * tile.b;   // dark ink on light tiles, light on dark
+            Color ink = lum > 0.52f ? new Color(0.07f, 0.09f, 0.12f, tile.a) : new Color(0.94f, 0.95f, 0.97f, tile.a);
+            rd.graphics.SetIconColor(ink);
+        }
+
+        private static readonly Color RingAvailable = new Color(0.32f, 0.78f, 0.97f, 1f);   // researchable = cyan frontier
+        private static readonly Color RingDone = new Color(0.30f, 0.86f, 0.50f, 1f);         // researched = green
+
+        // Per-node research-state halo. The discipline tile overrides stock's state frame, so we carry the
+        // researchable/researched read on the (otherwise search-only) searchHighlight overlay; locked = off.
+        internal static void StateRing(RDNode rd)
+        {
+            RDNodePrefab g = rd != null ? rd.graphics : null;
+            if (g == null || g.searchHighlight == null) return;
+            g.searchHighlight.raycastTarget = false;   // the ring must never intercept the node's click
+            if (rd.state == RDNode.State.RESEARCHABLE) { g.searchHighlight.color = RingAvailable; g.searchHighlight.enabled = true; }
+            else if (rd.state == RDNode.State.RESEARCHED) { g.searchHighlight.color = RingDone; g.searchHighlight.enabled = true; }
+            else g.searchHighlight.enabled = false;
+        }
+
         // Hover-trace lineage (like the HTML) + click empty background to deselect. Both key off the node
         // under the pointer (UI raycast). Stock R&D only deselects when you re-click the node.
         private Vector3 _downPos;
         private bool _dragged;
-        private RDNode _hoverNode;
+        private RDNode _hoverNode;       // node currently under the pointer (drives the hover name label)
+        private RDNode _lastHilite;      // last node the lineage highlight was applied for (change detection)
+        private static GUIStyle _hoverLabel;
         private static readonly List<RaycastResult> _rayHits = new List<RaycastResult>();
 
         private void Update()
@@ -307,12 +362,13 @@ namespace RPAxe.RnD
             RDController ctrl = RDController.Instance;
             if (ctrl == null) { _hoverNode = null; return; }
             RDNode over = NodeUnderPointer();
+            _hoverNode = over;   // every frame, for the hover name label
 
             // Hover: highlight the hovered node's lineage; on hover-out revert to the pinned selection (or
             // stock). Only re-highlight when the hovered node changes. Click still pins via ShowNodePanel.
-            if (AxeTreeMeta.Render.Hover && over != _hoverNode)
+            if (AxeTreeMeta.Render.Hover && over != _lastHilite)
             {
-                _hoverNode = over;
+                _lastHilite = over;
                 try
                 {
                     if (over != null) AxeHighlighter.Apply(ctrl, over);
@@ -350,7 +406,29 @@ namespace RPAxe.RnD
         private static GUIStyle _legendTitle, _legendRow;
         private void OnGUI()
         {
-            if (!ready || !AxeTreeMeta.Render.Legend || RDController.Instance == null || AxeTreeMeta.Disciplines.Count == 0) return;
+            if (!ready || RDController.Instance == null) return;
+            Color prev = GUI.color;
+            if (AxeTreeMeta.Render.Legend && AxeTreeMeta.Disciplines.Count > 0) DrawLegend();
+            // Hover name label (the prototype's on-hover node name), following the cursor.
+            if (AxeTreeMeta.Render.Hover && _hoverNode != null)
+            {
+                string nm = _hoverNode.tech != null ? _hoverNode.tech.title : _hoverNode.name;
+                if (!string.IsNullOrEmpty(nm))
+                {
+                    if (_hoverLabel == null) _hoverLabel = new GUIStyle(GUI.skin.label) { fontSize = 14, alignment = TextAnchor.MiddleLeft };
+                    Vector2 sz = _hoverLabel.CalcSize(new GUIContent(nm));
+                    float mx = Input.mousePosition.x, my = Screen.height - Input.mousePosition.y;
+                    var lr = new Rect(mx + 16f, my + 2f, sz.x + 14f, sz.y + 8f);
+                    GUI.color = new Color(0f, 0f, 0f, 0.85f); GUI.DrawTexture(lr, Texture2D.whiteTexture);
+                    GUI.color = Color.white;
+                    GUI.Label(new Rect(lr.x + 7f, lr.y + 4f, sz.x + 2f, sz.y), nm, _hoverLabel);
+                }
+            }
+            GUI.color = prev;
+        }
+
+        private static void DrawLegend()
+        {
             if (_legendRow == null)
             {
                 _legendRow = new GUIStyle(GUI.skin.label) { fontSize = 15, alignment = TextAnchor.MiddleLeft };
@@ -361,7 +439,6 @@ namespace RPAxe.RnD
             const float w = 280f, rowH = 24f, sw = 18f, pad = 10f;
             float h = list.Count * rowH + pad * 2f + 30f;
             var box = new Rect(10f, 48f, w, h);
-            Color prev = GUI.color;
             GUI.color = new Color(0f, 0f, 0f, 0.78f);
             GUI.DrawTexture(box, Texture2D.whiteTexture);
             GUI.color = Color.white;
@@ -375,7 +452,6 @@ namespace RPAxe.RnD
                 GUI.Label(new Rect(box.x + pad + sw + 9f, yy, w - pad - sw - 14f, rowH), kv.Value.Title, _legendRow);
                 yy += rowH;
             }
-            GUI.color = prev;
         }
     }
 }

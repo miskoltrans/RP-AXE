@@ -233,7 +233,7 @@ def node_block(disc, n, indent="\t"):
     a(f"{indent}\tanyToUnlock = {'True' if n.get('anyToUnlock') else 'False'}")
     a(f"{indent}\ticon = {disc[n['discipline']]['icon']}")
     a(f"{indent}\tpos = {n['_x']},{n['_y']},-1")
-    a(f"{indent}\tscale = 0.6")
+    a(f"{indent}\tscale = 1.0")
     for p in n.get("parents", []) or []:
         a(f"{indent}\tParent")
         a(f"{indent}\t{{")

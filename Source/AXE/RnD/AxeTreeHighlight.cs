@@ -44,8 +44,14 @@ namespace RPAxe.RnD
     internal static class AxeHighlighter
     {
         private static readonly Color32 DimLine = new Color32(96, 101, 110, 28);        // ghost off-lineage edges
-        private static readonly Color DimIcon = new Color(0.72f, 0.75f, 0.80f, 0.13f);   // ghost off-lineage nodes
         private static bool active;
+
+        // Ghost a node's tile: a faint hint of its discipline colour (or neutral) at low alpha.
+        private static Color GhostTile(RDNode n)
+        {
+            if (AxeTreeMeta.TryDisciplineColor(n?.tech?.techID, out Color dc)) return new Color(dc.r, dc.g, dc.b, 0.12f);
+            return new Color(0.40f, 0.42f, 0.45f, 0.12f);
+        }
 
         public static void Apply(RDController ctrl, RDNode sel)
         {
@@ -62,9 +68,10 @@ namespace RPAxe.RnD
                 bool inLineage = lineage.Contains(n);
                 if (n.graphics != null)
                 {
-                    if (!inLineage) n.graphics.SetIconColor(DimIcon);                                       // ghost
-                    else if (AxeTreeMeta.TryDisciplineColor(n.tech?.techID, out Color dc)) n.graphics.SetIconColor(dc);  // pop
-                    else n.graphics.SetIconColor(Color.white);
+                    if (!inLineage) AxeTreeRenderHost.PaintTile(n, GhostTile(n));                           // ghost the tile
+                    else if (AxeTreeMeta.TryDisciplineColor(n.tech?.techID, out Color dc)) AxeTreeRenderHost.PaintTile(n, dc);  // pop
+                    else AxeTreeRenderHost.PaintTile(n, Color.white);
+                    if (!inLineage && n.graphics.searchHighlight != null) n.graphics.searchHighlight.enabled = false;   // hide state ring on ghosts
                 }
                 if (n.parents == null) continue;
                 for (int p = 0; p < n.parents.Length; p++)
@@ -95,7 +102,7 @@ namespace RPAxe.RnD
             active = false;
             List<RDNode> nodes = ctrl.nodes;
             for (int i = 0; i < nodes.Count; i++)
-                if (nodes[i] != null) nodes[i].UpdateGraphics();   // recompute stock colours (lines + icon tint)
+                if (nodes[i] != null) nodes[i].UpdateGraphics();   // recompute stock tile/edge + the state ring (via the postfix)
         }
 
         // Selection + all ancestors (via parents) + all descendants (via children).

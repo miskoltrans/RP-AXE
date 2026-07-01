@@ -36,7 +36,7 @@ namespace RPAxe.RnD
             foreach (var n in nodes) Bucket(byDisc, n.Discipline).Add(n);
 
             float TH = nodeH;                                   // size the stack to the tile so tiles never overlap
-            float SUBH = TH + 26f * spacingF, BANDH = TH + 96f * spacingF;   // scale the GAP, not the tile
+            float SUBH = TH + 40f * spacingF, BANDH = TH + 96f * spacingF;   // scale the GAP, not the tile (room for the state ring)
             var bandCy = new Dictionary<string, float>();
             float acc = 0f;
             foreach (var d in discs)

@@ -21,7 +21,7 @@
 'use strict';
 
 // ---- tunables ----
-const NODE_W = 168, NODE_H = 62, NODE_SQ = 58;   // labelled rect (design view) + square icon tile (KSP-faithful)
+const NODE_W = 168, NODE_H = 62, NODE_SQ = 70;   // labelled rect (design view) + square icon tile (~KSP scale 1.0)
 const CORNER_R = 15, CORNER_SEGS = 3;   // stock UIGridArea.roundedCornerRadius / lineCornerSegments
 const EDGE_W = 2;                        // uniform stroke width (stock lineThickness=2); NEVER varied per state — width change = VectorLine.Draw rebuild
 const ARROW = 9;                        // arrowhead size (screen px here; KSP arrow sprite scales with the grid transform)
@@ -140,7 +140,7 @@ function computeLayout(){ if(opt.layout==='bands') layoutBands(); else layoutSug
 // Discipline-banded layout: each discipline gets its own horizontal band (ordered by `order`); x=tier,
 // nodes stacked within their (discipline,tier) cell. Bands grow with mean cost when diffspread is on.
 function layoutBands(){
-  const COLW=380;
+  const COLW=430;   // match the in-game tier width (build_tree TIERW)
   const discs=Object.keys(D.disciplines).sort((a,b)=>(D.disciplines[a].order||99)-(D.disciplines[b].order||99));
   const med=medianCost();
   const byDisc={}; for(const n of D.nodes)(byDisc[n.discipline]=byDisc[n.discipline]||[]).push(n);
