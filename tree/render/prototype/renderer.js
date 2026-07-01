@@ -21,7 +21,7 @@
 'use strict';
 
 // ---- tunables ----
-const NODE_W = 168, NODE_H = 62;        // tile size in world units (tiers 430 apart, rows ~80 apart)
+const NODE_W = 168, NODE_H = 62, NODE_SQ = 58;   // labelled rect (design view) + square icon tile (KSP-faithful)
 const CORNER_R = 15, CORNER_SEGS = 3;   // stock UIGridArea.roundedCornerRadius / lineCornerSegments
 const EDGE_W = 2;                        // uniform stroke width (stock lineThickness=2); NEVER varied per state — width change = VectorLine.Draw rebuild
 const ARROW = 9;                        // arrowhead size (screen px here; KSP arrow sprite scales with the grid transform)
@@ -38,7 +38,8 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:false, icons:true };
+const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:false, icons:true, square:false };
+const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
 const C_DONE='#4ade80', C_AVAIL='#38bdf8';     // researched / researchable (the frontier = "what to research next")
@@ -95,7 +96,7 @@ function restore(){ try{ const s=JSON.parse(localStorage.getItem(LSKEY)||'{}');
   (s.r||[]).forEach(x=>{ if(byId[x]) researched.add(x); }); }catch(e){} }
 
 // ============================ geometry ============================
-function box(n){ return {x:n.pos[0], y:n.pos[1], w:NODE_W, h:NODE_H}; }
+function box(n){ return {x:n.pos[0], y:n.pos[1], w:NW(), h:NH()}; }
 function anchor(n, side, t){                       // point on a node side; t in [0,1] along it (0.5 = centre)
   const b=box(n);
   if(side==='RIGHT')  return [b.x+b.w, b.y+t*b.h];
@@ -161,7 +162,7 @@ function buildLaneRoutes(){
   const seg={}, chains=[];
   for(const e of edges){
     if(!e.waypoints || e.waypoints.length<2){ e.laneGeom=null; continue; }
-    const ts=e.waypoints.map(p=>tierOf(p[0])), ys=e.waypoints.map(p=>p[1]+NODE_H/2);
+    const ts=e.waypoints.map(p=>tierOf(p[0])), ys=e.waypoints.map(p=>p[1]+NH()/2);
     chains.push([e,ts,ys]);
     for(let i=0;i<ts.length-1;i++)
       (seg[ts[i]]=seg[ts[i]]||[]).push([Math.min(ys[i],ys[i+1]),Math.max(ys[i],ys[i+1]),e.from+'>'+e.to+'#'+i]);
@@ -170,9 +171,9 @@ function buildLaneRoutes(){
   for(const g in seg){ const s=seg[g].sort((a,b)=>a[0]-b[0]), ends=[];
     for(const [lo,hi,key] of s){ let l=ends.findIndex(h=>h<=lo+1e-6); if(l<0){ l=ends.length; ends.push(hi); } else ends[l]=hi; lane[key]=l; }
     lanesN[g]=ends.length; }
-  const laneX=(g,l)=>tierX(g)+NODE_W+(l+1)/(lanesN[g]+1)*(TW-NODE_W);
+  const laneX=(g,l)=>tierX(g)+NW()+(l+1)/(lanesN[g]+1)*(TW-NW());
   for(const [e,ts,ys] of chains){
-    const pts=[[tierX(ts[0])+NODE_W, ys[0]]];
+    const pts=[[tierX(ts[0])+NW(), ys[0]]];
     for(let i=0;i<ts.length-1;i++){ const lx=laneX(ts[i], lane[e.from+'>'+e.to+'#'+i]); pts.push([lx,ys[i]],[lx,ys[i+1]]); }
     pts.push([tierX(ts[ts.length-1]), ys[ys.length-1]]);
     e.laneGeom=pts;
@@ -258,27 +259,35 @@ function drawNode(n, focusing){
   if(n.id===selId){ ctx.strokeStyle='#fff'; ctx.lineWidth=3; ctx.stroke(); }
   else if(n.id===hoverId){ ctx.strokeStyle='rgba(255,255,255,.85)'; ctx.lineWidth=2; ctx.stroke(); }
 
-  if(opt.icons && iconReady(disc.icon) && cam.s>0.15){   // discipline RD icon, top-left corner
-    const s=Math.min(w,h)*0.4; ctx.globalAlpha=alpha;
-    ctx.drawImage(iconImg[disc.icon], x+3*cam.s, y+3*cam.s, s, s);
-  }
-
   const ink = lum(disc.color)>140 ? '#10181f' : '#f3f3f3';   // contrast text (fixes dark-on-dark)
-  ctx.fillStyle=ink; ctx.textAlign='center'; ctx.textBaseline='middle';
-  const fs=Math.max(7.5, 10.5*cam.s);
-  if(fs>=6){
-    ctx.font=`600 ${fs}px Segoe UI,Helvetica,Arial,sans-serif`;
-    const maxw=w*0.9, lines=wrap(n.title,13,3).map(ln=>clip(ln,maxw));
-    const lh=fs*1.13, top=y+h/2-(lines.length-1)*lh/2-4*cam.s;
-    lines.forEach((ln,i)=> ctx.fillText(ln, x+w/2, top+i*lh));
-    const np=(n.parts||[]).length, nu=(n.upgrades||[]).length;
-    ctx.font=`${Math.max(6,8*cam.s)}px Segoe UI,Helvetica,Arial`;
-    ctx.globalAlpha=alpha*0.75;
-    ctx.fillText(`T${n.tier} · ${np?np+'p':'—'}${nu?'+'+nu+'u':''}`, x+w/2, y+h-8*cam.s);
+  if(opt.square){                                   // KSP-faithful: square tile = icon only, name on hover/panel
+    if(opt.icons && iconReady(disc.icon)){ const s=Math.min(w,h)*0.82; ctx.globalAlpha=alpha;
+      ctx.drawImage(iconImg[disc.icon], x+(w-s)/2, y+(h-s)/2, s, s); }
+    else if(cam.s>0.25){ ctx.globalAlpha=alpha; ctx.fillStyle=ink; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.font=`600 ${Math.max(7,9*cam.s)}px Segoe UI,Helvetica,Arial`; ctx.fillText(clip(n.title,w*0.86), x+w/2, y+h/2); }
+  } else {                                          // design view: corner icon + wrapped title + badge
+    if(opt.icons && iconReady(disc.icon) && cam.s>0.15){ const s=Math.min(w,h)*0.4; ctx.globalAlpha=alpha;
+      ctx.drawImage(iconImg[disc.icon], x+3*cam.s, y+3*cam.s, s, s); }
+    ctx.fillStyle=ink; ctx.textAlign='center'; ctx.textBaseline='middle';
+    const fs=Math.max(7.5, 10.5*cam.s);
+    if(fs>=6){
+      ctx.font=`600 ${fs}px Segoe UI,Helvetica,Arial,sans-serif`;
+      const maxw=w*0.9, lines=wrap(n.title,13,3).map(ln=>clip(ln,maxw));
+      const lh=fs*1.13, top=y+h/2-(lines.length-1)*lh/2-4*cam.s;
+      lines.forEach((ln,i)=> ctx.fillText(ln, x+w/2, top+i*lh));
+      const np=(n.parts||[]).length, nu=(n.upgrades||[]).length;
+      ctx.font=`${Math.max(6,8*cam.s)}px Segoe UI,Helvetica,Arial`;
+      ctx.globalAlpha=alpha*0.75;
+      ctx.fillText(`T${n.tier} · ${np?np+'p':'—'}${nu?'+'+nu+'u':''}`, x+w/2, y+h-8*cam.s);
+    }
   }
   if(opt.progress && !dimFocus && st===RESEARCHED && cam.s>0.2){    // ✓ researched
     ctx.globalAlpha=alpha; ctx.textBaseline='top'; ctx.fillStyle=C_DONE; ctx.textAlign='right';
     ctx.font=`bold ${Math.max(9,12*cam.s)}px Segoe UI`; ctx.fillText('✓', x+w-3, y+2);
+  }
+  if(opt.square && n.id===hoverId){                 // square tiles have no in-tile name -> label on hover
+    ctx.globalAlpha=1; ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='top';
+    ctx.font=`600 ${Math.max(9,11*cam.s)}px Segoe UI,Helvetica,Arial`; ctx.fillText(clip(n.title,220), x+w/2, y+h+3*cam.s);
   }
   ctx.globalAlpha=1;
 }
@@ -322,7 +331,7 @@ function setFocus(id){
 }
 function fit(){
   const xs=D.nodes.map(n=>n.pos[0]), ys=D.nodes.map(n=>n.pos[1]);
-  const x0=Math.min(...xs), x1=Math.max(...xs)+NODE_W, y0=Math.min(...ys), y1=Math.max(...ys)+NODE_H;
+  const x0=Math.min(...xs), x1=Math.max(...xs)+NW(), y0=Math.min(...ys), y1=Math.max(...ys)+NH();
   const W=cv.clientWidth, H=cv.clientHeight, m=40;
   cam.s=Math.min((W-2*m)/(x1-x0), (H-2*m)/(y1-y0));
   cam.x=m-x0*cam.s + (W-2*m-(x1-x0)*cam.s)/2;
@@ -391,6 +400,7 @@ function init(){
   cv=document.getElementById('cv'); ctx=cv.getContext('2d');
   if(/baseline/.test(location.search)){ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; }
   if(new URLSearchParams(location.search).has('lane')) opt.lane=true;
+  if(new URLSearchParams(location.search).has('square')) opt.square=true;
   buildModel(); restore();
   const rq=new URLSearchParams(location.search).get('research');   // ?research=id,id — shareable snapshot / demo
   if(rq) rq.split(',').forEach(x=>{ if(byId[x]) researched.add(x); });
@@ -436,7 +446,7 @@ function init(){
   // controls
   const cb=(id,key,geom)=>{ const el=document.getElementById(id); el.checked=opt[key];
     el.addEventListener('change',()=>{ opt[key]=el.checked; if(key==='highlight')setFocus(activeFocus()); geom?rebuild():draw(); }); };
-  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_lane','lane',true); cb('c_icon','icons',false);
+  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_lane','lane',true); cb('c_icon','icons',false); cb('c_square','square',true);
   const cp=document.getElementById('c_prog'); cp.checked=opt.progress;
   cp.addEventListener('change',()=>{ opt.progress=cp.checked; afterStateChange(); });
   const sync=()=>{ document.getElementById('c_fan').checked=opt.fan; document.getElementById('c_arr').checked=opt.arrows;
