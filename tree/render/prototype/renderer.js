@@ -1,12 +1,21 @@
 // renderer.js — RP-AXE tech-tree rendering prototype (Canvas 2D).
 //
-// PORTABLE CORE. Every primitive here is chosen to map 1:1 onto a KSP plugin:
-//   * each edge is ONE flat polyline (Vectrosity VectorLine, LineType.Continuous)
-//   * corners are pre-tessellated points (port of stock RDNode.chamferCorner) — no arcs/beziers
-//   * arrowheads are endpoint markers snapped to 4 cardinal directions (stock arrowT/B/L/R sprites)
-//   * geometry is built ONCE (buildGeometry); draw() only transforms + recolors.
-//     Hover/pan/zoom never rebuild geometry — same "build once, then show/hide + recolor" model
-//     KSP's RDNode uses, so the interaction cost ports for free.
+// PORTABILITY LEDGER — everything here maps onto a KSP "enhance-stock" plugin (Vectrosity lines +
+// arrow sprites + TextMeshPro), checked against decompiled RDNode / Vectrosity:
+//   * each edge = ONE flat polyline (VectorLine, LineType.Continuous), uniform width, one flat colour.
+//   * corners = pre-tessellated points (port of stock RDNode.chamferCorner) — NOT canvas arcs/beziers.
+//   * arrowheads = one endpoint sprite per edge, snapped to 4 cardinal dirs (stock arrowT/B/L/R).
+//   * state / highlight / dim = COLOUR + ALPHA only (Vectrosity line.color — cheap, no re-Draw).
+//     NEVER vary width per state: a width change needs VectorLine.Draw() (mesh rebuild). This is
+//     exactly stock's model — build once in DrawArrow, then only toggle active + swap material colour.
+//   * geometry built ONCE (buildGeometry); draw() only transforms (pan/zoom) + recolours.
+//   * node tile = a node Image (tint it by discipline); in-tile title/badge = child TMP labels
+//     (stock shows only the RD icon there); contrast ink = the TMP colour.
+// Cosmetic-only (achieved differently in KSP, harmless): canvas lineCap/lineJoin 'round' (KSP rounds
+//   via the tessellated points, caps are square); dashed anyToUnlock via setLineDash (KSP = a dash
+//   TEXTURE on the Material; colour is the real distinguisher); px sizes here vs grid-scaled in KSP.
+// Scale: 1 VectorLine + 1 (pooled) arrow sprite per edge, 1–2 TMP labels per node — ~300 each at the
+//   full tree, within KSP norms (RP-1 ships ~330 nodes). Pool/cull off-screen sprites + labels.
 //
 // World space = the cfg px space carried in tree-data.js (x = MARGIN_X + tier*TIERW, y = layout row).
 'use strict';
@@ -14,8 +23,8 @@
 // ---- tunables ----
 const NODE_W = 168, NODE_H = 62;        // tile size in world units (tiers 430 apart, rows ~80 apart)
 const CORNER_R = 15, CORNER_SEGS = 3;   // stock UIGridArea.roundedCornerRadius / lineCornerSegments
-const EDGE_W = 1.6, EDGE_W_HI = 3.4;    // stroke width, screen px (normal / lit)
-const ARROW = 9;                        // arrowhead size, screen px
+const EDGE_W = 2;                        // uniform stroke width (stock lineThickness=2); NEVER varied per state — width change = VectorLine.Draw rebuild
+const ARROW = 9;                        // arrowhead size (screen px here; KSP arrow sprite scales with the grid transform)
 const GOLD = '#f4d35e', GRAY = '#8a8f98';
 const DIM_EDGE = 0.10, DIM_NODE = 0.24; // alpha for de-emphasised elements when a lineage is focused
 const FAN_LO = 0.18, FAN_HI = 0.82;     // fraction range along a node side for distributed endpoints
@@ -121,7 +130,7 @@ const SX=wx=>wx*cam.s+cam.x, SY=wy=>wy*cam.s+cam.y;
 function draw(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   ctx.clearRect(0,0,cv.width,cv.height);
-  ctx.lineJoin='round'; ctx.lineCap='round';
+  ctx.lineJoin='round'; ctx.lineCap='round';   // cosmetic — KSP rounds via tessellated chamfer pts; caps are square
   const focusing = !!(focusSet && opt.highlight);
 
   // tier column labels (orientation)
@@ -137,8 +146,8 @@ function draw(){
     if(e.anyToUnlock) color=GOLD;
     ctx.globalAlpha = focusing ? (lit?1:DIM_EDGE) : 1;
     ctx.strokeStyle = color;
-    ctx.lineWidth = (focusing && lit) ? EDGE_W_HI : EDGE_W;
-    ctx.setLineDash(e.anyToUnlock ? [6,4] : []);
+    ctx.lineWidth = EDGE_W;              // uniform; emphasis is colour+alpha only (no rebuild)
+    ctx.setLineDash(e.anyToUnlock ? [6,4] : []);   // KSP: a dash-texture Material, not a numeric array
     const g=e.geom;
     ctx.beginPath(); ctx.moveTo(SX(g[0][0]),SY(g[0][1]));
     for(let i=1;i<g.length;i++) ctx.lineTo(SX(g[i][0]),SY(g[i][1]));
@@ -168,6 +177,8 @@ function drawNode(n, focusing){
   const dim = focusing && !focusSet.has(n.id);
   ctx.globalAlpha = dim?DIM_NODE:1;
 
+  // NOTE(port): tile = a node Image tinted by discipline colour; title/badge = child TMP labels
+  // (stock draws only the RD icon here); contrast ink below = the TMP colour.
   roundRect(x,y,w,h,Math.max(2,3*cam.s)); ctx.fillStyle=disc.color; ctx.fill();
   if(n.id===selId){ ctx.strokeStyle='#fff'; ctx.lineWidth=3; ctx.stroke(); }
   else if(n.id===hoverId){ ctx.strokeStyle='rgba(255,255,255,.8)'; ctx.lineWidth=2; ctx.stroke(); }
