@@ -51,6 +51,17 @@ nodes:
     flavor: "1950. A united Kerbalkind turns its eyes upward — no missiles to inherit, no doctrine to obey. Here is the common toolbox: procedural structure, tankage, nosecones and avionics that any vehicle needs, and the first two instruments — a barometer and a thermometer — to turn a flight into a measurement. There are two ways off the ground — the rocket and the wing. Choose either. Choose both."
     parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, B9_Aero_Wing_Procedural_TypeA, sensorBarometer, sensorThermometer]
 
+  # ================================= PARKING NODE (second root, parallel to start) =================================
+  # Every part/upgrade not explicitly placed on a tree node is routed here by AxePartPlacement.cfg
+  # (@PART[*] -> parking, then the placed ones override). Keeps unplaced parts OFF `start`. Later this
+  # becomes the opt-in Experimental node; for now it is the development holding pen. Off the main tree.
+  - id: parking
+    title: "Unsorted Parts (Parking)"
+    discipline: SystemsIntegration
+    tier: 0
+    parents: []
+    flavor: "Everything not yet given a home on the tree lands here — uncurated, third-party and not-yet-placed parts. A development holding pen, and later the opt-in Experimental node. Off the main tree; excluded from balance."
+
   # ============================================ ROCKET TRACK ============================================
   # Unified by propulsion. The root IS rocket propulsion — crude sounding motors that expand through a
   # de Laval nozzle. Data check: these span 3-244 kN, Isp 222-315, all pressure-fed or solid.
@@ -58,7 +69,6 @@ nodes:
     title: "Rocket Propulsion & the de Laval Nozzle"
     discipline: FluidDynamics
     tier: 1
-    cost: 0
     parents: [start]
     flavor: "Choke the exhaust to Mach 1 at the throat and expand it supersonically through the diverging bell — de Laval's steam-turbine nozzle, repurposed to turn a controlled chemical fire into directed thrust. With that, plus fins to fly straight, a crude pressure-fed or solid motor lofts an instrument package above the Karman line. The difference between a firework and a rocket."
     parts: [ROE-ORM65, ROE-Aerobee, ROE-VeroniqueAK, TinyTim, ROMeteoSustainer]
@@ -142,7 +152,6 @@ nodes:
     title: "Cambered Airfoil & Three-Axis Control"
     discipline: Aerodynamics
     tier: 1
-    cost: 0
     parents: [start]
     flavor: "A cambered wing makes lift; ailerons, elevator and rudder make it obey. Hang a lightweight piston engine and a propeller on the nose and you have controlled, powered flight — the runway route that chases altitude and speed records now, and reaches for the rocketplane and the spaceplane later."
     parts: [RO-X1Cockpit, RO-OldFighterCockpit, B9_Aero_Wing_Procedural_TypeC, B9_Aero_Wing_Procedural_TypeB, GearFixed, SXTTinyprop, SXTMerlin66prop, SXTPWR2800, SXT_Jumo213A]

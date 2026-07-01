@@ -3,7 +3,8 @@ digraph AXE {
   node[shape=box,style="filled,rounded",fontname="Helvetica",fontsize=10,color="#00000000"];
   edge[color="#888888",arrowsize=0.6];
   "start" [label="Start\nSystemsIntegration T0 · 0",fillcolor="#e8e8e8",fontcolor="#111111"];
-  "rocketryStart" [label="Rocket Propulsion & the de Laval Nozzle\nFluidDynamics T1 · 0",fillcolor="#ee9b00",fontcolor="#111111"];
+  "parking" [label="Unsorted Parts (Parking)\nSystemsIntegration T0 · 0",fillcolor="#e8e8e8",fontcolor="#111111"];
+  "rocketryStart" [label="Rocket Propulsion & the de Laval Nozzle\nFluidDynamics T1 · 20",fillcolor="#ee9b00",fontcolor="#111111"];
   "fd_turbopumpLiquid" [label="Turbopump-Fed Liquid Propulsion (A-4)\nFluidDynamics T2 · 90",fillcolor="#ee9b00",fontcolor="#111111"];
   "pc_solidGrain" [label="Cast Composite Solid Grains\nPropellantChemistry T2 · 90",fillcolor="#e07a5f",fontcolor="#111111"];
   "pc_kerosene" [label="Hydrotreated Narrow-Cut Kerosene (RP-1)\nPropellantChemistry T3 · 400",fillcolor="#e07a5f",fontcolor="#111111"];
@@ -14,14 +15,14 @@ digraph AXE {
   "tel_pcmTelemetry" [label="PCM/FM Telemetry Downlink\nTelecommunications T2 · 90",fillcolor="#4361ee",fontcolor="#111111"];
   "mic_probeAvionics" [label="Vacuum-Tube Sequencers & Sensors\nMicroelectronics T2 · 90",fillcolor="#cdb4db",fontcolor="#111111"];
   "int_firstOrbit" [label="First Orbital Capability\nSystemsIntegration T3 · 400",fillcolor="#e8e8e8",fontcolor="#111111"];
-  "xplaneStart" [label="Cambered Airfoil & Three-Axis Control\nAerodynamics T1 · 0",fillcolor="#48cae4",fontcolor="#111111"];
+  "xplaneStart" [label="Cambered Airfoil & Three-Axis Control\nAerodynamics T1 · 20",fillcolor="#48cae4",fontcolor="#111111"];
   "met_turbojet" [label="Gas-Turbine Propulsion & Turbine Superalloys\nMetallurgy T2 · 90",fillcolor="#8d99ae",fontcolor="#111111"];
   "aero_transonicFlight" [label="Transonic Area-Rule Shaping\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_supersonicCruise" [label="Supersonic Cruise Aerodynamics\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_rocketplane" [label="Rocket-Powered Research Aircraft\nAerodynamics T2 · 90",fillcolor="#48cae4",fontcolor="#111111"];
   "life_pressurizedCabin" [label="Cabin Pressurization\nLifeSupport T3 · 400",fillcolor="#f72585",fontcolor="#111111"];
   "int_crewedSuborbital" [label="Crewed Suborbital Flight\nSystemsIntegration T4 · 900",fillcolor="#e8e8e8",fontcolor="#111111"];
-  { rank=same; "start" }
+  { rank=same; "start" "parking" }
   { rank=same; "rocketryStart" "xplaneStart" }
   { rank=same; "fd_turbopumpLiquid" "pc_solidGrain" "str_stageSeparation" "gnc_earlyGuidance" "tel_pcmTelemetry" "mic_probeAvionics" "met_turbojet" "aero_rocketplane" }
   { rank=same; "pc_kerosene" "fd_gasGenerator" "cryo_earlyHydrolox" "int_firstOrbit" "aero_transonicFlight" "life_pressurizedCabin" }
