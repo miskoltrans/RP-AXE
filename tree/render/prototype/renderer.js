@@ -305,7 +305,11 @@ function buildLaneRoutes(){
     const order=[...Array(lanesN[g]).keys()].sort((a,b)=>(sum[a]/cnt[a])-(sum[b]/cnt[b]));
     const m={}; order.forEach((oldL,newL)=>m[oldL]=newL); laneRank[g]=m;
   }
-  const laneX=(g,l)=>tierX(g)+NW()+(l+1)/(lanesN[g]+1)*(TW-NW());
+  // tight, fixed pitch between lanes (centred in the gutter), not spread across the whole gutter;
+  // clamps down only if a very busy gutter would otherwise overflow ~80% of its width.
+  const LANE_PITCH=13;
+  const laneX=(g,l)=>{ const n=lanesN[g], gw=TW-NW(), pitch=Math.min(LANE_PITCH,(gw*0.8)/Math.max(1,n)), cx=tierX(g)+NW()+gw/2;
+    return cx+(l-(n-1)/2)*pitch; };
   const built=[];
   for(const [e,ts,ys] of chains){
     const pts=[[tierX(ts[0])+NW(), ys[0]]];
