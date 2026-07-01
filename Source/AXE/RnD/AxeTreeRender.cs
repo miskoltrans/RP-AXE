@@ -317,26 +317,32 @@ namespace RPAxe.RnD
         }
 
         // Discipline colour legend, shown while R&D is open (RDController.Instance != null).
+        private static GUIStyle _legendTitle, _legendRow;
         private void OnGUI()
         {
             if (!ready || !AxeTreeMeta.Render.Legend || RDController.Instance == null || AxeTreeMeta.Disciplines.Count == 0) return;
+            if (_legendRow == null)
+            {
+                _legendRow = new GUIStyle(GUI.skin.label) { fontSize = 15, alignment = TextAnchor.MiddleLeft };
+                _legendTitle = new GUIStyle(GUI.skin.label) { fontSize = 18, fontStyle = FontStyle.Bold };
+            }
             var list = new List<KeyValuePair<string, AxeTreeMeta.DiscMeta>>(AxeTreeMeta.Disciplines);
             list.Sort((a, b) => a.Value.Order.CompareTo(b.Value.Order));
-            const float w = 178f, rowH = 15f, pad = 6f;
-            float h = list.Count * rowH + pad * 2f + 16f;
-            var box = new Rect(8f, 42f, w, h);
+            const float w = 280f, rowH = 24f, sw = 18f, pad = 10f;
+            float h = list.Count * rowH + pad * 2f + 30f;
+            var box = new Rect(10f, 48f, w, h);
             Color prev = GUI.color;
-            GUI.color = new Color(0f, 0f, 0f, 0.72f);
+            GUI.color = new Color(0f, 0f, 0f, 0.78f);
             GUI.DrawTexture(box, Texture2D.whiteTexture);
             GUI.color = Color.white;
-            GUI.Label(new Rect(box.x + pad, box.y + 3f, w, 16f), "Disciplines");
-            float yy = box.y + 19f;
+            GUI.Label(new Rect(box.x + pad, box.y + 6f, w, 24f), "Disciplines", _legendTitle);
+            float yy = box.y + 34f;
             foreach (KeyValuePair<string, AxeTreeMeta.DiscMeta> kv in list)
             {
                 GUI.color = kv.Value.Color;
-                GUI.DrawTexture(new Rect(box.x + pad, yy + 2f, 10f, 10f), Texture2D.whiteTexture);
+                GUI.DrawTexture(new Rect(box.x + pad, yy + (rowH - sw) / 2f, sw, sw), Texture2D.whiteTexture);
                 GUI.color = Color.white;
-                GUI.Label(new Rect(box.x + pad + 15f, yy, w - 22f, rowH), kv.Value.Title);
+                GUI.Label(new Rect(box.x + pad + sw + 9f, yy, w - pad - sw - 14f, rowH), kv.Value.Title, _legendRow);
                 yy += rowH;
             }
             GUI.color = prev;
