@@ -326,8 +326,16 @@ function showPanel(id){
 }
 function legendHTML(){
   const ds=Object.values(D.disciplines).sort((a,b)=>a.order-b.order);
-  return `<div class="sec">Disciplines</div><ul class="legend">`+
-    ds.map(d=>`<li><span class="dot" style="background:${d.color}"></span>${esc(d.title)}</li>`).join('')+`</ul>`;
+  let h='';
+  if(opt.progress){
+    h+=`<div class="sec">Research state</div><ul class="legend">`+
+       `<li><span class="ring" style="border-color:${C_DONE}"></span>Researched</li>`+
+       `<li><span class="ring" style="border-color:${C_AVAIL}"></span>Researchable — research next</li>`+
+       `<li><span class="ring locked"></span>Locked (prereqs unmet)</li></ul>`;
+  }
+  h+=`<div class="sec">Disciplines</div><ul class="legend">`+
+     ds.map(d=>`<li><span class="dot" style="background:${d.color}"></span>${esc(d.title)}</li>`).join('')+`</ul>`;
+  return h;
 }
 
 // ============================ init ============================
