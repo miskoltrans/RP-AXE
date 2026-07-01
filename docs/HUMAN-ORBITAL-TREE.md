@@ -3,7 +3,12 @@
 Derived from `manifest/human-orbital-partlist.md` (21 RP-1 nodes, ~140 new parts once earlyAvionics +
 scienceSatellite are set aside as already-resolved). Same rule as `EARLY-TREE.md`: node = one
 **non-obvious enabling breakthrough** (zero `&`), carrying a **⭐king** part + ride-alongs; cost
-abstracts the R&D for the unnamed rest. This is a first pass — redline any of it.
+abstracts the R&D for the unnamed rest. This is a first pass, revised once already — redline any of it.
+
+**Revision note:** the first pass under-counted. It let low part-count per RP-1 category talk it into
+default-ride-along too often, even though `fd_deepThrottleEarly` (1 part, XLR99) already proved a thin
+category can hide a real breakthrough. Re-scanned the `orbitalRocketry1958–1961` block and the categories
+originally left as "Open calls" with that corrected lens — see **13 king parts** below, up from 6.
 
 ## The framing that shapes it
 First Orbit answered "can it fly." Human Orbital answers "can it fly *someone*, and get them back
@@ -14,12 +19,11 @@ attitude control + parachute recovery the early tree *already built* for uncrewe
 RP-1 nodes (`earlyAvionics`, `scienceSatellite`) are re-listed in the partlist purely for
 self-containedness — they were already placed in the first-orbit batch. **Skip them here.**
 
-Most of the remaining 21 nodes are NOT new breakthroughs — they're later-year variants of engines and
-systems the early tree already teaches (more `fd_multiChamber`/`fd_baffledInjector` engines, more RCS
-blocks, more solar panels, bigger landing gear). Per the ENGINE PASS finding in `TREE.md` §9 ("9 solids
-/ 6 multi-chamber on one node is correct king+ride-along, not a lump"), the right move for most of these
-is to extend an **existing** node's `parts:` list, not mint a new one. Real judgment calls are flagged
-as **Open calls** at the end.
+Beyond that milestone, the `orbitalRocketry1958–1961` block (41 parts) turned out to hide several real
+scatter-breakthroughs of its own — this is the historical moment national programs' engine lines start
+to diverge (peroxide chemistry, storable-propellant boosters, restart-in-vacuum, clustering) — alongside
+the genuinely-ride-along bulk (more `fd_multiChamber`/`fd_baffledInjector` variants, more RCS blocks,
+more solar panels, bigger landing gear).
 
 ---
 
@@ -60,13 +64,48 @@ as **Open calls** at the end.
   capsule. Homed as a refinement, not a gate: a reckless program could fly without one, same reasoning
   that kept staging optional for orbit.*
 
-## Scatter-aha inside the existing engine lines (no new gate)
+- **Touchdown Energy Absorption** `str_landingLegs` `[StructuresMechanisms, T3]` — parents: `str_staging`.
+  ⭐`landingLeg1`. ride: `miniLandingLeg`, `SXTAirbag`, `SXTAirbagSmall`.
+  *Crushable/damped legs (or a cushioning airbag) that catch a touchdown without bouncing or tipping.
+  Reuses the id/title/flavor already seeded in `library.yaml`. Resolves RP-1's `humanRatedEDL` category —
+  the name is misleading (these are generic touchdown-recovery parts, not human-specific), but the
+  breakthrough itself is real.*
+
+## Scatter-ahas inside the existing engine/propellant lines (no new gate)
 
 - **Throttleable Restart Combustion** `fd_deepThrottleEarly` `[FluidDynamics, T3]` — parents: `fd_turbopumpFeed`.
   ⭐`ROE-XLR99` (X-15). *The world's first large, deeply throttleable, restartable liquid engine — a real
-  scatter-aha, and a taste of `library.yaml`'s much later `fd_deepThrottle` (T8). Worth its own tiny node
-  rather than folding into `fd_baffledInjector`'s ride-along pile, per the "one non-obvious breakthrough"
-  rule — throttling is not what the LR89/LR79 boosters it's listed beside teach.*
+  scatter-aha, and a taste of `library.yaml`'s much later `fd_deepThrottle` (T8).*
+
+- **High-Test Peroxide Combustion** `pc_hydrogenPeroxide` `[PropellantChemistry, T2]` — parents: `start`.
+  ⭐`ROE-Gamma2`. ride: `ROE-Gamma8`.
+  *Concentrated peroxide decomposed over a catalyst into hot steam and oxygen — British rocketry's
+  signature chemistry (Black Knight, Blue Streak's Gamma engines), and a genuinely different oxidizer
+  path from kerolox or storable hypergolics. Reuses the id/flavor already seeded in `library.yaml`.*
+
+- **Restart-in-Vacuum Hypergolic Ignition** `fd_restartableHypergolics` `[FluidDynamics, T3]` — parents:
+  `pc_hypergolics`. ⭐`ROE-Agena` (XLR81). ride: `ROE-AgenaSPS`, `RO-KDU414`, `ROE-Agena_EquipmentRack`.
+  *Reignite in vacuum on command, not just once at launch — the Agena upper stage, and the platform that
+  became Corona's bus and Gemini's docking target. Absorbs the equipment rack (the Agena's own avionics)
+  and the small satellite-attitude engines it spawned as the same breakthrough at different scales.*
+
+- **Storable-Propellant Orbital-Class Boosters** `pc_storableBoosters` `[PropellantChemistry, T3]` —
+  parents: `pc_hypergolics`. ⭐`ROE-RD215`. ride: `ROE-RD215_Single`, `ROE-RD219`.
+  *Corrosive, toxic storables scaled from a small hypergolic trim engine up to full first-stage thrust —
+  the Yangel-bureau approach of repurposing an ICBM's always-ready propellants for a space launcher.
+  (`ROE-RD855`/`RD856` look like the same family but I haven't verified their propellant — check before
+  riding them here.)*
+
+- **Engine-Cluster Heavy Lift** `str_engineClustering` `[StructuresMechanisms, T4]` — parents:
+  `fd_orbitalThrust`. ⭐`ROE-H1C`. ride: `ROE-H1D`, `ROE-RS27`.
+  *Eight first-generation orbital-class engines on a common structure and manifold, synchronized to light
+  together — Saturn I, the first heavy-lift booster. See Open call 1 on whether this belongs here or in a
+  future heavy-lift/lunar batch.*
+
+- **Solid Retrofire** `pc_solidRetrofire` `[PropellantChemistry, T3]` — parents: `pc_solidGrains`.
+  ⭐`ROC-MercuryRetroBDB`. ride: `ROC-MercuryPosigradeBDB`, `ROE-Agena_Retro_TypeIII`, `ROE-RangerRetro`.
+  *A one-shot solid burn, precisely timed, to drop out of orbit or push a spent stage safely clear —
+  deorbit and separation with no restart requirement.*
 
 - **Helical Directional Arrays** `tel_helicalDirectional` `[Telecommunications, T2]` — parents: `tel_telemetry`.
   ⭐`antenna_cone_toggle` (`digitalComms`). *Axial-mode helix gives circularly-polarized gain that tolerates
@@ -74,63 +113,67 @@ as **Open calls** at the end.
 
 ## Ride-alongs only — extend an existing node, don't mint one
 
-- **`highSpeedFlight`** (14 parts: bigger turbojets/turboprops/ramjets, `GearLarge`/`GearMedium`) → spread
+- **`highSpeedFlight`**, minus the turboprops (below): turbojets/ramjets, `GearLarge`/`GearMedium` → spread
   across `met_turbineAlloys` / `aero_areaRule` / `aero_afterburner` / `aero_ramjet` / `xplaneStart` by
   engine family (same capability-ladder judgment already used for the early tree's turbojets); landing
   gear rides `xplaneStart`.
+- **`highSpeedFlight`**'s `SXTNK12M`/`SXTPWPT6` (turboprops) → **new node**, see below (Free-Turbine
+  Propeller Drive — didn't fit cleanly under Scatter-ahas since it's Aerodynamics not propellant/engine,
+  but it's a real king too): `aero_turboshaftProp` `[Aerodynamics, T3]`, parents: `met_turbineAlloys`.
+  ⭐`SXTNK12M` (NK-12, the most powerful turboprop ever built — Tu-95's contra-rotating props at
+  near-supersonic tip speed). ride: `SXTPWPT6`.
 - **`hypersonicFlightRP0`** (5 parts) → `aero_rocketplane` already carries `Mark1Cockpit`/`Mark2Cockpit`;
   add `MK1Cargobay`, `SXTSmallFuselage`, `vernierEngine`.
-- **`earlyFlightControl`** (6 parts, RCS thruster variants + Agena Equipment Rack) → `gnc_rcs`.
-- **`stabilityRP0`** (3 parts: `RO-KDU414`, `ROE-AgenaSPS`, `ROE-RangerRetro`) + **`solids1959`**'s Mercury
-  retro pair (`ROC-MercuryRetroBDB`, `ROC-MercuryPosigradeBDB`) → ride `gnc_rcs` for now (see Open call 3
-  for the fuller two-solutions treatment this could get instead).
-- **`solids1959`**'s Scout-family stages (`ROE-Algol1`, `ROE-Altair`, `ROE-Antares1`) → `pc_solidGrains`.
-- **`orbitalRocketry1958/1959/1960/1961`** (41 parts total, minus `ROE-XLR99` above) → spread across
-  `fd_multiChamber` / `fd_baffledInjector` / `pc_hypergolics` by nation+family (per-engine judgment call,
-  same tool-supported process as the early tree's engine pass) — see Open call 1 before doing this.
+- **`earlyFlightControl`**'s plain RCS blocks (`ROE-generic-full/half/quarter`, `ca_jib`, `microEngine`) →
+  `gnc_rcs`. (Its `ROE-Agena_EquipmentRack` moved to `fd_restartableHypergolics` above.)
+- **`solids1959`**'s Scout-family stages (`ROE-Algol1`, `ROE-Altair`, `ROE-Antares1` [+ Inline variants]) →
+  `pc_solidGrains`.
+- **`solids1959`**'s `ROE-Agena_Spinrocket` → rides `start`, alongside `ROSmallSpinMotor` (first-orbit
+  batch) — same breakthrough (passive spin stabilization, already flavor-established at turn one), just a
+  bigger later implementation. **Not** the retrofire node — corrected from an earlier draft that lumped it
+  in with `pc_solidRetrofire` purely because both are small solid motors; spin-stabilization and
+  deceleration are different functions. Confirmed: only 2 spin-motor parts exist in the whole 1820-part
+  curated manifest, so this stays a minor ride-along, not its own node.
+- **`orbitalRocketry1958/1959/1960/1961`** (remaining ~30 parts after the 5 kings pulled above) → spread
+  across `fd_multiChamber` / `fd_baffledInjector` / `pc_hypergolics` by nation+family (per-engine judgment
+  call, same tool-supported process as the early tree's engine pass).
 - **`materialsScienceHuman`** (4 parts: bigger service bays/radial tanks/nosecone) → `met_weldedTank` /
   `aero_fairings` ride-alongs, same as the early tree's procedural structure.
 - **`primitiveSolarPanels`** (1 part) → `elec_siliconPV`.
-- **`lunarRangeComms`** (1 part, `longAntenna`) → `tel_telemetry` (see Open call 4 on ordering vs
+- **`lunarRangeComms`** (1 part, `longAntenna`) → `tel_telemetry` (see Open call 2 on ordering vs
   `tel_helicalDirectional`).
 - **`electronicsHuman`** (0 parts, 2 upgrades only) → no node; `RFTech-Battery-II` is a tier-upgrade with
   no part to hang a king on here (batteries are stock, ungated — this is just a capacity bump wherever
   the battery-bearing node ends up).
 - **`earlyAvionics`, `scienceSatellite`** → already placed in `first-orbit-partlist.md`. Skip.
 
+**Ullage motors — checked, correctly absent from this batch.** Only one exists in the whole curated
+manifest (`ROE-TX280`, S-IV Ullage Motor), and it's in `interplanetary-lunar-probes-partlist` (the next
+batch), not here — consistent with Mercury/Vostok being direct-ascent, single-burn boosters with no
+coast-then-restart upper stage needing propellant settled.
+
 ---
 
 ## Open calls
 
-1. **The `orbitalRocketry1958–1961` engine-divergence question (carried over from `TREE.md` §9,
-   DEFERRED).** These 41 engines are the historical moment the three orbital-thrust paths
-   (Soviet multi-chamber / Western baffled-injector / hydrolox) would start to diverge into distinct
-   national lines (R-7 successors → Metallurgy; Atlas/Titan → FluidDynamics; Agena/Centaur → Cryogenics
-   per `library.yaml`'s later plan). Do we (a) just ride them onto the 3 existing nodes now and defer
-   divergence to a later batch [recommended, keeps this batch small], or (b) start the divergent lines
-   here since this milestone is literally when history forked? Saturn I's `H-1` clustering (in
-   `orbitalRocketry1961`) is the strongest argument for "here" — clustering-for-heavy-lift is a genuine
-   new breakthrough — but it also arguably belongs to a future lunar/heavy-lift batch, not "humans in
-   orbit." **My lean: defer H-1/clustering to that future batch; ride the rest.**
-2. **`humanRatedEDL`** (`SXTAirbag`, `SXTAirbagSmall`, `landingLeg1`, `miniLandingLeg`) — despite the RP-1
-   name, these are stock aircraft landing-gear/airbag parts, not spacecraft lander legs. Likely a
-   rocket-plane/lifting-body runway-recovery ride-along (`aero_rocketplane` or `xplaneStart`), but I'm not
-   fully confident — flag for redline rather than guess.
-3. **Orbital maneuvering as its own two-solutions node?** `stabilityRP0` + the Mercury retro pair read
-   like a genuine multi-entry pair — solid single-shot retrofire (US, `ROC-MercuryRetroBDB`) vs
-   restartable liquid maneuvering (Soviet, `ROE-AgenaSPS`) — mirroring `fd_multiChamber`/`fd_baffledInjector`.
-   I folded them into `gnc_rcs` ride-alongs above to keep this batch smaller, but if the "choice should
-   feel smart" philosophy applies here too, this could become `pc_solidRetrofire` ‖ `fd_restartableManeuvering`
-   → a small multi-entry convergence. Your call — only 5 parts total, so low cost either way.
-4. **`lunarRangeComms` vs `digitalComms` ordering** — `longAntenna` (Communotron 16) and `antenna_cone_toggle`
+1. **`str_engineClustering` (H-1/Saturn I) — this batch or a future heavy-lift/lunar one?** It's a real
+   breakthrough and it's genuinely in this partlist, but Saturn-class heavy lift arguably belongs to a
+   later "humans to the Moon" milestone rather than "humans in orbit." Included above; your call whether
+   to build it now or park it.
+2. **`lunarRangeComms` vs `digitalComms` ordering** — `longAntenna` (Communotron 16) and `antenna_cone_toggle`
    (helical) are both single-part categories; which comes first (cost/tier) depends on which RP-1 places
    earlier in-game. Didn't verify tier order from the ConfigCache — check before wiring parents.
-5. **`str_launchEscape`'s tier/parent** — proposed as a T4 child of `int_crewedCapsule`. Could equally be
+3. **`ROE-RD855`/`ROE-RD856` propellant** — tentatively rode onto `pc_storableBoosters` alongside RD215/219
+   by family resemblance, not verified. Check before committing.
+4. **`str_launchEscape`'s tier/parent** — proposed as a T4 child of `int_crewedCapsule`. Could equally be
    pulled forward to gate the capsule (if "no one would actually fly without one" outweighs the what-if
    principle) — see the relaxed-convergence note. Recommend keeping it a refinement, consistent with how
    `int_orbitalInsertion` already treats staging/guidance as optional.
 
 ## Node count
-9 new nodes (2 new-discipline entry points + the milestone + a refinement + 2 scatter-ahas + 1 optional
-multi-entry pair pending Open call 3) vs RP-1's 21 era-named nodes for the same ~140 parts. First new use
-of the LifeSupport and CompositeMaterials disciplines.
+13 new nodes: the milestone (`int_crewedCapsule`) + its 2 new-discipline inputs (`life_openLoopECLSS`,
+`cmp_ablativeTPS`) + 2 refinements (`str_launchEscape`, `str_landingLegs`) + 7 scatter-ahas
+(`fd_deepThrottleEarly`, `pc_hydrogenPeroxide`, `fd_restartableHypergolics`, `pc_storableBoosters`,
+`str_engineClustering`, `pc_solidRetrofire`, `tel_helicalDirectional`) + `aero_turboshaftProp` (listed
+under ride-alongs for narrative flow but counted here) — vs RP-1's 21 era-named nodes for the same ~140
+parts. First new use of the LifeSupport and CompositeMaterials disciplines.
