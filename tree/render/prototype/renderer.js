@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:false };
+const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:false, icons:true };
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
 const C_DONE='#4ade80', C_AVAIL='#38bdf8';     // researched / researchable (the frontier = "what to research next")
@@ -258,6 +258,11 @@ function drawNode(n, focusing){
   if(n.id===selId){ ctx.strokeStyle='#fff'; ctx.lineWidth=3; ctx.stroke(); }
   else if(n.id===hoverId){ ctx.strokeStyle='rgba(255,255,255,.85)'; ctx.lineWidth=2; ctx.stroke(); }
 
+  if(opt.icons && iconReady(disc.icon) && cam.s>0.15){   // discipline RD icon, top-left corner
+    const s=Math.min(w,h)*0.4; ctx.globalAlpha=alpha;
+    ctx.drawImage(iconImg[disc.icon], x+3*cam.s, y+3*cam.s, s, s);
+  }
+
   const ink = lum(disc.color)>140 ? '#10181f' : '#f3f3f3';   // contrast text (fixes dark-on-dark)
   ctx.fillStyle=ink; ctx.textAlign='center'; ctx.textBaseline='middle';
   const fs=Math.max(7.5, 10.5*cam.s);
@@ -295,6 +300,11 @@ function wrap(s,width,maxlines){
   if(lines.length>maxlines){ lines[maxlines-1]=lines[maxlines-1].slice(0,width-1)+'…'; lines.length=maxlines; }
   return lines;
 }
+// node icons — RD sprite per discipline (KSP: the node's Image/icon). Loaded from icons/<disc.icon>.png.
+const iconImg={};
+function loadIcons(){ for(const nm of new Set(Object.values(D.disciplines).map(d=>d.icon).filter(Boolean))){
+  const im=new Image(); im.onload=draw; im.src='icons/'+nm+'.png'; iconImg[nm]=im; } }
+function iconReady(nm){ const im=iconImg[nm]; return im && im.complete && im.naturalWidth>0; }
 
 // ============================ interaction ============================
 function hitTest(mx,my){
@@ -384,7 +394,7 @@ function init(){
   buildModel(); restore();
   const rq=new URLSearchParams(location.search).get('research');   // ?research=id,id — shareable snapshot / demo
   if(rq) rq.split(',').forEach(x=>{ if(byId[x]) researched.add(x); });
-  buildGeometry();
+  buildGeometry(); loadIcons();
   new ResizeObserver(resize).observe(cv);
   cv.width=cv.clientWidth*DPR; cv.height=cv.clientHeight*DPR;
   fit(); fitScale=cam.s; updateZoomLabel();
@@ -426,7 +436,7 @@ function init(){
   // controls
   const cb=(id,key,geom)=>{ const el=document.getElementById(id); el.checked=opt[key];
     el.addEventListener('change',()=>{ opt[key]=el.checked; if(key==='highlight')setFocus(activeFocus()); geom?rebuild():draw(); }); };
-  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_lane','lane',true);
+  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_lane','lane',true); cb('c_icon','icons',false);
   const cp=document.getElementById('c_prog'); cp.checked=opt.progress;
   cp.addEventListener('change',()=>{ opt.progress=cp.checked; afterStateChange(); });
   const sync=()=>{ document.getElementById('c_fan').checked=opt.fan; document.getElementById('c_arr').checked=opt.arrows;
