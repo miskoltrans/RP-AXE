@@ -161,7 +161,8 @@ nodes:
     discipline: Thermodynamics
     tier: 1
     parents: [start]
-    flavor: "Reject waste heat to space with coatings, finishes and surface geometry alone — the baseline thermal balance of every spacecraft, before you can afford anything active."
+    flavor: "Reject waste heat to space with coatings, finishes and bimetallic louvers that open and close with temperature — the baseline thermal balance of every spacecraft, before you can afford anything active."
+    parts: [ca_louver_m, ca_louver_s, ca_louver_s2]
   - id: th_hermeticBus
     title: "Hermetic Thermal-Control Bus"
     discipline: Thermodynamics
