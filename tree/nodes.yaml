@@ -49,7 +49,7 @@ nodes:
     tier: 0
     parents: []
     flavor: "1950. A united Kerbalkind turns its eyes upward — no missiles to inherit, no doctrine to obey. Here is the common toolbox: procedural structure, tankage, nosecones and avionics that any vehicle needs, and the first two instruments — a barometer and a thermometer — to turn a flight into a measurement. There are two ways off the ground — the rocket and the wing. Choose either. Choose both."
-    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer]
+    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, B9_Aero_Wing_Procedural_TypeA, sensorBarometer, sensorThermometer]
 
   # ============================================ ROCKET TRACK ============================================
   # Unified by propulsion. The root IS rocket propulsion — crude sounding motors that expand through a
@@ -61,7 +61,7 @@ nodes:
     cost: 0
     parents: [start]
     flavor: "Choke the exhaust to Mach 1 at the throat and expand it supersonically through the diverging bell — de Laval's steam-turbine nozzle, repurposed to turn a controlled chemical fire into directed thrust. With that, plus fins to fly straight, a crude pressure-fed or solid motor lofts an instrument package above the Karman line. The difference between a firework and a rocket."
-    parts: [ROE-ORM65, ROE-Aerobee, ROE-VeroniqueAK, TinyTim, ROMeteoSustainer, B9_Aero_Wing_Procedural_TypeA]
+    parts: [ROE-ORM65, ROE-Aerobee, ROE-VeroniqueAK, TinyTim, ROMeteoSustainer]
   - id: fd_turbopumpLiquid
     title: "Turbopump-Fed Liquid Propulsion (A-4)"
     discipline: FluidDynamics
