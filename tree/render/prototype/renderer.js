@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true };
+const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:false };
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
 const C_DONE='#4ade80', C_AVAIL='#38bdf8';     // researched / researchable (the frontier = "what to research next")
@@ -150,11 +150,41 @@ function routeEdge(e){
 }
 const snap4=d=> Math.abs(d[0])>=Math.abs(d[1]) ? [Math.sign(d[0])||1,0] : [0,Math.sign(d[1])||1];
 
+// laneRouted: route through the layout's dummy waypoints; vertical legs spread into per-gutter lanes
+// (interval-graph colouring) so parallel lines don't pile up. Consumes edges[].waypoints (layout-owned).
+// Still one flat polyline per edge — the KSP port is a Harmony hook on GetVectorArray returning this
+// richer point list instead of the stock elbow.
+function buildLaneRoutes(){
+  const xs=[...new Set(D.nodes.map(n=>n.pos[0]))].sort((a,b)=>a-b);
+  const X0=xs[0], TW=xs.length>1?xs[1]-xs[0]:430;
+  const tierOf=x=>Math.round((x-X0)/TW), tierX=t=>X0+t*TW;
+  const seg={}, chains=[];
+  for(const e of edges){
+    if(!e.waypoints || e.waypoints.length<2){ e.laneGeom=null; continue; }
+    const ts=e.waypoints.map(p=>tierOf(p[0])), ys=e.waypoints.map(p=>p[1]+NODE_H/2);
+    chains.push([e,ts,ys]);
+    for(let i=0;i<ts.length-1;i++)
+      (seg[ts[i]]=seg[ts[i]]||[]).push([Math.min(ys[i],ys[i+1]),Math.max(ys[i],ys[i+1]),e.from+'>'+e.to+'#'+i]);
+  }
+  const lane={}, lanesN={};
+  for(const g in seg){ const s=seg[g].sort((a,b)=>a[0]-b[0]), ends=[];
+    for(const [lo,hi,key] of s){ let l=ends.findIndex(h=>h<=lo+1e-6); if(l<0){ l=ends.length; ends.push(hi); } else ends[l]=hi; lane[key]=l; }
+    lanesN[g]=ends.length; }
+  const laneX=(g,l)=>tierX(g)+NODE_W+(l+1)/(lanesN[g]+1)*(TW-NODE_W);
+  for(const [e,ts,ys] of chains){
+    const pts=[[tierX(ts[0])+NODE_W, ys[0]]];
+    for(let i=0;i<ts.length-1;i++){ const lx=laneX(ts[i], lane[e.from+'>'+e.to+'#'+i]); pts.push([lx,ys[i]],[lx,ys[i+1]]); }
+    pts.push([tierX(ts[ts.length-1]), ys[ys.length-1]]);
+    e.laneGeom=pts;
+  }
+}
+
 function buildGeometry(){
   computeSlots();
+  buildLaneRoutes();
   for(const e of edges){
     if(!(e.from in byId)||!(e.to in byId)){ e.geom=null; continue; }
-    e.geom=routeEdge(e);
+    e.geom = (opt.lane && e.laneGeom) ? e.laneGeom : routeEdge(e);   // laneRouted (waypoints) or stock elbow
     const a=e.geom[e.geom.length-1], b=e.geom[e.geom.length-2];
     e.arrow={ tip:a, dir:snap4(norm(sub(a,b))) };
   }
@@ -350,6 +380,7 @@ function afterStateChange(){ draw(); updateHud(); if(selId) showPanel(selId); }
 function init(){
   cv=document.getElementById('cv'); ctx=cv.getContext('2d');
   if(/baseline/.test(location.search)){ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; }
+  if(new URLSearchParams(location.search).has('lane')) opt.lane=true;
   buildModel(); restore();
   const rq=new URLSearchParams(location.search).get('research');   // ?research=id,id — shareable snapshot / demo
   if(rq) rq.split(',').forEach(x=>{ if(byId[x]) researched.add(x); });
@@ -395,12 +426,13 @@ function init(){
   // controls
   const cb=(id,key,geom)=>{ const el=document.getElementById(id); el.checked=opt[key];
     el.addEventListener('change',()=>{ opt[key]=el.checked; if(key==='highlight')setFocus(activeFocus()); geom?rebuild():draw(); }); };
-  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false);
+  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_lane','lane',true);
   const cp=document.getElementById('c_prog'); cp.checked=opt.progress;
   cp.addEventListener('change',()=>{ opt.progress=cp.checked; afterStateChange(); });
   const sync=()=>{ document.getElementById('c_fan').checked=opt.fan; document.getElementById('c_arr').checked=opt.arrows;
-    document.getElementById('c_disc').checked=opt.discEdges; document.getElementById('c_hi').checked=opt.highlight; };
-  document.getElementById('b_base').addEventListener('click',()=>{ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; focusSet=null; sync(); rebuild(); });
+    document.getElementById('c_disc').checked=opt.discEdges; document.getElementById('c_hi').checked=opt.highlight;
+    document.getElementById('c_lane').checked=opt.lane; };
+  document.getElementById('b_base').addEventListener('click',()=>{ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; opt.lane=false; focusSet=null; sync(); rebuild(); });
   document.getElementById('b_enh').addEventListener('click',()=>{ opt.baseline=false; opt.fan=true; opt.discEdges=true; opt.highlight=true; sync(); rebuild(); });
   document.getElementById('b_reset').addEventListener('click',()=>{ if(confirm('Reset all research progress?')){ resetProgress(); setFocus(activeFocus()); afterStateChange(); } });
   document.getElementById('b_fit').addEventListener('click',()=>{ fit(); draw(); });
