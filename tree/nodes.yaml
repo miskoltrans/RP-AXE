@@ -621,7 +621,7 @@ nodes:
     title: "Solar Array Gimballing"
     discipline: ElectricalPower
     tier: 5
-    parents: [elec_bodyMountedArrays, rob_servoActuators]
+    parents: [elec_bodyMountedArrays]
     flavor: "Gimbal the arrays to face the sun continuously, multiplying usable power — and adding the first always-moving mechanism to fail."
   - id: elec_lithiumIon
     title: "Lithium-Ion Secondary Cells"
@@ -785,7 +785,7 @@ nodes:
     title: "Lattice-Fin Flight Control"
     discipline: Aerodynamics
     tier: 5
-    parents: [aero_reentryBluntBody, rob_servoActuators]
+    parents: [aero_reentryBluntBody]
     flavor: "Stow flat, deploy into the airstream for crisp control authority on a descending booster — the steering of a reusable first stage."
   - id: aero_supersonicRetropropulsion
     title: "Supersonic Retropropulsion"
@@ -1203,7 +1203,7 @@ nodes:
     title: "Autonomous Rendezvous & Proximity Ops"
     discipline: GuidanceControl
     tier: 6
-    parents: [gnc_digitalGuidance, tel_sBandTransponder]
+    parents: [gnc_digitalGuidance]
     flavor: "Close, match and dock with another vehicle by computer — the maneuver that builds stations and refuels ships."
   - id: gnc_precisionLanding
     title: "Terrain-Relative Precision Landing"

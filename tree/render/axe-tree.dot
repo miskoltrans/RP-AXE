@@ -347,7 +347,6 @@ digraph AXE {
   "elec_silverZinc" -> "elec_siliconPV" [style=solid];
   "elec_siliconPV" -> "elec_bodyMountedArrays" [style=solid];
   "elec_bodyMountedArrays" -> "elec_trackingArrays" [style=solid];
-  "rob_servoActuators" -> "elec_trackingArrays" [style=solid];
   "elec_fuelCell" -> "elec_lithiumIon" [style=solid];
   "elec_trackingArrays" -> "elec_tripleJunction" [style=solid];
   "elec_tripleJunction" -> "elec_concentratorPV" [style=solid];
@@ -377,7 +376,6 @@ digraph AXE {
   "aero_supersonicInlets" -> "aero_hypersonicWaverider" [style=solid];
   "aero_reentryBluntBody" -> "aero_liftingBody" [style=solid];
   "aero_reentryBluntBody" -> "aero_gridFins" [style=solid];
-  "rob_servoActuators" -> "aero_gridFins" [style=solid];
   "aero_reentryBluntBody" -> "aero_supersonicRetropropulsion" [style=solid];
   "aero_reentryBluntBody" -> "aero_iad" [style=solid];
   "aero_hypersonicWaverider" -> "aero_scramjet" [style=solid];
@@ -449,7 +447,6 @@ digraph AXE {
   "opt_starTracker" -> "gnc_opticalNav" [style=solid];
   "gnc_strapdownINS" -> "gnc_ringLaserGyro" [style=solid];
   "gnc_digitalGuidance" -> "gnc_autonomousRendezvous" [style=solid];
-  "tel_sBandTransponder" -> "gnc_autonomousRendezvous" [style=solid];
   "gnc_autonomousRendezvous" -> "gnc_precisionLanding" [style=solid];
   "gnc_precisionLanding" -> "gnc_propulsiveLanding" [style=solid];
   "fd_deepThrottle" -> "gnc_propulsiveLanding" [style=solid];
