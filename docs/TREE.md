@@ -177,9 +177,21 @@ strong, issues few + concentrated. **Applied to `tree/nodes.yaml`:**
   nudges, not tree edges). **General rule for the SystemsIntegration lane:** convergence/milestone nodes gate on
   irreducible physics only; keep their inputs relaxed.
 - **Settled (no edit):** aviation-as-roleplay + x-plane contracts (§3B); rocketry-default (§3B).
-- **OPEN — the engine axis (user: "engines feel weakest"):** to-orbit engines are coarse (multi-entry paths carry
-  no opportunity cost; a lot of engines pile into few nodes) while `library.yaml` already holds a far more granular
-  propulsion design (fd cycle ladder + engine-homing convergences: F-1/RD-170/J-2/RS-25). Next session: decide how
-  much of the library ladder to pull into the spine + give each engine path a persistent downstream advantage.
-  Also parked from the review: reward-desert at the orbit milestone (part-less `fd_orbitalThrust`+`int_orbitalInsertion`);
-  `fd_verniers` home/tier + id/tag mismatch; `mic_massSpec` discipline home — all fold into the engine pass.
+### 9. ENGINE PASS (in progress — user workflow: get current placements happy → library-sort → re-review → other parts → whole tree)
+Step-1 "are we happy with current engine placements" done. **Applied:**
+- `fd_verniers` → FluidDynamics @T2 off `fd_turbopumpFeed` (was GuidanceControl @T1 — homed by function, id/tag
+  mismatch, tier below the engines it trims), retitled "Vernier Trim Chambers" (commit 2aaa73d).
+- `fd_baffledInjector` → "Single Large-Chamber Combustion" — it hosted the tier-2 Western single-chamber boosters
+  (LR89/LR79/LR105/X-405/Gamma/Stentor) that didn't use baffles; baffles are the later F-1 node (out of phase).
+- **Corrected framing:** the "9 solids / 6 multi-chamber on one node" is NOT a lump — it's correct king+ride-along
+  (one breakthrough, many variant outcomes; cost abstracts the rest) per the node philosophy. Engines don't feel
+  weak from too-few-nodes; they feel weak from a **flat choice**.
+- **DEFERRED (user: "skip now fix later") — engine DIVERGENCE.** The three paths (multi-chamber ‖ single-chamber ‖
+  hydrolox) are all T2, same cost, converge identically at `fd_orbitalThrust` → no opportunity cost, pick is
+  arbitrary. Decision options worked out (pick later): (a) **cost-differentiated now + divergent successor lines
+  later** [recommended] — price paths apart this phase; each roots a distinct mid-game line already in `library.yaml`
+  (Soviet→RD-170/Metallurgy, Western→F-1/FluidDyn, hydrolox→J-2/Cryo), built when we extend past orbit; (b) cost dial
+  only; (c) inherent-physics only; (d) full divergence now (breaks phase order). This also decides `fd_orbitalThrust`'s
+  payload (thin marker if successors carry the uprated configs; else it carries them). Other review leftovers folded
+  here: reward-desert part-less `fd_orbitalThrust`/`int_orbitalInsertion`; `mic_massSpec` discipline home.
+- **NEXT when resumed:** settle divergence (a–d) → then library-sort the rest of this phase's parts → re-review → whole-tree pass.
