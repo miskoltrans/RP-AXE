@@ -99,8 +99,18 @@ more solar panels, bigger landing gear).
 - **Engine-Cluster Heavy Lift** `str_engineClustering` `[StructuresMechanisms, T4]` — parents:
   `fd_orbitalThrust`. ⭐`ROE-H1C`. ride: `ROE-H1D`, `ROE-RS27`.
   *Eight first-generation orbital-class engines on a common structure and manifold, synchronized to light
-  together — Saturn I, the first heavy-lift booster. See Open call 1 on whether this belongs here or in a
-  future heavy-lift/lunar batch.*
+  together — Saturn I, the first heavy-lift booster.* **Settled: belongs in this batch** (see Settled §1
+  below) — H-1 is literally the same Rocketdyne S-3D lineage already teaching `fd_baffledInjector`
+  (Jupiter/Thor's engine), so its narrative doesn't borrow from the Moon at all: *"you already have a good
+  single-chamber engine — Saturn I's answer to 'more thrust' was to multiply it, not reinvent it."* That's
+  a clean echo of the very first engine fork (`fd_multiChamber` clustered small chambers ‖
+  `fd_baffledInjector` scaled one big one) playing out a second time, one tier up, and Saturn I's actual
+  flights (SA-1–SA-10, uncrewed/crewed Apollo CSM shakedowns, Pegasus micrometeoroid satellites) were
+  Earth-orbit test missions — squarely "humans in orbit," not lunar. **F-1 is correctly the *other* fork
+  arriving later**: it's `fd_baffledInjector`'s own lineage scaled to a single enormous chamber instead of
+  clustering — the same "cluster vs scale" tension, resolved the other way, for the mission (translunar
+  injection) that actually needs it. Two solutions to one problem, arriving at two different points in the
+  tree for two different reasons — not a continuity gap.
 
 - **Solid Retrofire** `pc_solidRetrofire` `[PropellantChemistry, T3]` — parents: `pc_solidGrains`.
   ⭐`ROC-MercuryRetroBDB`. ride: `ROC-MercuryPosigradeBDB`, `ROE-Agena_Retro_TypeIII`, `ROE-RangerRetro`.
@@ -143,8 +153,8 @@ more solar panels, bigger landing gear).
 - **`materialsScienceHuman`** (4 parts: bigger service bays/radial tanks/nosecone) → `met_weldedTank` /
   `aero_fairings` ride-alongs, same as the early tree's procedural structure.
 - **`primitiveSolarPanels`** (1 part) → `elec_siliconPV`.
-- **`lunarRangeComms`** (1 part, `longAntenna`) → `tel_telemetry` (see Open call 2 on ordering vs
-  `tel_helicalDirectional`).
+- **`lunarRangeComms`** (1 part, `longAntenna`) → `tel_telemetry`, strictly before `tel_helicalDirectional`
+  (see Settled §1).
 - **`electronicsHuman`** (0 parts, 2 upgrades only) → no node; `RFTech-Battery-II` is a tier-upgrade with
   no part to hang a king on here (batteries are stock, ungated — this is just a capacity bump wherever
   the battery-bearing node ends up).
@@ -157,34 +167,28 @@ coast-then-restart upper stage needing propellant settled.
 
 ---
 
-## Open calls
+## Settled (do not re-litigate)
 
-Two of the original four resolved against ground truth (`RP0TechTree.cfg` + the RO engine configs) and are
-folded into the node descriptions above: `lunarRangeComms`→`digitalComms` ordering, and `RD855`/`RD856`'s
-propellant. Two remain genuine judgment calls — nothing in the data settles these, they're design choices:
+All four original open calls are now resolved — two against ground truth, two by user decision:
 
-1. **`str_engineClustering` (H-1/Saturn I) — this batch or a future heavy-lift/lunar one?** It's a real
-   breakthrough (8 orbital-class engines on a common structure, synchronized ignition) and it's genuinely
-   in this partlist's `orbitalRocketry1961` category, so it's not a data question — RP-1 places it here.
-   The judgment call is about *our* tree's narrative arc: does "humans in orbit" earn a heavy-lift node, or
-   does heavy lift belong with the lunar-landing milestone it actually enabled? Arguments for building it
-   here: it's ground-truthed as present, and H-1 clustering predates and is independent of the lunar
-   mission profile — Saturn I flew Earth-orbit-only test flights first. Arguments for deferring: it adds a
-   4th discipline-spanning node to an otherwise tight, focused milestone, and its *payoff* (enough thrust
-   for translunar injection) doesn't matter until the lunar batch exists — building it now means a node
-   that's real but unused for a while. No data resolves this; it's about how tightly you want each batch's
-   node set to map to what that milestone's *player* actually needs next turn.
-2. **`str_launchEscape`'s tier/parent** — proposed as a T4 child of `int_crewedCapsule` (a refinement, not
-   a gate). The alternative is pulling it forward to gate the capsule itself, i.e. "you cannot unlock a
-   crewed capsule until you've also solved abort." That's a philosophical call about what "relaxed
-   convergence" means for *safety* specifically, not propulsion physics: `int_orbitalInsertion` dropped
-   staging/guidance as gates because a good-enough engine+tank really can single-stage to orbit — the
-   physics doesn't force it. But no real program flew crew without a documented abort capability; that's a
-   procedural/political constraint, not a law of physics, which is exactly the distinction the what-if
-   principle turns on. I lean refinement (keep the gate about physics only, let escape systems be an
-   available-but-optional upgrade), but this is the one place in the milestone where "reckless but
-   physically possible" and "no real program would ever do this" diverge sharply enough to be worth your
-   explicit sign-off rather than my default.
+1. **`lunarRangeComms` → `digitalComms` ordering** — ground-truthed via `RP0TechTree.cfg`'s own
+   `Parent{parentID}` chain. `longAntenna`'s ride-along sits before `tel_helicalDirectional`.
+2. **`RD855`/`RD856` propellant** — ground-truthed via their engine configs: storable hypergolic verniers
+   of the R-16/R-36 family. Confirmed on `pc_storableBoosters`.
+3. **`str_engineClustering` (H-1/Saturn I) — IN this batch (user decision).** Test: does it have its own
+   clear narrative path, independent of the Moon? Yes — H-1 is the same Rocketdyne S-3D lineage already
+   teaching `fd_baffledInjector`; Saturn I's answer to "more thrust" was to cluster eight of an engine you
+   already have rather than invent a bigger chamber, and its actual flights were Earth-orbit test missions.
+   **F-1 is correctly deferred**: it's the *other* fork of the same "cluster vs scale" tension (from the
+   very first engine split, `fd_multiChamber` ‖ `fd_baffledInjector`), resolved by scaling instead of
+   clustering, for the mission (translunar injection) that needs it. Two solutions, two different points in
+   the tree, each independently motivated — not a continuity gap.
+4. **`str_launchEscape` — refinement, not a gate (user decision, "physics approach").** Consistent with
+   `int_orbitalInsertion` already dropping staging/guidance as hard gates: the tree's convergence nodes gate
+   on irreducible *physics* only, never on procedural/safety norms real programs happened to follow. A
+   reckless program *could* physically fly crew without an abort system — the tree must not block that "for
+   no reason," same principle as the orbit gate. `str_launchEscape` stays a T4 child of `int_crewedCapsule`,
+   available but optional.
 
 ## Node count
 13 new nodes: the milestone (`int_crewedCapsule`) + its 2 new-discipline inputs (`life_openLoopECLSS`,
