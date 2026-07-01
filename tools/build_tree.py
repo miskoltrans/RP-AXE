@@ -400,18 +400,36 @@ def _inline_svg(disc, nodes, by, routes):
     maxtier = max(n["tier"] for n in nodes)
 
     edges, boxes = [], []
-    for pid, cid, chain in routes:                   # edges first (drawn under nodes): routed polylines
+    # --- orthogonal routing: H/V segments on the grid, vertical legs nudged into per-gutter
+    #     lanes (interval-graph colouring) so parallel lines get spacing, not a pile-up ---
+    yc = lambda yv: PAD + (yv - miny) * YS + NH / 2
+    chains_c, seg = [], collections.defaultdict(list)     # seg: gutter g -> [ymin, ymax, key]
+    for ei, (pid, cid, chain) in enumerate(routes):
+        ts = [t for t, _ in chain]; ys = [yc(yv) for _, yv in chain]
+        chains_c.append((ei, cid, ts, ys))
+        for i in range(len(ts) - 1):                      # a vertical leg lives in the gutter right of col ts[i]
+            seg[ts[i]].append([min(ys[i], ys[i + 1]), max(ys[i], ys[i + 1]), (ei, i)])
+    lane, lanes_n = {}, {}                                # colour each gutter's verticals: overlapping -> distinct lane
+    for g, segs in seg.items():
+        segs.sort(); ends = []                            # ends[l] = last ymax placed on lane l
+        for lo, hi, key in segs:
+            l = next((j for j, e in enumerate(ends) if e <= lo + 1e-6), -1)
+            if l < 0: l = len(ends); ends.append(hi)
+            else: ends[l] = hi
+            lane[key] = l
+        lanes_n[g] = len(ends)
+    def lane_x(g, l):                                     # spread this gutter's lanes across its width
+        return PAD + g * COLW + NW + (l + 1) / (lanes_n[g] + 1) * (COLW - NW)
+    for ei, cid, ts, ys in chains_c:
         dashed = by[cid].get("anyToUnlock")
         stroke = f'stroke="{MULTI_ENTRY_COLOR}" stroke-dasharray="5 4"' if dashed else 'stroke="#8a8f98"'
-        pts, n = [], len(chain)
-        for i, (t, yv) in enumerate(chain):
-            cy = PAD + (yv - miny) * YS + NH / 2
-            cx = (PAD + t * COLW + NW if i == 0 else          # parent right anchor
-                  PAD + t * COLW if i == n - 1 else            # child left anchor
-                  PAD + t * COLW + NW / 2)                     # dummy waypoint (column centre)
-            pts.append(f"{cx:.0f},{cy:.0f}")
-        edges.append(f'<polyline points="{" ".join(pts)}" fill="none" {stroke} '
-                     f'stroke-width="1.5" stroke-linejoin="round"/>')
+        pts = [(PAD + ts[0] * COLW + NW, ys[0])]          # parent right anchor
+        for i in range(len(ts) - 1):
+            lx = lane_x(ts[i], lane[(ei, i)])
+            pts += [(lx, ys[i]), (lx, ys[i + 1])]          # H into the lane, then V to the next row
+        pts.append((PAD + ts[-1] * COLW, ys[-1]))          # child left anchor
+        edges.append(f'<polyline points="{" ".join(f"{x:.0f},{y:.0f}" for x, y in pts)}" '
+                     f'fill="none" {stroke} stroke-width="1.4" stroke-linejoin="round" shape-rendering="crispEdges"/>')
     for t in range(maxtier + 1):                     # tier column headers
         boxes.append(f'<text x="{PAD + t*COLW:.0f}" y="20" fill="#888" font-size="12" font-weight="600">T{t}</text>')
     for n in nodes:
