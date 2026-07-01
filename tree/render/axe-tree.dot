@@ -113,7 +113,7 @@ digraph AXE {
   "aero_sweptWing" [label="Swept & Delta Wings\nAerodynamics T3 · 400",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_supersonicInlets" [label="Supersonic Inlet Design\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_reentryBluntBody" [label="Blunt-Body Reentry Aerodynamics\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
-  "aero_proceduralFairings" [label="Payload Fairings & Separation\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
+  "aero_proceduralFairings" [label="Jettisonable Aeroshells\nAerodynamics T4 · 900",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_hypersonicWaverider" [label="Hypersonic Waverider Forebodies\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_liftingBody" [label="Lifting-Body Reentry\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
   "aero_gridFins" [label="Lattice-Fin Flight Control\nAerodynamics T5 · 1500",fillcolor="#48cae4",fontcolor="#111111"];
@@ -128,11 +128,11 @@ digraph AXE {
   "str_landingLegs" [label="Touchdown Energy Absorption\nStructuresMechanisms T3 · 400",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_deployableBooms" [label="Stored-Strain Deployable Booms\nStructuresMechanisms T4 · 900",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_dockingProbeDrogue" [label="Probe-and-Drogue Docking\nStructuresMechanisms T4 · 900",fillcolor="#adb5bd",fontcolor="#111111"];
-  "str_androgynousDocking" [label="Androgynous Docking (APAS)\nStructuresMechanisms T5 · 1500",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_androgynousDocking" [label="Androgynous Docking\nStructuresMechanisms T5 · 1500",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_deployableTruss" [label="Deployable & Erectable Trusses\nStructuresMechanisms T5 · 1500",fillcolor="#adb5bd",fontcolor="#111111"];
-  "str_berthingMechanism" [label="Berthing Mechanisms (CBM)\nStructuresMechanisms T6 · 2000",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_berthingMechanism" [label="Low-Energy Berthing\nStructuresMechanisms T6 · 2000",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_actuatedMechanisms" [label="High-Reliability Actuators & Latches\nStructuresMechanisms T6 · 2000",fillcolor="#adb5bd",fontcolor="#111111"];
-  "str_reusableLandingGear" [label="Reusable Landing Gear\nStructuresMechanisms T6 · 2000",fillcolor="#adb5bd",fontcolor="#111111"];
+  "str_reusableLandingGear" [label="Reflight-Rated Recovery Structures\nStructuresMechanisms T6 · 2000",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_inflatableHab" [label="Restraint-Layer Inflatable Modules\nStructuresMechanisms T6 · 2000",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_largeDeployableReflectors" [label="Large Deployable Reflectors\nStructuresMechanisms T7 · 2300",fillcolor="#adb5bd",fontcolor="#111111"];
   "str_inSpaceAssembly" [label="Robotic On-Orbit Truss Assembly\nStructuresMechanisms T8 · 2100",fillcolor="#adb5bd",fontcolor="#111111"];
@@ -181,7 +181,7 @@ digraph AXE {
   "gnc_reactionWheels" [label="Momentum-Exchange Attitude Control\nGuidanceControl T3 · 400",fillcolor="#7209b7",fontcolor="#111111"];
   "gnc_strapdownINS" [label="Strapdown Inertial Navigation\nGuidanceControl T4 · 900",fillcolor="#7209b7",fontcolor="#111111"];
   "gnc_digitalGuidance" [label="Digital Closed-Loop Ascent Guidance\nGuidanceControl T5 · 1500",fillcolor="#7209b7",fontcolor="#111111"];
-  "gnc_cmg" [label="Control-Moment Gyros\nGuidanceControl T5 · 1500",fillcolor="#7209b7",fontcolor="#111111"];
+  "gnc_cmg" [label="Torque-Amplified Momentum Control\nGuidanceControl T5 · 1500",fillcolor="#7209b7",fontcolor="#111111"];
   "gnc_opticalNav" [label="Optical & Star-Field Navigation\nGuidanceControl T6 · 2000",fillcolor="#7209b7",fontcolor="#111111"];
   "gnc_ringLaserGyro" [label="Ring-Laser & Fiber-Optic Gyros\nGuidanceControl T6 · 2000",fillcolor="#7209b7",fontcolor="#111111"];
   "gnc_autonomousRendezvous" [label="Autonomous Rendezvous & Proximity Ops\nGuidanceControl T6 · 2000",fillcolor="#7209b7",fontcolor="#111111"];
@@ -209,9 +209,9 @@ digraph AXE {
   "opt_interferometry" [label="Optical Interferometry\nOpticsPhotonics T8 · 2100",fillcolor="#3a0ca3",fontcolor="#111111"];
   "life_pressurizedCabin" [label="Two-Gas Pressurised Cabin\nLifeSupport T3 · 400",fillcolor="#f72585",fontcolor="#111111"];
   "life_openLoopECLSS" [label="Open-Loop Oxygen & CO2 Scrubbing\nLifeSupport T4 · 900",fillcolor="#f72585",fontcolor="#111111"];
-  "life_suitEVA" [label="Pressure Suits & EVA\nLifeSupport T4 · 900",fillcolor="#f72585",fontcolor="#111111"];
+  "life_suitEVA" [label="Pressurized EVA Mobility\nLifeSupport T4 · 900",fillcolor="#f72585",fontcolor="#111111"];
   "life_co2Removal" [label="Regenerable CO2 Removal\nLifeSupport T5 · 1500",fillcolor="#f72585",fontcolor="#111111"];
-  "life_radiationShelter" [label="Radiation Shelters & Dosimetry\nLifeSupport T5 · 1500",fillcolor="#f72585",fontcolor="#111111"];
+  "life_radiationShelter" [label="Radiation Shielding & Dosimetry\nLifeSupport T5 · 1500",fillcolor="#f72585",fontcolor="#111111"];
   "life_waterRecovery" [label="Water Recovery & Recycling\nLifeSupport T6 · 2000",fillcolor="#f72585",fontcolor="#111111"];
   "life_galleyWaste" [label="Metabolic Consumables & Waste Cycling\nLifeSupport T6 · 2000",fillcolor="#f72585",fontcolor="#111111"];
   "life_o2Generation" [label="Oxygen Generation Assembly\nLifeSupport T7 · 2300",fillcolor="#f72585",fontcolor="#111111"];

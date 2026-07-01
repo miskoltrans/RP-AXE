@@ -764,7 +764,7 @@ nodes:
     parents: [aero_parachuteRecovery]
     flavor: "A blunt shape stands the shock off the vehicle, dumping reentry heat into the air instead of the skin — the counter-intuitive key to survival."
   - id: aero_proceduralFairings
-    title: "Payload Fairings & Separation"
+    title: "Jettisonable Aeroshells"
     discipline: Aerodynamics
     tier: 4
     parents: [aero_transonicArea]
@@ -855,7 +855,7 @@ nodes:
     parents: [str_stageSeparation]
     flavor: "A probe captures a drogue cone and reels two craft together — the first hard mechanical mating in space."
   - id: str_androgynousDocking
-    title: "Androgynous Docking (APAS)"
+    title: "Androgynous Docking"
     discipline: StructuresMechanisms
     tier: 5
     parents: [str_dockingProbeDrogue]
@@ -868,7 +868,7 @@ nodes:
     parents: [str_deployableBooms]
     flavor: "Fold a large truss for launch and unfold it into a rigid backbone — the spine of a modular station."
   - id: str_berthingMechanism
-    title: "Berthing Mechanisms (CBM)"
+    title: "Low-Energy Berthing"
     discipline: StructuresMechanisms
     tier: 6
     parents: [str_androgynousDocking]
@@ -880,7 +880,7 @@ nodes:
     parents: [str_landingLegs]
     flavor: "Single-fault-tolerant motors, latches and release mechanisms that simply must not jam after years in vacuum."
   - id: str_reusableLandingGear
-    title: "Reusable Landing Gear"
+    title: "Reflight-Rated Recovery Structures"
     discipline: StructuresMechanisms
     tier: 6
     parents: [str_landingLegs]
@@ -1182,7 +1182,7 @@ nodes:
     anyToUnlock: false
     flavor: "Compute the optimal path to orbit in real time and steer to it — guidance that adapts to winds and engine dispersions. Needs strapdown INS and a flight computer at once."
   - id: gnc_cmg
-    title: "Control-Moment Gyros"
+    title: "Torque-Amplified Momentum Control"
     discipline: GuidanceControl
     tier: 5
     parents: [gnc_reactionWheels]
@@ -1360,7 +1360,7 @@ nodes:
     parents: [life_pressurizedCabin]
     flavor: "Bleed stored oxygen and scrub CO2 with lithium hydroxide — consumables-limited air for short missions."
   - id: life_suitEVA
-    title: "Pressure Suits & EVA"
+    title: "Pressurized EVA Mobility"
     discipline: LifeSupport
     tier: 4
     parents: [life_pressurizedCabin]
@@ -1372,7 +1372,7 @@ nodes:
     parents: [life_openLoopECLSS]
     flavor: "Swing-bed sorbents that bake out CO2 and reuse — air revitalisation that doesn't run out of cartridges."
   - id: life_radiationShelter
-    title: "Radiation Shelters & Dosimetry"
+    title: "Radiation Shielding & Dosimetry"
     discipline: LifeSupport
     tier: 5
     parents: [life_pressurizedCabin]
