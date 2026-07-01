@@ -49,6 +49,10 @@ def load_tsv(path):
 ph, prows = load_tsv(CURATED)
 pn = ph.index("name"); pt = ph.index("title")
 curated_title = {r[pn]: r[pt] for r in prows if len(r) > pt}
+# ModularLaunchPads = launch-pad/tower part bloat; excluded here, inserted separately later.
+EXCLUDE_MODS = {"ModularLaunchPads"}
+pm = ph.index("mod")
+excluded = {r[pn] for r in prows if len(r) > pm and r[pm] in EXCLUDE_MODS}
 
 uh, urows = load_tsv(UPGRADES)
 print("upgrades-curated header:", uh)
@@ -100,6 +104,7 @@ for nid, ntitle in NODES:
     parts = sorted(set(part_nodes.get(nid, [])))
     if nid in ("start", "unlockParts"):
         parts = [p for p in parts if p not in OUR_START]   # smaller start: drop what we already give at our start
+    parts = [p for p in parts if p not in excluded]        # ModularLaunchPads inserted separately
     ups = sorted(set(up_nodes.get(nid, [])))
     if not parts and not ups: continue
     nc = sum(1 for p in parts if p in curated_title)
@@ -125,6 +130,7 @@ print("per-node parts (curated/total):")
 for nid, ntitle in NODES:
     parts = sorted(set(part_nodes.get(nid, [])))
     if nid in ("start", "unlockParts"): parts = [p for p in parts if p not in OUR_START]
+    parts = [p for p in parts if p not in excluded]
     if parts:
         nc = sum(1 for p in parts if p in curated_title)
         print(f"  {nc:>3}/{len(parts):<3}  {nid:<26} {ntitle}")
