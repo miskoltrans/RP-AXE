@@ -35,25 +35,52 @@ DISC_SPREAD = {"Telecommunications","ElectricalPower","Robotics","CompositeMater
                "GuidanceControl","Microelectronics","Computing","OpticsPhotonics"}
 
 def has(s, *subs): return any(x.lower() in (s or "").lower() for x in subs)
+def flt(x):
+    try: return float(x)
+    except: return 0.0
+
+def engine_node(fam, thr, isp):
+    """Home an engine on its fuel-family ladder by CAPABILITY (thrust class + vacuum Isp)."""
+    if fam == "kerolox":
+        if thr < 40:    return "fd_pressureFed"          # verniers / tiny
+        if isp >= 345:  return "fd_stagedCombustion"     # genuinely high-perf (most staged kerolox is ox-rich->Metallurgy via override)
+        if thr >= 2000: return "fd_combustionStability"  # heavy-lift big-chamber
+        return "fd_gasGenerator"                          # workhorse open cycle
+    if fam == "hydrolox":
+        if isp >= 455:  return "cryo_stagedHydrolox"      # RS-25 class
+        if thr < 150:   return "fd_expanderCycle"         # small efficient upper (RL10)
+        return "cryo_lh2Insulation"                       # gas-gen workhorse (J-2)
+    if fam == "hypergolic":
+        return "pc_storableOxidizers" if isp >= 320 else "pc_hypergolicChemistry"
+    if fam == "solid":
+        return "pc_castableComposite" if thr >= 1000 else "pc_apcpGrain"
+    if fam == "nuclear":
+        return "nuc_nervaImproved" if isp >= 900 else "nuc_nuclearThermal"
+    if fam == "electric":
+        return "elec_mpdThrusters" if thr >= 5 else "elec_ionThrusters"
+    if fam == "airbreather":                                # jets (no dedicated air-breathing lane; home on aero)
+        return "aero_subsonicAirfoils" if thr < 30 else "aero_supersonicInlets"
+    return {"methalox": "pc_methalox", "nuclearpulse": "nuc_gasCoreNTR",
+            "piston": "aero_subsonicAirfoils"}.get(fam, "pc_hypergolicChemistry")
 
 def route(p):
     """-> (target, method, confidence). target: NODE:<id> | SPREAD:<disc> | EXPERIMENTAL | REVIEW."""
     disc, mods, props, mod, name = p["disc"], p["modules"], p["propellants"], p["mod"], p["name"]
-    if disc.startswith("engine:"):                                     # home each fuel-family at its WORKHORSE cycle
-        if has(props, "Uranium"):     return ("NODE:nuc_nuclearThermal", "engine:nuclear", "med")
-        if has(props, "IntakeAir"):   return ("NODE:aero_supersonicInlets", "engine:airbreather", "low")
-        if disc == "engine:other":                                     # grab-bag: sub-route by propellant
-            if has(props, "Xenon", "Argon", "Krypton"):                   return ("NODE:elec_ionThrusters", "engine:electric", "med")
-            if has(props, "FissionPulse", "FissionPellet"):              return ("NODE:nuc_gasCoreNTR", "engine:nuclearpulse", "med")
-            if has(props, "PBAN", "PUPE", "PBAA", "CTPB", "HTPB", "NGNC"): return ("NODE:pc_castableComposite", "engine:solid", "med")
-            if has(props, "LqdMethane"):                                  return ("NODE:pc_methalox", "engine:methalox", "med")
-            if has(props, "RG-1", "Kerosene", "RP-1"):                    return ("NODE:fd_gasGenerator", "engine:kerolox", "med")
-            if has(props, "AvGas", "Gasoline"):                           return ("NODE:aero_subsonicAirfoils", "engine:piston", "low")
-            return ("NODE:pc_hypergolicChemistry", "engine:other", "low")
-        return {"engine:cryo":       ("NODE:cryo_lh2Insulation", "engine:hydrolox", "med"),
-                "engine:hypergolic": ("NODE:pc_hypergolicChemistry", "engine:hypergolic", "med"),
-                "engine:kerolox":    ("NODE:fd_gasGenerator", "engine:kerolox", "med"),
-                "engine:solid":      ("NODE:pc_castableComposite", "engine:solid", "med")}[disc]
+    if disc.startswith("engine:"):                                     # spread each fuel-family across its ladder by capability
+        thr, isp = flt(p.get("thrust")), flt(p.get("isp"))
+        if isp > 1000:                fam = "airbreather"   # rocket Isp maxes ~470s; thousands = air-breathing jet
+        elif has(props, "Uranium"):   fam = "nuclear"
+        elif has(props, "IntakeAir"): fam = "airbreather"
+        elif disc == "engine:other":                                   # grab-bag: sub-detect by propellant
+            fam = ("electric" if has(props, "Xenon", "Argon", "Krypton") else
+                   "nuclearpulse" if has(props, "FissionPulse", "FissionPellet") else
+                   "solid" if has(props, "PBAN", "PUPE", "PBAA", "CTPB", "HTPB", "NGNC") else
+                   "methalox" if has(props, "LqdMethane") else
+                   "kerolox" if has(props, "RG-1", "Kerosene", "RP-1") else
+                   "piston" if has(props, "AvGas", "Gasoline") else "other")
+        else:
+            fam = {"cryo": "hydrolox", "hypergolic": "hypergolic", "kerolox": "kerolox", "solid": "solid"}[disc.split(":")[1]]
+        return ("NODE:" + engine_node(fam, thr, isp), "engine:" + fam, "med")
     if disc == "tank":
         return ("SPREAD:Cryogenics" if has(props, "LqdHydrogen", "LqdMethane") else "SPREAD:Metallurgy", "tank", "med")
     if disc == "structure":                                            # sub-route by mechanism
@@ -114,6 +141,17 @@ def main():
         for ln in f:
             c = ln.rstrip("\n").split("\t")
             parts.append({h: (c[ix[h]] if ix[h] < len(c) else "") for h in hdr})
+
+    cap = {}                                                           # per-part thrust/Isp for capability spread
+    cp = os.path.join(MAN, "part-capability.tsv")
+    if os.path.exists(cp):
+        with open(cp, encoding="utf-8") as f:
+            next(f, None)
+            for ln in f:
+                c = ln.rstrip("\n").split("\t")
+                if c and c[0]: cap[c[0]] = (c[1] if len(c) > 1 else "", c[2] if len(c) > 2 else "")
+    for p in parts:
+        p["thrust"], p["isp"] = cap.get(p["name"], ("", ""))
 
     overrides = {}                                                      # hand-overrides win over auto-routing
     op = os.path.join(MAN, "part-overrides.tsv")

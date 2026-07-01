@@ -1,52 +1,49 @@
 part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
-RAPIER	CR-7 R.A.P.I.E.R.	Squad	cryo_lh2Insulation	4	aerospaceTech	LqdMethane;LqdOxygen	MultiModeEngine;ModuleEnginesAJEJet;ModuleEnginesRF;EngineGr	med
-RO-LifeSupport-DummyEngine	Life Support Config Engine	Squad	cryo_lh2Insulation	4	crewSurvivability	Food;Water;Oxygen;LqdOxygen;LqdHydrogen	ModuleEnginesRF;ModuleEngineConfigs	med
-RO-model304	Model 304 Turbojet	Squad	cryo_lh2Insulation	4	supersonicFlight	LqdHydrogen	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
-ROC-D2AJ10-133	AJ10-133-LH	ROCapsules	cryo_lh2Insulation	4	unlockParts	Aerozine50;NTO;Helium;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROC-LEMLMAEBDB	Lunar Module Ascent Engine (LMAE)	ROCapsules	cryo_lh2Insulation	4	unlockParts	Aerozine50;MON1;Helium;LqdMethane;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-AJ10-transtar	AJ23 Transtar	ROEngines	cryo_lh2Insulation	4	start	MMH;MON3;LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROLAnimateEngineHeat;EngineGroupModule;Modul	med
-ROE-AJ10Adv	AJ10 Series (Advanced Short Nozzle)	ROEngines	cryo_lh2Insulation	4	start	Aerozine50;NTO;Helium;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-Agena	XLR81 (Agena) Vacuum Engine	ROEngines	cryo_lh2Insulation	4	start	Kerosene;IRFNA-III;UDMH;IRFNA-IV;MMH;MON3;LqdFluorine;LqdHydrogen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 ROE-BE3	BE-3PM	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROLAnimateEngineHeat;ModuleEngineConfigs;Eng	med
 ROE-BE4	BE-4	ROEngines	cryo_lh2Insulation	4	start	LqdMethane;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-HG3	HG-3	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-HM7	HM-7	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 ROE-J2	J-2	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 ROE-J2T	J-2T	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 ROE-J2X	J-2X	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROLAnimateEngineHeat;EngineGroupModule;Modul	med
-ROE-LE5	LE-5	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 ROE-LE7	LE-7	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-LMAE	Lunar Module Ascent Engine (LMAE)	ROEngines	cryo_lh2Insulation	4	start	Aerozine50;MON1;Helium;LqdMethane;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-LR129	LR129	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
 ROE-LR87_LH2	AJ23-65	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 ROE-M1	M-1	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-MB35	MB-35	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROEDeployableEngine;EngineGroupModule;Module	med
-ROE-MB60	MB-60	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RD0120	RD-0120	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROLAnimateEngineHeat;EngineGroupModule;Modul	med
-ROE-RD0146	RD-0146	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RD57	RD-57	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RL10A4N	RL-10A-4N Series (46" Extendable Nozzle)	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROEDeployableEngine;EngineGroupModule;Module	med
-ROE-RL10B2	RL-10B/C Series (84.1" Extendable Nozzle)	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROEDeployableEngine;EngineGroupModule;Module	med
-ROE-RL10Fixed	RL-10 Series (Non-Extendable Nozzle)	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen;LqdMethane	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 ROE-RS68	RS-68	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen;Ablator	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RZ20	RZ.20	ROEngines	cryo_lh2Insulation	4	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-RO_KVD1	RD-56/KVD-1/CE-7.5	Squad	cryo_lh2Insulation	4	heavierRocketry	LiquidFuel;Oxidizer;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-YF75D_Engine	YF-75	KerwisChineseAerospacePack	cryo_lh2Insulation	4	advRocketry	LiquidFuel;Oxidizer;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 YF75_Engine	YF-75	KerwisChineseAerospacePack	cryo_lh2Insulation	4	advRocketry	LiquidFuel;Oxidizer;Hydrazine;LqdHydrogen;LqdOxygen	ModuleEnginesRF;FXModuleAnimateRCS;ModuleRCSFX;EngineGroupMo	med
 YF77_Engine	YF-77	KerwisChineseAerospacePack	cryo_lh2Insulation	4	advRocketry	LiquidFuel;Oxidizer;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 YF77_Engine-double-withShell	YF-77 with CZ-5 Boattail	KerwisChineseAerospacePack	cryo_lh2Insulation	4	advRocketry	LiquidFuel;Oxidizer;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 cryoengine-allosaur-1	STBE-3	CryoEngines	cryo_lh2Insulation	4	veryHeavyRocketry	LqdMethane;Oxidizer;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-cryoengine-buzzard-1	M10	CryoEngines	cryo_lh2Insulation	4	heavyRocketry	LqdMethane;Oxidizer;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 cryoengine-eagle-1	Raptor-Vacuum	CryoEngines	cryo_lh2Insulation	4	veryHeavyRocketry	LqdMethane;Oxidizer;CooledLqdMethane;CooledLqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 cryoengine-fuji-1	LE-9	CryoEngines	cryo_lh2Insulation	4	heavierRocketry	LqdHydrogen;Oxidizer;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-cryoengine-pavonis-1	RL60/Vinci	CryoEngines	cryo_lh2Insulation	4	heavyRocketry	LqdHydrogen;Oxidizer;LqdOxygen	ModuleEnginesRF;ModuleDeployableEngine;EngineGroupModule;Mod	med
-cryoengine-tharsis-1	RL60/Vinci	CryoEngines	cryo_lh2Insulation	4	veryHeavyRocketry	LqdHydrogen;Oxidizer;LqdOxygen	ModuleEnginesRF;ModuleDeployableEngine;EngineGroupModule;Mod	med
 cryoengine-vesuvius-1	Vulcain 2	CryoEngines	cryo_lh2Insulation	4	advRocketry	LqdHydrogen;Oxidizer;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-fft-ffre-plasma-1	Dusty Plasma Afterburning Fission Fragment Rocket Engine	FarFutureTechnologies	cryo_lh2Insulation	4	nuclearPropulsion	FissionParticles;LqdHydrogen	MultiModeEngine;ModuleEnginesRF;ModuleSystemHeatEngine;Engin	med
-nflv-engine-rd701-1	RD-701	NearFutureLaunchVehicles	cryo_lh2Insulation	4	heavierRocketry	LiquidFuel;Oxidizer;RG-1;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
-nflv-engine-rd704-1	RD-704	NearFutureLaunchVehicles	cryo_lh2Insulation	4	veryHeavyRocketry	LiquidFuel;Oxidizer;RG-1;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
 nflv-engine-stbe-kero-1	STBE (Pratt & Whitney)	NearFutureLaunchVehicles	cryo_lh2Insulation	4	veryHeavyRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen;LqdMethane	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 rmm_arenysaurus	LRBE	RocketMotorMenagerie	cryo_lh2Insulation	4	veryHeavyRocketry	LqdMethane;Oxidizer;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 rmm_dugong	SSBE	RocketMotorMenagerie	cryo_lh2Insulation	4	veryHeavyRocketry	LiquidFuel;Oxidizer;RP-1;LqdOxygen;LqdHydrogen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 rmm_rainier	Space Transportation Main Engine (STME)	RocketMotorMenagerie	cryo_lh2Insulation	4	veryHeavyRocketry	LqdHydrogen;Oxidizer;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
 rmm_turiasaurus	STBE (Pratt & Whitney)	RocketMotorMenagerie	cryo_lh2Insulation	4	veryHeavyRocketry	LqdMethane;Oxidizer;RP-1;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-AJ10-transtar	AJ23 Transtar	ROEngines	cryo_stagedHydrolox	5	start	MMH;MON3;LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROLAnimateEngineHeat;EngineGroupModule;Modul	med
+ROE-HG3	HG-3	ROEngines	cryo_stagedHydrolox	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LR129	LR129	ROEngines	cryo_stagedHydrolox	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
+ROE-MB35	MB-35	ROEngines	cryo_stagedHydrolox	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROEDeployableEngine;EngineGroupModule;Module	med
+ROE-MB60	MB-60	ROEngines	cryo_stagedHydrolox	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD0120	RD-0120	ROEngines	cryo_stagedHydrolox	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROLAnimateEngineHeat;EngineGroupModule;Modul	med
+ROE-RD0146	RD-0146	ROEngines	cryo_stagedHydrolox	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RD57	RD-57	ROEngines	cryo_stagedHydrolox	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RL10B2	RL-10B/C Series (84.1" Extendable Nozzle)	ROEngines	cryo_stagedHydrolox	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROEDeployableEngine;EngineGroupModule;Module	med
+ROE-RL10Fixed	RL-10 Series (Non-Extendable Nozzle)	ROEngines	cryo_stagedHydrolox	5	start	LqdHydrogen;LqdOxygen;LqdMethane	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO_KVD1	RD-56/KVD-1/CE-7.5	Squad	cryo_stagedHydrolox	5	heavierRocketry	LiquidFuel;Oxidizer;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+cryoengine-pavonis-1	RL60/Vinci	CryoEngines	cryo_stagedHydrolox	5	heavyRocketry	LqdHydrogen;Oxidizer;LqdOxygen	ModuleEnginesRF;ModuleDeployableEngine;EngineGroupModule;Mod	med
+cryoengine-tharsis-1	RL60/Vinci	CryoEngines	cryo_stagedHydrolox	5	veryHeavyRocketry	LqdHydrogen;Oxidizer;LqdOxygen	ModuleEnginesRF;ModuleDeployableEngine;EngineGroupModule;Mod	med
+nflv-engine-rd701-1	RD-701	NearFutureLaunchVehicles	cryo_stagedHydrolox	5	heavierRocketry	LiquidFuel;Oxidizer;RG-1;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
+nflv-engine-rd704-1	RD-704	NearFutureLaunchVehicles	cryo_stagedHydrolox	5	veryHeavyRocketry	LiquidFuel;Oxidizer;RG-1;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleBimodalEngineConfigs	med
+RO-LifeSupport-DummyEngine	Life Support Config Engine	Squad	fd_expanderCycle	5	crewSurvivability	Food;Water;Oxygen;LqdOxygen;LqdHydrogen	ModuleEnginesRF;ModuleEngineConfigs	med
+ROC-D2AJ10-133	AJ10-133-LH	ROCapsules	fd_expanderCycle	5	unlockParts	Aerozine50;NTO;Helium;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROC-LEMLMAEBDB	Lunar Module Ascent Engine (LMAE)	ROCapsules	fd_expanderCycle	5	unlockParts	Aerozine50;MON1;Helium;LqdMethane;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-AJ10Adv	AJ10 Series (Advanced Short Nozzle)	ROEngines	fd_expanderCycle	5	start	Aerozine50;NTO;Helium;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-Agena	XLR81 (Agena) Vacuum Engine	ROEngines	fd_expanderCycle	5	start	Kerosene;IRFNA-III;UDMH;IRFNA-IV;MMH;MON3;LqdFluorine;LqdHydrogen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-HM7	HM-7	ROEngines	fd_expanderCycle	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LE5	LE-5	ROEngines	fd_expanderCycle	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-LMAE	Lunar Module Ascent Engine (LMAE)	ROEngines	fd_expanderCycle	5	start	Aerozine50;MON1;Helium;LqdMethane;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ROE-RL10A4N	RL-10A-4N Series (46" Extendable Nozzle)	ROEngines	fd_expanderCycle	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;ROEDeployableEngine;EngineGroupModule;Module	med
+ROE-RZ20	RZ.20	ROEngines	fd_expanderCycle	5	start	LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+YF75D_Engine	YF-75	KerwisChineseAerospacePack	fd_expanderCycle	5	advRocketry	LiquidFuel;Oxidizer;LqdHydrogen;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+cryoengine-buzzard-1	M10	CryoEngines	fd_expanderCycle	5	heavyRocketry	LqdMethane;Oxidizer;LqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med

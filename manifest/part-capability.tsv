@@ -1,0 +1,1821 @@
+part	maxThrust	ispVac	antPower	solarRate
+1x3SPanels				0.0567
+1x3WPanels				0.28728
+25mKossak				
+45DegreeRCS		240.0		
+625mBonny				
+AM_MLP_AerobeeLaunchStand				
+AM_MLP_AgenaServiceTower				
+AM_MLP_Atlas2UmbilicalArm1				
+AM_MLP_Atlas2UmbilicalArm2				
+AM_MLP_Atlas2UmbilicalArm3				
+AM_MLP_AtlasLaunchStand				
+AM_MLP_AtlasLaunchStandAlt				
+AM_MLP_AtlasSepClampArm				
+AM_MLP_AtlasSepSideUmb				
+AM_MLP_AtlasUmbilicalArmAgena				
+AM_MLP_AtlasUmbilicalArmCentaur				
+AM_MLP_AtlasUmbilicalArmCentaur1				
+AM_MLP_AtlasUmbilicalArmCentaur2				
+AM_MLP_CentaurServiceTower1				
+AM_MLP_CentaurServiceTower2				
+AM_MLP_CrewElevatorAtlasUmbilical				
+AM_MLP_CrewElevatorLargeExt				
+AM_MLP_CrewElevatorLargeSec1				
+AM_MLP_CrewElevatorLargeTop				
+AM_MLP_CrewElevatorSmallSec1				
+AM_MLP_CrewElevatorSmallTop				
+AM_MLP_CrewElevatorXLargeSec				
+AM_MLP_Delta4LaunchStand				
+AM_MLP_Delta4ModTowerCore				
+AM_MLP_Delta4ModTowerTop				
+AM_MLP_Delta4ServiceTower				
+AM_MLP_Delta4TowerArm1				
+AM_MLP_Delta4TowerArm2				
+AM_MLP_Delta4TowerArm3				
+AM_MLP_FlatLaunchBaseMini				
+AM_MLP_FlatLaunchBaseSmall				
+AM_MLP_FlatSlabServiceTower				
+AM_MLP_GenBaseLarge				
+AM_MLP_GenBaseMedium				
+AM_MLP_GenBaseMicro				
+AM_MLP_GenBaseMini				
+AM_MLP_GenBaseSmall				
+AM_MLP_GenBaseXLarge				
+AM_MLP_GeneralCrewArm				
+AM_MLP_GeneralCrewArmSmallMount				
+AM_MLP_GeneralCrewElevator				
+AM_MLP_GeneralCrewElevator2				
+AM_MLP_GeneralCrewElevatorMini				
+AM_MLP_GeneralCrewElevatorMiniArm				
+AM_MLP_GeneralCrewElevatorMiniArmS				
+AM_MLP_GeneralCrewElevatorMiniSec1				
+AM_MLP_GeneralCrewElevatorSmall				
+AM_MLP_GeneralFallbackUmbilicalTower				
+AM_MLP_GeneralHold1				
+AM_MLP_GeneralHold2				
+AM_MLP_GeneralHold3				
+AM_MLP_GeneralHold4				
+AM_MLP_GeneralHold5				
+AM_MLP_GeneralHold6				
+AM_MLP_GeneralHold7				
+AM_MLP_GeneralHoldSRB				
+AM_MLP_GeneralLaunchBase				
+AM_MLP_GeneralLaunchBaseMedium				
+AM_MLP_GeneralLaunchBaseSmall				
+AM_MLP_GeneralLaunchPlate				
+AM_MLP_GeneralModularMultiTowerLarge				
+AM_MLP_GeneralModularMultiTowerMast				
+AM_MLP_GeneralModularMultiTowerMedium				
+AM_MLP_GeneralModularMultiTowerSmall				
+AM_MLP_GeneralModularMultiTowerTop				
+AM_MLP_GeneralROFI	0.1	80.0		
+AM_MLP_GeneralServiceTowerLargeSec1				
+AM_MLP_GeneralServiceTowerLargeTop				
+AM_MLP_GeneralServiceTowerMedium				
+AM_MLP_GeneralServiceTowerMediumSec1				
+AM_MLP_GeneralServiceTowerMediumTop				
+AM_MLP_GeneralServiceTowerSmall				
+AM_MLP_GeneralServiceTowerSmallSec1				
+AM_MLP_GeneralServiceTowerSmallTop				
+AM_MLP_GeneralServiceTowerXLBase				
+AM_MLP_GeneralServiceTowerXLSec1				
+AM_MLP_GeneralServiceTowerXLTop				
+AM_MLP_GeneralStrongbackTowerFull				
+AM_MLP_GeneralStrongbackTowerMicro				
+AM_MLP_GeneralStrongbackTowerMini				
+AM_MLP_GeneralStrongbackTowerSmall				
+AM_MLP_GeneralTowerAtlasV				
+AM_MLP_GeneralTowerDeltaII				
+AM_MLP_GeneralTowerMulti				
+AM_MLP_GeneralTowerSwingArm				
+AM_MLP_GeneralTowerSwingArmLarge				
+AM_MLP_GeneralTowerSwingArmMedium				
+AM_MLP_GeneralUmbilicalDroopA				
+AM_MLP_GeneralUmbilicalDroopA4				
+AM_MLP_GeneralUmbilicalDroopAtlas2				
+AM_MLP_GeneralUmbilicalDroopB				
+AM_MLP_GeneralUmbilicalDroopB4				
+AM_MLP_GeneralUmbilicalDroopC				
+AM_MLP_GeneralUmbilicalDroopC4				
+AM_MLP_GeneralUmbilicalDroopD				
+AM_MLP_GeneralUmbilicalDroopD4				
+AM_MLP_GeneralUmbilicalDroopE				
+AM_MLP_GeneralUmbilicalDroopE4				
+AM_MLP_GeneralUmbilicalDrop				
+AM_MLP_GeneralUmbilicalDropLarge				
+AM_MLP_HoldArmSaturnIB				
+AM_MLP_HoldArmSaturnV				
+AM_MLP_JupiterPetalCover				
+AM_MLP_LargeLaunchStand				
+AM_MLP_LaunchPlateEnergia				
+AM_MLP_LaunchPlateFalcon9				
+AM_MLP_LaunchPlateN1				
+AM_MLP_LaunchPlateRnd1				
+AM_MLP_LaunchPlateRnd2				
+AM_MLP_LaunchPlateRnd3				
+AM_MLP_LaunchPlateSqr1				
+AM_MLP_LaunchPlateSqr2				
+AM_MLP_LaunchPlateSqr3				
+AM_MLP_LaunchRailLarge				
+AM_MLP_LaunchRailMedium				
+AM_MLP_LaunchRailMini				
+AM_MLP_LaunchRailSmall				
+AM_MLP_LaunchStandCrewElevatorAtlas				
+AM_MLP_LaunchStandCrewElevatorGemini				
+AM_MLP_LaunchStandCrewElevatorMercury				
+AM_MLP_LaunchStandCrewWalkwayMercury				
+AM_MLP_LaunchStandCrewWalkwayMini				
+AM_MLP_LaunchStandServiceTower1				
+AM_MLP_LaunchStandServiceTower2				
+AM_MLP_LaunchStandServiceTower3				
+AM_MLP_LaunchStandServiceTower4				
+AM_MLP_LaunchStandSmallPole				
+AM_MLP_LaunchStandSmallUmbilical				
+AM_MLP_MilkstoolLaunchStand1				
+AM_MLP_MilkstoolLaunchStand2				
+AM_MLP_MilkstoolLaunchStand3				
+AM_MLP_MilkstoolMini1S				
+AM_MLP_MilkstoolMini1T				
+AM_MLP_MilkstoolMini2S				
+AM_MLP_MilkstoolMini2T				
+AM_MLP_MilkstoolMini3M				
+AM_MLP_MilkstoolMini3S				
+AM_MLP_MilkstoolMini3T				
+AM_MLP_N1ModularTower				
+AM_MLP_N1TowerPlatform				
+AM_MLP_RedstoneLaunchStand				
+AM_MLP_SaturnHammerheadCrane				
+AM_MLP_SaturnLaunchStandPedestal				
+AM_MLP_SaturnLauncherMilkstool				
+AM_MLP_SaturnLauncherTSM				
+AM_MLP_SaturnLightningMast				
+AM_MLP_SaturnLightningMastAlt				
+AM_MLP_SaturnMilkstoolClamp				
+AM_MLP_SaturnMobileLauncherBaseFree				
+AM_MLP_SaturnMobileLauncherClampBase				
+AM_MLP_SaturnTowerBase				
+AM_MLP_SaturnTowerBaseSquare				
+AM_MLP_SaturnTowerCrewArm				
+AM_MLP_SaturnTowerCrewFloor				
+AM_MLP_SaturnTowerCrewSection				
+AM_MLP_SaturnTowerDamperArm				
+AM_MLP_SaturnTowerMultiSection				
+AM_MLP_SaturnTowerSwingArm0				
+AM_MLP_SaturnTowerSwingArm2				
+AM_MLP_SaturnTowerSwingArm3				
+AM_MLP_SaturnTowerSwingArm4				
+AM_MLP_SaturnTowerSwingArm5				
+AM_MLP_SaturnTowerSwingArm6				
+AM_MLP_SaturnTowerSwingArm7				
+AM_MLP_SaturnTowerSwingArm8				
+AM_MLP_SaturnTowerSwingArmBDB				
+AM_MLP_SaturnTowerSwingArmGen				
+AM_MLP_SaturnTowerTopSection				
+AM_MLP_ScissorArmUmbilical				
+AM_MLP_ShuttleLauncherBaseClamp				
+AM_MLP_ShuttleLauncherFSSBase				
+AM_MLP_ShuttleLauncherRSS				
+AM_MLP_ShuttleLauncherRSSHinge				
+AM_MLP_ShuttleLauncherSRBHold				
+AM_MLP_ShuttleLauncherTSM	0.1	80.0		
+AM_MLP_ShuttleSLC6LaunchMount				
+AM_MLP_ShuttleSLC6TowerCore				
+AM_MLP_ShuttleSLC6TowerCrew				
+AM_MLP_ShuttleSLC6TowerCrewArm				
+AM_MLP_ShuttleSLC6TowerIntertank				
+AM_MLP_ShuttleSLC6TowerLOXArm				
+AM_MLP_ShuttleSLC6TowerMast				
+AM_MLP_ShuttleSLC6TowerTop				
+AM_MLP_ShuttleTowerArmHydrogen				
+AM_MLP_ShuttleTowerArmIntertank				
+AM_MLP_ShuttleTowerArmLOX				
+AM_MLP_ShuttleTowerCrewArm				
+AM_MLP_ShuttleTowerCrewFloor				
+AM_MLP_ShuttleTowerCrewSection				
+AM_MLP_ShuttleTowerIntertankStructure				
+AM_MLP_ShuttleTowerMultiSection				
+AM_MLP_ShuttleTowerRodanCrewArm				
+AM_MLP_ShuttleTowerTopSection				
+AM_MLP_SmallLaunchStand				
+AM_MLP_SmallLaunchStandRect				
+AM_MLP_SmallTowerSwingArm				
+AM_MLP_SmallTowerSwingArmLarge				
+AM_MLP_SmallTowerSwingArmMedium				
+AM_MLP_SoyuzLaunchBase				
+AM_MLP_SoyuzLaunchBaseArmLG				
+AM_MLP_SoyuzLaunchBaseArmSM				
+AM_MLP_SoyuzLaunchBaseClampArm				
+AM_MLP_SoyuzLaunchBaseElevator				
+AM_MLP_SoyuzLaunchBaseGantry				
+AM_MLP_SpecialServiceTowerAtlasVBase				
+AM_MLP_SpecialServiceTowerAtlasVSec1				
+AM_MLP_SpecialServiceTowerAtlasVSec2				
+AM_MLP_SpecialServiceTowerAtlasVTop				
+AM_MLP_SpecialServiceTowerDeltaIIBase				
+AM_MLP_SpecialServiceTowerDeltaIISec1				
+AM_MLP_SpecialServiceTowerDeltaIISec2				
+AM_MLP_SpecialServiceTowerDeltaIITop				
+AM_MLP_TestStandEngine				
+AM_MLP_TestStandSmall				
+AM_MLP_TestStandTower				
+AM_MLP_ThorLaunchStand				
+AM_MLP_ThorServiceTowerFallback				
+AM_MLP_Titan3LaunchStand				
+AM_MLP_TitanIIITowerMast				
+AM_MLP_TitanIILaunchStand				
+AM_MLP_TitanIIServiceTowerMast				
+AM_MLP_TitanIIServiceTowerModBase				
+AM_MLP_TitanIIServiceTowerModSec1				
+AM_MLP_TitanIIServiceTowerModSec2				
+AM_MLP_TitanIIServiceTowerModTop				
+AM_MLP_TitanIIServiceTowerSingle				
+AM_MLP_TitanIIServiceTowerUmbilical				
+AM_MLP_TitanIIServiceTowerUmbilical2				
+AM_MLP_TitanIIServiceTowerUmbilicalGem				
+AM_MLP_TitanIIServiceTowerUmbilicalGem2				
+AM_MLP_VanguardLaunchStand				
+AM_MLP_VanguardServiceTower				
+APAS89-95				
+AdvancedCanard				
+Angledpanel				
+B9_Aero_Wing_Procedural_TypeA				
+B9_Aero_Wing_Procedural_TypeB				
+B9_Aero_Wing_Procedural_TypeC				
+BioCapsule				
+CanardController				
+CircularIntake				
+DFH-1				
+Decoupler_0				
+Decoupler_1				
+Decoupler_2				
+FuelCell				
+FuelCellArray				
+GearFixed				
+GearFree				
+GearLarge				
+GearLargeSpaceplane				
+GearMedium				
+GearMediumSpaceplane				
+GearSmall				
+GearSmallSpaceplane				
+GooExperiment				
+GrapplingDevice				
+HeavyRcs		240.0		
+HighGainAntenna				
+HighGainAntenna5				
+HighGainAntenna5_v2				
+InflatableHAB				
+InlineRCS		240.0		
+IntakeRadialLong				
+JetEngine	41.25	10500.0		
+KF-ALG-Large				
+KF-ALG-Large-Spaceplane				
+KF-ALG-Medium				
+KF-ALG-Medium-Spaceplane				
+KF-ALG-Small				
+KF-ALG-Small-Spaceplane				
+KF-ALG-SmallSide				
+KF-ALG-SmallSide-Spaceplane				
+KF-ScrewDrive				
+KF-Skid				
+KF-TrackInverting				
+KF-TrackLong				
+KF-TrackMedium				
+KF-TrackMole				
+KF-TrackSimple				
+KF-TrackSmall				
+KF-TrackSurface				
+KF-TrackTiny				
+KF-WheelLarge				
+KF-WheelMedium				
+KF-WheelSmall				
+KF-WheelTiny				
+KF-WheelTruck-Dual				
+KF-WheelTruck-Single				
+KIWIA24	60.0	768.0		
+KIWIB48	220.0	831.0		
+KerbCan				
+KzFlatAdapter				
+KzFlatBoattail				
+KzInterstageAdapter2				
+KzProcFairingSide1				
+KzProcFairingSide1_TU				
+KzProcFairingSide2				
+KzProcFairingSide2_TU				
+KzResizableFairingBase				
+KzResizableFairingBaseRing				
+KzThrustPlate				
+L25mSci				
+LFUELM3				
+LGLadderUtility				
+LMiniAircaftTail				
+LMkIIAircaftTail				
+LMkIIIAircaftFus				
+LRadialAirIntake				
+LSVCM3				
+LSmallFuelMod				
+LargeOMS	80.0	310.0		
+Large_Crewed_Lab				
+LaunchEscapeSystem	689.5	190.0		
+LgRadialSolarPanel				0.15624
+LiquefactionArray				
+Liquifier				
+LongLadder				
+MK1Cargobay				
+MK1CrewCabin				
+MK1IntakeFuselage				
+MK2VApod				
+Mark1Cockpit				
+Mark2Cockpit				
+MassiveBooster	15800.0	266.0		
+MedLadder				
+MedLadderUtility				
+MountPlatform_MLP				
+NERVA_NRX	243.0	848.0		
+OrbitalScanner				
+PEWEE100	227.3	901.0		
+Phoebus1N50	299.0	828.0		
+Phoebus2N100	913.0	813.0		
+PioneerVernier	0.06	235.0		
+PotatoComet				
+PotatoRoid				
+R8winglet				
+RAPIER	250.0	3200.0		
+RCSBlockQuarter		254.0		
+RCSBlockSmall_138		254.0		
+RCSBlockSmall_28		254.0		
+RCSBlockSmall_69		254.0		
+RCSBlock_1100		254.0		
+RCSBlock_138		254.0		
+RCSBlock_2200		254.0		
+RCSBlock_275		254.0		
+RCSBlock_28		254.0		
+RCSBlock_413		254.0		
+RCSBlock_550		254.0		
+RCSBlock_69		254.0		
+RCSBlock_825		254.0		
+RCSBoonExt		254.0		
+RCSLinearSmall_28		254.0		
+RCSLinearSmall_69		254.0		
+RC_cone				
+RC_cone_double				
+RC_radial				
+RC_stack				
+RD0410MID	72.84	910.0		
+RO-2kN-Thruster	3.64	315.0		
+RO-457M	3.35	3817.0		
+RO-A136	150.0	4000.0		
+RO-AL7F	109.0	9000.0		
+RO-AdvancedImager				
+RO-ApolloDockingPort				
+RO-Atar101D	34.3	9600.0		
+RO-B9ProcAMWing-Early				
+RO-B9ProcAMWing-Supersonic				
+RO-B9ProcCS-Early				
+RO-B9ProcCS-Supersonic				
+RO-B9ProcWing-Early				
+RO-B9ProcWing-Supersonic				
+RO-BasicFilmCamera				
+RO-BasicTVCamera				
+RO-D30F6	152.0	9000.0		
+RO-DerwentV	15.7	9600.0		
+RO-DigitalCamera				
+RO-EarlyMagnet				
+RO-EarlyTVCamera				
+RO-FighterInlineCockpit				
+RO-FluxgateMagnet				
+RO-GeigerMuller				
+RO-HIRES				
+RO-HRIRRadiometer				
+RO-HeliumMagnet				
+RO-HighResFilmCamera				
+RO-ID500	2.1	7140.0		
+RO-IRIS				
+RO-IRRadiometer				
+RO-ImprovedFilmCamera				
+RO-ImprovedTVCamera				
+RO-IntakeRadialLongPitot				
+RO-IonMassSpectrometer				
+RO-J35	21.8	9600.0		
+RO-J47	32.03	9600.0		
+RO-J48	109.0	9000.0		
+RO-J85GE5	109.0	9000.0		
+RO-JT3C	61.16	6400.0		
+RO-KA-LRCNTR	145.6	1400.0		
+RO-KA-PrincetonLNTR	80.0	1414.0		
+RO-KDU414	2.0	315.0		
+RO-KTDU417	1500.0	314.0		
+RO-KTDU5A	1500.0	310.0		
+RO-LifeSupport-DummyEngine	0.01	0.01		
+RO-MIMS				
+RO-MK1Cargobay				
+RO-MMRTG				
+RO-Micrometeorite				
+RO-Mk1Cockpit				
+RO-Mk1CockpitInline				
+RO-Mk1CrewModule				
+RO-Mk1Fuselage				
+RO-Mk1FuselagePres				
+RO-NIMS				
+RO-Nord1500	67.8			
+RO-OldFighterCockpit				
+RO-Olympus593	169.2	4000.0		
+RO-PMIRR				
+RO-PPS1350	1.5	2200.0		
+RO-PlasmaWave				
+RO-ProcTankSpaceplane				
+RO-QuadropoleMassSpectrometer				
+RO-R11F	109.0	9000.0		
+RO-R13	109.0	9000.0		
+RO-R15BD	150.0	4000.0		
+RO-R25F	109.0	9000.0		
+RO-RD012	150.0	4000.0		
+RO-RD9B	75.4	9000.0		
+RO-RFTank-BalloonNew				
+RO-RFTank-Integral				
+RO-RFTank-SM				
+RO-RFTank-Separate				
+RO-RJ43	150.0	4000.0		
+RO-RJ47	150.0	4000.0		
+RO-RJ55	144.56			
+RO-RJ59	150.0	4000.0		
+RO-RPWS				
+RO-RSRM	14819.0	268.0		
+RO-RestockPlus-RCS-Block-Dual-138		240.0		
+RO-RestockPlus-RCS-Block-Dual-28		230.0		
+RO-RestockPlus-RCS-Block-Quad-138		240.0		
+RO-RestockPlus-RCS-Block-Quad-28		230.0		
+RO-RestockPlus-RCS-Block-Quad-Angled-28		230.0		
+RO-RestockPlus-RCS-Block-Quint-138		240.0		
+RO-RestockPlus-RCS-Block-Quint-28		230.0		
+RO-RestockPlus-RCS-Block-Triple-Angled-138		240.0		
+RO-RestockPlus-RCS-Block-Triple-Angled-28		230.0		
+RO-RestockPlus-RCS-Linear-28		230.0		
+RO-SNAP-19-RTG				
+RO-SNAP-3-RTGPo210				
+RO-SNAP-9-RTG				
+RO-SPT100	3.35	2700.0		
+RO-SPT140	3.35	2700.0		
+RO-SPT50	1.5	2200.0		
+RO-SPT60	1.5	2200.0		
+RO-SPT70	3.35	2700.0		
+RO-SWPlasmaAnalyzer				
+RO-SXT-R79	176.15	4000.0		
+RO-Sapphire203	72.77	9000.0		
+RO-SaturnI-IU				
+RO-ScintillationCounter				
+RO-SurfaceSampleScoop				
+RO-TwoChannelIR				
+RO-UVSpectrometer				
+RO-VIMS				
+RO-VK1	26.47	9600.0		
+RO-WS10	144.0	9000.0		
+RO-X1Cockpit				
+RO-fft20mMMO	1870.0	16000.0		
+RO-fft20mMMOtank				
+RO-fftdustyplasmaffre	0.043	527000.0		
+RO-fftorion12	4320.0	3670.0		
+RO-fftorion8	2360.0	2720.0		
+RO-ionSPT60	3.0	3690.0		
+RO-model304	75.4	9000.0		
+RO-nfa-RD41	210.0	6950.0		
+RO-nflv-rcs-aero-heavy-1-half		215.0		
+RO-nflv-rcs-aero-heavy-1-quarter		215.0		
+RO-nflv-rcs-aero-heavy-2-half		300.0		
+RO-nflv-rcs-aero-heavy-2-quarter		300.0		
+RO-nupit	26.7	7000.0		
+RO-rangerSolarPanel				0.127233
+RO-reactor-BES5				
+RO-reactor-RAPIDL				
+RO-reactor-SAFE400				
+RO-reactor-TOPAZI				
+RO-reactor-TOPAZII				
+RO-reactor-kilopower				
+RO-reactor-prometheus				
+RO-reactor-snap10a				
+RO-reactor-snap2				
+RO-reactor-snap50				
+RO-reactor-snap50-300				
+RO-reactor-snap8				
+RO-shockConeIntake125				
+RO-shockConeIntakeBomarc				
+RO-shockConeIntakeMig				
+ROAdvCapsule		283.0		
+ROC-APAS8995A				
+ROC-APAS8995Av2				
+ROC-APAS8995P				
+ROC-APAS8995Pv2				
+ROC-AgenaFairing				
+ROC-AgenaPort				
+ROC-ApolloAPAS75BDB				
+ROC-ApolloASTPAdapterBDB				
+ROC-ApolloASTPUVXBDB				
+ROC-ApolloASTPVHFBDB				
+ROC-ApolloCADSActive				
+ROC-ApolloCADSPassive				
+ROC-ApolloCMBDB		274.0		
+ROC-ApolloCMBDBBlockIII		274.0		
+ROC-ApolloDecouplerBDB				
+ROC-ApolloDipoleBDB				
+ROC-ApolloDockingLightBDB				
+ROC-ApolloDrogueDockPortBDB				
+ROC-ApolloDrogueParachuteBDB				
+ROC-ApolloEVALightBDB				
+ROC-ApolloEngineMountBDB				
+ROC-ApolloForwardHSBDB				
+ROC-ApolloHGABDB				
+ROC-ApolloHGABlockIII				
+ROC-ApolloHGABlockV				
+ROC-ApolloHSBDB				
+ROC-ApolloHSBDBBlockIII				
+ROC-ApolloLESBDB	693.7	208.0		
+ROC-ApolloMissionModule				
+ROC-ApolloMissionModule4				
+ROC-ApolloNoseconeBDB				
+ROC-ApolloParachuteBDB				
+ROC-ApolloProbeDockPortBDB				
+ROC-ApolloRCS		278.0		
+ROC-ApolloSMB2BDB				
+ROC-ApolloSMBlockIII				
+ROC-ApolloSMDBDBlockIV				
+ROC-ApolloScimitarBDB				
+ROC-ApolloSolarBlockV				1.449
+ROC-ApolloVHFBDB				
+ROC-BigGeminiCabinBDB				
+ROC-BigGeminiDecoupler				
+ROC-BigGeminiDockingAdapter				
+ROC-BigGeminiHS				
+ROC-BigGeminiHSLunar				
+ROC-BigGeminiLES	693.7	172.0		
+ROC-BigGeminiMOLPort				
+ROC-BigGeminiNose				
+ROC-BigGeminiParachute				
+ROC-BigGeminiParachuteDrogue				
+ROC-BigGeminiSM				
+ROC-CSTCM		220.0		
+ROC-CSTHS				
+ROC-CSTNDSActive				
+ROC-CSTNDSPassive				
+ROC-CSTNoseCone				
+ROC-CSTParachute				
+ROC-CSTRS88	773.96	252.0		
+ROC-CSTSM		320.0		3.0
+ROC-D2AJ10-133	35.585	433.0		
+ROC-D2Adaptor				
+ROC-D2Antenna				
+ROC-D2Block1LES	230.0	225.0		
+ROC-D2Block1LESDecoupler				
+ROC-D2Block2LES	620.0	205.0		
+ROC-D2Block2Nosecone				
+ROC-D2CM		260.0		
+ROC-D2DockDrogue				
+ROC-D2DockProbe				
+ROC-D2Interstage				
+ROC-D2Interstage2				
+ROC-D2Interstage3				
+ROC-D2MissionModule1				
+ROC-D2MissionModule2				
+ROC-D2Parachute				
+ROC-D2RCS		260.0		
+ROC-D2ServiceModule				
+ROC-D2Skirt1		260.0		
+ROC-D2Skirt2		260.0		
+ROC-D2Solar				0.6483078
+ROC-DynaAdapterBigMoroz				
+ROC-DynaAntenna				
+ROC-DynaBayMoroz				
+ROC-DynaButtMoroz		145.0		
+ROC-DynaCabinMoroz				
+ROC-DynaCockpitAltMoroz		145.0		
+ROC-DynaCockpitMoroz		145.0		
+ROC-DynaCrewTubeMoroz				
+ROC-DynaDockingArms				
+ROC-DynaDockingSystem				
+ROC-DynaElevonMoroz				
+ROC-DynaRudderMoroz				
+ROC-DynaShieldMoroz				
+ROC-DynaSkidFront				
+ROC-DynaSkidRear				
+ROC-DynaWingMoroz		145.0		
+ROC-GeminiAntenna				
+ROC-GeminiAntennaBDB				
+ROC-GeminiBEquipmentSection	1.0	255.0		
+ROC-GeminiBRetrogradeSection				
+ROC-GeminiCMBDB				
+ROC-GeminiEquipmentSectionBDB		258.0		
+ROC-GeminiFlightPack				
+ROC-GeminiFlightPackContSurf				
+ROC-GeminiHSBDB				
+ROC-GeminiHSLunarBDB				
+ROC-GeminiLCMBDB				
+ROC-GeminiNoseCapBDB				
+ROC-GeminiNoseconeAeroBDB				
+ROC-GeminiNoseconeBDB				
+ROC-GeminiOAMSBDB	0.440374	296.0		
+ROC-GeminiOAMSRCSBDB		296.0		
+ROC-GeminiParachuteBDB				
+ROC-GeminiParachuteDrogueBDB				
+ROC-GeminiRetroBDB	2.78	255.0		
+ROC-GeminiRetroMECBDB	2.78	256.3		
+ROC-GeminiRetrogradeSectionBDB		296.0		
+ROC-GeminiWing		283.0		
+ROC-GeminiWingContSurf				
+ROC-LEMAscentBDB		278.0		
+ROC-LEMAscentTaxiBDB		278.0		
+ROC-LEMDecouplerBDB				
+ROC-LEMDescentBDB				
+ROC-LEMFoldingSNAP27BDB				
+ROC-LEMLMAEBDB	24.5	356.0		
+ROC-LEMLMDEBDB	46.92	306.4		
+ROC-LEMLegsBDB				
+ROC-LEMMESABDB				
+ROC-LEMRackSNAP9BDB				
+ROC-LEMRover				
+ROC-LEMShelterBDB		278.0		
+ROC-LEMTruckPlatformBDB				
+ROC-LEMTruckRCS3BDB		278.0		
+ROC-LEMTruckRCS4BDB		278.0		
+ROC-LFVBDB	1.868	295.0		
+ROC-MercuryAirbrakeBDB				
+ROC-MercuryCMBDB		137.0		
+ROC-MercuryDecouplerAtlasBDB				
+ROC-MercuryDecouplerBDB				
+ROC-MercuryHS				
+ROC-MercuryLESBDB	231.3	225.0		
+ROC-MercuryNoseCapBDB				
+ROC-MercuryParachuteBDB				
+ROC-MercuryPosigradeBDB	1.779	206.0		
+ROC-MercuryRCS2BDB		137.0		
+ROC-MercuryRCSBDB		137.0		
+ROC-MercuryRetroBDB	5.1	206.0		
+ROC-MercuryRetropackBDB				
+ROC-OrionCM		239.0		
+ROC-OrionCover1	6.0	150.0		
+ROC-OrionCover2	6.0	150.0		
+ROC-OrionCover3	6.0	150.0		
+ROC-OrionESM	3.92	311.0		
+ROC-OrionEUSDecoupler				
+ROC-OrionForwardHS				
+ROC-OrionHS				
+ROC-OrionLAS	1779.28	290.0		
+ROC-OrionParachute				
+ROC-OrionRCS		311.0		
+ROC-OrionSolar				2.75
+ROC-ReentryControlSystemBDB		283.0		
+ROC-RetrogradeDecouplerBDB				
+ROC-VoskhodAirlock	0.5	120.0		
+ROC-VoskhodCapsule	16.7	250.0		
+ROC-VoskhodRetroBooster	117.7	224.0		
+ROC-VoskhodRetroDecoupler				
+ROC-VostokCapsule				
+ROC-VostokDecoupler				
+ROC-VostokParachute				
+ROC-VostokService	15.83	266.0		
+ROC-ZenitCapsule				
+ROE-1204sepMotor	160.0	154.0		
+ROE-1205sepMotor	160.0	154.0		
+ROE-1206sepMotor	160.0	154.0		
+ROE-1207sepMotor	160.0	154.0		
+ROE-1208sepMotor	160.0	154.0		
+ROE-120XDecoupler				
+ROE-18KS7800	34.09116	238.8		
+ROE-25KS18000	88.06796	198.8		
+ROE-A4	400.0	255.0		
+ROE-A7	409.36	265.0		
+ROE-AJ10-137	97.416	314.0		
+ROE-AJ10-190	33.4	316.0		
+ROE-AJ10-transtar	26.7	483.0		
+ROE-AJ10Adv	42.1	433.0		
+ROE-AJ10AdvLong	43.6	319.2		
+ROE-AJ10Early	34.25	272.5		
+ROE-AJ10Mid	35.2	278.0		
+ROE-AJ260FLA	35391.0	263.0		
+ROE-AJ260FLF	35391.0	263.0		
+ROE-AJ260SLA	26708.0	263.0		
+ROE-AJ260SLF	26708.0	263.0		
+ROE-AJ60	1688.4	275.0		
+ROE-Aerobee	21.28	235.44		
+ROE-Agena	75.62	446.2		
+ROE-AgenaSPS	0.9608	278.0		
+ROE-Agena_EquipmentRack				
+ROE-Agena_Retro_TypeIII	0.609	217.8		
+ROE-Agena_Spinrocket	0.169	114.0		
+ROE-Alcyone1	26.69	270.4		
+ROE-Algol1	493.6442	241.4		
+ROE-Algol1_Inline	493.6442	241.4		
+ROE-Algol2	449.02112	258.88		
+ROE-Algol2_Inline	449.02112	258.88		
+ROE-Algol3	530.25896	260.289		
+ROE-Algol3_Inline	530.25896	260.289		
+ROE-Altair	16.35	255.04		
+ROE-AltairII	35.0	279.0		
+ROE-AltairIII	29.36	284.22		
+ROE-Antares1	62.27508	256.0		
+ROE-Antares1_Inline	62.27508	256.0		
+ROE-Antares2	93.074555	281.4		
+ROE-Antares2_Inline	93.074555	281.4		
+ROE-Antares3	100.37408	294.36		
+ROE-Antares3_Inline	100.37408	294.36		
+ROE-BE3	511.3	360.0		
+ROE-BE4	2647.5	341.0		
+ROE-BNTR	182.37	925.0		
+ROE-BabySergeant	8.0	235.0		
+ROE-BabySergeantX11	88.0	235.0		
+ROE-BabySergeantX11Dec				
+ROE-BabySergeantX3	24.0	235.0		
+ROE-BabySergeantX3Dec				
+ROE-C1	0.445	301.0		
+ROE-Castor1	349.3	273.21		
+ROE-Castor120	2125.0	280.0		
+ROE-Castor1_Inline	349.3	273.21		
+ROE-Castor2	369.23	282.2		
+ROE-Castor2_Inline	369.23	282.2		
+ROE-Castor30	330.7653	293.1		
+ROE-Castor30XL	533.3418	294.4		
+ROE-Castor4	460.0	261.0		
+ROE-Castor4A	538.0	265.0		
+ROE-Castor4AXL	765.0	282.4		
+ROE-CastorDecoupler				
+ROE-E1	2828.57	310.0		
+ROE-F1	9189.6	306.2		
+ROE-F1B	8815.0	299.0		
+ROE-G1	55.02	368.0		
+ROE-GCRC	17.3	237.46		
+ROE-GEM40	666.0	283.4		
+ROE-GEM46	915.0	290.7		
+ROE-GEM60	1248.91	274.0		
+ROE-GEM63	1658.0	275.0		
+ROE-Gamma2	75.1	279.4		
+ROE-Gamma301	133.447	269.0		
+ROE-Gamma8	266.893	269.0		
+ROE-H1C	1480.6	297.0		
+ROE-H1D	1480.6	302.0		
+ROE-HG3	1422.44	458.0		
+ROE-HM7	64.8	446.0		
+ROE-HiPAT	0.556	329.0		
+ROE-J2	1400.0	436.0		
+ROE-J2T	1111.6	442.0		
+ROE-J2X	1308.0	448.0		
+ROE-Juno45K	253.3688	305.0		
+ROE-Juno6K	34.176	302.0		
+ROE-JupiterVernier	1.5	220.0		
+ROE-KTDU35	4.09	278.0		
+ROE-KTDU425A	18.89	315.0		
+ROE-LE5	137.2	452.0		
+ROE-LE7	1098.0	446.5		
+ROE-LEROS1B	0.707	324.0		
+ROE-LEROS4	1.1	323.0		
+ROE-LMAE	24.5	356.0		
+ROE-LMDE	46.92	306.4		
+ROE-LR101	5.304	247.0		
+ROE-LR101Inline	5.304	247.0		
+ROE-LR101Inline_2	5.304	247.0		
+ROE-LR101_2	5.304	247.0		
+ROE-LR105	386.4	316.0		
+ROE-LR105_2	386.4	316.0		
+ROE-LR129	1619.2	463.0		
+ROE-LR79	873.0	305.5		
+ROE-LR87	2421.6	308.4		
+ROE-LR87_11	2421.6	308.4		
+ROE-LR87_LH2	889.0	434.0		
+ROE-LR87_Single	1281.0	326.3		
+ROE-LR89	1032.5	293.4		
+ROE-LR89_2	1032.5	293.4		
+ROE-LR91	472.5	319.9		
+ROE-LR91-4V	472.5	319.9		
+ROE-LargeApolloLC				
+ROE-LargeLC				
+ROE-LargeRadialLC				
+ROE-M1	8006.799	430.0		
+ROE-M55	876.0	262.0		
+ROE-MB35	155.7	468.0		
+ROE-MB60	266.9	467.0		
+ROE-MR80B	3.603	223.0		
+ROE-MR80TDE	2.811	210.0		
+ROE-MediumApolloLC				
+ROE-MediumLC				
+ROE-MediumRadialLC				
+ROE-Merlin1A	369.2	288.5		
+ROE-Merlin1C	482.63	304.8		
+ROE-Merlin1CV	524.9	336.0		
+ROE-Merlin1D	914.12	311.0		
+ROE-Merlin1DV	934.12	348.0		
+ROE-ModularRCS				
+ROE-NERVA	648.8	900.0		
+ROE-NERVAII	867.0	850.0		
+ROE-NERVAXE	239.0	850.0		
+ROE-NK33	1815.0	331.9		
+ROE-NK43	1823.9	346.0		
+ROE-NK9	603.0	331.6		
+ROE-NK9V	451.1	353.0		
+ROE-NikeM5E1	217.96	228.0		
+ROE-ORM65	3.176	233.0		
+ROE-R103	11.192	220.0		
+ROE-R40B	4.0	293.0		
+ROE-R42	0.89	327.0		
+ROE-RD0105	54.5	323.5		
+ROE-RD0110	318.78	330.4		
+ROE-RD0110R	68.3	298.0		
+ROE-RD0110Vernier	6.0	330.0		
+ROE-RD0120	2313.0	460.7		
+ROE-RD0124	294.3	359.0		
+ROE-RD0146	98.1	470.0		
+ROE-RD0203	569.2	311.0		
+ROE-RD0210	638.48	356.0		
+ROE-RD0212	678.04	354.07		
+ROE-RD0213	646.14	356.0		
+ROE-RD0214	7.9775	323.4		
+ROE-RD100	500.14	248.0		
+ROE-RD107	1033.3	319.99		
+ROE-RD108	1011.0	320.39		
+ROE-RD109	101.6	362.0		
+ROE-RD111	1628.0	318.0		
+ROE-RD120	912.02	350.0		
+ROE-RD170	8316.0	337.4		
+ROE-RD180	4152.0	338.4		
+ROE-RD191	2085.0	339.2		
+ROE-RD200	98.51	234.0		
+ROE-RD211	749.2	264.0		
+ROE-RD215	1775.0	301.4		
+ROE-RD215_Single	887.5	301.4		
+ROE-RD219	941.4	318.0		
+ROE-RD254	2045.2	357.9		
+ROE-RD270	7159.0	365.0		
+ROE-RD270M	7159.0	365.0		
+ROE-RD275	1958.4	341.5		
+ROE-RD301	97.67	400.0		
+ROE-RD57	432.0	461.0		
+ROE-RD58	86.3	362.0		
+ROE-RD8	19.61	342.0		
+ROE-RD855	82.0	292.0		
+ROE-RD856	13.48	280.5		
+ROE-RL10A4N	99.2	450.5		
+ROE-RL10B2	110.1	465.6		
+ROE-RL10Fixed	108.3	470.5		
+ROE-RS25	2364.5	464.0		
+ROE-RS27	1480.6	302.0		
+ROE-RS68	4192.2	435.0		
+ROE-RZ	791.2	288.0		
+ROE-RZ20	72.56	425.0		
+ROE-RangerRetro	0.255	234.97		
+ROE-Raptor	2745.862	350.0		
+ROE-RaptorVac	3000.8349	380.0		
+ROE-Rutherford	24.91	317.0		
+ROE-RutherfordVac	25.79	343.0		
+ROE-S155	39.0	255.0		
+ROE-S2253	165.5	265.0		
+ROE-S523	157.6	303.0		
+ROE-S592	20.01	333.2		
+ROE-S598M	19.61	328.0		
+ROE-SNTPPFE100	503.06	954.0		
+ROE-SR19	267.7	288.0		
+ROE-SR73	152.0	296.9		
+ROE-SRMU	8233.777	281.0		
+ROE-SmallApolloLC				
+ROE-SmallLC				
+ROE-SmallRadialLC				
+ROE-Star13	5.68	275.2		
+ROE-Star13A	5.87	288.3		
+ROE-Star13D	3.06	223.0		
+ROE-Star17	10.94	286.2		
+ROE-Star17A	17.4	286.7		
+ROE-Star37	43.5	289.0		
+ROE-Star37E	68.8	284.0		
+ROE-Star37FM	55.6	293.7		
+ROE-Star48B	78.0	292.1		
+ROE-Star5D	6.272	256.0		
+ROE-Star8	7.749	273.0		
+ROE-Stentor	121.0	220.0		
+ROE-SuperDraco	85.0	280.0		
+ROE-SuperDracoDouble	170.0	280.0		
+ROE-TD339	0.462	287.0		
+ROE-TX280	15.2	222.0		
+ROE-UA1204	4151.3	266.0		
+ROE-UA1205	5338.0	266.0		
+ROE-UA1206	6227.0	265.0		
+ROE-UA1207	7450.0	269.5		
+ROE-UA1208	7450.0	269.5		
+ROE-UmbilicalTower				
+ROE-UpgradeIcon-Coatl				
+ROE-Veronique	73.8	261.0		
+ROE-VeroniqueAK	73.8	261.0		
+ROE-Viking2	698.0	282.4		
+ROE-Viking4	808.0	292.7		
+ROE-Viking5	760.0	280.6		
+ROE-X405	135.28	278.0		
+ROE-X405H	186.42	330.53		
+ROE-XLR10	110.5	214.5		
+ROE-XLR11	47.08	234.4		
+ROE-XLR25	73.75	230.0		
+ROE-XLR41	333.0	239.0		
+ROE-XLR99	369.2	298.0		
+ROE-generic-full	1.82			
+ROE-generic-half	0.91			
+ROE-generic-quarter	0.455			
+ROH-AdjustableHIAD				
+ROH-AdjustableHS				
+ROMeteoSustainer	23.0	315.0		
+ROS-BlanketSolarPanel				0.081
+ROS-FoldingSolarPanel				0.081
+ROS-HingedSolarPanel				0.081
+ROS-StaticSolarPanel				0.081
+ROSmallSpinMotor	18.0	225.0		
+ROT-AtlasDecoupler				
+ROT-AtlasTank-Balloon				
+ROT-AtlasTank-Integral				
+ROT-AtlasTank-Separate				
+ROT-BalloonTank-New				
+ROT-BoosterTank-Integral				
+ROT-BoosterTank-Separate				
+ROT-GenericTank-Integral				
+ROT-GenericTank-Separate				
+ROT-KatnissTank-Balloon				
+ROT-KatnissTank-Integral				
+ROT-KatnissTank-Separate				
+ROT-LanderTank-Integral				
+ROT-LanderTank-SM				
+ROT-LanderTank-Separate				
+ROT-MiscTank-Balloon				
+ROT-MiscTank-Integral				
+ROT-MiscTank-Radial-Integral				
+ROT-MiscTank-Radial-Separate				
+ROT-MiscTank-Separate				
+ROT-MiscTank-ServiceModule				
+ROT-MiscTank-Shielded				
+ROT-ModularCargoBay				
+ROT-Mount				
+ROT-Nose-Integral				
+ROT-Nose-Separate				
+ROT-Nose-ServiceModule				
+ROT-OpenInterstage				
+ROT-ProbeCore				
+ROT-RadialTank-Integral				
+ROT-RadialTank-Separate				
+ROT-RingDecoupler				
+ROT-ServiceModule				
+ROT-SphericalTank-Integral				
+ROT-SphericalTank-Separate				
+ROT-ToroidalTank-Integral				
+ROT-ToroidalTank-Separate				
+RO_EarlyMediumSolarPanel				0.007875
+RO_EarlyTinySolarPanel				0.00315
+RO_FASA_ExplorerRCS		254.0		
+RO_FASA_MercuryPodRCS		254.0		
+RO_KVD1	1500.0	461.5		
+RO_RCSBlock_restock_1100		254.0		
+RO_RCSBlock_restock_138		254.0		
+RO_RCSBlock_restock_2200		254.0		
+RO_RCSBlock_restock_275		254.0		
+RO_RCSBlock_restock_28		254.0		
+RO_RCSBlock_restock_413		254.0		
+RO_RCSBlock_restock_550		254.0		
+RO_RCSBlock_restock_69		254.0		
+RO_RCSBlock_restock_825		254.0		
+RO_RCSBlock_restock_mini_138		254.0		
+RO_RCSBlock_restock_mini_28		254.0		
+RO_RCSBlock_restock_mini_69		254.0		
+RO_ServiceBay_300				
+RO_boeing702				
+RO_linearRcs_tenth		254.0		
+RO_mk1_LES	231.3	190.0		
+RP-1-CommunicationSat				0.0
+RP-1-NavigationSat				0.0
+RP0-SampleReturnCapsule				
+RP0-SampleReturnCommand		80.0		
+RP0Cherenkov				
+RP0HumanRatedFlag				
+RP0aerobeeSounding				
+RP0probeSounding0-3m				
+RP0probeVanguardXray				
+RSBRibbedBase				
+RSBRibbedBase_Boattail				
+RSBRibbedBase_Interstage				
+RSBTrussBase				
+RSBTrussBase_Boattail				
+RSBTrussBase_Interstage				
+RelayAntenna100				
+RelayAntenna3m				
+RelayAntenna5				
+RelayAntenna50				
+ReleaseValve				
+SMLadderUtility				
+SSTUBase				
+SSTUBase_Boattail				
+SSTUBase_Interstage				
+SSTUHollowRing				
+SSTUHollowRing_Boattail				
+SSTUHollowRing_Interstage				
+STXCANIOT				
+SXTAirbag				
+SXTAirbagSmall				
+SXTAlouetteI				0.35
+SXTAntenna				
+SXTBuzzard				
+SXTClyde				
+SXTCrewCabSSP10				
+SXTCrewCabSSP20				
+SXTDLK83EHabitat				
+SXTDepolyRTGI				
+SXTDepolyRTGII				
+SXTEntenteCordiale				
+SXTISSHabISK30				
+SXTInlineAirIntake				
+SXTJ213	30.0	21600.0		
+SXTK1Decoupler				
+SXTK1Decoupler2				
+SXTKO211Dprop	14.0	17600.0		
+SXTKe90TurboJet	229.8	12600.0		
+SXTMTVGirder				
+SXTMTVGirderBasic				
+SXTMTVGirderOpen				
+SXTMTVGirderOpenMedium				
+SXTMTVGirderOpenSmall				
+SXTMerlin46Prop	20.0	14700.0		
+SXTMerlin66prop	20.0	14700.0		
+SXTMiniJet	10.0	9600.0		
+SXTNK12M	150.0	22600.0		
+SXTNK21BlockV	1628.0	353.0		
+SXTOsaulNoseCockpitAn225				
+SXTOsaulTail				
+SXTOsualHullLarge				
+SXTOsualRadCockpit				
+SXTOsualRadHull				
+SXTOsualRadHullEnd				
+SXTPWPT6	13.0	17000.0		
+SXTPWR2800	30.0	21600.0		
+SXTProbeGooo				
+SXTProtonlikeNoseCone				
+SXTR280018WProp	30.0	21600.0		
+SXTR280021Prop	30.0	21600.0		
+SXTRCSRack		254.0		
+SXTRadialAirIntakeShockCone				
+SXTSPKTRCabin				
+SXTSmallFuselage				
+SXTSputnik				
+SXTTinyprop	5.0	45000.0		
+SXTVTOLturboFan	182.0	4000.0		
+SXTWaxWing	34.35	278.0		
+SXT_Jumo213A	30.0	21600.0		
+SXTke111				
+SXTlaunchclamp1				
+SXTmk3Cockpit52				
+SXTradialWindow				
+SXTsciencenosecone				
+SXTsolarPanelLarge				1.44
+SXTsolarPanelhex				0.153
+ScienceBoxUpgrade				
+ServiceBay_125_v2				
+ServiceBay_250_v2				
+ShieldCapLarge				
+SmallGearBay				
+SmallGearBaySpaceplane				
+SmallPointLight				
+SmallSpotLight				
+SmallStripLight				
+SnubOtron	18.0	225.0		
+SquadRCSBlockHalf		254.0		
+SquadRCSBlockTenth		254.0		
+StandardCtrlSrf				
+SurfAntenna				
+SurfaceScanner				
+SurveyScanner				
+TOWER_SV				
+TinyTim	244.4	222.0		
+USAccelGravWedge				
+USFluidSpectroWedge				
+USFuelCellMedium				
+USFuelCellSmal				
+USGooBayWedge				
+USMatBayWedge				
+USRTGWedge				
+USRTGWedgeMM				
+USRadialTanks				
+USThermoBaroWedge				
+YF100_Engine-double-withShell2	2794.0	337.0		
+YF100_Engine_S	1397.0	337.0		
+YF20_Engine	839.6	308.0		
+YF21_Engine	3358.4	308.0		
+YF21_with_shell_CZ-2	3358.4	289.5		
+YF21_with_shell_CZ-2C	3358.4	305.0		
+YF21_with_shell_CZ-2D	3358.4	305.0		
+YF22_Engine	784.5	310.0		
+YF23_Engine	11.8	300.0		
+YF25K_Engine	839.6	308.0		
+YF2_Engine	1214.4	267.2		
+YF2_with_shell	1214.4	267.2		
+YF3_Engine	320.2	286.9		
+YF3_with_shell	320.2	286.9		
+YF75D_Engine	92.11	451.1		
+YF75_Engine	184.22	451.1		
+YF77_Engine	700.0	428.0		
+YF77_Engine-double-withShell	1400.0	428.0		
+acamar_adapter_s2_s0p5_1				
+acamar_crew_s2_1				
+acamar_science_processor_s2_1				
+adapterSize2-Size1				
+adapterSize2-Size1Slant				
+advSasModule				
+aerocam				
+aerocam180				
+airScoop				
+airbrake1				
+airplaneTail				
+airplaneTailB				
+aje_al31	142.2	9000.0		
+aje_atar	70.6	9000.0		
+aje_avon	72.77	9000.0		
+aje_f404	80.51	9000.0		
+aje_j57	87.2	9000.0		
+aje_j75	131.2	9000.0		
+aje_j79	83.4	9000.0		
+aje_ramjet	700.0	9000.0		
+aje_solarPanels				0.63
+alnair_les_s0_2	2700.0	295.5		
+antenna_cone_toggle				
+antenna_quetzal				
+aquarius_crew_s1p5_1		312.0		
+aquarius_drogue_parachute_s0_1				
+aquarius_heatshield_s1p5_1				
+aquarius_parachute_s0p5_1	56.0	250.0		
+aquila_adapter_s1p5_1				
+aquila_adapter_s2_s0p5_1				
+aquila_adapter_s2_s1p5_1				
+aquila_control_s2_1				
+aquila_crew_s1_1				
+aquila_crew_s1_3				
+aquila_crew_s1p5_2				
+aquila_experiment_rack_s1p5_1				
+aquila_lab_s1_1				
+aquila_lab_s1p5_1				
+aquila_lab_s1p5_2				
+aquila_node_adapter_s1_1				
+aquila_node_s0p5_1				
+aquila_node_s0p5_2				
+aquila_sensor_synthetic_aperture_radar_srf_1				
+aquila_sensor_visible_light_telescope_s0_1				
+aquila_structural_cone_s1p5_1				
+asasmodule1-2				
+basicFin				
+ca_ESM2				
+ca_RM01		254.0		
+ca_RM02		254.0		
+ca_aacs				
+ca_ant_gps			400.0	
+ca_argo-mk2				
+ca_argo-mk2-hga			4900000.0	
+ca_argo-mk2-mast			1600.0	
+ca_argo-mk2-solar				0.175
+ca_draco				
+ca_draco_as				
+ca_draco_drogue				
+ca_draco_hs				
+ca_draco_parachute				
+ca_explorer		245.0		
+ca_explorer_solar				0.07085
+ca_fom_drogue				
+ca_fom_heatS				
+ca_fom_lander				
+ca_fom_parachute				
+ca_fom_sp				0.016
+ca_hera		229.0		
+ca_jib	0.91	254.0		
+ca_lahar	6.0	293.0		
+ca_landv_core				
+ca_landv_hga			6400.0	0.09
+ca_landv_omni				
+ca_landv_orbiter_HGA				
+ca_landv_orbiter_core				
+ca_landv_sp				0.115
+ca_louver_m				
+ca_louver_s				
+ca_louver_s2				
+ca_mer_ft		250.0		
+ca_mer_leu				
+ca_mer_rtg				
+ca_rs01		254.0		
+ca_rs04		254.0		
+ca_rtg2000				
+ca_rtg3900				
+ca_rw_large				
+ca_rw_medium				
+ca_rw_small				
+ca_rw_xsmall				
+ca_startrack				
+ca_tank_mp_s				
+ca_trident	1.275	321.0		
+ca_vor_comm			25600.0	
+ca_vor_core				
+ca_vor_dish				
+ca_vor_mptank				
+ca_vor_sep1				
+ca_vor_sp				0.55
+ca_vor_sp2				0.275
+ca_vor_tank				
+conformaldecals-flag				
+conformaldecals-generic				
+conformaldecals-munar				
+conformaldecals-semiotic				
+conformaldecals-text				
+controller1000				
+crewCabin				
+cryoengine-allosaur-1	3172.0	345.0		
+cryoengine-buzzard-1	98.1	375.0		
+cryoengine-eagle-1	3000.8349	382.0		
+cryoengine-fuji-1	1471.0	425.0		
+cryoengine-pavonis-1	289.1	468.0		
+cryoengine-tharsis-1	578.2	468.0		
+cryoengine-vesuvius-1	1350.0	433.0		
+cupola				
+deltaWing				
+delta_small				
+dish_L				
+dish_S				
+dish_deploy_S				
+dish_deploy_S2				
+dish_hera				
+dish_quetzal		235.0		
+dish_tatsujin				
+dish_xihe				
+docking-linear-1				
+docking-linear-2				
+dockingPort1				
+dockingPort2				
+dockingPort3				
+dockingPortLarge				
+dockingPortLateral				
+domeLight1				
+elevon2				
+elevon3				
+elevon5				
+eos_aqua		228.0		
+eos_aura		228.0		
+eos_tdrs				
+eos_terra		228.0		1.26
+eos_terraalt				1.0
+eridani_crew_s1p5_1				
+eridani_crew_s2_1				
+eridani_crew_s2_s1p5_1				
+eridani_node_adapter_s1p5_s0p5_1				
+evaChute				
+evaCylinder				
+evaJetpack				
+explorer_6				0.064
+fft-ffre-plasma-1	4.651	527000.0		
+fft-fission-orion-5-1	3470.0	3300.0		
+fft-fission-zpinch-1	642.0	9500.0		
+fft-fueltank-fission-25-1				
+fft-fueltank-fission-25-2				
+fft-fueltank-fission-25-3				
+fft-fueltank-fission-5-1				
+fft-fueltank-fission-5-2				
+fft-fueltank-fission-radial-1				
+fft-fueltank-fission-radial-2				
+fft-fueltank-fission-radial-3				
+fft-fueltank-pulseunits-5-1				
+fft-fueltank-pulseunits-5-2				
+fft-fueltank-pulseunits-5-3				
+fft-fueltank-targets-5-1				
+fft-nswr-2	8696.9	8000.0		
+flag				
+foldingRadLarge				
+foldingRadMed				
+foldingRadSmall				
+fuelLine				
+galileo_aprobe				
+galileo_aprobe_bot				
+galileo_hs_bot				
+galileo_hs_mid				
+galileo_hs_top				
+galileo_mb	0.4	303.0		
+galileo_probe_hs_parachute				
+galileo_probe_parachute				
+gdish_actual				
+gdish_intended				
+grab-1				0.004
+groundAnchor				
+groundLight1				
+groundLight2				
+hc_booster				
+hc_kazzelblad				
+hc_launchcam				
+hc_navcam				
+hc_nightvision				
+hc_scicam				
+hc_wideangle				
+hinge_01				
+hinge_01_s				
+hinge_03				
+hinge_03_s				
+hinge_04				
+ionArgon-0625	1.5	2900.0		
+ionArgon-0625-2	3.35	2700.0		
+ionArgon-0625-3	8.4	4370.0		
+ionEngine	9.2	3690.0		
+ionXenon-0625	2.1	6380.0		
+ionXenon-0625-2	4.3	9650.0		
+ionXenon-0625-3	3.85	19200.0		
+ius_bottom	267.77	295.5		
+ius_dec_fs				
+ius_dec_ss				
+ius_top	113.87	303.5		
+kerbalEVA				
+kerbalEVAFuture				
+kerbalEVASlimSuit				
+kerbalEVASlimSuitFemale				
+kerbalEVAVintage				
+kerbalEVAfemale				
+kerbalEVAfemaleFuture				
+kerbalEVAfemaleVintage				
+kerbalism-ISRU				
+kerbalism-chemicalplant				
+kerbalism-drill				
+kerbalism-fuelcell				
+kerbalism-large-drill				
+kerbalism-lifesupportmodule				
+kerbalism-miniISRU				
+kerbpro				
+l11_astro				
+l11_radio				
+ladder1				
+landerCabinMedium				
+landerCabinSmall				
+landingLeg1				
+landingLeg1-2				
+largeLandingLeg				
+largeSolarPanel				2.665
+largeSolarPanelEarly				1.08
+launchClamp1				
+linearRcs		254.0		
+longAntenna				
+luna11_als				
+luna13_als				
+luna2				
+luna3		65.0		0.395
+luna9_airbag_cvr				
+luna9_als				
+luna_als				
+luna_astro				
+luna_ktdu	44.0	287.0		
+luna_radio				
+luna_vernier	0.15	287.0		
+magellan	3.528	239.0		
+mediumDishAntenna				
+mer_dish				
+mer_ringDecoupler				
+meridiani				
+microEngine	2.0	315.0		
+microIbeam				
+miniIntake				
+miniJetEngine	13.1	6400.0		
+miniLandingLeg				
+mk1-3pod		280.84		
+mk1pod_v2		137.0		
+mk2CargoBayL				
+mk2CargoBayS				
+mk2Cockpit_Inline				
+mk2Cockpit_Standard				
+mk2CrewCabin				
+mk2DockingPort				
+mk2DroneCore				
+mk2LanderCabin_v2				
+mk3CargoBayL				
+mk3CargoBayM				
+mk3CargoBayS				
+mk3CargoRamp				
+mk3Cockpit_Shuttle				
+mk3CrewCabin				
+molniya1	1.96	290.0		0.45
+mpdt-125	96.4	4665.0		
+mumech_hullcam				
+nacelleBody				
+navLight1				
+neo_dawn	9e-05	3200.0		
+neo_deepimpact		312.0		0.62
+neo_deepimpact_impactor		312.0		
+neo_ds1	9e-05	3200.0		
+neo_near	0.45	317.0		1.8
+neo_stardust		312.0		0.8
+neo_stardust_collector				
+neo_stardust_para				
+neo_ulysses		312.0		
+nfa-turbofan-25-2	510.0	9000.0		
+nfa-turbojet-25-1	540.0	4300.0		
+nfa-vtol-0625-1	80.0	6900.0		
+nfa-vtol-125-1	210.0	6950.0		
+nfe-rtg-asrg-1				
+nfe-rtg-gphs-1				
+nfe-rtg-mmrtg-1				
+nfe-rtg-snap27-1				
+nfex-antenna-deploy-wv3-1				
+nfex-antenna-feeder-direct-1				
+nfex-antenna-phased-array-1				
+nfex-antenna-phased-array-2				
+nfex-antenna-phased-array-3				
+nfex-antenna-phased-single-3				
+nfex-antenna-reflector-giant-1				
+nfex-antenna-reflector-huge-1				
+nfex-antenna-reflector-large-1				
+nfex-antenna-reflector-side-1				
+nfex-antenna-reflector-side-2				
+nfex-antenna-reflector-side-3				
+nfex-antenna-relay-tdrs-1				
+nfex-antenna-relay-tdrs-2				
+nfex-antenna-relay-tiny-1				
+nfex-antenna-rover-2				
+nfex-antenna-rover-3				
+nfex-antenna-static-mini-1				
+nfex-antenna-top-dish-1				
+nfex-antenna-top-dish-2				
+nflv-engine-ar1-1	2487.0	337.0		
+nflv-engine-ar1c-1	14922.0	337.0		
+nflv-engine-rd701-1	4004.0	460.0		
+nflv-engine-rd704-1	2002.0	460.0		
+nflv-engine-rs84-1	5026.49	340.0		
+nflv-engine-stbe-kero-1	3275.0	341.5		
+nflv-rcs-aero-heavy-1		215.0		
+nflv-rcs-aero-heavy-2		300.0		
+nfs-panel-deploying-advanced-2x20-hub-1				55.0
+nfs-panel-deploying-blanket-arm-1				150.0
+nfs-panel-deploying-blanket-dsg-1				100.0
+nfs-panel-deploying-blanket-starship-1				25.0
+nfs-panel-deploying-concentrator-1x4-juno-1				7.0
+nfs-panel-deploying-curved-375-1				
+noseCone				
+ntr-gc-25-1	820.0	1625.0		
+p1_decoupler				
+parachuteDrogue				
+parachuteLarge				
+parachuteRadial				
+parachuteSingle				
+pioneer1_booster	1.12	235.0		
+pioneer_0_1_2	13.3	235.0		
+pioneer_10_11		228.0		
+pioneer_3_4				
+pioneer_5				0.08
+pioneer_6_7_8_9		57.525		0.395
+piston_01				
+piston_02				
+piston_03				
+piston_04				
+pit-0625	14.8	3500.0		
+pit-125	26.7	7000.0		
+pointyNoseConeA				
+pointyNoseConeB				
+polyot	1.96	290.0		
+polyot_side_engine	1.96	290.0		
+probeCoreSphere_v2				
+proceduralAvionics				
+proceduralCrewTube				
+proceduralNoseCone				
+proceduralStackDecoupler				
+proceduralStructural				
+proceduralTankOre				
+quetzal				
+radPanelEdge				
+radPanelLg				
+radPanelSm				
+radialDecoupler				
+radialDecoupler1-2				
+radialDecoupler2				
+radialEngineBody				
+ramAirIntake				
+rana_mount_srf_1				
+rana_truss_srf_1				
+rana_truss_srf_2				
+reactor-0625				
+reactor-125				
+reactor-25				
+restock-airlock-1				
+restock-antenna-stack-2				
+restock-antenna-stack-3				
+restock-decoupler-1875-1				
+restock-decoupler-radial-tiny-1				
+restock-drone-core-375-1				
+restock-engine-125-pug	55.4	340.0		
+restock-engine-cherenkov	300.0	910.0		
+restock-nosecone-1875-1				
+restock-rcs-block-dual-1		240.0		
+restock-rcs-block-dual-mini-1		230.0		
+restock-rcs-block-quad-angled-1		240.0		
+restock-rcs-block-quad-angled-mini-1		230.0		
+restock-rcs-block-quad-mini-1		230.0		
+restock-rcs-block-quint-1		240.0		
+restock-rcs-block-qunit-mini-1		230.0		
+restock-rcs-block-triple-angled-1		240.0		
+restock-rcs-block-triple-angled-mini-1		230.0		
+restock-rcs-single-mini-1		230.0		
+restock-reactionwheel-radial-1				
+restock-relay-radial-2				
+restock-separator-1875-1				
+restock-srb-anvil-1	14819.0	268.0		
+rmm_arenysaurus	2473.5	355.0		
+rmm_arsia	2093.0	480.0		
+rmm_dugong	2306.0	361.0		
+rmm_ishtar	2364.5	464.0		
+rmm_rainier	2891.3	428.5		
+rmm_turiasaurus	3275.0	341.5		
+rn_cassini	0.89	321.0		
+rn_galileo_scanner				
+rn_heliosa_b		70.0		0.24
+rn_huygen_hs_bottom				
+rn_huygen_hs_chute				
+rn_huygen_hs_top				
+rn_huygens				
+rn_huygens_chute				
+rn_juno_spacecraft	0.635	317.0		14.0
+rn_ladee	0.455	323.0		0.295
+rn_ladee_scanner				
+rn_lcross_mb		70.0		0.156
+rn_lro	0.3559	317.0		
+rn_magellan_scanner				
+rn_mariner10	0.222	234.97		0.51
+rn_mariner1_2	0.225	234.97		0.222
+rn_mariner3-4	0.222	234.97		0.85
+rn_mariner5	0.222	234.97		0.3
+rn_mariner6-7	0.223	234.97		0.95
+rn_mariner8-9	1.34	287.0		1.02
+rn_mars_observer	1.96	312.0		
+rn_messenger	0.645	317.0		
+rn_new_horizons				
+rn_protonn4_1		60.0		2.2
+rn_protonn6_4		60.0		2.2
+rn_sphinx_t3e				0.095
+rn_strela3_gonets				0.2
+rn_surveyor3				
+rn_surveyor_engines	1.3878	287.0		
+rn_surveyor_retro	43.5	260.0		
+rn_surveyor_s_engine	0.4626	287.0		
+rn_surveyor_solar				0.085
+rn_tdrs_ag				
+rn_venera1	1.96	290.0		0.22
+rn_voyager		227.0		
+rn_vpam	67.2	287.0		
+ro_TKS_adapter_s2_s0p5_1				
+ro_TKS_adapter_s2_s1p5_1				
+ro_TKS_crew_s1p5_2				
+ro_kvant-2_adapter_s2_s0p5_1				
+ro_kvant-2_adapter_s2_s1p5_1				
+ro_kvant-2_crew_s1p5_2				
+ro_priroda_adapter_s2_s0p5_1				
+ro_priroda_adapter_s2_s1p5_1				
+ro_priroda_crew_s1p5_2				
+ro_spektr_adapter_s2_s0p5_1				
+ro_spektr_adapter_s2_s1p5_1				
+ro_spektr_crew_s1p5_2				
+rocketNoseCone_v2				
+rotoServo_00				
+rotoServo_02				
+rotoServo_03				
+rotoServo_04				
+rotor_01				
+rotor_01s				
+rotor_02				
+rotor_02s				
+rotor_03				
+rotor_03s				
+roverBody_v2				
+roverWheel1				
+roverWheel2				
+roverWheel3				
+rtg				
+rtg-0625				
+rtgMini				
+sargas_decoupler_s1p5_1				
+sasModule				
+science_module				
+seatExternalCmd				
+sensorAtmosphere				
+sensorBarometer				
+sensorGravimeter				
+sensorThermometer				
+sepMotor1	98.0	225.0		
+sepMotorLarge	392.0	225.0		
+sepMotorSmall	18.0	225.0		
+shockConeIntake				
+shortDecoupler1-2				
+smallCtrlSrf				
+smallHardpoint				
+smallRadialDecoupler				
+solarPanels1				0.27
+solarPanels2				0.189
+solarPanels3				0.1728
+solarPanels4				0.0864
+solarPanels5				0.0225
+solarPanels5HiTech				0.0315
+sp_mariner_a				0.2
+sp_mariner_b				0.2
+spotLight1				
+spotLight1_v2				
+spotLight2				
+spotLight2_v2				
+spotLight3				
+sputnik1				
+sputnik2	0.16	2.0		
+sputnik3				0.1
+sspx-adapter-0625-125-1				
+sspx-adapter-125-25-1				
+sspx-adapter-125-25-2				
+sspx-adapter-1875-0625-1				
+sspx-adapter-1875-125-1				
+sspx-adapter-1875-125-2				
+sspx-adapter-25-1875-1				
+sspx-adapter-25-375-1				
+sspx-adapter-25-375-2				
+sspx-adapter-375-5-1				
+sspx-adapter-375-5-2				
+sspx-adjusting-base-125-1				
+sspx-adjusting-base-25-1				
+sspx-adjusting-base-375-1				
+sspx-adjusting-base-cradle-125-1				
+sspx-adjusting-base-cradle-25-1				
+sspx-adjusting-base-cradle-375-1				
+sspx-adjusting-stairs-1				
+sspx-airlock-125-1				
+sspx-airlock-25-1				
+sspx-aquaculture-375-1				
+sspx-attach-125-1				
+sspx-attach-1875-1				
+sspx-attach-25-1				
+sspx-attach-375-1				
+sspx-cargo-125-1				
+sspx-cargo-25-1				
+sspx-cargo-25-2				
+sspx-cargo-container-25-1				
+sspx-cargo-container-25-2				
+sspx-cargo-container-25-3				
+sspx-cargo-container-375-1				
+sspx-cargo-container-375-2				
+sspx-cargo-container-375-3				
+sspx-cargo-container-radial-huge-1				
+sspx-cargo-container-radial-huge-2				
+sspx-cargo-container-radial-medium-1				
+sspx-cargo-container-radial-medium-2				
+sspx-cargo-container-radial-medium-3				
+sspx-cargo-container-radial-small-1				
+sspx-cargo-container-radial-small-2				
+sspx-cargo-container-radial-small-3				
+sspx-core-125-1				
+sspx-core-1875-1				
+sspx-core-25-1				
+sspx-core-375-1				
+sspx-core-5-1				
+sspx-cupola-125-1				
+sspx-cupola-1875-1				
+sspx-cupola-375-1				
+sspx-cupola-greenhouse-125-1				
+sspx-cupola-telescope-125-1				
+sspx-docking-125-1				
+sspx-dome-5-1				
+sspx-dome-cupola-5-1				
+sspx-dome-greenhouse-5-1				
+sspx-dome-habitation-5-1				
+sspx-expandable-centrifuge-375-1				
+sspx-expandable-centrifuge-375-2				
+sspx-expandable-centrifuge-5-1				
+sspx-extendable-tube-125-1				
+sspx-extendable-tube-25-1				
+sspx-greenhouse-25-1				
+sspx-greenhouse-375-1				
+sspx-greenhouse-5-1				
+sspx-habitation-125-1				
+sspx-habitation-1875-1				
+sspx-habitation-1875-2				
+sspx-habitation-25-1				
+sspx-habitation-375-1				
+sspx-habitation-375-2				
+sspx-habitation-375-3				
+sspx-habitation-5-1				
+sspx-habitation-5-2				
+sspx-hub-125-1				
+sspx-hub-1875-1				
+sspx-hub-25-1				
+sspx-inflatable-centrifuge-125-1				
+sspx-inflatable-centrifuge-125-2				
+sspx-inflatable-centrifuge-25-1				
+sspx-inflatable-hab-125-1				
+sspx-inflatable-hab-125-2				
+sspx-inflatable-hab-125-3				
+sspx-inflatable-hab-25-1				
+sspx-inflatable-hab-25-2				
+sspx-lab-375-1				
+sspx-lab-5-1				
+sspx-lab-pallet-1				
+sspx-lab-pallet-2				
+sspx-logistics-5-1				
+sspx-logistics-5-2				
+sspx-observation-25-1				
+sspx-science-1875-1				
+sspx-tube-125-1				
+sspx-tube-125-2				
+sspx-tube-125-3				
+sspx-tube-1875-1				
+sspx-tube-1875-2				
+sspx-tube-1875-3				
+sspx-tube-1875-angled-1				
+sspx-tube-25-1				
+sspx-tube-25-2				
+sspx-tube-25-3				
+sspx-tube-375-1				
+sspx-tube-375-2				
+sspx-tube-375-3				
+sspx-utility-125-1				
+sspx-utility-1875-1				
+stackBiCoupler_v2				
+stackPoint1				
+stackTriCoupler_v2				
+standardNoseCone				
+stationHub				
+stationHubLarge				
+stripLight1				
+structuralIBeam1				
+structuralIBeam2				
+structuralIBeam3				
+structuralMiniNode				
+structuralPanel1				
+structuralPanel2				
+structuralPylon				
+structuralWing				
+structuralWing2				
+structuralWing3				
+structuralWing4				
+strutConnector				
+strutCube				
+strutCube3way				
+strutCube90				
+strutCubeLarge				
+strutCubeMedium				
+strutCubeMountingPlate				
+strutCubeOCTOAdapter				
+strutCubeS0Adapter				
+strutCubeSmall				
+strutOcto				
+sweptWing				
+sweptWing1				
+sweptWing2				
+tailfin				
+tatsujin		254.0		
+telescopicLadder				
+telescopicLadderBay				
+tiros-1	1.2	360.0		0.02
+torekka				
+transit2a				0.0145
+truss-circular-01				
+truss-circular-02				
+truss-circular-03				
+truss-circular-04				
+truss-circular-adapter-01				
+truss-circular-adapter-02				
+truss-circular-docking-01				
+truss-hex-01				
+truss-hex-02				
+truss-hex-03				
+truss-hex-adapter-01				
+truss-micro-01				
+truss-micro-02				
+truss-octo-01				
+truss-octo-02				
+truss-octo-03				
+truss-octo-04				
+truss-octo-adapter-crew-01				
+truss-octo-angled-01				
+truss-octo-angled-crew-01				
+truss-octo-attach-01				
+truss-octo-crew-01				
+truss-octo-crew-02				
+truss-octo-crew-03				
+truss-octo-docking-octo				
+truss-octo-drone-01				
+truss-octo-hub-01				
+truss-octo-hub-crew-01				
+truss-spinal-01				
+truss-spinal-02				
+truss-spinal-03				
+truss-spinal-adapter-01				
+truss-spinal-adapter-02				
+truss-spinal-docking-01				
+trussAdapter				
+trussPiece1x				
+trussPiece3x				
+turboFanEngine	172.4	4000.0		
+turboFanSize2	233.5	12600.0		
+turboJet	144.6	9000.0		
+vanguard-1				0.003
+vanguard-2				
+vanguard-3				
+vasimr-0625	3.67	6000.0		
+vasimr-125	14.7	6000.0		
+vela_high_gain_antenna_srf_1				
+vela_landing_leg_srf_1				
+vela_landing_leg_srf_2				
+vernierEngine		260.0		
+wheelMed				
+wingConnector				
+wingConnector2				
+wingConnector3				
+wingConnector4				
+wingConnector5				
+wingStrake				
+winglet				
+winglet3				
+xihe				

@@ -1,5 +1,3 @@
 part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
-RO-fftdustyplasmaffre	Dusty Plasma Fission Fragment Rocket Engine	FarFutureTechnologies	pc_hypergolicChemistry	3	nuclearPropulsion	FissionParticles	ModuleEnginesRF;ModuleEngineExhaustDamage;ModuleSystemHeatEn	low
-ROE-RD301	RD-301	ROEngines	pc_hypergolicChemistry	3	start	LqdAmmonia;LqdFluorine	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	low
-fft-nswr-2	20 m Nuclear Salt Water Rocket	FarFutureTechnologies	pc_hypergolicChemistry	3	nuclearPropulsion	NuclearSaltWater	ModuleEnginesRF;ModuleEngineExhaustDamage;ModuleSystemHeatEn	low
-sputnik2	Sputnik 2	RN_Soviet_Probes	pc_hypergolicChemistry	3	generalRocketry	LqdOxygen	ModuleCommand;ModuleScienceContainer;ModuleRealAntenna;Modul	low
+ROE-RD301	RD-301	ROEngines	pc_hypergolicChemistry	3	start	LqdAmmonia;LqdFluorine	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+sputnik2	Sputnik 2	RN_Soviet_Probes	pc_hypergolicChemistry	3	generalRocketry	LqdOxygen	ModuleCommand;ModuleScienceContainer;ModuleRealAntenna;Modul	med

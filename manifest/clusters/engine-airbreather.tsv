@@ -1,0 +1,92 @@
+part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
+RO-457M	457M 72kW Hall Effect Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;ArgonGas;XenonGas;KryptonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-PPS1350	PPS-1350 Hall Effect Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;ArgonGas;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-SPT100	SPT-100 Hall Effect Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;ArgonGas;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-SPT140	SPT-140 Hall Effect Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;ArgonGas;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-SPT50	SPT-50 Hall Effect Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;ArgonGas;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-SPT60	SPT-60 Hall Effect Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;ArgonGas;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-SPT70	SPT-70 Hall Effect Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;ArgonGas;XenonGas;KryptonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-ionSPT60	SPT-60 Hall Effect Thruster	Squad	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ionArgon-0625	HERMeS Hall Effect Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;ArgonGas;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ionArgon-0625-2	P5 5kW Hall Effect Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;ArgonGas;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ionArgon-0625-3	X3 Hall-Effect Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;ArgonGas;XenonGas;KryptonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ionEngine	NSTAR Gridded Ion Thruster	Squad	aero_subsonicAirfoils	1	ionPropulsion	ElectricCharge;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+neo_dawn	Dawn	RN_US_Probes	aero_subsonicAirfoils	1	generalRocketry	Hydrazine;XenonGas	ModuleCommand;ModuleReactionWheel;ModuleRCSFX;ModuleEnginesR	med
+neo_ds1	Deep Space 1	RN_US_Probes	aero_subsonicAirfoils	1	generalRocketry	Hydrazine;XenonGas	ModuleCommand;ModuleReactionWheel;ModuleRCSFX;ModuleEnginesR	med
+pit-0625	FARAD Pulsed Inductive Thruster	NearFuturePropulsion	aero_subsonicAirfoils	1	experimentalScience	ElectricCharge;ArgonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RAPIER	CR-7 R.A.P.I.E.R.	Squad	aero_supersonicInlets	4	aerospaceTech	LqdMethane;LqdOxygen	MultiModeEngine;ModuleEnginesAJEJet;ModuleEnginesRF;EngineGr	med
+RO-KA-LRCNTR	Lewis Research Center LNTR	KerbalAtomics	aero_supersonicInlets	4	nuclearPropulsion	LqdHydrogen;EnrichedUranium;CoreModerator;TungstenPowder	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-KA-PrincetonLNTR	Princeton LNTR	KerbalAtomics	aero_supersonicInlets	4	nuclearPropulsion	LqdHydrogen;EnrichedUranium;CoreModerator	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-Olympus593	Olympus 593 Turbojet	Squad	aero_supersonicInlets	4	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-R15BD	R-15 Turbojet	Squad	aero_supersonicInlets	4	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-RD012	RD-012 Ramjet	Squad	aero_supersonicInlets	4	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
+RO-RJ43	RJ43 Ramjet	Squad	aero_supersonicInlets	4	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
+RO-RJ47	RJ47 Ramjet	Squad	aero_supersonicInlets	4	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
+RO-RJ59	RJ59 Ramjet	Squad	aero_supersonicInlets	4	hypersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule;ModuleEngineConfigs	med
+RO-SXT-R79	R-79 Turbofan	SXT	aero_supersonicInlets	4	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-fftorion12	12 Meter Orion Drive	FarFutureTechnologies	aero_supersonicInlets	4	nuclearPropulsion	FissionPulses	ModuleEnginesRF;ModulePulseEngineAnimator;ModuleEngineExhaus	med
+RO-fftorion8	8 Meter Orion Drive	FarFutureTechnologies	aero_supersonicInlets	4	nuclearPropulsion	FissionPulses	ModuleEnginesRF;ModulePulseEngineAnimator;ModuleEngineExhaus	med
+SXTVTOLturboFan	F135 Low-Bypass Turbofan	SXT	aero_supersonicInlets	4	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+fft-fission-orion-5-1	10 Meter Orion Drive	FarFutureTechnologies	aero_supersonicInlets	4	nuclearPropulsion	FissionPulses	ModuleEnginesRF;ModulePulseEngineAnimator;ModuleEngineExhaus	med
+mpdt-125	SX3 MPD Thruster	NearFuturePropulsion	aero_supersonicInlets	4	veryHeavyRocketry	ElectricCharge;Lithium;ArgonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+nfa-turbojet-25-1	GE4 Turbojet	NearFutureAeronautics	aero_supersonicInlets	4	hypersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+turboFanEngine	J58 Turbojet	Squad	aero_supersonicInlets	4	hypersonicFlight	Kerosene;NitrousOxide	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
+JetEngine	TF/CF34 High-Bypass Turbofan	Squad	aero_scramjet	6	aerodynamicSystems	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-AL7F	AL-7 Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-Atar101D	Atar 101 Turbojet	SXT	aero_scramjet	6	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-D30F6	D-30 Low-Bypass Turbofan	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-DerwentV	Derwent Turbojet	SXT	aero_scramjet	6	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-ID500	ID-500 Gridded Ion Thruster	NearFuturePropulsion	aero_scramjet	6	ionPropulsion	ElectricCharge;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+RO-J35	J35 Turbojet	SXT	aero_scramjet	6	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-J47	J47 Turbojet	SXT	aero_scramjet	6	stability	Kerosene;Water	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
+RO-J48	J48/Tay Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-J85GE5	J85 Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-JT3C	J57 Turbojet (No Afterburner)	Squad	aero_scramjet	6	aviation	Kerosene;Water	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
+RO-R11F	R-11 Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-R13	R-13 Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-R25F	R-25 Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-RD9B	RD-9 Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-Sapphire203	Sapphire Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-VK1	VK-1 Turbojet	SXT	aero_scramjet	6	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-WS10	WS-10 Low-Bypass Turbofan	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-fft20mMMO	20 m "Mini-Mag" Orion Drive	FarFutureTechnologies	aero_scramjet	6	nuclearPropulsion	FissionPellets	ModuleEnginesRF;ModuleSystemHeatEngine;ModuleChargeableEngin	med
+RO-fftdustyplasmaffre	Dusty Plasma Fission Fragment Rocket Engine	FarFutureTechnologies	aero_scramjet	6	nuclearPropulsion	FissionParticles	ModuleEnginesRF;ModuleEngineExhaustDamage;ModuleSystemHeatEn	med
+RO-model304	Model 304 Turbojet	Squad	aero_scramjet	6	supersonicFlight	LqdHydrogen	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+RO-nfa-RD41	2x RD-41 Turbojet	NearFutureAeronautics	aero_scramjet	6	aerospaceTech	Kerosene	ModuleEnginesAJEJet;ModuleDeployableEngine;EngineGroupModule	med
+RO-nupit	NuPIT Pulsed Inductive Thruster	NearFuturePropulsion	aero_scramjet	6	experimentalScience	ElectricCharge;ArgonGas;LqdAmmonia	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+SXTJ213	Junkers Jumo 213E	SXT	aero_scramjet	6	aviation	AvGas	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTKO211Dprop	Junkers Jumo 211F	SXT	aero_scramjet	6	stability	AvGas	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTKe90TurboJet	D-18 High-Bypass Turbofan	SXT	aero_scramjet	6		Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+SXTMerlin46Prop	Rolls-Royce Merlin 46	SXT	aero_scramjet	6	aviation	AvGas	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTMerlin66prop	Rolls-Royce Merlin 66	SXT	aero_scramjet	6	aviation	AvGas	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTMiniJet	Williams/Rolls-Royce FJ44-2A turbofan	SXT	aero_scramjet	6	stability	Kerosene	ModuleEnginesAJEJet;EngineGroupModule	med
+SXTNK12M	NK-12 Turboprop	SXT	aero_scramjet	6	advAerodynamics	Kerosene	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTPWPT6	PT6A Turboprop	SXT	aero_scramjet	6	aerodynamicSystems	Kerosene	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTPWR2800	Pratt & Whitney R-2800-63W Double Wasp	SXT	aero_scramjet	6	aviation	AvGas	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTR280018WProp	Pratt & Whitney R-2800-18W Double Wasp	SXT	aero_scramjet	6	aviation	AvGas	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTR280021Prop	Pratt & Whitney R-2800-21 Double Wasp	SXT	aero_scramjet	6	aviation	AvGas	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXTTinyprop	IO-550-B Piston Engine	SXT	aero_scramjet	6	start	AvGas	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+SXT_Jumo213A	Junkers Jumo 213A	SXT	aero_scramjet	6	aviation	AvGas	ModuleEnginesAJEPropeller;FSswitchEngineThrustTransform;Engi	med
+aje_al31	AL-31 Low-Bypass Turbofan	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_atar	Atar 09 Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_avon	Avon Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_f404	F404 Low-Bypass Turbofan	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_j57	J57 Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_j75	J75 Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene;Water	ModuleEnginesAJEJet;EngineGroupModule;ModuleBimodalEngineCon	med
+aje_j79	J79 Turbojet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+aje_ramjet	CR2 Ramjet	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJERamjet;EngineGroupModule	med
+fft-ffre-plasma-1	Dusty Plasma Afterburning Fission Fragment Rocket Engine	FarFutureTechnologies	aero_scramjet	6	nuclearPropulsion	FissionParticles;LqdHydrogen	MultiModeEngine;ModuleEnginesRF;ModuleSystemHeatEngine;Engin	med
+fft-fission-zpinch-1	10 m "Mini-Mag" Orion Drive	FarFutureTechnologies	aero_scramjet	6	nuclearPropulsion	FissionPellets	ModuleEnginesRF;ModuleSystemHeatEngine;ModuleChargeableEngin	med
+fft-nswr-2	20 m Nuclear Salt Water Rocket	FarFutureTechnologies	aero_scramjet	6	nuclearPropulsion	NuclearSaltWater	ModuleEnginesRF;ModuleEngineExhaustDamage;ModuleSystemHeatEn	med
+ionXenon-0625	NEXT Gridded Ion Thruster	NearFuturePropulsion	aero_scramjet	6	ionPropulsion	ElectricCharge;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ionXenon-0625-2	HiPEP Gridded Ion Thruster	NearFuturePropulsion	aero_scramjet	6	ionPropulsion	ElectricCharge;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+ionXenon-0625-3	DS4G Gridded Ion Thruster	NearFuturePropulsion	aero_scramjet	6	largeUnmanned	ElectricCharge;XenonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+miniJetEngine	J85 Turbojet (No Afterburner)	Squad	aero_scramjet	6	aviation	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+nfa-turbofan-25-2	Olympus 593 Turbojet	NearFutureAeronautics	aero_scramjet	6	highAltitudeFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+nfa-vtol-0625-1	RB.162 Turbojet	NearFutureAeronautics	aero_scramjet	6	aerospaceTech	Kerosene	ModuleEnginesAJEJet;ModuleDeployableEngine;EngineGroupModule	med
+nfa-vtol-125-1	2x RB.162 Turbojet	NearFutureAeronautics	aero_scramjet	6	aerospaceTech	Kerosene	ModuleEnginesAJEJet;ModuleDeployableEngine;EngineGroupModule	med
+pit-125	PIT Mk Va Pulsed Inductive Thruster	NearFuturePropulsion	aero_scramjet	6	experimentalScience	ElectricCharge;ArgonGas;Ammonia;Hydrazine;Helium	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+turboFanSize2	CF6 High-Bypass Turbofan	Squad	aero_scramjet	6	heavyAerodynamics	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+turboJet	F100 Low-Bypass Turbofan	Squad	aero_scramjet	6	supersonicFlight	Kerosene	ModuleEnginesAJEJet;EngineGroupModule;ModuleEngineConfigs	med
+vasimr-0625	VX-200SS VASIMR	NearFuturePropulsion	aero_scramjet	6	experimentalElectrics	ArgonGas;ElectricCharge;KryptonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
+vasimr-125	VF-200 VASIMR	NearFuturePropulsion	aero_scramjet	6	experimentalElectrics	ArgonGas;ElectricCharge;KryptonGas	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med

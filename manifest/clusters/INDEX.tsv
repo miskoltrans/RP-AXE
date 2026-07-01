@@ -1,39 +1,37 @@
 cluster	parts	nodes	nodes_sample
-upgrade-engineconfig	462	12	cryo_lh2Insulation, cryo_stagedHydrolox, elec_ionThrusters, experimental …
+upgrade-engineconfig	462	17	aero_scramjet, aero_subsonicAirfoils, aero_supersonicInlets, cryo_lh2Insulation …
 ground-support	212	1	experimental
 unclassified	177	1	experimental
-engine-hypergolic	135	1	pc_hypergolicChemistry
 struct-adapter	132	1	str_interstageTruss
+engine-hypergolic	132	2	pc_hypergolicChemistry, pc_storableOxidizers
 tank	110	2	met_chemMilling, met_weldedSteel
-engine-solid	104	1	pc_castableComposite
+engine-solid	104	2	pc_apcpGrain, pc_castableComposite
 probe-satellite	94	1	int_satelliteBus
+engine-airbreather	91	3	aero_scramjet, aero_subsonicAirfoils, aero_supersonicInlets
 upgrade-capability	91	5	aero_proceduralFairings, comp_dataStorage, comp_digitalFlightComputer, experimental …
 rcs	85	1	gnc_reactionControl
-engine-kerolox	78	1	fd_gasGenerator
 clean-aero	77	2	aero_subsonicAirfoils, aero_transonicArea
 clean-Telecommunications	76	3	tel_cassegrainHGA, tel_pcmTelemetry, tel_phasedArray
 struct-decoupler	71	1	str_stageSeparation
 clean-ElectricalPower	55	3	elec_fuelCell, elec_silverZinc, ext_powerGrid
 science-instrument	51	3	mic_integratedCircuit, mic_photolithography, mic_vacuumTubes
-engine-hydrolox	51	1	cryo_lh2Insulation
+engine-hydrolox	48	3	cryo_lh2Insulation, cryo_stagedHydrolox, fd_expanderCycle
 clean-cabin	38	1	life_pressurizedCabin
 clean-docking	34	1	str_androgynousDocking
+engine-kerolox	32	4	fd_combustionStability, fd_gasGenerator, fd_pressureFed, fd_stagedCombustion
 clean-chute	30	1	aero_parachuteRecovery
 override	28	8	aero_scramjet, cryo_stagedHydrolox, fd_combustionStability, fd_deepThrottle …
 clean-fairing	24	1	aero_proceduralFairings
-engine-electric	21	1	elec_ionThrusters
 clean-capsule	20	1	int_crewedCapsule
 clean-rtg-in-elec	19	1	nuc_rtg
 clean-Robotics	18	1	rob_servoActuators
 clean-reactor	15	1	nuc_fissionReactor
-engine-nuclear	13	1	nuc_nuclearThermal
 clean-CompositeMaterials	13	2	cmp_ablativeTPS, cmp_glassFiber
-engine-piston	9	1	aero_subsonicAirfoils
+engine-nuclear	11	2	nuc_nervaImproved, nuc_nuclearThermal
 clean-GuidanceControl	9	1	gnc_inertialNav
-engine-nuclearpulse	5	1	nuc_gasCoreNTR
-engine-other	4	1	pc_hypergolicChemistry
 struct-legs	3	1	str_landingLegs
 clean-Thermodynamics	3	1	th_regenCooling
+engine-other	2	1	pc_hypergolicChemistry
 engine-methalox	2	1	pc_methalox
 probe-comsat	2	1	int_comsatBus
 science-optical	2	1	opt_tvImaging
