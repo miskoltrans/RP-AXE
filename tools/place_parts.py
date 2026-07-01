@@ -111,8 +111,14 @@ def route(p):
         if mod == "ROCapsules" or has(mods, "Ablator", "HeatShield"):
             return ("NODE:int_crewedCapsule", "clean:capsule", "high")
         return ("SPREAD:LifeSupport", "clean:cabin", "med")
-    if disc == "ElectricalPower" and has(name + mods, "RTG", "Radioisotope", "SNAP"):
-        return ("NODE:nuc_rtg", "clean:rtg-in-elec", "high")           # radioisotope = Nuclear, not Electrical
+    if disc == "ElectricalPower":
+        if has(name + mods, "RTG", "Radioisotope", "SNAP"):
+            return ("NODE:nuc_rtg", "clean:rtg-in-elec", "high")       # radioisotope = Nuclear, not Electrical
+        if has(mods, "SolarPanel", "ROSolar"):                        # spread solar by charge rate across the PV ladder
+            r = flt(p.get("solar"))
+            node = ("elec_siliconPV" if r < 0.5 else "elec_bodyMountedArrays" if r < 3 else
+                    "elec_trackingArrays" if r < 15 else "elec_tripleJunction" if r < 60 else "elec_flexibleArrays")
+            return ("NODE:" + node, "clean:solar", "high")
     if disc == "StructuresMechanisms":
         if has(mods, "DockingNode"):  return ("NODE:str_androgynousDocking", "clean:docking", "high")
         return ("SPREAD:StructuresMechanisms", "clean:struct", "med")
@@ -149,9 +155,10 @@ def main():
             next(f, None)
             for ln in f:
                 c = ln.rstrip("\n").split("\t")
-                if c and c[0]: cap[c[0]] = (c[1] if len(c) > 1 else "", c[2] if len(c) > 2 else "")
+                if c and c[0]: cap[c[0]] = (c[1] if len(c) > 1 else "", c[2] if len(c) > 2 else "",
+                                            c[4] if len(c) > 4 else "")
     for p in parts:
-        p["thrust"], p["isp"] = cap.get(p["name"], ("", ""))
+        p["thrust"], p["isp"], p["solar"] = cap.get(p["name"], ("", "", ""))
 
     overrides = {}                                                      # hand-overrides win over auto-routing
     op = os.path.join(MAN, "part-overrides.tsv")

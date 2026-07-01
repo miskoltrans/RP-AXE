@@ -1,5 +1,5 @@
 cluster	parts	nodes	nodes_sample
-upgrade-engineconfig	462	17	aero_scramjet, aero_subsonicAirfoils, aero_supersonicInlets, cryo_lh2Insulation …
+upgrade-engineconfig	462	16	aero_subsonicAirfoils, aero_supersonicInlets, cryo_lh2Insulation, cryo_stagedHydrolox …
 ground-support	212	1	experimental
 unclassified	177	1	experimental
 struct-adapter	132	1	str_interstageTruss
@@ -7,15 +7,15 @@ engine-hypergolic	132	2	pc_hypergolicChemistry, pc_storableOxidizers
 tank	110	2	met_chemMilling, met_weldedSteel
 engine-solid	104	2	pc_apcpGrain, pc_castableComposite
 probe-satellite	94	1	int_satelliteBus
-engine-airbreather	91	3	aero_scramjet, aero_subsonicAirfoils, aero_supersonicInlets
+engine-airbreather	91	2	aero_subsonicAirfoils, aero_supersonicInlets
 upgrade-capability	91	5	aero_proceduralFairings, comp_dataStorage, comp_digitalFlightComputer, experimental …
 rcs	85	1	gnc_reactionControl
 clean-aero	77	2	aero_subsonicAirfoils, aero_transonicArea
 clean-Telecommunications	76	3	tel_cassegrainHGA, tel_pcmTelemetry, tel_phasedArray
 struct-decoupler	71	1	str_stageSeparation
-clean-ElectricalPower	55	3	elec_fuelCell, elec_silverZinc, ext_powerGrid
 science-instrument	51	3	mic_integratedCircuit, mic_photolithography, mic_vacuumTubes
 engine-hydrolox	48	3	cryo_lh2Insulation, cryo_stagedHydrolox, fd_expanderCycle
+clean-solar	40	5	elec_bodyMountedArrays, elec_flexibleArrays, elec_siliconPV, elec_trackingArrays …
 clean-cabin	38	1	life_pressurizedCabin
 clean-docking	34	1	str_androgynousDocking
 engine-kerolox	32	4	fd_combustionStability, fd_gasGenerator, fd_pressureFed, fd_stagedCombustion
@@ -25,6 +25,7 @@ clean-fairing	24	1	aero_proceduralFairings
 clean-capsule	20	1	int_crewedCapsule
 clean-rtg-in-elec	19	1	nuc_rtg
 clean-Robotics	18	1	rob_servoActuators
+clean-ElectricalPower	15	1	elec_fuelCell
 clean-reactor	15	1	nuc_fissionReactor
 clean-CompositeMaterials	13	2	cmp_ablativeTPS, cmp_glassFiber
 engine-nuclear	11	2	nuc_nervaImproved, nuc_nuclearThermal
