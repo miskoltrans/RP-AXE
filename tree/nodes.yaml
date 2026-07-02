@@ -432,8 +432,8 @@ nodes:
     discipline: StructuresMechanisms
     tier: 1
     parents: [start]
-    flavor: "The unglamorous shelf: struts, I-beams, panels, pylons, hardpoints and nose cones — the passive structure that ties a vehicle together and fairs it over. No breakthrough, just the fittings you always reach for."
-    parts: [proceduralStructural, proceduralNoseCone, structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve]
+    flavor: "A dead-end shelf off the main tree: pre-made struts, beams, panels, nose cones, plates and fittings you bolt on when you'd rather not shape a procedural piece. The procedural structural part is lighter and the default — nothing depends on researching this; it's here only if you want the fixed catalog."
+    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate]
 
   # ===================== BAND 1 * AVIONICS (capability tiers — grants:, no physical part) =====================
   # RP-1's Science-Core avionics ladder as ONE track (user). Each node grants the avionics tier; names are my
@@ -485,3 +485,11 @@ nodes:
     parents: [aero_subsonicWing]
     flavor: "A blunt tail drags a low-pressure wake behind it; taper the aft body into a boattail and the flow closes cleanly, shaving base drag off a rocket or airframe stern for the price of a little length. The contoured aft-fairings and adapters that earn their keep in the transonic climb."
     parts: [KzFlatBoattail, RSBRibbedBase_Boattail, RSBTrussBase_Boattail, SSTUBase_Boattail, SSTUHollowRing_Boattail]
+
+  - id: str_diameterAdapters
+    title: "Modular Diameter Adapters"
+    discipline: StructuresMechanisms
+    tier: 1
+    parents: [start]
+    flavor: "Procedural ribbed, truss and hollow adapters that mate one diameter to another and carry the load across an interstage or under a payload — the structural handshake between a fat booster and a slim upper, or a stage and the satellite it lifts."
+    parts: [RSBRibbedBase, RSBTrussBase, SSTUBase, SSTUHollowRing, adapterSize2-Size1, adapterSize2-Size1Slant, strutCubeOCTOAdapter, strutCubeS0Adapter, trussAdapter, KzFlatAdapter, RSBRibbedBase_Interstage, RSBTrussBase_Interstage, SSTUBase_Interstage, SSTUHollowRing_Interstage]
