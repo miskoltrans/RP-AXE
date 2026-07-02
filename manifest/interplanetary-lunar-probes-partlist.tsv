@@ -23,12 +23,12 @@ scienceHuman	Early Human Spaceflight Era Science	-2952	part	dmUS2GoreSat	no	no	U
 scienceHuman	Early Human Spaceflight Era Science	-2952	part	sensorGravimeter	yes	no	Orbital Perturbation Experiment
 interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	part	ca_argo-mk2	yes	no	Mariner Mars & Venus Spacecraft Bus
 interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	part	rn_mariner1_2	yes	no	Mariner 1/2
-interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	upgrade	Deep-Space-interplanetaryProbes	REFERENCE-avionics		
+interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	upgrade	Deep-Space-interplanetaryProbes	DROP-avionics		
 interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	upgrade	HDD-Upgrade-1961	KEEP-capability		
-interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	upgrade	Near-Earth-interplanetaryProbes	REFERENCE-avionics		
+interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	upgrade	Near-Earth-interplanetaryProbes	DROP-avionics		
 interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	upgrade	RFTech-ComSat-II	KEEP-capability		
 interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	upgrade	RFTech-NavSat-II	KEEP-capability		
-interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	upgrade	Science-Core-interplanetaryProbes	REFERENCE-avionics		
+interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	upgrade	Science-Core-interplanetaryProbes	KEEP-avionics		
 interplanetaryComms	Interplanetary Communications	-2952	part	HighGainAntenna	yes	no	1.25m Retractable Parabolic Antenna
 interplanetaryComms	Interplanetary Communications	-2952	part	HighGainAntenna5	yes	no	HG-5 Retractable Parabolic Antenna (DEPRECATED)
 interplanetaryComms	Interplanetary Communications	-2952	part	HighGainAntenna5_v2	yes	no	HG-5 Retractable Parabolic Antenna
@@ -53,7 +53,7 @@ interplanetaryComms	Interplanetary Communications	-2952	part	nfex-antenna-top-di
 interplanetaryComms	Interplanetary Communications	-2952	part	restock-antenna-stack-2	yes	no	Communotron DTS-J1
 interplanetaryComms	Interplanetary Communications	-2952	part	restock-antenna-stack-3	yes	no	Communotron HG-61
 interplanetaryComms	Interplanetary Communications	-2952	part	restock-relay-radial-2	yes	no	HG-20 High Gain Antenna
-interplanetaryComms	Interplanetary Communications	-2952	upgrade	RP0Level4TrackingStation	REFERENCE-comms-dsn		
+interplanetaryComms	Interplanetary Communications	-2952	upgrade	RP0Level4TrackingStation	KEEP-dsn		
 interplanetaryComms	Interplanetary Communications	-2952	upgrade	commsTL3	KEEP-techlevel-TODO		
 prototypeHydrolox	Prototype Hydrolox Engines	-2867	part	ROE-RL10Fixed	yes	no	RL-10 Series (Non-Extendable Nozzle)
 orbitalRocketry1962	1962 Orbital Rocketry	-2867	upgrade	RFUpgrade_AJ10-118	KEEP-engine		
@@ -82,10 +82,10 @@ solids1962	1962-1963 Solid Rocket Engines	-2867	part	ROE-M55	yes	no	M55 (Minutem
 solids1962	1962-1963 Solid Rocket Engines	-2867	part	ROE-Star13D	yes	no	STAR 13D
 solids1962	1962-1963 Solid Rocket Engines	-2867	upgrade	RFTech-solids-tltech1	KEEP-engine-typelevel		
 improvedAvionics	Improved Avionics	-2867	part	SXTAlouetteI	yes	no	Alouette Core
-improvedAvionics	Improved Avionics	-2867	upgrade	Deep-Space-improvedAvionics	REFERENCE-avionics		
-improvedAvionics	Improved Avionics	-2867	upgrade	Near-Earth-improvedAvionics	REFERENCE-avionics		
+improvedAvionics	Improved Avionics	-2867	upgrade	Deep-Space-improvedAvionics	DROP-avionics		
+improvedAvionics	Improved Avionics	-2867	upgrade	Near-Earth-improvedAvionics	DROP-avionics		
 improvedAvionics	Improved Avionics	-2867	upgrade	RP-1-PayloadTech-Axial	KEEP-capability		
-improvedAvionics	Improved Avionics	-2867	upgrade	Science-Core-improvedAvionics	REFERENCE-avionics		
+improvedAvionics	Improved Avionics	-2867	upgrade	Science-Core-improvedAvionics	KEEP-avionics		
 earlyHydrolox	Early Hydrolox Engines	-2782	part	ROE-LR87_LH2	yes	no	AJ23-65
 earlyHydrolox	Early Hydrolox Engines	-2782	part	ROE-RZ20	yes	no	RZ.20
 earlyHydrolox	Early Hydrolox Engines	-2782	upgrade	RFUpgrade_RL10A-3-1	KEEP-engine		
@@ -163,10 +163,10 @@ matureAvionics	Mature Avionics and Probes	-2612	part	ca_landv_orbiter_core	yes	n
 matureAvionics	Mature Avionics and Probes	-2612	part	ca_startrack	yes	no	CA-ACS 'StarTrack' Attitude Control System
 matureAvionics	Mature Avionics and Probes	-2612	part	pioneer_6_7_8_9	yes	no	Pioneer 6/7/8/9
 matureAvionics	Mature Avionics and Probes	-2612	part	rn_surveyor3	yes	no	Surveyor Lunar Probe
-matureAvionics	Mature Avionics and Probes	-2612	upgrade	Deep-Space-matureAvionics	REFERENCE-avionics		
+matureAvionics	Mature Avionics and Probes	-2612	upgrade	Deep-Space-matureAvionics	DROP-avionics		
 matureAvionics	Mature Avionics and Probes	-2612	upgrade	HDD-Upgrade-1964	KEEP-capability		
-matureAvionics	Mature Avionics and Probes	-2612	upgrade	Near-Earth-matureAvionics	REFERENCE-avionics		
-matureAvionics	Mature Avionics and Probes	-2612	upgrade	Science-Core-matureAvionics	REFERENCE-avionics		
+matureAvionics	Mature Avionics and Probes	-2612	upgrade	Near-Earth-matureAvionics	DROP-avionics		
+matureAvionics	Mature Avionics and Probes	-2612	upgrade	Science-Core-matureAvionics	KEEP-avionics		
 improvedComms	Improved Communications	-2612	part	ROC-D2Antenna	yes	no	D-2 High Gain Antenna
 improvedComms	Improved Communications	-2612	part	ROC-DynaAntenna	yes	no	DynaSoar Telemetry Antenna
 improvedComms	Improved Communications	-2612	part	ROC-GeminiAntenna	yes	no	Gemini Antenna
@@ -184,7 +184,7 @@ improvedComms	Improved Communications	-2612	part	nfex-antenna-phased-single-3	ye
 improvedComms	Improved Communications	-2612	part	nfex-antenna-relay-tdrs-1	yes	no	RA-0-8 Relay Antenna
 improvedComms	Improved Communications	-2612	part	nfex-antenna-relay-tdrs-2	yes	no	RA-5B Advanced Relay Antenna
 improvedComms	Improved Communications	-2612	part	nfex-antenna-rover-3	yes	no	AX-30 High Gain Micro-Antenna
-improvedComms	Improved Communications	-2612	upgrade	RP0Level5TrackingStation	REFERENCE-comms-dsn		
+improvedComms	Improved Communications	-2612	upgrade	RP0Level5TrackingStation	KEEP-dsn		
 improvedComms	Improved Communications	-2612	upgrade	commsTL4	KEEP-techlevel-TODO		
 improvedPower	Improved Power Generation and Storage	-2612	part	FuelCell	yes	no	Fuel Cell
 improvedPower	Improved Power Generation and Storage	-2612	part	FuelCellArray	yes	no	Fuel Cell Array

@@ -116,7 +116,7 @@ dockingCrewTransfer	Docking and Crew Transfer	-2357	upgrade	RFUpgrade_ISPS	KEEP-
 dockingCrewTransfer	Docking and Crew Transfer	-2357	upgrade	RFUpgrade_ISPS-HDA	KEEP-engine		
 advancedComms	Advanced Communications	-2272	part	ROC-ApolloHGABDB	yes	no	Apollo High Gain Antenna (HGA)
 advancedComms	Advanced Communications	-2272	part	ROC-ApolloScimitarBDB	yes	no	Apollo Scimitar Antenna
-advancedComms	Advanced Communications	-2272	upgrade	RP0Level6TrackingStation	REFERENCE-comms-dsn		
+advancedComms	Advanced Communications	-2272	upgrade	RP0Level6TrackingStation	KEEP-dsn		
 advancedComms	Advanced Communications	-2272	upgrade	commsTL5	KEEP-techlevel-TODO		
 improvedRTG	Improved RTGs	-2272	part	RO-SNAP-19-RTG	yes	no	SNAP-19 Series RTG
 improvedRTG	Improved RTGs	-2272	part	RO-reactor-BES5	yes	no	BES-5 Nuclear Reactor
@@ -129,12 +129,12 @@ improvedRTG	Improved RTGs	-2272	part	ca_rtg2000	yes	no	Pioneer SNAP-19 RTG
 improvedRTG	Improved RTGs	-2272	part	nfe-rtg-snap27-1	yes	no	SNAP-27 Series RTG
 largeHydrolox	Large Hydrolox Engines	-2272	upgrade	RFUpgrade_J-2-225K	KEEP-engine		
 largeScaleAvionics	Large Scale Avionics	-2272	part	roverBody_v2	yes	no	Probodobodyne RoveMate
-largeScaleAvionics	Large Scale Avionics	-2272	upgrade	Deep-Space-largeScaleAvionics	REFERENCE-avionics		
+largeScaleAvionics	Large Scale Avionics	-2272	upgrade	Deep-Space-largeScaleAvionics	DROP-avionics		
 largeScaleAvionics	Large Scale Avionics	-2272	upgrade	HDD-Upgrade-1969	KEEP-capability		
-largeScaleAvionics	Large Scale Avionics	-2272	upgrade	Near-Earth-largeScaleAvionics	REFERENCE-avionics		
+largeScaleAvionics	Large Scale Avionics	-2272	upgrade	Near-Earth-largeScaleAvionics	DROP-avionics		
 largeScaleAvionics	Large Scale Avionics	-2272	upgrade	RFTech-ComSat-III	KEEP-capability		
 largeScaleAvionics	Large Scale Avionics	-2272	upgrade	RFTech-NavSat-III	KEEP-capability		
-largeScaleAvionics	Large Scale Avionics	-2272	upgrade	Science-Core-largeScaleAvionics	REFERENCE-avionics		
+largeScaleAvionics	Large Scale Avionics	-2272	upgrade	Science-Core-largeScaleAvionics	KEEP-avionics		
 lunarRatedPower	Lunar Rated Power Generation	-2272	part	1x3WPanels	yes	no	OX-4M 2x3 Photovoltaic Panels
 lunarRatedPower	Lunar Rated Power Generation	-2272	part	LgRadialSolarPanel	yes	no	ST3 Solar Panel
 lunarRatedPower	Lunar Rated Power Generation	-2272	part	ROC-D2Solar	yes	no	D-2 Solar Array

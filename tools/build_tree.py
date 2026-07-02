@@ -242,11 +242,14 @@ def node_block(disc, n, indent="\t"):
         a(f"{indent}\t\tlineTo = LEFT")
         a(f"{indent}\t}}")
     parts = n.get("parts") or []; ups = n.get("upgrades") or []
-    if parts or ups:
+    grants = n.get("grants") or []   # provisional capability/facility unlocks (avionics tier, DSN level) — docs/PLACEHOLDERS.md
+    if parts or ups or grants:
         a(f"{indent}\tUnlocks")
         a(f"{indent}\t{{")
         for p in parts: a(f"{indent}\t\tpart = {p}")
         for u in ups:   a(f"{indent}\t\tpartUpgrade = {u}")
+        if grants: a(f"{indent}\t\t// GRANTs (provisional): capability/facility unlocks; emission may change once the avionics/DSN mechanism is wired")
+        for g in grants: a(f"{indent}\t\tpartUpgrade = {g}")
         a(f"{indent}\t}}")
     a(f"{indent}}}")
     return "\n".join(L)
@@ -492,8 +495,8 @@ def _inline_svg(disc, nodes, by, routes):
         boxes.append(f'<text x="{PAD + t*COLW:.0f}" y="20" fill="#888" font-size="12" font-weight="600">T{t}</text>')
     for n in nodes:
         d = disc[n["discipline"]]; x, y = X(n), Y(n); cx = x + NW / 2
-        np = len(n.get("parts") or []); nu = len(n.get("upgrades") or [])
-        badge = (f"{np}p" + (f"+{nu}u" if nu else "")) if (np or nu) else "—"
+        np = len(n.get("parts") or []); nu = len(n.get("upgrades") or []); ng = len(n.get("grants") or [])
+        badge = (f"{np}p" + (f"+{nu}u" if nu else "") + (f"+{ng}g" if ng else "")) if (np or nu or ng) else "—"
         lines = _wrap(n["title"], width=13, maxlines=3)   # small title inside the square; full detail on click
         starts = {1: [40], 2: [32, 46], 3: [24, 38, 52]}[len(lines)]
         tspans = "".join(
@@ -527,7 +530,7 @@ def emit_html(disc, nodes, by, routes):
             "title": n["title"], "discipline": disc[n["discipline"]]["title"],
             "color": disc[n["discipline"]]["color"], "tier": n["tier"], "cost": n["cost"],
             "anyToUnlock": bool(n.get("anyToUnlock")), "flavor": (n.get("flavor") or "").strip(),
-            "parts": parts, "upgrades": list(n.get("upgrades") or []),
+            "parts": parts, "upgrades": list(n.get("upgrades") or []), "grants": list(n.get("grants") or []),
         }
     npart = sum(len(d["parts"]) for d in data.values())
     sub = f"{len(nodes)} nodes · {npart} parts placed · click a node"
@@ -649,7 +652,7 @@ def emit_prototype_data(disc, nodes, by, routes):
             "id": n["id"], "title": n["title"], "discipline": n["discipline"],
             "tier": n["tier"], "cost": n["cost"], "anyToUnlock": bool(n.get("anyToUnlock")),
             "flavor": (n.get("flavor") or "").strip(),
-            "parts": parts, "upgrades": list(n.get("upgrades") or []),
+            "parts": parts, "upgrades": list(n.get("upgrades") or []), "grants": list(n.get("grants") or []),
             "pos": [n["_x"], n["_y"]],
         })
     jedges = [{"from": pid, "to": cid, "anyToUnlock": bool(by[cid].get("anyToUnlock")),

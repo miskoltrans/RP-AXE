@@ -188,9 +188,9 @@ earlyAvionics	Early Avionics and Probes	part	sputnik2	yes	Sputnik 2
 earlyAvionics	Early Avionics and Probes	part	sputnik3	yes	Sputnik 3 "Object D"
 earlyAvionics	Early Avionics and Probes	part	vanguard-1	yes	Vanguard 1
 earlyAvionics	Early Avionics and Probes	upgrade	HDD-Upgrade-Early	KEEP-capability	
-earlyAvionics	Early Avionics and Probes	upgrade	Near-Earth-earlyAvionics	REFERENCE-avionics	
+earlyAvionics	Early Avionics and Probes	upgrade	Near-Earth-earlyAvionics	DROP-avionics	
 earlyAvionics	Early Avionics and Probes	upgrade	RP-1-PayloadTech-EarlyAvionics	KEEP-capability	
-earlyAvionics	Early Avionics and Probes	upgrade	Science-Core-earlyAvionics	REFERENCE-avionics	
+earlyAvionics	Early Avionics and Probes	upgrade	Science-Core-earlyAvionics	KEEP-avionics	
 scienceSatellite	Satellite Era Science	part	RO-BasicFilmCamera	yes	PH02 - Basic Film Camera
 scienceSatellite	Satellite Era Science	part	RO-EarlyMagnet	yes	MG01 - Early Magnetometer
 scienceSatellite	Satellite Era Science	part	RO-EarlyTVCamera	yes	VI01 - Early Television Camera
@@ -201,7 +201,7 @@ scienceSatellite	Satellite Era Science	part	dmUS2Scope	no	Univ. Storage 2 - Orbi
 primitiveSolarPanels	Primitive Solar Panels	part	RO_EarlyMediumSolarPanel	yes	ST1 Medium Solar Panel
 primitiveSolarPanels	Primitive Solar Panels	upgrade	solarTL1	KEEP-techlevel-TODO	
 lunarRangeComms	Lunar Range Communications	part	longAntenna	yes	Communotron 16
-lunarRangeComms	Lunar Range Communications	upgrade	RP0Level2TrackingStation	REFERENCE-comms-dsn	
+lunarRangeComms	Lunar Range Communications	upgrade	RP0Level2TrackingStation	KEEP-dsn	
 lunarRangeComms	Lunar Range Communications	upgrade	commsTL1	KEEP-techlevel-TODO	
 basicAvionics	Basic Avionics and Probes	part	explorer_6	yes	Explorer 6
 basicAvionics	Basic Avionics and Probes	part	grab-1	yes	GRAB 1
@@ -210,10 +210,10 @@ basicAvionics	Basic Avionics and Probes	part	tiros-1	yes	Tiros-1 Satellite
 basicAvionics	Basic Avionics and Probes	part	transit2a	yes	Transit-2A Satellite
 basicAvionics	Basic Avionics and Probes	part	vanguard-2	yes	Vanguard 2
 basicAvionics	Basic Avionics and Probes	part	vanguard-3	yes	Vanguard 3
-basicAvionics	Basic Avionics and Probes	upgrade	Deep-Space-basicAvionics	REFERENCE-avionics	
+basicAvionics	Basic Avionics and Probes	upgrade	Deep-Space-basicAvionics	DROP-avionics	
 basicAvionics	Basic Avionics and Probes	upgrade	HDD-Upgrade-Basic	KEEP-capability	
-basicAvionics	Basic Avionics and Probes	upgrade	Near-Earth-basicAvionics	REFERENCE-avionics	
-basicAvionics	Basic Avionics and Probes	upgrade	Science-Core-basicAvionics	REFERENCE-avionics	
+basicAvionics	Basic Avionics and Probes	upgrade	Near-Earth-basicAvionics	DROP-avionics	
+basicAvionics	Basic Avionics and Probes	upgrade	Science-Core-basicAvionics	KEEP-avionics	
 digitalComms	Digital Communications	part	antenna_cone_toggle	yes	CA-A02 Helical Omnidirectional Antenna
-digitalComms	Digital Communications	upgrade	RP0Level3TrackingStation	REFERENCE-comms-dsn	
+digitalComms	Digital Communications	upgrade	RP0Level3TrackingStation	KEEP-dsn	
 digitalComms	Digital Communications	upgrade	commsTL2	KEEP-techlevel-TODO	
