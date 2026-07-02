@@ -1,242 +1,196 @@
-# In-game render port — ortho-late routing + Brandes–Köpf layout (handoff)
+# In-game render: bake layout offline (BK), render only edges in KSP
 
-> **Follow-up to [RENDER-PORT.md](RENDER-PORT.md)** (that port is DONE). This adds the two variants the
-> prototype settled on as the shipping look and makes them the in-game default:
-> **routing = ortho-late** ("elbow into target", converging edges) + **layout = sugiyama-bk**
-> (Brandes–Köpf coordinate assignment ⇒ straight edge runs). Both are already the prototype default
-> (`tree/render/prototype/renderer.js`, `opt.routing='ortho-late'`, `opt.layout='sugiyama-bk'`).
->
-> **Scope:** port these two only. Bundle/bezier/octilinear routing and the discipline-grouped layout stay
-> HTML-only for now (noted at the end as optional future work).
+> **Supersedes the earlier "port BK into C#" plan.** Decision (2026-07-02): node placement is **static
+> data** → compute it **offline in the compiler** and delete the runtime re-layout. KSP does only what it
+> genuinely must at runtime: draw the **ortho-late** edges (there's no cfg field for a custom edge polyline).
+> Shipping look = **ortho-late routing + Brandes–Köpf (`sugiyama-bk`) layout**, already the prototype default.
 
-## What "done" looks like
+## Why this is the right split (ground truth)
 
-Open R&D in-game with the default `RenderSettings.cfg`: nodes are placed by BK (long prerequisite chains
-run as **dead-straight horizontal lines**, not gentle diagonals) and edges are **converging orthogonal
-elbows into the target node** (a riser just left of each target), matching the prototype's default view.
-`layout = stock` still disables everything; `routing = lanes` still gives the old lane-packed look.
+`tools/build_tree.py` `main()` already bakes positions:
+```
+resolve(...)                 # discipline-grid fallback _x,_y
+routes = sugiyama_layout(...) # OVERWRITES _x,_y with the layered layout (+ returns dummy-routed edges)
+emit_cfg(...)                # AxeTechTree.cfg: pos = _x,_y,-1   -> THE GAME TREE (line ~235)
+emit_prototype_data(...)     # tree-data.js: pos = [_x,_y] + waypoints -> THE PROTOTYPE (line ~656)
+```
+So the game cfg **already** carries the compiler's node positions. `AxeTreeRender.OnTreeSpawn` then
+*overwrites* them at runtime with its own `LayoutSugiyama`/`LayoutBands` — that was a decoupling
+convenience while layout was being iterated in the prototype; now that BK is decided, consolidate.
 
-## Files & anchors (verified against current source)
-
-| file | what changes |
-|------|--------------|
-| `Source/AXE/RnD/AxeTreeLayout.cs` | add BK coordinate assignment to `LayoutSugiyama` (new `useBK` param + `segPrev` build + 5 `Bk*` methods); add `RouteOrthoLate` |
-| `Source/AXE/RnD/AxeTreeRender.cs`  | accept `sugiyama-bk` layout (guard ~line 94 + dispatch ~line 140); replace the `LaneRouting` edge block (~line 184) with a routing dispatch; loosen the `GetVectorArray_Prefix` gate (~line 259) |
-| `Source/AXE/RnD/AxeTreeMeta.cs`    | add `Routing` to `Settings`; parse `routing`; accept `sugiyama-bk` |
-| `GameData/RP-AXE/RenderSettings.cfg` | `layout = sugiyama-bk`, add `routing = ortho-late`, update header comments |
-
-Everything stays inside the existing enhance-stock envelope: **one flat polyline per edge**, returned by
-the existing `GetVectorArray` Harmony prefix; colour/width untouched. No new hooks.
+**Consequences of moving BK into the compiler:**
+- `AxeTechTree.cfg` **and** `tree-data.js` both get BK positions from one change — so the prototype's
+  **"compiler" layout mode previews exactly what ships** (and equals its own `sugiyama-bk` mode).
+- The C# plugin **sheds** its entire layout body (~400 lines), the `RDNode.pos` reflection, the
+  `OnTreeSpawn` reposition, and the runtime fit/flip. One layout implementation instead of three.
+- Only **edges** stay at runtime (KSP draws them via Vectrosity → `RDNode.GetVectorArray`), computed from
+  the now-baked positions. That's the small, unavoidable piece.
 
 ---
 
-## 1. `AxeTreeLayout.cs` — Brandes–Köpf coordinates
+# Part A — `build_tree.py`: Brandes–Köpf coordinates (Python)
 
-### 1a. Build `segPrev` in `LayoutSugiyama`
+> This is the **layout agent's file** (`sugiyama_layout` is theirs). The change lives squarely in that
+> function; give them this section, or land it path-scoped and flag them. Everything else follows for free.
 
-BK needs the *proper-layered* adjacency (adjacent-rank segments only), NOT the `prev`/`nxt` maps (which
-include the non-forward `pt >= ct` edges). Add a `segPrev` map next to `prev`/`nxt`, populated **only** in
-the forward-chain branch:
+### A1. Build `seg_prev` (adjacent-rank segments only) in `sugiyama_layout`
 
-```csharp
-// beside: var prev = ...; var nxt = ...;
-var segPrev = new Dictionary<string, List<string>>();          // adjacent-rank predecessors (BK only)
-void AddSeg(string a, string b) { Bucket(segPrev, b).Add(a); } // a (upper) -> b (lower)
-```
-In the chain loop, in the **forward** branch (the `else` where dummies are inserted), alongside
-`AddAdj(chain[i], chain[i + 1])` add:
-```csharp
-for (int i = 0; i < chain.Count - 1; i++) { AddAdj(chain[i], chain[i + 1]); AddSeg(chain[i], chain[i + 1]); }
-```
-Do **not** call `AddSeg` in the `pt >= ct` (non-forward) branch — those aren't adjacent-rank segments.
-
-### 1b. Branch the coordinate assignment
-
-Change the signature (add `bool useBK` at the end):
-```csharp
-internal static void LayoutSugiyama(List<LNode> nodes, List<LEdge> edges, Dictionary<string, LNode> byId,
-    Dictionary<string, int> discOrder, float colw, float spacingY, float marginX, float marginY,
-    bool diffspread, bool useBK)
-```
-The existing coordinate block builds a `Dictionary<string,double> y` via PAV. Wrap it so BK is an
-alternative producing the same `y` (the `gap` lambda is already defined just above — reuse it as BK's
-separation function):
-```csharp
-Dictionary<string, double> y;
-if (useBK)
-{
-    y = BkCoords(order, layers, segPrev, gap, IsD);   // block alignment ⇒ straight edges
-}
-else
-{
-    // ---- existing PAV loop, UNCHANGED ----  (var pav = ...; y = new Dictionary...; for it<30 { ... })
-}
-// ---- everything below (miny / Y / n.X,n.Y / waypoints) stays as-is ----
-```
-`IsD` and `gap` already exist in the method. Nothing downstream changes — BK writes the same `y` map the
-waypoint emitter reads.
-
-### 1c. The BK methods (paste as private static members of `AxeTreeLayout`)
-
-Faithful port of `renderer.js` `bkType1/bkAlign/bkCompact/bkRun/bkCoords` — Brandes & Köpf 2002, 2-run
-(down-left + within-layer-mirrored down-right) averaged, with a final monotone sweep guaranteeing
-separation. (`string` compares by value in C#, so `align[v] != v` and `sink[v] == sink[ru]` are correct.)
-
-```csharp
-// ---- Brandes–Köpf coordinate assignment (port of renderer.js bkCoords). Aligns each vertex to its
-// median predecessor into vertical BLOCKS, then compacts blocks under a min-gap -> aligned edges become
-// straight runs (long dummy chains especially). 2 runs (L/R) averaged; monotone sweep guarantees sep.
-private static HashSet<string> BkType1(List<List<string>> L, Dictionary<string, List<string>> predOf,
-    Dictionary<string, int> ord, Func<string, bool> isd)
-{
-    var conf = new HashSet<string>();
-    for (int k = 0; k < L.Count - 1; k++)
-    {
-        var upper = L[k]; var lower = L[k + 1];
-        int k0 = 0, scan = 0;
-        for (int l1 = 0; l1 < lower.Count; l1++)
-        {
-            string v = lower[l1];
-            int innerPos = -1;
-            if (isd(v) && predOf.TryGetValue(v, out var pv))
-                foreach (var u in pv) if (isd(u) && ord[u] > innerPos) innerPos = ord[u];
-            if (l1 == lower.Count - 1 || innerPos >= 0)
-            {
-                int k1 = innerPos >= 0 ? innerPos : upper.Count - 1;
-                for (; scan <= l1; scan++)
-                {
-                    string w = lower[scan];
-                    if (predOf.TryGetValue(w, out var pw))
-                        foreach (var u in pw)
-                            if ((ord[u] < k0 || ord[u] > k1) && !(isd(u) && isd(w))) conf.Add(u + " " + w);
-                }
-                k0 = k1;
-            }
-        }
-    }
-    return conf;
-}
-
-private static void BkAlign(List<List<string>> L, Dictionary<string, List<string>> predOf,
-    Dictionary<string, int> ord, HashSet<string> conf,
-    Dictionary<string, string> root, Dictionary<string, string> align)
-{
-    foreach (var layer in L) foreach (var v in layer) { root[v] = v; align[v] = v; }
-    foreach (var layer in L)
-    {
-        int r = -1;
-        foreach (var v in layer)
-        {
-            if (!predOf.TryGetValue(v, out var ws) || ws.Count == 0) continue;
-            double mp = (ws.Count - 1) / 2.0;
-            for (int i = (int)Math.Floor(mp); i <= (int)Math.Ceiling(mp); i++)
-            {
-                if (align[v] != v) break;
-                string w = ws[i];
-                if (r < ord[w] && !(conf.Contains(w + " " + v) || conf.Contains(v + " " + w)))
-                { align[w] = v; root[v] = root[w]; align[v] = root[w]; r = ord[w]; }
-            }
-        }
-    }
-}
-
-private static Dictionary<string, double> BkCompact(List<List<string>> L,
-    Dictionary<string, string> root, Dictionary<string, string> align, Func<string, string, double> sep)
-{
-    var above = new Dictionary<string, string>();
-    foreach (var layer in L) for (int i = 0; i < layer.Count; i++) above[layer[i]] = i > 0 ? layer[i - 1] : null;
-    var X = new Dictionary<string, double>();
-    var sink = new Dictionary<string, string>();
-    var shift = new Dictionary<string, double>();
-    foreach (var layer in L) foreach (var v in layer) { sink[v] = v; shift[v] = double.PositiveInfinity; }
-    void Place(string v)
-    {
-        if (X.ContainsKey(v)) return;
-        X[v] = 0; string w = v;
-        do
-        {
-            string u = above[w];
-            if (u != null)
-            {
-                string ru = root[u]; Place(ru);
-                if (sink[v] == v) sink[v] = sink[ru];
-                double d = sep(u, w);
-                if (sink[v] == sink[ru]) X[v] = Math.Max(X[v], X[ru] + d);
-                else shift[sink[ru]] = Math.Min(shift[sink[ru]], X[v] - X[ru] - d);
-            }
-            w = align[w];
-        } while (w != v);
-    }
-    foreach (var layer in L) foreach (var v in layer) if (root[v] == v) Place(v);
-    var xs = new Dictionary<string, double>();
-    foreach (var layer in L) foreach (var v in layer)
-    {
-        xs[v] = X[root[v]];
-        double s = shift[sink[root[v]]];
-        if (!double.IsPositiveInfinity(s)) xs[v] += s;
-    }
-    return xs;
-}
-
-private static Dictionary<string, double> BkRun(List<List<string>> L,
-    Dictionary<string, List<string>> segPrev, Func<string, string, double> sep, Func<string, bool> isd)
-{
-    var ord = new Dictionary<string, int>();
-    foreach (var layer in L) for (int i = 0; i < layer.Count; i++) ord[layer[i]] = i;
-    var predOf = new Dictionary<string, List<string>>();
-    foreach (var layer in L) foreach (var v in layer)
-    {
-        var ps = segPrev.TryGetValue(v, out var sp) ? new List<string>(sp) : new List<string>();
-        ps.Sort((a, b) => ord[a] - ord[b]);
-        predOf[v] = ps;
-    }
-    var conf = BkType1(L, predOf, ord, isd);
-    var root = new Dictionary<string, string>(); var align = new Dictionary<string, string>();
-    BkAlign(L, predOf, ord, conf, root, align);
-    return BkCompact(L, root, align, sep);
-}
-
-private static Dictionary<string, double> BkCoords(List<int> order, Dictionary<int, List<string>> layers,
-    Dictionary<string, List<string>> segPrev, Func<string, string, double> sep, Func<string, bool> isd)
-{
-    var L = new List<List<string>>(); foreach (var t in order) L.Add(layers[t]);
-    var cL = BkRun(L, segPrev, sep, isd);                                   // down-left
-    var Lr = new List<List<string>>();
-    foreach (var layer in L) { var rev = new List<string>(layer); rev.Reverse(); Lr.Add(rev); }
-    var cRr = BkRun(Lr, segPrev, sep, isd);                                 // down-right (mirror)
-    var cR = new Dictionary<string, double>(); foreach (var kv in cRr) cR[kv.Key] = -kv.Value;
-    void Norm(Dictionary<string, double> m)
-    {
-        double mn = double.PositiveInfinity; foreach (var kv in m) if (kv.Value < mn) mn = kv.Value;
-        var keys = new List<string>(m.Keys); foreach (var k in keys) m[k] -= mn;
-    }
-    Norm(cL); Norm(cR);
-    var y = new Dictionary<string, double>();
-    foreach (var layer in L) foreach (var v in layer) y[v] = (cL[v] + cR[v]) / 2.0;   // balance L/R bias
-    foreach (var layer in L) for (int i = 1; i < layer.Count; i++)                    // guarantee separation
-    {
-        double need = y[layer[i - 1]] + sep(layer[i - 1], layer[i]);
-        if (y[layer[i]] < need) y[layer[i]] = need;
-    }
-    return y;
-}
+BK needs the *proper-layered* adjacency, not `prev`/`nxt` (which include non-forward edges). In the chain
+loop (~line 111) where `nxt`/`prev` are filled, also record adjacent-rank predecessors:
+```python
+seg_prev = collections.defaultdict(list)     # declare beside prev, nxt (~line 97)
+...
+for a, b in zip(chain, chain[1:]):
+    nxt[a].append(b); prev[b].append(a)
+    if vtier[b] == vtier[a] + 1: seg_prev[b].append(a)   # <-- add: BK proper-layering only
 ```
 
-### 1d. `RouteOrthoLate` (paste as an internal static method of `AxeTreeLayout`)
+### A2. Branch the coordinate assignment (BK default, keep PAV)
 
-Endpoint-based (uses node anchors + fan slots, ignores waypoints — same as the prototype). Reuses the
-existing `Chamfer`, `CORNER_R`, `CORNER_SEGS`. **`nodeH` is passed signed** (see §2) so the fan offset
-follows the Y-flip, exactly like `BuildLaneRoutes`.
+Add a `coords="bk"` param to the signature:
+```python
+def sugiyama_layout(disc, nodes, by, sweeps=8, coords="bk"):
+```
+After the best ordering is restored and `isd`/`gap` are defined (~line 148), replace the PAV coordinate
+block (the `pav` def + the `y = {...}` seed + the `for _ in range(30)` loop, ~lines 149–170) with:
+```python
+    if coords == "bk":
+        y = _bk_coords(order, layers, seg_prev, gap, isd)
+    else:
+        # ---- existing PAV/isotonic block, UNCHANGED (def pav; y = {...}; for _ in range(30): ...) ----
+        ...
+    # ---- miny / Y / n['_x'],n['_y'] / return chains stay exactly as-is ----
+```
+`gap` and `isd` already exist in the function; nothing downstream changes — BK writes the same `y` dict.
 
+### A3. `_bk_coords` (paste-ready; module-level, no new imports)
+
+Faithful port of `renderer.js` `bkCoords/bkType1/bkAlign/bkCompact/bkRun` — Brandes & Köpf 2002, 2 runs
+(down-left + within-layer-mirrored down-right) averaged, with a final monotone sweep guaranteeing separation.
+```python
+def _bk_coords(order, layers, seg_prev, gap, isd):
+    """Brandes–Köpf: align each vertex to its median predecessor into vertical BLOCKS, then compact
+    blocks under a min gap -> aligned edges become straight runs. 2 runs (L/R) averaged + sep sweep."""
+    INF = float("inf")
+    L = [layers[t] for t in order]
+
+    def bk_run(LL):
+        ordv = {}
+        for layer in LL:
+            for i, v in enumerate(layer): ordv[v] = i
+        pred = {v: sorted(seg_prev.get(v, ()), key=lambda u: ordv[u]) for layer in LL for v in layer}
+        # type-1 conflicts: segments crossing an inner (dummy–dummy) segment
+        conf = set()
+        for k in range(len(LL) - 1):
+            upper, lower = LL[k], LL[k + 1]
+            k0 = scan = 0
+            for l1, v in enumerate(lower):
+                inner = -1
+                if isd(v):
+                    for u in pred[v]:
+                        if isd(u) and ordv[u] > inner: inner = ordv[u]
+                if l1 == len(lower) - 1 or inner >= 0:
+                    k1 = inner if inner >= 0 else len(upper) - 1
+                    while scan <= l1:
+                        w = lower[scan]
+                        for u in pred[w]:
+                            if (ordv[u] < k0 or ordv[u] > k1) and not (isd(u) and isd(w)):
+                                conf.add((u, w))
+                        scan += 1
+                    k0 = k1
+        # vertical alignment -> blocks (root, align)
+        root = {v: v for layer in LL for v in layer}
+        align = {v: v for layer in LL for v in layer}
+        for layer in LL:
+            r = -1
+            for v in layer:
+                ws = pred[v]
+                if not ws: continue
+                n = len(ws)
+                for i in range((n - 1) // 2, n // 2 + 1):     # median predecessor(s)
+                    if align[v] != v: break
+                    w = ws[i]
+                    if r < ordv[w] and (w, v) not in conf and (v, w) not in conf:
+                        align[w] = v; root[v] = root[w]; align[v] = root[w]; r = ordv[w]
+        # horizontal compaction (one direction)
+        above = {}
+        for layer in LL:
+            for i, v in enumerate(layer): above[v] = layer[i - 1] if i else None
+        X, sink, shift = {}, {v: v for layer in LL for v in layer}, {v: INF for layer in LL for v in layer}
+        def place(v):
+            if v in X: return
+            X[v] = 0.0; w = v
+            while True:
+                u = above[w]
+                if u is not None:
+                    ru = root[u]; place(ru)
+                    if sink[v] == v: sink[v] = sink[ru]
+                    d = gap(u, w)
+                    if sink[v] == sink[ru]: X[v] = max(X[v], X[ru] + d)
+                    else: shift[sink[ru]] = min(shift[sink[ru]], X[v] - X[ru] - d)
+                w = align[w]
+                if w == v: break
+        for layer in LL:
+            for v in layer:
+                if root[v] == v: place(v)
+        xs = {}
+        for layer in LL:
+            for v in layer:
+                xs[v] = X[root[v]]
+                s = shift[sink[root[v]]]
+                if s < INF: xs[v] += s
+        return xs
+
+    cL = bk_run(L)
+    cR = {k: -val for k, val in bk_run([list(reversed(layer)) for layer in L]).items()}
+    def norm(m):
+        mn = min(m.values())
+        for k in m: m[k] -= mn
+    norm(cL); norm(cR)
+    y = {v: (cL[v] + cR[v]) / 2.0 for layer in L for v in layer}    # balance L/R bias
+    for layer in L:                                                 # guarantee separation
+        for i in range(1, len(layer)):
+            need = y[layer[i - 1]] + gap(layer[i - 1], layer[i])
+            if y[layer[i]] < need: y[layer[i]] = need
+    return y
+```
+> `place()` recurses over block-above chains (normally shallow). If a big tree ever hits `RecursionError`,
+> add `sys.setrecursionlimit(10000)` in `main()` or convert `place` to an explicit stack.
+
+### A4. `emit_cfg`: flip Y into KSP's convention  ← **verify #1**
+
+`emit_cfg` writes `_y` straight (~line 235). The runtime port used `FLIP_Y=true` to make discipline order
+read **top-to-bottom** (i.e. KSP's tree canvas is y-up vs. the prototype/compiler y-down). With positions
+now baked, do that flip here so the tree isn't upside-down without runtime help:
+```python
+maxY = max(n["_y"] for n in nodes)
+... pos = {n['_x']},{maxY - n['_y']},-1     # flip: y-down (compiler) -> y-up (KSP)
+```
+Leave `emit_prototype_data` on raw `_y` (Canvas is y-down — the prototype stays correct). This is the one
+coordinate thing to confirm in-game; if it renders inverted, drop/re-add the flip.
+
+**Result of Part A:** `AxeTechTree.cfg` (game) + `tree-data.js` (prototype) both carry BK positions from one
+compiler run. Prototype **Layout = Compiler** now equals the shipped layout.
+
+---
+
+# Part B — C# plugin: delete the layout, keep the edges
+
+### B1. `AxeTreeLayout.cs`
+- **DELETE** `LayoutSugiyama`, `LayoutBands`, and their helpers (`SChain`, the PAV/median/dummy machinery,
+  `MedianCost`, `Ord` if now unused). These move to the compiler.
+- **KEEP** `Chamfer`, `RoundPolyline`, `ComputeSlots`, the `LNode`/`LEdge` types, `Bucket`.
+  - `LNode` now only needs `Id, X, Y` for geometry (Discipline/Tier/Cost no longer used here).
+- **KEEP** `BuildLaneRoutes` only if you still want a `routing=lanes` option; otherwise delete it too.
+- **ADD** `RouteOrthoLate` (endpoint-based; reuses `Chamfer`/`CORNER_R`/`CORNER_SEGS`):
 ```csharp
-// ---- ortho-late routing (port of renderer.js routeOrthoLate): a single riser just LEFT of the target,
-// so edges converge "into the node" (stock/RP-1 look). Anchors: source RIGHT side, target LEFT side.
+// ortho-late: a single riser just LEFT of the target, so edges converge "into the node" (RP-1 look).
 internal static List<Vector2> RouteOrthoLate(LNode from, LNode to, float tF, float tT, float nodeW, float nodeH)
 {
-    Vector2 p = new Vector2(from.X + nodeW, from.Y + tF * nodeH);   // source right anchor (fan slot tF)
-    Vector2 c = new Vector2(to.X,          to.Y   + tT * nodeH);    // target left  anchor (fan slot tT)
+    Vector2 p = new Vector2(from.X + nodeW, from.Y + tF * nodeH);   // source RIGHT anchor (fan slot tF)
+    Vector2 c = new Vector2(to.X,          to.Y   + tT * nodeH);    // target LEFT  anchor (fan slot tT)
     if (Mathf.Abs(p.y - c.y) < 0.5f) return new List<Vector2> { p, c };
-    float rx = c.x - Mathf.Clamp((c.x - p.x) * 0.3f, 18f, 60f);     // riser just left of the target
+    float rx = c.x - Mathf.Clamp((c.x - p.x) * 0.3f, 18f, 60f);
     Vector2 k1 = new Vector2(rx, p.y), k2 = new Vector2(rx, c.y);
     var outp = new List<Vector2> { p };
     outp.AddRange(Chamfer(p, k1, k2, CORNER_R, CORNER_SEGS));
@@ -246,125 +200,115 @@ internal static List<Vector2> RouteOrthoLate(LNode from, LNode to, float tF, flo
 }
 ```
 
----
+### B2. `AxeTreeRender.cs` — `OnTreeSpawn` becomes routing-only
 
-## 2. `AxeTreeRender.cs` — wire layout + routing
+**DELETE** from `OnTreeSpawn`: the stock-envelope read, the `LayoutSugiyama`/`LayoutBands` call, the whole
+fit/flip block (`ax/bx/ay/by`, the waypoint transform), and the `SetPos` loop (+ the `PosField.SetValue`
+path — positions now come from cfg). The content-height grow (`content.sizeDelta`) was compensating for the
+re-layout exceeding the stock scroll area; with positions baked, KSP sizes its scroll content to the cfg
+tree — **remove it, but verify the top row is reachable** (if clipped, keep a minimal grow).
 
-**Guard (~line 94):** accept the new layout value.
+**KEEP**: the two Harmony patches (`GetVectorArray` prefix, `UpdateGraphics` postfix), all cosmetics
+(`PaintTile`/`StateRing`/`StateTint`/discipline colours/legend/hover). The body reduces to:
 ```csharp
-if (layoutMode != "bands" && layoutMode != "sugiyama" && layoutMode != "sugiyama-bk") return;
-```
-
-**Layout dispatch (~line 140):** pass `useBK`.
-```csharp
-if (layoutMode == "sugiyama" || layoutMode == "sugiyama-bk")
-    AxeTreeLayout.LayoutSugiyama(lnodes, edges, byId, discOrder, AxeTreeMeta.TierWidth,
-        SUG_SPACING_Y, AxeTreeMeta.MarginX, AxeTreeMeta.MarginY, false, layoutMode == "sugiyama-bk");
-else
-    AxeTreeLayout.LayoutBands(lnodes, edges, byId, discOrder, AxeTreeMeta.TierWidth,
-        AxeTreeMeta.MarginX, AxeTreeMeta.MarginY, NODE_H, SPACING_F, false);
-```
-
-**Routing dispatch (~line 184):** replace the whole `if (AxeTreeMeta.Render.LaneRouting) { ... }` block.
-Note `NODE_H * Mathf.Sign(ay)` — the signed node height so the fan follows the Y-flip (unchanged from lanes).
-```csharp
-string routing = AxeTreeMeta.Render.Routing;
-if (routing == "lanes")
+private void OnTreeSpawn(RDTechTree tree)
 {
-    AxeTreeLayout.ComputeSlots(edges, byId, AxeTreeMeta.Render.Fan);
-    AxeTreeLayout.BuildLaneRoutes(lnodes, edges, NODE_W, NODE_H * Mathf.Sign(ay), AxeTreeMeta.Render.LanePitch);
-    foreach (AxeTreeLayout.LEdge e in edges)
-        if (e.LaneGeom != null) Routes[e.From + ">" + e.To] = e.LaneGeom;
-}
-else if (routing == "ortho-late")
-{
-    AxeTreeLayout.ComputeSlots(edges, byId, AxeTreeMeta.Render.Fan);
-    float nh = NODE_H * Mathf.Sign(ay);
-    foreach (AxeTreeLayout.LEdge e in edges)
+    ready = false; Routes.Clear();
+    try
     {
-        if (!byId.TryGetValue(e.From, out var pf) || !byId.TryGetValue(e.To, out var pt)) continue;
-        Routes[e.From + ">" + e.To] = AxeTreeLayout.RouteOrthoLate(pf, pt, e.TF, e.TT, NODE_W, nh);
+        AxeTreeMeta.EnsureLoaded();
+        string routing = AxeTreeMeta.Render.Routing;
+        if (routing == "stock") return;                       // edges = stock; positions already from cfg
+        RDController ctrl = RDController.Instance;
+        if (ctrl == null || ctrl.nodes == null || ctrl.nodes.Count == 0 || PosField == null) return;
+
+        // model from LIVE (cfg-baked) positions — NO layout, NO reposition
+        var byId = new Dictionary<string, AxeTreeLayout.LNode>();
+        foreach (RDNode rd in ctrl.nodes)
+        {
+            string id = rd?.tech?.techID;
+            if (string.IsNullOrEmpty(id) || byId.ContainsKey(id)) continue;
+            Vector3 sp = (Vector3)PosField.GetValue(rd);
+            byId[id] = new AxeTreeLayout.LNode { Id = id, X = sp.x, Y = sp.y };
+        }
+        var edges = new List<AxeTreeLayout.LEdge>();
+        var seen = new HashSet<string>();
+        foreach (RDNode rd in ctrl.nodes)
+        {
+            string to = rd?.tech?.techID;
+            if (string.IsNullOrEmpty(to) || !byId.ContainsKey(to) || rd.parents == null) continue;
+            foreach (RDNode.Parent par in rd.parents)
+            {
+                string from = par?.parent?.node?.tech?.techID;
+                if (!string.IsNullOrEmpty(from) && byId.ContainsKey(from) && seen.Add(from + ">" + to))
+                    edges.Add(new AxeTreeLayout.LEdge { From = from, To = to });
+            }
+        }
+
+        AxeTreeLayout.ComputeSlots(edges, byId, AxeTreeMeta.Render.Fan);
+        float nh = -NODE_H;   // fan spreads toward smaller y (KSP y-up); matches the old ay<0 sign — verify
+        foreach (AxeTreeLayout.LEdge e in edges)
+        {
+            if (!byId.TryGetValue(e.From, out var pf) || !byId.TryGetValue(e.To, out var pt)) continue;
+            if (routing == "ortho-late")
+                Routes[e.From + ">" + e.To] = AxeTreeLayout.RouteOrthoLate(pf, pt, e.TF, e.TT, NODE_W, nh);
+            // else if (routing == "lanes") -> BuildLaneRoutes path, if kept
+        }
+        ready = true;
+        Debug.Log($"[AXE] render-port: {byId.Count} nodes, {Routes.Count} edges routed (routing={routing})");
     }
+    catch (Exception e) { Debug.LogError("[AXE] render-port OnTreeSpawn failed: " + e); ready = false; }
 }
-// else (routing == "stock"): leave Routes empty -> the prefix falls through to the stock elbow
 ```
+`GetVectorArray_Prefix` is unchanged except the gate: `if (!ready || AxeTreeMeta.Render.Routing == "stock") return true;`
+(the per-edge `Routes` lookup already falls back to the stock elbow when an edge has no route). The
+`RDNodeRoot.TransformPoint(local→world)` step stays — cfg `pos` **is** RDNodeRoot-local space (verified:
+`RDNodeRoot` is `scrollRect.content`, and `pos` → `localPosition`).
 
-**Prefix gate (~line 259):** was `if (!ready || !AxeTreeMeta.Render.LaneRouting) return true;`. The per-edge
-`Routes` lookup already handles "no route → stock", so gate on the routing mode instead:
+### B3. Config (`AxeTreeMeta.cs` + `RenderSettings.cfg`)
+The `layout` key no longer drives the plugin (positions come from cfg). Add `routing`, drop the layout
+role:
 ```csharp
-if (!ready || AxeTreeMeta.Render.Routing == "stock") return true;
+// Settings: add   public string Routing;   default "ortho-late"
+Render.Routing = (r.GetValue("routing") ?? "ortho-late").Trim().ToLowerInvariant();
 ```
-
-The debug log line (~205) referencing `Render.LaneRouting` can print `Render.Routing` instead (cosmetic).
-
----
-
-## 3. `AxeTreeMeta.cs` — config
-
-**`Settings` struct (~line 21):** add a `Routing` string.
-```csharp
-internal struct Settings { public string Layout; public string Routing; public bool LaneRouting;
-    public bool Fan; public float LanePitch; public bool DiscColor; public bool Legend; public bool Hover; }
+`RenderSettings.cfg`:
 ```
-**Default initializer (~line 28):** `Routing = "ortho-late"`, `Layout = "sugiyama-bk"`.
-
-**Parser (~line 89):** add, and keep `laneRouting` for back-compat (only consulted if `routing` is absent).
-```csharp
-string routing = r.GetValue("routing");
-Render.Routing = string.IsNullOrEmpty(routing)
-    ? (Render.LaneRouting ? "ortho-late" : "stock")   // no routing key: lanePitch/lane still honoured only if routing=lanes
-    : routing.Trim().ToLowerInvariant();
-```
-(Parse `laneRouting` *before* this so the fallback sees it. `routing` present always wins.)
-Accept `sugiyama-bk` wherever `Layout` is validated (the render guard in §2 is the real gate).
-
-## 4. `GameData/RP-AXE/RenderSettings.cfg`
-
-```
-//   layout      = sugiyama-bk | sugiyama | bands | stock
-//   routing     = ortho-late | lanes | stock   converging elbow into target (default) / lane-packed / stock elbow
-//   lanePitch   = <px>        only when routing = lanes
+//   routing = ortho-late | lanes | stock     converging elbow (default) / lane-packed (if kept) / stock elbow
+//   (node LAYOUT is baked into AxeTechTree.cfg by tools/build_tree.py — not a runtime setting)
 RPAXE_RENDER
 {
-	layout      = sugiyama-bk
-	routing     = ortho-late
-	laneRouting = true      // legacy; ignored when `routing` is set
-	fan         = true
-	lanePitch   = 1
-	discColor   = true
-	legend      = true
-	hover       = true
+	routing   = ortho-late
+	fan       = true
+	lanePitch = 1        // only if routing = lanes is kept
+	discColor = true
+	legend    = true
+	hover     = true
 }
 ```
+(`layout`/`laneRouting` keys become inert; leave the parse for back-compat or remove.)
 
 ---
 
 ## Build & verify
-
 ```
-dotnet build Source/AXE/AXE.csproj -c Release      # AXE.dll is gitignored; builds against the Instance
+python tools/build_tree.py         # re-emit AxeTechTree.cfg (BK pos) + tree-data.js
+dotnet build Source/AXE/AXE.csproj -c Release
 ```
-Then in-game (or via the `-axe-autotest` harness that drives the R&D scene — see [[ksp-scene-driving-api]]):
-1. **Layout** — long prerequisite chains render as straight horizontal lines (BK). Compare `layout=sugiyama`
-   (PAV, wavier) to confirm BK is active.
-2. **Routing** — every edge makes ONE riser just left of its target and converges into the node's left side
-   (not a mid-span S, not lane-packed).
-3. **Fallbacks** — `routing = lanes` reproduces the old look; `routing = stock` and `layout = stock` each
-   revert cleanly; no NREs in `KSP.log` (grep `[AXE]`).
-4. **No overlaps** — BK's final monotone sweep guarantees separation; confirm no stacked nodes at any tier.
+1. **Prototype** — open `tree/render/prototype/index.html`, set **Layout = Compiler**: it should now match
+   **Sugiyama + BK** (straight horizontal runs). That confirms Part A before touching the game.
+2. **In-game** (or `-axe-autotest`): tree is right-side-up (discipline order top→bottom — **verify #1**, the
+   `emit_cfg` flip); long chains are straight; every edge risers just left of its target and converges in.
+3. **Fan sign** — if endpoints spread the wrong way off the node side, flip `nh` to `+NODE_H`.
+4. **Fallbacks** — `routing = stock` reverts edges to stock elbows (positions still BK from cfg); no
+   `[AXE]` NREs in `KSP.log`. Top row reachable by scrolling (no clip).
 
-### Gotchas
-- **Signed `nodeH`.** Pass `NODE_H * Mathf.Sign(ay)` to `RouteOrthoLate` (as lanes does) or the fan offsets
-  go the wrong way under the Y-flip.
-- **`segPrev`, not `prev`.** BK must use the adjacent-rank-only segments; feeding it `prev` (which includes
-  non-forward edges) corrupts the type-1 conflict pass.
-- **Riser clamp (18–60 px)** is in the fitted stock pos-space; fine as-is, but if targets feel cramped after
-  the X-fit, widen to e.g. 24–80. Cosmetic only.
-- **`string` semantics.** The BK port relies on C# `string` value-equality for `!=`/`==` on ids — correct as
-  written; don't "optimize" to reference checks.
+## Net
+- ~400 lines of C# layout deleted; BK lives **once**, in the compiler.
+- Positions baked into cfg (their native home); runtime does only the edge draw it can't avoid.
+- Prototype **Compiler** mode = shipped layout, so the HTML sandbox is now a faithful preview.
 
-## Optional future work (HTML-only today)
-- `routing = bezier | bundle | octilinear` — port `routeBezier`/`routeBundle`/`routeOctilinear` (+ a
-  `bundleBeta` float) the same way; each is a pure per-edge function returning a flat point list.
-- `layout = sugiyama-disc` — discipline-constrained ordering. Ground-truthed as **too cross-linked** for
-  RP-AXE (long vertical cross-band edges); low priority. See `tree/render/prototype/ROUTING-VARIANTS.md`.
+## Optional future (HTML-only today)
+`routing = bezier | bundle | octilinear` — port `routeBezier`/`routeBundle`/`routeOctilinear` the same way
+(pure per-edge fns returning a flat point list). `layout = sugiyama-disc` — ground-truthed as too
+cross-linked for RP-AXE; skip. See `tree/render/prototype/ROUTING-VARIANTS.md`.
