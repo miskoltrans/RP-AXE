@@ -141,7 +141,7 @@ digraph AXE {
   "gnc_rcs" -> "gnc_attitude3axis" [style=dashed,color="#f4d35e"];
   "gnc_reactionWheels" -> "gnc_attitude3axis" [style=dashed,color="#f4d35e"];
   "gnc_attitude3axis" -> "gnc_starTracker" [style=solid];
-  "opt_filmReturn" -> "gnc_starTracker" [style=solid];
+  "opt_vidicon" -> "gnc_starTracker" [style=solid];
   "tel_telemetry" -> "tel_parabolicHGA" [style=solid];
   "gnc_attitude3axis" -> "tel_parabolicHGA" [style=solid];
   "gnc_rcs" -> "str_docking" [style=solid];

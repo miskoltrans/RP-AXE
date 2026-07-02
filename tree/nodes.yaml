@@ -385,7 +385,7 @@ nodes:
     title: "Stellar Attitude Determination"
     discipline: GuidanceControl
     tier: 6
-    parents: [gnc_attitude3axis, opt_filmReturn]
+    parents: [gnc_attitude3axis, opt_vidicon]
     flavor: "Photograph a patch of sky, match the pattern to a catalogue, and know exactly which way you face with no help from the ground — absolute orientation from the stars themselves. Mariner locked onto Canopus and held its aim across months and hundreds of millions of kilometres."
     parts: [ca_startrack]
 
