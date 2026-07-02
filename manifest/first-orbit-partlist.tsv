@@ -15,8 +15,8 @@ unlockParts	Starting Parts (RP-1)	part	KzFlatBoattail	yes	Boattail Adapter (Flat
 unlockParts	Starting Parts (RP-1)	part	KzInterstageAdapter2	yes	IB - Procedural Interstage Fairing Adapter
 unlockParts	Starting Parts (RP-1)	part	KzProcFairingSide1	yes	Procedural Fairing
 unlockParts	Starting Parts (RP-1)	part	KzProcFairingSide1_TU	yes	Procedural Fairing (Recolorable)
-unlockParts	Starting Parts (RP-1)	part	KzProcFairingSide2	yes	Procedural Fairing (Conic) (Deprecated)
-unlockParts	Starting Parts (RP-1)	part	KzProcFairingSide2_TU	yes	Procedural Fairing (Conic) (Deprecated) (Recolorable)
+unlockParts	Starting Parts (RP-1)	part	KzProcFairingSide2	DROP-deprecated	Procedural Fairing (Conic) (Deprecated)
+unlockParts	Starting Parts (RP-1)	part	KzProcFairingSide2_TU	DROP-deprecated	Procedural Fairing (Conic) (Deprecated) (Recolorable)
 unlockParts	Starting Parts (RP-1)	part	KzResizableFairingBase	yes	FB - Procedural Fairing Base
 unlockParts	Starting Parts (RP-1)	part	KzResizableFairingBaseRing	yes	FB - Procedural Fairing Base Ring
 unlockParts	Starting Parts (RP-1)	part	KzThrustPlate	yes	Thrust Plate [Procedural]
@@ -27,7 +27,7 @@ unlockParts	Starting Parts (RP-1)	part	LongLadder	yes	Pegasus III Mobility Enhan
 unlockParts	Starting Parts (RP-1)	part	MedLadder	yes	Pegasus II Mobility Enhancer
 unlockParts	Starting Parts (RP-1)	part	MedLadderUtility	yes	MK II Mobility Enhancer
 unlockParts	Starting Parts (RP-1)	part	R8winglet	yes	AV-R8 Winglet
-unlockParts	Starting Parts (RP-1)	part	RCSBlockQuarter	yes	RCS Quad [69/111 N class] (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	RCSBlockQuarter	DROP-deprecated	RCS Quad [69/111 N class] (DEPRECATED)
 unlockParts	Starting Parts (RP-1)	part	RCSBlockSmall_138	yes	RCS Block [ 138/223 N Class] (elbows)
 unlockParts	Starting Parts (RP-1)	part	RCSBlockSmall_28	yes	RCS Block [  28/45 N Class] (elbows)
 unlockParts	Starting Parts (RP-1)	part	RCSBlockSmall_69	yes	RCS Block [  69/111 N Class] (elbows)
@@ -76,7 +76,7 @@ unlockParts	Starting Parts (RP-1)	part	ROE-SmallApolloLC	yes	Small Apollo Style 
 unlockParts	Starting Parts (RP-1)	part	ROE-SmallLC	yes	Small Launch Clamp (0.375 m)
 unlockParts	Starting Parts (RP-1)	part	ROE-SmallRadialLC	yes	Small Radial Launch Clamp
 unlockParts	Starting Parts (RP-1)	part	ROE-UmbilicalTower	yes	Umbilical Tower
-unlockParts	Starting Parts (RP-1)	part	ROE-Veronique	yes	Véronique (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	ROE-Veronique	DROP-deprecated	Véronique (DEPRECATED)
 unlockParts	Starting Parts (RP-1)	part	ROE-VeroniqueAK	yes	Véronique
 unlockParts	Starting Parts (RP-1)	part	ROMeteoSustainer	yes	U-1250
 unlockParts	Starting Parts (RP-1)	part	ROSmallSpinMotor	yes	Spin Motor (Small)
@@ -101,8 +101,8 @@ unlockParts	Starting Parts (RP-1)	part	RO_RCSBlock_restock_mini_138	yes	Angled R
 unlockParts	Starting Parts (RP-1)	part	RO_RCSBlock_restock_mini_28	yes	Angled RCS Block [  28/45 N Class] (elbows)
 unlockParts	Starting Parts (RP-1)	part	RO_RCSBlock_restock_mini_69	yes	Angled RCS Block [  69/111 N Class] (elbows)
 unlockParts	Starting Parts (RP-1)	part	RO_linearRcs_tenth	yes	Attitude Jet (28/45 N class)
-unlockParts	Starting Parts (RP-1)	part	RP0aerobeeSounding	yes	Aerobee Sounding Rocket Telemetry Unit (DEPRECATED)
-unlockParts	Starting Parts (RP-1)	part	RP0probeSounding0-3m	yes	WAC-Corporal Sounding Rocket Telemetry Unit (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	RP0aerobeeSounding	DROP-deprecated	Aerobee Sounding Rocket Telemetry Unit (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	RP0probeSounding0-3m	DROP-deprecated	WAC-Corporal Sounding Rocket Telemetry Unit (DEPRECATED)
 unlockParts	Starting Parts (RP-1)	part	RSBRibbedBase	yes	FB - Procedural Ribbed Payload Adapter
 unlockParts	Starting Parts (RP-1)	part	RSBRibbedBase_Boattail	yes	Boattail Adapter (Ribbed)
 unlockParts	Starting Parts (RP-1)	part	RSBRibbedBase_Interstage	yes	IB - Procedural Ribbed Interstage Adapter
@@ -137,8 +137,8 @@ unlockParts	Starting Parts (RP-1)	part	SmallGearBay	yes	LY-10 Small Landing Gear
 unlockParts	Starting Parts (RP-1)	part	SmallPointLight	yes	MK 4 Point Light
 unlockParts	Starting Parts (RP-1)	part	SmallSpotLight	yes	MK 3 Mini Spotlight
 unlockParts	Starting Parts (RP-1)	part	SmallStripLight	yes	MK 5 Strip Light
-unlockParts	Starting Parts (RP-1)	part	SquadRCSBlockHalf	yes	RCS Quad [138/223 N class] (DEPRECATED)
-unlockParts	Starting Parts (RP-1)	part	SquadRCSBlockTenth	yes	RCS Quad (28/45 N class) (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	SquadRCSBlockHalf	DROP-deprecated	RCS Quad [138/223 N class] (DEPRECATED)
+unlockParts	Starting Parts (RP-1)	part	SquadRCSBlockTenth	DROP-deprecated	RCS Quad (28/45 N class) (DEPRECATED)
 unlockParts	Starting Parts (RP-1)	part	StandardCtrlSrf	yes	Elevon 1
 unlockParts	Starting Parts (RP-1)	part	SurfAntenna	yes	Communotron 16-S
 unlockParts	Starting Parts (RP-1)	part	TinyTim	yes	Tiny Tim Booster
@@ -173,7 +173,7 @@ unlockParts	Starting Parts (RP-1)	part	hc_navcam	yes	NavCam
 unlockParts	Starting Parts (RP-1)	part	hc_nightvision	yes	Nightvisioncam
 unlockParts	Starting Parts (RP-1)	part	hc_scicam	yes	ScienceCam
 unlockParts	Starting Parts (RP-1)	part	hc_wideangle	yes	Wide Angle Cam
-unlockParts	Starting Parts (RP-1)	part	kerbpro	yes	KerbPro
+unlockParts	Starting Parts (RP-1)	part	kerbpro	DROP-sacked	KerbPro
 unlockParts	Starting Parts (RP-1)	part	ladder1	yes	Pegasus I Mobility Enhancer
 unlockParts	Starting Parts (RP-1)	part	launchClamp1	yes	TT18-A Launch Stability Enhancer
 unlockParts	Starting Parts (RP-1)	part	microIbeam	yes	M-Beam 100 I-Beam
@@ -271,7 +271,7 @@ earlyRocketry	Early Rocketry	upgrade	RFUpgrade_U-2000	KEEP-engine
 earlyRocketry	Early Rocketry	upgrade	RFUpgrade_XASR-2	KEEP-engine	
 earlyRocketry	Early Rocketry	upgrade	RFUpgrade_XLR11-RM-5	KEEP-engine	
 earlyRocketry	Early Rocketry	upgrade	RFUpgrade_XLR35-RM-1	KEEP-engine	
-basicRocketryRP0	Basic Rocketry	part	ROE-LR89	yes	LR43/LR89 (DEPRECATED)
+basicRocketryRP0	Basic Rocketry	part	ROE-LR89	DROP-deprecated	LR43/LR89 (DEPRECATED)
 basicRocketryRP0	Basic Rocketry	part	ROE-LR89_2	yes	LR43/LR89
 basicRocketryRP0	Basic Rocketry	part	ROE-S2253	yes	S2.253/S3.42/S5.2
 basicRocketryRP0	Basic Rocketry	part	ROE-Stentor	yes	Stentor Booster
@@ -283,11 +283,11 @@ basicRocketryRP0	Basic Rocketry	upgrade	RFUpgrade_RD-103	KEEP-engine
 orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-AJ10Early	yes	AJ10 Series (Early)
 orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-Gamma301	yes	Gamma-201/301
 orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-JupiterVernier	yes	S-3D Vernier Exhaust
-orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR101	yes	LR101 (DEPRECATED)
-orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR101Inline	yes	LR101 (DEPRECATED)
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR101	DROP-deprecated	LR101 (DEPRECATED)
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR101Inline	DROP-deprecated	LR101 (DEPRECATED)
 orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR101Inline_2	yes	LR101
 orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR101_2	yes	LR101
-orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR105	yes	LR105 (DEPRECATED)
+orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR105	DROP-deprecated	LR105 (DEPRECATED)
 orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR105_2	yes	LR105
 orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-LR79	yes	LR79
 orbitalRocketry1956	1956-1957 Orbital Rocketry	part	ROE-RD107	yes	RD-107/117
@@ -385,7 +385,7 @@ avionicsPrototypes	Avionics Prototypes	part	probeCoreSphere_v2	yes	Sputnik PS-1
 avionicsPrototypes	Avionics Prototypes	part	sputnik1	yes	Sputnik 1
 avionicsPrototypes	Avionics Prototypes	upgrade	Near-Earth-avionicsPrototypes	DROP-avionics	
 avionicsPrototypes	Avionics Prototypes	upgrade	Science-Core-avionicsPrototypes	KEEP-avionics	
-earlyAvionics	Early Avionics and Probes	part	RP0probeVanguardXray	yes	20in X-Ray Detector (DEPRECATED)
+earlyAvionics	Early Avionics and Probes	part	RP0probeVanguardXray	DROP-deprecated	20in X-Ray Detector (DEPRECATED)
 earlyAvionics	Early Avionics and Probes	part	pioneer_0_1_2	yes	Pioneer 0/1/2
 earlyAvionics	Early Avionics and Probes	part	pioneer_3_4	yes	Pioneer 3/4
 earlyAvionics	Early Avionics and Probes	part	sputnik2	yes	Sputnik 2
@@ -442,8 +442,8 @@ matureSupersonic	Mature Supersonic Flight	part	SXTmk3Cockpit52	yes	B-52 Stratofo
 matureSupersonic	Mature Supersonic Flight	part	airbrake1	yes	A.I.R.B.R.A.K.E.S
 matureSupersonic	Mature Supersonic Flight	part	aje_j75	yes	J75 Turbojet
 matureSupersonic	Mature Supersonic Flight	part	aje_j79	yes	J79 Turbojet
-matureSupersonic	Mature Supersonic Flight	part	nacelleBody	yes	Engine Nacelle (DEPRECATED)
-matureSupersonic	Mature Supersonic Flight	part	radialEngineBody	yes	Engine Pre-cooler (DEPRECATED)
+matureSupersonic	Mature Supersonic Flight	part	nacelleBody	DROP-deprecated	Engine Nacelle (DEPRECATED)
+matureSupersonic	Mature Supersonic Flight	part	radialEngineBody	DROP-deprecated	Engine Pre-cooler (DEPRECATED)
 matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_Avon114R	KEEP-engine	
 matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_J47-GE-25A	KEEP-engine	
 matureSupersonic	Mature Supersonic Flight	upgrade	RFUpgrade_J47-GE-27	KEEP-engine	

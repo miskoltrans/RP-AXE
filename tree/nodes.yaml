@@ -25,7 +25,7 @@ nodes:
     tier: 0
     parents: []
     flavor: "1950. You begin with the de Laval nozzle, a procedural airframe, avionics, the first instruments and a handful of sounding motors — enough to fly above the Karman line turn one. Rocketry is the default; whether to fly aeroplanes at all is yours to choose."
-    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor]
+    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, groundAnchor]
   - id: parking
     title: "Unsorted Parts (Parking)"
     discipline: SystemsIntegration
@@ -262,7 +262,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Encode a reading as the gap between radio pulses and beam it down on a fixed carrier — the beep-beep that proved a satellite was alive and returned its first data. The whole point of orbit, if you can't hear it."
-    parts: [SXTAntenna, SurfAntenna, longAntenna]
+    parts: [SXTAntenna, SurfAntenna, longAntenna, nfex-antenna-rover-2]
   - id: th_hermeticBus
     title: "Hermetic Thermal-Control Bus"
     discipline: Thermodynamics
@@ -426,7 +426,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "The unglamorous shelf: struts, I-beams, panels, pylons, hardpoints and nose cones — the passive structure that ties a vehicle together and fairs it over. No breakthrough, just the fittings you always reach for."
-    parts: [proceduralStructural, proceduralNoseCone, structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2]
+    parts: [proceduralStructural, proceduralNoseCone, structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve]
 
   # ===================== BAND 1 * AVIONICS (capability tiers — grants:, no physical part) =====================
   # RP-1's Science-Core avionics ladder as ONE track (user). Each node grants the avionics tier; names are my
