@@ -72,13 +72,9 @@ nodes:
     parents: [fd_turbopumpFeed]
     flavor: "Scale one chamber and tame its combustion by hand — careful injector design still holds at this size. The first purpose-built kerosene-oxygen boosters: Vanguard's X-405 and its kin, the small single chambers a satellite could ride."
     parts: [ROE-X405, ROE-X405H]
-  - id: fd_multiChamber
-    title: "Multi-Chamber Combustion"
-    discipline: FluidDynamics
-    tier: 3
-    parents: [fd_turbopumpFeed]
-    flavor: "Don't fight instability in one big chamber — cluster several small ones, each below the acoustic threshold, on a common turbopump. The Soviet answer, and the layout that would grow into the R-7."
-    parts: [ROE-S155]  # small multi-chamber anchor; S-155 home under review (see notes)
+  # (Multi-chamber has NO small tier: S-155 turned out single-chamber + an aircraft engine, moved to the
+  #  aviation rocketplane cluster. The multi-chamber breakthrough debuts at ORBITAL scale —
+  #  fd_orbitalSoviet (R-7 kerolox) and fd_orbitalMultiChamber (storable). S-155 parked for aviation.)
   # --- orbital-class thrust: the generation that reaches orbit ---
   - id: fd_orbitalWest
     title: "Sustained Orbital-Class Thrust"
@@ -91,7 +87,7 @@ nodes:
     title: "Parallel Engine Clustering"
     discipline: FluidDynamics
     tier: 4
-    parents: [fd_multiChamber, fd_verniers]
+    parents: [fd_verniers]
     flavor: "Twenty combustion chambers across four strap-on boosters and a core, all lit on the pad and synchronised — the R-7 that carried Sputnik to orbit. Brute multiplicity where the West built single chambers. Unflyable without vernier steering, which its engines carry built-in."
     parts: [ROE-RD107, ROE-RD108]
   # --- orbital-class multi-chamber (storable boosters) — YF-2 1214 kN, RD-211 749 kN cluster tight ---
@@ -99,7 +95,7 @@ nodes:
     title: "Orbital-Class Multi-Chamber Combustion"   # NAME TENTATIVE — review
     discipline: FluidDynamics
     tier: 4
-    parents: [fd_multiChamber]
+    parents: [fd_verniers]
     flavor: "Scale the clustered-chamber approach to a meganewton — a bank of chambers on a common turbopump delivering booster thrust without ever risking one large unstable chamber. The storable orbital boosters (RD-211, YF-2) that lofted payloads on propellant you could keep in the tank for years."
     parts: [YF2_Engine, YF2_with_shell, ROE-RD211]
   - id: fd_matureOrbital
