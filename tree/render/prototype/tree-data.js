@@ -147,11 +147,6 @@ window.TREE = {
      "title": "Aerobee"
     },
     {
-     "name": "ROE-Agena_Spinrocket",
-     "mod": "ROEngines",
-     "title": "Agena 1KS30HA Spin Rocket"
-    },
-    {
      "name": "ROE-ORM65",
      "mod": "ROEngines",
      "title": "ORM-65"
@@ -1044,7 +1039,7 @@ window.TREE = {
    "tier": 2,
    "cost": 90,
    "anyToUnlock": false,
-   "flavor": "Don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales, and it isn't a Western monopoly: the LR89/LR79/LR87/LR91 boosters (Atlas, Thor, Titan), Britain's licensed RZ, Vanguard's X-405 family.",
+   "flavor": "Don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales: the LR89/LR79/LR87/LR91 boosters (Atlas, Thor, Titan), Britain's licensed RZ, Vanguard's X-405 family.",
    "parts": [
     {
      "name": "ROE-Gamma301",
@@ -1125,7 +1120,7 @@ window.TREE = {
    "tier": 2,
    "cost": 90,
    "anyToUnlock": false,
-   "flavor": "Small, gimballed trim chambers that steer and roll the stack while the main engines just push — the Atlas and Jupiter vernier motors, co-developed with the big engines they trim. The fine hand on a heavy rocket.",
+   "flavor": "Small, gimballed trim chambers that steer and roll the stack while the main engines just push — the Atlas and Jupiter vernier motors, co-developed with the big engines they trim, and China's YF-23 doing the identical job for the YF-22 stage. The fine hand on a heavy rocket.",
    "parts": [
     {
      "name": "ROE-JupiterVernier",
@@ -4524,11 +4519,6 @@ window.TREE = {
      "name": "ROE-Gamma8",
      "mod": "ROEngines",
      "title": "Gamma 8"
-    },
-    {
-     "name": "ROE-S2253",
-     "mod": "ROEngines",
-     "title": "S2.253/S3.42/S5.2"
     }
    ],
    "upgrades": [],
@@ -4544,7 +4534,7 @@ window.TREE = {
    "tier": 3,
    "cost": 400,
    "anyToUnlock": false,
-   "flavor": "Reignite in vacuum on command, not just once at launch — the Agena upper stage, the platform that became Corona's bus and Gemini's docking target, and the small satellite-attitude engines the same restart trick spawned at a smaller scale.",
+   "flavor": "Reignite in vacuum on command, not just once at launch — the Agena upper stage, the platform that became Corona's bus and Gemini's docking target. Rides here too: the small solid motors that spin-stabilize and settle propellant around a restartable stage, and an independently-developed Soviet restartable engine (KDU-414) solving the same reignition problem its own way.",
    "parts": [
     {
      "name": "RO-KDU414",
@@ -4565,6 +4555,21 @@ window.TREE = {
      "name": "ROE-Agena_EquipmentRack",
      "mod": "ROEngines",
      "title": "Agena Equipment Rack"
+    },
+    {
+     "name": "ROE-Agena_Retro_TypeIII",
+     "mod": "ROEngines",
+     "title": "Agena Retrorocket Type III"
+    },
+    {
+     "name": "ROE-Agena_Spinrocket",
+     "mod": "ROEngines",
+     "title": "Agena 1KS30HA Spin Rocket"
+    },
+    {
+     "name": "ROE-RangerRetro",
+     "mod": "ROEngines",
+     "title": "MC-4-610"
     }
    ],
    "upgrades": [],
@@ -4580,7 +4585,7 @@ window.TREE = {
    "tier": 3,
    "cost": 400,
    "anyToUnlock": false,
-   "flavor": "Corrosive, toxic storables scaled from a small hypergolic trim engine up to full first-stage thrust — the Yangel-bureau approach of repurposing an ICBM's always-ready propellants for a space launcher.",
+   "flavor": "Corrosive, toxic storables scaled from a small hypergolic trim engine up to full first-stage thrust — the Yangel-bureau's ICBM-derived RD-215/219 family, but hit independently by France's Viking and China's YF-20 series too: repurposing always-ready storable propellants for a space launcher wasn't a one-nation idea.",
    "parts": [
     {
      "name": "ROE-RD215",
@@ -4681,7 +4686,7 @@ window.TREE = {
    "tier": 4,
    "cost": 900,
    "anyToUnlock": false,
-   "flavor": "Eight first-generation orbital-class engines on a common structure and manifold, synchronized to light together — Saturn I, the first heavy-lift booster, built by clustering an engine you already had rather than inventing a bigger one.",
+   "flavor": "Eight first-generation orbital-class engines on a common structure and manifold, synchronized to light together — Saturn I, the first heavy-lift booster, built by clustering an engine you already had rather than inventing a bigger one. The same H-1 lineage later flew singly too, as the RS-27 on Thor/Delta — proof the engine itself wasn't the hard part, the manifold was.",
    "parts": [
     {
      "name": "ROE-H1C",
@@ -4723,16 +4728,6 @@ window.TREE = {
      "name": "ROC-MercuryRetroBDB",
      "mod": "ROCapsules",
      "title": "Mercury Retro (TE-M-316)"
-    },
-    {
-     "name": "ROE-Agena_Retro_TypeIII",
-     "mod": "ROEngines",
-     "title": "Agena Retrorocket Type III"
-    },
-    {
-     "name": "ROE-RangerRetro",
-     "mod": "ROEngines",
-     "title": "MC-4-610"
     }
    ],
    "upgrades": [],
@@ -4764,12 +4759,12 @@ window.TREE = {
   },
   {
    "id": "aero_turboshaftProp",
-   "title": "Free-Turbine Propeller Drive",
+   "title": "Turboshaft-Driven Propellers",
    "discipline": "Aerodynamics",
    "tier": 3,
    "cost": 400,
    "anyToUnlock": false,
-   "flavor": "A power turbine geared down to spin a propeller instead of shoving exhaust out the back — the NK-12, still the most powerful turboprop ever built, driving the Tu-95's contra-rotating props at near-supersonic tip speed.",
+   "flavor": "Gear a gas turbine down to spin a propeller instead of shoving exhaust out the back. Two ways to take the power off: NK-12 geared its turbine directly through a differential gearbox to drive the Tu-95's contra-rotating props at near-supersonic tip speed, still the most powerful turboprop ever built; PT6 decouples a free power turbine from the gas generator entirely, the simpler design that became ubiquitous.",
    "parts": [
     {
      "name": "SXTNK12M",

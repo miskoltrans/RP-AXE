@@ -80,7 +80,7 @@ digraph AXE {
   "str_engineClustering" [label="Engine-Cluster Heavy Lift\nStructuresMechanisms T4 · 900",fillcolor="#bfb08d",fontcolor="#111111"];
   "pc_solidRetrofire" [label="Solid Retrofire\nPropellantChemistry T2 · 90",fillcolor="#e5533b",fontcolor="#111111"];
   "tel_helicalDirectional" [label="Helical Directional Arrays\nTelecommunications T2 · 90",fillcolor="#3f7bf5",fontcolor="#111111"];
-  "aero_turboshaftProp" [label="Free-Turbine Propeller Drive\nAerodynamics T3 · 400",fillcolor="#5aa0e2",fontcolor="#111111"];
+  "aero_turboshaftProp" [label="Turboshaft-Driven Propellers\nAerodynamics T3 · 400",fillcolor="#5aa0e2",fontcolor="#111111"];
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydrogen" "pc_solidGrains" "met_weldedTank" "str_staging" "gnc_pitchProgram" "aero_fairings" "aero_recovery" "th_radiativeControl" "elec_siliconPV" "tel_telemetry" "nuc_geiger" "met_exposurePanels" "opt_filmReturn" "opt_vidicon" "mic_massSpec" "xplaneStart" }
   { rank=same; "fd_multiChamber" "fd_baffledInjector" "fd_verniers" "pc_hypergolics" "fd_expanderCycle" "met_isogrid" "str_balloonTank" "gnc_rcs" "str_booms" "th_hermeticBus" "nuc_rtg" "rob_rotorActuation" "met_turbineAlloys" "life_openLoopECLSS" "cmp_ablativeTPS" "str_landingLegs" "pc_hydrogenPeroxide" "pc_solidRetrofire" "tel_helicalDirectional" }
