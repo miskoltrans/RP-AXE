@@ -316,8 +316,8 @@ nodes:
   - id: opt_vidicon
     title: "Vidicon Imaging"
     discipline: OpticsPhotonics
-    tier: 2
-    parents: [opt_filmReturn]
+    tier: 3
+    parents: [opt_filmReturn, elec_semiconductorDiode]
     flavor: "Scan a photoconductive target with an electron beam and read the image off as a video signal — lower resolution than film, but it comes down the radio link the instant you take it. No capsule to recover."
     parts: [RO-EarlyTVCamera, aerocam, aerocam180, hc_booster, hc_kazzelblad, hc_launchcam, hc_navcam, hc_nightvision, hc_scicam, hc_wideangle, mumech_hullcam]
   - id: nuc_geiger
@@ -330,15 +330,15 @@ nodes:
   - id: mic_massSpec
     title: "Magnetic-Sector Mass Spectrometry"
     discipline: Microelectronics
-    tier: 2
-    parents: [mic_atmoSounding]
+    tier: 3
+    parents: [mic_atmoSounding, elec_semiconductorDiode]
     flavor: "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there."
     parts: [RO-IonMassSpectrometer, USFluidSpectroWedge]
   - id: mic_magnetometer
     title: "Fluxgate Magnetometry"
     discipline: Microelectronics
-    tier: 2
-    parents: [mic_atmoSounding]
+    tier: 3
+    parents: [mic_atmoSounding, elec_semiconductorDiode]
     flavor: "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron."
     parts: [RO-EarlyMagnet]
   - id: bio_cultures
@@ -620,3 +620,24 @@ nodes:
     parents: [aero_subsonicWing]
     flavor: "A rack of pre-made nose cones in fixed sizes and profiles, pressed and spun to shape, for when you would rather bolt on a stock cap than draw a procedural one. The procedural nose cone is lighter and always the default; nothing depends on this shelf."
     parts: [noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, SXTProtonlikeNoseCone]
+  - id: nuc_cosmicRay
+    title: "Cosmic-Ray Telescopy"
+    discipline: NuclearEngineering
+    tier: 3
+    parents: [nuc_geiger, elec_semiconductorDiode]
+    flavor: "Stack scintillators and photomultipliers in coincidence so only a particle passing clean through every layer is counted: a telescope not for light but for cosmic rays, reading their energy and direction. It takes fast electronics to catch a nanosecond coincidence, which is why it waits on the solid-state line."
+    parts: [RO-ScintillationCounter, RP0Cherenkov]
+  - id: opt_recon
+    title: "Reconnaissance Imaging"
+    discipline: OpticsPhotonics
+    tier: 4
+    parents: [opt_vidicon]
+    flavor: "Long-focal-length optics and fine-grain emulsion resolve a vehicle from orbit: the reconnaissance cameras that were the real reason the first satellites flew, whether they drop the film capsule or scan it down a video link."
+    parts: [RO-ImprovedFilmCamera, RO-HighResFilmCamera, RO-BasicTVCamera, RO-ImprovedTVCamera]
+  - id: opt_remoteSensing
+    title: "Infrared Remote Sensing"
+    discipline: OpticsPhotonics
+    tier: 4
+    parents: [opt_vidicon, elec_semiconductorDiode]
+    flavor: "Scan the planet in wavelengths the eye cannot see: an infrared radiometer maps cloud-top temperature, an ultraviolet spectrometer reads the high atmosphere. The first weather and earth-resource sensing from orbit."
+    parts: [RO-IRRadiometer, RO-HRIRRadiometer, RO-TwoChannelIR, RO-UVSpectrometer]
