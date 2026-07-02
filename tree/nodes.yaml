@@ -212,7 +212,7 @@ nodes:
     tier: 3
     parents: [met_stainlessSteel]
     flavor: "Nickel-chromium superalloy that keeps its strength at red heat — a turbopump turbine that spins hotter and harder feeds a higher chamber pressure, and the very same alloy is what lets a jet turbine run at all. The metallurgy where rockets and jets cross over."
-    upgrades: [RFUpgrade_LR43-NA-3, RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13]
+    upgrades: [RFUpgrade_LR43-NA-3, RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13, RFUpgrade_J35-A-17, RFUpgrade_J47-GE-25A, RFUpgrade_J47-GE-27, RFUpgrade_J48-P-8, RFUpgrade_J57-P-21, RFUpgrade_J57-P-43WA, RFUpgrade_J57-P-7A, RFUpgrade_JT3C-6, RFUpgrade_Avon114R, RFUpgrade_RD-9BF-811, RFUpgrade_Sapphire203]
 
   # ===================== BAND 1 * STRUCTURES & TANK MATERIALS =====================
   # Mass-fraction line: welded steel (T1) -> stainless (T2) -> isogrid ‖ balloon light tanks. The Metallurgy
@@ -333,3 +333,79 @@ nodes:
     parents: [start]
     flavor: "Expose sample coupons, gels and living cultures to vacuum, cold and radiation, then read what changed — the first crude survey of whether anything we build, or grow, can take the environment at all."
     parts: [GooExperiment, BioCapsule, USGooBayWedge, USThermoBaroWedge, SXTProbeGooo, science_module]
+
+  # ===================== BAND 1 ‖ AVIATION / SUPERSONIC (parallel milestone) =====================
+  # Air-breathing propulsion is its OWN lane; supersonic engines DEPEND on Aerodynamics breakthroughs
+  # (swept wing + shock-cone intake). Rocketplane rockets stay in FluidDynamics (they're rockets).
+  # MULTI-TIER edges flagged for review: aero_subsonicWing->aero_supersonicWing (T1->T3);
+  #   fd_rocketplaneRocket->fd_throttlingRocket (T2->T5, the X-1 -> X-15 leap).
+  - id: aero_subsonicWing
+    title: "Cantilever Monoplane Wing"
+    discipline: Aerodynamics
+    tier: 1
+    parents: [start]
+    flavor: "An internally-braced wing that needs no external struts or wires, clean enough to fly fast — with the pitot intake and control surfaces that make an aeroplane a controllable platform. The airframe everything else bolts onto."
+    parts: [RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake]
+  - id: str_landingGear
+    title: "Retractable Landing Gear"
+    discipline: StructuresMechanisms
+    tier: 1
+    parents: [start]
+    flavor: "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, in the sizes a light trainer through a heavy jet demand."
+    parts: [KF-ALG-Medium, KF-ALG-Small, KF-ALG-Large, KF-ALG-SmallSide]
+  - id: av_centrifugalJet
+    title: "Centrifugal-Flow Turbojet"
+    discipline: AirBreathing
+    tier: 2
+    parents: [aero_subsonicWing]
+    flavor: "A single centrifugal impeller flings air outward into the combustor — robust, simple, and the first jet to fly a fighter, though its fat frontal area caps the speed. Continuous thrust with no propeller."
+    parts: [RO-DerwentV, RO-VK1]
+  - id: fd_rocketplaneRocket
+    title: "Chamber-Staged Aircraft Rocket"
+    discipline: FluidDynamics
+    tier: 2
+    parents: [aero_subsonicWing]
+    flavor: "Four small ethanol-oxygen chambers lit one at a time to step the thrust up and down — no throttle valve, but control enough to push a piloted aeroplane past the sound barrier and glide it home. The X-1's engine."
+    parts: [ROE-XLR11, ROE-XLR10, ROE-XLR25, ROE-S155]
+  - id: av_axialJet
+    title: "Axial-Flow Turbojet"
+    discipline: AirBreathing
+    tier: 3
+    parents: [av_centrifugalJet]
+    flavor: "Stack many stages of bladed rotor and stator so the air is squeezed along the axis instead of flung sideways — a slim engine that swallows far more air and scales to real thrust. The architecture every later jet keeps."
+    parts: [RO-J47, RO-J35, RO-Atar101D]
+  - id: aero_supersonicWing
+    title: "Swept-Wing Planform"
+    discipline: Aerodynamics
+    tier: 3
+    parents: [aero_subsonicWing]
+    flavor: "Rake the wing back so the flow across it stays subsonic while the aircraft goes supersonic, delaying the shock stall — with a shock-cone intake that decelerates the air before it reaches the compressor. What makes level supersonic flight possible at all."
+    parts: [RO-B9ProcWing-Supersonic, RO-B9ProcCS-Supersonic, RO-B9ProcAMWing-Supersonic, SXTRadialAirIntakeShockCone, RO-shockConeIntake125]
+  - id: av_afterburner
+    title: "Afterburning Turbojet"
+    discipline: AirBreathing
+    tier: 4
+    parents: [av_axialJet, aero_supersonicWing]
+    flavor: "Dump raw fuel into the hot exhaust behind the turbine and light it — a burst of thrust that shoves a fighter through the transonic drag rise, at a ruinous fuel cost. Reheat: the supersonic dash."
+    parts: [aje_j57, aje_avon, RO-Sapphire203, RO-RD9B, RO-J48]
+  - id: av_variableStator
+    title: "Variable-Stator Turbojet"
+    discipline: AirBreathing
+    tier: 4
+    parents: [av_axialJet, aero_supersonicWing]
+    flavor: "Pivot the compressor's stator vanes to keep the airflow attached across a huge speed range — the engine that holds Mach 2 without stalling its own compressor. The Starfighter's powerplant."
+    parts: [aje_j79, aje_j75, turboFanEngine, RO-J85GE5]
+  - id: av_ramjet
+    title: "Ramjet Compression"
+    discipline: AirBreathing
+    tier: 5
+    parents: [av_variableStator]
+    flavor: "Above Mach 2 the forward speed alone rams and compresses the air — no compressor, no turbine, just an inlet, a flame and a nozzle. Useless from a standstill, unbeatable once you are already fast. Missiles and interceptors."
+    parts: [RO-RJ43, RO-RJ47, RO-RJ55, RO-RJ59, RO-Nord1500]
+  - id: fd_throttlingRocket
+    title: "Throttleable Restartable Rocket"
+    discipline: FluidDynamics
+    tier: 5
+    parents: [fd_rocketplaneRocket, aero_supersonicWing]
+    flavor: "A rocket a pilot can throttle deeply and relight in flight, burning ammonia and oxygen with control enough to fly the edge of space and come back. The X-15's XLR99: the first man-rated throttleable engine, and the doorway to hypersonics."
+    parts: [ROE-XLR99, ROE-XLR41]

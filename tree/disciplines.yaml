@@ -13,6 +13,7 @@ ResourceEngineering:   { title: "Resource Engineering",  order: 4,  color: "#b07
 Cryogenics:            { title: "Cryogenics",            order: 5,  color: "#37c6e8", icon: RDicon_fuelSystems }
 Thermodynamics:        { title: "Thermodynamics",        order: 6,  color: "#f4813a", icon: RDicon_metamaterials }
 FluidDynamics:         { title: "Fluid Dynamics",        order: 7,  color: "#23b9a0", icon: RDicon_propulsionSystems }
+AirBreathing:          { title: "Air-Breathing Propulsion", order: 7.5, color: "#6cc4b0", icon: RDicon_aerodynamics }
 ElectricalPower:       { title: "Electrical Power",      order: 8,  color: "#ffd23f", icon: RDicon_electrics }
 NuclearEngineering:    { title: "Nuclear Engineering",   order: 9,  color: "#83c341", icon: RDicon_nuclearPropulsion }
 # --- cluster 3: Flight, Structure, Control ---
