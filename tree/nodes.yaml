@@ -118,23 +118,17 @@ nodes:
   # ===================== BAND 1 * HYDROLOX — the ahistorical gamble =====================
   # commit early (T1) / worse first (T2 prototype) / overtakes mid-band (T4 RL-10). Isp never nerfed;
   # the cost is thrust + handling + program time up front.
-  - id: cryo_hydrogen
-    title: "Cryogenic Hydrogen Handling"
-    discipline: Cryogenics
-    tier: 1
-    parents: [start]
-    flavor: "No doctrine says burn kerosene first. Bet early on hydrogen — vacuum-jacketed tanks, multilayer insulation, the low-density fuel that demands enormous pumps — for the highest specific impulse chemistry there is. It just costs more program to get there."
   - id: cryo_hydroloxPrototype
     title: "Hydrogen-Oxygen Combustion"
     discipline: Cryogenics
-    tier: 2
-    parents: [cryo_hydrogen]
-    flavor: "The first hydrolox engine that runs at all — low thrust, finicky, expensive, its great specific impulse not yet worth the trouble. Kerolox still wins the early climb; this is the down payment on a better long game."
+    tier: 1
+    parents: [start]
+    flavor: "No doctrine says burn kerosene first: bet early on hydrogen for the highest specific impulse there is, and accept the first hydrolox engine that runs at all — low thrust, finicky, expensive, its great specific impulse not yet worth the trouble. Kerolox still wins the early climb; this is the down payment on a better long game."
     parts: [ROE-RZ20]
   - id: cryo_expanderCycle
     title: "Expander-Cycle Combustion"
     discipline: Cryogenics
-    tier: 4
+    tier: 3
     parents: [cryo_hydroloxPrototype]
     flavor: "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, the highest specific impulse a chemical engine reaches. The RL-10: the tier where hydrogen finally overtakes kerosene."
     parts: [ROE-RL10Fixed]
@@ -441,7 +435,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Rivet and weld sheet, extrusion and tube into a load-bearing frame — the everyday structural craft of 1950: struts, I-beams, panels, mounts and nose cones, the skeleton every vehicle hangs on. The root the rest of structures grows from."
-    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount, SXTProtonlikeNoseCone, Angledpanel]
+    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount]
 
   # ===================== BAND 1 * AVIONICS (capability tiers — grants:, no physical part) =====================
   # RP-1's Science-Core avionics ladder as ONE track (user). Each node grants the avionics tier; names are my
@@ -527,7 +521,7 @@ nodes:
     upgrades: [solarTL0]
 
   - id: prop_recipEngine
-    title: "Reciprocating Aero Engines"
+    title: "Reciprocating Piston Propulsion"
     discipline: AirBreathing
     tier: 1
     parents: [start]
@@ -543,7 +537,7 @@ nodes:
     parts: [RO-X1Cockpit, RO-FighterInlineCockpit, RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, SXTmk3Cockpit52, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow]
 
   - id: str_standardDecouplers
-    title: "Standard Decouplers"
+    title: "Stock Separation Rings"
     discipline: StructuresMechanisms
     tier: 3
     parents: [str_staging]
@@ -586,3 +580,10 @@ nodes:
     parents: [gs_generalPad]
     flavor: "Purpose-built bases for one launcher, with a flame trench or tulip to turn a heavy first stage's exhaust aside: the dedicated pads orbital rockets earned once a general stand could no longer take the blast. Soyuz's tulip and the US stands from Atlas to Titan."
     parts: [AM_MLP_SoyuzLaunchBase, AM_MLP_SoyuzLaunchBaseArmLG, AM_MLP_SoyuzLaunchBaseArmSM, AM_MLP_SoyuzLaunchBaseClampArm, AM_MLP_SoyuzLaunchBaseElevator, AM_MLP_SoyuzLaunchBaseGantry, AM_MLP_AgenaServiceTower, AM_MLP_Atlas2UmbilicalArm1, AM_MLP_Atlas2UmbilicalArm2, AM_MLP_Atlas2UmbilicalArm3, AM_MLP_AtlasLaunchStand, AM_MLP_AtlasLaunchStandAlt, AM_MLP_AtlasSepClampArm, AM_MLP_AtlasSepSideUmb, AM_MLP_AtlasUmbilicalArmAgena, AM_MLP_AtlasUmbilicalArmCentaur, AM_MLP_AtlasUmbilicalArmCentaur1, AM_MLP_AtlasUmbilicalArmCentaur2, AM_MLP_CentaurServiceTower1, AM_MLP_CentaurServiceTower2, AM_MLP_CrewElevatorAtlasUmbilical, AM_MLP_Delta4LaunchStand, AM_MLP_Delta4ModTowerCore, AM_MLP_Delta4ModTowerTop, AM_MLP_Delta4ServiceTower, AM_MLP_Delta4TowerArm1, AM_MLP_Delta4TowerArm2, AM_MLP_Delta4TowerArm3, AM_MLP_GeneralServiceTowerXLBase, AM_MLP_GeneralServiceTowerXLSec1, AM_MLP_GeneralServiceTowerXLTop, AM_MLP_GeneralTowerAtlasV, AM_MLP_GeneralTowerDeltaII, AM_MLP_GeneralUmbilicalDroopAtlas2, AM_MLP_JupiterPetalCover, AM_MLP_LaunchStandCrewElevatorAtlas, AM_MLP_LaunchStandCrewElevatorGemini, AM_MLP_LaunchStandCrewElevatorMercury, AM_MLP_LaunchStandCrewWalkwayMercury, AM_MLP_LaunchStandSmallPole, AM_MLP_RedstoneLaunchStand, AM_MLP_SpecialServiceTowerAtlasVBase, AM_MLP_SpecialServiceTowerAtlasVSec1, AM_MLP_SpecialServiceTowerAtlasVSec2, AM_MLP_SpecialServiceTowerAtlasVTop, AM_MLP_SpecialServiceTowerDeltaIIBase, AM_MLP_SpecialServiceTowerDeltaIISec1, AM_MLP_SpecialServiceTowerDeltaIISec2, AM_MLP_SpecialServiceTowerDeltaIITop, AM_MLP_ThorLaunchStand, AM_MLP_ThorServiceTowerFallback, AM_MLP_Titan3LaunchStand, AM_MLP_TitanIIITowerMast, AM_MLP_TitanIILaunchStand, AM_MLP_TitanIIServiceTowerMast, AM_MLP_TitanIIServiceTowerModBase, AM_MLP_TitanIIServiceTowerModSec1, AM_MLP_TitanIIServiceTowerModSec2, AM_MLP_TitanIIServiceTowerModTop, AM_MLP_TitanIIServiceTowerSingle, AM_MLP_TitanIIServiceTowerUmbilical, AM_MLP_TitanIIServiceTowerUmbilical2, AM_MLP_TitanIIServiceTowerUmbilicalGem, AM_MLP_TitanIIServiceTowerUmbilicalGem2, AM_MLP_VanguardLaunchStand, AM_MLP_VanguardServiceTower]
+  - id: str_stockNoseCones
+    title: "Stock Nose Cones"
+    discipline: StructuresMechanisms
+    tier: 2
+    parents: [str_structuralHardware]
+    flavor: "A rack of pre-made nose cones, couplers and a service bay in fixed sizes, for when you would rather bolt on a stock cap than shape a procedural one. The procedural nose cone is lighter and the default; nothing depends on this - it is here only if you want the fixed catalogue."
+    parts: [noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, SXTProtonlikeNoseCone, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, Angledpanel]
