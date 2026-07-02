@@ -61,7 +61,8 @@ nodes:
     title: "Turbopump Feed"
     discipline: FluidDynamics
     tier: 2
-    parents: [pc_storables]
+    parents: [pc_storables, fd_injectors]
+    anyToUnlock: true
     flavor: "Drive the propellants with a turbine-spun pump instead of tank pressure — the tank stops being a heavy pressure vessel and the chamber can run far harder than any sounding motor reaches. The step from a powder dart to the turbopump-fed V-2: a large liquid rocket at last."
     parts: [ROE-A4, ROE-A7, ROE-RD100]
   # --- the combustion fork: two answers to a stable large chamber ---
