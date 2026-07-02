@@ -188,8 +188,8 @@ nodes:
   - id: met_stainlessSteel
     title: "Austenitic Stainless Steel"
     discipline: Metallurgy
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [met_weldedTank]
     flavor: "Chromium-nickel steel that keeps its strength while hot and holds a higher chamber pressure without a thicker, heavier wall — the metallurgy that turned the V-2's chamber into the Redstone's. Push the pressure, take the thrust."
     upgrades: [RFUpgrade_Model39c, RFUpgrade_5D60, RFUpgrade_RD-101, RFUpgrade_RD-102, RFUpgrade_RD-103, RFUpgrade_RD-103M, RFUpgrade_Veronique61, RFUpgrade_A-6, RFUpgrade_A-6H]
   - id: fd_injectors
@@ -202,7 +202,46 @@ nodes:
   - id: met_nimonic
     title: "Nimonic Turbine Alloys"
     discipline: Metallurgy
-    tier: 2
+    tier: 3
     parents: [met_stainlessSteel]
     flavor: "Nickel-chromium superalloy that keeps its strength at red heat — a turbopump turbine that spins hotter and harder feeds a higher chamber pressure, and the very same alloy is what lets a jet turbine run at all. The metallurgy where rockets and jets cross over."
     upgrades: [RFUpgrade_LR43-NA-3, RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13]
+
+  # ===================== BAND 1 * STRUCTURES & TANK MATERIALS =====================
+  # Mass-fraction line: welded steel (T1) -> stainless (T2) -> isogrid ‖ balloon light tanks. The Metallurgy
+  # materials lane (welded -> stainless -> Nimonic) feeds both tanks (Structures) and engines (FluidDynamics).
+  - id: met_weldedTank
+    title: "Fusion-Welded Pressure Vessels"
+    discipline: Metallurgy
+    tier: 1
+    parents: [start]
+    flavor: "Roll, fusion-weld and proof-test a thin metal cylinder that holds its propellant under pressure without bursting — the first tank that flies, and the steel the first engine chambers are cut from. Heavy, but honest."
+    parts: [ROT-GenericTank-Separate, ROT-BoosterTank-Separate, ROT-RadialTank-Separate]
+  - id: met_isogrid
+    title: "Machined Isogrid Stiffening"
+    discipline: Metallurgy
+    tier: 2
+    parents: [met_weldedTank]
+    flavor: "Machine a triangular-rib isogrid into thick plate — cutting metal away everywhere the load path doesn't run, leaving only the ribs that carry it. The same stiffness at a fraction of the mass; the light conventional tankage that flies most orbital rockets."
+    parts: [ROT-GenericTank-Integral, ROT-AtlasTank-Integral, ROT-BoosterTank-Integral]
+  - id: str_balloonTank
+    title: "Pressure-Stabilized Monocoque"
+    discipline: StructuresMechanisms
+    tier: 3
+    parents: [met_stainlessSteel]
+    flavor: "Make the stainless wall so thin it only holds its shape under internal pressure — the Atlas 'steel balloon' reached orbit weighing almost nothing empty, and would crumple if you ever let it depressurise. As much an orbital enabler as any engine."
+    parts: [ROT-AtlasTank-Balloon, ROT-BalloonTank-New, RO-RFTank-BalloonNew]
+  - id: str_staging
+    title: "Pyrotechnic Frangible Separation"
+    discipline: StructuresMechanisms
+    tier: 1
+    parents: [start]
+    flavor: "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one burn."
+    parts: [proceduralStackDecoupler, Decoupler_1, radialDecoupler, sepMotor1, ROT-RingDecoupler]
+  - id: aero_fairings
+    title: "Jettisonable Payload Fairings"
+    discipline: Aerodynamics
+    tier: 1
+    parents: [start]
+    flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
+    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2]
