@@ -99,6 +99,27 @@ My lean: ship **`bezier`** as the default (best readability, still one clean lin
 **`ortho-late`** available for players who want the native R&D feel and **`bundle`** as a declutter
 toggle. But this stays a taste call — that's why all nine are live.
 
+## Layout variants (node placement — separate from routing)
+
+Routing draws the *lines*; **layout** places the *nodes* (the **Layout** dropdown / `?layout=`).
+Two new layered-layout variants were added this session — both stay in the layered/Sugiyama family
+because **x = tier is semantic** (fixing x + wanting ortho edges *is* a layered drawing; force-directed
+/ radial throw the tier axis away). The x-column is untouched; only the cross-axis order/coordinate change.
+
+| `layout`         | what changed | verdict |
+|------------------|--------------|---------|
+| `sugiyama`       | median-sweep ordering + isotonic (PAV) neighbour-mean coordinates (the prior default). | fine, but PAV **smears edges into gentle diagonals** — the weak stage. |
+| `sugiyama-bk` ★  | same ordering, but coordinates via **Brandes–Köpf** block alignment (`bkCoords`): each node aligns to its median neighbour into vertical blocks, then blocks compact under a min-gap. Two runs (down-left + down-right mirror) averaged; a final monotone sweep guarantees separation. | **the win.** Edges become **dead-straight horizontal runs** (long dummy-chain edges especially) — which is exactly what makes ortho/bezier look crisp. This is why dagre/ELK look better than a textbook Sugiyama. Pairs great with `ortho-late` *and* `bezier`. |
+| `sugiyama-disc` ★| **discipline-constrained** ordering (each tier sorts by discipline first, crossing-min within) + BK coords + a band gutter. Gives the tree a readable *geography* (Propulsion always here, Avionics there). | works, but **exposes that RP-AXE is too cross-linked for strict swim-lanes**: the many cross-discipline prereqs turn into long vertical cross-band edges and the tree runs tall/narrow. Good as a "show me the discipline map" toggle, not the everyday layout. (Same reason a tidy-tree backbone wouldn't fit this graph.) |
+
+**Layout recommendation:** ship **`sugiyama-bk`** as the default node placement — it's a drop-in upgrade to
+the one weak stage (coordinate assignment) and makes every routing variant read cleaner. Keep `sugiyama-disc`
+as an optional geography view. The BK engine (`bkType1`/`bkAlign`/`bkCompact`/`bkRun`/`bkCoords`) is a
+faithful port of Brandes & Köpf 2002 (2-run L/R-balanced, not the full 4-way — the up/down asymmetry is
+negligible for an L→R tree). Note this is **prototype-owned** layout (renderer.js `layoutSugiyama(cfg)`),
+independent of `build_tree.py::sugiyama_layout` (the separate layout agent's file) — porting BK in-game
+means mirroring `bkCoords` into `AxeTreeLayout.cs`'s coordinate step.
+
 ## Porting the winner to KSP (C#)
 
 Only `lanes` is ported (`AxeTreeLayout.BuildLaneRoutes`). The others are **easier** — each is a

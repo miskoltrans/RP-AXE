@@ -72,24 +72,30 @@ function reachable(id, adj){                       // BFS closure (ancestors via
 // crossings); coordinate assignment (rank stack, then neighbour-mean straightening under a min gap);
 // per-edge waypoints through each spanned tier. applyLayout() swaps pos+waypoints in/out so ALL the
 // downstream code (anchors, routing, lane assignment, fit, hit-test) works unchanged either way.
-function layoutSugiyama(){
+// Layered layout, parameterized (cfg defaults to the original behaviour so 'sugiyama' is unchanged):
+//   cfg.coords 'pav' (default) isotonic neighbour-mean | 'bk' Brandes–Köpf block alignment (straight edges)
+//   cfg.order  undefined crossing-min only | 'disc' discipline-constrained ordering (soft swim-lanes)
+function layoutSugiyama(cfg){
+  cfg=cfg||{}; const useBK=cfg.coords==='bk', discOrd=cfg.order==='disc';
   const COLW=380*opt.spacingX, SPACING_Y=94*opt.spacingY, med=medianCost();
   const wv=v=>(opt.diffspread && !String(v).startsWith('__d') && byId[v]) ? (0.6+1.4*Math.min(2,(byId[v].cost||0)/med)) : 1;
-  // --- layered graph with DUMMY nodes on every >1-tier edge (so long edges join the ordering) ---
-  const vtier={}, seed={}, layers={}, prev={}, nxt={}, chains=[];
+  // --- layered graph with DUMMY nodes on every >1-tier edge. segPrev/segNext = adjacent-rank segments
+  //     ONLY (the "proper layering" Brandes–Köpf needs); prev/nxt keep every edge for ordering/PAV. ---
+  const vtier={}, seed={}, layers={}, prev={}, nxt={}, segPrev={}, segNext={}, chains=[];
   for(const n of D.nodes){ vtier[n.id]=n.tier; seed[n.id]=(D.disciplines[n.discipline]||{}).order||99;
     (layers[n.tier]=layers[n.tier]||[]).push(n.id); }
   const addAdj=(a,b)=>{ (nxt[a]=nxt[a]||[]).push(b); (prev[b]=prev[b]||[]).push(a); };
+  const addSeg=(a,b)=>{ (segNext[a]=segNext[a]||[]).push(b); (segPrev[b]=segPrev[b]||[]).push(a); };
   let dc=0;
   for(const n of D.nodes){ const cid=n.id, ct=n.tier;
     for(const pid of (parents[cid]||[])){ if(!(pid in byId)) continue;
       const pt=byId[pid].tier;
-      if(pt>=ct){ addAdj(pid,cid); chains.push([pid,cid,[pid,cid]]); continue; }   // non-forward: straight
+      if(pt>=ct){ addAdj(pid,cid); chains.push([pid,cid,[pid,cid]]); continue; }   // non-forward: no BK segment
       const chain=[pid];
       for(let t=pt+1;t<ct;t++){ const dk='__d'+(dc++); vtier[dk]=t; seed[dk]=seed[pid];
         (layers[t]=layers[t]||[]).push(dk); chain.push(dk); }
       chain.push(cid);
-      for(let i=0;i<chain.length-1;i++) addAdj(chain[i],chain[i+1]);
+      for(let i=0;i<chain.length-1;i++){ addAdj(chain[i],chain[i+1]); addSeg(chain[i],chain[i+1]); }
       chains.push([pid,cid,chain]);
     } }
   const order=Object.keys(layers).map(Number).sort((a,b)=>a-b);
@@ -109,24 +115,35 @@ function layoutSugiyama(){
     for(const t of seq){ const keep=Object.assign({},rank);
       reindex(t,(a,b)=>{ const ma=(adj[a]&&adj[a].length)?median(adj[a]):keep[a],
                                mb=(adj[b]&&adj[b].length)?median(adj[b]):keep[b];
+                         if(discOrd){ const sc=seed[a]-seed[b]; if(sc) return sc; }   // disciplines contiguous first
                          return (ma-mb)||(keep[a]-keep[b]); }); }
     const c=crossings(); if(best===null||c<best.c){ best={c,ord:{}}; for(const t of order) best.ord[t]=layers[t].slice(); } }
   for(const t of order){ layers[t]=best.ord[t]; layers[t].forEach((v,i)=>rank[v]=i); }
-  // --- coordinate assignment: isotonic (PAV) pull toward neighbour mean under a min gap ---
+  // --- coordinate assignment ---
   const isd=v=>String(v).startsWith('__d');
-  const gap=(a,b)=>(isd(a)&&isd(b))?0.12:((isd(a)||isd(b))?0.45:1.0*(wv(a)+wv(b))/2);   // dummy thin; real gap grows with cost when diffspread
-  const pav=a=>{ const vals=[],cnts=[];
-    for(const x of a){ vals.push(x); cnts.push(1);
-      while(vals.length>1 && vals[vals.length-2]>=vals[vals.length-1]){
-        const v2=vals.pop(),c2=cnts.pop(),v1=vals.pop(),c1=cnts.pop(); vals.push((v1*c1+v2*c2)/(c1+c2)); cnts.push(c1+c2); } }
-    const out=[]; for(let i=0;i<vals.length;i++) for(let k=0;k<cnts[i];k++) out.push(vals[i]); return out; };
-  const y={}; for(const t of order) for(const v of layers[t]) y[v]=rank[v];
-  for(let it=0;it<30;it++){
-    const des={}; for(const t of order) for(const v of layers[t]){ const ns=(prev[v]||[]).concat(nxt[v]||[]);
-      des[v]= ns.length ? ns.reduce((s,w)=>s+y[w],0)/ns.length : y[v]; }
-    for(const t of order){ const row=layers[t]; if(!row.length) continue;
-      const c=[0]; let acc=0; for(let i=1;i<row.length;i++){ acc+=gap(row[i-1],row[i]); c[i]=acc; }
-      const z=pav(row.map((v,i)=>des[v]-c[i])); for(let i=0;i<row.length;i++) y[row[i]]=z[i]+c[i]; } }
+  const gap=(a,b)=>{                              // min separation between two vertices stacked in a layer
+    if(isd(a)&&isd(b)) return 0.12;               // dummy–dummy: thin (long edges pack tight)
+    if(isd(a)||isd(b)) return 0.45;
+    if(discOrd){ const da=(byId[a]||{}).discipline, db=(byId[b]||{}).discipline; if(da&&db&&da!==db) return 1.5; }  // band gutter
+    return 1.0*(wv(a)+wv(b))/2;                   // real–real: grows with cost when diffspread
+  };
+  let y;
+  if(useBK){
+    y=bkCoords(order, layers, segPrev, gap, isd);   // Brandes–Köpf: aligns nodes into blocks ⇒ straight edges
+  } else {                                          // isotonic (PAV) pull toward neighbour mean under min gap
+    const pav=a=>{ const vals=[],cnts=[];
+      for(const x of a){ vals.push(x); cnts.push(1);
+        while(vals.length>1 && vals[vals.length-2]>=vals[vals.length-1]){
+          const v2=vals.pop(),c2=cnts.pop(),v1=vals.pop(),c1=cnts.pop(); vals.push((v1*c1+v2*c2)/(c1+c2)); cnts.push(c1+c2); } }
+      const out=[]; for(let i=0;i<vals.length;i++) for(let k=0;k<cnts[i];k++) out.push(vals[i]); return out; };
+    y={}; for(const t of order) for(const v of layers[t]) y[v]=rank[v];
+    for(let it=0;it<30;it++){
+      const des={}; for(const t of order) for(const v of layers[t]){ const ns=(prev[v]||[]).concat(nxt[v]||[]);
+        des[v]= ns.length ? ns.reduce((s,w)=>s+y[w],0)/ns.length : y[v]; }
+      for(const t of order){ const row=layers[t]; if(!row.length) continue;
+        const c=[0]; let acc=0; for(let i=1;i<row.length;i++){ acc+=gap(row[i-1],row[i]); c[i]=acc; }
+        const z=pav(row.map((v,i)=>des[v]-c[i])); for(let i=0;i<row.length;i++) y[row[i]]=z[i]+c[i]; } }
+  }
   let miny=Infinity; for(const v in y) if(y[v]<miny) miny=y[v];
   const Y=v=>(y[v]-miny)*SPACING_Y;
   for(const n of D.nodes){ n._lx=n.tier*COLW; n._ly=Y(n.id); }
@@ -134,8 +151,86 @@ function layoutSugiyama(){
   for(const [pid,cid,chain] of chains){ const e=eByKey[pid+'>'+cid]; if(e) e._mywp=chain.map(v=>[vtier[v]*COLW, Y(v)]); }
   for(const e of edges) if(!e._mywp) e._mywp=(e.from in byId&&e.to in byId)?[[byId[e.from]._lx,byId[e.from]._ly],[byId[e.to]._lx,byId[e.to]._ly]]:null;
 }
+
+// ---- Brandes–Köpf horizontal (here vertical) coordinate assignment ----
+// "Fast and Simple Horizontal Coordinate Assignment" (Brandes & Köpf 2002). Aligns each vertex to its
+// median neighbour into vertical BLOCKS, then compacts blocks under a min-gap — so aligned edges become
+// dead-straight runs (long edges through dummy chains especially). This is what makes dagre/ELK look
+// crisp under orthogonal routing vs. a neighbour-mean pass, which smears edges into gentle diagonals.
+// We run two directions (down-left + down-right via a within-layer mirror) and average to balance the
+// left/right bias — not the full 4-way balance, but the visible asymmetry for an L→R tree is L/R. A final
+// monotone per-layer sweep guarantees separation (averaging two valid runs can nudge nodes together).
+function bkType1(L, predOf, ord, isd){        // mark segments that cross an inner (dummy–dummy) segment
+  const conf=new Set();
+  for(let k=0;k<L.length-1;k++){ const upper=L[k], lower=L[k+1]; let k0=0, scan=0;
+    for(let l1=0;l1<lower.length;l1++){ const v=lower[l1];
+      let innerPos=-1; if(isd(v)) for(const u of (predOf[v]||[])) if(isd(u)&&ord[u]>innerPos) innerPos=ord[u];
+      if(l1===lower.length-1 || innerPos>=0){ const k1=innerPos>=0?innerPos:upper.length-1;
+        for(; scan<=l1; scan++){ const w=lower[scan];
+          for(const u of (predOf[w]||[])) if((ord[u]<k0||ord[u]>k1) && !(isd(u)&&isd(w))) conf.add(u+' '+w); }
+        k0=k1;
+      } } }
+  return conf;
+}
+function bkAlign(L, predOf, ord, conf){       // vertical alignment → {root, align} blocks (down, median)
+  const root={}, align={};
+  for(const layer of L) for(const v of layer){ root[v]=v; align[v]=v; }
+  const has=(u,w)=>conf.has(u+' '+w)||conf.has(w+' '+u);
+  for(const layer of L){ let r=-1;
+    for(const v of layer){ const ws=predOf[v]; if(!ws||!ws.length) continue;
+      const mp=(ws.length-1)/2;
+      for(let i=Math.floor(mp); i<=Math.ceil(mp); i++){ if(align[v]!==v) break;
+        const w=ws[i]; if(r<ord[w] && !has(w,v)){ align[w]=v; root[v]=root[w]; align[v]=root[w]; r=ord[w]; } }
+    } }
+  return {root,align};
+}
+function bkCompact(L, root, align, sep){       // horizontal compaction → coord per vertex (one direction)
+  const above={}; for(const layer of L) for(let i=0;i<layer.length;i++) above[layer[i]]=i>0?layer[i-1]:null;
+  const X={}, sink={}, shift={};
+  for(const layer of L) for(const v of layer){ sink[v]=v; shift[v]=Infinity; }
+  function place(v){ if(v in X) return; X[v]=0; let w=v;
+    do{ const u=above[w];
+      if(u!=null){ const ru=root[u]; place(ru);
+        if(sink[v]===v) sink[v]=sink[ru];
+        const d=sep(u,w);
+        if(sink[v]===sink[ru]) X[v]=Math.max(X[v], X[ru]+d);
+        else shift[sink[ru]]=Math.min(shift[sink[ru]], X[v]-X[ru]-d);
+      } w=align[w];
+    } while(w!==v);
+  }
+  for(const layer of L) for(const v of layer) if(root[v]===v) place(v);
+  const xs={}; for(const layer of L) for(const v of layer){ xs[v]=X[root[v]];
+    const s=shift[sink[root[v]]]; if(s<Infinity) xs[v]+=s; }
+  return xs;
+}
+function bkRun(L, segPrev, sep, isd){          // one BK pass over ordered layers L (predecessors = upper layer)
+  const ord={}; for(const layer of L) layer.forEach((v,i)=>ord[v]=i);
+  const predOf={}; for(const layer of L) for(const v of layer)
+    predOf[v]=(segPrev[v]||[]).slice().sort((a,b)=>ord[a]-ord[b]);
+  const conf=bkType1(L,predOf,ord,isd);
+  const {root,align}=bkAlign(L,predOf,ord,conf);
+  return bkCompact(L,root,align,sep);
+}
+function bkCoords(order, layers, segPrev, sep, isd){
+  const L=order.map(t=>layers[t]);
+  const cL=bkRun(L, segPrev, sep, isd);                 // down-left
+  const cRr=bkRun(L.map(l=>l.slice().reverse()), segPrev, sep, isd);   // down-right (within-layer mirror)
+  const cR={}; for(const k in cRr) cR[k]=-cRr[k];       // …measured from the far side ⇒ negate to shared frame
+  const norm=m=>{ let mn=Infinity; for(const k in m) if(m[k]<mn) mn=m[k]; for(const k in m) m[k]-=mn; };
+  norm(cL); norm(cR);
+  const y={}; for(const layer of L) for(const v of layer) y[v]=(cL[v]+cR[v])/2;   // balance L/R bias
+  for(const layer of L) for(let i=1;i<layer.length;i++){                          // guarantee separation
+    const need=y[layer[i-1]]+sep(layer[i-1],layer[i]); if(y[layer[i]]<need) y[layer[i]]=need; }
+  return y;
+}
+
 function medianCost(){ const cs=D.nodes.map(n=>n.cost||0).filter(c=>c>0).sort((a,b)=>a-b); return cs.length?(cs[cs.length>>1]||1):1; }
-function computeLayout(){ if(opt.layout==='bands') layoutBands(); else layoutSugiyama(); }
+function computeLayout(){
+  if(opt.layout==='bands') layoutBands();
+  else if(opt.layout==='sugiyama-bk')   layoutSugiyama({coords:'bk'});
+  else if(opt.layout==='sugiyama-disc') layoutSugiyama({coords:'bk', order:'disc'});
+  else layoutSugiyama();
+}
 
 // Discipline-banded layout: each discipline gets its own horizontal band (ordered by `order`); x=tier,
 // nodes stacked within their (discipline,tier) cell. Bands grow with mean cost when diffspread is on.
