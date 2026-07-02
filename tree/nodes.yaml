@@ -78,7 +78,7 @@ nodes:
     tier: 3
     parents: [fd_turbopumpFeed]
     flavor: "Don't fight instability in one big chamber — cluster several small ones, each below the acoustic threshold, on a common turbopump. The Soviet answer, and the layout that would grow into the R-7."
-    parts: [ROE-S155, YF2_Engine, YF2_with_shell, ROE-RD211]  # RD-211: multi-chamber hardware home; draws its storable config from pc_hypergolics
+    parts: [ROE-S155]  # small multi-chamber anchor; S-155 home under review (see notes)
   # --- orbital-class thrust: the generation that reaches orbit ---
   - id: fd_orbitalWest
     title: "Sustained Orbital-Class Thrust"
@@ -93,7 +93,15 @@ nodes:
     tier: 4
     parents: [fd_multiChamber, fd_verniers]
     flavor: "Twenty combustion chambers across four strap-on boosters and a core, all lit on the pad and synchronised — the R-7 that carried Sputnik to orbit. Brute multiplicity where the West built single chambers. Unflyable without vernier steering, which its engines carry built-in."
-    parts: [ROE-RD107, ROE-RD108]  # RD-211 pulled — it's a standalone hypergolic multi-chamber (Isp 264), not R-7 kerolox; parked for the storable-engine node
+    parts: [ROE-RD107, ROE-RD108]
+  # --- orbital-class multi-chamber (storable boosters) — YF-2 1214 kN, RD-211 749 kN cluster tight ---
+  - id: fd_orbitalMultiChamber
+    title: "Orbital-Class Multi-Chamber Combustion"   # NAME TENTATIVE — review
+    discipline: FluidDynamics
+    tier: 4
+    parents: [fd_multiChamber]
+    flavor: "Scale the clustered-chamber approach to a meganewton — a bank of chambers on a common turbopump delivering booster thrust without ever risking one large unstable chamber. The storable orbital boosters (RD-211, YF-2) that lofted payloads on propellant you could keep in the tank for years."
+    parts: [YF2_Engine, YF2_with_shell, ROE-RD211]
   - id: fd_matureOrbital
     title: "High-Expansion Vacuum Nozzles"
     discipline: FluidDynamics
@@ -146,7 +154,14 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Nitrocellulose plasticised with nitroglycerin and extruded into a grain that carries its own oxygen — the older solid chemistry: simple, dense, storable, lit once and done. The JATO boosters and the first Nike stages."
-    parts: [ROE-NikeM5E1, ROE-25KS18000, ROE-18KS7800, ROE-R103]
+    parts: [ROE-18KS7800, ROE-R103]
+  - id: pc_doubleBaseBooster
+    title: "Double-Base Booster Grains"   # NAME TENTATIVE — review
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [pc_doubleBaseSolid]
+    flavor: "Cast a double-base grain large enough to boost a stack off the pad — case-bonded to the motor wall so it burns from the core out without cracking. The Nike booster and the heavy JATO units, where double-base is pushed to its size limit before composite takes over."
+    parts: [ROE-NikeM5E1, ROE-25KS18000]
   - id: pc_compositeSolid
     title: "Ammonium-Perchlorate Composite Grains"
     discipline: PropellantChemistry
