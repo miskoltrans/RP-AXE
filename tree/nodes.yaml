@@ -70,13 +70,19 @@ nodes:
     discipline: FluidDynamics
     tier: 3
     parents: [fd_turbopumpFeed]
-    flavor: "One large chamber, its combustion tamed by careful injector design — the workhorse kerosene-oxygen booster. From Vanguard's little X-405 up to the Atlas LR-89, whose own configs uprate it to a meganewton: more thrust arrives as an upgrade, not a new engine."
-    parts: [ROE-LR89_2, ROE-LR105_2, ROE-LR79, ROE-RZ, ROE-X405, ROE-X405H]
+    flavor: "A single small chamber held stable by careful injector design — the first purpose-built kerosene-oxygen boosters a satellite could ride: Vanguard's X-405, and the Atlas sustainer that runs on to orbit after the boosters drop away."
+    parts: [ROE-X405, ROE-X405H, ROE-LR105_2]
   # (Multi-chamber has NO small tier: S-155 turned out single-chamber + an aircraft engine, moved to the
   #  aviation rocketplane cluster. The multi-chamber breakthrough debuts at ORBITAL scale —
   #  fd_orbitalSoviet (R-7 kerolox) and fd_orbitalMultiChamber (storable). S-155 parked for aviation.)
-  # fd_orbitalWest DISSOLVED (was "Sustained Orbital-Class Thrust" — a banned capability name): LR-89/79/105/RZ
-  #   merged into fd_singleChamber; their orbital thrust is a config-upgrade STATE (met_nimonic), not a node.
+  # --- US/Western orbital boosters: taming combustion in a ~1 MN single chamber (capability peer of the R-7) ---
+  - id: fd_largeChamber
+    title: "Single Large-Chamber Combustion"
+    discipline: FluidDynamics
+    tier: 4
+    parents: [fd_singleChamber]
+    flavor: "Scale a single combustion chamber to a meganewton and its own acoustics threaten to tear it apart — injector design and damping hold the burn stable at a size the small chambers never faced. The hard way the West reached orbit: one big stable chamber, where the Soviets clustered many small ones. Atlas, Thor, Blue Streak."
+    parts: [ROE-LR89_2, ROE-LR79, ROE-RZ]
   - id: fd_orbitalSoviet
     title: "Parallel Engine Clustering"
     discipline: FluidDynamics
