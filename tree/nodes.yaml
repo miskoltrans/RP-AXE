@@ -419,8 +419,8 @@ nodes:
     title: "Electric Servo Actuators"
     discipline: Robotics
     tier: 5
-    parents: [start]
-    flavor: "A motor, a gearbox and a position feedback loop in one sealed can — command an angle and the shaft holds it against load. The root of every deployed boom, gimballed dish, hinged panel and jointed arm a spacecraft carries; robotics begins here."
+    parents: [rob_rotorActuation]
+    flavor: "A motor, a gearbox and a position feedback loop in one sealed can — command an angle and the shaft holds it against load. The closed-loop evolution of the commanded rotor, and the root of every deployed boom, gimballed dish, hinged panel and jointed arm a spacecraft carries."
     parts: [rotoServo_03, rotoServo_00, rotoServo_02, rotoServo_04, rotor_02, rotor_02s, rotor_03, rotor_03s, hinge_01, hinge_01_s, hinge_03, hinge_03_s, hinge_04, piston_01, piston_02, piston_03, piston_04, controller1000]
   - id: rob_roverWheels
     title: "Powered Rover Wheels"

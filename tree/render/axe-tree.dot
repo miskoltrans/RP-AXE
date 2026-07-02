@@ -147,7 +147,7 @@ digraph AXE {
   "gnc_rcs" -> "str_docking" [style=solid];
   "str_staging" -> "str_docking" [style=solid];
   "str_staging" -> "str_touchdownAbsorption" [style=solid];
-  "start" -> "rob_servos" [style=solid];
+  "rob_rotorActuation" -> "rob_servos" [style=solid];
   "rob_servos" -> "rob_roverWheels" [style=solid];
   "rob_servos" -> "rob_surfaceSampler" [style=solid];
   "aero_recovery" -> "cmp_ablativeHeatshield" [style=solid];
