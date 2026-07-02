@@ -6,6 +6,10 @@
 > `RDTechTree.OnTechTreeSpawn` + a Harmony prefix on `RDNode.GetVectorArray`). Config in
 > `GameData/RP-AXE/RenderSettings.cfg` (`layout`/`laneRouting`/`fan`/`lanePitch`). In-game smoke-tested via
 > `-axe-autotest`. The notes below are the original design/handoff, kept for reference.
+>
+> **NEXT:** [RENDER-PORT-ORTHO-BK.md](RENDER-PORT-ORTHO-BK.md) — add the prototype's chosen default look
+> (routing = **ortho-late** converging elbows + layout = **sugiyama-bk** Brandes–Köpf straight edges).
+> Paste-ready C# + exact wiring anchors.
 
 Port the HTML rendering prototype into the **KSP R&D scene** via the AXE Harmony plugin,
 **config-toggleable**. This is the next big task (written before a context clear).
