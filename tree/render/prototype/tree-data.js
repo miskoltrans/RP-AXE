@@ -2980,7 +2980,7 @@ window.TREE = {
    "tier": 5,
    "cost": 1500,
    "anyToUnlock": false,
-   "flavor": "React hydrogen and oxygen across a potassium-hydroxide electrolyte and draw kilowatts straight from the reaction, with drinkable water as the only exhaust — power for a crewed craft that needs more than batteries and cannot wait on the sun. Gemini and Apollo ran on them.",
+   "flavor": "React hydrogen and oxygen across a potassium-hydroxide electrolyte and draw kilowatts straight from the reaction, with drinkable water as the only exhaust — power for a crewed craft that needs more than batteries and cannot wait on the sun. Apollo — and later the Shuttle — ran on them (Gemini flew a rival ion-exchange-membrane cell).",
    "parts": [
     {
      "name": "FuelCell",
