@@ -78,7 +78,7 @@ nodes:
   #  fd_orbitalSoviet (R-7 kerolox) and fd_orbitalMultiChamber (storable). S-155 parked for aviation.)
   # --- US/Western orbital boosters: taming combustion in a ~1 MN single chamber (capability peer of the R-7) ---
   - id: fd_largeChamber
-    title: "Single Large-Chamber Combustion"
+    title: "Combustion-Instability Damping"
     discipline: FluidDynamics
     tier: 4
     parents: [fd_singleChamber]
@@ -182,7 +182,7 @@ nodes:
     parts: [ROE-Gamma301]
     upgrades: [RFUpgrade_HTP]
   - id: pc_stentor
-    title: "Throttleable Peroxide Sustainer"   # NAME TENTATIVE — confirm Stentor's distinguishing mechanism
+    title: "Deep-Throttling Peroxide Combustion"
     discipline: PropellantChemistry
     tier: 3
     parents: [pc_htp]
@@ -331,14 +331,14 @@ nodes:
     title: "Magnetic-Sector Mass Spectrometry"
     discipline: Microelectronics
     tier: 2
-    parents: [nuc_geiger]
+    parents: [mic_atmoSounding]
     flavor: "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there."
     parts: [RO-IonMassSpectrometer, USFluidSpectroWedge]
   - id: mic_magnetometer
     title: "Fluxgate Magnetometry"
     discipline: Microelectronics
     tier: 2
-    parents: [nuc_geiger]
+    parents: [mic_atmoSounding]
     flavor: "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron."
     parts: [RO-EarlyMagnet]
   - id: bio_cultures
@@ -369,7 +369,7 @@ nodes:
     flavor: "An internally-braced wing that needs no external struts or wires, clean enough to fly fast — with the pitot intake and control surfaces that make an aeroplane a controllable platform. The airframe everything else bolts onto."
     parts: [RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, RO-IntakeRadialLongPitot, SXTInlineAirIntake, airScoop, miniIntake]
   - id: str_landingGear
-    title: "Retractable Landing Gear"
+    title: "Oleo-Strut Undercarriage"
     discipline: StructuresMechanisms
     tier: 2
     parents: [str_structuralHardware]
@@ -504,7 +504,7 @@ nodes:
     parts: [RSBRibbedBase, RSBTrussBase, SSTUBase, SSTUHollowRing, adapterSize2-Size1, adapterSize2-Size1Slant, strutCubeOCTOAdapter, strutCubeS0Adapter, trussAdapter, KzFlatAdapter, RSBRibbedBase_Interstage, RSBTrussBase_Interstage, SSTUBase_Interstage, SSTUHollowRing_Interstage, ROT-OpenInterstage]
 
   - id: str_serviceModuleTank
-    title: "Load-Bearing Tank Structure"
+    title: "Structural Propellant Tankage"
     discipline: StructuresMechanisms
     tier: 4
     parents: [str_balloonTank]
@@ -535,7 +535,7 @@ nodes:
     parts: [SXTMerlin46Prop, SXTMerlin66prop, SXTKO211Dprop, SXTR280018WProp, SXTR280021Prop, SXTTinyprop, SXTJ213, SXTPWR2800, SXT_Jumo213A]
 
   - id: aero_pilotedCockpits
-    title: "Piloted Cockpits"
+    title: "Pressurized Cockpit"
     discipline: Aerodynamics
     tier: 2
     parents: [aero_subsonicWing]
@@ -550,7 +550,7 @@ nodes:
     flavor: "A rack of pre-made decouplers and separators in fixed sizes - stack, radial, and the skirt rings that drop a spent booster - for when you would rather bolt on a catalogue part than shape a procedural one. The procedural decoupler stays the default; this is the shelf."
     parts: [Decoupler_0, Decoupler_2, radialDecoupler1-2, radialDecoupler2, restock-decoupler-1875-1, restock-decoupler-radial-tiny-1, restock-separator-1875-1, shortDecoupler1-2, smallRadialDecoupler, ROE-BabySergeantX11Dec, ROE-BabySergeantX3Dec, ROE-CastorDecoupler, ROT-AtlasDecoupler]
   - id: tel_appSatellites
-    title: "Application-Satellite Buses"
+    title: "Radio-Relay Payloads"
     discipline: Telecommunications
     tier: 4
     parents: [th_hermeticBus]
