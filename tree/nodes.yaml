@@ -284,6 +284,13 @@ nodes:
     parents: [elec_semiconductorDiode]
     flavor: "Diffuse a shallow junction into a silicon wafer so sunlight knocks a current across it — grams of cells that trickle-charge a battery indefinitely, outliving every chemical primary. Vanguard 1 is still up there, still lit."
     parts: [ROS-StaticSolarPanel, RO_EarlyTinySolarPanel]
+  - id: rob_rotorActuation
+    title: "Electric Rotor Actuation"
+    discipline: Robotics
+    tier: 3
+    parents: [elec_semiconductorDiode]
+    flavor: "A brushless electric motor married to a solid-state controller that holds it at any commanded speed or angle — the first actuator a machine can move on its own. Nothing in an unmanned launcher spins one yet, but every arm, rover wheel, tracking mount and deployable to come turns on this."
+    parts: [rotor_01, rotor_01s]
   - id: gnc_rcs
     title: "Cold-Gas Reaction Control"
     discipline: GuidanceControl
