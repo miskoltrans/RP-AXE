@@ -177,9 +177,16 @@ nodes:
     discipline: PropellantChemistry
     tier: 2
     parents: [pc_storables]
-    flavor: "Concentrated hydrogen peroxide decomposed across a silver catalyst into a hot oxidising gas — a storable oxidiser that needs no cryogenics and lights a kerosene engine cleanly. Britain's Gamma and Stentor ran on it."
-    parts: [ROE-Stentor, ROE-Gamma301]
+    flavor: "Concentrated hydrogen peroxide decomposed across a silver catalyst into a hot oxidising gas — a storable oxidiser that needs no cryogenics and lights a kerosene engine cleanly. Britain's Gamma sustainers ran on it."
+    parts: [ROE-Gamma301]
     upgrades: [RFUpgrade_HTP]
+  - id: pc_stentor
+    title: "Throttleable Peroxide Sustainer"   # NAME TENTATIVE — confirm Stentor's distinguishing mechanism
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [pc_htp]
+    flavor: "A two-chamber peroxide engine whose small cruise chamber throttles deeply while a fixed chamber boosts — variable thrust from a storable propellant, built for a missile that had to coast and correct. (Britain's Stentor.)"
+    parts: [ROE-Stentor]
 
   # ============ BAND 1 * UPGRADE ENABLERS (prototype: uprates home NON-LINEARLY at what enabled them) ============
   # A thrust-uprate homes at the ALLOY that let the engine run harder (Metallurgy); an Isp gain at the INJECTOR.
@@ -245,3 +252,84 @@ nodes:
     parents: [start]
     flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
     parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2]
+
+  # ===================== BAND 1 * SPACECRAFT SYSTEMS & SCIENCE =====================
+  # First-satellite systems + science payloads (science is NOT utility — finest curation). Most are early
+  # parallel breakthroughs off start (T1); the integrated Sputnik bus and the film->vidicon step sit at T2.
+  - id: tel_telemetry
+    title: "Pulse-Interval Telemetry"
+    discipline: Telecommunications
+    tier: 1
+    parents: [start]
+    flavor: "Encode a reading as the gap between radio pulses and beam it down on a fixed carrier — the beep-beep that proved a satellite was alive and returned its first data. The whole point of orbit, if you can't hear it."
+    parts: [SXTAntenna, SurfAntenna, longAntenna]
+  - id: th_hermeticBus
+    title: "Hermetic Thermal-Control Bus"
+    discipline: Thermodynamics
+    tier: 2
+    parents: [tel_telemetry]
+    flavor: "Seal the electronics in a pressurised sphere with a circulating gas and a polished radiating skin, holding them at room temperature through the swing from sunlight to shadow. Sputnik was mostly this: a bus that keeps its instruments alive."
+    parts: [SXTSputnik, probeCoreSphere_v2, sputnik1, ROT-ProbeCore]
+  - id: elec_siliconPV
+    title: "Diffused-Junction Photovoltaics"
+    discipline: ElectricalPower
+    tier: 2
+    parents: [tel_telemetry]
+    flavor: "Diffuse a shallow junction into a silicon wafer so sunlight knocks a current across it — grams of cells that trickle-charge a battery indefinitely, outliving every chemical primary. Vanguard 1 is still up there, still lit."
+    parts: [ROS-StaticSolarPanel, RO_EarlyTinySolarPanel]
+  - id: gnc_rcs
+    title: "Cold-Gas Reaction Control"
+    discipline: GuidanceControl
+    tier: 1
+    parents: [start]
+    flavor: "Bleed compressed nitrogen through opposed nozzles to nudge a craft's attitude — no combustion, nothing to go wrong, just enough impulse to point. The simplest way to hold an orientation in vacuum."
+    parts: [ROE-ModularRCS]
+  - id: aero_recovery
+    title: "Drogue-Stabilized Deceleration"
+    discipline: Aerodynamics
+    tier: 1
+    parents: [start]
+    flavor: "A small drogue bites the thin high air to hold a falling body straight and slow it enough that a main canopy can open without tearing — the difference between a returned payload and a crater."
+    parts: [parachuteSingle, parachuteDrogue, parachuteLarge, parachuteRadial, RC_cone]
+  - id: opt_filmReturn
+    title: "Film-Return Imaging"
+    discipline: OpticsPhotonics
+    tier: 1
+    parents: [start]
+    flavor: "Expose photographic film to the scene and bring the physical emulsion home — the highest resolution there is, at the price of recovering the capsule. Reconnaissance before anyone could downlink a picture."
+    parts: [RO-BasicFilmCamera]
+  - id: opt_vidicon
+    title: "Vidicon Imaging"
+    discipline: OpticsPhotonics
+    tier: 2
+    parents: [opt_filmReturn]
+    flavor: "Scan a photoconductive target with an electron beam and read the image off as a video signal — lower resolution than film, but it comes down the radio link the instant you take it. No capsule to recover."
+    parts: [RO-EarlyTVCamera]
+  - id: nuc_geiger
+    title: "Geiger-Müller Ionization Counting"
+    discipline: NuclearEngineering
+    tier: 1
+    parents: [start]
+    flavor: "A wire at high voltage in a gas tube: a single charged particle triggers an avalanche you can read as a click. The instrument that found the radiation belts on the first American satellite."
+    parts: [RO-GeigerMuller, RO-Micrometeorite]
+  - id: mic_massSpec
+    title: "Magnetic-Sector Mass Spectrometry"
+    discipline: Microelectronics
+    tier: 2
+    parents: [nuc_geiger]
+    flavor: "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there."
+    parts: [RO-IonMassSpectrometer, USFluidSpectroWedge]
+  - id: mic_magnetometer
+    title: "Fluxgate Magnetometry"
+    discipline: Microelectronics
+    tier: 2
+    parents: [nuc_geiger]
+    flavor: "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron."
+    parts: [RO-EarlyMagnet]
+  - id: met_exposurePanels
+    title: "Materials Exposure Panels"
+    discipline: Metallurgy
+    tier: 1
+    parents: [start]
+    flavor: "Expose sample coupons, gels and living cultures to vacuum, cold and radiation, then read what changed — the first crude survey of whether anything we build, or grow, can take the environment at all."
+    parts: [GooExperiment, BioCapsule, USGooBayWedge, USThermoBaroWedge, SXTProbeGooo, science_module]
