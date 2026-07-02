@@ -409,3 +409,14 @@ nodes:
     parents: [fd_rocketplaneRocket, aero_supersonicWing]
     flavor: "A rocket a pilot can throttle deeply and relight in flight, burning ammonia and oxygen with control enough to fly the edge of space and come back. The X-15's XLR99: the first man-rated throttleable engine, and the doorway to hypersonics."
     parts: [ROE-XLR99, ROE-XLR41]
+
+  # ===================== BAND 1 * UTILITY CATCH-ALL (exempt from the <=6 rule) =====================
+  # The passive structure everyone needs and no one researches for. Station-scale modular truss + MLP +
+  # rocket landing legs + cockpits + cosmetics intentionally PARK (band-2 or the user's live review queue).
+  - id: str_structuralHardware
+    title: "Structural Hardware & Fittings"
+    discipline: StructuresMechanisms
+    tier: 1
+    parents: [start]
+    flavor: "The unglamorous shelf: struts, I-beams, panels, pylons, hardpoints and nose cones — the passive structure that ties a vehicle together and fairs it over. No breakthrough, just the fittings you always reach for."
+    parts: [proceduralStructural, proceduralNoseCone, structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2]
