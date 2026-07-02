@@ -70,19 +70,13 @@ nodes:
     discipline: FluidDynamics
     tier: 3
     parents: [fd_turbopumpFeed]
-    flavor: "Scale one chamber and tame its combustion by hand — careful injector design still holds at this size. The first purpose-built kerosene-oxygen boosters: Vanguard's X-405 and its kin, the small single chambers a satellite could ride."
-    parts: [ROE-X405, ROE-X405H]
+    flavor: "One large chamber, its combustion tamed by careful injector design — the workhorse kerosene-oxygen booster. From Vanguard's little X-405 up to the Atlas LR-89, whose own configs uprate it to a meganewton: more thrust arrives as an upgrade, not a new engine."
+    parts: [ROE-LR89_2, ROE-LR105_2, ROE-LR79, ROE-RZ, ROE-X405, ROE-X405H]
   # (Multi-chamber has NO small tier: S-155 turned out single-chamber + an aircraft engine, moved to the
   #  aviation rocketplane cluster. The multi-chamber breakthrough debuts at ORBITAL scale —
   #  fd_orbitalSoviet (R-7 kerolox) and fd_orbitalMultiChamber (storable). S-155 parked for aviation.)
-  # --- orbital-class thrust: the generation that reaches orbit ---
-  - id: fd_orbitalWest
-    title: "Sustained Orbital-Class Thrust"
-    discipline: FluidDynamics
-    tier: 4
-    parents: [fd_singleChamber]
-    flavor: "A meganewton of stable thrust in one chamber, gimballed and trusted with a payload — the Atlas and Thor boosters that put the first Western satellites up."
-    parts: [ROE-LR89_2, ROE-LR79, ROE-LR105_2, ROE-RZ]
+  # fd_orbitalWest DISSOLVED (was "Sustained Orbital-Class Thrust" — a banned capability name): LR-89/79/105/RZ
+  #   merged into fd_singleChamber; their orbital thrust is a config-upgrade STATE (met_nimonic), not a node.
   - id: fd_orbitalSoviet
     title: "Parallel Engine Clustering"
     discipline: FluidDynamics
@@ -102,8 +96,7 @@ nodes:
     title: "High-Expansion Vacuum Nozzles"
     discipline: FluidDynamics
     tier: 5
-    parents: [fd_orbitalWest, fd_orbitalSoviet]
-    anyToUnlock: true
+    parents: [fd_orbitalSoviet]
     flavor: "A nozzle bell too large to fire at sea level — the flow would rip away from the walls — but in vacuum it extracts every last metre-per-second from the exhaust. The dedicated upper-stage engines that let the R-7 reach past low orbit toward the Moon: high specific impulse where there is no air to fight."
     parts: [ROE-RD0105, ROE-RD0110, ROE-RD109]
   # --- vernier trim chambers (ride the boosters they steer) ---
@@ -172,6 +165,7 @@ nodes:
     parents: [pc_storables]
     flavor: "An amine fuel and a nitric-acid oxidiser that ignite on contact — no igniter, storable for years, restartable after a cold coast. The propellant of upper stages and spacecraft engines that must light every time."
     parts: [ROE-AJ10Early, ROE-RD200, ROE-S2253]
+    upgrades: [RFUpgrade_NitrousOxide]
   - id: pc_htp
     title: "High-Test Peroxide Combustion"
     discipline: PropellantChemistry
@@ -179,6 +173,7 @@ nodes:
     parents: [pc_storables]
     flavor: "Concentrated hydrogen peroxide decomposed across a silver catalyst into a hot oxidising gas — a storable oxidiser that needs no cryogenics and lights a kerosene engine cleanly. Britain's Gamma and Stentor ran on it."
     parts: [ROE-Stentor, ROE-Gamma301]
+    upgrades: [RFUpgrade_HTP]
 
   # ============ BAND 1 * UPGRADE ENABLERS (prototype: uprates home NON-LINEARLY at what enabled them) ============
   # A thrust-uprate homes at the ALLOY that let the engine run harder (Metallurgy); an Isp gain at the INJECTOR.
@@ -190,7 +185,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Chromium-nickel steel that keeps its strength while hot and holds a higher chamber pressure without a thicker, heavier wall — the metallurgy that turned the V-2's chamber into the Redstone's. Push the pressure, take the thrust."
-    upgrades: [RFUpgrade_Model39c, RFUpgrade_5D60, RFUpgrade_RD-101, RFUpgrade_RD-102, RFUpgrade_RD-103, RFUpgrade_RD-103M]
+    upgrades: [RFUpgrade_Model39c, RFUpgrade_5D60, RFUpgrade_RD-101, RFUpgrade_RD-102, RFUpgrade_RD-103, RFUpgrade_RD-103M, RFUpgrade_Veronique61, RFUpgrade_A-6, RFUpgrade_A-6H]
   - id: fd_injectors
     title: "Impinging-Jet Injectors"
     discipline: FluidDynamics
@@ -198,3 +193,10 @@ nodes:
     parents: [start]
     flavor: "Aim paired fuel and oxidiser jets to collide and atomise on contact, across a flat plate drilled for even mixing over the whole injector face — more complete combustion, a little more specific impulse from the same propellants."
     upgrades: [RFUpgrade_VeroniqueAGI, RFUpgrade_A-9]
+  - id: met_nimonic
+    title: "Nimonic Turbine Alloys"
+    discipline: Metallurgy
+    tier: 2
+    parents: [met_stainlessSteel]
+    flavor: "Nickel-chromium superalloy that keeps its strength at red heat — a turbopump turbine that spins hotter and harder feeds a higher chamber pressure, and the very same alloy is what lets a jet turbine run at all. The metallurgy where rockets and jets cross over."
+    upgrades: [RFUpgrade_LR43-NA-3, RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13]
