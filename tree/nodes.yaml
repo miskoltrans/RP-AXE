@@ -102,6 +102,14 @@ nodes:
     anyToUnlock: true
     flavor: "The orbital boosters uprated and paired with an efficient upper stage — margin enough to place a real payload, not just a beeping sphere. Whichever booster you perfected, the last of the climb is a high-Isp kick stage. This is where orbit stops being a stunt. (Booster NA-x / 8D74-x upgrade configs live here.)"
     parts: [ROE-RD0110, ROE-RD109, ROE-RD0105, ROE-S2253]
+  # --- vernier trim chambers (ride the boosters they steer) ---
+  - id: fd_verniers
+    title: "Vernier Trim Chambers"
+    discipline: FluidDynamics
+    tier: 4
+    parents: [fd_singleChamber]
+    flavor: "Small gimballed trim chambers that steer and roll the stack while the main engines just push — the Atlas LR-101 and Jupiter S-3D verniers, co-developed with the big engines they trim. The fine hand on a heavy rocket."
+    parts: [ROE-LR101_2, ROE-LR101Inline_2, ROE-JupiterVernier]
 
   # ===================== BAND 1 * HYDROLOX — the ahistorical gamble =====================
   # commit early (T1) / worse first (T2 prototype) / overtakes mid-band (T4 RL-10). Isp never nerfed;
