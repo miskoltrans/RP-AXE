@@ -400,7 +400,7 @@ nodes:
     title: "Swept-Wing Planform"
     discipline: Aerodynamics
     tier: 3
-    parents: [aero_boattail]
+    parents: [aero_subsonicWing]
     flavor: "Rake the wing back so the flow across it stays subsonic while the aircraft goes supersonic, delaying the shock stall — with a shock-cone intake that decelerates the air before it reaches the compressor. What makes level supersonic flight possible at all."
     parts: [RO-B9ProcWing-Supersonic, RO-B9ProcCS-Supersonic, RO-B9ProcAMWing-Supersonic, SXTRadialAirIntakeShockCone, RO-shockConeIntake125, RO-shockConeIntakeBomarc, RO-shockConeIntakeMig, shockConeIntake, airbrake1]
   - id: av_afterburner
