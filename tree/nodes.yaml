@@ -223,7 +223,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Roll, fusion-weld and proof-test a thin metal cylinder that holds its propellant under pressure without bursting — the first tank that flies, and the steel the first engine chambers are cut from. Heavy, but honest."
-    parts: [ROT-GenericTank-Separate, ROT-BoosterTank-Separate, ROT-RadialTank-Separate, ROT-AtlasTank-Separate, ROT-KatnissTank-Separate, ROT-LanderTank-Separate, ROT-MiscTank-Radial-Separate, ROT-MiscTank-Separate, ROT-Nose-Separate, ROT-SphericalTank-Separate, ROT-ToroidalTank-Separate]
+    parts: [ROT-GenericTank-Separate, ROT-BoosterTank-Separate, ROT-RadialTank-Separate, ROT-AtlasTank-Separate, ROT-KatnissTank-Separate, ROT-LanderTank-Separate, ROT-MiscTank-Radial-Separate, ROT-MiscTank-Separate, ROT-Nose-Separate, ROT-SphericalTank-Separate, ROT-ToroidalTank-Separate, ca_tank_mp_s]
   - id: met_isogrid
     title: "Machined Isogrid Stiffening"
     discipline: Metallurgy
@@ -266,8 +266,8 @@ nodes:
   - id: th_hermeticBus
     title: "Hermetic Thermal-Control Bus"
     discipline: Thermodynamics
-    tier: 2
-    parents: [tel_telemetry]
+    tier: 3
+    parents: [met_isogrid]
     flavor: "Seal the electronics in a pressurised sphere with a circulating gas and a polished radiating skin, holding them at room temperature through the swing from sunlight to shadow. Sputnik was mostly this: a bus that keeps its instruments alive."
     parts: [SXTSputnik, probeCoreSphere_v2, sputnik1, ROT-ProbeCore]
   - id: elec_semiconductorDiode
@@ -433,7 +433,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "A dead-end shelf off the main tree: pre-made struts, beams, panels, nose cones, plates and fittings you bolt on when you'd rather not shape a procedural piece. The procedural structural part is lighter and the default — nothing depends on researching this; it's here only if you want the fixed catalog."
-    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount]
+    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount, SXTProtonlikeNoseCone]
 
   # ===================== BAND 1 * AVIONICS (capability tiers — grants:, no physical part) =====================
   # RP-1's Science-Core avionics ladder as ONE track (user). Each node grants the avionics tier; names are my
@@ -525,3 +525,11 @@ nodes:
     parents: [start]
     flavor: "A supercharged piston engine swinging a propeller - the powerplant that flew every fighter and bomber before the jet, wringing altitude and speed from high-octane fuel and forced induction. Merlin, Jumo, Double Wasp: the sound of the propeller age."
     parts: [SXTMerlin46Prop, SXTMerlin66prop, SXTKO211Dprop, SXTR280018WProp, SXTR280021Prop, SXTTinyprop]
+
+  - id: aero_pilotedCockpits
+    title: "Piloted Cockpits"
+    discipline: Aerodynamics
+    tier: 2
+    parents: [aero_subsonicWing]
+    flavor: "A cockpit shaped around a pilot - canopy, seat, sticks and dials - with the tail surfaces that keep the aeroplane pointed where the pilot aims it. From an open fighter office to a bomber glazed nose: the crudest crew accommodation, and the first rung toward a pressurised cabin and, past it, a capsule."
+    parts: [RO-X1Cockpit, RO-FighterInlineCockpit, RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, SXTmk3Cockpit52, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow]
