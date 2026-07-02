@@ -464,7 +464,7 @@ nodes:
     title: "Stable-Platform Guidance"
     discipline: GuidanceControl
     tier: 3
-    parents: [gnc_avionicsPrototypes]
+    parents: [gnc_avionicsPrototypes, elec_semiconductorDiode]
     flavor: "A gimballed, gyro-held platform that stays fixed in space while the vehicle rotates around it, read by transistorized electronics light enough to fly — the guidance package that steers a satellite launcher through its whole ascent."
     grants: [Science-Core-earlyAvionics]
     upgrades: [HDD-Upgrade-Early, RP-1-PayloadTech-EarlyAvionics]
