@@ -371,7 +371,7 @@ nodes:
     title: "Centrifugal-Flow Turbojet"
     discipline: AirBreathing
     tier: 2
-    parents: [aero_subsonicWing]
+    parents: [prop_recipEngine]
     flavor: "A single centrifugal impeller flings air outward into the combustor — robust, simple, and the first jet to fly a fighter, though its fat frontal area caps the speed. Continuous thrust with no propeller."
     parts: [RO-DerwentV, RO-VK1]
   - id: fd_rocketplaneRocket
@@ -517,3 +517,11 @@ nodes:
     parents: [elec_siliconPV]
     flavor: "Etch and coat the cell face so less sunlight reflects away and more drives current - a few points of efficiency per generation, compounding across the tech tree. The first rung of the solar-cell efficiency ladder."
     upgrades: [solarTL0]
+
+  - id: prop_recipEngine
+    title: "Reciprocating Aero Engines"
+    discipline: AirBreathing
+    tier: 1
+    parents: [start]
+    flavor: "A supercharged piston engine swinging a propeller - the powerplant that flew every fighter and bomber before the jet, wringing altitude and speed from high-octane fuel and forced induction. Merlin, Jumo, Double Wasp: the sound of the propeller age."
+    parts: [SXTMerlin46Prop, SXTMerlin66prop, SXTKO211Dprop, SXTR280018WProp, SXTR280021Prop, SXTTinyprop]
