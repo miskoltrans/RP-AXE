@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'lanes', icons:true, square:true, layout:'sugiyama', spacingX:1.3, spacingY:1.3, diffspread:false, lanePitch:1, halo:false, bundleBeta:0.85 };
+const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'ortho-late', icons:true, square:true, layout:'sugiyama-bk', spacingX:1.3, spacingY:1.3, diffspread:false, lanePitch:1, halo:false, bundleBeta:0.85 };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
@@ -867,7 +867,7 @@ function init(){
     document.getElementById('c_disc').checked=opt.discEdges; document.getElementById('c_hi').checked=opt.highlight;
     document.getElementById('s_route').value=opt.routing; };
   document.getElementById('b_base').addEventListener('click',()=>{ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; opt.routing='ortho-mid'; focusSet=null; sync(); rebuild(); });
-  document.getElementById('b_enh').addEventListener('click',()=>{ opt.baseline=false; opt.fan=true; opt.discEdges=true; opt.highlight=true; opt.routing='lanes'; sync(); rebuild(); });
+  document.getElementById('b_enh').addEventListener('click',()=>{ opt.baseline=false; opt.fan=true; opt.discEdges=true; opt.highlight=true; opt.routing='ortho-late'; sync(); rebuild(); });
   document.getElementById('b_reset').addEventListener('click',()=>{ if(confirm('Reset all research progress?')){ resetProgress(); setFocus(activeFocus()); afterStateChange(); } });
   document.getElementById('b_fit').addEventListener('click',()=>{ fit(); draw(); });
   document.getElementById('zi').addEventListener('click',()=>{ cam.s=Math.min(6,cam.s*1.2); updateZoomLabel(); draw(); });
