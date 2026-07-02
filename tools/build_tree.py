@@ -9,7 +9,7 @@ One source of truth (YAML) -> the game cfg, the editor-openable cfg (Q1 "open wi
 picture. Validates: unique ids, known disciplines, parents exist, no cycles. Cost = node.cost or
 meta.tier_cost[tier]*scalar. Layout pos auto-derived from (discipline order, tier).
 """
-import os, sys, subprocess, collections, json, re
+import os, sys, math, subprocess, collections, json, re
 import yaml
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -22,6 +22,8 @@ X0, TIERW = 0, 430              # x = X0 + tier*TIERW (X anchored to MARGIN_X be
 Y0, DISCH, SUBH = 300, 100, 34  # y = Y0 + (order-1)*DISCH + sub-stack (lane-grid fallback)
 MARGIN_X, MARGIN_Y = -2568, 711 # anchor top-left to the editor's stock-tree origin
 SPACING_Y = 80                  # delta layout: vertical px per within-tier row
+COORDS_BK = True                # sugiyama_layout coordinate stage: True = Brandes-Kopf block alignment
+                                # (straight edges, the in-game default); False = isotonic (PAV) neighbour-mean
 MULTI_ENTRY_COLOR = "#f4d35e"   # dashed-edge color for anyToUnlock (shared: graphviz render + html viewer)
 
 def die(msg):
@@ -95,6 +97,7 @@ def sugiyama_layout(disc, nodes, by, sweeps=8):
     layers = collections.defaultdict(list)              # tier -> [vertex keys] (real ids + dummies)
     for n in nodes: layers[tier[n["id"]]].append(n["id"])
     prev, nxt = collections.defaultdict(list), collections.defaultdict(list)
+    segprev = collections.defaultdict(list)             # adjacent-rank segment predecessors only (BK proper layering)
     vtier = {n["id"]: tier[n["id"]] for n in nodes}
     seed = {n["id"]: float(disc[n["discipline"]]["order"]) for n in nodes}  # cluster by discipline
     chains, dcount = [], 0
@@ -108,7 +111,9 @@ def sugiyama_layout(disc, nodes, by, sweeps=8):
                 vtier[dk] = t; layers[t].append(dk); seed[dk] = seed[pid]
                 chain.append(dk)
             chain.append(cid)
-            for a, b in zip(chain, chain[1:]): nxt[a].append(b); prev[b].append(a)
+            for a, b in zip(chain, chain[1:]):
+                nxt[a].append(b); prev[b].append(a)
+                if vtier[b] == vtier[a] + 1: segprev[b].append(a)   # BK: only adjacent-forward hops
             chains.append((pid, cid, chain))
     order = sorted(layers)                               # tiers ascending
     rank = {}
@@ -156,18 +161,114 @@ def sugiyama_layout(disc, nodes, by, sweeps=8):
         out = []
         for v, c in zip(vals, cnts): out.extend([v] * c)
         return out
-    y = {v: float(rank[v]) for t in order for v in layers[t]}   # coordinate assignment
-    for _ in range(30):                                 # place each layer as near neighbour-mean as the
-        des = {v: (sum(y[w] for w in prev[v] + nxt[v]) / len(prev[v] + nxt[v])   # gaps allow (exact, compacts)
-                   if (prev[v] or nxt[v]) else y[v]) for v in y}
-        for t in order:
-            row = layers[t]
-            if not row: continue
-            c, acc = [0.0] * len(row), 0.0              # cumulative min-gap offset along the layer
-            for i in range(1, len(row)):
-                acc += gap(row[i - 1], row[i]); c[i] = acc
-            z = pav([des[row[i]] - c[i] for i in range(len(row))])   # y = z + offset, z non-decreasing
-            for i, v in enumerate(row): y[v] = z[i] + c[i]
+    # --- Brandes-Kopf coordinate assignment (Brandes & Kopf 2002): align each vertex to its median
+    #     segment-neighbour into vertical BLOCKS, then compact blocks under the min-gap, so aligned +
+    #     long (dummy-chain) edges become dead-straight runs. Two runs (down-left + down-right mirror)
+    #     averaged for L/R balance; a final monotone per-layer sweep guarantees separation. This is the
+    #     stage the in-game render CONSUMES (positions emitted to cfg); C# only routes edges. ---
+    def bk_type1(Ls, predof, ordm):                     # mark non-inner segments crossing an inner (dummy) one
+        conf = set()
+        for k in range(len(Ls) - 1):
+            upper, lower = Ls[k], Ls[k + 1]
+            k0 = scan = 0
+            for l1, v in enumerate(lower):
+                innerpos = -1
+                if isd(v):
+                    for u in predof.get(v, ()):
+                        if isd(u) and ordm[u] > innerpos: innerpos = ordm[u]
+                if l1 == len(lower) - 1 or innerpos >= 0:
+                    k1 = innerpos if innerpos >= 0 else len(upper) - 1
+                    while scan <= l1:
+                        w = lower[scan]
+                        for u in predof.get(w, ()):
+                            if (ordm[u] < k0 or ordm[u] > k1) and not (isd(u) and isd(w)): conf.add((u, w))
+                        scan += 1
+                    k0 = k1
+        return conf
+    def bk_align(Ls, predof, ordm, conf):               # vertical alignment -> root/align blocks (median-biased)
+        root = {v: v for layer in Ls for v in layer}
+        align = {v: v for layer in Ls for v in layer}
+        has = lambda u, w: (u, w) in conf or (w, u) in conf
+        for layer in Ls:
+            r = -1
+            for v in layer:
+                ws = predof.get(v) or []
+                if not ws: continue
+                mp = (len(ws) - 1) / 2.0
+                for i in range(int(math.floor(mp)), int(math.ceil(mp)) + 1):
+                    if align[v] != v: break
+                    w = ws[i]
+                    if r < ordm[w] and not has(w, v):
+                        align[w] = v; root[v] = root[w]; align[v] = root[w]; r = ordm[w]
+        return root, align
+    def bk_compact(Ls, root, align, sep):               # horizontal compaction -> coord per vertex (one dir)
+        above = {}
+        for layer in Ls:
+            for i, v in enumerate(layer): above[v] = layer[i - 1] if i > 0 else None
+        X, sink, shift = {}, {}, {}
+        for layer in Ls:
+            for v in layer: sink[v] = v; shift[v] = math.inf
+        def place(v):
+            if v in X: return
+            X[v] = 0.0; w = v
+            while True:
+                u = above[w]
+                if u is not None:
+                    ru = root[u]; place(ru)
+                    if sink[v] == v: sink[v] = sink[ru]
+                    d = sep(u, w)
+                    if sink[v] == sink[ru]: X[v] = max(X[v], X[ru] + d)
+                    else: shift[sink[ru]] = min(shift[sink[ru]], X[v] - X[ru] - d)
+                w = align[w]
+                if w == v: break
+        for layer in Ls:
+            for v in layer:
+                if root[v] == v: place(v)
+        xs = {}
+        for layer in Ls:
+            for v in layer:
+                xs[v] = X[root[v]]
+                s = shift[sink[root[v]]]
+                if s < math.inf: xs[v] += s
+        return xs
+    def bk_run(Ls, sep):
+        ordm = {v: i for layer in Ls for i, v in enumerate(layer)}
+        predof = {v: sorted(segprev.get(v, ()), key=lambda a: ordm[a]) for layer in Ls for v in layer}
+        conf = bk_type1(Ls, predof, ordm)
+        root, align = bk_align(Ls, predof, ordm, conf)
+        return bk_compact(Ls, root, align, sep)
+    def bk_coords(sep):
+        Ls = [layers[t] for t in order]
+        cL = bk_run(Ls, sep)
+        cRr = bk_run([layer[::-1] for layer in Ls], sep)   # within-layer mirror -> down-right
+        cR = {k: -v for k, v in cRr.items()}
+        for m in (cL, cR):
+            mn = min(m.values())
+            for k in m: m[k] -= mn
+        yy = {v: (cL[v] + cR[v]) / 2.0 for layer in Ls for v in layer}
+        for layer in Ls:                                 # guarantee separation after averaging
+            for i in range(1, len(layer)):
+                need = yy[layer[i - 1]] + sep(layer[i - 1], layer[i])
+                if yy[layer[i]] < need: yy[layer[i]] = need
+        return yy
+
+    if COORDS_BK:
+        nverts = sum(len(layers[t]) for t in order)     # bk_compact.place recurses along block chains
+        sys.setrecursionlimit(max(sys.getrecursionlimit(), 2000 + 4 * nverts))
+        y = bk_coords(gap)                              # block-aligned coordinates (straight edges)
+    else:
+        y = {v: float(rank[v]) for t in order for v in layers[t]}   # isotonic (PAV) coordinate assignment
+        for _ in range(30):                             # place each layer as near neighbour-mean as the
+            des = {v: (sum(y[w] for w in prev[v] + nxt[v]) / len(prev[v] + nxt[v])   # gaps allow (exact, compacts)
+                       if (prev[v] or nxt[v]) else y[v]) for v in y}
+            for t in order:
+                row = layers[t]
+                if not row: continue
+                c, acc = [0.0] * len(row), 0.0          # cumulative min-gap offset along the layer
+                for i in range(1, len(row)):
+                    acc += gap(row[i - 1], row[i]); c[i] = acc
+                z = pav([des[row[i]] - c[i] for i in range(len(row))])   # y = z + offset, z non-decreasing
+                for i, v in enumerate(row): y[v] = z[i] + c[i]
     miny = min(y.values())
     Y = lambda v: int(MARGIN_Y + (y[v] - miny) * SPACING_Y)
     for n in nodes:
