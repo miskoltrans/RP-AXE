@@ -378,12 +378,25 @@ namespace RPAxe.RnD
                 catch (Exception e) { Debug.LogException(e); }
             }
 
-            // Click (not drag/pan) on empty background -> deselect.
+            // Click (not drag/pan) on empty background -> deselect. Stock only deselects when you re-click
+            // the node; it tracks selection in TWO places -- ctrl.node_selected AND node.selected/graphics.
+            // ShowNothingPanel() alone only swaps the side panel to "nothing" (+ our AxeHighlighter.Clear);
+            // it leaves node.selected==true and the node's selection glow lit, so the node's own click handler
+            // (RDNode.NodeInput) still sees itself as selected and TOGGLES OFF on the next click instead of
+            // re-selecting. Replicate stock's full deselect: clear the node's flag+glow via UnselectNode() and
+            // drop ctrl.node_selected so both re-click and hover-restore read "nothing pinned".
             if (Input.GetMouseButtonDown(0)) { _downPos = Input.mousePosition; _dragged = false; }
             else if (Input.GetMouseButton(0) && !_dragged && (Input.mousePosition - _downPos).sqrMagnitude > 25f) _dragged = true;
             else if (Input.GetMouseButtonUp(0) && !_dragged && over == null && ctrl.node_selected != null)
             {
-                try { ctrl.ShowNothingPanel(); } catch (Exception e) { Debug.LogException(e); }
+                try
+                {
+                    RDNode sel = ctrl.node_selected;
+                    ctrl.ShowNothingPanel();   // side panel -> nothing (+ AxeHighlighter.Clear via postfix)
+                    sel.UnselectNode();         // clear node.selected + the selection glow (the missing half)
+                    ctrl.node_selected = null;  // controller no longer holds a pinned node
+                }
+                catch (Exception e) { Debug.LogException(e); }
             }
         }
 
