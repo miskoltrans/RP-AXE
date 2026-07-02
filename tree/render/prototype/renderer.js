@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'lanes', icons:true, square:true, layout:'sugiyama', spacingX:1.3, spacingY:1.3, diffspread:false, lanePitch:1, halo:false };
+const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'lanes', icons:true, square:true, layout:'sugiyama', spacingX:1.3, spacingY:1.3, diffspread:false, lanePitch:1, halo:false, bundleBeta:0.85 };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
@@ -283,6 +283,9 @@ const snap4=d=> Math.abs(d[0])>=Math.abs(d[1]) ? [Math.sign(d[0])||1,0] : [0,Mat
 //   ortho-late orthogonal elbow with the riser near the TARGET (converging "into node" look)
 //   polyline   straight segments through the dummy waypoints (classic Sugiyama)
 //   spline     smooth Catmull-Rom curve through the dummy waypoints (dagre/d3 look)
+//   bezier     horizontal-tangent cubic Bézier, endpoint-based (React-Flow "bumpX"; clean modern flow)
+//   bundle     edge bundling — pull to per-node out/in hubs by β, declutters dense fan-in/out
+//   octilinear metro/subway routing — horizontal, one 45° diagonal, horizontal into the target
 //   direct     one straight line source→target (baseline; ignores dummies)
 function pathThroughDummies(e){          // source-right anchor, centred interior dummies, target-left anchor
   const wp=e.waypoints; if(!wp||wp.length<2) return null;
@@ -311,15 +314,75 @@ function routeOrthoLate(e){              // orthogonal elbow, single riser near 
   const k1=[rx,p[1]], k2=[rx,c[1]];
   return [p, ...chamfer(p,k1,k2,CORNER_R,CORNER_SEGS), ...chamfer(k1,k2,c,CORNER_R,CORNER_SEGS), c];
 }
+
+// ---- NEW variants (2026-07-02) ----
+// cubic Bézier P0..P3 → sampled flat polyline (tessellated so the KSP Vectrosity port stays ONE line).
+function cubicBezier(p0,p1,p2,p3,segs){
+  const out=[];
+  for(let i=0;i<=segs;i++){ const t=i/segs, u=1-t, a=u*u*u, b=3*u*u*t, cc=3*u*t*t, d=t*t*t;
+    out.push([a*p0[0]+b*p1[0]+cc*p2[0]+d*p3[0], a*p0[1]+b*p1[1]+cc*p2[1]+d*p3[1]]); }
+  return out;
+}
+// bezier: horizontal-tangent cubic (React-Flow "bumpX" / dagre look). LEAVES the source rightward and
+// ARRIVES at the target leftward — the tangents are flat so it reads as a clean left→right flow. Unlike
+// `spline` (which interpolates the dummy chain and can wiggle), this is a single predictable S with no
+// mid-points, so it never strays across a column on its own. Endpoint-based (ignores dummies by design).
+const BEZ_K=0.5;                         // control-point reach as a fraction of the horizontal span
+function routeBezier(e){
+  const p=anchor(byId[e.from],'RIGHT',e._tF), c=anchor(byId[e.to],'LEFT',e._tT);
+  if(c[0]<=p[0]+2) return routeEdge(e);   // back/same-tier edge: a horizontal-tangent bezier would loop
+  if(Math.abs(p[1]-c[1])<0.5) return [p,c];
+  const dx=c[0]-p[0];
+  return cubicBezier(p, [p[0]+BEZ_K*dx,p[1]], [c[0]-BEZ_K*dx,c[1]], c, 18);
+}
+// bundle: hierarchical edge bundling. Every edge leaving a node is pulled toward that node's OUT-hub
+// (the mean y of its targets) and every edge entering a node toward its IN-hub (mean y of its sources),
+// by strength β (opt.bundleBeta). Edges to nearby targets thus share a curved trunk and only peel off
+// near their ends — the dense root fan-out / Systems-Integration block collapse into a few legible
+// bundles instead of a hairball. β=0 ≡ `bezier`; β=1 ≡ fully merged. Still one tessellated line per edge.
+let bundleOutY={}, bundleInY={};
+function buildBundleHubs(){
+  const outYs={}, inYs={};
+  for(const e of edges){ if(!(e.from in byId)||!(e.to in byId)) continue;
+    const s=anchor(byId[e.from],'RIGHT',e._tF), t=anchor(byId[e.to],'LEFT',e._tT);
+    (outYs[e.from]=outYs[e.from]||[]).push(t[1]); (inYs[e.to]=inYs[e.to]||[]).push(s[1]); }
+  const mean=a=>a.reduce((x,y)=>x+y,0)/a.length;
+  bundleOutY={}; bundleInY={};
+  for(const id in outYs) bundleOutY[id]=mean(outYs[id]);
+  for(const id in inYs)  bundleInY[id]=mean(inYs[id]);
+}
+function routeBundle(e){
+  const p=anchor(byId[e.from],'RIGHT',e._tF), c=anchor(byId[e.to],'LEFT',e._tT);
+  if(c[0]<=p[0]+2) return routeEdge(e);
+  const dx=c[0]-p[0], b=opt.bundleBeta;
+  const hOut=bundleOutY[e.from], hIn=bundleInY[e.to];
+  const c1y=p[1]+((hOut==null?p[1]:hOut)-p[1])*b, c2y=c[1]+((hIn==null?c[1]:hIn)-c[1])*b;
+  return cubicBezier(p, [p[0]+BEZ_K*dx,c1y], [c[0]-BEZ_K*dx,c2y], c, 20);
+}
+// octilinear: metro/subway-map routing — horizontal run, one 45° diagonal to change rows, horizontal
+// into the target. Distinct clean aesthetic; corners rounded via the stock chamfer. Falls back to the
+// converging orthogonal elbow when the span is too short to fit a 45° leg.
+function routeOctilinear(e){
+  const p=anchor(byId[e.from],'RIGHT',e._tF), c=anchor(byId[e.to],'LEFT',e._tT);
+  const dx=c[0]-p[0], dy=c[1]-p[1], ady=Math.abs(dy);
+  if(ady<0.5) return [p,c];
+  if(dx<=ady+8) return routeOrthoLate(e);            // no room for a 45° leg → converging elbow
+  const run=Math.max(12,(dx-ady)/2);
+  const k1=[p[0]+run, p[1]], k2=[p[0]+run+ady, c[1]];
+  return roundPolyline([p,k1,k2,c], CORNER_R, CORNER_SEGS);
+}
 function edgeGeom(e){
   switch(opt.routing){
-    case 'ortho-mid':  return routeEdge(e);
-    case 'ortho-late': return routeOrthoLate(e);
-    case 'polyline':   return pathThroughDummies(e) || routeEdge(e);
-    case 'spline':     return catmullRom(pathThroughDummies(e), 14) || routeEdge(e);
-    case 'direct':     return [anchor(byId[e.from],'RIGHT',e._tF), anchor(byId[e.to],'LEFT',e._tT)];
+    case 'ortho-mid':   return routeEdge(e);
+    case 'ortho-late':  return routeOrthoLate(e);
+    case 'polyline':    return pathThroughDummies(e) || routeEdge(e);
+    case 'spline':      return catmullRom(pathThroughDummies(e), 14) || routeEdge(e);
+    case 'bezier':      return routeBezier(e);
+    case 'bundle':      return routeBundle(e);
+    case 'octilinear':  return routeOctilinear(e);
+    case 'direct':      return [anchor(byId[e.from],'RIGHT',e._tF), anchor(byId[e.to],'LEFT',e._tT)];
     case 'lanes':
-    default:           return e.laneGeom || routeEdge(e);
+    default:            return e.laneGeom || routeEdge(e);
   }
 }
 
@@ -387,7 +450,8 @@ function buildLaneRoutes(){
 
 function buildGeometry(){
   computeSlots();
-  if(opt.routing==='lanes') buildLaneRoutes();   // only 'lanes' needs the gutter lane-packing pass
+  if(opt.routing==='lanes') buildLaneRoutes();        // only 'lanes' needs the gutter lane-packing pass
+  else if(opt.routing==='bundle') buildBundleHubs();  // bundle needs per-node out/in hub y's first
   for(const e of edges){
     if(!(e.from in byId)||!(e.to in byId)){ e.geom=null; continue; }
     e.geom = edgeGeom(e);   // routing variant (opt.routing)
@@ -637,6 +701,7 @@ function init(){
   if(sp0==='compact') opt.spacingX=opt.spacingY=0.7; else if(sp0==='airy') opt.spacingX=opt.spacingY=1.6; else if(sp0==='normal') opt.spacingX=opt.spacingY=1;
   if(P0.has('diffspread')) opt.diffspread=true;
   if(P0.get('lanePitch')) opt.lanePitch=+P0.get('lanePitch')||opt.lanePitch;
+  if(P0.get('bundle')!=null) opt.bundleBeta=Math.max(0,Math.min(1,+P0.get('bundle')||opt.bundleBeta));
   buildModel(); restore();
   const rq=new URLSearchParams(location.search).get('research');   // ?research=id,id — shareable snapshot / demo
   if(rq) rq.split(',').forEach(x=>{ if(byId[x]) researched.add(x); });
@@ -700,6 +765,9 @@ function init(){
   const rl=document.getElementById('r_lane'), rlv=document.getElementById('r_lane_v');
   rl.value=opt.lanePitch; rlv.textContent=opt.lanePitch+'px';
   rl.addEventListener('input',()=>{ opt.lanePitch=+rl.value; rlv.textContent=opt.lanePitch+'px'; if(opt.routing==='lanes')rebuild(); });
+  const rb=document.getElementById('r_bundle'), rbv=document.getElementById('r_bundle_v');
+  rb.value=opt.bundleBeta; rbv.textContent=opt.bundleBeta.toFixed(2);
+  rb.addEventListener('input',()=>{ opt.bundleBeta=+rb.value; rbv.textContent=opt.bundleBeta.toFixed(2); if(opt.routing==='bundle')rebuild(); });
   const sync=()=>{ document.getElementById('c_fan').checked=opt.fan; document.getElementById('c_arr').checked=opt.arrows;
     document.getElementById('c_disc').checked=opt.discEdges; document.getElementById('c_hi').checked=opt.highlight;
     document.getElementById('s_route').value=opt.routing; };
