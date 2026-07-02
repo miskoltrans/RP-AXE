@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:true, icons:true, square:true, layout:'bands', spacingF:0.7, diffspread:false, lanePitch:13, halo:false };
+const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:true, icons:true, square:true, layout:'sugiyama', spacingX:1.3, spacingY:1.3, diffspread:false, lanePitch:1, halo:false };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
@@ -73,7 +73,7 @@ function reachable(id, adj){                       // BFS closure (ancestors via
 // per-edge waypoints through each spanned tier. applyLayout() swaps pos+waypoints in/out so ALL the
 // downstream code (anchors, routing, lane assignment, fit, hit-test) works unchanged either way.
 function layoutSugiyama(){
-  const COLW=380, SPACING_Y=94*opt.spacingF, med=medianCost();
+  const COLW=380*opt.spacingX, SPACING_Y=94*opt.spacingY, med=medianCost();
   const wv=v=>(opt.diffspread && !String(v).startsWith('__d') && byId[v]) ? (0.6+1.4*Math.min(2,(byId[v].cost||0)/med)) : 1;
   // --- layered graph with DUMMY nodes on every >1-tier edge (so long edges join the ordering) ---
   const vtier={}, seed={}, layers={}, prev={}, nxt={}, chains=[];
@@ -140,17 +140,17 @@ function computeLayout(){ if(opt.layout==='bands') layoutBands(); else layoutSug
 // Discipline-banded layout: each discipline gets its own horizontal band (ordered by `order`); x=tier,
 // nodes stacked within their (discipline,tier) cell. Bands grow with mean cost when diffspread is on.
 function layoutBands(){
-  const COLW=430;   // match the in-game tier width (build_tree TIERW)
+  const COLW=430*opt.spacingX;   // match the in-game tier width (build_tree TIERW), scaled by X spacing
   const discs=Object.keys(D.disciplines).sort((a,b)=>(D.disciplines[a].order||99)-(D.disciplines[b].order||99));
   const med=medianCost();
   const byDisc={}; for(const n of D.nodes)(byDisc[n.discipline]=byDisc[n.discipline]||[]).push(n);
   const TH=Math.max(NODE_SQ,NODE_H);        // size spacing to the tile so tiles never overlap (either mode)
-  const SUBH=TH+26*opt.spacingF, BANDH=TH+96*opt.spacingF;   // scale the GAP, not the tile (Compact stays clear)
+  const SUBH=TH+26*opt.spacingY, BANDH=TH+96*opt.spacingY;   // scale the GAP, not the tile (Compact stays clear)
   const bandCy={}; let acc=0;
   for(const d of discs){ const ns=byDisc[d]||[]; const perTier={};
     for(const n of ns) perTier[n.tier]=(perTier[n.tier]||0)+1;
     let maxStack=1; for(const k in perTier) if(perTier[k]>maxStack) maxStack=perTier[k];
-    let h=Math.max(BANDH, maxStack*SUBH+40*opt.spacingF);
+    let h=Math.max(BANDH, maxStack*SUBH+40*opt.spacingY);
     if(opt.diffspread && ns.length){ const mc=ns.reduce((s,n)=>s+(n.cost||0),0)/ns.length; h*=(0.7+0.9*Math.min(2,mc/med)); }
     bandCy[d]=acc+h/2; acc+=h;
   }
@@ -356,10 +356,11 @@ function draw(){
   ctx.lineJoin='round'; ctx.lineCap='round';   // cosmetic — KSP rounds via tessellated chamfer pts; caps are square
   const focusing = !!(focusSet && opt.highlight);
 
-  // tier column labels (orientation)
-  ctx.fillStyle='#5a6673'; ctx.font='600 12px Segoe UI,Helvetica,Arial'; ctx.textAlign='left'; ctx.textBaseline='top';
+  // tier column labels (orientation) — on the BOTTOM edge; the top is covered by the toolbar
+  ctx.fillStyle='#5a6673'; ctx.font='600 12px Segoe UI,Helvetica,Arial'; ctx.textAlign='left'; ctx.textBaseline='bottom';
   const tierX={}; for(const n of D.nodes){ if(!(n.tier in tierX)) tierX[n.tier]=n.pos[0]; }
-  for(const t in tierX){ ctx.fillText('T'+t, SX(tierX[t]), 6); }
+  const tierLabelY=cv.clientHeight-30;   // clear of the #foot / #hud bars pinned at bottom:8px
+  for(const t in tierX){ ctx.fillText('T'+t, SX(tierX[t]), tierLabelY); }
 
   // edges (under nodes)
   for(const e of edges){
@@ -581,7 +582,10 @@ function init(){
   if(new URLSearchParams(location.search).has('square')) opt.square=true;
   const P0=new URLSearchParams(location.search);
   if(P0.get('layout')) opt.layout=P0.get('layout'); else if(P0.has('mylayout')) opt.layout='sugiyama';
-  if(P0.get('spacing')==='compact') opt.spacingF=0.7; else if(P0.get('spacing')==='airy') opt.spacingF=1.6;
+  if(P0.get('spacingx')) opt.spacingX=+P0.get('spacingx')||opt.spacingX;
+  if(P0.get('spacingy')) opt.spacingY=+P0.get('spacingy')||opt.spacingY;
+  const sp0=P0.get('spacing');                     // legacy coarse preset → drive both axes
+  if(sp0==='compact') opt.spacingX=opt.spacingY=0.7; else if(sp0==='airy') opt.spacingX=opt.spacingY=1.6; else if(sp0==='normal') opt.spacingX=opt.spacingY=1;
   if(P0.has('diffspread')) opt.diffspread=true;
   if(P0.get('lanePitch')) opt.lanePitch=+P0.get('lanePitch')||opt.lanePitch;
   buildModel(); restore();
@@ -636,8 +640,10 @@ function init(){
   const relayout=()=>{ if(opt.layout!=='compiler') computeLayout(); applyLayout(); buildGeometry(); fit(); draw(); };
   const selL=document.getElementById('s_layout'); selL.value=opt.layout;
   selL.addEventListener('change',()=>{ opt.layout=selL.value; relayout(); });
-  const selS=document.getElementById('s_spacing'); selS.value=opt.spacingF<0.9?'compact':(opt.spacingF>1.2?'airy':'normal');
-  selS.addEventListener('change',()=>{ opt.spacingF=selS.value==='compact'?0.7:(selS.value==='airy'?1.6:1); relayout(); });
+  const wireSp=(id,vid,key)=>{ const r=document.getElementById(id), v=document.getElementById(vid);
+    r.value=opt[key]; v.textContent=opt[key].toFixed(1)+'×';
+    r.addEventListener('input',()=>{ opt[key]=+r.value; v.textContent=opt[key].toFixed(1)+'×'; relayout(); }); };
+  wireSp('r_spx','r_spx_v','spacingX'); wireSp('r_spy','r_spy_v','spacingY');
   const cd=document.getElementById('c_diff'); cd.checked=opt.diffspread;
   cd.addEventListener('change',()=>{ opt.diffspread=cd.checked; relayout(); });
   const rl=document.getElementById('r_lane'), rlv=document.getElementById('r_lane_v');
