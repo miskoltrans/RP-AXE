@@ -46,6 +46,7 @@ namespace RPAxe.RnD
     public class AxeTreeRenderHost : MonoBehaviour
     {
         private const float SPACING_F = 0.7f;          // compact (prototype default)
+        private const float SUG_SPACING_Y = 122f;       // sugiyama px per rank unit (prototype 94 * 1.3 default) — clears the 65px tile
         private const bool FLIP_Y = true;              // top-to-bottom discipline order (flip if bands look inverted)
         private const float NODE_W = 70f, NODE_H = 65f;   // real node size at scale 1.0 (prefab ~70x65) — routing + stacking
 
@@ -89,7 +90,8 @@ namespace RPAxe.RnD
             try
             {
                 AxeTreeMeta.EnsureLoaded();
-                if (AxeTreeMeta.Render.Layout != "bands") return;   // stock -> leave the tree untouched
+                string layoutMode = AxeTreeMeta.Render.Layout;
+                if (layoutMode != "bands" && layoutMode != "sugiyama") return;   // stock/other -> leave the tree untouched
                 RDController ctrl = RDController.Instance;
                 if (ctrl == null || ctrl.nodes == null || ctrl.nodes.Count == 0) return;
 
@@ -135,8 +137,12 @@ namespace RPAxe.RnD
                 var discOrder = new Dictionary<string, int>();
                 foreach (var kv in AxeTreeMeta.Disciplines) discOrder[kv.Key] = kv.Value.Order;
 
-                AxeTreeLayout.LayoutBands(lnodes, edges, byId, discOrder, AxeTreeMeta.TierWidth,
-                    AxeTreeMeta.MarginX, AxeTreeMeta.MarginY, NODE_H, SPACING_F, false);
+                if (layoutMode == "sugiyama")
+                    AxeTreeLayout.LayoutSugiyama(lnodes, edges, byId, discOrder, AxeTreeMeta.TierWidth,
+                        SUG_SPACING_Y, AxeTreeMeta.MarginX, AxeTreeMeta.MarginY, false);
+                else
+                    AxeTreeLayout.LayoutBands(lnodes, edges, byId, discOrder, AxeTreeMeta.TierWidth,
+                        AxeTreeMeta.MarginX, AxeTreeMeta.MarginY, NODE_H, SPACING_F, false);
 
                 // Fit our layout's bbox onto the stock envelope: X is ~identity (tiers already match), Y is
                 // scaled to fit + optionally flipped so discipline order reads top-to-bottom. Applied to node

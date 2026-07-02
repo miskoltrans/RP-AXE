@@ -88,6 +88,179 @@ namespace RPAxe.RnD
             }
         }
 
+        // ---- layered (Sugiyama) layout, a 1:1 port of renderer.js layoutSugiyama: tier = column;
+        // long edges get DUMMY nodes on every spanned tier so they join the ordering; median sweeps cut
+        // crossings; PAV/isotonic coordinate assignment straightens each rank under a min gap; edges are
+        // routed through their dummy chain. Sets n.X/n.Y (pos px space) and e.Waypoints like LayoutBands.
+        // colw only sets aspect (the caller re-fits X to the stock envelope); spacingY = px per rank unit.
+        internal static void LayoutSugiyama(List<LNode> nodes, List<LEdge> edges, Dictionary<string, LNode> byId,
+            Dictionary<string, int> discOrder, float colw, float spacingY, float marginX, float marginY, bool diffspread)
+        {
+            float med = MedianCost(nodes);
+            Func<string, float> wv = v => (diffspread && byId.TryGetValue(v, out var bn))
+                ? 0.6f + 1.4f * Mathf.Min(2f, bn.Cost / med) : 1f;
+            bool IsD(string v) => v.StartsWith("__d", StringComparison.Ordinal);
+
+            // parents (from edges), restricted to modelled nodes
+            var parents = new Dictionary<string, List<string>>();
+            foreach (var e in edges)
+                if (byId.ContainsKey(e.From) && byId.ContainsKey(e.To)) Bucket(parents, e.To).Add(e.From);
+
+            // --- layered graph with dummy nodes on every >1-tier edge ---
+            var vtier = new Dictionary<string, int>();
+            var seed = new Dictionary<string, int>();
+            var layers = new Dictionary<int, List<string>>();
+            var prev = new Dictionary<string, List<string>>();
+            var nxt = new Dictionary<string, List<string>>();
+            var chains = new List<SChain>();
+            foreach (var n in nodes)
+            {
+                vtier[n.Id] = n.Tier;
+                seed[n.Id] = discOrder.TryGetValue(n.Discipline, out int o) ? o : 99;
+                Bucket(layers, n.Tier).Add(n.Id);
+            }
+            void AddAdj(string a, string b) { Bucket(nxt, a).Add(b); Bucket(prev, b).Add(a); }
+            int dc = 0;
+            foreach (var n in nodes)
+            {
+                string cid = n.Id; int ct = n.Tier;
+                if (!parents.TryGetValue(cid, out var ps)) continue;
+                foreach (var pid in ps)
+                {
+                    if (!byId.TryGetValue(pid, out var pn)) continue;
+                    int pt = pn.Tier;
+                    if (pt >= ct) { AddAdj(pid, cid); chains.Add(new SChain { Pid = pid, Cid = cid, Nodes = new List<string> { pid, cid } }); continue; }
+                    var chain = new List<string> { pid };
+                    for (int t = pt + 1; t < ct; t++)
+                    {
+                        string dk = "__d" + (dc++);
+                        vtier[dk] = t; seed[dk] = seed[pid];
+                        Bucket(layers, t).Add(dk); chain.Add(dk);
+                    }
+                    chain.Add(cid);
+                    for (int i = 0; i < chain.Count - 1; i++) AddAdj(chain[i], chain[i + 1]);
+                    chains.Add(new SChain { Pid = pid, Cid = cid, Nodes = chain });
+                }
+            }
+
+            var order = new List<int>(layers.Keys); order.Sort();
+            var rank = new Dictionary<string, int>();
+            void Reindex(int t, Comparison<string> key) { layers[t].Sort(key); for (int i = 0; i < layers[t].Count; i++) rank[layers[t][i]] = i; }
+            foreach (var t in order) Reindex(t, (a, b) => { int d = seed[a] - seed[b]; return d != 0 ? d : string.CompareOrdinal(a, b); });
+
+            Func<List<string>, double> median = ids =>
+            {
+                if (ids == null || ids.Count == 0) return -1;
+                var vs = new List<int>(ids.Count); foreach (var w in ids) vs.Add(rank[w]); vs.Sort();
+                int m = vs.Count >> 1;
+                return (vs.Count % 2 == 1) ? vs[m] : (vs[m - 1] + vs[m]) / 2.0;
+            };
+            Func<int> crossings = () =>
+            {
+                int c = 0;
+                for (int oi = 0; oi < order.Count - 1; oi++)
+                {
+                    int t = order[oi];
+                    var es = new List<int[]>();
+                    foreach (var u in layers[t])
+                        if (nxt.TryGetValue(u, out var ws))
+                            foreach (var w in ws) if (vtier[w] == t + 1) es.Add(new[] { rank[u], rank[w] });
+                    es.Sort((a, b) => a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]);
+                    for (int i = 0; i < es.Count; i++) for (int j = i + 1; j < es.Count; j++) if (es[i][1] > es[j][1]) c++;
+                }
+                return c;
+            };
+
+            var orderRev = new List<int>(order); orderRev.Reverse();
+            int bestC = int.MaxValue; Dictionary<int, List<string>> bestOrd = null;
+            for (int s = 0; s < 8; s++)
+            {
+                bool asc = s % 2 == 0;
+                var adj = asc ? prev : nxt;
+                var seq = asc ? order : orderRev;
+                foreach (var t in seq)
+                {
+                    var keep = new Dictionary<string, int>(rank);
+                    Reindex(t, (a, b) =>
+                    {
+                        double ma = (adj.TryGetValue(a, out var la) && la.Count > 0) ? median(la) : keep[a];
+                        double mb = (adj.TryGetValue(b, out var lb) && lb.Count > 0) ? median(lb) : keep[b];
+                        int cmp = ma < mb ? -1 : (ma > mb ? 1 : 0);
+                        return cmp != 0 ? cmp : keep[a] - keep[b];
+                    });
+                }
+                int c = crossings();
+                if (bestOrd == null || c < bestC)
+                {
+                    bestC = c; bestOrd = new Dictionary<int, List<string>>();
+                    foreach (var t in order) bestOrd[t] = new List<string>(layers[t]);
+                }
+            }
+            foreach (var t in order) { layers[t] = bestOrd[t]; for (int i = 0; i < layers[t].Count; i++) rank[layers[t][i]] = i; }
+
+            // --- coordinate assignment: isotonic (PAV) pull toward neighbour mean under a min gap ---
+            Func<string, string, double> gap = (a, b) => (IsD(a) && IsD(b)) ? 0.12 : ((IsD(a) || IsD(b)) ? 0.45 : 1.0 * (wv(a) + wv(b)) / 2.0);
+            Func<List<double>, List<double>> pav = arr =>
+            {
+                var vals = new List<double>(); var cnts = new List<int>();
+                foreach (var x in arr)
+                {
+                    vals.Add(x); cnts.Add(1);
+                    while (vals.Count > 1 && vals[vals.Count - 2] >= vals[vals.Count - 1])
+                    {
+                        double v2 = vals[vals.Count - 1]; int c2 = cnts[cnts.Count - 1]; vals.RemoveAt(vals.Count - 1); cnts.RemoveAt(cnts.Count - 1);
+                        double v1 = vals[vals.Count - 1]; int c1 = cnts[cnts.Count - 1]; vals.RemoveAt(vals.Count - 1); cnts.RemoveAt(cnts.Count - 1);
+                        vals.Add((v1 * c1 + v2 * c2) / (c1 + c2)); cnts.Add(c1 + c2);
+                    }
+                }
+                var outp = new List<double>();
+                for (int i = 0; i < vals.Count; i++) for (int k = 0; k < cnts[i]; k++) outp.Add(vals[i]);
+                return outp;
+            };
+            var y = new Dictionary<string, double>();
+            foreach (var t in order) foreach (var v in layers[t]) y[v] = rank[v];
+            for (int it = 0; it < 30; it++)
+            {
+                var des = new Dictionary<string, double>();
+                foreach (var t in order) foreach (var v in layers[t])
+                {
+                    double sum = 0; int cnt = 0;
+                    if (prev.TryGetValue(v, out var pl)) foreach (var w in pl) { sum += y[w]; cnt++; }
+                    if (nxt.TryGetValue(v, out var nl)) foreach (var w in nl) { sum += y[w]; cnt++; }
+                    des[v] = cnt > 0 ? sum / cnt : y[v];
+                }
+                foreach (var t in order)
+                {
+                    var row = layers[t]; if (row.Count == 0) continue;
+                    var c = new double[row.Count]; double acc = 0;
+                    for (int i = 1; i < row.Count; i++) { acc += gap(row[i - 1], row[i]); c[i] = acc; }
+                    var input = new List<double>(row.Count);
+                    for (int i = 0; i < row.Count; i++) input.Add(des[row[i]] - c[i]);
+                    var z = pav(input);
+                    for (int i = 0; i < row.Count; i++) y[row[i]] = z[i] + c[i];
+                }
+            }
+            double miny = double.PositiveInfinity;
+            foreach (var kv in y) if (kv.Value < miny) miny = kv.Value;
+            Func<string, float> Y = v => (float)((y[v] - miny) * spacingY);
+
+            foreach (var n in nodes) { n.X = marginX + n.Tier * colw; n.Y = marginY + Y(n.Id); }
+            var eByKey = new Dictionary<string, LEdge>();
+            foreach (var e in edges) eByKey[e.From + ">" + e.To] = e;
+            foreach (var ch in chains)
+                if (eByKey.TryGetValue(ch.Pid + ">" + ch.Cid, out var e))
+                {
+                    var wp = new List<Vector2>(ch.Nodes.Count);
+                    foreach (var v in ch.Nodes) wp.Add(new Vector2(marginX + vtier[v] * colw, marginY + Y(v)));
+                    e.Waypoints = wp;
+                }
+            foreach (var e in edges)
+                if (e.Waypoints == null)
+                    e.Waypoints = (byId.ContainsKey(e.From) && byId.ContainsKey(e.To))
+                        ? new List<Vector2> { new Vector2(byId[e.From].X, byId[e.From].Y), new Vector2(byId[e.To].X, byId[e.To].Y) }
+                        : null;
+        }
+
         // ---- endpoint fan: spread each node's incident edges along its side, ordered by the other
         // end's Y, so they don't converge/cross. fan off (or single edge) -> 0.5 (stock convergence).
         internal static void ComputeSlots(List<LEdge> edges, Dictionary<string, LNode> byId, bool fan)
@@ -283,5 +456,6 @@ namespace RPAxe.RnD
         private struct Seg { public float Lo, Hi; public string Key; }
         private struct HRun { public float Lo, Hi; public List<Vector2> Pts; public int I; }
         private class Chain { public LEdge E; public int[] Ts; public float[] Ys; }
+        private class SChain { public string Pid, Cid; public List<string> Nodes; }   // Sugiyama edge chain (pid->cid via dummies)
     }
 }
