@@ -4513,7 +4513,7 @@ window.TREE = {
    "tier": 2,
    "cost": 90,
    "anyToUnlock": false,
-   "flavor": "Concentrated peroxide decomposed over a silver catalyst into hot steam and oxygen — British rocketry's signature chemistry (Black Knight, Blue Streak's Gamma engines), and a genuinely different oxidiser path from kerolox or storable hypergolics.",
+   "flavor": "Concentrated peroxide decomposed over a silver catalyst into hot steam and oxygen — British rocketry's signature chemistry (Black Knight and Black Arrow's Gamma engines), and a genuinely different oxidiser path from kerolox or storable hypergolics.",
    "parts": [
     {
      "name": "ROE-Gamma2",
