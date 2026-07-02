@@ -123,18 +123,18 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "No doctrine says burn kerosene first. Bet early on hydrogen — vacuum-jacketed tanks, multilayer insulation, the low-density fuel that demands enormous pumps — for the highest specific impulse chemistry there is. It just costs more program to get there."
-  - id: fd_hydroloxPrototype
+  - id: cryo_hydroloxPrototype
     title: "Hydrogen-Oxygen Combustion"
-    discipline: FluidDynamics
+    discipline: Cryogenics
     tier: 2
     parents: [cryo_hydrogen]
     flavor: "The first hydrolox engine that runs at all — low thrust, finicky, expensive, its great specific impulse not yet worth the trouble. Kerolox still wins the early climb; this is the down payment on a better long game."
     parts: [ROE-RZ20]
-  - id: fd_expanderCycle
+  - id: cryo_expanderCycle
     title: "Expander-Cycle Combustion"
-    discipline: FluidDynamics
+    discipline: Cryogenics
     tier: 4
-    parents: [fd_hydroloxPrototype]
+    parents: [cryo_hydroloxPrototype]
     flavor: "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, the highest specific impulse a chemical engine reaches. The RL-10: the tier where hydrogen finally overtakes kerosene."
     parts: [ROE-RL10Fixed]
 
