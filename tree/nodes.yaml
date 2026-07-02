@@ -250,7 +250,7 @@ nodes:
     title: "Jettisonable Payload Fairings"
     discipline: Aerodynamics
     tier: 2
-    parents: [aero_subsonic]
+    parents: [aero_subsonicWing]
     flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
     parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, KzProcFairingSide1_TU]
 
@@ -303,7 +303,7 @@ nodes:
     title: "Drogue-Stabilized Deceleration"
     discipline: Aerodynamics
     tier: 2
-    parents: [aero_subsonic]
+    parents: [aero_subsonicWing]
     flavor: "A small drogue bites the thin high air to hold a falling body straight and slow it enough that a main canopy can open without tearing — the difference between a returned payload and a crater."
     parts: [parachuteSingle, parachuteDrogue, parachuteLarge, parachuteRadial, RC_cone, RC_cone_double, RC_radial, RC_stack, evaChute]
   - id: opt_filmReturn
@@ -362,10 +362,10 @@ nodes:
   # MULTI-TIER edges flagged for review: aero_subsonicWing->aero_supersonicWing (T1->T3);
   #   fd_rocketplaneRocket->fd_throttlingRocket (T2->T5, the X-1 -> X-15 leap).
   - id: aero_subsonicWing
-    title: "Cantilever Monoplane Wing"
+    title: "Subsonic Aerodynamics"
     discipline: Aerodynamics
-    tier: 2
-    parents: [aero_subsonic]
+    tier: 1
+    parents: [start]
     flavor: "An internally-braced wing that needs no external struts or wires, clean enough to fly fast — with the pitot intake and control surfaces that make an aeroplane a controllable platform. The airframe everything else bolts onto."
     parts: [RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, RO-IntakeRadialLongPitot, SXTInlineAirIntake, airScoop, miniIntake]
   - id: str_landingGear
@@ -385,7 +385,7 @@ nodes:
   - id: fd_rocketplaneRocket
     title: "Chamber-Staged Aircraft Rocket"
     discipline: FluidDynamics
-    tier: 3
+    tier: 2
     parents: [aero_subsonicWing]
     flavor: "Four small ethanol-oxygen chambers lit one at a time to step the thrust up and down — no throttle valve, but control enough to push a piloted aeroplane past the sound barrier and glide it home. The X-1's engine."
     parts: [ROE-XLR11, ROE-XLR10, ROE-XLR25, ROE-S155]
@@ -400,9 +400,9 @@ nodes:
     title: "Swept-Wing Planform"
     discipline: Aerodynamics
     tier: 3
-    parents: [aero_subsonicWing]
+    parents: [aero_boattail]
     flavor: "Rake the wing back so the flow across it stays subsonic while the aircraft goes supersonic, delaying the shock stall — with a shock-cone intake that decelerates the air before it reaches the compressor. What makes level supersonic flight possible at all."
-    parts: [RO-B9ProcWing-Supersonic, RO-B9ProcCS-Supersonic, RO-B9ProcAMWing-Supersonic, SXTRadialAirIntakeShockCone, RO-shockConeIntake125, RO-shockConeIntakeBomarc, RO-shockConeIntakeMig, shockConeIntake]
+    parts: [RO-B9ProcWing-Supersonic, RO-B9ProcCS-Supersonic, RO-B9ProcAMWing-Supersonic, SXTRadialAirIntakeShockCone, RO-shockConeIntake125, RO-shockConeIntakeBomarc, RO-shockConeIntakeMig, shockConeIntake, airbrake1]
   - id: av_afterburner
     title: "Afterburning Turbojet"
     discipline: AirBreathing
@@ -482,15 +482,15 @@ nodes:
   - id: aero_stampedWings
     title: "Stamped Aerofoil Panels"
     discipline: Aerodynamics
-    tier: 3
+    tier: 2
     parents: [aero_subsonicWing]
     flavor: "Press and rivet standardized wing panels, elevons and connectors from sheet stock — a catalog of fixed aerofoil sections you bolt straight on, no shaping required. The procedural wing is lighter, cleaner and always the default; research this only if you would rather build from off-the-shelf panels."
-    parts: [deltaWing, delta_small, structuralWing, structuralWing2, structuralWing3, structuralWing4, sweptWing, sweptWing1, sweptWing2, wingConnector, wingConnector2, wingConnector3, wingConnector4, wingConnector5, StandardCtrlSrf, elevon2, elevon3, elevon5, smallCtrlSrf, R8winglet, wingStrake, winglet, winglet3, CanardController]
+    parts: [deltaWing, delta_small, structuralWing, structuralWing2, structuralWing3, structuralWing4, sweptWing, sweptWing1, sweptWing2, wingConnector, wingConnector2, wingConnector3, wingConnector4, wingConnector5, StandardCtrlSrf, elevon2, elevon3, elevon5, smallCtrlSrf, R8winglet, wingStrake, winglet, winglet3, CanardController, basicFin, tailfin]
 
   - id: aero_boattail
     title: "Boattail Aft-Fairings"
     discipline: Aerodynamics
-    tier: 3
+    tier: 2
     parents: [aero_subsonicWing]
     flavor: "A blunt tail drags a low-pressure wake behind it; taper the aft body into a boattail and the flow closes cleanly, shaving base drag off a rocket or airframe stern for the price of a little length. The contoured aft-fairings and adapters that earn their keep in the transonic climb."
     parts: [KzFlatBoattail, RSBRibbedBase_Boattail, RSBTrussBase_Boattail, SSTUBase_Boattail, SSTUHollowRing_Boattail]
@@ -537,7 +537,7 @@ nodes:
   - id: aero_pilotedCockpits
     title: "Piloted Cockpits"
     discipline: Aerodynamics
-    tier: 3
+    tier: 2
     parents: [aero_subsonicWing]
     flavor: "A cockpit shaped around a pilot - canopy, seat, sticks and dials - with the tail surfaces that keep the aeroplane pointed where the pilot aims it. From an open fighter office to a bomber glazed nose: the crudest crew accommodation, and the first rung toward a pressurised cabin and, past it, a capsule."
     parts: [RO-X1Cockpit, RO-FighterInlineCockpit, RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, SXTmk3Cockpit52, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow]
@@ -565,13 +565,6 @@ nodes:
     flavor: "A satellite built not to explore but to work: a stabilised bus carrying a communications relay or a navigation beacon, earning its launch by the service it sells back to the ground. The first spacecraft with a customer."
     parts: [RP-1-CommunicationSat, RP-1-NavigationSat]
 
-  - id: aero_subsonic
-    title: "Subsonic Aerodynamics"
-    discipline: Aerodynamics
-    tier: 1
-    parents: [start]
-    flavor: "The first grasp of lift, drag and stability below the speed of sound - the fins that keep a rocket pointed, the airfoil that holds a wing up, the streamlining that lets a body fly straight. Everything aerodynamic grows from here."
-    parts: [basicFin, tailfin, airbrake1]
   - id: gs_launchPlates
     title: "Flat Launch Plates"
     discipline: GroundSupport
