@@ -359,7 +359,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "An internally-braced wing that needs no external struts or wires, clean enough to fly fast — with the pitot intake and control surfaces that make an aeroplane a controllable platform. The airframe everything else bolts onto."
-    parts: [RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake]
+    parts: [RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, basicFin, tailfin, airbrake1]
   - id: str_landingGear
     title: "Retractable Landing Gear"
     discipline: StructuresMechanisms
@@ -476,4 +476,12 @@ nodes:
     tier: 2
     parents: [aero_subsonicWing]
     flavor: "Press and rivet standardized wing panels, elevons and connectors from sheet stock — a catalog of fixed aerofoil sections you bolt straight on, no shaping required. The procedural wing is lighter, cleaner and always the default; research this only if you would rather build from off-the-shelf panels."
-    parts: [deltaWing, delta_small, structuralWing, structuralWing2, structuralWing3, structuralWing4, sweptWing, sweptWing1, sweptWing2, wingConnector, wingConnector2, wingConnector3, wingConnector4, wingConnector5, StandardCtrlSrf, elevon2, elevon3, elevon5, smallCtrlSrf]
+    parts: [deltaWing, delta_small, structuralWing, structuralWing2, structuralWing3, structuralWing4, sweptWing, sweptWing1, sweptWing2, wingConnector, wingConnector2, wingConnector3, wingConnector4, wingConnector5, StandardCtrlSrf, elevon2, elevon3, elevon5, smallCtrlSrf, R8winglet, wingStrake, winglet, winglet3, CanardController]
+
+  - id: aero_boattail
+    title: "Boattail Aft-Fairings"
+    discipline: Aerodynamics
+    tier: 2
+    parents: [aero_subsonicWing]
+    flavor: "A blunt tail drags a low-pressure wake behind it; taper the aft body into a boattail and the flow closes cleanly, shaving base drag off a rocket or airframe stern for the price of a little length. The contoured aft-fairings and adapters that earn their keep in the transonic climb."
+    parts: [KzFlatBoattail, RSBRibbedBase_Boattail, RSBTrussBase_Boattail, SSTUBase_Boattail, SSTUHollowRing_Boattail]
