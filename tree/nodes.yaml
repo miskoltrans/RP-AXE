@@ -251,7 +251,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
-    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2]
+    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, KzProcFairingSide1_TU]
 
   # ===================== BAND 1 * SPACECRAFT SYSTEMS & SCIENCE =====================
   # First-satellite systems + science payloads (science is NOT utility — finest curation). Most are early
@@ -304,7 +304,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "A small drogue bites the thin high air to hold a falling body straight and slow it enough that a main canopy can open without tearing — the difference between a returned payload and a crater."
-    parts: [parachuteSingle, parachuteDrogue, parachuteLarge, parachuteRadial, RC_cone]
+    parts: [parachuteSingle, parachuteDrogue, parachuteLarge, parachuteRadial, RC_cone, RC_cone_double, RC_radial, RC_stack, evaChute]
   - id: opt_filmReturn
     title: "Film-Return Imaging"
     discipline: OpticsPhotonics
@@ -359,14 +359,14 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "An internally-braced wing that needs no external struts or wires, clean enough to fly fast — with the pitot intake and control surfaces that make an aeroplane a controllable platform. The airframe everything else bolts onto."
-    parts: [RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, basicFin, tailfin, airbrake1]
+    parts: [RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, basicFin, tailfin, airbrake1, RO-IntakeRadialLongPitot, SXTInlineAirIntake, airScoop, miniIntake]
   - id: str_landingGear
     title: "Retractable Landing Gear"
     discipline: StructuresMechanisms
     tier: 1
     parents: [start]
     flavor: "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, in the sizes a light trainer through a heavy jet demand."
-    parts: [KF-ALG-Medium, KF-ALG-Small, KF-ALG-Large, KF-ALG-SmallSide]
+    parts: [KF-ALG-Medium, KF-ALG-Small, KF-ALG-Large, KF-ALG-SmallSide, GearFixed, GearFree, GearSmall, SmallGearBay]
   - id: av_centrifugalJet
     title: "Centrifugal-Flow Turbojet"
     discipline: AirBreathing
@@ -387,21 +387,21 @@ nodes:
     tier: 3
     parents: [av_centrifugalJet]
     flavor: "Stack many stages of bladed rotor and stator so the air is squeezed along the axis instead of flung sideways — a slim engine that swallows far more air and scales to real thrust. The architecture every later jet keeps."
-    parts: [RO-J47, RO-J35, RO-Atar101D]
+    parts: [RO-J47, RO-J35, RO-Atar101D, RO-JT3C]
   - id: aero_supersonicWing
     title: "Swept-Wing Planform"
     discipline: Aerodynamics
     tier: 3
     parents: [aero_subsonicWing]
     flavor: "Rake the wing back so the flow across it stays subsonic while the aircraft goes supersonic, delaying the shock stall — with a shock-cone intake that decelerates the air before it reaches the compressor. What makes level supersonic flight possible at all."
-    parts: [RO-B9ProcWing-Supersonic, RO-B9ProcCS-Supersonic, RO-B9ProcAMWing-Supersonic, SXTRadialAirIntakeShockCone, RO-shockConeIntake125]
+    parts: [RO-B9ProcWing-Supersonic, RO-B9ProcCS-Supersonic, RO-B9ProcAMWing-Supersonic, SXTRadialAirIntakeShockCone, RO-shockConeIntake125, RO-shockConeIntakeBomarc, RO-shockConeIntakeMig, shockConeIntake]
   - id: av_afterburner
     title: "Afterburning Turbojet"
     discipline: AirBreathing
     tier: 4
     parents: [av_axialJet, aero_supersonicWing]
     flavor: "Dump raw fuel into the hot exhaust behind the turbine and light it — a burst of thrust that shoves a fighter through the transonic drag rise, at a ruinous fuel cost. Reheat: the supersonic dash."
-    parts: [aje_j57, aje_avon, RO-Sapphire203, RO-RD9B, RO-J48]
+    parts: [aje_j57, aje_avon, RO-Sapphire203, RO-RD9B, RO-J48, RO-AL7F]
   - id: av_variableStator
     title: "Variable-Stator Turbojet"
     discipline: AirBreathing
@@ -433,7 +433,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "A dead-end shelf off the main tree: pre-made struts, beams, panels, nose cones, plates and fittings you bolt on when you'd rather not shape a procedural piece. The procedural structural part is lighter and the default — nothing depends on researching this; it's here only if you want the fixed catalog."
-    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount, SXTProtonlikeNoseCone]
+    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount, SXTProtonlikeNoseCone, Angledpanel]
 
   # ===================== BAND 1 * AVIONICS (capability tiers — grants:, no physical part) =====================
   # RP-1's Science-Core avionics ladder as ONE track (user). Each node grants the avionics tier; names are my
@@ -524,7 +524,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "A supercharged piston engine swinging a propeller - the powerplant that flew every fighter and bomber before the jet, wringing altitude and speed from high-octane fuel and forced induction. Merlin, Jumo, Double Wasp: the sound of the propeller age."
-    parts: [SXTMerlin46Prop, SXTMerlin66prop, SXTKO211Dprop, SXTR280018WProp, SXTR280021Prop, SXTTinyprop]
+    parts: [SXTMerlin46Prop, SXTMerlin66prop, SXTKO211Dprop, SXTR280018WProp, SXTR280021Prop, SXTTinyprop, SXTJ213, SXTPWR2800, SXT_Jumo213A]
 
   - id: aero_pilotedCockpits
     title: "Piloted Cockpits"
