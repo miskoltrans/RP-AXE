@@ -56,7 +56,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "An oxidiser you can keep in the tank for months — fuming nitric acid — that ignites on contact with its fuel, so the engine needs no igniter and no turbopump. The chemistry of the first cheap storable rockets: the sounding motors that clear the Karman line and return the first data from the edge of space."
-    parts: [ROE-VeroniqueAK, ROE-Aerobee, ROE-R103, ROMeteoSustainer]
+    parts: [ROE-VeroniqueAK, ROE-Aerobee, ROMeteoSustainer]
   - id: fd_turbopumpFeed
     title: "Turbopump Feed"
     discipline: FluidDynamics
@@ -70,15 +70,15 @@ nodes:
     discipline: FluidDynamics
     tier: 3
     parents: [fd_turbopumpFeed]
-    flavor: "Scale one chamber and tame its combustion by hand — careful injector design still holds at this size. The first purpose-built boosters: Vanguard's X-405, Britain's Gamma, the small single chambers a satellite could ride. (Early LR-89/LR-105 base configs to be curated in.)"
-    parts: [ROE-X405, ROE-Gamma301, ROE-Stentor, ROE-X405H]
+    flavor: "Scale one chamber and tame its combustion by hand — careful injector design still holds at this size. The first purpose-built kerosene-oxygen boosters: Vanguard's X-405 and its kin, the small single chambers a satellite could ride."
+    parts: [ROE-X405, ROE-X405H]
   - id: fd_multiChamber
     title: "Multi-Chamber Combustion"
     discipline: FluidDynamics
     tier: 3
     parents: [fd_turbopumpFeed]
     flavor: "Don't fight instability in one big chamber — cluster several small ones, each below the acoustic threshold, on a common turbopump. The Soviet answer, and the layout that would grow into the R-7."
-    parts: [ROE-S155, YF2_Engine, YF2_with_shell]
+    parts: [ROE-S155, YF2_Engine, YF2_with_shell, ROE-RD211]  # RD-211: multi-chamber hardware home; draws its storable config from pc_hypergolics
   # --- orbital-class thrust: the generation that reaches orbit ---
   - id: fd_orbitalWest
     title: "Sustained Orbital-Class Thrust"
@@ -134,3 +134,37 @@ nodes:
     parents: [fd_hydroloxPrototype]
     flavor: "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, the highest specific impulse a chemical engine reaches. The RL-10: the tier where hydrogen finally overtakes kerosene."
     parts: [ROE-RL10Fixed]
+
+  # ===================== BAND 1 * PROPELLANT CHEMISTRY (storable + solid lines) =====================
+  # Engines home by their CHEMISTRY when the propellant IS their signature (solid grains, a storable upper).
+  # Hardware-defined engines (RD-211 = multi-chamber) home in FluidDynamics and DRAW the config from here.
+  # Base nodes sit T1-T2; each engine's UPGRADE configs stretch the line forward to ~T5 (wiring pending the
+  # higher tiers). Isp ladder (balance): solids 200-240 < storables/HTP/hypergolic 220-272 < kerolox 290-320.
+  - id: pc_doubleBaseSolid
+    title: "Double-Base Solid Propellant"
+    discipline: PropellantChemistry
+    tier: 1
+    parents: [start]
+    flavor: "Nitrocellulose plasticised with nitroglycerin and extruded into a grain that carries its own oxygen — the older solid chemistry: simple, dense, storable, lit once and done. The JATO boosters and the first Nike stages."
+    parts: [ROE-NikeM5E1, ROE-25KS18000, ROE-18KS7800, ROE-R103]
+  - id: pc_compositeSolid
+    title: "Ammonium-Perchlorate Composite Grains"
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [pc_doubleBaseSolid]
+    flavor: "Ammonium-perchlorate oxidiser bound in a rubbery polysulfide matrix, cast to shape around an integral nozzle — higher energy than double-base and castable to any size. The Baby Sergeant cluster that spun Explorer 1 to orbit."
+    parts: [ROE-BabySergeant, ROE-BabySergeantX3, ROE-BabySergeantX11, ROE-GCRC]
+  - id: pc_hypergolics
+    title: "Amine-Nitrate Hypergolics"
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [pc_storables]
+    flavor: "An amine fuel and a nitric-acid oxidiser that ignite on contact — no igniter, storable for years, restartable after a cold coast. The propellant of upper stages and spacecraft engines that must light every time."
+    parts: [ROE-AJ10Early, ROE-RD200, ROE-S2253]
+  - id: pc_htp
+    title: "High-Test Peroxide Combustion"
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [pc_storables]
+    flavor: "Concentrated hydrogen peroxide decomposed across a silver catalyst into a hot oxidising gas — a storable oxidiser that needs no cryogenics and lights a kerosene engine cleanly. Britain's Gamma and Stentor ran on it."
+    parts: [ROE-Stentor, ROE-Gamma301]
