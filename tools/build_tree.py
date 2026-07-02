@@ -18,10 +18,10 @@ TREE = os.path.join(REPO, "tree")
 OUTD = os.path.join(REPO, "GameData", "RP-AXE", "design", "Tree")
 REND = os.path.join(TREE, "render")
 
-X0, TIERW = 0, 430              # x = X0 + tier*TIERW (X anchored to MARGIN_X below)
+X0, TIERW = 0, 380              # x = X0 + tier*TIERW (X anchored to MARGIN_X below); matches renderer.js sugiyama COLW base
 Y0, DISCH, SUBH = 300, 100, 34  # y = Y0 + (order-1)*DISCH + sub-stack (lane-grid fallback)
 MARGIN_X, MARGIN_Y = -2568, 711 # anchor top-left to the editor's stock-tree origin
-SPACING_Y = 80                  # delta layout: vertical px per within-tier row
+SPACING_Y = 94                  # vertical px per rank unit; matches renderer.js sugiyama SPACING_Y base (94*spacing=1.0)
 COORDS_BK = True                # sugiyama_layout coordinate stage: True = Brandes-Kopf block alignment
                                 # (straight edges, the in-game default); False = isotonic (PAV) neighbour-mean
 KSP_CFG_FLIP_Y = True           # emit_cfg only: mirror y (compiler y-down -> KSP canvas y-up) so the tree
