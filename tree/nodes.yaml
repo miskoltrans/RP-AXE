@@ -549,13 +549,13 @@ nodes:
     parents: [str_staging]
     flavor: "A rack of pre-made decouplers and separators in fixed sizes - stack, radial, and the skirt rings that drop a spent booster - for when you would rather bolt on a catalogue part than shape a procedural one. The procedural decoupler stays the default; this is the shelf."
     parts: [Decoupler_0, Decoupler_2, radialDecoupler1-2, radialDecoupler2, restock-decoupler-1875-1, restock-decoupler-radial-tiny-1, restock-separator-1875-1, shortDecoupler1-2, smallRadialDecoupler, ROE-BabySergeantX11Dec, ROE-BabySergeantX3Dec, ROE-CastorDecoupler, ROT-AtlasDecoupler]
-  - id: gs_launchClamps
-    title: "Launch Hold-Down Clamps"
-    discipline: StructuresMechanisms
-    tier: 2
-    parents: [str_structuralHardware]
+  - id: gs_launchStands
+    title: "Fixed Launch Stands"
+    discipline: GroundSupport
+    tier: 1
+    parents: [start]
     flavor: "Clamps that grip the vehicle to the pad, feed it power and propellant through an umbilical, and let go the instant the engines prove good for flight - the ground half of every launch, holding a live rocket still until it is ready to fly."
-    parts: [ROE-SmallLC, ROE-MediumLC, ROE-LargeLC, ROE-SmallRadialLC, ROE-MediumRadialLC, ROE-LargeRadialLC, ROE-SmallApolloLC, ROE-MediumApolloLC, ROE-LargeApolloLC, ROE-UmbilicalTower, SXTlaunchclamp1, launchClamp1]
+    parts: [ROE-SmallLC, ROE-MediumLC, ROE-LargeLC, ROE-SmallRadialLC, ROE-MediumRadialLC, ROE-LargeRadialLC, ROE-SmallApolloLC, ROE-MediumApolloLC, ROE-LargeApolloLC, ROE-UmbilicalTower, SXTlaunchclamp1, launchClamp1, AM_MLP_AerobeeLaunchStand, AM_MLP_LaunchRailLarge, AM_MLP_LaunchRailMedium, AM_MLP_LaunchRailMini, AM_MLP_LaunchRailSmall, AM_MLP_LaunchStandSmallUmbilical, AM_MLP_N1ModularTower, AM_MLP_SmallTowerSwingArm, AM_MLP_SmallTowerSwingArmLarge, AM_MLP_SmallTowerSwingArmMedium, AM_MLP_TestStandEngine, AM_MLP_TestStandSmall, AM_MLP_TestStandTower]
 
   - id: tel_appSatellites
     title: "Application-Satellite Buses"
@@ -572,3 +572,24 @@ nodes:
     parents: [start]
     flavor: "The first grasp of lift, drag and stability below the speed of sound - the fins that keep a rocket pointed, the airfoil that holds a wing up, the streamlining that lets a body fly straight. Everything aerodynamic grows from here."
     parts: [basicFin, tailfin, airbrake1]
+  - id: gs_launchPlates
+    title: "Flat Launch Plates"
+    discipline: GroundSupport
+    tier: 2
+    parents: [gs_launchStands]
+    flavor: "A flat load-bearing plate the whole vehicle sits on, spreading the hold-down loads and channelling the exhaust down and out: the step from a bare stand to a proper pad as rockets grow past what a few clamps can hold."
+    parts: [AM_MLP_FlatLaunchBaseMini, AM_MLP_FlatLaunchBaseSmall, AM_MLP_LaunchPlateEnergia, AM_MLP_LaunchPlateFalcon9, AM_MLP_LaunchPlateN1, AM_MLP_LaunchPlateRnd1, AM_MLP_LaunchPlateRnd2, AM_MLP_LaunchPlateRnd3, AM_MLP_LaunchPlateSqr1, AM_MLP_LaunchPlateSqr2, AM_MLP_LaunchPlateSqr3, AM_MLP_N1TowerPlatform]
+  - id: gs_generalPad
+    title: "General Modular Launch Pad"
+    discipline: GroundSupport
+    tier: 3
+    parents: [gs_launchPlates]
+    flavor: "A full modular pad: bases sized to the rocket, hold-downs, a service tower to stack and check it, and crew arms and elevators to put people aboard. The launch complex as a building, not a fitting."
+    parts: [AM_MLP_FlatSlabServiceTower, AM_MLP_GenBaseLarge, AM_MLP_GenBaseMedium, AM_MLP_GenBaseMicro, AM_MLP_GenBaseMini, AM_MLP_GenBaseSmall, AM_MLP_GenBaseXLarge, AM_MLP_GeneralFallbackUmbilicalTower, AM_MLP_GeneralHold3, AM_MLP_GeneralHold4, AM_MLP_GeneralHoldSRB, AM_MLP_GeneralLaunchPlate, AM_MLP_GeneralROFI, AM_MLP_GeneralServiceTowerLargeSec1, AM_MLP_GeneralServiceTowerLargeTop, AM_MLP_GeneralServiceTowerMedium, AM_MLP_GeneralServiceTowerMediumSec1, AM_MLP_GeneralServiceTowerMediumTop, AM_MLP_GeneralServiceTowerSmall, AM_MLP_GeneralServiceTowerSmallSec1, AM_MLP_GeneralServiceTowerSmallTop, AM_MLP_GeneralStrongbackTowerFull, AM_MLP_GeneralStrongbackTowerMicro, AM_MLP_GeneralStrongbackTowerMini, AM_MLP_GeneralStrongbackTowerSmall, AM_MLP_GeneralTowerMulti, AM_MLP_GeneralTowerSwingArm, AM_MLP_GeneralTowerSwingArmLarge, AM_MLP_GeneralTowerSwingArmMedium, AM_MLP_GeneralUmbilicalDroopA, AM_MLP_GeneralUmbilicalDroopA4, AM_MLP_GeneralUmbilicalDroopB, AM_MLP_GeneralUmbilicalDroopB4, AM_MLP_GeneralUmbilicalDroopC, AM_MLP_GeneralUmbilicalDroopC4, AM_MLP_GeneralUmbilicalDroopD, AM_MLP_GeneralUmbilicalDroopD4, AM_MLP_GeneralUmbilicalDroopE, AM_MLP_GeneralUmbilicalDroopE4, AM_MLP_GeneralUmbilicalDrop, AM_MLP_GeneralUmbilicalDropLarge, AM_MLP_LaunchStandServiceTower1, AM_MLP_LaunchStandServiceTower2, AM_MLP_LaunchStandServiceTower3, AM_MLP_LaunchStandServiceTower4, AM_MLP_SmallLaunchStand, AM_MLP_SmallLaunchStandRect, MountPlatform_MLP, AM_MLP_CrewElevatorLargeExt, AM_MLP_CrewElevatorLargeSec1, AM_MLP_CrewElevatorLargeTop, AM_MLP_CrewElevatorSmallSec1, AM_MLP_CrewElevatorSmallTop, AM_MLP_CrewElevatorXLargeSec, AM_MLP_GeneralCrewArm, AM_MLP_GeneralCrewArmSmallMount, AM_MLP_GeneralCrewElevator, AM_MLP_GeneralCrewElevator2, AM_MLP_GeneralCrewElevatorMini, AM_MLP_GeneralCrewElevatorMiniArm, AM_MLP_GeneralCrewElevatorMiniArmS, AM_MLP_GeneralCrewElevatorMiniSec1, AM_MLP_GeneralCrewElevatorSmall, AM_MLP_GeneralHold1, AM_MLP_GeneralHold2, AM_MLP_GeneralHold5, AM_MLP_GeneralHold6, AM_MLP_GeneralHold7, AM_MLP_GeneralModularMultiTowerLarge, AM_MLP_GeneralModularMultiTowerMast, AM_MLP_GeneralModularMultiTowerMedium, AM_MLP_GeneralModularMultiTowerSmall, AM_MLP_GeneralModularMultiTowerTop, AM_MLP_LaunchStandCrewWalkwayMini, AM_MLP_ScissorArmUmbilical]
+  - id: gs_flameTrenchBases
+    title: "Flame-Trench Launch Bases"
+    discipline: GroundSupport
+    tier: 4
+    parents: [gs_generalPad]
+    flavor: "Purpose-built bases for one launcher, with a flame trench or tulip to turn a heavy first stage's exhaust aside: the dedicated pads orbital rockets earned once a general stand could no longer take the blast. Soyuz's tulip and the US stands from Atlas to Titan."
+    parts: [AM_MLP_SoyuzLaunchBase, AM_MLP_SoyuzLaunchBaseArmLG, AM_MLP_SoyuzLaunchBaseArmSM, AM_MLP_SoyuzLaunchBaseClampArm, AM_MLP_SoyuzLaunchBaseElevator, AM_MLP_SoyuzLaunchBaseGantry, AM_MLP_AgenaServiceTower, AM_MLP_Atlas2UmbilicalArm1, AM_MLP_Atlas2UmbilicalArm2, AM_MLP_Atlas2UmbilicalArm3, AM_MLP_AtlasLaunchStand, AM_MLP_AtlasLaunchStandAlt, AM_MLP_AtlasSepClampArm, AM_MLP_AtlasSepSideUmb, AM_MLP_AtlasUmbilicalArmAgena, AM_MLP_AtlasUmbilicalArmCentaur, AM_MLP_AtlasUmbilicalArmCentaur1, AM_MLP_AtlasUmbilicalArmCentaur2, AM_MLP_CentaurServiceTower1, AM_MLP_CentaurServiceTower2, AM_MLP_CrewElevatorAtlasUmbilical, AM_MLP_Delta4LaunchStand, AM_MLP_Delta4ModTowerCore, AM_MLP_Delta4ModTowerTop, AM_MLP_Delta4ServiceTower, AM_MLP_Delta4TowerArm1, AM_MLP_Delta4TowerArm2, AM_MLP_Delta4TowerArm3, AM_MLP_GeneralServiceTowerXLBase, AM_MLP_GeneralServiceTowerXLSec1, AM_MLP_GeneralServiceTowerXLTop, AM_MLP_GeneralTowerAtlasV, AM_MLP_GeneralTowerDeltaII, AM_MLP_GeneralUmbilicalDroopAtlas2, AM_MLP_JupiterPetalCover, AM_MLP_LaunchStandCrewElevatorAtlas, AM_MLP_LaunchStandCrewElevatorGemini, AM_MLP_LaunchStandCrewElevatorMercury, AM_MLP_LaunchStandCrewWalkwayMercury, AM_MLP_LaunchStandSmallPole, AM_MLP_RedstoneLaunchStand, AM_MLP_SpecialServiceTowerAtlasVBase, AM_MLP_SpecialServiceTowerAtlasVSec1, AM_MLP_SpecialServiceTowerAtlasVSec2, AM_MLP_SpecialServiceTowerAtlasVTop, AM_MLP_SpecialServiceTowerDeltaIIBase, AM_MLP_SpecialServiceTowerDeltaIISec1, AM_MLP_SpecialServiceTowerDeltaIISec2, AM_MLP_SpecialServiceTowerDeltaIITop, AM_MLP_ThorLaunchStand, AM_MLP_ThorServiceTowerFallback, AM_MLP_Titan3LaunchStand, AM_MLP_TitanIIITowerMast, AM_MLP_TitanIILaunchStand, AM_MLP_TitanIIServiceTowerMast, AM_MLP_TitanIIServiceTowerModBase, AM_MLP_TitanIIServiceTowerModSec1, AM_MLP_TitanIIServiceTowerModSec2, AM_MLP_TitanIIServiceTowerModTop, AM_MLP_TitanIIServiceTowerSingle, AM_MLP_TitanIIServiceTowerUmbilical, AM_MLP_TitanIIServiceTowerUmbilical2, AM_MLP_TitanIIServiceTowerUmbilicalGem, AM_MLP_TitanIIServiceTowerUmbilicalGem2, AM_MLP_VanguardLaunchStand, AM_MLP_VanguardServiceTower]

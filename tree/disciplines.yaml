@@ -19,6 +19,7 @@ NuclearEngineering:    { title: "Nuclear Engineering",   order: 9,  color: "#83c
 # --- cluster 3: Flight, Structure, Control ---
 Aerodynamics:          { title: "Aerodynamics",          order: 10, color: "#5aa0e2", icon: RDicon_aerodynamics }
 StructuresMechanisms:  { title: "Structures & Mechanisms", order: 11, color: "#bfb08d", icon: RDicon_construction }
+GroundSupport:         { title: "Ground Support",        order: 11.5, color: "#8f8778", icon: RDicon_construction }
 # --- convergence layer (NOT a science discipline): where whole vehicles come together from 3-4 disciplines.
 #     Ordered mid-lane (not last) so its many cross-links stay short — it is the render's hub (measured ~28%
 #     less edge length here than at the bottom). Also home for integrated composite parts (probes, capsules)
