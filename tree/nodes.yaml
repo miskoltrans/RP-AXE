@@ -50,30 +50,30 @@ nodes:
 
   # ===================== BAND 1 * KEROLOX BOOSTER SPINE (T1 -> T5) =====================
   # sounding -> turbopump(V-2) -> first boosters (Western || Soviet fork) -> orbital -> uprated orbital.
-  - id: fd_sounding
-    title: "Pressure-Fed Sounding Rockets"
-    discipline: FluidDynamics
+  - id: pc_storables
+    title: "Nitric-Acid Storable Propellants"
+    discipline: PropellantChemistry
     tier: 1
     parents: [start]
-    flavor: "A pressure-fed chamber and a de Laval nozzle scaled from a dart to a rocket that reaches the edge of space and returns data — no turbopump yet, just tank pressure and nerve. The sounding rocket that clears the Karman line."
+    flavor: "An oxidiser you can keep in the tank for months — fuming nitric acid — that ignites on contact with its fuel, so the engine needs no igniter and no turbopump. The chemistry of the first cheap storable rockets: the sounding motors that clear the Karman line and return the first data from the edge of space."
     parts: [ROE-VeroniqueAK, ROE-Aerobee, ROE-R103, ROMeteoSustainer]
   - id: fd_turbopumpFeed
     title: "Turbopump Feed"
     discipline: FluidDynamics
     tier: 2
-    parents: [fd_sounding]
+    parents: [pc_storables]
     flavor: "Drive the propellants with a turbine-spun pump instead of tank pressure — the tank stops being a heavy pressure vessel and the chamber can run far harder than any sounding motor reaches. The step from a powder dart to the turbopump-fed V-2: a large liquid rocket at last."
     parts: [ROE-A4, ROE-A7, ROE-RD100]
   # --- the combustion fork: two answers to a stable large chamber ---
   - id: fd_singleChamber
-    title: "Single-Chamber Boosters"
+    title: "Single-Chamber Combustion"
     discipline: FluidDynamics
     tier: 3
     parents: [fd_turbopumpFeed]
     flavor: "Scale one chamber and tame its combustion by hand — careful injector design still holds at this size. The first purpose-built boosters: Vanguard's X-405, Britain's Gamma, the small single chambers a satellite could ride. (Early LR-89/LR-105 base configs to be curated in.)"
     parts: [ROE-X405, ROE-Gamma301, ROE-Stentor, ROE-X405H]
   - id: fd_multiChamber
-    title: "Multi-Chamber Boosters"
+    title: "Multi-Chamber Combustion"
     discipline: FluidDynamics
     tier: 3
     parents: [fd_turbopumpFeed]
@@ -81,34 +81,34 @@ nodes:
     parts: [ROE-S155, YF2_Engine, YF2_with_shell]
   # --- orbital-class thrust: the generation that reaches orbit ---
   - id: fd_orbitalWest
-    title: "Orbital-Class Single Chambers"
+    title: "Sustained Orbital-Class Thrust"
     discipline: FluidDynamics
     tier: 4
     parents: [fd_singleChamber]
     flavor: "A meganewton of stable thrust in one chamber, gimballed and trusted with a payload — the Atlas and Thor boosters that put the first Western satellites up."
     parts: [ROE-LR89_2, ROE-LR79, ROE-LR105_2, ROE-RZ]
   - id: fd_orbitalSoviet
-    title: "R-7 Engine Cluster"
+    title: "Parallel Engine Clustering"
     discipline: FluidDynamics
     tier: 4
-    parents: [fd_multiChamber]
-    flavor: "Twenty combustion chambers across four strap-on boosters and a core, all lit on the pad and synchronised — the R-7 that carried Sputnik to orbit. Brute multiplicity where the West built single chambers."
-    parts: [ROE-RD107, ROE-RD108, ROE-RD211]
+    parents: [fd_multiChamber, fd_verniers]
+    flavor: "Twenty combustion chambers across four strap-on boosters and a core, all lit on the pad and synchronised — the R-7 that carried Sputnik to orbit. Brute multiplicity where the West built single chambers. Unflyable without vernier steering, which its engines carry built-in."
+    parts: [ROE-RD107, ROE-RD108]  # RD-211 pulled — it's a standalone hypergolic multi-chamber (Isp 264), not R-7 kerolox; parked for the storable-engine node
   - id: fd_matureOrbital
-    title: "Uprated Orbital Rocketry"
+    title: "High-Expansion Vacuum Nozzles"
     discipline: FluidDynamics
     tier: 5
     parents: [fd_orbitalWest, fd_orbitalSoviet]
     anyToUnlock: true
-    flavor: "The orbital boosters uprated and paired with an efficient upper stage — margin enough to place a real payload, not just a beeping sphere. Whichever booster you perfected, the last of the climb is a high-Isp kick stage. This is where orbit stops being a stunt. (Booster NA-x / 8D74-x upgrade configs live here.)"
-    parts: [ROE-RD0110, ROE-RD109, ROE-RD0105, ROE-S2253]
+    flavor: "A nozzle bell too large to fire at sea level — the flow would rip away from the walls — but in vacuum it extracts every last metre-per-second from the exhaust. The dedicated upper-stage engines that let the R-7 reach past low orbit toward the Moon: high specific impulse where there is no air to fight."
+    parts: [ROE-RD0105, ROE-RD0110, ROE-RD109]
   # --- vernier trim chambers (ride the boosters they steer) ---
   - id: fd_verniers
-    title: "Vernier Trim Chambers"
+    title: "Auxiliary-Chamber Thrust Vectoring"
     discipline: FluidDynamics
-    tier: 4
-    parents: [fd_singleChamber]
-    flavor: "Small gimballed trim chambers that steer and roll the stack while the main engines just push — the Atlas LR-101 and Jupiter S-3D verniers, co-developed with the big engines they trim. The fine hand on a heavy rocket."
+    tier: 3
+    parents: [fd_turbopumpFeed]
+    flavor: "Steer and roll a large rocket in powered flight with small gimballed auxiliary chambers — full three-axis control, roll especially, before a single main engine can be trusted to gimbal for it. The R-7's verniers are integral to its engines, so you cannot fly the cluster without this; Atlas and Jupiter bolt theirs on."
     parts: [ROE-LR101_2, ROE-LR101Inline_2, ROE-JupiterVernier]
 
   # ===================== BAND 1 * HYDROLOX — the ahistorical gamble =====================
@@ -121,14 +121,14 @@ nodes:
     parents: [start]
     flavor: "No doctrine says burn kerosene first. Bet early on hydrogen — vacuum-jacketed tanks, multilayer insulation, the low-density fuel that demands enormous pumps — for the highest specific impulse chemistry there is. It just costs more program to get there."
   - id: fd_hydroloxPrototype
-    title: "Prototype Hydrolox Combustion"
+    title: "Hydrogen-Oxygen Combustion"
     discipline: FluidDynamics
     tier: 2
     parents: [cryo_hydrogen]
     flavor: "The first hydrolox engine that runs at all — low thrust, finicky, expensive, its great specific impulse not yet worth the trouble. Kerolox still wins the early climb; this is the down payment on a better long game."
     parts: [ROE-RZ20]
   - id: fd_expanderCycle
-    title: "Expander-Cycle Hydrolox"
+    title: "Expander-Cycle Combustion"
     discipline: FluidDynamics
     tier: 4
     parents: [fd_hydroloxPrototype]
