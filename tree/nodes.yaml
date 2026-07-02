@@ -468,3 +468,12 @@ nodes:
     parents: [gnc_rcs]
     flavor: "Precision jigs, fixtures and go/no-go gauges let unskilled hands turn out thousands of identical, interchangeable thruster blocks — pull the one you want off the shelf and bolt it on, no machinist required. The procedural block is lighter, cleaner and always the default; research this only if you truly, really must have the fixed catalog hardware."
     parts: [InlineRCS, RCSBlockSmall_138, RCSBlockSmall_28, RCSBlockSmall_69, RCSBlock_138, RCSBlock_28, RCSBlock_69, RCSBoonExt, RCSLinearSmall_28, RCSLinearSmall_69, RO-RestockPlus-RCS-Block-Dual-138, RO-RestockPlus-RCS-Block-Dual-28, RO-RestockPlus-RCS-Block-Quad-138, RO-RestockPlus-RCS-Block-Quad-28, RO-RestockPlus-RCS-Block-Quad-Angled-28, RO-RestockPlus-RCS-Block-Quint-138, RO-RestockPlus-RCS-Block-Quint-28, RO-RestockPlus-RCS-Block-Triple-Angled-138, RO-RestockPlus-RCS-Block-Triple-Angled-28, RO-RestockPlus-RCS-Linear-28, RO-nflv-rcs-aero-heavy-1-half, RO-nflv-rcs-aero-heavy-1-quarter, RO-nflv-rcs-aero-heavy-2-half, RO-nflv-rcs-aero-heavy-2-quarter, RO_FASA_ExplorerRCS, RO_FASA_MercuryPodRCS, RO_RCSBlock_restock_138, RO_RCSBlock_restock_28, RO_RCSBlock_restock_69, RO_RCSBlock_restock_mini_138, RO_RCSBlock_restock_mini_28, RO_RCSBlock_restock_mini_69, RO_linearRcs_tenth, ca_RM01, ca_rs01, ca_rs04, restock-rcs-block-dual-mini-1, restock-rcs-block-quad-angled-mini-1, restock-rcs-block-quad-mini-1, restock-rcs-block-qunit-mini-1, restock-rcs-block-triple-angled-mini-1, restock-rcs-single-mini-1]
+
+  # ============ BAND 1 * STAMPED WINGS (optional DEAD-END; procedural B9 wing stays the default) ============
+  - id: aero_stampedWings
+    title: "Stamped Aerofoil Panels"
+    discipline: Aerodynamics
+    tier: 2
+    parents: [aero_subsonicWing]
+    flavor: "Press and rivet standardized wing panels, elevons and connectors from sheet stock — a catalog of fixed aerofoil sections you bolt straight on, no shaping required. The procedural wing is lighter, cleaner and always the default; research this only if you would rather build from off-the-shelf panels."
+    parts: [deltaWing, delta_small, structuralWing, structuralWing2, structuralWing3, structuralWing4, sweptWing, sweptWing1, sweptWing2, wingConnector, wingConnector2, wingConnector3, wingConnector4, wingConnector5, StandardCtrlSrf, elevon2, elevon3, elevon5, smallCtrlSrf]
