@@ -151,7 +151,7 @@ nodes:
     flavor: "Nitrocellulose plasticised with nitroglycerin and extruded into a grain that carries its own oxygen — the older solid chemistry: simple, dense, storable, lit once and done. The JATO boosters and the first Nike stages."
     parts: [ROE-18KS7800, ROE-R103]
   - id: pc_doubleBaseBooster
-    title: "Double-Base Booster Grains"   # NAME TENTATIVE — review
+    title: "Double-Base Booster Grains"
     discipline: PropellantChemistry
     tier: 2
     parents: [pc_doubleBaseSolid]
@@ -160,8 +160,8 @@ nodes:
   - id: pc_compositeSolid
     title: "Ammonium-Perchlorate Composite Grains"
     discipline: PropellantChemistry
-    tier: 2
-    parents: [pc_doubleBaseSolid]
+    tier: 3
+    parents: [pc_doubleBaseBooster]
     flavor: "Ammonium-perchlorate oxidiser bound in a rubbery polysulfide matrix, cast to shape around an integral nozzle — higher energy than double-base and castable to any size. The Baby Sergeant cluster that spun Explorer 1 to orbit."
     parts: [ROE-BabySergeant, ROE-BabySergeantX3, ROE-BabySergeantX11, ROE-GCRC]
   - id: pc_hypergolics
