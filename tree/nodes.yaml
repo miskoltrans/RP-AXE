@@ -241,15 +241,15 @@ nodes:
   - id: str_staging
     title: "Pyrotechnic Frangible Separation"
     discipline: StructuresMechanisms
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [str_structuralHardware]
     flavor: "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one burn."
     parts: [proceduralStackDecoupler, Decoupler_1, radialDecoupler, ROT-RingDecoupler]
   - id: aero_fairings
     title: "Jettisonable Payload Fairings"
     discipline: Aerodynamics
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [aero_subsonic]
     flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
     parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, KzProcFairingSide1_TU]
 
@@ -294,15 +294,15 @@ nodes:
   - id: gnc_rcs
     title: "Cold-Gas Reaction Control"
     discipline: GuidanceControl
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [gnc_postWarAvionics]
     flavor: "Bleed compressed nitrogen through opposed nozzles to nudge a craft's attitude — no combustion, nothing to go wrong, just enough impulse to point. The simplest way to hold an orientation in vacuum."
     parts: [ROE-ModularRCS]
   - id: aero_recovery
     title: "Drogue-Stabilized Deceleration"
     discipline: Aerodynamics
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [aero_subsonic]
     flavor: "A small drogue bites the thin high air to hold a falling body straight and slow it enough that a main canopy can open without tearing — the difference between a returned payload and a crater."
     parts: [parachuteSingle, parachuteDrogue, parachuteLarge, parachuteRadial, RC_cone, RC_cone_double, RC_radial, RC_stack, evaChute]
   - id: opt_filmReturn
@@ -340,13 +340,20 @@ nodes:
     parents: [nuc_geiger]
     flavor: "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron."
     parts: [RO-EarlyMagnet]
-  - id: met_exposurePanels
-    title: "Materials Exposure Panels"
-    discipline: Metallurgy
+  - id: bio_cultures
+    title: "Space-Exposed Biology"
+    discipline: LifeSupport
     tier: 1
     parents: [start]
-    flavor: "Expose sample coupons, gels and living cultures to vacuum, cold and radiation, then read what changed — the first crude survey of whether anything we build, or grow, can take the environment at all."
-    parts: [GooExperiment, BioCapsule, USGooBayWedge, USThermoBaroWedge, SXTProbeGooo, science_module]
+    flavor: "Fly gels, spores and living cultures sealed in a capsule, then recover them to see what vacuum, cold and raw radiation did — the first read on whether anything alive survives above the atmosphere. The seed of every later life-sciences payload."
+    parts: [GooExperiment, BioCapsule, USGooBayWedge, SXTProbeGooo]
+  - id: mic_atmoSounding
+    title: "Upper-Atmosphere Sounding"
+    discipline: Microelectronics
+    tier: 1
+    parents: [start]
+    flavor: "A wedge of thermometers, barometers and sample cells flown up a sounding rocket to log temperature, pressure and density where balloons can't reach — the first instruments to tell us what the air is doing at the edge of space."
+    parts: [USThermoBaroWedge, science_module]
 
   # ===================== BAND 1 ‖ AVIATION / SUPERSONIC (parallel milestone) =====================
   # Air-breathing propulsion is its OWN lane; supersonic engines DEPEND on Aerodynamics breakthroughs
@@ -356,15 +363,15 @@ nodes:
   - id: aero_subsonicWing
     title: "Cantilever Monoplane Wing"
     discipline: Aerodynamics
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [aero_subsonic]
     flavor: "An internally-braced wing that needs no external struts or wires, clean enough to fly fast — with the pitot intake and control surfaces that make an aeroplane a controllable platform. The airframe everything else bolts onto."
-    parts: [RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, basicFin, tailfin, airbrake1, RO-IntakeRadialLongPitot, SXTInlineAirIntake, airScoop, miniIntake]
+    parts: [RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, RO-IntakeRadialLongPitot, SXTInlineAirIntake, airScoop, miniIntake]
   - id: str_landingGear
     title: "Retractable Landing Gear"
     discipline: StructuresMechanisms
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [str_structuralHardware]
     flavor: "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, in the sizes a light trainer through a heavy jet demand."
     parts: [KF-ALG-Medium, KF-ALG-Small, KF-ALG-Large, KF-ALG-SmallSide, GearFixed, GearFree, GearSmall, SmallGearBay]
   - id: av_centrifugalJet
@@ -377,7 +384,7 @@ nodes:
   - id: fd_rocketplaneRocket
     title: "Chamber-Staged Aircraft Rocket"
     discipline: FluidDynamics
-    tier: 2
+    tier: 3
     parents: [aero_subsonicWing]
     flavor: "Four small ethanol-oxygen chambers lit one at a time to step the thrust up and down — no throttle valve, but control enough to push a piloted aeroplane past the sound barrier and glide it home. The X-1's engine."
     parts: [ROE-XLR11, ROE-XLR10, ROE-XLR25, ROE-S155]
@@ -428,11 +435,11 @@ nodes:
   # The passive structure everyone needs and no one researches for. Station-scale modular truss + MLP +
   # rocket landing legs + cockpits + cosmetics intentionally PARK (band-2 or the user's live review queue).
   - id: str_structuralHardware
-    title: "Structural Hardware & Fittings"
+    title: "Riveted Airframe Structure"
     discipline: StructuresMechanisms
     tier: 1
     parents: [start]
-    flavor: "A dead-end shelf off the main tree: pre-made struts, beams, panels, nose cones, plates and fittings you bolt on when you'd rather not shape a procedural piece. The procedural structural part is lighter and the default — nothing depends on researching this; it's here only if you want the fixed catalog."
+    flavor: "Rivet and weld sheet, extrusion and tube into a load-bearing frame — the everyday structural craft of 1950: struts, I-beams, panels, mounts and nose cones, the skeleton every vehicle hangs on. The root the rest of structures grows from."
     parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount, SXTProtonlikeNoseCone, Angledpanel]
 
   # ===================== BAND 1 * AVIONICS (capability tiers — grants:, no physical part) =====================
@@ -465,7 +472,7 @@ nodes:
   - id: gnc_standardRCS
     title: "Interchangeable-Part Manufacture"
     discipline: GuidanceControl
-    tier: 2
+    tier: 3
     parents: [gnc_rcs]
     flavor: "Precision jigs, fixtures and go/no-go gauges let unskilled hands turn out thousands of identical, interchangeable thruster blocks — pull the one you want off the shelf and bolt it on, no machinist required. The procedural block is lighter, cleaner and always the default; research this only if you truly, really must have the fixed catalog hardware."
     parts: [InlineRCS, RCSBlockSmall_138, RCSBlockSmall_28, RCSBlockSmall_69, RCSBlock_138, RCSBlock_28, RCSBlock_69, RCSBoonExt, RCSLinearSmall_28, RCSLinearSmall_69, RO-RestockPlus-RCS-Block-Dual-138, RO-RestockPlus-RCS-Block-Dual-28, RO-RestockPlus-RCS-Block-Quad-138, RO-RestockPlus-RCS-Block-Quad-28, RO-RestockPlus-RCS-Block-Quad-Angled-28, RO-RestockPlus-RCS-Block-Quint-138, RO-RestockPlus-RCS-Block-Quint-28, RO-RestockPlus-RCS-Block-Triple-Angled-138, RO-RestockPlus-RCS-Block-Triple-Angled-28, RO-RestockPlus-RCS-Linear-28, RO-nflv-rcs-aero-heavy-1-half, RO-nflv-rcs-aero-heavy-1-quarter, RO-nflv-rcs-aero-heavy-2-half, RO-nflv-rcs-aero-heavy-2-quarter, RO_FASA_ExplorerRCS, RO_FASA_MercuryPodRCS, RO_RCSBlock_restock_138, RO_RCSBlock_restock_28, RO_RCSBlock_restock_69, RO_RCSBlock_restock_mini_138, RO_RCSBlock_restock_mini_28, RO_RCSBlock_restock_mini_69, RO_linearRcs_tenth, ca_RM01, ca_rs01, ca_rs04, restock-rcs-block-dual-mini-1, restock-rcs-block-quad-angled-mini-1, restock-rcs-block-quad-mini-1, restock-rcs-block-qunit-mini-1, restock-rcs-block-triple-angled-mini-1, restock-rcs-single-mini-1]
@@ -474,7 +481,7 @@ nodes:
   - id: aero_stampedWings
     title: "Stamped Aerofoil Panels"
     discipline: Aerodynamics
-    tier: 2
+    tier: 3
     parents: [aero_subsonicWing]
     flavor: "Press and rivet standardized wing panels, elevons and connectors from sheet stock — a catalog of fixed aerofoil sections you bolt straight on, no shaping required. The procedural wing is lighter, cleaner and always the default; research this only if you would rather build from off-the-shelf panels."
     parts: [deltaWing, delta_small, structuralWing, structuralWing2, structuralWing3, structuralWing4, sweptWing, sweptWing1, sweptWing2, wingConnector, wingConnector2, wingConnector3, wingConnector4, wingConnector5, StandardCtrlSrf, elevon2, elevon3, elevon5, smallCtrlSrf, R8winglet, wingStrake, winglet, winglet3, CanardController]
@@ -482,7 +489,7 @@ nodes:
   - id: aero_boattail
     title: "Boattail Aft-Fairings"
     discipline: Aerodynamics
-    tier: 2
+    tier: 3
     parents: [aero_subsonicWing]
     flavor: "A blunt tail drags a low-pressure wake behind it; taper the aft body into a boattail and the flow closes cleanly, shaving base drag off a rocket or airframe stern for the price of a little length. The contoured aft-fairings and adapters that earn their keep in the transonic climb."
     parts: [KzFlatBoattail, RSBRibbedBase_Boattail, RSBTrussBase_Boattail, SSTUBase_Boattail, SSTUHollowRing_Boattail]
@@ -490,8 +497,8 @@ nodes:
   - id: str_diameterAdapters
     title: "Modular Diameter Adapters"
     discipline: StructuresMechanisms
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [str_structuralHardware]
     flavor: "Procedural ribbed, truss and hollow adapters that mate one diameter to another and carry the load across an interstage or under a payload — the structural handshake between a fat booster and a slim upper, or a stage and the satellite it lifts."
     parts: [RSBRibbedBase, RSBTrussBase, SSTUBase, SSTUHollowRing, adapterSize2-Size1, adapterSize2-Size1Slant, strutCubeOCTOAdapter, strutCubeS0Adapter, trussAdapter, KzFlatAdapter, RSBRibbedBase_Interstage, RSBTrussBase_Interstage, SSTUBase_Interstage, SSTUHollowRing_Interstage, ROT-OpenInterstage]
 
@@ -506,7 +513,7 @@ nodes:
   - id: cmp_compositeFairings
     title: "Composite Fairing Shells"
     discipline: CompositeMaterials
-    tier: 2
+    tier: 3
     parents: [aero_fairings]
     flavor: "Lay up the payload shroud from resin-bonded fibre instead of spun metal - a lighter shell that still takes the aero loads and splits clean on command. The first rung of a fairing-tech ladder that keeps shaving shroud mass off every launch."
     upgrades: [PFTech-Fairing-I]
@@ -529,7 +536,7 @@ nodes:
   - id: aero_pilotedCockpits
     title: "Piloted Cockpits"
     discipline: Aerodynamics
-    tier: 2
+    tier: 3
     parents: [aero_subsonicWing]
     flavor: "A cockpit shaped around a pilot - canopy, seat, sticks and dials - with the tail surfaces that keep the aeroplane pointed where the pilot aims it. From an open fighter office to a bomber glazed nose: the crudest crew accommodation, and the first rung toward a pressurised cabin and, past it, a capsule."
     parts: [RO-X1Cockpit, RO-FighterInlineCockpit, RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, SXTmk3Cockpit52, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow]
@@ -537,15 +544,15 @@ nodes:
   - id: str_standardDecouplers
     title: "Standard Decouplers"
     discipline: StructuresMechanisms
-    tier: 2
+    tier: 3
     parents: [str_staging]
     flavor: "A rack of pre-made decouplers and separators in fixed sizes - stack, radial, and the skirt rings that drop a spent booster - for when you would rather bolt on a catalogue part than shape a procedural one. The procedural decoupler stays the default; this is the shelf."
     parts: [Decoupler_0, Decoupler_2, radialDecoupler1-2, radialDecoupler2, restock-decoupler-1875-1, restock-decoupler-radial-tiny-1, restock-separator-1875-1, shortDecoupler1-2, smallRadialDecoupler, ROE-BabySergeantX11Dec, ROE-BabySergeantX3Dec, ROE-CastorDecoupler, ROT-AtlasDecoupler]
   - id: gs_launchClamps
     title: "Launch Hold-Down Clamps"
     discipline: StructuresMechanisms
-    tier: 1
-    parents: [start]
+    tier: 2
+    parents: [str_structuralHardware]
     flavor: "Clamps that grip the vehicle to the pad, feed it power and propellant through an umbilical, and let go the instant the engines prove good for flight - the ground half of every launch, holding a live rocket still until it is ready to fly."
     parts: [ROE-SmallLC, ROE-MediumLC, ROE-LargeLC, ROE-SmallRadialLC, ROE-MediumRadialLC, ROE-LargeRadialLC, ROE-SmallApolloLC, ROE-MediumApolloLC, ROE-LargeApolloLC, ROE-UmbilicalTower, SXTlaunchclamp1, launchClamp1]
 
@@ -556,3 +563,11 @@ nodes:
     parents: [th_hermeticBus]
     flavor: "A satellite built not to explore but to work: a stabilised bus carrying a communications relay or a navigation beacon, earning its launch by the service it sells back to the ground. The first spacecraft with a customer."
     parts: [RP-1-CommunicationSat, RP-1-NavigationSat]
+
+  - id: aero_subsonic
+    title: "Subsonic Aerodynamics"
+    discipline: Aerodynamics
+    tier: 1
+    parents: [start]
+    flavor: "The first grasp of lift, drag and stability below the speed of sound - the fins that keep a rocket pointed, the airfoil that holds a wing up, the streamlining that lets a body fly straight. Everything aerodynamic grows from here."
+    parts: [basicFin, tailfin, airbrake1]
