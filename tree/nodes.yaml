@@ -118,17 +118,23 @@ nodes:
   # ===================== BAND 1 * HYDROLOX — the ahistorical gamble =====================
   # commit early (T1) / worse first (T2 prototype) / overtakes mid-band (T4 RL-10). Isp never nerfed;
   # the cost is thrust + handling + program time up front.
-  - id: cryo_hydroloxPrototype
-    title: "Hydrogen-Oxygen Combustion"
+  - id: cryo_hydrogen
+    title: "Cryogenic Hydrogen Handling"
     discipline: Cryogenics
     tier: 1
     parents: [start]
-    flavor: "No doctrine says burn kerosene first: bet early on hydrogen for the highest specific impulse there is, and accept the first hydrolox engine that runs at all — low thrust, finicky, expensive, its great specific impulse not yet worth the trouble. Kerolox still wins the early climb; this is the down payment on a better long game."
+    flavor: "No doctrine says burn kerosene first. Bet early on hydrogen: vacuum-jacketed tanks, multilayer insulation and enormous pumps for a low-density fuel, all for the highest specific impulse chemistry there is. It costs a whole node of program time up front just to commit - and this is that commitment."
+  - id: cryo_hydroloxPrototype
+    title: "Hydrogen-Oxygen Combustion"
+    discipline: Cryogenics
+    tier: 2
+    parents: [cryo_hydrogen]
+    flavor: "The first hydrolox engine that runs at all — low thrust, finicky, expensive, its great specific impulse not yet worth the trouble. Kerolox still wins the early climb; this is the down payment on a better long game."
     parts: [ROE-RZ20]
   - id: cryo_expanderCycle
     title: "Expander-Cycle Combustion"
     discipline: Cryogenics
-    tier: 3
+    tier: 4
     parents: [cryo_hydroloxPrototype]
     flavor: "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, the highest specific impulse a chemical engine reaches. The RL-10: the tier where hydrogen finally overtakes kerosene."
     parts: [ROE-RL10Fixed]
