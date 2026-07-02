@@ -18,14 +18,21 @@ namespace RPAxe.RnD
     {
         internal struct NodeMeta { public string Discipline; public int Tier; public int Cost; }
         internal struct DiscMeta { public int Order; public Color Color; public string Icon; public string Title; }
-        internal struct Settings { public string Layout; public bool LaneRouting; public bool Fan; public float LanePitch; public bool DiscColor; public bool Legend; public bool Hover; }
+        internal struct Settings
+        {
+            public string Layout; public bool LaneRouting; public bool Fan; public float LanePitch;
+            public bool DiscColor; public bool Legend; public bool Hover;
+            public string Routing;   // edge routing style: lanes | ortho-late | stock
+            // routing override is active (we replace stock elbows) for any non-stock style
+            public bool RouteOverride => Routing == "lanes" || Routing == "ortho-late";
+        }
 
         // Layout constants (shared with build_tree.py; fallbacks match its X0/TIERW/MARGIN defaults).
         internal static float MarginX = -2568f, MarginY = 711f, TierWidth = 430f, NodeSize = 58f;
         internal static readonly Dictionary<string, NodeMeta> Nodes = new Dictionary<string, NodeMeta>();
         internal static readonly Dictionary<string, DiscMeta> Disciplines = new Dictionary<string, DiscMeta>();
         // Default = stock (feature off) so a missing/absent cfg can never brick the scene.
-        internal static Settings Render = new Settings { Layout = "stock", LaneRouting = true, Fan = true, LanePitch = 13f, DiscColor = true, Legend = true, Hover = true };
+        internal static Settings Render = new Settings { Layout = "stock", LaneRouting = true, Routing = "lanes", Fan = true, LanePitch = 13f, DiscColor = true, Legend = true, Hover = true };
         internal static bool Loaded { get; private set; }
 
         internal static void EnsureLoaded()
@@ -35,7 +42,7 @@ namespace RPAxe.RnD
             LoadMeta();
             LoadSettings();
             Debug.Log($"[AXE] tree meta: {Nodes.Count} nodes / {Disciplines.Count} disciplines; " +
-                      $"render layout={Render.Layout} lane={Render.LaneRouting} fan={Render.Fan}");
+                      $"render layout={Render.Layout} routing={Render.Routing} fan={Render.Fan}");
         }
 
         // Full (un-tinted) discipline colour for a tech id — used by the lineage highlight to pop the lineage.
@@ -89,6 +96,10 @@ namespace RPAxe.RnD
             string layout = r.GetValue("layout");
             Render.Layout = string.IsNullOrEmpty(layout) ? "bands" : layout.Trim().ToLowerInvariant();
             Render.LaneRouting = ParseBool(r.GetValue("laneRouting"), true);
+            // `routing` selects the edge-routing style; if absent, derive from the legacy laneRouting bool.
+            string routing = r.GetValue("routing");
+            Render.Routing = !string.IsNullOrEmpty(routing) ? routing.Trim().ToLowerInvariant()
+                                                            : (Render.LaneRouting ? "lanes" : "stock");
             Render.Fan = ParseBool(r.GetValue("fan"), true);
             if (float.TryParse(r.GetValue("lanePitch"), NumberStyles.Float, CultureInfo.InvariantCulture, out float lp) && lp >= 0f)
                 Render.LanePitch = lp;   // 0 = all lanes collapse to the gutter centre (single line)

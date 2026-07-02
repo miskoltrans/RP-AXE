@@ -5,10 +5,13 @@ using UnityEngine;
 namespace RPAxe.RnD
 {
     /// <summary>
-    /// KSP-free port of the HTML rendering prototype's layout + edge routing
-    /// (tree/render/prototype/renderer.js): layoutBands + computeSlots + buildLaneRoutes + chamfer/
-    /// roundPolyline. Operates on plain LNode/LEdge over UnityEngine.Vector2 — no KSP.UI / Harmony /
-    /// RDNode dependency — so it mirrors the prototype 1:1 and is easy to reason about in isolation.
+    /// KSP-free port of the HTML rendering prototype's edge routing + (legacy) layout
+    /// (tree/render/prototype/renderer.js): computeSlots + routeOrthoLate + buildLaneRoutes +
+    /// chamfer/roundPolyline, plus the legacy in-C# layoutBands/layoutSugiyama. Node POSITIONS for the
+    /// live tree come from the emitter (build_tree.py, incl. the Brandes–Köpf coordinate pass) — this
+    /// file's job in-game is edge routing only. Operates on plain LNode/LEdge over UnityEngine.Vector2 —
+    /// no KSP.UI / Harmony / RDNode dependency — so it mirrors the prototype 1:1 and is easy to reason
+    /// about in isolation.
     /// All coordinates are the cfg px "pos space" (x = marginX + tier*tierWidth, y = layout row), the
     /// same space RDNode.pos lives in; the caller converts to world for the arrow hook.
     /// Constants match renderer.js: LANE_PITCH=13, HGAP=6, FAN=[0.18,0.82], CORNER_R=15, CORNER_SEGS=3.
@@ -16,7 +19,7 @@ namespace RPAxe.RnD
     internal static class AxeTreeLayout
     {
         internal class LNode { public string Id; public string Discipline; public int Tier; public int Cost; public float X, Y; }
-        internal class LEdge { public string From, To; public List<Vector2> Waypoints; public float TF = 0.5f, TT = 0.5f; public List<Vector2> LaneGeom; }
+        internal class LEdge { public string From, To; public List<Vector2> Waypoints; public float TF = 0.5f, TT = 0.5f; public List<Vector2> Geom; }   // Geom = the routed polyline (lanes OR ortho-late)
 
         private const float HGAP = 6f, FAN_LO = 0.18f, FAN_HI = 0.82f, CORNER_R = 15f;   // lane pitch is now a param (config)
         private const int CORNER_SEGS = 3;
@@ -93,6 +96,9 @@ namespace RPAxe.RnD
         // crossings; PAV/isotonic coordinate assignment straightens each rank under a min gap; edges are
         // routed through their dummy chain. Sets n.X/n.Y (pos px space) and e.Waypoints like LayoutBands.
         // colw only sets aspect (the caller re-fits X to the stock envelope); spacingY = px per rank unit.
+        // NOTE: the Brandes–Köpf coordinate variant lives in the emitter (build_tree.py), not here — the
+        // in-game port consumes emitted node positions; C# only re-routes edges. This stays for the
+        // legacy in-C# sugiyama mode.
         internal static void LayoutSugiyama(List<LNode> nodes, List<LEdge> edges, Dictionary<string, LNode> byId,
             Dictionary<string, int> discOrder, float colw, float spacingY, float marginX, float marginY, bool diffspread)
         {
@@ -284,6 +290,30 @@ namespace RPAxe.RnD
                 setT(list[i], (!fan || n <= 1) ? 0.5f : FAN_LO + (FAN_HI - FAN_LO) * (i / (float)(n - 1)));
         }
 
+        // ---- ortho-late routing: orthogonal elbow with the single riser pushed next to the TARGET, so
+        // edges run horizontally then turn in — converging "into the node" (the stock RP-1 / KSP look).
+        // One flat polyline per edge, endpoint-based (ignores the dummy chain / waypoints). A 1:1 port of
+        // renderer.js routeOrthoLate. Node box: n.X..n.X+nodeW horizontally; anchors on the side at
+        // n.Y + t*nodeH — nodeH is SIGNED by the caller (the Y-flip) so anchors stay on the correct side.
+        // Writes e.Geom (the same field BuildLaneRoutes fills), consumed by the GetVectorArray hook.
+        internal static void RouteOrthoLate(List<LEdge> edges, Dictionary<string, LNode> byId, float nodeW, float nodeH)
+        {
+            foreach (var e in edges)
+            {
+                if (!byId.TryGetValue(e.From, out var fn) || !byId.TryGetValue(e.To, out var tn)) { e.Geom = null; continue; }
+                Vector2 p = new Vector2(fn.X + nodeW, fn.Y + e.TF * nodeH);   // source RIGHT side (fan slot)
+                Vector2 c = new Vector2(tn.X, tn.Y + e.TT * nodeH);           // target LEFT side (fan slot)
+                if (Mathf.Abs(p.y - c.y) < 0.5f) { e.Geom = new List<Vector2> { p, c }; continue; }   // same row -> straight
+                float rx = c.x - Mathf.Max(18f, Mathf.Min(60f, (c.x - p.x) * 0.3f));   // riser just left of the target
+                Vector2 k1 = new Vector2(rx, p.y), k2 = new Vector2(rx, c.y);
+                var pts = new List<Vector2> { p };
+                pts.AddRange(Chamfer(p, k1, k2, CORNER_R, CORNER_SEGS));      // round the first corner
+                pts.AddRange(Chamfer(k1, k2, c, CORNER_R, CORNER_SEGS));      // round the second corner
+                pts.Add(c);
+                e.Geom = pts;
+            }
+        }
+
         // ---- lane routing: one flat polyline per edge; vertical legs spread into per-gutter lanes
         // (interval-graph colouring) + lane-order by barycentre + horizontal-track separation + rounding.
         internal static void BuildLaneRoutes(List<LNode> nodes, List<LEdge> edges, float nodeW, float nodeH, float lanePitch)
@@ -300,7 +330,7 @@ namespace RPAxe.RnD
             var chains = new List<Chain>();
             foreach (var e in edges)
             {
-                if (e.Waypoints == null || e.Waypoints.Count < 2) { e.LaneGeom = null; continue; }
+                if (e.Waypoints == null || e.Waypoints.Count < 2) { e.Geom = null; continue; }
                 var wps = e.Waypoints; int m = wps.Count;
                 var ts = new int[m]; var ys = new float[m];
                 for (int i = 0; i < m; i++)
@@ -367,7 +397,7 @@ namespace RPAxe.RnD
                 }
                 pts.Add(new Vector2(tierX(ts[ts.Length - 1]), ys[ys.Length - 1]));           // left edge of target
                 built.Add(pts);
-                e.LaneGeom = pts;
+                e.Geom = pts;
             }
 
             // horizontal-track separation: interior horizontal runs overlapping on a row get bumped to
@@ -396,7 +426,7 @@ namespace RPAxe.RnD
             }
 
             foreach (var ch in chains)
-                if (ch.E.LaneGeom != null) ch.E.LaneGeom = RoundPolyline(ch.E.LaneGeom, CORNER_R, CORNER_SEGS);
+                if (ch.E.Geom != null) ch.E.Geom = RoundPolyline(ch.E.Geom, CORNER_R, CORNER_SEGS);
         }
 
         // ---- stock RDNode.chamferCorner: iterative corner-cutting -> 2^segs tessellated points.

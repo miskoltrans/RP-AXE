@@ -16,8 +16,8 @@ namespace RPAxe.RnD
     ///     and BEFORE the nodes' next-frame Setup): compute the bands layout from AxeTreeMeta and
     ///     overwrite each RDNode's private `pos` field, which Setup then applies (localPosition = pos)
     ///     and draws arrows against — no teardown/redraw races. Also precomputes the lane routes.
-    ///   * Harmony prefix on RDNode.GetVectorArray(Parent): return the precomputed lane-routed points
-    ///     (world space) instead of the stock elbow, when laneRouting is on.
+    ///   * Harmony prefix on RDNode.GetVectorArray(Parent): return the precomputed routed points
+    ///     (world space) instead of the stock elbow, when a routing override (lanes / ortho-late) is on.
     /// Colour/width are left to stock (per the prototype ledger: never vary width -> Vectrosity rebuild).
     /// Everything is guarded + try/catch'd; layout=stock (or any failure) falls back to the stock tree.
     ///
@@ -181,13 +181,17 @@ namespace RPAxe.RnD
                     if (id != null && posById.TryGetValue(id, out Vector2 p)) { SetPos(rd, p.x, p.y); placed++; }
                 }
 
-                if (AxeTreeMeta.Render.LaneRouting)
+                if (AxeTreeMeta.Render.RouteOverride)
                 {
-                    AxeTreeLayout.ComputeSlots(edges, byId, AxeTreeMeta.Render.Fan);   // nodes render 42x39; the
-                    // fan endpoint offset is in Y, so it must follow the Y-flip (ay<0) to stay on the node's side.
-                    AxeTreeLayout.BuildLaneRoutes(lnodes, edges, NODE_W, NODE_H * Mathf.Sign(ay), AxeTreeMeta.Render.LanePitch);
+                    AxeTreeLayout.ComputeSlots(edges, byId, AxeTreeMeta.Render.Fan);
+                    // The fan endpoint offset is in Y, so nodeH must follow the Y-flip (ay<0) to stay on the node's side.
+                    float signedH = NODE_H * Mathf.Sign(ay);
+                    if (AxeTreeMeta.Render.Routing == "ortho-late")
+                        AxeTreeLayout.RouteOrthoLate(edges, byId, NODE_W, signedH);   // converging elbow into the target
+                    else
+                        AxeTreeLayout.BuildLaneRoutes(lnodes, edges, NODE_W, signedH, AxeTreeMeta.Render.LanePitch);
                     foreach (AxeTreeLayout.LEdge e in edges)
-                        if (e.LaneGeom != null) Routes[e.From + ">" + e.To] = e.LaneGeom;
+                        if (e.Geom != null) Routes[e.From + ">" + e.To] = e.Geom;
                 }
 
                 // RDNodeRoot IS scrollRect.content (verified) -> node localPos is content-local. When the
@@ -202,8 +206,8 @@ namespace RPAxe.RnD
                 }
 
                 ready = true;
-                Debug.Log($"[AXE] render-port: {lnodes.Count} unique nodes ({placed} RDNodes placed), {Routes.Count} edges lane-routed " +
-                          $"(layout={AxeTreeMeta.Render.Layout} lane={AxeTreeMeta.Render.LaneRouting} fan={AxeTreeMeta.Render.Fan})");
+                Debug.Log($"[AXE] render-port: {lnodes.Count} unique nodes ({placed} RDNodes placed), {Routes.Count} edges routed " +
+                          $"(layout={AxeTreeMeta.Render.Layout} routing={AxeTreeMeta.Render.Routing} fan={AxeTreeMeta.Render.Fan})");
                 if (DEBUG_DUMP) StartCoroutine(DebugDump());
             }
             catch (Exception e) { Debug.LogError("[AXE] render-port OnTreeSpawn failed: " + e); ready = false; }
@@ -256,7 +260,7 @@ namespace RPAxe.RnD
         // __0 = the original's first arg (the Parent) bound positionally, so we don't depend on its name.
         private static bool GetVectorArray_Prefix(RDNode __instance, RDNode.Parent __0, ref List<Vector2> __result)
         {
-            if (!ready || !AxeTreeMeta.Render.LaneRouting) return true;
+            if (!ready || !AxeTreeMeta.Render.RouteOverride) return true;
             try
             {
                 string from = __0?.parent?.node?.tech?.techID;
