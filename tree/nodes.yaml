@@ -270,11 +270,18 @@ nodes:
     parents: [tel_telemetry]
     flavor: "Seal the electronics in a pressurised sphere with a circulating gas and a polished radiating skin, holding them at room temperature through the swing from sunlight to shadow. Sputnik was mostly this: a bus that keeps its instruments alive."
     parts: [SXTSputnik, probeCoreSphere_v2, sputnik1, ROT-ProbeCore]
-  - id: elec_siliconPV
-    title: "Diffused-Junction Photovoltaics"
+  - id: elec_semiconductorDiode
+    title: "Semiconductor Diodes"
     discipline: ElectricalPower
     tier: 2
     parents: [tel_telemetry]
+    flavor: "A sliver of doped crystal that passes current one way only — grown up from the cat's-whisker radio detector into a rugged solid-state device. It lights an indicator on almost no power, and it is the seed of everything solid-state: rectifiers, transistors, the integrated circuit still to come. Microelectronics grows from here."
+    parts: [SmallPointLight, SmallSpotLight, SmallStripLight, domeLight1, groundLight1, groundLight2, navLight1, spotLight1, spotLight1_v2, spotLight2, spotLight2_v2, spotLight3, stripLight1]
+  - id: elec_siliconPV
+    title: "Diffused-Junction Photovoltaics"
+    discipline: ElectricalPower
+    tier: 3
+    parents: [elec_semiconductorDiode]
     flavor: "Diffuse a shallow junction into a silicon wafer so sunlight knocks a current across it — grams of cells that trickle-charge a battery indefinitely, outliving every chemical primary. Vanguard 1 is still up there, still lit."
     parts: [ROS-StaticSolarPanel, RO_EarlyTinySolarPanel]
   - id: gnc_rcs
@@ -304,7 +311,7 @@ nodes:
     tier: 2
     parents: [opt_filmReturn]
     flavor: "Scan a photoconductive target with an electron beam and read the image off as a video signal — lower resolution than film, but it comes down the radio link the instant you take it. No capsule to recover."
-    parts: [RO-EarlyTVCamera]
+    parts: [RO-EarlyTVCamera, aerocam, aerocam180, hc_booster, hc_kazzelblad, hc_launchcam, hc_navcam, hc_nightvision, hc_scicam, hc_wideangle, mumech_hullcam]
   - id: nuc_geiger
     title: "Geiger-Müller Ionization Counting"
     discipline: NuclearEngineering
@@ -445,3 +452,12 @@ nodes:
     parents: [gnc_avionicsPrototypes]
     flavor: "A gimballed, gyro-held platform that stays fixed in space while the vehicle rotates around it, read by transistorized electronics light enough to fly — the guidance package that steers a satellite launcher through its whole ascent."
     grants: [Science-Core-earlyAvionics]
+
+  # ============ BAND 1 * STANDARDIZED RCS (optional DEAD-END; procedural ModularRCS stays the default) ============
+  - id: gnc_standardRCS
+    title: "Interchangeable-Part Manufacture"
+    discipline: GuidanceControl
+    tier: 2
+    parents: [gnc_rcs]
+    flavor: "Precision jigs, fixtures and go/no-go gauges let unskilled hands turn out thousands of identical, interchangeable thruster blocks — pull the one you want off the shelf and bolt it on, no machinist required. The procedural block is lighter, cleaner and always the default; research this only if you truly, really must have the fixed catalog hardware."
+    parts: [InlineRCS, RCSBlockSmall_138, RCSBlockSmall_28, RCSBlockSmall_69, RCSBlock_138, RCSBlock_28, RCSBlock_69, RCSBoonExt, RCSLinearSmall_28, RCSLinearSmall_69, RO-RestockPlus-RCS-Block-Dual-138, RO-RestockPlus-RCS-Block-Dual-28, RO-RestockPlus-RCS-Block-Quad-138, RO-RestockPlus-RCS-Block-Quad-28, RO-RestockPlus-RCS-Block-Quad-Angled-28, RO-RestockPlus-RCS-Block-Quint-138, RO-RestockPlus-RCS-Block-Quint-28, RO-RestockPlus-RCS-Block-Triple-Angled-138, RO-RestockPlus-RCS-Block-Triple-Angled-28, RO-RestockPlus-RCS-Linear-28, RO-nflv-rcs-aero-heavy-1-half, RO-nflv-rcs-aero-heavy-1-quarter, RO-nflv-rcs-aero-heavy-2-half, RO-nflv-rcs-aero-heavy-2-quarter, RO_FASA_ExplorerRCS, RO_FASA_MercuryPodRCS, RO_RCSBlock_restock_138, RO_RCSBlock_restock_28, RO_RCSBlock_restock_69, RO_RCSBlock_restock_mini_138, RO_RCSBlock_restock_mini_28, RO_RCSBlock_restock_mini_69, RO_linearRcs_tenth, ca_RM01, ca_rs01, ca_rs04, restock-rcs-block-dual-mini-1, restock-rcs-block-quad-angled-mini-1, restock-rcs-block-quad-mini-1, restock-rcs-block-qunit-mini-1, restock-rcs-block-triple-angled-mini-1, restock-rcs-single-mini-1]
