@@ -182,18 +182,19 @@ nodes:
 
   # ============ BAND 1 * UPGRADE ENABLERS (prototype: uprates home NON-LINEARLY at what enabled them) ============
   # A thrust-uprate homes at the ALLOY that let the engine run harder (Metallurgy); an Isp gain at the INJECTOR.
-  # Upgrades are NEXT-TIER DESCENDANTS — base engines sit in fd_turbopumpFeed @T2, so their configs unlock @T3.
+  # Enablers are their OWN discipline track (NOT parented to the engines) and may sit BEFORE the base engines;
+  # the config needs (enabler AND base engine), so it effectively unlocks when you get the base model.
   - id: met_stainlessSteel
     title: "Austenitic Stainless Steel"
     discipline: Metallurgy
-    tier: 3
-    parents: [fd_turbopumpFeed]
+    tier: 1
+    parents: [start]
     flavor: "Chromium-nickel steel that keeps its strength while hot and holds a higher chamber pressure without a thicker, heavier wall — the metallurgy that turned the V-2's chamber into the Redstone's. Push the pressure, take the thrust."
     upgrades: [RFUpgrade_Model39c, RFUpgrade_5D60, RFUpgrade_RD-101, RFUpgrade_RD-102, RFUpgrade_RD-103, RFUpgrade_RD-103M]
   - id: fd_injectors
     title: "Impinging-Jet Injectors"
     discipline: FluidDynamics
-    tier: 3
-    parents: [fd_turbopumpFeed]
+    tier: 1
+    parents: [start]
     flavor: "Aim paired fuel and oxidiser jets to collide and atomise on contact, across a flat plate drilled for even mixing over the whole injector face — more complete combustion, a little more specific impulse from the same propellants."
     upgrades: [RFUpgrade_VeroniqueAGI, RFUpgrade_A-9]
