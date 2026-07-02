@@ -420,3 +420,28 @@ nodes:
     parents: [start]
     flavor: "The unglamorous shelf: struts, I-beams, panels, pylons, hardpoints and nose cones — the passive structure that ties a vehicle together and fairs it over. No breakthrough, just the fittings you always reach for."
     parts: [proceduralStructural, proceduralNoseCone, structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2]
+
+  # ===================== BAND 1 * AVIONICS (capability tiers — grants:, no physical part) =====================
+  # RP-1's Science-Core avionics ladder as ONE track (user). Each node grants the avionics tier; names are my
+  # best read of the era's guidance breakthrough — correct freely.
+  - id: gnc_postWarAvionics
+    title: "Gyroscopic Autopilot"
+    discipline: GuidanceControl
+    tier: 1
+    parents: [start]
+    flavor: "Spinning-mass gyroscopes sense a vehicle's drift and an analog computer swings the controls to correct it — the first machine that flies a rocket straight with no hand on the stick. Crude and heavy, but it holds a heading."
+    grants: [Science-Core-postWarAvionics]
+  - id: gnc_avionicsPrototypes
+    title: "Analog Inertial Guidance"
+    discipline: GuidanceControl
+    tier: 2
+    parents: [gnc_postWarAvionics]
+    flavor: "Pair the gyros with accelerometers on a stabilized platform and integrate the motion in analog circuitry — the craft knows where it is and where it is going with no word from the ground. Guidance you can trust to a warhead or an orbit."
+    grants: [Science-Core-avionicsPrototypes]
+  - id: gnc_earlyAvionics
+    title: "Stable-Platform Guidance"
+    discipline: GuidanceControl
+    tier: 3
+    parents: [gnc_avionicsPrototypes]
+    flavor: "A gimballed, gyro-held platform that stays fixed in space while the vehicle rotates around it, read by transistorized electronics light enough to fly — the guidance package that steers a satellite launcher through its whole ascent."
+    grants: [Science-Core-earlyAvionics]
