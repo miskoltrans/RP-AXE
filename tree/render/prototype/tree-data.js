@@ -3411,17 +3411,12 @@ window.TREE = {
    "tier": 6,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Meet the surface at a survivable speed and turn the last of the kinetic energy into crushed metal, compressed strut or a bounced airbag instead of a wreck — legs for a controlled settle, a crushable shell or an inflated cushion for a harder arrival. The difference between landing and impacting.",
+   "flavor": "Meet the surface faster than any leg could take and turn the last of the kinetic energy into crushed metal instead of a wreck — a crumple-shell that collapses on impact so the payload inside rides out the blow. Luna 9 hit the Moon hard and lived: the difference between landing and impacting.",
    "parts": [
     {
      "name": "ShieldCapLarge",
      "mod": "VenStockRevamp",
      "title": "Mk2 Pod Protective Cover"
-    },
-    {
-     "name": "landerCabinSmall",
-     "mod": "Squad",
-     "title": "Mk1 Lander Can"
     }
    ],
    "upgrades": [],
@@ -4417,6 +4412,11 @@ window.TREE = {
      "title": "Human Rated Flag"
     },
     {
+     "name": "landerCabinSmall",
+     "mod": "Squad",
+     "title": "Mk1 Lander Can"
+    },
+    {
      "name": "mk1pod_v2",
      "mod": "Squad",
      "title": "Mk1 Pod (2m)"
@@ -4456,7 +4456,7 @@ window.TREE = {
   },
   {
    "id": "str_landingLegs",
-   "title": "Touchdown Energy Absorption",
+   "title": "Crushable Landing Gear",
    "discipline": "StructuresMechanisms",
    "tier": 2,
    "cost": 90,

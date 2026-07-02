@@ -72,7 +72,7 @@ digraph AXE {
   "cmp_ablativeTPS" [label="Ballistic Ablative Reentry\nCompositeMaterials T2 · 90",fillcolor="#9caf6a",fontcolor="#111111"];
   "int_crewedCapsule" [label="Crewed Reentry Capsule\nSystemsIntegration T5 · 1500",fillcolor="#ededed",fontcolor="#111111"];
   "str_launchEscape" [label="Powered Abort Escape\nStructuresMechanisms T6 · 2000",fillcolor="#bfb08d",fontcolor="#111111"];
-  "str_landingLegs" [label="Touchdown Energy Absorption\nStructuresMechanisms T2 · 90",fillcolor="#bfb08d",fontcolor="#111111"];
+  "str_landingLegs" [label="Crushable Landing Gear\nStructuresMechanisms T2 · 90",fillcolor="#bfb08d",fontcolor="#111111"];
   "fd_deepThrottleEarly" [label="Throttleable Restart Combustion\nFluidDynamics T3 · 400",fillcolor="#23b9a0",fontcolor="#111111"];
   "pc_hydrogenPeroxide" [label="High-Test Peroxide Combustion\nPropellantChemistry T2 · 90",fillcolor="#e5533b",fontcolor="#111111"];
   "fd_restartableHypergolics" [label="Restart-in-Vacuum Hypergolic Ignition\nFluidDynamics T3 · 400",fillcolor="#23b9a0",fontcolor="#111111"];

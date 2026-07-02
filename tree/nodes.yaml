@@ -411,8 +411,8 @@ nodes:
     discipline: StructuresMechanisms
     tier: 6
     parents: [str_staging]
-    flavor: "Meet the surface at a survivable speed and turn the last of the kinetic energy into crushed metal, compressed strut or a bounced airbag instead of a wreck — legs for a controlled settle, a crushable shell or an inflated cushion for a harder arrival. The difference between landing and impacting."
-    parts: [landerCabinSmall, ShieldCapLarge]
+    flavor: "Meet the surface faster than any leg could take and turn the last of the kinetic energy into crushed metal instead of a wreck — a crumple-shell that collapses on impact so the payload inside rides out the blow. Luna 9 hit the Moon hard and lived: the difference between landing and impacting."
+    parts: [ShieldCapLarge]
 
   # --- robotics ---
   - id: rob_servos
@@ -558,7 +558,7 @@ nodes:
     parents: [int_orbitalInsertion, gnc_rcs, aero_recovery, life_openLoopECLSS, cmp_ablativeTPS]
     anyToUnlock: false
     flavor: "The irreducible list to fly a person to orbit and bring them home alive: an orbit-capable booster, attitude control to keep the heatshield forward, the heatshield itself, a way to decelerate, and air to breathe. Nothing else is physics — everything else is a practical-path nicety, kept off the gate."
-    parts: [ROC-MercuryCMBDB, ROC-VostokCapsule, ROC-ZenitCapsule, mk1pod_v2, ROC-MercuryNoseCapBDB, ROC-MercuryAirbrakeBDB, ROC-VostokService, RP0HumanRatedFlag]
+    parts: [ROC-MercuryCMBDB, ROC-VostokCapsule, ROC-ZenitCapsule, mk1pod_v2, landerCabinSmall, ROC-MercuryNoseCapBDB, ROC-MercuryAirbrakeBDB, ROC-VostokService, RP0HumanRatedFlag]
   - id: str_launchEscape
     title: "Powered Abort Escape"
     discipline: StructuresMechanisms
@@ -567,7 +567,7 @@ nodes:
     flavor: "A solid tractor motor that yanks the capsule clear of a failing booster on explosive-bolt command — abort sensing, jettison logic and its own propulsion, not free with the capsule. A refinement, not a gate: the tree doesn't force a program to have solved abort before it can fly crew, same principle that kept staging optional for orbit."
     parts: [ROC-MercuryLESBDB, RO_mk1_LES]
   - id: str_landingLegs
-    title: "Touchdown Energy Absorption"
+    title: "Crushable Landing Gear"
     discipline: StructuresMechanisms
     tier: 2
     parents: [start]
