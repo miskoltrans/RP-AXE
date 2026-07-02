@@ -91,24 +91,17 @@ namespace RPAxe.RnD
             {
                 AxeTreeMeta.EnsureLoaded();
                 string layoutMode = AxeTreeMeta.Render.Layout;
-                if (layoutMode != "bands" && layoutMode != "sugiyama") return;   // stock/other -> leave the tree untouched
+                // reposition = C# computes + applies node positions (legacy sugiyama/bands). Otherwise
+                // (layout=stock) we CONSUME the emitter's positions (build_tree.py's Brandes-Kopf pass) and
+                // only re-route edges — the intended split: emitter owns positions, this port owns edges.
+                bool reposition = layoutMode == "bands" || layoutMode == "sugiyama";
+                if (!reposition && !AxeTreeMeta.Render.RouteOverride) return;   // fully stock -> nothing to do
                 RDController ctrl = RDController.Instance;
                 if (ctrl == null || ctrl.nodes == null || ctrl.nodes.Count == 0) return;
 
-                // Stock (cfg) position envelope, read BEFORE we move anything. We fit our layout INTO this
-                // box so nothing lands outside the scroll content (which is sized for the stock tree).
-                float sMinX = 1e9f, sMaxX = -1e9f, sMinY = 1e9f, sMaxY = -1e9f;
-                foreach (RDNode rd in ctrl.nodes)
-                {
-                    if (rd == null || PosField == null) continue;
-                    Vector3 sp = (Vector3)PosField.GetValue(rd);
-                    if (sp.x < sMinX) sMinX = sp.x; if (sp.x > sMaxX) sMaxX = sp.x;
-                    if (sp.y < sMinY) sMinY = sp.y; if (sp.y > sMaxY) sMaxY = sp.y;
-                }
-
                 // The in-game tree can contain DUPLICATE RDNodes per techID (e.g. a stray editor TechTree
-                // in the DB). Build the layout model on UNIQUE ids only, else duplicates inflate the band
-                // stacking; then apply the computed position to EVERY RDNode of that id so dups stack.
+                // in the DB). Build the layout model on UNIQUE ids only; a computed position is applied to
+                // EVERY RDNode of that id (repositon path) so dups stack.
                 var lnodes = new List<AxeTreeLayout.LNode>();
                 var byId = new Dictionary<string, AxeTreeLayout.LNode>();
                 foreach (RDNode rd in ctrl.nodes)
@@ -134,57 +127,98 @@ namespace RPAxe.RnD
                     }
                 }
 
-                var discOrder = new Dictionary<string, int>();
-                foreach (var kv in AxeTreeMeta.Disciplines) discOrder[kv.Key] = kv.Value.Order;
-
-                if (layoutMode == "sugiyama")
-                    AxeTreeLayout.LayoutSugiyama(lnodes, edges, byId, discOrder, AxeTreeMeta.TierWidth,
-                        SUG_SPACING_Y, AxeTreeMeta.MarginX, AxeTreeMeta.MarginY, false);
-                else
-                    AxeTreeLayout.LayoutBands(lnodes, edges, byId, discOrder, AxeTreeMeta.TierWidth,
-                        AxeTreeMeta.MarginX, AxeTreeMeta.MarginY, NODE_H, SPACING_F, false);
-
-                // Fit our layout's bbox onto the stock envelope: X is ~identity (tiers already match), Y is
-                // scaled to fit + optionally flipped so discipline order reads top-to-bottom. Applied to node
-                // positions AND edge waypoints so routing (below) works entirely in the final coordinate space.
-                float mMinX = 1e9f, mMaxX = -1e9f, mMinY = 1e9f, mMaxY = -1e9f;
-                foreach (AxeTreeLayout.LNode ln in lnodes)
-                {
-                    if (ln.X < mMinX) mMinX = ln.X; if (ln.X > mMaxX) mMaxX = ln.X;
-                    if (ln.Y < mMinY) mMinY = ln.Y; if (ln.Y > mMaxY) mMaxY = ln.Y;
-                }
-                float ax = mMaxX > mMinX ? (sMaxX - sMinX) / (mMaxX - mMinX) : 1f;
-                float bx = sMinX - ax * mMinX;
-                // Y fit: STRETCH a short tree to fill the envelope, but NEVER compress a tall one below its
-                // natural spacing (compression overlaps stacks). When the natural layout is taller than the
-                // envelope we keep ayMag=1 and grow scrollRect.content (below) so the extra height scrolls.
-                // Anchor the bottom band at ENV_BOT and build upward.
-                const float ENV_BOT = 80f, ENV_TOP = 2255f;
-                float envH = ENV_TOP - ENV_BOT, naturalH = Mathf.Max(1f, mMaxY - mMinY);
-                float ayMag = naturalH <= envH ? envH / naturalH : 1f;
-                float ay = FLIP_Y ? -ayMag : ayMag;
-                float by = FLIP_Y ? ENV_BOT + ayMag * mMaxY : ENV_BOT - ayMag * mMinY;
-                float layoutTopY = ENV_BOT + ayMag * naturalH;   // highest node centre (drives the content-height grow)
-                Debug.Log($"[AXE] FIT naturalH={naturalH:F0} ayMag={ayMag:F3} env={envH:F0} topY={layoutTopY:F0}");
-                foreach (AxeTreeLayout.LNode ln in lnodes) { ln.X = ax * ln.X + bx; ln.Y = ay * ln.Y + by; }
-                foreach (AxeTreeLayout.LEdge e in edges)
-                    if (e.Waypoints != null)
-                        for (int i = 0; i < e.Waypoints.Count; i++)
-                            e.Waypoints[i] = new Vector2(ax * e.Waypoints[i].x + bx, ay * e.Waypoints[i].y + by);
-
-                var posById = new Dictionary<string, Vector2>(lnodes.Count);
-                foreach (AxeTreeLayout.LNode ln in lnodes) posById[ln.Id] = new Vector2(ln.X, ln.Y);
                 int placed = 0;
-                foreach (RDNode rd in ctrl.nodes)
+                float ay;   // sign of the vertical axis in the final pos-space (drives the fan-side offset)
+                if (reposition)
                 {
-                    string id = rd?.tech?.techID;
-                    if (id != null && posById.TryGetValue(id, out Vector2 p)) { SetPos(rd, p.x, p.y); placed++; }
+                    // Stock (cfg) position envelope, read BEFORE we move anything, so our layout fits INTO the
+                    // box the scroll content is sized for.
+                    float sMinX = 1e9f, sMaxX = -1e9f, sMinY = 1e9f, sMaxY = -1e9f;
+                    foreach (RDNode rd in ctrl.nodes)
+                    {
+                        if (rd == null || PosField == null) continue;
+                        Vector3 sp = (Vector3)PosField.GetValue(rd);
+                        if (sp.x < sMinX) sMinX = sp.x; if (sp.x > sMaxX) sMaxX = sp.x;
+                        if (sp.y < sMinY) sMinY = sp.y; if (sp.y > sMaxY) sMaxY = sp.y;
+                    }
+
+                    var discOrder = new Dictionary<string, int>();
+                    foreach (var kv in AxeTreeMeta.Disciplines) discOrder[kv.Key] = kv.Value.Order;
+
+                    if (layoutMode == "sugiyama")
+                        AxeTreeLayout.LayoutSugiyama(lnodes, edges, byId, discOrder, AxeTreeMeta.TierWidth,
+                            SUG_SPACING_Y, AxeTreeMeta.MarginX, AxeTreeMeta.MarginY, false);
+                    else
+                        AxeTreeLayout.LayoutBands(lnodes, edges, byId, discOrder, AxeTreeMeta.TierWidth,
+                            AxeTreeMeta.MarginX, AxeTreeMeta.MarginY, NODE_H, SPACING_F, false);
+
+                    // Fit our layout's bbox onto the stock envelope: X is ~identity (tiers already match), Y is
+                    // scaled to fit + optionally flipped so discipline order reads top-to-bottom. Applied to node
+                    // positions AND edge waypoints so routing (below) works entirely in the final coordinate space.
+                    float mMinX = 1e9f, mMaxX = -1e9f, mMinY = 1e9f, mMaxY = -1e9f;
+                    foreach (AxeTreeLayout.LNode ln in lnodes)
+                    {
+                        if (ln.X < mMinX) mMinX = ln.X; if (ln.X > mMaxX) mMaxX = ln.X;
+                        if (ln.Y < mMinY) mMinY = ln.Y; if (ln.Y > mMaxY) mMaxY = ln.Y;
+                    }
+                    float ax = mMaxX > mMinX ? (sMaxX - sMinX) / (mMaxX - mMinX) : 1f;
+                    float bx = sMinX - ax * mMinX;
+                    // Y fit: STRETCH a short tree to fill the envelope, but NEVER compress a tall one below its
+                    // natural spacing (compression overlaps stacks). When taller than the envelope we keep
+                    // ayMag=1 and grow scrollRect.content so the extra height scrolls. Anchor bottom at ENV_BOT.
+                    const float ENV_BOT = 80f, ENV_TOP = 2255f;
+                    float envH = ENV_TOP - ENV_BOT, naturalH = Mathf.Max(1f, mMaxY - mMinY);
+                    float ayMag = naturalH <= envH ? envH / naturalH : 1f;
+                    ay = FLIP_Y ? -ayMag : ayMag;
+                    float by = FLIP_Y ? ENV_BOT + ayMag * mMaxY : ENV_BOT - ayMag * mMinY;
+                    float layoutTopY = ENV_BOT + ayMag * naturalH;   // highest node centre (drives the content-height grow)
+                    Debug.Log($"[AXE] FIT naturalH={naturalH:F0} ayMag={ayMag:F3} env={envH:F0} topY={layoutTopY:F0}");
+                    foreach (AxeTreeLayout.LNode ln in lnodes) { ln.X = ax * ln.X + bx; ln.Y = ay * ln.Y + by; }
+                    foreach (AxeTreeLayout.LEdge e in edges)
+                        if (e.Waypoints != null)
+                            for (int i = 0; i < e.Waypoints.Count; i++)
+                                e.Waypoints[i] = new Vector2(ax * e.Waypoints[i].x + bx, ay * e.Waypoints[i].y + by);
+
+                    var posById = new Dictionary<string, Vector2>(lnodes.Count);
+                    foreach (AxeTreeLayout.LNode ln in lnodes) posById[ln.Id] = new Vector2(ln.X, ln.Y);
+                    foreach (RDNode rd in ctrl.nodes)
+                    {
+                        string id = rd?.tech?.techID;
+                        if (id != null && posById.TryGetValue(id, out Vector2 p)) { SetPos(rd, p.x, p.y); placed++; }
+                    }
+
+                    // RDNodeRoot IS scrollRect.content (verified) -> node localPos is content-local. When the
+                    // layout is taller than the stock scroll rect, grow the content height so the top row stays
+                    // reachable by scrolling instead of clipping.
+                    RectTransform content = ctrl.gridArea != null && ctrl.gridArea.scrollRect != null ? ctrl.gridArea.scrollRect.content : null;
+                    if (content != null)
+                    {
+                        float need = layoutTopY + ENV_BOT;
+                        if (content.sizeDelta.y < need)
+                            content.sizeDelta = new Vector2(content.sizeDelta.x, need);
+                    }
+                }
+                else
+                {
+                    // STOCK POSITIONS: consume the emitter's (Brandes-Kopf) RDNode.pos as-is — no reposition,
+                    // no fit — and route edges against them. The fan-side sign is a config switch (flipY) so a
+                    // wrong-side result is a one-line cfg toggle + restart, not a rebuild.
+                    foreach (RDNode rd in ctrl.nodes)
+                    {
+                        string id = rd?.tech?.techID;
+                        if (id != null && PosField != null && byId.TryGetValue(id, out AxeTreeLayout.LNode ln))
+                        {
+                            Vector3 sp = (Vector3)PosField.GetValue(rd);
+                            ln.X = sp.x; ln.Y = sp.y;
+                        }
+                    }
+                    ay = AxeTreeMeta.Render.FlipY ? -1f : 1f;
                 }
 
                 if (AxeTreeMeta.Render.RouteOverride)
                 {
                     AxeTreeLayout.ComputeSlots(edges, byId, AxeTreeMeta.Render.Fan);
-                    // The fan endpoint offset is in Y, so nodeH must follow the Y-flip (ay<0) to stay on the node's side.
+                    // The fan endpoint offset is in Y, so nodeH must follow the vertical-axis sign to stay on the node's side.
                     float signedH = NODE_H * Mathf.Sign(ay);
                     if (AxeTreeMeta.Render.Routing == "ortho-late")
                         AxeTreeLayout.RouteOrthoLate(edges, byId, NODE_W, signedH);   // converging elbow into the target
@@ -194,19 +228,8 @@ namespace RPAxe.RnD
                         if (e.Geom != null) Routes[e.From + ">" + e.To] = e.Geom;
                 }
 
-                // RDNodeRoot IS scrollRect.content (verified) -> node localPos is content-local. When the
-                // layout is taller than the stock scroll rect, grow the content height (+ a half-node margin
-                // above the top centre) so the top row stays reachable by scrolling instead of clipping.
-                RectTransform content = ctrl.gridArea != null && ctrl.gridArea.scrollRect != null ? ctrl.gridArea.scrollRect.content : null;
-                if (content != null)
-                {
-                    float need = layoutTopY + ENV_BOT;
-                    if (content.sizeDelta.y < need)
-                        content.sizeDelta = new Vector2(content.sizeDelta.x, need);
-                }
-
                 ready = true;
-                Debug.Log($"[AXE] render-port: {lnodes.Count} unique nodes ({placed} RDNodes placed), {Routes.Count} edges routed " +
+                Debug.Log($"[AXE] render-port: {lnodes.Count} unique nodes ({(reposition ? placed + " placed" : "stock pos")}), {Routes.Count} edges routed " +
                           $"(layout={AxeTreeMeta.Render.Layout} routing={AxeTreeMeta.Render.Routing} fan={AxeTreeMeta.Render.Fan})");
                 if (DEBUG_DUMP) StartCoroutine(DebugDump());
             }
