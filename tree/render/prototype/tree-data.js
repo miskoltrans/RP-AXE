@@ -988,7 +988,7 @@ window.TREE = {
    "tier": 2,
    "cost": 90,
    "anyToUnlock": false,
-   "flavor": "Combustion instability tears a single large chamber apart in milliseconds. The Soviet answer was to not build one: four smaller chambers per engine, each below the acoustic threshold, fed by a common turbopump. The R-7 that launched Sputnik.",
+   "flavor": "Combustion instability tears a single large chamber apart in milliseconds. The Soviet answer was to not build one: four smaller chambers per engine, each below the acoustic threshold, fed by a common turbopump. The R-7 that launched Sputnik — and the R-9's RD-111, the same four-chamber layout in one engine.",
    "parts": [
     {
      "name": "ROE-E1",
@@ -1004,6 +1004,11 @@ window.TREE = {
      "name": "ROE-RD108",
      "mod": "ROEngines",
      "title": "RD-108/118"
+    },
+    {
+     "name": "ROE-RD111",
+     "mod": "ROEngines",
+     "title": "RD-111"
     },
     {
      "name": "ROE-RD211",
@@ -1039,7 +1044,7 @@ window.TREE = {
    "tier": 2,
    "cost": 90,
    "anyToUnlock": false,
-   "flavor": "Don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales, and it isn't a Western monopoly: the LR89/LR79/LR87/LR91 boosters (Atlas, Thor, Titan), Britain's licensed RZ, Vanguard's X-405 family — and the Soviets' own RD-111 (Desna), fast-fuelled with supercooled kerolox to match a storable rival's readiness, solving the identical problem without clustering.",
+   "flavor": "Don't split the chamber — scale a single large one and tame its combustion by hand. At this size careful injector design holds; the truly enormous chambers (the F-1) would later need injector-face baffles and tuned cavities to survive. Harder than many small chambers, but it scales, and it isn't a Western monopoly: the LR89/LR79/LR87/LR91 boosters (Atlas, Thor, Titan), Britain's licensed RZ, Vanguard's X-405 family.",
    "parts": [
     {
      "name": "ROE-Gamma301",
@@ -1085,11 +1090,6 @@ window.TREE = {
      "name": "ROE-LR91-4V",
      "mod": "ROEngines",
      "title": "LR91 (4 Vernier)"
-    },
-    {
-     "name": "ROE-RD111",
-     "mod": "ROEngines",
-     "title": "RD-111"
     },
     {
      "name": "ROE-RZ",
