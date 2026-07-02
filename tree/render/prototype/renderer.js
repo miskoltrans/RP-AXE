@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, lane:true, icons:true, square:true, layout:'sugiyama', spacingX:1.3, spacingY:1.3, diffspread:false, lanePitch:1, halo:false };
+const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'lanes', icons:true, square:true, layout:'sugiyama', spacingX:1.3, spacingY:1.3, diffspread:false, lanePitch:1, halo:false };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
@@ -274,6 +274,55 @@ function routeEdge(e){
 }
 const snap4=d=> Math.abs(d[0])>=Math.abs(d[1]) ? [Math.sign(d[0])||1,0] : [0,Math.sign(d[1])||1];
 
+// ============================ routing VARIANTS ============================
+// Line/edge-routing styles to compare (opt.routing). Each returns ONE flat polyline in world space
+// (spline is tessellated to points so the KSP Vectrosity port stays a single VectorLine per edge).
+// All consume the layout's dummy chain (e.waypoints) where relevant + the fan slots (_tF/_tT).
+//   lanes      orthogonal, vertical legs packed into per-gutter lanes (buildLaneRoutes → e.laneGeom)
+//   ortho-mid  stock KSP elbow: one riser at mid-X (routeEdge), ignores intermediate tiers
+//   ortho-late orthogonal elbow with the riser near the TARGET (converging "into node" look)
+//   polyline   straight segments through the dummy waypoints (classic Sugiyama)
+//   spline     smooth Catmull-Rom curve through the dummy waypoints (dagre/d3 look)
+//   direct     one straight line source→target (baseline; ignores dummies)
+function pathThroughDummies(e){          // source-right anchor, centred interior dummies, target-left anchor
+  const wp=e.waypoints; if(!wp||wp.length<2) return null;
+  const pts=[anchor(byId[e.from],'RIGHT',e._tF)];
+  for(let i=1;i<wp.length-1;i++) pts.push([wp[i][0], wp[i][1]+0.5*NH()]);
+  pts.push(anchor(byId[e.to],'LEFT',e._tT));
+  return pts;
+}
+function catmullRom(P, seg){             // Catmull-Rom through P → sampled flat polyline
+  if(!P||P.length<3) return P;
+  const out=[P[0]];
+  for(let i=0;i<P.length-1;i++){
+    const p0=P[i-1]||P[i], p1=P[i], p2=P[i+1], p3=P[i+2]||P[i+1];
+    for(let s=1;s<=seg;s++){ const t=s/seg, t2=t*t, t3=t2*t;
+      out.push([
+        0.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),
+        0.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)]);
+    }
+  }
+  return out;
+}
+function routeOrthoLate(e){              // orthogonal elbow, single riser near the TARGET
+  const p=anchor(byId[e.from],'RIGHT',e._tF), c=anchor(byId[e.to],'LEFT',e._tT);
+  if(Math.abs(p[1]-c[1])<0.5) return [p,c];
+  const rx=c[0]-Math.max(18,Math.min(60,(c[0]-p[0])*0.3));   // riser just left of the target node
+  const k1=[rx,p[1]], k2=[rx,c[1]];
+  return [p, ...chamfer(p,k1,k2,CORNER_R,CORNER_SEGS), ...chamfer(k1,k2,c,CORNER_R,CORNER_SEGS), c];
+}
+function edgeGeom(e){
+  switch(opt.routing){
+    case 'ortho-mid':  return routeEdge(e);
+    case 'ortho-late': return routeOrthoLate(e);
+    case 'polyline':   return pathThroughDummies(e) || routeEdge(e);
+    case 'spline':     return catmullRom(pathThroughDummies(e), 14) || routeEdge(e);
+    case 'direct':     return [anchor(byId[e.from],'RIGHT',e._tF), anchor(byId[e.to],'LEFT',e._tT)];
+    case 'lanes':
+    default:           return e.laneGeom || routeEdge(e);
+  }
+}
+
 // laneRouted: route through the layout's dummy waypoints; vertical legs spread into per-gutter lanes
 // (interval-graph colouring) so parallel lines don't pile up. Consumes edges[].waypoints (layout-owned).
 // Still one flat polyline per edge — the KSP port is a Harmony hook on GetVectorArray returning this
@@ -338,10 +387,10 @@ function buildLaneRoutes(){
 
 function buildGeometry(){
   computeSlots();
-  buildLaneRoutes();
+  if(opt.routing==='lanes') buildLaneRoutes();   // only 'lanes' needs the gutter lane-packing pass
   for(const e of edges){
     if(!(e.from in byId)||!(e.to in byId)){ e.geom=null; continue; }
-    e.geom = (opt.lane && e.laneGeom) ? e.laneGeom : routeEdge(e);   // laneRouted (waypoints) or stock elbow
+    e.geom = edgeGeom(e);   // routing variant (opt.routing)
     const a=e.geom[e.geom.length-1], b=e.geom[e.geom.length-2];
     e.arrow={ tip:a, dir:snap4(norm(sub(a,b))) };
   }
@@ -578,7 +627,7 @@ function afterStateChange(){ draw(); updateHud(); if(selId) showPanel(selId); }
 function init(){
   cv=document.getElementById('cv'); ctx=cv.getContext('2d');
   if(/baseline/.test(location.search)){ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; }
-  if(new URLSearchParams(location.search).has('lane')) opt.lane=true;
+  if(new URLSearchParams(location.search).get('routing')) opt.routing=new URLSearchParams(location.search).get('routing');
   if(new URLSearchParams(location.search).has('square')) opt.square=true;
   const P0=new URLSearchParams(location.search);
   if(P0.get('layout')) opt.layout=P0.get('layout'); else if(P0.has('mylayout')) opt.layout='sugiyama';
@@ -634,7 +683,9 @@ function init(){
   // controls
   const cb=(id,key,geom)=>{ const el=document.getElementById(id); el.checked=opt[key];
     el.addEventListener('change',()=>{ opt[key]=el.checked; if(key==='highlight')setFocus(activeFocus()); geom?rebuild():draw(); }); };
-  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_lane','lane',true); cb('c_icon','icons',false); cb('c_square','square',true); cb('c_halo','halo',false);
+  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_icon','icons',false); cb('c_square','square',true); cb('c_halo','halo',false);
+  const selR=document.getElementById('s_route'); selR.value=opt.routing;
+  selR.addEventListener('change',()=>{ opt.routing=selR.value; rebuild(); });
   const cp=document.getElementById('c_prog'); cp.checked=opt.progress;
   cp.addEventListener('change',()=>{ opt.progress=cp.checked; afterStateChange(); });
   const relayout=()=>{ if(opt.layout!=='compiler') computeLayout(); applyLayout(); buildGeometry(); fit(); draw(); };
@@ -648,12 +699,12 @@ function init(){
   cd.addEventListener('change',()=>{ opt.diffspread=cd.checked; relayout(); });
   const rl=document.getElementById('r_lane'), rlv=document.getElementById('r_lane_v');
   rl.value=opt.lanePitch; rlv.textContent=opt.lanePitch+'px';
-  rl.addEventListener('input',()=>{ opt.lanePitch=+rl.value; rlv.textContent=opt.lanePitch+'px'; if(opt.lane)rebuild(); });
+  rl.addEventListener('input',()=>{ opt.lanePitch=+rl.value; rlv.textContent=opt.lanePitch+'px'; if(opt.routing==='lanes')rebuild(); });
   const sync=()=>{ document.getElementById('c_fan').checked=opt.fan; document.getElementById('c_arr').checked=opt.arrows;
     document.getElementById('c_disc').checked=opt.discEdges; document.getElementById('c_hi').checked=opt.highlight;
-    document.getElementById('c_lane').checked=opt.lane; };
-  document.getElementById('b_base').addEventListener('click',()=>{ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; opt.lane=false; focusSet=null; sync(); rebuild(); });
-  document.getElementById('b_enh').addEventListener('click',()=>{ opt.baseline=false; opt.fan=true; opt.discEdges=true; opt.highlight=true; sync(); rebuild(); });
+    document.getElementById('s_route').value=opt.routing; };
+  document.getElementById('b_base').addEventListener('click',()=>{ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; opt.routing='ortho-mid'; focusSet=null; sync(); rebuild(); });
+  document.getElementById('b_enh').addEventListener('click',()=>{ opt.baseline=false; opt.fan=true; opt.discEdges=true; opt.highlight=true; opt.routing='lanes'; sync(); rebuild(); });
   document.getElementById('b_reset').addEventListener('click',()=>{ if(confirm('Reset all research progress?')){ resetProgress(); setFocus(activeFocus()); afterStateChange(); } });
   document.getElementById('b_fit').addEventListener('click',()=>{ fit(); draw(); });
   document.getElementById('zi').addEventListener('click',()=>{ cam.s=Math.min(6,cam.s*1.2); updateZoomLabel(); draw(); });
