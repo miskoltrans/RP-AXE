@@ -223,21 +223,21 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Roll, fusion-weld and proof-test a thin metal cylinder that holds its propellant under pressure without bursting — the first tank that flies, and the steel the first engine chambers are cut from. Heavy, but honest."
-    parts: [ROT-GenericTank-Separate, ROT-BoosterTank-Separate, ROT-RadialTank-Separate]
+    parts: [ROT-GenericTank-Separate, ROT-BoosterTank-Separate, ROT-RadialTank-Separate, ROT-AtlasTank-Separate, ROT-KatnissTank-Separate, ROT-LanderTank-Separate, ROT-MiscTank-Radial-Separate, ROT-MiscTank-Separate, ROT-Nose-Separate, ROT-SphericalTank-Separate, ROT-ToroidalTank-Separate]
   - id: met_isogrid
     title: "Machined Isogrid Stiffening"
     discipline: Metallurgy
     tier: 2
     parents: [met_weldedTank]
     flavor: "Machine a triangular-rib isogrid into thick plate — cutting metal away everywhere the load path doesn't run, leaving only the ribs that carry it. The same stiffness at a fraction of the mass; the light conventional tankage that flies most orbital rockets."
-    parts: [ROT-GenericTank-Integral, ROT-AtlasTank-Integral, ROT-BoosterTank-Integral]
+    parts: [ROT-GenericTank-Integral, ROT-AtlasTank-Integral, ROT-BoosterTank-Integral, RO-RFTank-Integral, ROT-KatnissTank-Integral, ROT-LanderTank-Integral, ROT-MiscTank-Integral, ROT-MiscTank-Radial-Integral, ROT-Nose-Integral, ROT-RadialTank-Integral, ROT-SphericalTank-Integral, ROT-ToroidalTank-Integral]
   - id: str_balloonTank
     title: "Pressure-Stabilized Monocoque"
     discipline: StructuresMechanisms
     tier: 3
     parents: [met_stainlessSteel]
     flavor: "Make the stainless wall so thin it only holds its shape under internal pressure — the Atlas 'steel balloon' reached orbit weighing almost nothing empty, and would crumple if you ever let it depressurise. As much an orbital enabler as any engine."
-    parts: [ROT-AtlasTank-Balloon, ROT-BalloonTank-New, RO-RFTank-BalloonNew]
+    parts: [ROT-AtlasTank-Balloon, ROT-BalloonTank-New, RO-RFTank-BalloonNew, ROT-KatnissTank-Balloon, ROT-MiscTank-Balloon]
   - id: str_staging
     title: "Pyrotechnic Frangible Separation"
     discipline: StructuresMechanisms
@@ -433,7 +433,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "A dead-end shelf off the main tree: pre-made struts, beams, panels, nose cones, plates and fittings you bolt on when you'd rather not shape a procedural piece. The procedural structural part is lighter and the default — nothing depends on researching this; it's here only if you want the fixed catalog."
-    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate]
+    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount]
 
   # ===================== BAND 1 * AVIONICS (capability tiers — grants:, no physical part) =====================
   # RP-1's Science-Core avionics ladder as ONE track (user). Each node grants the avionics tier; names are my
@@ -492,4 +492,12 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Procedural ribbed, truss and hollow adapters that mate one diameter to another and carry the load across an interstage or under a payload — the structural handshake between a fat booster and a slim upper, or a stage and the satellite it lifts."
-    parts: [RSBRibbedBase, RSBTrussBase, SSTUBase, SSTUHollowRing, adapterSize2-Size1, adapterSize2-Size1Slant, strutCubeOCTOAdapter, strutCubeS0Adapter, trussAdapter, KzFlatAdapter, RSBRibbedBase_Interstage, RSBTrussBase_Interstage, SSTUBase_Interstage, SSTUHollowRing_Interstage]
+    parts: [RSBRibbedBase, RSBTrussBase, SSTUBase, SSTUHollowRing, adapterSize2-Size1, adapterSize2-Size1Slant, strutCubeOCTOAdapter, strutCubeS0Adapter, trussAdapter, KzFlatAdapter, RSBRibbedBase_Interstage, RSBTrussBase_Interstage, SSTUBase_Interstage, SSTUHollowRing_Interstage, ROT-OpenInterstage]
+
+  - id: str_serviceModuleTank
+    title: "Load-Bearing Tank Structure"
+    discipline: StructuresMechanisms
+    tier: 4
+    parents: [str_balloonTank]
+    flavor: "Let the propellant tank be the spacecraft spine - its walls carry the flight loads and mount the engine, thrusters, power and radios behind the payload, so the service module needs no separate airframe. The integrated tankage a satellite or probe bus is built around."
+    parts: [RO-RFTank-SM, ROT-LanderTank-SM, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-ServiceModule]
