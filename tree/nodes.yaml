@@ -596,8 +596,22 @@ nodes:
     discipline: StructuresMechanisms
     tier: 2
     parents: [str_structuralHardware]
-    flavor: "Clamps that grip the vehicle to the pad and feed it power and propellant through an umbilical, letting go the instant the engines prove good for flight. The ground half of every launch."
-    parts: [ROE-SmallLC, ROE-MediumLC, ROE-LargeLC, ROE-SmallRadialLC, ROE-MediumRadialLC, ROE-LargeRadialLC, ROE-SmallApolloLC, ROE-MediumApolloLC, ROE-LargeApolloLC, ROE-UmbilicalTower, SXTlaunchclamp1, launchClamp1]
+    flavor: "Clamps that grip the vehicle to the pad and let go the instant the engines prove good for flight — the ground half of every launch. The simplest hold-down: a stability clamp for a small stack on a light stand."
+    parts: [ROE-SmallLC, ROE-MediumLC, ROE-LargeLC, SXTlaunchclamp1, launchClamp1]
+  - id: gs_radialClamps
+    title: "Radial Hold-Down Clamps"
+    discipline: StructuresMechanisms
+    tier: 3
+    parents: [gs_launchClamps]
+    flavor: "Grip a rocket radially around its base rather than underneath it — the hold-down a wider, heavier stack needs to sit still against its own thrust until the engines are proven and released."
+    parts: [ROE-SmallRadialLC, ROE-MediumRadialLC, ROE-LargeRadialLC]
+  - id: gs_holdDownArms
+    title: "Swing-Arm Hold-Downs"
+    discipline: StructuresMechanisms
+    tier: 4
+    parents: [gs_radialClamps]
+    flavor: "Massive arms that pin the largest rockets to the pad and swing clear on the launch command, with an umbilical tower feeding propellant, power and data until the last second. The hold-down of a crewed heavy."
+    parts: [ROE-SmallApolloLC, ROE-MediumApolloLC, ROE-LargeApolloLC, ROE-UmbilicalTower]
   - id: gs_soundingStands
     title: "Sounding-Rocket Stands"
     discipline: GroundSupport

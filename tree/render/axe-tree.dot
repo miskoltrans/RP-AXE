@@ -76,6 +76,8 @@ digraph AXE {
   "str_standardDecouplers" [label="Prefabricated Stack Decouplers\nStructuresMechanisms T4 · 900",fillcolor="#bfb08d",fontcolor="#111111"];
   "tel_appSatellites" [label="Radio-Relay Payloads\nTelecommunications T4 · 900",fillcolor="#3f7bf5",fontcolor="#111111"];
   "gs_launchClamps" [label="Launch Hold-Down Clamps\nStructuresMechanisms T2 · 90",fillcolor="#bfb08d",fontcolor="#111111"];
+  "gs_radialClamps" [label="Radial Hold-Down Clamps\nStructuresMechanisms T3 · 400",fillcolor="#bfb08d",fontcolor="#111111"];
+  "gs_holdDownArms" [label="Swing-Arm Hold-Downs\nStructuresMechanisms T4 · 900",fillcolor="#bfb08d",fontcolor="#111111"];
   "gs_soundingStands" [label="Sounding-Rocket Stands\nGroundSupport T1 · 20",fillcolor="#8f8778",fontcolor="#111111"];
   "gs_launchBases" [label="Fixed Launch Bases\nGroundSupport T2 · 90",fillcolor="#8f8778",fontcolor="#111111"];
   "gs_serviceTowers" [label="Umbilical Service Towers\nGroundSupport T3 · 400",fillcolor="#8f8778",fontcolor="#111111"];
@@ -90,8 +92,8 @@ digraph AXE {
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_stampedWings" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
-  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "str_prefabAdapters" "str_radialDecouplers" "gs_serviceTowers" }
-  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "fd_throttleableRocketplane" "gnc_earlyAvionics" "str_serviceModuleTank" "cmp_compositeFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_dedicatedComplexes" "aero_prefabNoseCones" "nuc_cosmicRay" }
+  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "str_prefabAdapters" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" }
+  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "fd_throttleableRocketplane" "gnc_earlyAvionics" "str_serviceModuleTank" "cmp_compositeFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" "nuc_cosmicRay" }
   { rank=same; "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_recon" "opt_remoteSensing" }
   { rank=same; "gs_saturnPad" }
   { rank=same; "gs_shuttlePad" }
@@ -173,6 +175,8 @@ digraph AXE {
   "str_radialDecouplers" -> "str_standardDecouplers" [style=solid];
   "th_hermeticBus" -> "tel_appSatellites" [style=solid];
   "str_structuralHardware" -> "gs_launchClamps" [style=solid];
+  "gs_launchClamps" -> "gs_radialClamps" [style=solid];
+  "gs_radialClamps" -> "gs_holdDownArms" [style=solid];
   "start" -> "gs_soundingStands" [style=solid];
   "gs_soundingStands" -> "gs_launchBases" [style=solid];
   "gs_launchBases" -> "gs_serviceTowers" [style=solid];
