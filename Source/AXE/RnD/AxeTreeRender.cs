@@ -6,6 +6,7 @@ using KSP.UI;
 using KSP.UI.Screens;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace RPAxe.RnD
 {
@@ -55,6 +56,9 @@ namespace RPAxe.RnD
         private static bool installed;
         private static bool ready;
         private static readonly Dictionary<string, List<Vector2>> Routes = new Dictionary<string, List<Vector2>>();
+        private static readonly List<AxeTreeLayout.JunctionDot> Dots = new List<AxeTreeLayout.JunctionDot>();   // junction-bus branch dots
+        private static readonly List<GameObject> DotPool = new List<GameObject>();   // pooled dot Images (children of RDNodeRoot)
+        private static Sprite DotSprite;
         private static readonly FieldInfo PosField = AccessTools.Field(typeof(RDNode), "pos");
         private static readonly FieldInfo WidthF = AccessTools.Field(typeof(RDNode), "width");
         private static readonly FieldInfo HeightF = AccessTools.Field(typeof(RDNode), "height");
@@ -220,12 +224,18 @@ namespace RPAxe.RnD
                     AxeTreeLayout.ComputeSlots(edges, byId, AxeTreeMeta.Render.Fan);
                     // The fan endpoint offset is in Y, so nodeH must follow the vertical-axis sign to stay on the node's side.
                     float signedH = NODE_H * Mathf.Sign(ay);
-                    if (AxeTreeMeta.Render.Routing == "ortho-late")
-                        AxeTreeLayout.RouteOrthoLate(edges, byId, NODE_W, signedH);   // converging elbow into the target
-                    else
-                        AxeTreeLayout.BuildLaneRoutes(lnodes, edges, NODE_W, signedH, AxeTreeMeta.Render.LanePitch);
+                    bool xf = AxeTreeMeta.Render.Xfan; float xp = AxeTreeMeta.Render.XfanPitch;
+                    Dots.Clear();
+                    switch (AxeTreeMeta.Render.Routing)
+                    {
+                        case "ortho-late":  AxeTreeLayout.RouteOrthoLate(edges, byId, NODE_W, signedH, xf, xp); break;
+                        case "ortho-early": AxeTreeLayout.RouteOrthoEarly(edges, byId, NODE_W, signedH, xf, xp); break;
+                        case "junction":    AxeTreeLayout.RouteJunctionBus(edges, byId, NODE_W, signedH, Dots); break;
+                        default:            AxeTreeLayout.BuildLaneRoutes(lnodes, edges, NODE_W, signedH, AxeTreeMeta.Render.LanePitch); break;
+                    }
                     foreach (AxeTreeLayout.LEdge e in edges)
                         if (e.Geom != null) Routes[e.From + ">" + e.To] = e.Geom;
+                    BuildJunctionDots(ctrl);   // instantiate/refresh bus branch dots (no-op unless routing=junction)
                 }
 
                 ready = true;
@@ -310,6 +320,57 @@ namespace RPAxe.RnD
             if (rd == null || PosField == null) return;
             Vector3 cur = (Vector3)PosField.GetValue(rd);   // keep the cfg z (layer)
             PosField.SetValue(rd, new Vector3(x, y, cur.z));
+        }
+
+        // Junction-bus branch dots: small Image children of RDNodeRoot (= scroll content), placed by
+        // localPosition in the SAME pos-space as the routed points (and the nodes), so they pan/zoom with the
+        // tree. Pooled + reused across respawns; coloured by the bus source's discipline. No-op / all hidden
+        // unless routing = junction. Placed at OnTreeSpawn (before Setup); localPosition is absolute so it holds.
+        private static void BuildJunctionDots(RDController ctrl)
+        {
+            foreach (GameObject g in DotPool) if (g != null) g.SetActive(false);
+            if (AxeTreeMeta.Render.Routing != "junction" || Dots.Count == 0) return;
+            Transform root = ctrl != null ? ctrl.RDNodeRoot : null;
+            if (root == null) return;
+            if (DotSprite == null) DotSprite = MakeCircleSprite(20);
+            for (int i = 0; i < Dots.Count; i++)
+            {
+                GameObject go = i < DotPool.Count ? DotPool[i] : null;
+                if (go == null)
+                {
+                    go = new GameObject("AxeJunctionDot", typeof(RectTransform), typeof(Image));   // Image RequireComponent adds CanvasRenderer
+                    Image im0 = go.GetComponent<Image>();
+                    im0.raycastTarget = false; im0.sprite = DotSprite;
+                    if (i < DotPool.Count) DotPool[i] = go; else DotPool.Add(go);
+                }
+                RectTransform rt = go.GetComponent<RectTransform>();
+                rt.SetParent(root, false);
+                rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
+                rt.sizeDelta = new Vector2(9f, 9f);
+                rt.localPosition = new Vector3(Dots[i].Pos.x, Dots[i].Pos.y, 0f);   // same space as the routed points
+                Color col = new Color(0.54f, 0.56f, 0.59f, 1f);
+                if (AxeTreeMeta.Nodes.TryGetValue(Dots[i].From, out AxeTreeMeta.NodeMeta m)
+                    && AxeTreeMeta.Disciplines.TryGetValue(m.Discipline, out AxeTreeMeta.DiscMeta d)) col = d.Color;
+                go.GetComponent<Image>().color = col;
+                go.SetActive(true);
+            }
+        }
+
+        // A soft-edged white circle sprite (1px AA), tinted per-dot via Image.color.
+        private static Sprite MakeCircleSprite(int size)
+        {
+            var tex = new Texture2D(size, size, TextureFormat.ARGB32, false) { wrapMode = TextureWrapMode.Clamp };
+            float r = size / 2f;
+            var px = new Color32[size * size];
+            for (int y = 0; y < size; y++)
+                for (int x = 0; x < size; x++)
+                {
+                    float dx = x + 0.5f - r, dy = y + 0.5f - r;
+                    float a = Mathf.Clamp01(r - Mathf.Sqrt(dx * dx + dy * dy));   // 1px anti-aliased edge
+                    px[y * size + x] = new Color32(255, 255, 255, (byte)(a * 255f));
+                }
+            tex.SetPixels32(px); tex.Apply();
+            return Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 100f);
         }
 
         // Tint each node's icon + its incident (parent) edges by discipline colour, AFTER stock UpdateGraphics

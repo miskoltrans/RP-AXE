@@ -19,7 +19,8 @@ namespace RPAxe.RnD
     internal static class AxeTreeLayout
     {
         internal class LNode { public string Id; public string Discipline; public int Tier; public int Cost; public float X, Y; }
-        internal class LEdge { public string From, To; public List<Vector2> Waypoints; public float TF = 0.5f, TT = 0.5f; public List<Vector2> Geom; }   // Geom = the routed polyline (lanes OR ortho-late)
+        internal class LEdge { public string From, To; public List<Vector2> Waypoints; public float TF = 0.5f, TT = 0.5f; public float XF, XFo; public List<Vector2> Geom; }   // Geom = routed polyline; XF/XFo = Fan-X index among in-/out-edges
+        internal struct JunctionDot { public Vector2 Pos; public string From; }   // junction-bus branch dot (coloured by From's discipline in the render)
 
         private const float HGAP = 6f, FAN_LO = 0.18f, FAN_HI = 0.82f, CORNER_R = 15f;   // lane pitch is now a param (config)
         private const int CORNER_SEGS = 3;
@@ -280,6 +281,10 @@ namespace RPAxe.RnD
             }
             foreach (var kv in outB) Spread(kv.Value, e => byId[e.To].Y, (e, t) => e.TF = t, fan);   // source RIGHT side
             foreach (var kv in inB) Spread(kv.Value, e => byId[e.From].Y, (e, t) => e.TT = t, fan);  // target LEFT side
+            // Fan X indices (centred, in the sorted order above): XF among edges INTO the same target
+            // (ortho-late risers), XFo among edges OUT of the same source (ortho-early risers).
+            foreach (var kv in inB) { var l = kv.Value; int n = l.Count; for (int i = 0; i < n; i++) l[i].XF = n <= 1 ? 0f : i - (n - 1) / 2f; }
+            foreach (var kv in outB) { var l = kv.Value; int n = l.Count; for (int i = 0; i < n; i++) l[i].XFo = n <= 1 ? 0f : i - (n - 1) / 2f; }
         }
 
         private static void Spread(List<LEdge> list, Func<LEdge, float> cyOf, Action<LEdge, float> setT, bool fan)
@@ -290,27 +295,64 @@ namespace RPAxe.RnD
                 setT(list[i], (!fan || n <= 1) ? 0.5f : FAN_LO + (FAN_HI - FAN_LO) * (i / (float)(n - 1)));
         }
 
-        // ---- ortho-late routing: orthogonal elbow with the single riser pushed next to the TARGET, so
-        // edges run horizontally then turn in — converging "into the node" (the stock RP-1 / KSP look).
-        // One flat polyline per edge, endpoint-based (ignores the dummy chain / waypoints). A 1:1 port of
-        // renderer.js routeOrthoLate. Node box: n.X..n.X+nodeW horizontally; anchors on the side at
-        // n.Y + t*nodeH — nodeH is SIGNED by the caller (the Y-flip) so anchors stay on the correct side.
-        // Writes e.Geom (the same field BuildLaneRoutes fills), consumed by the GetVectorArray hook.
-        internal static void RouteOrthoLate(List<LEdge> edges, Dictionary<string, LNode> byId, float nodeW, float nodeH)
+        // ---- orthogonal-elbow routing (ortho-late / ortho-early): one flat polyline per edge, endpoint-based
+        // (ignores the dummy chain). A 1:1 port of renderer.js routeOrthoLate/routeOrthoEarly. Node box:
+        // n.X..n.X+nodeW horizontally; side anchors at n.Y + t*nodeH — nodeH is SIGNED by the caller (Y-flip).
+        // Fan X staggers risers on x so edges sharing a riser column read as distinct (late: by target in-edge
+        // index XF; early: by source out-edge index XFo). Writes e.Geom, consumed by the GetVectorArray hook.
+        private const float BUS_STUB = 28f;   // junction-bus: px from a source's right edge to its shared bus
+
+        private static List<Vector2> Elbow(LNode fn, LNode tn, LEdge e, float nodeW, float nodeH, bool early, bool xfan, float pitch)
         {
+            Vector2 p = new Vector2(fn.X + nodeW, fn.Y + e.TF * nodeH);   // source RIGHT side (fan slot)
+            Vector2 c = new Vector2(tn.X, tn.Y + e.TT * nodeH);          // target LEFT side (fan slot)
+            if (Mathf.Abs(p.y - c.y) < 0.5f) return new List<Vector2> { p, c };   // same row -> straight
+            float reach = Mathf.Max(18f, Mathf.Min(60f, (c.x - p.x) * 0.3f));
+            float rx = early ? p.x + reach : c.x - reach;                // riser near the source (early) or target (late)
+            if (xfan) rx = early ? Mathf.Min(c.x - 10f, Mathf.Max(p.x + 12f, rx + e.XFo * pitch))
+                                 : Mathf.Max(p.x + 10f, Mathf.Min(c.x - 12f, rx - e.XF * pitch));
+            Vector2 k1 = new Vector2(rx, p.y), k2 = new Vector2(rx, c.y);
+            var pts = new List<Vector2> { p };
+            pts.AddRange(Chamfer(p, k1, k2, CORNER_R, CORNER_SEGS));
+            pts.AddRange(Chamfer(k1, k2, c, CORNER_R, CORNER_SEGS));
+            pts.Add(c);
+            return pts;
+        }
+
+        internal static void RouteOrthoLate(List<LEdge> edges, Dictionary<string, LNode> byId, float nodeW, float nodeH, bool xfan, float xfanPitch)
+        {
+            foreach (var e in edges)
+                e.Geom = (byId.TryGetValue(e.From, out var fn) && byId.TryGetValue(e.To, out var tn))
+                    ? Elbow(fn, tn, e, nodeW, nodeH, false, xfan, xfanPitch) : null;
+        }
+
+        internal static void RouteOrthoEarly(List<LEdge> edges, Dictionary<string, LNode> byId, float nodeW, float nodeH, bool xfan, float xfanPitch)
+        {
+            foreach (var e in edges)
+                e.Geom = (byId.TryGetValue(e.From, out var fn) && byId.TryGetValue(e.To, out var tn))
+                    ? Elbow(fn, tn, e, nodeW, nodeH, true, xfan, xfanPitch) : null;
+        }
+
+        // ---- junction-bus (hyperedge): edges leaving a multi-child source SHARE one vertical bus just right
+        // of the node — they emanate from the node mid-right into a single trunk, run down it, and peel off at
+        // each target row (a JUNCTION DOT is emitted per peel-off; the render draws them). Single-child sources
+        // fall back to the ortho-late elbow. Each edge is still one flat polyline (they overlap on the bus).
+        internal static void RouteJunctionBus(List<LEdge> edges, Dictionary<string, LNode> byId, float nodeW, float nodeH, List<JunctionDot> dotsOut)
+        {
+            dotsOut.Clear();
+            var outB = new Dictionary<string, List<LEdge>>();
+            foreach (var e in edges) if (byId.ContainsKey(e.From) && byId.ContainsKey(e.To)) Bucket(outB, e.From).Add(e);
+            var busX = new Dictionary<string, float>();
+            foreach (var kv in outB) if (kv.Value.Count >= 2) busX[kv.Key] = byId[kv.Key].X + nodeW + BUS_STUB;
             foreach (var e in edges)
             {
                 if (!byId.TryGetValue(e.From, out var fn) || !byId.TryGetValue(e.To, out var tn)) { e.Geom = null; continue; }
-                Vector2 p = new Vector2(fn.X + nodeW, fn.Y + e.TF * nodeH);   // source RIGHT side (fan slot)
-                Vector2 c = new Vector2(tn.X, tn.Y + e.TT * nodeH);           // target LEFT side (fan slot)
-                if (Mathf.Abs(p.y - c.y) < 0.5f) { e.Geom = new List<Vector2> { p, c }; continue; }   // same row -> straight
-                float rx = c.x - Mathf.Max(18f, Mathf.Min(60f, (c.x - p.x) * 0.3f));   // riser just left of the target
-                Vector2 k1 = new Vector2(rx, p.y), k2 = new Vector2(rx, c.y);
-                var pts = new List<Vector2> { p };
-                pts.AddRange(Chamfer(p, k1, k2, CORNER_R, CORNER_SEGS));      // round the first corner
-                pts.AddRange(Chamfer(k1, k2, c, CORNER_R, CORNER_SEGS));      // round the second corner
-                pts.Add(c);
-                e.Geom = pts;
+                if (!busX.TryGetValue(e.From, out float bx)) { e.Geom = Elbow(fn, tn, e, nodeW, nodeH, false, false, 0f); continue; }   // single child -> elbow
+                Vector2 p = new Vector2(fn.X + nodeW, fn.Y + 0.5f * nodeH);   // node mid-right -> clean trunk
+                Vector2 c = new Vector2(tn.X, tn.Y + e.TT * nodeH);
+                if (Mathf.Abs(p.y - c.y) < 0.5f && c.x <= bx + 2f) { e.Geom = new List<Vector2> { p, c }; continue; }
+                dotsOut.Add(new JunctionDot { Pos = new Vector2(bx, c.y), From = e.From });
+                e.Geom = RoundPolyline(new List<Vector2> { p, new Vector2(bx, p.y), new Vector2(bx, c.y), c }, CORNER_R, CORNER_SEGS);
             }
         }
 

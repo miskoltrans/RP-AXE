@@ -22,10 +22,12 @@ namespace RPAxe.RnD
         {
             public string Layout; public bool LaneRouting; public bool Fan; public float LanePitch;
             public bool DiscColor; public bool Legend; public bool Hover;
-            public string Routing;   // edge routing style: lanes | ortho-late | stock
+            public string Routing;   // edge routing: lanes | ortho-late | ortho-early | junction | stock
             public bool FlipY;       // stock-mode routing: fan-side sign; flip if edges attach on the wrong side
+            public bool Xfan;        // ortho elbows: stagger risers sharing a column on x (Fan X)
+            public float XfanPitch;  // px between staggered risers
             // routing override is active (we replace stock elbows) for any non-stock style
-            public bool RouteOverride => Routing == "lanes" || Routing == "ortho-late";
+            public bool RouteOverride => Routing == "lanes" || Routing == "ortho-late" || Routing == "ortho-early" || Routing == "junction";
         }
 
         // Layout constants (shared with build_tree.py; fallbacks match its X0/TIERW/MARGIN defaults).
@@ -33,7 +35,7 @@ namespace RPAxe.RnD
         internal static readonly Dictionary<string, NodeMeta> Nodes = new Dictionary<string, NodeMeta>();
         internal static readonly Dictionary<string, DiscMeta> Disciplines = new Dictionary<string, DiscMeta>();
         // Default = stock (feature off) so a missing/absent cfg can never brick the scene.
-        internal static Settings Render = new Settings { Layout = "stock", LaneRouting = true, Routing = "lanes", FlipY = true, Fan = true, LanePitch = 13f, DiscColor = true, Legend = true, Hover = true };
+        internal static Settings Render = new Settings { Layout = "stock", LaneRouting = true, Routing = "lanes", FlipY = true, Xfan = true, XfanPitch = 10f, Fan = true, LanePitch = 13f, DiscColor = true, Legend = true, Hover = true };
         internal static bool Loaded { get; private set; }
 
         internal static void EnsureLoaded()
@@ -102,6 +104,9 @@ namespace RPAxe.RnD
             Render.Routing = !string.IsNullOrEmpty(routing) ? routing.Trim().ToLowerInvariant()
                                                             : (Render.LaneRouting ? "lanes" : "stock");
             Render.FlipY = ParseBool(r.GetValue("flipY"), true);
+            Render.Xfan = ParseBool(r.GetValue("xfan"), true);
+            if (float.TryParse(r.GetValue("xfanPitch"), NumberStyles.Float, CultureInfo.InvariantCulture, out float xp) && xp >= 0f)
+                Render.XfanPitch = xp;
             Render.Fan = ParseBool(r.GetValue("fan"), true);
             if (float.TryParse(r.GetValue("lanePitch"), NumberStyles.Float, CultureInfo.InvariantCulture, out float lp) && lp >= 0f)
                 Render.LanePitch = lp;   // 0 = all lanes collapse to the gutter centre (single line)
