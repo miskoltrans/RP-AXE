@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'ortho-late', icons:true, square:true, layout:'sugiyama-bk', spacingX:1.0, spacingY:1.0, diffspread:false, lanePitch:1, halo:false, bundleBeta:0.85 };
+const opt={ fan:true, xfan:true, xfanPitch:16, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'ortho-late', icons:true, square:true, layout:'sugiyama-bk', spacingX:1.0, spacingY:1.0, diffspread:false, lanePitch:1, halo:false, bundleBeta:0.85 };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
@@ -326,7 +326,10 @@ function computeSlots(){
   };
   for(const id in outB) spread(outB[id], e=>byId[e.to].pos[1],   (e,t)=>e._tF=t);
   for(const id in inB)  spread(inB[id],  e=>byId[e.from].pos[1], (e,t)=>e._tT=t);
-  for(const e of edges){ if(e._tF==null)e._tF=0.5; if(e._tT==null)e._tT=0.5; }
+  // Fan X: index each edge among those converging into the SAME target (already sorted by source y above),
+  // centred, so routeOrthoLate can stagger their risers on x (same-tier parents otherwise share one riser).
+  for(const id in inB){ const list=inB[id], n=list.length; list.forEach((e,i)=> e._xF = n<=1?0 : (i-(n-1)/2)); }
+  for(const e of edges){ if(e._tF==null)e._tF=0.5; if(e._tT==null)e._tT=0.5; if(e._xF==null)e._xF=0; }
 }
 
 // Stock RDNode.chamferCorner: iterative corner-cutting -> 2^segs tessellated points, offsets r/2.5^(i+1).
@@ -405,7 +408,8 @@ function catmullRom(P, seg){             // Catmull-Rom through P → sampled fl
 function routeOrthoLate(e){              // orthogonal elbow, single riser near the TARGET
   const p=anchor(byId[e.from],'RIGHT',e._tF), c=anchor(byId[e.to],'LEFT',e._tT);
   if(Math.abs(p[1]-c[1])<0.5) return [p,c];
-  const rx=c[0]-Math.max(18,Math.min(60,(c[0]-p[0])*0.3));   // riser just left of the target node
+  let rx=c[0]-Math.max(18,Math.min(60,(c[0]-p[0])*0.3));   // riser just left of the target node
+  if(opt.xfan) rx=Math.max(p[0]+10, Math.min(c[0]-12, rx-(e._xF||0)*opt.xfanPitch));   // Fan X: stagger converging risers
   const k1=[rx,p[1]], k2=[rx,c[1]];
   return [p, ...chamfer(p,k1,k2,CORNER_R,CORNER_SEGS), ...chamfer(k1,k2,c,CORNER_R,CORNER_SEGS), c];
 }
@@ -795,6 +799,8 @@ function init(){
   const sp0=P0.get('spacing');                     // legacy coarse preset → drive both axes
   if(sp0==='compact') opt.spacingX=opt.spacingY=0.7; else if(sp0==='airy') opt.spacingX=opt.spacingY=1.6; else if(sp0==='normal') opt.spacingX=opt.spacingY=1;
   if(P0.has('diffspread')) opt.diffspread=true;
+  if(P0.has('xfan')) opt.xfan = P0.get('xfan')!=='0';
+  if(P0.get('xfanpitch')) opt.xfanPitch = +P0.get('xfanpitch')||opt.xfanPitch;
   if(P0.get('lanePitch')) opt.lanePitch=+P0.get('lanePitch')||opt.lanePitch;
   if(P0.get('bundle')!=null) opt.bundleBeta=Math.max(0,Math.min(1,+P0.get('bundle')||opt.bundleBeta));
   buildModel(); restore();
@@ -843,7 +849,7 @@ function init(){
   // controls
   const cb=(id,key,geom)=>{ const el=document.getElementById(id); el.checked=opt[key];
     el.addEventListener('change',()=>{ opt[key]=el.checked; if(key==='highlight')setFocus(activeFocus()); geom?rebuild():draw(); }); };
-  cb('c_fan','fan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_icon','icons',false); cb('c_square','square',true); cb('c_halo','halo',false);
+  cb('c_fan','fan',true); cb('c_xfan','xfan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_icon','icons',false); cb('c_square','square',true); cb('c_halo','halo',false);
   const selR=document.getElementById('s_route'); selR.value=opt.routing;
   selR.addEventListener('change',()=>{ opt.routing=selR.value; rebuild(); });
   const cp=document.getElementById('c_prog'); cp.checked=opt.progress;
@@ -860,6 +866,9 @@ function init(){
   const rl=document.getElementById('r_lane'), rlv=document.getElementById('r_lane_v');
   rl.value=opt.lanePitch; rlv.textContent=opt.lanePitch+'px';
   rl.addEventListener('input',()=>{ opt.lanePitch=+rl.value; rlv.textContent=opt.lanePitch+'px'; if(opt.routing==='lanes')rebuild(); });
+  const rxf=document.getElementById('r_xfan'), rxfv=document.getElementById('r_xfan_v');
+  rxf.value=opt.xfanPitch; rxfv.textContent=opt.xfanPitch+'px';
+  rxf.addEventListener('input',()=>{ opt.xfanPitch=+rxf.value; rxfv.textContent=opt.xfanPitch+'px'; if(opt.xfan)rebuild(); });
   const rb=document.getElementById('r_bundle'), rbv=document.getElementById('r_bundle_v');
   rb.value=opt.bundleBeta; rbv.textContent=opt.bundleBeta.toFixed(2);
   rb.addEventListener('input',()=>{ opt.bundleBeta=+rb.value; rbv.textContent=opt.bundleBeta.toFixed(2); if(opt.routing==='bundle')rebuild(); });
