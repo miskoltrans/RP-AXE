@@ -24,6 +24,9 @@ do not re-litigate. New band-2 nodes are **PENDING** until the user signs them o
 **Pending review — science (1 node):**
 - [ ] `opt_orbitalMapping` (SCANsat MapTraq seed; instruments already in band 1; band-3 fills the mapping lane)
 
+**Pending review — charter (3 nodes):**
+- [ ] `hire_appSats` (empty entry root) → `charter_firstSats` (T4, Sputnik/Vanguard/Pioneer) → `charter_matureSats` (T5, Tiros/Transit/GRAB/Explorer — the dump)
+
 ## Engine spine (DONE — 16 nodes, T4→T6)
 
 The 1958–61 propulsion cohort. **Homed by propellant, not the RealFuels disc tag.** Two transitions
@@ -86,5 +89,12 @@ micrometeorite) were already placed in band 1 — no new instrument nodes. Band-
 `SCANsat_Scanner32` skipped (DEPRECATED); `dmUS2MagBoom`/`dmUS2Scope` deferred (uncurated US2 wedges).
 The mapping-lane bulk is in the interplanetary partlist (band 3).
 
+## Charter (DONE — 3 nodes)
+Satellite/probe packs bought as integrated spacecraft, tiered by era: `hire_appSats` (empty entry root)
+→ `charter_firstSats` (T4 — Sputnik 2/3, Vanguard 1, Pioneer 0-4) → `charter_matureSats` (T5 — Explorer 6,
+GRAB, Pioneer 5, Tiros-1, Transit-2A, Vanguard 2/3; the "rest" dump). Avionics grants (Science-Core/HDD)
+belong to the avionics ladder in Support, not here; band-1 `hire_JPL`/`hire_OKB` stay as deep-space roots.
+
 ## Remaining band-2 lanes (NOT yet authored)
-Power/comms/DSN support · the charter nodes.
+Support only: power (solar) · comms/DSN (antennas + tracking-station levels) · structures/materials
+ride-alongs (service bays, US tanks, Fairing-II, SM tank) · the avionics grants ladder.
