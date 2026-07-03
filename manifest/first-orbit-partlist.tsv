@@ -405,8 +405,8 @@ scienceSatellite	Satellite Era Science	part	RO-EarlyMagnet	yes	MG01 - Early Magn
 scienceSatellite	Satellite Era Science	part	RO-EarlyTVCamera	yes	VI01 - Early Television Camera
 scienceSatellite	Satellite Era Science	part	RO-GeigerMuller	yes	CR01 - Geiger-Muller Counter
 scienceSatellite	Satellite Era Science	part	RO-Micrometeorite	yes	MM01 - Micrometeorite Detector
-scienceSatellite	Satellite Era Science	part	dmUS2MagBoom	no	Univ. Storage 2 - Magnetometer Boom
-scienceSatellite	Satellite Era Science	part	dmUS2Scope	no	Univ. Storage 2 - Orbital Telescope
+scienceSatellite	Satellite Era Science	part	dmUS2MagBoom	yes	Univ. Storage 2 - Magnetometer Boom
+scienceSatellite	Satellite Era Science	part	dmUS2Scope	yes	Univ. Storage 2 - Orbital Telescope
 supersonicDev	Supersonic Plane Development	part	RO-B9ProcAMWing-Supersonic	yes	B9 Procedural Wing, All-Moving (Supersonic)
 supersonicDev	Supersonic Plane Development	part	RO-B9ProcCS-Supersonic	yes	B9 Procedural Control Surface (Supersonic)
 supersonicDev	Supersonic Plane Development	part	RO-B9ProcWing-Supersonic	yes	B9 Procedural Wing (Supersonic)

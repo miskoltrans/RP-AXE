@@ -115,6 +115,16 @@ off `gnc_earlyAvionics`) · `tel_dopplerRanging` (DSN L2) → `tel_pcmTelemetry`
 `str_equipmentBays` (service bays 3m/4m, US radial tank, Mk18 nose). Tech-levels placed (solarTL1, commsTL1/2,
 HDD-Basic, SM-II); `PFTech-Fairing-II` + `RFTech-Battery-II` deferred (fairing/battery ladders).
 
+## US2 wedges — REVIEW QUEUE (config from RP-1)
+5 DMagic Universal Storage 2 science wedges, all were `curated=no` (unconfigured). **Approach: take the
+config straight from RP-1** — the rebuild pulls RP-1's `.cfg`; nothing to hand-author.
+- **BAND 2 — marked `curated=yes`** (human-orbital + first-orbit partlists): `dmUS2MagBoom` (Magnetometer
+  Boom) · `dmUS2Scope` (Orbital Telescope). **Tree placement PENDING confirm** — proposed
+  `mic_boomMagnetometry` (T5, MG-boom gate) and `opt_orbitalTelescope` (T6); open Q: is `dmUS2Scope`
+  astronomy (outward) or high-res Earth-imaging (→ recon lane)?
+- **BAND 3 — still `curated=no`**: `dmUS2RPWS` (RPWS plasma-wave, WS03) · `dmUS2GoreSat` (IR Radiometer,
+  IR-family) · `dmUS2ImagingPlatform` (Multi-Spectral Imaging). Mark + place when band 3 is built.
+
 ## BAND 2 COMPLETE — 41 new nodes, tree at 129 / 19 disciplines
 Engines 16 · aviation 7 · crewed 9 · science 4 · charter (into existing roots) · support 5. All PENDING
 sign-off (see checklist above). Deferred within band 2: US2 wedges (uncurated), IR03 finer gate (band 3),

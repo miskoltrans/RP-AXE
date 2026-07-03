@@ -197,8 +197,8 @@ scienceSatellite	Satellite Era Science	part	RO-EarlyTVCamera	yes	VI01 - Early Te
 scienceSatellite	Satellite Era Science	part	RO-GeigerMuller	yes	CR01 - Geiger-Muller Counter
 scienceSatellite	Satellite Era Science	part	RO-Micrometeorite	yes	MM01 - Micrometeorite Detector
 scienceSatellite	Satellite Era Science	part	SCANsat_Scanner32	yes	SCAN Anomaly Scanner (DEPRECATED)
-scienceSatellite	Satellite Era Science	part	dmUS2MagBoom	no	Univ. Storage 2 - Magnetometer Boom
-scienceSatellite	Satellite Era Science	part	dmUS2Scope	no	Univ. Storage 2 - Orbital Telescope
+scienceSatellite	Satellite Era Science	part	dmUS2MagBoom	yes	Univ. Storage 2 - Magnetometer Boom
+scienceSatellite	Satellite Era Science	part	dmUS2Scope	yes	Univ. Storage 2 - Orbital Telescope
 primitiveSolarPanels	Primitive Solar Panels	part	RO_EarlyMediumSolarPanel	yes	ST1 Medium Solar Panel
 primitiveSolarPanels	Primitive Solar Panels	upgrade	solarTL1	KEEP-techlevel-TODO	
 lunarRangeComms	Lunar Range Communications	part	longAntenna	yes	Communotron 16
