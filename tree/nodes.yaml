@@ -41,6 +41,7 @@ nodes:
     parents: []
     hide_empty: true
     flavor: "Stand up a jet-propulsion lab — the home of integrated US robotic spacecraft. (US-probe pack only.)"
+    parts: [vanguard-1, pioneer_0_1_2, pioneer_3_4, explorer_6, grab-1, pioneer_5, tiros-1, transit2a, vanguard-2, vanguard-3]
   - id: hire_OKB
     title: "Charter a Design Bureau (OKB)"
     discipline: SystemsIntegration
@@ -48,6 +49,7 @@ nodes:
     parents: []
     hide_empty: true
     flavor: "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. (Soviet-probe pack only.)"
+    parts: [sputnik2, sputnik3]
 
   # ===================== BAND 1 * KEROLOX BOOSTER SPINE (T1 -> T5) =====================
   # sounding -> turbopump(V-2) -> first boosters (Western || Soviet fork) -> orbital -> uprated orbital.
@@ -965,28 +967,3 @@ nodes:
     parents: [opt_remoteSensing]
     flavor: "Sweep a body strip by strip as the orbit carries the scanner across it, assembling a complete map from thousands of passes — terrain, altimetry and anomaly built from coverage no single frame could give. The first instrument that maps a world instead of photographing a scene. The seed of the mapping lane that fills out among the planets."
     parts: [SCANsat_Tracker]
-
-  # ===================== BAND 2 * CHARTER (satellite/probe packs, tiered by era) =====================
-  # Appsats and probes are bought as integrated packs, not researched as tech. Empty entry -> first
-  # satellites (T4, 1958) -> the rest (T5, 1959-60 = the dump). Avionics grants (Science-Core/HDD) live
-  # in the avionics ladder, not here; the deep-space hire_JPL/hire_OKB stay as band-1 charter roots.
-  - id: hire_appSats
-    title: "Charter a Satellite Program"
-    discipline: SystemsIntegration
-    tier: 0
-    parents: []
-    flavor: "Stand up a program to build and fly integrated satellites — the bureau that turns a launcher and a payload into a working spacecraft you buy off the shelf rather than research piece by piece."
-  - id: charter_firstSats
-    title: "First-Generation Satellites"
-    discipline: SystemsIntegration
-    tier: 4
-    parents: [hire_appSats]
-    flavor: "The first objects ever put in orbit: a beeping sphere, an instrumented cone, a proof that a nation could reach space at all. Sputnik, Vanguard and the early Pioneers — payloads whose whole mission was to exist, and be heard."
-    parts: [sputnik2, sputnik3, vanguard-1, pioneer_0_1_2, pioneer_3_4]
-  - id: charter_matureSats
-    title: "Application Satellites"
-    discipline: SystemsIntegration
-    tier: 5
-    parents: [charter_firstSats]
-    flavor: "Satellites that do a job: Tiros watching the weather, Transit fixing a ship's position, GRAB listening for radar — the first spacecraft that paid their way. The rest of the era's fleet, bought and flown as the missions demand."
-    parts: [explorer_6, grab-1, pioneer_5, tiros-1, transit2a, vanguard-2, vanguard-3]

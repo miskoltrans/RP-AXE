@@ -24,8 +24,8 @@ do not re-litigate. New band-2 nodes are **PENDING** until the user signs them o
 **Pending review — science (1 node):**
 - [ ] `opt_orbitalMapping` (SCANsat MapTraq seed; instruments already in band 1; band-3 fills the mapping lane)
 
-**Pending review — charter (3 nodes):**
-- [ ] `hire_appSats` (empty entry root) → `charter_firstSats` (T4, Sputnik/Vanguard/Pioneer) → `charter_matureSats` (T5, Tiros/Transit/GRAB/Explorer — the dump)
+**Pending review — charter (no new nodes — sorted into existing roots):**
+- [ ] US buses → `hire_JPL` (Vanguard 1, Pioneer 0-5, Explorer 6, Tiros-1, Transit-2A, GRAB) · Soviet → `hire_OKB` (Sputnik 2/3)
 
 ## Engine spine (DONE — 16 nodes, T4→T6)
 
@@ -89,11 +89,11 @@ micrometeorite) were already placed in band 1 — no new instrument nodes. Band-
 `SCANsat_Scanner32` skipped (DEPRECATED); `dmUS2MagBoom`/`dmUS2Scope` deferred (uncurated US2 wedges).
 The mapping-lane bulk is in the interplanetary partlist (band 3).
 
-## Charter (DONE — 3 nodes)
-Satellite/probe packs bought as integrated spacecraft, tiered by era: `hire_appSats` (empty entry root)
-→ `charter_firstSats` (T4 — Sputnik 2/3, Vanguard 1, Pioneer 0-4) → `charter_matureSats` (T5 — Explorer 6,
-GRAB, Pioneer 5, Tiros-1, Transit-2A, Vanguard 2/3; the "rest" dump). Avionics grants (Science-Core/HDD)
-belong to the avionics ladder in Support, not here; band-1 `hire_JPL`/`hire_OKB` stay as deep-space roots.
+## Charter (DONE — no new nodes)
+The band-1 charter roots `hire_JPL` (US) and `hire_OKB` (Soviet) were left empty *specifically* to receive
+these probes — so the buses sort straight into them, no new charter node needed. US → `hire_JPL` (Vanguard 1,
+Pioneer 0-5, Explorer 6, Tiros-1, Transit-2A, GRAB); Soviet → `hire_OKB` (Sputnik 2/3). Avionics grants
+(Science-Core/HDD) belong to the avionics ladder in Support, not here.
 
 ## Remaining band-2 lanes (NOT yet authored)
 Support only: power (solar) · comms/DSN (antennas + tracking-station levels) · structures/materials
