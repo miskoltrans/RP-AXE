@@ -38,7 +38,9 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, xfan:true, xfanPitch:16, avoid:false, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'junction', icons:true, square:true, layout:'sugiyama-bk', spacingX:1.0, spacingY:1.0, diffspread:false, lanePitch:1, halo:false, bundleBeta:0.85 };
+// Fixed rendering flags (no longer toggleable — always these values): arrowheads/icons/discipline
+// colours/lineage-highlight/research-state/fan-endpoints/square-tiles ON, halo OFF, baseline OFF.
+const opt={ fan:true, xfan:true, xfanPitch:16, avoid:false, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'junction', icons:true, square:true, layout:'compiler', spacingX:1.0, spacingY:1.0, diffspread:false, halo:false };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
@@ -225,11 +227,9 @@ function bkCoords(order, layers, segPrev, sep, isd){
 }
 
 function medianCost(){ const cs=D.nodes.map(n=>n.cost||0).filter(c=>c>0).sort((a,b)=>a-b); return cs.length?(cs[cs.length>>1]||1):1; }
-function computeLayout(){
+function computeLayout(){   // only reached for layout != 'compiler' (compiler uses the emitted _opos)
   if(opt.layout==='bands') layoutBands();
-  else if(opt.layout==='sugiyama-bk')   layoutSugiyama({coords:'bk'});
-  else if(opt.layout==='sugiyama-disc') layoutSugiyama({coords:'bk', order:'disc'});
-  else layoutSugiyama();
+  else layoutSugiyama({coords:'bk'});   // sugiyama-bk
 }
 
 // Discipline-banded layout: each discipline gets its own horizontal band (ordered by `order`); x=tier,
@@ -374,38 +374,16 @@ function routeEdge(e){
 const snap4=d=> Math.abs(d[0])>=Math.abs(d[1]) ? [Math.sign(d[0])||1,0] : [0,Math.sign(d[1])||1];
 
 // ============================ routing VARIANTS ============================
-// Line/edge-routing styles to compare (opt.routing). Each returns ONE flat polyline in world space
-// (spline is tessellated to points so the KSP Vectrosity port stays a single VectorLine per edge).
-// All consume the layout's dummy chain (e.waypoints) where relevant + the fan slots (_tF/_tT).
-//   lanes      orthogonal, vertical legs packed into per-gutter lanes (buildLaneRoutes → e.laneGeom)
-//   ortho-mid  stock KSP elbow: one riser at mid-X (routeEdge), ignores intermediate tiers
-//   ortho-late orthogonal elbow with the riser near the TARGET (converging "into node" look)
-//   polyline   straight segments through the dummy waypoints (classic Sugiyama)
-//   spline     smooth Catmull-Rom curve through the dummy waypoints (dagre/d3 look)
-//   bezier     horizontal-tangent cubic Bézier, endpoint-based (React-Flow "bumpX"; clean modern flow)
-//   bundle     edge bundling — pull to per-node out/in hubs by β, declutters dense fan-in/out
-//   octilinear metro/subway routing — horizontal, one 45° diagonal, horizontal into the target
-//   direct     one straight line source→target (baseline; ignores dummies)
-function pathThroughDummies(e){          // source-right anchor, centred interior dummies, target-left anchor
-  const wp=e.waypoints; if(!wp||wp.length<2) return null;
-  const pts=[anchor(byId[e.from],'RIGHT',e._tF)];
-  for(let i=1;i<wp.length-1;i++) pts.push([wp[i][0], wp[i][1]+0.5*NH()]);
-  pts.push(anchor(byId[e.to],'LEFT',e._tT));
-  return pts;
-}
-function catmullRom(P, seg){             // Catmull-Rom through P → sampled flat polyline
-  if(!P||P.length<3) return P;
-  const out=[P[0]];
-  for(let i=0;i<P.length-1;i++){
-    const p0=P[i-1]||P[i], p1=P[i], p2=P[i+1], p3=P[i+2]||P[i+1];
-    for(let s=1;s<=seg;s++){ const t=s/seg, t2=t*t, t3=t2*t;
-      out.push([
-        0.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),
-        0.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)]);
-    }
-  }
-  return out;
-}
+// Edge-routing styles (opt.routing). Each returns ONE flat polyline in world space (curves tessellated)
+// so the KSP Vectrosity port stays a single VectorLine per edge. Endpoint fan slots = _tF/_tT.
+//   ortho-mid       stock KSP elbow: one riser at mid-X (routeEdge)
+//   ortho-late      orthogonal elbow, riser near the TARGET (converging "into node")
+//   ortho-early     orthogonal elbow, riser near the SOURCE (diverging "out of node")
+//   junction        hyperedge bus — a shared vertical trunk per multi-child hub + branch dots
+//   junction-gutter same, but multi-tier peel-offs step through the layout's clear dummy rows
+//   bezier          horizontal-tangent cubic Bézier, endpoint-based (React-Flow "bumpX")
+//   octilinear      metro/subway routing — horizontal, one 45° diagonal, horizontal into the target
+// Fan X (opt.xfan) staggers risers that share a column; Avoid nodes (opt.avoid) detours node-crossing runs.
 function routeOrthoLate(e){              // orthogonal elbow, single riser near the TARGET
   const p=anchor(byId[e.from],'RIGHT',e._tF), c=anchor(byId[e.to],'LEFT',e._tT);
   if(Math.abs(p[1]-c[1])<0.5) return [p,c];
@@ -461,7 +439,7 @@ function routeJunctionGutter(e){
     junctions.push({x:bx, y:c[1], col:e.discColor||GRAY, e});
     return roundPolyline([p,[bx,p[1]],[bx,c[1]],c], CORNER_R, CORNER_SEGS);
   }
-  const wy=i=> wp[i][1]+0.5*NH();                            // dummy row centre (matches pathThroughDummies)
+  const wy=i=> wp[i][1]+0.5*NH();                            // dummy row centre
   junctions.push({x:bx, y:wy(1), col:e.discColor||GRAY, e});
   const pts=[p,[bx,p[1]],[bx,wy(1)]];                        // into trunk, down to the first dummy row
   for(let i=1;i<wp.length-1;i++){                            // staircase: horiz across each dummy tier, vert in its gutter
@@ -516,30 +494,6 @@ function routeBezier(e){
   const dx=c[0]-p[0];
   return cubicBezier(p, [p[0]+BEZ_K*dx,p[1]], [c[0]-BEZ_K*dx,c[1]], c, 18);
 }
-// bundle: hierarchical edge bundling. Every edge leaving a node is pulled toward that node's OUT-hub
-// (the mean y of its targets) and every edge entering a node toward its IN-hub (mean y of its sources),
-// by strength β (opt.bundleBeta). Edges to nearby targets thus share a curved trunk and only peel off
-// near their ends — the dense root fan-out / Systems-Integration block collapse into a few legible
-// bundles instead of a hairball. β=0 ≡ `bezier`; β=1 ≡ fully merged. Still one tessellated line per edge.
-let bundleOutY={}, bundleInY={};
-function buildBundleHubs(){
-  const outYs={}, inYs={};
-  for(const e of edges){ if(!(e.from in byId)||!(e.to in byId)) continue;
-    const s=anchor(byId[e.from],'RIGHT',e._tF), t=anchor(byId[e.to],'LEFT',e._tT);
-    (outYs[e.from]=outYs[e.from]||[]).push(t[1]); (inYs[e.to]=inYs[e.to]||[]).push(s[1]); }
-  const mean=a=>a.reduce((x,y)=>x+y,0)/a.length;
-  bundleOutY={}; bundleInY={};
-  for(const id in outYs) bundleOutY[id]=mean(outYs[id]);
-  for(const id in inYs)  bundleInY[id]=mean(inYs[id]);
-}
-function routeBundle(e){
-  const p=anchor(byId[e.from],'RIGHT',e._tF), c=anchor(byId[e.to],'LEFT',e._tT);
-  if(c[0]<=p[0]+2) return routeEdge(e);
-  const dx=c[0]-p[0], b=opt.bundleBeta;
-  const hOut=bundleOutY[e.from], hIn=bundleInY[e.to];
-  const c1y=p[1]+((hOut==null?p[1]:hOut)-p[1])*b, c2y=c[1]+((hIn==null?c[1]:hIn)-c[1])*b;
-  return cubicBezier(p, [p[0]+BEZ_K*dx,c1y], [c[0]-BEZ_K*dx,c2y], c, 20);
-}
 // octilinear: metro/subway-map routing — horizontal run, one 45° diagonal to change rows, horizontal
 // into the target. Distinct clean aesthetic; corners rounded via the stock chamfer. Falls back to the
 // converging orthogonal elbow when the span is too short to fit a 45° leg.
@@ -554,89 +508,20 @@ function routeOctilinear(e){
 }
 function edgeGeom(e){
   switch(opt.routing){
-    case 'ortho-mid':   return routeEdge(e);
     case 'ortho-late':  return routeOrthoLate(e);
     case 'ortho-early': return routeOrthoEarly(e);
     case 'junction':    return routeJunctionBus(e);
     case 'junction-gutter': return routeJunctionGutter(e);
-    case 'polyline':    return pathThroughDummies(e) || routeEdge(e);
-    case 'spline':      return catmullRom(pathThroughDummies(e), 14) || routeEdge(e);
     case 'bezier':      return routeBezier(e);
-    case 'bundle':      return routeBundle(e);
     case 'octilinear':  return routeOctilinear(e);
-    case 'direct':      return [anchor(byId[e.from],'RIGHT',e._tF), anchor(byId[e.to],'LEFT',e._tT)];
-    case 'lanes':
-    default:            return e.laneGeom || routeEdge(e);
+    default:            return routeEdge(e);   // ortho-mid (also the fallback)
   }
 }
 
-// laneRouted: route through the layout's dummy waypoints; vertical legs spread into per-gutter lanes
-// (interval-graph colouring) so parallel lines don't pile up. Consumes edges[].waypoints (layout-owned).
-// Still one flat polyline per edge — the KSP port is a Harmony hook on GetVectorArray returning this
-// richer point list instead of the stock elbow.
-function buildLaneRoutes(){
-  const xs=[...new Set(D.nodes.map(n=>n.pos[0]))].sort((a,b)=>a-b);
-  const X0=xs[0], TW=xs.length>1?xs[1]-xs[0]:430;
-  const tierOf=x=>Math.round((x-X0)/TW), tierX=t=>X0+t*TW;
-  const seg={}, chains=[];
-  for(const e of edges){
-    if(!e.waypoints || e.waypoints.length<2){ e.laneGeom=null; continue; }
-    // endpoints use the fan slot (spread along the node side); interior dummies stay centred
-    const ts=e.waypoints.map(p=>tierOf(p[0]));
-    const ys=e.waypoints.map((p,i)=>p[1]+(i===0?e._tF:(i===e.waypoints.length-1?e._tT:0.5))*NH());
-    chains.push([e,ts,ys]);
-    for(let i=0;i<ts.length-1;i++)
-      (seg[ts[i]]=seg[ts[i]]||[]).push([Math.min(ys[i],ys[i+1]),Math.max(ys[i],ys[i+1]),e.from+'>'+e.to+'#'+i]);
-  }
-  const lane={}, lanesN={};
-  for(const g in seg){ const s=seg[g].sort((a,b)=>a[0]-b[0]), ends=[];
-    for(const [lo,hi,key] of s){ let l=ends.findIndex(h=>h<=lo+1e-6); if(l<0){ l=ends.length; ends.push(hi); } else ends[l]=hi; lane[key]=l; }
-    lanesN[g]=ends.length; }
-  // LANE-ORDER: reassign each gutter's lane x-slots by leg barycentre so tracks run monotonically
-  // top->bottom — the horizontal connectors then cross far less than first-fit order.
-  const laneRank={};
-  for(const g in seg){
-    const sum=[], cnt=[];
-    for(const [lo,hi,key] of seg[g]){ const l=lane[key]; sum[l]=(sum[l]||0)+(lo+hi)/2; cnt[l]=(cnt[l]||0)+1; }
-    const order=[...Array(lanesN[g]).keys()].sort((a,b)=>(sum[a]/cnt[a])-(sum[b]/cnt[b]));
-    const m={}; order.forEach((oldL,newL)=>m[oldL]=newL); laneRank[g]=m;
-  }
-  // tight, fixed pitch between lanes (centred in the gutter), not spread across the whole gutter;
-  // clamps down only if a very busy gutter would otherwise overflow ~80% of its width.
-  const LANE_PITCH=opt.lanePitch;   // px between parallel lanes (live-tunable in the bar)
-  const laneX=(g,l)=>{ const n=lanesN[g], gw=TW-NW(), pitch=Math.min(LANE_PITCH,(gw*0.8)/Math.max(1,n)), cx=tierX(g)+NW()+gw/2;
-    return cx+(l-(n-1)/2)*pitch; };
-  const built=[];
-  for(const [e,ts,ys] of chains){
-    const pts=[[tierX(ts[0])+NW(), ys[0]]];
-    for(let i=0;i<ts.length-1;i++){ const g=ts[i]; const lx=laneX(g, laneRank[g][lane[e.from+'>'+e.to+'#'+i]]); pts.push([lx,ys[i]],[lx,ys[i+1]]); }
-    pts.push([tierX(ts[ts.length-1]), ys[ys.length-1]]);
-    built.push(pts);
-    e.laneGeom=pts;   // rounded below, after horizontal-track separation
-  }
-  // HORIZONTAL TRACKS: interior horizontal runs that overlap on the same row get bumped to separate
-  // tracks (offset y on BOTH endpoints; the adjoining vertical legs just change length, so the path
-  // stays orthogonal + continuous). Skip the first/last segment (node-touching — handled by the fan).
-  const rows={};
-  for(const pts of built)
-    for(let i=1;i<pts.length-2;i++)
-      if(Math.abs(pts[i][1]-pts[i+1][1])<0.5 && Math.abs(pts[i][0]-pts[i+1][0])>0.5){
-        const y=Math.round(pts[i][1]); (rows[y]=rows[y]||[]).push([Math.min(pts[i][0],pts[i+1][0]), Math.max(pts[i][0],pts[i+1][0]), pts, i]);
-      }
-  const HGAP=6;
-  for(const y in rows){ const ends=[];
-    for(const s of rows[y].sort((a,b)=>a[0]-b[0])){
-      let tk=ends.findIndex(x=>x<=s[0]+1e-6); if(tk<0){ tk=ends.length; ends.push(s[1]); } else ends[tk]=s[1];
-      if(tk>0){ const off=tk*HGAP; s[2][s[3]][1]+=off; s[2][s[3]+1][1]+=off; }
-    } }
-  for(const [e] of chains) e.laneGeom=roundPolyline(e.laneGeom, CORNER_R, CORNER_SEGS);   // smooth the jogs
-}
 
 function buildGeometry(){
   computeSlots();
-  if(opt.routing==='lanes') buildLaneRoutes();        // only 'lanes' needs the gutter lane-packing pass
-  else if(opt.routing==='bundle') buildBundleHubs();  // bundle needs per-node out/in hub y's first
-  else if(opt.routing==='junction'||opt.routing==='junction-gutter') buildBusRoutes(); // per-source bus x + fresh dots
+  if(opt.routing==='junction'||opt.routing==='junction-gutter') buildBusRoutes(); // per-source bus x + fresh dots
   for(const e of edges){
     if(!(e.from in byId)||!(e.to in byId)){ e.geom=null; continue; }
     e.geom = edgeGeom(e);   // routing variant (opt.routing)
@@ -896,8 +781,6 @@ function init(){
   if(P0.has('xfan')) opt.xfan = P0.get('xfan')!=='0';
   if(P0.get('xfanpitch')) opt.xfanPitch = +P0.get('xfanpitch')||opt.xfanPitch;
   if(P0.has('avoid')) opt.avoid = P0.get('avoid')!=='0';
-  if(P0.get('lanePitch')) opt.lanePitch=+P0.get('lanePitch')||opt.lanePitch;
-  if(P0.get('bundle')!=null) opt.bundleBeta=Math.max(0,Math.min(1,+P0.get('bundle')||opt.bundleBeta));
   buildModel(); restore();
   const rq=new URLSearchParams(location.search).get('research');   // ?research=id,id — shareable snapshot / demo
   if(rq) rq.split(',').forEach(x=>{ if(byId[x]) researched.add(x); });
@@ -942,13 +825,11 @@ function init(){
     selId=id; setFocus(activeFocus()); afterStateChange(); });
 
   // controls
-  const cb=(id,key,geom)=>{ const el=document.getElementById(id); el.checked=opt[key];
-    el.addEventListener('change',()=>{ opt[key]=el.checked; if(key==='highlight')setFocus(activeFocus()); geom?rebuild():draw(); }); };
-  cb('c_fan','fan',true); cb('c_xfan','xfan',true); cb('c_avoid','avoid',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_icon','icons',false); cb('c_square','square',true); cb('c_halo','halo',false);
+  const cb=(id,key)=>{ const el=document.getElementById(id); el.checked=opt[key];
+    el.addEventListener('change',()=>{ opt[key]=el.checked; rebuild(); }); };
+  cb('c_xfan','xfan'); cb('c_avoid','avoid');
   const selR=document.getElementById('s_route'); selR.value=opt.routing;
   selR.addEventListener('change',()=>{ opt.routing=selR.value; rebuild(); });
-  const cp=document.getElementById('c_prog'); cp.checked=opt.progress;
-  cp.addEventListener('change',()=>{ opt.progress=cp.checked; afterStateChange(); });
   const relayout=()=>{ if(opt.layout!=='compiler') computeLayout(); applyLayout(); buildGeometry(); fit(); draw(); };
   const selL=document.getElementById('s_layout'); selL.value=opt.layout;
   selL.addEventListener('change',()=>{ opt.layout=selL.value; relayout(); });
@@ -956,22 +837,9 @@ function init(){
     r.value=opt[key]; v.textContent=opt[key].toFixed(1)+'×';
     r.addEventListener('input',()=>{ opt[key]=+r.value; v.textContent=opt[key].toFixed(1)+'×'; relayout(); }); };
   wireSp('r_spx','r_spx_v','spacingX'); wireSp('r_spy','r_spy_v','spacingY');
-  const cd=document.getElementById('c_diff'); cd.checked=opt.diffspread;
-  cd.addEventListener('change',()=>{ opt.diffspread=cd.checked; relayout(); });
-  const rl=document.getElementById('r_lane'), rlv=document.getElementById('r_lane_v');
-  rl.value=opt.lanePitch; rlv.textContent=opt.lanePitch+'px';
-  rl.addEventListener('input',()=>{ opt.lanePitch=+rl.value; rlv.textContent=opt.lanePitch+'px'; if(opt.routing==='lanes')rebuild(); });
   const rxf=document.getElementById('r_xfan'), rxfv=document.getElementById('r_xfan_v');
   rxf.value=opt.xfanPitch; rxfv.textContent=opt.xfanPitch+'px';
   rxf.addEventListener('input',()=>{ opt.xfanPitch=+rxf.value; rxfv.textContent=opt.xfanPitch+'px'; if(opt.xfan)rebuild(); });
-  const rb=document.getElementById('r_bundle'), rbv=document.getElementById('r_bundle_v');
-  rb.value=opt.bundleBeta; rbv.textContent=opt.bundleBeta.toFixed(2);
-  rb.addEventListener('input',()=>{ opt.bundleBeta=+rb.value; rbv.textContent=opt.bundleBeta.toFixed(2); if(opt.routing==='bundle')rebuild(); });
-  const sync=()=>{ document.getElementById('c_fan').checked=opt.fan; document.getElementById('c_arr').checked=opt.arrows;
-    document.getElementById('c_disc').checked=opt.discEdges; document.getElementById('c_hi').checked=opt.highlight;
-    document.getElementById('s_route').value=opt.routing; };
-  document.getElementById('b_base').addEventListener('click',()=>{ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; opt.routing='ortho-mid'; focusSet=null; sync(); rebuild(); });
-  document.getElementById('b_enh').addEventListener('click',()=>{ opt.baseline=false; opt.fan=true; opt.discEdges=true; opt.highlight=true; opt.routing='junction'; sync(); rebuild(); });
   document.getElementById('b_reset').addEventListener('click',()=>{ if(confirm('Reset all research progress?')){ resetProgress(); setFocus(activeFocus()); afterStateChange(); } });
   document.getElementById('b_fit').addEventListener('click',()=>{ fit(); draw(); });
   document.getElementById('zi').addEventListener('click',()=>{ cam.s=Math.min(6,cam.s*1.2); updateZoomLabel(); draw(); });

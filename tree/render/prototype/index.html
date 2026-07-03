@@ -46,41 +46,22 @@
 <div id="stage">
   <canvas id="cv"></canvas>
   <div id="bar">
-    <label><input type="checkbox" id="c_prog">Research state</label>
-    <span class="sep"></span>
-    <label><input type="checkbox" id="c_fan">Fan endpoints</label>
-    <label title="stagger converging risers on the x-axis so overlapping edges read as distinct (ortho-late)"><input type="checkbox" id="c_xfan">Fan X</label>
-    <label>· <input type="range" id="r_xfan" min="0" max="40" step="1" value="16" style="width:66px;vertical-align:middle"><span id="r_xfan_v" style="color:var(--mut);min-width:32px;display:inline-block">16px</span></label>
-    <label title="detour any horizontal edge run that passes through a node box (post-process, any routing)"><input type="checkbox" id="c_avoid">Avoid nodes</label>
-    <label>Routing <select id="s_route">
-      <option value="lanes">Lanes (ortho, packed)</option>
+    <label>Edges <select id="s_route">
       <option value="ortho-mid">Ortho S (mid riser)</option>
       <option value="ortho-late">Ortho elbow (into target)</option>
-      <option value="ortho-early">Ortho elbow (out of source) ★</option>
-      <option value="junction">Junction bus (schematic) ★</option>
-      <option value="junction-gutter">Junction bus — gutter-routed ★</option>
-      <option value="polyline">Polyline (thru dummies)</option>
-      <option value="spline">Spline (smooth)</option>
-      <option value="bezier">Bézier (horiz-tangent) ★</option>
-      <option value="bundle">Bundle (declutter) ★</option>
-      <option value="octilinear">Octilinear (metro 45°) ★</option>
-      <option value="direct">Direct (straight)</option>
+      <option value="ortho-early">Ortho elbow (out of source)</option>
+      <option value="junction">Junction bus (schematic)</option>
+      <option value="junction-gutter">Junction bus — gutter-routed</option>
+      <option value="bezier">Bézier (horiz-tangent)</option>
+      <option value="octilinear">Octilinear (metro 45°)</option>
     </select></label>
-    <label><input type="checkbox" id="c_square">KSP square tiles</label>
-    <label>Layout <select id="s_layout"><option value="compiler">Compiler</option><option value="sugiyama">Sugiyama</option><option value="sugiyama-bk">Sugiyama + BK (straight) ★</option><option value="sugiyama-disc">Sugiyama + disciplines ★</option><option value="bands">Discipline bands</option></select></label>
+    <label title="stagger converging risers on the x-axis so overlapping edges read as distinct"><input type="checkbox" id="c_xfan">Fan X</label>
+    <label>· <input type="range" id="r_xfan" min="0" max="40" step="1" value="16" style="width:66px;vertical-align:middle"><span id="r_xfan_v" style="color:var(--mut);min-width:32px;display:inline-block">16px</span></label>
+    <label title="detour any horizontal edge run that passes through a node box (post-process, any routing)"><input type="checkbox" id="c_avoid">Avoid nodes</label>
+    <span class="sep"></span>
+    <label>Nodes <select id="s_layout"><option value="compiler">Compiler</option><option value="sugiyama-bk">Sugiyama + BK (straight)</option><option value="bands">Discipline bands</option></select></label>
     <label>Spacing X <input type="range" id="r_spx" min="0.5" max="3" step="0.1" value="1.0" style="width:70px;vertical-align:middle"><span id="r_spx_v" style="color:var(--mut);min-width:30px;display:inline-block">1.0×</span></label>
     <label>Y <input type="range" id="r_spy" min="0.5" max="3" step="0.1" value="1.0" style="width:70px;vertical-align:middle"><span id="r_spy_v" style="color:var(--mut);min-width:30px;display:inline-block">1.0×</span></label>
-    <label>Lane <input type="range" id="r_lane" min="0" max="30" step="1" value="1" style="width:78px;vertical-align:middle"><span id="r_lane_v" style="color:var(--mut);min-width:32px;display:inline-block">1px</span></label>
-    <label>Bundle β <input type="range" id="r_bundle" min="0" max="1" step="0.05" value="0.85" style="width:78px;vertical-align:middle"><span id="r_bundle_v" style="color:var(--mut);min-width:30px;display:inline-block">0.85</span></label>
-    <label><input type="checkbox" id="c_diff">Spread by cost</label>
-    <label><input type="checkbox" id="c_arr">Arrowheads</label>
-    <label><input type="checkbox" id="c_icon">Icons</label>
-    <label><input type="checkbox" id="c_disc">Colour edges by discipline</label>
-    <label><input type="checkbox" id="c_hi">Highlight lineage</label>
-    <label><input type="checkbox" id="c_halo">Halo</label>
-    <span class="sep"></span>
-    <button id="b_base" class="k">Stock baseline</button>
-    <button id="b_enh" class="e">Enhanced</button>
     <span class="sep"></span>
     <button id="zo">−</button><span id="zl">100%</span><button id="zi">+</button>
     <button id="b_fit">Fit</button>
