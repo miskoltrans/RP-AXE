@@ -318,7 +318,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Expose photographic film to the scene and bring the physical emulsion home — the highest resolution there is, at the price of recovering the capsule. Reconnaissance before anyone could downlink a picture."
-    parts: [RO-BasicFilmCamera]
+    parts: [science_module, RO-BasicFilmCamera]
   - id: opt_vidicon
     title: "Vidicon Imaging"
     discipline: OpticsPhotonics
@@ -360,7 +360,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "A wedge of thermometers, barometers and sample cells flown up a sounding rocket to log temperature, pressure and density where balloons can't reach — the first instruments to tell us what the air is doing at the edge of space."
-    parts: [USThermoBaroWedge, science_module]
+    parts: [USThermoBaroWedge]
 
   # ===================== BAND 1 ‖ AVIATION / SUPERSONIC (parallel milestone) =====================
   # Air-breathing propulsion is its OWN lane; supersonic engines DEPEND on Aerodynamics breakthroughs

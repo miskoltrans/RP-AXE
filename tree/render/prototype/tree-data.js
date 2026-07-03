@@ -1922,6 +1922,11 @@ window.TREE = {
      "name": "RO-BasicFilmCamera",
      "mod": "RP-1",
      "title": "PH02 - Basic Film Camera"
+    },
+    {
+     "name": "science_module",
+     "mod": "Squad",
+     "title": "PH01 - Early Film Camera"
     }
    ],
    "upgrades": [],
@@ -2129,11 +2134,6 @@ window.TREE = {
      "name": "USThermoBaroWedge",
      "mod": "UniversalStorage2",
      "title": "Atmospheric Science Unit"
-    },
-    {
-     "name": "science_module",
-     "mod": "Squad",
-     "title": "PH01 - Early Film Camera"
     }
    ],
    "upgrades": [],
