@@ -205,7 +205,7 @@ nodes:
     discipline: FluidDynamics
     tier: 1
     parents: [start]
-    flavor: "Aim paired fuel and oxidiser jets to collide and atomise on contact, across a flat plate drilled for even mixing over the whole injector face — more complete combustion, a little more specific impulse from the same propellants."
+    flavor: "Aim paired fuel and oxidiser jets to collide and atomise on contact, across a flat plate drilled for even mixing over the whole injector face — more complete combustion, a little more specific impulse from the same propellants. Get it right and a small pressure-fed chamber burns clean enough to fly: the four-chamber engine of a rocket aeroplane, and the combustion craft the turbopump-fed boosters are built on."
     upgrades: [RFUpgrade_VeroniqueAGI, RFUpgrade_A-9, RFUpgrade_Model39cI]
   - id: met_nimonic
     title: "Nimonic Turbine Alloys"
@@ -399,7 +399,7 @@ nodes:
     title: "Chamber-Staged Aircraft Rocket"
     discipline: FluidDynamics
     tier: 2
-    parents: [aero_subsonicWing]
+    parents: [fd_injectors]
     flavor: "Four small ethanol-oxygen chambers lit one at a time to step the thrust up and down — no throttle valve, but control enough to push a piloted aeroplane past the sound barrier and glide it home. The X-1's engine."
     parts: [ROE-XLR11, ROE-XLR10, ROE-S155]
   - id: av_axialJet

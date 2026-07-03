@@ -146,7 +146,7 @@ digraph AXE {
   "str_structuralHardware" -> "str_landingGear" [style=solid];
   "str_landingGear" -> "str_adjustableGear" [style=solid];
   "prop_recipEngine" -> "av_centrifugalJet" [style=solid];
-  "aero_subsonicWing" -> "fd_rocketplaneRocket" [style=solid];
+  "fd_injectors" -> "fd_rocketplaneRocket" [style=solid];
   "av_centrifugalJet" -> "av_axialJet" [style=solid];
   "aero_subsonicWing" -> "aero_supersonicWing" [style=solid];
   "av_axialJet" -> "av_afterburner" [style=solid];
