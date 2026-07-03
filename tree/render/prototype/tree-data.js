@@ -6319,6 +6319,28 @@ window.TREE = {
     -288,
     4466
    ]
+  },
+  {
+   "id": "opt_orbitalMapping",
+   "title": "Synoptic Orbital Scanning",
+   "discipline": "OpticsPhotonics",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Sweep a body strip by strip as the orbit carries the scanner across it, assembling a complete map from thousands of passes — terrain, altimetry and anomaly built from coverage no single frame could give. The first instrument that maps a world instead of photographing a scene. The seed of the mapping lane that fills out among the planets.",
+   "parts": [
+    {
+     "name": "SCANsat_Tracker",
+     "mod": "SCANsat",
+     "title": "SCAN MapTraq®"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -288,
+    5036
+   ]
   }
  ],
  "edges": [
@@ -8431,6 +8453,21 @@ window.TREE = {
     [
      -288,
      4466
+    ]
+   ]
+  },
+  {
+   "from": "opt_remoteSensing",
+   "to": "opt_orbitalMapping",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -668,
+     4733
+    ],
+    [
+     -288,
+     5036
     ]
    ]
   }

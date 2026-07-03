@@ -21,6 +21,9 @@ do not re-litigate. New band-2 nodes are **PENDING** until the user signs them o
 - [ ] T5 subsystems: `cmp_ablativeTPS` · `life_openLoopECLSS` · `gnc_spacecraftRCS` · `life_pressurisedCabin` · `int_launchEscape`
 - [ ] T6 vehicles: `int_mercuryCapsule` · `int_vostokCapsule` · `int_zenitRecon` · `edl_crewedRecovery` — OPEN: keep "Capsule" in the 3 vehicle names, or drop to pure "…Reentry"?
 
+**Pending review — science (1 node):**
+- [ ] `opt_orbitalMapping` (SCANsat MapTraq seed; instruments already in band 1; band-3 fills the mapping lane)
+
 ## Engine spine (DONE — 16 nodes, T4→T6)
 
 The 1958–61 propulsion cohort. **Homed by propellant, not the RealFuels disc tag.** Two transitions
@@ -76,5 +79,12 @@ first node in that discipline), `life_openLoopECLSS`, `gnc_spacecraftRCS`, `life
 recon) gated on **TPS × opt_recon** (stays in-band at T6); `edl_crewedRecovery`. Tech-level capability
 upgrades (Heatsink, MercuryHS) deferred to a tech-level pass (like solarTL/commsTL).
 
+## Science (DONE — instruments already in band 1 + 1 SCANsat seed)
+All five satellite instruments (PH02 film / MG01 magnetometer / VI01 TV / CR01 geiger / MM01
+micrometeorite) were already placed in band 1 — no new instrument nodes. Band-2 adds one seed node:
+`opt_orbitalMapping` "Synoptic Orbital Scanning" (SCANsat MapTraq, T6, off `opt_remoteSensing`).
+`SCANsat_Scanner32` skipped (DEPRECATED); `dmUS2MagBoom`/`dmUS2Scope` deferred (uncurated US2 wedges).
+The mapping-lane bulk is in the interplanetary partlist (band 3).
+
 ## Remaining band-2 lanes (NOT yet authored)
-Satellite science instruments · power/comms/DSN support · the charter nodes.
+Power/comms/DSN support · the charter nodes.

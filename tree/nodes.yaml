@@ -953,3 +953,15 @@ nodes:
     parents: [aero_recovery]
     flavor: "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point."
     parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, SXTAirbag, SXTAirbagSmall, landingLeg1]
+
+  # ===================== BAND 2 * SCIENCE (SCANsat mapping seed) =====================
+  # The satellite instruments (film/magnetometer/TV/geiger/micrometeorite) are ALL placed in band 1.
+  # Band-2 science = one SCANsat mapping seed; the scanner bulk lives in the interplanetary partlist (band 3).
+  # SCANsat_Scanner32 skipped (DEPRECATED = editor-hidden); US2 wedges (dmUS2*) deferred (uncurated).
+  - id: opt_orbitalMapping
+    title: "Synoptic Orbital Scanning"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_remoteSensing]
+    flavor: "Sweep a body strip by strip as the orbit carries the scanner across it, assembling a complete map from thousands of passes — terrain, altimetry and anomaly built from coverage no single frame could give. The first instrument that maps a world instead of photographing a scene. The seed of the mapping lane that fills out among the planets."
+    parts: [SCANsat_Tracker]
