@@ -2,11 +2,20 @@
 
 Pre-P1 science measurement (see [`RESTART.md`](RESTART.md) T2). The tree's total cost is
 balanced against total collectable science, so we measure the budget **before** setting node
-costs. Two science streams: uncrewed **probe science** (RP-1's RP0\* suite) and crewed
-**lab/station science** (KerbalismLab).
+costs. Science splits on **two cross-cutting axes**: by *source system* — RP-1's **RP0\* suite**
+(instrument experiments) and **KerbalismLab** (lab/station) — and by *crew requirement* —
+**crewed** (needs a Kerbal) vs **uncrewed** (robotic). These are NOT the same cut: the RP0\* suite
+is itself ~61% crewed *by experiment count* (60 of 98 — life-sciences, habitats, EVA, crew/TV reports),
+though only ~7% by whole-system science *value* since those crewed experiments are Earth/Moon-locked
+(§2). This doc measures
+the **crewed vs uncrewed** budget — Uncrewed = RP0\* robotic instruments; Crewed = RP0\* crewed
+experiments + all of KerbalismLab. (An earlier version wrongly equated "probe science = uncrewed" —
+half the RP0\* suite is crewed.)
 
-Reproduce: `python tools/science_budget.py` (probe) and `python tools/lab_inventory.py` (lab).
-Data artifacts: [`../manifest/lab-experiments.tsv`](../manifest/lab-experiments.tsv).
+Reproduce: `python tools/science_budget.py` (RP0\* crewed/uncrewed split) and `python tools/lab_budget.py`
+(KerbalismLab). Data artifacts: [`../manifest/experiment-crew.tsv`](../manifest/experiment-crew.tsv)
+(crew classification, via `tools/experiment_crew.py`),
+[`../manifest/lab-experiments.tsv`](../manifest/lab-experiments.tsv).
 
 ---
 
@@ -79,77 +88,91 @@ science = baseValue × bodyDataValue(situation) × biomeValue
   science on the homeworld; it must come from real spaceflight and (mostly) other bodies. Costs ~nothing
   in total because other bodies are 2–50× Earth.
 
-## 2. Probe science (RP0\*) — the dominant, back-loaded stream
+## 2. RP0\* suite — MIXED crewed/uncrewed (NOT "probe science")
 
 `tools/science_budget.py`, 98 experiments (96 RP0\* + 2 surface samples). Fully ground-truthed:
 body multipliers vs `BodyScienceParams.cfg` (Earth post-`EarthScienceRemoval`); **biome weights** from
-the merged `ModuleManager.ConfigCache` (`tools/extract_biomes.py`); **per-experiment body restrictions**
-from RP-1's actual `BodyAllowed`/`BodyNotAllowed` (`manifest/experiment-bodies.tsv` via
-`tools/experiment_bodies.py`). **Theoretical max:**
+the merged `ModuleManager.ConfigCache` (`tools/extract_biomes.py`); **body restrictions** from RP-1's
+`BodyAllowed`/`BodyNotAllowed` (`manifest/experiment-bodies.tsv`); **crew requirement** from the Kerbalism
+`Experiment` module's `crew_operate` + EVA-part detection (`manifest/experiment-crew.tsv` via
+`tools/experiment_crew.py`). **The suite is 60 crewed / 38 uncrewed.** Theoretical max, crew-split:
 
-| reachable by era | cumulative probe science |
-|---|---|
-| first orbit ~1958 (Earth+Moon) | **48,575** |
-| inner planets ~1961 | 133,415 |
-| crewed + landing ~1964 | 257,846 |
-| adv probes/stations ~1967 | 423,191 |
-| Jupiter ~1970 | 812,279 |
-| Saturn ~1972 | 1,475,750 |
-| Uranus ~1986 | 1,963,473 |
-| Pluto/modern ~2015 | **2,568,951** |
+| reachable by era | crewed | uncrewed | combined | crew% |
+|---|---|---|---|---|
+| first orbit ~1958 (Earth+Moon) | 26,327 | 22,248 | **48,575** | 54% |
+| inner planets ~1961 | 31,372 | 102,044 | 133,415 | 24% |
+| crewed + landing ~1964 | 40,012 | 217,835 | 257,846 | 16% |
+| adv probes/stations ~1967 | 52,672 | 370,520 | 423,191 | 12% |
+| Jupiter ~1970 | 75,182 | 737,098 | 812,279 | 9% |
+| Saturn ~1972 | 114,804 | 1,360,946 | 1,475,750 | 8% |
+| Uranus ~1986 | 141,464 | 1,822,009 | 1,963,473 | 7% |
+| Pluto/modern ~2015 | **177,124** | **2,391,827** | **2,568,951** | 7% |
 
-- **Earth-only 21k, Earth+Moon 49k** — the early game is genuinely science-tight.
+- **The crew split INVERTS with distance.** Crewed RP0\* experiments are almost all Earth/Moon-locked
+  (`HomeBody`/`HomeBodyAndMoons`/`Moon`: life-sciences, habitats, EVA, crew/TV reports), so they DON'T
+  scale to deep space. Uncrewed probe instruments (imaging, mag/mass-spec, RPWS, IR, telemetry) are
+  universal and soak up the ×10–50 outer-body multipliers. So crewed is **54% at first orbit but only
+  7% of the whole-system RP0\* total** — crewed front-loaded, uncrewed back-loaded.
+- **Earth-only 21k, Earth+Moon 49k** — the early game is genuinely science-tight, and it's ~half crewed.
 - **Big correction from reading body restrictions:** 49 experiments are **Earth-only** (`HomeBody`),
-  5 Earth+Moon, 11 Moon-only; the rest universal. My earlier keyword heuristic had wrongly spread
-  several Earth-only experiments across all 32 bodies — worst case **`RP0photos4` (baseValue 10,000)** and
-  the rest of the film-return photography family ("photography" never matched the id "photos"). Fixing
-  that **cut the total from 7.3M → 2.57M (−65%)**. Lesson logged: heuristics on the highest-value rows
-  are where estimates go most wrong.
-- Still **back-loaded** (Jupiter→Pluto ≈ 1.8M of 2.57M) but far less extreme. No one collects the
-  theoretical max; realistic collection ~20–40% → **~0.5–1.0M**.
-- Reference anchor: **RP-1's full tech tree costs ~115,070 science** (pre-restart tree). The tree is
-  comfortably funded by **mid-game** (≥258k available by the early-crewed era), but completing a large
-  AXE tree requires genuine **interplanetary** exploration — science is binding throughout, tightest early.
-- *Still modeled (not read):* "theoretical max" = every experiment at every allowed body/biome (real
-  collection is a fraction); Charon biomesum reads 0 (cache artifact). Body-assignment is now exact.
+  5 Earth+Moon, 11 Moon-only; the rest universal. An earlier keyword heuristic wrongly spread several
+  Earth-only experiments across all 32 bodies — worst case **`RP0photos4` (baseValue 10,000, uncrewed)**
+  and the film-return photography family. Fixing that **cut the total 7.3M → 2.57M (−65%)**.
+- Uncrewed is **back-loaded** (Jupiter→Pluto ≈ 1.8M of the 2.39M uncrewed). No one collects the
+  theoretical max; realistic collection ~20–40%.
+- Reference anchor: **RP-1's full pre-restart tree costs ~115,070 science.**
+- *Known gaps (data integrity):* the 98-list predates the current RP-1 install — it MISSES 5 stock
+  experiments present today (`crewReport`, `evaReport`, `surfaceSample` = crewed; `temperatureScan`,
+  `barometerScan` = uncrewed) and CARRIES 2 stale ones absent now (`RP0ALFMED` crewed, `RP0BistaticRadar`
+  uncrewed — classified from history in `science_budget.py`'s `CREW_FALLBACK`). The 5 omitted (universal)
+  would add roughly +50–80k, mostly crewed; not yet folded in, to preserve the validated 2.57M anchor.
+  A future refresh should re-derive the experiment set from the live install. "Theoretical max" = every
+  experiment at every allowed body/biome; Charon biomesum reads 0 (cache artifact).
 
-## 3. Crewed-lab science (KerbalismLab) — counted on the same basis as probes
+## 3. KerbalismLab (ALL crewed) — the crewed deep-space tail
 
 `tools/lab_budget.py` (inventory: `tools/lab_inventory.py` → `manifest/lab-experiments.tsv`).
-**71 experiments** (65 fork + 6 base), `value` 10–500. **They scale with the body exactly like probe
-science** (`value` is a Kerbalism `baseValue`: `science = value × bodyDataValue(situation) × biome`) —
-a value=50 `InSpaceLow` exp = 50 @Earth, 150 @Mars, 500 @Jupiter, 1,500 @Pluto. And the fork **gates
-~30 of 65 off Earth** (`BodyNotAllowed=HomeBody`, or `Gaseous`/`Suns`/`Moons`-only, e.g. `JUNO-*` gas
-giants) — the design *wants* crewed labs at distant bodies. So the budget MUST count all allowed bodies:
+**71 experiments** (65 fork + 6 base), `value` 10–500, **all crewed** (they run in a crewed lab).
+They scale with the body exactly like RP0\* (`value` is a Kerbalism `baseValue`: `science = value ×
+bodyDataValue(situation) × biome`) — a value=50 `InSpaceLow` exp = 50 @Earth, 150 @Mars, 1,500 @Pluto.
+And unlike the Earth/Moon-locked *crewed RP0\** experiments, the fork **gates ~30 of 65 OFF Earth**
+(`BodyNotAllowed=HomeBody`, or `Gaseous`/`Suns`/`Moons`-only, e.g. `JUNO-*` gas giants) — so KerbalismLab
+DOES scale to deep space. So the budget MUST count all allowed bodies:
 
-**Crewed-lab theoretical max (all allowed bodies, same basis as §2) = 1,365,760.**
+**KerbalismLab theoretical max (all allowed bodies, same basis as §2) = 1,365,760.**
 Dominated by `SrfLanded@Biomes` experiments deliberately gated off Earth → run on all 31 other bodies
 with full body+biome multipliers (RELAX alone 164k; ChemCam/GV-SSPB/PPME-1 ~70k each).
 
 - **Realizability caveat (the catch):** this is the *least* collectable third of the budget — those
-  totals need **crewed surface bases on other bodies' biomes**, the hardest thing in the game. Probe
-  theoretical-max you approach with flybys; crewed you basically never reach. *Realistic* crewed-lab is
-  far lower — an Earth-orbit station runs only 27 of 65 (~3.6k); LEO + a Moon/Mars base ~10–15k. (My
-  earlier "~51k realistic" was a flat-value × bodies error — superseded by both numbers here.)
-- Tier funding: UnlockTechs cluster early-mid (`basicScience`/`scienceTech`/`spaceExploration`); stock
-  node names → remap to AXE nodes at integration.
+  totals need **crewed surface bases on other bodies' biomes**, the hardest thing in the game. Uncrewed
+  probe theoretical-max you approach with flybys; this you basically never reach. *Realistic* KerbalismLab
+  is far lower — an Earth-orbit station runs only 27 of 65 (~3.6k); LEO + a Moon/Mars base ~10–15k.
+- Not installable as-is (the §1 load blocker); P3 re-authors it (§4) as plain `Experiment` modules under
+  AXE's control. Tier funding: UnlockTechs cluster early-mid; stock node names → remap to AXE nodes.
 
-## 3b. T2 TOTAL BUDGET (the deliverable) — combined, per era
+## 3b. T2 TOTAL BUDGET (the deliverable) — CREWED vs UNCREWED, per era
 
-| era (cumulative) | probe | crewed-lab | **combined** |
-|---|---|---|---|
-| orbit ~1958 | 48,575 | 9,277 | **57,852** |
-| inner planets ~1961 | 133,415 | 48,238 | **181,653** |
-| crewed + landing ~1964 | 257,846 | 113,122 | **370,968** |
-| adv probes ~1967 | 423,191 | 199,927 | **623,118** |
-| Jupiter ~1970 | 812,279 | 408,452 | **1,220,731** |
-| Saturn ~1972 | 1,475,750 | 769,777 | **2,245,527** |
-| Uranus ~1986 | 1,963,473 | 1,041,392 | **3,004,865** |
-| **Pluto / total** | **2,568,951** | **1,365,760** | **3,934,711** |
+**Uncrewed** = RP0\* robotic instruments (§2). **Crewed** = RP0\* crewed experiments (§2) + all of
+KerbalismLab (§3).
 
-**Total collectable science ≈ 3.93M; split ≈ 65% probe / 35% crewed-lab.** This is the per-tier budget
-the tree is costed against (§4). Theoretical ceiling — realistic collection is lower and probe-weighted
-(crewed third is hardest to realize). Both regenerate: `science_budget.py` + `lab_budget.py`.
+| era (cumulative) | **crewed** (RP0\*+lab) | **uncrewed** (RP0\* robotic) | combined | crew% |
+|---|---|---|---|---|
+| orbit ~1958 | 35,604 | 22,248 | **57,852** | 62% |
+| inner planets ~1961 | 79,610 | 102,044 | **181,654** | 44% |
+| crewed + landing ~1964 | 153,134 | 217,835 | **370,969** | 41% |
+| adv probes ~1967 | 252,599 | 370,520 | **623,119** | 41% |
+| Jupiter ~1970 | 483,634 | 737,098 | **1,220,732** | 40% |
+| Saturn ~1972 | 884,581 | 1,360,946 | **2,245,527** | 39% |
+| Uranus ~1986 | 1,182,856 | 1,822,009 | **3,004,865** | 39% |
+| **Pluto / total** | **1,542,884** | **2,391,827** | **3,934,711** | **39%** |
+
+**Total collectable science ≈ 3.93M; split ≈ 39% crewed / 61% uncrewed** (theoretical max). Crewed
+**dominates early** (62% at first orbit — life-sciences + lunar + early lab) then settles to a steady
+~39% as the universal uncrewed instruments reach the outer planets. **Realistic** collection is far
+more uncrewed-weighted: the crewed 39% leans on the KerbalismLab deep-space tail (least realizable) plus
+Earth/Moon-locked crewed RP0\*, whereas uncrewed probe science you approach with flybys. This is the
+per-tier budget the tree is costed against (§4). Regenerate: `science_budget.py` (RP0\* crewed/uncrewed) +
+`lab_budget.py` (KerbalismLab).
 
 **✅ Resolved (the earlier "do they scale?" uncertainty):** they **do** scale by body — same Kerbalism
 subject mechanism as probes. No cache read needed; it's visible in the experiment defs (stock situations
@@ -163,8 +186,8 @@ no tail) vs. keep a deliberate handful as high-value deep-space targets (JUNO/so
 
 ## 4. Tree-cost decision — PROVISIONAL: ~300k total, front-loaded bite
 
-Total budget (§3b): **~3.93M theoretical (65% probe / 35% crewed-lab)**; realistic collection is lower and
-probe-weighted. Anchors considered: RP-1 = **115k** (≈3% of pool, completable); VISION-literal "tree cost ≈
+Total budget (§3b): **~3.93M theoretical (39% crewed / 61% uncrewed)**; realistic collection is lower and
+uncrewed-weighted. Anchors considered: RP-1 = **115k** (≈3% of pool, completable); VISION-literal "tree cost ≈
 total science" = ~3.93M (you'd unlock ~5% — absurd). **PROVISIONAL DECISION (2026-06-30): total tree cost
 ≈ 300k** (≈ 2.6× RP-1, ≈ 8% of pool).
 

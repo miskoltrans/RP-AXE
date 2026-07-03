@@ -59,6 +59,24 @@ for line in open(os.path.join(TMP,"science_audit_experiments.txt")):
     p=line.strip().split("|")
     if len(p)==4 and p[1]: exps.append((p[0],float(p[1]),int(p[2]),int(p[3])))
 
+# CREWED vs UNCREWED classification, read from manifest/experiment-crew.tsv
+# (crew_operate on the Kerbalism Experiment module + EVA-part detection; regen via
+# tools/experiment_crew.py). A crewed experiment needs a Kerbal (crew_operate CrewOnly/Pilot/
+# Scientist/Engineer/True) or is EVA-collected (evaReport, surface samples). See docs/SCIENCE.md.
+CREW={}
+_ct=os.path.join(TMP,"..","manifest","experiment-crew.tsv")
+if os.path.exists(_ct):
+    for ln in open(_ct,encoding="utf-8"):
+        c=ln.rstrip("\n").split("\t")
+        if len(c)>=2 and c[0]!="experiment": CREW[c[0]]=(c[1]=="1")
+# Stale entries: RP0ALFMED (Apollo Light-Flash, crewed) and RP0BistaticRadar (radio instrument,
+# uncrewed) are in the audit list but absent from the current RP-1 install, so they're not in the
+# crew tsv. Classify from history. Any other unknown defaults to UNCREWED (probe instrument).
+CREW_FALLBACK={"RP0ALFMED":True, "RP0BistaticRadar":False}
+def is_crewed(eid):
+    if eid in CREW: return CREW[eid]
+    return CREW_FALLBACK.get(eid, False)
+
 # EXACT per-experiment body restrictions, read from manifest/experiment-bodies.tsv
 # (RP-1's KERBALISM_EXPERIMENT BodyAllowed/BodyNotAllowed; regen via tools/experiment_bodies.py).
 # Experiments absent from the file carry no restriction -> universal (all bodies).
@@ -94,22 +112,31 @@ def sci_on(body,bv,sm,bm):
             tot+=bv*mult[i]*bf
     return tot
 
-avail={b:0.0 for b in B}
+avail={b:0.0 for b in B}          # combined (back-compat)
+avail_crew={b:0.0 for b in B}     # crewed only
+avail_unc={b:0.0 for b in B}      # uncrewed only
 for eid,bv,sm,bm in exps:
-    for b in bodies_for(eid): avail[b]+=sci_on(b,bv,sm,bm)
+    crewed=is_crewed(eid)
+    for b in bodies_for(eid):
+        s=sci_on(b,bv,sm,bm)
+        avail[b]+=s
+        (avail_crew if crewed else avail_unc)[b]+=s
 
-total=sum(avail.values())
-print("=== PROBE-SCIENCE BUDGET (RP0*, theoretical max, real biome weights) ===")
-print(f"experiments: {len(exps)}")
-print(f"TOTAL available probe science = {total:,.0f}")
+total=sum(avail.values()); tc=sum(avail_crew.values()); tu=sum(avail_unc.values())
+ncrew=sum(1 for e,_,_,_ in exps if is_crewed(e))
+print("=== RP0* SCIENCE BUDGET (theoretical max, real biome weights) — CREWED vs UNCREWED ===")
+print(f"experiments: {len(exps)}  ({ncrew} crewed / {len(exps)-ncrew} uncrewed)")
+print(f"TOTAL available = {total:,.0f}   CREWED = {tc:,.0f} ({tc/total*100:.0f}%)   UNCREWED = {tu:,.0f} ({tu/total*100:.0f}%)")
 print(f"Earth-only = {avail['Earth']:,.0f}   Earth+Moon (early game) = {avail['Earth']+avail['Moon']:,.0f}\n")
-print("per-body (sorted):")
+print(f"per-body (sorted): {'total':>12} {'crewed':>12} {'uncrewed':>12}")
 for b,v in sorted(avail.items(),key=lambda x:-x[1]):
-    print(f"  {b:10s}{v:12,.0f}   biomesum={B[b][1]:>5}  reach x={B[b][2]}")
-print("\n=== cumulative reachable probe science by era ===")
+    print(f"  {b:10s}{v:12,.0f} {avail_crew[b]:12,.0f} {avail_unc[b]:12,.0f}   biomesum={B[b][1]:>5}  reach x={B[b][2]}")
+print("\n=== cumulative reachable science by era — CREWED vs UNCREWED ===")
 mil=[(-3292,"orbit ~1958"),(-2952,"inner planets ~1961"),(-2612,"crewed+landing ~1964"),
  (-2272,"adv probes ~1967"),(-2102,"Jupiter ~1970"),(-1847,"Saturn ~1972"),(-1200,"Uranus ~1986"),
  (-657,"Pluto ~2015")]
+print(f"  {'era':<29} {'crewed':>12} {'uncrewed':>12} {'combined':>12}  crew%")
 for mx,lab in mil:
-    r=sum(v for b,v in avail.items() if B[b][2]<=mx)
-    print(f"  x<= {mx:6d} {lab:22s} {r:12,.0f}")
+    rc=sum(v for b,v in avail_crew.items() if B[b][2]<=mx)
+    ru=sum(v for b,v in avail_unc.items() if B[b][2]<=mx)
+    print(f"  x<= {mx:6d} {lab:22s} {rc:12,.0f} {ru:12,.0f} {rc+ru:12,.0f}  {rc/(rc+ru)*100:4.0f}%")
