@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, xfan:true, xfanPitch:16, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'junction', icons:true, square:true, layout:'sugiyama-bk', spacingX:1.0, spacingY:1.0, diffspread:false, lanePitch:1, halo:false, bundleBeta:0.85 };
+const opt={ fan:true, xfan:true, xfanPitch:16, avoid:false, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'junction', icons:true, square:true, layout:'sugiyama-bk', spacingX:1.0, spacingY:1.0, diffspread:false, lanePitch:1, halo:false, bundleBeta:0.85 };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
@@ -446,6 +446,55 @@ function routeJunctionBus(e){
   junctions.push({x:bx, y:c[1], col:e.discColor||GRAY, e});   // dot where this edge leaves the bus (e = owning edge)
   return roundPolyline([p,[bx,p[1]],[bx,c[1]],c], CORNER_R, CORNER_SEGS);
 }
+// junction-gutter (variant A): the schematic bus, but multi-tier peel-offs STEP THROUGH the layout's dummy
+// rows instead of one long horizontal at the target row. Each horizontal crosses a tier at that tier's
+// DUMMY y (a row the layout kept clear of real nodes), and each vertical runs in the gutter after a column
+// — so the edge never plows through a node the way plain `junction` can. Adjacent-tier edges (no dummies)
+// use the plain one-gutter bus peel-off. Still one flat polyline per edge; dots as before.
+function routeJunctionGutter(e){
+  const bx=busX[e.from];
+  if(bx==null) return routeOrthoLate(e);
+  const p=anchor(byId[e.from],'RIGHT',0.5), c=anchor(byId[e.to],'LEFT',e._tT);
+  const wp=e.waypoints;
+  if(!wp || wp.length<=2){                                   // adjacent tier: one-gutter bus peel-off (already node-safe)
+    if(Math.abs(p[1]-c[1])<0.5 && c[0]<=bx+2) return [p,c];
+    junctions.push({x:bx, y:c[1], col:e.discColor||GRAY, e});
+    return roundPolyline([p,[bx,p[1]],[bx,c[1]],c], CORNER_R, CORNER_SEGS);
+  }
+  const wy=i=> wp[i][1]+0.5*NH();                            // dummy row centre (matches pathThroughDummies)
+  junctions.push({x:bx, y:wy(1), col:e.discColor||GRAY, e});
+  const pts=[p,[bx,p[1]],[bx,wy(1)]];                        // into trunk, down to the first dummy row
+  for(let i=1;i<wp.length-1;i++){                            // staircase: horiz across each dummy tier, vert in its gutter
+    const gx=wp[i][0]+NW(), nextY = i+1<wp.length-1 ? wy(i+1) : c[1];
+    pts.push([gx, wy(i)], [gx, nextY]);
+  }
+  pts.push(c);                                              // final gutter horizontal into the target
+  return roundPolyline(pts, CORNER_R, CORNER_SEGS);
+}
+// avoid-nodes (variant B): a post-process — detour any LONG horizontal run that passes through a node box.
+// For each offending node, hop into the gutter just past it, at a clear y above/below (whichever is nearer),
+// and rejoin the row. Local + per-edge (can't guarantee global planarity, but clears the obvious crossings).
+// Applied to whatever routing is active (opt.avoid); operates on the flat polyline then re-rounds.
+function avoidNodes(pts){
+  if(!pts || pts.length<3) return pts;
+  const M=8, boxes=D.nodes.map(n=>[n.pos[0],n.pos[1],NW(),NH()]);   // [x,y,w,h]
+  const out=[pts[0]];
+  for(let i=1;i<pts.length;i++){
+    const a=out[out.length-1], b=pts[i];
+    const horiz=Math.abs(a[1]-b[1])<0.5 && Math.abs(b[0]-a[0])>NW()*0.8;   // only long horizontals offend
+    if(!horiz){ out.push(b); continue; }
+    const y=a[1], dir=Math.sign(b[0]-a[0]), x1=Math.min(a[0],b[0]), x2=Math.max(a[0],b[0]);
+    const hit=boxes.filter(bx=> y>bx[1]+2 && y<bx[1]+bx[3]-2 && bx[0]+bx[2]>x1+2 && bx[0]<x2-2)
+                   .sort((p,q)=> dir>0 ? p[0]-q[0] : q[0]-p[0]);
+    for(const nb of hit){                                    // jog around each crossed node
+      const above=nb[1]-M, below=nb[1]+nb[3]+M, jy=(Math.abs(y-above)<=Math.abs(y-below))?above:below;
+      const L=dir>0?nb[0]-M:nb[0]+nb[2]+M, R=dir>0?nb[0]+nb[2]+M:nb[0]-M;
+      out.push([L,y],[L,jy],[R,jy],[R,y]);
+    }
+    out.push(b);
+  }
+  return roundPolyline(out, CORNER_R, CORNER_SEGS);
+}
 
 // ---- NEW variants (2026-07-02) ----
 // cubic Bézier P0..P3 → sampled flat polyline (tessellated so the KSP Vectrosity port stays ONE line).
@@ -509,6 +558,7 @@ function edgeGeom(e){
     case 'ortho-late':  return routeOrthoLate(e);
     case 'ortho-early': return routeOrthoEarly(e);
     case 'junction':    return routeJunctionBus(e);
+    case 'junction-gutter': return routeJunctionGutter(e);
     case 'polyline':    return pathThroughDummies(e) || routeEdge(e);
     case 'spline':      return catmullRom(pathThroughDummies(e), 14) || routeEdge(e);
     case 'bezier':      return routeBezier(e);
@@ -586,10 +636,11 @@ function buildGeometry(){
   computeSlots();
   if(opt.routing==='lanes') buildLaneRoutes();        // only 'lanes' needs the gutter lane-packing pass
   else if(opt.routing==='bundle') buildBundleHubs();  // bundle needs per-node out/in hub y's first
-  else if(opt.routing==='junction') buildBusRoutes(); // junction needs per-source bus x's + a fresh dot list
+  else if(opt.routing==='junction'||opt.routing==='junction-gutter') buildBusRoutes(); // per-source bus x + fresh dots
   for(const e of edges){
     if(!(e.from in byId)||!(e.to in byId)){ e.geom=null; continue; }
     e.geom = edgeGeom(e);   // routing variant (opt.routing)
+    if(opt.avoid) e.geom = avoidNodes(e.geom);   // post-process: detour horizontals around node boxes
     const a=e.geom[e.geom.length-1], b=e.geom[e.geom.length-2];
     e.arrow={ tip:a, dir:snap4(norm(sub(a,b))) };
   }
@@ -844,6 +895,7 @@ function init(){
   if(P0.has('diffspread')) opt.diffspread=true;
   if(P0.has('xfan')) opt.xfan = P0.get('xfan')!=='0';
   if(P0.get('xfanpitch')) opt.xfanPitch = +P0.get('xfanpitch')||opt.xfanPitch;
+  if(P0.has('avoid')) opt.avoid = P0.get('avoid')!=='0';
   if(P0.get('lanePitch')) opt.lanePitch=+P0.get('lanePitch')||opt.lanePitch;
   if(P0.get('bundle')!=null) opt.bundleBeta=Math.max(0,Math.min(1,+P0.get('bundle')||opt.bundleBeta));
   buildModel(); restore();
@@ -892,7 +944,7 @@ function init(){
   // controls
   const cb=(id,key,geom)=>{ const el=document.getElementById(id); el.checked=opt[key];
     el.addEventListener('change',()=>{ opt[key]=el.checked; if(key==='highlight')setFocus(activeFocus()); geom?rebuild():draw(); }); };
-  cb('c_fan','fan',true); cb('c_xfan','xfan',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_icon','icons',false); cb('c_square','square',true); cb('c_halo','halo',false);
+  cb('c_fan','fan',true); cb('c_xfan','xfan',true); cb('c_avoid','avoid',true); cb('c_arr','arrows',false); cb('c_disc','discEdges',false); cb('c_hi','highlight',false); cb('c_icon','icons',false); cb('c_square','square',true); cb('c_halo','halo',false);
   const selR=document.getElementById('s_route'); selR.value=opt.routing;
   selR.addEventListener('change',()=>{ opt.routing=selR.value; rebuild(); });
   const cp=document.getElementById('c_prog'); cp.checked=opt.progress;

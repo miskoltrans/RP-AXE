@@ -51,12 +51,14 @@
     <label><input type="checkbox" id="c_fan">Fan endpoints</label>
     <label title="stagger converging risers on the x-axis so overlapping edges read as distinct (ortho-late)"><input type="checkbox" id="c_xfan">Fan X</label>
     <label>· <input type="range" id="r_xfan" min="0" max="40" step="1" value="16" style="width:66px;vertical-align:middle"><span id="r_xfan_v" style="color:var(--mut);min-width:32px;display:inline-block">16px</span></label>
+    <label title="detour any horizontal edge run that passes through a node box (post-process, any routing)"><input type="checkbox" id="c_avoid">Avoid nodes</label>
     <label>Routing <select id="s_route">
       <option value="lanes">Lanes (ortho, packed)</option>
       <option value="ortho-mid">Ortho S (mid riser)</option>
       <option value="ortho-late">Ortho elbow (into target)</option>
       <option value="ortho-early">Ortho elbow (out of source) ★</option>
       <option value="junction">Junction bus (schematic) ★</option>
+      <option value="junction-gutter">Junction bus — gutter-routed ★</option>
       <option value="polyline">Polyline (thru dummies)</option>
       <option value="spline">Spline (smooth)</option>
       <option value="bezier">Bézier (horiz-tangent) ★</option>
