@@ -63,7 +63,7 @@ digraph AXE {
   "gnc_avionicsPrototypes" [label="Analog Inertial Guidance\nGuidanceControl T2 · 90",fillcolor="#8a5cd6",fontcolor="#111111"];
   "gnc_earlyAvionics" [label="Stable-Platform Guidance\nGuidanceControl T4 · 900",fillcolor="#8a5cd6",fontcolor="#111111"];
   "gnc_standardRCS" [label="Interchangeable-Part Manufacture\nGuidanceControl T3 · 400",fillcolor="#8a5cd6",fontcolor="#111111"];
-  "aero_stampedWings" [label="Stamped Aerofoil Panels\nAerodynamics T2 · 90",fillcolor="#5aa0e2",fontcolor="#111111"];
+  "aero_stampedWings" [label="Stamped Aerofoil Panels\nAerodynamics T3 · 400",fillcolor="#5aa0e2",fontcolor="#111111"];
   "aero_boattail" [label="Boattail Aft-Fairings\nAerodynamics T2 · 90",fillcolor="#5aa0e2",fontcolor="#111111"];
   "str_diameterAdapters" [label="Modular Diameter Adapters\nStructuresMechanisms T2 · 90",fillcolor="#bfb08d",fontcolor="#111111"];
   "str_prefabAdapters" [label="Prefabricated Adapters\nStructuresMechanisms T3 · 400",fillcolor="#bfb08d",fontcolor="#111111"];
@@ -91,8 +91,8 @@ digraph AXE {
   "opt_remoteSensing" [label="Infrared Remote Sensing\nOpticsPhotonics T5 · 1500",fillcolor="#7c8cff",fontcolor="#111111"];
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
-  { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_stampedWings" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
-  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "str_prefabAdapters" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" }
+  { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
+  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "aero_stampedWings" "str_prefabAdapters" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" }
   { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "fd_throttleableRocketplane" "gnc_earlyAvionics" "str_serviceModuleTank" "cmp_compositeFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" "nuc_cosmicRay" }
   { rank=same; "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_recon" "opt_remoteSensing" }
   { rank=same; "gs_saturnPad" }
@@ -162,7 +162,7 @@ digraph AXE {
   "gnc_avionicsPrototypes" -> "gnc_earlyAvionics" [style=solid];
   "elec_transistor" -> "gnc_earlyAvionics" [style=solid];
   "gnc_rcs" -> "gnc_standardRCS" [style=solid];
-  "aero_subsonicWing" -> "aero_stampedWings" [style=solid];
+  "aero_boattail" -> "aero_stampedWings" [style=solid];
   "aero_subsonicWing" -> "aero_boattail" [style=solid];
   "str_structuralHardware" -> "str_diameterAdapters" [style=solid];
   "str_diameterAdapters" -> "str_prefabAdapters" [style=solid];

@@ -502,8 +502,8 @@ nodes:
   - id: aero_stampedWings
     title: "Stamped Aerofoil Panels"
     discipline: Aerodynamics
-    tier: 2
-    parents: [aero_subsonicWing]
+    tier: 3
+    parents: [aero_boattail]
     flavor: "Press and rivet standardized wing panels, elevons and connectors from sheet stock — a catalog of fixed aerofoil sections you bolt straight on, no shaping required. The procedural wing is lighter, cleaner and always the default; research this only if you would rather build from off-the-shelf panels."
     parts: [deltaWing, delta_small, structuralWing, structuralWing2, structuralWing3, structuralWing4, sweptWing, sweptWing1, sweptWing2, wingConnector, wingConnector2, wingConnector3, wingConnector4, wingConnector5, StandardCtrlSrf, elevon2, elevon3, elevon5, smallCtrlSrf, R8winglet, wingStrake, winglet, winglet3, CanardController, basicFin, tailfin]
 
