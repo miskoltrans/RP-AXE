@@ -64,7 +64,7 @@ nodes:
     parents: [pc_storables, fd_injectors]
     anyToUnlock: true
     flavor: "Drive the propellants with a turbine-spun pump instead of tank pressure — the tank stops being a heavy pressure vessel and the chamber can run far harder than any sounding motor reaches. The step from a powder dart to the turbopump-fed V-2: a large liquid rocket at last."
-    parts: [ROE-A4, ROE-A7, ROE-RD100]
+    parts: [ROE-A4, ROE-A7, ROE-RD100, ROE-XLR41]
   # --- the combustion fork: two answers to a stable large chamber ---
   - id: fd_singleChamber
     title: "Single-Chamber Combustion"
@@ -450,7 +450,7 @@ nodes:
     tier: 5
     parents: [fd_throttleableRocketplane]
     flavor: "A rocket a pilot can throttle deeply and relight in flight, burning ammonia and oxygen with control enough to fly the edge of space and come back. The X-15's XLR99: the first man-rated throttleable engine, and the doorway to hypersonics."
-    parts: [ROE-XLR99, ROE-XLR41]
+    parts: [ROE-XLR99]
 
   # ===================== BAND 1 * UTILITY CATCH-ALL (exempt from the <=6 rule) =====================
   # The passive structure everyone needs and no one researches for. Station-scale modular truss + MLP +
