@@ -366,7 +366,7 @@ nodes:
   # Air-breathing propulsion is its OWN lane; supersonic engines DEPEND on Aerodynamics breakthroughs
   # (swept wing + shock-cone intake). Rocketplane rockets stay in FluidDynamics (they're rockets).
   # MULTI-TIER edges flagged for review: aero_subsonicWing->aero_supersonicWing (T1->T3).
-  #   (X-1 -> X-15 leap now bridged by fd_throttleableRocketplane / the X-2's XLR25 at T4.)
+  #   (X-1 -> X-15 leap now bridged by fd_throttleableRocketplane / the X-2's XLR25 at T3.)
   - id: aero_subsonicWing
     title: "Subsonic Aerodynamics"
     discipline: Aerodynamics
@@ -440,9 +440,9 @@ nodes:
   - id: fd_throttleableRocketplane
     title: "Throttle-Valve Aircraft Rocket"
     discipline: FluidDynamics
-    tier: 4
-    parents: [fd_rocketplaneRocket, pc_stentor]
-    flavor: "A throttle valve on an aircraft rocket at last — the Curtiss-Wright XLR25 could be modulated continuously in flight instead of stepped chamber by chamber, the first US rocket a pilot flew on the stick. The X-2's engine, borrowing the deep-throttling art proven on storable sustainers: the bridge from the X-1's fixed chambers to the X-15's man-rated throttle."
+    tier: 3
+    parents: [fd_rocketplaneRocket]
+    flavor: "A throttle valve on an aircraft rocket at last — the Curtiss-Wright XLR25 could be modulated continuously in flight instead of stepped chamber by chamber, the first US rocket a pilot flew on the stick. The X-2's engine: the bridge from the X-1's fixed chambers to the X-15's man-rated throttle."
     parts: [ROE-XLR25]
   - id: fd_throttlingRocket
     title: "Throttleable Restartable Rocket"

@@ -56,7 +56,7 @@ digraph AXE {
   "av_afterburner" [label="Afterburning Turbojet\nAirBreathing T4 · 900",fillcolor="#6cc4b0",fontcolor="#111111"];
   "av_variableStator" [label="Variable-Stator Turbojet\nAirBreathing T4 · 900",fillcolor="#6cc4b0",fontcolor="#111111"];
   "av_ramjet" [label="Ramjet Compression\nAirBreathing T5 · 1500",fillcolor="#6cc4b0",fontcolor="#111111"];
-  "fd_throttleableRocketplane" [label="Throttle-Valve Aircraft Rocket\nFluidDynamics T4 · 900",fillcolor="#23b9a0",fontcolor="#111111"];
+  "fd_throttleableRocketplane" [label="Throttle-Valve Aircraft Rocket\nFluidDynamics T3 · 400",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_throttlingRocket" [label="Throttleable Restartable Rocket\nFluidDynamics T5 · 1500",fillcolor="#23b9a0",fontcolor="#111111"];
   "str_structuralHardware" [label="Riveted Airframe Structure\nStructuresMechanisms T1 · 20",fillcolor="#bfb08d",fontcolor="#111111"];
   "gnc_postWarAvionics" [label="Gyroscopic Autopilot\nGuidanceControl T1 · 20",fillcolor="#8a5cd6",fontcolor="#111111"];
@@ -93,8 +93,8 @@ digraph AXE {
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
-  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "aero_stampedWings" "str_prefabAdapters" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" "nuc_cosmicRay" "opt_recon" }
-  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "fd_throttleableRocketplane" "gnc_earlyAvionics" "str_serviceModuleTank" "cmp_compositeFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" }
+  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "fd_throttleableRocketplane" "gnc_standardRCS" "aero_stampedWings" "str_prefabAdapters" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" "nuc_cosmicRay" "opt_recon" }
+  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "cmp_compositeFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" }
   { rank=same; "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_tvRecon" "opt_remoteSensing" }
   { rank=same; "gs_saturnPad" }
   { rank=same; "gs_shuttlePad" }
@@ -155,7 +155,6 @@ digraph AXE {
   "aero_supersonicWing" -> "av_variableStator" [style=solid];
   "av_variableStator" -> "av_ramjet" [style=solid];
   "fd_rocketplaneRocket" -> "fd_throttleableRocketplane" [style=solid];
-  "pc_stentor" -> "fd_throttleableRocketplane" [style=solid];
   "fd_throttleableRocketplane" -> "fd_throttlingRocket" [style=solid];
   "start" -> "str_structuralHardware" [style=solid];
   "start" -> "gnc_postWarAvionics" [style=solid];
