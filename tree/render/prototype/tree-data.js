@@ -5505,7 +5505,7 @@ window.TREE = {
   },
   {
    "id": "fd_vacuumExpansion",
-   "title": "Optimised Vacuum Expansion",
+   "title": "Extended Vacuum Expansion",
    "discipline": "FluidDynamics",
    "tier": 6,
    "cost": 2000,
@@ -5687,7 +5687,7 @@ window.TREE = {
   },
   {
    "id": "fd_longMarchStorable",
-   "title": "Clustered Storable Combustion",
+   "title": "Storable Chamber Clustering",
    "discipline": "FluidDynamics",
    "tier": 5,
    "cost": 1500,
@@ -5771,7 +5771,7 @@ window.TREE = {
   },
   {
    "id": "fd_saturnKerolox",
-   "title": "High-Thrust Kerolox Combustion",
+   "title": "High-Pressure Kerolox Combustion",
    "discipline": "FluidDynamics",
    "tier": 6,
    "cost": 2000,

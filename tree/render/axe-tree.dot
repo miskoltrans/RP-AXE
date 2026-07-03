@@ -98,14 +98,14 @@ digraph AXE {
   "pc_strapOnSolids" [label="Strap-On Thrust Augmentation\nPropellantChemistry T4 · 900",fillcolor="#e5533b",fontcolor="#111111"];
   "pc_retroKick" [label="Vacuum-Start Solid Impulse\nPropellantChemistry T4 · 900",fillcolor="#e5533b",fontcolor="#111111"];
   "fd_regenCooling" [label="Regenerative Chamber Cooling\nFluidDynamics T4 · 900",fillcolor="#23b9a0",fontcolor="#111111"];
-  "fd_vacuumExpansion" [label="Optimised Vacuum Expansion\nFluidDynamics T6 · 2000",fillcolor="#23b9a0",fontcolor="#111111"];
+  "fd_vacuumExpansion" [label="Extended Vacuum Expansion\nFluidDynamics T6 · 2000",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_restartableUpper" [label="Restartable Vacuum Ignition\nFluidDynamics T4 · 900",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_spacecraftPropulsion" [label="Restartable Deep-Throttling\nFluidDynamics T5 · 1500",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_storableSustainer" [label="Storable Single-Chamber Combustion\nFluidDynamics T4 · 900",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_titanTandem" [label="Altitude-Start Tandem Staging\nFluidDynamics T5 · 1500",fillcolor="#23b9a0",fontcolor="#111111"];
-  "fd_longMarchStorable" [label="Clustered Storable Combustion\nFluidDynamics T5 · 1500",fillcolor="#23b9a0",fontcolor="#111111"];
+  "fd_longMarchStorable" [label="Storable Chamber Clustering\nFluidDynamics T5 · 1500",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_sovietStorable" [label="Storable Tandem Staging\nFluidDynamics T5 · 1500",fillcolor="#23b9a0",fontcolor="#111111"];
-  "fd_saturnKerolox" [label="High-Thrust Kerolox Combustion\nFluidDynamics T6 · 2000",fillcolor="#23b9a0",fontcolor="#111111"];
+  "fd_saturnKerolox" [label="High-Pressure Kerolox Combustion\nFluidDynamics T6 · 2000",fillcolor="#23b9a0",fontcolor="#111111"];
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }

@@ -28,7 +28,7 @@ node** (doctrine #4; verified by `scratchpad/check_upg.py` = 0 violations).
 | `pc_ntoHypergolics` | Dinitrogen-Tetroxide Oxidiser | 4 | `pc_hypergolics` |
 | `pc_larchPeroxide` | Refined Peroxide Combustion | 6 | `pc_htpSustainer` |
 | `fd_regenCooling` | Regenerative Chamber Cooling | 4 | `met_nimonic` |
-| `fd_vacuumExpansion` | Optimised Vacuum Expansion | 6 | `fd_matureOrbital` |
+| `fd_vacuumExpansion` | Extended Vacuum Expansion | 6 | `fd_matureOrbital` |
 
 ### Part nodes (base engines; may carry non-conflicting uprates)
 | Node | Title | Tier | Parents | King / parts |
@@ -39,9 +39,9 @@ node** (doctrine #4; verified by `scratchpad/check_upg.py` = 0 violations).
 | `pc_fluorine` | Liquid-Fluorine Oxidiser *(gamble)* | 6 | `pc_hypergolics` | G-1 (hydrazine+F₂, Isp 357) |
 | `fd_storableSustainer` | Storable Single-Chamber Combustion | 4 | `fd_singleChamber` | Viking 2/4/5, YF-3 |
 | `fd_titanTandem` | Altitude-Start Tandem Staging | 5 | `fd_largeChamber` | LR87 ×3, LR91 ×2 |
-| `fd_longMarchStorable` | Clustered Storable Combustion | 5 | `fd_orbitalMultiChamber` + `pc_ntoHypergolics` | YF-21 (CZ-2), YF-20/22/23/25 |
+| `fd_longMarchStorable` | Storable Chamber Clustering | 5 | `fd_orbitalMultiChamber` + `pc_ntoHypergolics` | YF-21 (CZ-2), YF-20/22/23/25 |
 | `fd_sovietStorable` | Storable Tandem Staging | 5 | `fd_orbitalMultiChamber` + `pc_ntoHypergolics` | RD-215/219, RD-855/856 |
-| `fd_saturnKerolox` | High-Thrust Kerolox Combustion | 6 | `fd_largeChamber` | H-1/RS-27, RD-111 → Saturn ref |
+| `fd_saturnKerolox` | High-Pressure Kerolox Combustion | 6 | `fd_largeChamber` | H-1/RS-27, RD-111 → Saturn ref |
 | `pc_scoutSolids` | Staged Solid Boost | 4 | `pc_compositeSolid` | Algol, Antares, Altair (+Castor uprates) |
 | `pc_strapOnSolids` | Strap-On Thrust Augmentation | 4 | `pc_compositeSolid` | Castor (Thor→Delta) |
 | `pc_retroKick` | Vacuum-Start Solid Impulse | 4 | `pc_compositeSolid` | Mercury retro (deorbit = coming home) |

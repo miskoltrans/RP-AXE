@@ -764,7 +764,7 @@ nodes:
     flavor: "Route the fuel through milled channels in the chamber wall before it burns, carrying the heat back into the cycle instead of letting it melt the throat — so the same engine holds a higher chamber pressure without burning through. The quiet enabler behind every thrust uprate of the era: Atlas, Thor and Blue Streak all grow harder on the same hardware."
     upgrades: [RFUpgrade_LR105-NA-3, RFUpgrade_LR105-NA-5, RFUpgrade_LR89-NA-3, RFUpgrade_LR89-NA-5, RFUpgrade_LR79-NA-9, RFUpgrade_LR79-NA-11, RFUpgrade_S-3D, RFUpgrade_RZ.2-Mk3, RFUpgrade_RZ.2-Mk4, RFUpgrade_RD-107-8D74-1958, RFUpgrade_RD-107-8D74-1959, RFUpgrade_RD-107-8D74K, RFUpgrade_RD-107-8D76, RFUpgrade_RD-108-8D75-1958, RFUpgrade_RD-108-8D75-1959, RFUpgrade_RD-108-8D75K, RFUpgrade_RD-108-8D77, RFUpgrade_Viking-4, RFUpgrade_Viking-5, RFUpgrade_LR87-AJ-3, RFUpgrade_LR91-AJ-3]
   - id: fd_vacuumExpansion
-    title: "Optimised Vacuum Expansion"
+    title: "Extended Vacuum Expansion"
     discipline: FluidDynamics
     tier: 6
     parents: [fd_matureOrbital]
@@ -802,7 +802,7 @@ nodes:
     flavor: "Design the two stages as one propulsion system: a twin-chamber booster handing off to a dedicated second-stage engine built to ignite at altitude, in the thin air its bell is shaped for. Titan's LR87 and LR91 — the first purpose-built tandem, where the upper engine is no afterthought but half the design."
     parts: [ROE-LR87, ROE-LR87_11, ROE-LR87_Single, ROE-LR91, ROE-LR91-4V]
   - id: fd_longMarchStorable
-    title: "Clustered Storable Combustion"
+    title: "Storable Chamber Clustering"
     discipline: FluidDynamics
     tier: 5
     parents: [fd_orbitalMultiChamber, pc_ntoHypergolics]
@@ -816,7 +816,7 @@ nodes:
     flavor: "The storable answer as a tandem missile stack: a paired-chamber first stage and a vacuum second stage, all on dimethylhydrazine and nitric-acid oxidiser, sat fuelled in a silo for years. The R-14 and R-16 engines — propulsion built to wait, then go."
     parts: [ROE-RD215, ROE-RD215_Single, ROE-RD219, ROE-RD855, ROE-RD856]
   - id: fd_saturnKerolox
-    title: "High-Thrust Kerolox Combustion"
+    title: "High-Pressure Kerolox Combustion"
     discipline: FluidDynamics
     tier: 6
     parents: [fd_largeChamber]
