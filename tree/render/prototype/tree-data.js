@@ -198,7 +198,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2247
+    2393
    ]
   },
   {
@@ -230,7 +230,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2153
+    2299
    ]
   },
   {
@@ -607,7 +607,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    1965
+    2111
    ]
   },
   {
@@ -739,7 +739,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2059
+    2205
    ]
   },
   {
@@ -771,7 +771,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1688
+    1641
    ]
   },
   {
@@ -808,7 +808,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1850
+    1824
    ]
   },
   {
@@ -840,7 +840,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1944
+    1730
    ]
   },
   {
@@ -872,7 +872,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1897
+    1683
    ]
   },
   {
@@ -899,7 +899,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1782
+    2055
    ]
   },
   {
@@ -931,7 +931,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1688
+    1871
    ]
   },
   {
@@ -963,7 +963,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1782
+    2055
    ]
   },
   {
@@ -995,7 +995,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1735
+    1918
    ]
   },
   {
@@ -1011,7 +1011,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2247
+    1824
    ]
   },
   {
@@ -1033,7 +1033,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2247
+    1589
    ]
   },
   {
@@ -1055,7 +1055,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2247
+    1589
    ]
   },
   {
@@ -1102,7 +1102,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1228
+    1087
    ]
   },
   {
@@ -1129,7 +1129,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1228
+    1087
    ]
   },
   {
@@ -1166,7 +1166,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1228
+    1087
    ]
   },
   {
@@ -1200,7 +1200,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1432
+    1411
    ]
   },
   {
@@ -1224,7 +1224,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1594
+    1275
    ]
   },
   {
@@ -1246,7 +1246,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1594
+    1275
    ]
   },
   {
@@ -1283,7 +1283,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    899
+    852
    ]
   },
   {
@@ -1303,7 +1303,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1897
+    1918
    ]
   },
   {
@@ -1337,7 +1337,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    852
+    805
    ]
   },
   {
@@ -1419,7 +1419,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    805
+    899
    ]
   },
   {
@@ -1538,7 +1538,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    946
+    899
    ]
   },
   {
@@ -1570,7 +1570,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3230
+    3136
    ]
   },
   {
@@ -1612,7 +1612,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2666
+    2619
    ]
   },
   {
@@ -1649,7 +1649,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3622
+    3747
    ]
   },
   {
@@ -1768,7 +1768,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3622
+    3747
    ]
   },
   {
@@ -1784,7 +1784,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3575
+    3794
    ]
   },
   {
@@ -1811,7 +1811,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3857
+    3700
    ]
   },
   {
@@ -1838,7 +1838,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3763
+    3794
    ]
   },
   {
@@ -1860,7 +1860,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3387
+    3606
    ]
   },
   {
@@ -1922,7 +1922,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2435
+    2760
    ]
   },
   {
@@ -1949,7 +1949,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2854
+    3888
    ]
   },
   {
@@ -2021,7 +2021,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3204
+    3888
    ]
   },
   {
@@ -2048,7 +2048,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2153
+    2384
    ]
   },
   {
@@ -2075,7 +2075,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3460
+    3324
    ]
   },
   {
@@ -2097,7 +2097,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3554
+    3418
    ]
   },
   {
@@ -2134,7 +2134,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2692
+    3982
    ]
   },
   {
@@ -2156,7 +2156,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3319
+    3371
    ]
   },
   {
@@ -2213,7 +2213,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2551
+    2666
    ]
   },
   {
@@ -2314,7 +2314,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2341
+    2290
    ]
   },
   {
@@ -2346,7 +2346,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2059
+    2196
    ]
   },
   {
@@ -2383,7 +2383,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2341
+    2290
    ]
   },
   {
@@ -2492,7 +2492,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2478
+    2290
    ]
   },
   {
@@ -2529,7 +2529,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2341
+    2478
    ]
   },
   {
@@ -2571,7 +2571,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2341
+    2478
    ]
   },
   {
@@ -2593,7 +2593,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2059
+    2196
    ]
   },
   {
@@ -2615,7 +2615,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2059
+    2196
    ]
   },
   {
@@ -2762,7 +2762,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3089
+    2995
    ]
   },
   {
@@ -2780,7 +2780,7 @@ window.TREE = {
    ],
    "pos": [
     -2188,
-    3434
+    3559
    ]
   },
   {
@@ -2798,7 +2798,7 @@ window.TREE = {
    ],
    "pos": [
     -1808,
-    3481
+    3512
    ]
   },
   {
@@ -2819,7 +2819,7 @@ window.TREE = {
    ],
    "pos": [
     -1048,
-    3669
+    3512
    ]
   },
   {
@@ -3046,7 +3046,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3387
+    3606
    ]
   },
   {
@@ -3193,7 +3193,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2572
+    2713
    ]
   },
   {
@@ -3235,7 +3235,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2619
+    2666
    ]
   },
   {
@@ -3401,7 +3401,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    946
+    899
    ]
   },
   {
@@ -3419,7 +3419,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2619
+    2572
    ]
   },
   {
@@ -3437,7 +3437,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3857
+    3700
    ]
   },
   {
@@ -3499,7 +3499,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2341
+    2290
    ]
   },
   {
@@ -3576,7 +3576,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    805
+    993
    ]
   },
   {
@@ -3628,7 +3628,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3230
+    3136
    ]
   },
   {
@@ -3680,7 +3680,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2995
+    3136
    ]
   },
   {
@@ -3749,7 +3749,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3136
+    2854
    ]
   },
   {
@@ -3781,7 +3781,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3136
+    2854
    ]
   },
   {
@@ -3818,7 +3818,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2901
+    2854
    ]
   },
   {
@@ -3870,7 +3870,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1040
+    3230
    ]
   },
   {
@@ -4162,7 +4162,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1040
+    3230
    ]
   },
   {
@@ -4244,7 +4244,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1040
+    3230
    ]
   },
   {
@@ -4606,7 +4606,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1040
+    3230
    ]
   },
   {
@@ -4733,7 +4733,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1040
+    3230
    ]
   },
   {
@@ -4950,7 +4950,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    1040
+    3230
    ]
   },
   {
@@ -5092,7 +5092,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     92,
-    1040
+    3230
    ]
   },
   {
@@ -5139,7 +5139,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2713
+    2666
    ]
   },
   {
@@ -5166,7 +5166,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2153
+    2384
    ]
   },
   {
@@ -5193,7 +5193,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2854
+    3888
    ]
   },
   {
@@ -5220,7 +5220,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    3251
+    3935
    ]
   },
   {
@@ -5257,7 +5257,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    3157
+    3841
    ]
   },
   {
@@ -5274,6 +5274,8 @@ window.TREE = {
     "RFUpgrade_RD-214U-8D59U",
     "RFUpgrade_RD-217-8D515",
     "RFUpgrade_S5.2",
+    "RFUpgrade_XLR81-BA-5",
+    "RFUpgrade_XLR81-BA-7",
     "RFUpgrade_YF-1A",
     "RFUpgrade_YF-1B",
     "RFUpgrade_YF-3A"
@@ -5281,12 +5283,12 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1500
+    1369
    ]
   },
   {
    "id": "pc_htpSustainer",
-   "title": "Multi-Chamber Peroxide Sustainers",
+   "title": "Multi-Chamber Peroxide Combustion",
    "discipline": "PropellantChemistry",
    "tier": 4,
    "cost": 900,
@@ -5304,6 +5306,22 @@ window.TREE = {
      "title": "Gamma 8"
     }
    ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1048,
+    1275
+   ]
+  },
+  {
+   "id": "pc_larchPeroxide",
+   "title": "Refined Peroxide Combustion",
+   "discipline": "PropellantChemistry",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Push the peroxide sustainer harder — a hotter catalyst pack and a higher chamber pressure wring more thrust and a dozen seconds of specific impulse from the same hydrogen peroxide. The Larch uprates that turned the Gamma engines into an orbital launcher's powerplant, a decade after the chemistry was written off.",
+   "parts": [],
    "upgrades": [
     "RFUpgrade_Gamma-301",
     "RFUpgrade_Larch-2",
@@ -5312,8 +5330,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1048,
-    1594
+    -288,
+    1275
    ]
   },
   {
@@ -5335,12 +5353,12 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    1364
+    1411
    ]
   },
   {
    "id": "pc_scoutSolids",
-   "title": "Cast Composite Upper Stages",
+   "title": "Staged Solid Boost",
    "discipline": "PropellantChemistry",
    "tier": 4,
    "cost": 900,
@@ -5373,11 +5391,14 @@ window.TREE = {
      "title": "Antares I X-254"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_Castor-1-SL",
+    "RFUpgrade_Castor-1-Vac"
+   ],
    "grants": [],
    "pos": [
     -1048,
-    1228
+    1087
    ]
   },
   {
@@ -5400,19 +5421,16 @@ window.TREE = {
      "title": "Castor 1"
     }
    ],
-   "upgrades": [
-    "RFUpgrade_Castor-1-SL",
-    "RFUpgrade_Castor-1-Vac"
-   ],
+   "upgrades": [],
    "grants": [],
    "pos": [
     -1048,
-    1322
+    1181
    ]
   },
   {
    "id": "pc_retroKick",
-   "title": "Vacuum-Start Solid Motors",
+   "title": "Vacuum-Start Solid Impulse",
    "discipline": "PropellantChemistry",
    "tier": 4,
    "cost": 900,
@@ -5444,7 +5462,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1134
+    993
    ]
   },
   {
@@ -5482,7 +5500,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    852
+    805
    ]
   },
   {
@@ -5504,7 +5522,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    1782
+    2055
    ]
   },
   {
@@ -5540,21 +5558,17 @@ window.TREE = {
    "upgrades": [
     "RFUpgrade_AJ10-101A",
     "RFUpgrade_AJ10-142",
-    "RFUpgrade_AJ10-42",
-    "RFUpgrade_XLR81-BA-1",
-    "RFUpgrade_XLR81-BA-3",
-    "RFUpgrade_XLR81-BA-5",
-    "RFUpgrade_XLR81-BA-7"
+    "RFUpgrade_AJ10-42"
    ],
    "grants": [],
    "pos": [
     -1048,
-    1406
+    1453
    ]
   },
   {
    "id": "fd_spacecraftPropulsion",
-   "title": "Restartable Course-Correction Propulsion",
+   "title": "Restartable Deep-Throttling",
    "discipline": "FluidDynamics",
    "tier": 5,
    "cost": 1500,
@@ -5577,16 +5591,19 @@ window.TREE = {
      "title": "MC-4-610"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_XLR81-BA-1",
+    "RFUpgrade_XLR81-BA-3"
+   ],
    "grants": [],
    "pos": [
     -668,
-    1406
+    1453
    ]
   },
   {
    "id": "fd_storableSustainer",
-   "title": "Storable Hypergolic Sustainers",
+   "title": "Storable Single-Chamber Combustion",
    "discipline": "FluidDynamics",
    "tier": 4,
    "cost": 900,
@@ -5623,7 +5640,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1991
+    1777
    ]
   },
   {
@@ -5665,12 +5682,12 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1918
+    1867
    ]
   },
   {
    "id": "fd_longMarchStorable",
-   "title": "Clustered Storable First Stage",
+   "title": "Clustered Storable Combustion",
    "discipline": "FluidDynamics",
    "tier": 5,
    "cost": 1500,
@@ -5707,12 +5724,12 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1500
+    1688
    ]
   },
   {
    "id": "fd_sovietStorable",
-   "title": "Tandem Storable Booster",
+   "title": "Storable Tandem Staging",
    "discipline": "FluidDynamics",
    "tier": 5,
    "cost": 1500,
@@ -5749,12 +5766,12 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1688
+    1782
    ]
   },
   {
    "id": "fd_saturnKerolox",
-   "title": "Mass-Produced Kerolox Booster",
+   "title": "High-Thrust Kerolox Combustion",
    "discipline": "FluidDynamics",
    "tier": 6,
    "cost": 2000,
@@ -5786,7 +5803,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    1876
+    1824
    ]
   }
  ],
@@ -5798,11 +5815,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     1688
+     1641
     ]
    ]
   },
@@ -5813,11 +5830,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1688
+     1641
     ],
     [
      -1808,
-     1850
+     1824
     ]
    ]
   },
@@ -5828,11 +5845,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1897
+     1918
     ],
     [
      -1808,
-     1850
+     1824
     ]
    ]
   },
@@ -5843,11 +5860,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1850
+     1824
     ],
     [
      -1428,
-     1944
+     1730
     ]
    ]
   },
@@ -5858,11 +5875,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1944
+     1730
     ],
     [
      -1048,
-     1897
+     1683
     ]
    ]
   },
@@ -5873,11 +5890,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1735
+     1918
     ],
     [
      -1048,
-     1782
+     2055
     ]
    ]
   },
@@ -5888,11 +5905,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1735
+     1918
     ],
     [
      -1048,
-     1688
+     1871
     ]
    ]
   },
@@ -5903,11 +5920,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1782
+     2055
     ],
     [
      -668,
-     1782
+     2055
     ]
    ]
   },
@@ -5918,11 +5935,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1850
+     1824
     ],
     [
      -1428,
-     1735
+     1918
     ]
    ]
   },
@@ -5933,11 +5950,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     2247
+     1824
     ]
    ]
   },
@@ -5948,11 +5965,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2247
+     1824
     ],
     [
      -1808,
-     2247
+     1589
     ]
    ]
   },
@@ -5963,15 +5980,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2247
+     1589
     ],
     [
      -1428,
-     2247
+     1589
     ],
     [
      -1048,
-     2247
+     1589
     ]
    ]
   },
@@ -5982,11 +5999,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     1228
+     1087
     ]
    ]
   },
@@ -5997,11 +6014,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1228
+     1087
     ],
     [
      -1808,
-     1228
+     1087
     ]
    ]
   },
@@ -6012,11 +6029,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1228
+     1087
     ],
     [
      -1428,
-     1228
+     1087
     ]
    ]
   },
@@ -6027,11 +6044,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1688
+     1641
     ],
     [
      -1808,
-     1432
+     1411
     ]
    ]
   },
@@ -6042,11 +6059,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1688
+     1641
     ],
     [
      -1808,
-     1594
+     1275
     ]
    ]
   },
@@ -6057,11 +6074,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1594
+     1275
     ],
     [
      -1428,
-     1594
+     1275
     ]
    ]
   },
@@ -6072,11 +6089,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     805
+     899
     ],
     [
      -1808,
-     899
+     852
     ]
    ]
   },
@@ -6087,11 +6104,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     1897
+     1918
     ]
    ]
   },
@@ -6102,11 +6119,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     899
+     852
     ],
     [
      -1428,
-     852
+     805
     ]
    ]
   },
@@ -6117,11 +6134,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     805
+     899
     ]
    ]
   },
@@ -6132,7 +6149,7 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     805
+     899
     ],
     [
      -1808,
@@ -6147,11 +6164,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     899
+     852
     ],
     [
      -1428,
-     946
+     899
     ]
    ]
   },
@@ -6162,11 +6179,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3089
+     2995
     ],
     [
      -1808,
-     3230
+     3136
     ]
    ]
   },
@@ -6177,11 +6194,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2619
+     2666
     ],
     [
      -1428,
-     2666
+     2619
     ]
    ]
   },
@@ -6192,11 +6209,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     3622
+     3747
     ]
    ]
   },
@@ -6222,11 +6239,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3622
+     3747
     ],
     [
      -1808,
-     3622
+     3747
     ]
    ]
   },
@@ -6237,11 +6254,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3622
+     3747
     ],
     [
      -1428,
-     3575
+     3794
     ]
    ]
   },
@@ -6252,11 +6269,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3622
+     3747
     ],
     [
      -1428,
-     3857
+     3700
     ]
    ]
   },
@@ -6267,11 +6284,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3575
+     3794
     ],
     [
      -1048,
-     3763
+     3794
     ]
    ]
   },
@@ -6282,11 +6299,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3434
+     3559
     ],
     [
      -1808,
-     3387
+     3606
     ]
    ]
   },
@@ -6297,11 +6314,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2551
+     2666
     ],
     [
      -1808,
-     2435
+     2760
     ]
    ]
   },
@@ -6312,11 +6329,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     2854
+     3888
     ]
    ]
   },
@@ -6327,11 +6344,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2854
+     3888
     ],
     [
      -1048,
-     3204
+     3888
     ]
    ]
   },
@@ -6342,11 +6359,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3575
+     3794
     ],
     [
      -1048,
-     3204
+     3888
     ]
    ]
   },
@@ -6357,11 +6374,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     2153
+     2384
     ]
    ]
   },
@@ -6372,19 +6389,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3319
+     3371
     ],
     [
      -1808,
-     3272
+     3324
     ],
     [
      -1428,
-     3272
+     3324
     ],
     [
      -1048,
-     3460
+     3324
     ]
    ]
   },
@@ -6395,11 +6412,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3575
+     3794
     ],
     [
      -1048,
-     3460
+     3324
     ]
    ]
   },
@@ -6410,19 +6427,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3319
+     3371
     ],
     [
      -1808,
-     3325
+     3418
     ],
     [
      -1428,
-     3325
+     3418
     ],
     [
      -1048,
-     3554
+     3418
     ]
    ]
   },
@@ -6433,11 +6450,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3575
+     3794
     ],
     [
      -1048,
-     3554
+     3418
     ]
    ]
   },
@@ -6448,11 +6465,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     2692
+     3982
     ]
    ]
   },
@@ -6463,11 +6480,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     3319
+     3371
     ]
    ]
   },
@@ -6478,11 +6495,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     2551
+     2666
     ]
    ]
   },
@@ -6493,7 +6510,7 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3089
+     2995
     ],
     [
      -1808,
@@ -6523,11 +6540,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2341
+     2290
     ],
     [
      -1808,
-     2341
+     2290
     ]
    ]
   },
@@ -6538,11 +6555,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1897
+     1918
     ],
     [
      -1808,
-     2059
+     2196
     ]
    ]
   },
@@ -6553,11 +6570,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2341
+     2290
     ],
     [
      -1428,
-     2341
+     2290
     ]
    ]
   },
@@ -6568,7 +6585,7 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2551
+     2666
     ],
     [
      -1808,
@@ -6587,11 +6604,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2341
+     2290
     ],
     [
      -1048,
-     2478
+     2290
     ]
    ]
   },
@@ -6606,7 +6623,7 @@ window.TREE = {
     ],
     [
      -1048,
-     2478
+     2290
     ]
    ]
   },
@@ -6617,11 +6634,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2341
+     2290
     ],
     [
      -1048,
-     2341
+     2478
     ]
    ]
   },
@@ -6636,7 +6653,7 @@ window.TREE = {
     ],
     [
      -1048,
-     2341
+     2478
     ]
    ]
   },
@@ -6647,11 +6664,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     2341
+     2478
     ],
     [
      -668,
-     2341
+     2478
     ]
    ]
   },
@@ -6662,11 +6679,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2059
+     2196
     ],
     [
      -1428,
-     2059
+     2196
     ]
    ]
   },
@@ -6677,15 +6694,15 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2059
+     2196
     ],
     [
      -1048,
-     2059
+     2196
     ],
     [
      -668,
-     2059
+     2196
     ]
    ]
   },
@@ -6696,11 +6713,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     3089
+     2995
     ]
    ]
   },
@@ -6711,11 +6728,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     3434
+     3559
     ]
    ]
   },
@@ -6726,11 +6743,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3434
+     3559
     ],
     [
      -1808,
-     3481
+     3512
     ]
    ]
   },
@@ -6741,15 +6758,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3481
+     3512
     ],
     [
      -1428,
-     3481
+     3512
     ],
     [
      -1048,
-     3669
+     3512
     ]
    ]
   },
@@ -6760,11 +6777,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3575
+     3794
     ],
     [
      -1048,
-     3669
+     3512
     ]
    ]
   },
@@ -6775,11 +6792,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3387
+     3606
     ],
     [
      -1428,
-     3387
+     3606
     ]
    ]
   },
@@ -6790,11 +6807,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2619
+     2666
     ],
     [
      -1428,
-     2572
+     2713
     ]
    ]
   },
@@ -6805,11 +6822,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2551
+     2666
     ],
     [
      -1808,
-     2619
+     2666
     ]
    ]
   },
@@ -6820,7 +6837,7 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3089
+     2995
     ],
     [
      -1808,
@@ -6850,11 +6867,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     946
+     899
     ],
     [
      -1048,
-     946
+     899
     ]
    ]
   },
@@ -6865,11 +6882,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2666
+     2619
     ],
     [
      -1048,
-     2619
+     2572
     ]
    ]
   },
@@ -6880,11 +6897,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3857
+     3700
     ],
     [
      -1048,
-     3857
+     3700
     ]
    ]
   },
@@ -6895,11 +6912,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     2341
+     2290
     ]
    ]
   },
@@ -6910,11 +6927,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     805
+     899
     ],
     [
      -1808,
-     805
+     993
     ]
    ]
   },
@@ -6925,11 +6942,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3230
+     3136
     ],
     [
      -1428,
-     3230
+     3136
     ]
    ]
   },
@@ -6940,11 +6957,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3230
+     3136
     ],
     [
      -1048,
-     2995
+     3136
     ]
    ]
   },
@@ -6970,11 +6987,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3089
+     2995
     ],
     [
      -1808,
-     3136
+     2854
     ]
    ]
   },
@@ -6985,11 +7002,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3136
+     2854
     ],
     [
      -1428,
-     3136
+     2854
     ]
    ]
   },
@@ -7000,11 +7017,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3136
+     2854
     ],
     [
      -1048,
-     2901
+     2854
     ]
    ]
   },
@@ -7015,11 +7032,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2247
+     2393
     ],
     [
      -2188,
-     1040
+     3230
     ]
    ]
   },
@@ -7030,11 +7047,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1040
+     3230
     ],
     [
      -1808,
-     1040
+     3230
     ]
    ]
   },
@@ -7045,11 +7062,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1040
+     3230
     ],
     [
      -1428,
-     1040
+     3230
     ]
    ]
   },
@@ -7060,11 +7077,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1040
+     3230
     ],
     [
      -1048,
-     1040
+     3230
     ]
    ]
   },
@@ -7075,11 +7092,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1040
+     3230
     ],
     [
      -668,
-     1040
+     3230
     ]
    ]
   },
@@ -7090,11 +7107,11 @@ window.TREE = {
    "waypoints": [
     [
      -668,
-     1040
+     3230
     ],
     [
      -288,
-     1040
+     3230
     ]
    ]
   },
@@ -7105,11 +7122,11 @@ window.TREE = {
    "waypoints": [
     [
      -288,
-     1040
+     3230
     ],
     [
      92,
-     1040
+     3230
     ]
    ]
   },
@@ -7120,11 +7137,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2666
+     2619
     ],
     [
      -1048,
-     2713
+     2666
     ]
    ]
   },
@@ -7135,15 +7152,15 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2153
+     2384
     ],
     [
      -1808,
-     2153
+     2384
     ],
     [
      -1428,
-     2153
+     2384
     ]
    ]
   },
@@ -7154,15 +7171,15 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2854
+     3888
     ],
     [
      -1808,
-     2854
+     3888
     ],
     [
      -1428,
-     2854
+     3888
     ]
    ]
   },
@@ -7173,11 +7190,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     3204
+     3888
     ],
     [
      -668,
-     3251
+     3935
     ]
    ]
   },
@@ -7188,11 +7205,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     3204
+     3888
     ],
     [
      -668,
-     3157
+     3841
     ]
    ]
   },
@@ -7203,15 +7220,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1432
+     1411
     ],
     [
      -1428,
-     1500
+     1369
     ],
     [
      -1048,
-     1500
+     1369
     ]
    ]
   },
@@ -7222,11 +7239,30 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1594
+     1275
     ],
     [
      -1048,
-     1594
+     1275
+    ]
+   ]
+  },
+  {
+   "from": "pc_htpSustainer",
+   "to": "pc_larchPeroxide",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1048,
+     1275
+    ],
+    [
+     -668,
+     1275
+    ],
+    [
+     -288,
+     1275
     ]
    ]
   },
@@ -7237,23 +7273,23 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1432
+     1411
     ],
     [
      -1428,
-     1364
+     1411
     ],
     [
      -1048,
-     1364
+     1411
     ],
     [
      -668,
-     1364
+     1411
     ],
     [
      -288,
-     1364
+     1411
     ]
    ]
   },
@@ -7264,11 +7300,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1228
+     1087
     ],
     [
      -1048,
-     1228
+     1087
     ]
    ]
   },
@@ -7279,11 +7315,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1228
+     1087
     ],
     [
      -1048,
-     1322
+     1181
     ]
    ]
   },
@@ -7294,11 +7330,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1228
+     1087
     ],
     [
      -1048,
-     1134
+     993
     ]
    ]
   },
@@ -7309,11 +7345,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     852
+     805
     ],
     [
      -1048,
-     852
+     805
     ]
    ]
   },
@@ -7324,11 +7360,11 @@ window.TREE = {
    "waypoints": [
     [
      -668,
-     1782
+     2055
     ],
     [
      -288,
-     1782
+     2055
     ]
    ]
   },
@@ -7339,15 +7375,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1432
+     1411
     ],
     [
      -1428,
-     1406
+     1453
     ],
     [
      -1048,
-     1406
+     1453
     ]
    ]
   },
@@ -7358,11 +7394,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1406
+     1453
     ],
     [
      -668,
-     1406
+     1453
     ]
    ]
   },
@@ -7373,11 +7409,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1944
+     1730
     ],
     [
      -1048,
-     1991
+     1777
     ]
    ]
   },
@@ -7388,11 +7424,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1897
+     1683
     ],
     [
      -668,
-     1918
+     1867
     ]
    ]
   },
@@ -7403,11 +7439,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1688
+     1871
     ],
     [
      -668,
-     1500
+     1688
     ]
    ]
   },
@@ -7418,11 +7454,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1500
+     1369
     ],
     [
      -668,
-     1500
+     1688
     ]
    ]
   },
@@ -7433,11 +7469,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1688
+     1871
     ],
     [
      -668,
-     1688
+     1782
     ]
    ]
   },
@@ -7448,11 +7484,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1500
+     1369
     ],
     [
      -668,
-     1688
+     1782
     ]
    ]
   },
@@ -7463,15 +7499,15 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1897
+     1683
     ],
     [
      -668,
-     1876
+     1824
     ],
     [
      -288,
-     1876
+     1824
     ]
    ]
   }

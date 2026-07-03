@@ -711,14 +711,20 @@ nodes:
     tier: 4
     parents: [pc_hypergolics]
     flavor: "Swap the fuming-nitric oxidiser for dinitrogen tetroxide — denser, hotter-burning, storable in the same tank — paired with unsymmetrical dimethylhydrazine that ignites the instant the two meet. The combination that scales the storable rocket from a spacecraft thruster up to a full orbital booster; every hypergolic launcher for decades runs on it."
-    upgrades: [RFUpgrade_YF-1A, RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_RD-217-8D515, RFUpgrade_S5.2]
+    upgrades: [RFUpgrade_YF-1A, RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_RD-217-8D515, RFUpgrade_S5.2, RFUpgrade_XLR81-BA-5, RFUpgrade_XLR81-BA-7]
   - id: pc_htpSustainer
-    title: "Multi-Chamber Peroxide Sustainers"
+    title: "Multi-Chamber Peroxide Combustion"
     discipline: PropellantChemistry
     tier: 4
     parents: [pc_stentor]
     flavor: "Bank many small peroxide-kerosene chambers into one sustainer, decomposing high-test peroxide over a silver catalyst for a clean, throttle-friendly burn with no cryogen. Britain's Gamma engines — eight chambers under the Black Arrow — carry a satellite to orbit on propellant that waits in the tank."
     parts: [ROE-Gamma2, ROE-Gamma8]
+  - id: pc_larchPeroxide
+    title: "Refined Peroxide Combustion"
+    discipline: PropellantChemistry
+    tier: 6
+    parents: [pc_htpSustainer]
+    flavor: "Push the peroxide sustainer harder — a hotter catalyst pack and a higher chamber pressure wring more thrust and a dozen seconds of specific impulse from the same hydrogen peroxide. The Larch uprates that turned the Gamma engines into an orbital launcher's powerplant, a decade after the chemistry was written off."
     upgrades: [RFUpgrade_Gamma-301, RFUpgrade_Larch-2, RFUpgrade_Larch-4, RFUpgrade_Larch-8]
   - id: pc_fluorine
     title: "Liquid-Fluorine Oxidiser"
@@ -728,12 +734,13 @@ nodes:
     flavor: "Burn hydrazine in liquid fluorine, the most aggressive oxidiser there is — a specific impulse no storable can touch, bought with a propellant that corrodes its own plumbing and poisons everything it escapes into. A high-energy gamble the Soviets ran on the bench and few dared fly."
     parts: [ROE-G1]
   - id: pc_scoutSolids
-    title: "Cast Composite Upper Stages"
+    title: "Staged Solid Boost"
     discipline: PropellantChemistry
     tier: 4
     parents: [pc_compositeSolid]
     flavor: "Cast a composite grain into a full upper stage and fire it in vacuum — a stack of solid motors, each lighting as the last burns out, that reaches orbit with no liquid engine at all. Scout's Algol, Antares and Altair: the all-solid launcher, cheap and ready, needing no pad crew to fuel it."
     parts: [ROE-Algol1, ROE-Algol1_Inline, ROE-Altair, ROE-Antares1, ROE-Antares1_Inline]
+    upgrades: [RFUpgrade_Castor-1-SL, RFUpgrade_Castor-1-Vac]
   - id: pc_strapOnSolids
     title: "Strap-On Thrust Augmentation"
     discipline: PropellantChemistry
@@ -741,9 +748,8 @@ nodes:
     parents: [pc_compositeSolid]
     flavor: "Strap solid motors around a liquid core and light them on the ground for a burst of extra liftoff thrust, then drop the burnt-out cases and fly on — augmentation you bolt on when the payload grows, with no change to the engine beneath. The Castor that turns a Thor into a Delta."
     parts: [ROE-Castor1, ROE-Castor1_Inline]
-    upgrades: [RFUpgrade_Castor-1-SL, RFUpgrade_Castor-1-Vac]
   - id: pc_retroKick
-    title: "Vacuum-Start Solid Motors"
+    title: "Vacuum-Start Solid Impulse"
     discipline: PropellantChemistry
     tier: 4
     parents: [pc_compositeSolid]
@@ -771,17 +777,18 @@ nodes:
     parents: [pc_hypergolics]
     flavor: "A storable-hypergolic upper that coasts dark through a long parking orbit and relights on command — the engine that stops being a single burn and becomes a manoeuvring stage. Agena's XLR81 shuts down and restarts in space: the key to circularising, changing plane, and the rendezvous still to come."
     parts: [ROE-Agena, ROE-AJ10Mid, ROE-Juno45K, ROE-Juno6K]
-    upgrades: [RFUpgrade_XLR81-BA-1, RFUpgrade_XLR81-BA-3, RFUpgrade_XLR81-BA-5, RFUpgrade_XLR81-BA-7, RFUpgrade_AJ10-42, RFUpgrade_AJ10-101A, RFUpgrade_AJ10-142]
+    upgrades: [RFUpgrade_AJ10-42, RFUpgrade_AJ10-101A, RFUpgrade_AJ10-142]
   - id: fd_spacecraftPropulsion
-    title: "Restartable Course-Correction Propulsion"
+    title: "Restartable Deep-Throttling"
     discipline: FluidDynamics
     tier: 5
     parents: [fd_restartableUpper]
     flavor: "Shrink the restartable engine to a spacecraft's own propulsion: a small, deeply-throttleable, many-times-restartable motor for the midcourse nudge and the retro burn a probe or capsule steers itself home with. Agena's secondary fires twenty times; a lunar probe lives or dies on one clean correction."
     parts: [ROE-AgenaSPS, RO-KDU414, ROE-RangerRetro]
+    upgrades: [RFUpgrade_XLR81-BA-1, RFUpgrade_XLR81-BA-3]
   # ---- FluidDynamics: hardware chambers (gated by lineage [+ enabler]) ----
   - id: fd_storableSustainer
-    title: "Storable Hypergolic Sustainers"
+    title: "Storable Single-Chamber Combustion"
     discipline: FluidDynamics
     tier: 4
     parents: [fd_singleChamber]
@@ -795,21 +802,21 @@ nodes:
     flavor: "Design the two stages as one propulsion system: a twin-chamber booster handing off to a dedicated second-stage engine built to ignite at altitude, in the thin air its bell is shaped for. Titan's LR87 and LR91 — the first purpose-built tandem, where the upper engine is no afterthought but half the design."
     parts: [ROE-LR87, ROE-LR87_11, ROE-LR87_Single, ROE-LR91, ROE-LR91-4V]
   - id: fd_longMarchStorable
-    title: "Clustered Storable First Stage"
+    title: "Clustered Storable Combustion"
     discipline: FluidDynamics
     tier: 5
     parents: [fd_orbitalMultiChamber, pc_ntoHypergolics]
     flavor: "Bolt four storable chambers to a common frame and fire them as one — three thousand kilonewtons of hypergolic thrust off the pad with no cryogenic plumbing to chill down or top off. The clustered first stage that lets a storable rocket match a kerolox booster for liftoff, ready to go at a moment's notice."
     parts: [YF20_Engine, YF21_Engine, YF22_Engine, YF23_Engine, YF25K_Engine]
   - id: fd_sovietStorable
-    title: "Tandem Storable Booster"
+    title: "Storable Tandem Staging"
     discipline: FluidDynamics
     tier: 5
     parents: [fd_orbitalMultiChamber, pc_ntoHypergolics]
     flavor: "The storable answer as a tandem missile stack: a paired-chamber first stage and a vacuum second stage, all on dimethylhydrazine and nitric-acid oxidiser, sat fuelled in a silo for years. The R-14 and R-16 engines — propulsion built to wait, then go."
     parts: [ROE-RD215, ROE-RD215_Single, ROE-RD219, ROE-RD855, ROE-RD856]
   - id: fd_saturnKerolox
-    title: "Mass-Produced Kerolox Booster"
+    title: "High-Thrust Kerolox Combustion"
     discipline: FluidDynamics
     tier: 6
     parents: [fd_largeChamber]
