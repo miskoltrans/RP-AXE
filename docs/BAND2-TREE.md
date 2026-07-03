@@ -14,6 +14,9 @@ do not re-litigate. New band-2 nodes are **PENDING** until the user signs them o
 - [ ] `pc_ntoHypergolics` `pc_htpSustainer` `pc_larchPeroxide` `pc_fluorine` `pc_scoutSolids` `pc_strapOnSolids` `pc_retroKick`
 - [ ] `fd_regenCooling` `fd_vacuumExpansion` `fd_restartableUpper` `fd_spacecraftPropulsion` `fd_storableSustainer` `fd_titanTandem` `fd_longMarchStorable` `fd_sovietStorable` `fd_saturnKerolox`
 
+**Pending review — aviation tail (7 nodes):**
+- [ ] `met_cooledTurbine` (enabler, 15 jet uprates) · `av_turboprop` · `av_hydrogenJet` (× `cryo_hydrogen`) · `av_highTempTurbojet` · `av_ramjetAdvanced` · `aero_variableIntake` · `str_heavyGear`
+
 ## Engine spine (DONE — 16 nodes, T4→T6)
 
 The 1958–61 propulsion cohort. **Homed by propellant, not the RealFuels disc tag.** Two transitions
@@ -53,6 +56,14 @@ node** (doctrine #4; verified by `scratchpad/check_upg.py` = 0 violations).
 **Already-placed band-2 engines** (band 1 pulled forward — not duplicated): RD-0105/0110/0109, XLR99,
 RZ, X-405H. **Parked:** YF-21 CZ-2/2C/2D boattail shells. All nodes ≤6 base parts (ideal 3).
 
+## Aviation tail (DONE — 7 nodes, T4→T6)
+Extends band-1's AirBreathing/Aerodynamics lanes (most jets already placed there). `met_cooledTurbine`
+(Metallurgy, T4, off `met_nimonic`) is the enabler holding the ~15 jet uprates — mirrors how `met_nimonic`
+already feeds T4 jets, so an enabler below its base engines is fine (config needs enabler AND base).
+New engines: `av_turboprop` (NK-12/PT6), `av_highTempTurbojet` (Atar-09/R-11/J85, T5), `av_hydrogenJet`
+(Model 304, gated on `cryo_hydrogen`), `av_ramjetAdvanced` (RD-012 + RJ43 uprates, T6). Plus
+`aero_variableIntake` (adjustable ramp) and `str_heavyGear` (LY-60/99, continues the gear lane).
+
 ## Remaining band-2 lanes (NOT yet authored)
 Crewed spine (Mercury ‖ Vostok capsules, ablative TPS, ECLSS, LES, recovery) · satellite science
-instruments · power/comms/DSN support · the charter nodes · the aviation tail (jets + jet uprates).
+instruments · power/comms/DSN support · the charter nodes.

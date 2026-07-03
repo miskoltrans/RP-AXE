@@ -822,3 +822,60 @@ nodes:
     parents: [fd_largeChamber, fd_orbitalSoviet, fd_regenCooling]
     flavor: "Uprate the kerosene-oxygen booster and build it to be mass-produced — a rugged, high-thrust engine you cluster eight at a time under a heavy first stage. The H-1 that becomes the Saturn I's power, and the RD-111 pushing kerolox to its pre-staged-combustion ceiling: the last and largest of the simple gas-generator boosters."
     parts: [ROE-RS27, ROE-H1C, ROE-H1D, ROE-RD111]
+
+  # ================================================================================================
+  # ===================== BAND 2 * AVIATION TAIL (T4 -> T6) ========================================
+  # Extends the band-1 AirBreathing/Aerodynamics lanes. Most of the jet family is already placed
+  # (av_afterburner/variableStator/ramjet); band 2 = the ~15 jet uprates (on a cooled-turbine enabler,
+  # off their base nodes) + the genuinely-new engines (turboprop, Mach-2 fighter turbojets, hydrogen
+  # jet, advanced ramjet) + a variable intake + the heavy-gear continuation.
+  - id: met_cooledTurbine
+    title: "Air-Cooled Turbine Blades"
+    discipline: Metallurgy
+    tier: 4
+    parents: [met_nimonic]
+    flavor: "Drill fine passages through each turbine blade and bleed compressor air through them, filming the metal in cool gas so the turbine can face a far hotter gas stream than it could survive bare. The step past a better alloy — run the fire hotter and every jet behind it gains thrust."
+    upgrades: [RFUpgrade_AL-7F-1, RFUpgrade_AL-7F-2, RFUpgrade_Atar101E-3, RFUpgrade_Avon200R, RFUpgrade_CJ805-3B, RFUpgrade_J57-P-20A, RFUpgrade_J75-P-19, RFUpgrade_J75-P-5A, RFUpgrade_J79-GE-2A, RFUpgrade_J79-GE-5C, RFUpgrade_J79-GE-8, RFUpgrade_J85-GE-5, RFUpgrade_R-11F2-300, RFUpgrade_RD-9AF2-300, RFUpgrade_WP-6]
+  - id: av_turboprop
+    title: "Geared Turboprop"
+    discipline: AirBreathing
+    tier: 4
+    parents: [av_axialJet]
+    flavor: "Gear the axial turbine down to swing a large propeller instead of blasting a jet — trading top speed for the fuel economy and heavy-lift pull a jet cannot match down low. The Tu-95's monstrous contra-rotating NK-12 and the workhorse PT6: turbine power delivered through a propeller."
+    parts: [SXTNK12M, SXTPWPT6]
+  - id: av_hydrogenJet
+    title: "Hydrogen-Fuelled Turbojet"
+    discipline: AirBreathing
+    tier: 4
+    parents: [av_axialJet, cryo_hydrogen]
+    flavor: "Feed the jet liquid hydrogen instead of kerosene — a fuel so energetic it promises altitude and range no kerosene burner can reach, at the price of a vacuum-jacketed fuel system feeding a red-hot engine. The Model 304 of the CL-400 Suntan spyplane: a gamble that flew on the coldest fuel there is, then stayed on the bench."
+    parts: [RO-model304]
+  - id: av_highTempTurbojet
+    title: "High-Temperature Turbojet"
+    discipline: AirBreathing
+    tier: 5
+    parents: [av_variableStator, met_cooledTurbine]
+    flavor: "With a cooled turbine able to take the heat, run the combustor hotter and lighter for the thrust-to-weight a supersonic fighter lives on — a compact afterburning turbojet that holds Mach 2 on internal fuel. The R-11 of the MiG-21, the Atar 09 of the Mirage."
+    parts: [aje_atar, RO-R11F, miniJetEngine]
+  - id: av_ramjetAdvanced
+    title: "Refined Ramjet Compression"
+    discipline: AirBreathing
+    tier: 6
+    parents: [av_ramjet]
+    flavor: "Tune the inlet and flame-holders for sustained cruise at the top of the supersonic range — the long-burning ramjet of a missile that flies for minutes, not seconds. Where the ramjet stops being a boost phase and becomes the whole propulsion."
+    parts: [RO-RD012]
+    upgrades: [RFUpgrade_RJ43-MA-11, RFUpgrade_RJ43-MA-5]
+  - id: aero_variableIntake
+    title: "Variable-Geometry Intake"
+    discipline: Aerodynamics
+    tier: 4
+    parents: [aero_supersonicWing]
+    flavor: "Move a ramp or a translating cone inside the inlet to hold the shock exactly where it must sit across a wide speed range — feeding the compressor smooth subsonic air whether the aircraft is transonic or deep in the Mach-2 régime. The fixed shock cone, made adjustable."
+    parts: [ramAirIntake]
+  - id: str_heavyGear
+    title: "Large Aircraft Undercarriage"
+    discipline: StructuresMechanisms
+    tier: 4
+    parents: [str_adjustableGear]
+    flavor: "Legs rated for the weight of a heavy jet or transport, spreading the load on a soft field and soaking up a fast, heavy touchdown. The biggest undercarriage on the shelf, where the adjustable struts run out of rating."
+    parts: [GearMedium, GearLarge]

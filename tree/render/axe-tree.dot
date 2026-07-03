@@ -106,13 +106,20 @@ digraph AXE {
   "fd_longMarchStorable" [label="Storable Chamber Clustering\nFluidDynamics T5 · 1500",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_sovietStorable" [label="Storable Tandem Staging\nFluidDynamics T5 · 1500",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_saturnKerolox" [label="High-Pressure Kerolox Combustion\nFluidDynamics T6 · 2000",fillcolor="#23b9a0",fontcolor="#111111"];
+  "met_cooledTurbine" [label="Air-Cooled Turbine Blades\nMetallurgy T4 · 900",fillcolor="#8dadcc",fontcolor="#111111"];
+  "av_turboprop" [label="Geared Turboprop\nAirBreathing T4 · 900",fillcolor="#6cc4b0",fontcolor="#111111"];
+  "av_hydrogenJet" [label="Hydrogen-Fuelled Turbojet\nAirBreathing T4 · 900",fillcolor="#6cc4b0",fontcolor="#111111"];
+  "av_highTempTurbojet" [label="High-Temperature Turbojet\nAirBreathing T5 · 1500",fillcolor="#6cc4b0",fontcolor="#111111"];
+  "av_ramjetAdvanced" [label="Refined Ramjet Compression\nAirBreathing T6 · 2000",fillcolor="#6cc4b0",fontcolor="#111111"];
+  "aero_variableIntake" [label="Variable-Geometry Intake\nAerodynamics T4 · 900",fillcolor="#5aa0e2",fontcolor="#111111"];
+  "str_heavyGear" [label="Large Aircraft Undercarriage\nStructuresMechanisms T4 · 900",fillcolor="#bfb08d",fontcolor="#111111"];
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
   { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "fd_throttleableRocketplane" "gnc_standardRCS" "aero_stampedWings" "str_prefabAdapters" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" "nuc_cosmicRay" "opt_recon" }
-  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "met_stiffenedFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" "pc_ntoHypergolics" "pc_htpSustainer" "pc_scoutSolids" "pc_strapOnSolids" "pc_retroKick" "fd_regenCooling" "fd_restartableUpper" "fd_storableSustainer" }
-  { rank=same; "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_tvRecon" "opt_remoteSensing" "fd_spacecraftPropulsion" "fd_titanTandem" "fd_longMarchStorable" "fd_sovietStorable" }
-  { rank=same; "gs_saturnPad" "pc_larchPeroxide" "pc_fluorine" "fd_vacuumExpansion" "fd_saturnKerolox" }
+  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "met_stiffenedFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" "pc_ntoHypergolics" "pc_htpSustainer" "pc_scoutSolids" "pc_strapOnSolids" "pc_retroKick" "fd_regenCooling" "fd_restartableUpper" "fd_storableSustainer" "met_cooledTurbine" "av_turboprop" "av_hydrogenJet" "aero_variableIntake" "str_heavyGear" }
+  { rank=same; "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_tvRecon" "opt_remoteSensing" "fd_spacecraftPropulsion" "fd_titanTandem" "fd_longMarchStorable" "fd_sovietStorable" "av_highTempTurbojet" }
+  { rank=same; "gs_saturnPad" "pc_larchPeroxide" "pc_fluorine" "fd_vacuumExpansion" "fd_saturnKerolox" "av_ramjetAdvanced" }
   { rank=same; "gs_shuttlePad" }
   "start" -> "pc_storables" [style=solid];
   "pc_storables" -> "fd_turbopumpFeed" [style=dashed,color="#f4d35e"];
@@ -225,6 +232,15 @@ digraph AXE {
   "fd_largeChamber" -> "fd_saturnKerolox" [style=solid];
   "fd_orbitalSoviet" -> "fd_saturnKerolox" [style=solid];
   "fd_regenCooling" -> "fd_saturnKerolox" [style=solid];
+  "met_nimonic" -> "met_cooledTurbine" [style=solid];
+  "av_axialJet" -> "av_turboprop" [style=solid];
+  "av_axialJet" -> "av_hydrogenJet" [style=solid];
+  "cryo_hydrogen" -> "av_hydrogenJet" [style=solid];
+  "av_variableStator" -> "av_highTempTurbojet" [style=solid];
+  "met_cooledTurbine" -> "av_highTempTurbojet" [style=solid];
+  "av_ramjet" -> "av_ramjetAdvanced" [style=solid];
+  "aero_supersonicWing" -> "aero_variableIntake" [style=solid];
+  "str_adjustableGear" -> "str_heavyGear" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;
   label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";
 }
