@@ -4,9 +4,10 @@ Paste this (or point me to it) to resume. Full detail lives in the auto-loaded m
 (`rp-axe-band1-status`, `rp-axe-milestone-tiers`, `rp-axe-tree-*`, `rp-axe-placeholder-parts`).
 
 ## State
-- **80 nodes, 19 disciplines, build clean, all committed** (latest `5679ce5`).
+- **85 nodes, 19 disciplines, build clean, all committed** (latest `084ce70`).
 - **SSOT = `tree/nodes.yaml`**, compiled by `tools/build_tree.py`; disciplines in `tree/disciplines.yaml`.
 - Band 1 = "to first orbit" + early satellites. **First partlist fully placed** (only intentional defers remain).
+- **Last pass (2026-07-03) — dependency-hub review** (memory `rp-axe-dependency-flags`): flag every node with >3 dependents. Split `elec_semiconductorDiode` 7→2 (new `elec_transistor` gate); split the prefab structures catalogs (decouplers/adapters/gear); re-chained aero streamlining off boattail; bridged X-1→X-15 with the X-2. Accepted remaining hubs: transistor 6, wing 5, structural 4.
 
 ## Build / commit loop
 1. Edit `tree/nodes.yaml` — a node is `{id, title, discipline, tier, parents, flavor, parts | upgrades | grants, anyToUnlock?}`.
@@ -15,16 +16,16 @@ Paste this (or point me to it) to resume. Full detail lives in the auto-loaded m
 - Big/precise edits: a `python3 << 'PYEOF'` string-surgery heredoc with `assert`-guarded replaces is the reliable pattern (avoid matching em-dash `—` flavor text; anchor on titles/ASCII).
 
 ## The tree (lanes)
-- **Roots:** `start` (1950 baseline — de Laval nozzle, procedural airframe/tank/avionics, first instruments, sounding motors ORM-65/TinyTim), `parking`, `hire_JPL`/`hire_OKB` (probe-pack charters, hide_empty).
+- **Roots:** `start` (1950 baseline — de Laval nozzle, procedural airframe **+ early B9 wing (fly turn 1)**, tank/avionics, first instruments, sounding motors ORM-65/TinyTim), `parking`, `hire_JPL`/`hire_OKB` (probe-pack charters, hide_empty).
 - **Engine spine** (PropChem→FluidDynamics): storables/solids → **turbopump (V-2, `anyToUnlock`: feed OR combustion route)** → single-chamber → **Combustion-Instability Damping (West)** ‖ **Parallel Engine Clustering (Soviet R-7)** ‖ multi-chamber storable → High-Expansion Vacuum Nozzles. Verniers branch for TVC.
 - **Hydrolox gamble** (Cryogenics): `cryo_hydrogen` **empty T1 commitment gate (INTENTIONAL — costs program time; do NOT dissolve)** → weak prototype T2 → RL-10 expander T4.
 - **Materials** (Metallurgy): welded → austenitic stainless → Nimonic; feeds tanks (Structures) + engines + jet turbines (crossover). Tank mass-fraction: welded → isogrid ‖ balloon monocoque.
-- **Structures:** `str_structuralHardware` "Riveted Airframe Structure" = load-bearing foundation → staging/gear/adapters. Fixed catalogs (`Prefabricated Nose Cones/Decouplers`, `Stamped Aerofoil Panels`, `Interchangeable-Part Manufacture` RCS) are **opt-in DEAD-ENDS** (procedural is default).
-- **Aero:** `aero_subsonicWing` "Subsonic Aerodynamics" (the wing IS the foundation) → refinements T2 (fairings, recovery, boattail, prefab cones) → **Swept-Wing Planform** supersonic T3.
+- **Structures:** `str_structuralHardware` "Riveted Airframe Structure" = load-bearing foundation → staging, gear, adapters, launch clamps. Procedural is default; fixed catalogs are **opt-in DEAD-ENDS** off their king: decouplers (staging → radial T3 → stack T4), adapters (procedural king T2 → `Prefabricated Adapters` T3), gear (`Oleo-Strut` stock T2 → `Adjustable Heavy` KF T3), plus `Stamped Aerofoil Panels` + `Interchangeable-Part Manufacture` RCS. `ReleaseValve` drain valve → welded-tank; nose cones → aero streamlining chain.
+- **Aero:** early procedural wing now at `start`; `aero_subsonicWing` "Subsonic Aerodynamics" = intakes + platform, the aero lane root → recovery T2, **Swept-Wing Planform** supersonic T3, and the streamlining chain **boattail T2 → payload fairing T3 → {composite fairings ‖ prefab nose cones} T4**.
 - **AirBreathing:** piston → centrifugal → axial → afterburner ‖ variable-stator → ramjet (supersonic jets depend on aero swept-wing/shock-cone).
-- **Science:** basic 1950 instruments T1 (geiger, film, thermo/baro, biology) → **electronic instruments gated behind the transistor `elec_semiconductorDiode` → T3** (vidicon, mass-spec, magnetometer, cosmic-ray) → recon/IR remote-sensing T4. Deep-space instruments PARKED for band 2.
-- **Avionics** (GuidanceControl grants-ladder, Science-Core tiers): gyro autopilot → analog inertial → **transistorized stable-platform (× electronics crossover)**.
-- **LifeSupport:** biology exposure; `life_pilotedCockpits` (crew accommodation → the front of cockpit→cabin→capsule).
+- **Science:** basic 1950 instruments T1 (geiger, film, thermo/baro, biology) → the solid-state split: `elec_semiconductorDiode` T2 (junction/power — lights, silicon PV) → **`elec_transistor` "Transistor Amplification" T3 gates the signal instruments at T4** (vidicon, mass-spec, magnetometer, cosmic-ray) → recon/IR remote-sensing T5. Deep-space instruments PARKED for band 2.
+- **Avionics** (GuidanceControl grants-ladder, Science-Core tiers): gyro autopilot → analog inertial → **transistorized stable-platform T4 (× `elec_transistor` crossover)**.
+- **LifeSupport:** biology exposure; `life_pilotedCockpits` "Pressurized Cockpit" T2 off `met_weldedTank` (pressure-vessel lineage) — crew accommodation, the front of cockpit→cabin→capsule.
 - **Ground Support** (own discipline): the complete MLP inventory as **one straight line T1 Sounding-Rocket Stands → T7 Shuttle** (Saturn T6 + Shuttle T7 = reference/future). Functional launch clamps live separately in Structures.
 
 ## Design rules (FOLLOW THESE — hard-won)
@@ -41,11 +42,10 @@ Paste this (or point me to it) to resume. Full detail lives in the auto-loaded m
 11. **Propose before big placements; names always veto-able; commit granularly.** The user writes C# too — small purposeful `AXE.dll` modules are fine.
 
 ## Open threads / next
-- **⏰ FIRST: add ScanSat parts** (orbital-scanner remote-sensing → `opt_remoteSensing` T4 lane; may need pulling into `manifest/curated-parts.tsv` first).
+- **Add ScanSat parts** (orbital-scanner remote-sensing → `opt_remoteSensing` T5 lane; may need pulling into `manifest/curated-parts.tsv` first).
 - **Balance / propulsion deep-look** (T2 was de-bulged 26→23; propulsion "balanced but look deeper" per user).
-- **HTP T2/T3** confirm (Gamma-T2 / Stentor-T3 split).
 - **Avionics 8↔13 tier map + DSN nodes** (`grants:` currently a STUB emitting partUpgrade — real plugin/facility hookup TODO).
-- **Cost pass** (tier_cost weights; the hydrolox-overtakes-kerolox lever).
+- **Cost pass** (tier_cost weights; the hydrolox-overtakes-kerolox lever). NB the diode→transistor split pushed signal instruments to T4 and recon/IR to T5 — their cost roughly doubled; revisit here.
 - **Band 2** — appsats → humans ‖ lunar probes. **Strays re-home here:** ladders ×8, decals ×5 (park), probes ×5 (Sputnik/Vanguard/Pioneer → charter), X2CockpitUpgrade, crew-access/Saturn/Shuttle MLP (best-guess placed, refine).
 
 ## Intentional defers (NOT bugs)
