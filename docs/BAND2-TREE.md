@@ -118,10 +118,10 @@ HDD-Basic, SM-II); `PFTech-Fairing-II` + `RFTech-Battery-II` deferred (fairing/b
 ## US2 wedges — REVIEW QUEUE (config from RP-1)
 5 DMagic Universal Storage 2 science wedges, all were `curated=no` (unconfigured). **Approach: take the
 config straight from RP-1** — the rebuild pulls RP-1's `.cfg`; nothing to hand-author.
-- **BAND 2 — marked `curated=yes`** (human-orbital + first-orbit partlists): `dmUS2MagBoom` (Magnetometer
-  Boom) · `dmUS2Scope` (Orbital Telescope). **Tree placement PENDING confirm** — proposed
-  `mic_boomMagnetometry` (T5, MG-boom gate) and `opt_orbitalTelescope` (T6); open Q: is `dmUS2Scope`
-  astronomy (outward) or high-res Earth-imaging (→ recon lane)?
+- **BAND 2 — `curated=yes` + PLACED**: `dmUS2MagBoom` → new `mic_boomMagnetometry` (T5, MG-boom gate off
+  `mic_magnetometer`); `dmUS2Scope` → new `opt_precisionOptics` (T5 off `opt_recon`). Resolved from RP-1's
+  config (`RP-1/Parts/Science/US2.cfg` + `USScope.cfg`): the "Orbital Telescope" is a long-focal-length
+  **surface** imager (scopeScan/KerbNet-Terrain, `hirise` tag), NOT astronomy → recon/optics lane.
 - **BAND 3 — still `curated=no`**: `dmUS2RPWS` (RPWS plasma-wave, WS03) · `dmUS2GoreSat` (IR Radiometer,
   IR-family) · `dmUS2ImagingPlatform` (Multi-Spectral Imaging). Mark + place when band 3 is built.
 

@@ -726,6 +726,22 @@ nodes:
     parents: [opt_tvRecon]
     flavor: "A finer vidicon target and a denser scan resolve detail the early television camera smeared away — reconnaissance and weather imagery sharp enough to be worth the bandwidth to send it down. The electronic eye growing up."
     parts: [RO-ImprovedTVCamera]
+  # US2 wedges (config from RP-1): magnetometer boom gates above MG01; the "Orbital Telescope" is a
+  # long-focal-length SURFACE imager (scopeScan/Terrain, hirise tag) -> recon/optics lane, not astronomy.
+  - id: mic_boomMagnetometry
+    title: "Boom-Deployed Magnetometry"
+    discipline: Microelectronics
+    tier: 5
+    parents: [mic_magnetometer]
+    flavor: "Swing the magnetometer out on a long boom, far from the spacecraft's own motors and wiring, so it reads the planet's field instead of the craft's. The measurement that only works once the sensor is metres from everything electric."
+    parts: [dmUS2MagBoom]
+  - id: opt_precisionOptics
+    title: "Precision Orbital Optics"
+    discipline: OpticsPhotonics
+    tier: 5
+    parents: [opt_recon]
+    flavor: "A long-focal-length telescope trained on the surface from orbit, resolving detail a wide-angle camera smears into a blur — the optical reconnaissance that reads a runway, not just a coastline. Glass figured and held to the edge of what the aperture allows."
+    parts: [dmUS2Scope]
 
   # ===================== BAND 2 * SUPPORT (power / avionics / comms-DSN / structures) =====================
   # Grants + ride-alongs closing out the spacecraft-systems side of the era. Progression respected:
