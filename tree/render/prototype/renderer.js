@@ -40,7 +40,7 @@ let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
 // Fixed rendering flags (no longer toggleable — always these values): arrowheads/icons/discipline
 // colours/lineage-highlight/research-state/fan-endpoints/square-tiles ON, halo OFF, baseline OFF.
-const opt={ fan:true, xfan:true, xfanPitch:16, avoid:false, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'junction', icons:true, square:true, layout:'compiler', spacingX:1.0, spacingY:1.0, diffspread:false, halo:false };
+const opt={ fan:true, xfan:true, xfanPitch:16, avoid:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'junction', icons:true, square:true, layout:'compiler', spacingX:1.0, spacingY:1.0, diffspread:false, halo:false };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
