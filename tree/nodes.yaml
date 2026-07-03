@@ -562,7 +562,7 @@ nodes:
     parts: [SXTMerlin46Prop, SXTMerlin66prop, SXTKO211Dprop, SXTR280018WProp, SXTR280021Prop, SXTTinyprop, SXTJ213, SXTPWR2800, SXT_Jumo213A]
 
   - id: life_pilotedCockpits
-    title: "Pressurized Cockpit"
+    title: "Enclosed Crew Compartment"
     discipline: LifeSupport
     tier: 2
     parents: [met_weldedTank]
