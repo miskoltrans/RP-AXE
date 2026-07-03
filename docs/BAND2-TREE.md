@@ -28,6 +28,9 @@ do not re-litigate. New band-2 nodes are **PENDING** until the user signs them o
 **Pending review — charter (no new nodes — sorted into existing roots):**
 - [ ] US buses → `hire_JPL` (Vanguard 1, Pioneer 0-5, Explorer 6, Tiros-1, Transit-2A, GRAB) · Soviet → `hire_OKB` (Sputnik 2/3)
 
+**Pending review — support (5 nodes):**
+- [ ] `elec_deployableArrays` (solar) · `gnc_basicAvionics` (grants Science-Core-basic) · `tel_dopplerRanging` (DSN L2) · `tel_pcmTelemetry` (DSN L3 + helical) · `str_equipmentBays` (service bays + US tank + Mk18)
+
 ## Engine spine (DONE — 16 nodes, T4→T6)
 
 The 1958–61 propulsion cohort. **Homed by propellant, not the RealFuels disc tag.** Two transitions
@@ -106,6 +109,13 @@ these probes — so the buses sort straight into them, no new charter node neede
 Pioneer 0-5, Explorer 6, Tiros-1, Transit-2A, GRAB); Soviet → `hire_OKB` (Sputnik 2/3). Avionics grants
 (Science-Core/HDD) belong to the avionics ladder in Support, not here.
 
-## Remaining band-2 lanes (NOT yet authored)
-Support only: power (solar) · comms/DSN (antennas + tracking-station levels) · structures/materials
-ride-alongs (service bays, US tanks, Fairing-II, SM tank) · the avionics grants ladder.
+## Support (DONE — 5 nodes, T5–T6)
+`elec_deployableArrays` (ST1 panel, off `elec_arCoatings`) · `gnc_basicAvionics` (grants Science-Core-basic,
+off `gnc_earlyAvionics`) · `tel_dopplerRanging` (DSN L2) → `tel_pcmTelemetry` (DSN L3 + helical antenna) ·
+`str_equipmentBays` (service bays 3m/4m, US radial tank, Mk18 nose). Tech-levels placed (solarTL1, commsTL1/2,
+HDD-Basic, SM-II); `PFTech-Fairing-II` + `RFTech-Battery-II` deferred (fairing/battery ladders).
+
+## BAND 2 COMPLETE — 41 new nodes, tree at 129 / 19 disciplines
+Engines 16 · aviation 7 · crewed 9 · science 4 · charter (into existing roots) · support 5. All PENDING
+sign-off (see checklist above). Deferred within band 2: US2 wedges (uncurated), IR03 finer gate (band 3),
+ullage capability gate (band 3), the tech-level `TODO` tuning pass, the cost pass.

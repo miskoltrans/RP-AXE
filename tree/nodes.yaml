@@ -727,6 +727,52 @@ nodes:
     flavor: "A finer vidicon target and a denser scan resolve detail the early television camera smeared away — reconnaissance and weather imagery sharp enough to be worth the bandwidth to send it down. The electronic eye growing up."
     parts: [RO-ImprovedTVCamera]
 
+  # ===================== BAND 2 * SUPPORT (power / avionics / comms-DSN / structures) =====================
+  # Grants + ride-alongs closing out the spacecraft-systems side of the era. Progression respected:
+  # DSN L2 (T5) -> L3 (T6); solar TL0 (band-1) -> TL1; avionics early (T4) -> basic (T5). Tech-level
+  # PFTech-Fairing-II + RFTech-Battery-II deferred (no clean band-2 home; fairing/battery ladders).
+  - id: elec_deployableArrays
+    title: "Deployable Photovoltaic Arrays"
+    discipline: ElectricalPower
+    tier: 5
+    parents: [elec_arCoatings]
+    flavor: "Fold banks of silicon cells onto paddles that swing out once the satellite is clear of its shroud — far more collecting area than the body could ever carry, and the power to run a real payload through the sunlit half of every orbit. The array that outgrows the trickle-charge patch."
+    parts: [RO_EarlyMediumSolarPanel]
+    upgrades: [solarTL1]
+  - id: gnc_basicAvionics
+    title: "Miniaturised Inertial Guidance"
+    discipline: GuidanceControl
+    tier: 5
+    parents: [gnc_earlyAvionics]
+    flavor: "Shrink the whole gyro-and-accelerometer platform onto transistorised boards light enough that a probe, not just a launcher, can carry its own guidance — and keep pointing through a mission measured in weeks. Inertial reference, miniaturised."
+    grants: [Science-Core-basicAvionics]
+    upgrades: [HDD-Upgrade-Basic]
+  - id: tel_dopplerRanging
+    title: "Coherent Doppler Ranging"
+    discipline: Telecommunications
+    tier: 5
+    parents: [tel_telemetry]
+    flavor: "Lock a ground receiver to the exact frequency of a spacecraft's carrier and read the Doppler shift as it climbs away — velocity to a fraction of a metre per second, and range from the round-trip time of a coded tone. The two-way link that tracks a probe out past the Moon."
+    grants: [RP0Level2TrackingStation]
+    upgrades: [commsTL1]
+  - id: tel_pcmTelemetry
+    title: "Pulse-Code Modulation Telemetry"
+    discipline: Telecommunications
+    tier: 6
+    parents: [tel_dopplerRanging]
+    flavor: "Sample each reading, digitise it, and interleave the bits into one clocked stream — telemetry that arrives exact instead of drifting, and packs a dozen instruments down a single carrier, picked up on a helical antenna that does not care how the craft is tumbling. Pulse-code modulation: the beginning of digital spaceflight."
+    parts: [antenna_cone_toggle]
+    grants: [RP0Level3TrackingStation]
+    upgrades: [commsTL2]
+  - id: str_equipmentBays
+    title: "Enclosed Equipment Bays"
+    discipline: StructuresMechanisms
+    tier: 5
+    parents: [str_serviceModuleTank]
+    flavor: "A sealed structural bay behind the payload that shelters avionics, batteries and radios from launch acoustics and the vacuum beyond — the enclosed volume a working spacecraft is built around, from a service bay to a universal-storage rack, capped by a jettisonable nose."
+    parts: [RO_ServiceBay_300, ServiceBay_250_v2, USRadialTanks, restock-nosecone-1875-1]
+    upgrades: [RFTech-SM-II]
+
   # ================================================================================================
   # ===================== BAND 2 * ENGINE SPINE (T4 -> T6) =========================================
   # The 1958-61 propulsion cohort (see docs/BAND2-TREE.md). Two transitions drive it: storable
