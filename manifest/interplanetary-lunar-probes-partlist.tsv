@@ -20,6 +20,7 @@ scienceHuman	Early Human Spaceflight Era Science	-2952	part	RP0Cherenkov	yes	no	
 scienceHuman	Early Human Spaceflight Era Science	-2952	part	USAccelGravWedge	yes	no	Orbital Science Unit
 scienceHuman	Early Human Spaceflight Era Science	-2952	part	USMatBayWedge	yes	no	Crewed Experiment Bay
 scienceHuman	Early Human Spaceflight Era Science	-2952	part	dmUS2GoreSat	no	no	Univ. Storage 2 - Infrared Radiometer
+scienceHuman	Early Human Spaceflight Era Science	-2952	part	scansat-radar-poseidon-3b-1	yes	no	Early Radar Altimeter
 scienceHuman	Early Human Spaceflight Era Science	-2952	part	sensorGravimeter	yes	no	Orbital Perturbation Experiment
 interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	part	ca_argo-mk2	yes	no	Mariner Mars & Venus Spacecraft Bus
 interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	part	rn_mariner1_2	yes	no	Mariner 1/2

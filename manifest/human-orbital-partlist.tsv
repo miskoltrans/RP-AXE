@@ -45,7 +45,7 @@ basicCapsules	Basic Capsules	part	ROC-MercuryLESBDB	yes	Mercury Launch Escape Sy
 basicCapsules	Basic Capsules	part	ROC-MercuryNoseCapBDB	yes	Mercury M-DCAM Nose Unit
 basicCapsules	Basic Capsules	part	ROC-MercuryParachuteBDB	yes	Mercury M-ASD Main Parachute
 basicCapsules	Basic Capsules	part	ROC-MercuryRCS2BDB	yes	Mercury Landing and Control Module
-basicCapsules	Basic Capsules	part	ROC-MercuryRCSBDB	yes	Mercury Landing and Control Module (DEPRECATED)
+basicCapsules	Basic Capsules	part	ROC-MercuryRCSBDB	DROP-deprecated	Mercury Landing and Control Module (DEPRECATED)
 basicCapsules	Basic Capsules	part	ROC-MercuryRetropackBDB	yes	Mercury Retropack
 basicCapsules	Basic Capsules	part	ROC-VostokCapsule	yes	Vostok Descent Module
 basicCapsules	Basic Capsules	part	ROC-VostokDecoupler	yes	Vostok/Voskhod Decoupler
@@ -66,13 +66,13 @@ stabilityRP0	Stability	part	RO-KDU414	yes	S5.19
 stabilityRP0	Stability	part	ROE-AgenaSPS	yes	Agena-D Secondary Propulsion System
 stabilityRP0	Stability	part	ROE-RangerRetro	yes	MC-4-610
 entryDescentLanding	Entry, Descent and Landing	part	ROH-AdjustableHS	yes	Adjustable Heatshield
-entryDescentLanding	Entry, Descent and Landing	part	RP0-SampleReturnCapsule	yes	Science Sample Return Capsule (DEPRECATED)
-entryDescentLanding	Entry, Descent and Landing	part	RP0-SampleReturnCommand	yes	Sample Return Command Module (DEPRECATED)
+entryDescentLanding	Entry, Descent and Landing	part	RP0-SampleReturnCapsule	DROP-deprecated	Science Sample Return Capsule (DEPRECATED)
+entryDescentLanding	Entry, Descent and Landing	part	RP0-SampleReturnCommand	DROP-deprecated	Sample Return Command Module (DEPRECATED)
 entryDescentLanding	Entry, Descent and Landing	upgrade	Heatsink	KEEP-capability	
 humanRatedEDL	Human Rated EDL	part	SXTAirbag	yes	Mk10-XL Inflatable Airbag
 humanRatedEDL	Human Rated EDL	part	SXTAirbagSmall	yes	Mk-10 Inflatable Airbag
 humanRatedEDL	Human Rated EDL	part	landingLeg1	yes	LT-1 Landing Struts
-humanRatedEDL	Human Rated EDL	part	miniLandingLeg	yes	LT-05 Micro Landing Strut (DEPRECATED)
+humanRatedEDL	Human Rated EDL	part	miniLandingLeg	DROP-deprecated	LT-05 Micro Landing Strut (DEPRECATED)
 humanRatedEDL	Human Rated EDL	upgrade	MercuryHS	KEEP-capability	
 orbitalRocketry1958	1958 Orbital Rocketry	part	ROE-Agena	yes	XLR81 (Agena) Vacuum Engine
 orbitalRocketry1958	1958 Orbital Rocketry	part	ROE-Gamma2	yes	Gamma 2
@@ -117,7 +117,7 @@ orbitalRocketry1960	1960 Orbital Rocketry	part	ROE-AJ10Mid	yes	AJ10 Series (Mid)
 orbitalRocketry1960	1960 Orbital Rocketry	part	ROE-Juno45K	yes	Juno IVB JPL 45K Engine
 orbitalRocketry1960	1960 Orbital Rocketry	part	ROE-Juno6K	yes	Juno IV 6k Engine
 orbitalRocketry1960	1960 Orbital Rocketry	part	ROE-RD0110	yes	RD-0107/0110
-orbitalRocketry1960	1960 Orbital Rocketry	part	ROE-RD0110Vernier	yes	RD-0110 Vernier (DEPRECATED)
+orbitalRocketry1960	1960 Orbital Rocketry	part	ROE-RD0110Vernier	DROP-deprecated	RD-0110 Vernier (DEPRECATED)
 orbitalRocketry1960	1960 Orbital Rocketry	part	ROE-RD109	yes	RD-109/119
 orbitalRocketry1960	1960 Orbital Rocketry	part	ROE-RD215	yes	RD-216 (2x RD-215)
 orbitalRocketry1960	1960 Orbital Rocketry	part	ROE-RD215_Single	yes	RD-215
@@ -181,7 +181,7 @@ materialsScienceHuman	Early Human Spaceflight Materials Science	upgrade	RFTech-S
 materialsScienceHuman	Early Human Spaceflight Materials Science	upgrade	rp0EngineerUpgradeHuman	DROP-axed-career	
 electronicsHuman	Early Human Spaceflight Electronics Research	upgrade	RFTech-Battery-II	KEEP-tank-typelevel	
 electronicsHuman	Early Human Spaceflight Electronics Research	upgrade	rp0ResearcherUpgradeHuman	DROP-axed-career	
-earlyAvionics	Early Avionics and Probes	part	RP0probeVanguardXray	yes	20in X-Ray Detector (DEPRECATED)
+earlyAvionics	Early Avionics and Probes	part	RP0probeVanguardXray	DROP-deprecated	20in X-Ray Detector (DEPRECATED)
 earlyAvionics	Early Avionics and Probes	part	pioneer_0_1_2	yes	Pioneer 0/1/2
 earlyAvionics	Early Avionics and Probes	part	pioneer_3_4	yes	Pioneer 3/4
 earlyAvionics	Early Avionics and Probes	part	sputnik2	yes	Sputnik 2
@@ -196,6 +196,7 @@ scienceSatellite	Satellite Era Science	part	RO-EarlyMagnet	yes	MG01 - Early Magn
 scienceSatellite	Satellite Era Science	part	RO-EarlyTVCamera	yes	VI01 - Early Television Camera
 scienceSatellite	Satellite Era Science	part	RO-GeigerMuller	yes	CR01 - Geiger-Muller Counter
 scienceSatellite	Satellite Era Science	part	RO-Micrometeorite	yes	MM01 - Micrometeorite Detector
+scienceSatellite	Satellite Era Science	part	SCANsat_Scanner32	yes	SCAN Anomaly Scanner (DEPRECATED)
 scienceSatellite	Satellite Era Science	part	dmUS2MagBoom	no	Univ. Storage 2 - Magnetometer Boom
 scienceSatellite	Satellite Era Science	part	dmUS2Scope	no	Univ. Storage 2 - Orbital Telescope
 primitiveSolarPanels	Primitive Solar Panels	part	RO_EarlyMediumSolarPanel	yes	ST1 Medium Solar Panel
@@ -203,6 +204,7 @@ primitiveSolarPanels	Primitive Solar Panels	upgrade	solarTL1	KEEP-techlevel-TODO
 lunarRangeComms	Lunar Range Communications	part	longAntenna	yes	Communotron 16
 lunarRangeComms	Lunar Range Communications	upgrade	RP0Level2TrackingStation	KEEP-dsn	
 lunarRangeComms	Lunar Range Communications	upgrade	commsTL1	KEEP-techlevel-TODO	
+basicAvionics	Basic Avionics and Probes	part	SCANsat_Tracker	yes	SCAN MapTraq®
 basicAvionics	Basic Avionics and Probes	part	explorer_6	yes	Explorer 6
 basicAvionics	Basic Avionics and Probes	part	grab-1	yes	GRAB 1
 basicAvionics	Basic Avionics and Probes	part	pioneer_5	yes	Pioneer 5
