@@ -245,7 +245,7 @@ nodes:
     tier: 2
     parents: [str_structuralHardware]
     flavor: "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one burn."
-    parts: [proceduralStackDecoupler, Decoupler_1, radialDecoupler, ROT-RingDecoupler]
+    parts: [proceduralStackDecoupler, radialDecoupler, ROT-RingDecoupler]
   - id: aero_fairings
     title: "Jettisonable Payload Fairings"
     discipline: Aerodynamics
@@ -582,7 +582,7 @@ nodes:
     tier: 4
     parents: [str_radialDecouplers]
     flavor: "The rest of the catalogue shelf: pre-made in-line decouplers, separators and the skirt rings that drop a spent booster, in fixed sizes — for when you would rather bolt on a stock part than shape a procedural one. The procedural decoupler stays the default; this is the shelf."
-    parts: [Decoupler_0, Decoupler_2, restock-decoupler-1875-1, restock-separator-1875-1, shortDecoupler1-2, ROT-AtlasDecoupler]
+    parts: [Decoupler_0, Decoupler_1, Decoupler_2, restock-decoupler-1875-1, restock-separator-1875-1, shortDecoupler1-2, ROT-AtlasDecoupler]
   - id: tel_appSatellites
     title: "Radio-Relay Payloads"
     discipline: Telecommunications
