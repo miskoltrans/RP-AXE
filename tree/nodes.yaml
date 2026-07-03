@@ -557,8 +557,8 @@ nodes:
   - id: life_pilotedCockpits
     title: "Pressurized Cockpit"
     discipline: LifeSupport
-    tier: 4
-    parents: [str_balloonTank]
+    tier: 2
+    parents: [met_weldedTank]
     flavor: "A cockpit shaped around a pilot - canopy, seat, sticks and dials - with the tail surfaces that keep the aeroplane pointed where the pilot aims it. From an open fighter office to a bomber glazed nose: the crudest crew accommodation, and the first rung toward a pressurised cabin and, past it, a capsule."
     parts: [RO-X1Cockpit, RO-FighterInlineCockpit, RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, SXTmk3Cockpit52, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow]
 
