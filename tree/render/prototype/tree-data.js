@@ -139,16 +139,6 @@ window.TREE = {
    "flavor": "1950. You begin with the de Laval nozzle, a procedural airframe, avionics, the first instruments and a handful of sounding motors — enough to fly above the Karman line turn one. Rocketry is the default; whether to fly aeroplanes at all is yours to choose.",
    "parts": [
     {
-     "name": "RO-B9ProcAMWing-Early",
-     "mod": "B9_Aerospace_ProceduralWings",
-     "title": "B9 Procedural Wing, All-Moving (Early)"
-    },
-    {
-     "name": "RO-B9ProcCS-Early",
-     "mod": "B9_Aerospace_ProceduralWings",
-     "title": "B9 Procedural Control Surface (Early)"
-    },
-    {
      "name": "RO-B9ProcWing-Early",
      "mod": "B9_Aerospace_ProceduralWings",
      "title": "B9 Procedural Wing (Early)"
@@ -2160,7 +2150,7 @@ window.TREE = {
    "tier": 1,
    "cost": 20,
    "anyToUnlock": false,
-   "flavor": "Beyond the bare procedural airframe you begin with, the craft of subsonic aerodynamics: pitot and radial intakes that feed an engine cleanly, and the refinement that turns a wing into a controllable platform. The root the rest of aerodynamics grows from.",
+   "flavor": "Beyond the bare procedural wing you begin with, the craft of subsonic aerodynamics: the control surfaces and all-moving tail that make it a controllable platform, and the pitot and radial intakes that feed an engine cleanly. The root the rest of aerodynamics grows from.",
    "parts": [
     {
      "name": "CircularIntake",
@@ -2171,6 +2161,16 @@ window.TREE = {
      "name": "LRadialAirIntake",
      "mod": "SXT",
      "title": "XM-C200 Radial Pitot Intake"
+    },
+    {
+     "name": "RO-B9ProcAMWing-Early",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Wing, All-Moving (Early)"
+    },
+    {
+     "name": "RO-B9ProcCS-Early",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Control Surface (Early)"
     },
     {
      "name": "RO-IntakeRadialLongPitot",

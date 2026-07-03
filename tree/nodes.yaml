@@ -25,7 +25,7 @@ nodes:
     tier: 0
     parents: []
     flavor: "1950. You begin with the de Laval nozzle, a procedural airframe, avionics, the first instruments and a handful of sounding motors — enough to fly above the Karman line turn one. Rocketry is the default; whether to fly aeroplanes at all is yours to choose."
-    parts: [proceduralNoseCone, proceduralStructural, RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, groundAnchor]
+    parts: [proceduralNoseCone, proceduralStructural, RO-B9ProcWing-Early, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, groundAnchor]
   - id: parking
     title: "Unsorted Parts (Parking)"
     discipline: SystemsIntegration
@@ -372,8 +372,8 @@ nodes:
     discipline: Aerodynamics
     tier: 1
     parents: [start]
-    flavor: "Beyond the bare procedural airframe you begin with, the craft of subsonic aerodynamics: pitot and radial intakes that feed an engine cleanly, and the refinement that turns a wing into a controllable platform. The root the rest of aerodynamics grows from."
-    parts: [CircularIntake, LRadialAirIntake, RO-IntakeRadialLongPitot, SXTInlineAirIntake, airScoop, miniIntake]
+    flavor: "Beyond the bare procedural wing you begin with, the craft of subsonic aerodynamics: the control surfaces and all-moving tail that make it a controllable platform, and the pitot and radial intakes that feed an engine cleanly. The root the rest of aerodynamics grows from."
+    parts: [RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, RO-IntakeRadialLongPitot, SXTInlineAirIntake, airScoop, miniIntake]
   - id: str_landingGear
     title: "Oleo-Strut Undercarriage"
     discipline: StructuresMechanisms
