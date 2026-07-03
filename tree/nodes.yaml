@@ -323,7 +323,7 @@ nodes:
     title: "Vidicon Imaging"
     discipline: OpticsPhotonics
     tier: 4
-    parents: [opt_filmReturn, elec_transistor]
+    parents: [opt_recon, elec_transistor]
     flavor: "Scan a photoconductive target with an electron beam and read the image off as a video signal — lower resolution than film, but it comes down the radio link the instant you take it. No capsule to recover."
     parts: [RO-EarlyTVCamera, aerocam, aerocam180, hc_booster, hc_kazzelblad, hc_launchcam, hc_navcam, hc_nightvision, hc_scicam, hc_wideangle, mumech_hullcam]
   - id: nuc_geiger
@@ -671,9 +671,9 @@ nodes:
   - id: nuc_cosmicRay
     title: "Cosmic-Ray Telescopy"
     discipline: NuclearEngineering
-    tier: 4
-    parents: [nuc_geiger, elec_transistor]
-    flavor: "Stack scintillators and photomultipliers in coincidence so only a particle passing clean through every layer is counted: a telescope not for light but for cosmic rays, reading their energy and direction. It takes fast electronics to catch a nanosecond coincidence, which is why it waits on the solid-state line."
+    tier: 3
+    parents: [nuc_geiger]
+    flavor: "Stack scintillators and photomultipliers in coincidence so only a particle passing clean through every layer is counted: a telescope not for light but for cosmic rays, reading their energy and direction. The photomultiplier and its fast coincidence circuit run on the vacuum-tube electronics of the day — no transistor required."
     parts: [RO-ScintillationCounter, RP0Cherenkov]
   - id: opt_recon
     title: "Film Reconnaissance"

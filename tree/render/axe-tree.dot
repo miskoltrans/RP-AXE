@@ -86,15 +86,15 @@ digraph AXE {
   "gs_saturnPad" [label="Saturn Mobile Launcher\nGroundSupport T6 · 2000",fillcolor="#8f8778",fontcolor="#111111"];
   "gs_shuttlePad" [label="Shuttle Launch Platform\nGroundSupport T7 · 2300",fillcolor="#8f8778",fontcolor="#111111"];
   "aero_prefabNoseCones" [label="Prefabricated Nose Cones\nAerodynamics T4 · 900",fillcolor="#5aa0e2",fontcolor="#111111"];
-  "nuc_cosmicRay" [label="Cosmic-Ray Telescopy\nNuclearEngineering T4 · 900",fillcolor="#83c341",fontcolor="#111111"];
+  "nuc_cosmicRay" [label="Cosmic-Ray Telescopy\nNuclearEngineering T3 · 400",fillcolor="#83c341",fontcolor="#111111"];
   "opt_recon" [label="Film Reconnaissance\nOpticsPhotonics T3 · 400",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_tvRecon" [label="Television Reconnaissance\nOpticsPhotonics T5 · 1500",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_remoteSensing" [label="Infrared Remote Sensing\nOpticsPhotonics T5 · 1500",fillcolor="#7c8cff",fontcolor="#111111"];
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
-  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "aero_stampedWings" "str_prefabAdapters" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" "opt_recon" }
-  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "fd_throttleableRocketplane" "gnc_earlyAvionics" "str_serviceModuleTank" "cmp_compositeFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" "nuc_cosmicRay" }
+  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "aero_stampedWings" "str_prefabAdapters" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" "nuc_cosmicRay" "opt_recon" }
+  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "fd_throttleableRocketplane" "gnc_earlyAvionics" "str_serviceModuleTank" "cmp_compositeFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" }
   { rank=same; "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_tvRecon" "opt_remoteSensing" }
   { rank=same; "gs_saturnPad" }
   { rank=same; "gs_shuttlePad" }
@@ -133,7 +133,7 @@ digraph AXE {
   "gnc_postWarAvionics" -> "gnc_rcs" [style=solid];
   "aero_subsonicWing" -> "aero_recovery" [style=solid];
   "start" -> "opt_filmReturn" [style=solid];
-  "opt_filmReturn" -> "opt_vidicon" [style=solid];
+  "opt_recon" -> "opt_vidicon" [style=solid];
   "elec_transistor" -> "opt_vidicon" [style=solid];
   "start" -> "nuc_geiger" [style=solid];
   "mic_atmoSounding" -> "mic_massSpec" [style=solid];
@@ -187,7 +187,6 @@ digraph AXE {
   "gs_saturnPad" -> "gs_shuttlePad" [style=solid];
   "aero_fairings" -> "aero_prefabNoseCones" [style=solid];
   "nuc_geiger" -> "nuc_cosmicRay" [style=solid];
-  "elec_transistor" -> "nuc_cosmicRay" [style=solid];
   "opt_filmReturn" -> "opt_recon" [style=solid];
   "opt_vidicon" -> "opt_tvRecon" [style=solid];
   "opt_vidicon" -> "opt_remoteSensing" [style=solid];
