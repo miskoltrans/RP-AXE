@@ -193,7 +193,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2158
+    2231
    ]
   },
   {
@@ -209,7 +209,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2064
+    2137
    ]
   },
   {
@@ -586,7 +586,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    1876
+    1949
    ]
   },
   {
@@ -718,7 +718,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    1970
+    2043
    ]
   },
   {
@@ -750,7 +750,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1228
+    1133
    ]
   },
   {
@@ -782,7 +782,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1557
+    1463
    ]
   },
   {
@@ -814,7 +814,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1651
+    1369
    ]
   },
   {
@@ -846,7 +846,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1651
+    1369
    ]
   },
   {
@@ -873,7 +873,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1463
+    1557
    ]
   },
   {
@@ -905,7 +905,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1557
+    1463
    ]
   },
   {
@@ -937,7 +937,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1463
+    1557
    ]
   },
   {
@@ -985,7 +985,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1369
+    1275
    ]
   },
   {
@@ -1007,7 +1007,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1369
+    1275
    ]
   },
   {
@@ -1029,7 +1029,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1369
+    1275
    ]
   },
   {
@@ -1076,7 +1076,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    993
+    992
    ]
   },
   {
@@ -1103,7 +1103,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    993
+    992
    ]
   },
   {
@@ -1174,7 +1174,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1181
+    1180
    ]
   },
   {
@@ -1198,7 +1198,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1275
+    1086
    ]
   },
   {
@@ -1220,7 +1220,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1275
+    1087
    ]
   },
   {
@@ -1257,7 +1257,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    852
+    851
    ]
   },
   {
@@ -1277,7 +1277,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1557
+    1463
    ]
   },
   {
@@ -1388,7 +1388,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    805
+    804
    ]
   },
   {
@@ -1544,7 +1544,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2786
+    2790
    ]
   },
   {
@@ -1586,7 +1586,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2085
+    2038
    ]
   },
   {
@@ -1623,7 +1623,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3162
+    3401
    ]
   },
   {
@@ -1742,7 +1742,23 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3162
+    3401
+   ]
+  },
+  {
+   "id": "elec_transistor",
+   "title": "Transistor Amplification",
+   "discipline": "Microelectronics",
+   "tier": 3,
+   "cost": 400,
+   "anyToUnlock": false,
+   "flavor": "Replace the fragile, power-hungry vacuum tube with a sliver of doped germanium that amplifies and switches a signal cold, on almost nothing — the active device the diode could never be. Microelectronics proper begins here: every transistorised instrument, guidance platform and television camera that follows is built on this one breakthrough.",
+   "parts": [],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1428,
+    3448
    ]
   },
   {
@@ -1769,15 +1785,15 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3256
+    3354
    ]
   },
   {
    "id": "rob_rotorActuation",
    "title": "Electric Rotor Actuation",
    "discipline": "Robotics",
-   "tier": 3,
-   "cost": 400,
+   "tier": 4,
+   "cost": 900,
    "anyToUnlock": false,
    "flavor": "A brushless electric motor married to a solid-state controller that holds it at any commanded speed or angle — the first actuator a machine can move on its own. Nothing in an unmanned launcher spins one yet, but every arm, rover wheel, tracking mount and deployable to come turns on this.",
    "parts": [
@@ -1795,8 +1811,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1428,
-    3350
+    -1048,
+    3683
    ]
   },
   {
@@ -1818,7 +1834,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3726
+    3260
    ]
   },
   {
@@ -1880,7 +1896,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2273
+    2226
    ]
   },
   {
@@ -1902,15 +1918,15 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2717
+    3777
    ]
   },
   {
    "id": "opt_vidicon",
    "title": "Vidicon Imaging",
    "discipline": "OpticsPhotonics",
-   "tier": 3,
-   "cost": 400,
+   "tier": 4,
+   "cost": 900,
    "anyToUnlock": false,
    "flavor": "Scan a photoconductive target with an electron beam and read the image off as a video signal — lower resolution than film, but it comes down the radio link the instant you take it. No capsule to recover.",
    "parts": [
@@ -1973,8 +1989,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1428,
-    2999
+    -1048,
+    3777
    ]
   },
   {
@@ -2001,15 +2017,15 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2529
+    1791
    ]
   },
   {
    "id": "mic_massSpec",
    "title": "Magnetic-Sector Mass Spectrometry",
    "discipline": "Microelectronics",
-   "tier": 3,
-   "cost": 400,
+   "tier": 4,
+   "cost": 900,
    "anyToUnlock": false,
    "flavor": "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there.",
    "parts": [
@@ -2027,16 +2043,16 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1428,
-    3444
+    -1048,
+    3260
    ]
   },
   {
    "id": "mic_magnetometer",
    "title": "Fluxgate Magnetometry",
    "discipline": "Microelectronics",
-   "tier": 3,
-   "cost": 400,
+   "tier": 4,
+   "cost": 900,
    "anyToUnlock": false,
    "flavor": "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron.",
    "parts": [
@@ -2049,8 +2065,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1428,
-    3538
+    -1048,
+    3354
    ]
   },
   {
@@ -2087,7 +2103,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2623
+    3871
    ]
   },
   {
@@ -2114,7 +2130,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3491
+    3072
    ]
   },
   {
@@ -2176,7 +2192,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2184
+    2137
    ]
   },
   {
@@ -2233,7 +2249,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3068
+    2696
    ]
   },
   {
@@ -2260,7 +2276,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1745
+    1698
    ]
   },
   {
@@ -2297,7 +2313,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1839
+    1860
    ]
   },
   {
@@ -2334,7 +2350,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1745
+    1698
    ]
   },
   {
@@ -2396,7 +2412,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1949
+    1902
    ]
   },
   {
@@ -2443,7 +2459,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1975
+    1651
    ]
   },
   {
@@ -2480,7 +2496,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1881
+    1744
    ]
   },
   {
@@ -2522,7 +2538,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1881
+    1744
    ]
   },
   {
@@ -2549,7 +2565,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2017
+    1881
    ]
   },
   {
@@ -2691,7 +2707,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2927
+    2649
    ]
   },
   {
@@ -2709,7 +2725,7 @@ window.TREE = {
    ],
    "pos": [
     -2188,
-    3679
+    3213
    ]
   },
   {
@@ -2727,15 +2743,15 @@ window.TREE = {
    ],
    "pos": [
     -1808,
-    3632
+    3166
    ]
   },
   {
    "id": "gnc_earlyAvionics",
    "title": "Stable-Platform Guidance",
    "discipline": "GuidanceControl",
-   "tier": 3,
-   "cost": 400,
+   "tier": 4,
+   "cost": 900,
    "anyToUnlock": false,
    "flavor": "A gimballed, gyro-held platform that stays fixed in space while the vehicle rotates around it, read by transistorized electronics light enough to fly — the guidance package that steers a satellite launcher through its whole ascent.",
    "parts": [],
@@ -2747,8 +2763,8 @@ window.TREE = {
     "Science-Core-earlyAvionics"
    ],
    "pos": [
-    -1428,
-    3632
+    -1048,
+    3448
    ]
   },
   {
@@ -2975,7 +2991,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3726
+    3260
    ]
   },
   {
@@ -3122,7 +3138,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2367
+    2320
    ]
   },
   {
@@ -3164,7 +3180,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1991
+    1944
    ]
   },
   {
@@ -3281,7 +3297,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2974
+    2602
    ]
   },
   {
@@ -3323,7 +3339,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    899
+    898
    ]
   },
   {
@@ -3341,7 +3357,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2085
+    2038
    ]
   },
   {
@@ -3359,7 +3375,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3256
+    3589
    ]
   },
   {
@@ -3421,7 +3437,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1745
+    1698
    ]
   },
   {
@@ -3498,7 +3514,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2461
+    2414
    ]
   },
   {
@@ -3580,7 +3596,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2623
+    2790
    ]
   },
   {
@@ -3684,7 +3700,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2880
+    2508
    ]
   },
   {
@@ -3736,7 +3752,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1087
+    2884
    ]
   },
   {
@@ -4028,7 +4044,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1087
+    2884
    ]
   },
   {
@@ -4110,7 +4126,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1087
+    2884
    ]
   },
   {
@@ -4472,7 +4488,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1087
+    2884
    ]
   },
   {
@@ -4599,7 +4615,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1087
+    2884
    ]
   },
   {
@@ -4816,7 +4832,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    1087
+    2884
    ]
   },
   {
@@ -4958,7 +4974,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     92,
-    1087
+    2884
    ]
   },
   {
@@ -5005,15 +5021,15 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2179
+    2132
    ]
   },
   {
    "id": "nuc_cosmicRay",
    "title": "Cosmic-Ray Telescopy",
    "discipline": "NuclearEngineering",
-   "tier": 3,
-   "cost": 400,
+   "tier": 4,
+   "cost": 900,
    "anyToUnlock": false,
    "flavor": "Stack scintillators and photomultipliers in coincidence so only a particle passing clean through every layer is counted: a telescope not for light but for cosmic rays, reading their energy and direction. It takes fast electronics to catch a nanosecond coincidence, which is why it waits on the solid-state line.",
    "parts": [
@@ -5031,16 +5047,16 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1428,
-    2858
+    -1048,
+    3166
    ]
   },
   {
    "id": "opt_recon",
    "title": "Reconnaissance Imaging",
    "discipline": "OpticsPhotonics",
-   "tier": 4,
-   "cost": 900,
+   "tier": 5,
+   "cost": 1500,
    "anyToUnlock": false,
    "flavor": "Long-focal-length optics and fine-grain emulsion resolve a vehicle from orbit: the reconnaissance cameras that were the real reason the first satellites flew, whether they drop the film capsule or scan it down a video link.",
    "parts": [
@@ -5068,16 +5084,16 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1048,
-    2952
+    -668,
+    3730
    ]
   },
   {
    "id": "opt_remoteSensing",
    "title": "Infrared Remote Sensing",
    "discipline": "OpticsPhotonics",
-   "tier": 4,
-   "cost": 900,
+   "tier": 5,
+   "cost": 1500,
    "anyToUnlock": false,
    "flavor": "Scan the planet in wavelengths the eye cannot see: an infrared radiometer maps cloud-top temperature, an ultraviolet spectrometer reads the high atmosphere. The first weather and earth-resource sensing from orbit.",
    "parts": [
@@ -5105,8 +5121,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1048,
-    3046
+    -668,
+    3824
    ]
   }
  ],
@@ -5118,11 +5134,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     1228
+     1133
     ]
    ]
   },
@@ -5133,11 +5149,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1228
+     1133
     ],
     [
      -1808,
-     1557
+     1463
     ]
    ]
   },
@@ -5148,11 +5164,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1557
+     1463
     ],
     [
      -1808,
-     1557
+     1463
     ]
    ]
   },
@@ -5163,11 +5179,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1557
+     1463
     ],
     [
      -1428,
-     1651
+     1369
     ]
    ]
   },
@@ -5178,11 +5194,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1651
+     1369
     ],
     [
      -1048,
-     1651
+     1369
     ]
    ]
   },
@@ -5197,7 +5213,7 @@ window.TREE = {
     ],
     [
      -1048,
-     1463
+     1557
     ]
    ]
   },
@@ -5212,7 +5228,7 @@ window.TREE = {
     ],
     [
      -1048,
-     1557
+     1463
     ]
    ]
   },
@@ -5223,11 +5239,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1463
+     1557
     ],
     [
      -668,
-     1463
+     1557
     ]
    ]
   },
@@ -5238,7 +5254,7 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1557
+     1463
     ],
     [
      -1428,
@@ -5253,11 +5269,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     1369
+     1275
     ]
    ]
   },
@@ -5268,11 +5284,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1369
+     1275
     ],
     [
      -1808,
-     1369
+     1275
     ]
    ]
   },
@@ -5283,15 +5299,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1369
+     1275
     ],
     [
      -1428,
-     1369
+     1275
     ],
     [
      -1048,
-     1369
+     1275
     ]
    ]
   },
@@ -5302,11 +5318,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     993
+     992
     ]
    ]
   },
@@ -5317,11 +5333,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     993
+     992
     ],
     [
      -1808,
-     993
+     992
     ]
    ]
   },
@@ -5332,7 +5348,7 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     993
+     992
     ],
     [
      -1428,
@@ -5347,11 +5363,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1228
+     1133
     ],
     [
      -1808,
-     1181
+     1180
     ]
    ]
   },
@@ -5362,11 +5378,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1228
+     1133
     ],
     [
      -1808,
-     1275
+     1086
     ]
    ]
   },
@@ -5377,11 +5393,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1275
+     1086
     ],
     [
      -1428,
-     1275
+     1087
     ]
    ]
   },
@@ -5392,11 +5408,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     805
+     804
     ],
     [
      -1808,
-     852
+     851
     ]
    ]
   },
@@ -5407,11 +5423,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     1557
+     1463
     ]
    ]
   },
@@ -5422,7 +5438,7 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     852
+     851
     ],
     [
      -1428,
@@ -5437,11 +5453,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     805
+     804
     ]
    ]
   },
@@ -5452,7 +5468,7 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     805
+     804
     ],
     [
      -1808,
@@ -5467,7 +5483,7 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     852
+     851
     ],
     [
      -1428,
@@ -5482,11 +5498,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2927
+     2649
     ],
     [
      -1808,
-     2786
+     2790
     ]
    ]
   },
@@ -5497,11 +5513,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2184
+     2137
     ],
     [
      -1808,
-     2085
+     2038
     ]
    ]
   },
@@ -5512,11 +5528,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     3162
+     3401
     ]
    ]
   },
@@ -5542,11 +5558,26 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3162
+     3401
     ],
     [
      -1808,
-     3162
+     3401
+    ]
+   ]
+  },
+  {
+   "from": "elec_semiconductorDiode",
+   "to": "elec_transistor",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1808,
+     3401
+    ],
+    [
+     -1428,
+     3448
     ]
    ]
   },
@@ -5557,26 +5588,26 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3162
+     3401
     ],
     [
      -1428,
-     3256
+     3354
     ]
    ]
   },
   {
-   "from": "elec_semiconductorDiode",
+   "from": "elec_transistor",
    "to": "rob_rotorActuation",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1808,
-     3162
+     -1428,
+     3448
     ],
     [
-     -1428,
-     3350
+     -1048,
+     3683
     ]
    ]
   },
@@ -5587,11 +5618,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3679
+     3213
     ],
     [
      -1808,
-     3726
+     3260
     ]
    ]
   },
@@ -5602,11 +5633,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2184
+     2137
     ],
     [
      -1808,
-     2273
+     2226
     ]
    ]
   },
@@ -5617,11 +5648,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     2717
+     3777
     ]
    ]
   },
@@ -5632,30 +5663,34 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2717
+     3777
     ],
     [
      -1808,
-     2717
+     3777
     ],
     [
      -1428,
-     2999
+     3777
+    ],
+    [
+     -1048,
+     3777
     ]
    ]
   },
   {
-   "from": "elec_semiconductorDiode",
+   "from": "elec_transistor",
    "to": "opt_vidicon",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1808,
-     3162
+     -1428,
+     3448
     ],
     [
-     -1428,
-     2999
+     -1048,
+     3777
     ]
    ]
   },
@@ -5666,11 +5701,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     2529
+     1791
     ]
    ]
   },
@@ -5681,30 +5716,34 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3491
+     3072
     ],
     [
      -1808,
-     3444
+     3025
     ],
     [
      -1428,
-     3444
+     3025
+    ],
+    [
+     -1048,
+     3260
     ]
    ]
   },
   {
-   "from": "elec_semiconductorDiode",
+   "from": "elec_transistor",
    "to": "mic_massSpec",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1808,
-     3162
+     -1428,
+     3448
     ],
     [
-     -1428,
-     3444
+     -1048,
+     3260
     ]
    ]
   },
@@ -5715,30 +5754,34 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3491
+     3072
     ],
     [
      -1808,
-     3538
+     3078
     ],
     [
      -1428,
-     3538
+     3078
+    ],
+    [
+     -1048,
+     3354
     ]
    ]
   },
   {
-   "from": "elec_semiconductorDiode",
+   "from": "elec_transistor",
    "to": "mic_magnetometer",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1808,
-     3162
+     -1428,
+     3448
     ],
     [
-     -1428,
-     3538
+     -1048,
+     3354
     ]
    ]
   },
@@ -5749,11 +5792,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     2623
+     3871
     ]
    ]
   },
@@ -5764,11 +5807,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     3491
+     3072
     ]
    ]
   },
@@ -5779,11 +5822,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     2184
+     2137
     ]
    ]
   },
@@ -5794,11 +5837,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2927
+     2649
     ],
     [
      -1808,
-     3068
+     2696
     ]
    ]
   },
@@ -5809,11 +5852,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1745
+     1698
     ],
     [
      -1808,
-     1745
+     1698
     ]
    ]
   },
@@ -5824,11 +5867,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2184
+     2137
     ],
     [
      -1808,
-     1839
+     1860
     ]
    ]
   },
@@ -5839,11 +5882,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1745
+     1698
     ],
     [
      -1428,
-     1745
+     1698
     ]
    ]
   },
@@ -5854,15 +5897,15 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2184
+     2137
     ],
     [
      -1808,
-     1949
+     1902
     ],
     [
      -1428,
-     1949
+     1902
     ]
    ]
   },
@@ -5873,11 +5916,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1745
+     1698
     ],
     [
      -1048,
-     1975
+     1651
     ]
    ]
   },
@@ -5888,11 +5931,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1949
+     1902
     ],
     [
      -1048,
-     1975
+     1651
     ]
    ]
   },
@@ -5903,11 +5946,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1745
+     1698
     ],
     [
      -1048,
-     1881
+     1744
     ]
    ]
   },
@@ -5918,11 +5961,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1949
+     1902
     ],
     [
      -1048,
-     1881
+     1744
     ]
    ]
   },
@@ -5933,11 +5976,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1881
+     1744
     ],
     [
      -668,
-     1881
+     1744
     ]
    ]
   },
@@ -5948,19 +5991,19 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1839
+     1860
     ],
     [
      -1428,
-     1839
+     1860
     ],
     [
      -1048,
-     1839
+     1860
     ],
     [
      -668,
-     2017
+     1881
     ]
    ]
   },
@@ -5971,15 +6014,15 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1949
+     1902
     ],
     [
      -1048,
-     2017
+     1902
     ],
     [
      -668,
-     2017
+     1881
     ]
    ]
   },
@@ -5990,11 +6033,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     2927
+     2649
     ]
    ]
   },
@@ -6005,11 +6048,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     3679
+     3213
     ]
    ]
   },
@@ -6020,11 +6063,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3679
+     3213
     ],
     [
      -1808,
-     3632
+     3166
     ]
    ]
   },
@@ -6035,26 +6078,30 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3632
+     3166
     ],
     [
      -1428,
-     3632
+     3166
+    ],
+    [
+     -1048,
+     3448
     ]
    ]
   },
   {
-   "from": "elec_semiconductorDiode",
+   "from": "elec_transistor",
    "to": "gnc_earlyAvionics",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1808,
-     3162
+     -1428,
+     3448
     ],
     [
-     -1428,
-     3632
+     -1048,
+     3448
     ]
    ]
   },
@@ -6065,11 +6112,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3726
+     3260
     ],
     [
      -1428,
-     3726
+     3260
     ]
    ]
   },
@@ -6080,11 +6127,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2184
+     2137
     ],
     [
      -1808,
-     2367
+     2320
     ]
    ]
   },
@@ -6095,11 +6142,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2184
+     2137
     ],
     [
      -1808,
-     1991
+     1944
     ]
    ]
   },
@@ -6110,11 +6157,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2927
+     2649
     ],
     [
      -1808,
-     2974
+     2602
     ]
    ]
   },
@@ -6129,7 +6176,7 @@ window.TREE = {
     ],
     [
      -1048,
-     899
+     898
     ]
    ]
   },
@@ -6140,11 +6187,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2085
+     2038
     ],
     [
      -1428,
-     2085
+     2038
     ]
    ]
   },
@@ -6155,11 +6202,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3256
+     3354
     ],
     [
      -1048,
-     3256
+     3589
     ]
    ]
   },
@@ -6170,11 +6217,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     1745
+     1698
     ]
    ]
   },
@@ -6185,11 +6232,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2184
+     2137
     ],
     [
      -1808,
-     2461
+     2414
     ]
    ]
   },
@@ -6200,11 +6247,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2786
+     2790
     ],
     [
      -1428,
-     2623
+     2790
     ]
    ]
   },
@@ -6230,11 +6277,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2927
+     2649
     ],
     [
      -1808,
-     2880
+     2508
     ]
    ]
   },
@@ -6245,11 +6292,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2158
+     2231
     ],
     [
      -2188,
-     1087
+     2884
     ]
    ]
   },
@@ -6260,11 +6307,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1087
+     2884
     ],
     [
      -1808,
-     1087
+     2884
     ]
    ]
   },
@@ -6275,11 +6322,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1087
+     2884
     ],
     [
      -1428,
-     1087
+     2884
     ]
    ]
   },
@@ -6290,11 +6337,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1087
+     2884
     ],
     [
      -1048,
-     1087
+     2884
     ]
    ]
   },
@@ -6305,11 +6352,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1087
+     2884
     ],
     [
      -668,
-     1087
+     2884
     ]
    ]
   },
@@ -6320,11 +6367,11 @@ window.TREE = {
    "waypoints": [
     [
      -668,
-     1087
+     2884
     ],
     [
      -288,
-     1087
+     2884
     ]
    ]
   },
@@ -6335,11 +6382,11 @@ window.TREE = {
    "waypoints": [
     [
      -288,
-     1087
+     2884
     ],
     [
      92,
-     1087
+     2884
     ]
    ]
   },
@@ -6350,11 +6397,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2184
+     2137
     ],
     [
      -1808,
-     2179
+     2132
     ]
    ]
   },
@@ -6365,30 +6412,34 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2529
+     1791
     ],
     [
      -1808,
-     2529
+     1791
     ],
     [
      -1428,
-     2858
+     1791
+    ],
+    [
+     -1048,
+     3166
     ]
    ]
   },
   {
-   "from": "elec_semiconductorDiode",
+   "from": "elec_transistor",
    "to": "nuc_cosmicRay",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1808,
-     3162
+     -1428,
+     3448
     ],
     [
-     -1428,
-     2858
+     -1048,
+     3166
     ]
    ]
   },
@@ -6398,12 +6449,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1428,
-     2999
+     -1048,
+     3777
     ],
     [
-     -1048,
-     2952
+     -668,
+     3730
     ]
    ]
   },
@@ -6413,12 +6464,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1428,
-     2999
+     -1048,
+     3777
     ],
     [
-     -1048,
-     3046
+     -668,
+     3824
     ]
    ]
   }

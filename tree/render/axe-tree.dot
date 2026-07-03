@@ -34,15 +34,16 @@ digraph AXE {
   "tel_telemetry" [label="Pulse-Interval Telemetry\nTelecommunications T1 · 20",fillcolor="#3f7bf5",fontcolor="#111111"];
   "th_hermeticBus" [label="Hermetic Thermal-Control Bus\nThermodynamics T3 · 400",fillcolor="#f4813a",fontcolor="#111111"];
   "elec_semiconductorDiode" [label="Semiconductor Diodes\nElectricalPower T2 · 90",fillcolor="#ffd23f",fontcolor="#111111"];
+  "elec_transistor" [label="Transistor Amplification\nMicroelectronics T3 · 400",fillcolor="#c2a0e0",fontcolor="#111111"];
   "elec_siliconPV" [label="Diffused-Junction Photovoltaics\nElectricalPower T3 · 400",fillcolor="#ffd23f",fontcolor="#111111"];
-  "rob_rotorActuation" [label="Electric Rotor Actuation\nRobotics T3 · 400",fillcolor="#d98c2b",fontcolor="#111111"];
+  "rob_rotorActuation" [label="Electric Rotor Actuation\nRobotics T4 · 900",fillcolor="#d98c2b",fontcolor="#111111"];
   "gnc_rcs" [label="Cold-Gas Reaction Control\nGuidanceControl T2 · 90",fillcolor="#8a5cd6",fontcolor="#111111"];
   "aero_recovery" [label="Drogue-Stabilized Deceleration\nAerodynamics T2 · 90",fillcolor="#5aa0e2",fontcolor="#111111"];
   "opt_filmReturn" [label="Film-Return Imaging\nOpticsPhotonics T1 · 20",fillcolor="#7c8cff",fontcolor="#111111"];
-  "opt_vidicon" [label="Vidicon Imaging\nOpticsPhotonics T3 · 400",fillcolor="#7c8cff",fontcolor="#111111"];
+  "opt_vidicon" [label="Vidicon Imaging\nOpticsPhotonics T4 · 900",fillcolor="#7c8cff",fontcolor="#111111"];
   "nuc_geiger" [label="Geiger-Müller Ionization Counting\nNuclearEngineering T1 · 20",fillcolor="#83c341",fontcolor="#111111"];
-  "mic_massSpec" [label="Magnetic-Sector Mass Spectrometry\nMicroelectronics T3 · 400",fillcolor="#c2a0e0",fontcolor="#111111"];
-  "mic_magnetometer" [label="Fluxgate Magnetometry\nMicroelectronics T3 · 400",fillcolor="#c2a0e0",fontcolor="#111111"];
+  "mic_massSpec" [label="Magnetic-Sector Mass Spectrometry\nMicroelectronics T4 · 900",fillcolor="#c2a0e0",fontcolor="#111111"];
+  "mic_magnetometer" [label="Fluxgate Magnetometry\nMicroelectronics T4 · 900",fillcolor="#c2a0e0",fontcolor="#111111"];
   "bio_cultures" [label="Space-Exposed Biology\nLifeSupport T1 · 20",fillcolor="#f0508a",fontcolor="#111111"];
   "mic_atmoSounding" [label="Upper-Atmosphere Sounding\nMicroelectronics T1 · 20",fillcolor="#c2a0e0",fontcolor="#111111"];
   "aero_subsonicWing" [label="Subsonic Aerodynamics\nAerodynamics T1 · 20",fillcolor="#5aa0e2",fontcolor="#111111"];
@@ -58,7 +59,7 @@ digraph AXE {
   "str_structuralHardware" [label="Riveted Airframe Structure\nStructuresMechanisms T1 · 20",fillcolor="#bfb08d",fontcolor="#111111"];
   "gnc_postWarAvionics" [label="Gyroscopic Autopilot\nGuidanceControl T1 · 20",fillcolor="#8a5cd6",fontcolor="#111111"];
   "gnc_avionicsPrototypes" [label="Analog Inertial Guidance\nGuidanceControl T2 · 90",fillcolor="#8a5cd6",fontcolor="#111111"];
-  "gnc_earlyAvionics" [label="Stable-Platform Guidance\nGuidanceControl T3 · 400",fillcolor="#8a5cd6",fontcolor="#111111"];
+  "gnc_earlyAvionics" [label="Stable-Platform Guidance\nGuidanceControl T4 · 900",fillcolor="#8a5cd6",fontcolor="#111111"];
   "gnc_standardRCS" [label="Interchangeable-Part Manufacture\nGuidanceControl T3 · 400",fillcolor="#8a5cd6",fontcolor="#111111"];
   "aero_stampedWings" [label="Stamped Aerofoil Panels\nAerodynamics T2 · 90",fillcolor="#5aa0e2",fontcolor="#111111"];
   "aero_boattail" [label="Boattail Aft-Fairings\nAerodynamics T2 · 90",fillcolor="#5aa0e2",fontcolor="#111111"];
@@ -79,15 +80,15 @@ digraph AXE {
   "gs_saturnPad" [label="Saturn Mobile Launcher\nGroundSupport T6 · 2000",fillcolor="#8f8778",fontcolor="#111111"];
   "gs_shuttlePad" [label="Shuttle Launch Platform\nGroundSupport T7 · 2300",fillcolor="#8f8778",fontcolor="#111111"];
   "aero_prefabNoseCones" [label="Prefabricated Nose Cones\nAerodynamics T2 · 90",fillcolor="#5aa0e2",fontcolor="#111111"];
-  "nuc_cosmicRay" [label="Cosmic-Ray Telescopy\nNuclearEngineering T3 · 400",fillcolor="#83c341",fontcolor="#111111"];
-  "opt_recon" [label="Reconnaissance Imaging\nOpticsPhotonics T4 · 900",fillcolor="#7c8cff",fontcolor="#111111"];
-  "opt_remoteSensing" [label="Infrared Remote Sensing\nOpticsPhotonics T4 · 900",fillcolor="#7c8cff",fontcolor="#111111"];
+  "nuc_cosmicRay" [label="Cosmic-Ray Telescopy\nNuclearEngineering T4 · 900",fillcolor="#83c341",fontcolor="#111111"];
+  "opt_recon" [label="Reconnaissance Imaging\nOpticsPhotonics T5 · 1500",fillcolor="#7c8cff",fontcolor="#111111"];
+  "opt_remoteSensing" [label="Infrared Remote Sensing\nOpticsPhotonics T5 · 1500",fillcolor="#7c8cff",fontcolor="#111111"];
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "aero_fairings" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_stampedWings" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" "aero_prefabNoseCones" }
-  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "th_hermeticBus" "elec_siliconPV" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_axialJet" "aero_supersonicWing" "gnc_earlyAvionics" "gnc_standardRCS" "cmp_compositeFairings" "str_standardDecouplers" "gs_serviceTowers" "nuc_cosmicRay" }
-  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "av_afterburner" "av_variableStator" "str_serviceModuleTank" "elec_arCoatings" "tel_appSatellites" "gs_dedicatedComplexes" "opt_recon" "opt_remoteSensing" }
-  { rank=same; "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" }
+  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "cmp_compositeFairings" "str_standardDecouplers" "gs_serviceTowers" }
+  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "elec_arCoatings" "tel_appSatellites" "gs_dedicatedComplexes" "nuc_cosmicRay" }
+  { rank=same; "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_recon" "opt_remoteSensing" }
   { rank=same; "gs_saturnPad" }
   { rank=same; "gs_shuttlePad" }
   "start" -> "pc_storables" [style=solid];
@@ -119,18 +120,19 @@ digraph AXE {
   "start" -> "tel_telemetry" [style=solid];
   "met_isogrid" -> "th_hermeticBus" [style=solid];
   "tel_telemetry" -> "elec_semiconductorDiode" [style=solid];
+  "elec_semiconductorDiode" -> "elec_transistor" [style=solid];
   "elec_semiconductorDiode" -> "elec_siliconPV" [style=solid];
-  "elec_semiconductorDiode" -> "rob_rotorActuation" [style=solid];
+  "elec_transistor" -> "rob_rotorActuation" [style=solid];
   "gnc_postWarAvionics" -> "gnc_rcs" [style=solid];
   "aero_subsonicWing" -> "aero_recovery" [style=solid];
   "start" -> "opt_filmReturn" [style=solid];
   "opt_filmReturn" -> "opt_vidicon" [style=solid];
-  "elec_semiconductorDiode" -> "opt_vidicon" [style=solid];
+  "elec_transistor" -> "opt_vidicon" [style=solid];
   "start" -> "nuc_geiger" [style=solid];
   "mic_atmoSounding" -> "mic_massSpec" [style=solid];
-  "elec_semiconductorDiode" -> "mic_massSpec" [style=solid];
+  "elec_transistor" -> "mic_massSpec" [style=solid];
   "mic_atmoSounding" -> "mic_magnetometer" [style=solid];
-  "elec_semiconductorDiode" -> "mic_magnetometer" [style=solid];
+  "elec_transistor" -> "mic_magnetometer" [style=solid];
   "start" -> "bio_cultures" [style=solid];
   "start" -> "mic_atmoSounding" [style=solid];
   "start" -> "aero_subsonicWing" [style=solid];
@@ -150,7 +152,7 @@ digraph AXE {
   "start" -> "gnc_postWarAvionics" [style=solid];
   "gnc_postWarAvionics" -> "gnc_avionicsPrototypes" [style=solid];
   "gnc_avionicsPrototypes" -> "gnc_earlyAvionics" [style=solid];
-  "elec_semiconductorDiode" -> "gnc_earlyAvionics" [style=solid];
+  "elec_transistor" -> "gnc_earlyAvionics" [style=solid];
   "gnc_rcs" -> "gnc_standardRCS" [style=solid];
   "aero_subsonicWing" -> "aero_stampedWings" [style=solid];
   "aero_subsonicWing" -> "aero_boattail" [style=solid];
@@ -172,7 +174,7 @@ digraph AXE {
   "gs_saturnPad" -> "gs_shuttlePad" [style=solid];
   "aero_subsonicWing" -> "aero_prefabNoseCones" [style=solid];
   "nuc_geiger" -> "nuc_cosmicRay" [style=solid];
-  "elec_semiconductorDiode" -> "nuc_cosmicRay" [style=solid];
+  "elec_transistor" -> "nuc_cosmicRay" [style=solid];
   "opt_vidicon" -> "opt_recon" [style=solid];
   "opt_vidicon" -> "opt_remoteSensing" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;

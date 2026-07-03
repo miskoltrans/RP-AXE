@@ -278,6 +278,12 @@ nodes:
     parents: [tel_telemetry]
     flavor: "A sliver of doped crystal that passes current one way only — grown up from the cat's-whisker radio detector into a rugged solid-state device. It lights an indicator on almost no power, and it is the seed of everything solid-state: rectifiers, transistors, the integrated circuit still to come. Microelectronics grows from here."
     parts: [SmallPointLight, SmallSpotLight, SmallStripLight, domeLight1, groundLight1, groundLight2, navLight1, spotLight1, spotLight1_v2, spotLight2, spotLight2_v2, spotLight3, stripLight1]
+  - id: elec_transistor
+    title: "Transistor Amplification"
+    discipline: Microelectronics
+    tier: 3
+    parents: [elec_semiconductorDiode]
+    flavor: "Replace the fragile, power-hungry vacuum tube with a sliver of doped germanium that amplifies and switches a signal cold, on almost nothing — the active device the diode could never be. Microelectronics proper begins here: every transistorised instrument, guidance platform and television camera that follows is built on this one breakthrough."
   - id: elec_siliconPV
     title: "Diffused-Junction Photovoltaics"
     discipline: ElectricalPower
@@ -288,8 +294,8 @@ nodes:
   - id: rob_rotorActuation
     title: "Electric Rotor Actuation"
     discipline: Robotics
-    tier: 3
-    parents: [elec_semiconductorDiode]
+    tier: 4
+    parents: [elec_transistor]
     flavor: "A brushless electric motor married to a solid-state controller that holds it at any commanded speed or angle — the first actuator a machine can move on its own. Nothing in an unmanned launcher spins one yet, but every arm, rover wheel, tracking mount and deployable to come turns on this."
     parts: [rotor_01, rotor_01s]
   - id: gnc_rcs
@@ -316,8 +322,8 @@ nodes:
   - id: opt_vidicon
     title: "Vidicon Imaging"
     discipline: OpticsPhotonics
-    tier: 3
-    parents: [opt_filmReturn, elec_semiconductorDiode]
+    tier: 4
+    parents: [opt_filmReturn, elec_transistor]
     flavor: "Scan a photoconductive target with an electron beam and read the image off as a video signal — lower resolution than film, but it comes down the radio link the instant you take it. No capsule to recover."
     parts: [RO-EarlyTVCamera, aerocam, aerocam180, hc_booster, hc_kazzelblad, hc_launchcam, hc_navcam, hc_nightvision, hc_scicam, hc_wideangle, mumech_hullcam]
   - id: nuc_geiger
@@ -330,15 +336,15 @@ nodes:
   - id: mic_massSpec
     title: "Magnetic-Sector Mass Spectrometry"
     discipline: Microelectronics
-    tier: 3
-    parents: [mic_atmoSounding, elec_semiconductorDiode]
+    tier: 4
+    parents: [mic_atmoSounding, elec_transistor]
     flavor: "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there."
     parts: [RO-IonMassSpectrometer, USFluidSpectroWedge]
   - id: mic_magnetometer
     title: "Fluxgate Magnetometry"
     discipline: Microelectronics
-    tier: 3
-    parents: [mic_atmoSounding, elec_semiconductorDiode]
+    tier: 4
+    parents: [mic_atmoSounding, elec_transistor]
     flavor: "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron."
     parts: [RO-EarlyMagnet]
   - id: bio_cultures
@@ -463,8 +469,8 @@ nodes:
   - id: gnc_earlyAvionics
     title: "Stable-Platform Guidance"
     discipline: GuidanceControl
-    tier: 3
-    parents: [gnc_avionicsPrototypes, elec_semiconductorDiode]
+    tier: 4
+    parents: [gnc_avionicsPrototypes, elec_transistor]
     flavor: "A gimballed, gyro-held platform that stays fixed in space while the vehicle rotates around it, read by transistorized electronics light enough to fly — the guidance package that steers a satellite launcher through its whole ascent."
     grants: [Science-Core-earlyAvionics]
     upgrades: [HDD-Upgrade-Early, RP-1-PayloadTech-EarlyAvionics]
@@ -623,21 +629,21 @@ nodes:
   - id: nuc_cosmicRay
     title: "Cosmic-Ray Telescopy"
     discipline: NuclearEngineering
-    tier: 3
-    parents: [nuc_geiger, elec_semiconductorDiode]
+    tier: 4
+    parents: [nuc_geiger, elec_transistor]
     flavor: "Stack scintillators and photomultipliers in coincidence so only a particle passing clean through every layer is counted: a telescope not for light but for cosmic rays, reading their energy and direction. It takes fast electronics to catch a nanosecond coincidence, which is why it waits on the solid-state line."
     parts: [RO-ScintillationCounter, RP0Cherenkov]
   - id: opt_recon
     title: "Reconnaissance Imaging"
     discipline: OpticsPhotonics
-    tier: 4
+    tier: 5
     parents: [opt_vidicon]
     flavor: "Long-focal-length optics and fine-grain emulsion resolve a vehicle from orbit: the reconnaissance cameras that were the real reason the first satellites flew, whether they drop the film capsule or scan it down a video link."
     parts: [RO-ImprovedFilmCamera, RO-HighResFilmCamera, RO-BasicTVCamera, RO-ImprovedTVCamera]
   - id: opt_remoteSensing
     title: "Infrared Remote Sensing"
     discipline: OpticsPhotonics
-    tier: 4
+    tier: 5
     parents: [opt_vidicon]
     flavor: "Scan the planet in wavelengths the eye cannot see: an infrared radiometer maps cloud-top temperature, an ultraviolet spectrometer reads the high atmosphere. The first weather and earth-resource sensing from orbit."
     parts: [RO-IRRadiometer, RO-HRIRRadiometer, RO-TwoChannelIR, RO-UVSpectrometer]
