@@ -30,7 +30,7 @@ digraph AXE {
   "met_isogrid" [label="Machined Isogrid Stiffening\nMetallurgy T2 · 90",fillcolor="#8dadcc",fontcolor="#111111"];
   "str_balloonTank" [label="Pressure-Stabilized Monocoque\nStructuresMechanisms T3 · 400",fillcolor="#bfb08d",fontcolor="#111111"];
   "str_staging" [label="Pyrotechnic Frangible Separation\nStructuresMechanisms T2 · 90",fillcolor="#bfb08d",fontcolor="#111111"];
-  "aero_fairings" [label="Jettisonable Payload Fairings\nAerodynamics T2 · 90",fillcolor="#5aa0e2",fontcolor="#111111"];
+  "aero_fairings" [label="Jettisonable Payload Fairings\nAerodynamics T3 · 400",fillcolor="#5aa0e2",fontcolor="#111111"];
   "tel_telemetry" [label="Pulse-Interval Telemetry\nTelecommunications T1 · 20",fillcolor="#3f7bf5",fontcolor="#111111"];
   "th_hermeticBus" [label="Hermetic Thermal-Control Bus\nThermodynamics T3 · 400",fillcolor="#f4813a",fontcolor="#111111"];
   "elec_semiconductorDiode" [label="Semiconductor Diodes\nElectricalPower T2 · 90",fillcolor="#ffd23f",fontcolor="#111111"];
@@ -67,10 +67,10 @@ digraph AXE {
   "str_diameterAdapters" [label="Modular Diameter Adapters\nStructuresMechanisms T2 · 90",fillcolor="#bfb08d",fontcolor="#111111"];
   "str_prefabAdapters" [label="Prefabricated Adapters\nStructuresMechanisms T3 · 400",fillcolor="#bfb08d",fontcolor="#111111"];
   "str_serviceModuleTank" [label="Structural Propellant Tankage\nStructuresMechanisms T4 · 900",fillcolor="#bfb08d",fontcolor="#111111"];
-  "cmp_compositeFairings" [label="Composite Fairing Shells\nCompositeMaterials T3 · 400",fillcolor="#9caf6a",fontcolor="#111111"];
+  "cmp_compositeFairings" [label="Composite Fairing Shells\nCompositeMaterials T4 · 900",fillcolor="#9caf6a",fontcolor="#111111"];
   "elec_arCoatings" [label="Anti-Reflective Cell Coatings\nElectricalPower T4 · 900",fillcolor="#ffd23f",fontcolor="#111111"];
   "prop_recipEngine" [label="Reciprocating Piston Propulsion\nAirBreathing T1 · 20",fillcolor="#6cc4b0",fontcolor="#111111"];
-  "life_pilotedCockpits" [label="Pressurized Cockpit\nLifeSupport T2 · 90",fillcolor="#f0508a",fontcolor="#111111"];
+  "life_pilotedCockpits" [label="Pressurized Cockpit\nLifeSupport T4 · 900",fillcolor="#f0508a",fontcolor="#111111"];
   "str_radialDecouplers" [label="Prefabricated Radial Decouplers\nStructuresMechanisms T3 · 400",fillcolor="#bfb08d",fontcolor="#111111"];
   "str_standardDecouplers" [label="Prefabricated Stack Decouplers\nStructuresMechanisms T4 · 900",fillcolor="#bfb08d",fontcolor="#111111"];
   "tel_appSatellites" [label="Radio-Relay Payloads\nTelecommunications T4 · 900",fillcolor="#3f7bf5",fontcolor="#111111"];
@@ -82,15 +82,15 @@ digraph AXE {
   "gs_crewGantries" [label="Crew-Access Gantries\nGroundSupport T5 · 1500",fillcolor="#8f8778",fontcolor="#111111"];
   "gs_saturnPad" [label="Saturn Mobile Launcher\nGroundSupport T6 · 2000",fillcolor="#8f8778",fontcolor="#111111"];
   "gs_shuttlePad" [label="Shuttle Launch Platform\nGroundSupport T7 · 2300",fillcolor="#8f8778",fontcolor="#111111"];
-  "aero_prefabNoseCones" [label="Prefabricated Nose Cones\nAerodynamics T2 · 90",fillcolor="#5aa0e2",fontcolor="#111111"];
+  "aero_prefabNoseCones" [label="Prefabricated Nose Cones\nAerodynamics T4 · 900",fillcolor="#5aa0e2",fontcolor="#111111"];
   "nuc_cosmicRay" [label="Cosmic-Ray Telescopy\nNuclearEngineering T4 · 900",fillcolor="#83c341",fontcolor="#111111"];
   "opt_recon" [label="Reconnaissance Imaging\nOpticsPhotonics T5 · 1500",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_remoteSensing" [label="Infrared Remote Sensing\nOpticsPhotonics T5 · 1500",fillcolor="#7c8cff",fontcolor="#111111"];
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
-  { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "aero_fairings" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_stampedWings" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" "aero_prefabNoseCones" }
-  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "str_prefabAdapters" "cmp_compositeFairings" "str_radialDecouplers" "gs_serviceTowers" }
-  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_dedicatedComplexes" "nuc_cosmicRay" }
+  { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_stampedWings" "aero_boattail" "str_diameterAdapters" "gs_launchClamps" "gs_launchBases" }
+  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "str_prefabAdapters" "str_radialDecouplers" "gs_serviceTowers" }
+  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "cmp_compositeFairings" "elec_arCoatings" "life_pilotedCockpits" "str_standardDecouplers" "tel_appSatellites" "gs_dedicatedComplexes" "aero_prefabNoseCones" "nuc_cosmicRay" }
   { rank=same; "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_recon" "opt_remoteSensing" }
   { rank=same; "gs_saturnPad" }
   { rank=same; "gs_shuttlePad" }
@@ -119,7 +119,7 @@ digraph AXE {
   "met_weldedTank" -> "met_isogrid" [style=solid];
   "met_stainlessSteel" -> "str_balloonTank" [style=solid];
   "str_structuralHardware" -> "str_staging" [style=solid];
-  "aero_subsonicWing" -> "aero_fairings" [style=solid];
+  "aero_boattail" -> "aero_fairings" [style=solid];
   "start" -> "tel_telemetry" [style=solid];
   "met_isogrid" -> "th_hermeticBus" [style=solid];
   "tel_telemetry" -> "elec_semiconductorDiode" [style=solid];
@@ -151,7 +151,6 @@ digraph AXE {
   "aero_supersonicWing" -> "av_variableStator" [style=solid];
   "av_variableStator" -> "av_ramjet" [style=solid];
   "fd_rocketplaneRocket" -> "fd_throttlingRocket" [style=solid];
-  "aero_supersonicWing" -> "fd_throttlingRocket" [style=solid];
   "start" -> "str_structuralHardware" [style=solid];
   "start" -> "gnc_postWarAvionics" [style=solid];
   "gnc_postWarAvionics" -> "gnc_avionicsPrototypes" [style=solid];
@@ -166,7 +165,7 @@ digraph AXE {
   "aero_fairings" -> "cmp_compositeFairings" [style=solid];
   "elec_siliconPV" -> "elec_arCoatings" [style=solid];
   "start" -> "prop_recipEngine" [style=solid];
-  "aero_subsonicWing" -> "life_pilotedCockpits" [style=solid];
+  "str_balloonTank" -> "life_pilotedCockpits" [style=solid];
   "str_staging" -> "str_radialDecouplers" [style=solid];
   "str_radialDecouplers" -> "str_standardDecouplers" [style=solid];
   "th_hermeticBus" -> "tel_appSatellites" [style=solid];
@@ -178,7 +177,7 @@ digraph AXE {
   "gs_dedicatedComplexes" -> "gs_crewGantries" [style=solid];
   "gs_crewGantries" -> "gs_saturnPad" [style=solid];
   "gs_saturnPad" -> "gs_shuttlePad" [style=solid];
-  "aero_subsonicWing" -> "aero_prefabNoseCones" [style=solid];
+  "aero_fairings" -> "aero_prefabNoseCones" [style=solid];
   "nuc_geiger" -> "nuc_cosmicRay" [style=solid];
   "elec_transistor" -> "nuc_cosmicRay" [style=solid];
   "opt_vidicon" -> "opt_recon" [style=solid];

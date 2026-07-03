@@ -139,6 +139,21 @@ window.TREE = {
    "flavor": "1950. You begin with the de Laval nozzle, a procedural airframe, avionics, the first instruments and a handful of sounding motors — enough to fly above the Karman line turn one. Rocketry is the default; whether to fly aeroplanes at all is yours to choose.",
    "parts": [
     {
+     "name": "RO-B9ProcAMWing-Early",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Wing, All-Moving (Early)"
+    },
+    {
+     "name": "RO-B9ProcCS-Early",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Control Surface (Early)"
+    },
+    {
+     "name": "RO-B9ProcWing-Early",
+     "mod": "B9_Aerospace_ProceduralWings",
+     "title": "B9 Procedural Wing (Early)"
+    },
+    {
      "name": "RO-RFTank-Separate",
      "mod": "ProceduralParts",
      "title": "Procedural Tank (Conventional Structure)"
@@ -193,7 +208,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2137
+    2022
    ]
   },
   {
@@ -209,7 +224,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2043
+    1928
    ]
   },
   {
@@ -586,7 +601,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    1855
+    1740
    ]
   },
   {
@@ -718,7 +733,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    1949
+    1834
    ]
   },
   {
@@ -782,7 +797,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1604
+    1557
    ]
   },
   {
@@ -814,7 +829,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1698
+    1651
    ]
   },
   {
@@ -846,7 +861,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1698
+    1651
    ]
   },
   {
@@ -873,7 +888,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1510
+    1463
    ]
   },
   {
@@ -905,7 +920,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1604
+    1557
    ]
   },
   {
@@ -937,7 +952,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1510
+    1463
    ]
   },
   {
@@ -969,7 +984,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1557
+    1510
    ]
   },
   {
@@ -1076,7 +1091,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1087
+    993
    ]
   },
   {
@@ -1103,7 +1118,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1087
+    993
    ]
   },
   {
@@ -1140,7 +1155,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1087
+    993
    ]
   },
   {
@@ -1277,7 +1292,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1604
+    1557
    ]
   },
   {
@@ -1549,15 +1564,15 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3234
+    2602
    ]
   },
   {
    "id": "aero_fairings",
    "title": "Jettisonable Payload Fairings",
    "discipline": "Aerodynamics",
-   "tier": 2,
-   "cost": 90,
+   "tier": 3,
+   "cost": 400,
    "anyToUnlock": false,
    "flavor": "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command.",
    "parts": [
@@ -1590,8 +1605,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1808,
-    2179
+    -1428,
+    2043
    ]
   },
   {
@@ -1628,7 +1643,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2905
+    2999
    ]
   },
   {
@@ -1747,7 +1762,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2905
+    2999
    ]
   },
   {
@@ -1763,7 +1778,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2858
+    2952
    ]
   },
   {
@@ -1790,7 +1805,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3140
+    3046
    ]
   },
   {
@@ -1817,7 +1832,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3046
+    3093
    ]
   },
   {
@@ -1839,7 +1854,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3704
+    3375
    ]
   },
   {
@@ -1901,7 +1916,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2367
+    1949
    ]
   },
   {
@@ -1923,7 +1938,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1933
+    2205
    ]
   },
   {
@@ -1995,7 +2010,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2670
+    2555
    ]
   },
   {
@@ -2022,7 +2037,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2623
+    2670
    ]
   },
   {
@@ -2049,7 +2064,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2858
+    2905
    ]
   },
   {
@@ -2071,7 +2086,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2952
+    2999
    ]
   },
   {
@@ -2108,7 +2123,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1510
+    2367
    ]
   },
   {
@@ -2135,7 +2150,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2764
+    2811
    ]
   },
   {
@@ -2145,7 +2160,7 @@ window.TREE = {
    "tier": 1,
    "cost": 20,
    "anyToUnlock": false,
-   "flavor": "An internally-braced wing that needs no external struts or wires, clean enough to fly fast — with the pitot intake and control surfaces that make an aeroplane a controllable platform. The airframe everything else bolts onto.",
+   "flavor": "Beyond the bare procedural airframe you begin with, the craft of subsonic aerodynamics: pitot and radial intakes that feed an engine cleanly, and the refinement that turns a wing into a controllable platform. The root the rest of aerodynamics grows from.",
    "parts": [
     {
      "name": "CircularIntake",
@@ -2156,21 +2171,6 @@ window.TREE = {
      "name": "LRadialAirIntake",
      "mod": "SXT",
      "title": "XM-C200 Radial Pitot Intake"
-    },
-    {
-     "name": "RO-B9ProcAMWing-Early",
-     "mod": "B9_Aerospace_ProceduralWings",
-     "title": "B9 Procedural Wing, All-Moving (Early)"
-    },
-    {
-     "name": "RO-B9ProcCS-Early",
-     "mod": "B9_Aerospace_ProceduralWings",
-     "title": "B9 Procedural Control Surface (Early)"
-    },
-    {
-     "name": "RO-B9ProcWing-Early",
-     "mod": "B9_Aerospace_ProceduralWings",
-     "title": "B9 Procedural Wing (Early)"
     },
     {
      "name": "RO-IntakeRadialLongPitot",
@@ -2197,7 +2197,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2278
+    2001
    ]
   },
   {
@@ -2234,7 +2234,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3422
+    2508
    ]
   },
   {
@@ -2271,7 +2271,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3422
+    2508
    ]
   },
   {
@@ -2298,7 +2298,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1839
+    1745
    ]
   },
   {
@@ -2335,7 +2335,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2001
+    1839
    ]
   },
   {
@@ -2372,7 +2372,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1839
+    1745
    ]
   },
   {
@@ -2434,7 +2434,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2043
+    1881
    ]
   },
   {
@@ -2481,7 +2481,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1886
+    1881
    ]
   },
   {
@@ -2518,7 +2518,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1792
+    1745
    ]
   },
   {
@@ -2560,7 +2560,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1792
+    1745
    ]
   },
   {
@@ -2587,7 +2587,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2022
+    1839
    ]
   },
   {
@@ -2729,7 +2729,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3375
+    2461
    ]
   },
   {
@@ -2747,7 +2747,7 @@ window.TREE = {
    ],
    "pos": [
     -2188,
-    3657
+    3328
    ]
   },
   {
@@ -2765,7 +2765,7 @@ window.TREE = {
    ],
    "pos": [
     -1808,
-    3610
+    3281
    ]
   },
   {
@@ -2786,7 +2786,7 @@ window.TREE = {
    ],
    "pos": [
     -1048,
-    3610
+    3187
    ]
   },
   {
@@ -3013,7 +3013,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3704
+    3375
    ]
   },
   {
@@ -3160,7 +3160,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2461
+    2137
    ]
   },
   {
@@ -3202,7 +3202,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2085
+    2043
    ]
   },
   {
@@ -3269,7 +3269,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3328
+    2414
    ]
   },
   {
@@ -3331,7 +3331,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3328
+    2414
    ]
   },
   {
@@ -3373,15 +3373,15 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    899
+    852
    ]
   },
   {
    "id": "cmp_compositeFairings",
    "title": "Composite Fairing Shells",
    "discipline": "CompositeMaterials",
-   "tier": 3,
-   "cost": 400,
+   "tier": 4,
+   "cost": 900,
    "anyToUnlock": false,
    "flavor": "Lay up the payload shroud from resin-bonded fibre instead of spun metal - a lighter shell that still takes the aero loads and splits clean on command. The first rung of a fairing-tech ladder that keeps shaving shroud mass off every launch.",
    "parts": [],
@@ -3390,8 +3390,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1428,
-    2179
+    -1048,
+    1996
    ]
   },
   {
@@ -3409,7 +3409,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3140
+    3281
    ]
   },
   {
@@ -3471,15 +3471,15 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1839
+    1745
    ]
   },
   {
    "id": "life_pilotedCockpits",
    "title": "Pressurized Cockpit",
    "discipline": "LifeSupport",
-   "tier": 2,
-   "cost": 90,
+   "tier": 4,
+   "cost": 900,
    "anyToUnlock": false,
    "flavor": "A cockpit shaped around a pilot - canopy, seat, sticks and dials - with the tail surfaces that keep the aeroplane pointed where the pilot aims it. From an open fighter office to a bomber glazed nose: the crudest crew accommodation, and the first rung toward a pressurised cabin and, past it, a capsule.",
    "parts": [
@@ -3547,8 +3547,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1808,
-    2555
+    -1048,
+    946
    ]
   },
   {
@@ -3600,7 +3600,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3234
+    2602
    ]
   },
   {
@@ -3647,7 +3647,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3234
+    2393
    ]
   },
   {
@@ -3751,7 +3751,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3516
+    2320
    ]
   },
   {
@@ -3803,7 +3803,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    993
+    1087
    ]
   },
   {
@@ -4095,7 +4095,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    993
+    1087
    ]
   },
   {
@@ -4177,7 +4177,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    993
+    1087
    ]
   },
   {
@@ -4539,7 +4539,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    993
+    1087
    ]
   },
   {
@@ -4666,7 +4666,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    993
+    1087
    ]
   },
   {
@@ -4883,7 +4883,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    993
+    1087
    ]
   },
   {
@@ -5025,15 +5025,15 @@ window.TREE = {
    "grants": [],
    "pos": [
     92,
-    993
+    1087
    ]
   },
   {
    "id": "aero_prefabNoseCones",
    "title": "Prefabricated Nose Cones",
    "discipline": "Aerodynamics",
-   "tier": 2,
-   "cost": 90,
+   "tier": 4,
+   "cost": 900,
    "anyToUnlock": false,
    "flavor": "A rack of pre-made nose cones in fixed sizes and profiles, pressed and spun to shape, for when you would rather bolt on a stock cap than draw a procedural one. The procedural nose cone is lighter and always the default; nothing depends on this shelf.",
    "parts": [
@@ -5071,8 +5071,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1808,
-    2273
+    -1048,
+    2090
    ]
   },
   {
@@ -5099,7 +5099,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2764
+    2811
    ]
   },
   {
@@ -5136,7 +5136,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2623
+    2508
    ]
   },
   {
@@ -5173,7 +5173,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2717
+    2602
    ]
   }
  ],
@@ -5185,7 +5185,7 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
@@ -5204,7 +5204,7 @@ window.TREE = {
     ],
     [
      -1808,
-     1604
+     1557
     ]
    ]
   },
@@ -5215,11 +5215,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1604
+     1557
     ],
     [
      -1808,
-     1604
+     1557
     ]
    ]
   },
@@ -5230,11 +5230,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1604
+     1557
     ],
     [
      -1428,
-     1698
+     1651
     ]
    ]
   },
@@ -5245,11 +5245,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1698
+     1651
     ],
     [
      -1048,
-     1698
+     1651
     ]
    ]
   },
@@ -5260,11 +5260,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1557
+     1510
     ],
     [
      -1048,
-     1510
+     1463
     ]
    ]
   },
@@ -5275,11 +5275,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1557
+     1510
     ],
     [
      -1048,
-     1604
+     1557
     ]
    ]
   },
@@ -5290,11 +5290,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1510
+     1463
     ],
     [
      -668,
-     1510
+     1463
     ]
    ]
   },
@@ -5305,11 +5305,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1604
+     1557
     ],
     [
      -1428,
-     1557
+     1510
     ]
    ]
   },
@@ -5320,7 +5320,7 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
@@ -5369,11 +5369,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     1087
+     993
     ]
    ]
   },
@@ -5384,11 +5384,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1087
+     993
     ],
     [
      -1808,
-     1087
+     993
     ]
    ]
   },
@@ -5399,11 +5399,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1087
+     993
     ],
     [
      -1428,
-     1087
+     993
     ]
    ]
   },
@@ -5474,11 +5474,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     1604
+     1557
     ]
    ]
   },
@@ -5504,7 +5504,7 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
@@ -5549,26 +5549,26 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3375
+     2461
     ],
     [
      -1808,
-     3234
+     2602
     ]
    ]
   },
   {
-   "from": "aero_subsonicWing",
+   "from": "aero_boattail",
    "to": "aero_fairings",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2188,
-     2278
+     -1808,
+     2043
     ],
     [
-     -1808,
-     2179
+     -1428,
+     2043
     ]
    ]
   },
@@ -5579,11 +5579,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     2905
+     2999
     ]
    ]
   },
@@ -5609,11 +5609,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2905
+     2999
     ],
     [
      -1808,
-     2905
+     2999
     ]
    ]
   },
@@ -5624,11 +5624,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2905
+     2999
     ],
     [
      -1428,
-     2858
+     2952
     ]
    ]
   },
@@ -5639,11 +5639,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2905
+     2999
     ],
     [
      -1428,
-     3140
+     3046
     ]
    ]
   },
@@ -5654,11 +5654,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2858
+     2952
     ],
     [
      -1048,
-     3046
+     3093
     ]
    ]
   },
@@ -5669,11 +5669,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3657
+     3328
     ],
     [
      -1808,
-     3704
+     3375
     ]
    ]
   },
@@ -5684,11 +5684,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2278
+     2001
     ],
     [
      -1808,
-     2367
+     1949
     ]
    ]
   },
@@ -5699,11 +5699,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     1933
+     2205
     ]
    ]
   },
@@ -5714,19 +5714,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1933
+     2205
     ],
     [
      -1808,
-     1933
+     2205
     ],
     [
      -1428,
-     1933
+     2205
     ],
     [
      -1048,
-     2670
+     2555
     ]
    ]
   },
@@ -5737,11 +5737,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2858
+     2952
     ],
     [
      -1048,
-     2670
+     2555
     ]
    ]
   },
@@ -5752,11 +5752,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     2623
+     2670
     ]
    ]
   },
@@ -5767,19 +5767,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2764
+     2811
     ],
     [
      -1808,
-     2717
+     2764
     ],
     [
      -1428,
-     2717
+     2764
     ],
     [
      -1048,
-     2858
+     2905
     ]
    ]
   },
@@ -5790,11 +5790,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2858
+     2952
     ],
     [
      -1048,
-     2858
+     2905
     ]
    ]
   },
@@ -5805,19 +5805,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2764
+     2811
     ],
     [
      -1808,
-     2770
+     2817
     ],
     [
      -1428,
-     2770
+     2817
     ],
     [
      -1048,
-     2952
+     2999
     ]
    ]
   },
@@ -5828,11 +5828,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2858
+     2952
     ],
     [
      -1048,
-     2952
+     2999
     ]
    ]
   },
@@ -5843,11 +5843,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     1510
+     2367
     ]
    ]
   },
@@ -5858,11 +5858,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     2764
+     2811
     ]
    ]
   },
@@ -5873,11 +5873,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     2278
+     2001
     ]
    ]
   },
@@ -5888,11 +5888,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3375
+     2461
     ],
     [
      -1808,
-     3422
+     2508
     ]
    ]
   },
@@ -5903,11 +5903,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3422
+     2508
     ],
     [
      -1428,
-     3422
+     2508
     ]
    ]
   },
@@ -5918,11 +5918,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1839
+     1745
     ],
     [
      -1808,
-     1839
+     1745
     ]
    ]
   },
@@ -5933,11 +5933,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2278
+     2001
     ],
     [
      -1808,
-     2001
+     1839
     ]
    ]
   },
@@ -5948,11 +5948,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1839
+     1745
     ],
     [
      -1428,
-     1839
+     1745
     ]
    ]
   },
@@ -5963,15 +5963,15 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2278
+     2001
     ],
     [
      -1808,
-     2043
+     1881
     ],
     [
      -1428,
-     2043
+     1881
     ]
    ]
   },
@@ -5982,11 +5982,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1839
+     1745
     ],
     [
      -1048,
-     1886
+     1881
     ]
    ]
   },
@@ -5997,11 +5997,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2043
+     1881
     ],
     [
      -1048,
-     1886
+     1881
     ]
    ]
   },
@@ -6012,11 +6012,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1839
+     1745
     ],
     [
      -1048,
-     1792
+     1745
     ]
    ]
   },
@@ -6027,11 +6027,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2043
+     1881
     ],
     [
      -1048,
-     1792
+     1745
     ]
    ]
   },
@@ -6042,11 +6042,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1792
+     1745
     ],
     [
      -668,
-     1792
+     1745
     ]
    ]
   },
@@ -6057,38 +6057,19 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2001
+     1839
     ],
     [
      -1428,
-     2001
+     1839
     ],
     [
      -1048,
-     2001
+     1839
     ],
     [
      -668,
-     2022
-    ]
-   ]
-  },
-  {
-   "from": "aero_supersonicWing",
-   "to": "fd_throttlingRocket",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1428,
-     2043
-    ],
-    [
-     -1048,
-     2043
-    ],
-    [
-     -668,
-     2022
+     1839
     ]
    ]
   },
@@ -6099,11 +6080,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     3375
+     2461
     ]
    ]
   },
@@ -6114,11 +6095,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     3657
+     3328
     ]
    ]
   },
@@ -6129,11 +6110,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3657
+     3328
     ],
     [
      -1808,
-     3610
+     3281
     ]
    ]
   },
@@ -6144,15 +6125,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3610
+     3281
     ],
     [
      -1428,
-     3610
+     3281
     ],
     [
      -1048,
-     3610
+     3187
     ]
    ]
   },
@@ -6163,11 +6144,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2858
+     2952
     ],
     [
      -1048,
-     3610
+     3187
     ]
    ]
   },
@@ -6178,11 +6159,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3704
+     3375
     ],
     [
      -1428,
-     3704
+     3375
     ]
    ]
   },
@@ -6193,11 +6174,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2278
+     2001
     ],
     [
      -1808,
-     2461
+     2137
     ]
    ]
   },
@@ -6208,11 +6189,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2278
+     2001
     ],
     [
      -1808,
-     2085
+     2043
     ]
    ]
   },
@@ -6223,11 +6204,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3375
+     2461
     ],
     [
      -1808,
-     3328
+     2414
     ]
    ]
   },
@@ -6238,11 +6219,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3328
+     2414
     ],
     [
      -1428,
-     3328
+     2414
     ]
    ]
   },
@@ -6257,7 +6238,7 @@ window.TREE = {
     ],
     [
      -1048,
-     899
+     852
     ]
    ]
   },
@@ -6267,12 +6248,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1808,
-     2179
+     -1428,
+     2043
     ],
     [
-     -1428,
-     2179
+     -1048,
+     1996
     ]
    ]
   },
@@ -6283,11 +6264,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3140
+     3046
     ],
     [
      -1048,
-     3140
+     3281
     ]
    ]
   },
@@ -6298,26 +6279,26 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     1839
+     1745
     ]
    ]
   },
   {
-   "from": "aero_subsonicWing",
+   "from": "str_balloonTank",
    "to": "life_pilotedCockpits",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2188,
-     2278
+     -1428,
+     899
     ],
     [
-     -1808,
-     2555
+     -1048,
+     946
     ]
    ]
   },
@@ -6328,11 +6309,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3234
+     2602
     ],
     [
      -1428,
-     3234
+     2602
     ]
    ]
   },
@@ -6343,11 +6324,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3234
+     2602
     ],
     [
      -1048,
-     3234
+     2393
     ]
    ]
   },
@@ -6373,11 +6354,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3375
+     2461
     ],
     [
      -1808,
-     3516
+     2320
     ]
    ]
   },
@@ -6388,11 +6369,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2137
+     2022
     ],
     [
      -2188,
-     993
+     1087
     ]
    ]
   },
@@ -6403,11 +6384,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     993
+     1087
     ],
     [
      -1808,
-     993
+     1087
     ]
    ]
   },
@@ -6418,11 +6399,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     993
+     1087
     ],
     [
      -1428,
-     993
+     1087
     ]
    ]
   },
@@ -6433,11 +6414,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     993
+     1087
     ],
     [
      -1048,
-     993
+     1087
     ]
    ]
   },
@@ -6448,11 +6429,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     993
+     1087
     ],
     [
      -668,
-     993
+     1087
     ]
    ]
   },
@@ -6463,11 +6444,11 @@ window.TREE = {
    "waypoints": [
     [
      -668,
-     993
+     1087
     ],
     [
      -288,
-     993
+     1087
     ]
    ]
   },
@@ -6478,26 +6459,26 @@ window.TREE = {
    "waypoints": [
     [
      -288,
-     993
+     1087
     ],
     [
      92,
-     993
+     1087
     ]
    ]
   },
   {
-   "from": "aero_subsonicWing",
+   "from": "aero_fairings",
    "to": "aero_prefabNoseCones",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2188,
-     2278
+     -1428,
+     2043
     ],
     [
-     -1808,
-     2273
+     -1048,
+     2090
     ]
    ]
   },
@@ -6508,19 +6489,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2623
+     2670
     ],
     [
      -1808,
-     2623
+     2670
     ],
     [
      -1428,
-     2623
+     2670
     ],
     [
      -1048,
-     2764
+     2811
     ]
    ]
   },
@@ -6531,11 +6512,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2858
+     2952
     ],
     [
      -1048,
-     2764
+     2811
     ]
    ]
   },
@@ -6546,11 +6527,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     2670
+     2555
     ],
     [
      -668,
-     2623
+     2508
     ]
    ]
   },
@@ -6561,11 +6542,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     2670
+     2555
     ],
     [
      -668,
-     2717
+     2602
     ]
    ]
   }

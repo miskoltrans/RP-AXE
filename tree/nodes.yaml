@@ -25,7 +25,7 @@ nodes:
     tier: 0
     parents: []
     flavor: "1950. You begin with the de Laval nozzle, a procedural airframe, avionics, the first instruments and a handful of sounding motors — enough to fly above the Karman line turn one. Rocketry is the default; whether to fly aeroplanes at all is yours to choose."
-    parts: [proceduralNoseCone, proceduralStructural, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, groundAnchor]
+    parts: [proceduralNoseCone, proceduralStructural, RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, groundAnchor]
   - id: parking
     title: "Unsorted Parts (Parking)"
     discipline: SystemsIntegration
@@ -249,8 +249,8 @@ nodes:
   - id: aero_fairings
     title: "Jettisonable Payload Fairings"
     discipline: Aerodynamics
-    tier: 2
-    parents: [aero_subsonicWing]
+    tier: 3
+    parents: [aero_boattail]
     flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
     parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, KzProcFairingSide1_TU]
 
@@ -372,8 +372,8 @@ nodes:
     discipline: Aerodynamics
     tier: 1
     parents: [start]
-    flavor: "An internally-braced wing that needs no external struts or wires, clean enough to fly fast — with the pitot intake and control surfaces that make an aeroplane a controllable platform. The airframe everything else bolts onto."
-    parts: [RO-B9ProcWing-Early, RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, RO-IntakeRadialLongPitot, SXTInlineAirIntake, airScoop, miniIntake]
+    flavor: "Beyond the bare procedural airframe you begin with, the craft of subsonic aerodynamics: pitot and radial intakes that feed an engine cleanly, and the refinement that turns a wing into a controllable platform. The root the rest of aerodynamics grows from."
+    parts: [CircularIntake, LRadialAirIntake, RO-IntakeRadialLongPitot, SXTInlineAirIntake, airScoop, miniIntake]
   - id: str_landingGear
     title: "Oleo-Strut Undercarriage"
     discipline: StructuresMechanisms
@@ -441,7 +441,7 @@ nodes:
     title: "Throttleable Restartable Rocket"
     discipline: FluidDynamics
     tier: 5
-    parents: [fd_rocketplaneRocket, aero_supersonicWing]
+    parents: [fd_rocketplaneRocket]
     flavor: "A rocket a pilot can throttle deeply and relight in flight, burning ammonia and oxygen with control enough to fly the edge of space and come back. The X-15's XLR99: the first man-rated throttleable engine, and the doorway to hypersonics."
     parts: [ROE-XLR99, ROE-XLR41]
 
@@ -534,7 +534,7 @@ nodes:
   - id: cmp_compositeFairings
     title: "Composite Fairing Shells"
     discipline: CompositeMaterials
-    tier: 3
+    tier: 4
     parents: [aero_fairings]
     flavor: "Lay up the payload shroud from resin-bonded fibre instead of spun metal - a lighter shell that still takes the aero loads and splits clean on command. The first rung of a fairing-tech ladder that keeps shaving shroud mass off every launch."
     upgrades: [PFTech-Fairing-I]
@@ -557,8 +557,8 @@ nodes:
   - id: life_pilotedCockpits
     title: "Pressurized Cockpit"
     discipline: LifeSupport
-    tier: 2
-    parents: [aero_subsonicWing]
+    tier: 4
+    parents: [str_balloonTank]
     flavor: "A cockpit shaped around a pilot - canopy, seat, sticks and dials - with the tail surfaces that keep the aeroplane pointed where the pilot aims it. From an open fighter office to a bomber glazed nose: the crudest crew accommodation, and the first rung toward a pressurised cabin and, past it, a capsule."
     parts: [RO-X1Cockpit, RO-FighterInlineCockpit, RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, SXTmk3Cockpit52, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow]
 
@@ -643,8 +643,8 @@ nodes:
   - id: aero_prefabNoseCones
     title: "Prefabricated Nose Cones"
     discipline: Aerodynamics
-    tier: 2
-    parents: [aero_subsonicWing]
+    tier: 4
+    parents: [aero_fairings]
     flavor: "A rack of pre-made nose cones in fixed sizes and profiles, pressed and spun to shape, for when you would rather bolt on a stock cap than draw a procedural one. The procedural nose cone is lighter and always the default; nothing depends on this shelf."
     parts: [noseCone, standardNoseCone, pointyNoseConeA, pointyNoseConeB, rocketNoseCone_v2, SXTProtonlikeNoseCone]
   - id: nuc_cosmicRay
