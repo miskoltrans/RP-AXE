@@ -461,7 +461,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Rivet and weld sheet, extrusion and tube into a load-bearing frame — the everyday structural craft of 1950: struts, I-beams, panels, mounts and nose cones, the skeleton every vehicle hangs on. The root the rest of structures grows from."
-    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, structuralPylon, structuralMiniNode, smallHardpoint, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount]
+    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, Angledpanel, structuralPylon, structuralMiniNode, smallHardpoint, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount]
 
   # ===================== BAND 1 * AVIONICS (capability tiers — grants:, no physical part) =====================
   # RP-1's Science-Core avionics ladder as ONE track (user). Each node grants the avionics tier; names are my
@@ -528,7 +528,7 @@ nodes:
     tier: 3
     parents: [str_diameterAdapters]
     flavor: "The fixed-size shelf: stock diameter adapters, bi- and tri-couplers, cubic-strut mounts and a service bay, pressed and cast to set dimensions — bolt one on when you would rather not shape a procedural adapter. The procedural adapter stays the default; this is the catalogue."
-    parts: [adapterSize2-Size1, adapterSize2-Size1Slant, stackBiCoupler_v2, stackTriCoupler_v2, strutCubeOCTOAdapter, strutCubeS0Adapter, trussAdapter, ServiceBay_125_v2, Angledpanel]
+    parts: [adapterSize2-Size1, adapterSize2-Size1Slant, stackBiCoupler_v2, stackTriCoupler_v2, strutCubeOCTOAdapter, strutCubeS0Adapter, trussAdapter, ServiceBay_125_v2]
 
   - id: str_serviceModuleTank
     title: "Structural Propellant Tankage"
