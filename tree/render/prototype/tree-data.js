@@ -193,7 +193,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2231
+    2137
    ]
   },
   {
@@ -209,7 +209,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2137
+    2043
    ]
   },
   {
@@ -586,7 +586,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    1949
+    1855
    ]
   },
   {
@@ -718,7 +718,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2043
+    1949
    ]
   },
   {
@@ -750,7 +750,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1133
+    1228
    ]
   },
   {
@@ -782,7 +782,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1463
+    1604
    ]
   },
   {
@@ -814,7 +814,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1369
+    1698
    ]
   },
   {
@@ -846,7 +846,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1369
+    1698
    ]
   },
   {
@@ -873,7 +873,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1557
+    1510
    ]
   },
   {
@@ -905,7 +905,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1463
+    1604
    ]
   },
   {
@@ -937,7 +937,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1557
+    1510
    ]
   },
   {
@@ -969,7 +969,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1510
+    1557
    ]
   },
   {
@@ -985,7 +985,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1275
+    1369
    ]
   },
   {
@@ -1007,7 +1007,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1275
+    1369
    ]
   },
   {
@@ -1029,7 +1029,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1275
+    1369
    ]
   },
   {
@@ -1076,7 +1076,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    992
+    1087
    ]
   },
   {
@@ -1103,7 +1103,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    992
+    1087
    ]
   },
   {
@@ -1140,7 +1140,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    993
+    1087
    ]
   },
   {
@@ -1174,7 +1174,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1180
+    1181
    ]
   },
   {
@@ -1198,7 +1198,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1086
+    1275
    ]
   },
   {
@@ -1220,7 +1220,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1087
+    1275
    ]
   },
   {
@@ -1257,7 +1257,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    851
+    852
    ]
   },
   {
@@ -1277,7 +1277,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1463
+    1604
    ]
   },
   {
@@ -1379,6 +1379,11 @@ window.TREE = {
      "title": "Modular Toroidal Tank (Conventional Structure)"
     },
     {
+     "name": "ReleaseValve",
+     "mod": "Squad",
+     "title": "FTE-1 Drain Valve"
+    },
+    {
      "name": "ca_tank_mp_s",
      "mod": "CoatlAerospace",
      "title": "CA-MT10 Propellant Tank (Pressurized)"
@@ -1388,7 +1393,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    804
+    805
    ]
   },
   {
@@ -1544,7 +1549,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2790
+    3234
    ]
   },
   {
@@ -1586,7 +1591,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2038
+    2179
    ]
   },
   {
@@ -1623,7 +1628,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3401
+    2905
    ]
   },
   {
@@ -1742,7 +1747,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3401
+    2905
    ]
   },
   {
@@ -1758,7 +1763,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3448
+    2858
    ]
   },
   {
@@ -1785,7 +1790,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3354
+    3140
    ]
   },
   {
@@ -1812,7 +1817,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3683
+    3046
    ]
   },
   {
@@ -1834,7 +1839,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3260
+    3704
    ]
   },
   {
@@ -1896,7 +1901,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2226
+    2367
    ]
   },
   {
@@ -1918,7 +1923,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3777
+    1933
    ]
   },
   {
@@ -1990,7 +1995,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3777
+    2670
    ]
   },
   {
@@ -2017,7 +2022,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1791
+    2623
    ]
   },
   {
@@ -2044,7 +2049,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3260
+    2858
    ]
   },
   {
@@ -2066,7 +2071,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3354
+    2952
    ]
   },
   {
@@ -2103,7 +2108,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3871
+    1510
    ]
   },
   {
@@ -2130,7 +2135,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3072
+    2764
    ]
   },
   {
@@ -2192,7 +2197,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2137
+    2278
    ]
   },
   {
@@ -2202,7 +2207,7 @@ window.TREE = {
    "tier": 2,
    "cost": 90,
    "anyToUnlock": false,
-   "flavor": "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, in the sizes a light trainer through a heavy jet demand.",
+   "flavor": "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, from a fixed skid on a light trainer up to a steerable retractable leg.",
    "parts": [
     {
      "name": "GearFixed",
@@ -2219,6 +2224,28 @@ window.TREE = {
      "mod": "Squad",
      "title": "LY-35 Medium Landing Gear"
     },
+    {
+     "name": "SmallGearBay",
+     "mod": "Squad",
+     "title": "LY-10 Small Landing Gear"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1808,
+    3422
+   ]
+  },
+  {
+   "id": "str_adjustableGear",
+   "title": "Adjustable Heavy Undercarriage",
+   "discipline": "StructuresMechanisms",
+   "tier": 3,
+   "cost": 400,
+   "anyToUnlock": false,
+   "flavor": "Load-rated landing gear with adjustable ride height and stance, sized from a light trainer to a heavy jet — the sophisticated oleo strut for aircraft too big or too fast for the basic legs it grows past. A separate research, off the stock undercarriage.",
+   "parts": [
     {
      "name": "KF-ALG-Large",
      "mod": "KerbalFoundries",
@@ -2238,18 +2265,13 @@ window.TREE = {
      "name": "KF-ALG-SmallSide",
      "mod": "KerbalFoundries",
      "title": "Adjustable Landing Gear (Small - Side)"
-    },
-    {
-     "name": "SmallGearBay",
-     "mod": "Squad",
-     "title": "LY-10 Small Landing Gear"
     }
    ],
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1808,
-    2696
+    -1428,
+    3422
    ]
   },
   {
@@ -2276,7 +2298,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1698
+    1839
    ]
   },
   {
@@ -2313,7 +2335,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1860
+    2001
    ]
   },
   {
@@ -2350,7 +2372,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1698
+    1839
    ]
   },
   {
@@ -2412,7 +2434,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1902
+    2043
    ]
   },
   {
@@ -2459,7 +2481,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1651
+    1886
    ]
   },
   {
@@ -2496,7 +2518,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1744
+    1792
    ]
   },
   {
@@ -2538,7 +2560,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1744
+    1792
    ]
   },
   {
@@ -2565,7 +2587,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1881
+    2022
    ]
   },
   {
@@ -2707,7 +2729,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2649
+    3375
    ]
   },
   {
@@ -2725,7 +2747,7 @@ window.TREE = {
    ],
    "pos": [
     -2188,
-    3213
+    3657
    ]
   },
   {
@@ -2743,7 +2765,7 @@ window.TREE = {
    ],
    "pos": [
     -1808,
-    3166
+    3610
    ]
   },
   {
@@ -2764,7 +2786,7 @@ window.TREE = {
    ],
    "pos": [
     -1048,
-    3448
+    3610
    ]
   },
   {
@@ -2991,7 +3013,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3260
+    3704
    ]
   },
   {
@@ -3138,7 +3160,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2320
+    2461
    ]
   },
   {
@@ -3180,7 +3202,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1944
+    2085
    ]
   },
   {
@@ -3192,11 +3214,6 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Procedural ribbed, truss and hollow adapters that mate one diameter to another and carry the load across an interstage or under a payload — the structural handshake between a fat booster and a slim upper, or a stage and the satellite it lifts.",
    "parts": [
-    {
-     "name": "Angledpanel",
-     "mod": "VenStockRevamp",
-     "title": "M-1x1T Structural Panel"
-    },
     {
      "name": "KzFlatAdapter",
      "mod": "ProceduralFairings",
@@ -3228,11 +3245,6 @@ window.TREE = {
      "title": "IB - Procedural Truss Interstage Adapter"
     },
     {
-     "name": "ReleaseValve",
-     "mod": "Squad",
-     "title": "FTE-1 Drain Valve"
-    },
-    {
      "name": "SSTUBase",
      "mod": "ProceduralFairings",
      "title": "FB - Procedural Hollow Truss Payload Adapter"
@@ -3251,6 +3263,28 @@ window.TREE = {
      "name": "SSTUHollowRing_Interstage",
      "mod": "ProceduralFairings",
      "title": "IB - Procedural Hollow Interstage Ring"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1808,
+    3328
+   ]
+  },
+  {
+   "id": "str_prefabAdapters",
+   "title": "Prefabricated Adapters",
+   "discipline": "StructuresMechanisms",
+   "tier": 3,
+   "cost": 400,
+   "anyToUnlock": false,
+   "flavor": "The fixed-size shelf: stock diameter adapters, bi- and tri-couplers, cubic-strut mounts and a service bay, pressed and cast to set dimensions — bolt one on when you would rather not shape a procedural adapter. The procedural adapter stays the default; this is the catalogue.",
+   "parts": [
+    {
+     "name": "Angledpanel",
+     "mod": "VenStockRevamp",
+     "title": "M-1x1T Structural Panel"
     },
     {
      "name": "ServiceBay_125_v2",
@@ -3296,8 +3330,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1808,
-    2602
+    -1428,
+    3328
    ]
   },
   {
@@ -3339,7 +3373,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    898
+    899
    ]
   },
   {
@@ -3357,7 +3391,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2038
+    2179
    ]
   },
   {
@@ -3375,7 +3409,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3589
+    3140
    ]
   },
   {
@@ -3437,7 +3471,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1698
+    1839
    ]
   },
   {
@@ -3514,28 +3548,18 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2414
+    2555
    ]
   },
   {
-   "id": "str_standardDecouplers",
-   "title": "Prefabricated Decouplers",
+   "id": "str_radialDecouplers",
+   "title": "Prefabricated Radial Decouplers",
    "discipline": "StructuresMechanisms",
    "tier": 3,
    "cost": 400,
    "anyToUnlock": false,
-   "flavor": "A rack of pre-made decouplers and separators in fixed sizes - stack, radial, and the skirt rings that drop a spent booster - for when you would rather bolt on a catalogue part than shape a procedural one. The procedural decoupler stays the default; this is the shelf.",
+   "flavor": "The catalogue shelf of radial decouplers — the sprung and pyrotechnic blocks that hold a strap-on booster or drop tank to the core and fling it clear when it's spent, in fixed sizes off the shelf. The procedural radial decoupler stays the default; this is where the specific booster hardware lives.",
    "parts": [
-    {
-     "name": "Decoupler_0",
-     "mod": "Squad",
-     "title": "TD-06 Decoupler"
-    },
-    {
-     "name": "Decoupler_2",
-     "mod": "Squad",
-     "title": "TD-25 Decoupler"
-    },
     {
      "name": "ROE-BabySergeantX11Dec",
      "mod": "ROEngines",
@@ -3552,11 +3576,6 @@ window.TREE = {
      "title": "Castor I & II Radial Decoupler"
     },
     {
-     "name": "ROT-AtlasDecoupler",
-     "mod": "ROTanks",
-     "title": "Atlas Skirt Decoupler"
-    },
-    {
      "name": "radialDecoupler1-2",
      "mod": "Squad",
      "title": "Hydraulic Detachment Manifold"
@@ -3567,24 +3586,9 @@ window.TREE = {
      "title": "TT-70 Radial Decoupler"
     },
     {
-     "name": "restock-decoupler-1875-1",
-     "mod": "ReStockPlus",
-     "title": "TD-18 Decoupler"
-    },
-    {
      "name": "restock-decoupler-radial-tiny-1",
      "mod": "ReStockPlus",
      "title": "TT-14 Radial Decoupler"
-    },
-    {
-     "name": "restock-separator-1875-1",
-     "mod": "ReStockPlus",
-     "title": "TS-18 Separator"
-    },
-    {
-     "name": "shortDecoupler1-2",
-     "mod": "VenStockRevamp",
-     "title": "Shorter Rockomax Brand Decoupler"
     },
     {
      "name": "smallRadialDecoupler",
@@ -3596,7 +3600,54 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2790
+    3234
+   ]
+  },
+  {
+   "id": "str_standardDecouplers",
+   "title": "Prefabricated Stack Decouplers",
+   "discipline": "StructuresMechanisms",
+   "tier": 4,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The rest of the catalogue shelf: pre-made in-line decouplers, separators and the skirt rings that drop a spent booster, in fixed sizes — for when you would rather bolt on a stock part than shape a procedural one. The procedural decoupler stays the default; this is the shelf.",
+   "parts": [
+    {
+     "name": "Decoupler_0",
+     "mod": "Squad",
+     "title": "TD-06 Decoupler"
+    },
+    {
+     "name": "Decoupler_2",
+     "mod": "Squad",
+     "title": "TD-25 Decoupler"
+    },
+    {
+     "name": "ROT-AtlasDecoupler",
+     "mod": "ROTanks",
+     "title": "Atlas Skirt Decoupler"
+    },
+    {
+     "name": "restock-decoupler-1875-1",
+     "mod": "ReStockPlus",
+     "title": "TD-18 Decoupler"
+    },
+    {
+     "name": "restock-separator-1875-1",
+     "mod": "ReStockPlus",
+     "title": "TS-18 Separator"
+    },
+    {
+     "name": "shortDecoupler1-2",
+     "mod": "VenStockRevamp",
+     "title": "Shorter Rockomax Brand Decoupler"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1048,
+    3234
    ]
   },
   {
@@ -3700,7 +3751,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2508
+    3516
    ]
   },
   {
@@ -3752,7 +3803,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2884
+    993
    ]
   },
   {
@@ -4044,7 +4095,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2884
+    993
    ]
   },
   {
@@ -4126,7 +4177,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2884
+    993
    ]
   },
   {
@@ -4488,7 +4539,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2884
+    993
    ]
   },
   {
@@ -4615,7 +4666,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2884
+    993
    ]
   },
   {
@@ -4832,7 +4883,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    2884
+    993
    ]
   },
   {
@@ -4974,7 +5025,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     92,
-    2884
+    993
    ]
   },
   {
@@ -5021,7 +5072,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2132
+    2273
    ]
   },
   {
@@ -5048,7 +5099,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3166
+    2764
    ]
   },
   {
@@ -5085,7 +5136,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    3730
+    2623
    ]
   },
   {
@@ -5122,7 +5173,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    3824
+    2717
    ]
   }
  ],
@@ -5134,11 +5185,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     1133
+     1228
     ]
    ]
   },
@@ -5149,11 +5200,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1133
+     1228
     ],
     [
      -1808,
-     1463
+     1604
     ]
    ]
   },
@@ -5164,11 +5215,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1463
+     1604
     ],
     [
      -1808,
-     1463
+     1604
     ]
    ]
   },
@@ -5179,11 +5230,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1463
+     1604
     ],
     [
      -1428,
-     1369
+     1698
     ]
    ]
   },
@@ -5194,11 +5245,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1369
+     1698
     ],
     [
      -1048,
-     1369
+     1698
     ]
    ]
   },
@@ -5209,11 +5260,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1510
+     1557
     ],
     [
      -1048,
-     1557
+     1510
     ]
    ]
   },
@@ -5224,11 +5275,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1510
+     1557
     ],
     [
      -1048,
-     1463
+     1604
     ]
    ]
   },
@@ -5239,11 +5290,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1557
+     1510
     ],
     [
      -668,
-     1557
+     1510
     ]
    ]
   },
@@ -5254,11 +5305,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1463
+     1604
     ],
     [
      -1428,
-     1510
+     1557
     ]
    ]
   },
@@ -5269,11 +5320,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     1275
+     1369
     ]
    ]
   },
@@ -5284,11 +5335,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1275
+     1369
     ],
     [
      -1808,
-     1275
+     1369
     ]
    ]
   },
@@ -5299,15 +5350,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1275
+     1369
     ],
     [
      -1428,
-     1275
+     1369
     ],
     [
      -1048,
-     1275
+     1369
     ]
    ]
   },
@@ -5318,11 +5369,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     992
+     1087
     ]
    ]
   },
@@ -5333,11 +5384,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     992
+     1087
     ],
     [
      -1808,
-     992
+     1087
     ]
    ]
   },
@@ -5348,11 +5399,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     992
+     1087
     ],
     [
      -1428,
-     993
+     1087
     ]
    ]
   },
@@ -5363,11 +5414,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1133
+     1228
     ],
     [
      -1808,
-     1180
+     1181
     ]
    ]
   },
@@ -5378,11 +5429,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1133
+     1228
     ],
     [
      -1808,
-     1086
+     1275
     ]
    ]
   },
@@ -5393,11 +5444,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1086
+     1275
     ],
     [
      -1428,
-     1087
+     1275
     ]
    ]
   },
@@ -5408,11 +5459,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     804
+     805
     ],
     [
      -1808,
-     851
+     852
     ]
    ]
   },
@@ -5423,11 +5474,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     1463
+     1604
     ]
    ]
   },
@@ -5438,7 +5489,7 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     851
+     852
     ],
     [
      -1428,
@@ -5453,11 +5504,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     804
+     805
     ]
    ]
   },
@@ -5468,7 +5519,7 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     804
+     805
     ],
     [
      -1808,
@@ -5483,7 +5534,7 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     851
+     852
     ],
     [
      -1428,
@@ -5498,11 +5549,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2649
+     3375
     ],
     [
      -1808,
-     2790
+     3234
     ]
    ]
   },
@@ -5513,11 +5564,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2137
+     2278
     ],
     [
      -1808,
-     2038
+     2179
     ]
    ]
   },
@@ -5528,11 +5579,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     3401
+     2905
     ]
    ]
   },
@@ -5558,11 +5609,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3401
+     2905
     ],
     [
      -1808,
-     3401
+     2905
     ]
    ]
   },
@@ -5573,11 +5624,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3401
+     2905
     ],
     [
      -1428,
-     3448
+     2858
     ]
    ]
   },
@@ -5588,11 +5639,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3401
+     2905
     ],
     [
      -1428,
-     3354
+     3140
     ]
    ]
   },
@@ -5603,11 +5654,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3448
+     2858
     ],
     [
      -1048,
-     3683
+     3046
     ]
    ]
   },
@@ -5618,11 +5669,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3213
+     3657
     ],
     [
      -1808,
-     3260
+     3704
     ]
    ]
   },
@@ -5633,11 +5684,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2137
+     2278
     ],
     [
      -1808,
-     2226
+     2367
     ]
    ]
   },
@@ -5648,11 +5699,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     3777
+     1933
     ]
    ]
   },
@@ -5663,19 +5714,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3777
+     1933
     ],
     [
      -1808,
-     3777
+     1933
     ],
     [
      -1428,
-     3777
+     1933
     ],
     [
      -1048,
-     3777
+     2670
     ]
    ]
   },
@@ -5686,11 +5737,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3448
+     2858
     ],
     [
      -1048,
-     3777
+     2670
     ]
    ]
   },
@@ -5701,11 +5752,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     1791
+     2623
     ]
    ]
   },
@@ -5716,19 +5767,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3072
+     2764
     ],
     [
      -1808,
-     3025
+     2717
     ],
     [
      -1428,
-     3025
+     2717
     ],
     [
      -1048,
-     3260
+     2858
     ]
    ]
   },
@@ -5739,11 +5790,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3448
+     2858
     ],
     [
      -1048,
-     3260
+     2858
     ]
    ]
   },
@@ -5754,19 +5805,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3072
+     2764
     ],
     [
      -1808,
-     3078
+     2770
     ],
     [
      -1428,
-     3078
+     2770
     ],
     [
      -1048,
-     3354
+     2952
     ]
    ]
   },
@@ -5777,11 +5828,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3448
+     2858
     ],
     [
      -1048,
-     3354
+     2952
     ]
    ]
   },
@@ -5792,11 +5843,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     3871
+     1510
     ]
    ]
   },
@@ -5807,11 +5858,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     3072
+     2764
     ]
    ]
   },
@@ -5822,11 +5873,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     2137
+     2278
     ]
    ]
   },
@@ -5837,11 +5888,26 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2649
+     3375
     ],
     [
      -1808,
-     2696
+     3422
+    ]
+   ]
+  },
+  {
+   "from": "str_landingGear",
+   "to": "str_adjustableGear",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1808,
+     3422
+    ],
+    [
+     -1428,
+     3422
     ]
    ]
   },
@@ -5852,11 +5918,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1698
+     1839
     ],
     [
      -1808,
-     1698
+     1839
     ]
    ]
   },
@@ -5867,11 +5933,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2137
+     2278
     ],
     [
      -1808,
-     1860
+     2001
     ]
    ]
   },
@@ -5882,11 +5948,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1698
+     1839
     ],
     [
      -1428,
-     1698
+     1839
     ]
    ]
   },
@@ -5897,15 +5963,15 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2137
+     2278
     ],
     [
      -1808,
-     1902
+     2043
     ],
     [
      -1428,
-     1902
+     2043
     ]
    ]
   },
@@ -5916,11 +5982,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1698
+     1839
     ],
     [
      -1048,
-     1651
+     1886
     ]
    ]
   },
@@ -5931,11 +5997,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1902
+     2043
     ],
     [
      -1048,
-     1651
+     1886
     ]
    ]
   },
@@ -5946,11 +6012,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1698
+     1839
     ],
     [
      -1048,
-     1744
+     1792
     ]
    ]
   },
@@ -5961,11 +6027,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1902
+     2043
     ],
     [
      -1048,
-     1744
+     1792
     ]
    ]
   },
@@ -5976,11 +6042,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1744
+     1792
     ],
     [
      -668,
-     1744
+     1792
     ]
    ]
   },
@@ -5991,19 +6057,19 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1860
+     2001
     ],
     [
      -1428,
-     1860
+     2001
     ],
     [
      -1048,
-     1860
+     2001
     ],
     [
      -668,
-     1881
+     2022
     ]
    ]
   },
@@ -6014,15 +6080,15 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1902
+     2043
     ],
     [
      -1048,
-     1902
+     2043
     ],
     [
      -668,
-     1881
+     2022
     ]
    ]
   },
@@ -6033,11 +6099,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     2649
+     3375
     ]
    ]
   },
@@ -6048,11 +6114,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     3213
+     3657
     ]
    ]
   },
@@ -6063,11 +6129,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3213
+     3657
     ],
     [
      -1808,
-     3166
+     3610
     ]
    ]
   },
@@ -6078,15 +6144,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3166
+     3610
     ],
     [
      -1428,
-     3166
+     3610
     ],
     [
      -1048,
-     3448
+     3610
     ]
    ]
   },
@@ -6097,11 +6163,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3448
+     2858
     ],
     [
      -1048,
-     3448
+     3610
     ]
    ]
   },
@@ -6112,11 +6178,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3260
+     3704
     ],
     [
      -1428,
-     3260
+     3704
     ]
    ]
   },
@@ -6127,11 +6193,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2137
+     2278
     ],
     [
      -1808,
-     2320
+     2461
     ]
    ]
   },
@@ -6142,11 +6208,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2137
+     2278
     ],
     [
      -1808,
-     1944
+     2085
     ]
    ]
   },
@@ -6157,11 +6223,26 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2649
+     3375
     ],
     [
      -1808,
-     2602
+     3328
+    ]
+   ]
+  },
+  {
+   "from": "str_diameterAdapters",
+   "to": "str_prefabAdapters",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1808,
+     3328
+    ],
+    [
+     -1428,
+     3328
     ]
    ]
   },
@@ -6176,7 +6257,7 @@ window.TREE = {
     ],
     [
      -1048,
-     898
+     899
     ]
    ]
   },
@@ -6187,11 +6268,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2038
+     2179
     ],
     [
      -1428,
-     2038
+     2179
     ]
    ]
   },
@@ -6202,11 +6283,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3354
+     3140
     ],
     [
      -1048,
-     3589
+     3140
     ]
    ]
   },
@@ -6217,11 +6298,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     1698
+     1839
     ]
    ]
   },
@@ -6232,26 +6313,41 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2137
+     2278
     ],
     [
      -1808,
-     2414
+     2555
     ]
    ]
   },
   {
    "from": "str_staging",
-   "to": "str_standardDecouplers",
+   "to": "str_radialDecouplers",
    "anyToUnlock": false,
    "waypoints": [
     [
      -1808,
-     2790
+     3234
     ],
     [
      -1428,
-     2790
+     3234
+    ]
+   ]
+  },
+  {
+   "from": "str_radialDecouplers",
+   "to": "str_standardDecouplers",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1428,
+     3234
+    ],
+    [
+     -1048,
+     3234
     ]
    ]
   },
@@ -6277,11 +6373,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2649
+     3375
     ],
     [
      -1808,
-     2508
+     3516
     ]
    ]
   },
@@ -6292,11 +6388,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2231
+     2137
     ],
     [
      -2188,
-     2884
+     993
     ]
    ]
   },
@@ -6307,11 +6403,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2884
+     993
     ],
     [
      -1808,
-     2884
+     993
     ]
    ]
   },
@@ -6322,11 +6418,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2884
+     993
     ],
     [
      -1428,
-     2884
+     993
     ]
    ]
   },
@@ -6337,11 +6433,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2884
+     993
     ],
     [
      -1048,
-     2884
+     993
     ]
    ]
   },
@@ -6352,11 +6448,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     2884
+     993
     ],
     [
      -668,
-     2884
+     993
     ]
    ]
   },
@@ -6367,11 +6463,11 @@ window.TREE = {
    "waypoints": [
     [
      -668,
-     2884
+     993
     ],
     [
      -288,
-     2884
+     993
     ]
    ]
   },
@@ -6382,11 +6478,11 @@ window.TREE = {
    "waypoints": [
     [
      -288,
-     2884
+     993
     ],
     [
      92,
-     2884
+     993
     ]
    ]
   },
@@ -6397,11 +6493,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2137
+     2278
     ],
     [
      -1808,
-     2132
+     2273
     ]
    ]
   },
@@ -6412,19 +6508,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1791
+     2623
     ],
     [
      -1808,
-     1791
+     2623
     ],
     [
      -1428,
-     1791
+     2623
     ],
     [
      -1048,
-     3166
+     2764
     ]
    ]
   },
@@ -6435,11 +6531,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3448
+     2858
     ],
     [
      -1048,
-     3166
+     2764
     ]
    ]
   },
@@ -6450,11 +6546,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     3777
+     2670
     ],
     [
      -668,
-     3730
+     2623
     ]
    ]
   },
@@ -6465,11 +6561,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     3777
+     2670
     ],
     [
      -668,
-     3824
+     2717
     ]
    ]
   }

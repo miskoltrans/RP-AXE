@@ -48,6 +48,7 @@ digraph AXE {
   "mic_atmoSounding" [label="Upper-Atmosphere Sounding\nMicroelectronics T1 · 20",fillcolor="#c2a0e0",fontcolor="#111111"];
   "aero_subsonicWing" [label="Subsonic Aerodynamics\nAerodynamics T1 · 20",fillcolor="#5aa0e2",fontcolor="#111111"];
   "str_landingGear" [label="Oleo-Strut Undercarriage\nStructuresMechanisms T2 · 90",fillcolor="#bfb08d",fontcolor="#111111"];
+  "str_adjustableGear" [label="Adjustable Heavy Undercarriage\nStructuresMechanisms T3 · 400",fillcolor="#bfb08d",fontcolor="#111111"];
   "av_centrifugalJet" [label="Centrifugal-Flow Turbojet\nAirBreathing T2 · 90",fillcolor="#6cc4b0",fontcolor="#111111"];
   "fd_rocketplaneRocket" [label="Chamber-Staged Aircraft Rocket\nFluidDynamics T2 · 90",fillcolor="#23b9a0",fontcolor="#111111"];
   "av_axialJet" [label="Axial-Flow Turbojet\nAirBreathing T3 · 400",fillcolor="#6cc4b0",fontcolor="#111111"];
@@ -64,12 +65,14 @@ digraph AXE {
   "aero_stampedWings" [label="Stamped Aerofoil Panels\nAerodynamics T2 · 90",fillcolor="#5aa0e2",fontcolor="#111111"];
   "aero_boattail" [label="Boattail Aft-Fairings\nAerodynamics T2 · 90",fillcolor="#5aa0e2",fontcolor="#111111"];
   "str_diameterAdapters" [label="Modular Diameter Adapters\nStructuresMechanisms T2 · 90",fillcolor="#bfb08d",fontcolor="#111111"];
+  "str_prefabAdapters" [label="Prefabricated Adapters\nStructuresMechanisms T3 · 400",fillcolor="#bfb08d",fontcolor="#111111"];
   "str_serviceModuleTank" [label="Structural Propellant Tankage\nStructuresMechanisms T4 · 900",fillcolor="#bfb08d",fontcolor="#111111"];
   "cmp_compositeFairings" [label="Composite Fairing Shells\nCompositeMaterials T3 · 400",fillcolor="#9caf6a",fontcolor="#111111"];
   "elec_arCoatings" [label="Anti-Reflective Cell Coatings\nElectricalPower T4 · 900",fillcolor="#ffd23f",fontcolor="#111111"];
   "prop_recipEngine" [label="Reciprocating Piston Propulsion\nAirBreathing T1 · 20",fillcolor="#6cc4b0",fontcolor="#111111"];
   "life_pilotedCockpits" [label="Pressurized Cockpit\nLifeSupport T2 · 90",fillcolor="#f0508a",fontcolor="#111111"];
-  "str_standardDecouplers" [label="Prefabricated Decouplers\nStructuresMechanisms T3 · 400",fillcolor="#bfb08d",fontcolor="#111111"];
+  "str_radialDecouplers" [label="Prefabricated Radial Decouplers\nStructuresMechanisms T3 · 400",fillcolor="#bfb08d",fontcolor="#111111"];
+  "str_standardDecouplers" [label="Prefabricated Stack Decouplers\nStructuresMechanisms T4 · 900",fillcolor="#bfb08d",fontcolor="#111111"];
   "tel_appSatellites" [label="Radio-Relay Payloads\nTelecommunications T4 · 900",fillcolor="#3f7bf5",fontcolor="#111111"];
   "gs_launchClamps" [label="Launch Hold-Down Clamps\nStructuresMechanisms T2 · 90",fillcolor="#bfb08d",fontcolor="#111111"];
   "gs_soundingStands" [label="Sounding-Rocket Stands\nGroundSupport T1 · 20",fillcolor="#8f8778",fontcolor="#111111"];
@@ -86,8 +89,8 @@ digraph AXE {
   { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
   { rank=same; "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "aero_fairings" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_stampedWings" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" "aero_prefabNoseCones" }
-  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "cmp_compositeFairings" "str_standardDecouplers" "gs_serviceTowers" }
-  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "elec_arCoatings" "tel_appSatellites" "gs_dedicatedComplexes" "nuc_cosmicRay" }
+  { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "gnc_standardRCS" "str_prefabAdapters" "cmp_compositeFairings" "str_radialDecouplers" "gs_serviceTowers" }
+  { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_dedicatedComplexes" "nuc_cosmicRay" }
   { rank=same; "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_recon" "opt_remoteSensing" }
   { rank=same; "gs_saturnPad" }
   { rank=same; "gs_shuttlePad" }
@@ -137,6 +140,7 @@ digraph AXE {
   "start" -> "mic_atmoSounding" [style=solid];
   "start" -> "aero_subsonicWing" [style=solid];
   "str_structuralHardware" -> "str_landingGear" [style=solid];
+  "str_landingGear" -> "str_adjustableGear" [style=solid];
   "prop_recipEngine" -> "av_centrifugalJet" [style=solid];
   "aero_subsonicWing" -> "fd_rocketplaneRocket" [style=solid];
   "av_centrifugalJet" -> "av_axialJet" [style=solid];
@@ -157,12 +161,14 @@ digraph AXE {
   "aero_subsonicWing" -> "aero_stampedWings" [style=solid];
   "aero_subsonicWing" -> "aero_boattail" [style=solid];
   "str_structuralHardware" -> "str_diameterAdapters" [style=solid];
+  "str_diameterAdapters" -> "str_prefabAdapters" [style=solid];
   "str_balloonTank" -> "str_serviceModuleTank" [style=solid];
   "aero_fairings" -> "cmp_compositeFairings" [style=solid];
   "elec_siliconPV" -> "elec_arCoatings" [style=solid];
   "start" -> "prop_recipEngine" [style=solid];
   "aero_subsonicWing" -> "life_pilotedCockpits" [style=solid];
-  "str_staging" -> "str_standardDecouplers" [style=solid];
+  "str_staging" -> "str_radialDecouplers" [style=solid];
+  "str_radialDecouplers" -> "str_standardDecouplers" [style=solid];
   "th_hermeticBus" -> "tel_appSatellites" [style=solid];
   "str_structuralHardware" -> "gs_launchClamps" [style=solid];
   "start" -> "gs_soundingStands" [style=solid];

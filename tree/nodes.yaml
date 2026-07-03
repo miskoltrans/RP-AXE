@@ -224,7 +224,7 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Roll, fusion-weld and proof-test a thin metal cylinder that holds its propellant under pressure without bursting — the first tank that flies, and the steel the first engine chambers are cut from. Heavy, but honest."
-    parts: [ROT-GenericTank-Separate, ROT-BoosterTank-Separate, ROT-RadialTank-Separate, ROT-AtlasTank-Separate, ROT-KatnissTank-Separate, ROT-LanderTank-Separate, ROT-MiscTank-Radial-Separate, ROT-MiscTank-Separate, ROT-Nose-Separate, ROT-SphericalTank-Separate, ROT-ToroidalTank-Separate, ca_tank_mp_s]
+    parts: [ROT-GenericTank-Separate, ROT-BoosterTank-Separate, ROT-RadialTank-Separate, ROT-AtlasTank-Separate, ROT-KatnissTank-Separate, ROT-LanderTank-Separate, ROT-MiscTank-Radial-Separate, ROT-MiscTank-Separate, ROT-Nose-Separate, ROT-SphericalTank-Separate, ROT-ToroidalTank-Separate, ca_tank_mp_s, ReleaseValve]
   - id: met_isogrid
     title: "Machined Isogrid Stiffening"
     discipline: Metallurgy
@@ -379,8 +379,15 @@ nodes:
     discipline: StructuresMechanisms
     tier: 2
     parents: [str_structuralHardware]
-    flavor: "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, in the sizes a light trainer through a heavy jet demand."
-    parts: [KF-ALG-Medium, KF-ALG-Small, KF-ALG-Large, KF-ALG-SmallSide, GearFixed, GearFree, GearSmall, SmallGearBay]
+    flavor: "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, from a fixed skid on a light trainer up to a steerable retractable leg."
+    parts: [GearFixed, SmallGearBay, GearSmall, GearFree]
+  - id: str_adjustableGear
+    title: "Adjustable Heavy Undercarriage"
+    discipline: StructuresMechanisms
+    tier: 3
+    parents: [str_landingGear]
+    flavor: "Load-rated landing gear with adjustable ride height and stance, sized from a light trainer to a heavy jet — the sophisticated oleo strut for aircraft too big or too fast for the basic legs it grows past. A separate research, off the stock undercarriage."
+    parts: [KF-ALG-Small, KF-ALG-Medium, KF-ALG-Large, KF-ALG-SmallSide]
   - id: av_centrifugalJet
     title: "Centrifugal-Flow Turbojet"
     discipline: AirBreathing
@@ -507,7 +514,14 @@ nodes:
     tier: 2
     parents: [str_structuralHardware]
     flavor: "Procedural ribbed, truss and hollow adapters that mate one diameter to another and carry the load across an interstage or under a payload — the structural handshake between a fat booster and a slim upper, or a stage and the satellite it lifts."
-    parts: [RSBRibbedBase, RSBTrussBase, SSTUBase, SSTUHollowRing, adapterSize2-Size1, adapterSize2-Size1Slant, strutCubeOCTOAdapter, strutCubeS0Adapter, trussAdapter, KzFlatAdapter, RSBRibbedBase_Interstage, RSBTrussBase_Interstage, SSTUBase_Interstage, SSTUHollowRing_Interstage, ROT-OpenInterstage, stackBiCoupler_v2, stackTriCoupler_v2, ServiceBay_125_v2, ReleaseValve, Angledpanel]
+    parts: [RSBRibbedBase, RSBTrussBase, SSTUBase, SSTUHollowRing, KzFlatAdapter, RSBRibbedBase_Interstage, RSBTrussBase_Interstage, SSTUBase_Interstage, SSTUHollowRing_Interstage, ROT-OpenInterstage]
+  - id: str_prefabAdapters
+    title: "Prefabricated Adapters"
+    discipline: StructuresMechanisms
+    tier: 3
+    parents: [str_diameterAdapters]
+    flavor: "The fixed-size shelf: stock diameter adapters, bi- and tri-couplers, cubic-strut mounts and a service bay, pressed and cast to set dimensions — bolt one on when you would rather not shape a procedural adapter. The procedural adapter stays the default; this is the catalogue."
+    parts: [adapterSize2-Size1, adapterSize2-Size1Slant, stackBiCoupler_v2, stackTriCoupler_v2, strutCubeOCTOAdapter, strutCubeS0Adapter, trussAdapter, ServiceBay_125_v2, Angledpanel]
 
   - id: str_serviceModuleTank
     title: "Structural Propellant Tankage"
@@ -548,13 +562,20 @@ nodes:
     flavor: "A cockpit shaped around a pilot - canopy, seat, sticks and dials - with the tail surfaces that keep the aeroplane pointed where the pilot aims it. From an open fighter office to a bomber glazed nose: the crudest crew accommodation, and the first rung toward a pressurised cabin and, past it, a capsule."
     parts: [RO-X1Cockpit, RO-FighterInlineCockpit, RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, SXTmk3Cockpit52, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow]
 
-  - id: str_standardDecouplers
-    title: "Prefabricated Decouplers"
+  - id: str_radialDecouplers
+    title: "Prefabricated Radial Decouplers"
     discipline: StructuresMechanisms
     tier: 3
     parents: [str_staging]
-    flavor: "A rack of pre-made decouplers and separators in fixed sizes - stack, radial, and the skirt rings that drop a spent booster - for when you would rather bolt on a catalogue part than shape a procedural one. The procedural decoupler stays the default; this is the shelf."
-    parts: [Decoupler_0, Decoupler_2, radialDecoupler1-2, radialDecoupler2, restock-decoupler-1875-1, restock-decoupler-radial-tiny-1, restock-separator-1875-1, shortDecoupler1-2, smallRadialDecoupler, ROE-BabySergeantX11Dec, ROE-BabySergeantX3Dec, ROE-CastorDecoupler, ROT-AtlasDecoupler]
+    flavor: "The catalogue shelf of radial decouplers — the sprung and pyrotechnic blocks that hold a strap-on booster or drop tank to the core and fling it clear when it's spent, in fixed sizes off the shelf. The procedural radial decoupler stays the default; this is where the specific booster hardware lives."
+    parts: [radialDecoupler1-2, radialDecoupler2, restock-decoupler-radial-tiny-1, smallRadialDecoupler, ROE-CastorDecoupler, ROE-BabySergeantX3Dec, ROE-BabySergeantX11Dec]
+  - id: str_standardDecouplers
+    title: "Prefabricated Stack Decouplers"
+    discipline: StructuresMechanisms
+    tier: 4
+    parents: [str_radialDecouplers]
+    flavor: "The rest of the catalogue shelf: pre-made in-line decouplers, separators and the skirt rings that drop a spent booster, in fixed sizes — for when you would rather bolt on a stock part than shape a procedural one. The procedural decoupler stays the default; this is the shelf."
+    parts: [Decoupler_0, Decoupler_2, restock-decoupler-1875-1, restock-separator-1875-1, shortDecoupler1-2, ROT-AtlasDecoupler]
   - id: tel_appSatellites
     title: "Radio-Relay Payloads"
     discipline: Telecommunications
