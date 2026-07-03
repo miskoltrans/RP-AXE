@@ -326,10 +326,11 @@ function computeSlots(){
   };
   for(const id in outB) spread(outB[id], e=>byId[e.to].pos[1],   (e,t)=>e._tF=t);
   for(const id in inB)  spread(inB[id],  e=>byId[e.from].pos[1], (e,t)=>e._tT=t);
-  // Fan X: index each edge among those converging into the SAME target (already sorted by source y above),
-  // centred, so routeOrthoLate can stagger their risers on x (same-tier parents otherwise share one riser).
+  // Fan X: index each edge among those converging into the SAME target (_xF, for ortho-late risers) and
+  // among those leaving the SAME source (_xFo, for ortho-early risers), centred + sorted by the other end's y.
   for(const id in inB){ const list=inB[id], n=list.length; list.forEach((e,i)=> e._xF = n<=1?0 : (i-(n-1)/2)); }
-  for(const e of edges){ if(e._tF==null)e._tF=0.5; if(e._tT==null)e._tT=0.5; if(e._xF==null)e._xF=0; }
+  for(const id in outB){ const list=outB[id], n=list.length; list.forEach((e,i)=> e._xFo = n<=1?0 : (i-(n-1)/2)); }
+  for(const e of edges){ if(e._tF==null)e._tF=0.5; if(e._tT==null)e._tT=0.5; if(e._xF==null)e._xF=0; if(e._xFo==null)e._xFo=0; }
 }
 
 // Stock RDNode.chamferCorner: iterative corner-cutting -> 2^segs tessellated points, offsets r/2.5^(i+1).
@@ -413,6 +414,38 @@ function routeOrthoLate(e){              // orthogonal elbow, single riser near 
   const k1=[rx,p[1]], k2=[rx,c[1]];
   return [p, ...chamfer(p,k1,k2,CORNER_R,CORNER_SEGS), ...chamfer(k1,k2,c,CORNER_R,CORNER_SEGS), c];
 }
+// ortho-early: mirror of ortho-late — the single riser sits just RIGHT of the SOURCE, so edges diverge out
+// of a node immediately then run horizontally into their target row. The fan-OUT counterpart of late
+// (clean divergence from a hub); Fan X here staggers by the source's out-edge index (_xFo).
+function routeOrthoEarly(e){
+  const p=anchor(byId[e.from],'RIGHT',e._tF), c=anchor(byId[e.to],'LEFT',e._tT);
+  if(Math.abs(p[1]-c[1])<0.5) return [p,c];
+  let rx=p[0]+Math.max(18,Math.min(60,(c[0]-p[0])*0.3));   // riser just right of the source node
+  if(opt.xfan) rx=Math.min(c[0]-10, Math.max(p[0]+12, rx+(e._xFo||0)*opt.xfanPitch));
+  const k1=[rx,p[1]], k2=[rx,c[1]];
+  return [p, ...chamfer(p,k1,k2,CORNER_R,CORNER_SEGS), ...chamfer(k1,k2,c,CORNER_R,CORNER_SEGS), c];
+}
+// junction-bus (hyperedge): every edge leaving a multi-child source SHARES one vertical bus just right of
+// the node — they emanate from the node's mid-right (fan off on the source side) into a single trunk, run
+// down it, and peel off at each target's row with a JUNCTION DOT (schematic/circuit look). Collapses a
+// dense fan-out into one legible trunk + branch points instead of N near-parallel risers. Each edge is
+// still one flat polyline (they overlap ON the bus by design); the dots are drawn in a separate pass.
+const BUS_STUB=28;                       // px from the source's right edge to the shared bus
+let busX={}, junctions=[];               // busX[sourceId] = bus x; junctions = [{x,y,col}] branch dots
+function buildBusRoutes(){
+  busX={}; junctions=[];
+  const outB={};
+  for(const e of edges){ if(!(e.from in byId)||!(e.to in byId)) continue; (outB[e.from]=outB[e.from]||[]).push(e); }
+  for(const id in outB) if(outB[id].length>=2) busX[id]=byId[id].pos[0]+NW()+BUS_STUB;   // only multi-child sources get a bus
+}
+function routeJunctionBus(e){
+  const bx=busX[e.from];
+  if(bx==null) return routeOrthoLate(e);                     // single-child source -> ordinary elbow
+  const p=anchor(byId[e.from],'RIGHT',0.5), c=anchor(byId[e.to],'LEFT',e._tT);   // all share the node mid-right -> clean trunk
+  if(Math.abs(p[1]-c[1])<0.5 && c[0]<=bx+2) return [p,c];
+  junctions.push({x:bx, y:c[1], col:e.discColor||GRAY});     // dot where this edge leaves the bus
+  return roundPolyline([p,[bx,p[1]],[bx,c[1]],c], CORNER_R, CORNER_SEGS);
+}
 
 // ---- NEW variants (2026-07-02) ----
 // cubic Bézier P0..P3 → sampled flat polyline (tessellated so the KSP Vectrosity port stays ONE line).
@@ -474,6 +507,8 @@ function edgeGeom(e){
   switch(opt.routing){
     case 'ortho-mid':   return routeEdge(e);
     case 'ortho-late':  return routeOrthoLate(e);
+    case 'ortho-early': return routeOrthoEarly(e);
+    case 'junction':    return routeJunctionBus(e);
     case 'polyline':    return pathThroughDummies(e) || routeEdge(e);
     case 'spline':      return catmullRom(pathThroughDummies(e), 14) || routeEdge(e);
     case 'bezier':      return routeBezier(e);
@@ -551,6 +586,7 @@ function buildGeometry(){
   computeSlots();
   if(opt.routing==='lanes') buildLaneRoutes();        // only 'lanes' needs the gutter lane-packing pass
   else if(opt.routing==='bundle') buildBundleHubs();  // bundle needs per-node out/in hub y's first
+  else if(opt.routing==='junction') buildBusRoutes(); // junction needs per-source bus x's + a fresh dot list
   for(const e of edges){
     if(!(e.from in byId)||!(e.to in byId)){ e.geom=null; continue; }
     e.geom = edgeGeom(e);   // routing variant (opt.routing)
@@ -596,6 +632,10 @@ function draw(){
     if(opt.arrows) drawArrow(e.arrow, color, ctx.globalAlpha);
   }
   ctx.globalAlpha=1;
+  if(opt.routing==='junction') for(const j of junctions){   // schematic branch dots where edges peel off the bus
+    ctx.fillStyle=(opt.discEdges&&!opt.baseline)?j.col:GRAY; ctx.beginPath();
+    ctx.arc(SX(j.x),SY(j.y),Math.max(1.8,2.8*cam.s),0,6.2832); ctx.fill();
+  }
 
   for(const n of D.nodes) drawNode(n, focusing);
 }
