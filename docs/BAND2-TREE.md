@@ -17,6 +17,10 @@ do not re-litigate. New band-2 nodes are **PENDING** until the user signs them o
 **Pending review — aviation tail (7 nodes):**
 - [ ] `met_cooledTurbine` (enabler, 15 jet uprates) · `av_turboprop` · `av_hydrogenJet` (× `cryo_hydrogen`) · `av_highTempTurbojet` · `av_ramjetAdvanced` · `aero_variableIntake` · `str_heavyGear`
 
+**Pending review — crewed spine (9 nodes):**
+- [ ] T5 subsystems: `cmp_ablativeTPS` · `life_openLoopECLSS` · `gnc_spacecraftRCS` · `life_pressurisedCabin` · `int_launchEscape`
+- [ ] T6 vehicles: `int_mercuryCapsule` · `int_vostokCapsule` · `int_zenitRecon` · `edl_crewedRecovery` — OPEN: keep "Capsule" in the 3 vehicle names, or drop to pure "…Reentry"?
+
 ## Engine spine (DONE — 16 nodes, T4→T6)
 
 The 1958–61 propulsion cohort. **Homed by propellant, not the RealFuels disc tag.** Two transitions
@@ -64,6 +68,13 @@ New engines: `av_turboprop` (NK-12/PT6), `av_highTempTurbojet` (Atar-09/R-11/J85
 (Model 304, gated on `cryo_hydrogen`), `av_ramjetAdvanced` (RD-012 + RJ43 uprates, T6). Plus
 `aero_variableIntake` (adjustable ramp) and `str_heavyGear` (LY-60/99, continues the gear lane).
 
+## Crewed spine (DONE — 9 nodes, T5→T6)
+Subsystems @ T5 feed parallel Mercury ‖ Vostok vehicles @ T6. `cmp_ablativeTPS` (CompositeMaterials —
+first node in that discipline), `life_openLoopECLSS`, `gnc_spacecraftRCS`, `life_pressurisedCabin` (X-15),
+`int_launchEscape` (tractor motor, off `pc_scoutSolids`). Vehicles: `int_mercuryCapsule` (blunt-body) ‖
+`int_vostokCapsule` (spherical), both gated on **TPS × ECLSS**; `int_zenitRecon` is a *sibling* (uncrewed
+recon) gated on **TPS × opt_recon** (stays in-band at T6); `edl_crewedRecovery`. Tech-level capability
+upgrades (Heatsink, MercuryHS) deferred to a tech-level pass (like solarTL/commsTL).
+
 ## Remaining band-2 lanes (NOT yet authored)
-Crewed spine (Mercury ‖ Vostok capsules, ablative TPS, ECLSS, LES, recovery) · satellite science
-instruments · power/comms/DSN support · the charter nodes.
+Satellite science instruments · power/comms/DSN support · the charter nodes.

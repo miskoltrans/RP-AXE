@@ -33,7 +33,7 @@ nodes:
     cost: 999
     parents: []
     flavor: "Everything unplaced or purely cosmetic — a dev holding pen, off the main tree."
-    parts: [YF21_with_shell_CZ-2, YF21_with_shell_CZ-2C, YF21_with_shell_CZ-2D]
+    parts: [YF21_with_shell_CZ-2, YF21_with_shell_CZ-2C, YF21_with_shell_CZ-2D, ROE-Agena_EquipmentRack, RP0HumanRatedFlag]
   - id: hire_JPL
     title: "Charter a Deep-Space Probe Lab (JPL)"
     discipline: SystemsIntegration
@@ -879,3 +879,77 @@ nodes:
     parents: [str_adjustableGear]
     flavor: "Legs rated for the weight of a heavy jet or transport, spreading the load on a soft field and soaking up a fast, heavy touchdown. The biggest undercarriage on the shelf, where the adjustable struts run out of rating."
     parts: [GearMedium, GearLarge]
+
+  # ================================================================================================
+  # ===================== BAND 2 * CREWED SPINE (T5 subsystems -> T6 vehicles) =====================
+  # The marquee "humans" goal, the era's T6 climax. Subsystems (TPS, ECLSS, RCS, cabin, escape) at T5
+  # feed the parallel Mercury || Vostok vehicles at T6. The 3 sanctioned crossovers live here: each
+  # capsule needs TPS x ECLSS; Zenit (uncrewed recon) needs TPS x recon-optics. Tech-level capability
+  # upgrades (Heatsink, MercuryHS) DEFERRED as a tech-level pass, like band-1 solarTL/commsTL.
+  # ---- Subsystems (T5) ----
+  - id: cmp_ablativeTPS
+    title: "Ablative Reentry Shielding"
+    discipline: CompositeMaterials
+    tier: 5
+    parents: [th_hermeticBus]
+    flavor: "Face the reentry fireball with a shield built to be destroyed: a resin-and-fibre composite that chars and boils away layer by layer, carrying the heat off with the vapour and holding the structure behind it cool. The one thing between a returning capsule and cremation."
+    parts: [ROC-MercuryHS, ROH-AdjustableHS]
+  - id: life_openLoopECLSS
+    title: "Open-Loop Life Support"
+    discipline: LifeSupport
+    tier: 5
+    parents: [life_pilotedCockpits]
+    flavor: "Keep a human alive in vacuum the simple way — bottled oxygen bled into a sealed cabin, carbon dioxide scrubbed from the air with lithium hydroxide, heat and moisture carried off — all of it vented or consumed, nothing recycled. Hours of life for a first flight, no more asked."
+    parts: [RO-LifeSupport-DummyEngine]
+    upgrades: [RFTech-AddLifeSupport]
+  - id: gnc_spacecraftRCS
+    title: "Storable-Propellant Reaction Control"
+    discipline: GuidanceControl
+    tier: 5
+    parents: [gnc_rcs]
+    flavor: "Trade the cold-gas puffers for small liquid thrusters on a storable propellant — peroxide, or hypergolics that light on contact — for many times the impulse in the same mass. The reaction control a manoeuvring spacecraft needs to point, hold and turn through a whole mission."
+    parts: [ROE-generic-full, ROE-generic-half, ROE-generic-quarter, ca_jib, microEngine, vernierEngine]
+    upgrades: [RFTech-rcs-tltech1]
+  - id: life_pressurisedCabin
+    title: "Sealed Cabin Pressurisation"
+    discipline: LifeSupport
+    tier: 5
+    parents: [life_pilotedCockpits]
+    flavor: "Seal a cabin tight enough to hold near sea-level pressure while the air outside thins to nothing, feeding it breathing gas and bleeding off the heat of hypersonic flight — the pilot rides to the edge of space in something close to shirtsleeves. The X-15's sealed cabin and the pressurised fuselage behind it."
+    parts: [Mark1Cockpit, Mark2Cockpit, SXTSmallFuselage, MK1Cargobay]
+  - id: int_launchEscape
+    title: "Tractor Escape Rocket"
+    discipline: SystemsIntegration
+    tier: 5
+    parents: [pc_scoutSolids]
+    flavor: "A solid rocket on a lattice tower above the capsule that, at the first sign of a failing booster, fires to haul the crew up and clear faster than the fireball can climb — then throws itself away once the ascent is safe. The one system on a manned rocket that exists only to go unused."
+    parts: [ROC-MercuryLESBDB, RO_mk1_LES]
+  # ---- Vehicles (T6, parallel) ----
+  - id: int_mercuryCapsule
+    title: "Blunt-Body Reentry Capsule"
+    discipline: SystemsIntegration
+    tier: 6
+    parents: [cmp_ablativeTPS, life_openLoopECLSS]
+    flavor: "A blunt cone that rides its own shockwave down, the heatshield taking the fire while the crewman lies on his back against the deceleration. Mercury: one seat, a retrofire to leave orbit, a splashdown under a single canopy. The first American in orbit."
+    parts: [ROC-MercuryCMBDB, ROC-MercuryNoseCapBDB, ROC-MercuryAirbrakeBDB, ROC-MercuryDecouplerAtlasBDB, ROC-MercuryDecouplerBDB, ROC-MercuryRCS2BDB]
+  - id: int_vostokCapsule
+    title: "Spherical Reentry Capsule"
+    discipline: SystemsIntegration
+    tier: 6
+    parents: [cmp_ablativeTPS, life_openLoopECLSS]
+    flavor: "A perfect sphere, its mass offset so it finds its own heat-shielded attitude with no active control — crude, heavy, utterly reliable. Vostok brought the first human back from orbit, the cosmonaut ejecting to land under his own parachute while the ball thumped down nearby."
+    parts: [ROC-VostokCapsule, ROC-VostokDecoupler, ROC-VostokService, mk1pod_v2]
+  - id: int_zenitRecon
+    title: "Film-Return Reconnaissance Capsule"
+    discipline: SystemsIntegration
+    tier: 6
+    parents: [cmp_ablativeTPS, opt_recon]
+    flavor: "Strip the cosmonaut out of the sphere and fill it with cameras — the same descent capsule flown unmanned, exposing long rolls of film over the target and dropping them home to be recovered. Vostok and Zenit are one airframe: one carries a man, the other carries the eyes."
+    parts: [ROC-ZenitCapsule]
+  - id: edl_crewedRecovery
+    title: "Crewed Descent Recovery"
+    discipline: Aerodynamics
+    tier: 6
+    parents: [aero_recovery]
+    flavor: "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point."
+    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, SXTAirbag, SXTAirbagSmall, landingLeg1]

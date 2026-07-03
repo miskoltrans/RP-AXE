@@ -198,7 +198,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2602
+    2907
    ]
   },
   {
@@ -210,6 +210,16 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Everything unplaced or purely cosmetic — a dev holding pen, off the main tree.",
    "parts": [
+    {
+     "name": "ROE-Agena_EquipmentRack",
+     "mod": "ROEngines",
+     "title": "Agena Equipment Rack"
+    },
+    {
+     "name": "RP0HumanRatedFlag",
+     "mod": "Squad",
+     "title": "Human Rated Flag"
+    },
     {
      "name": "YF21_with_shell_CZ-2",
      "mod": "KerwisChineseAerospacePack",
@@ -230,7 +240,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2508
+    2813
    ]
   },
   {
@@ -607,7 +617,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2320
+    2625
    ]
   },
   {
@@ -739,7 +749,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2568,
-    2414
+    2719
    ]
   },
   {
@@ -771,7 +781,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1829
+    2191
    ]
   },
   {
@@ -808,7 +818,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2012
+    2374
    ]
   },
   {
@@ -840,7 +850,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1965
+    2327
    ]
   },
   {
@@ -872,7 +882,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1824
+    2186
    ]
   },
   {
@@ -899,7 +909,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2247
+    2609
    ]
   },
   {
@@ -931,7 +941,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2153
+    2515
    ]
   },
   {
@@ -963,7 +973,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2562
+    2971
    ]
   },
   {
@@ -995,7 +1005,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2059
+    2421
    ]
   },
   {
@@ -1011,7 +1021,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1971
+    2333
    ]
   },
   {
@@ -1033,7 +1043,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1897
+    2259
    ]
   },
   {
@@ -1055,7 +1065,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1730
+    2092
    ]
   },
   {
@@ -1102,7 +1112,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    1181
+    1542
    ]
   },
   {
@@ -1129,7 +1139,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1181
+    1542
    ]
   },
   {
@@ -1166,7 +1176,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1181
+    1542
    ]
   },
   {
@@ -1200,7 +1210,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1505
+    1914
    ]
   },
   {
@@ -1224,7 +1234,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1369
+    1730
    ]
   },
   {
@@ -1246,7 +1256,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    1369
+    1730
    ]
   },
   {
@@ -1283,7 +1293,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    899
+    1176
    ]
   },
   {
@@ -1303,7 +1313,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2106
+    2468
    ]
   },
   {
@@ -1337,7 +1347,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    852
+    1129
    ]
   },
   {
@@ -1419,7 +1429,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    946
+    1176
    ]
   },
   {
@@ -1496,7 +1506,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    711
+    967
    ]
   },
   {
@@ -1538,7 +1548,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    993
+    1270
    ]
   },
   {
@@ -1570,7 +1580,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3392
+    3954
    ]
   },
   {
@@ -1612,7 +1622,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2875
+    3237
    ]
   },
   {
@@ -1649,7 +1659,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    4003
+    4545
    ]
   },
   {
@@ -1686,7 +1696,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    711
+    967
    ]
   },
   {
@@ -1768,7 +1778,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    4003
+    4545
    ]
   },
   {
@@ -1784,7 +1794,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    4050
+    4592
    ]
   },
   {
@@ -1811,7 +1821,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3956
+    4451
    ]
   },
   {
@@ -1838,7 +1848,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    4050
+    4686
    ]
   },
   {
@@ -1860,7 +1870,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3862
+    4336
    ]
   },
   {
@@ -1922,7 +1932,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3016
+    3578
    ]
   },
   {
@@ -1949,7 +1959,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    4144
+    4827
    ]
   },
   {
@@ -2021,7 +2031,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    4144
+    4780
    ]
   },
   {
@@ -2048,7 +2058,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2457
+    2818
    ]
   },
   {
@@ -2075,7 +2085,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3580
+    4142
    ]
   },
   {
@@ -2097,7 +2107,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3674
+    4404
    ]
   },
   {
@@ -2134,7 +2144,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    4238
+    4921
    ]
   },
   {
@@ -2156,7 +2166,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3627
+    4147
    ]
   },
   {
@@ -2213,7 +2223,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2828
+    3190
    ]
   },
   {
@@ -2250,7 +2260,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3298
+    3860
    ]
   },
   {
@@ -2287,7 +2297,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3298
+    3860
    ]
   },
   {
@@ -2314,7 +2324,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2363
+    2724
    ]
   },
   {
@@ -2346,7 +2356,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2200
+    2562
    ]
   },
   {
@@ -2383,7 +2393,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2363
+    2724
    ]
   },
   {
@@ -2445,7 +2455,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2640
+    3002
    ]
   },
   {
@@ -2492,7 +2502,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2499
+    2861
    ]
   },
   {
@@ -2529,7 +2539,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2593
+    2955
    ]
   },
   {
@@ -2571,7 +2581,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2865
+    3274
    ]
   },
   {
@@ -2593,7 +2603,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2200
+    2562
    ]
   },
   {
@@ -2615,7 +2625,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2703
+    3112
    ]
   },
   {
@@ -2762,7 +2772,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3251
+    3813
    ]
   },
   {
@@ -2780,7 +2790,7 @@ window.TREE = {
    ],
    "pos": [
     -2188,
-    3815
+    4289
    ]
   },
   {
@@ -2798,7 +2808,7 @@ window.TREE = {
    ],
    "pos": [
     -1808,
-    3768
+    4215
    ]
   },
   {
@@ -2819,7 +2829,7 @@ window.TREE = {
    ],
    "pos": [
     -1048,
-    3768
+    4498
    ]
   },
   {
@@ -3046,7 +3056,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3862
+    4357
    ]
   },
   {
@@ -3193,7 +3203,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2969
+    3331
    ]
   },
   {
@@ -3235,7 +3245,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2922
+    3284
    ]
   },
   {
@@ -3302,7 +3312,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3204
+    3766
    ]
   },
   {
@@ -3359,7 +3369,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3204
+    3766
    ]
   },
   {
@@ -3401,7 +3411,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    993
+    1270
    ]
   },
   {
@@ -3419,7 +3429,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2828
+    3190
    ]
   },
   {
@@ -3437,7 +3447,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3956
+    4592
    ]
   },
   {
@@ -3499,7 +3509,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2363
+    2724
    ]
   },
   {
@@ -3576,7 +3586,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    1040
+    1359
    ]
   },
   {
@@ -3628,7 +3638,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3392
+    3954
    ]
   },
   {
@@ -3680,7 +3690,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3392
+    3954
    ]
   },
   {
@@ -3707,7 +3717,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    711
+    988
    ]
   },
   {
@@ -3749,7 +3759,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3110
+    3672
    ]
   },
   {
@@ -3781,7 +3791,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3110
+    3672
    ]
   },
   {
@@ -3818,7 +3828,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3110
+    3672
    ]
   },
   {
@@ -3870,7 +3880,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3486
+    4048
    ]
   },
   {
@@ -4162,7 +4172,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3486
+    4048
    ]
   },
   {
@@ -4244,7 +4254,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3486
+    4048
    ]
   },
   {
@@ -4606,7 +4616,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3486
+    4048
    ]
   },
   {
@@ -4733,7 +4743,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    3486
+    4048
    ]
   },
   {
@@ -4950,7 +4960,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    3486
+    4748
    ]
   },
   {
@@ -5092,7 +5102,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     92,
-    3486
+    4748
    ]
   },
   {
@@ -5139,7 +5149,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2922
+    3284
    ]
   },
   {
@@ -5166,7 +5176,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2457
+    2818
    ]
   },
   {
@@ -5193,7 +5203,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    4144
+    4827
    ]
   },
   {
@@ -5220,7 +5230,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    4191
+    4827
    ]
   },
   {
@@ -5257,7 +5267,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    4097
+    4733
    ]
   },
   {
@@ -5283,7 +5293,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1463
+    1824
    ]
   },
   {
@@ -5310,7 +5320,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1369
+    1730
    ]
   },
   {
@@ -5331,7 +5341,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    1369
+    1197
    ]
   },
   {
@@ -5353,7 +5363,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    1505
+    1312
    ]
   },
   {
@@ -5398,7 +5408,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1181
+    1542
    ]
   },
   {
@@ -5425,7 +5435,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1275
+    1636
    ]
   },
   {
@@ -5462,7 +5472,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1087
+    1448
    ]
   },
   {
@@ -5500,7 +5510,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    899
+    1176
    ]
   },
   {
@@ -5522,7 +5532,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    2562
+    3881
    ]
   },
   {
@@ -5563,7 +5573,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1547
+    1956
    ]
   },
   {
@@ -5598,7 +5608,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    1547
+    2468
    ]
   },
   {
@@ -5640,7 +5650,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    1918
+    2280
    ]
   },
   {
@@ -5682,7 +5692,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2332
+    2741
    ]
   },
   {
@@ -5724,7 +5734,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2153
+    2562
    ]
   },
   {
@@ -5766,7 +5776,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2247
+    2656
    ]
   },
   {
@@ -5803,7 +5813,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    2290
+    2008
    ]
   },
   {
@@ -5835,7 +5845,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    805
+    1082
    ]
   },
   {
@@ -5862,7 +5872,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2405
+    2767
    ]
   },
   {
@@ -5884,7 +5894,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2059
+    2421
    ]
   },
   {
@@ -5916,7 +5926,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2059
+    2374
    ]
   },
   {
@@ -5941,7 +5951,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -288,
-    2865
+    4137
    ]
   },
   {
@@ -5963,7 +5973,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2734
+    3096
    ]
   },
   {
@@ -5990,7 +6000,324 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3298
+    3860
+   ]
+  },
+  {
+   "id": "cmp_ablativeTPS",
+   "title": "Ablative Reentry Shielding",
+   "discipline": "CompositeMaterials",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "Face the reentry fireball with a shield built to be destroyed: a resin-and-fibre composite that chars and boils away layer by layer, carrying the heat off with the vapour and holding the structure behind it cool. The one thing between a returning capsule and cremation.",
+   "parts": [
+    {
+     "name": "ROC-MercuryHS",
+     "mod": "ROCapsules",
+     "title": "Mercury Heatshield"
+    },
+    {
+     "name": "ROH-AdjustableHS",
+     "mod": "ROHeatshields",
+     "title": "Adjustable Heatshield"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -668,
+    946
+   ]
+  },
+  {
+   "id": "life_openLoopECLSS",
+   "title": "Open-Loop Life Support",
+   "discipline": "LifeSupport",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "Keep a human alive in vacuum the simple way — bottled oxygen bled into a sealed cabin, carbon dioxide scrubbed from the air with lithium hydroxide, heat and moisture carried off — all of it vented or consumed, nothing recycled. Hours of life for a first flight, no more asked.",
+   "parts": [
+    {
+     "name": "RO-LifeSupport-DummyEngine",
+     "mod": "Squad",
+     "title": "Life Support Config Engine"
+    }
+   ],
+   "upgrades": [
+    "RFTech-AddLifeSupport"
+   ],
+   "grants": [],
+   "pos": [
+    -668,
+    1312
+   ]
+  },
+  {
+   "id": "gnc_spacecraftRCS",
+   "title": "Storable-Propellant Reaction Control",
+   "discipline": "GuidanceControl",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "Trade the cold-gas puffers for small liquid thrusters on a storable propellant — peroxide, or hypergolics that light on contact — for many times the impulse in the same mass. The reaction control a manoeuvring spacecraft needs to point, hold and turn through a whole mission.",
+   "parts": [
+    {
+     "name": "ROE-generic-full",
+     "mod": "ROEngines",
+     "title": "1.1/1.78kN Thruster"
+    },
+    {
+     "name": "ROE-generic-half",
+     "mod": "ROEngines",
+     "title": "550/890N Thruster"
+    },
+    {
+     "name": "ROE-generic-quarter",
+     "mod": "ROEngines",
+     "title": "275/445N Thruster"
+    },
+    {
+     "name": "ca_jib",
+     "mod": "CoatlAerospace",
+     "title": "Generic 0.5 kN Thruster"
+    },
+    {
+     "name": "microEngine",
+     "mod": "Squad",
+     "title": "1.1/1.78kN Thruster"
+    },
+    {
+     "name": "vernierEngine",
+     "mod": "Squad",
+     "title": "Attitude Jet, Conformal (275/445 N class)"
+    }
+   ],
+   "upgrades": [
+    "RFTech-rcs-tltech1"
+   ],
+   "grants": [],
+   "pos": [
+    -668,
+    4268
+   ]
+  },
+  {
+   "id": "life_pressurisedCabin",
+   "title": "Sealed Cabin Pressurisation",
+   "discipline": "LifeSupport",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "Seal a cabin tight enough to hold near sea-level pressure while the air outside thins to nothing, feeding it breathing gas and bleeding off the heat of hypersonic flight — the pilot rides to the edge of space in something close to shirtsleeves. The X-15's sealed cabin and the pressurised fuselage behind it.",
+   "parts": [
+    {
+     "name": "MK1Cargobay",
+     "mod": "VenStockRevamp",
+     "title": "1.25m Cargo Bay"
+    },
+    {
+     "name": "Mark1Cockpit",
+     "mod": "Squad",
+     "title": "X-15 Cockpit"
+    },
+    {
+     "name": "Mark2Cockpit",
+     "mod": "Squad",
+     "title": "X-15 Inline Cockpit"
+    },
+    {
+     "name": "SXTSmallFuselage",
+     "mod": "SXT",
+     "title": "0.625m Fuselage (Pressurized)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -668,
+    1406
+   ]
+  },
+  {
+   "id": "int_launchEscape",
+   "title": "Tractor Escape Rocket",
+   "discipline": "SystemsIntegration",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "A solid rocket on a lattice tower above the capsule that, at the first sign of a failing booster, fires to haul the crew up and clear faster than the fireball can climb — then throws itself away once the ascent is safe. The one system on a manned rocket that exists only to go unused.",
+   "parts": [
+    {
+     "name": "ROC-MercuryLESBDB",
+     "mod": "ROCapsules",
+     "title": "Mercury Launch Escape System"
+    },
+    {
+     "name": "RO_mk1_LES",
+     "mod": "Squad",
+     "title": "Launch Escape System (Mercury)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -668,
+    1542
+   ]
+  },
+  {
+   "id": "int_mercuryCapsule",
+   "title": "Blunt-Body Reentry Capsule",
+   "discipline": "SystemsIntegration",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "A blunt cone that rides its own shockwave down, the heatshield taking the fire while the crewman lies on his back against the deceleration. Mercury: one seat, a retrofire to leave orbit, a splashdown under a single canopy. The first American in orbit.",
+   "parts": [
+    {
+     "name": "ROC-MercuryAirbrakeBDB",
+     "mod": "ROCapsules",
+     "title": "Mercury M-ASF Destabilizing Flap"
+    },
+    {
+     "name": "ROC-MercuryCMBDB",
+     "mod": "ROCapsules",
+     "title": "Mercury Capsule"
+    },
+    {
+     "name": "ROC-MercuryDecouplerAtlasBDB",
+     "mod": "ROCapsules",
+     "title": "Mercury-Atlas Adapter"
+    },
+    {
+     "name": "ROC-MercuryDecouplerBDB",
+     "mod": "ROCapsules",
+     "title": "Mercury Redstone Adapter"
+    },
+    {
+     "name": "ROC-MercuryNoseCapBDB",
+     "mod": "ROCapsules",
+     "title": "Mercury M-DCAM Nose Unit"
+    },
+    {
+     "name": "ROC-MercuryRCS2BDB",
+     "mod": "ROCapsules",
+     "title": "Mercury Landing and Control Module"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -288,
+    711
+   ]
+  },
+  {
+   "id": "int_vostokCapsule",
+   "title": "Spherical Reentry Capsule",
+   "discipline": "SystemsIntegration",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "A perfect sphere, its mass offset so it finds its own heat-shielded attitude with no active control — crude, heavy, utterly reliable. Vostok brought the first human back from orbit, the cosmonaut ejecting to land under his own parachute while the ball thumped down nearby.",
+   "parts": [
+    {
+     "name": "ROC-VostokCapsule",
+     "mod": "ROCapsules",
+     "title": "Vostok Descent Module"
+    },
+    {
+     "name": "ROC-VostokDecoupler",
+     "mod": "ROCapsules",
+     "title": "Vostok/Voskhod Decoupler"
+    },
+    {
+     "name": "ROC-VostokService",
+     "mod": "ROCapsules",
+     "title": "Vostok/Voskhod/Zenit Service Module"
+    },
+    {
+     "name": "mk1pod_v2",
+     "mod": "Squad",
+     "title": "Mk1 Pod (2m)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -288,
+    941
+   ]
+  },
+  {
+   "id": "int_zenitRecon",
+   "title": "Film-Return Reconnaissance Capsule",
+   "discipline": "SystemsIntegration",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Strip the cosmonaut out of the sphere and fill it with cameras — the same descent capsule flown unmanned, exposing long rolls of film over the target and dropping them home to be recovered. Vostok and Zenit are one airframe: one carries a man, the other carries the eyes.",
+   "parts": [
+    {
+     "name": "ROC-ZenitCapsule",
+     "mod": "ROCapsules",
+     "title": "Zenit Descent Module (Improved Film Camera)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -288,
+    2981
+   ]
+  },
+  {
+   "id": "edl_crewedRecovery",
+   "title": "Crewed Descent Recovery",
+   "discipline": "Aerodynamics",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point.",
+   "parts": [
+    {
+     "name": "ROC-MercuryParachuteBDB",
+     "mod": "ROCapsules",
+     "title": "Mercury M-ASD Main Parachute"
+    },
+    {
+     "name": "ROC-MercuryRetropackBDB",
+     "mod": "ROCapsules",
+     "title": "Mercury Retropack"
+    },
+    {
+     "name": "ROC-VostokParachute",
+     "mod": "ROCapsules",
+     "title": "Vostok/Voskhod Parachute"
+    },
+    {
+     "name": "SXTAirbag",
+     "mod": "SXT",
+     "title": "Mk10-XL Inflatable Airbag"
+    },
+    {
+     "name": "SXTAirbagSmall",
+     "mod": "SXT",
+     "title": "Mk-10 Inflatable Airbag"
+    },
+    {
+     "name": "landingLeg1",
+     "mod": "Squad",
+     "title": "LT-1 Landing Struts"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -288,
+    4466
    ]
   }
  ],
@@ -6002,11 +6329,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     1829
+     2191
     ]
    ]
   },
@@ -6017,11 +6344,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1829
+     2191
     ],
     [
      -1808,
-     2012
+     2374
     ]
    ]
   },
@@ -6032,11 +6359,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2106
+     2468
     ],
     [
      -1808,
-     2012
+     2374
     ]
    ]
   },
@@ -6047,11 +6374,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2012
+     2374
     ],
     [
      -1428,
-     1965
+     2327
     ]
    ]
   },
@@ -6062,11 +6389,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1965
+     2327
     ],
     [
      -1048,
-     1824
+     2186
     ]
    ]
   },
@@ -6077,11 +6404,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2059
+     2421
     ],
     [
      -1048,
-     2247
+     2609
     ]
    ]
   },
@@ -6092,11 +6419,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2059
+     2421
     ],
     [
      -1048,
-     2153
+     2515
     ]
    ]
   },
@@ -6107,11 +6434,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     2247
+     2609
     ],
     [
      -668,
-     2562
+     2971
     ]
    ]
   },
@@ -6122,11 +6449,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2012
+     2374
     ],
     [
      -1428,
-     2059
+     2421
     ]
    ]
   },
@@ -6137,11 +6464,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     1971
+     2333
     ]
    ]
   },
@@ -6152,11 +6479,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1971
+     2333
     ],
     [
      -1808,
-     1897
+     2259
     ]
    ]
   },
@@ -6167,15 +6494,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1897
+     2259
     ],
     [
      -1428,
-     1897
+     2259
     ],
     [
      -1048,
-     1730
+     2092
     ]
    ]
   },
@@ -6186,11 +6513,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     1181
+     1542
     ]
    ]
   },
@@ -6201,11 +6528,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1181
+     1542
     ],
     [
      -1808,
-     1181
+     1542
     ]
    ]
   },
@@ -6216,11 +6543,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1181
+     1542
     ],
     [
      -1428,
-     1181
+     1542
     ]
    ]
   },
@@ -6231,11 +6558,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1829
+     2191
     ],
     [
      -1808,
-     1505
+     1914
     ]
    ]
   },
@@ -6246,11 +6573,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1829
+     2191
     ],
     [
      -1808,
-     1369
+     1730
     ]
    ]
   },
@@ -6261,11 +6588,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1369
+     1730
     ],
     [
      -1428,
-     1369
+     1730
     ]
    ]
   },
@@ -6276,11 +6603,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     946
+     1176
     ],
     [
      -1808,
-     899
+     1176
     ]
    ]
   },
@@ -6291,11 +6618,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     2106
+     2468
     ]
    ]
   },
@@ -6306,11 +6633,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     899
+     1176
     ],
     [
      -1428,
-     852
+     1129
     ]
    ]
   },
@@ -6321,11 +6648,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     946
+     1176
     ]
    ]
   },
@@ -6336,11 +6663,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     946
+     1176
     ],
     [
      -1808,
-     711
+     967
     ]
    ]
   },
@@ -6351,11 +6678,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     899
+     1176
     ],
     [
      -1428,
-     993
+     1270
     ]
    ]
   },
@@ -6366,11 +6693,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3251
+     3813
     ],
     [
      -1808,
-     3392
+     3954
     ]
    ]
   },
@@ -6381,11 +6708,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2922
+     3284
     ],
     [
      -1428,
-     2875
+     3237
     ]
    ]
   },
@@ -6396,11 +6723,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     4003
+     4545
     ]
    ]
   },
@@ -6411,11 +6738,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     711
+     967
     ],
     [
      -1428,
-     711
+     967
     ]
    ]
   },
@@ -6426,11 +6753,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     4003
+     4545
     ],
     [
      -1808,
-     4003
+     4545
     ]
    ]
   },
@@ -6441,11 +6768,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     4003
+     4545
     ],
     [
      -1428,
-     4050
+     4592
     ]
    ]
   },
@@ -6456,11 +6783,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     4003
+     4545
     ],
     [
      -1428,
-     3956
+     4451
     ]
    ]
   },
@@ -6471,11 +6798,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     4050
+     4592
     ],
     [
      -1048,
-     4050
+     4686
     ]
    ]
   },
@@ -6486,11 +6813,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3815
+     4289
     ],
     [
      -1808,
-     3862
+     4336
     ]
    ]
   },
@@ -6501,11 +6828,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2828
+     3190
     ],
     [
      -1808,
-     3016
+     3578
     ]
    ]
   },
@@ -6516,11 +6843,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     4144
+     4827
     ]
    ]
   },
@@ -6531,11 +6858,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     4144
+     4827
     ],
     [
      -1048,
-     4144
+     4780
     ]
    ]
   },
@@ -6546,11 +6873,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     4050
+     4592
     ],
     [
      -1048,
-     4144
+     4780
     ]
    ]
   },
@@ -6561,11 +6888,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     2457
+     2818
     ]
    ]
   },
@@ -6576,19 +6903,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3627
+     4147
     ],
     [
      -1808,
-     3580
+     4142
     ],
     [
      -1428,
-     3580
+     4142
     ],
     [
      -1048,
-     3580
+     4142
     ]
    ]
   },
@@ -6599,11 +6926,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     4050
+     4592
     ],
     [
      -1048,
-     3580
+     4142
     ]
    ]
   },
@@ -6614,19 +6941,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3627
+     4147
     ],
     [
      -1808,
-     3674
+     4153
     ],
     [
      -1428,
-     3674
+     4153
     ],
     [
      -1048,
-     3674
+     4404
     ]
    ]
   },
@@ -6637,11 +6964,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     4050
+     4592
     ],
     [
      -1048,
-     3674
+     4404
     ]
    ]
   },
@@ -6652,11 +6979,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     4238
+     4921
     ]
    ]
   },
@@ -6667,11 +6994,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     3627
+     4147
     ]
    ]
   },
@@ -6682,11 +7009,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     2828
+     3190
     ]
    ]
   },
@@ -6697,11 +7024,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3251
+     3813
     ],
     [
      -1808,
-     3298
+     3860
     ]
    ]
   },
@@ -6712,11 +7039,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3298
+     3860
     ],
     [
      -1428,
-     3298
+     3860
     ]
    ]
   },
@@ -6727,11 +7054,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2363
+     2724
     ],
     [
      -1808,
-     2363
+     2724
     ]
    ]
   },
@@ -6742,11 +7069,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2106
+     2468
     ],
     [
      -1808,
-     2200
+     2562
     ]
    ]
   },
@@ -6757,11 +7084,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2363
+     2724
     ],
     [
      -1428,
-     2363
+     2724
     ]
    ]
   },
@@ -6772,15 +7099,15 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2828
+     3190
     ],
     [
      -1808,
-     2640
+     3002
     ],
     [
      -1428,
-     2640
+     3002
     ]
    ]
   },
@@ -6791,11 +7118,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2363
+     2724
     ],
     [
      -1048,
-     2499
+     2861
     ]
    ]
   },
@@ -6806,11 +7133,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2640
+     3002
     ],
     [
      -1048,
-     2499
+     2861
     ]
    ]
   },
@@ -6821,11 +7148,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2363
+     2724
     ],
     [
      -1048,
-     2593
+     2955
     ]
    ]
   },
@@ -6836,11 +7163,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2640
+     3002
     ],
     [
      -1048,
-     2593
+     2955
     ]
    ]
   },
@@ -6851,11 +7178,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     2593
+     2955
     ],
     [
      -668,
-     2865
+     3274
     ]
    ]
   },
@@ -6866,11 +7193,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2200
+     2562
     ],
     [
      -1428,
-     2200
+     2562
     ]
    ]
   },
@@ -6881,15 +7208,15 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2200
+     2562
     ],
     [
      -1048,
-     2363
+     2724
     ],
     [
      -668,
-     2703
+     3112
     ]
    ]
   },
@@ -6900,11 +7227,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     3251
+     3813
     ]
    ]
   },
@@ -6915,11 +7242,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     3815
+     4289
     ]
    ]
   },
@@ -6930,11 +7257,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3815
+     4289
     ],
     [
      -1808,
-     3768
+     4215
     ]
    ]
   },
@@ -6945,15 +7272,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3768
+     4215
     ],
     [
      -1428,
-     3768
+     4215
     ],
     [
      -1048,
-     3768
+     4498
     ]
    ]
   },
@@ -6964,11 +7291,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     4050
+     4592
     ],
     [
      -1048,
-     3768
+     4498
     ]
    ]
   },
@@ -6979,11 +7306,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3862
+     4336
     ],
     [
      -1428,
-     3862
+     4357
     ]
    ]
   },
@@ -6994,11 +7321,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2922
+     3284
     ],
     [
      -1428,
-     2969
+     3331
     ]
    ]
   },
@@ -7009,11 +7336,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2828
+     3190
     ],
     [
      -1808,
-     2922
+     3284
     ]
    ]
   },
@@ -7024,11 +7351,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3251
+     3813
     ],
     [
      -1808,
-     3204
+     3766
     ]
    ]
   },
@@ -7039,11 +7366,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3204
+     3766
     ],
     [
      -1428,
-     3204
+     3766
     ]
    ]
   },
@@ -7054,11 +7381,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     993
+     1270
     ],
     [
      -1048,
-     993
+     1270
     ]
    ]
   },
@@ -7069,11 +7396,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2875
+     3237
     ],
     [
      -1048,
-     2828
+     3190
     ]
    ]
   },
@@ -7084,11 +7411,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3956
+     4451
     ],
     [
      -1048,
-     3956
+     4592
     ]
    ]
   },
@@ -7099,11 +7426,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     2363
+     2724
     ]
    ]
   },
@@ -7114,11 +7441,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     946
+     1176
     ],
     [
      -1808,
-     1040
+     1359
     ]
    ]
   },
@@ -7129,11 +7456,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3392
+     3954
     ],
     [
      -1428,
-     3392
+     3954
     ]
    ]
   },
@@ -7144,11 +7471,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3392
+     3954
     ],
     [
      -1048,
-     3392
+     3954
     ]
    ]
   },
@@ -7159,11 +7486,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     711
+     967
     ],
     [
      -1048,
-     711
+     988
     ]
    ]
   },
@@ -7174,11 +7501,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3251
+     3813
     ],
     [
      -1808,
-     3110
+     3672
     ]
    ]
   },
@@ -7189,11 +7516,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3110
+     3672
     ],
     [
      -1428,
-     3110
+     3672
     ]
    ]
   },
@@ -7204,11 +7531,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3110
+     3672
     ],
     [
      -1048,
-     3110
+     3672
     ]
    ]
   },
@@ -7219,11 +7546,11 @@ window.TREE = {
    "waypoints": [
     [
      -2568,
-     2602
+     2907
     ],
     [
      -2188,
-     3486
+     4048
     ]
    ]
   },
@@ -7234,11 +7561,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3486
+     4048
     ],
     [
      -1808,
-     3486
+     4048
     ]
    ]
   },
@@ -7249,11 +7576,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3486
+     4048
     ],
     [
      -1428,
-     3486
+     4048
     ]
    ]
   },
@@ -7264,11 +7591,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3486
+     4048
     ],
     [
      -1048,
-     3486
+     4048
     ]
    ]
   },
@@ -7279,11 +7606,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     3486
+     4048
     ],
     [
      -668,
-     3486
+     4048
     ]
    ]
   },
@@ -7294,11 +7621,11 @@ window.TREE = {
    "waypoints": [
     [
      -668,
-     3486
+     4048
     ],
     [
      -288,
-     3486
+     4748
     ]
    ]
   },
@@ -7309,11 +7636,11 @@ window.TREE = {
    "waypoints": [
     [
      -288,
-     3486
+     4748
     ],
     [
      92,
-     3486
+     4748
     ]
    ]
   },
@@ -7324,11 +7651,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2875
+     3237
     ],
     [
      -1048,
-     2922
+     3284
     ]
    ]
   },
@@ -7339,15 +7666,15 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2457
+     2818
     ],
     [
      -1808,
-     2457
+     2818
     ],
     [
      -1428,
-     2457
+     2818
     ]
    ]
   },
@@ -7358,15 +7685,15 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     4144
+     4827
     ],
     [
      -1808,
-     4144
+     4827
     ],
     [
      -1428,
-     4144
+     4827
     ]
    ]
   },
@@ -7377,11 +7704,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     4144
+     4780
     ],
     [
      -668,
-     4191
+     4827
     ]
    ]
   },
@@ -7392,11 +7719,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     4144
+     4780
     ],
     [
      -668,
-     4097
+     4733
     ]
    ]
   },
@@ -7407,15 +7734,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1505
+     1914
     ],
     [
      -1428,
-     1463
+     1824
     ],
     [
      -1048,
-     1463
+     1824
     ]
    ]
   },
@@ -7426,11 +7753,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1369
+     1730
     ],
     [
      -1048,
-     1369
+     1730
     ]
    ]
   },
@@ -7441,15 +7768,15 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1369
+     1730
     ],
     [
      -668,
-     1369
+     1730
     ],
     [
      -288,
-     1369
+     1197
     ]
    ]
   },
@@ -7460,23 +7787,23 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1505
+     1914
     ],
     [
      -1428,
-     1505
+     1867
     ],
     [
      -1048,
-     1505
+     1867
     ],
     [
      -668,
-     1505
+     1867
     ],
     [
      -288,
-     1505
+     1312
     ]
    ]
   },
@@ -7487,11 +7814,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1181
+     1542
     ],
     [
      -1048,
-     1181
+     1542
     ]
    ]
   },
@@ -7502,11 +7829,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1181
+     1542
     ],
     [
      -1048,
-     1275
+     1636
     ]
    ]
   },
@@ -7517,11 +7844,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1181
+     1542
     ],
     [
      -1048,
-     1087
+     1448
     ]
    ]
   },
@@ -7532,11 +7859,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     852
+     1129
     ],
     [
      -1048,
-     899
+     1176
     ]
    ]
   },
@@ -7547,11 +7874,11 @@ window.TREE = {
    "waypoints": [
     [
      -668,
-     2562
+     2971
     ],
     [
      -288,
-     2562
+     3881
     ]
    ]
   },
@@ -7562,15 +7889,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     1505
+     1914
     ],
     [
      -1428,
-     1547
+     1956
     ],
     [
      -1048,
-     1547
+     1956
     ]
    ]
   },
@@ -7581,11 +7908,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1547
+     1956
     ],
     [
      -668,
-     1547
+     2468
     ]
    ]
   },
@@ -7596,11 +7923,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     1965
+     2327
     ],
     [
      -1048,
-     1918
+     2280
     ]
    ]
   },
@@ -7611,41 +7938,41 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
+     2186
+    ],
+    [
+     -668,
+     2741
+    ]
+   ]
+  },
+  {
+   "from": "fd_orbitalMultiChamber",
+   "to": "fd_longMarchStorable",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1048,
+     2515
+    ],
+    [
+     -668,
+     2562
+    ]
+   ]
+  },
+  {
+   "from": "pc_ntoHypergolics",
+   "to": "fd_longMarchStorable",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1048,
      1824
     ],
     [
      -668,
-     2332
-    ]
-   ]
-  },
-  {
-   "from": "fd_orbitalMultiChamber",
-   "to": "fd_longMarchStorable",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1048,
-     2153
-    ],
-    [
-     -668,
-     2153
-    ]
-   ]
-  },
-  {
-   "from": "pc_ntoHypergolics",
-   "to": "fd_longMarchStorable",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1048,
-     1463
-    ],
-    [
-     -668,
-     2153
+     2562
     ]
    ]
   },
@@ -7656,11 +7983,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     2153
+     2515
     ],
     [
      -668,
-     2247
+     2656
     ]
    ]
   },
@@ -7671,11 +7998,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1463
+     1824
     ],
     [
      -668,
-     2247
+     2656
     ]
    ]
   },
@@ -7686,15 +8013,15 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     1824
+     2186
     ],
     [
      -668,
-     2290
+     2699
     ],
     [
      -288,
-     2290
+     2008
     ]
    ]
   },
@@ -7705,15 +8032,15 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     2247
+     2609
     ],
     [
      -668,
-     2520
+     2929
     ],
     [
      -288,
-     2290
+     2008
     ]
    ]
   },
@@ -7724,15 +8051,15 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     899
+     1176
     ],
     [
      -668,
-     899
+     1176
     ],
     [
      -288,
-     2290
+     2008
     ]
    ]
   },
@@ -7743,11 +8070,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     852
+     1129
     ],
     [
      -1048,
-     805
+     1082
     ]
    ]
   },
@@ -7758,11 +8085,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2363
+     2724
     ],
     [
      -1048,
-     2405
+     2767
     ]
    ]
   },
@@ -7773,11 +8100,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2363
+     2724
     ],
     [
      -1048,
-     2059
+     2421
     ]
    ]
   },
@@ -7788,19 +8115,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     1971
+     2333
     ],
     [
      -1808,
-     1830
+     2192
     ],
     [
      -1428,
-     1830
+     2192
     ],
     [
      -1048,
-     2059
+     2421
     ]
    ]
   },
@@ -7811,11 +8138,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     2593
+     2955
     ],
     [
      -668,
-     2059
+     2374
     ]
    ]
   },
@@ -7826,11 +8153,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     805
+     1082
     ],
     [
      -668,
-     2059
+     2374
     ]
    ]
   },
@@ -7841,11 +8168,11 @@ window.TREE = {
    "waypoints": [
     [
      -668,
-     2865
+     3274
     ],
     [
      -288,
-     2865
+     4137
     ]
    ]
   },
@@ -7856,11 +8183,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2640
+     3002
     ],
     [
      -1048,
-     2734
+     3096
     ]
    ]
   },
@@ -7871,11 +8198,239 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3298
+     3860
     ],
     [
      -1048,
-     3298
+     3860
+    ]
+   ]
+  },
+  {
+   "from": "th_hermeticBus",
+   "to": "cmp_ablativeTPS",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1428,
+     967
+    ],
+    [
+     -1048,
+     946
+    ],
+    [
+     -668,
+     946
+    ]
+   ]
+  },
+  {
+   "from": "life_pilotedCockpits",
+   "to": "life_openLoopECLSS",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1808,
+     1359
+    ],
+    [
+     -1428,
+     1312
+    ],
+    [
+     -1048,
+     1312
+    ],
+    [
+     -668,
+     1312
+    ]
+   ]
+  },
+  {
+   "from": "gnc_rcs",
+   "to": "gnc_spacecraftRCS",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1808,
+     4336
+    ],
+    [
+     -1428,
+     4268
+    ],
+    [
+     -1048,
+     4268
+    ],
+    [
+     -668,
+     4268
+    ]
+   ]
+  },
+  {
+   "from": "life_pilotedCockpits",
+   "to": "life_pressurisedCabin",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1808,
+     1359
+    ],
+    [
+     -1428,
+     1406
+    ],
+    [
+     -1048,
+     1406
+    ],
+    [
+     -668,
+     1406
+    ]
+   ]
+  },
+  {
+   "from": "pc_scoutSolids",
+   "to": "int_launchEscape",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1048,
+     1542
+    ],
+    [
+     -668,
+     1542
+    ]
+   ]
+  },
+  {
+   "from": "cmp_ablativeTPS",
+   "to": "int_mercuryCapsule",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -668,
+     946
+    ],
+    [
+     -288,
+     711
+    ]
+   ]
+  },
+  {
+   "from": "life_openLoopECLSS",
+   "to": "int_mercuryCapsule",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -668,
+     1312
+    ],
+    [
+     -288,
+     711
+    ]
+   ]
+  },
+  {
+   "from": "cmp_ablativeTPS",
+   "to": "int_vostokCapsule",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -668,
+     946
+    ],
+    [
+     -288,
+     941
+    ]
+   ]
+  },
+  {
+   "from": "life_openLoopECLSS",
+   "to": "int_vostokCapsule",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -668,
+     1312
+    ],
+    [
+     -288,
+     941
+    ]
+   ]
+  },
+  {
+   "from": "cmp_ablativeTPS",
+   "to": "int_zenitRecon",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -668,
+     946
+    ],
+    [
+     -288,
+     2981
+    ]
+   ]
+  },
+  {
+   "from": "opt_recon",
+   "to": "int_zenitRecon",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1428,
+     4827
+    ],
+    [
+     -1048,
+     4895
+    ],
+    [
+     -668,
+     4895
+    ],
+    [
+     -288,
+     2981
+    ]
+   ]
+  },
+  {
+   "from": "aero_recovery",
+   "to": "edl_crewedRecovery",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1808,
+     3578
+    ],
+    [
+     -1428,
+     3578
+    ],
+    [
+     -1048,
+     3578
+    ],
+    [
+     -668,
+     3578
+    ],
+    [
+     -288,
+     4466
     ]
    ]
   }
