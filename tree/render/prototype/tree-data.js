@@ -1554,7 +1554,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2748
+    2607
    ]
   },
   {
@@ -1633,7 +1633,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    3119
+    3072
    ]
   },
   {
@@ -1752,7 +1752,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3119
+    3072
    ]
   },
   {
@@ -1768,7 +1768,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3072
+    3025
    ]
   },
   {
@@ -1795,7 +1795,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3166
+    3119
    ]
   },
   {
@@ -1822,7 +1822,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3260
+    3166
    ]
   },
   {
@@ -1844,7 +1844,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    3542
+    3448
    ]
   },
   {
@@ -1933,7 +1933,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2304
+    2769
    ]
   },
   {
@@ -2005,7 +2005,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2654
+    2884
    ]
   },
   {
@@ -2032,7 +2032,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2492
+    2351
    ]
   },
   {
@@ -2059,7 +2059,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3072
+    2978
    ]
   },
   {
@@ -2081,7 +2081,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3166
+    3072
    ]
   },
   {
@@ -2118,7 +2118,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2398
+    2095
    ]
   },
   {
@@ -2140,7 +2140,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2931
+    2884
    ]
   },
   {
@@ -2234,7 +2234,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2842
+    2701
    ]
   },
   {
@@ -2271,7 +2271,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2842
+    2701
    ]
   },
   {
@@ -2746,7 +2746,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    2701
+    2560
    ]
   },
   {
@@ -2764,7 +2764,7 @@ window.TREE = {
    ],
    "pos": [
     -2188,
-    3495
+    3401
    ]
   },
   {
@@ -2782,7 +2782,7 @@ window.TREE = {
    ],
    "pos": [
     -1808,
-    3448
+    3354
    ]
   },
   {
@@ -2803,7 +2803,7 @@ window.TREE = {
    ],
    "pos": [
     -1048,
-    3354
+    3260
    ]
   },
   {
@@ -3030,7 +3030,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    3542
+    3448
    ]
   },
   {
@@ -3286,7 +3286,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2654
+    2513
    ]
   },
   {
@@ -3348,7 +3348,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2654
+    2513
    ]
   },
   {
@@ -3426,7 +3426,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    3448
+    3354
    ]
   },
   {
@@ -3617,7 +3617,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2748
+    2607
    ]
   },
   {
@@ -3664,7 +3664,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2748
+    2445
    ]
   },
   {
@@ -3733,7 +3733,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1808,
-    2560
+    2419
    ]
   },
   {
@@ -3765,7 +3765,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1428,
-    2560
+    2419
    ]
   },
   {
@@ -3802,7 +3802,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2398
+    2304
    ]
   },
   {
@@ -5150,23 +5150,18 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1048,
-    2842
+    2654
    ]
   },
   {
    "id": "opt_recon",
-   "title": "Reconnaissance Imaging",
+   "title": "Film Reconnaissance",
    "discipline": "OpticsPhotonics",
-   "tier": 5,
-   "cost": 1500,
+   "tier": 3,
+   "cost": 400,
    "anyToUnlock": false,
-   "flavor": "Long-focal-length optics and fine-grain emulsion resolve a vehicle from orbit: the reconnaissance cameras that were the real reason the first satellites flew, whether they drop the film capsule or scan it down a video link.",
+   "flavor": "Long-focal-length optics and fine-grain emulsion resolve a vehicle from orbit and drop the exposed film home in a capsule — the high-resolution reconnaissance that was the real reason the first satellites flew. No electronics, just better glass and finer grain: it gets there before the television does.",
    "parts": [
-    {
-     "name": "RO-BasicTVCamera",
-     "mod": "RP-1",
-     "title": "VI02 - Basic TV Camera"
-    },
     {
      "name": "RO-HighResFilmCamera",
      "mod": "RP-1",
@@ -5176,6 +5171,28 @@ window.TREE = {
      "name": "RO-ImprovedFilmCamera",
      "mod": "RP-1",
      "title": "PH03 - Improved Film Camera"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1428,
+    2790
+   ]
+  },
+  {
+   "id": "opt_tvRecon",
+   "title": "Television Reconnaissance",
+   "discipline": "OpticsPhotonics",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "Higher-resolution vidicon cameras that scan the reconnaissance image down a radio link the moment it is taken — no capsule to recover, the picture on the ground in minutes. The electronic eye catching up to the spy film.",
+   "parts": [
+    {
+     "name": "RO-BasicTVCamera",
+     "mod": "RP-1",
+     "title": "VI02 - Basic TV Camera"
     },
     {
      "name": "RO-ImprovedTVCamera",
@@ -5187,7 +5204,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2607
+    2931
    ]
   },
   {
@@ -5224,7 +5241,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -668,
-    2701
+    2837
    ]
   }
  ],
@@ -5600,11 +5617,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2701
+     2560
     ],
     [
      -1808,
-     2748
+     2607
     ]
    ]
   },
@@ -5634,7 +5651,7 @@ window.TREE = {
     ],
     [
      -2188,
-     3119
+     3072
     ]
    ]
   },
@@ -5660,11 +5677,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3119
+     3072
     ],
     [
      -1808,
-     3119
+     3072
     ]
    ]
   },
@@ -5675,11 +5692,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3119
+     3072
     ],
     [
      -1428,
-     3072
+     3025
     ]
    ]
   },
@@ -5690,11 +5707,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3119
+     3072
     ],
     [
      -1428,
-     3166
+     3119
     ]
    ]
   },
@@ -5705,11 +5722,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3072
+     3025
     ],
     [
      -1048,
-     3260
+     3166
     ]
    ]
   },
@@ -5720,11 +5737,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3495
+     3401
     ],
     [
      -1808,
-     3542
+     3448
     ]
    ]
   },
@@ -5754,7 +5771,7 @@ window.TREE = {
     ],
     [
      -2188,
-     2304
+     2769
     ]
    ]
   },
@@ -5765,19 +5782,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2304
+     2769
     ],
     [
      -1808,
-     2304
+     2743
     ],
     [
      -1428,
-     2304
+     2743
     ],
     [
      -1048,
-     2654
+     2884
     ]
    ]
   },
@@ -5788,11 +5805,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3072
+     3025
     ],
     [
      -1048,
-     2654
+     2884
     ]
    ]
   },
@@ -5807,7 +5824,7 @@ window.TREE = {
     ],
     [
      -2188,
-     2492
+     2351
     ]
    ]
   },
@@ -5818,19 +5835,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2931
+     2884
     ],
     [
      -1808,
-     2884
+     2837
     ],
     [
      -1428,
-     2884
+     2837
     ],
     [
      -1048,
-     3072
+     2978
     ]
    ]
   },
@@ -5841,11 +5858,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3072
+     3025
     ],
     [
      -1048,
-     3072
+     2978
     ]
    ]
   },
@@ -5856,19 +5873,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2931
+     2884
     ],
     [
      -1808,
-     2937
+     2890
     ],
     [
      -1428,
-     2937
+     2890
     ],
     [
      -1048,
-     3166
+     3072
     ]
    ]
   },
@@ -5879,11 +5896,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3072
+     3025
     ],
     [
      -1048,
-     3166
+     3072
     ]
    ]
   },
@@ -5898,7 +5915,7 @@ window.TREE = {
     ],
     [
      -2188,
-     2398
+     2095
     ]
    ]
   },
@@ -5913,7 +5930,7 @@ window.TREE = {
     ],
     [
      -2188,
-     2931
+     2884
     ]
    ]
   },
@@ -5939,11 +5956,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2701
+     2560
     ],
     [
      -1808,
-     2842
+     2701
     ]
    ]
   },
@@ -5954,11 +5971,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2842
+     2701
     ],
     [
      -1428,
-     2842
+     2701
     ]
    ]
   },
@@ -6161,7 +6178,7 @@ window.TREE = {
     ],
     [
      -2188,
-     2701
+     2560
     ]
    ]
   },
@@ -6176,7 +6193,7 @@ window.TREE = {
     ],
     [
      -2188,
-     3495
+     3401
     ]
    ]
   },
@@ -6187,11 +6204,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     3495
+     3401
     ],
     [
      -1808,
-     3448
+     3354
     ]
    ]
   },
@@ -6202,15 +6219,15 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3448
+     3354
     ],
     [
      -1428,
-     3448
+     3354
     ],
     [
      -1048,
-     3354
+     3260
     ]
    ]
   },
@@ -6221,11 +6238,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3072
+     3025
     ],
     [
      -1048,
-     3354
+     3260
     ]
    ]
   },
@@ -6236,11 +6253,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     3542
+     3448
     ],
     [
      -1428,
-     3542
+     3448
     ]
    ]
   },
@@ -6281,11 +6298,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2701
+     2560
     ],
     [
      -1808,
-     2654
+     2513
     ]
    ]
   },
@@ -6296,11 +6313,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2654
+     2513
     ],
     [
      -1428,
-     2654
+     2513
     ]
    ]
   },
@@ -6341,11 +6358,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3166
+     3119
     ],
     [
      -1048,
-     3448
+     3354
     ]
    ]
   },
@@ -6386,11 +6403,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2748
+     2607
     ],
     [
      -1428,
-     2748
+     2607
     ]
    ]
   },
@@ -6401,11 +6418,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2748
+     2607
     ],
     [
      -1048,
-     2748
+     2445
     ]
    ]
   },
@@ -6431,11 +6448,11 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2701
+     2560
     ],
     [
      -1808,
-     2560
+     2419
     ]
    ]
   },
@@ -6446,11 +6463,11 @@ window.TREE = {
    "waypoints": [
     [
      -1808,
-     2560
+     2419
     ],
     [
      -1428,
-     2560
+     2419
     ]
    ]
   },
@@ -6461,11 +6478,11 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     2560
+     2419
     ],
     [
      -1048,
-     2398
+     2304
     ]
    ]
   },
@@ -6596,19 +6613,19 @@ window.TREE = {
    "waypoints": [
     [
      -2188,
-     2492
+     2351
     ],
     [
      -1808,
-     2492
+     2351
     ],
     [
      -1428,
-     2492
+     2351
     ],
     [
      -1048,
-     2842
+     2654
     ]
    ]
   },
@@ -6619,26 +6636,45 @@ window.TREE = {
    "waypoints": [
     [
      -1428,
-     3072
+     3025
     ],
     [
      -1048,
-     2842
+     2654
+    ]
+   ]
+  },
+  {
+   "from": "opt_filmReturn",
+   "to": "opt_recon",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2188,
+     2769
+    ],
+    [
+     -1808,
+     2790
+    ],
+    [
+     -1428,
+     2790
     ]
    ]
   },
   {
    "from": "opt_vidicon",
-   "to": "opt_recon",
+   "to": "opt_tvRecon",
    "anyToUnlock": false,
    "waypoints": [
     [
      -1048,
-     2654
+     2884
     ],
     [
      -668,
-     2607
+     2931
     ]
    ]
   },
@@ -6649,11 +6685,11 @@ window.TREE = {
    "waypoints": [
     [
      -1048,
-     2654
+     2884
     ],
     [
      -668,
-     2701
+     2837
     ]
    ]
   }

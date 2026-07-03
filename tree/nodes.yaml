@@ -676,12 +676,19 @@ nodes:
     flavor: "Stack scintillators and photomultipliers in coincidence so only a particle passing clean through every layer is counted: a telescope not for light but for cosmic rays, reading their energy and direction. It takes fast electronics to catch a nanosecond coincidence, which is why it waits on the solid-state line."
     parts: [RO-ScintillationCounter, RP0Cherenkov]
   - id: opt_recon
-    title: "Reconnaissance Imaging"
+    title: "Film Reconnaissance"
+    discipline: OpticsPhotonics
+    tier: 3
+    parents: [opt_filmReturn]
+    flavor: "Long-focal-length optics and fine-grain emulsion resolve a vehicle from orbit and drop the exposed film home in a capsule — the high-resolution reconnaissance that was the real reason the first satellites flew. No electronics, just better glass and finer grain: it gets there before the television does."
+    parts: [RO-ImprovedFilmCamera, RO-HighResFilmCamera]
+  - id: opt_tvRecon
+    title: "Television Reconnaissance"
     discipline: OpticsPhotonics
     tier: 5
     parents: [opt_vidicon]
-    flavor: "Long-focal-length optics and fine-grain emulsion resolve a vehicle from orbit: the reconnaissance cameras that were the real reason the first satellites flew, whether they drop the film capsule or scan it down a video link."
-    parts: [RO-ImprovedFilmCamera, RO-HighResFilmCamera, RO-BasicTVCamera, RO-ImprovedTVCamera]
+    flavor: "Higher-resolution vidicon cameras that scan the reconnaissance image down a radio link the moment it is taken — no capsule to recover, the picture on the ground in minutes. The electronic eye catching up to the spy film."
+    parts: [RO-BasicTVCamera, RO-ImprovedTVCamera]
   - id: opt_remoteSensing
     title: "Infrared Remote Sensing"
     discipline: OpticsPhotonics
