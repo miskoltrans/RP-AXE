@@ -38,7 +38,7 @@ let D, byId={}, parents={}, children={}, edges=[];
 let cam={s:1,x:0,y:0};                  // world->screen: screenX = worldX*s + x
 let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
-const opt={ fan:true, xfan:true, xfanPitch:16, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'ortho-late', icons:true, square:true, layout:'sugiyama-bk', spacingX:1.0, spacingY:1.0, diffspread:false, lanePitch:1, halo:false, bundleBeta:0.85 };
+const opt={ fan:true, xfan:true, xfanPitch:16, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'junction', icons:true, square:true, layout:'sugiyama-bk', spacingX:1.0, spacingY:1.0, diffspread:false, lanePitch:1, halo:false, bundleBeta:0.85 };
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
@@ -443,7 +443,7 @@ function routeJunctionBus(e){
   if(bx==null) return routeOrthoLate(e);                     // single-child source -> ordinary elbow
   const p=anchor(byId[e.from],'RIGHT',0.5), c=anchor(byId[e.to],'LEFT',e._tT);   // all share the node mid-right -> clean trunk
   if(Math.abs(p[1]-c[1])<0.5 && c[0]<=bx+2) return [p,c];
-  junctions.push({x:bx, y:c[1], col:e.discColor||GRAY});     // dot where this edge leaves the bus
+  junctions.push({x:bx, y:c[1], col:e.discColor||GRAY, e});   // dot where this edge leaves the bus (e = owning edge)
   return roundPolyline([p,[bx,p[1]],[bx,c[1]],c], CORNER_R, CORNER_SEGS);
 }
 
@@ -633,9 +633,12 @@ function draw(){
   }
   ctx.globalAlpha=1;
   if(opt.routing==='junction') for(const j of junctions){   // schematic branch dots where edges peel off the bus
+    const lit = !focusing || (litEdges && litEdges.has(j.e));   // dim dots off the highlighted lineage
+    ctx.globalAlpha = focusing ? (lit?1:DIM_EDGE) : 1;
     ctx.fillStyle=(opt.discEdges&&!opt.baseline)?j.col:GRAY; ctx.beginPath();
     ctx.arc(SX(j.x),SY(j.y),Math.max(1.8,2.8*cam.s),0,6.2832); ctx.fill();
   }
+  ctx.globalAlpha=1;
 
   for(const n of D.nodes) drawNode(n, focusing);
 }
@@ -916,7 +919,7 @@ function init(){
     document.getElementById('c_disc').checked=opt.discEdges; document.getElementById('c_hi').checked=opt.highlight;
     document.getElementById('s_route').value=opt.routing; };
   document.getElementById('b_base').addEventListener('click',()=>{ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; opt.routing='ortho-mid'; focusSet=null; sync(); rebuild(); });
-  document.getElementById('b_enh').addEventListener('click',()=>{ opt.baseline=false; opt.fan=true; opt.discEdges=true; opt.highlight=true; opt.routing='ortho-late'; sync(); rebuild(); });
+  document.getElementById('b_enh').addEventListener('click',()=>{ opt.baseline=false; opt.fan=true; opt.discEdges=true; opt.highlight=true; opt.routing='junction'; sync(); rebuild(); });
   document.getElementById('b_reset').addEventListener('click',()=>{ if(confirm('Reset all research progress?')){ resetProgress(); setFocus(activeFocus()); afterStateChange(); } });
   document.getElementById('b_fit').addEventListener('click',()=>{ fit(); draw(); });
   document.getElementById('zi').addEventListener('click',()=>{ cam.s=Math.min(6,cam.s*1.2); updateZoomLabel(); draw(); });
