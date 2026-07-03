@@ -5279,11 +5279,6 @@ window.TREE = {
      "name": "RO-BasicTVCamera",
      "mod": "RP-1",
      "title": "VI02 - Basic TV Camera"
-    },
-    {
-     "name": "RO-ImprovedTVCamera",
-     "mod": "RP-1",
-     "title": "VI03 - Improved TV Camera"
     }
    ],
    "upgrades": [],
@@ -5303,20 +5298,54 @@ window.TREE = {
    "flavor": "Scan the planet in wavelengths the eye cannot see: an infrared radiometer maps cloud-top temperature, an ultraviolet spectrometer reads the high atmosphere. The first weather and earth-resource sensing from orbit.",
    "parts": [
     {
+     "name": "RO-IRRadiometer",
+     "mod": "RP-1",
+     "title": "IR01 - Infrared Radiometer"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -668,
+    4733
+   ]
+  },
+  {
+   "id": "opt_irRadiometry",
+   "title": "Multi-Channel Radiometry",
+   "discipline": "OpticsPhotonics",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Split the infrared into a warm band and a window band, and the difference between them gives the temperature of what you are looking at, not just its brightness. The sharper, multi-channel radiometer that reads cloud-top and sea-surface temperature from orbit where the single-band instrument saw only a glow.",
+   "parts": [
+    {
      "name": "RO-HRIRRadiometer",
      "mod": "RP-1",
      "title": "IR02 - High-Resolution Infrared Radiometer"
     },
     {
-     "name": "RO-IRRadiometer",
-     "mod": "RP-1",
-     "title": "IR01 - Infrared Radiometer"
-    },
-    {
      "name": "RO-TwoChannelIR",
      "mod": "RP-1",
      "title": "IR03 - Two-Channel Infrared Radiometer"
-    },
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -288,
+    4942
+   ]
+  },
+  {
+   "id": "opt_uvSpectrometry",
+   "title": "Ultraviolet Spectrometry",
+   "discipline": "OpticsPhotonics",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Disperse the ultraviolet an atmosphere emits and absorbs into a spectrum — the fingerprints of ozone, hydrogen and the rest of the high air, in wavelengths the eye and the film both miss entirely. The first instrument to read the atmosphere's chemistry from above it.",
+   "parts": [
     {
      "name": "RO-UVSpectrometer",
      "mod": "RP-1",
@@ -5326,8 +5355,30 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -668,
-    4733
+    -288,
+    5130
+   ]
+  },
+  {
+   "id": "opt_refinedTV",
+   "title": "Refined Vidicon Imaging",
+   "discipline": "OpticsPhotonics",
+   "tier": 6,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "A finer vidicon target and a denser scan resolve detail the early television camera smeared away — reconnaissance and weather imagery sharp enough to be worth the bandwidth to send it down. The electronic eye growing up.",
+   "parts": [
+    {
+     "name": "RO-ImprovedTVCamera",
+     "mod": "RP-1",
+     "title": "VI03 - Improved TV Camera"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -288,
+    5224
    ]
   },
   {
@@ -7806,6 +7857,51 @@ window.TREE = {
     [
      -668,
      4733
+    ]
+   ]
+  },
+  {
+   "from": "opt_remoteSensing",
+   "to": "opt_irRadiometry",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -668,
+     4733
+    ],
+    [
+     -288,
+     4942
+    ]
+   ]
+  },
+  {
+   "from": "opt_remoteSensing",
+   "to": "opt_uvSpectrometry",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -668,
+     4733
+    ],
+    [
+     -288,
+     5130
+    ]
+   ]
+  },
+  {
+   "from": "opt_tvRecon",
+   "to": "opt_refinedTV",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -668,
+     4827
+    ],
+    [
+     -288,
+     5224
     ]
    ]
   },

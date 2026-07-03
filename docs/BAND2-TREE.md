@@ -21,8 +21,9 @@ do not re-litigate. New band-2 nodes are **PENDING** until the user signs them o
 - [ ] T5 subsystems: `cmp_ablativeTPS` · `life_openLoopECLSS` · `gnc_spacecraftRCS` · `life_pressurisedCabin` · `int_launchEscape`
 - [ ] T6 vehicles: `int_mercuryCapsule` · `int_vostokCapsule` · `int_zenitRecon` · `edl_crewedRecovery` — OPEN: keep "Capsule" in the 3 vehicle names, or drop to pure "…Reentry"?
 
-**Pending review — science (1 node):**
-- [ ] `opt_orbitalMapping` (SCANsat MapTraq seed; instruments already in band 1; band-3 fills the mapping lane)
+**Pending review — science (1 seed + 3 progression gates):**
+- [ ] `opt_orbitalMapping` (SCANsat MapTraq seed)
+- [ ] `opt_irRadiometry` (IR02/03) · `opt_uvSpectrometry` (IS02) · `opt_refinedTV` (VI03) — numbered-family gates at T6
 
 **Pending review — charter (no new nodes — sorted into existing roots):**
 - [ ] US buses → `hire_JPL` (Vanguard 1, Pioneer 0-5, Explorer 6, Tiros-1, Transit-2A, GRAB) · Soviet → `hire_OKB` (Sputnik 2/3)
@@ -88,6 +89,16 @@ micrometeorite) were already placed in band 1 — no new instrument nodes. Band-
 `opt_orbitalMapping` "Synoptic Orbital Scanning" (SCANsat MapTraq, T6, off `opt_remoteSensing`).
 `SCANsat_Scanner32` skipped (DEPRECATED); `dmUS2MagBoom`/`dmUS2Scope` deferred (uncurated US2 wedges).
 The mapping-lane bulk is in the interplanetary partlist (band 3).
+
+**Numbered-instrument progression (design rule):** every family (PH/VI/IR/IS/MS/MG/CR/WS, `XX##` codes)
+is a *tiered gated progression* — `XX01` cheap/early, higher numbers gate above. Bulk in T1–T4; refinements
+at T5–T6. Split the bunched T5 node: IR01 stays `opt_remoteSensing` (T5) → IR02/03 → `opt_irRadiometry` (T6);
+IS02 → `opt_uvSpectrometry` (T6); VI02 stays `opt_tvRecon` (T5) → VI03 → `opt_refinedTV` (T6). Band 3
+continues each family (IR04, IS01/03/04, MS02–04, VI04/05, PH05, WS01–03, MG02/03).
+
+**Ullage — open opportunity:** companion to `fd_restartableUpper` (coast-then-relight needs settling). Hardware
+already folded into the sep/posigrade solids (`pc_retroKick`, band-1 sep motors), so it'd be a *capability gate*.
+Thin in band 2 (short coasts); becomes a real breakthrough in band 3 (lunar/planetary injection). Not yet placed.
 
 ## Charter (DONE — no new nodes)
 The band-1 charter roots `hire_JPL` (US) and `hire_OKB` (Soviet) were left empty *specifically* to receive

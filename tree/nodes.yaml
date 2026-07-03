@@ -691,14 +691,41 @@ nodes:
     tier: 5
     parents: [opt_vidicon]
     flavor: "Higher-resolution vidicon cameras that scan the reconnaissance image down a radio link the moment it is taken — no capsule to recover, the picture on the ground in minutes. The electronic eye catching up to the spy film."
-    parts: [RO-BasicTVCamera, RO-ImprovedTVCamera]
+    parts: [RO-BasicTVCamera]
   - id: opt_remoteSensing
     title: "Infrared Remote Sensing"
     discipline: OpticsPhotonics
     tier: 5
     parents: [opt_vidicon]
     flavor: "Scan the planet in wavelengths the eye cannot see: an infrared radiometer maps cloud-top temperature, an ultraviolet spectrometer reads the high atmosphere. The first weather and earth-resource sensing from orbit."
-    parts: [RO-IRRadiometer, RO-HRIRRadiometer, RO-TwoChannelIR, RO-UVSpectrometer]
+    parts: [RO-IRRadiometer]
+
+  # ===================== BAND 2 * SCIENCE INSTRUMENT GATES (numbered-family progressions) =====================
+  # Split the bunched T5 remote-sensing/TV nodes so each numbered instrument gates the next: IR01 (T5) ->
+  # IR02/03 (T6), VI02 (T5) -> VI03 (T6), IS02 gets its own strand (seeds the IS spectrometer family).
+  # Bulk stays T1-T4; these top-tier refinements use T6. Band 3 continues each family (IR04, IS01/03/04,
+  # MS02-04, VI04/05, PH05, WS01-03, MG02/03) as further gates.
+  - id: opt_irRadiometry
+    title: "Multi-Channel Radiometry"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_remoteSensing]
+    flavor: "Split the infrared into a warm band and a window band, and the difference between them gives the temperature of what you are looking at, not just its brightness. The sharper, multi-channel radiometer that reads cloud-top and sea-surface temperature from orbit where the single-band instrument saw only a glow."
+    parts: [RO-HRIRRadiometer, RO-TwoChannelIR]
+  - id: opt_uvSpectrometry
+    title: "Ultraviolet Spectrometry"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_remoteSensing]
+    flavor: "Disperse the ultraviolet an atmosphere emits and absorbs into a spectrum — the fingerprints of ozone, hydrogen and the rest of the high air, in wavelengths the eye and the film both miss entirely. The first instrument to read the atmosphere's chemistry from above it."
+    parts: [RO-UVSpectrometer]
+  - id: opt_refinedTV
+    title: "Refined Vidicon Imaging"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_tvRecon]
+    flavor: "A finer vidicon target and a denser scan resolve detail the early television camera smeared away — reconnaissance and weather imagery sharp enough to be worth the bandwidth to send it down. The electronic eye growing up."
+    parts: [RO-ImprovedTVCamera]
 
   # ================================================================================================
   # ===================== BAND 2 * ENGINE SPINE (T4 -> T6) =========================================
