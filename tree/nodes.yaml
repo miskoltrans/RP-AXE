@@ -805,7 +805,7 @@ nodes:
     title: "Liquid-Fluorine Oxidiser"
     discipline: PropellantChemistry
     tier: 6
-    parents: [pc_hypergolics]
+    parents: [pc_ntoHypergolics]
     flavor: "Burn hydrazine in liquid fluorine, the most aggressive oxidiser there is — a specific impulse no storable can touch, bought with a propellant that corrodes its own plumbing and poisons everything it escapes into. A high-energy gamble the Soviets ran on the bench and few dared fly."
     parts: [ROE-G1]
   - id: pc_scoutSolids
@@ -996,7 +996,7 @@ nodes:
     title: "Tractor Escape Rocket"
     discipline: SystemsIntegration
     tier: 5
-    parents: [pc_scoutSolids]
+    parents: [pc_strapOnSolids]
     flavor: "A solid rocket on a lattice tower above the capsule that, at the first sign of a failing booster, fires to haul the crew up and clear faster than the fireball can climb — then throws itself away once the ascent is safe. The one system on a manned rocket that exists only to go unused."
     parts: [ROC-MercuryLESBDB, RO_mk1_LES]
   # ---- Vehicles (T6, parallel) ----

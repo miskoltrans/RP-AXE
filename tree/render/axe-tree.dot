@@ -241,7 +241,7 @@ digraph AXE {
   "pc_hypergolics" -> "pc_ntoHypergolics" [style=solid];
   "pc_stentor" -> "pc_htpSustainer" [style=solid];
   "pc_htpSustainer" -> "pc_larchPeroxide" [style=solid];
-  "pc_hypergolics" -> "pc_fluorine" [style=solid];
+  "pc_ntoHypergolics" -> "pc_fluorine" [style=solid];
   "pc_compositeSolid" -> "pc_scoutSolids" [style=solid];
   "pc_compositeSolid" -> "pc_strapOnSolids" [style=solid];
   "pc_compositeSolid" -> "pc_retroKick" [style=solid];
@@ -271,7 +271,7 @@ digraph AXE {
   "life_pilotedCockpits" -> "life_openLoopECLSS" [style=solid];
   "gnc_rcs" -> "gnc_spacecraftRCS" [style=solid];
   "life_pilotedCockpits" -> "life_pressurisedCabin" [style=solid];
-  "pc_scoutSolids" -> "int_launchEscape" [style=solid];
+  "pc_strapOnSolids" -> "int_launchEscape" [style=solid];
   "cmp_ablativeTPS" -> "int_mercuryCapsule" [style=solid];
   "life_openLoopECLSS" -> "int_mercuryCapsule" [style=solid];
   "cmp_ablativeTPS" -> "int_vostokCapsule" [style=solid];
