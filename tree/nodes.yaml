@@ -819,6 +819,6 @@ nodes:
     title: "High-Pressure Kerolox Combustion"
     discipline: FluidDynamics
     tier: 6
-    parents: [fd_largeChamber]
+    parents: [fd_largeChamber, fd_orbitalSoviet, fd_regenCooling]
     flavor: "Uprate the kerosene-oxygen booster and build it to be mass-produced — a rugged, high-thrust engine you cluster eight at a time under a heavy first stage. The H-1 that becomes the Saturn I's power, and the RD-111 pushing kerolox to its pre-staged-combustion ceiling: the last and largest of the simple gas-generator boosters."
     parts: [ROE-RS27, ROE-H1C, ROE-H1D, ROE-RD111]

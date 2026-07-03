@@ -223,6 +223,8 @@ digraph AXE {
   "fd_orbitalMultiChamber" -> "fd_sovietStorable" [style=solid];
   "pc_ntoHypergolics" -> "fd_sovietStorable" [style=solid];
   "fd_largeChamber" -> "fd_saturnKerolox" [style=solid];
+  "fd_orbitalSoviet" -> "fd_saturnKerolox" [style=solid];
+  "fd_regenCooling" -> "fd_saturnKerolox" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;
   label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";
 }
