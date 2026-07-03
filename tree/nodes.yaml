@@ -538,9 +538,9 @@ nodes:
     flavor: "Let the propellant tank be the spacecraft spine - its walls carry the flight loads and mount the engine, thrusters, power and radios behind the payload, so the service module needs no separate airframe. The integrated tankage a satellite or probe bus is built around."
     parts: [RO-RFTank-SM, ROT-LanderTank-SM, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-ServiceModule]
 
-  - id: aero_stiffenedFairings
+  - id: met_stiffenedFairings
     title: "Aluminium Stringer Fairings"
-    discipline: Aerodynamics
+    discipline: Metallurgy
     tier: 4
     parents: [aero_fairings]
     flavor: "Stiffen a spun-aluminium payload shroud with riveted stringers instead of casting it thick - the first step off dead-weight spun metal, shaving shroud mass on every launch. The opening rung of a fairing-materials ladder that runs on through magnesium and fibreglass to composite shells in the bands ahead."
