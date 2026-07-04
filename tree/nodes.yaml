@@ -1023,6 +1023,7 @@ nodes:
     parents: [th_hermeticBus]
     flavor: "Face the reentry fireball with a shield built to be destroyed: a resin-and-fibre composite that chars and boils away layer by layer, carrying the heat off with the vapour and holding the structure behind it cool. The one thing between a returning capsule and cremation."
     parts: [ROC-MercuryHS, ROH-AdjustableHS]
+    upgrades: [Heatsink]
   - id: life_openLoopECLSS
     title: "Open-Loop Life Support"
     discipline: LifeSupport
@@ -1082,6 +1083,7 @@ nodes:
     parents: [aero_recovery]
     flavor: "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point."
     parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, SXTAirbag, SXTAirbagSmall, landingLeg1]
+    upgrades: [MercuryHS]
 
   # ===================== BAND 2 * SCIENCE (SCANsat mapping seed) =====================
   # The satellite instruments (film/magnetometer/TV/geiger/micrometeorite) are ALL placed in band 1.

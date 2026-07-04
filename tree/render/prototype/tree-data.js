@@ -6392,7 +6392,9 @@ window.TREE = {
      "title": "Adjustable Heatshield"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "Heatsink"
+   ],
    "grants": [],
    "pos": [
     -668,
@@ -6682,7 +6684,9 @@ window.TREE = {
      "title": "LT-1 Landing Struts"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "MercuryHS"
+   ],
    "grants": [],
    "pos": [
     -288,
