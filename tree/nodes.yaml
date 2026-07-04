@@ -593,8 +593,15 @@ nodes:
     discipline: LifeSupport
     tier: 2
     parents: [met_weldedTank]
-    flavor: "A cockpit shaped around a pilot - canopy, seat, sticks and dials - with the tail surfaces that keep the aeroplane pointed where the pilot aims it. From an open fighter office to a bomber glazed nose: the crudest crew accommodation, and the first rung toward a pressurised cabin and, past it, a capsule."
-    parts: [RO-X1Cockpit, RO-FighterInlineCockpit, RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, SXTmk3Cockpit52, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow]
+    flavor: "A cockpit shaped around a pilot — canopy, seat, sticks and dials — and the tail surfaces that keep the aeroplane pointed where he aims it. The crew accommodation of the propeller age: everything a piston fighter, bomber or light aircraft needs, and nothing a spacecraft will. A dead-end for aeroplane builders."
+    parts: [RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow]
+  - id: life_highAltCompartment
+    title: "High-Altitude Crew Compartment"
+    discipline: LifeSupport
+    tier: 3
+    parents: [met_weldedTank]
+    flavor: "A cockpit sealed and fed with oxygen to keep a pilot alive where the air runs out — the jet trainer, the high-flying bomber, the rocket aeroplane at the edge of space. The crew compartment that must hold an environment, not just a windscreen: the first rung toward a sealed cabin and, past it, a capsule."
+    parts: [RO-X1Cockpit, RO-FighterInlineCockpit, SXTmk3Cockpit52]
 
   - id: str_radialDecouplers
     title: "Prefabricated Radial Decouplers"
@@ -1020,7 +1027,7 @@ nodes:
     title: "Open-Loop Life Support"
     discipline: LifeSupport
     tier: 5
-    parents: [life_pilotedCockpits]
+    parents: [life_highAltCompartment]
     flavor: "Keep a human alive in vacuum the simple way — bottled oxygen bled into a sealed cabin, carbon dioxide scrubbed from the air with lithium hydroxide, heat and moisture carried off — all of it vented or consumed, nothing recycled. Hours of life for a first flight, no more asked."
     parts: [RO-LifeSupport-DummyEngine]
     upgrades: [RFTech-AddLifeSupport]
@@ -1036,7 +1043,7 @@ nodes:
     title: "Sealed Cabin Pressurisation"
     discipline: LifeSupport
     tier: 5
-    parents: [life_pilotedCockpits]
+    parents: [life_highAltCompartment]
     flavor: "Seal a cabin tight enough to hold near sea-level pressure while the air outside thins to nothing, feeding it breathing gas and bleeding off the heat of hypersonic flight — the pilot rides to the edge of space in something close to shirtsleeves. The X-15's sealed cabin and the pressurised fuselage behind it."
     parts: [Mark1Cockpit, Mark2Cockpit, SXTSmallFuselage, MK1Cargobay]
   - id: int_launchEscape
