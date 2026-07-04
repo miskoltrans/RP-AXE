@@ -40,17 +40,39 @@ nodes:
     tier: 1
     cost: 300
     parents: []
-    hide_empty: true
-    flavor: "Stand up a jet-propulsion lab — the home of integrated US robotic spacecraft. (US-probe pack only.)"
-    parts: [vanguard-1, pioneer_0_1_2, pioneer_3_4, explorer_6, grab-1, pioneer_5, tiros-1, transit2a, vanguard-2, vanguard-3]
+    flavor: "Stand up a jet-propulsion lab — the home of integrated US robotic spacecraft. Charter the programme; the spacecraft arrive by era."
   - id: hire_OKB
     title: "Charter a Design Bureau (OKB)"
     discipline: SystemsIntegration
     tier: 1
     cost: 300
     parents: []
-    hide_empty: true
-    flavor: "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. (Soviet-probe pack only.)"
+    flavor: "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. Charter the programme; the spacecraft arrive by era."
+
+  # ===================== BAND 2 * CHARTER PACKS (era-tiered off the JPL/OKB entries) =====================
+  # Fixes the mission-feasibility leapfrog: integrated appsats no longer unlock at T1 before their instrument
+  # lanes. Entries (hire_JPL/OKB, T1) charter the programme; packs arrive by era — first sats when orbit is
+  # reachable (~T4), application sats (~T5) alongside opt_tvRecon/opt_remoteSensing.
+  - id: charter_usEarly
+    title: "First-Generation Satellites"
+    discipline: SystemsIntegration
+    tier: 4
+    parents: [hire_JPL]
+    flavor: "Vanguard, the early Pioneers and the Explorers — the first American satellites, flown to prove a nation could reach orbit and read back the space it found there."
+    parts: [vanguard-1, pioneer_0_1_2, pioneer_3_4, explorer_6, vanguard-2, vanguard-3]
+  - id: charter_usApp
+    title: "Application Satellites"
+    discipline: SystemsIntegration
+    tier: 5
+    parents: [charter_usEarly]
+    flavor: "Satellites that earn their launch: Tiros watching the weather, Transit fixing a ship's position, GRAB listening for enemy radar. The first American spacecraft flown for a service, not a first."
+    parts: [tiros-1, transit2a, grab-1, pioneer_5]
+  - id: charter_sovietEarly
+    title: "First Soviet Satellites"
+    discipline: SystemsIntegration
+    tier: 4
+    parents: [hire_OKB]
+    flavor: "Sputnik 2 and 3 — the heavy early Soviet satellites that carried first a dog and then a laboratory into orbit while the West was still counting its failures."
     parts: [sputnik2, sputnik3]
 
   # ===================== BAND 1 * KEROLOX BOOSTER SPINE (T1 -> T5) =====================

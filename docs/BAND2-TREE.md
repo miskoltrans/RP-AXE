@@ -25,8 +25,8 @@ do not re-litigate. New band-2 nodes are **PENDING** until the user signs them o
 - [ ] `opt_orbitalMapping` (SCANsat MapTraq seed)
 - [ ] `opt_irRadiometry` (IR02/03) · `opt_uvSpectrometry` (IS02) · `opt_refinedTV` (VI03) — numbered-family gates at T6
 
-**Pending review — charter (no new nodes — sorted into existing roots):**
-- [ ] US buses → `hire_JPL` (Vanguard 1, Pioneer 0-5, Explorer 6, Tiros-1, Transit-2A, GRAB) · Soviet → `hire_OKB` (Sputnik 2/3)
+**Pending review — charter (era-tiered, 3 pack nodes):**
+- [ ] `hire_JPL`/`hire_OKB` (T1 entries) → `charter_usEarly` (T4) → `charter_usApp` (T5) · `charter_sovietEarly` (T4)
 
 **Pending review — support (5 nodes):**
 - [ ] `elec_deployableArrays` (solar) · `gnc_basicAvionics` (grants Science-Core-basic) · `tel_dopplerRanging` (DSN L2) · `tel_pcmTelemetry` (DSN L3 + helical) · `str_equipmentBays` (service bays + US tank + Mk18)
@@ -103,14 +103,14 @@ continues each family (IR04, IS01/03/04, MS02–04, VI04/05, PH05, WS01–03, MG
 already folded into the sep/posigrade solids (`pc_retroKick`, band-1 sep motors), so it'd be a *capability gate*.
 Thin in band 2 (short coasts); becomes a real breakthrough in band 3 (lunar/planetary injection). Not yet placed.
 
-## Charter (DONE — no new nodes)
-The band-1 charter roots `hire_JPL` (US) and `hire_OKB` (Soviet) were left empty *specifically* to receive
-these probes — so the buses sort straight into them, no new charter node needed. US → `hire_JPL` (Vanguard 1,
-Pioneer 0-5, Explorer 6, Tiros-1, Transit-2A, GRAB); Soviet → `hire_OKB` (Sputnik 2/3). Avionics grants
-(Science-Core/HDD) belong to the avionics ladder in Support, not here.
-**Charter floor:** roots are now **T1 / cost 300** (was T0/free) — chartering a program shouldn't be free
-at game start. Full era-tiering of the packs is a temp-state deferral: by the tree's end the T0 pen empties
-and the probes distribute properly.
+## Charter (DONE — era-tiered, 3 pack nodes)
+`hire_JPL` (US) and `hire_OKB` (Soviet) are **T1 / cost 300** charter gates (no parts). Spacecraft arrive by
+ERA off them — this fixes the mission-feasibility leapfrog (integrated appsats were unlocking at T1, years
+before their own instrument lanes):
+- `hire_JPL` (T1) → `charter_usEarly` (**T4**: Vanguard 1, Pioneer 0-4, Explorer 6, Vanguard 2/3) →
+  `charter_usApp` (**T5**: Tiros-1, Transit-2A, GRAB, Pioneer 5 — now alongside `opt_tvRecon`/`opt_remoteSensing`).
+- `hire_OKB` (T1) → `charter_sovietEarly` (**T4**: Sputnik 2/3).
+Avionics grants (Science-Core/HDD) belong to the avionics ladder in Support, not here.
 
 ## Engine performance audit (role-aware) — PASSED
 Every engine hand-tagged by role (`manifest/engine-roles.tsv`, 441 engines, from a second agent). Re-ran the

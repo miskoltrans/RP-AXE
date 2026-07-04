@@ -250,58 +250,8 @@ window.TREE = {
    "tier": 1,
    "cost": 300,
    "anyToUnlock": false,
-   "flavor": "Stand up a jet-propulsion lab — the home of integrated US robotic spacecraft. (US-probe pack only.)",
+   "flavor": "Stand up a jet-propulsion lab — the home of integrated US robotic spacecraft. Charter the programme; the spacecraft arrive by era.",
    "parts": [
-    {
-     "name": "explorer_6",
-     "mod": "RN_US_Probes",
-     "title": "Explorer 6"
-    },
-    {
-     "name": "grab-1",
-     "mod": "RN_US_Probes",
-     "title": "GRAB 1"
-    },
-    {
-     "name": "pioneer_0_1_2",
-     "mod": "RN_US_Probes",
-     "title": "Pioneer 0/1/2"
-    },
-    {
-     "name": "pioneer_3_4",
-     "mod": "RN_US_Probes",
-     "title": "Pioneer 3/4"
-    },
-    {
-     "name": "pioneer_5",
-     "mod": "RN_US_Probes",
-     "title": "Pioneer 5"
-    },
-    {
-     "name": "tiros-1",
-     "mod": "RN_US_Probes",
-     "title": "Tiros-1 Satellite"
-    },
-    {
-     "name": "transit2a",
-     "mod": "RN_US_Probes",
-     "title": "Transit-2A Satellite"
-    },
-    {
-     "name": "vanguard-1",
-     "mod": "RN_US_Probes",
-     "title": "Vanguard 1"
-    },
-    {
-     "name": "vanguard-2",
-     "mod": "RN_US_Probes",
-     "title": "Vanguard 2"
-    },
-    {
-     "name": "vanguard-3",
-     "mod": "RN_US_Probes",
-     "title": "Vanguard 3"
-    },
     {
      "name": "eos_aqua",
      "mod": "RN_US_Probes",
@@ -667,7 +617,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    5357
+    5498
    ]
   },
   {
@@ -677,18 +627,8 @@ window.TREE = {
    "tier": 1,
    "cost": 300,
    "anyToUnlock": false,
-   "flavor": "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. (Soviet-probe pack only.)",
+   "flavor": "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. Charter the programme; the spacecraft arrive by era.",
    "parts": [
-    {
-     "name": "sputnik2",
-     "mod": "RN_Soviet_Probes",
-     "title": "Sputnik 2"
-    },
-    {
-     "name": "sputnik3",
-     "mod": "RN_Soviet_Probes",
-     "title": "Sputnik 3 \"Object D\""
-    },
     {
      "name": "l11_astro",
      "mod": "RN_Soviet_Probes",
@@ -809,7 +749,118 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2188,
-    5451
+    5592
+   ]
+  },
+  {
+   "id": "charter_usEarly",
+   "title": "First-Generation Satellites",
+   "discipline": "SystemsIntegration",
+   "tier": 4,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Vanguard, the early Pioneers and the Explorers — the first American satellites, flown to prove a nation could reach orbit and read back the space it found there.",
+   "parts": [
+    {
+     "name": "explorer_6",
+     "mod": "RN_US_Probes",
+     "title": "Explorer 6"
+    },
+    {
+     "name": "pioneer_0_1_2",
+     "mod": "RN_US_Probes",
+     "title": "Pioneer 0/1/2"
+    },
+    {
+     "name": "pioneer_3_4",
+     "mod": "RN_US_Probes",
+     "title": "Pioneer 3/4"
+    },
+    {
+     "name": "vanguard-1",
+     "mod": "RN_US_Probes",
+     "title": "Vanguard 1"
+    },
+    {
+     "name": "vanguard-2",
+     "mod": "RN_US_Probes",
+     "title": "Vanguard 2"
+    },
+    {
+     "name": "vanguard-3",
+     "mod": "RN_US_Probes",
+     "title": "Vanguard 3"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1048,
+    5498
+   ]
+  },
+  {
+   "id": "charter_usApp",
+   "title": "Application Satellites",
+   "discipline": "SystemsIntegration",
+   "tier": 5,
+   "cost": 1500,
+   "anyToUnlock": false,
+   "flavor": "Satellites that earn their launch: Tiros watching the weather, Transit fixing a ship's position, GRAB listening for enemy radar. The first American spacecraft flown for a service, not a first.",
+   "parts": [
+    {
+     "name": "grab-1",
+     "mod": "RN_US_Probes",
+     "title": "GRAB 1"
+    },
+    {
+     "name": "pioneer_5",
+     "mod": "RN_US_Probes",
+     "title": "Pioneer 5"
+    },
+    {
+     "name": "tiros-1",
+     "mod": "RN_US_Probes",
+     "title": "Tiros-1 Satellite"
+    },
+    {
+     "name": "transit2a",
+     "mod": "RN_US_Probes",
+     "title": "Transit-2A Satellite"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -668,
+    5498
+   ]
+  },
+  {
+   "id": "charter_sovietEarly",
+   "title": "First Soviet Satellites",
+   "discipline": "SystemsIntegration",
+   "tier": 4,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Sputnik 2 and 3 — the heavy early Soviet satellites that carried first a dog and then a laboratory into orbit while the West was still counting its failures.",
+   "parts": [
+    {
+     "name": "sputnik2",
+     "mod": "RN_Soviet_Probes",
+     "title": "Sputnik 2"
+    },
+    {
+     "name": "sputnik3",
+     "mod": "RN_Soviet_Probes",
+     "title": "Sputnik 3 \"Object D\""
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1048,
+    5592
    ]
   },
   {
@@ -6628,6 +6679,67 @@ window.TREE = {
   }
  ],
  "edges": [
+  {
+   "from": "hire_JPL",
+   "to": "charter_usEarly",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2188,
+     5498
+    ],
+    [
+     -1808,
+     5498
+    ],
+    [
+     -1428,
+     5498
+    ],
+    [
+     -1048,
+     5498
+    ]
+   ]
+  },
+  {
+   "from": "charter_usEarly",
+   "to": "charter_usApp",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1048,
+     5498
+    ],
+    [
+     -668,
+     5498
+    ]
+   ]
+  },
+  {
+   "from": "hire_OKB",
+   "to": "charter_sovietEarly",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2188,
+     5592
+    ],
+    [
+     -1808,
+     5592
+    ],
+    [
+     -1428,
+     5592
+    ],
+    [
+     -1048,
+     5592
+    ]
+   ]
+  },
   {
    "from": "start",
    "to": "pc_storables",
