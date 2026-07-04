@@ -93,7 +93,8 @@ digraph AXE {
   "opt_recon" [label="Film Reconnaissance\nOpticsPhotonics T3 · 400",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_tvRecon" [label="Television Reconnaissance\nOpticsPhotonics T5 · 1500",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_remoteSensing" [label="Infrared Remote Sensing\nOpticsPhotonics T5 · 1500",fillcolor="#7c8cff",fontcolor="#111111"];
-  "opt_irRadiometry" [label="Multi-Channel Radiometry\nOpticsPhotonics T6 · 2000",fillcolor="#7c8cff",fontcolor="#111111"];
+  "opt_irRadiometry" [label="High-Resolution Radiometry\nOpticsPhotonics T6 · 2000",fillcolor="#7c8cff",fontcolor="#111111"];
+  "opt_twoChannelIR" [label="Two-Channel Radiometry\nOpticsPhotonics T6 · 2000",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_uvSpectrometry" [label="Ultraviolet Spectrometry\nOpticsPhotonics T6 · 2000",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_refinedTV" [label="Refined Vidicon Imaging\nOpticsPhotonics T6 · 2000",fillcolor="#7c8cff",fontcolor="#111111"];
   "mic_boomMagnetometry" [label="Boom-Deployed Magnetometry\nMicroelectronics T5 · 1500",fillcolor="#c2a0e0",fontcolor="#111111"];
@@ -142,7 +143,7 @@ digraph AXE {
   { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "fd_throttleableRocketplane" "gnc_standardRCS" "aero_stampedWings" "str_prefabAdapters" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" "nuc_cosmicRay" "opt_recon" }
   { rank=same; "charter_usEarly" "charter_sovietEarly" "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "met_stiffenedFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" "pc_ntoHypergolics" "pc_htpSustainer" "pc_scoutSolids" "pc_strapOnSolids" "pc_retroKick" "fd_regenCooling" "fd_restartableUpper" "fd_storableSustainer" "met_cooledTurbine" "av_turboprop" "av_hydrogenJet" "aero_variableIntake" "str_heavyGear" }
   { rank=same; "charter_usApp" "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_tvRecon" "opt_remoteSensing" "mic_boomMagnetometry" "opt_precisionOptics" "elec_deployableArrays" "gnc_basicAvionics" "tel_dopplerRanging" "str_equipmentBays" "fd_spacecraftPropulsion" "fd_titanTandem" "fd_longMarchStorable" "fd_sovietStorable" "av_highTempTurbojet" "cmp_ablativeTPS" "life_openLoopECLSS" "gnc_spacecraftRCS" "life_pressurisedCabin" "int_launchEscape" }
-  { rank=same; "gs_saturnPad" "opt_irRadiometry" "opt_uvSpectrometry" "opt_refinedTV" "tel_pcmTelemetry" "pc_larchPeroxide" "pc_fluorine" "fd_vacuumExpansion" "fd_saturnKerolox" "av_ramjetAdvanced" "int_mercuryCapsule" "int_vostokCapsule" "int_zenitRecon" "edl_crewedRecovery" "opt_orbitalMapping" }
+  { rank=same; "gs_saturnPad" "opt_irRadiometry" "opt_twoChannelIR" "opt_uvSpectrometry" "opt_refinedTV" "tel_pcmTelemetry" "pc_larchPeroxide" "pc_fluorine" "fd_vacuumExpansion" "fd_saturnKerolox" "av_ramjetAdvanced" "int_mercuryCapsule" "int_vostokCapsule" "int_zenitRecon" "edl_crewedRecovery" "opt_orbitalMapping" }
   { rank=same; "gs_shuttlePad" }
   "hire_JPL" -> "charter_usEarly" [style=solid];
   "charter_usEarly" -> "charter_usApp" [style=solid];
@@ -239,6 +240,8 @@ digraph AXE {
   "opt_vidicon" -> "opt_tvRecon" [style=solid];
   "opt_vidicon" -> "opt_remoteSensing" [style=solid];
   "opt_remoteSensing" -> "opt_irRadiometry" [style=solid];
+  "opt_remoteSensing" -> "opt_twoChannelIR" [style=solid];
+  "th_hermeticBus" -> "opt_twoChannelIR" [style=solid];
   "opt_remoteSensing" -> "opt_uvSpectrometry" [style=solid];
   "opt_tvRecon" -> "opt_refinedTV" [style=solid];
   "mic_magnetometer" -> "mic_boomMagnetometry" [style=solid];

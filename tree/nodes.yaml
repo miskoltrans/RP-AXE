@@ -730,12 +730,19 @@ nodes:
   # Bulk stays T1-T4; these top-tier refinements use T6. Band 3 continues each family (IR04, IS01/03/04,
   # MS02-04, VI04/05, PH05, WS01-03, MG02/03) as further gates.
   - id: opt_irRadiometry
-    title: "Multi-Channel Radiometry"
+    title: "High-Resolution Radiometry"
     discipline: OpticsPhotonics
     tier: 6
     parents: [opt_remoteSensing]
-    flavor: "Split the infrared into a warm band and a window band, and the difference between them gives the temperature of what you are looking at, not just its brightness. The sharper, multi-channel radiometer that reads cloud-top and sea-surface temperature from orbit where the single-band instrument saw only a glow."
-    parts: [RO-HRIRRadiometer, RO-TwoChannelIR]
+    flavor: "A finer detector and a tighter scan resolve the infrared scene into detail the first radiometer blurred — the warm and cold of a coastline or a storm system mapped sharply, still in a single band but now worth the downlink."
+    parts: [RO-HRIRRadiometer]
+  - id: opt_twoChannelIR
+    title: "Two-Channel Radiometry"
+    discipline: OpticsPhotonics
+    tier: 6
+    parents: [opt_remoteSensing, th_hermeticBus]
+    flavor: "Read the infrared in two bands at once and difference them — a warm channel against an atmospheric window — and the ratio gives the true surface temperature, not merely its brightness. The harder instrument (IR03 above IR02): the two detectors must be held at a stable temperature, or the radiometer reads its own warmth instead of the world's."
+    parts: [RO-TwoChannelIR]
   - id: opt_uvSpectrometry
     title: "Ultraviolet Spectrometry"
     discipline: OpticsPhotonics

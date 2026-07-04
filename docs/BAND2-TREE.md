@@ -23,7 +23,7 @@ do not re-litigate. New band-2 nodes are **PENDING** until the user signs them o
 
 **Pending review — science (1 seed + 3 progression gates):**
 - [ ] `opt_orbitalMapping` (SCANsat MapTraq seed)
-- [ ] `opt_irRadiometry` (IR02/03) · `opt_uvSpectrometry` (IS02) · `opt_refinedTV` (VI03) — numbered-family gates at T6
+- [ ] `opt_irRadiometry` (IR02) · `opt_twoChannelIR` (IR03, heavier req: +thermal) · `opt_uvSpectrometry` (IS02) · `opt_refinedTV` (VI03) — numbered-family gates at T6
 
 **Pending review — charter (era-tiered, 3 pack nodes):**
 - [ ] `hire_JPL`/`hire_OKB` (T1 entries) → `charter_usEarly` (T4) → `charter_usApp` (T5) · `charter_sovietEarly` (T4)
@@ -95,9 +95,11 @@ The mapping-lane bulk is in the interplanetary partlist (band 3).
 
 **Numbered-instrument progression (design rule):** every family (PH/VI/IR/IS/MS/MG/CR/WS, `XX##` codes)
 is a *tiered gated progression* — `XX01` cheap/early, higher numbers gate above. Bulk in T1–T4; refinements
-at T5–T6. Split the bunched T5 node: IR01 stays `opt_remoteSensing` (T5) → IR02/03 → `opt_irRadiometry` (T6);
-IS02 → `opt_uvSpectrometry` (T6); VI02 stays `opt_tvRecon` (T5) → VI03 → `opt_refinedTV` (T6). Band 3
-continues each family (IR04, IS01/03/04, MS02–04, VI04/05, PH05, WS01–03, MG02/03).
+at T5–T6. IR01 `opt_remoteSensing` (T5) → IR02 `opt_irRadiometry` (T6) ‖ IR03 `opt_twoChannelIR` (T6,
+**heavier req** — also `th_hermeticBus` for a thermally-stable detector: the *same-tier-heavier-requirement*
+gate for a later instrument when the tier ceiling blocks a clean T7); IS02 → `opt_uvSpectrometry` (T6);
+VI02 `opt_tvRecon` (T5) → VI03 `opt_refinedTV` (T6). Band 3 continues each family (IR04, IS01/03/04,
+MS02–04, VI04/05, PH05, WS01–03, MG02/03).
 
 **Ullage — open opportunity:** companion to `fd_restartableUpper` (coast-then-relight needs settling). Hardware
 already folded into the sep/posigrade solids (`pc_retroKick`, band-1 sep motors), so it'd be a *capability gate*.
