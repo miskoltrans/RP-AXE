@@ -6,30 +6,20 @@ new nodes land T4–T6. Partlist = `manifest/human-orbital-partlist.tsv` (RP-1 b
 taxonomy re-derived from parts). Decisions: crewed lane = **parallel Mercury ‖ Vostok**; appsats/probes
 = **charter nodes** (empty start → first-sats T4 → rest in last node); crossovers **sparingly**.
 
-## Sign-off status
-Convention: everything in the tree **before commit `e912eeb`** (the 88 band-1 nodes) is **SIGNED OFF** —
-do not re-litigate. New band-2 nodes are **PENDING** until the user signs them off; tracked here.
+## Sign-off status — BAND 2 SIGNED OFF ✅
+**Signed off 2026-07-05, through commit `7026979`.** Everything in the tree — the 88 band-1 nodes **and** all
+band-2 work — is **SIGNED OFF; do not re-litigate.** Band 2 covers: engine spine (16), aviation tail (7),
+crewed spine (9), science (1 seed + 3 gates), era-tiered charter (3 packs), support (5), plus the
+post-review refinements — **IR03 gate** (`opt_twoChannelIR`), **cockpit split** (`life_highAltCompartment`
++ prop dead-end), **cross-lane science gates** (`mic_boomMagnetometry`←robotics, `opt_precisionOptics`←guidance),
+and the **TPS material ladder** (`Heatsink`/`MercuryHS`). Tree = **136 nodes / 19 disciplines**.
 
-**Pending review — engine spine (16 nodes, authored `e912eeb`, revised in the naming/upgrade pass):**
-- [ ] `pc_ntoHypergolics` `pc_htpSustainer` `pc_larchPeroxide` `pc_fluorine` `pc_scoutSolids` `pc_strapOnSolids` `pc_retroKick`
-- [ ] `fd_regenCooling` `fd_vacuumExpansion` `fd_restartableUpper` `fd_spacecraftPropulsion` `fd_storableSustainer` `fd_titanTandem` `fd_longMarchStorable` `fd_sovietStorable` `fd_saturnKerolox`
+Resolved at sign-off: the 3 crewed-vehicle names **keep "Capsule"** (`int_mercuryCapsule` etc.); the tier-fence
+and crossover-sparingly rules held throughout. The next **PENDING** boundary is **band 3**.
 
-**Pending review — aviation tail (7 nodes):**
-- [ ] `met_cooledTurbine` (enabler, 15 jet uprates) · `av_turboprop` · `av_hydrogenJet` (× `cryo_hydrogen`) · `av_highTempTurbojet` · `av_ramjetAdvanced` · `aero_variableIntake` · `str_heavyGear`
-
-**Pending review — crewed spine (9 nodes):**
-- [ ] T5 subsystems: `cmp_ablativeTPS` · `life_openLoopECLSS` · `gnc_spacecraftRCS` · `life_pressurisedCabin` · `int_launchEscape`
-- [ ] T6 vehicles: `int_mercuryCapsule` · `int_vostokCapsule` · `int_zenitRecon` · `edl_crewedRecovery` — OPEN: keep "Capsule" in the 3 vehicle names, or drop to pure "…Reentry"?
-
-**Pending review — science (1 seed + 3 progression gates):**
-- [ ] `opt_orbitalMapping` (SCANsat MapTraq seed)
-- [ ] `opt_irRadiometry` (IR02) · `opt_twoChannelIR` (IR03, heavier req: +thermal) · `opt_uvSpectrometry` (IS02) · `opt_refinedTV` (VI03) — numbered-family gates at T6
-
-**Pending review — charter (era-tiered, 3 pack nodes):**
-- [ ] `hire_JPL`/`hire_OKB` (T1 entries) → `charter_usEarly` (T4) → `charter_usApp` (T5) · `charter_sovietEarly` (T4)
-
-**Pending review — support (5 nodes):**
-- [ ] `elec_deployableArrays` (solar) · `gnc_basicAvionics` (grants Science-Core-basic) · `tel_dopplerRanging` (DSN L2) · `tel_pcmTelemetry` (DSN L3 + helical) · `str_equipmentBays` (service bays + US tank + Mk18)
+Deferred debt carried to band 3 (documented, not lost): cost pass · tech-level `TODO` tuning ·
+band-3 US2 wedge *placement* · band-3 TPS rungs (Gemini/Lunar/Inflatable) · ullage gate ·
+radiation-hardening gate (investigate mechanics first). See `rp-axe-gate-ideas` design bank.
 
 ## Engine spine (DONE — 16 nodes, T4→T6)
 
@@ -139,7 +129,9 @@ config straight from RP-1** — the rebuild pulls RP-1's `.cfg`; nothing to hand
   `dmUS2GoreSat` (IR Radiometer) · `dmUS2ImagingPlatform` (Multi-Spectral Imaging). Config pulls from RP-1;
   place when band-3 science nodes exist (marked in interplanetary + crewed-lunar-landing partlists).
 
-## BAND 2 COMPLETE — 41 new nodes, tree at 129 / 19 disciplines
-Engines 16 · aviation 7 · crewed 9 · science 4 · charter (into existing roots) · support 5. All PENDING
-sign-off (see checklist above). Deferred within band 2: US2 wedges (uncurated), IR03 finer gate (band 3),
-ullage capability gate (band 3), the tech-level `TODO` tuning pass, the cost pass.
+## BAND 2 COMPLETE & SIGNED OFF ✅ — tree at 136 / 19 disciplines
+Engines 16 · aviation 7 · crewed 9 · science (1 seed + 3 gates) · era-tiered charter (3 packs) · support 5,
+plus post-review refinements (IR03 gate, cockpit split, cross-lane science gates, TPS material ladder).
+**Signed off 2026-07-05 through `7026979`.** Triple-audited: story · role-tagged engine performance ·
+mission-feasibility. Deferred to band 3 (documented): US2 wedge *placement* + band-3 TPS rungs,
+ullage gate, radiation-hardening gate, tech-level `TODO` tuning, cost pass.
