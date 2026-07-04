@@ -176,7 +176,7 @@ prototypeNuclearPropulsion	Prototype Nuclear Propulsion	-2272	part	KIWIB48	yes	n
 prototypeNuclearPropulsion	Prototype Nuclear Propulsion	-2272	part	RO-A136	yes	no	A-136 Nuclear Turbo-Ramjet
 scienceLunar	Lunar Exploration Era Science	-2272	part	RO-PlasmaWave	yes	no	RPWS01 - Plasma Wave Detector
 scienceLunar	Lunar Exploration Era Science	-2272	part	RO-QuadropoleMassSpectrometer	yes	no	MS03 - Quadropole Mass Spectrometer
-scienceLunar	Lunar Exploration Era Science	-2272	part	dmUS2RPWS	no	no	Univ. Storage 2 - RPWS Antenna
+scienceLunar	Lunar Exploration Era Science	-2272	part	dmUS2RPWS	yes	no	Univ. Storage 2 - RPWS Antenna
 solids1967	1967-1968 Solid Rocket Engines	-2272	part	ROE-1206sepMotor	yes	no	UA1206 Nosecone & Separation Motor
 solids1967	1967-1968 Solid Rocket Engines	-2272	part	ROE-Star17	yes	no	STAR 17
 solids1967	1967-1968 Solid Rocket Engines	-2272	part	ROE-UA1206	yes	no	UA1206

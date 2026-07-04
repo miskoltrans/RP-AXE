@@ -19,7 +19,7 @@ scienceHuman	Early Human Spaceflight Era Science	-2952	part	RO-ImprovedFilmCamer
 scienceHuman	Early Human Spaceflight Era Science	-2952	part	RP0Cherenkov	yes	no	CD01 - Cherenkov Cosmic Ray Detector
 scienceHuman	Early Human Spaceflight Era Science	-2952	part	USAccelGravWedge	yes	no	Orbital Science Unit
 scienceHuman	Early Human Spaceflight Era Science	-2952	part	USMatBayWedge	yes	no	Crewed Experiment Bay
-scienceHuman	Early Human Spaceflight Era Science	-2952	part	dmUS2GoreSat	no	no	Univ. Storage 2 - Infrared Radiometer
+scienceHuman	Early Human Spaceflight Era Science	-2952	part	dmUS2GoreSat	yes	no	Univ. Storage 2 - Infrared Radiometer
 scienceHuman	Early Human Spaceflight Era Science	-2952	part	scansat-radar-poseidon-3b-1	yes	no	Early Radar Altimeter
 scienceHuman	Early Human Spaceflight Era Science	-2952	part	sensorGravimeter	yes	no	Orbital Perturbation Experiment
 interplanetaryProbes	Early Interplanetary Avionics and Probes	-2952	part	ca_argo-mk2	yes	no	Mariner Mars & Venus Spacecraft Bus
@@ -158,7 +158,7 @@ scienceAdvCapsules	Interplanetary Era Science	-2612	part	RO-IRIS	yes	no	IS01 - I
 scienceAdvCapsules	Interplanetary Era Science	-2612	part	RO-MIMS	yes	no	MS02 - Magnetic Ion-Mass Spectrometer (MIMS)
 scienceAdvCapsules	Interplanetary Era Science	-2612	part	RO-ScintillationCounter	yes	no	CR02 - Scintillation Counter Cosmic Ray Telescope
 scienceAdvCapsules	Interplanetary Era Science	-2612	part	RO-SurfaceSampleScoop	yes	no	Soil Mechanics Surface Sampler
-scienceAdvCapsules	Interplanetary Era Science	-2612	part	dmUS2ImagingPlatform	no	no	Univ. Storage 2 - Multi-Spectral Imaging Platform
+scienceAdvCapsules	Interplanetary Era Science	-2612	part	dmUS2ImagingPlatform	yes	no	Univ. Storage 2 - Multi-Spectral Imaging Platform
 matureAvionics	Mature Avionics and Probes	-2612	part	ca_landv_core	yes	no	Surveyor Lander Core
 matureAvionics	Mature Avionics and Probes	-2612	part	ca_landv_orbiter_core	yes	no	Surveyor Orbiter Core
 matureAvionics	Mature Avionics and Probes	-2612	part	ca_startrack	yes	no	CA-ACS 'StarTrack' Attitude Control System

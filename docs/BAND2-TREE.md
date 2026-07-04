@@ -135,8 +135,9 @@ config straight from RP-1** — the rebuild pulls RP-1's `.cfg`; nothing to hand
   `mic_magnetometer`); `dmUS2Scope` → new `opt_precisionOptics` (T5 off `opt_recon`). Resolved from RP-1's
   config (`RP-1/Parts/Science/US2.cfg` + `USScope.cfg`): the "Orbital Telescope" is a long-focal-length
   **surface** imager (scopeScan/KerbNet-Terrain, `hirise` tag), NOT astronomy → recon/optics lane.
-- **BAND 3 — still `curated=no`**: `dmUS2RPWS` (RPWS plasma-wave, WS03) · `dmUS2GoreSat` (IR Radiometer,
-  IR-family) · `dmUS2ImagingPlatform` (Multi-Spectral Imaging). Mark + place when band 3 is built.
+- **BAND 3 — `curated=yes`, placement deferred to band 3**: `dmUS2RPWS` (RPWS plasma-wave, WS03) ·
+  `dmUS2GoreSat` (IR Radiometer) · `dmUS2ImagingPlatform` (Multi-Spectral Imaging). Config pulls from RP-1;
+  place when band-3 science nodes exist (marked in interplanetary + crewed-lunar-landing partlists).
 
 ## BAND 2 COMPLETE — 41 new nodes, tree at 129 / 19 disciplines
 Engines 16 · aviation 7 · crewed 9 · science 4 · charter (into existing roots) · support 5. All PENDING
