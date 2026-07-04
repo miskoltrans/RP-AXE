@@ -247,8 +247,8 @@ window.TREE = {
    "id": "hire_JPL",
    "title": "Charter a Deep-Space Probe Lab (JPL)",
    "discipline": "SystemsIntegration",
-   "tier": 0,
-   "cost": 0,
+   "tier": 1,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Stand up a jet-propulsion lab — the home of integrated US robotic spacecraft. (US-probe pack only.)",
    "parts": [
@@ -666,16 +666,16 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2568,
-    2859
+    -2188,
+    5357
    ]
   },
   {
    "id": "hire_OKB",
    "title": "Charter a Design Bureau (OKB)",
    "discipline": "SystemsIntegration",
-   "tier": 0,
-   "cost": 0,
+   "tier": 1,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. (Soviet-probe pack only.)",
    "parts": [
@@ -808,8 +808,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2568,
-    2953
+    -2188,
+    5451
    ]
   },
   {

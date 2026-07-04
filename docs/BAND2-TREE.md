@@ -108,6 +108,17 @@ The band-1 charter roots `hire_JPL` (US) and `hire_OKB` (Soviet) were left empty
 these probes — so the buses sort straight into them, no new charter node needed. US → `hire_JPL` (Vanguard 1,
 Pioneer 0-5, Explorer 6, Tiros-1, Transit-2A, GRAB); Soviet → `hire_OKB` (Sputnik 2/3). Avionics grants
 (Science-Core/HDD) belong to the avionics ladder in Support, not here.
+**Charter floor:** roots are now **T1 / cost 300** (was T0/free) — chartering a program shouldn't be free
+at game start. Full era-tiering of the packs is a temp-state deferral: by the tree's end the T0 pen empties
+and the probes distribute properly.
+
+## Engine performance audit (role-aware) — PASSED
+Every engine hand-tagged by role (`manifest/engine-roles.tsv`, 441 engines, from a second agent). Re-ran the
+tier-inversion audit joined on roles: **zero broken inversions**. The one flagged booster-vs-booster case —
+US kerolox (H-1 T6, LR87 T5) dominated by the Soviet R-7 (RD-108 T4) — is **ACCEPTED as flavor** (the R-7
+genuinely out-performed; `fd_saturnKerolox` is carried by the non-dominated RD-111; H-1's real edge was
+cheap mass-production/clustering, which the tree doesn't model). All other hits were flavor (double-base
+solids < TinyTim) or non-comparable (kick motors ranked by Isp). `engine-roles.tsv` is a reusable audit input.
 
 ## Support (DONE — 5 nodes, T5–T6)
 `elec_deployableArrays` (ST1 panel, off `elec_arCoatings`) · `gnc_basicAvionics` (grants Science-Core-basic,

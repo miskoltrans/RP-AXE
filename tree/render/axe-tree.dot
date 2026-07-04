@@ -4,8 +4,8 @@ digraph AXE {
   edge[color="#888888",arrowsize=0.6];
   "start" [label="Start\nSystemsIntegration T0 · 0",fillcolor="#ededed",fontcolor="#111111"];
   "parking" [label="Unsorted Parts (Parking)\nSystemsIntegration T0 · 999",fillcolor="#ededed",fontcolor="#111111"];
-  "hire_JPL" [label="Charter a Deep-Space Probe Lab (JPL)\nSystemsIntegration T0 · 0",fillcolor="#ededed",fontcolor="#111111"];
-  "hire_OKB" [label="Charter a Design Bureau (OKB)\nSystemsIntegration T0 · 0",fillcolor="#ededed",fontcolor="#111111"];
+  "hire_JPL" [label="Charter a Deep-Space Probe Lab (JPL)\nSystemsIntegration T1 · 300",fillcolor="#ededed",fontcolor="#111111"];
+  "hire_OKB" [label="Charter a Design Bureau (OKB)\nSystemsIntegration T1 · 300",fillcolor="#ededed",fontcolor="#111111"];
   "pc_storables" [label="Nitric-Acid Storable Propellants\nPropellantChemistry T1 · 20",fillcolor="#e5533b",fontcolor="#111111"];
   "fd_turbopumpFeed" [label="Turbopump Feed\nFluidDynamics T2 · 90",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_singleChamber" [label="Single-Chamber Combustion\nFluidDynamics T3 · 400",fillcolor="#23b9a0",fontcolor="#111111"];
@@ -133,8 +133,8 @@ digraph AXE {
   "int_zenitRecon" [label="Film-Return Reconnaissance Capsule\nSystemsIntegration T6 · 2000",fillcolor="#ededed",fontcolor="#111111"];
   "edl_crewedRecovery" [label="Crewed Descent Recovery\nAerodynamics T6 · 2000",fillcolor="#5aa0e2",fontcolor="#111111"];
   "opt_orbitalMapping" [label="Synoptic Orbital Scanning\nOpticsPhotonics T6 · 2000",fillcolor="#7c8cff",fontcolor="#111111"];
-  { rank=same; "start" "parking" "hire_JPL" "hire_OKB" }
-  { rank=same; "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
+  { rank=same; "start" "parking" }
+  { rank=same; "hire_JPL" "hire_OKB" "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
   { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "fd_throttleableRocketplane" "gnc_standardRCS" "aero_stampedWings" "str_prefabAdapters" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" "nuc_cosmicRay" "opt_recon" }
   { rank=same; "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "met_stiffenedFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" "pc_ntoHypergolics" "pc_htpSustainer" "pc_scoutSolids" "pc_strapOnSolids" "pc_retroKick" "fd_regenCooling" "fd_restartableUpper" "fd_storableSustainer" "met_cooledTurbine" "av_turboprop" "av_hydrogenJet" "aero_variableIntake" "str_heavyGear" }
