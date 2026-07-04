@@ -247,7 +247,9 @@ digraph AXE {
   "opt_remoteSensing" -> "opt_uvSpectrometry" [style=solid];
   "opt_tvRecon" -> "opt_refinedTV" [style=solid];
   "mic_magnetometer" -> "mic_boomMagnetometry" [style=solid];
+  "rob_rotorActuation" -> "mic_boomMagnetometry" [style=solid];
   "opt_recon" -> "opt_precisionOptics" [style=solid];
+  "gnc_earlyAvionics" -> "opt_precisionOptics" [style=solid];
   "elec_arCoatings" -> "elec_deployableArrays" [style=solid];
   "gnc_earlyAvionics" -> "gnc_basicAvionics" [style=solid];
   "tel_telemetry" -> "tel_dopplerRanging" [style=solid];

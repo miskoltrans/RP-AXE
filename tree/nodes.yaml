@@ -770,15 +770,15 @@ nodes:
     title: "Boom-Deployed Magnetometry"
     discipline: Microelectronics
     tier: 5
-    parents: [mic_magnetometer]
-    flavor: "Swing the magnetometer out on a long boom, far from the spacecraft's own motors and wiring, so it reads the planet's field instead of the craft's. The measurement that only works once the sensor is metres from everything electric."
+    parents: [mic_magnetometer, rob_rotorActuation]
+    flavor: "Swing the magnetometer out on a long boom, far from the spacecraft's own motors and wiring, so it reads the planet's field instead of the craft's — a boom that has to unfold and lock rigid on command. The measurement that only works once the sensor is metres from everything electric, and something can put it there."
     parts: [dmUS2MagBoom]
   - id: opt_precisionOptics
     title: "Precision Orbital Optics"
     discipline: OpticsPhotonics
     tier: 5
-    parents: [opt_recon]
-    flavor: "A long-focal-length telescope trained on the surface from orbit, resolving detail a wide-angle camera smears into a blur — the optical reconnaissance that reads a runway, not just a coastline. Glass figured and held to the edge of what the aperture allows."
+    parents: [opt_recon, gnc_earlyAvionics]
+    flavor: "A long-focal-length telescope trained on the surface from orbit, resolving detail a wide-angle camera smears into a blur — the optical reconnaissance that reads a runway, not just a coastline. Glass figured to the edge of the aperture and held rock-steady on a stabilised platform, for at this focal length the smallest jitter is a smear."
     parts: [dmUS2Scope]
 
   # ===================== BAND 2 * SUPPORT (power / avionics / comms-DSN / structures) =====================
