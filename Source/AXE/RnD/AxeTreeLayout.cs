@@ -20,7 +20,7 @@ namespace RPAxe.RnD
     {
         internal class LNode { public string Id; public string Discipline; public int Tier; public int Cost; public float X, Y; }
         internal class LEdge { public string From, To; public List<Vector2> Waypoints; public float TF = 0.5f, TT = 0.5f; public float XF, XFo; public List<Vector2> Geom; }   // Geom = routed polyline; XF/XFo = Fan-X index among in-/out-edges
-        internal struct JunctionDot { public Vector2 Pos; public string From; }   // junction-bus branch dot (coloured by From's discipline in the render)
+        internal struct JunctionDot { public Vector2 Pos; public string From, To; }   // junction-bus branch dot (coloured by From's discipline; From/To = the owning edge, for lineage dimming)
 
         private const float HGAP = 6f, FAN_LO = 0.18f, FAN_HI = 0.82f, CORNER_R = 15f;   // lane pitch is now a param (config)
         private const int CORNER_SEGS = 3;
@@ -351,7 +351,7 @@ namespace RPAxe.RnD
                 Vector2 p = new Vector2(fn.X + nodeW, fn.Y + 0.5f * nodeH);   // node mid-right -> clean trunk
                 Vector2 c = new Vector2(tn.X, tn.Y + e.TT * nodeH);
                 if (Mathf.Abs(p.y - c.y) < 0.5f && c.x <= bx + 2f) { e.Geom = new List<Vector2> { p, c }; continue; }
-                dotsOut.Add(new JunctionDot { Pos = new Vector2(bx, c.y), From = e.From });
+                dotsOut.Add(new JunctionDot { Pos = new Vector2(bx, c.y), From = e.From, To = e.To });
                 e.Geom = RoundPolyline(new List<Vector2> { p, new Vector2(bx, p.y), new Vector2(bx, c.y), c }, CORNER_R, CORNER_SEGS);
             }
         }

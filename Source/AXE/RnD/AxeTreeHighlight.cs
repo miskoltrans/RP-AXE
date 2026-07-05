@@ -93,6 +93,11 @@ namespace RPAxe.RnD
                     }
                 }
             }
+            // Dim the junction-bus branch dots off the lineage too (they're separate Images the loop above
+            // doesn't touch) — otherwise they stay saturated over ghosted edges.
+            var lineageIds = new HashSet<string>();
+            foreach (RDNode ln in lineage) { string t = ln?.tech?.techID; if (!string.IsNullOrEmpty(t)) lineageIds.Add(t); }
+            AxeTreeRenderHost.HighlightDots(lineageIds);
             active = true;
         }
 
@@ -103,6 +108,7 @@ namespace RPAxe.RnD
             List<RDNode> nodes = ctrl.nodes;
             for (int i = 0; i < nodes.Count; i++)
                 if (nodes[i] != null) nodes[i].UpdateGraphics();   // recompute stock tile/edge + the state ring (via the postfix)
+            AxeTreeRenderHost.RestoreDots();   // dots aren't RDNodes -> UpdateGraphics won't restore them
         }
 
         // Selection + all ancestors (via parents) + all descendants (via children).

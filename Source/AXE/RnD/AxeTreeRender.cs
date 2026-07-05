@@ -241,6 +241,7 @@ namespace RPAxe.RnD
                 ready = true;
                 Debug.Log($"[AXE] render-port: {lnodes.Count} unique nodes ({(reposition ? placed + " placed" : "stock pos")}), {Routes.Count} edges routed " +
                           $"(layout={AxeTreeMeta.Render.Layout} routing={AxeTreeMeta.Render.Routing} fan={AxeTreeMeta.Render.Fan})");
+                StartCoroutine(FitContentToNodes());   // grow the scroll content to bound a tall/wide tree (else it clips)
                 if (DEBUG_DUMP) StartCoroutine(DebugDump());
             }
             catch (Exception e) { Debug.LogError("[AXE] render-port OnTreeSpawn failed: " + e); ready = false; }
@@ -251,6 +252,60 @@ namespace RPAxe.RnD
         {
             yield return new WaitForSecondsRealtime(1.5f);
             DumpNow();
+        }
+
+        // Grow the R&D scroll content to bound the whole tree. KSP ships a fixed-size content canvas
+        // (~4000x2300); the emitter's `stock` layout can place nodes far past it (dump: nodes reach y~6000
+        // but content is ~2300 tall -> the top clips with no way to scroll to it, and nodes right of x=0
+        // fall outside the pivot=(1,0) content). The reposition path grows content itself; the stock path
+        // never did. Read the ACTUAL post-Setup node localPositions (RDNodeRoot IS content, scale 1) and
+        // UNION the content rect to cover them + a margin, choosing the pivot so the rect brackets the node
+        // cloud while the tree stays visually put (preserve world position). Monotonic (grow-only), so a
+        // tree that already fits is left untouched. Re-run once after a beat to survive late stock re-sizes.
+        private System.Collections.IEnumerator FitContentToNodes()
+        {
+            yield return null; yield return null; yield return null;   // let the nodes' Setup apply localPositions
+            FitContentNow();
+            yield return new WaitForSecondsRealtime(1.25f);
+            FitContentNow();
+        }
+
+        private static void FitContentNow()
+        {
+            try
+            {
+                RDController ctrl = RDController.Instance;
+                if (ctrl == null || ctrl.nodes == null || ctrl.nodes.Count == 0) return;
+                RectTransform content = ctrl.gridArea != null && ctrl.gridArea.scrollRect != null ? ctrl.gridArea.scrollRect.content : null;
+                if (content == null) return;
+
+                float mnx = 1e9f, mxx = -1e9f, mny = 1e9f, mxy = -1e9f;
+                foreach (RDNode rd in ctrl.nodes)
+                {
+                    if (rd == null) continue;
+                    Vector3 p = rd.transform.localPosition;
+                    if (p.x < mnx) mnx = p.x; if (p.x + NODE_W > mxx) mxx = p.x + NODE_W;   // include the tile's right extent
+                    if (p.y < mny) mny = p.y; if (p.y > mxy) mxy = p.y;
+                }
+                if (mxx < mnx) return;
+
+                const float PAD = 160f;
+                Rect r = content.rect;
+                // Union the current rect with the padded node bbox -> never lose stock coverage, only grow.
+                // Keep the bottom at the content's y-origin (pivot.y stays ~0; the emitter keeps node y > 0).
+                float xMin = Mathf.Min(r.xMin, mnx - PAD), xMax = Mathf.Max(r.xMax, mxx + PAD);
+                float yMin = Mathf.Min(r.yMin, 0f),        yMax = Mathf.Max(r.yMax, mxy + PAD);
+                float newW = xMax - xMin, newH = yMax - yMin;
+                if (newW <= r.width + 1f && newH <= r.height + 1f) return;   // already contains everything
+
+                Vector3 worldBefore = content.position;                      // pivot is the transform origin; children
+                content.pivot = new Vector2(-xMin / newW, -yMin / newH);     //   move with it -> restore position so the
+                content.sizeDelta = new Vector2(newW, newH);                 //   tree stays put while the rect re-brackets it
+                content.position = worldBefore;
+
+                Debug.Log($"[AXE] content-fit: nodes x[{mnx:F0}..{mxx:F0}] y[{mny:F0}..{mxy:F0}] -> rect x[{xMin:F0}..{xMax:F0}] y[{yMin:F0}..{yMax:F0}] size=({newW:F0},{newH:F0}) pivot={content.pivot}");
+            }
+            catch (Exception e) { Debug.LogError("[AXE] content-fit failed: " + e); }
         }
 
         private static void DumpNow()
@@ -271,7 +326,7 @@ namespace RPAxe.RnD
                 if (ga != null && ga.scrollRect != null)
                 {
                     var sr = ga.scrollRect;
-                    if (sr.content != null) Debug.Log($"[AXE] DUMP content rect={sr.content.rect} sizeDelta={sr.content.sizeDelta} anchoredPos={sr.content.anchoredPosition}");
+                    if (sr.content != null) Debug.Log($"[AXE] DUMP content rect={sr.content.rect} sizeDelta={sr.content.sizeDelta} anchoredPos={sr.content.anchoredPosition} pivot={sr.content.pivot} anchorMin={sr.content.anchorMin} anchorMax={sr.content.anchorMax}");
                     if (sr.viewport != null) Debug.Log($"[AXE] DUMP viewport rect={sr.viewport.rect}");
                 }
                 RDNode s = ctrl.nodes[0];
@@ -348,11 +403,45 @@ namespace RPAxe.RnD
                 rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
                 rt.sizeDelta = new Vector2(9f, 9f);
                 rt.localPosition = new Vector3(Dots[i].Pos.x, Dots[i].Pos.y, 0f);   // same space as the routed points
-                Color col = new Color(0.54f, 0.56f, 0.59f, 1f);
-                if (AxeTreeMeta.Nodes.TryGetValue(Dots[i].From, out AxeTreeMeta.NodeMeta m)
-                    && AxeTreeMeta.Disciplines.TryGetValue(m.Discipline, out AxeTreeMeta.DiscMeta d)) col = d.Color;
-                go.GetComponent<Image>().color = col;
+                go.GetComponent<Image>().color = DotBaseColor(i);
                 go.SetActive(true);
+            }
+        }
+
+        // A junction dot's resting colour = its bus source's discipline colour (neutral grey fallback).
+        private static Color DotBaseColor(int i)
+        {
+            if (i >= 0 && i < Dots.Count
+                && AxeTreeMeta.Nodes.TryGetValue(Dots[i].From, out AxeTreeMeta.NodeMeta m)
+                && AxeTreeMeta.Disciplines.TryGetValue(m.Discipline, out AxeTreeMeta.DiscMeta d)) return d.Color;
+            return new Color(0.54f, 0.56f, 0.59f, 1f);
+        }
+
+        // Lineage-dim the junction-bus dots the same way the prototype does: a dot's edge is "lit" only if
+        // BOTH its ends are on the highlighted lineage; off-lineage dots ghost to a low alpha. Restore =
+        // resting discipline colour. Called by AxeHighlighter (Apply/Clear) so dots track hover + selection.
+        internal static void HighlightDots(HashSet<string> lineageIds)
+        {
+            for (int i = 0; i < Dots.Count && i < DotPool.Count; i++)
+            {
+                GameObject g = DotPool[i];
+                if (g == null || !g.activeSelf) continue;
+                Image im = g.GetComponent<Image>();
+                if (im == null) continue;
+                bool lit = lineageIds != null && lineageIds.Contains(Dots[i].From) && lineageIds.Contains(Dots[i].To);
+                Color b = DotBaseColor(i);
+                im.color = lit ? b : new Color(b.r, b.g, b.b, 0.10f);   // off-lineage -> ghost (prototype DIM_EDGE)
+            }
+        }
+
+        internal static void RestoreDots()
+        {
+            for (int i = 0; i < Dots.Count && i < DotPool.Count; i++)
+            {
+                GameObject g = DotPool[i];
+                if (g == null || !g.activeSelf) continue;
+                Image im = g.GetComponent<Image>();
+                if (im != null) im.color = DotBaseColor(i);
             }
         }
 
@@ -422,9 +511,11 @@ namespace RPAxe.RnD
             if (rd == null || rd.graphics == null) return;
             UIStateButton btn = rd.graphics.button;
             if (btn != null && btn.Image != null) btn.Image.color = tile;
-            float lum = 0.30f * tile.r + 0.59f * tile.g + 0.11f * tile.b;   // dark ink on light tiles, light on dark
-            Color ink = lum > 0.52f ? new Color(0.07f, 0.09f, 0.12f, tile.a) : new Color(0.94f, 0.95f, 0.97f, tile.a);
-            rd.graphics.SetIconColor(ink);
+            // Draw the discipline glyph in its NATIVE colours — the prototype draws the icon untinted, and
+            // the shipped RDicon_* PNGs (GameData/RP-AXE/design/Tree/icons, wired via each node's cfg `icon`)
+            // are dark line-art that reads on every (bright) discipline tile. White = no multiply; carry the
+            // tile's alpha so faded / ghosted nodes dim the icon in step with the tile.
+            rd.graphics.SetIconColor(new Color(1f, 1f, 1f, tile.a));
         }
 
         private static readonly Color RingAvailable = new Color(0.32f, 0.78f, 0.97f, 1f);   // researchable = cyan frontier
