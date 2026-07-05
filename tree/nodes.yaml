@@ -184,7 +184,10 @@ nodes:
     tier: 2
     parents: [pc_doubleBaseSolid]
     flavor: "Cast a double-base grain large enough to boost a stack off the pad — case-bonded to the motor wall so it burns from the core out without cracking. The Nike booster and the heavy JATO units, where double-base is pushed to its size limit before composite takes over."
-    parts: [ROE-NikeM5E1, ROE-25KS18000]
+    parts: [ROE-NikeM5E1, ROE-25KS18000, ROE-Alcyone1]
+    # ROE-Alcyone1 researched (2026-07): propellant code NGNC = nitroglycerin/nitrocellulose, i.e. classic
+    # double-base chemistry, NOT the composite PBAA/PBAN family the Mark II solids batch uses. Direct-add
+    # here (no doctrine-4 conflict) rather than force it into pc_scoutMarkII where it doesn't belong.
   - id: pc_compositeSolid
     title: "Ammonium-Perchlorate Composite Grains"
     discipline: PropellantChemistry
@@ -272,7 +275,10 @@ nodes:
     tier: 2
     parents: [str_structuralHardware]
     flavor: "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one burn."
-    parts: [proceduralStackDecoupler, radialDecoupler, ROT-RingDecoupler]
+    parts: [proceduralStackDecoupler, radialDecoupler, ROT-RingDecoupler, ROE-120XDecoupler]
+    # ROE-120XDecoupler added (2026-07): pure structure (disc=structure, no engine module), pairs with
+    # pc_segmentedCasting's UA120X booster family by NAME but belongs in the structural decoupler catalog,
+    # not the propellant-chemistry node — same lesson as the parachute/landing-leg mistakes this session.
   - id: aero_fairings
     title: "Jettisonable Payload Fairings"
     discipline: Aerodynamics
@@ -298,6 +304,10 @@ nodes:
     parents: [met_isogrid]
     flavor: "Seal the electronics in a pressurised sphere with a circulating gas and a polished radiating skin, holding them at room temperature through the swing from sunlight to shadow. Sputnik was mostly this: a bus that keeps its instruments alive."
     parts: [SXTSputnik, probeCoreSphere_v2, sputnik1, ROT-ProbeCore]
+    upgrades: [MLI.Upgrade1]
+    # MLI.Upgrade1 added (2026-07): multi-layer-insulation wrapping-density tier, confirmed KEEP-capability
+    # — a passive thermal-blanketing improvement, fits this node's own passive hermetic-sealing mechanism
+    # (as opposed to th_activeLouvers' active heat rejection).
   - id: elec_semiconductorDiode
     title: "Semiconductor Diodes"
     discipline: ElectricalPower
@@ -331,7 +341,10 @@ nodes:
     tier: 2
     parents: [gnc_postWarAvionics]
     flavor: "Bleed compressed nitrogen through opposed nozzles to nudge a craft's attitude — no combustion, nothing to go wrong, just enough impulse to point. The simplest way to hold an orientation in vacuum."
-    parts: [ROE-ModularRCS]
+    parts: [ROE-ModularRCS, RO-2kN-Thruster]
+    # RO-2kN-Thruster added (2026-07): Nitrogen cold-gas thruster, exact same mechanism as this node's own
+    # part. RP-1 itself gates it at "Starting Parts" (even earlier than this node's own T2) — close enough
+    # and the mechanism match is what matters; not worth re-opening the T0/T1 band-1 fence for one thruster.
   - id: aero_recovery
     title: "Drogue-Stabilized Deceleration"
     discipline: Aerodynamics
@@ -408,6 +421,18 @@ nodes:
     parents: [str_structuralHardware]
     flavor: "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, from a fixed skid on a light trainer up to a steerable retractable leg."
     parts: [GearFixed, SmallGearBay, GearSmall, GearFree]
+  - id: str_fixedLanderLegs
+    title: "Fixed Landing Struts"
+    discipline: StructuresMechanisms
+    tier: 7
+    parents: [str_landingGear]
+    flavor: "No wheels, no retraction — just a shock-absorbing strut that swings out once and takes the full load of touching down somewhere with no runway at all."
+    parts: [landingLeg1]
+    # NEW (2026-07 fix, user call — "make them a simple one off node"): split out of
+    # fd_continuousThrottleDescent, where it had been bundled with a throttleable engine just because
+    # Surveyor happened to use both — a structural touchdown strut isn't a propellant/combustion
+    # breakthrough. Parented off the existing wheeled/retractable strut lineage (same shock-absorbing-leg
+    # family, fixed instead of retractable) rather than off anything propulsion-related.
   - id: str_adjustableGear
     title: "Adjustable Heavy Undercarriage"
     discipline: StructuresMechanisms
@@ -463,7 +488,8 @@ nodes:
     tier: 5
     parents: [av_variableStator]
     flavor: "Above Mach 2 the forward speed alone rams and compresses the air — no compressor, no turbine, just an inlet, a flame and a nozzle. Useless from a standstill, unbeatable once you are already fast. Missiles and interceptors."
-    parts: [RO-RJ43, RO-RJ47, RO-RJ55, RO-RJ59, RO-Nord1500]
+    parts: [RO-RJ43, RO-RJ47, RO-RJ55, RO-RJ59, RO-Nord1500, aje_ramjet]
+    # aje_ramjet (CR2) added 2026-07 (band-3 lunar batch): generic ramjet, same ram-compression mechanism.
   - id: fd_throttleableRocketplane
     title: "Throttle-Valve Aircraft Rocket"
     discipline: FluidDynamics
@@ -742,7 +768,9 @@ nodes:
     tier: 6
     parents: [opt_remoteSensing]
     flavor: "A finer detector and a tighter scan resolve the infrared scene into detail the first radiometer blurred — the warm and cold of a coastline or a storm system mapped sharply, still in a single band but now worth the downlink."
-    parts: [RO-HRIRRadiometer]
+    parts: [RO-HRIRRadiometer, dmUS2GoreSat]
+    # dmUS2GoreSat added (2026-07): the US2 wedge IR radiometer, same mechanism as this node's own
+    # instrument — direct-add, no doctrine-4 conflict. Config pulled from RP-1 per band-2's own note.
   - id: opt_twoChannelIR
     title: "Two-Channel Radiometry"
     discipline: OpticsPhotonics
@@ -800,7 +828,10 @@ nodes:
     parents: [gnc_earlyAvionics]
     flavor: "Shrink the whole gyro-and-accelerometer platform onto transistorised boards light enough that a probe, not just a launcher, can carry its own guidance — and keep pointing through a mission measured in weeks. Inertial reference, miniaturised."
     grants: [Science-Core-basicAvionics]
-    upgrades: [HDD-Upgrade-Basic]
+    upgrades: [HDD-Upgrade-Basic, HDD-Upgrade-1961, HDD-Upgrade-1964, RFTech-ComSat-II, RFTech-NavSat-II, RP-1-PayloadTech-Axial]
+    # +5 upgrades (2026-07): confirmed KEEP-capability, not REFERENCE — same avionics-capability ladder
+    # this node already carries (HDD-Upgrade-Basic), just the next rungs. Were wrongly bucketed with the
+    # genuinely-blocked REFERENCE-avionics items just because they share the same RP-1 techRequired bucket.
   - id: tel_dopplerRanging
     title: "Coherent Doppler Ranging"
     discipline: Telecommunications
@@ -840,7 +871,7 @@ nodes:
     tier: 4
     parents: [pc_hypergolics]
     flavor: "Swap the fuming-nitric oxidiser for dinitrogen tetroxide — denser, hotter-burning, storable in the same tank — paired with unsymmetrical dimethylhydrazine that ignites the instant the two meet. The combination that scales the storable rocket from a spacecraft thruster up to a full orbital booster; every hypergolic launcher for decades runs on it."
-    upgrades: [RFUpgrade_YF-1A, RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_RD-217-8D515, RFUpgrade_S5.2, RFUpgrade_XLR81-BA-5, RFUpgrade_XLR81-BA-7]
+    upgrades: [RFUpgrade_YF-1A, RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_RD-217-8D515, RFUpgrade_S5.2, RFUpgrade_XLR81-BA-5, RFUpgrade_XLR81-BA-7, RFUpgrade_RD-250-8D518, RFUpgrade_RD-252-8D724, RFUpgrade_RD-855, RFUpgrade_RD-856]
   - id: pc_htpSustainer
     title: "Multi-Chamber Peroxide Combustion"
     discipline: PropellantChemistry
@@ -862,6 +893,9 @@ nodes:
     parents: [pc_ntoHypergolics]
     flavor: "Burn hydrazine in liquid fluorine, the most aggressive oxidiser there is — a specific impulse no storable can touch, bought with a propellant that corrodes its own plumbing and poisons everything it escapes into. A high-energy gamble the Soviets ran on the bench and few dared fly."
     parts: [ROE-G1]
+    upgrades: [RFUpgrade_XLR81-LF2-SPS]
+    # XLR81-LF2-SPS (2026-07, band-3 lunar batch): a liquid-fluorine Agena variant - the exotic-oxidiser
+    # gamble gains another member. Base ROE-Agena lives in fd_restartableUpper, so no doctrine-4 conflict.
   - id: pc_scoutSolids
     title: "Staged Solid Boost"
     discipline: PropellantChemistry
@@ -883,7 +917,12 @@ nodes:
     tier: 4
     parents: [pc_compositeSolid]
     flavor: "A small solid motor precise and reliable enough to fire once in vacuum after a long cold coast: the retro burn that drops a capsule out of orbit exactly where it must come down, the posigrade that shoves it clear of the spent stage, the spin-up that steadies it. Nothing comes home from orbit — film, sample or pilot — without a retrofire that does not fail."
-    parts: [ROC-MercuryRetroBDB, ROC-MercuryPosigradeBDB, ROE-Agena_Retro_TypeIII, ROE-Agena_Spinrocket]
+    parts: [ROC-MercuryRetroBDB, ROC-MercuryPosigradeBDB, ROE-Agena_Retro_TypeIII, ROE-Agena_Spinrocket, ROC-GeminiRetroMECBDB, ROC-VoskhodRetroBooster]
+    # ROE-TX280 moved OUT to the new fd_propellantUllage (2026-07 fix) — it's a genuinely distinct purpose
+    # (settling propellant before ignition) from retro/posigrade/spin, which this node already covers, and
+    # the user wants ullage represented as its own mechanism, not folded into this grab-bag.
+    # ROC-VoskhodRetroBooster moved IN from edl_crewedRecovery — a real engine mis-filed in the parachute
+    # node; belongs here with the other actual retro-rocket motors.
   # ---- FluidDynamics: physics enablers ----
   - id: fd_regenCooling
     title: "Regenerative Chamber Cooling"
@@ -898,15 +937,28 @@ nodes:
     tier: 6
     parents: [fd_matureOrbital]
     flavor: "Extend the nozzle bell far past what any sea-level engine could survive, tuned so the exhaust expands to near-vacuum pressure and wrings out the last dozen seconds of specific impulse. The refinement that lets an upper stage do more on the same propellant — the RD-119 alone gains nearly thirty seconds over its predecessor."
-    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2]
+    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_X-405H-3, RFUpgrade_RD-0108, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_LR89-NA-6, RFUpgrade_S-3FH, RFUpgrade_LR79-NA-13, RFUpgrade_XLR11-RM-13-10K]
+    parts: [ROE-LR87_LH2]
+    # Part-count-pass finds (2026-07): 6 more upgrades in this same "combustion/injector refinement, no
+    # chemistry change" character (Atlas vernier/sustainer, Thor sustainer, Thor's fuel-swap experiment,
+    # X-1's rocket-plane refinement) that were in the original census but dropped during the doctrine-4
+    # restructuring — never actually authored anywhere. Same fix for ROE-LR87_LH2 (AJ23-65): a large
+    # (667 kN) new hydrolox engine that never got a base-part home; same vacuum-optimized mechanism as
+    # RL10A-3-1, just bigger.
   - id: fd_restartableUpper
     title: "Restartable Vacuum Ignition"
     discipline: FluidDynamics
     tier: 4
     parents: [pc_hypergolics]
     flavor: "A storable-hypergolic upper that coasts dark through a long parking orbit and relights on command — the engine that stops being a single burn and becomes a manoeuvring stage. Agena's XLR81 shuts down and restarts in space: the key to circularising, changing plane, and the rendezvous still to come."
-    parts: [ROE-Agena, ROE-AJ10Mid, ROE-Juno45K, ROE-Juno6K]
-    upgrades: [RFUpgrade_AJ10-42, RFUpgrade_AJ10-101A, RFUpgrade_AJ10-142]
+    parts: [ROE-Agena, ROE-AJ10Mid, ROE-Juno45K, ROE-Juno6K, ROE-AJ10Adv, RO-KTDU5A, ROE-KTDU35, ROE-S523]
+    upgrades: [RFUpgrade_AJ10-42, RFUpgrade_AJ10-101A, RFUpgrade_AJ10-142, RFUpgrade_AJ10-118, RFUpgrade_AJ10-118D]
+    # 4 more base parts added (2026-07, part-count-pass find), all the same restartable-storable-vernier
+    # mechanism this node already covers: ROE-AJ10Adv (another AJ10-family vernier), RO-KTDU5A/ROE-KTDU35
+    # (the Soviet KTDU family — "correction-braking propulsion," the direct Eastern-bloc counterpart to
+    # Agena's restart capability; added here rather than a separate "Soviet" node per the standing
+    # ahistorical rule — mechanism, not nation, decides placement), ROE-S523 (similar small storable
+    # engine, lower confidence on exact identity but same class).
   - id: fd_spacecraftPropulsion
     title: "Restartable Deep-Throttling"
     discipline: FluidDynamics
@@ -950,7 +1002,10 @@ nodes:
     tier: 6
     parents: [fd_largeChamber, fd_orbitalSoviet, fd_regenCooling]
     flavor: "Uprate the kerosene-oxygen booster and build it to be mass-produced — a rugged, high-thrust engine you cluster eight at a time under a heavy first stage. The H-1 that becomes the Saturn I's power, and the RD-111 pushing kerolox to its pre-staged-combustion ceiling: the last and largest of the simple gas-generator boosters."
-    parts: [ROE-RS27, ROE-H1C, ROE-H1D, ROE-RD111]
+    parts: [ROE-RS27, ROE-H1C, ROE-H1D, ROE-RD111, ROE-E1]
+    # ROE-E1 added (2026-07, part-count-pass find): a large gas-generator kerolox test engine, same
+    # generation/class as H-1/RD-111. Its own upgrade (RFUpgrade_E-1-468k) was already placed in
+    # fd_gasGeneratorCeiling — the base part itself was never homed. Must go HERE, not there (doctrine #4).
 
   # ================================================================================================
   # ===================== BAND 2 * AVIATION TAIL (T4 -> T6) ========================================
@@ -964,7 +1019,9 @@ nodes:
     tier: 4
     parents: [met_nimonic]
     flavor: "Drill fine passages through each turbine blade and bleed compressor air through them, filming the metal in cool gas so the turbine can face a far hotter gas stream than it could survive bare. The step past a better alloy — run the fire hotter and every jet behind it gains thrust."
-    upgrades: [RFUpgrade_AL-7F-1, RFUpgrade_AL-7F-2, RFUpgrade_Atar101E-3, RFUpgrade_Avon200R, RFUpgrade_CJ805-3B, RFUpgrade_J57-P-20A, RFUpgrade_J75-P-19, RFUpgrade_J75-P-5A, RFUpgrade_J79-GE-2A, RFUpgrade_J79-GE-5C, RFUpgrade_J79-GE-8, RFUpgrade_J85-GE-5, RFUpgrade_R-11F2-300, RFUpgrade_RD-9AF2-300, RFUpgrade_WP-6]
+    upgrades: [RFUpgrade_AL-7F-1, RFUpgrade_AL-7F-2, RFUpgrade_Atar101E-3, RFUpgrade_Avon200R, RFUpgrade_CJ805-3B, RFUpgrade_J57-P-20A, RFUpgrade_J75-P-19, RFUpgrade_J75-P-5A, RFUpgrade_J79-GE-2A, RFUpgrade_J79-GE-5C, RFUpgrade_J79-GE-8, RFUpgrade_J85-GE-5, RFUpgrade_R-11F2-300, RFUpgrade_RD-9AF2-300, RFUpgrade_WP-6, RFUpgrade_Avon302, RFUpgrade_J79-GE-10, RFUpgrade_J79-GE-11, RFUpgrade_J79-GE-17, RFUpgrade_R-11F2S-300, RFUpgrade_WP-7, RFUpgrade_WP-7A, RFUpgrade_WP-6A, RFUpgrade_PT6A-27, RFUpgrade_PT6A-28, RFUpgrade_R-15BD-300, RFUpgrade_Atar09K-50, RFUpgrade_J57-P-420, RFUpgrade_RB162-4D]
+    # 3 more upgrades added (2026-07, part-count-pass find): in the original engine census, dropped
+    # somewhere between that census and the summary table used to author this node — never actually placed.
   - id: av_turboprop
     title: "Geared Turboprop"
     discipline: AirBreathing
@@ -993,7 +1050,7 @@ nodes:
     parents: [av_ramjet]
     flavor: "Tune the inlet and flame-holders for sustained cruise at the top of the supersonic range — the long-burning ramjet of a missile that flies for minutes, not seconds. Where the ramjet stops being a boost phase and becomes the whole propulsion."
     parts: [RO-RD012]
-    upgrades: [RFUpgrade_RJ43-MA-11, RFUpgrade_RJ43-MA-5]
+    upgrades: [RFUpgrade_RJ43-MA-11, RFUpgrade_RJ43-MA-5, RFUpgrade_MA20S-4]
   - id: aero_variableIntake
     title: "Variable-Geometry Intake"
     discipline: Aerodynamics
@@ -1024,13 +1081,29 @@ nodes:
     flavor: "Face the reentry fireball with a shield built to be destroyed: a resin-and-fibre composite that chars and boils away layer by layer, carrying the heat off with the vapour and holding the structure behind it cool. The one thing between a returning capsule and cremation."
     parts: [ROC-MercuryHS, ROH-AdjustableHS]
     upgrades: [Heatsink]
+  - id: cmp_ablativeRefinement
+    title: "Advanced Ablator Formulation"
+    discipline: CompositeMaterials
+    tier: 6
+    parents: [cmp_ablativeTPS]
+    flavor: "A denser char layer and a slower burn-through rate let the same shield shrug off a hotter, faster reentry — the material getting better, not the shape changing. Mercury's ablator becomes Gemini's."
+    parts: [ROC-GeminiHSBDB]
+    upgrades: [MercuryHS, GeminiHS]
+    # NEW (2026-07 fix, user call): MercuryHS/GeminiHS + ROC-GeminiHSBDB pulled out of edl_crewedRecovery.
+    # cmp_ablativeTPS already IS the TPS material ladder's real home (holds the Heatsink rung); band 2 broke
+    # the ladder by continuing it inside the parachute/recovery node instead of here. Kept at T6 (MercuryHS's
+    # original tier via edl_crewedRecovery) rather than bumping to 7 — this is a structural fix (right node),
+    # not a balance change (right tier); GeminiHS riding along in a T6 node matches the same pattern already
+    # used for edl_crewedRecovery's own Gemini/Voskhod additions.
   - id: life_openLoopECLSS
     title: "Open-Loop Life Support"
     discipline: LifeSupport
     tier: 5
     parents: [life_highAltCompartment]
     flavor: "Keep a human alive in vacuum the simple way — bottled oxygen bled into a sealed cabin, carbon dioxide scrubbed from the air with lithium hydroxide, heat and moisture carried off — all of it vented or consumed, nothing recycled. Hours of life for a first flight, no more asked."
-    parts: [RO-LifeSupport-DummyEngine]
+    parts: [RO-LifeSupport-DummyEngine, kerbalism-lifesupportmodule]
+    # kerbalism-lifesupportmodule added (2026-07): "External ECLSS Module" — same open-loop mechanism,
+    # packaged as an external add-on unit. No conflict, direct-add.
     upgrades: [RFTech-AddLifeSupport]
   - id: gnc_spacecraftRCS
     title: "Storable-Propellant Reaction Control"
@@ -1082,8 +1155,19 @@ nodes:
     tier: 6
     parents: [aero_recovery]
     flavor: "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point."
-    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, SXTAirbag, SXTAirbagSmall, landingLeg1]
-    upgrades: [MercuryHS]
+    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, ROC-GeminiParachuteBDB, ROC-GeminiParachuteDrogueBDB, ROC-GeminiRetrogradeSectionBDB, ROC-ReentryControlSystemBDB, ROC-RetrogradeDecouplerBDB, ROC-VoskhodRetroDecoupler]
+    # ROC-VoskhodRetroDecoupler added (2026-07): pure structure (disc=structure, no engine module), pairs
+    # with the decouplers already here rather than pc_retroKick (which holds the actual motor,
+    # ROC-VoskhodRetroBooster) — same split as Gemini's own retro section/decoupler.
+    # landingLeg1 moved to str_fixedLanderLegs (2026-07 fix) — crewed splashdown capsules of this era never
+    # used landing legs; that's robotic-lander structural gear, mis-filed here since band 1/2.
+    # SXTAirbag/SXTAirbagSmall PULLED, left UNPLACED — same mis-filing (airbag touchdown = robotic-lander
+    # tech, e.g. a future Luna-9-style bouncing lander, not crewed recovery); no confirmed home yet.
+    # ROC-VoskhodRetroBooster moved to pc_retroKick (2026-07 fix) — it's a real engine (ModuleEnginesRF,
+    # disc=engine:solid), not recovery structure; every other part here checked clean (no engine module).
+    # ROC-GeminiHSBDB + the MercuryHS/GeminiHS upgrades moved to cmp_ablativeRefinement (2026-07 fix) — the
+    # TPS material ladder is its own CompositeMaterials-discipline continuation of cmp_ablativeTPS, not part
+    # of the parachute/structural recovery sequence; band 2 had folded it in here, which buried the ladder.
 
   # ===================== BAND 2 * SCIENCE (SCANsat mapping seed) =====================
   # The satellite instruments (film/magnetometer/TV/geiger/micrometeorite) are ALL placed in band 1.
@@ -1096,3 +1180,826 @@ nodes:
     parents: [opt_remoteSensing]
     flavor: "Sweep a body strip by strip as the orbit carries the scanner across it, assembling a complete map from thousands of passes — terrain, altimetry and anomaly built from coverage no single frame could give. The first instrument that maps a world instead of photographing a scene. The seed of the mapping lane that fills out among the planets."
     parts: [SCANsat_Tracker]
+
+  # ================================================================================================
+  # ===================== BAND 3 * ENGINE SPINE CONTINUATION (T7 -> T8) ===========================
+  # interplanetary-lunar-probes-partlist.tsv only. Proposal in docs/BAND3-TREE.md — full ground-truth,
+  # naming/balance/story-pass notes and open loose ends live there. This is the authored result for review.
+  # ================================================================================================
+  - id: fd_clusteredThrustGrowth
+    title: "Clustered-Chamber Thrust Uprating"
+    discipline: FluidDynamics
+    tier: 7
+    parents: [fd_longMarchStorable]
+    flavor: "Squeeze more thrust from the same four-chamber cluster without touching the chemistry — the storable engines already flying, simply pushed harder."
+    upgrades: [RFUpgrade_YF-20B, RFUpgrade_YF-25K]
+  - id: fd_blendedStorableFuel
+    title: "Blended Storable Fuel"
+    discipline: FluidDynamics
+    tier: 7
+    parents: [fd_storableSustainer]
+    flavor: "Cut the UDMH with hydrazine and the same engine burns denser — real thrust for free, Isp along for the ride either way. Viking's own uprate, not a new engine."
+    upgrades: [RFUpgrade_Viking-4B, RFUpgrade_Viking-5B]
+    # Re-scoped (2026-07): previously recommended skipping this as "~flat" — wrong. Real numbers: Viking-4B
+    # +8.8% thrust, Viking-5B +8.0% thrust, Isp a wash either direction. A genuine uprate, doctrine-4 forces
+    # it off fd_storableSustainer's own base parts (Viking 2/4/5), same pattern as fd_clusteredThrustGrowth.
+  - id: fd_ammoniaCombustionRefinement
+    title: "Stabilized Ammonia Combustion"
+    discipline: FluidDynamics
+    tier: 7
+    parents: [fd_throttlingRocket]
+    flavor: "Retune the X-15's ammonia-lox chamber for a cleaner burn at higher pressure, wringing a real jump in specific impulse from the same volatile propellant. The rocket-plane's engine, refined rather than replaced."
+    upgrades: [RFUpgrade_XLR99-RM-3, RFUpgrade_XLR99-RM-5]
+  - id: fd_titanStorableConversion
+    title: "Storable-Propellant Booster Conversion"
+    discipline: FluidDynamics
+    tier: 7
+    parents: [fd_titanTandem, pc_ntoHypergolics]
+    flavor: "Trade kerosene for a hypergolic that ignites on contact and sits fuelled in a silo for years — some engines keep the old chemistry and simply grow, others convert outright. A missile built to launch now, not after a fuelling countdown."
+    upgrades: [RFUpgrade_LR87-AJ-5, RFUpgrade_LR87-AJ-5-Kero, RFUpgrade_LR87-AJ-7, RFUpgrade_LR87-AJ-7-Kero, RFUpgrade_LR91-AJ-5, RFUpgrade_LR91-AJ-5-Kero, RFUpgrade_LR91-AJ-7, RFUpgrade_LR91-AJ-7-Kero]
+  - id: pc_juno_ClF3
+    title: "Chlorine-Trifluoride Oxidiser"
+    discipline: PropellantChemistry
+    tier: 7
+    parents: [fd_restartableUpper]
+    flavor: "Burn hydrazine in chlorine trifluoride, a storable oxidiser so aggressive it ignites on contact with almost anything — glass, sand, the operators. A sliver more Isp for a propellant few would trust near a launch pad."
+    upgrades: [RFUpgrade_Juno45k-BII, RFUpgrade_Juno6k-BII]
+  - id: pc_pioneerVernierTrim
+    title: "Solid Vernier Trim Motor"
+    discipline: PropellantChemistry
+    tier: 4
+    parents: [pc_compositeSolid]
+    flavor: "A small solid motor that nudges a spinning spacecraft's trajectory without ever touching the main stage — a trim burn with no throttle and no restart, just a single precise kick. The adjustment motor riding along on Pioneer's booster."
+    parts: [PioneerVernier]
+    upgrades: [RFUpgrade_JPL-532A]
+    # RENAMED + re-scoped (2026-07 fix): pioneer1_booster and p1_decoupler are mod=RN_US_Probes, which
+    # tools/build_tree.py auto-routes to hire_JPL regardless of nodes.yaml (route_probe_mods) — placing them
+    # here was a no-op that silently lost to the auto-router. Only PioneerVernier (mod=ROEngines) is a real
+    # normal-tree part, so hire_JPL is dropped as a parent too: nothing left here justifies the charter
+    # cross-dependency.
+  - id: fd_gasGeneratorCeiling
+    title: "Gas-Generator Thrust Ceiling"
+    discipline: FluidDynamics
+    tier: 8
+    parents: [fd_saturnKerolox]
+    flavor: "Push the simple gas-generator cycle as far as it goes — bigger turbopumps, higher flow, more thrust from the same open-cycle plumbing. The last uprate before the cycle itself runs out of room to grow."
+    parts: [ROE-F1]
+    upgrades: [RFUpgrade_H-1-188K, RFUpgrade_H-1-200K, RFUpgrade_E-1-468k, RFUpgrade_E-1-500k, RFUpgrade_E-1-Upgrade, RFUpgrade_RD-111-8D716A]
+    # F-1 (2026-07, band-3 lunar batch): the king this node was named for - the largest gas-generator
+    # engine ever built. Its own uprate (F-1-1.52M) is barred from here by doctrine-4 -> fd_gasGeneratorApex.
+  - id: pc_orscDebut
+    title: "Oxidiser-Rich Staged Combustion"
+    discipline: PropellantChemistry
+    tier: 8
+    parents: [fd_regenCooling]
+    flavor: "Burn the turbine's exhaust back into the main chamber instead of dumping it overboard — every drop of propellant makes thrust, not waste heat. The first staged-combustion engine in the fleet, and a real jump in specific impulse for it."
+    parts: [ROE-RD58, ROE-NK9, ROE-NK9V]
+    # NK-9/NK-9V (2026-07, band-3 lunar batch): medium kerolox ORSC uppers join the debut. RFUpgrade_11D33
+    # MOVED OUT to pc_n1ClosedCycle (was a doctrine-4 violation vs its own base ROE-RD58); the whole RD-58
+    # chain + the NK-9/NK-9V upgrades cascade UP into pc_n1ClosedCycle.
+
+  # ================================================================================================
+  # ===================== BAND 3 * SECOND GENERATION CAPSULES (Gemini vs Voskhod, T7 -> T8) =======
+  # ================================================================================================
+  - id: int_geminiCapsule
+    title: "Orbital Attitude and Maneuvering Propulsion"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [int_mercuryCapsule]
+    flavor: "Give the capsule its own thrusters and it stops merely falling around the Earth — it can change its orbit, chase a target, hold a heading. Gemini: not a bigger Mercury, a spacecraft that flies itself."
+    parts: [ROC-GeminiCMBDB, ROC-GeminiEquipmentSectionBDB, ROC-GeminiNoseCapBDB, ROC-GeminiNoseconeAeroBDB, ROC-GeminiOAMSBDB, ROC-GeminiOAMSRCSBDB, ROAdvCapsule, USMatBayWedge]
+    upgrades: [RFTech-Battery-III, RFTech-SM-III, RFTech-Tank-Sep-AlCu]
+    # +3 upgrades (2026-07): RealFuels per-tank-type tech tier (battery/service-module/separate-tank alloy),
+    # confirmed KEEP-tank-typelevel, bucket=materialsScienceAdvCapsules — this IS the advanced-capsule
+    # generation these describe.
+    # Gemini's antenna moved OUT (2026-07 fix): it uses ModuleRealAntenna, the same comms mechanism as
+    # DynaSoar's antenna — bundling it here by MISSION instead of by mechanism was the same mistake this
+    # whole session has been catching elsewhere. Now grouped with its real siblings in
+    # tel_realAntennaTelemetry.
+    # ROAdvCapsule researched (2026-07): mod=RealismOverhaul, manufacturer="Generic", 2-crew, offset-CoM
+    # lifting reentry + integrated bipropellant ACS — the SAME capability generation as Gemini (maneuverable,
+    # 2-seat), just a non-historical generic skin rather than the BDB-branded parts. Rides along here rather
+    # than getting its own node; 7 parts, one over the usual cap, justified as the same king twice
+    # (historical + generic), not a second breakthrough.
+  - id: int_voskhodCabin
+    title: "Inflatable-Airlock Descent Module"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [int_vostokCapsule]
+    flavor: "Bolt an inflatable fabric tunnel to the hatch and a cosmonaut can leave the capsule entirely — the first door opened in vacuum. Voskhod, stripped down to fit three, then opened up to let one of them out."
+    parts: [ROC-VoskhodCapsule, ROC-VoskhodAirlock, evaCylinder, evaJetpack]
+    # +2 ride-alongs (2026-07): EVA fuel cylinders + jetpack — the actual gear the airlock breakthrough
+    # exists to use. Genuinely part of this vehicle's capability, not a new breakthrough.
+  - id: gnc_rendezvousDocking
+    title: "Orbital Rendezvous and Docking"
+    discipline: GuidanceControl
+    tier: 8
+    parents: [int_geminiCapsule, int_voskhodCabin]
+    anyToUnlock: true
+    flavor: "Close the last few metres by eye and thruster, then latch two spacecraft nose to nose in orbit — the manoeuvre every later mission depends on. Any maneuverable crewed vehicle can get you here; it isn't tied to one program's specific propulsion choice."
+    parts: [ROC-AgenaPort, ROC-AgenaFairing, ROC-GeminiNoseconeBDB, dockingPort3]
+    # FIXED (2026-07): was an AND-gate on [int_geminiCapsule, gnc_spacecraftRCS]. Docking doesn't need
+    # storable-propellant RCS specifically (ahistorical — a different maneuvering approach could reach the
+    # same milestone), and it shouldn't be tied exclusively to Gemini either — anyToUnlock against BOTH
+    # advanced capsule lines instead. dockingPort3 (a plain propellant-transfer docking port, mod=Squad)
+    # added as a ride-along — same mechanism family, not RCS-specific.
+  - id: gnc_smallRcsCatalog
+    title: "Small-Class RCS Catalog"
+    discipline: GuidanceControl
+    tier: 7
+    parents: [gnc_spacecraftRCS]
+    flavor: "The same storable-propellant reaction control, in fixed off-the-shelf block sizes instead of a sized-to-fit procedural unit — the first size class off the shelf, before spacecraft grew heavy enough to need more."
+    parts: [45DegreeRCS, RCSBlock_275, RO_RCSBlock_restock_275, restock-rcs-block-dual-1, restock-rcs-block-quad-angled-1, restock-rcs-block-quint-1, restock-rcs-block-triple-angled-1, nflv-rcs-aero-heavy-1, nflv-rcs-aero-heavy-2, linearRcs, SXTRCSRack, ca_RM02]
+  - id: gnc_fixedRcsCatalog
+    title: "Fixed Reaction-Control Block Catalog"
+    discipline: GuidanceControl
+    tier: 8
+    parents: [gnc_smallRcsCatalog]
+    flavor: "The same catalog, scaled up — bigger blocks for spacecraft that outgrew the first size class. The procedural thruster stays the default; this is the shelf of named hardware for whoever wants the specific part."
+    parts: [HeavyRcs, RCSBlock_413, RCSBlock_550, RO_RCSBlock_restock_413, RO_RCSBlock_restock_550, ROC-ApolloRCS, ROC-D2RCS, sasModule]
+    # SPLIT (2026-07, user catch): checked era data before merging this time — the 275N-class parts I'd
+    # just added are `improvedFlightControl` (x=-2782), genuinely earlier than this node's own `earlyDocking`
+    # (x=-2612), not the same generation. Real successor relationship (small→big RCS blocks), not one
+    # bundle — same lesson as the antenna-catalog mistake, caught before shipping this time instead of after.
+    # Catalog dead-end (no doctrine-4 conflict — none of these part-ids share a node elsewhere), matching the
+    # standing "procedural default, fixed-catalog opt-in dead-end" pattern. sasModule (reaction wheel) rides
+    # along as a related attitude-control catalog item rather than getting its own node for one part.
+
+  # ================================================================================================
+  # ===================== BAND 3 * ROBOTIC LANDERS + INTERPLANETARY BUS (Surveyor, Mariner, T7) ====
+  # ================================================================================================
+  - id: fd_continuousThrottleDescent
+    title: "Continuous-Throttle Descent"
+    discipline: FluidDynamics
+    tier: 7
+    parents: [pc_retroKick, gnc_spacecraftRCS]
+    flavor: "Fly the last stretch of a landing on gimbaled, throttleable liquid thrusters that can be told to slow down instead of just shutting off. The generic hardware behind any soft landing — the historical Surveyor-branded version of this same engine ships separately, through the charter."
+    parts: [ROE-TD339, ROE-MR80TDE]
+    # ROE-MR80TDE (2026-07, band-3 lunar batch): 10:1 monopropellant terminal-descent engine - the deeper
+    # robotic soft-landing successor to TD-339, same lineage.
+    # landingLeg1 split OUT to str_fixedLanderLegs (2026-07 fix, user call) — a structural touchdown strut
+    # is not a propellant/combustion breakthrough; bundling it here just because Surveyor happened to use
+    # both together was mission-sequence bundling, not mechanism bundling.
+    # RE-SCOPED (2026-07 fix): rn_surveyor_engines/rn_surveyor_retro/rn_surveyor_s_engine are all
+    # mod=RN_US_Probes, auto-routed to hire_JPL by tools/build_tree.py regardless of nodes.yaml — they never
+    # actually lived here, so removed rather than left as a silent no-op. ROE-TD339 is a SEPARATE
+    # mod=ROEngines part (the same engine, RO-curated rather than mission-branded) — the real normal-tree
+    # king. landingLeg1 moved IN from edl_crewedRecovery (was mis-filed there — crewed capsules of this era
+    # never used landing legs; this is robotic-lander structural gear, which is what this node actually is).
+    # Surveyor's retro rocket (Star-37) has no normal-tree home in THIS node anymore, but the generic
+    # Star-37 hardware already lives in pc_apogeeKickStage — a normal-tree lander can still combine both.
+  - id: cmp_airbagTouchdown
+    title: "Airbag-Cushioned Touchdown"
+    discipline: CompositeMaterials
+    tier: 7
+    parents: [pc_retroKick]
+    flavor: "Skip the throttled engine entirely — kill your speed with one solid burn, then just bounce. A cluster of inflated bags absorbs the impact a precision-landed craft would rather not risk on a bad sensor reading. Nobody has actually tried landing this way here; go find out if it holds."
+    parts: [SXTAirbag, SXTAirbagSmall]
+    # Placed now rather than deferred to the Luna-9 file (2026-07, user call): ahistorical tree, and the
+    # parts are already in hand — no reason to wait on hardware from a later file when the mechanism stands
+    # on its own. Sibling to fd_continuousThrottleDescent off the SAME pc_retroKick braking-burn lineage: two
+    # real alternatives after the coarse retro burn — throttle precisely down, or just bounce and hope.
+  - id: gnc_threeAxisStabilizedBus
+    title: "Three-Axis Attitude Stabilization"
+    discipline: GuidanceControl
+    tier: 7
+    parents: [gnc_spacecraftRCS]
+    flavor: "Stop spinning the whole spacecraft and instead hold it steady on three independent axes — a camera can finally be pointed and kept there. Spin-stabilization was simple and blind; this bus can aim."
+    parts: [ca_argo-mk2, ca_argo-mk2-solar, ca_argo-mk2-hga, ca_argo-mk2-mast, sp_mariner_a, sp_mariner_b, SXTAlouetteI]
+    # SXTAlouetteI added (2026-07): Alouette 1 (Canada's first satellite) is a complete 3-axis-capable,
+    # RealAntenna-equipped probe bus — same mechanism class as Mariner's, not tied to the US/Soviet charter
+    # (mod=SXT, not RN_*_Probes, so it never auto-routes). Rides along here rather than getting its own
+    # node for one satellite.
+    # +4 ride-alongs (2026-07, comms/power pass): Mariner's own HGA/LGA antennas + its own solar panels —
+    # genuinely part of this bus, not new breakthroughs.
+    # RE-SCOPED (2026-07 fix): rn_mariner1_2 is mod=RN_US_Probes, auto-routed to hire_JPL regardless of
+    # nodes.yaml — removed (was a silent no-op). ca_argo-mk2/-solar are mod=CoatlAerospace, genuinely
+    # normal-tree parts. hire_JPL dropped as parent too: per standing rule, the charter subtree (hire_JPL/
+    # hire_OKB) never cross-depends on the normal tree, and nothing charter-routed remains in this node to
+    # justify the edge.
+
+  # ================================================================================================
+  # ===================== BAND 3 * APOLLO SERVICE PROPULSION SYSTEM (T8) ===========================
+  # ================================================================================================
+  - id: fd_propellantUllage
+    title: "Propellant Ullage Settling"
+    discipline: FluidDynamics
+    tier: 7
+    parents: [fd_restartableUpper]
+    flavor: "Fire a small motor for a few seconds first, just to press the propellant to the aft end of a weightless tank — so the main engine's feed line draws liquid, not the vapour that floats free after a long coast. The unglamorous fix for the one failure mode that kills a perfect restart."
+    parts: [ROE-TX280]
+    # NEW (2026-07, user call — "make an ullage node specifically for ullage"): pulled ROE-TX280 out of
+    # pc_retroKick, where it was bundled with deorbit/posigrade/spin motors under a shared "vacuum-start
+    # solid impulse" theme that isn't actually ullage's mechanism. Parented on fd_restartableUpper directly
+    # (T4, band 2) rather than pc_retroKick — this is fd_restartableUpper's OWN "coasts dark, relights on
+    # command" problem finally getting its real answer, not a borrowed crossover. Tier 7 (not inherited from
+    # T4) since the hardware/mechanic is genuinely new to band 3.
+  - id: fd_pressureFedRestart
+    title: "Pressure-Fed Multi-Restart Combustion"
+    discipline: FluidDynamics
+    tier: 8
+    parents: [pc_ntoHypergolics, fd_propellantUllage]
+    flavor: "Strip out the turbopump and push propellant with tank pressure alone — less performance, but nothing left to fail on the one burn that has to work, months into the mission, with no one able to reach it."
+    parts: [ROE-AJ10-137]
+    # SIMPLIFIED (2026-07): was a 3-parent crossover [pc_ntoHypergolics, fd_restartableUpper, pc_retroKick].
+    # fd_propellantUllage already descends from fd_restartableUpper, so listing both was redundant —
+    # dropped to 2 explicit parents, cleaner and still correct (ullage-settling is now the real reason this
+    # engine can be trusted to relight, not a bolted-on third lane).
+
+  # ================================================================================================
+  # ===================== BAND 3 * SOLIDS FAMILY (1962/64/66, T7) =================================
+  # ================================================================================================
+  - id: pc_scoutMarkII
+    title: "Composite-Binder Solid Stages"
+    discipline: PropellantChemistry
+    tier: 7
+    parents: [pc_scoutSolids]
+    flavor: "Swap the early polysulfide binder for a composite polybutadiene grain — tougher, higher-energy, and lighter for the same impulse. Scout's own stages, uprated stage by stage."
+    parts: [ROE-Algol2, ROE-Algol2_Inline, ROE-Antares2, ROE-Antares2_Inline, ROE-AltairII, ROE-AltairIII]
+    upgrades: [RFTech-solids-tltech1]
+    # RFTech-solids-tltech1 added (2026-07): RealFuels per-engine-TYPE tech-level for solids, confirmed
+    # KEEP-engine-typelevel — matches this era's solids generation (bucket=solids1962).
+  - id: pc_strapOnMarkII
+    title: "Composite-Binder Strap-On Solid"
+    discipline: PropellantChemistry
+    tier: 7
+    parents: [pc_strapOnSolids]
+    flavor: "The same composite-binder propellant chemistry, scaled up for a strap-on booster instead of a stage — augmentation thrust that grows with the chemistry, not just the casing."
+    parts: [ROE-Castor2, ROE-Castor2_Inline]
+    upgrades: [RFTech-solids-tltech2]
+    # RFTech-solids-tltech2 added (2026-07): same mechanism as tltech1, next generation (bucket=solids1964).
+    # ROE-M55 moved OUT (2026-07 research) — real-world identification: M55/SR19/SR73 thrust
+    # (876/267.7/152 kN, monotonically decreasing) matches Minuteman III's three actual stages
+    # (Thiokol M55A1 / Aerojet SR19-AJ-1 / Chemical Systems SR73-AJ-1) far better than a strap-on
+    # booster lineage. Moved to the new pc_allSolidStaging node below.
+  - id: pc_allSolidStaging
+    title: "Instant-Readiness Solid Staging"
+    discipline: PropellantChemistry
+    tier: 7
+    parents: [pc_compositeSolid]
+    flavor: "Stack three solid stages instead of one liquid and one solid — nothing to fuel, nothing to chill, ready to fly from a cold silo the instant the order comes. The missile that trades some performance for never needing a countdown at all."
+    parts: [ROE-M55, ROE-SR19, ROE-SR73]
+  - id: pc_segmentedCasting
+    title: "Segmented Solid-Grain Casting"
+    discipline: PropellantChemistry
+    tier: 7
+    parents: [pc_compositeSolid]
+    flavor: "Cast the grain in stacked segments and bolt them together instead of pouring one impossibly large piece — the only way to build a solid motor bigger than a single mould allows."
+    parts: [ROE-UA1204, ROE-UA1205, ROE-1204sepMotor, ROE-1205sepMotor, ROE-AJ260SLA, ROE-AJ260SLF]
+  - id: pc_apogeeKickStage
+    title: "Solid Apogee-Kick Stage"
+    discipline: PropellantChemistry
+    tier: 7
+    parents: [pc_retroKick]
+    flavor: "A precise, vacuum-reliable solid burn timed to the moment of highest altitude — not to come home, but to finish the job: circularise an orbit or send a probe on its way."
+    parts: [ROE-Star13D, ROE-Star13, ROE-Star13A, ROE-Star37, ROE-Star37E, ROE-Star17, ROE-Star17A, SXTWaxWing]
+    # STAR-17/17A + Waxwing added 2026-07 (band-3 lunar batch): the spin-stabilized solid-kick CATALOG (a
+    # fixed family of sizes, cap-exempt) - Waxwing is Black Arrow's spin-stabilized orbital-insertion motor.
+  - id: pc_storableVernierFamily
+    title: "Storable Vernier Chamber Family"
+    discipline: PropellantChemistry
+    tier: 7
+    parents: [pc_ntoHypergolics]
+    flavor: "One chemistry, cast into a whole range of chamber sizes from a tiny corrector to a full sustainer — the same NTO-hypergolic combustion scaled to whatever the mission needs, not one engine per role."
+    parts: [ROE-RD0203, ROE-RD0212, ROE-RD0213, ROE-RD0214]
+    # Added (2026-07, part-count-pass find): base parts never homed. Numbered RD-02XX sequence + shared
+    # UDMH+NTO chemistry reads as one coherent family, though the actual thrust range (7.7-605 kN) spans
+    # what's probably several distinct roles (vernier through sustainer) — lower confidence than most of
+    # this batch; worth a second look rather than treated as fully resolved.
+
+  # ================================================================================================
+  # ===================== BAND 3 * SURVEYOR PROBE BUSES (T7) =======================================
+  # ================================================================================================
+  - id: int_surveyorLanderBus
+    title: "Soft-Lander Probe Bus"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [fd_continuousThrottleDescent, rob_linearActuation]
+    flavor: "The command core, low/high-gain antennas and a scissoring arm that reaches out to dig and scoop the ground beside the lander — the bus built around a vehicle that has to work once it stops moving, not just while it's flying."
+    parts: [ca_landv_core, ca_landv_omni, ca_landv_hga, RO-SurfaceSampleScoop]
+  - id: int_surveyorOrbiter
+    title: "Lunar Orbiter Bus"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [fd_continuousThrottleDescent]
+    flavor: "The same lander program's core and antenna, built instead to stay in orbit and look down rather than land — a sibling vehicle from the same soft-landing effort, aimed at the whole map instead of one spot."
+    parts: [ca_landv_orbiter_core, ca_landv_orbiter_HGA, ca_landv_sp]
+
+  # ================================================================================================
+  # ===================== BAND 3 * DEEP-SPACE COMMUNICATIONS (T7 -> T8) ============================
+  # ================================================================================================
+  - id: tel_deployableHighGainDish
+    title: "Deployable High-Gain Dish"
+    discipline: Telecommunications
+    tier: 7
+    parents: [tel_pcmTelemetry]
+    flavor: "Fold a dish bigger than the launch shroud allows, then open it once clear — the gain a distant probe needs to be heard at all, in a package that first has to fit under a nose cone."
+    parts: [HighGainAntenna, HighGainAntenna5_v2, dish_deploy_S, dish_deploy_S2]
+    upgrades: [commsTL3]
+    # commsTL3 added (2026-07): RealAntennas' own tech-level upgrade, same :NEEDS[RP-0] re-pointing fix.
+    grants: [RP0Level4TrackingStation]
+    # RP0Level4TrackingStation added (2026-07): same already-live DSN ladder as tel_dopplerRanging's
+    # Level2/tel_pcmTelemetry's Level3 — the next rung, not superseded content.
+  - id: tel_antennaCatalog
+    title: "Fixed Antenna Catalog"
+    discipline: Telecommunications
+    tier: 7
+    parents: [tel_pcmTelemetry]
+    flavor: "The same deployable-dish generation, off the shelf in whatever size and gain a given mission needs — omni for a simple always-on link, small relay dishes through a 4m high-gain reflector. The procedural antenna stays the default; this is the named-hardware shelf."
+    parts: [RelayAntenna5, RelayAntenna50, RelayAntenna3m, RelayAntenna100, restock-antenna-stack-2, restock-antenna-stack-3, restock-relay-radial-2, antenna_quetzal, nfex-antenna-reflector-side-1, nfex-antenna-reflector-side-2, nfex-antenna-reflector-side-3, nfex-antenna-deploy-wv3-1, nfex-antenna-feeder-direct-1, nfex-antenna-static-mini-1, nfex-antenna-top-dish-1, nfex-antenna-top-dish-2, nfex-antenna-relay-tiny-1, ROC-D2Antenna]
+    # FIXED (2026-07, user catch): checked real era data (the partlist's own x-position) instead of
+    # assuming — 17 of these 19 parts are `interplanetaryComms` (x=-2952), the EXACT SAME era as
+    # `tel_deployableHighGainDish`'s own 4 parts. This was never a "later catalog" — it's more vendor
+    # variants of the SAME generation, mislabeled, then papered over by force-bumping the whole thing to
+    # T8 to dodge a same-tier warning. Real fix: sibling of the breakthrough node (same parent, same tier,
+    # no edge between them), not its child. The 2 genuinely later parts (`mediumDishAntenna`,
+    # `nfex-antenna-rover-3`, both x=-2612) moved OUT to the new tel_compactHighGainAntenna below.
+  - id: tel_compactHighGainAntenna
+    title: "Miniaturized High-Gain Antenna"
+    discipline: Telecommunications
+    tier: 8
+    parents: [tel_deployableHighGainDish]
+    flavor: "The same dish gain in a fraction of the mass and volume — small enough to ride on a rover or a craft that never had room for the first generation's hardware."
+    parts: [mediumDishAntenna, nfex-antenna-rover-3]
+    # Catalog dead-end (19 parts, well past the usual cap) — matches the standing "procedural default,
+    # fixed-catalog exempt" pattern used elsewhere (e.g. str_standardDecouplers).
+  - id: tel_phasedArrayRelay
+    title: "Phased-Array Relay Antenna"
+    discipline: Telecommunications
+    tier: 8
+    parents: [tel_deployableHighGainDish]
+    flavor: "Steer the beam electronically across an array of fixed elements instead of physically pointing a dish — no motor, no gimbal, nothing to jam, and it can track two things at once."
+    parts: [nfex-antenna-phased-array-1, nfex-antenna-phased-array-2, nfex-antenna-phased-array-3, nfex-antenna-phased-single-3, nfex-antenna-relay-tdrs-1, nfex-antenna-relay-tdrs-2]
+    grants: [RP0Level5TrackingStation]
+    upgrades: [commsTL4]
+    # RP0Level5TrackingStation added (2026-07): the DSN ladder's next rung, matching this node's own
+    # electronic-steering leap in capability. commsTL4 added same pass: RealAntennas' own tech-level
+    # upgrade, same :NEEDS[RP-0] re-pointing fix as commsTL3.
+
+  # ================================================================================================
+  # ===================== BAND 3 * PROBE POWER (T7 -> T8) ===========================================
+  # ================================================================================================
+  - id: elec_deployablePanelII
+    title: "Larger Deployable Solar Array"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_deployableArrays]
+    flavor: "More cells on a bigger paddle — the same fold-out array scaled up for a hungrier payload, nothing new about how it works."
+    parts: [RO-rangerSolarPanel, solarPanels4, solarPanels5, 1x3SPanels]
+    upgrades: [solarTL2]
+    # solarTL2 added (2026-07): ROSolar's own PARTUPGRADE, techRequired patch is `:NEEDS[RP-0]` (never
+    # fires under AXE) — re-pointed here, same fix as the RFUpgrade_*/RFTech_* configs all session.
+  - id: elec_fuelCellPower
+    title: "Chemical Fuel-Cell Power"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_deployableArrays, cryo_hydrogen]
+    flavor: "Combine hydrogen and oxygen across a membrane and draw off the current instead of burning them — power on demand with no sun angle to worry about, for as long as the reactant tanks last."
+    parts: [FuelCell, FuelCellArray, USFuelCellMedium, USFuelCellSmal, kerbalism-fuelcell]
+  - id: elec_refinedSolarSimulation
+    title: "Refined Solar-Array Simulation"
+    discipline: ElectricalPower
+    tier: 8
+    parents: [elec_deployablePanelII]
+    flavor: "Model the cell string, the sun angle and the shadowing properly instead of a flat output curve — the same panel, understood well enough to size it exactly instead of overbuilding it."
+    parts: [ROS-HingedSolarPanel, ROS-FoldingSolarPanel]
+    upgrades: [solarTL3, solarTL4]
+    # solarTL3/4 added (2026-07): same fix as solarTL2 — ROSolar's own upgrades, re-pointed here since the
+    # next two rungs of that same efficiency ladder land on this node's own generation.
+
+  # ================================================================================================
+  # ===================== BAND 3 * SCIENCE OPPORTUNITIES (T7) =======================================
+  # ================================================================================================
+  - id: mic_boomMagnetometryII
+    title: "Extended Boom Magnetometry"
+    discipline: Microelectronics
+    tier: 8
+    parents: [mic_boomMagnetometry, rob_linearActuation]
+    flavor: "A second, more sensitive sensor, now riding a boom that extends itself on command instead of just unfolding once — the field measured finer, and from exactly the distance the mission wants."
+    parts: [RO-HeliumMagnet]
+  - id: opt_radarAltimetry
+    title: "Radar Altimetry"
+    discipline: OpticsPhotonics
+    tier: 7
+    parents: [opt_orbitalMapping]
+    flavor: "Bounce a radar pulse straight down and time the echo — terrain height where a camera only gives shape, filling in the mapping lane's one missing dimension."
+    parts: [scansat-radar-poseidon-3b-1]
+  - id: gnc_orbitalGravimetry
+    title: "Orbital Perturbation Gravimetry"
+    discipline: GuidanceControl
+    tier: 8
+    parents: [gnc_threeAxisStabilizedBus]
+    flavor: "Track a stable bus precisely enough to see the tiny course changes a mass concentration in the ground below pulls it into — gravity mapped from how the orbit itself misbehaves."
+    parts: [USAccelGravWedge, sensorGravimeter]
+  - id: opt_infraredInterferometry
+    title: "Infrared Interferometer Spectrometry"
+    discipline: OpticsPhotonics
+    tier: 7
+    parents: [opt_remoteSensing]
+    flavor: "Split the incoming light and recombine it after an offset path to read the whole spectrum from the interference pattern at once, rather than filtering it band by band — composition, not just temperature."
+    parts: [RO-IRIS]
+  - id: mic_ionMassSpec
+    title: "Ion-Mass Spectrometry"
+    discipline: Microelectronics
+    tier: 7
+    parents: [mic_massSpec]
+    flavor: "Steer ions through a magnetic sector built for the ion environment of open space rather than a lab bench atmosphere — the same sorting-by-mass principle, reading the solar wind instead of the upper air."
+    parts: [RO-MIMS]
+  - id: opt_multiSpectralImaging
+    title: "Multi-Spectral Imaging"
+    discipline: OpticsPhotonics
+    tier: 7
+    parents: [opt_remoteSensing]
+    flavor: "Capture several wavelength bands of the same scene at once instead of one — a surface picked apart by what it reflects in each band, not just what it looks like."
+    parts: [dmUS2ImagingPlatform]
+
+  # ================================================================================================
+  # ===================== BAND 3 * ROBOTICS (T7) ====================================================
+  # `rob_rotorActuation` (T4, band 1) is the whole lane's foundation — its own flavor text already
+  # anticipates this fan-out ("every arm, rover wheel, tracking mount and deployable to come turns on
+  # this"). 6 new nodes all descend from it directly; that's a 7-dependent hub, well past the usual >3
+  # flag, but this is the single most self-justified case of it in the tree — the root node predicted
+  # this exact spread when it was written in band 1.
+  # ================================================================================================
+  - id: rob_heavyRotorActuation
+    title: "Heavy-Duty Rotor Actuation"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_rotorActuation]
+    flavor: "The same brushless motor and controller, built to carry real load instead of just proving the concept — a rotor that can turn a solar array or an antenna mount, not just a test rig."
+    parts: [rotor_02, rotor_02s, rotor_03, rotor_03s]
+  - id: rob_hingeActuation
+    title: "Hinged Joint Actuation"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_rotorActuation]
+    flavor: "Limit the same servo to a fixed arc instead of a full turn — a joint that folds and locks rather than spins, the shape a deployable panel or an arm elbow actually needs."
+    parts: [hinge_01, hinge_01_s, hinge_03, hinge_03_s, hinge_04]
+  - id: rob_linearActuation
+    title: "Linear Servo Extension"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_rotorActuation]
+    flavor: "Turn the same rotary motor into a push instead of a spin — a telescoping actuator that extends a boom or a leg exactly as far as commanded, then holds it there."
+    parts: [piston_01, piston_02, piston_03, piston_04]
+  - id: rob_precisionRotationServo
+    title: "Precision Rotation Servo"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_rotorActuation]
+    flavor: "Close the loop on the same motor with real position and speed feedback — commanded to an exact angle and held there, not just spun and hoped for."
+    parts: [rotoServo_00, rotoServo_02, rotoServo_03, rotoServo_04]
+  - id: rob_sequencedControl
+    title: "Programmable Actuator Sequencing"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_rotorActuation]
+    flavor: "One controller that steps every hinge, piston and rotor through an ordered sequence on command — deployment stops being one actuator at a time and becomes a single scripted motion."
+    parts: [controller1000]
+  - id: rob_surfaceMobility
+    title: "Powered Rover Mobility"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_rotorActuation]
+    flavor: "Put the same motor in a wheel hub and drive instead of just standing there — a lander that can cross the ground it touched down on, not just sit and look at it."
+    parts: [KF-WheelSmall, KF-WheelTiny, roverWheel1, roverWheel2]
+
+  - id: str_fuelCrossfeed
+    title: "Inter-Tank Fuel Crossfeed"
+    discipline: StructuresMechanisms
+    tier: 7
+    parents: [str_staging]
+    flavor: "Pipe propellant across a strut between two tanks still bolted together — drain the strap-on boosters first and keep the core stage topped off, so when the boosters finally drop away the core is still full. Asparagus staging: three half-empty cores flying like one that never emptied at all."
+    parts: [fuelLine]
+    # NEW (2026-07, user call — "it's what allows for asparagus staging, deserves its own node"): was about
+    # to be waved off as a generic utility part. Real mechanism (`CModuleFuelLine`) is cross-tank propellant
+    # feed while stages are still attached — genuinely distinct from str_staging's separation mechanism
+    # (severing a spent stage), which is why it's a sibling here, not folded into that node.
+
+  # ================================================================================================
+  # ===================== BAND 3 * SCATTERED-BY-MECHANISM PARTS (T7 -> T8) =========================
+  # Parts whose donor vehicle (D-2, DynaSoar, Apollo, lunar-Gemini) has no node of its own yet — homed
+  # anyway, by their own mechanism, per the standing scatter-by-difficulty rule.
+  # ================================================================================================
+  - id: tel_realAntennaTelemetry
+    title: "Modeled Antenna Telemetry"
+    discipline: Telecommunications
+    tier: 7
+    parents: [tel_pcmTelemetry]
+    flavor: "A comms antenna simulated as a real system — gain, pattern and tracking modelled, not just a data-rate number — the same telemetry hardware whichever crewed vehicle happens to carry it."
+    parts: [ROC-GeminiAntenna, ROC-GeminiAntennaBDB, ROC-DynaAntenna]
+  - id: cmp_lunarReturnAblator
+    title: "Lunar-Return Ablator Rating"
+    discipline: CompositeMaterials
+    tier: 8
+    parents: [cmp_ablativeRefinement]
+    flavor: "Rate the same ablator for a translunar-return entry instead of a low-orbit one — the ladder's next real step is speed, not shape, and it doesn't care which airframe it's bolted to."
+    parts: [ROC-ApolloHSBDB, ROC-GeminiHSLunarBDB]
+    upgrades: [EarlyLunarHS]
+    # EarlyLunarHS added (2026-07): the SAME material-ladder rung, as a PARTUPGRADE preset on the
+    # procedural ROH-AdjustableHS (already in cmp_ablativeTPS) instead of a named part — same mechanism,
+    # different delivery.
+
+  # ================================================================================================
+  # ===================== BAND 3 * RADIOISOTOPE POWER (T7 -> T8) ===================================
+  # First nuclear-power-GENERATION content in the tree (NuclearEngineering so far only had radiation
+  # DETECTION — nuc_geiger, nuc_cosmicRay). The real 2-step history: SNAP-3A flew on polonium-210
+  # because that's the isotope on hand, and it's a genuine dead end (138-day half-life — power is
+  # mostly gone before a mission gets going); SNAP-3B swapped in plutonium-238 (87.7-year half-life)
+  # and THAT is the actual breakthrough that makes an RTG a real power source, not a demonstration.
+  # ================================================================================================
+  - id: nuc_isotopePower
+    title: "Radioisotope Thermoelectric Power"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_deployableArrays, nuc_geiger]
+    flavor: "Stack thermocouples across a radioactive pellet and draw current straight from the heat of its own decay — power with no sun angle and no moving part, fuelled with whatever isotope happens to be on hand. Polonium-210 proves the generator works; it does not prove it lasts — the source itself is mostly spent within a season."
+    parts: [RO-SNAP-3-RTGPo210]
+  - id: nuc_isotopePowerII
+    title: "Long-Lived Isotope Power"
+    discipline: ElectricalPower
+    tier: 8
+    parents: [nuc_isotopePower]
+    flavor: "Swap in plutonium-238 for the same generator and the output barely sags in a decade instead of collapsing in a season — the fuel choice that turns a demonstration into a power source you can fly past the orbit of Mars and still hear from."
+    parts: [rtgMini, RO-SNAP-9-RTG]
+
+  # ================================================================================================
+  # ===================== BAND 3 * ADVANCED JETS + ATTITUDE HARDWARE (T7 -> T8) ====================
+  # ================================================================================================
+  - id: av_mach2Turbojet
+    title: "Mach-2-Class Turbojet"
+    discipline: AirBreathing
+    tier: 7
+    parents: [av_afterburner, av_variableStator]
+    flavor: "Push the afterburning and variable-stator tricks together into one engine built for sustained Mach 2 cruise, not just a burst through the transonic wall — Concorde's Olympus, the MiG-21's R-13, the MiG-25's R-15."
+    parts: [RO-Olympus593, nfa-turbofan-25-2, RO-R13, RO-R15BD, nfa-turbojet-25-1, RO-R25F]
+    # nfa-turbojet-25-1 (GE4 SST) + RO-R25F (R-25) added 2026-07 (band-3 lunar batch): more Mach-2+ turbojets.
+    # nfa-turbofan-25-2 is the SAME Olympus 593 engine as RO-Olympus593, just the NearFutureAeronautics
+    # mod's own wrapper — same part-count-pass pattern as ROE-AJ10Mid/Early (two curated sources, one
+    # real engine), placed together rather than treated as a second breakthrough.
+  - id: av_dedicatedLiftJet
+    title: "Dedicated Lift Jet"
+    discipline: AirBreathing
+    tier: 7
+    parents: [av_afterburner]
+    flavor: "A turbojet built to point straight down and do nothing but hold a hover — no forward thrust to speak of, the whole engine is the vertical-lift half of a VTOL aircraft."
+    parts: [nfa-vtol-0625-1, nfa-vtol-125-1]
+    # Base parts for the RB.162 family — RFUpgrade_RB162-4D (their upgrade) was already placed in
+    # met_cooledTurbine; the base engines themselves were the part-count-pass gap. Kept separate from
+    # av_mach2Turbojet: a lift jet is a genuinely different role (vertical thrust only), not a faster cruise
+    # engine.
+  - id: gnc_reactionWheelAttitude
+    title: "Reaction-Wheel Attitude Control"
+    discipline: GuidanceControl
+    tier: 8
+    parents: [gnc_threeAxisStabilizedBus]
+    flavor: "Spin a flywheel up or down and the whole spacecraft turns the other way — attitude held and changed with no propellant spent at all, as long as a star tracker keeps telling it which way it's actually pointed."
+    parts: [ca_rw_small, ca_rw_xsmall, ca_startrack]
+    # Generic CoatlAerospace hardware (not Mariner-branded like ca_argo-mk2-*), so it's the catalog/general
+    # implementation of 3-axis stabilization rather than a ride-along on Mariner's own bus — successor node,
+    # not a direct-add, to keep the generic hardware separate from the vehicle-specific parts.
+
+  - id: th_activeLouvers
+    title: "Active Thermal Louvers"
+    discipline: Thermodynamics
+    tier: 7
+    parents: [th_hermeticBus]
+    flavor: "Blades that open to radiate heat away and close to hold it in, driven by the bus temperature itself — the hermetic sphere's fixed skin becomes a thermostat instead of a single fixed compromise."
+    parts: [ca_louver_s]
+    # NEW: th_hermeticBus (T3, band 1) was passive-only (a fixed radiating skin) — this is the real next
+    # step, active/dynamic heat rejection, not just a bigger version of the same passive bus.
+
+  - id: int_compactCrewPod
+    title: "Compact Crew Pod"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [life_openLoopECLSS]
+    flavor: "A minimal cabin and its own protective nose cover — not a full capsule program, just the smallest crewed pod that still counts as one."
+    parts: [landerCabinSmall, ShieldCapLarge]
+    # LOWER CONFIDENCE: paired on "small generic crew pod + a protective cover," not a confirmed real
+    # mission lineage like everything else this batch — flagging rather than asserting.
+
+  # ================================================================================================
+  # ============ BAND 3 * CREWED LUNAR LANDING + MOON-ROCKET PROPULSION (engines, 2026-07) ==========
+  # ==== T8 = operational Moon rocket (Saturn gas-gen; Proton storable ORSC); T9 = high-perf apex ===
+  # ==== (N1 kerolox ORSC, M-1, NTR) + the lander.  Authored from crewed-lunar-landing-partlist.tsv =
+  # ================================================================================================
+
+  # ---- Lane 1: crewed lunar landing (the headline) ----
+  - id: fd_deepThrottleLanding
+    title: "Deep-Throttle Descent"
+    discipline: FluidDynamics
+    tier: 9
+    parents: [fd_continuousThrottleDescent, fd_pressureFedRestart]
+    flavor: "Throttle a crewed descent engine ten-to-one for a controlled touchdown, and trust a pressure-fed ascent engine to light once - or the crew stays. Surveyor learned to throttle a descent; the Service Module learned to relight on faith; here the two meet and land people."
+    parts: [ROE-LMDE, ROC-LEMLMDEBDB, ROE-LMAE, ROC-LEMLMAEBDB, RO-KTDU417]
+    # King LMDE (10:1 deep-throttle descent). LMAE = the one-shot pressure-fed ascent; KTDU-417 = the
+    # Soviet LK lander, homed by ROLE not chemistry (turbopump UDMH/NTO). Crossover, both parents load-
+    # bearing. LMDE's own upgrade (LMDE-J) barred here by doctrine-4 -> fd_lunarSurfaceMobility.
+  - id: fd_lunarSurfaceMobility
+    title: "Lunar Surface Mobility"
+    discipline: FluidDynamics
+    tier: 10
+    parents: [fd_deepThrottleLanding]
+    flavor: "Once you are down, get around - a throttleable open-cockpit rocket to hop the surface, and the uprated descent engine of the longer, heavier missions that follow the first footprints."
+    parts: [ROC-LFVBDB]
+    upgrades: [RFUpgrade_LMDE-J]
+    # Thin now (LFV + the doctrine-4-displaced LMDE-J uprate); grows into the extended-surface-ops home
+    # (LRV rover / MESA) when non-engine parts are curated.
+
+  # ---- Lane 2: F-1 uprate trap ----
+  - id: fd_gasGeneratorApex
+    title: "Diminishing-Return Thrust Uprating"
+    discipline: FluidDynamics
+    tier: 9
+    parents: [fd_gasGeneratorCeiling]
+    flavor: "One more percent of thrust from a cycle with nothing left to give. The mightiest engine ever built is also the end of its line - spend a whole tier here and you have bought a rounding error while staged combustion and hydrolox walk past you."
+    upgrades: [RFUpgrade_F-1-1.52M]
+    # Deliberate opportunity-cost TRAP (user call): dead-end parentage, marginal F-1 uprate, sitting at
+    # the same tier as the lander and NTR.
+
+  # ---- Lane 3: hydrolox uppers ----
+  - id: cryo_gasGeneratorHydrolox
+    title: "Gas-Generator Hydrolox Combustion"
+    discipline: Cryogenics
+    tier: 8
+    parents: [cryo_expanderCycle, fd_saturnKerolox]
+    flavor: "Drive a hydrogen turbopump with a gas generator instead of the expander's own bleed - trade the closed cycle's elegance for the raw thrust to push a Moon rocket's upper stages. The high-thrust hydrolox engine the expander could never be."
+    parts: [ROE-J2, ROE-HM7, YF75_Engine, YF75D_Engine, ROC-D2AJ10-133]
+    upgrades: [RFUpgrade_LR87-LH2-Vacuum, RFUpgrade_LR87-LH2-SustainerUpgrade, RFUpgrade_LR87-LH2-VacuumUpgrade, RFUpgrade_RZ20-Mk2]
+    # King J-2 (Saturn upper). Crossover: hydrogen handling + gas-generator turbopumps. LR87-LH2 & RZ.20
+    # upgrades ride here legally (bases live in fd_vacuumExpansion / cryo_hydroloxPrototype).
+  - id: cryo_largeHydrolox
+    title: "Hydrolox Thrust Ceiling"
+    discipline: Cryogenics
+    tier: 9
+    parents: [cryo_gasGeneratorHydrolox]
+    flavor: "Scale the gas-generator hydrolox engine until it rivals a kerolox booster - a hydrogen engine of five thousand kilonewtons. The hydrolox twin of the F-1 ceiling: colossal, thirsty, never flown, and the end of its own line."
+    parts: [ROE-M1]
+    upgrades: [RFUpgrade_J-2-225K, RFUpgrade_J-2-230K]
+    # J-2 uprates land here (doctrine-4: J-2 base is one tier down in cryo_gasGeneratorHydrolox).
+  - id: cryo_refinedExpander
+    title: "Refined Expander-Cycle Combustion"
+    discipline: Cryogenics
+    tier: 7
+    parents: [cryo_expanderCycle]
+    flavor: "Wring more specific impulse out of the closed expander cycle - hotter, tighter plumbing on the efficient small upper stage."
+    upgrades: [RFUpgrade_RL10A-3-3, RFUpgrade_RL10A-3-7]
+    # Thin stub (RL-10 base sits in cryo_expanderCycle; its refinements can't live with it). Fills out as
+    # the long RL-10 chain arrives in later batches.
+
+  # ---- Lane 4: kerolox ORSC (N1) ----
+  - id: pc_n1ClosedCycle
+    title: "Subcooled-Propellant Staged Combustion"
+    discipline: PropellantChemistry
+    tier: 9
+    parents: [pc_orscDebut]
+    flavor: "Chill the propellants until they are dense enough, then run oxidiser-rich staged combustion at booster scale - the most efficient kerosene engine anyone ever fired. The rocket it flew on failed; the engine never did."
+    parts: [ROE-NK33, ROE-NK43, SXTNK21BlockV]
+    upgrades: [RFUpgrade_NK-19, RFUpgrade_NK-21, RFUpgrade_11D33, RFUpgrade_11D33M, RFUpgrade_RD-58]
+    # King NK-33. Fillers cascade UP by doctrine-4: NK-9/NK-9V's upgrades (NK-19/21) + the whole RD-58
+    # chain (11D33/11D33M/RD-58) - all their base parts live one tier down in pc_orscDebut.
+
+  # ---- Lane 5: NTO ORSC (Proton) ----
+  - id: pc_protonStagedCombustion
+    title: "Storable Staged Combustion"
+    discipline: PropellantChemistry
+    tier: 8
+    parents: [fd_regenCooling, fd_sovietStorable]
+    flavor: "Bring staged combustion to the storables: route the preburner exhaust back through the chamber on nitrogen tetroxide and hydrazine, and the workhorse hypergolic booster gets its efficiency jump without ever needing a cryogen. The engine that is still flying."
+    parts: [ROE-RD275, ROE-RD254, ROE-RD0210]
+    # King RD-253/275. Parallel storable ORSC debut, sharing the regen-cooling root with the kerolox debut
+    # (pc_orscDebut) in a different propellant branch. Lower Isp than kerolox ORSC -> a tier below N1.
+  - id: pc_refinedStorableORSC
+    title: "Refined Storable Staged Combustion"
+    discipline: PropellantChemistry
+    tier: 9
+    parents: [pc_protonStagedCombustion, pc_storableVernierFamily]
+    flavor: "Squeeze the storable staged-combustion boosters a little further - Mk-II chambers, higher flow, the same dependable poison."
+    upgrades: [RFUpgrade_RD-253-Mk2, RFUpgrade_RD-254-11D44-Mk2, RFUpgrade_RD-0210, RFUpgrade_RD-0203U, RFUpgrade_RD-0212, RFUpgrade_RD-0213, RFUpgrade_RD-0214]
+    # Pure doctrine-4 catch node: every upgrade's base lives in pc_protonStagedCombustion or
+    # pc_storableVernierFamily, so none can sit with its base.
+
+  # ---- Lane 6: nuclear thermal (opens NuclearEngineering as a propulsion branch) ----
+  - id: nuc_nuclearThermalRocket
+    title: "Solid-Core Nuclear Thermal Propulsion"
+    discipline: NuclearEngineering
+    tier: 9
+    parents: [cryo_hydrogen]
+    flavor: "Heat liquid hydrogen in a fission reactor and blow it out a nozzle - twice the specific impulse of the best chemical engine, bought as a heavy, low-thrust, radioactive gamble. The road to deep space forks here."
+    parts: [KIWIB48, KIWIA24]
+    # King KIWI-B4E. Opens NuclearEngineering as a PROPULSION discipline (was radiation science only).
+    # PENDING: a fission-reactor parent (SNAP-10A, power lane) joins later and closes the T1->T9 gap - the
+    # LH2-handling edge is the only prereq placed so far.
+  - id: nuc_nuclearRamjet
+    title: "Reactor-Heated Ramjet"
+    discipline: NuclearEngineering
+    tier: 10
+    parents: [nuc_nuclearThermalRocket, av_ramjet]
+    flavor: "Skip the propellant entirely: ram air through a live reactor and let the heat do the rest - an engine that could fly for weeks and irradiate everything it passed. A frontier curiosity that goes nowhere, on purpose."
+    parts: [RO-A136]
+    # Provisional tier/parent (pending the reactor node). The Pluto dead-end crossover: NuclearEngineering
+    # x AirBreathing.
+
+  # ================================================================================================
+  # ===================== BAND 3 * AVIONICS GRANTS LADDER + DSN LEVELS (T7 -> T8) ==================
+  # `Science-Core-*`/`RP0Level*TrackingStation` are RP-1 PARTUPGRADE names marked REFERENCE in the T3
+  # curation audit (AXE doesn't emit the literal RP-1 upgrade) — but the SAME names are already reused
+  # live as `grants:` values by AXE's own plugin-facing tier system (gnc_basicAvionics/tel_dopplerRanging/
+  # tel_pcmTelemetry already do this). These are the next rungs of that same already-live ladder, not
+  # superseded content — confirmed by checking disposition consistency before placing.
+  # ================================================================================================
+  - id: gnc_interplanetaryAvionics
+    title: "Interplanetary Avionics Tier"
+    discipline: GuidanceControl
+    tier: 7
+    parents: [gnc_basicAvionics]
+    flavor: "The same miniaturised guidance stack, qualified for a mission measured in months past Earth instead of weeks in its own orbit."
+    grants: [Science-Core-interplanetaryProbes]
+  - id: gnc_improvedAvionics
+    title: "Improved Avionics Tier"
+    discipline: GuidanceControl
+    tier: 8
+    parents: [gnc_interplanetaryAvionics]
+    flavor: "The next rung of the same ladder — more capability in the same mass and power budget."
+    grants: [Science-Core-improvedAvionics]
+  - id: gnc_matureAvionics
+    title: "Mature Avionics Tier"
+    discipline: GuidanceControl
+    tier: 9
+    parents: [gnc_improvedAvionics]
+    flavor: "The ladder's most capable rung reached in this file — everything the earlier tiers proved, running longer and doing more of it."
+    grants: [Science-Core-matureAvionics]
+
+  # ================================================================================================
+  # ============ BAND 3 * AVIATION (turbofans) + SOLIDS CONTINUATION (engines, 2026-07) =============
+  # ================================================================================================
+
+  # ---- Lane 7: turbofans (the bypass breakthrough) + solid boosters ----
+  - id: av_highBypassTurbofan
+    title: "High-Bypass Turbofan"
+    discipline: AirBreathing
+    tier: 7
+    parents: [av_variableStator]
+    flavor: "Wrap the core in a huge ducted fan and let most of the air bypass the burner entirely - the quiet, thrifty engine that made long-haul jets economical, trading raw exhaust speed for fuel it never has to carry."
+    parts: [turboFanSize2, JetEngine]
+    # King CF6 (turboFanSize2). CF34 (JetEngine) rides along. Upgrades (CF6-50A, TF34-GE-400A) barred here
+    # by doctrine-4 -> av_advancedJetEngines.
+  - id: av_lowBypassTurbofan
+    title: "Low-Bypass Turbofan"
+    discipline: AirBreathing
+    tier: 7
+    parents: [av_afterburner]
+    flavor: "A modest bypass fan bolted to a fighter's afterburning core - some of the turbofan's thrift without giving up the supersonic dash. The engine of the teen-series fighters."
+    parts: [turboJet, aje_f404, RO-D30F6]
+    # King F100 (turboJet). F404 + D-30 ride along. F100-PW-220 upgrade -> av_advancedJetEngines (doctrine-4).
+  - id: av_advancedJetEngines
+    title: "Advanced Jet Engines"
+    discipline: AirBreathing
+    tier: 8
+    parents: [av_highBypassTurbofan, av_lowBypassTurbofan, av_mach2Turbojet]
+    flavor: "The mature marks of every jet in the hangar - hotter turbines, tighter tolerances, a few percent more thrust and a few percent less fuel, engine by engine."
+    upgrades: [RFUpgrade_CF6-50A, RFUpgrade_F100-PW-220, RFUpgrade_TF34-GE-400A, RFUpgrade_J79-GE-119, RFUpgrade_J79-MTU-J1K, RFUpgrade_J85-GE-21, RFUpgrade_WP-6Z, RFUpgrade_WP-7B, RFUpgrade_R-13F-300, RFUpgrade_R-13F2-300, RFUpgrade_R-15BF2-300, RFUpgrade_RB162-81]
+    # Doctrine-4 collector for late-mark jet refinements whose bases live across av_highBypassTurbofan,
+    # av_lowBypassTurbofan, av_variableStator, av_afterburner, av_highTempTurbojet, av_mach2Turbojet,
+    # av_dedicatedLiftJet - none of those bases live here, so all are legal.
+  - id: av_refinedTurboprop
+    title: "Refined Free-Turbine Turboprop"
+    discipline: AirBreathing
+    tier: 5
+    parents: [av_turboprop]
+    flavor: "Squeeze more shaft power out of the free-turbine turboprop - the small, efficient propjet, refined mark by mark."
+    upgrades: [RFUpgrade_PT6A-11AG, RFUpgrade_PT6A-15AG, RFUpgrade_PT6A-20A, RFUpgrade_PT6A-34, RFUpgrade_PT6A-42, RFUpgrade_PT6A-135]
+    # PT6A refinements; base SXTPWPT6 lives in av_turboprop, so doctrine-4 keeps them here.
+
+  # ---- Lane 8: solids continuation ----
+  - id: pc_largeSegmentedBooster
+    title: "Large-Segment Solid Casting"
+    discipline: PropellantChemistry
+    tier: 8
+    parents: [pc_segmentedCasting]
+    flavor: "Stack more segments and the solid grows without a ceiling - the largest strap-on boosters ever fired, out to a Titan's full seven segments, and the monster that was drawn but never poured. The same segmented mechanism, taken to its limit."
+    parts: [ROE-UA1206, ROE-UA1207, ROE-1206sepMotor, ROE-1207sepMotor]
+    upgrades: [RFUpgrade_AJ260-SL3, RFTech-solids-tltech3]
+    # King UA1206/UA1207 (larger Titan SRBs). AJ260-SL3 uprate lands here (base AJ260-SL in pc_segmentedCasting,
+    # doctrine-4). RFTech-solids-tltech3 = the next solid propellant tech-level after tltech1/2.
+
+  # ================================================================================================
+  # ===================== BAND 3 * RCS PROPELLANT CHEMISTRY (T7) — Cluster F, resolved =============
+  # ================================================================================================
+  - id: pc_storableRcsPropellants
+    title: "Storable RCS Propellant Selection"
+    discipline: PropellantChemistry
+    tier: 8
+    parents: [pc_ntoHypergolics, gnc_smallRcsCatalog]
+    flavor: "The same reaction-control block, filled with whatever storable hypergolic blend the mission calls for — five real combinations flown across five different programs, none of them meaningfully better than the others. A menu, not a ladder."
+    upgrades: [RFUpgrade_MMH+NTO, RFUpgrade_MMH+MON3, RFUpgrade_MMH+MON10, RFUpgrade_UDMH+NTO, RFUpgrade_Aerozine50+NTO, RFTech-rcs-tltech2]
+    # Confirmed via the live RealismOverhaul config (thrusterPower 0.442-0.455, ALL specLevel=operational):
+    # a genuine simultaneous menu, not a sequence — matches why no era-ordering was ever findable.
+  - id: pc_caveaB
+    title: "Cavea-B Oxidiser (gamble)"
+    discipline: PropellantChemistry
+    tier: 9
+    parents: [pc_storableRcsPropellants]
+    flavor: "A storable blend studied but never flown — specLevel=concept in its own source data, the one entry in this family that never left the bench. A small edge over the operational choices, for whoever wants to gamble on it anyway."
+    upgrades: [RFUpgrade_Cavea-B]
