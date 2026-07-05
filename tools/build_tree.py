@@ -335,7 +335,10 @@ def node_block(disc, n, indent="\t", flip_y=None):
     a(f"{indent}\thideEmpty = {'True' if n.get('hide_empty') else 'False'}")
     a(f"{indent}\tnodeName = node_{n['id']}")
     a(f"{indent}\tanyToUnlock = {'True' if n.get('anyToUnlock') else 'False'}")
-    a(f"{indent}\ticon = {disc[n['discipline']]['icon']}")
+    # Full GameData path (not the bare name): most discipline icons aren't stock SimpleIcons,
+    # so a bare `RDicon_x` would fall back in-game. The PNGs ship in GameData/RP-AXE/design/Tree/icons/
+    # (copied from tree/render/prototype/icons/), resolved by KSP like RP-1's RP-1/Tree/Icons/ nodes.
+    a(f"{indent}\ticon = RP-AXE/design/Tree/icons/{disc[n['discipline']]['icon']}")
     a(f"{indent}\tpos = {n['_x']},{yv},-1")
     a(f"{indent}\tscale = 1.0")
     for p in n.get("parents", []) or []:
