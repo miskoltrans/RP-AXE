@@ -59,6 +59,7 @@ namespace RPAxe.RnD
         private static readonly List<AxeTreeLayout.JunctionDot> Dots = new List<AxeTreeLayout.JunctionDot>();   // junction-bus branch dots
         private static readonly List<GameObject> DotPool = new List<GameObject>();   // pooled dot Images (children of RDNodeRoot)
         private static Sprite DotSprite;
+        internal static readonly Color RND_BG = new Color(0.078f, 0.086f, 0.110f, 1f);   // #14161c — matches the prototype backdrop (renderer.js RND_BG)
         private static readonly FieldInfo PosField = AccessTools.Field(typeof(RDNode), "pos");
         private static readonly FieldInfo WidthF = AccessTools.Field(typeof(RDNode), "width");
         private static readonly FieldInfo HeightF = AccessTools.Field(typeof(RDNode), "height");
@@ -242,6 +243,7 @@ namespace RPAxe.RnD
                 Debug.Log($"[AXE] render-port: {lnodes.Count} unique nodes ({(reposition ? placed + " placed" : "stock pos")}), {Routes.Count} edges routed " +
                           $"(layout={AxeTreeMeta.Render.Layout} routing={AxeTreeMeta.Render.Routing} fan={AxeTreeMeta.Render.Fan})");
                 StartCoroutine(FitContentToNodes());   // grow the scroll content to bound a tall/wide tree (else it clips)
+                OverrideBackground(ctrl);               // replace the stock grid with a solid backdrop (matches the prototype)
                 if (DEBUG_DUMP) StartCoroutine(DebugDump());
             }
             catch (Exception e) { Debug.LogError("[AXE] render-port OnTreeSpawn failed: " + e); ready = false; }
@@ -276,6 +278,7 @@ namespace RPAxe.RnD
             {
                 RDController ctrl = RDController.Instance;
                 if (ctrl == null || ctrl.nodes == null || ctrl.nodes.Count == 0) return;
+                OverrideBackground(ctrl);   // re-assert the solid backdrop after Setup/scroll settle
                 RectTransform content = ctrl.gridArea != null && ctrl.gridArea.scrollRect != null ? ctrl.gridArea.scrollRect.content : null;
                 if (content == null) return;
 
@@ -308,6 +311,27 @@ namespace RPAxe.RnD
             catch (Exception e) { Debug.LogError("[AXE] content-fit failed: " + e); }
         }
 
+        // Replace the stock R&D blueprint grid with a solid backdrop that matches the prototype. BGDUMP showed
+        // the grid IS the scroll-content node's own Image (RDNodeRoot == "Grid", sprite=R&D_grid), with every
+        // RDNode rendered as its child on top. So we recolour THAT Image: drop the grid sprite + set the solid
+        // colour -> a plain fill behind all nodes, panning/scaling with them. Per-scene + reset from the prefab
+        // on the next R&D open, so it's non-destructive. Re-asserted from FitContentNow to survive rebuilds.
+        internal static void OverrideBackground(RDController ctrl)
+        {
+            if (!AxeTreeMeta.Render.SolidBg) return;
+            try
+            {
+                RectTransform content = ctrl != null && ctrl.gridArea != null && ctrl.gridArea.scrollRect != null ? ctrl.gridArea.scrollRect.content : null;
+                Image grid = content != null ? content.GetComponent<Image>() : null;
+                if (grid == null) return;
+                grid.sprite = null;                    // drop the R&D_grid texture
+                grid.overrideSprite = null;
+                grid.type = Image.Type.Simple;         // a null-sprite Simple Image renders a solid quad
+                grid.color = RND_BG;                   // -> solid backdrop behind all nodes
+            }
+            catch (Exception e) { Debug.LogError("[AXE] backdrop override failed: " + e); }
+        }
+
         private static void DumpNow()
         {
             try
@@ -337,6 +361,22 @@ namespace RPAxe.RnD
                 Debug.Log($"[AXE] DUMP node0 anchorR={s.GetPosition(RDNode.Anchor.RIGHT, Vector3.zero)} anchorL={s.GetPosition(RDNode.Anchor.LEFT, Vector3.zero)}");
                 Transform root = ctrl.RDNodeRoot;
                 if (root != null) Debug.Log($"[AXE] DUMP RDNodeRoot pos={root.position} localScale={root.localScale} euler={root.eulerAngles}");
+                // BACKGROUND diagnosis: ancestor chain + the host's children, to locate the stock grid.
+                RectTransform contentRT = ctrl.gridArea != null && ctrl.gridArea.scrollRect != null ? ctrl.gridArea.scrollRect.content : null;
+                Transform tw = contentRT;
+                for (int up = 0; up < 6 && tw != null; up++)
+                {
+                    Image im = tw.GetComponent<Image>(); RawImage raw = tw.GetComponent<RawImage>();
+                    Debug.Log($"[AXE] BGDUMP anc[{up}] '{tw.name}' img={(im != null ? im.color.ToString("F2") + (im.sprite != null ? "/spr:" + im.sprite.name : "") : "-")} raw={(raw != null ? (raw.texture != null ? raw.texture.name : "yes") : "-")} kids={tw.childCount}");
+                    tw = tw.parent;
+                }
+                Transform host = contentRT != null ? contentRT.parent : null;
+                if (host != null)
+                    for (int i = 0; i < host.childCount; i++)
+                    {
+                        Transform c = host.GetChild(i);
+                        Debug.Log($"[AXE] BGDUMP host.kid[{i}] '{c.name}' img={(c.GetComponent<Image>() != null)} raw={(c.GetComponent<RawImage>() != null)} active={c.gameObject.activeSelf}");
+                    }
                 RectTransform content = ga != null && ga.scrollRect != null ? ga.scrollRect.content : null;
                 if (root != null && content != null)
                     Debug.Log($"[AXE] DUMP root==content? {ReferenceEquals(root, content)} rootLocalY={root.localPosition.y:F0} rootParent={(root.parent != null ? root.parent.name : "null")} contentWorldY={content.position.y:F0} contentParent={(content.parent != null ? content.parent.name : "null")}");

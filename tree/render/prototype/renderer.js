@@ -534,17 +534,14 @@ function buildGeometry(){
 // ============================ view / draw ============================
 const SX=wx=>wx*cam.s+cam.x, SY=wy=>wy*cam.s+cam.y;
 
-// ---- KSP R&D backdrop -----------------------------------------------------------------
-// The real R&D tech-tree scene is a dark navy "blueprint": near-black blue base with a
-// faint blue grid (a fine grid + brighter major lines). Colours + spacing sampled from an
-// actual in-game screenshot (Instance/axe-shot-RD.png): base ~#0b101e, grid ~rgba(90,120,170).
-// Reproduced so tile/edge/icon colours are judged against the real background, not a flat
-// grey. For pixel-exact fidelity drop a real screenshot named `rnd-bg.png` beside this file.
-// NOTE: drawn screen-space (fixed grid); in-game the grid pans/zooms with the canvas — use
-// rnd-bg.png if that difference matters for what you're checking.
+// ---- backdrop -------------------------------------------------------------------------
+// Solid dark backdrop (a hair cool) so the bright discipline tiles read true. The in-game
+// R&D grid is overridden to this SAME colour (AxeTreeRender.cs RND_BG) so prototype == KSP.
+// Drop a real screenshot named `rnd-bg.png` beside this file to override with an image.
+const RND_BG = '#14161c';   // keep in sync with AxeTreeRenderHost.RND_BG
 let _bgImg=null, _bgTried=false;
 function ensureBgImage(){ if(_bgTried) return; _bgTried=true;
-  const im=new Image(); im.onload=()=>{ _bgImg=im; draw(); }; im.src='rnd-bg.png'; }   // onerror -> stay procedural
+  const im=new Image(); im.onload=()=>{ _bgImg=im; draw(); }; im.src='rnd-bg.png'; }   // onerror -> stay solid
 function drawBackground(){
   ensureBgImage();
   const W=cv.clientWidth, H=cv.clientHeight;
@@ -552,13 +549,7 @@ function drawBackground(){
     const iw=_bgImg.naturalWidth, ih=_bgImg.naturalHeight, s=Math.max(W/iw,H/ih);
     ctx.drawImage(_bgImg,(W-iw*s)/2,(H-ih*s)/2,iw*s,ih*s); return;
   }
-  ctx.fillStyle='#0b101e'; ctx.fillRect(0,0,W,H);                      // dark navy base
-  const STEP=28, MAJOR=5, FINE='rgba(90,120,170,0.07)', MAJ='rgba(98,128,180,0.14)';   // 28px fine grid measured off the real shot
-  ctx.lineWidth=1;
-  for(let i=0,x=0; x<=W; i++,x+=STEP){ ctx.strokeStyle = i%MAJOR===0?MAJ:FINE;
-    ctx.beginPath(); ctx.moveTo(Math.round(x)+0.5,0); ctx.lineTo(Math.round(x)+0.5,H); ctx.stroke(); }
-  for(let j=0,y=0; y<=H; j++,y+=STEP){ ctx.strokeStyle = j%MAJOR===0?MAJ:FINE;
-    ctx.beginPath(); ctx.moveTo(0,Math.round(y)+0.5); ctx.lineTo(W,Math.round(y)+0.5); ctx.stroke(); }
+  ctx.fillStyle=RND_BG; ctx.fillRect(0,0,W,H);
 }
 
 function draw(){
