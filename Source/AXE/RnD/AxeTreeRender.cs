@@ -550,7 +550,16 @@ namespace RPAxe.RnD
         {
             if (rd == null || rd.graphics == null) return;
             UIStateButton btn = rd.graphics.button;
-            if (btn != null && btn.Image != null) btn.Image.color = tile;
+            if (btn != null && btn.Image != null)
+            {
+                // Flatten the tile: the stock node-frame sprite averages ~0.5 luminance and KSP multiplies it
+                // by our colour, so tiles rendered ~half as bright as the prototype's flat fill (verified: a
+                // #c2a0e0 tile came out #604f6f). Drop the sprite -> a flat quad shows the colour at full value.
+                btn.Image.sprite = null;
+                btn.Image.overrideSprite = null;
+                btn.Image.type = Image.Type.Simple;
+                btn.Image.color = tile;
+            }
             // Draw the discipline glyph in its NATIVE colours — the prototype draws the icon untinted, and
             // the shipped RDicon_* PNGs (GameData/RP-AXE/design/Tree/icons, wired via each node's cfg `icon`)
             // are dark line-art that reads on every (bright) discipline tile. White = no multiply; carry the
