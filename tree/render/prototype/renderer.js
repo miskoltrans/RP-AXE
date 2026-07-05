@@ -40,11 +40,12 @@ let hoverId=null, selId=null, focusSet=null, litEdges=null;
 let cv, ctx, DPR=window.devicePixelRatio||1;
 // Fixed rendering flags (no longer toggleable — always these values): arrowheads/icons/discipline
 // colours/lineage-highlight/research-state/fan-endpoints/square-tiles ON, halo OFF, baseline OFF.
-const opt={ fan:true, xfan:true, xfanPitch:16, avoid:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'junction', icons:true, square:true, layout:'compiler', spacingX:1.0, spacingY:1.0, diffspread:false, halo:false };
+const opt={ fan:true, xfan:true, xfanPitch:16, avoid:true, arrows:true, discEdges:true, highlight:true, baseline:false, progress:true, routing:'junction', icons:true, square:true, layout:'compiler', spacingX:1.0, spacingY:1.0, diffspread:false, halo:false, doneStyle:'stamp' };   // doneStyle: 'stamp' (keep disc colour + bold green ring/check) | 'tile' (recolour tile green) — toggle with the 'd' key
 const NW=()=>opt.square?NODE_SQ:NODE_W, NH=()=>opt.square?NODE_SQ:NODE_H;   // current tile w/h (rect vs square)
 let researched=new Set();                      // research state (KSP RDNode.State: researched/researchable/locked)
 const LSKEY='rpaxe-tree-progress';
 const C_DONE='#4ade80', C_AVAIL='#38bdf8';     // researched / researchable (the frontier = "what to research next")
+const C_DONE_FILL='#2fa25f';                    // doneStyle='tile': the green a researched tile is recoloured to
 const EDGE_LOCK='#464b53', GOLD_DIM='#6f6535'; // prereq-not-met edge (stock LineMaterialGray)
 
 // ============================ model ============================
@@ -626,8 +627,9 @@ function drawNode(n, focusing){
   // 3-state read (portable: tint + alpha + badge). LOCKED = desaturated + dim; RESEARCHABLE = glow ring;
   // RESEARCHED = ✓ badge. But a LOCKED node ON the focused lineage pops at full colour (not desaturated).
   const lockedRest = opt.progress && st===LOCKED && !inFocus;
+  const doneTile = opt.progress && st===RESEARCHED && !dimFocus && opt.doneStyle==='tile';   // recolour the whole tile green
   const alpha = dimFocus ? DIM_NODE : (lockedRest ? 0.42 : 1);
-  const fill = lockedRest ? desat(disc.color, 0.8) : disc.color;
+  const fill = lockedRest ? desat(disc.color, 0.8) : (doneTile ? C_DONE_FILL : disc.color);
   ctx.globalAlpha = alpha;
 
   roundRect(x,y,w,h,Math.max(2,3*cam.s)); ctx.fillStyle=fill; ctx.fill();
@@ -636,8 +638,9 @@ function drawNode(n, focusing){
     if(st===RESEARCHABLE){                         // AVAILABLE: bright glow ring — the actionable frontier
       ctx.save(); ctx.shadowColor=C_AVAIL; ctx.shadowBlur=Math.max(4,9*cam.s);
       ctx.strokeStyle=C_AVAIL; ctx.lineWidth=Math.max(2,3*cam.s); ctx.stroke(); ctx.restore();
-    } else if(st===RESEARCHED){                     // DONE: subtle green ring (+ ✓ badge below)
-      ctx.strokeStyle=C_DONE; ctx.lineWidth=2; ctx.stroke();
+    } else if(st===RESEARCHED){                     // DONE (+ the ✓ badge below, both styles)
+      if(opt.doneStyle==='stamp'){ ctx.strokeStyle=C_DONE; ctx.lineWidth=Math.max(2.5,3.4*cam.s); ctx.stroke(); }   // bold green ring, disc colour kept
+      else { ctx.strokeStyle='#1c6e40'; ctx.lineWidth=Math.max(1,1.5*cam.s); ctx.stroke(); }                        // darker-green edge on the green tile
     }
   }
   if(focusing && opt.halo && inFocus && n.id!==selId){   // HALO: white outline pops the lineage over the ghost
@@ -668,11 +671,13 @@ function drawNode(n, focusing){
       ctx.fillText(`T${n.tier} · ${np?np+'p':'—'}${nu?'+'+nu+'u':''}`, x+w/2, y+h-8*cam.s);
     }
   }
-  if(opt.progress && !dimFocus && st===RESEARCHED && cam.s>0.18){    // ✓ researched badge: green disc + tick
-    const r=Math.max(4.5,6.5*cam.s), cx=x+w-r-1.5, cy=y+r+1.5;
-    ctx.globalAlpha=alpha; ctx.fillStyle=C_DONE; ctx.beginPath(); ctx.arc(cx,cy,r,0,6.2832); ctx.fill();
-    ctx.strokeStyle='#08140a'; ctx.lineWidth=Math.max(1.2,1.6*cam.s); ctx.lineCap='round'; ctx.lineJoin='round';
-    ctx.beginPath(); ctx.moveTo(cx-r*0.42,cy+r*0.04); ctx.lineTo(cx-r*0.08,cy+r*0.4); ctx.lineTo(cx+r*0.48,cy-r*0.4); ctx.stroke();
+  if(opt.progress && !dimFocus && st===RESEARCHED && cam.s>0.15){    // ✓ researched badge: bold green disc + tick
+    const r=Math.max(6,8.5*cam.s), cx=x+w-r-1, cy=y+r+1;
+    ctx.globalAlpha=alpha;
+    ctx.fillStyle=C_DONE; ctx.beginPath(); ctx.arc(cx,cy,r,0,6.2832); ctx.fill();
+    ctx.strokeStyle='rgba(6,20,10,0.9)'; ctx.lineWidth=Math.max(1,1.4*cam.s); ctx.stroke();   // dark rim -> reads on the green tile too
+    ctx.strokeStyle='#08140a'; ctx.lineWidth=Math.max(1.6,2.1*cam.s); ctx.lineCap='round'; ctx.lineJoin='round';
+    ctx.beginPath(); ctx.moveTo(cx-r*0.42,cy+r*0.02); ctx.lineTo(cx-r*0.06,cy+r*0.42); ctx.lineTo(cx+r*0.5,cy-r*0.42); ctx.stroke();
   }
   if(opt.square && n.id===hoverId){                 // square tiles have no in-tile name -> label on hover
     ctx.globalAlpha=1; ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='top';
@@ -782,7 +787,8 @@ function updateHud(){ const el=document.getElementById('hud'); if(!el)return;
   if(!opt.progress){ el.style.display='none'; return; } el.style.display='';
   const c=counts();
   el.innerHTML=`<b>${c.r}</b>/${c.total} researched · <span style="color:${C_AVAIL}">${c.a} available</span> · `+
-               `<span style="color:#8a8f98">${c.l} locked</span> · ${c.sci.toLocaleString()}◈`;
+               `<span style="color:#8a8f98">${c.l} locked</span> · ${c.sci.toLocaleString()}◈`+
+               ` · <span style="color:${C_DONE}">done:${opt.doneStyle}</span> <span style="color:#6b7280">(d)</span>`;
 }
 function afterStateChange(){ draw(); updateHud(); if(selId) showPanel(selId); }
 function init(){
@@ -872,6 +878,9 @@ function init(){
   window.addEventListener('keydown',e=>{ if(!selId||(e.target&&e.target.tagName==='INPUT')||!opt.progress)return;
     if(e.key==='r'){ const s=stateOf(selId); if(s===RESEARCHABLE)research(selId); else if(s===LOCKED)researchPathTo(selId); afterStateChange(); }
     else if(e.key==='u'){ unresearch(selId); afterStateChange(); } });
+  // 'd' toggles the researched treatment (stamp <-> tile) so you can compare them live on real nodes.
+  window.addEventListener('keydown',e=>{ if(e.target&&e.target.tagName==='INPUT')return;
+    if(e.key==='d'){ opt.doneStyle = opt.doneStyle==='stamp' ? 'tile' : 'stamp'; draw(); updateHud(); } });
   updateHud();
   // console / test API (also lets power users script progress)
   window.RP={ research, unresearch, researchPathTo, resetProgress, stateOf, counts, redraw:afterStateChange, get researched(){return researched;} };
