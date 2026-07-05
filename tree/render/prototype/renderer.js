@@ -534,9 +534,43 @@ function buildGeometry(){
 // ============================ view / draw ============================
 const SX=wx=>wx*cam.s+cam.x, SY=wy=>wy*cam.s+cam.y;
 
+// ---- KSP R&D backdrop (screen-space, fixed under the panning tree) -------------------
+// Stand-in for the real R&D tech-tree scene so tile / edge / icon colours are judged
+// against KSP's actual (dark, cool) background instead of a flat grey — the whole point
+// of this prototype is to preview the in-game look. Drop a real screenshot named
+// `rnd-bg.png` beside this file (KSP F1 grab of the R&D screen) for pixel-perfect
+// fidelity; otherwise a procedural dark-slate gradient + teal nebula + faint fixed stars
+// stands in. Screen-space (not world) because KSP's backdrop is fixed while the tree pans.
+let _bgImg=null, _bgTried=false, _stars=null;
+function ensureBgImage(){ if(_bgTried) return; _bgTried=true;
+  const im=new Image(); im.onload=()=>{ _bgImg=im; draw(); }; im.src='rnd-bg.png'; }   // onerror -> stay procedural
+function drawBackground(){
+  ensureBgImage();
+  const W=cv.clientWidth, H=cv.clientHeight;
+  if(_bgImg && _bgImg.naturalWidth){                                   // real screenshot: cover-fit
+    const iw=_bgImg.naturalWidth, ih=_bgImg.naturalHeight, s=Math.max(W/iw,H/ih);
+    ctx.drawImage(_bgImg,(W-iw*s)/2,(H-ih*s)/2,iw*s,ih*s); return;
+  }
+  const g=ctx.createLinearGradient(0,0,0,H);                           // near-black (top) -> dark slate-blue
+  g.addColorStop(0,'#090d12'); g.addColorStop(1,'#121b24');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  const rg=ctx.createRadialGradient(W*0.5,H*0.30,0, W*0.5,H*0.30,Math.max(W,H)*0.7);   // soft teal nebula glow
+  rg.addColorStop(0,'rgba(40,88,106,0.20)'); rg.addColorStop(0.55,'rgba(28,58,78,0.07)'); rg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=rg; ctx.fillRect(0,0,W,H);
+  if(!_stars||_stars.W!==W||_stars.H!==H){                             // faint stars, fixed field (cached per size)
+    const n=Math.round(W*H/8500), a=[];
+    for(let i=0;i<n;i++) a.push([Math.random(),Math.random(),0.3+0.7*Math.random(),0.12+0.35*Math.random()]);
+    a.W=W; a.H=H; _stars=a;
+  }
+  ctx.fillStyle='#cfe3ee';
+  for(const s of _stars){ ctx.globalAlpha=s[3]; ctx.beginPath(); ctx.arc(s[0]*W,s[1]*H,s[2],0,6.2832); ctx.fill(); }
+  ctx.globalAlpha=1;
+}
+
 function draw(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
   ctx.clearRect(0,0,cv.width,cv.height);
+  drawBackground();                             // KSP-R&D-like backdrop (screenshot if present, else procedural)
   ctx.lineJoin='round'; ctx.lineCap='round';   // cosmetic — KSP rounds via tessellated chamfer pts; caps are square
   const focusing = !!(focusSet && opt.highlight);
 
