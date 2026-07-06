@@ -68,10 +68,12 @@ namespace RPAxe.RnD
                 bool inLineage = lineage.Contains(n);
                 if (n.graphics != null)
                 {
-                    if (!inLineage) AxeTreeRenderHost.PaintTile(n, GhostTile(n));                           // ghost the tile
-                    else if (n.state == RDNode.State.RESEARCHED) AxeTreeRenderHost.PaintTile(n, AxeTreeRenderHost.DoneTile);   // researched stays green on the lineage
-                    else if (AxeTreeMeta.TryDisciplineColor(n.tech?.techID, out Color dc)) AxeTreeRenderHost.PaintTile(n, dc);  // pop
-                    else AxeTreeRenderHost.PaintTile(n, Color.white);
+                    // TintTile (colour only) not PaintTile — hover repaints every node, and PaintTile's
+                    // per-node transform write (icon scale) forced a full canvas rebuild each hover-move.
+                    if (!inLineage) AxeTreeRenderHost.TintTile(n, GhostTile(n));                           // ghost the tile
+                    else if (n.state == RDNode.State.RESEARCHED) AxeTreeRenderHost.TintTile(n, AxeTreeRenderHost.DoneTile);   // researched stays green on the lineage
+                    else if (AxeTreeMeta.TryDisciplineColor(n.tech?.techID, out Color dc)) AxeTreeRenderHost.TintTile(n, dc);  // pop
+                    else AxeTreeRenderHost.TintTile(n, Color.white);
                     if (!inLineage && n.graphics.searchHighlight != null) n.graphics.searchHighlight.enabled = false;   // hide state ring on ghosts
                 }
                 if (n.parents == null) continue;

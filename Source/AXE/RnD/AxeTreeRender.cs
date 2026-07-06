@@ -270,8 +270,39 @@ namespace RPAxe.RnD
         {
             yield return null; yield return null; yield return null;   // let the nodes' Setup apply localPositions
             FitContentNow();
+            CenterOnStart(RDController.Instance);   // land the initial view on the start node
             yield return new WaitForSecondsRealtime(1.25f);
             FitContentNow();
+        }
+
+        // Scroll the initial view to the start node: vertically centred, ~25% from the left (the tree only
+        // extends rightward from start, so the left is empty). Runs once at open; setting content.position
+        // is a scroll offset only (not a pivot change), so it doesn't affect zoom.
+        private static void CenterOnStart(RDController ctrl)
+        {
+            try
+            {
+                UnityEngine.UI.ScrollRect sr = ctrl != null && ctrl.gridArea != null ? ctrl.gridArea.scrollRect : null;
+                RectTransform content = sr != null ? sr.content : null;
+                RectTransform vp = sr != null ? (sr.viewport != null ? sr.viewport : sr.transform as RectTransform) : null;
+                if (content == null || vp == null || ctrl.nodes == null) return;
+
+                RDNode start = null;
+                foreach (RDNode n in ctrl.nodes) if (n != null && n.tech != null && n.tech.techID == "start") { start = n; break; }
+                if (start == null)   // fallback: the leftmost node (tier 0)
+                {
+                    float mnx = 1e9f;
+                    foreach (RDNode n in ctrl.nodes) if (n != null && n.transform.localPosition.x < mnx) { mnx = n.transform.localPosition.x; start = n; }
+                }
+                if (start == null) return;
+
+                Rect vr = vp.rect;
+                Vector2 targetLocal = new Vector2(vr.xMin + vr.width * 0.25f, vr.center.y);   // 25% from left, vertical centre
+                Vector3 delta = vp.TransformPoint(targetLocal) - start.transform.position;
+                content.position += new Vector3(delta.x, delta.y, 0f);
+                if (sr != null) sr.velocity = Vector2.zero;
+            }
+            catch (Exception e) { Debug.LogError("[AXE] center-on-start failed: " + e); }
         }
 
         private static void FitContentNow()
@@ -601,6 +632,18 @@ namespace RPAxe.RnD
             rd.graphics.SetIconColor(new Color(1f, 1f, 1f, tile.a));
             if (TechIconF != null && TechIconF.GetValue(rd.graphics) is Graphic ic)   // shrink the glyph for easier navigation
                 ic.transform.localScale = new Vector3(ICON_SCALE, ICON_SCALE, 1f);
+        }
+
+        // Lightweight recolour for the hover highlight: sets ONLY the tile + icon COLOUR. Graphic.color
+        // equality-checks, so unchanged nodes cost nothing (no dirty, no canvas rebuild) — unlike PaintTile,
+        // which also writes the icon localScale (a transform write per node, ×223 per hover-move = the lag).
+        // The sprite/scale setup stays from the last PaintTile (spawn / state change).
+        internal static void TintTile(RDNode rd, Color tile)
+        {
+            if (rd == null || rd.graphics == null) return;
+            UIStateButton btn = rd.graphics.button;
+            if (btn != null && btn.Image != null) btn.Image.color = tile;
+            rd.graphics.SetIconColor(new Color(1f, 1f, 1f, tile.a));
         }
 
         private static readonly Color RingAvailable = new Color(0.32f, 0.78f, 0.97f, 1f);   // researchable = cyan frontier
