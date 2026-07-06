@@ -386,6 +386,7 @@ nodes:
     parents: [start]
     flavor: "Roll, fusion-weld and proof-test a thin metal cylinder that holds its propellant under pressure without bursting — the first tank that flies, and the steel the first engine chambers are cut from. Heavy, but honest."
     parts: [ROT-GenericTank-Separate, ROT-BoosterTank-Separate, ROT-RadialTank-Separate, ROT-AtlasTank-Separate, ROT-KatnissTank-Separate, ROT-LanderTank-Separate, ROT-MiscTank-Radial-Separate, ROT-MiscTank-Separate, ROT-Nose-Separate, ROT-SphericalTank-Separate, ROT-ToroidalTank-Separate, ca_tank_mp_s, ReleaseValve]
+    upgrades: [RFTech-Tank-Sep-Al2, RFTech-Tank-Sep-Al]  # early separate-wall aluminium tank tech-levels ride the base tank node (2026-07 Group-B)
   - id: met_isogrid
     title: "Machined Isogrid Stiffening"
     discipline: Metallurgy
@@ -766,7 +767,7 @@ nodes:
     tier: 4
     parents: [aero_fairings]
     flavor: "Stiffen a spun-aluminium payload shroud with riveted stringers instead of casting it thick - the first step off dead-weight spun metal, shaving shroud mass on every launch. The opening rung of a fairing-materials ladder that runs on through magnesium and fibreglass to composite shells in the bands ahead."
-    upgrades: [PFTech-Fairing-I]
+    upgrades: [PFTech-Fairing-I, PFTech-Fairing-II]  # Fairing-II (improved aluminium fairing) rides with Fairing-I 2026-07 Group-B
   - id: elec_arCoatings
     title: "Anti-Reflective Cell Coatings"
     discipline: ElectricalPower
@@ -797,6 +798,7 @@ nodes:
     parents: [met_weldedTank]
     flavor: "A cockpit sealed and fed with oxygen to keep a pilot alive where the air runs out — the jet trainer, the high-flying bomber, the rocket aeroplane at the edge of space. The crew compartment that must hold an environment, not just a windscreen: the first rung toward a sealed cabin and, past it, a capsule."
     parts: [RO-X1Cockpit, RO-FighterInlineCockpit, SXTmk3Cockpit52]
+    upgrades: [X2CockpitUpgrade]  # X-2 rocketplane cockpit upgrade rides the X-1 cockpit node 2026-07 Group-B
 
   - id: str_radialDecouplers
     title: "Prefabricated Radial Decouplers"
@@ -3065,7 +3067,7 @@ nodes:
     tier: 9
     parents: [th_hermeticBus]
     flavor: "Wrap the bus in another few layers of aluminised film and the heat leak keeps dropping further still - the same passive blanket, thickened for a mission measured in months rather than weeks."
-    upgrades: [MLI.Upgrade3]
+    upgrades: [MLI.Upgrade2, MLI.Upgrade3]  # MLI.Upgrade2 (earlier MLI generation) rides the MLI node 2026-07 Group-B
     # Continues th_hermeticBus's passive-insulation ladder (MLI.Upgrade1 there). MLI.Upgrade2 is a known
     # gap (never curated/placed - see the band-2 handover note) skipped over here, not silently absorbed.
   - id: th_pumpedLoopRadiators
@@ -3085,10 +3087,73 @@ nodes:
     tier: 9
     parents: [str_balloonTank]
     flavor: "Swap the pressure-stabilised tank's stainless skin for an aluminium-copper alloy and the same trick - a wall so thin it needs its own pressure to stand - sheds a third of its weight again. The material the Shuttle's own External Tank flies on."
-    upgrades: [RFTech-Tank-Balloon-SteelAlCu]
+    upgrades: [RFTech-Tank-Balloon-SteelAlCu, RFTech-Tank-Iso-AlCu, RFTech-SM-IV]  # +Iso-AlCu (isogrid, same AlCu alloy) +SM-IV (service-module tankage, lunar era) 2026-07 Group-B
     # Real crossover: the upgrade token name itself (SteelAlCu) names the actual Space Shuttle External
     # Tank alloy transition (steel -> 2219 aluminium-copper alloy). Continues str_balloonTank's
     # pressure-stabilised-tank lineage (T3) with a Metallurgy-side alloy upgrade, not a new tank shape.
+
+  # ===================== TECH-LEVEL LADDER BUILD-OUT (2026-07, Group B) =====================
+  # New capability nodes that host RP-1's materials-science / thermal / late-RCS tech-level ladders,
+  # whose lanes had no home past the mid-tree. Pure tier-filler upgrades (no parts), like the comms
+  # ladder. Rungs that fit an existing era/material node ride there instead (see the ride-on comments).
+  - id: met_aluminiumLithiumTankage
+    title: "Aluminium-Lithium Alloy Tankage"
+    discipline: Metallurgy
+    tier: 11
+    parents: [met_aluminiumCopperBalloonTank]
+    flavor: "Alloy the tank wall with lithium and it comes out several percent lighter and stiffer at the same strength — the dry-mass saving that goes straight into payload. The alloy the Shuttle's Super-Lightweight Tank and a generation of launchers after it are built from."
+    upgrades: [RFTech-Tank-Sep-AlLi, RFTech-Tank-Iso-AlLi, RFTech-Tank-Balloon-SteelAlLi, RFTech-Tank-Wet-Wing2]
+    # The Al-Li generation of RP-1's tank-material line (materialsScienceInternational/LongTerm), continuing
+    # the metallurgy tank chain past AlCu balloon tankage.
+  - id: met_stirWeldedTankage
+    title: "Friction-Stir-Welded Tankage"
+    discipline: Metallurgy
+    tier: 13
+    parents: [met_aluminiumLithiumTankage]
+    flavor: "Join the tank barrel with a spinning shoulder that stirs the metal together below its melting point instead of melting it — a weld with none of the porosity or heat-warp of an arc, strong enough to trust an integral tank wall to. The process behind the friction-stir-welded barrels of the modern launch fleet."
+    upgrades: [RFTech-Tank-Sep-Stir, RFTech-Tank-Iso-Comp]
+    # Friction-stir-welded + composite-isogrid tankage (materialsScienceCommercial era).
+  - id: met_stainlessSteelTankage
+    title: "Stir-Welded Stainless-Steel Tankage"
+    discipline: Metallurgy
+    tier: 15
+    parents: [met_stirWeldedTankage]
+    flavor: "Go back to steel — but a cryo-tough stainless that keeps its strength through re-entry heat and down to liquid-oxygen cold, cheap enough to build a reusable tank-and-hull as one piece. The counter-intuitive material choice behind a fully-reusable heavy launcher."
+    upgrades: [RFTech-Tank-Sep-Starship, RFTech-Tank-Iso-Magic]
+    # Near-future stainless / exotic tankage (materialsScienceNF era; Starship-class).
+  - id: cmp_advancedCompositeFairings
+    title: "High-Temperature Composite Fairings"
+    discipline: CompositeMaterials
+    tier: 12
+    parents: [cmp_compositeFairingShells]
+    flavor: "Cure the fairing from higher-temperature resins and out-of-autoclave layups — lighter shells that also take the aerothermal load of a faster ascent, and come off a production line instead of a hand-layup bench. The payload shroud grown into a manufactured part."
+    upgrades: [PFTech-Fairing-V, PFTech-Fairing-VI]
+    # Late composite-fairing tech-levels (materialsScienceLongTerm/Commercial), past the T9 composite node.
+  - id: th_advancedMLI
+    title: "Perforated Double-Aluminised Insulation"
+    discipline: Thermodynamics
+    tier: 11
+    parents: [th_extendedMLIWrapping]
+    flavor: "Refine the multi-layer blanket — more and thinner double-aluminised layers, perforated to vent the trapped gas so they pack tighter without conducting — and the parasitic heat leak into a cryogenic tank or a cold instrument drops again. The insulation that lets propellant and coolant last a long mission."
+    upgrades: [MLI.Upgrade4, MLI.Upgrade5, RFTech-MLI-UpgradeBalloon]
+    # Later MLI generations (materialsScienceSpaceplanes/LongTerm), past the T9 MLI node.
+  - id: gnc_longLifeRCS
+    title: "Long-Life Reaction-Control Thrusters"
+    discipline: GuidanceControl
+    tier: 11
+    parents: [gnc_bipropAttitudeThrust]
+    flavor: "Build the reaction-control thruster to fire tens of thousands of times without eroding its throat or coking its injector — the durability a space station holds attitude with for decades, and a reusable stage relights on descent after descent. The RCS that stops being a consumable."
+    upgrades: [RFTech-rcs-tltech4, RFTech-rcs-tltech5, RFTech-rcs-tltech7]
+    # Late RCS tech-levels (spaceStation/largeSpaceplane/gridFins eras); the RCS lane had no home past T8.
+  - id: elec_secondaryBatteries
+    title: "Sealed Rechargeable Battery Cells"
+    discipline: ElectricalPower
+    tier: 6
+    parents: [elec_deployableArrays]
+    flavor: "Seal a rechargeable cell so it cycles through orbital night after orbital night without venting or dying — nickel-cadmium, then nickel-hydrogen — and a spacecraft can finally store the power its arrays make in daylight. The other half of every solar power system."
+    upgrades: [RFTech-Battery-II, RFTech-Battery-IV]
+    # Secondary-battery energy-density tech-levels (electronicsHuman/Lunar). Battery-III sits on
+    # int_geminiCapsule from an earlier opportunistic placement; left in place.
   - id: cmp_compositeFairingShells
     title: "Composite Fairing Shells"
     discipline: CompositeMaterials
@@ -3096,7 +3161,7 @@ nodes:
     parents: [met_stiffenedFairings, cmp_ablativeRefinement]
     flavor: "Carry the resin-and-fibre layup learned for a reentry heatshield over to a payload shroud instead - a fairing that sheds the last of the aluminium stringer's dead weight, built from the same composite technique that already keeps a capsule cool on the way down."
     parts: [ROC-CSTNoseCone]
-    upgrades: [PFTech-Fairing-IV]
+    upgrades: [PFTech-Fairing-III, PFTech-Fairing-IV]  # Fairing-III (early composite) rides with Fairing-IV 2026-07 Group-B
     # Real crossover, flagged by a prior author: met_stiffenedFairings' own flavor text promised the
     # fairing-materials ladder "runs on through magnesium and fibreglass to composite shells" - this is
     # that promised rung, crossing into CompositeMaterials by reusing cmp_ablativeRefinement's fibre-resin
@@ -3419,7 +3484,7 @@ nodes:
     parents: [pc_shuttleSRB]
     flavor: "Wind the motor case out of graphite and epoxy instead of forging it from steel, and the dead weight falls away. The filament-wound composite case - on the giant SRMU, the standalone Castor 120, the Titan solids - is the material leap past the heavy segmented steel of the Shuttle booster, more impulse for less structure."
     parts: [ROE-SRMU, ROE-Castor120, ROE-UA1208, ROE-1208sepMotor, ROE-Castor30, ROE-Castor30XL]
-    upgrades: [RFUpgrade_FWC-SRM, RFUpgrade_RSRM-1986, RFTech-solids-tltech6, RFTech-solids-tltech7]
+    upgrades: [RFUpgrade_FWC-SRM, RFUpgrade_RSRM-1986, RFTech-solids-tltech4, RFTech-solids-tltech6, RFTech-solids-tltech7]  # +solids-tltech4 (1972 solid tech-level) 2026-07 Group-B
     # ROE-Castor30/30XL (2026-07, band-5 sweep): direct siblings of Castor 120 already here - same real
     # Castor-30-series commercial family (Antares stage 2), not a separate lineage. Reaches the 6-part cap.
   - id: pc_gemStrapOnCatalog
@@ -4291,6 +4356,7 @@ nodes:
     parents: [pc_filamentWoundSolid]
     flavor: "Add one more segment to the Shuttle's own composite-case booster and it becomes the largest solid rocket motor ever flown - the same casting and winding technique, scaled up one more time for a heavier successor vehicle."
     parts: [MassiveBooster]
+    upgrades: [RFTech-solids-tltech5]  # 1981 solid tech-level (five-segment era) 2026-07 Group-B
     # King RSRMV (SLS). Sibling of pc_gemStrapOnCatalog off the same filament-wound composite-case parent.
 
   # ---- GuidanceControl: commercial-crew abort engines learn to also land ----
