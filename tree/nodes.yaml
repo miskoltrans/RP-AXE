@@ -801,7 +801,7 @@ nodes:
     title: "Sounding-Rocket Stands"
     discipline: GroundSupport
     tier: 1
-    parents: [start]
+    parents: []  # OFF-START: detached from start -> standalone but startable MLP subtree (charter treatment); T1 stands = the root
     flavor: "A rail or a light stand and a mast to fuel it: all a sounding rocket needs to leave the ground. Where the launch-pad line begins."
     parts: [AM_MLP_AerobeeLaunchStand, AM_MLP_LaunchRailLarge, AM_MLP_LaunchRailMedium, AM_MLP_LaunchRailMini, AM_MLP_LaunchRailSmall, AM_MLP_TestStandEngine, AM_MLP_TestStandSmall]
   - id: gs_launchBases
