@@ -1,0 +1,264 @@
+node	node_title	x	kind	name	curated	prev	title
+materialsScienceSpaceStation	Space Station Era Materials Science	-1932	part	ca_vor_mptank	yes	no	CAE-MT12 Propellant Tank (Pressurized)
+materialsScienceSpaceStation	Space Station Era Materials Science	-1932	part	ca_vor_sep1	yes	no	Venera Reentry Module Decoupler
+materialsScienceSpaceStation	Space Station Era Materials Science	-1932	part	ca_vor_tank	yes	no	4MV-1/2 Spacecraft Bus Propellant Tank
+materialsScienceSpaceStation	Space Station Era Materials Science	-1932	part	fft-fueltank-pulseunits-5-1	yes	no	Orion Pulse Unit Magazine (Small)
+materialsScienceSpaceStation	Space Station Era Materials Science	-1932	part	fft-fueltank-pulseunits-5-2	yes	no	Orion Pulse Unit Magazine (Medium)
+materialsScienceSpaceStation	Space Station Era Materials Science	-1932	part	fft-fueltank-pulseunits-5-3	yes	no	Orion Pulse Unit Magazine (Large)
+materialsScienceSpaceStation	Space Station Era Materials Science	-1932	part	ius_dec_fs	yes	no	IUS First Stage Decoupler
+materialsScienceSpaceStation	Space Station Era Materials Science	-1932	part	ius_dec_ss	yes	no	IUS Second Stage Decoupler
+materialsScienceSpaceStation	Space Station Era Materials Science	-1932	upgrade	MLI.Upgrade3	KEEP-capability		
+materialsScienceSpaceStation	Space Station Era Materials Science	-1932	upgrade	rp0EngineerUpgradeStation	DROP-axed-career		
+electronicsSpaceStation	Space Station Era Electronics Research	-1932	upgrade	rp0ResearcherUpgradeStation	DROP-axed-career		
+earlySpaceStations	Early Space Stations	-1847	part	SXTISSHabISK30	yes	no	Skylab Orbital Workshop
+earlySpaceStations	Early Space Stations	-1847	part	SXTSPKTRCabin	yes	no	SPKTR-10 Lacuga Storage Container
+earlySpaceStations	Early Space Stations	-1847	part	sspx-adapter-25-375-1	yes	no	Station Conical Adapter [6.75m to 4.5m]
+earlySpaceStations	Early Space Stations	-1847	part	sspx-adapter-25-375-2	yes	no	Station Flat Adapter [6.75m to 4.5m]
+earlySpaceStations	Early Space Stations	-1847	part	sspx-adjusting-base-125-1	yes	no	2.25m Adjustable Base Frame
+earlySpaceStations	Early Space Stations	-1847	part	sspx-adjusting-base-25-1	yes	no	4.5m Adjustable Base Frame
+earlySpaceStations	Early Space Stations	-1847	part	sspx-adjusting-base-cradle-125-1	yes	no	2.25m Adjustable Base Cradle
+earlySpaceStations	Early Space Stations	-1847	part	sspx-adjusting-base-cradle-25-1	yes	no	4.5m Adjustable Base Cradle
+earlySpaceStations	Early Space Stations	-1847	part	sspx-airlock-125-1	yes	no	2.25m Service Airlock
+earlySpaceStations	Early Space Stations	-1847	part	sspx-attach-125-1	yes	no	2.25m Pressurized Radial Attachment Point
+earlySpaceStations	Early Space Stations	-1847	part	sspx-attach-1875-1	yes	no	3.38m Pressurized Radial Attachment Point
+earlySpaceStations	Early Space Stations	-1847	part	sspx-cargo-container-25-3	yes	no	4.5m Storage Module (Short)
+earlySpaceStations	Early Space Stations	-1847	part	sspx-habitation-125-1	yes	no	2.25m Habitation Module
+earlySpaceStations	Early Space Stations	-1847	part	sspx-habitation-1875-1	yes	no	3.38m Habitation Module (Long)
+earlySpaceStations	Early Space Stations	-1847	part	sspx-tube-125-1	yes	no	2.25m Pressurized Crew Tube (Long)
+earlySpaceStations	Early Space Stations	-1847	part	sspx-tube-1875-1	yes	no	3.38m Pressurized Crew Tube (Long)
+earlySpaceStations	Early Space Stations	-1847	part	sspx-utility-125-1	yes	no	2.25m Utility Module
+earlySpaceStations	Early Space Stations	-1847	part	sspx-utility-1875-1	yes	no	3.38m Utility Module
+earlySpaceStations	Early Space Stations	-1847	part	truss-hex-01	yes	no	Hexa-Girder Modular Truss L1
+earlySpaceStations	Early Space Stations	-1847	part	truss-hex-02	yes	no	Hexa-Girder Modular Truss M1
+earlySpaceStations	Early Space Stations	-1847	part	truss-hex-03	yes	no	Hexa-Girder Modular Truss S1
+earlySpaceStations	Early Space Stations	-1847	part	truss-hex-adapter-01	yes	no	Hexa-Girder Truss Adapter
+spaceStationControl	Space Station Attitude Control	-1847	part	GrapplingDevice	yes	no	Advanced Grabbing Unit
+spaceStationControl	Space Station Attitude Control	-1847	part	ROC-ApolloAPAS75BDB	yes	no	APAS-75 Androgynous Docking Port
+spaceStationControl	Space Station Attitude Control	-1847	part	ROC-ApolloASTPAdapterBDB	yes	no	Apollo-Soyuz Test Project Docking Module
+spaceStationControl	Space Station Attitude Control	-1847	part	ROC-ApolloASTPUVXBDB	yes	no	Apollo-Soyuz Test Project UV Absorbtion Experiment
+spaceStationControl	Space Station Attitude Control	-1847	part	ROC-ApolloASTPVHFBDB	yes	no	Apollo-Soyuz Test Project VHF-FM Antenna
+spaceStationControl	Space Station Attitude Control	-1847	part	ROC-BigGeminiMOLPort	yes	no	MOL Docking Mechanism
+spaceStationControl	Space Station Attitude Control	-1847	part	ROC-LEMTruckRCS3BDB	yes	no	AES LM Truck 3x RCS Cluster
+spaceStationControl	Space Station Attitude Control	-1847	part	ROC-LEMTruckRCS4BDB	yes	no	AES LM Truck 4x RCS Cluster
+spaceStationControl	Space Station Attitude Control	-1847	part	ROE-HiPAT	yes	no	R-4D
+spaceStationControl	Space Station Attitude Control	-1847	part	advSasModule	yes	no	Advanced Inline Stabilizer
+spaceStationControl	Space Station Attitude Control	-1847	part	ca_rw_large	yes	no	RW-4A Radial Reaction Wheel Assembly
+spaceStationControl	Space Station Attitude Control	-1847	part	ca_trident	yes	no	Bi-Propellant Apogee Engine
+spaceStationControl	Space Station Attitude Control	-1847	part	mk2DockingPort	yes	no	Mk2 Clamp-O-Tron
+spaceStationControl	Space Station Attitude Control	-1847	upgrade	RFTech-rcs-tltech4	KEEP-engine-typelevel		
+spaceStationControl	Space Station Attitude Control	-1847	upgrade	RFUpgrade_R-4D-15	KEEP-engine		
+spaceStationControl	Space Station Attitude Control	-1847	upgrade	RFUpgrade_R-4D-15DM	KEEP-engine		
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	ROC-ApolloHSBDBBlockIII	yes	no	Apollo Block III+ Heatshield
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	ROC-BigGeminiHS	yes	no	Big G Heat Shield
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	ROC-BigGeminiHSLunar	yes	no	Big G Lunar Heat Shield
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	ROC-LEMAscentTaxiBDB	yes	no	AES LM Taxi Ascent Stage
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	ROC-LEMShelterBDB	yes	no	AES LM Shelter
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	ROC-LEMTruckPlatformBDB	yes	no	AES LM Truck Payload Platform
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	ca_fom_drogue	yes	no	Venera Lander Aeroshell (Drogue Parachute)
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	ca_fom_heatS	yes	no	Venera Lander Aeroshell (Heat Shield)
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	ca_fom_parachute	yes	no	Venera Lander Aeroshell (Main Parachute)
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	galileo_aprobe_bot	no	no	DEPRECATED - Galileo Atmospheric Probe Bottom (DEPRECATED)
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	galileo_hs_bot	yes	no	Galileo Atmospheric Probe Heatshield Bottom
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	galileo_hs_mid	yes	no	Galileo Atmospheric Probe Heatshield Middle
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	galileo_hs_top	yes	no	Galileo Atmospheric Probe Heatshield Top
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	galileo_probe_hs_parachute	yes	no	Galileo Probe Heatshield Parachute
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	galileo_probe_parachute	yes	no	Galileo Probe Parachute
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	mk2LanderCabin_v2	yes	no	Mk2 Lander Can
+advancedUncrewedLanding	Advanced Uncrewed Landing	-1847	part	sspx-adjusting-stairs-1	yes	no	Extensible Stairs
+hydrolox1972	1972-1975 Hydrolox Engines	-1847	upgrade	RFUpgrade_HM-7B	KEEP-engine		
+hydrolox1972	1972-1975 Hydrolox Engines	-1847	upgrade	RFUpgrade_J-2S	KEEP-engine		
+hydrolox1972	1972-1975 Hydrolox Engines	-1847	upgrade	RFUpgrade_M-1	KEEP-engine		
+hydrolox1972	1972-1975 Hydrolox Engines	-1847	upgrade	RFUpgrade_RL10A-3-3A	KEEP-engine		
+hydrolox1972	1972-1975 Hydrolox Engines	-1847	upgrade	RFUpgrade_RL10A-3-9	KEEP-engine		
+hydrolox1972	1972-1975 Hydrolox Engines	-1847	upgrade	RFUpgrade_YF-75D	KEEP-engine		
+prototypeFRSC	Prototype FRSC Engines	-1847	part	ROE-LR129	yes	no	LR129
+prototypeFRSC	Prototype FRSC Engines	-1847	part	ROE-RD57	yes	no	RD-57
+prototypeFRSC	Prototype FRSC Engines	-1847	part	RO_KVD1	yes	no	RD-56/KVD-1/CE-7.5
+orbitalRocketry1972	1972-1975 Orbital Rocketry	-1847	upgrade	RFUpgrade_AJ10-118F	KEEP-engine		
+orbitalRocketry1972	1972-1975 Orbital Rocketry	-1847	upgrade	RFUpgrade_H-1-205K	KEEP-engine		
+orbitalRocketry1972	1972-1975 Orbital Rocketry	-1847	upgrade	RFUpgrade_KTDU-425A	KEEP-engine		
+orbitalRocketry1972	1972-1975 Orbital Rocketry	-1847	upgrade	RFUpgrade_Model8096-39	KEEP-engine		
+orbitalRocketry1972	1972-1975 Orbital Rocketry	-1847	upgrade	RFUpgrade_Model8096A	KEEP-engine		
+orbitalRocketry1972	1972-1975 Orbital Rocketry	-1847	upgrade	RFUpgrade_RD-107-11D512	KEEP-engine		
+orbitalRocketry1972	1972-1975 Orbital Rocketry	-1847	upgrade	RFUpgrade_RD-108-11D511	KEEP-engine		
+orbitalRocketry1972	1972-1975 Orbital Rocketry	-1847	upgrade	RFUpgrade_RS-27	KEEP-engine		
+orbitalRocketry1972	1972-1975 Orbital Rocketry	-1847	upgrade	RFUpgrade_TR-201	KEEP-engine		
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	part	ROE-RD270	yes	no	RD-270
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	part	ROE-RD270M	no	no	RD-270M (DEPRECATED)
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	upgrade	RFUpgrade_30x_NK-33	DROP-no-curated-host		
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	upgrade	RFUpgrade_4x_NK-39	KEEP-engine		
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	upgrade	RFUpgrade_8x_NK-43	DROP-no-curated-host		
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	upgrade	RFUpgrade_NK-31	KEEP-engine		
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	upgrade	RFUpgrade_NK-33	KEEP-engine		
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	upgrade	RFUpgrade_NK-39	KEEP-engine		
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	upgrade	RFUpgrade_NK-43	KEEP-engine		
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	upgrade	RFUpgrade_RD-254-11D44-Mk3	KEEP-engine		
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	upgrade	RFUpgrade_RD-270M-8D420M	KEEP-engine		
+stagedCombustion1972	1972-1975 ORSC Engines	-1847	upgrade	RFUpgrade_RD-58M	KEEP-engine		
+solids1972	1972-1975 Solid Rocket Engines	-1847	part	ROE-AJ260FLA	yes	no	AJ-260 FL Radial Solid Rocket Booster
+solids1972	1972-1975 Solid Rocket Engines	-1847	part	ROE-AJ260FLF	yes	no	AJ-260 FL
+solids1972	1972-1975 Solid Rocket Engines	-1847	part	ROE-Algol3	yes	no	Algol III
+solids1972	1972-1975 Solid Rocket Engines	-1847	part	ROE-Algol3_Inline	yes	no	Algol III
+solids1972	1972-1975 Solid Rocket Engines	-1847	part	ROE-Castor4	yes	no	Castor 4
+solids1972	1972-1975 Solid Rocket Engines	-1847	upgrade	RFTech-solids-tltech4	KEEP-engine-typelevel		
+earlyElecPropulsion	Early Electric Propulsion	-1847	part	RO-SPT50	yes	no	SPT-50 Hall Effect Thruster
+earlyElecPropulsion	Early Electric Propulsion	-1847	part	RO-SPT60	yes	no	SPT-60 Hall Effect Thruster
+earlyElecPropulsion	Early Electric Propulsion	-1847	part	RO-ionSPT60	yes	no	SPT-60 Hall Effect Thruster
+earlyNuclearPropulsion	Early Nuclear Propulsion	-1847	part	NERVA_NRX	yes	no	NERVA NRX
+earlyNuclearPropulsion	Early Nuclear Propulsion	-1847	part	Phoebus1N50	yes	no	Phoebus 1B Atomic Rocket Motor
+earlyNuclearPropulsion	Early Nuclear Propulsion	-1847	part	RO-fftorion12	yes	no	12 Meter Orion Drive
+earlyNuclearPropulsion	Early Nuclear Propulsion	-1847	part	RO-fftorion8	yes	no	8 Meter Orion Drive
+earlyNuclearPropulsion	Early Nuclear Propulsion	-1847	part	ROE-NERVAXE	yes	no	Nerva XE-Prime
+earlyNuclearPropulsion	Early Nuclear Propulsion	-1847	part	fft-fission-orion-5-1	yes	no	10 Meter Orion Drive
+basicLifeSupport	Basic Life Support and ISRU	-1847	part	kerbalism-drill	yes	no	Regolith Harvester
+spaceStationSolarPanels	Space Station Solar Panels	-1847	part	SXTsolarPanelLarge	yes	no	OX-VL Photovoltaic Array
+spaceStationSolarPanels	Space Station Solar Panels	-1847	part	SXTsolarPanelhex	yes	no	OX-HEX Photovoltaic Panels
+spaceStationSolarPanels	Space Station Solar Panels	-1847	part	ca_explorer_solar	yes	no	IUE Solar Array Wing (SAW)
+spaceStationSolarPanels	Space Station Solar Panels	-1847	part	ca_fom_sp	yes	no	Venera Lander Bus Solar Array
+spaceStationSolarPanels	Space Station Solar Panels	-1847	part	ca_louver_m	yes	no	CA-TCL8 Thermal Control Louver
+spaceStationSolarPanels	Space Station Solar Panels	-1847	part	ca_vor_sp	yes	no	4MV Spacecraft Bus SAW & TCS (Standard)
+spaceStationSolarPanels	Space Station Solar Panels	-1847	part	ca_vor_sp2	yes	no	4MV Spacecraft Bus SAW & TCS (Small)
+spaceStationSolarPanels	Space Station Solar Panels	-1847	part	largeSolarPanelEarly	yes	no	XT3 Solar Panel Array Mk1
+spaceStationSolarPanels	Space Station Solar Panels	-1847	part	solarPanels1	yes	no	XT2 Solar Panel Array Mk2
+spaceStationSolarPanels	Space Station Solar Panels	-1847	part	solarPanels3	yes	no	XT1 Solar Panel Array Mk2
+spaceStationSolarPanels	Space Station Solar Panels	-1847	upgrade	solarTL6	KEEP-techlevel-TODO		
+deepSpaceComms	Deep Space Communications	-1847	part	ca_ant_gps	yes	no	CA-GPS Omnidirectional Antenna
+deepSpaceComms	Deep Space Communications	-1847	part	ca_vor_comm	yes	no	4MV Spacecraft Bus Antenna Array
+deepSpaceComms	Deep Space Communications	-1847	part	ca_vor_dish	yes	no	4MV-1 Spacecraft Bus Parabolic Antenna
+deepSpaceComms	Deep Space Communications	-1847	part	dish_quetzal	yes	no	Pioneer 10 & 11 Parabolic Antenna
+deepSpaceComms	Deep Space Communications	-1847	upgrade	RP0Level7TrackingStation	REFERENCE-comms-dsn		
+deepSpaceComms	Deep Space Communications	-1847	upgrade	commsTL6	KEEP-techlevel-TODO		
+advancedAvionics	Advanced Avionics and Probes	-1847	part	ca_aacs	yes	no	CA-AACS Advanced Attitude Control System
+advancedAvionics	Advanced Avionics and Probes	-1847	part	ca_explorer	yes	no	IUE Spacecraft Bus
+advancedAvionics	Advanced Avionics and Probes	-1847	part	ca_fom_lander	yes	no	Venera Lander Bus
+advancedAvionics	Advanced Avionics and Probes	-1847	part	ca_vor_core	yes	no	4MV Spacecraft Bus
+advancedAvionics	Advanced Avionics and Probes	-1847	part	pioneer_10_11	yes	no	Pioneer 10/11 Probe
+advancedAvionics	Advanced Avionics and Probes	-1847	part	quetzal	yes	no	Pioneer 10/11 Core
+advancedAvionics	Advanced Avionics and Probes	-1847	part	rn_voyager	yes	no	Voyager 1/2 Probe
+advancedAvionics	Advanced Avionics and Probes	-1847	part	torekka	yes	no	Voyager Core
+advancedAvionics	Advanced Avionics and Probes	-1847	upgrade	Deep-Space-advancedAvionics	REFERENCE-avionics		
+advancedAvionics	Advanced Avionics and Probes	-1847	upgrade	HDD-Upgrade-1975	KEEP-capability		
+advancedAvionics	Advanced Avionics and Probes	-1847	upgrade	Near-Earth-advancedAvionics	REFERENCE-avionics		
+advancedAvionics	Advanced Avionics and Probes	-1847	upgrade	Science-Core-advancedAvionics	REFERENCE-avionics		
+deepSpaceScience	Deep Space Science Experiments	-1847	part	RO-DigitalCamera	yes	no	PH05 - Ultra Resolution Digital Imaging Camera
+deepSpaceScience	Deep Space Science Experiments	-1847	part	RO-FluxgateMagnet	yes	no	MG03 - Fluxgate Magnetometer Boom
+deepSpaceScience	Deep Space Science Experiments	-1847	part	RO-ImprovedTVCamera	yes	no	VI03 - Improved TV Camera
+deepSpaceScience	Deep Space Science Experiments	-1847	part	RO-SWPlasmaAnalyzer	yes	no	RPWS02 - Solar Wind Plasma Analyzer
+deepSpaceScience	Deep Space Science Experiments	-1847	part	RO-UVSpectrometer	yes	no	IS02 - Ultraviolet Spectrometer
+deepSpaceScience	Deep Space Science Experiments	-1847	part	SXTsciencenosecone	yes	no	GC-MS + Antenna
+deepSpaceScience	Deep Space Science Experiments	-1847	part	dmUS2SARaltimeter	no	no	Univ. Storage 2 - SAR Altimetry Sensor
+deepSpaceScience	Deep Space Science Experiments	-1847	part	scansat-radar-seasat-1	yes	no	Seasat SAR Radar Antenna
+deepSpaceScience	Deep Space Science Experiments	-1847	part	sensorAtmosphere	yes	no	MS04 - Gas Chromatograph-Mass Spectrometer (GC/MS)
+improvedCapsules	Improved Capsules	-1762	part	ROC-ApolloCMBDBBlockIII	yes	no	Apollo Block III+ Command Module (CM)
+improvedCapsules	Improved Capsules	-1762	part	ROC-ApolloHGABlockIII	yes	no	Apollo Block III High Gain Antenna
+improvedCapsules	Improved Capsules	-1762	part	ROC-ApolloMissionModule	yes	no	Apollo Block III+ Mission Module
+improvedCapsules	Improved Capsules	-1762	part	ROC-ApolloSMBlockIII	yes	no	Apollo Block III+ Service Module
+improvedCapsules	Improved Capsules	-1762	part	ROC-BigGeminiCabinBDB	yes	no	Big G Crew Module
+improvedCapsules	Improved Capsules	-1762	part	ROC-BigGeminiDecoupler	yes	no	Big G Service Module Decoupler
+improvedCapsules	Improved Capsules	-1762	part	ROC-BigGeminiDockingAdapter	yes	no	Big G Docking Adapter
+improvedCapsules	Improved Capsules	-1762	part	ROC-BigGeminiLES	yes	no	Big G Launch Escape System
+improvedCapsules	Improved Capsules	-1762	part	ROC-BigGeminiNose	yes	no	Big G Nose Fairing
+improvedCapsules	Improved Capsules	-1762	part	ROC-BigGeminiParachute	yes	no	Big G Landing Parachute System
+improvedCapsules	Improved Capsules	-1762	part	ROC-BigGeminiParachuteDrogue	yes	no	Big G Drogue Parachute
+improvedCapsules	Improved Capsules	-1762	part	ROC-BigGeminiSM	yes	no	Big G Service Module
+hydrolox1976	1976-1980 Hydrolox Engines	-1762	part	ROE-J2T	yes	no	J-2T
+hydrolox1976	1976-1980 Hydrolox Engines	-1762	upgrade	RFUpgrade_HM-7B+	KEEP-engine		
+hydrolox1976	1976-1980 Hydrolox Engines	-1762	upgrade	RFUpgrade_M-1SL	KEEP-engine		
+FRSC1976	1976-1980 FRSC Engines	-1762	part	ROE-HG3	yes	no	HG-3
+FRSC1976	1976-1980 FRSC Engines	-1762	part	ROE-RD301	yes	no	RD-301
+FRSC1976	1976-1980 FRSC Engines	-1762	upgrade	RFUpgrade_HG-3-SL	KEEP-engine		
+FRSC1976	1976-1980 FRSC Engines	-1762	upgrade	RFUpgrade_KVD-1	KEEP-engine		
+FRSC1976	1976-1980 FRSC Engines	-1762	upgrade	RFUpgrade_LR129-P-1	KEEP-engine		
+orbitalRocketry1976	1976-1980 Orbital Rocketry	-1762	upgrade	RFUpgrade_AJ10-138A	KEEP-engine		
+orbitalRocketry1976	1976-1980 Orbital Rocketry	-1762	upgrade	RFUpgrade_E-1-575k	KEEP-engine		
+orbitalRocketry1976	1976-1980 Orbital Rocketry	-1762	upgrade	RFUpgrade_E-1-Upgrade2	KEEP-engine		
+orbitalRocketry1976	1976-1980 Orbital Rocketry	-1762	upgrade	RFUpgrade_E-1A_KS	KEEP-engine		
+orbitalRocketry1976	1976-1980 Orbital Rocketry	-1762	upgrade	RFUpgrade_F-1A	KEEP-engine		
+orbitalRocketry1976	1976-1980 Orbital Rocketry	-1762	upgrade	RFUpgrade_H-1-250K	KEEP-engine		
+orbitalRocketry1976	1976-1980 Orbital Rocketry	-1762	upgrade	RFUpgrade_H-2-300K	KEEP-engine		
+orbitalRocketry1976	1976-1980 Orbital Rocketry	-1762	upgrade	RFUpgrade_Model8096L	KEEP-engine		
+stagedCombustion1976	1976-1980 ORSC Engines	-1762	upgrade	RFUpgrade_RD-0210-Mk2	KEEP-engine		
+stagedCombustion1976	1976-1980 ORSC Engines	-1762	upgrade	RFUpgrade_RD-0212-Mk2	KEEP-engine		
+stagedCombustion1976	1976-1980 ORSC Engines	-1762	upgrade	RFUpgrade_RD-0213-Mk2	KEEP-engine		
+stagedCombustion1976	1976-1980 ORSC Engines	-1762	upgrade	RFUpgrade_RD-116-8D420K	KEEP-engine		
+stagedCombustion1976	1976-1980 ORSC Engines	-1762	upgrade	RFUpgrade_RD-253-Mk3	KEEP-engine		
+solids1976	1976-1980 Solid Rocket Engines	-1762	part	ROE-Antares3	yes	no	Antares III (STAR 31)
+solids1976	1976-1980 Solid Rocket Engines	-1762	part	ROE-Antares3_Inline	yes	no	Antares III (STAR 31)
+solids1976	1976-1980 Solid Rocket Engines	-1762	part	ius_bottom	yes	no	IUS Booster First Stage
+solids1976	1976-1980 Solid Rocket Engines	-1762	part	ius_top	yes	no	IUS Booster Second Stage
+solids1976	1976-1980 Solid Rocket Engines	-1762	part	rn_vpam	no	no	DEPRECATED DO NOT USE (RN Voyager PAM) (DEPRECATED)
+multihundredWattRTG	Multi-Hundred Watt RTGs	-1762	part	RO-reactor-snap50-300	yes	no	NASA SNAP-50 300 kWe Nuclear Reactor
+multihundredWattRTG	Multi-Hundred Watt RTGs	-1762	part	USRTGWedge	yes	no	Universal Storage: Multi-hundred Watt RTG
+multihundredWattRTG	Multi-Hundred Watt RTGs	-1762	part	ca_rtg3900	yes	no	Voyager MHW-RTG
+multihundredWattRTG	Multi-Hundred Watt RTGs	-1762	part	rtg	yes	no	Multi-Hundred Watt RTG
+highDataRateComms	High Data Rate Communications	-1762	part	dish_L	yes	no	Voyager 1 & 2 Parabolic Antenna
+highDataRateComms	High Data Rate Communications	-1762	upgrade	RP0Level8TrackingStation	REFERENCE-comms-dsn		
+highDataRateComms	High Data Rate Communications	-1762	upgrade	commsTL7	KEEP-techlevel-TODO		
+materialsScienceSpaceplanes	Spaceplanes Era Materials Science	-1677	part	radPanelEdge	yes	no	EATCS Radiator Panel (Fin)
+materialsScienceSpaceplanes	Spaceplanes Era Materials Science	-1677	part	radPanelLg	yes	no	EATCS Radiator Panel (Long)
+materialsScienceSpaceplanes	Spaceplanes Era Materials Science	-1677	part	radPanelSm	yes	no	EATCS Radiator Panel (Short)
+materialsScienceSpaceplanes	Spaceplanes Era Materials Science	-1677	upgrade	MLI.Upgrade4	KEEP-capability		
+materialsScienceSpaceplanes	Spaceplanes Era Materials Science	-1677	upgrade	PFTech-Fairing-IV	KEEP-capability		
+materialsScienceSpaceplanes	Spaceplanes Era Materials Science	-1677	upgrade	RFTech-Tank-Balloon-SteelAlCu	KEEP-tank-typelevel		
+materialsScienceSpaceplanes	Spaceplanes Era Materials Science	-1677	upgrade	rp0EngineerUpgradeSpaceplanes	DROP-axed-career		
+electronicsSpaceplanes	Spaceplanes Era Electronics Research	-1677	upgrade	rp0ResearcherUpgradeSpaceplanes	DROP-axed-career		
+matureTurbofans	Mature Turbofans	-1592	part	SXTKe90TurboJet	yes	no	D-18 High-Bypass Turbofan
+matureTurbofans	Mature Turbofans	-1592	part	aje_al31	yes	no	AL-31 Low-Bypass Turbofan
+matureTurbofans	Mature Turbofans	-1592	upgrade	RFUpgrade_CF34-1A	KEEP-engine		
+matureTurbofans	Mature Turbofans	-1592	upgrade	RFUpgrade_CF6-50E2	KEEP-engine		
+matureTurbofans	Mature Turbofans	-1592	upgrade	RFUpgrade_CF6-80A	KEEP-engine		
+matureTurbofans	Mature Turbofans	-1592	upgrade	RFUpgrade_GE4-J6H	KEEP-engine		
+matureTurbofans	Mature Turbofans	-1592	upgrade	RFUpgrade_J79-IAI-J1E	KEEP-engine		
+matureTurbofans	Mature Turbofans	-1592	upgrade	RFUpgrade_PT6A-21	KEEP-engine		
+matureTurbofans	Mature Turbofans	-1592	upgrade	RFUpgrade_WP-13	KEEP-engine		
+matureTurbofans	Mature Turbofans	-1592	upgrade	RFUpgrade_WP-7BM	KEEP-engine		
+spaceShuttles	Space Shuttles	-1592	part	mk3CargoBayL	yes	no	Mk3 Cargo Bay CRG-100
+spaceShuttles	Space Shuttles	-1592	part	mk3CargoBayM	yes	no	Mk3 Cargo Bay CRG-50
+spaceShuttles	Space Shuttles	-1592	part	mk3CargoBayS	yes	no	Mk3 Cargo Bay CRG-25
+spaceShuttles	Space Shuttles	-1592	part	mk3CargoRamp	yes	no	Mk3 Cargo Ramp
+spaceShuttles	Space Shuttles	-1592	part	mk3Cockpit_Shuttle	yes	no	Mk3 Cockpit
+spaceShuttles	Space Shuttles	-1592	part	mk3CrewCabin	yes	no	Mk3 Passenger Module
+largeSpaceplaneControl	Large Spaceplane Control	-1592	part	ROE-R40B	yes	no	R-40
+largeSpaceplaneControl	Large Spaceplane Control	-1592	part	ca_lahar	yes	no	R-40
+largeSpaceplaneControl	Large Spaceplane Control	-1592	upgrade	RFTech-rcs-tltech5	KEEP-engine-typelevel		
+hydrolox1981	1981-1985 Hydrolox Engines	-1592	upgrade	RFUpgrade_J-2T-250K	KEEP-engine		
+hydrolox1981	1981-1985 Hydrolox Engines	-1592	upgrade	RFUpgrade_RL10A-3-3B	KEEP-engine		
+FRSC1981	1981-1985 FRSC Engines	-1592	part	ROE-RS25	yes	no	RS-25 (SSME)
+FRSC1981	1981-1985 FRSC Engines	-1592	upgrade	RFUpgrade_HG-3A	KEEP-engine		
+FRSC1981	1981-1985 FRSC Engines	-1592	upgrade	RFUpgrade_HG-3A-SL	KEEP-engine		
+FRSC1981	1981-1985 FRSC Engines	-1592	upgrade	RFUpgrade_LR129-P-2	KEEP-engine		
+orbitalRocketry1981	1981-1985 Orbital Rocketry	-1592	part	ROE-AJ10-190	yes	no	AJ10-190
+orbitalRocketry1981	1981-1985 Orbital Rocketry	-1592	upgrade	RFUpgrade_Model8096B	KEEP-engine		
+orbitalRocketry1981	1981-1985 Orbital Rocketry	-1592	upgrade	RFUpgrade_RD-107-11D512P	KEEP-engine		
+orbitalRocketry1981	1981-1985 Orbital Rocketry	-1592	upgrade	RFUpgrade_RD-108-11D511P	KEEP-engine		
+stagedCombustion1981	1981-1985 ORSC Engines	-1592	part	ROE-RD120	yes	no	RD-120
+stagedCombustion1981	1981-1985 ORSC Engines	-1592	part	ROE-RD8	yes	no	RD-8
+stagedCombustion1981	1981-1985 ORSC Engines	-1592	upgrade	RFUpgrade_17D12	KEEP-engine		
+solids1981	1981-1985 Solid Rocket Engines	-1592	part	RO-RSRM	yes	no	RSRM
+solids1981	1981-1985 Solid Rocket Engines	-1592	part	ROE-Star37FM	yes	no	STAR 37FM
+solids1981	1981-1985 Solid Rocket Engines	-1592	part	ROE-Star48B	yes	no	STAR 48B
+solids1981	1981-1985 Solid Rocket Engines	-1592	part	restock-srb-anvil-1	yes	no	RSRM
+solids1981	1981-1985 Solid Rocket Engines	-1592	upgrade	RFTech-solids-tltech5	KEEP-engine-typelevel		
+elecPropulsion1981	1981-1985 Electric Propulsion	-1592	part	RO-SPT70	yes	no	SPT-70 Hall Effect Thruster
+basicNuclearPropulsion	Basic Nuclear Propulsion	-1592	part	PEWEE100	yes	no	Peewee 100 Atomic Rocket Motor
+basicNuclearPropulsion	Basic Nuclear Propulsion	-1592	part	Phoebus2N100	yes	no	Phoebus 2A Atomic Rocket Motor
+basicNuclearPropulsion	Basic Nuclear Propulsion	-1592	part	RO-KA-PrincetonLNTR	yes	no	Princeton LNTR
+basicNuclearPropulsion	Basic Nuclear Propulsion	-1592	part	ROE-NERVA	yes	no	NERVA I
+improvedLifeSupport	Improved Life Support and ISRU	-1592	part	kerbalism-large-drill	yes	no	Large Regolith Harvester
+gphsRTG	GPHS-RTGs	-1592	part	SXTDepolyRTGI	yes	no	GPHS-RTG
+gphsRTG	GPHS-RTGs	-1592	part	SXTDepolyRTGII	yes	no	GPHS-RTG [Shielded]
+gphsRTG	GPHS-RTGs	-1592	part	ca_mer_rtg	yes	no	GPHS-RTG
+gphsRTG	GPHS-RTGs	-1592	part	nfe-rtg-gphs-1	yes	no	GPHS-RTG
+maturePower	Mature Power Generation and Storage	-1592	part	largeSolarPanel	yes	no	XT4 Solar Panel Array Mk1
+maturePower	Mature Power Generation and Storage	-1592	upgrade	solarTL7	KEEP-techlevel-TODO		
+largeScaleComms	Large Scale Communications	-1592	part	nfex-antenna-reflector-giant-1	yes	no	RFL-2000 Dish Reflector Array
+largeScaleComms	Large Scale Communications	-1592	part	nfex-antenna-reflector-huge-1	yes	no	RFL-100 Giant Dish Reflector
+largeScaleComms	Large Scale Communications	-1592	part	nfex-antenna-reflector-large-1	yes	no	RFL-50 Large Dish Reflector
+nextGenAvionics	Next Generation Avionics and Probes	-1592	upgrade	Deep-Space-nextGenAvionics	REFERENCE-avionics		
+nextGenAvionics	Next Generation Avionics and Probes	-1592	upgrade	Near-Earth-nextGenAvionics	REFERENCE-avionics		
+nextGenAvionics	Next Generation Avionics and Probes	-1592	upgrade	Science-Core-nextGenAvionics	REFERENCE-avionics		
+scienceExploration	Exploration Era Science	-1592	part	RO-AdvancedImager	yes	no	VI04 - Advanced Visible Imaging Device
+scienceExploration	Exploration Era Science	-1592	part	RO-NIMS	yes	no	IS03 - Near Infrared Mapping Spectrometer (NIMS) and Ultraviolet Spectrometer (UVS)
+scienceExploration	Exploration Era Science	-1592	part	SCANsat_Scanner32	yes	yes	SCAN Anomaly Scanner (DEPRECATED)
+scienceExploration	Exploration Era Science	-1592	part	SCANsat_Tracker	yes	yes	SCAN MapTraq®
+scienceExploration	Exploration Era Science	-1592	part	SurveyScanner	yes	no	M700 Survey Scanner
