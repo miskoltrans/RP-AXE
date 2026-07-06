@@ -3629,6 +3629,22 @@ nodes:
     flavor: "Standardise the RTG into modular General-Purpose Heat Source bricks, stack as many as the mission needs, and the same design flies Galileo, Ulysses, Cassini and every deep-space mission after them for the next forty years."
     parts: [SXTDepolyRTGI, SXTDepolyRTGII, ca_mer_rtg, nfe-rtg-gphs-1, RO-MMRTG, nfe-rtg-mmrtg-1, nfe-rtg-asrg-1, USRTGWedgeMM]
 
+  # ---- Lane 6b: deep-space link capability (X-band generation — first rung of the advanced-comms ladder) ----
+  - id: tel_xBandDownlink
+    title: "X-Band Deep-Space Downlink"
+    discipline: Telecommunications
+    tier: 9
+    parents: [tel_phasedArrayRelay]
+    flavor: "Move the deep-space link up from S-band to X-band — roughly four times the frequency, and with it the beam narrows and the data rate climbs, wringing a usable stream out of a signal smeared across the outer Solar System. It takes both ends at once: an onboard transponder that transmits on the new band, and a DSN dish upgraded to hear it. Voyager flew its whole grand tour home on X-band."
+    grants: [RP0Level6TrackingStation]
+    upgrades: [commsTL5]
+    # 2026-07 (pays down the Voyager probe-requirements gap): continues the DSN-level + RealAntennas
+    # tech-level ladder off tel_phasedArrayRelay (Level5/commsTL4) with its next rung, Level6/commsTL5 —
+    # RP-1 gates exactly this pair at its own `advancedComms` node, the first of the advanced/deep-space
+    # comms tiers. Capability node (no new dish — the deep-space parabolics are separate hardware catalogs).
+    # The remaining rungs (deepSpaceComms/Level7+commsTL6 ... modernComms/Level11+commsTL10) still belong to
+    # later station/deep-space telecom nodes per the station+ISS partlists; this closes only the X-band gap.
+
   # ---- Lane 7: antennas (probe-specific parabolic dishes + generic giant reflectors, split by mechanism) ----
   - id: tel_deepSpaceProbeAntennas
     title: "Deep-Space Probe Antennas"
