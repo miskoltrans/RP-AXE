@@ -3713,11 +3713,10 @@ nodes:
     grants: [RP0Level7TrackingStation]
     upgrades: [commsTL6]
     # 2026-07 (extends the comms ladder past tel_xBandDownlink, at the user's request). commsTL6-10 are
-    # RealAntennas' onboard tech levels (KEEP-techlevel-TODO — the live, real progression). The RP0Level7-11
-    # grants map to RP-1's deepSpaceComms->modernComms DSN rungs but are REFERENCE-comms-dsn (docs/UPGRADES.md
-    # C2: the tracking-station facility mechanic is axed); they are kept here only to continue the L2-6 grants
-    # pattern already live in the tree. If the DSN axis is later handled another way, drop the `grants:` lines
-    # from these five nodes and keep the `upgrades:`.
+    # RealAntennas' onboard tech levels (KEEP-techlevel — the live, real progression). The RP0Level7-11 grants
+    # map to RP-1's deepSpaceComms->modernComms DSN rungs; they KEEP (the DSN axis stays in the tree so it's
+    # here to build against), continuing the L2-6 grants pattern. Their in-game effect (per-level DSN gain)
+    # still needs wiring — tracked automatically in docs/IMPL-TODO.md via the grants: mechanism, not dropped.
   - id: tel_concatenatedCoding
     title: "Concatenated Channel Coding"
     discipline: Telecommunications

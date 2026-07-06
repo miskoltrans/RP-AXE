@@ -39,6 +39,17 @@ Capability nodes carry no `parts:`; they carry **`grants:`** — a list of capab
 > real emission — an avionics-plugin tier gate / a tracking-station facility unlock — is still to be
 > wired. The `grants:` **data is stable**; only its emission will evolve. Do not hand-edit the cfg.
 
+## The implementation backlog — [IMPL-TODO.md](IMPL-TODO.md) (generated)
+REFERENCE / provisional content lives in the tree **on purpose** — it's there to build against when
+we implement it, not to be dropped. Every `grants:` capability stub is auto-collected into
+`docs/IMPL-TODO.md` on each `build_tree` run, grouped by family (DSN levels, avionics tiers, …) with
+a note on what game-side work each still needs. That generated file is the single checklist of "in
+the tree, but its effect isn't wired yet."
+
+For anything that needs implementation but isn't a `grants:` capability (e.g. a physical part whose
+special behaviour needs a plugin), add an **`impl_todo: "<what's missing>"`** field to its node: it
+lands in the same backlog and stamps a `// NEEDS-IMPL:` comment into the emitted cfg.
+
 ## Track 1 — Avionics (ONE track, mapped to RP-1 "Science-Core")
 Decision (user, 2026-07-02): a **single** avionics track. RP-1's Near-Earth and Deep-Space avionics
 lines are `DROP`ped; the 8 **Science-Core** tiers are the tree-visible avionics progression. Each
@@ -59,16 +70,23 @@ node `grants:` the corresponding avionics-plugin tier.
 Fill the `plugin tier` column (and confirm discipline: GuidanceControl vs Computing) before authoring.
 
 ## Track 2 — Deep Space Network / tracking-station levels (KEEP, definitely in-game)
-5 levels, each a **Telecommunications** node that `grants:` the tracking-station facility level
-(extends comms range / downlink). NOT plugin-covered — real gating.
+10 levels (`RP0Level2…11TrackingStation`), each a **Telecommunications** node that `grants:` the
+tracking-station facility level (extends comms range / downlink). NOT plugin-covered — real gating.
+**All placed** along the comms ladder (`tel_dopplerRanging` → `tel_opticalDownlink`); the in-game
+gain-per-level effect is the implementation TODO, auto-tracked in [IMPL-TODO.md](IMPL-TODO.md).
 
-| RP-1 | → RP-AXE node (draft) | milestone |
+| grant | → RP-AXE node | tier |
 |---|---|---|
-| RP0Level2TrackingStation | tel_… | band 1 |
-| RP0Level3TrackingStation | tel_… | band 1/2 |
-| RP0Level4TrackingStation | tel_… | band 2 |
-| RP0Level5TrackingStation | tel_… | band 2/3 |
-| RP0Level6TrackingStation | tel_… | band 3 |
+| RP0Level2TrackingStation | tel_dopplerRanging | T5 |
+| RP0Level3TrackingStation | tel_pcmTelemetry | T6 |
+| RP0Level4TrackingStation | tel_deployableHighGainDish | T7 |
+| RP0Level5TrackingStation | tel_phasedArrayRelay | T8 |
+| RP0Level6TrackingStation | tel_xBandDownlink | T9 |
+| RP0Level7TrackingStation | tel_kaBandDownlink | T10 |
+| RP0Level8TrackingStation | tel_concatenatedCoding | T11 |
+| RP0Level9TrackingStation | tel_antennaArraying | T12 |
+| RP0Level10TrackingStation | tel_bandwidthEfficientModulation | T13 |
+| RP0Level11TrackingStation | tel_opticalDownlink | T14 |
 
 ## Agent checklist (per milestone)
 1. Read the milestone partlist; collect `KEEP-avionics` / `KEEP-dsn` items whose tier lands here.
