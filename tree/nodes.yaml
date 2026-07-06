@@ -435,7 +435,7 @@ nodes:
     tier: 7
     parents: [str_landingGear]
     flavor: "No wheels, no retraction — just a shock-absorbing strut that swings out once and takes the full load of touching down somewhere with no runway at all."
-    parts: [landingLeg1, landingLeg1-2]
+    parts: [landingLeg1, landingLeg1-2, ROC-LEMLegsBDB, ROC-LEMDescentBDB]
     # NEW (2026-07 fix, user call — "make them a simple one off node"): split out of
     # fd_continuousThrottleDescent, where it had been bundled with a throttleable engine just because
     # Surveyor happened to use both — a structural touchdown strut isn't a propellant/combustion
@@ -665,7 +665,7 @@ nodes:
     tier: 4
     parents: [str_radialDecouplers]
     flavor: "The rest of the catalogue shelf: pre-made in-line decouplers, separators and the skirt rings that drop a spent booster, in fixed sizes — for when you would rather bolt on a stock part than shape a procedural one. The procedural decoupler stays the default; this is the shelf."
-    parts: [Decoupler_0, Decoupler_1, Decoupler_2, restock-decoupler-1875-1, restock-separator-1875-1, shortDecoupler1-2, ROT-AtlasDecoupler, SXTK1Decoupler, SXTK1Decoupler2, ROC-D2Block1LESDecoupler]
+    parts: [Decoupler_0, Decoupler_1, Decoupler_2, restock-decoupler-1875-1, restock-separator-1875-1, shortDecoupler1-2, ROT-AtlasDecoupler, SXTK1Decoupler, SXTK1Decoupler2, ROC-D2Block1LESDecoupler, ROC-LEMDecouplerBDB]
   - id: tel_appSatellites
     title: "Radio-Relay Payloads"
     discipline: Telecommunications
@@ -884,7 +884,7 @@ nodes:
     tier: 5
     parents: [str_serviceModuleTank]
     flavor: "A sealed structural bay behind the payload that shelters avionics, batteries and radios from launch acoustics and the vacuum beyond — the enclosed volume a working spacecraft is built around, from a service bay to a universal-storage rack, capped by a jettisonable nose."
-    parts: [RO_ServiceBay_300, ServiceBay_250_v2, USRadialTanks, restock-nosecone-1875-1]
+    parts: [RO_ServiceBay_300, ServiceBay_250_v2, USRadialTanks, restock-nosecone-1875-1, ROC-LEMMESABDB]
     upgrades: [RFTech-SM-II]
 
   # ================================================================================================
@@ -1960,7 +1960,7 @@ nodes:
     tier: 7
     parents: [life_openLoopECLSS]
     flavor: "The smallest sealed cabin that still keeps a single Kerbal alive and working — no service module, no full capsule program, just a can with a hatch and an experiment slot built in."
-    parts: [landerCabinSmall]
+    parts: [landerCabinSmall, ROC-LEMAscentBDB, landerCabinMedium]
     # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): this node's own comment already
     # flagged the landerCabinSmall+ShieldCapLarge pairing as unconfirmed; ground-truthing confirms it was
     # actually wrong — landerCabinSmall is a Mk1-family pod (Squad) and ShieldCapLarge is a Mk2-family
@@ -2303,19 +2303,6 @@ nodes:
     flavor: "The Eastern-bloc answer to a manned Moon shot: a descent module, a mission module for the crew to live in, and a service module - a whole spacecraft rather than a scaled-up capsule."
     parts: [ROC-D2CM, ROC-D2ServiceModule, ROC-D2MissionModule1, ROC-D2MissionModule2, ROC-D2Adaptor, ROC-D2Block2Nosecone, MK2VApod]
     # King D-2 descent module. MK2VApod (TKS VA) = a Soviet crew-return capsule ride-along of the same era.
-
-  # ---- Lane B: lunar module ----
-  - id: int_lunarModule
-    title: "Two-Stage Lunar Module"
-    discipline: SystemsIntegration
-    tier: 9
-    parents: [int_apolloCSM]
-    flavor: "A spacecraft that only ever flies in vacuum: a descent stage with legs to set down on, and a separate ascent stage that leaves the legs behind and flies the crew back to lunar orbit. The airframe the deep-throttle engines were built for."
-    parts: [ROC-LEMDescentBDB, ROC-LEMAscentBDB, ROC-LEMLegsBDB, ROC-LEMDecouplerBDB, ROC-LEMMESABDB, landerCabinMedium]
-    # King LM descent stage. Pairs with the engines in fd_deepThrottleLanding (LMDE/LMAE). Deprecated MEM
-    # parts (MEMDescentMod/MEMLanderSXT) intentionally NOT placed - superseded by these ROC-LEM parts.
-
-  # ---- Lane D: space stations ----
   - id: life_stationHabitation
     title: "Long-Duration Habitation Module"
     discipline: LifeSupport

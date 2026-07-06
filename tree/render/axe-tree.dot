@@ -232,7 +232,6 @@ digraph AXE {
   "nuc_fissionReactor" [label="Compact Fission Reactor\nNuclearEngineering T8 · 2100",fillcolor="#83c341",fontcolor="#111111"];
   "int_apolloCSM" [label="Trans-Lunar Crew Vehicle\nSystemsIntegration T8 · 2100",fillcolor="#ededed",fontcolor="#111111"];
   "int_d2LunarCraft" [label="Circumlunar Descent Craft\nSystemsIntegration T8 · 2100",fillcolor="#ededed",fontcolor="#111111"];
-  "int_lunarModule" [label="Two-Stage Lunar Module\nSystemsIntegration T9 · 1700",fillcolor="#ededed",fontcolor="#111111"];
   "life_stationHabitation" [label="Long-Duration Habitation Module\nLifeSupport T8 · 2100",fillcolor="#f0508a",fontcolor="#111111"];
   "str_stationStructures" [label="Pressurised Station Connectors\nStructuresMechanisms T8 · 2100",fillcolor="#bfb08d",fontcolor="#111111"];
   "int_orbitalLab" [label="Crewed Orbital Laboratory\nSystemsIntegration T9 · 1700",fillcolor="#ededed",fontcolor="#111111"];
@@ -250,7 +249,7 @@ digraph AXE {
   { rank=same; "gs_saturnPad" "opt_irRadiometry" "opt_twoChannelIR" "opt_uvSpectrometry" "opt_refinedTV" "tel_pcmTelemetry" "pc_larchPeroxide" "pc_fluorine" "fd_vacuumExpansion" "fd_saturnKerolox" "av_ramjetAdvanced" "cmp_ablativeRefinement" "int_mercuryCapsule" "int_vostokCapsule" "int_zenitRecon" "edl_crewedRecovery" "opt_orbitalMapping" "fd_engineMaturation" "aero_spaceplaneWing" "life_spaceplaneCockpit" "str_aircraftAirframe" }
   { rank=same; "str_fixedLanderLegs" "gs_shuttlePad" "life_crewedExperimentBay" "fd_clusteredThrustGrowth" "fd_blendedStorableFuel" "fd_ammoniaCombustionRefinement" "fd_titanStorableConversion" "pc_juno_ClF3" "int_geminiCapsule" "int_voskhodCabin" "gnc_smallRcsCatalog" "fd_continuousThrottleDescent" "cmp_airbagTouchdown" "gnc_threeAxisStabilizedBus" "fd_propellantUllage" "pc_scoutMarkII" "pc_strapOnMarkII" "pc_allSolidStaging" "pc_segmentedCasting" "pc_apogeeKickStage" "pc_storableVernierFamily" "tel_deployableHighGainDish" "tel_antennaCatalog" "elec_deployablePanelII" "elec_fuelCellPower" "opt_radarAltimetry" "opt_infraredInterferometry" "mic_ionMassSpec" "opt_multiSpectralImaging" "rob_heavyRotorActuation" "rob_hingeActuation" "rob_linearActuation" "rob_precisionRotationServo" "rob_sequencedControl" "rob_surfaceMobility" "rob_trackDrive" "rob_screwDrive" "str_fuelCrossfeed" "tel_realAntennaTelemetry" "nuc_isotopePower" "av_mach2Turbojet" "av_dedicatedLiftJet" "th_activeLouvers" "int_compactCrewPod" "cryo_refinedExpander" "gnc_interplanetaryAvionics" "elec_integratedCircuit" "av_highBypassTurbofan" "av_lowBypassTurbofan" "int_heavyLaunchEscape" "aero_liftingReentry" }
   { rank=same; "fd_gasGeneratorCeiling" "pc_orscDebut" "gnc_rendezvousDocking" "gnc_fixedRcsCatalog" "fd_pressureFedRestart" "pc_apogeeKickCatalog" "int_surveyorLanderBus" "int_surveyorOrbiter" "tel_compactHighGainAntenna" "tel_phasedArrayRelay" "elec_refinedSolarSimulation" "mic_boomMagnetometryII" "gnc_orbitalGravimetry" "rob_heavyWheelDrive" "rob_heavyTrackDrive" "cmp_lunarReturnAblator" "nuc_isotopePowerII" "gnc_reactionWheelAttitude" "cryo_gasGeneratorHydrolox" "pc_protonStagedCombustion" "comp_digitalGuidanceComputer" "av_advancedJetEngines" "pc_largeSegmentedBooster" "pc_storableRcsPropellants" "fd_advancedSpacecraftPropulsion" "nuc_fissionReactor" "int_apolloCSM" "int_d2LunarCraft" "life_stationHabitation" "str_stationStructures" "mic_plasmaWave" }
-  { rank=same; "cmp_lunarLandingAblator" "fd_deepThrottleLanding" "fd_gasGeneratorApex" "cryo_largeHydrolox" "pc_n1ClosedCycle" "pc_refinedStorableORSC" "nuc_nuclearThermalRocket" "nuc_nuclearRamjet" "comp_realTimeFlightComputer" "pc_caveaB" "int_lunarModule" "int_orbitalLab" }
+  { rank=same; "cmp_lunarLandingAblator" "fd_deepThrottleLanding" "fd_gasGeneratorApex" "cryo_largeHydrolox" "pc_n1ClosedCycle" "pc_refinedStorableORSC" "nuc_nuclearThermalRocket" "nuc_nuclearRamjet" "comp_realTimeFlightComputer" "pc_caveaB" "int_orbitalLab" }
   { rank=same; "fd_lunarSurfaceMobility" "comp_networkedAvionics" }
   "hire_JPL" -> "charter_usEarly" [style=solid];
   "charter_usEarly" -> "charter_usApp" [style=solid];
@@ -516,7 +515,6 @@ digraph AXE {
   "nuc_cosmicRay" -> "nuc_fissionReactor" [style=solid];
   "int_geminiCapsule" -> "int_apolloCSM" [style=solid];
   "int_voskhodCabin" -> "int_d2LunarCraft" [style=solid];
-  "int_apolloCSM" -> "int_lunarModule" [style=solid];
   "life_openLoopECLSS" -> "life_stationHabitation" [style=solid];
   "str_equipmentBays" -> "str_stationStructures" [style=solid];
   "life_stationHabitation" -> "int_orbitalLab" [style=solid];
