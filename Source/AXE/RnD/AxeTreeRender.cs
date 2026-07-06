@@ -732,8 +732,12 @@ namespace RPAxe.RnD
             RDNodePrefab g = rd != null ? rd.graphics : null;
             if (g == null || g.searchHighlight == null) return;
             g.searchHighlight.raycastTarget = false;   // the ring must never intercept the node's click
-            g.searchHighlight.enabled = false;         // blue researchable ring HIDDEN for now (per request);
-            // to restore: if (rd.state == RDNode.State.RESEARCHABLE) { g.searchHighlight.color = RingAvailable; g.searchHighlight.enabled = true; } else enabled = false;
+            // Blue ring on the RESEARCHABLE frontier — but never on the SELECTED node: its green selection halo
+            // occupies the same 79x79 spot, so showing both would double up. Refreshed on selection change (Update).
+            RDController ctrl = RDController.Instance;
+            if (rd.state == RDNode.State.RESEARCHABLE && (ctrl == null || ctrl.node_selected != rd))
+            { g.searchHighlight.color = RingAvailable; g.searchHighlight.enabled = true; }
+            else g.searchHighlight.enabled = false;   // researched (green tile) / locked / currently-selected = no blue ring
         }
 
         // Hover-trace lineage (like the HTML) + click empty background to deselect. Both key off the node
@@ -741,6 +745,7 @@ namespace RPAxe.RnD
         private Vector3 _downPos;
         private bool _dragged;
         private RDNode _lastHilite;      // last node the lineage highlight was applied for (change detection)
+        private RDNode _lastSelected;    // last pinned node (so we re-toggle the blue ring on selection change)
         private static readonly List<RaycastResult> _rayHits = new List<RaycastResult>();
 
         private void Update()
@@ -748,6 +753,20 @@ namespace RPAxe.RnD
             RDController ctrl = RDController.Instance;
             if (ctrl == null) return;
             RDNode over = NodeUnderPointer();
+
+            // Selection change: the blue ring hides on the selected node (green halo shows there) and returns on
+            // deselect. StateRing doesn't re-run on its own for a pin change, so refresh both affected nodes.
+            if (ctrl.node_selected != _lastSelected)
+            {
+                RDNode prev = _lastSelected;
+                _lastSelected = ctrl.node_selected;
+                try
+                {
+                    if (prev != null) StateRing(prev);
+                    if (ctrl.node_selected != null) StateRing(ctrl.node_selected);
+                }
+                catch (Exception e) { Debug.LogException(e); }
+            }
 
             // Hover: highlight the hovered node's lineage; on hover-out revert to the pinned selection (or
             // stock). Only re-highlight when the hovered node changes. Click still pins via ShowNodePanel.
