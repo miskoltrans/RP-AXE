@@ -197,8 +197,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -3200,
-    5885
+    -5264,
+    6747
    ]
   },
   {
@@ -239,8 +239,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -3200,
-    5791
+    -5264,
+    6653
    ]
   },
   {
@@ -616,8 +616,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    10804
+    -4960,
+    8208
    ]
   },
   {
@@ -748,8 +748,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    10710
+    -4960,
+    7071
    ]
   },
   {
@@ -795,8 +795,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    10804
+    -4048,
+    9250
    ]
   },
   {
@@ -832,8 +832,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    10804
+    -3744,
+    9250
    ]
   },
   {
@@ -859,8 +859,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    10710
+    -4048,
+    7071
    ]
   },
   {
@@ -891,8 +891,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    4784
+    -4960,
+    7910
    ]
   },
   {
@@ -928,8 +928,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    5637
+    -4656,
+    8161
    ]
   },
   {
@@ -960,8 +960,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    5805
+    -4352,
+    8393
    ]
   },
   {
@@ -992,8 +992,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    5758
+    -4048,
+    8184
    ]
   },
   {
@@ -1019,8 +1019,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    5590
+    -4048,
+    8020
    ]
   },
   {
@@ -1051,8 +1051,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    5496
+    -4048,
+    7784
    ]
   },
   {
@@ -1083,8 +1083,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    5690
+    -3744,
+    8115
    ]
   },
   {
@@ -1115,8 +1115,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    5543
+    -4352,
+    8114
    ]
   },
   {
@@ -1131,8 +1131,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    5082
+    -4960,
+    4318
    ]
   },
   {
@@ -1153,8 +1153,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    4711
+    -4656,
+    4365
    ]
   },
   {
@@ -1175,8 +1175,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    4544
+    -4048,
+    4365
    ]
   },
   {
@@ -1222,8 +1222,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    1065
+    -4960,
+    3383
    ]
   },
   {
@@ -1254,8 +1254,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    1065
+    -4656,
+    3383
    ]
   },
   {
@@ -1291,8 +1291,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    1065
+    -4352,
+    3383
    ]
   },
   {
@@ -1325,8 +1325,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -2592,
-    4020
+    -4656,
+    7486
    ]
   },
   {
@@ -1349,8 +1349,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -2592,
-    3769
+    -4656,
+    7165
    ]
   },
   {
@@ -1371,8 +1371,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    3769
+    -4352,
+    7165
    ]
   },
   {
@@ -1408,8 +1408,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -2592,
-    3000
+    -4656,
+    2636
    ]
   },
   {
@@ -1428,8 +1428,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -2896,
-    5825
+    -4960,
+    8302
    ]
   },
   {
@@ -1462,8 +1462,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -2288,
-    2953
+    -4352,
+    2730
    ]
   },
   {
@@ -1544,8 +1544,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    2927
+    -4960,
+    1961
    ]
   },
   {
@@ -1621,8 +1621,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    2628
+    -4656,
+    1672
    ]
   },
   {
@@ -1663,8 +1663,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    3209
+    -4352,
+    2530
    ]
   },
   {
@@ -1700,8 +1700,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    7016
+    -4656,
+    6981
    ]
   },
   {
@@ -1742,8 +1742,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    7179
+    -4352,
+    4612
    ]
   },
   {
@@ -1779,8 +1779,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    8749
+    -4960,
+    10673
    ]
   },
   {
@@ -1818,8 +1818,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -2288,
-    2628
+    -4352,
+    1672
    ]
   },
   {
@@ -1910,8 +1910,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    8728
+    -4656,
+    10652
    ]
   },
   {
@@ -1926,8 +1926,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    9151
+    -4352,
+    10699
    ]
   },
   {
@@ -1953,8 +1953,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    8681
+    -4352,
+    9711
    ]
   },
   {
@@ -1980,8 +1980,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    9130
+    -4048,
+    10861
    ]
   },
   {
@@ -2007,8 +2007,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    7671
+    -4656,
+    7643
    ]
   },
   {
@@ -2069,8 +2069,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    7456
+    -4656,
+    4797
    ]
   },
   {
@@ -2096,8 +2096,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    10333
+    -4960,
+    11485
    ]
   },
   {
@@ -2168,8 +2168,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    10239
+    -4048,
+    11373
    ]
   },
   {
@@ -2195,8 +2195,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    3675
+    -4960,
+    3900
    ]
   },
   {
@@ -2222,8 +2222,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    9621
+    -4048,
+    11981
    ]
   },
   {
@@ -2244,8 +2244,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    9940
+    -4048,
+    11698
    ]
   },
   {
@@ -2281,8 +2281,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    5731
+    -4960,
+    2384
    ]
   },
   {
@@ -2303,8 +2303,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    9925
+    -4960,
+    11771
    ]
   },
   {
@@ -2360,8 +2360,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    7247
+    -4960,
+    4634
    ]
   },
   {
@@ -2417,8 +2417,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    6906
+    -4656,
+    6887
    ]
   },
   {
@@ -2459,8 +2459,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    6948
+    -3136,
+    6908
    ]
   },
   {
@@ -2516,8 +2516,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    6885
+    -4352,
+    6866
    ]
   },
   {
@@ -2543,8 +2543,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    5355
+    -4656,
+    6247
    ]
   },
   {
@@ -2575,8 +2575,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    6108
+    -4656,
+    9528
    ]
   },
   {
@@ -2612,8 +2612,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    5355
+    -4352,
+    6247
    ]
   },
   {
@@ -2674,8 +2674,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    7367
+    -4352,
+    4728
    ]
   },
   {
@@ -2721,8 +2721,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    6791
+    -4048,
+    6358
    ]
   },
   {
@@ -2758,8 +2758,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    6486
+    -4048,
+    6158
    ]
   },
   {
@@ -2805,8 +2805,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    6534
+    -3744,
+    6268
    ]
   },
   {
@@ -2827,8 +2827,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    6108
+    -4352,
+    9528
    ]
   },
   {
@@ -2849,8 +2849,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    6108
+    -3744,
+    9669
    ]
   },
   {
@@ -2991,8 +2991,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    6575
+    -4960,
+    6571
    ]
   },
   {
@@ -3013,8 +3013,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    6575
+    -4656,
+    6456
    ]
   },
   {
@@ -3031,8 +3031,8 @@ window.TREE = {
     "Science-Core-postWarAvionics"
    ],
    "pos": [
-    -2896,
-    7812
+    -4960,
+    8114
    ]
   },
   {
@@ -3049,8 +3049,8 @@ window.TREE = {
     "Science-Core-avionicsPrototypes"
    ],
    "pos": [
-    -2592,
-    7859
+    -4656,
+    8046
    ]
   },
   {
@@ -3070,8 +3070,8 @@ window.TREE = {
     "Science-Core-earlyAvionics"
    ],
    "pos": [
-    -1984,
-    8424
+    -4048,
+    9413
    ]
   },
   {
@@ -3297,8 +3297,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    7650
+    -4352,
+    7622
    ]
   },
   {
@@ -3444,8 +3444,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    7085
+    -4352,
+    4518
    ]
   },
   {
@@ -3486,8 +3486,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    7132
+    -4656,
+    4565
    ]
   },
   {
@@ -3583,8 +3583,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    6317
+    -4656,
+    6362
    ]
   },
   {
@@ -3640,8 +3640,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    6296
+    -4352,
+    6341
    ]
   },
   {
@@ -3712,8 +3712,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    3256
+    -4048,
+    2577
    ]
   },
   {
@@ -3730,8 +3730,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1984,
-    7132
+    -4048,
+    4565
    ]
   },
   {
@@ -3748,8 +3748,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1984,
-    8283
+    -4048,
+    9847
    ]
   },
   {
@@ -3810,8 +3810,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    5637
+    -4960,
+    6247
    ]
   },
   {
@@ -3877,8 +3877,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    2812
+    -4656,
+    2123
    ]
   },
   {
@@ -3909,8 +3909,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    3419
+    -4352,
+    1928
    ]
   },
   {
@@ -3961,8 +3961,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    6995
+    -4352,
+    6960
    ]
   },
   {
@@ -4015,6 +4015,11 @@ window.TREE = {
      "title": "Mercury Redstone Adapter"
     },
     {
+     "name": "ROC-OrionEUSDecoupler",
+     "mod": "ROCapsules",
+     "title": "Orion Decoupler"
+    },
+    {
      "name": "ROC-VostokDecoupler",
      "mod": "ROCapsules",
      "title": "Vostok/Voskhod Decoupler"
@@ -4035,6 +4040,11 @@ window.TREE = {
      "title": "N-1 Block A/B Decoupler"
     },
     {
+     "name": "mer_ringDecoupler",
+     "mod": "CoatlAerospace",
+     "title": "Huygens Structural Adapter"
+    },
+    {
      "name": "restock-decoupler-1875-1",
      "mod": "ReStockPlus",
      "title": "TD-18 Decoupler"
@@ -4053,8 +4063,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    6995
+    -4048,
+    6960
    ]
   },
   {
@@ -4080,8 +4090,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    2654
+    -4048,
+    1766
    ]
   },
   {
@@ -4122,8 +4132,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    6202
+    -4656,
+    6772
    ]
   },
   {
@@ -4154,8 +4164,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    6202
+    -4352,
+    6772
    ]
   },
   {
@@ -4191,8 +4201,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    6202
+    -4048,
+    6772
    ]
   },
   {
@@ -4243,8 +4253,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2896,
-    10066
+    -4960,
+    12075
    ]
   },
   {
@@ -4535,8 +4545,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2592,
-    10066
+    -4656,
+    12075
    ]
   },
   {
@@ -4617,8 +4627,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    10066
+    -4352,
+    12075
    ]
   },
   {
@@ -4979,8 +4989,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    10568
+    -4048,
+    12075
    ]
   },
   {
@@ -5106,8 +5116,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    10568
+    -3744,
+    12075
    ]
   },
   {
@@ -5323,8 +5333,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    10568
+    -3440,
+    12075
    ]
   },
   {
@@ -5465,8 +5475,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    10568
+    -3136,
+    12075
    ]
   },
   {
@@ -5537,8 +5547,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    7226
+    -4048,
+    4659
    ]
   },
   {
@@ -5564,8 +5574,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    3628
+    -4352,
+    3947
    ]
   },
   {
@@ -5591,8 +5601,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -2288,
-    10333
+    -4352,
+    11485
    ]
   },
   {
@@ -5613,8 +5623,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    10030
+    -3744,
+    11420
    ]
   },
   {
@@ -5635,8 +5645,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    10286
+    -3744,
+    11138
    ]
   },
   {
@@ -5662,8 +5672,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    10380
+    -3440,
+    11232
    ]
   },
   {
@@ -5684,8 +5694,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    5826
+    -3440,
+    6777
    ]
   },
   {
@@ -5711,8 +5721,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    10474
+    -3440,
+    11326
    ]
   },
   {
@@ -5738,8 +5748,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    10030
+    -3440,
+    11420
    ]
   },
   {
@@ -5760,8 +5770,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    9548
+    -3744,
+    11540
    ]
   },
   {
@@ -5782,8 +5792,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    9893
+    -3744,
+    10386
    ]
   },
   {
@@ -5806,8 +5816,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1680,
-    8283
+    -3744,
+    9847
    ]
   },
   {
@@ -5831,8 +5841,8 @@ window.TREE = {
     "Science-Core-basicAvionics"
    ],
    "pos": [
-    -1680,
-    8424
+    -3744,
+    9413
    ]
   },
   {
@@ -5851,8 +5861,8 @@ window.TREE = {
     "RP0Level2TrackingStation"
    ],
    "pos": [
-    -1680,
-    9799
+    -3744,
+    11724
    ]
   },
   {
@@ -5877,8 +5887,8 @@ window.TREE = {
     "RP0Level3TrackingStation"
    ],
    "pos": [
-    -1376,
-    9799
+    -3440,
+    11724
    ]
   },
   {
@@ -5926,8 +5936,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1680,
-    3256
+    -3744,
+    2577
    ]
   },
   {
@@ -5956,8 +5966,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1984,
-    3931
+    -4048,
+    7575
    ]
   },
   {
@@ -5983,8 +5993,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    3769
+    -4048,
+    7165
    ]
   },
   {
@@ -6004,8 +6014,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1376,
-    3769
+    -3440,
+    7165
    ]
   },
   {
@@ -6028,8 +6038,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1376,
-    3905
+    -3440,
+    7496
    ]
   },
   {
@@ -6073,8 +6083,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1984,
-    946
+    -4048,
+    3007
    ]
   },
   {
@@ -6100,8 +6110,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    1134
+    -4048,
+    3571
    ]
   },
   {
@@ -6147,8 +6157,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    1347
+    -4048,
+    3424
    ]
   },
   {
@@ -6185,8 +6195,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1984,
-    2906
+    -4048,
+    2913
    ]
   },
   {
@@ -6231,8 +6241,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1376,
-    5690
+    -3440,
+    8115
    ]
   },
   {
@@ -6299,8 +6309,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1984,
-    4135
+    -4048,
+    7275
    ]
   },
   {
@@ -6345,8 +6355,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1680,
-    4067
+    -3744,
+    7275
    ]
   },
   {
@@ -6387,8 +6397,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    5873
+    -4048,
+    9156
    ]
   },
   {
@@ -6429,8 +6439,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    5779
+    -3744,
+    8205
    ]
   },
   {
@@ -6471,8 +6481,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    4890
+    -3744,
+    7878
    ]
   },
   {
@@ -6513,8 +6523,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    4796
+    -3744,
+    7690
    ]
   },
   {
@@ -6555,8 +6565,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    5596
+    -3440,
+    8021
    ]
   },
   {
@@ -6601,8 +6611,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1984,
-    3000
+    -4048,
+    2683
    ]
   },
   {
@@ -6628,8 +6638,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    5376
+    -4048,
+    6568
    ]
   },
   {
@@ -6650,8 +6660,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    4737
+    -4048,
+    4471
    ]
   },
   {
@@ -6682,8 +6692,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    4681
+    -3744,
+    4276
    ]
   },
   {
@@ -6708,8 +6718,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1376,
-    6513
+    -3440,
+    6289
    ]
   },
   {
@@ -6730,8 +6740,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    7320
+    -4048,
+    4755
    ]
   },
   {
@@ -6767,8 +6777,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1984,
-    6885
+    -4048,
+    6866
    ]
   },
   {
@@ -6796,8 +6806,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1680,
-    2701
+    -3744,
+    1394
    ]
   },
   {
@@ -6821,8 +6831,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1376,
-    2680
+    -3440,
+    971
    ]
   },
   {
@@ -6848,8 +6858,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    3372
+    -3744,
+    1881
    ]
   },
   {
@@ -6872,8 +6882,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    3440
+    -3136,
+    2325
    ]
   },
   {
@@ -6921,8 +6931,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1680,
-    7692
+    -3744,
+    7784
    ]
   },
   {
@@ -6958,8 +6968,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    3508
+    -3744,
+    2393
    ]
   },
   {
@@ -6985,8 +6995,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1680,
-    1181
+    -3744,
+    3618
    ]
   },
   {
@@ -7012,8 +7022,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    2958
+    -3440,
+    1181
    ]
   },
   {
@@ -7039,8 +7049,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    3099
+    -3440,
+    1582
    ]
   },
   {
@@ -7061,8 +7071,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    6061
+    -3440,
+    6955
    ]
   },
   {
@@ -7093,6 +7103,11 @@ window.TREE = {
      "name": "ROC-BigGeminiParachuteDrogue",
      "mod": "ROCapsules",
      "title": "Big G Drogue Parachute"
+    },
+    {
+     "name": "ROC-CSTParachute",
+     "mod": "ROCapsules",
+     "title": "CST-100 Parachute Pack"
     },
     {
      "name": "ROC-D2Parachute",
@@ -7135,6 +7150,11 @@ window.TREE = {
      "title": "Mercury Retropack"
     },
     {
+     "name": "ROC-OrionParachute",
+     "mod": "ROCapsules",
+     "title": "Orion Main Parachute"
+    },
+    {
      "name": "ROC-ReentryControlSystemBDB",
      "mod": "ROCapsules",
      "title": "Gemini Re-entry Control System"
@@ -7158,8 +7178,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    7456
+    -3440,
+    4797
    ]
   },
   {
@@ -7185,8 +7205,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    10286
+    -3440,
+    11138
    ]
   },
   {
@@ -7206,8 +7226,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    4890
+    -3136,
+    8084
    ]
   },
   {
@@ -7228,8 +7248,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    5873
+    -3136,
+    9156
    ]
   },
   {
@@ -7247,8 +7267,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    6108
+    -3136,
+    9669
    ]
   },
   {
@@ -7279,8 +7299,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    4753
+    -3136,
+    7990
    ]
   },
   {
@@ -7298,8 +7318,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    4204
+    -3136,
+    7317
    ]
   },
   {
@@ -7322,8 +7342,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1984,
-    1040
+    -4048,
+    3304
    ]
   },
   {
@@ -7352,8 +7372,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -768,
-    5528
+    -2832,
+    8900
    ]
   },
   {
@@ -7384,8 +7404,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    2822
+    -2832,
+    2902
    ]
   },
   {
@@ -7425,8 +7445,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    2958
+    -3136,
+    1181
    ]
   },
   {
@@ -7462,8 +7482,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    3099
+    -3136,
+    1582
    ]
   },
   {
@@ -7534,8 +7554,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    3052
+    -2832,
+    1275
    ]
   },
   {
@@ -7611,8 +7631,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    7557
+    -3136,
+    7675
    ]
   },
   {
@@ -7708,8 +7728,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    7557
+    -2832,
+    7391
    ]
   },
   {
@@ -7721,6 +7741,11 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Fly the last stretch of a landing on gimbaled, throttleable liquid thrusters that can be told to slow down instead of just shutting off. The generic hardware behind any soft landing — the historical Surveyor-branded version of this same engine ships separately, through the charter.",
    "parts": [
+    {
+     "name": "ROE-MR80B",
+     "mod": "ROEngines",
+     "title": "MR-80B (MLE)"
+    },
     {
      "name": "ROE-MR80TDE",
      "mod": "ROEngines",
@@ -7735,8 +7760,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    4570
+    -3136,
+    6337
    ]
   },
   {
@@ -7762,8 +7787,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    1275
+    -3136,
+    3430
    ]
   },
   {
@@ -7804,8 +7829,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    7745
+    -3136,
+    7769
    ]
   },
   {
@@ -7826,8 +7851,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    4110
+    -3136,
+    7233
    ]
   },
   {
@@ -7848,8 +7873,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    3973
+    -2832,
+    6900
    ]
   },
   {
@@ -7897,8 +7922,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    946
+    -3136,
+    3007
    ]
   },
   {
@@ -7941,8 +7966,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    1087
+    -3136,
+    3524
    ]
   },
   {
@@ -7973,8 +7998,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    852
+    -3136,
+    3101
    ]
   },
   {
@@ -8020,8 +8045,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    758
+    -3136,
+    3712
    ]
   },
   {
@@ -8062,8 +8087,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    1369
+    -3136,
+    3336
    ]
   },
   {
@@ -8094,8 +8119,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    1369
+    -2832,
+    3336
    ]
   },
   {
@@ -8131,8 +8156,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    3837
+    -3136,
+    7411
    ]
   },
   {
@@ -8168,8 +8193,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    6586
+    -2832,
+    7972
    ]
   },
   {
@@ -8200,8 +8225,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    7651
+    -2832,
+    7485
    ]
   },
   {
@@ -8241,8 +8266,8 @@ window.TREE = {
     "RP0Level4TrackingStation"
    ],
    "pos": [
-    -1072,
-    9821
+    -3136,
+    11745
    ]
   },
   {
@@ -8358,8 +8383,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    9684
+    -3136,
+    11608
    ]
   },
   {
@@ -8390,8 +8415,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    9774
+    -2832,
+    11698
    ]
   },
   {
@@ -8441,8 +8466,8 @@ window.TREE = {
     "RP0Level5TrackingStation"
    ],
    "pos": [
-    -768,
-    9868
+    -2832,
+    11792
    ]
   },
   {
@@ -8510,8 +8535,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    8283
+    -3136,
+    9847
    ]
   },
   {
@@ -8552,8 +8577,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    4984
+    -3136,
+    4429
    ]
   },
   {
@@ -8592,8 +8617,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -768,
-    8283
+    -2832,
+    9941
    ]
   },
   {
@@ -8619,8 +8644,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    9146
+    -2832,
+    10408
    ]
   },
   {
@@ -8651,8 +8676,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    10286
+    -3136,
+    11185
    ]
   },
   {
@@ -8678,8 +8703,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    7745
+    -2832,
+    7579
    ]
   },
   {
@@ -8700,8 +8725,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    10098
+    -3136,
+    10903
    ]
   },
   {
@@ -8727,8 +8752,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    9433
+    -3136,
+    11981
    ]
   },
   {
@@ -8749,8 +8774,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    10192
+    -3136,
+    10997
    ]
   },
   {
@@ -8786,8 +8811,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    9339
+    -3136,
+    10809
    ]
   },
   {
@@ -8828,8 +8853,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    8869
+    -3136,
+    10433
    ]
   },
   {
@@ -8865,8 +8890,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    8775
+    -3136,
+    10339
    ]
   },
   {
@@ -8902,8 +8927,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    9057
+    -3136,
+    10527
    ]
   },
   {
@@ -8924,8 +8949,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    9151
+    -3136,
+    10621
    ]
   },
   {
@@ -8966,8 +8991,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    8633
+    -3136,
+    10129
    ]
   },
   {
@@ -9003,13 +9028,23 @@ window.TREE = {
      "name": "KF-WheelTruck-Single",
      "mod": "KerbalFoundries",
      "title": "KF Truck Wheel - Single"
+    },
+    {
+     "name": "roverWheel3",
+     "mod": "Squad",
+     "title": "RoveMax Model XL3"
+    },
+    {
+     "name": "wheelMed",
+     "mod": "Squad",
+     "title": "TR-2L Ruggedized Vehicular Wheel"
     }
    ],
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    8654
+    -2832,
+    10150
    ]
   },
   {
@@ -9050,8 +9085,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    8963
+    -3136,
+    10244
    ]
   },
   {
@@ -9082,8 +9117,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    8822
+    -2832,
+    10244
    ]
   },
   {
@@ -9104,8 +9139,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    9245
+    -3136,
+    10715
    ]
   },
   {
@@ -9126,8 +9161,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    7042
+    -3136,
+    7002
    ]
   },
   {
@@ -9158,8 +9193,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    9915
+    -3136,
+    11839
    ]
   },
   {
@@ -9187,9 +9222,24 @@ window.TREE = {
      "title": "Apollo Block III+ Heatshield"
     },
     {
+     "name": "ROC-CSTHS",
+     "mod": "ROCapsules",
+     "title": "CST-100 Heat Shield"
+    },
+    {
      "name": "ROC-GeminiHSLunarBDB",
      "mod": "ROCapsules",
      "title": "Gemini Lunar Heatshield"
+    },
+    {
+     "name": "ROC-OrionForwardHS",
+     "mod": "ROCapsules",
+     "title": "Orion Forward Heat Shield and Docking Port"
+    },
+    {
+     "name": "ROC-OrionHS",
+     "mod": "ROCapsules",
+     "title": "Orion Heatshield"
     }
    ],
    "upgrades": [
@@ -9197,8 +9247,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -768,
-    1698
+    -2832,
+    899
    ]
   },
   {
@@ -9226,8 +9276,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    1698
+    -2528,
+    899
    ]
   },
   {
@@ -9248,8 +9298,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    3722
+    -3136,
+    3853
    ]
   },
   {
@@ -9300,8 +9350,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    3722
+    -2832,
+    3853
    ]
   },
   {
@@ -9347,8 +9397,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    6539
+    -3136,
+    5198
    ]
   },
   {
@@ -9374,8 +9424,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    5078
+    -3136,
+    6525
    ]
   },
   {
@@ -9421,8 +9471,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    7839
+    -2832,
+    7809
    ]
   },
   {
@@ -9453,8 +9503,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    1510
+    -3136,
+    711
    ]
   },
   {
@@ -9500,8 +9550,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    3329
+    -3136,
+    1676
    ]
   },
   {
@@ -9539,11 +9589,13 @@ window.TREE = {
      "title": "Lunar Module Descent Engine (LMDE)"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_RS-18"
+   ],
    "grants": [],
    "pos": [
-    -464,
-    4298
+    -2528,
+    6623
    ]
   },
   {
@@ -9571,8 +9623,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -160,
-    4298
+    -2224,
+    6623
    ]
   },
   {
@@ -9590,8 +9642,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    6292
+    -2528,
+    8900
    ]
   },
   {
@@ -9614,8 +9666,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    6806
+    -2528,
+    8994
    ]
   },
   {
@@ -9661,8 +9713,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -768,
-    5293
+    -2832,
+    6712
    ]
   },
   {
@@ -9686,8 +9738,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    5916
+    -2528,
+    6832
    ]
   },
   {
@@ -9716,8 +9768,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1072,
-    4476
+    -3136,
+    4344
    ]
   },
   {
@@ -9748,14 +9800,19 @@ window.TREE = {
    "upgrades": [
     "RFUpgrade_11D33",
     "RFUpgrade_11D33M",
+    "RFUpgrade_AJ26-58",
+    "RFUpgrade_AJ26-59",
+    "RFUpgrade_AJ26-60",
+    "RFUpgrade_AJ26-62",
     "RFUpgrade_NK-19",
     "RFUpgrade_NK-21",
-    "RFUpgrade_RD-58"
+    "RFUpgrade_RD-58",
+    "RFUpgrade_RD-58M-CCN"
    ],
    "grants": [],
    "pos": [
-    -464,
-    1954
+    -2528,
+    2902
    ]
   },
   {
@@ -9783,11 +9840,14 @@ window.TREE = {
      "title": "RD-253/RD-275"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_RD-275M",
+    "RFUpgrade_RD-277M-14D16M"
+   ],
    "grants": [],
    "pos": [
-    -768,
-    3879
+    -2832,
+    4959
    ]
   },
   {
@@ -9810,8 +9870,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    3166
+    -2528,
+    5165
    ]
   },
   {
@@ -9837,8 +9897,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    3418
+    -2528,
+    4229
    ]
   },
   {
@@ -9859,8 +9919,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    5660
+    -2528,
+    4835
    ]
   },
   {
@@ -9877,8 +9937,8 @@ window.TREE = {
     "Science-Core-interplanetaryProbes"
    ],
    "pos": [
-    -1072,
-    8424
+    -3136,
+    9413
    ]
   },
   {
@@ -9893,8 +9953,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    8518
+    -3136,
+    9941
    ]
   },
   {
@@ -9911,8 +9971,8 @@ window.TREE = {
     "Science-Core-improvedAvionics"
    ],
    "pos": [
-    -768,
-    8471
+    -2832,
+    9800
    ]
   },
   {
@@ -9929,8 +9989,8 @@ window.TREE = {
     "Science-Core-matureAvionics"
    ],
    "pos": [
-    -464,
-    8471
+    -2528,
+    9800
    ]
   },
   {
@@ -9947,8 +10007,8 @@ window.TREE = {
     "Science-Core-largeScaleAvionics"
    ],
    "pos": [
-    -160,
-    8471
+    -2224,
+    9800
    ]
   },
   {
@@ -9979,8 +10039,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    6445
+    -3136,
+    4933
    ]
   },
   {
@@ -10011,8 +10071,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    6833
+    -3136,
+    6431
    ]
   },
   {
@@ -10031,8 +10091,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -768,
-    6680
+    -2832,
+    5155
    ]
   },
   {
@@ -10054,8 +10114,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -768,
-    6492
+    -2832,
+    4865
    ]
   },
   {
@@ -10075,8 +10135,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -768,
-    6398
+    -2832,
+    5339
    ]
   },
   {
@@ -10100,8 +10160,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1680,
-    5376
+    -3744,
+    6568
    ]
   },
   {
@@ -10150,8 +10210,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -768,
-    758
+    -2832,
+    3712
    ]
   },
   {
@@ -10182,8 +10242,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -768,
-    5434
+    -2832,
+    7297
    ]
   },
   {
@@ -10200,8 +10260,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    6198
+    -2528,
+    7344
    ]
   },
   {
@@ -10242,8 +10302,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    1181
+    -3136,
+    3618
    ]
   },
   {
@@ -10264,8 +10324,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    4067
+    -2832,
+    6806
    ]
   },
   {
@@ -10296,8 +10356,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1376,
-    5502
+    -3440,
+    7811
    ]
   },
   {
@@ -10343,8 +10403,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    3628
+    -2832,
+    3947
    ]
   },
   {
@@ -10370,8 +10430,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    2958
+    -2832,
+    1087
    ]
   },
   {
@@ -10407,8 +10467,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    3146
+    -2832,
+    1629
    ]
   },
   {
@@ -10454,8 +10514,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    3397
+    -2832,
+    1745
    ]
   },
   {
@@ -10561,8 +10621,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    3256
+    -2832,
+    2577
    ]
   },
   {
@@ -10588,8 +10648,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    2633
+    -2528,
+    1745
    ]
   },
   {
@@ -10607,6 +10667,11 @@ window.TREE = {
      "title": "RPWS01 - Plasma Wave Detector"
     },
     {
+     "name": "RO-RPWS",
+     "mod": "RP-1",
+     "title": "RPWS03 - Radio and Plasma Wave Science (RPWS)"
+    },
+    {
      "name": "RO-SWPlasmaAnalyzer",
      "mod": "RP-1",
      "title": "RPWS02 - Solar Wind Plasma Analyzer"
@@ -10620,8 +10685,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    9501
+    -2832,
+    11959
    ]
   },
   {
@@ -10657,8 +10722,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    7362
+    -3440,
+    4701
    ]
   },
   {
@@ -10714,8 +10779,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1072,
-    4655
+    -3136,
+    3195
    ]
   },
   {
@@ -10801,8 +10866,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    3508
+    -3440,
+    2393
    ]
   },
   {
@@ -10888,8 +10953,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -1376,
-    6791
+    -3440,
+    5023
    ]
   },
   {
@@ -10917,11 +10982,13 @@ window.TREE = {
      "title": "RD-56/KVD-1/CE-7.5"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_CE-7.5"
+   ],
    "grants": [],
    "pos": [
-    -464,
-    5754
+    -2528,
+    6717
    ]
   },
   {
@@ -10946,8 +11013,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -160,
-    5754
+    -2224,
+    6717
    ]
   },
   {
@@ -10973,8 +11040,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -160,
-    5895
+    -2224,
+    6853
    ]
   },
   {
@@ -10999,8 +11066,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    144,
-    5754
+    -1920,
+    6717
    ]
   },
   {
@@ -11021,8 +11088,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -160,
-    3260
+    -2224,
+    5259
    ]
   },
   {
@@ -11040,8 +11107,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    144,
-    3260
+    -1920,
+    5259
    ]
   },
   {
@@ -11067,8 +11134,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -160,
-    1954
+    -2224,
+    2713
    ]
   },
   {
@@ -11088,8 +11155,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -160,
-    3166
+    -2224,
+    5165
    ]
   },
   {
@@ -11115,8 +11182,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -768,
-    946
+    -2832,
+    3007
    ]
   },
   {
@@ -11142,8 +11209,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    711
+    -2528,
+    3759
    ]
   },
   {
@@ -11186,11 +11253,13 @@ window.TREE = {
      "title": "STAR 8 (RAD)"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_STAR-37FMV"
+   ],
    "grants": [],
    "pos": [
-    -464,
-    1416
+    -2528,
+    3289
    ]
   },
   {
@@ -11226,8 +11295,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    1087
+    -2528,
+    3524
    ]
   },
   {
@@ -11254,8 +11323,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    3606
+    -2528,
+    7062
    ]
   },
   {
@@ -11286,8 +11355,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -160,
-    3418
+    -2224,
+    4229
    ]
   },
   {
@@ -11323,8 +11392,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    144,
-    3418
+    -1920,
+    4229
    ]
   },
   {
@@ -11339,8 +11408,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    2445
+    -2528,
+    2529
    ]
   },
   {
@@ -11352,6 +11421,11 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Skip the reactor and the nozzle entirely - drop small fission charges out the back and ride the shockwave off an ablative plate, one controlled detonation at a time. Absurd, filthy, and on paper the only chemistry-free way to put a truly heavy ship anywhere in the solar system fast. Project Orion never flew; here, it can.",
    "parts": [
+    {
+     "name": "RO-fft20mMMOtank",
+     "mod": "FarFutureTechnologies",
+     "title": "20 m \"Mini-Mag\" Orion Pulse Unit Magazine"
+    },
     {
      "name": "RO-fftorion12",
      "mod": "FarFutureTechnologies",
@@ -11381,13 +11455,18 @@ window.TREE = {
      "name": "fft-fueltank-pulseunits-5-3",
      "mod": "FarFutureTechnologies",
      "title": "Orion Pulse Unit Magazine (Large)"
+    },
+    {
+     "name": "fft-fueltank-targets-5-1",
+     "mod": "FarFutureTechnologies",
+     "title": "10 m \"Mini-Mag\" Orion Pulse Unit Magazine"
     }
    ],
    "upgrades": [],
    "grants": [],
    "pos": [
-    -160,
-    2654
+    -2224,
+    3277
    ]
   },
   {
@@ -11418,8 +11497,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    6712
+    -2528,
+    5816
    ]
   },
   {
@@ -11437,11 +11516,14 @@ window.TREE = {
      "title": "SPT-70 Hall Effect Thruster"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_SPT-70M",
+    "RFUpgrade_SPT-70MK"
+   ],
    "grants": [],
    "pos": [
-    -160,
-    6759
+    -2224,
+    5769
    ]
   },
   {
@@ -11453,6 +11535,16 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Trade the reaction-control block's simple storable monopropellant for a genuine two-propellant combustion chamber - a real flame instead of a catalytic fizz, and a meaningful jump in specific impulse for every correction burn and apogee kick a spacecraft makes on its own.",
    "parts": [
+    {
+     "name": "ROC-OrionESM",
+     "mod": "ROCapsules",
+     "title": "Orion European Service Module"
+    },
+    {
+     "name": "ROC-OrionRCS",
+     "mod": "ROCapsules",
+     "title": "Orion RCS Thrusters"
+    },
     {
      "name": "ROE-HiPAT",
      "mod": "ROEngines",
@@ -11480,8 +11572,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    6104
+    -2528,
+    7250
    ]
   },
   {
@@ -11508,8 +11600,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    7356
+    -2528,
+    4930
    ]
   },
   {
@@ -11534,8 +11626,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    7450
+    -2528,
+    5071
    ]
   },
   {
@@ -11552,8 +11644,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    1604
+    -2528,
+    805
    ]
   },
   {
@@ -11565,6 +11657,21 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Stop relying on the hull's own skin to shed heat and circulate coolant out to dedicated panels instead - a heat-rejection system sized independently of the spacecraft it serves, because a crewed orbiter or a station generates more waste heat than any body-mounted radiator could ever carry alone.",
    "parts": [
+    {
+     "name": "foldingRadLarge",
+     "mod": "Squad",
+     "title": "EATCS Retractable Radiator (Large)"
+    },
+    {
+     "name": "foldingRadMed",
+     "mod": "Squad",
+     "title": "EATCS Retractable Radiator (Medium)"
+    },
+    {
+     "name": "foldingRadSmall",
+     "mod": "Squad",
+     "title": "EATCS Retractable Radiator (Small)"
+    },
     {
      "name": "radPanelEdge",
      "mod": "Squad",
@@ -11584,8 +11691,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    1510
+    -2528,
+    711
    ]
   },
   {
@@ -11602,8 +11709,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    2351
+    -2528,
+    2435
    ]
   },
   {
@@ -11614,14 +11721,20 @@ window.TREE = {
    "cost": 1700,
    "anyToUnlock": false,
    "flavor": "Carry the resin-and-fibre layup learned for a reentry heatshield over to a payload shroud instead - a fairing that sheds the last of the aluminium stringer's dead weight, built from the same composite technique that already keeps a capsule cool on the way down.",
-   "parts": [],
+   "parts": [
+    {
+     "name": "ROC-CSTNoseCone",
+     "mod": "ROCapsules",
+     "title": "CST-100 Nose Cone"
+    }
+   ],
    "upgrades": [
     "PFTech-Fairing-IV"
    ],
    "grants": [],
    "pos": [
-    -464,
-    3700
+    -2528,
+    2786
    ]
   },
   {
@@ -11657,8 +11770,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    2727
+    -2528,
+    1839
    ]
   },
   {
@@ -11694,8 +11807,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    2821
+    -2528,
+    1651
    ]
   },
   {
@@ -11761,8 +11874,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    2539
+    -2528,
+    2692
    ]
   },
   {
@@ -11808,8 +11921,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    2236
+    -2528,
+    1275
    ]
   },
   {
@@ -11827,16 +11940,26 @@ window.TREE = {
      "title": "Advanced Inline Stabilizer"
     },
     {
+     "name": "asasmodule1-2",
+     "mod": "Squad",
+     "title": "Advanced Reaction Wheel Module, Large"
+    },
+    {
      "name": "ca_rw_large",
      "mod": "CoatlAerospace",
      "title": "RW-4A Radial Reaction Wheel Assembly"
+    },
+    {
+     "name": "restock-reactionwheel-radial-1",
+     "mod": "ReStockPlus",
+     "title": "Radial Reaction Wheel (Large)"
     }
    ],
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    7954
+    -2528,
+    7809
    ]
   },
   {
@@ -11857,8 +11980,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    8707
+    -2528,
+    10318
    ]
   },
   {
@@ -11886,16 +12009,26 @@ window.TREE = {
      "title": "Apollo Block III+ Mission Module"
     },
     {
+     "name": "ROC-ApolloMissionModule4",
+     "mod": "ROCapsules",
+     "title": "Apollo Block IV Mission Module"
+    },
+    {
      "name": "ROC-ApolloSMBlockIII",
      "mod": "ROCapsules",
      "title": "Apollo Block III+ Service Module"
+    },
+    {
+     "name": "ROC-ApolloSMDBDBlockIV",
+     "mod": "ROCapsules",
+     "title": "Apollo Block IV Service Module"
     }
    ],
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    2142
+    -2528,
+    1087
    ]
   },
   {
@@ -11936,8 +12069,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    2048
+    -2528,
+    1181
    ]
   },
   {
@@ -11983,8 +12116,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    4655
+    -2528,
+    3195
    ]
   },
   {
@@ -12012,11 +12145,21 @@ window.TREE = {
      "title": "RL-10B/C Series (84.1\" Extendable Nozzle)"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_CECE-Base",
+    "RFUpgrade_CECE-High",
+    "RFUpgrade_CECE-Methane",
+    "RFUpgrade_RD-0146D",
+    "RFUpgrade_RL10C-1",
+    "RFUpgrade_RL10C-1-1",
+    "RFUpgrade_RL10C-1A",
+    "RFUpgrade_RL10C-2",
+    "RFUpgrade_RL10C-2-1"
+   ],
    "grants": [],
    "pos": [
-    144,
-    4476
+    -1920,
+    4344
    ]
   },
   {
@@ -12034,11 +12177,14 @@ window.TREE = {
      "title": "LE-5"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_LE-5B-2",
+    "RFUpgrade_LE-5B-3"
+   ],
    "grants": [],
    "pos": [
-    144,
-    5848
+    -1920,
+    6968
    ]
   },
   {
@@ -12076,11 +12222,16 @@ window.TREE = {
      "title": "Space Transportation Main Engine (STME)"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_RS-68A",
+    "RFUpgrade_RS-68B",
+    "RFUpgrade_RS-68K",
+    "RFUpgrade_RS-800"
+   ],
    "grants": [],
    "pos": [
-    144,
-    5942
+    -1920,
+    6811
    ]
   },
   {
@@ -12111,8 +12262,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    448,
-    5848
+    -1616,
+    6529
    ]
   },
   {
@@ -12145,8 +12296,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    752,
-    5848
+    -1312,
+    6529
    ]
   },
   {
@@ -12177,8 +12328,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    448,
-    4042
+    -1616,
+    4855
    ]
   },
   {
@@ -12191,6 +12342,11 @@ window.TREE = {
    "flavor": "Methane splits the difference: colder than kerosene, denser than hydrogen, clean-burning and one day makeable on Mars. The LRBE is the tree's first methalox engine - a staged-combustion booster on a fuel nobody flew yet, the seed of a lane that a later era will grow into.",
    "parts": [
     {
+     "name": "ROE-BE4",
+     "mod": "ROEngines",
+     "title": "BE-4"
+    },
+    {
      "name": "rmm_arenysaurus",
      "mod": "RocketMotorMenagerie",
      "title": "LRBE"
@@ -12199,8 +12355,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    448,
-    1813
+    -1616,
+    2551
    ]
   },
   {
@@ -12228,11 +12384,14 @@ window.TREE = {
      "title": "YF-100"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_RD-171M",
+    "RFUpgrade_YF-100K"
+   ],
    "grants": [],
    "pos": [
-    144,
-    1907
+    -1920,
+    2786
    ]
   },
   {
@@ -12248,18 +12407,26 @@ window.TREE = {
      "name": "ROE-RD180",
      "mod": "ROEngines",
      "title": "RD-180"
+    },
+    {
+     "name": "ROE-RD191",
+     "mod": "ROEngines",
+     "title": "RD-191"
     }
    ],
    "upgrades": [
     "RFUpgrade_RD-120F",
     "RFUpgrade_RD-120K",
     "RFUpgrade_RD-171",
-    "RFUpgrade_RD-172-173"
+    "RFUpgrade_RD-172-173",
+    "RFUpgrade_RD-181",
+    "RFUpgrade_RD-191",
+    "RFUpgrade_RD-193"
    ],
    "grants": [],
    "pos": [
-    448,
-    1907
+    -1616,
+    2833
    ]
   },
   {
@@ -12282,8 +12449,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    144,
-    3166
+    -1920,
+    5165
    ]
   },
   {
@@ -12321,11 +12488,14 @@ window.TREE = {
      "title": "Aestus"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_Aestus-II",
+    "RFUpgrade_AestusMod"
+   ],
    "grants": [],
    "pos": [
-    144,
-    3606
+    -1920,
+    7062
    ]
   },
   {
@@ -12351,8 +12521,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    144,
-    6245
+    -1920,
+    8858
    ]
   },
   {
@@ -12383,8 +12553,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    144,
-    6339
+    -1920,
+    8943
    ]
   },
   {
@@ -12407,6 +12577,16 @@ window.TREE = {
      "title": "Castor 120"
     },
     {
+     "name": "ROE-Castor30",
+     "mod": "ROEngines",
+     "title": "Castor 30A"
+    },
+    {
+     "name": "ROE-Castor30XL",
+     "mod": "ROEngines",
+     "title": "Castor 30XL"
+    },
+    {
      "name": "ROE-SRMU",
      "mod": "ROEngines",
      "title": "SRMU"
@@ -12425,8 +12605,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -160,
-    711
+    -2224,
+    3900
    ]
   },
   {
@@ -12457,13 +12637,18 @@ window.TREE = {
      "name": "ROE-GEM60",
      "mod": "ROEngines",
      "title": "GEM 60"
+    },
+    {
+     "name": "ROE-GEM63",
+     "mod": "ROEngines",
+     "title": "GEM 63"
     }
    ],
    "upgrades": [],
    "grants": [],
    "pos": [
-    144,
-    711
+    -1920,
+    3947
    ]
   },
   {
@@ -12493,12 +12678,15 @@ window.TREE = {
    ],
    "upgrades": [
     "RFUpgrade_457M-V1-K",
+    "RFUpgrade_SPT-100D",
+    "RFUpgrade_SPT-100M",
+    "RFUpgrade_SPT-140D",
     "RFUpgrade_SPT-50M"
    ],
    "grants": [],
    "pos": [
-    144,
-    6806
+    -1920,
+    5722
    ]
   },
   {
@@ -12517,13 +12705,14 @@ window.TREE = {
     }
    ],
    "upgrades": [
+    "RFUpgrade_457M-V2",
     "RFUpgrade_PITV-Hydrazine-40",
     "RFUpgrade_SPT-100B"
    ],
    "grants": [],
    "pos": [
-    448,
-    6806
+    -1616,
+    5722
    ]
   },
   {
@@ -12544,8 +12733,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    448,
-    6618
+    -1616,
+    5628
    ]
   },
   {
@@ -12558,16 +12747,30 @@ window.TREE = {
    "flavor": "No electrodes to erode - a pulsed magnetic field ionises and flings a puff of ammonia, and repeats thousands of times a second. The PIT reaches seven thousand seconds of Isp, an experimental high-power concept for the kind of cruise no chemical stage could sustain.",
    "parts": [
     {
+     "name": "RO-nupit",
+     "mod": "NearFuturePropulsion",
+     "title": "NuPIT Pulsed Inductive Thruster"
+    },
+    {
+     "name": "pit-0625",
+     "mod": "NearFuturePropulsion",
+     "title": "FARAD Pulsed Inductive Thruster"
+    },
+    {
      "name": "pit-125",
      "mod": "NearFuturePropulsion",
      "title": "PIT Mk Va Pulsed Inductive Thruster"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_NuPIT-7000",
+    "RFUpgrade_PITV-Ammonia-1200",
+    "RFUpgrade_PITV-Hydrazine-1200"
+   ],
    "grants": [],
    "pos": [
-    448,
-    6712
+    -1616,
+    5816
    ]
   },
   {
@@ -12598,8 +12801,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    448,
-    4768
+    -1616,
+    4276
    ]
   },
   {
@@ -12620,8 +12823,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    448,
-    2692
+    -1616,
+    4182
    ]
   },
   {
@@ -12649,8 +12852,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    752,
-    2692
+    -1312,
+    4182
    ]
   },
   {
@@ -12676,8 +12879,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -160,
-    7403
+    -2224,
+    4977
    ]
   },
   {
@@ -12718,8 +12921,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -160,
-    7309
+    -2224,
+    4883
    ]
   },
   {
@@ -12737,6 +12940,11 @@ window.TREE = {
      "title": "LEROS-1b (635N)"
     },
     {
+     "name": "ROE-LEROS4",
+     "mod": "ROEngines",
+     "title": "LEROS-4 (1100N)"
+    },
+    {
      "name": "ROE-R42",
      "mod": "ROEngines",
      "title": "R-42"
@@ -12750,8 +12958,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    144,
-    6104
+    -1920,
+    7250
    ]
   },
   {
@@ -12763,6 +12971,11 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Face an atmosphere ninety times denser than Earth's and hot enough to melt lead at the surface - the Venera aeroshell's heatshield and twin parachutes, built for a descent that ends in a furnace no matter how gently you land in it.",
    "parts": [
+    {
+     "name": "ca_draco_hs",
+     "mod": "CoatlAerospace",
+     "title": "Huygens Heat Shield"
+    },
     {
      "name": "ca_fom_drogue",
      "mod": "CoatlAerospace",
@@ -12782,8 +12995,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    1860
+    -2528,
+    993
    ]
   },
   {
@@ -12814,8 +13027,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -160,
-    1698
+    -2224,
+    899
    ]
   },
   {
@@ -12827,6 +13040,16 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "A parachute stack timed to deploy only once the heatshield has done its worst work and the shockwave has finally fallen behind - Galileo's own descent sequence, the last mechanical step between the hottest entry in the tree and a working probe.",
    "parts": [
+    {
+     "name": "ca_draco_drogue",
+     "mod": "CoatlAerospace",
+     "title": "Huygens Drogue Parachute"
+    },
+    {
+     "name": "ca_draco_parachute",
+     "mod": "CoatlAerospace",
+     "title": "Huygens Main Parachute"
+    },
     {
      "name": "galileo_probe_hs_parachute",
      "mod": "RN_US_Probes",
@@ -12841,8 +13064,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    144,
-    1698
+    -1920,
+    852
    ]
   },
   {
@@ -12863,8 +13086,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    8612
+    -2528,
+    10108
    ]
   },
   {
@@ -12885,8 +13108,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -160,
-    8612
+    -2224,
+    10108
    ]
   },
   {
@@ -12927,8 +13150,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    8048
+    -2528,
+    7903
    ]
   },
   {
@@ -12974,8 +13197,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    8142
+    -2528,
+    7715
    ]
   },
   {
@@ -13008,8 +13231,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -464,
-    8236
+    -2528,
+    9894
    ]
   },
   {
@@ -13055,8 +13278,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    8330
+    -2528,
+    9988
    ]
   },
   {
@@ -13069,6 +13292,16 @@ window.TREE = {
    "flavor": "The generic array's last uprate in this era - more efficient cells, the same fold-out paddle, still the default choice for anything that doesn't need a dedicated mission-sized wing.",
    "parts": [
     {
+     "name": "ROC-ApolloSolarBlockV",
+     "mod": "ROCapsules",
+     "title": "Apollo Block V Solar Array"
+    },
+    {
+     "name": "ROC-OrionSolar",
+     "mod": "ROCapsules",
+     "title": "Orion Solar Panels"
+    },
+    {
      "name": "largeSolarPanel",
      "mod": "Squad",
      "title": "XT4 Solar Panel Array Mk1"
@@ -13079,8 +13312,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -160,
-    8236
+    -2224,
+    9894
    ]
   },
   {
@@ -13111,8 +13344,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    2957
+    -2528,
+    3853
    ]
   },
   {
@@ -13125,6 +13358,11 @@ window.TREE = {
    "flavor": "Standardise the RTG into modular General-Purpose Heat Source bricks, stack as many as the mission needs, and the same design flies Galileo, Ulysses, Cassini and every deep-space mission after them for the next forty years.",
    "parts": [
     {
+     "name": "RO-MMRTG",
+     "mod": "Squad",
+     "title": "Multi-Mission RTG"
+    },
+    {
      "name": "SXTDepolyRTGI",
      "mod": "SXT",
      "title": "GPHS-RTG"
@@ -13135,21 +13373,36 @@ window.TREE = {
      "title": "GPHS-RTG [Shielded]"
     },
     {
+     "name": "USRTGWedgeMM",
+     "mod": "UniversalStorage2",
+     "title": "Universal Storage: Multi-Mission RTG"
+    },
+    {
      "name": "ca_mer_rtg",
      "mod": "CoatlAerospace",
      "title": "GPHS-RTG"
     },
     {
+     "name": "nfe-rtg-asrg-1",
+     "mod": "NearFutureElectrical",
+     "title": "NASA & DOE Advanced Sterling RG"
+    },
+    {
      "name": "nfe-rtg-gphs-1",
      "mod": "NearFutureElectrical",
      "title": "GPHS-RTG"
+    },
+    {
+     "name": "nfe-rtg-mmrtg-1",
+     "mod": "NearFutureElectrical",
+     "title": "Multi-Mission RTG"
     }
    ],
    "upgrades": [],
    "grants": [],
    "pos": [
-    -160,
-    2957
+    -2224,
+    3994
    ]
   },
   {
@@ -13190,8 +13443,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    9637
+    -2528,
+    11655
    ]
   },
   {
@@ -13222,8 +13475,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    9731
+    -2528,
+    11561
    ]
   },
   {
@@ -13249,8 +13502,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    9543
+    -2528,
+    12002
    ]
   },
   {
@@ -13271,8 +13524,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    10030
+    -2528,
+    11420
    ]
   },
   {
@@ -13293,8 +13546,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    3512
+    -2528,
+    7156
    ]
   },
   {
@@ -13315,8 +13568,8 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -464,
-    6010
+    -2528,
+    6926
    ]
   },
   {
@@ -13337,32 +13590,2131 @@ window.TREE = {
    "upgrades": [],
    "grants": [],
    "pos": [
-    -160,
-    3072
+    -2224,
+    5071
+   ]
+  },
+  {
+   "id": "life_modularHabitat",
+   "title": "Modular Station Habitat",
+   "discipline": "LifeSupport",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "The station stops being a converted rocket stage and becomes a purpose-built module you launch, dock and inhabit. A rigid pressurised core with dedicated habitation and science modules - the Mir/ISS way of building a station out of standardised, connectable rooms.",
+   "parts": [
+    {
+     "name": "STXCANIOT",
+     "mod": "SXT",
+     "title": "PPD-H Crew Cabin"
+    },
+    {
+     "name": "sspx-core-1875-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "3.38m Station Core"
+    },
+    {
+     "name": "sspx-habitation-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Habitation Module Long"
+    },
+    {
+     "name": "sspx-habitation-375-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Habitation Module (Small)"
+    },
+    {
+     "name": "sspx-science-1875-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "3.38m Science Module"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    1557
+   ]
+  },
+  {
+   "id": "life_pressurizedCrewTubes",
+   "title": "Pressurised Crew Tubes",
+   "discipline": "LifeSupport",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Pressurised passageways that let a crew move between modules without an EVA - straight, angled and extendable crew tubes that turn a cluster of docked modules into one shirtsleeve interior.",
+   "parts": [
+    {
+     "name": "sspx-extendable-tube-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Extendable Crew Tube"
+    },
+    {
+     "name": "sspx-tube-1875-angled-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "3.38m Pressurized Crew Tube (Angled)"
+    },
+    {
+     "name": "sspx-tube-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Pressurized Crew Tube (Long)"
+    },
+    {
+     "name": "sspx-tube-25-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Pressurized Crew Tube (Medium)"
+    },
+    {
+     "name": "sspx-tube-25-3",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Pressurized Crew Tube (Short)"
+    },
+    {
+     "name": "sspx-tube-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Pressurized Crew Tube (Long)"
+    },
+    {
+     "name": "sspx-tube-375-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Pressurized Crew Tube (Medium)"
+    },
+    {
+     "name": "sspx-tube-375-3",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Pressurized Crew Tube (Short)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    1651
+   ]
+  },
+  {
+   "id": "life_stationLogistics",
+   "title": "Station Logistics Modules",
+   "discipline": "LifeSupport",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Keeping a station supplied: pressurised stores, cargo containers and radial logistics modules for the water, air, food and spares that a permanent crew consumes faster than any single launch can carry.",
+   "parts": [
+    {
+     "name": "sspx-cargo-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Storage Module"
+    },
+    {
+     "name": "sspx-cargo-25-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Storage Module (Short)"
+    },
+    {
+     "name": "sspx-cargo-container-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Storage Module (Long)"
+    },
+    {
+     "name": "sspx-cargo-container-25-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Storage Module (Medium)"
+    },
+    {
+     "name": "sspx-cargo-container-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Storage Module (Long)"
+    },
+    {
+     "name": "sspx-cargo-container-375-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.225m Storage Module (Medium)"
+    },
+    {
+     "name": "sspx-cargo-container-375-3",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Storage Module (Short)"
+    },
+    {
+     "name": "sspx-cargo-container-radial-huge-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Large Radial Cargo Container (Long)"
+    },
+    {
+     "name": "sspx-cargo-container-radial-huge-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Large Radial Cargo Container (Short)"
+    },
+    {
+     "name": "sspx-cargo-container-radial-medium-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Twin Radial Cargo Container (Long)"
+    },
+    {
+     "name": "sspx-cargo-container-radial-medium-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Twin Radial Cargo Container (Medium)"
+    },
+    {
+     "name": "sspx-cargo-container-radial-medium-3",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Twin Radial Cargo Container (Short)"
+    },
+    {
+     "name": "sspx-cargo-container-radial-small-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Radial Cargo Container (Long)"
+    },
+    {
+     "name": "sspx-cargo-container-radial-small-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Radial Cargo Container (Medium)"
+    },
+    {
+     "name": "sspx-cargo-container-radial-small-3",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Radial Cargo Container (Small)"
+    },
+    {
+     "name": "sspx-logistics-5-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "9m Logistics Module (Long)"
+    },
+    {
+     "name": "sspx-logistics-5-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "9m Logistics Module (Short)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    1839
+   ]
+  },
+  {
+   "id": "life_externalStowage",
+   "title": "External Stowage Platforms",
+   "discipline": "LifeSupport",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Not everything needs to be kept warm and pressurised. External stowage pallets bolt spares, experiments and replacement units to the outside of the station, exposed to vacuum and reachable by arm or spacewalk.",
+   "parts": [
+    {
+     "name": "sspx-lab-pallet-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "External Stowage Platform (3.6m x 3.6m)"
+    },
+    {
+     "name": "sspx-lab-pallet-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "External Stowage Platform (1.8m x 1.8m)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    1839
+   ]
+  },
+  {
+   "id": "life_bioregenerativeECLSS",
+   "title": "Bioregenerative Life Support",
+   "discipline": "LifeSupport",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Close the loop with living things: a greenhouse that grows food and scrubs carbon dioxide back into oxygen, turning the open-loop consumables chain toward a self-sustaining one. The first bioregenerative step for missions too long to resupply.",
+   "parts": [
+    {
+     "name": "sspx-cupola-greenhouse-125-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "2.25m Greenhouse Dome"
+    },
+    {
+     "name": "sspx-greenhouse-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Greenhouse Module"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    1463
+   ]
+  },
+  {
+   "id": "life_observationCupola",
+   "title": "Observation Cupola",
+   "discipline": "LifeSupport",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "A windowed dome that gives the crew a direct, wide-angle eye on the vehicle and the world below - the cupola from which an arm operator berths an incoming module, or a crew simply watches the Earth turn. A telescope dome shares the pressure-vessel design.",
+   "parts": [
+    {
+     "name": "cupola",
+     "mod": "Squad",
+     "title": "Cupola Observatory Module"
+    },
+    {
+     "name": "sspx-cupola-125-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "2.25m Cupola"
+    },
+    {
+     "name": "sspx-cupola-1875-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "3.38m Observation Module"
+    },
+    {
+     "name": "sspx-cupola-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Cupola"
+    },
+    {
+     "name": "sspx-cupola-telescope-125-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "2.25m Telescope Dome"
+    },
+    {
+     "name": "sspx-observation-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Cupola (Large)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    1463
+   ]
+  },
+  {
+   "id": "life_stationAirlock",
+   "title": "Station Service Airlock",
+   "discipline": "LifeSupport",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "A dedicated way out. A service airlock lets the crew step into vacuum and back without depressurising the whole station - the front door for every spacewalk, assembly task and external repair.",
+   "parts": [
+    {
+     "name": "sspx-airlock-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Service Airlock w/ Extendable NASA Docking System"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    1745
+   ]
+  },
+  {
+   "id": "life_isru",
+   "title": "In-Situ Resource Utilisation",
+   "discipline": "LifeSupport",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Stop hauling every gram from Earth. Extract water and volatiles from the ground, liquefy them into cryogenic propellant and run the chemistry to make more - the in-situ resource utilisation that makes a surface base, rather than a visit, affordable.",
+   "parts": [
+    {
+     "name": "LiquefactionArray",
+     "mod": "KerbalismConfig",
+     "title": "Liquefaction Array"
+    },
+    {
+     "name": "Liquifier",
+     "mod": "KerbalismConfig",
+     "title": "Liquifier"
+    },
+    {
+     "name": "kerbalism-ISRU",
+     "mod": "KerbalismConfig",
+     "title": "ISRU"
+    },
+    {
+     "name": "kerbalism-chemicalplant",
+     "mod": "KerbalismConfig",
+     "title": "Chemical Plant"
+    },
+    {
+     "name": "kerbalism-miniISRU",
+     "mod": "KerbalismConfig",
+     "title": "Mini ISRU"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    2001
+   ]
+  },
+  {
+   "id": "str_modularTrussSystem",
+   "title": "Modular Truss Assembly System",
+   "discipline": "StructuresMechanisms",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "The backbone you assemble in orbit. A kit of standardised girder segments, angled connectors, hubs and pressurised passages - plus the free-flying guidance unit that flies each segment into place - that bolt together into an arbitrarily large truss, the structural skeleton of a modular station built one launch at a time.",
+   "parts": [
+    {
+     "name": "truss-octo-01",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Modular Truss XL"
+    },
+    {
+     "name": "truss-octo-02",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Modular Truss"
+    },
+    {
+     "name": "truss-octo-03",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Modular Truss Mini"
+    },
+    {
+     "name": "truss-octo-04",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Modular Truss Micro"
+    },
+    {
+     "name": "truss-octo-adapter-crew-01",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Pressurized Adapter"
+    },
+    {
+     "name": "truss-octo-angled-01",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Modular Angular Connector"
+    },
+    {
+     "name": "truss-octo-angled-crew-01",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Pressurized Angular Connector"
+    },
+    {
+     "name": "truss-octo-attach-01",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Radial Attach Node"
+    },
+    {
+     "name": "truss-octo-crew-01",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Pressurized Truss XL"
+    },
+    {
+     "name": "truss-octo-crew-02",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Pressurized Truss"
+    },
+    {
+     "name": "truss-octo-crew-03",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Pressurized Truss Mini"
+    },
+    {
+     "name": "truss-octo-docking-octo",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Octagonal Docking Connector"
+    },
+    {
+     "name": "truss-octo-drone-01",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Guidance Unit"
+    },
+    {
+     "name": "truss-octo-hub-01",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Modular Hub"
+    },
+    {
+     "name": "truss-octo-hub-crew-01",
+     "mod": "NearFutureConstruction",
+     "title": "Octo-Girder Pressurized Hub"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    2461
+   ]
+  },
+  {
+   "id": "str_spinalTruss",
+   "title": "Spinal Truss Keel",
+   "discipline": "StructuresMechanisms",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "A single load-bearing spine down the length of a large vehicle or station, with its own adapters and docking connector - the central keel that everything else hangs off.",
+   "parts": [
+    {
+     "name": "truss-spinal-01",
+     "mod": "NearFutureConstruction",
+     "title": "Spinal Modular Truss"
+    },
+    {
+     "name": "truss-spinal-02",
+     "mod": "NearFutureConstruction",
+     "title": "Spinal Modular Truss Mini"
+    },
+    {
+     "name": "truss-spinal-03",
+     "mod": "NearFutureConstruction",
+     "title": "Spinal Modular Truss Micro"
+    },
+    {
+     "name": "truss-spinal-adapter-01",
+     "mod": "NearFutureConstruction",
+     "title": "Spinal Truss Series-3 Adapter"
+    },
+    {
+     "name": "truss-spinal-adapter-02",
+     "mod": "NearFutureConstruction",
+     "title": "Spinal Truss Series-2 Adapter"
+    },
+    {
+     "name": "truss-spinal-docking-01",
+     "mod": "NearFutureConstruction",
+     "title": "Spinal Truss Docking Connector"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    2367
+   ]
+  },
+  {
+   "id": "str_stationHubs",
+   "title": "Station Multi-Point Hubs",
+   "discipline": "StructuresMechanisms",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Multi-point connectors - the junction boxes of a station - that let one node join four, six or more modules at once, turning a linear stack into a branching structure.",
+   "parts": [
+    {
+     "name": "sspx-hub-125-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "2.25m Station Hub"
+    },
+    {
+     "name": "sspx-hub-1875-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "3.38m Station Hub"
+    },
+    {
+     "name": "sspx-hub-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Station Hub"
+    },
+    {
+     "name": "stationHub",
+     "mod": "Squad",
+     "title": "Rockomax HubMax Multi-Point Connector"
+    },
+    {
+     "name": "stationHubLarge",
+     "mod": "VenStockRevamp",
+     "title": "Extra-Large Rockomax HubMax Multi-Point Connector"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    2179
+   ]
+  },
+  {
+   "id": "str_stationMountingBases",
+   "title": "Station Mounting Bases",
+   "discipline": "StructuresMechanisms",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Adjustable base frames, cradles and radial attachment points that mount a module, a payload or a whole vehicle onto a station or a launch stack at any angle it's needed.",
+   "parts": [
+    {
+     "name": "sspx-adapter-375-5-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Station Conical Adapter [6.75m to 9m]"
+    },
+    {
+     "name": "sspx-adapter-375-5-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Station Flat Adapter [6.75m to 9m]"
+    },
+    {
+     "name": "sspx-adjusting-base-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Adjustable Base Frame"
+    },
+    {
+     "name": "sspx-adjusting-base-cradle-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Adjustable Base Cradle"
+    },
+    {
+     "name": "sspx-attach-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Pressurized Radial Attachment Point"
+    },
+    {
+     "name": "sspx-attach-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Pressurized Radial Attachment Point"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    2273
+   ]
+  },
+  {
+   "id": "str_heavyTransportAirframe",
+   "title": "Heavy Transport Airframe",
+   "discipline": "StructuresMechanisms",
+   "tier": 8,
+   "cost": 2100,
+   "anyToUnlock": false,
+   "flavor": "The strategic-airlift airframe class - the huge fuselage, cockpit and tail sections of an An-124-scale cargo aircraft, big enough to swallow a rocket stage or an outsized payload. A fixed-catalogue dead-end off the monocoque airframe.",
+   "parts": [
+    {
+     "name": "MK1IntakeFuselage",
+     "mod": "Squad",
+     "title": "1.25m Fuselage (Diverterless Intake)"
+    },
+    {
+     "name": "SXTOsaulNoseCockpitAn225",
+     "mod": "SXT",
+     "title": "An-124 Cockpit"
+    },
+    {
+     "name": "SXTOsaulTail",
+     "mod": "SXT",
+     "title": "An-124 Tail Section"
+    },
+    {
+     "name": "SXTOsualHullLarge",
+     "mod": "SXT",
+     "title": "An-124 Hull section"
+    },
+    {
+     "name": "SXTOsualRadCockpit",
+     "mod": "SXT",
+     "title": "An-124 Cockpit Radial"
+    },
+    {
+     "name": "SXTOsualRadHull",
+     "mod": "SXT",
+     "title": "An-124 Hull section Radial"
+    },
+    {
+     "name": "SXTOsualRadHullEnd",
+     "mod": "SXT",
+     "title": "An-124 Hull section Radial End"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2832,
+    5044
+   ]
+  },
+  {
+   "id": "gnc_androgynousDocking",
+   "title": "Androgynous Docking & Berthing",
+   "discipline": "GuidanceControl",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Two identical ports that can each play either role, so any two vehicles can mate - the androgynous docking mechanism that let the Shuttle meet Mir and built the International Space Station, past the gendered probe-and-drogue of the first rendezvous era.",
+   "parts": [
+    {
+     "name": "APAS89-95",
+     "mod": "Squad",
+     "title": "APAS-89/95"
+    },
+    {
+     "name": "ROC-APAS8995Av2",
+     "mod": "ROCapsules",
+     "title": "APAS 89/95 Active Docking Port"
+    },
+    {
+     "name": "ROC-APAS8995Pv2",
+     "mod": "ROCapsules",
+     "title": "APAS 89/95 Passive Docking Port"
+    },
+    {
+     "name": "ROC-ApolloCADSActive",
+     "mod": "ROCapsules",
+     "title": "Apollo Block IV CADS Active Docking Port"
+    },
+    {
+     "name": "ROC-ApolloCADSPassive",
+     "mod": "ROCapsules",
+     "title": "Apollo Block IV CADS Passive Docking Port"
+    },
+    {
+     "name": "docking-linear-1",
+     "mod": "NearFutureConstruction",
+     "title": "Grip-O-Tron Linear Docking Connector"
+    },
+    {
+     "name": "docking-linear-2",
+     "mod": "NearFutureConstruction",
+     "title": "Grip-O-Tron XL Linear Docking Connector"
+    },
+    {
+     "name": "dockingPortLarge",
+     "mod": "Squad",
+     "title": "Common Berthing Mechanism"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    1275
+   ]
+  },
+  {
+   "id": "gnc_flagshipProbeBus",
+   "title": "Flagship Deep-Space Bus",
+   "discipline": "GuidanceControl",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "The big, fully three-axis stabilised spacecraft bus that a flagship deep-space mission is built on - a stable platform carrying a payload of instruments across the Solar System, holding its aim for years at a time.",
+   "parts": [
+    {
+     "name": "ca_hera",
+     "mod": "CoatlAerospace",
+     "title": "Juno Spacecraft Bus"
+    },
+    {
+     "name": "ca_mer_leu",
+     "mod": "CoatlAerospace",
+     "title": "Cassini Lower Equipment Unit"
+    },
+    {
+     "name": "meridiani",
+     "mod": "CoatlAerospace",
+     "title": "Cassini Spacecraft Bus"
+    },
+    {
+     "name": "xihe",
+     "mod": "CoatlAerospace",
+     "title": "STEREO Spacecraft Bus"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    7715
+   ]
+  },
+  {
+   "id": "gnc_commercialComsatBus",
+   "title": "Commercial Comsat Bus",
+   "discipline": "GuidanceControl",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "The workhorse commercial bus. A standardised three-axis platform, sold by the dozen, that carries a communications or earth-observation payload to its slot and station-keeps there for a decade - spaceflight as a product line.",
+   "parts": [
+    {
+     "name": "RO_boeing702",
+     "mod": "Squad",
+     "title": "Boeing 702 Large Satellite Bus"
+    },
+    {
+     "name": "ca_ESM2",
+     "mod": "CoatlAerospace",
+     "title": "LM900 Satellite Bus"
+    },
+    {
+     "name": "tatsujin",
+     "mod": "CoatlAerospace",
+     "title": "LM-DS Generic Spacecraft Bus"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    7621
+   ]
+  },
+  {
+   "id": "nuc_thermionicReactor",
+   "title": "Thermionic Space Reactor",
+   "discipline": "NuclearEngineering",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "Convert reactor heat straight to electricity with no moving parts, using the thermionic effect - the TOPAZ space reactor, a kilowatt-class fission power source for payloads no solar array or isotope pellet can feed, the step past thermoelectric SNAP.",
+   "parts": [
+    {
+     "name": "RO-reactor-TOPAZI",
+     "mod": "NearFutureElectrical",
+     "title": "TOPAZ-I Nuclear Reactor"
+    },
+    {
+     "name": "RO-reactor-TOPAZII",
+     "mod": "NearFutureElectrical",
+     "title": "TOPAZ-II Nuclear Reactor"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2528,
+    4088
+   ]
+  },
+  {
+   "id": "opt_hyperspectralImaging",
+   "title": "Hyperspectral Imaging",
+   "discipline": "OpticsPhotonics",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Not three colours but hundreds. A hyperspectral imager splits each pixel into a continuous spectrum, reading the mineral, chemical and biological signature of the surface below - the scanner that maps what a place is made of, not just what it looks like.",
+   "parts": [
+    {
+     "name": "scansat-multi-abi-1",
+     "mod": "SCANsat",
+     "title": "ABI Multi-Spectral Imager"
+    },
+    {
+     "name": "scansat-multi-modis-1",
+     "mod": "SCANsat",
+     "title": "MODIS Multi-Spectral Imager"
+    },
+    {
+     "name": "scansat-multi-msi-1",
+     "mod": "SCANsat",
+     "title": "MSI Multi-Spectral Imager"
+    },
+    {
+     "name": "scansat-resources-crism-1",
+     "mod": "SCANsat",
+     "title": "CRISM Multi-Spectral Resource Scanner"
+    },
+    {
+     "name": "scansat-resources-hyperion-1",
+     "mod": "SCANsat",
+     "title": "Hyperion Multi-Spectral Resource Scanner"
+    },
+    {
+     "name": "scansat-resources-mise-1",
+     "mod": "SCANsat",
+     "title": "MISE Multi-Spectral Resource Scanner"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    10997
+   ]
+  },
+  {
+   "id": "opt_thermalMappingSpectrometry",
+   "title": "Thermal-Mapping Spectrometry",
+   "discipline": "OpticsPhotonics",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Map a world by its heat and its infrared fingerprint. A thermal-mapping spectrometer builds up the temperature and composition of a surface or atmosphere band by band - the Cassini/Mars-class instrument for reading planets in the infrared.",
+   "parts": [
+    {
+     "name": "RO-PMIRR",
+     "mod": "RP-1",
+     "title": "IR04 - Pressure Modulated Infrared Radiometer (PMIRR)"
+    },
+    {
+     "name": "RO-VIMS",
+     "mod": "RP-1",
+     "title": "IS04 - Advanced Infrared Mapping Spectrometer (AIMS)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    10903
+   ]
+  },
+  {
+   "id": "opt_highResolutionImager",
+   "title": "High-Resolution Orbital Imager",
+   "discipline": "OpticsPhotonics",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "The sharpest eye yet - a large-optics, solid-state imager that resolves fine surface detail from orbit, the reconnaissance-grade camera turned on other worlds.",
+   "parts": [
+    {
+     "name": "RO-HIRES",
+     "mod": "RP-1",
+     "title": "VI05 - High Resolution Imaging Device"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    11420
+   ]
+  },
+  {
+   "id": "opt_syntheticApertureRadar",
+   "title": "Synthetic-Aperture Radar",
+   "discipline": "OpticsPhotonics",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "See through cloud and darkness by making your own illumination. Synthetic-aperture radar bounces a beam off the surface and reconstructs a high-resolution image from the echoes - the instrument that mapped the whole cloud-shrouded surface of Venus.",
+   "parts": [
+    {
+     "name": "RO-MagellanRadar",
+     "mod": "SCANsat",
+     "title": "RDRS Radar Antenna"
+    },
+    {
+     "name": "scansat-sar-paz-1",
+     "mod": "SCANsat",
+     "title": "PAZ-SAR Radar Antenna"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    11185
+   ]
+  },
+  {
+   "id": "opt_orbitalResourceScanning",
+   "title": "Orbital Resource Scanning",
+   "discipline": "OpticsPhotonics",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Survey a whole body from orbit for what's worth landing on - narrow-band and surface scanners that build global maps of terrain, resources and anomalies, the reconnaissance a surface mission is planned from.",
+   "parts": [
+    {
+     "name": "OrbitalScanner",
+     "mod": "Squad",
+     "title": "M4435 Narrow-Band Scanner"
+    },
+    {
+     "name": "SurfaceScanner",
+     "mod": "Squad",
+     "title": "Surface Scanning Module"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    11091
+   ]
+  },
+  {
+   "id": "tel_deepSpaceParabolic",
+   "title": "Deep-Space Parabolic Dish",
+   "discipline": "Telecommunications",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "A large steerable parabolic dish - the high-gain antenna that closes the link across hundreds of millions of kilometres, turning a whisper from the outer Solar System into a usable data stream.",
+   "parts": [
+    {
+     "name": "ROC-ApolloHGABlockV",
+     "mod": "ROCapsules",
+     "title": "Apollo Block V High Gain Antenna"
+    },
+    {
+     "name": "dish_S",
+     "mod": "CoatlAerospace",
+     "title": "Ulysses Parabolic Antenna"
+    },
+    {
+     "name": "dish_hera",
+     "mod": "CoatlAerospace",
+     "title": "Juno Parabolic Antenna"
+    },
+    {
+     "name": "dish_tatsujin",
+     "mod": "CoatlAerospace",
+     "title": "MAVEN Parabolic Antenna"
+    },
+    {
+     "name": "dish_xihe",
+     "mod": "CoatlAerospace",
+     "title": "STEREO Parabolic Antenna"
+    },
+    {
+     "name": "mer_dish",
+     "mod": "CoatlAerospace",
+     "title": "Cassini Parabolic Antenna"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    11561
+   ]
+  },
+  {
+   "id": "int_atmosphericEntryProbe",
+   "title": "Atmospheric Entry Probe",
+   "discipline": "SystemsIntegration",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "A probe built to survive falling into an atmosphere: an aeroshell and a descent body that ride a fireball down and then float the rest of the way, returning data from inside a world's air rather than from orbit above it - the Huygens way to reach a surface.",
+   "parts": [
+    {
+     "name": "ca_draco",
+     "mod": "CoatlAerospace",
+     "title": "Huygens Atmospheric Lander"
+    },
+    {
+     "name": "ca_draco_as",
+     "mod": "CoatlAerospace",
+     "title": "Huygens Aeroshell"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2224,
+    7972
+   ]
+  },
+  {
+   "id": "life_inflatableHabitat",
+   "title": "Inflatable Habitat",
+   "discipline": "LifeSupport",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Launch it packed tight, inflate it to full volume in orbit. An expandable habitat trades a rigid metal shell for a soft, layered one that unfolds into far more living space than its launch diameter would allow - the BEAM/Bigelow way to fly a big room in a small fairing.",
+   "parts": [
+    {
+     "name": "InflatableHAB",
+     "mod": "VenStockRevamp",
+     "title": "IKU-03 Kerbal Safety Bubble"
+    },
+    {
+     "name": "SXTDLK83EHabitat",
+     "mod": "SXT",
+     "title": "Ares LK-S3E Heavy Planetary Habitat"
+    },
+    {
+     "name": "sspx-extendable-tube-125-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "2.25m Extendable Crew Tube"
+    },
+    {
+     "name": "sspx-inflatable-hab-125-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "2.25m Inflatable Habitat (Long)"
+    },
+    {
+     "name": "sspx-inflatable-hab-125-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "2.25m Inflatable Habitat (Medium)"
+    },
+    {
+     "name": "sspx-inflatable-hab-125-3",
+     "mod": "StationPartsExpansionRedux",
+     "title": "2.25m Inflatable Habitat (Short)"
+    },
+    {
+     "name": "sspx-inflatable-hab-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Inflatable Habitat (Long)"
+    },
+    {
+     "name": "sspx-inflatable-hab-25-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Inflatable Habitat (Short)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    1557
+   ]
+  },
+  {
+   "id": "life_centrifugeHabitat",
+   "title": "Centrifuge Habitat",
+   "discipline": "LifeSupport",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Spin for gravity. A rotating habitat module generates centrifugal weight for its crew, holding off the bone and muscle loss of long-duration freefall - the first artificial-gravity station rooms, inflatable and expandable to the diameter a comfortable spin needs.",
+   "parts": [
+    {
+     "name": "sspx-expandable-centrifuge-375-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Expandable Centrifuge (36m Diameter)"
+    },
+    {
+     "name": "sspx-inflatable-centrifuge-125-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "2.25m Inflatable Centrifuge (16m Diameter)"
+    },
+    {
+     "name": "sspx-inflatable-centrifuge-125-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "2.25m Inflatable Centrifuge (13m Diameter)"
+    },
+    {
+     "name": "sspx-inflatable-centrifuge-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Inflatable Centrifuge (25m Diameter)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1616,
+    1557
+   ]
+  },
+  {
+   "id": "life_largeStationModule",
+   "title": "Large Station Module",
+   "discipline": "LifeSupport",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The heavy station module class - nine-metre cores, habitation blocks and science labs that dwarf the early ISS parts, the pressurised volume of a permanent orbital or surface base built for a large crew.",
+   "parts": [
+    {
+     "name": "sspx-core-25-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "4.5m Station Core"
+    },
+    {
+     "name": "sspx-core-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Station Core"
+    },
+    {
+     "name": "sspx-core-5-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "9m Station Core"
+    },
+    {
+     "name": "sspx-habitation-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Habitation Module (Large)"
+    },
+    {
+     "name": "sspx-habitation-375-3",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Habitation Module (Shielded)"
+    },
+    {
+     "name": "sspx-habitation-5-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "9m Habitation Module (Large)"
+    },
+    {
+     "name": "sspx-habitation-5-2",
+     "mod": "StationPartsExpansionRedux",
+     "title": "9m Habitation Module (Small)"
+    },
+    {
+     "name": "sspx-lab-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Station Science Lab"
+    },
+    {
+     "name": "sspx-lab-5-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "9m Station Science Lab"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    1651
+   ]
+  },
+  {
+   "id": "life_aquacultureModule",
+   "title": "Aquaculture & Greenhouse Modules",
+   "discipline": "LifeSupport",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Grow protein, not just greens. Aquaculture and full-scale greenhouse modules extend bioregenerative life support from air and vegetables to a fuller closed food chain - the ecosystem a base needs to feed itself for years.",
+   "parts": [
+    {
+     "name": "sspx-aquaculture-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Aquaculture Module"
+    },
+    {
+     "name": "sspx-greenhouse-375-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "6.75m Greenhouse Module"
+    },
+    {
+     "name": "sspx-greenhouse-5-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "9m Greenhouse"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1616,
+    1463
+   ]
+  },
+  {
+   "id": "str_annularTruss",
+   "title": "Annular Truss Structure",
+   "discipline": "StructuresMechanisms",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "A ring rather than a beam. Annular truss segments close a structure back on itself - the circular backbone for a rotating habitat, a large aperture or a torus station.",
+   "parts": [
+    {
+     "name": "truss-circular-01",
+     "mod": "NearFutureConstruction",
+     "title": "Annular Modular Truss XL"
+    },
+    {
+     "name": "truss-circular-02",
+     "mod": "NearFutureConstruction",
+     "title": "Annular Modular Truss"
+    },
+    {
+     "name": "truss-circular-03",
+     "mod": "NearFutureConstruction",
+     "title": "Annular Modular Truss Mini"
+    },
+    {
+     "name": "truss-circular-04",
+     "mod": "NearFutureConstruction",
+     "title": "Annular Modular Truss Micro"
+    },
+    {
+     "name": "truss-circular-adapter-01",
+     "mod": "NearFutureConstruction",
+     "title": "Annular Truss Adapter"
+    },
+    {
+     "name": "truss-circular-adapter-02",
+     "mod": "NearFutureConstruction",
+     "title": "Annular Truss Adapter V2"
+    },
+    {
+     "name": "truss-circular-docking-01",
+     "mod": "NearFutureConstruction",
+     "title": "Annular Truss Docking Connector"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    2414
+   ]
+  },
+  {
+   "id": "str_strongbackTruss",
+   "title": "Strongback Truss",
+   "discipline": "StructuresMechanisms",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The strongback - a heavy closed or open girder that carries the primary loads of a large integrated vehicle or launch stack, in a family of lengths sized to the payload.",
+   "parts": [
+    {
+     "name": "SXTMTVGirder",
+     "mod": "SXT",
+     "title": "Strongback Truss (Closed Long)"
+    },
+    {
+     "name": "SXTMTVGirderBasic",
+     "mod": "SXT",
+     "title": "Strongback Truss (Closed Short)"
+    },
+    {
+     "name": "SXTMTVGirderOpen",
+     "mod": "SXT",
+     "title": "Strongback Truss (Open Long)"
+    },
+    {
+     "name": "SXTMTVGirderOpenMedium",
+     "mod": "SXT",
+     "title": "Strongback Truss (Open Medium)"
+    },
+    {
+     "name": "SXTMTVGirderOpenSmall",
+     "mod": "SXT",
+     "title": "Strongback Truss (Open Short)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    2508
+   ]
+  },
+  {
+   "id": "str_reusableLandingLeg",
+   "title": "Reusable Booster Landing Leg",
+   "discipline": "StructuresMechanisms",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Bring the booster home standing up. A heavy, energy-absorbing landing leg that lets a returning stage touch down on its own tail and be flown again - the strut that made propulsive recovery routine.",
+   "parts": [
+    {
+     "name": "largeLandingLeg",
+     "mod": "VenStockRevamp",
+     "title": "LT-5 Macro Super Landing Strut"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    5491
+   ]
+  },
+  {
+   "id": "gnc_nasaDockingSystem",
+   "title": "NASA Docking System",
+   "discipline": "GuidanceControl",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The modern international standard: the NASA Docking System and its IDSS-compatible ports, a low-impact androgynous mechanism that any commercial-crew vehicle can use to berth at the station - docking as an interface everyone builds to.",
+   "parts": [
+    {
+     "name": "ROC-CSTNDSActive",
+     "mod": "ROCapsules",
+     "title": "NASA Docking System (Active)"
+    },
+    {
+     "name": "ROC-CSTNDSPassive",
+     "mod": "ROCapsules",
+     "title": "NASA Docking System (Passive)"
+    },
+    {
+     "name": "dockingPort1",
+     "mod": "Squad",
+     "title": "NASA Docking System (Shielded)"
+    },
+    {
+     "name": "dockingPort2",
+     "mod": "Squad",
+     "title": "NASA Docking System"
+    },
+    {
+     "name": "dockingPortLateral",
+     "mod": "Squad",
+     "title": "NASA Docking System"
+    },
+    {
+     "name": "sspx-docking-125-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Extendable NASA Docking System"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    1275
+   ]
+  },
+  {
+   "id": "int_commercialCrewCapsule",
+   "title": "Commercial Crew Capsule",
+   "discipline": "SystemsIntegration",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Crew to orbit, bought as a service. The Orion and CST-100 command modules - a new generation of reusable crew capsules with modern avionics, glass cockpits and their own service modules, flown by contractors rather than a single national programme.",
+   "parts": [
+    {
+     "name": "ROC-CSTCM",
+     "mod": "ROCapsules",
+     "title": "CST-100 Command Module"
+    },
+    {
+     "name": "ROC-CSTSM",
+     "mod": "ROCapsules",
+     "title": "CST-100 Service Module"
+    },
+    {
+     "name": "ROC-OrionCM",
+     "mod": "ROCapsules",
+     "title": "Orion Command Module"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    1087
+   ]
+  },
+  {
+   "id": "cmp_inflatableDecelerator",
+   "title": "Inflatable Aerodynamic Decelerator",
+   "discipline": "CompositeMaterials",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Slow down with an umbrella instead of a wall. An inflatable heat shield deploys a wide, soft aeroshell that decelerates a heavy payload high in a thin atmosphere - the HIAD, the way to land tonnes on Mars where a rigid shield can't be built big enough.",
+   "parts": [
+    {
+     "name": "ROH-AdjustableHIAD",
+     "mod": "ROHeatshields",
+     "title": "Adjustable HIAD"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    946
+   ]
+  },
+  {
+   "id": "nuc_modernFissionReactor",
+   "title": "Compact Fission Power Reactor",
+   "discipline": "NuclearEngineering",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Compact fission power for the surface and deep space, sized to the mission - a few to a few hundred kilowatts from a reactor that fits on a lander. Kilopower, SAFE-400 and their kin: the power source a crewed base or a nuclear-electric tug runs on, past what any array or isotope pellet delivers.",
+   "parts": [
+    {
+     "name": "RO-reactor-RAPIDL",
+     "mod": "NearFutureElectrical",
+     "title": "RAPID-L Nuclear Reactor"
+    },
+    {
+     "name": "RO-reactor-SAFE400",
+     "mod": "NearFutureElectrical",
+     "title": "NASA SAFE-400 Nuclear Reactor"
+    },
+    {
+     "name": "RO-reactor-kilopower",
+     "mod": "NearFutureElectrical",
+     "title": "NASA Kilopower 10kWe Reactor"
+    },
+    {
+     "name": "RO-reactor-prometheus",
+     "mod": "NearFutureElectrical",
+     "title": "Prometheus 200 KWe Nuclear Reactor"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    4088
+   ]
+  },
+  {
+   "id": "nuc_fissilePropellantMagazine",
+   "title": "Fissile Propellant Magazine",
+   "discipline": "NuclearEngineering",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Storing the fuel for a nuclear engine - fissile-material magazines that feed a fission-fragment or gas-core drive, the tankage an advanced nuclear stage carries its reactor charge in.",
+   "parts": [
+    {
+     "name": "fft-fueltank-fission-25-1",
+     "mod": "FarFutureTechnologies",
+     "title": "10 m Fissiles Tank (Long)"
+    },
+    {
+     "name": "fft-fueltank-fission-25-2",
+     "mod": "FarFutureTechnologies",
+     "title": "10 m Fissiles Tank (Medium)"
+    },
+    {
+     "name": "fft-fueltank-fission-25-3",
+     "mod": "FarFutureTechnologies",
+     "title": "10 m Fissiles Tank (Short)"
+    },
+    {
+     "name": "fft-fueltank-fission-5-1",
+     "mod": "FarFutureTechnologies",
+     "title": "20 m Fissiles Tank (Long)"
+    },
+    {
+     "name": "fft-fueltank-fission-5-2",
+     "mod": "FarFutureTechnologies",
+     "title": "20 m Fissiles Tank (Short)"
+    },
+    {
+     "name": "fft-fueltank-fission-radial-1",
+     "mod": "FarFutureTechnologies",
+     "title": "3.2 m Fissiles Tank (Long)"
+    },
+    {
+     "name": "fft-fueltank-fission-radial-2",
+     "mod": "FarFutureTechnologies",
+     "title": "3.2 m Fissiles Tank (Medium)"
+    },
+    {
+     "name": "fft-fueltank-fission-radial-3",
+     "mod": "FarFutureTechnologies",
+     "title": "3.2 m Fissiles Tank (Short)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1616,
+    4088
+   ]
+  },
+  {
+   "id": "cryo_combustionTapOff",
+   "title": "Combustion Tap-Off Cycle",
+   "discipline": "Cryogenics",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Skip the separate gas-generator combustor entirely - bleed hot gas straight off the main chamber wall to spin the turbopump, then dump it overboard. Simpler than a gas generator, cheaper than staged combustion: the operational middle path Blue Origin bet New Shepard and New Glenn's upper stage on.",
+   "parts": [
+    {
+     "name": "ROE-BE3",
+     "mod": "ROEngines",
+     "title": "BE-3PM"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1616,
+    6623
+   ]
+  },
+  {
+   "id": "cryo_highThrustExpander",
+   "title": "Higher-Thrust Closed Expander",
+   "discipline": "Cryogenics",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Scale the closed expander cycle past the RL-10's own ceiling - two parallel American and European programs converge on the same bigger turbopump, the same clean cycle, roughly triple the thrust.",
+   "parts": [
+    {
+     "name": "cryoengine-pavonis-1",
+     "mod": "CryoEngines",
+     "title": "RL60/Vinci"
+    },
+    {
+     "name": "cryoengine-tharsis-1",
+     "mod": "CryoEngines",
+     "title": "RL60/Vinci"
+    }
+   ],
+   "upgrades": [
+    "RFUpgrade_Vinci-180"
+   ],
+   "grants": [],
+   "pos": [
+    -1616,
+    4365
+   ]
+  },
+  {
+   "id": "cryo_smallScaleMethalox",
+   "title": "Small-Scale Methalox Upper Stage",
+   "discipline": "Cryogenics",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "A simpler, plainer methalox debut at small scale - no staged-combustion preburner, just a clean upper-stage engine sized for a commercial small-satellite launcher. The unglamorous sibling to the booster-scale methalox story unfolding one node over.",
+   "parts": [
+    {
+     "name": "cryoengine-buzzard-1",
+     "mod": "CryoEngines",
+     "title": "M10"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1616,
+    2645
+   ]
+  },
+  {
+   "id": "cryo_expanderBoosterScale",
+   "title": "Expander-Bleed Cycle at Booster Scale",
+   "discipline": "Cryogenics",
+   "tier": 13,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Vent a little of the cooling-jacket gas overboard instead of routing every drop through the turbopump, and the expander cycle's thrust ceiling - always capped by a small upper-stage engine's own heat-exchange area - breaks wide open. The expander cycle finally reaches core-stage scale.",
+   "parts": [
+    {
+     "name": "cryoengine-fuji-1",
+     "mod": "CryoEngines",
+     "title": "LE-9"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1312,
+    4323
+   ]
+  },
+  {
+   "id": "cryo_fullFlowMethalox",
+   "title": "Full-Flow Staged-Combustion Methalox",
+   "discipline": "Cryogenics",
+   "tier": 13,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Burn both turbopump drive-gas streams through combustion at once - a fuel-rich preburner AND an oxidiser-rich preburner, nothing vented overboard at all. The thermodynamic endpoint of the staged-combustion idea, and the only cycle that ever reached it in metal.",
+   "parts": [
+    {
+     "name": "ROE-Raptor",
+     "mod": "ROEngines",
+     "title": "Raptor (Surface Variant)"
+    },
+    {
+     "name": "ROE-RaptorVac",
+     "mod": "ROEngines",
+     "title": "Raptor-Vacuum"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1312,
+    2551
+   ]
+  },
+  {
+   "id": "fd_reusableGasGenKerolox",
+   "title": "Reusable Gas-Generator Kerolox",
+   "discipline": "FluidDynamics",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "After a whole tree of gas-generator kerolox engines chasing diminishing returns while staged combustion walked past, one company bets the other way: keep the simple open cycle, keep it deliberately unglamorous, and win on cost and reusability instead of chasing one more second of Isp.",
+   "parts": [
+    {
+     "name": "ROE-Merlin1A",
+     "mod": "ROEngines",
+     "title": "Merlin 1A"
+    },
+    {
+     "name": "ROE-Merlin1C",
+     "mod": "ROEngines",
+     "title": "Merlin 1C"
+    },
+    {
+     "name": "ROE-Merlin1CV",
+     "mod": "ROEngines",
+     "title": "Merlin 1C Vacuum"
+    }
+   ],
+   "upgrades": [
+    "RFUpgrade_Merlin1C",
+    "RFUpgrade_Merlin1CVac"
+   ],
+   "grants": [],
+   "pos": [
+    -1616,
+    8973
+   ]
+  },
+  {
+   "id": "fd_densifiedPropellantKerolox",
+   "title": "Densified-Propellant Kerolox Uprating",
+   "discipline": "FluidDynamics",
+   "tier": 13,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Chill both propellants below their normal boiling points before loading, and more mass packs into the same tanks and the same engine - the real refinement behind a two-thirds thrust jump on the same basic cycle, no new chemistry required.",
+   "parts": [
+    {
+     "name": "ROE-Merlin1D",
+     "mod": "ROEngines",
+     "title": "Merlin 1D"
+    },
+    {
+     "name": "ROE-Merlin1DV",
+     "mod": "ROEngines",
+     "title": "Merlin 1D Vacuum"
+    }
+   ],
+   "upgrades": [
+    "RFUpgrade_Merlin1D",
+    "RFUpgrade_Merlin1D+",
+    "RFUpgrade_Merlin1D++",
+    "RFUpgrade_Merlin1DVac",
+    "RFUpgrade_Merlin1DVac+"
+   ],
+   "grants": [],
+   "pos": [
+    -1312,
+    8973
+   ]
+  },
+  {
+   "id": "pc_americanORSCKerolox",
+   "title": "American ORSC Kerolox Studies",
+   "discipline": "PropellantChemistry",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Two separately-funded American answers to the imported RD-180 - oxidiser-rich staged combustion on kerosene, drawn to compete on the same contract the Russians won on price. Real hardware, real test stands, and no flight between them.",
+   "parts": [
+    {
+     "name": "nflv-engine-ar1-1",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "AR-1"
+    },
+    {
+     "name": "nflv-engine-ar1c-1",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "AR-1"
+    },
+    {
+     "name": "nflv-engine-rs84-1",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "RS-84"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1616,
+    2739
+   ]
+  },
+  {
+   "id": "pc_fiveSegmentSolidScaleUp",
+   "title": "Five-Segment Solid Booster Scale-Up",
+   "discipline": "PropellantChemistry",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Add one more segment to the Shuttle's own composite-case booster and it becomes the largest solid rocket motor ever flown - the same casting and winding technique, scaled up one more time for a heavier successor vehicle.",
+   "parts": [
+    {
+     "name": "MassiveBooster",
+     "mod": "Squad",
+     "title": "RSRMV"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    3853
+   ]
+  },
+  {
+   "id": "gnc_deepThrottlingAbortLandingEngine",
+   "title": "Deep-Throttling Pressure-Fed Abort/Landing Engine",
+   "discipline": "GuidanceControl",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "A launch-abort engine that can also fly a controlled, propulsive touchdown - pressure-fed hypergolics deep-throttled and restarted enough times to trust a crew's life to it twice in one mission, once going up wrong and once coming down right.",
+   "parts": [
+    {
+     "name": "ROC-CSTRS88",
+     "mod": "ROCapsules",
+     "title": "CST-100 Launch Abort Engines (LAE)"
+    },
+    {
+     "name": "ROC-OrionCover1",
+     "mod": "ROCapsules",
+     "title": "Orion SM Fairing - 1"
+    },
+    {
+     "name": "ROC-OrionCover2",
+     "mod": "ROCapsules",
+     "title": "Orion SM Fairing - 2"
+    },
+    {
+     "name": "ROC-OrionCover3",
+     "mod": "ROCapsules",
+     "title": "Orion ESM Fairing - 3"
+    },
+    {
+     "name": "ROC-OrionLAS",
+     "mod": "ROCapsules",
+     "title": "Orion LAS and BPC"
+    },
+    {
+     "name": "ROE-SuperDraco",
+     "mod": "ROEngines",
+     "title": "SuperDraco"
+    },
+    {
+     "name": "ROE-SuperDracoDouble",
+     "mod": "ROEngines",
+     "title": "Twin SuperDraco"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1616,
+    7690
+   ]
+  },
+  {
+   "id": "ep_electricPumpFeed",
+   "title": "Electric-Pump-Fed Kerolox",
+   "discipline": "ElectricalPower",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Spin the propellant pumps with a battery and a brushless motor instead of a gas generator or a preburner turbine - no exhaust-driven turbine at all. A little less thrust-to-weight bought back with radical simplicity and a bill of materials any workshop can assemble.",
+   "parts": [
+    {
+     "name": "ROE-Rutherford",
+     "mod": "ROEngines",
+     "title": "Rutherford"
+    },
+    {
+     "name": "ROE-RutherfordVac",
+     "mod": "ROEngines",
+     "title": "Rutherford Vacuum"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1616,
+    7271
+   ]
+  },
+  {
+   "id": "ep_nextGenGriddedIon",
+   "title": "Next-Generation Gridded Ion Thruster",
+   "discipline": "ElectricalPower",
+   "tier": 13,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "NSTAR's direct successor - the same electrostatic-grid acceleration, refined for higher throughput and, in its most extreme sibling, a second acceleration stage for even higher exhaust velocity.",
+   "parts": [
+    {
+     "name": "RO-ID500",
+     "mod": "NearFuturePropulsion",
+     "title": "ID-500 Gridded Ion Thruster"
+    },
+    {
+     "name": "ionXenon-0625",
+     "mod": "NearFuturePropulsion",
+     "title": "NEXT Gridded Ion Thruster"
+    },
+    {
+     "name": "ionXenon-0625-2",
+     "mod": "NearFuturePropulsion",
+     "title": "HiPEP Gridded Ion Thruster"
+    },
+    {
+     "name": "ionXenon-0625-3",
+     "mod": "NearFuturePropulsion",
+     "title": "DS4G Gridded Ion Thruster"
+    }
+   ],
+   "upgrades": [
+    "RFUpgrade_DS4G-25-hi",
+    "RFUpgrade_DS4G-25-mid",
+    "RFUpgrade_DS4G-50-hi",
+    "RFUpgrade_DS4G-50-low"
+   ],
+   "grants": [],
+   "pos": [
+    -1312,
+    5628
+   ]
+  },
+  {
+   "id": "ep_nasaHighPowerHall",
+   "title": "NASA High-Power Hall Thruster",
+   "discipline": "ElectricalPower",
+   "tier": 13,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Purpose-built for deep-space station-keeping on a crewed outpost, not just trimming a satellite's orbit - the next mark past the 457M, and in its nested-channel sibling, the highest-power Hall thruster ever built.",
+   "parts": [
+    {
+     "name": "ionArgon-0625",
+     "mod": "NearFuturePropulsion",
+     "title": "HERMeS Hall Effect Thruster"
+    },
+    {
+     "name": "ionArgon-0625-2",
+     "mod": "NearFuturePropulsion",
+     "title": "P5 5kW Hall Effect Thruster"
+    },
+    {
+     "name": "ionArgon-0625-3",
+     "mod": "NearFuturePropulsion",
+     "title": "X3 Hall-Effect Thruster"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1312,
+    5722
+   ]
+  },
+  {
+   "id": "ep_magnetoplasmadynamic",
+   "title": "Magnetoplasmadynamic Thruster",
+   "discipline": "ElectricalPower",
+   "tier": 13,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Skip both the Hall channel and the ion grid - drive a plasma arc straight through an electromagnetic pinch and let the field itself do the accelerating. High power density, real hardware, and a genuinely different mechanism from anything else this tree calls electric propulsion.",
+   "parts": [
+    {
+     "name": "mpdt-125",
+     "mod": "NearFuturePropulsion",
+     "title": "SX3 MPD Thruster"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1312,
+    5534
+   ]
+  },
+  {
+   "id": "ep_variableSpecificImpulsePlasma",
+   "title": "Variable-Specific-Impulse Plasma Rocket",
+   "discipline": "ElectricalPower",
+   "tier": 14,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "RF-heat a plasma instead of arcing through it, then steer it out through a magnetic nozzle - and unlike every other electric thruster in this tree, trade thrust for Isp continuously, in flight, instead of picking one number at build time.",
+   "parts": [
+    {
+     "name": "vasimr-0625",
+     "mod": "NearFuturePropulsion",
+     "title": "VX-200SS VASIMR"
+    },
+    {
+     "name": "vasimr-125",
+     "mod": "NearFuturePropulsion",
+     "title": "VF-200 VASIMR"
+    }
+   ],
+   "upgrades": [
+    "RFUpgrade_VF-200-Kr",
+    "RFUpgrade_VX-200SS-Kr"
+   ],
+   "grants": [],
+   "pos": [
+    -1008,
+    5534
+   ]
+  },
+  {
+   "id": "nuc_bimodalNTR",
+   "title": "Bimodal Nuclear Thermal + Power",
+   "discipline": "NuclearEngineering",
+   "tier": 14,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "The same reactor that heats propellant for thrust keeps running between burns as a power source - real NASA bimodal-NTR design studies, squeezing a second job out of the mass a nuclear stage already has to carry.",
+   "parts": [
+    {
+     "name": "ROE-BNTR",
+     "mod": "ROEngines",
+     "title": "Bimodal NTR"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1008,
+    4182
+   ]
+  },
+  {
+   "id": "nuc_fissionFragmentRocket",
+   "title": "Fission-Fragment Rocket",
+   "discipline": "NuclearEngineering",
+   "tier": 15,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Let the fission fragments themselves be the exhaust - no propellant to heat, no working fluid at all, just the reaction products flying straight out at a meaningful fraction of the speed of light. The highest specific impulse anything in this tree will ever reach.",
+   "parts": [
+    {
+     "name": "RO-fftdustyplasmaffre",
+     "mod": "FarFutureTechnologies",
+     "title": "Dusty Plasma Fission Fragment Rocket Engine"
+    },
+    {
+     "name": "fft-ffre-plasma-1",
+     "mod": "FarFutureTechnologies",
+     "title": "Dusty Plasma Afterburning Fission Fragment Rocket Engine"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -704,
+    4182
+   ]
+  },
+  {
+   "id": "nuc_magneticFusionPulsePropulsion",
+   "title": "Magnetically-Confined Fusion Pulse Drive",
+   "discipline": "NuclearEngineering",
+   "tier": 16,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Compress a small fusion-fuel target with a magnetic pulse and ride the shockwave off a plate - Project Orion's own pusher-plate trick, but the charge is a magnetically-confined fusion pellet instead of a fission bomb. Real theoretical NASA/MSNW study, one full generation past classic Orion.",
+   "parts": [
+    {
+     "name": "RO-fft20mMMO",
+     "mod": "FarFutureTechnologies",
+     "title": "20 m \"Mini-Mag\" Orion Drive"
+    },
+    {
+     "name": "fft-fission-zpinch-1",
+     "mod": "FarFutureTechnologies",
+     "title": "10 m \"Mini-Mag\" Orion Drive"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -400,
+    3277
+   ]
+  },
+  {
+   "id": "nuc_nuclearSaltWaterRocket",
+   "title": "Nuclear Salt Water Rocket",
+   "discipline": "NuclearEngineering",
+   "tier": 16,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Dissolve fissile salts in water and let the mixture go critical continuously as it streams through the chamber - the reactor doesn't heat the propellant, the reactor IS the propellant. The wildest, most engineering-fiction concept in the curated set.",
+   "parts": [
+    {
+     "name": "fft-nswr-2",
+     "mod": "FarFutureTechnologies",
+     "title": "20 m Nuclear Salt Water Rocket"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -400,
+    4182
    ]
   }
  ],
  "edges": [
+  {
+   "from": "start",
+   "to": "hire_JPL",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -5264,
+     6747
+    ],
+    [
+     -4960,
+     8208
+    ]
+   ]
+  },
+  {
+   "from": "start",
+   "to": "hire_OKB",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -5264,
+     6747
+    ],
+    [
+     -4960,
+     7071
+    ]
+   ]
+  },
   {
    "from": "hire_JPL",
    "to": "charter_usEarly",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     10804
+     -4960,
+     8208
     ],
     [
-     -2592,
-     10804
+     -4656,
+     9460
     ],
     [
-     -2288,
-     10804
+     -4352,
+     9460
     ],
     [
-     -1984,
-     10804
+     -4048,
+     9250
     ]
    ]
   },
@@ -13372,12 +15724,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     10804
+     -4048,
+     9250
     ],
     [
-     -1680,
-     10804
+     -3744,
+     9250
     ]
    ]
   },
@@ -13387,20 +15739,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     10710
+     -4960,
+     7071
     ],
     [
-     -2592,
-     10710
+     -4656,
+     7071
     ],
     [
-     -2288,
-     10710
+     -4352,
+     7071
     ],
     [
-     -1984,
-     10710
+     -4048,
+     7071
     ]
    ]
   },
@@ -13410,12 +15762,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     4784
+     -4960,
+     7910
     ]
    ]
   },
@@ -13425,12 +15777,12 @@ window.TREE = {
    "anyToUnlock": true,
    "waypoints": [
     [
-     -2896,
-     4784
+     -4960,
+     7910
     ],
     [
-     -2592,
-     5637
+     -4656,
+     8161
     ]
    ]
   },
@@ -13440,12 +15792,12 @@ window.TREE = {
    "anyToUnlock": true,
    "waypoints": [
     [
-     -2896,
-     5825
+     -4960,
+     8302
     ],
     [
-     -2592,
-     5637
+     -4656,
+     8161
     ]
    ]
   },
@@ -13455,12 +15807,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     5637
+     -4656,
+     8161
     ],
     [
-     -2288,
-     5805
+     -4352,
+     8393
     ]
    ]
   },
@@ -13470,12 +15822,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     5805
+     -4352,
+     8393
     ],
     [
-     -1984,
-     5758
+     -4048,
+     8184
     ]
    ]
   },
@@ -13485,12 +15837,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     5543
+     -4352,
+     8114
     ],
     [
-     -1984,
-     5590
+     -4048,
+     8020
     ]
    ]
   },
@@ -13500,12 +15852,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     5543
+     -4352,
+     8114
     ],
     [
-     -1984,
-     5496
+     -4048,
+     7784
     ]
    ]
   },
@@ -13515,12 +15867,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     5590
+     -4048,
+     8020
     ],
     [
-     -1680,
-     5690
+     -3744,
+     8115
     ]
    ]
   },
@@ -13530,12 +15882,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     5637
+     -4656,
+     8161
     ],
     [
-     -2288,
-     5543
+     -4352,
+     8114
     ]
    ]
   },
@@ -13545,12 +15897,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     5082
+     -4960,
+     4318
     ]
    ]
   },
@@ -13560,12 +15912,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     5082
+     -4960,
+     4318
     ],
     [
-     -2592,
-     4711
+     -4656,
+     4365
     ]
    ]
   },
@@ -13575,16 +15927,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     4711
+     -4656,
+     4365
     ],
     [
-     -2288,
-     4711
+     -4352,
+     4365
     ],
     [
-     -1984,
-     4544
+     -4048,
+     4365
     ]
    ]
   },
@@ -13594,12 +15946,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     1065
+     -4960,
+     3383
     ]
    ]
   },
@@ -13609,12 +15961,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     1065
+     -4960,
+     3383
     ],
     [
-     -2592,
-     1065
+     -4656,
+     3383
     ]
    ]
   },
@@ -13624,12 +15976,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     1065
+     -4656,
+     3383
     ],
     [
-     -2288,
-     1065
+     -4352,
+     3383
     ]
    ]
   },
@@ -13639,12 +15991,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     4784
+     -4960,
+     7910
     ],
     [
-     -2592,
-     4020
+     -4656,
+     7486
     ]
    ]
   },
@@ -13654,12 +16006,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     4784
+     -4960,
+     7910
     ],
     [
-     -2592,
-     3769
+     -4656,
+     7165
     ]
    ]
   },
@@ -13669,12 +16021,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     3769
+     -4656,
+     7165
     ],
     [
-     -2288,
-     3769
+     -4352,
+     7165
     ]
    ]
   },
@@ -13684,12 +16036,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     2927
+     -4960,
+     1961
     ],
     [
-     -2592,
-     3000
+     -4656,
+     2636
     ]
    ]
   },
@@ -13699,12 +16051,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     5825
+     -4960,
+     8302
     ]
    ]
   },
@@ -13714,12 +16066,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     3000
+     -4656,
+     2636
     ],
     [
-     -2288,
-     2953
+     -4352,
+     2730
     ]
    ]
   },
@@ -13729,12 +16081,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     2927
+     -4960,
+     1961
     ]
    ]
   },
@@ -13744,12 +16096,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     2927
+     -4960,
+     1961
     ],
     [
-     -2592,
-     2628
+     -4656,
+     1672
     ]
    ]
   },
@@ -13759,12 +16111,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     3000
+     -4656,
+     2636
     ],
     [
-     -2288,
-     3209
+     -4352,
+     2530
     ]
    ]
   },
@@ -13774,12 +16126,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     6575
+     -4960,
+     6571
     ],
     [
-     -2592,
-     7016
+     -4656,
+     6981
     ]
    ]
   },
@@ -13789,12 +16141,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     7132
+     -4656,
+     4565
     ],
     [
-     -2288,
-     7179
+     -4352,
+     4612
     ]
    ]
   },
@@ -13804,12 +16156,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     8749
+     -4960,
+     10673
     ]
    ]
   },
@@ -13819,12 +16171,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     2628
+     -4656,
+     1672
     ],
     [
-     -2288,
-     2628
+     -4352,
+     1672
     ]
    ]
   },
@@ -13834,12 +16186,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     8749
+     -4960,
+     10673
     ],
     [
-     -2592,
-     8728
+     -4656,
+     10652
     ]
    ]
   },
@@ -13849,12 +16201,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     8728
+     -4656,
+     10652
     ],
     [
-     -2288,
-     9151
+     -4352,
+     10699
     ]
    ]
   },
@@ -13864,12 +16216,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     8728
+     -4656,
+     10652
     ],
     [
-     -2288,
-     8681
+     -4352,
+     9711
     ]
    ]
   },
@@ -13879,12 +16231,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     9151
+     -4352,
+     10699
     ],
     [
-     -1984,
-     9130
+     -4048,
+     10861
     ]
    ]
   },
@@ -13894,12 +16246,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     7812
+     -4960,
+     8114
     ],
     [
-     -2592,
-     7671
+     -4656,
+     7643
     ]
    ]
   },
@@ -13909,12 +16261,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     7247
+     -4960,
+     4634
     ],
     [
-     -2592,
-     7456
+     -4656,
+     4797
     ]
    ]
   },
@@ -13924,12 +16276,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     10333
+     -4960,
+     11485
     ]
    ]
   },
@@ -13939,12 +16291,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     10333
+     -4352,
+     11485
     ],
     [
-     -1984,
-     10239
+     -4048,
+     11373
     ]
    ]
   },
@@ -13954,12 +16306,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     9151
+     -4352,
+     10699
     ],
     [
-     -1984,
-     10239
+     -4048,
+     11373
     ]
    ]
   },
@@ -13969,12 +16321,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     3675
+     -4960,
+     3900
     ]
    ]
   },
@@ -13984,20 +16336,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     9925
+     -4960,
+     11771
     ],
     [
-     -2592,
-     9919
+     -4656,
+     11981
     ],
     [
-     -2288,
-     9919
+     -4352,
+     11981
     ],
     [
-     -1984,
-     9621
+     -4048,
+     11981
     ]
    ]
   },
@@ -14007,12 +16359,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     9151
+     -4352,
+     10699
     ],
     [
-     -1984,
-     9621
+     -4048,
+     11981
     ]
    ]
   },
@@ -14022,20 +16374,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     9925
+     -4960,
+     11771
     ],
     [
-     -2592,
-     9940
+     -4656,
+     11766
     ],
     [
-     -2288,
-     9940
+     -4352,
+     11766
     ],
     [
-     -1984,
-     9940
+     -4048,
+     11698
     ]
    ]
   },
@@ -14045,12 +16397,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     9151
+     -4352,
+     10699
     ],
     [
-     -1984,
-     9940
+     -4048,
+     11698
     ]
    ]
   },
@@ -14060,12 +16412,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     5731
+     -4960,
+     2384
     ]
    ]
   },
@@ -14075,12 +16427,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     9925
+     -4960,
+     11771
     ]
    ]
   },
@@ -14090,12 +16442,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     7247
+     -4960,
+     4634
     ]
    ]
   },
@@ -14105,12 +16457,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     6575
+     -4960,
+     6571
     ],
     [
-     -2592,
-     6906
+     -4656,
+     6887
     ]
    ]
   },
@@ -14120,28 +16472,28 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     6906
+     -4656,
+     6887
     ],
     [
-     -2288,
-     6948
+     -4352,
+     6908
     ],
     [
-     -1984,
-     6948
+     -4048,
+     6908
     ],
     [
-     -1680,
-     6948
+     -3744,
+     6908
     ],
     [
-     -1376,
-     6948
+     -3440,
+     6908
     ],
     [
-     -1072,
-     6948
+     -3136,
+     6908
     ]
    ]
   },
@@ -14151,12 +16503,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     6906
+     -4656,
+     6887
     ],
     [
-     -2288,
-     6885
+     -4352,
+     6866
     ]
    ]
   },
@@ -14166,12 +16518,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     5637
+     -4960,
+     6247
     ],
     [
-     -2592,
-     5355
+     -4656,
+     6247
     ]
    ]
   },
@@ -14181,12 +16533,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     5825
+     -4960,
+     8302
     ],
     [
-     -2592,
-     6108
+     -4656,
+     9528
     ]
    ]
   },
@@ -14196,12 +16548,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     5355
+     -4656,
+     6247
     ],
     [
-     -2288,
-     5355
+     -4352,
+     6247
     ]
    ]
   },
@@ -14211,16 +16563,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     7247
+     -4960,
+     4634
     ],
     [
-     -2592,
-     7367
+     -4656,
+     4728
     ],
     [
-     -2288,
-     7367
+     -4352,
+     4728
     ]
    ]
   },
@@ -14230,12 +16582,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     5355
+     -4352,
+     6247
     ],
     [
-     -1984,
-     6791
+     -4048,
+     6358
     ]
    ]
   },
@@ -14245,12 +16597,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     7367
+     -4352,
+     4728
     ],
     [
-     -1984,
-     6791
+     -4048,
+     6358
     ]
    ]
   },
@@ -14260,12 +16612,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     5355
+     -4352,
+     6247
     ],
     [
-     -1984,
-     6486
+     -4048,
+     6158
     ]
    ]
   },
@@ -14275,12 +16627,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     7367
+     -4352,
+     4728
     ],
     [
-     -1984,
-     6486
+     -4048,
+     6158
     ]
    ]
   },
@@ -14290,12 +16642,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     6486
+     -4048,
+     6158
     ],
     [
-     -1680,
-     6534
+     -3744,
+     6268
     ]
    ]
   },
@@ -14305,12 +16657,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     6108
+     -4656,
+     9528
     ],
     [
-     -2288,
-     6108
+     -4352,
+     9528
     ]
    ]
   },
@@ -14320,16 +16672,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     6108
+     -4352,
+     9528
     ],
     [
-     -1984,
-     6108
+     -4048,
+     9669
     ],
     [
-     -1680,
-     6108
+     -3744,
+     9669
     ]
    ]
   },
@@ -14339,12 +16691,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     6575
+     -4960,
+     6571
     ]
    ]
   },
@@ -14354,12 +16706,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     6575
+     -4960,
+     6571
     ],
     [
-     -2592,
-     6575
+     -4656,
+     6456
     ]
    ]
   },
@@ -14369,12 +16721,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     7812
+     -4960,
+     8114
     ]
    ]
   },
@@ -14384,12 +16736,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     7812
+     -4960,
+     8114
     ],
     [
-     -2592,
-     7859
+     -4656,
+     8046
     ]
    ]
   },
@@ -14399,16 +16751,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     7859
+     -4656,
+     8046
     ],
     [
-     -2288,
-     7859
+     -4352,
+     8046
     ],
     [
-     -1984,
-     8424
+     -4048,
+     9413
     ]
    ]
   },
@@ -14418,12 +16770,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     9151
+     -4352,
+     10699
     ],
     [
-     -1984,
-     8424
+     -4048,
+     9413
     ]
    ]
   },
@@ -14433,12 +16785,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     7671
+     -4656,
+     7643
     ],
     [
-     -2288,
-     7650
+     -4352,
+     7622
     ]
    ]
   },
@@ -14448,12 +16800,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     7132
+     -4656,
+     4565
     ],
     [
-     -2288,
-     7085
+     -4352,
+     4518
     ]
    ]
   },
@@ -14463,12 +16815,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     7247
+     -4960,
+     4634
     ],
     [
-     -2592,
-     7132
+     -4656,
+     4565
     ]
    ]
   },
@@ -14478,12 +16830,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     6575
+     -4960,
+     6571
     ],
     [
-     -2592,
-     6317
+     -4656,
+     6362
     ]
    ]
   },
@@ -14493,12 +16845,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     6317
+     -4656,
+     6362
     ],
     [
-     -2288,
-     6296
+     -4352,
+     6341
     ]
    ]
   },
@@ -14508,12 +16860,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     3209
+     -4352,
+     2530
     ],
     [
-     -1984,
-     3256
+     -4048,
+     2577
     ]
    ]
   },
@@ -14523,12 +16875,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     7179
+     -4352,
+     4612
     ],
     [
-     -1984,
-     7132
+     -4048,
+     4565
     ]
    ]
   },
@@ -14538,12 +16890,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     8681
+     -4352,
+     9711
     ],
     [
-     -1984,
-     8283
+     -4048,
+     9847
     ]
    ]
   },
@@ -14553,12 +16905,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     5637
+     -4960,
+     6247
     ]
    ]
   },
@@ -14568,12 +16920,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     2927
+     -4960,
+     1961
     ],
     [
-     -2592,
-     2812
+     -4656,
+     2123
     ]
    ]
   },
@@ -14583,16 +16935,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     2927
+     -4960,
+     1961
     ],
     [
-     -2592,
-     3419
+     -4656,
+     1928
     ],
     [
-     -2288,
-     3419
+     -4352,
+     1928
     ]
    ]
   },
@@ -14602,12 +16954,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     7016
+     -4656,
+     6981
     ],
     [
-     -2288,
-     6995
+     -4352,
+     6960
     ]
    ]
   },
@@ -14617,12 +16969,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     6995
+     -4352,
+     6960
     ],
     [
-     -1984,
-     6995
+     -4048,
+     6960
     ]
    ]
   },
@@ -14632,12 +16984,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     2628
+     -4352,
+     1672
     ],
     [
-     -1984,
-     2654
+     -4048,
+     1766
     ]
    ]
   },
@@ -14647,12 +16999,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     6575
+     -4960,
+     6571
     ],
     [
-     -2592,
-     6202
+     -4656,
+     6772
     ]
    ]
   },
@@ -14662,12 +17014,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     6202
+     -4656,
+     6772
     ],
     [
-     -2288,
-     6202
+     -4352,
+     6772
     ]
    ]
   },
@@ -14677,12 +17029,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     6202
+     -4352,
+     6772
     ],
     [
-     -1984,
-     6202
+     -4048,
+     6772
     ]
    ]
   },
@@ -14692,12 +17044,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -3200,
-     5885
+     -5264,
+     6747
     ],
     [
-     -2896,
-     10066
+     -4960,
+     12075
     ]
    ]
   },
@@ -14707,12 +17059,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     10066
+     -4960,
+     12075
     ],
     [
-     -2592,
-     10066
+     -4656,
+     12075
     ]
    ]
   },
@@ -14722,12 +17074,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     10066
+     -4656,
+     12075
     ],
     [
-     -2288,
-     10066
+     -4352,
+     12075
     ]
    ]
   },
@@ -14737,12 +17089,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     10066
+     -4352,
+     12075
     ],
     [
-     -1984,
-     10568
+     -4048,
+     12075
     ]
    ]
   },
@@ -14752,12 +17104,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     10568
+     -4048,
+     12075
     ],
     [
-     -1680,
-     10568
+     -3744,
+     12075
     ]
    ]
   },
@@ -14767,12 +17119,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     10568
+     -3744,
+     12075
     ],
     [
-     -1376,
-     10568
+     -3440,
+     12075
     ]
    ]
   },
@@ -14782,12 +17134,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     10568
+     -3440,
+     12075
     ],
     [
-     -1072,
-     10568
+     -3136,
+     12075
     ]
    ]
   },
@@ -14797,12 +17149,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     7179
+     -4352,
+     4612
     ],
     [
-     -1984,
-     7226
+     -4048,
+     4659
     ]
    ]
   },
@@ -14812,16 +17164,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     3675
+     -4960,
+     3900
     ],
     [
-     -2592,
-     3628
+     -4656,
+     3947
     ],
     [
-     -2288,
-     3628
+     -4352,
+     3947
     ]
    ]
   },
@@ -14831,16 +17183,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     10333
+     -4960,
+     11485
     ],
     [
-     -2592,
-     10333
+     -4656,
+     11485
     ],
     [
-     -2288,
-     10333
+     -4352,
+     11485
     ]
    ]
   },
@@ -14850,12 +17202,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     10239
+     -4048,
+     11373
     ],
     [
-     -1680,
-     10030
+     -3744,
+     11420
     ]
    ]
   },
@@ -14865,12 +17217,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     10239
+     -4048,
+     11373
     ],
     [
-     -1680,
-     10286
+     -3744,
+     11138
     ]
    ]
   },
@@ -14880,12 +17232,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     10286
+     -3744,
+     11138
     ],
     [
-     -1376,
-     10380
+     -3440,
+     11232
     ]
    ]
   },
@@ -14895,12 +17247,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     10286
+     -3744,
+     11138
     ],
     [
-     -1376,
-     5826
+     -3440,
+     6777
     ]
    ]
   },
@@ -14910,20 +17262,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     2628
+     -4352,
+     1672
     ],
     [
-     -1984,
-     2743
+     -4048,
+     1808
     ],
     [
-     -1680,
-     2743
+     -3744,
+     1808
     ],
     [
-     -1376,
-     5826
+     -3440,
+     6777
     ]
    ]
   },
@@ -14933,12 +17285,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     10286
+     -3744,
+     11138
     ],
     [
-     -1376,
-     10474
+     -3440,
+     11326
     ]
    ]
   },
@@ -14948,12 +17300,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     10030
+     -3744,
+     11420
     ],
     [
-     -1376,
-     10030
+     -3440,
+     11420
     ]
    ]
   },
@@ -14963,12 +17315,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9940
+     -4048,
+     11698
     ],
     [
-     -1680,
-     9548
+     -3744,
+     11540
     ]
    ]
   },
@@ -14978,12 +17330,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9130
+     -4048,
+     10861
     ],
     [
-     -1680,
-     9548
+     -3744,
+     11540
     ]
    ]
   },
@@ -14993,16 +17345,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     10333
+     -4352,
+     11485
     ],
     [
-     -1984,
-     10642
+     -4048,
+     11798
     ],
     [
-     -1680,
-     9893
+     -3744,
+     10386
     ]
    ]
   },
@@ -15012,12 +17364,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     8424
+     -4048,
+     9413
     ],
     [
-     -1680,
-     9893
+     -3744,
+     10386
     ]
    ]
   },
@@ -15027,12 +17379,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     8283
+     -4048,
+     9847
     ],
     [
-     -1680,
-     8283
+     -3744,
+     9847
     ]
    ]
   },
@@ -15042,12 +17394,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     8424
+     -4048,
+     9413
     ],
     [
-     -1680,
-     8424
+     -3744,
+     9413
     ]
    ]
   },
@@ -15057,24 +17409,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     8749
+     -4960,
+     10673
     ],
     [
-     -2592,
-     9663
+     -4656,
+     11416
     ],
     [
-     -2288,
-     9663
+     -4352,
+     11416
     ],
     [
-     -1984,
-     9663
+     -4048,
+     11416
     ],
     [
-     -1680,
-     9799
+     -3744,
+     11724
     ]
    ]
   },
@@ -15084,12 +17436,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     9799
+     -3744,
+     11724
     ],
     [
-     -1376,
-     9799
+     -3440,
+     11724
     ]
    ]
   },
@@ -15099,12 +17451,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     3256
+     -4048,
+     2577
     ],
     [
-     -1680,
-     3256
+     -3744,
+     2577
     ]
    ]
   },
@@ -15114,16 +17466,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     4020
+     -4656,
+     7486
     ],
     [
-     -2288,
-     3931
+     -4352,
+     7575
     ],
     [
-     -1984,
-     3931
+     -4048,
+     7575
     ]
    ]
   },
@@ -15133,12 +17485,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     3769
+     -4352,
+     7165
     ],
     [
-     -1984,
-     3769
+     -4048,
+     7165
     ]
    ]
   },
@@ -15148,16 +17500,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     3769
+     -4048,
+     7165
     ],
     [
-     -1680,
-     3769
+     -3744,
+     7165
     ],
     [
-     -1376,
-     3769
+     -3440,
+     7165
     ]
    ]
   },
@@ -15167,16 +17519,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     3931
+     -4048,
+     7575
     ],
     [
-     -1680,
-     3905
+     -3744,
+     7496
     ],
     [
-     -1376,
-     3905
+     -3440,
+     7496
     ]
    ]
   },
@@ -15186,12 +17538,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     1065
+     -4352,
+     3383
     ],
     [
-     -1984,
-     946
+     -4048,
+     3007
     ]
    ]
   },
@@ -15201,12 +17553,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     1065
+     -4352,
+     3383
     ],
     [
-     -1984,
-     1134
+     -4048,
+     3571
     ]
    ]
   },
@@ -15216,12 +17568,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     1065
+     -4352,
+     3383
     ],
     [
-     -1984,
-     1347
+     -4048,
+     3424
     ]
    ]
   },
@@ -15231,12 +17583,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     2953
+     -4352,
+     2730
     ],
     [
-     -1984,
-     2906
+     -4048,
+     2913
     ]
    ]
   },
@@ -15246,12 +17598,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     5690
+     -3744,
+     8115
     ],
     [
-     -1376,
-     5690
+     -3440,
+     8115
     ]
    ]
   },
@@ -15261,16 +17613,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     4020
+     -4656,
+     7486
     ],
     [
-     -2288,
-     4135
+     -4352,
+     7275
     ],
     [
-     -1984,
-     4135
+     -4048,
+     7275
     ]
    ]
   },
@@ -15280,12 +17632,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     4135
+     -4048,
+     7275
     ],
     [
-     -1680,
-     4067
+     -3744,
+     7275
     ]
    ]
   },
@@ -15295,12 +17647,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     5805
+     -4352,
+     8393
     ],
     [
-     -1984,
-     5873
+     -4048,
+     9156
     ]
    ]
   },
@@ -15310,12 +17662,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     5758
+     -4048,
+     8184
     ],
     [
-     -1680,
-     5779
+     -3744,
+     8205
     ]
    ]
   },
@@ -15325,12 +17677,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     5496
+     -4048,
+     7784
     ],
     [
-     -1680,
-     4890
+     -3744,
+     7878
     ]
    ]
   },
@@ -15340,12 +17692,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     3931
+     -4048,
+     7575
     ],
     [
-     -1680,
-     4890
+     -3744,
+     7878
     ]
    ]
   },
@@ -15355,12 +17707,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     5496
+     -4048,
+     7784
     ],
     [
-     -1680,
-     4796
+     -3744,
+     7690
     ]
    ]
   },
@@ -15370,12 +17722,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     3931
+     -4048,
+     7575
     ],
     [
-     -1680,
-     4796
+     -3744,
+     7690
     ]
    ]
   },
@@ -15385,16 +17737,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     5758
+     -4048,
+     8184
     ],
     [
-     -1680,
-     5737
+     -3744,
+     8162
     ],
     [
-     -1376,
-     5596
+     -3440,
+     8021
     ]
    ]
   },
@@ -15404,16 +17756,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     5590
+     -4048,
+     8020
     ],
     [
-     -1680,
-     5543
+     -3744,
+     7973
     ],
     [
-     -1376,
-     5596
+     -3440,
+     8021
     ]
    ]
   },
@@ -15423,16 +17775,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     2906
+     -4048,
+     2913
     ],
     [
-     -1680,
-     2918
+     -3744,
+     2924
     ],
     [
-     -1376,
-     5596
+     -3440,
+     8021
     ]
    ]
   },
@@ -15442,12 +17794,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     2953
+     -4352,
+     2730
     ],
     [
-     -1984,
-     3000
+     -4048,
+     2683
     ]
    ]
   },
@@ -15457,12 +17809,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     5355
+     -4352,
+     6247
     ],
     [
-     -1984,
-     5376
+     -4048,
+     6568
     ]
    ]
   },
@@ -15472,12 +17824,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     5355
+     -4352,
+     6247
     ],
     [
-     -1984,
-     4737
+     -4048,
+     4471
     ]
    ]
   },
@@ -15487,20 +17839,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     5082
+     -4960,
+     4318
     ],
     [
-     -2592,
-     4486
+     -4656,
+     4282
     ],
     [
-     -2288,
-     4486
+     -4352,
+     4282
     ],
     [
-     -1984,
-     4737
+     -4048,
+     4471
     ]
    ]
   },
@@ -15510,12 +17862,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     6486
+     -4048,
+     6158
     ],
     [
-     -1680,
-     4681
+     -3744,
+     4276
     ]
    ]
   },
@@ -15525,12 +17877,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     3000
+     -4048,
+     2683
     ],
     [
-     -1680,
-     4681
+     -3744,
+     4276
     ]
    ]
   },
@@ -15540,12 +17892,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     6534
+     -3744,
+     6268
     ],
     [
-     -1376,
-     6513
+     -3440,
+     6289
     ]
    ]
   },
@@ -15555,12 +17907,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     7367
+     -4352,
+     4728
     ],
     [
-     -1984,
-     7320
+     -4048,
+     4755
     ]
    ]
   },
@@ -15570,12 +17922,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     6885
+     -4352,
+     6866
     ],
     [
-     -1984,
-     6885
+     -4048,
+     6866
     ]
    ]
   },
@@ -15585,16 +17937,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     2628
+     -4352,
+     1672
     ],
     [
-     -1984,
-     2701
+     -4048,
+     1394
     ],
     [
-     -1680,
-     2701
+     -3744,
+     1394
     ]
    ]
   },
@@ -15604,12 +17956,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     2701
+     -3744,
+     1394
     ],
     [
-     -1376,
-     2680
+     -3440,
+     971
     ]
    ]
   },
@@ -15619,16 +17971,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     3419
+     -4352,
+     1928
     ],
     [
-     -1984,
-     3372
+     -4048,
+     1881
     ],
     [
-     -1680,
-     3372
+     -3744,
+     1881
     ]
    ]
   },
@@ -15638,16 +17990,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     3372
+     -3744,
+     1881
     ],
     [
-     -1376,
-     3440
+     -3440,
+     2325
     ],
     [
-     -1072,
-     3440
+     -3136,
+     2325
     ]
    ]
   },
@@ -15657,20 +18009,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     7671
+     -4656,
+     7643
     ],
     [
-     -2288,
-     7692
+     -4352,
+     7665
     ],
     [
-     -1984,
-     7692
+     -4048,
+     7665
     ],
     [
-     -1680,
-     7692
+     -3744,
+     7784
     ]
    ]
   },
@@ -15680,16 +18032,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     3419
+     -4352,
+     1928
     ],
     [
-     -1984,
-     3508
+     -4048,
+     2393
     ],
     [
-     -1680,
-     3508
+     -3744,
+     2393
     ]
    ]
   },
@@ -15699,57 +18051,57 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     1134
+     -4048,
+     3571
     ],
     [
-     -1680,
+     -3744,
+     3618
+    ]
+   ]
+  },
+  {
+   "from": "cmp_ablativeTPS",
+   "to": "int_mercuryCapsule",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3744,
+     1394
+    ],
+    [
+     -3440,
+     1181
+    ]
+   ]
+  },
+  {
+   "from": "life_openLoopECLSS",
+   "to": "int_mercuryCapsule",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3744,
+     1881
+    ],
+    [
+     -3440,
      1181
     ]
    ]
   },
   {
    "from": "cmp_ablativeTPS",
-   "to": "int_mercuryCapsule",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1680,
-     2701
-    ],
-    [
-     -1376,
-     2958
-    ]
-   ]
-  },
-  {
-   "from": "life_openLoopECLSS",
-   "to": "int_mercuryCapsule",
-   "anyToUnlock": false,
-   "waypoints": [
-    [
-     -1680,
-     3372
-    ],
-    [
-     -1376,
-     2958
-    ]
-   ]
-  },
-  {
-   "from": "cmp_ablativeTPS",
    "to": "int_vostokCapsule",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     2701
+     -3744,
+     1394
     ],
     [
-     -1376,
-     3099
+     -3440,
+     1582
     ]
    ]
   },
@@ -15759,12 +18111,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     3372
+     -3744,
+     1881
     ],
     [
-     -1376,
-     3099
+     -3440,
+     1582
     ]
    ]
   },
@@ -15774,12 +18126,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     2701
+     -3744,
+     1394
     ],
     [
-     -1376,
-     6061
+     -3440,
+     6955
     ]
    ]
   },
@@ -15789,20 +18141,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     10333
+     -4352,
+     11485
     ],
     [
-     -1984,
-     10630
+     -4048,
+     11787
     ],
     [
-     -1680,
-     10630
+     -3744,
+     11787
     ],
     [
-     -1376,
-     6061
+     -3440,
+     6955
     ]
    ]
   },
@@ -15812,24 +18164,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     7456
+     -4656,
+     4797
     ],
     [
-     -2288,
-     7456
+     -4352,
+     4797
     ],
     [
-     -1984,
-     7456
+     -4048,
+     4797
     ],
     [
-     -1680,
-     7456
+     -3744,
+     4797
     ],
     [
-     -1376,
-     7456
+     -3440,
+     4797
     ]
    ]
   },
@@ -15839,12 +18191,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     10286
+     -3744,
+     11138
     ],
     [
-     -1376,
-     10286
+     -3440,
+     11138
     ]
    ]
   },
@@ -15854,16 +18206,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     4890
+     -3744,
+     7878
     ],
     [
-     -1376,
-     4890
+     -3440,
+     7926
     ],
     [
-     -1072,
-     4890
+     -3136,
+     8084
     ]
    ]
   },
@@ -15873,20 +18225,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     5873
+     -4048,
+     9156
     ],
     [
-     -1680,
-     5873
+     -3744,
+     9156
     ],
     [
-     -1376,
-     5873
+     -3440,
+     9156
     ],
     [
-     -1072,
-     5873
+     -3136,
+     9156
     ]
    ]
   },
@@ -15896,16 +18248,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     6108
+     -3744,
+     9669
     ],
     [
-     -1376,
-     6108
+     -3440,
+     9669
     ],
     [
-     -1072,
-     6108
+     -3136,
+     9669
     ]
    ]
   },
@@ -15915,16 +18267,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     5779
+     -3744,
+     8205
     ],
     [
-     -1376,
-     5779
+     -3440,
+     8205
     ],
     [
-     -1072,
-     4753
+     -3136,
+     7990
     ]
    ]
   },
@@ -15934,20 +18286,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     3931
+     -4048,
+     7575
     ],
     [
-     -1680,
-     3999
+     -3744,
+     7549
     ],
     [
-     -1376,
-     3999
+     -3440,
+     7549
     ],
     [
-     -1072,
-     4753
+     -3136,
+     7990
     ]
    ]
   },
@@ -15957,20 +18309,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     4135
+     -4048,
+     7275
     ],
     [
-     -1680,
-     4204
+     -3744,
+     7317
     ],
     [
-     -1376,
-     4204
+     -3440,
+     7317
     ],
     [
-     -1072,
-     4204
+     -3136,
+     7317
     ]
    ]
   },
@@ -15980,12 +18332,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     1065
+     -4352,
+     3383
     ],
     [
-     -1984,
-     1040
+     -4048,
+     3304
     ]
    ]
   },
@@ -15995,16 +18347,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     5596
+     -3440,
+     8021
     ],
     [
-     -1072,
-     5528
+     -3136,
+     8900
     ],
     [
-     -768,
-     5528
+     -2832,
+     8900
     ]
    ]
   },
@@ -16014,24 +18366,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     2906
+     -4048,
+     2913
     ],
     [
-     -1680,
-     2822
+     -3744,
+     2902
     ],
     [
-     -1376,
-     2822
+     -3440,
+     2902
     ],
     [
-     -1072,
-     2822
+     -3136,
+     2902
     ],
     [
-     -768,
-     2822
+     -2832,
+     2902
     ]
    ]
   },
@@ -16041,12 +18393,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     2958
+     -3440,
+     1181
     ],
     [
-     -1072,
-     2958
+     -3136,
+     1181
     ]
    ]
   },
@@ -16056,12 +18408,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     3099
+     -3440,
+     1582
     ],
     [
-     -1072,
-     3099
+     -3136,
+     1582
     ]
    ]
   },
@@ -16071,12 +18423,12 @@ window.TREE = {
    "anyToUnlock": true,
    "waypoints": [
     [
-     -1072,
-     2958
+     -3136,
+     1181
     ],
     [
-     -768,
-     3052
+     -2832,
+     1275
     ]
    ]
   },
@@ -16086,12 +18438,12 @@ window.TREE = {
    "anyToUnlock": true,
    "waypoints": [
     [
-     -1072,
-     3099
+     -3136,
+     1582
     ],
     [
-     -768,
-     3052
+     -2832,
+     1275
     ]
    ]
   },
@@ -16101,16 +18453,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     7692
+     -3744,
+     7784
     ],
     [
-     -1376,
-     7557
+     -3440,
+     7675
     ],
     [
-     -1072,
-     7557
+     -3136,
+     7675
     ]
    ]
   },
@@ -16120,12 +18472,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     7557
+     -3136,
+     7675
     ],
     [
-     -768,
-     7557
+     -2832,
+     7391
     ]
    ]
   },
@@ -16135,20 +18487,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     1347
+     -4048,
+     3424
     ],
     [
-     -1680,
-     1400
+     -3744,
+     3477
     ],
     [
-     -1376,
-     1400
+     -3440,
+     3477
     ],
     [
-     -1072,
-     4570
+     -3136,
+     6337
     ]
    ]
   },
@@ -16158,16 +18510,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     7692
+     -3744,
+     7784
     ],
     [
-     -1376,
-     7545
+     -3440,
+     7664
     ],
     [
-     -1072,
-     4570
+     -3136,
+     6337
     ]
    ]
   },
@@ -16177,20 +18529,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     1347
+     -4048,
+     3424
     ],
     [
-     -1680,
-     1275
+     -3744,
+     3430
     ],
     [
-     -1376,
-     1275
+     -3440,
+     3430
     ],
     [
-     -1072,
-     1275
+     -3136,
+     3430
     ]
    ]
   },
@@ -16200,16 +18552,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     7692
+     -3744,
+     7784
     ],
     [
-     -1376,
-     7745
+     -3440,
+     7769
     ],
     [
-     -1072,
-     7745
+     -3136,
+     7769
     ]
    ]
   },
@@ -16219,20 +18571,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     4135
+     -4048,
+     7275
     ],
     [
-     -1680,
-     4110
+     -3744,
+     7233
     ],
     [
-     -1376,
-     4110
+     -3440,
+     7233
     ],
     [
-     -1072,
-     4110
+     -3136,
+     7233
     ]
    ]
   },
@@ -16242,24 +18594,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     3931
+     -4048,
+     7575
     ],
     [
-     -1680,
-     3973
+     -3744,
+     7454
     ],
     [
-     -1376,
-     3973
+     -3440,
+     7454
     ],
     [
-     -1072,
-     3973
+     -3136,
+     7454
     ],
     [
-     -768,
-     3973
+     -2832,
+     6900
     ]
    ]
   },
@@ -16269,12 +18621,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     4110
+     -3136,
+     7233
     ],
     [
-     -768,
-     3973
+     -2832,
+     6900
     ]
    ]
   },
@@ -16284,20 +18636,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     946
+     -4048,
+     3007
     ],
     [
-     -1680,
-     946
+     -3744,
+     3007
     ],
     [
-     -1376,
-     946
+     -3440,
+     3007
     ],
     [
-     -1072,
-     946
+     -3136,
+     3007
     ]
    ]
   },
@@ -16307,20 +18659,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     1134
+     -4048,
+     3571
     ],
     [
-     -1680,
-     1087
+     -3744,
+     3524
     ],
     [
-     -1376,
-     1087
+     -3440,
+     3524
     ],
     [
-     -1072,
-     1087
+     -3136,
+     3524
     ]
    ]
   },
@@ -16330,24 +18682,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     1065
+     -4352,
+     3383
     ],
     [
-     -1984,
-     852
+     -4048,
+     3101
     ],
     [
-     -1680,
-     852
+     -3744,
+     3101
     ],
     [
-     -1376,
-     852
+     -3440,
+     3101
     ],
     [
-     -1072,
-     852
+     -3136,
+     3101
     ]
    ]
   },
@@ -16357,24 +18709,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     1065
+     -4352,
+     3383
     ],
     [
-     -1984,
-     758
+     -4048,
+     3712
     ],
     [
-     -1680,
-     758
+     -3744,
+     3712
     ],
     [
-     -1376,
-     758
+     -3440,
+     3712
     ],
     [
-     -1072,
-     758
+     -3136,
+     3712
     ]
    ]
   },
@@ -16384,20 +18736,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     1347
+     -4048,
+     3424
     ],
     [
-     -1680,
-     1369
+     -3744,
+     3336
     ],
     [
-     -1376,
-     1369
+     -3440,
+     3336
     ],
     [
-     -1072,
-     1369
+     -3136,
+     3336
     ]
    ]
   },
@@ -16407,12 +18759,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     1369
+     -3136,
+     3336
     ],
     [
-     -768,
-     1369
+     -2832,
+     3336
     ]
    ]
   },
@@ -16422,20 +18774,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     3931
+     -4048,
+     7575
     ],
     [
-     -1680,
-     3837
+     -3744,
+     7411
     ],
     [
-     -1376,
-     3837
+     -3440,
+     7411
     ],
     [
-     -1072,
-     3837
+     -3136,
+     7411
     ]
    ]
   },
@@ -16445,12 +18797,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     4570
+     -3136,
+     6337
     ],
     [
-     -768,
-     6586
+     -2832,
+     7972
     ]
    ]
   },
@@ -16460,12 +18812,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     8775
+     -3136,
+     10339
     ],
     [
-     -768,
-     6586
+     -2832,
+     7972
     ]
    ]
   },
@@ -16475,12 +18827,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     7745
+     -3136,
+     7769
     ],
     [
-     -768,
-     7651
+     -2832,
+     7485
     ]
    ]
   },
@@ -16490,12 +18842,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     9799
+     -3440,
+     11724
     ],
     [
-     -1072,
-     9821
+     -3136,
+     11745
     ]
    ]
   },
@@ -16505,12 +18857,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     9799
+     -3440,
+     11724
     ],
     [
-     -1072,
-     9684
+     -3136,
+     11608
     ]
    ]
   },
@@ -16520,12 +18872,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     9821
+     -3136,
+     11745
     ],
     [
-     -768,
-     9774
+     -2832,
+     11698
     ]
    ]
   },
@@ -16535,12 +18887,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     9821
+     -3136,
+     11745
     ],
     [
-     -768,
-     9868
+     -2832,
+     11792
     ]
    ]
   },
@@ -16550,16 +18902,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     8283
+     -3744,
+     9847
     ],
     [
-     -1376,
-     8283
+     -3440,
+     9847
     ],
     [
-     -1072,
-     8283
+     -3136,
+     9847
     ]
    ]
   },
@@ -16569,32 +18921,32 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     5082
+     -4960,
+     4318
     ],
     [
-     -2592,
-     4984
+     -4656,
+     4429
     ],
     [
-     -2288,
-     4984
+     -4352,
+     4429
     ],
     [
-     -1984,
-     4984
+     -4048,
+     4429
     ],
     [
-     -1680,
-     4984
+     -3744,
+     4429
     ],
     [
-     -1376,
-     4984
+     -3440,
+     4429
     ],
     [
-     -1072,
-     4984
+     -3136,
+     4429
     ]
    ]
   },
@@ -16604,12 +18956,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     8283
+     -3136,
+     9847
     ],
     [
-     -768,
-     8283
+     -2832,
+     9941
     ]
    ]
   },
@@ -16619,20 +18971,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     9548
+     -3744,
+     11540
     ],
     [
-     -1376,
-     9548
+     -3440,
+     11540
     ],
     [
-     -1072,
-     9548
+     -3136,
+     11540
     ],
     [
-     -768,
-     9146
+     -2832,
+     10408
     ]
    ]
   },
@@ -16642,12 +18994,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     8775
+     -3136,
+     10339
     ],
     [
-     -768,
-     9146
+     -2832,
+     10408
     ]
    ]
   },
@@ -16657,12 +19009,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     10286
+     -3440,
+     11138
     ],
     [
-     -1072,
-     10286
+     -3136,
+     11185
     ]
    ]
   },
@@ -16672,12 +19024,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     7745
+     -3136,
+     7769
     ],
     [
-     -768,
-     7745
+     -2832,
+     7579
     ]
    ]
   },
@@ -16687,16 +19039,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     10286
+     -3744,
+     11138
     ],
     [
-     -1376,
-     10098
+     -3440,
+     10903
     ],
     [
-     -1072,
-     10098
+     -3136,
+     10903
     ]
    ]
   },
@@ -16706,20 +19058,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9621
+     -4048,
+     11981
     ],
     [
-     -1680,
-     9433
+     -3744,
+     11981
     ],
     [
-     -1376,
-     9433
+     -3440,
+     11981
     ],
     [
-     -1072,
-     9433
+     -3136,
+     11981
     ]
    ]
   },
@@ -16729,16 +19081,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     10286
+     -3744,
+     11138
     ],
     [
-     -1376,
-     10192
+     -3440,
+     10997
     ],
     [
-     -1072,
-     10192
+     -3136,
+     10997
     ]
    ]
   },
@@ -16748,20 +19100,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9130
+     -4048,
+     10861
     ],
     [
-     -1680,
-     9339
+     -3744,
+     10809
     ],
     [
-     -1376,
-     9339
+     -3440,
+     10809
     ],
     [
-     -1072,
-     9339
+     -3136,
+     10809
     ]
    ]
   },
@@ -16771,20 +19123,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9130
+     -4048,
+     10861
     ],
     [
-     -1680,
-     8869
+     -3744,
+     10433
     ],
     [
-     -1376,
-     8869
+     -3440,
+     10433
     ],
     [
-     -1072,
-     8869
+     -3136,
+     10433
     ]
    ]
   },
@@ -16794,20 +19146,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9130
+     -4048,
+     10861
     ],
     [
-     -1680,
-     8775
+     -3744,
+     10339
     ],
     [
-     -1376,
-     8775
+     -3440,
+     10339
     ],
     [
-     -1072,
-     8775
+     -3136,
+     10339
     ]
    ]
   },
@@ -16817,20 +19169,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9130
+     -4048,
+     10861
     ],
     [
-     -1680,
-     9057
+     -3744,
+     10527
     ],
     [
-     -1376,
-     9057
+     -3440,
+     10527
     ],
     [
-     -1072,
-     9057
+     -3136,
+     10527
     ]
    ]
   },
@@ -16840,20 +19192,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9130
+     -4048,
+     10861
     ],
     [
-     -1680,
-     9151
+     -3744,
+     10621
     ],
     [
-     -1376,
-     9151
+     -3440,
+     10621
     ],
     [
-     -1072,
-     9151
+     -3136,
+     10621
     ]
    ]
   },
@@ -16863,20 +19215,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9130
+     -4048,
+     10861
     ],
     [
-     -1680,
-     8633
+     -3744,
+     10129
     ],
     [
-     -1376,
-     8633
+     -3440,
+     10129
     ],
     [
-     -1072,
-     8633
+     -3136,
+     10129
     ]
    ]
   },
@@ -16886,12 +19238,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     8633
+     -3136,
+     10129
     ],
     [
-     -768,
-     8654
+     -2832,
+     10150
     ]
    ]
   },
@@ -16901,20 +19253,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9130
+     -4048,
+     10861
     ],
     [
-     -1680,
-     8963
+     -3744,
+     10244
     ],
     [
-     -1376,
-     8963
+     -3440,
+     10244
     ],
     [
-     -1072,
-     8963
+     -3136,
+     10244
     ]
    ]
   },
@@ -16924,12 +19276,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     8963
+     -3136,
+     10244
     ],
     [
-     -768,
-     8822
+     -2832,
+     10244
     ]
    ]
   },
@@ -16939,20 +19291,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     9130
+     -4048,
+     10861
     ],
     [
-     -1680,
-     9245
+     -3744,
+     10715
     ],
     [
-     -1376,
-     9245
+     -3440,
+     10715
     ],
     [
-     -1072,
-     9245
+     -3136,
+     10715
     ]
    ]
   },
@@ -16962,28 +19314,28 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     7016
+     -4656,
+     6981
     ],
     [
-     -2288,
-     7042
+     -4352,
+     7002
     ],
     [
-     -1984,
-     7042
+     -4048,
+     7002
     ],
     [
-     -1680,
-     7042
+     -3744,
+     7002
     ],
     [
-     -1376,
-     7042
+     -3440,
+     7002
     ],
     [
-     -1072,
-     7042
+     -3136,
+     7002
     ]
    ]
   },
@@ -16993,12 +19345,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     9799
+     -3440,
+     11724
     ],
     [
-     -1072,
-     9915
+     -3136,
+     11839
     ]
    ]
   },
@@ -17008,16 +19360,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     2680
+     -3440,
+     971
     ],
     [
-     -1072,
-     1698
+     -3136,
+     899
     ],
     [
-     -768,
-     1698
+     -2832,
+     899
     ]
    ]
   },
@@ -17027,12 +19379,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     1698
+     -2832,
+     899
     ],
     [
-     -464,
-     1698
+     -2528,
+     899
     ]
    ]
   },
@@ -17042,32 +19394,32 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     3675
+     -4960,
+     3900
     ],
     [
-     -2592,
-     3722
+     -4656,
+     3853
     ],
     [
-     -2288,
-     3722
+     -4352,
+     3853
     ],
     [
-     -1984,
-     3722
+     -4048,
+     3853
     ],
     [
-     -1680,
-     3722
+     -3744,
+     3853
     ],
     [
-     -1376,
-     3722
+     -3440,
+     3853
     ],
     [
-     -1072,
-     3722
+     -3136,
+     3853
     ]
    ]
   },
@@ -17077,12 +19429,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     3722
+     -3136,
+     3853
     ],
     [
-     -768,
-     3722
+     -2832,
+     3853
     ]
    ]
   },
@@ -17092,20 +19444,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     6791
+     -4048,
+     6358
     ],
     [
-     -1680,
-     6749
+     -3744,
+     6363
     ],
     [
-     -1376,
-     6749
+     -3440,
+     6363
     ],
     [
-     -1072,
-     6539
+     -3136,
+     5198
     ]
    ]
   },
@@ -17115,20 +19467,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     6486
+     -4048,
+     6158
     ],
     [
-     -1680,
-     6365
+     -3744,
+     4960
     ],
     [
-     -1376,
-     6365
+     -3440,
+     4960
     ],
     [
-     -1072,
-     6539
+     -3136,
+     5198
     ]
    ]
   },
@@ -17138,24 +19490,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     5355
+     -4352,
+     6247
     ],
     [
-     -1984,
-     5078
+     -4048,
+     6525
     ],
     [
-     -1680,
-     5078
+     -3744,
+     6525
     ],
     [
-     -1376,
-     5078
+     -3440,
+     6525
     ],
     [
-     -1072,
-     5078
+     -3136,
+     6525
     ]
    ]
   },
@@ -17165,12 +19517,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     7745
+     -3136,
+     7769
     ],
     [
-     -768,
-     7839
+     -2832,
+     7809
     ]
    ]
   },
@@ -17180,24 +19532,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     2628
+     -4352,
+     1672
     ],
     [
-     -1984,
-     1510
+     -4048,
+     711
     ],
     [
-     -1680,
-     1510
+     -3744,
+     711
     ],
     [
-     -1376,
-     1510
+     -3440,
+     711
     ],
     [
-     -1072,
-     1510
+     -3136,
+     711
     ]
    ]
   },
@@ -17207,16 +19559,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     3372
+     -3744,
+     1881
     ],
     [
-     -1376,
-     3329
+     -3440,
+     1676
     ],
     [
-     -1072,
-     3329
+     -3136,
+     1676
     ]
    ]
   },
@@ -17226,16 +19578,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     4570
+     -3136,
+     6337
     ],
     [
-     -768,
-     4570
+     -2832,
+     5223
     ],
     [
-     -464,
-     4298
+     -2528,
+     6623
     ]
    ]
   },
@@ -17245,12 +19597,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3973
+     -2832,
+     6900
     ],
     [
-     -464,
-     4298
+     -2528,
+     6623
     ]
    ]
   },
@@ -17260,12 +19612,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     4298
+     -2528,
+     6623
     ],
     [
-     -160,
-     4298
+     -2224,
+     6623
     ]
    ]
   },
@@ -17275,12 +19627,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     5528
+     -2832,
+     8900
     ],
     [
-     -464,
-     6292
+     -2528,
+     8900
     ]
    ]
   },
@@ -17290,20 +19642,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     5596
+     -3440,
+     8021
     ],
     [
-     -1072,
-     5711
+     -3136,
+     8994
     ],
     [
-     -768,
-     5711
+     -2832,
+     8994
     ],
     [
-     -464,
-     6806
+     -2528,
+     8994
     ]
    ]
   },
@@ -17313,24 +19665,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     4544
+     -4048,
+     4365
     ],
     [
-     -1680,
-     4612
+     -3744,
+     4386
     ],
     [
-     -1376,
-     4612
+     -3440,
+     4386
     ],
     [
-     -1072,
-     4612
+     -3136,
+     4386
     ],
     [
-     -768,
-     5293
+     -2832,
+     6712
     ]
    ]
   },
@@ -17340,16 +19692,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     5596
+     -3440,
+     8021
     ],
     [
-     -1072,
-     5293
+     -3136,
+     8126
     ],
     [
-     -768,
-     5293
+     -2832,
+     6712
     ]
    ]
   },
@@ -17359,12 +19711,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     5293
+     -2832,
+     6712
     ],
     [
-     -464,
-     5916
+     -2528,
+     6832
     ]
    ]
   },
@@ -17374,20 +19726,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     4544
+     -4048,
+     4365
     ],
     [
-     -1680,
-     4476
+     -3744,
+     4344
     ],
     [
-     -1376,
-     4476
+     -3440,
+     4344
     ],
     [
-     -1072,
-     4476
+     -3136,
+     4344
     ]
    ]
   },
@@ -17397,12 +19749,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     2822
+     -2832,
+     2902
     ],
     [
-     -464,
-     1954
+     -2528,
+     2902
     ]
    ]
   },
@@ -17412,24 +19764,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     2906
+     -4048,
+     2913
     ],
     [
-     -1680,
-     2896
+     -3744,
+     2913
     ],
     [
-     -1376,
-     2896
+     -3440,
+     2913
     ],
     [
-     -1072,
-     2896
+     -3136,
+     2913
     ],
     [
-     -768,
-     3879
+     -2832,
+     4959
     ]
    ]
   },
@@ -17439,20 +19791,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     4796
+     -3744,
+     7690
     ],
     [
-     -1376,
-     4796
+     -3440,
+     7601
     ],
     [
-     -1072,
-     4796
+     -3136,
+     7601
     ],
     [
-     -768,
-     3879
+     -2832,
+     4959
     ]
    ]
   },
@@ -17462,12 +19814,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3879
+     -2832,
+     4959
     ],
     [
-     -464,
-     3166
+     -2528,
+     5165
     ]
    ]
   },
@@ -17477,16 +19829,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     3837
+     -3136,
+     7411
     ],
     [
-     -768,
-     3837
+     -2832,
+     6994
     ],
     [
-     -464,
-     3166
+     -2528,
+     5165
     ]
    ]
   },
@@ -17496,40 +19848,40 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2896,
-     5082
+     -4960,
+     4318
     ],
     [
-     -2592,
-     4246
+     -4656,
+     4229
     ],
     [
-     -2288,
-     4246
+     -4352,
+     4229
     ],
     [
-     -1984,
-     4246
+     -4048,
+     4229
     ],
     [
-     -1680,
-     4246
+     -3744,
+     4229
     ],
     [
-     -1376,
-     4246
+     -3440,
+     4229
     ],
     [
-     -1072,
-     4246
+     -3136,
+     4229
     ],
     [
-     -768,
-     4246
+     -2832,
+     4229
     ],
     [
-     -464,
-     3418
+     -2528,
+     4229
     ]
    ]
   },
@@ -17539,12 +19891,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3628
+     -2832,
+     3947
     ],
     [
-     -464,
-     3418
+     -2528,
+     4229
     ]
    ]
   },
@@ -17554,12 +19906,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3628
+     -2832,
+     3947
     ],
     [
-     -464,
-     5660
+     -2528,
+     4835
     ]
    ]
   },
@@ -17569,24 +19921,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     6534
+     -3744,
+     6268
     ],
     [
-     -1376,
-     6722
+     -3440,
+     5086
     ],
     [
-     -1072,
-     6722
+     -3136,
+     5086
     ],
     [
-     -768,
-     6722
+     -2832,
+     5086
     ],
     [
-     -464,
-     5660
+     -2528,
+     4835
     ]
    ]
   },
@@ -17596,16 +19948,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     8424
+     -3744,
+     9413
     ],
     [
-     -1376,
-     8424
+     -3440,
+     9413
     ],
     [
-     -1072,
-     8424
+     -3136,
+     9413
     ]
    ]
   },
@@ -17615,24 +19967,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     9151
+     -4352,
+     10699
     ],
     [
-     -1984,
-     8518
+     -4048,
+     9941
     ],
     [
-     -1680,
-     8518
+     -3744,
+     9941
     ],
     [
-     -1376,
-     8518
+     -3440,
+     9941
     ],
     [
-     -1072,
-     8518
+     -3136,
+     9941
     ]
    ]
   },
@@ -17642,12 +19994,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     8424
+     -3136,
+     9413
     ],
     [
-     -768,
-     8471
+     -2832,
+     9800
     ]
    ]
   },
@@ -17657,12 +20009,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     8518
+     -3136,
+     9941
     ],
     [
-     -768,
-     8471
+     -2832,
+     9800
     ]
    ]
   },
@@ -17672,12 +20024,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     8471
+     -2832,
+     9800
     ],
     [
-     -464,
-     8471
+     -2528,
+     9800
     ]
    ]
   },
@@ -17687,12 +20039,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     8471
+     -2528,
+     9800
     ],
     [
-     -160,
-     8471
+     -2224,
+     9800
     ]
    ]
   },
@@ -17702,20 +20054,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     6486
+     -4048,
+     6158
     ],
     [
-     -1680,
-     6445
+     -3744,
+     4933
     ],
     [
-     -1376,
-     6445
+     -3440,
+     4933
     ],
     [
-     -1072,
-     6445
+     -3136,
+     4933
     ]
    ]
   },
@@ -17725,20 +20077,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     6791
+     -4048,
+     6358
     ],
     [
-     -1680,
-     6833
+     -3744,
+     6332
     ],
     [
-     -1376,
-     6833
+     -3440,
+     6332
     ],
     [
-     -1072,
-     6833
+     -3136,
+     6431
     ]
    ]
   },
@@ -17748,12 +20100,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     6445
+     -3136,
+     4933
     ],
     [
-     -768,
-     6680
+     -2832,
+     5155
     ]
    ]
   },
@@ -17763,12 +20115,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     6833
+     -3136,
+     6431
     ],
     [
-     -768,
-     6680
+     -2832,
+     5155
     ]
    ]
   },
@@ -17778,12 +20130,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     6539
+     -3136,
+     5198
     ],
     [
-     -768,
-     6680
+     -2832,
+     5155
     ]
    ]
   },
@@ -17793,24 +20145,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     6486
+     -4048,
+     6158
     ],
     [
-     -1680,
-     6376
+     -3744,
+     4865
     ],
     [
-     -1376,
-     6376
+     -3440,
+     4865
     ],
     [
-     -1072,
-     6376
+     -3136,
+     4865
     ],
     [
-     -768,
-     6492
+     -2832,
+     4865
     ]
    ]
   },
@@ -17820,12 +20172,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     6539
+     -3136,
+     5198
     ],
     [
-     -768,
-     6398
+     -2832,
+     5339
     ]
    ]
   },
@@ -17835,12 +20187,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     5078
+     -3136,
+     6525
     ],
     [
-     -768,
-     6398
+     -2832,
+     5339
     ]
    ]
   },
@@ -17850,12 +20202,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     5376
+     -4048,
+     6568
     ],
     [
-     -1680,
-     5376
+     -3744,
+     6568
     ]
    ]
   },
@@ -17865,12 +20217,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     758
+     -3136,
+     3712
     ],
     [
-     -768,
-     758
+     -2832,
+     3712
     ]
    ]
   },
@@ -17880,24 +20232,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     3931
+     -4048,
+     7575
     ],
     [
-     -1680,
-     4010
+     -3744,
+     7538
     ],
     [
-     -1376,
-     4010
+     -3440,
+     7538
     ],
     [
-     -1072,
-     4010
+     -3136,
+     7538
     ],
     [
-     -768,
-     5434
+     -2832,
+     7297
     ]
    ]
   },
@@ -17907,12 +20259,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     7557
+     -3136,
+     7675
     ],
     [
-     -768,
-     5434
+     -2832,
+     7297
     ]
    ]
   },
@@ -17922,12 +20274,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     5434
+     -2832,
+     7297
     ],
     [
-     -464,
-     6198
+     -2528,
+     7344
     ]
    ]
   },
@@ -17937,16 +20289,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     1181
+     -3744,
+     3618
     ],
     [
-     -1376,
-     1181
+     -3440,
+     3618
     ],
     [
-     -1072,
-     1181
+     -3136,
+     3618
     ]
    ]
   },
@@ -17956,20 +20308,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     4067
+     -3744,
+     7275
     ],
     [
-     -1376,
-     4067
+     -3440,
+     7275
     ],
     [
-     -1072,
-     4067
+     -3136,
+     7275
     ],
     [
-     -768,
-     4067
+     -2832,
+     6806
     ]
    ]
   },
@@ -17979,16 +20331,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     5590
+     -4048,
+     8020
     ],
     [
-     -1680,
-     5575
+     -3744,
+     8005
     ],
     [
-     -1376,
-     5502
+     -3440,
+     7811
     ]
    ]
   },
@@ -17998,12 +20350,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     4796
+     -3744,
+     7690
     ],
     [
-     -1376,
-     5502
+     -3440,
+     7811
     ]
    ]
   },
@@ -18013,12 +20365,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     3722
+     -3136,
+     3853
     ],
     [
-     -768,
-     3628
+     -2832,
+     3947
     ]
    ]
   },
@@ -18028,28 +20380,28 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     3628
+     -4352,
+     3947
     ],
     [
-     -1984,
-     3628
+     -4048,
+     3947
     ],
     [
-     -1680,
-     3628
+     -3744,
+     3947
     ],
     [
-     -1376,
-     3628
+     -3440,
+     3947
     ],
     [
-     -1072,
-     3628
+     -3136,
+     3947
     ],
     [
-     -768,
-     3628
+     -2832,
+     3947
     ]
    ]
   },
@@ -18059,12 +20411,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     2958
+     -3136,
+     1181
     ],
     [
-     -768,
-     2958
+     -2832,
+     1087
     ]
    ]
   },
@@ -18074,12 +20426,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     3099
+     -3136,
+     1582
     ],
     [
-     -768,
-     3146
+     -2832,
+     1629
     ]
    ]
   },
@@ -18089,20 +20441,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     3372
+     -3744,
+     1881
     ],
     [
-     -1376,
-     3397
+     -3440,
+     1745
     ],
     [
-     -1072,
-     3397
+     -3136,
+     1745
     ],
     [
-     -768,
-     3397
+     -2832,
+     1745
     ]
    ]
   },
@@ -18112,20 +20464,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     3256
+     -3744,
+     2577
     ],
     [
-     -1376,
-     3256
+     -3440,
+     2577
     ],
     [
-     -1072,
-     3256
+     -3136,
+     2577
     ],
     [
-     -768,
-     3256
+     -2832,
+     2577
     ]
    ]
   },
@@ -18135,12 +20487,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3397
+     -2832,
+     1745
     ],
     [
-     -464,
-     2633
+     -2528,
+     1745
     ]
    ]
   },
@@ -18150,12 +20502,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     9433
+     -3136,
+     11981
     ],
     [
-     -768,
-     9501
+     -2832,
+     11959
     ]
    ]
   },
@@ -18165,20 +20517,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     7367
+     -4352,
+     4728
     ],
     [
-     -1984,
-     7362
+     -4048,
+     4701
     ],
     [
-     -1680,
-     7362
+     -3744,
+     4701
     ],
     [
-     -1376,
-     7362
+     -3440,
+     4701
     ]
    ]
   },
@@ -18188,12 +20540,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     7362
+     -3440,
+     4701
     ],
     [
-     -1072,
-     4655
+     -3136,
+     3195
     ]
    ]
   },
@@ -18203,16 +20555,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     2701
+     -3744,
+     1394
     ],
     [
-     -1376,
-     2722
+     -3440,
+     1087
     ],
     [
-     -1072,
-     4655
+     -3136,
+     3195
     ]
    ]
   },
@@ -18222,12 +20574,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1680,
-     3508
+     -3744,
+     2393
     ],
     [
-     -1376,
-     3508
+     -3440,
+     2393
     ]
    ]
   },
@@ -18237,24 +20589,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2592,
-     6317
+     -4656,
+     6362
     ],
     [
-     -2288,
-     6338
+     -4352,
+     6657
     ],
     [
-     -1984,
-     6338
+     -4048,
+     6657
     ],
     [
-     -1680,
-     6338
+     -3744,
+     6657
     ],
     [
-     -1376,
-     6791
+     -3440,
+     5023
     ]
    ]
   },
@@ -18264,20 +20616,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     7367
+     -4352,
+     4728
     ],
     [
-     -1984,
-     7393
+     -4048,
+     4713
     ],
     [
-     -1680,
-     7393
+     -3744,
+     4713
     ],
     [
-     -1376,
-     6791
+     -3440,
+     5023
     ]
    ]
   },
@@ -18287,12 +20639,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     5293
+     -2832,
+     6712
     ],
     [
-     -464,
-     5754
+     -2528,
+     6717
     ]
    ]
   },
@@ -18302,12 +20654,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     5754
+     -2528,
+     6717
     ],
     [
-     -160,
-     5754
+     -2224,
+     6717
     ]
    ]
   },
@@ -18317,12 +20669,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     5916
+     -2528,
+     6832
     ],
     [
-     -160,
-     5895
+     -2224,
+     6853
     ]
    ]
   },
@@ -18332,12 +20684,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     5754
+     -2224,
+     6717
     ],
     [
-     144,
-     5754
+     -1920,
+     6717
     ]
    ]
   },
@@ -18347,12 +20699,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     3166
+     -2528,
+     5165
     ],
     [
-     -160,
-     3260
+     -2224,
+     5259
     ]
    ]
   },
@@ -18362,12 +20714,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     3260
+     -2224,
+     5259
     ],
     [
-     144,
-     3260
+     -1920,
+     5259
     ]
    ]
   },
@@ -18377,12 +20729,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     1954
+     -2528,
+     2902
     ],
     [
-     -160,
-     1954
+     -2224,
+     2713
     ]
    ]
   },
@@ -18392,12 +20744,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     3166
+     -2528,
+     5165
     ],
     [
-     -160,
-     3166
+     -2224,
+     5165
     ]
    ]
   },
@@ -18407,12 +20759,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     946
+     -3136,
+     3007
     ],
     [
-     -768,
-     946
+     -2832,
+     3007
     ]
    ]
   },
@@ -18422,12 +20774,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     758
+     -2832,
+     3712
     ],
     [
-     -464,
-     711
+     -2528,
+     3759
     ]
    ]
   },
@@ -18437,12 +20789,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     1369
+     -2832,
+     3336
     ],
     [
-     -464,
-     1416
+     -2528,
+     3289
     ]
    ]
   },
@@ -18452,12 +20804,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     1369
+     -2832,
+     3336
     ],
     [
-     -464,
-     1087
+     -2528,
+     3524
     ]
    ]
   },
@@ -18467,12 +20819,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     758
+     -2832,
+     3712
     ],
     [
-     -464,
-     1087
+     -2528,
+     3524
     ]
    ]
   },
@@ -18482,12 +20834,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     4067
+     -2832,
+     6806
     ],
     [
-     -464,
-     3606
+     -2528,
+     7062
     ]
    ]
   },
@@ -18497,12 +20849,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     3418
+     -2528,
+     4229
     ],
     [
-     -160,
-     3418
+     -2224,
+     4229
     ]
    ]
   },
@@ -18512,12 +20864,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     3418
+     -2224,
+     4229
     ],
     [
-     144,
-     3418
+     -1920,
+     4229
     ]
    ]
   },
@@ -18527,12 +20879,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3256
+     -2832,
+     2577
     ],
     [
-     -464,
-     2445
+     -2528,
+     2529
     ]
    ]
   },
@@ -18542,16 +20894,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3628
+     -2832,
+     3947
     ],
     [
-     -464,
-     2863
+     -2528,
+     3926
     ],
     [
-     -160,
-     2654
+     -2224,
+     3277
     ]
    ]
   },
@@ -18561,12 +20913,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     2445
+     -2528,
+     2529
     ],
     [
-     -160,
-     2654
+     -2224,
+     3277
     ]
    ]
   },
@@ -18576,32 +20928,32 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     8681
+     -4352,
+     9711
     ],
     [
-     -1984,
-     7933
+     -4048,
+     9711
     ],
     [
-     -1680,
-     7933
+     -3744,
+     9711
     ],
     [
-     -1376,
-     7933
+     -3440,
+     9711
     ],
     [
-     -1072,
-     7933
+     -3136,
+     9711
     ],
     [
-     -768,
-     7933
+     -2832,
+     9711
     ],
     [
-     -464,
-     6712
+     -2528,
+     5816
     ]
    ]
   },
@@ -18611,12 +20963,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3722
+     -2832,
+     3853
     ],
     [
-     -464,
-     6712
+     -2528,
+     5816
     ]
    ]
   },
@@ -18626,12 +20978,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     6712
+     -2528,
+     5816
     ],
     [
-     -160,
-     6759
+     -2224,
+     5769
     ]
    ]
   },
@@ -18641,12 +20993,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     5434
+     -2832,
+     7297
     ],
     [
-     -464,
-     6104
+     -2528,
+     7250
     ]
    ]
   },
@@ -18656,12 +21008,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     6680
+     -2832,
+     5155
     ],
     [
-     -464,
-     7356
+     -2528,
+     4930
     ]
    ]
   },
@@ -18671,12 +21023,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     6680
+     -2832,
+     5155
     ],
     [
-     -464,
-     7450
+     -2528,
+     5071
     ]
    ]
   },
@@ -18686,32 +21038,32 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     2628
+     -4352,
+     1672
     ],
     [
-     -1984,
-     1604
+     -4048,
+     805
     ],
     [
-     -1680,
-     1604
+     -3744,
+     805
     ],
     [
-     -1376,
-     1604
+     -3440,
+     805
     ],
     [
-     -1072,
-     1604
+     -3136,
+     805
     ],
     [
-     -768,
-     1604
+     -2832,
+     805
     ],
     [
-     -464,
-     1604
+     -2528,
+     805
     ]
    ]
   },
@@ -18721,16 +21073,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     1510
+     -3136,
+     711
     ],
     [
-     -768,
-     1510
+     -2832,
+     711
     ],
     [
-     -464,
-     1510
+     -2528,
+     711
     ]
    ]
   },
@@ -18740,32 +21092,32 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -2288,
-     3209
+     -4352,
+     2530
     ],
     [
-     -1984,
-     3188
+     -4048,
+     2435
     ],
     [
-     -1680,
-     3188
+     -3744,
+     2435
     ],
     [
-     -1376,
-     3188
+     -3440,
+     2435
     ],
     [
-     -1072,
-     3188
+     -3136,
+     2435
     ],
     [
-     -768,
-     3188
+     -2832,
+     2435
     ],
     [
-     -464,
-     2351
+     -2528,
+     2435
     ]
    ]
   },
@@ -18775,28 +21127,28 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1984,
-     7132
+     -4048,
+     4565
     ],
     [
-     -1680,
-     7132
+     -3744,
+     4565
     ],
     [
-     -1376,
-     7132
+     -3440,
+     4565
     ],
     [
-     -1072,
-     7132
+     -3136,
+     4565
     ],
     [
-     -768,
-     7132
+     -2832,
+     4565
     ],
     [
-     -464,
-     3700
+     -2528,
+     2786
     ]
    ]
   },
@@ -18806,20 +21158,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     2680
+     -3440,
+     971
     ],
     [
-     -1072,
-     2732
+     -3136,
+     1024
     ],
     [
-     -768,
-     2732
+     -2832,
+     1024
     ],
     [
-     -464,
-     3700
+     -2528,
+     2786
     ]
    ]
   },
@@ -18829,12 +21181,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3397
+     -2832,
+     1745
     ],
     [
-     -464,
-     2727
+     -2528,
+     1839
     ]
    ]
   },
@@ -18844,12 +21196,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3397
+     -2832,
+     1745
     ],
     [
-     -464,
-     2821
+     -2528,
+     1651
     ]
    ]
   },
@@ -18859,12 +21211,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3256
+     -2832,
+     2577
     ],
     [
-     -464,
-     2539
+     -2528,
+     2692
     ]
    ]
   },
@@ -18874,12 +21226,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3052
+     -2832,
+     1275
     ],
     [
-     -464,
-     2236
+     -2528,
+     1275
     ]
    ]
   },
@@ -18889,12 +21241,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     7839
+     -2832,
+     7809
     ],
     [
-     -464,
-     7954
+     -2528,
+     7809
     ]
    ]
   },
@@ -18904,16 +21256,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     8775
+     -3136,
+     10339
     ],
     [
-     -768,
-     8701
+     -2832,
+     10313
     ],
     [
-     -464,
-     8707
+     -2528,
+     10318
     ]
    ]
   },
@@ -18923,16 +21275,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     8869
+     -3136,
+     10433
     ],
     [
-     -768,
-     8754
+     -2832,
+     10365
     ],
     [
-     -464,
-     8707
+     -2528,
+     10318
     ]
    ]
   },
@@ -18942,12 +21294,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     2958
+     -2832,
+     1087
     ],
     [
-     -464,
-     2142
+     -2528,
+     1087
     ]
    ]
   },
@@ -18957,16 +21309,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     2958
+     -3136,
+     1181
     ],
     [
-     -768,
-     2890
+     -2832,
+     1181
     ],
     [
-     -464,
-     2048
+     -2528,
+     1181
     ]
    ]
   },
@@ -18976,16 +21328,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     4655
+     -3136,
+     3195
     ],
     [
-     -768,
-     4655
+     -2832,
+     3195
     ],
     [
-     -464,
-     4655
+     -2528,
+     3195
     ]
    ]
   },
@@ -18995,20 +21347,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     3508
+     -3440,
+     2393
     ],
     [
-     -1072,
-     3508
+     -3136,
+     2393
     ],
     [
-     -768,
-     3508
+     -2832,
+     2393
     ],
     [
-     -464,
-     4655
+     -2528,
+     3195
     ]
    ]
   },
@@ -19018,20 +21370,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     6791
+     -3440,
+     5023
     ],
     [
-     -1072,
-     6791
+     -3136,
+     5002
     ],
     [
-     -768,
-     6791
+     -2832,
+     5002
     ],
     [
-     -464,
-     4655
+     -2528,
+     3195
     ]
    ]
   },
@@ -19041,24 +21393,24 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     4476
+     -3136,
+     4344
     ],
     [
-     -768,
-     4476
+     -2832,
+     4344
     ],
     [
-     -464,
-     4476
+     -2528,
+     4344
     ],
     [
-     -160,
-     4476
+     -2224,
+     4344
     ],
     [
-     144,
-     4476
+     -1920,
+     4344
     ]
    ]
   },
@@ -19068,20 +21420,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     5293
+     -2832,
+     6712
     ],
     [
-     -464,
-     5848
+     -2528,
+     6968
     ],
     [
-     -160,
-     5848
+     -2224,
+     6968
     ],
     [
-     144,
-     5848
+     -1920,
+     6968
     ]
    ]
   },
@@ -19091,16 +21443,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     5916
+     -2528,
+     6832
     ],
     [
-     -160,
-     5942
+     -2224,
+     6811
     ],
     [
-     144,
-     5942
+     -1920,
+     6811
     ]
    ]
   },
@@ -19110,12 +21462,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     144,
-     5754
+     -1920,
+     6717
     ],
     [
-     448,
-     5848
+     -1616,
+     6529
     ]
    ]
   },
@@ -19125,12 +21477,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     448,
-     5848
+     -1616,
+     6529
     ],
     [
-     752,
-     5848
+     -1312,
+     6529
     ]
    ]
   },
@@ -19140,12 +21492,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     144,
-     5754
+     -1920,
+     6717
     ],
     [
-     448,
-     4042
+     -1616,
+     4855
     ]
    ]
   },
@@ -19155,16 +21507,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     1954
+     -2224,
+     2713
     ],
     [
-     144,
-     2022
+     -1920,
+     2828
     ],
     [
-     448,
-     4042
+     -1616,
+     4855
     ]
    ]
   },
@@ -19174,16 +21526,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     1954
+     -2224,
+     2713
     ],
     [
-     144,
-     1813
+     -1920,
+     2551
     ],
     [
-     448,
-     1813
+     -1616,
+     2551
     ]
    ]
   },
@@ -19193,12 +21545,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     1954
+     -2224,
+     2713
     ],
     [
-     144,
-     1907
+     -1920,
+     2786
     ]
    ]
   },
@@ -19208,12 +21560,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     144,
-     1907
+     -1920,
+     2786
     ],
     [
-     448,
-     1907
+     -1616,
+     2833
     ]
    ]
   },
@@ -19223,12 +21575,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     3166
+     -2224,
+     5165
     ],
     [
-     144,
-     3166
+     -1920,
+     5165
     ]
    ]
   },
@@ -19238,16 +21590,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     3606
+     -2528,
+     7062
     ],
     [
-     -160,
-     3606
+     -2224,
+     7062
     ],
     [
-     144,
-     3606
+     -1920,
+     7062
     ]
    ]
   },
@@ -19257,16 +21609,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     6292
+     -2528,
+     8900
     ],
     [
-     -160,
-     6245
+     -2224,
+     8858
     ],
     [
-     144,
-     6245
+     -1920,
+     8858
     ]
    ]
   },
@@ -19276,16 +21628,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     6292
+     -2528,
+     8900
     ],
     [
-     -160,
-     6339
+     -2224,
+     8943
     ],
     [
-     144,
-     6339
+     -1920,
+     8943
     ]
    ]
   },
@@ -19295,12 +21647,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     711
+     -2528,
+     3759
     ],
     [
-     -160,
-     711
+     -2224,
+     3900
     ]
    ]
   },
@@ -19310,12 +21662,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     711
+     -2224,
+     3900
     ],
     [
-     144,
-     711
+     -1920,
+     3947
     ]
    ]
   },
@@ -19325,12 +21677,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     6759
+     -2224,
+     5769
     ],
     [
-     144,
-     6806
+     -1920,
+     5722
     ]
    ]
   },
@@ -19340,12 +21692,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     144,
-     6806
+     -1920,
+     5722
     ],
     [
-     448,
-     6806
+     -1616,
+     5722
     ]
    ]
   },
@@ -19355,20 +21707,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     6712
+     -2528,
+     5816
     ],
     [
-     -160,
-     6618
+     -2224,
+     5628
     ],
     [
-     144,
-     6618
+     -1920,
+     5628
     ],
     [
-     448,
-     6618
+     -1616,
+     5628
     ]
    ]
   },
@@ -19378,16 +21730,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     6759
+     -2224,
+     5769
     ],
     [
-     144,
-     6712
+     -1920,
+     5816
     ],
     [
-     448,
-     6712
+     -1616,
+     5816
     ]
    ]
   },
@@ -19397,12 +21749,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     144,
-     3418
+     -1920,
+     4229
     ],
     [
-     448,
-     4768
+     -1616,
+     4276
     ]
    ]
   },
@@ -19412,12 +21764,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     144,
-     3418
+     -1920,
+     4229
     ],
     [
-     448,
-     2692
+     -1616,
+     4182
     ]
    ]
   },
@@ -19427,12 +21779,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     448,
-     2692
+     -1616,
+     4182
     ],
     [
-     752,
-     2692
+     -1312,
+     4182
     ]
    ]
   },
@@ -19442,12 +21794,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     7356
+     -2528,
+     4930
     ],
     [
-     -160,
-     7403
+     -2224,
+     4977
     ]
    ]
   },
@@ -19457,12 +21809,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     7356
+     -2528,
+     4930
     ],
     [
-     -160,
-     7309
+     -2224,
+     4883
     ]
    ]
   },
@@ -19472,16 +21824,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     6104
+     -2528,
+     7250
     ],
     [
-     -160,
-     6104
+     -2224,
+     7250
     ],
     [
-     144,
-     6104
+     -1920,
+     7250
     ]
    ]
   },
@@ -19491,20 +21843,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     2680
+     -3440,
+     971
     ],
     [
-     -1072,
-     1860
+     -3136,
+     993
     ],
     [
-     -768,
-     1860
+     -2832,
+     993
     ],
     [
-     -464,
-     1860
+     -2528,
+     993
     ]
    ]
   },
@@ -19514,12 +21866,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     1698
+     -2528,
+     899
     ],
     [
-     -160,
-     1698
+     -2224,
+     899
     ]
    ]
   },
@@ -19529,12 +21881,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -160,
-     1698
+     -2224,
+     899
     ],
     [
-     144,
-     1698
+     -1920,
+     852
     ]
    ]
   },
@@ -19544,16 +21896,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     8633
+     -3136,
+     10129
     ],
     [
-     -768,
-     8612
+     -2832,
+     10108
     ],
     [
-     -464,
-     8612
+     -2528,
+     10108
     ]
    ]
   },
@@ -19563,12 +21915,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     8612
+     -2528,
+     10108
     ],
     [
-     -160,
-     8612
+     -2224,
+     10108
     ]
    ]
   },
@@ -19578,12 +21930,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     7839
+     -2832,
+     7809
     ],
     [
-     -464,
-     8048
+     -2528,
+     7903
     ]
    ]
   },
@@ -19593,12 +21945,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     7839
+     -2832,
+     7809
     ],
     [
-     -464,
-     8142
+     -2528,
+     7715
     ]
    ]
   },
@@ -19608,12 +21960,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     8283
+     -2832,
+     9941
     ],
     [
-     -464,
-     8236
+     -2528,
+     9894
     ]
    ]
   },
@@ -19623,12 +21975,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     8283
+     -2832,
+     9941
     ],
     [
-     -464,
-     8330
+     -2528,
+     9988
     ]
    ]
   },
@@ -19638,12 +21990,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     8236
+     -2528,
+     9894
     ],
     [
-     -160,
-     8236
+     -2224,
+     9894
     ]
    ]
   },
@@ -19653,12 +22005,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3722
+     -2832,
+     3853
     ],
     [
-     -464,
-     2957
+     -2528,
+     3853
     ]
    ]
   },
@@ -19668,12 +22020,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     2957
+     -2528,
+     3853
     ],
     [
-     -160,
-     2957
+     -2224,
+     3994
     ]
    ]
   },
@@ -19683,16 +22035,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     9684
+     -3136,
+     11608
     ],
     [
-     -768,
-     9637
+     -2832,
+     11655
     ],
     [
-     -464,
-     9637
+     -2528,
+     11655
     ]
    ]
   },
@@ -19702,16 +22054,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     9684
+     -3136,
+     11608
     ],
     [
-     -768,
-     9731
+     -2832,
+     11561
     ],
     [
-     -464,
-     9731
+     -2528,
+     11561
     ]
    ]
   },
@@ -19721,16 +22073,16 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1072,
-     9433
+     -3136,
+     11981
     ],
     [
-     -768,
-     9543
+     -2832,
+     12002
     ],
     [
-     -464,
-     9543
+     -2528,
+     12002
     ]
    ]
   },
@@ -19740,20 +22092,20 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -1376,
-     10030
+     -3440,
+     11420
     ],
     [
-     -1072,
-     10030
+     -3136,
+     11420
     ],
     [
-     -768,
-     10030
+     -2832,
+     11420
     ],
     [
-     -464,
-     10030
+     -2528,
+     11420
     ]
    ]
   },
@@ -19763,12 +22115,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     3973
+     -2832,
+     6900
     ],
     [
-     -464,
-     3512
+     -2528,
+     7156
     ]
    ]
   },
@@ -19778,12 +22130,12 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -768,
-     5293
+     -2832,
+     6712
     ],
     [
-     -464,
-     6010
+     -2528,
+     6926
     ]
    ]
   },
@@ -19793,12 +22145,1004 @@ window.TREE = {
    "anyToUnlock": false,
    "waypoints": [
     [
-     -464,
-     3166
+     -2528,
+     5165
     ],
     [
-     -160,
-     3072
+     -2224,
+     5071
+    ]
+   ]
+  },
+  {
+   "from": "life_habitatModuleCatalog",
+   "to": "life_modularHabitat",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     1651
+    ],
+    [
+     -2224,
+     1557
+    ]
+   ]
+  },
+  {
+   "from": "life_habitatModuleCatalog",
+   "to": "life_pressurizedCrewTubes",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     1651
+    ],
+    [
+     -2224,
+     1651
+    ]
+   ]
+  },
+  {
+   "from": "life_habitatModuleCatalog",
+   "to": "life_stationLogistics",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     1651
+    ],
+    [
+     -2224,
+     1839
+    ]
+   ]
+  },
+  {
+   "from": "life_stationLogistics",
+   "to": "life_externalStowage",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     1839
+    ],
+    [
+     -1920,
+     1839
+    ]
+   ]
+  },
+  {
+   "from": "life_modularHabitat",
+   "to": "life_bioregenerativeECLSS",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     1557
+    ],
+    [
+     -1920,
+     1463
+    ]
+   ]
+  },
+  {
+   "from": "life_habitatModuleCatalog",
+   "to": "life_observationCupola",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     1651
+    ],
+    [
+     -2224,
+     1463
+    ]
+   ]
+  },
+  {
+   "from": "life_habitatModuleCatalog",
+   "to": "life_stationAirlock",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     1651
+    ],
+    [
+     -2224,
+     1745
+    ]
+   ]
+  },
+  {
+   "from": "life_openLoopECLSS",
+   "to": "life_isru",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3744,
+     1881
+    ],
+    [
+     -3440,
+     2001
+    ],
+    [
+     -3136,
+     2001
+    ],
+    [
+     -2832,
+     2001
+    ],
+    [
+     -2528,
+     2001
+    ],
+    [
+     -2224,
+     2001
+    ]
+   ]
+  },
+  {
+   "from": "str_externalTrussStructure",
+   "to": "str_modularTrussSystem",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     2692
+    ],
+    [
+     -2224,
+     2461
+    ]
+   ]
+  },
+  {
+   "from": "str_externalTrussStructure",
+   "to": "str_spinalTruss",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     2692
+    ],
+    [
+     -2224,
+     2367
+    ]
+   ]
+  },
+  {
+   "from": "str_stationStructures",
+   "to": "str_stationHubs",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2832,
+     2577
+    ],
+    [
+     -2528,
+     2572
+    ],
+    [
+     -2224,
+     2179
+    ]
+   ]
+  },
+  {
+   "from": "str_stationStructures",
+   "to": "str_stationMountingBases",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2832,
+     2577
+    ],
+    [
+     -2528,
+     2624
+    ],
+    [
+     -2224,
+     2273
+    ]
+   ]
+  },
+  {
+   "from": "str_aircraftAirframe",
+   "to": "str_heavyTransportAirframe",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3440,
+     5023
+    ],
+    [
+     -3136,
+     5044
+    ],
+    [
+     -2832,
+     5044
+    ]
+   ]
+  },
+  {
+   "from": "gnc_stationBerthing",
+   "to": "gnc_androgynousDocking",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     1275
+    ],
+    [
+     -2224,
+     1275
+    ]
+   ]
+  },
+  {
+   "from": "gnc_usProbeBusFamily",
+   "to": "gnc_flagshipProbeBus",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     7715
+    ],
+    [
+     -2224,
+     7715
+    ]
+   ]
+  },
+  {
+   "from": "gnc_threeAxisStabilizedBus",
+   "to": "gnc_commercialComsatBus",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3136,
+     7769
+    ],
+    [
+     -2832,
+     7621
+    ],
+    [
+     -2528,
+     7621
+    ],
+    [
+     -2224,
+     7621
+    ]
+   ]
+  },
+  {
+   "from": "nuc_fissionReactor",
+   "to": "nuc_thermionicReactor",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2832,
+     3947
+    ],
+    [
+     -2528,
+     4088
+    ]
+   ]
+  },
+  {
+   "from": "opt_multiSpectralImaging",
+   "to": "opt_hyperspectralImaging",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3136,
+     10997
+    ],
+    [
+     -2832,
+     10997
+    ],
+    [
+     -2528,
+     10997
+    ],
+    [
+     -2224,
+     10997
+    ]
+   ]
+  },
+  {
+   "from": "opt_infraredInterferometry",
+   "to": "opt_thermalMappingSpectrometry",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3136,
+     10903
+    ],
+    [
+     -2832,
+     10903
+    ],
+    [
+     -2528,
+     10903
+    ],
+    [
+     -2224,
+     10903
+    ]
+   ]
+  },
+  {
+   "from": "opt_digitalImaging",
+   "to": "opt_highResolutionImager",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     11420
+    ],
+    [
+     -2224,
+     11420
+    ]
+   ]
+  },
+  {
+   "from": "opt_radarAltimetry",
+   "to": "opt_syntheticApertureRadar",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3136,
+     11185
+    ],
+    [
+     -2832,
+     11185
+    ],
+    [
+     -2528,
+     11185
+    ],
+    [
+     -2224,
+     11185
+    ]
+   ]
+  },
+  {
+   "from": "opt_orbitalMapping",
+   "to": "opt_orbitalResourceScanning",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3440,
+     11138
+    ],
+    [
+     -3136,
+     11091
+    ],
+    [
+     -2832,
+     11091
+    ],
+    [
+     -2528,
+     11091
+    ],
+    [
+     -2224,
+     11091
+    ]
+   ]
+  },
+  {
+   "from": "tel_largeApertureReflectors",
+   "to": "tel_deepSpaceParabolic",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     11561
+    ],
+    [
+     -2224,
+     11561
+    ]
+   ]
+  },
+  {
+   "from": "int_surveyorLanderBus",
+   "to": "int_atmosphericEntryProbe",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2832,
+     7972
+    ],
+    [
+     -2528,
+     7972
+    ],
+    [
+     -2224,
+     7972
+    ]
+   ]
+  },
+  {
+   "from": "life_modularHabitat",
+   "to": "life_inflatableHabitat",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     1557
+    ],
+    [
+     -1920,
+     1557
+    ]
+   ]
+  },
+  {
+   "from": "life_inflatableHabitat",
+   "to": "life_centrifugeHabitat",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     1557
+    ],
+    [
+     -1616,
+     1557
+    ]
+   ]
+  },
+  {
+   "from": "life_modularHabitat",
+   "to": "life_largeStationModule",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     1557
+    ],
+    [
+     -1920,
+     1651
+    ]
+   ]
+  },
+  {
+   "from": "life_bioregenerativeECLSS",
+   "to": "life_aquacultureModule",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     1463
+    ],
+    [
+     -1616,
+     1463
+    ]
+   ]
+  },
+  {
+   "from": "str_modularTrussSystem",
+   "to": "str_annularTruss",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     2461
+    ],
+    [
+     -1920,
+     2414
+    ]
+   ]
+  },
+  {
+   "from": "str_modularTrussSystem",
+   "to": "str_strongbackTruss",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     2461
+    ],
+    [
+     -1920,
+     2508
+    ]
+   ]
+  },
+  {
+   "from": "str_fixedLanderLegs",
+   "to": "str_reusableLandingLeg",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3136,
+     6908
+    ],
+    [
+     -2832,
+     5491
+    ],
+    [
+     -2528,
+     5491
+    ],
+    [
+     -2224,
+     5491
+    ],
+    [
+     -1920,
+     5491
+    ]
+   ]
+  },
+  {
+   "from": "gnc_androgynousDocking",
+   "to": "gnc_nasaDockingSystem",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     1275
+    ],
+    [
+     -1920,
+     1275
+    ]
+   ]
+  },
+  {
+   "from": "int_apolloBlockIII",
+   "to": "int_commercialCrewCapsule",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     1087
+    ],
+    [
+     -2224,
+     1087
+    ],
+    [
+     -1920,
+     1087
+    ]
+   ]
+  },
+  {
+   "from": "cmp_extremeAtmosphericEntry",
+   "to": "cmp_inflatableDecelerator",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     899
+    ],
+    [
+     -1920,
+     946
+    ]
+   ]
+  },
+  {
+   "from": "nuc_thermionicReactor",
+   "to": "nuc_modernFissionReactor",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     4088
+    ],
+    [
+     -2224,
+     4088
+    ],
+    [
+     -1920,
+     4088
+    ]
+   ]
+  },
+  {
+   "from": "nuc_modernFissionReactor",
+   "to": "nuc_fissilePropellantMagazine",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     4088
+    ],
+    [
+     -1616,
+     4088
+    ]
+   ]
+  },
+  {
+   "from": "cryo_boosterGasGenHydrolox",
+   "to": "cryo_combustionTapOff",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     6811
+    ],
+    [
+     -1616,
+     6623
+    ]
+   ]
+  },
+  {
+   "from": "cryo_deployableNozzleExpander",
+   "to": "cryo_highThrustExpander",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     4344
+    ],
+    [
+     -1616,
+     4365
+    ]
+   ]
+  },
+  {
+   "from": "pc_zenitKerolox",
+   "to": "cryo_smallScaleMethalox",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     2713
+    ],
+    [
+     -1920,
+     2645
+    ],
+    [
+     -1616,
+     2645
+    ]
+   ]
+  },
+  {
+   "from": "cryo_deployableNozzleExpander",
+   "to": "cryo_expanderBoosterScale",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     4344
+    ],
+    [
+     -1616,
+     4323
+    ],
+    [
+     -1312,
+     4323
+    ]
+   ]
+  },
+  {
+   "from": "cryo_methaloxStagedCombustion",
+   "to": "cryo_fullFlowMethalox",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1616,
+     2551
+    ],
+    [
+     -1312,
+     2551
+    ]
+   ]
+  },
+  {
+   "from": "fd_terminalGasGenKerolox",
+   "to": "fd_reusableGasGenKerolox",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     8858
+    ],
+    [
+     -1616,
+     8973
+    ]
+   ]
+  },
+  {
+   "from": "fd_reusableGasGenKerolox",
+   "to": "fd_densifiedPropellantKerolox",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1616,
+     8973
+    ],
+    [
+     -1312,
+     8973
+    ]
+   ]
+  },
+  {
+   "from": "pc_multiChamberORSC",
+   "to": "pc_americanORSCKerolox",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     2786
+    ],
+    [
+     -1616,
+     2739
+    ]
+   ]
+  },
+  {
+   "from": "pc_filamentWoundSolid",
+   "to": "pc_fiveSegmentSolidScaleUp",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     3900
+    ],
+    [
+     -1920,
+     3853
+    ]
+   ]
+  },
+  {
+   "from": "gnc_deepSpaceApogeeEngine",
+   "to": "gnc_deepThrottlingAbortLandingEngine",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     7250
+    ],
+    [
+     -1616,
+     7690
+    ]
+   ]
+  },
+  {
+   "from": "fd_gasGeneratorApex",
+   "to": "ep_electricPumpFeed",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     8900
+    ],
+    [
+     -2224,
+     8900
+    ],
+    [
+     -1920,
+     8900
+    ],
+    [
+     -1616,
+     7271
+    ]
+   ]
+  },
+  {
+   "from": "ep_hallEffectThruster",
+   "to": "ep_electricPumpFeed",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     5816
+    ],
+    [
+     -2224,
+     5962
+    ],
+    [
+     -1920,
+     5962
+    ],
+    [
+     -1616,
+     7271
+    ]
+   ]
+  },
+  {
+   "from": "ep_griddedIon",
+   "to": "ep_nextGenGriddedIon",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1616,
+     5628
+    ],
+    [
+     -1312,
+     5628
+    ]
+   ]
+  },
+  {
+   "from": "ep_highPowerHall",
+   "to": "ep_nasaHighPowerHall",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1616,
+     5722
+    ],
+    [
+     -1312,
+     5722
+    ]
+   ]
+  },
+  {
+   "from": "ep_hallEffectThruster",
+   "to": "ep_magnetoplasmadynamic",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     5816
+    ],
+    [
+     -2224,
+     5534
+    ],
+    [
+     -1920,
+     5534
+    ],
+    [
+     -1616,
+     5534
+    ],
+    [
+     -1312,
+     5534
+    ]
+   ]
+  },
+  {
+   "from": "ep_magnetoplasmadynamic",
+   "to": "ep_variableSpecificImpulsePlasma",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1312,
+     5534
+    ],
+    [
+     -1008,
+     5534
+    ]
+   ]
+  },
+  {
+   "from": "nuc_advancedCoreNTR",
+   "to": "nuc_bimodalNTR",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1312,
+     4182
+    ],
+    [
+     -1008,
+     4182
+    ]
+   ]
+  },
+  {
+   "from": "nuc_bimodalNTR",
+   "to": "nuc_fissionFragmentRocket",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1008,
+     4182
+    ],
+    [
+     -704,
+     4182
+    ]
+   ]
+  },
+  {
+   "from": "nuc_pulsePropulsion",
+   "to": "nuc_magneticFusionPulsePropulsion",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2224,
+     3277
+    ],
+    [
+     -1920,
+     3277
+    ],
+    [
+     -1616,
+     3277
+    ],
+    [
+     -1312,
+     3277
+    ],
+    [
+     -1008,
+     3277
+    ],
+    [
+     -704,
+     3277
+    ],
+    [
+     -400,
+     3277
+    ]
+   ]
+  },
+  {
+   "from": "nuc_fissionFragmentRocket",
+   "to": "nuc_nuclearSaltWaterRocket",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -704,
+     4182
+    ],
+    [
+     -400,
+     4182
     ]
    ]
   }
