@@ -25,7 +25,8 @@ MARGIN_X, MARGIN_Y = -3200, 711 # MARGIN_X is RE-COMPUTED in sugiyama_layout to 
                                 # (rightmost tier at x=-RIGHT_PAD) so it always sits at x<0 inside the R&D
                                 # scroll content (right edge pivot-pinned at x=0), for ANY tier count.
 RIGHT_PAD = 400                 # px between the rightmost tier and x=0 (right scroll-past padding)
-SPACING_Y = 94                  # vertical px per rank unit; matches renderer.js sugiyama SPACING_Y base (94*spacing=1.0)
+YSPACING = 0.9                  # vertical rank-spacing multiplier (1.0 = 94px per rank; 0.9 = tighter rows)
+SPACING_Y = round(94 * YSPACING)  # vertical px per rank unit; matches renderer.js sugiyama SPACING_Y base (94*spacing=1.0)
 COORDS_BK = True                # sugiyama_layout coordinate stage: True = Brandes-Kopf block alignment
                                 # (straight edges, the in-game default); False = isotonic (PAV) neighbour-mean
 KSP_CFG_FLIP_Y = True           # emit_cfg only: mirror y (compiler y-down -> KSP canvas y-up) so the tree
