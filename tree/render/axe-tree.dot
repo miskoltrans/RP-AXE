@@ -278,6 +278,31 @@ digraph AXE {
   "int_apolloBlockIII" [label="Extended-Duration Apollo Block III+\nSystemsIntegration T9 · 1700",fillcolor="#ededed",fontcolor="#111111"];
   "int_bigGeminiLogistics" [label="Enlarged Station-Logistics Capsule\nSystemsIntegration T9 · 1700",fillcolor="#ededed",fontcolor="#111111"];
   "int_shuttleOrbiter" [label="Reusable Winged Orbiter\nSystemsIntegration T9 · 1700",fillcolor="#ededed",fontcolor="#111111"];
+  "cryo_deployableNozzleExpander" [label="Deployable-Nozzle Expander Cycle\nCryogenics T11 · 900",fillcolor="#37c6e8",fontcolor="#111111"];
+  "cryo_operationalHydroloxUpper" [label="Operational Restartable Hydrolox Upper\nCryogenics T11 · 900",fillcolor="#37c6e8",fontcolor="#111111"];
+  "cryo_boosterGasGenHydrolox" [label="Booster-Class Gas-Generator Hydrolox\nCryogenics T11 · 900",fillcolor="#37c6e8",fontcolor="#111111"];
+  "cryo_operationalFRSC" [label="Operational Fuel-Rich Staged-Combustion Hydrolox\nCryogenics T12 · 0",fillcolor="#37c6e8",fontcolor="#111111"];
+  "cryo_reusableEngineUprating" [label="Reusable-Engine Production Uprating\nCryogenics T13 · 0",fillcolor="#37c6e8",fontcolor="#111111"];
+  "cryo_tripropellant" [label="Tripropellant Staged Combustion\nCryogenics T12 · 0",fillcolor="#37c6e8",fontcolor="#111111"];
+  "cryo_methaloxStagedCombustion" [label="Methalox Staged Combustion\nCryogenics T12 · 0",fillcolor="#37c6e8",fontcolor="#111111"];
+  "pc_multiChamberORSC" [label="High-Thrust Multi-Chamber ORSC\nPropellantChemistry T11 · 900",fillcolor="#e5533b",fontcolor="#111111"];
+  "pc_modularORSC" [label="Modular Oxidiser-Rich Kerolox\nPropellantChemistry T12 · 0",fillcolor="#e5533b",fontcolor="#111111"];
+  "pc_operationalStorableORSC" [label="Operational Storable Staged Combustion\nPropellantChemistry T11 · 900",fillcolor="#e5533b",fontcolor="#111111"];
+  "fd_multiRestartStorableUpper" [label="Multi-Restart Storable Upper Stage\nFluidDynamics T11 · 900",fillcolor="#23b9a0",fontcolor="#111111"];
+  "fd_terminalGasGenKerolox" [label="Terminal Gas-Generator Kerolox Uprating\nFluidDynamics T11 · 900",fillcolor="#23b9a0",fontcolor="#111111"];
+  "fd_advancedGasGenKerolox" [label="Advanced Gas-Generator Kerolox Booster\nFluidDynamics T11 · 900",fillcolor="#23b9a0",fontcolor="#111111"];
+  "pc_filamentWoundSolid" [label="Filament-Wound Composite-Case Solids\nPropellantChemistry T10 · 1300",fillcolor="#e5533b",fontcolor="#111111"];
+  "pc_gemStrapOnCatalog" [label="Graphite-Epoxy Strap-On Catalog\nPropellantChemistry T11 · 900",fillcolor="#e5533b",fontcolor="#111111"];
+  "ep_operationalHall" [label="Operational Hall-Effect Thruster\nElectricalPower T11 · 900",fillcolor="#ffd23f",fontcolor="#111111"];
+  "ep_highPowerHall" [label="High-Power Nested Hall Thruster\nElectricalPower T12 · 0",fillcolor="#ffd23f",fontcolor="#111111"];
+  "ep_griddedIon" [label="Gridded Ion Electrostatic Thruster\nElectricalPower T12 · 0",fillcolor="#ffd23f",fontcolor="#111111"];
+  "ep_pulsedInductive" [label="Pulsed Inductive Thruster\nElectricalPower T12 · 0",fillcolor="#ffd23f",fontcolor="#111111"];
+  "nuc_flightDesignNTR" [label="Flight-Design Solid-Core NTR\nNuclearEngineering T12 · 0",fillcolor="#83c341",fontcolor="#111111"];
+  "nuc_particleBedNTR" [label="Particle-Bed NTR\nNuclearEngineering T12 · 0",fillcolor="#83c341",fontcolor="#111111"];
+  "nuc_advancedCoreNTR" [label="Advanced-Core NTR Concepts\nNuclearEngineering T13 · 0",fillcolor="#83c341",fontcolor="#111111"];
+  "av_vtolVectoredTurbofan" [label="Vectored-Thrust VTOL Turbofan\nAirBreathing T10 · 1300",fillcolor="#6cc4b0",fontcolor="#111111"];
+  "av_fourthGenFighterTurbofan" [label="Fourth-Generation Fighter Turbofan\nAirBreathing T10 · 1300",fillcolor="#6cc4b0",fontcolor="#111111"];
+  "gnc_deepSpaceApogeeEngine" [label="Deep-Space Bipropellant Apogee Engine\nGuidanceControl T11 · 900",fillcolor="#8a5cd6",fontcolor="#111111"];
   { rank=same; "start" "parking" }
   { rank=same; "hire_JPL" "hire_OKB" "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
   { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "str_rigidBracing" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
@@ -288,8 +313,10 @@ digraph AXE {
   { rank=same; "str_fixedLanderLegs" "gs_shuttlePad" "life_crewedExperimentBay" "fd_clusteredThrustGrowth" "fd_blendedStorableFuel" "fd_ammoniaCombustionRefinement" "fd_titanStorableConversion" "pc_juno_ClF3" "int_geminiCapsule" "int_voskhodCabin" "gnc_smallRcsCatalog" "fd_continuousThrottleDescent" "cmp_airbagTouchdown" "gnc_threeAxisStabilizedBus" "fd_propellantUllage" "pc_scoutMarkII" "pc_strapOnMarkII" "pc_allSolidStaging" "pc_segmentedCasting" "pc_apogeeKickStage" "pc_storableVernierFamily" "tel_deployableHighGainDish" "tel_antennaCatalog" "elec_deployablePanelII" "elec_fuelCellPower" "opt_radarAltimetry" "opt_infraredInterferometry" "mic_ionMassSpec" "opt_multiSpectralImaging" "rob_heavyRotorActuation" "rob_hingeActuation" "rob_linearActuation" "rob_precisionRotationServo" "rob_sequencedControl" "rob_surfaceMobility" "rob_trackDrive" "rob_screwDrive" "str_fuelCrossfeed" "tel_realAntennaTelemetry" "nuc_isotopePower" "av_mach2Turbojet" "av_dedicatedLiftJet" "th_activeLouvers" "int_compactCrewPod" "cryo_refinedExpander" "gnc_interplanetaryAvionics" "elec_integratedCircuit" "av_highBypassTurbofan" "av_lowBypassTurbofan" "int_heavyLaunchEscape" "aero_liftingReentry" }
   { rank=same; "fd_gasGeneratorCeiling" "pc_orscDebut" "gnc_rendezvousDocking" "gnc_fixedRcsCatalog" "fd_pressureFedRestart" "pc_apogeeKickCatalog" "int_surveyorLanderBus" "int_surveyorOrbiter" "tel_compactHighGainAntenna" "tel_phasedArrayRelay" "elec_refinedSolarSimulation" "mic_boomMagnetometryII" "gnc_orbitalGravimetry" "rob_heavyWheelDrive" "rob_heavyTrackDrive" "cmp_lunarReturnAblator" "nuc_isotopePowerII" "gnc_reactionWheelAttitude" "cryo_gasGeneratorHydrolox" "pc_protonStagedCombustion" "comp_digitalGuidanceComputer" "av_advancedJetEngines" "av_advancedFighterTurbojets" "av_advancedHighSpeedTurbojets" "pc_largeSegmentedBooster" "pc_storableRcsPropellants" "fd_advancedSpacecraftPropulsion" "nuc_fissionReactor" "int_apolloCSM" "int_d2LunarCraft" "life_stationHabitation" "str_stationStructures" "mic_plasmaWave" "pc_scoutMarkIII" }
   { rank=same; "cmp_lunarLandingAblator" "fd_deepThrottleLanding" "fd_gasGeneratorApex" "fd_matureKeroloxClusterUprating" "cryo_largeHydrolox" "pc_n1ClosedCycle" "pc_refinedStorableORSC" "nuc_nuclearThermalRocket" "nuc_nuclearRamjet" "comp_realTimeFlightComputer" "pc_caveaB" "int_orbitalLab" "cryo_deepThrottleHydrolox" "pc_shuttleSRB" "pc_apogeeKickCatalogII" "pc_solidUpperStage" "fd_restartableUpperMaturation" "str_pusherPlate" "ep_hallEffectThruster" "gnc_bipropAttitudeThrust" "av_secondGenTurbofan" "av_secondGenAfterburner" "th_extendedMLIWrapping" "th_pumpedLoopRadiators" "met_aluminiumCopperBalloonTank" "cmp_compositeFairingShells" "life_convertedStageStation" "life_habitatModuleCatalog" "str_externalTrussStructure" "gnc_stationBerthing" "gnc_largeReactionWheels" "rob_grappleEndEffector" "int_apolloBlockIII" "int_bigGeminiLogistics" "int_shuttleOrbiter" }
-  { rank=same; "fd_lunarSurfaceMobility" "comp_networkedAvionics" "cryo_uprateRestartableHydrolox" "cryo_matureGasGeneratorHydrolox" "pc_stagedCombustionCeiling" "pc_zenitKerolox" "pc_refinedStorableORSCII" "nuc_fullScaleNTRTesting" "nuc_pulsePropulsion" "ep_higherPowerHallThruster" }
-  { rank=same; "cryo_ssme" "pc_rd270Variants" "nuc_flightRatedNTR" }
+  { rank=same; "fd_lunarSurfaceMobility" "comp_networkedAvionics" "cryo_uprateRestartableHydrolox" "cryo_matureGasGeneratorHydrolox" "pc_stagedCombustionCeiling" "pc_zenitKerolox" "pc_refinedStorableORSCII" "nuc_fullScaleNTRTesting" "nuc_pulsePropulsion" "ep_higherPowerHallThruster" "pc_filamentWoundSolid" "av_vtolVectoredTurbofan" "av_fourthGenFighterTurbofan" }
+  { rank=same; "cryo_ssme" "pc_rd270Variants" "nuc_flightRatedNTR" "cryo_deployableNozzleExpander" "cryo_operationalHydroloxUpper" "cryo_boosterGasGenHydrolox" "pc_multiChamberORSC" "pc_operationalStorableORSC" "fd_multiRestartStorableUpper" "fd_terminalGasGenKerolox" "fd_advancedGasGenKerolox" "pc_gemStrapOnCatalog" "ep_operationalHall" "gnc_deepSpaceApogeeEngine" }
+  { rank=same; "cryo_operationalFRSC" "cryo_tripropellant" "cryo_methaloxStagedCombustion" "pc_modularORSC" "ep_highPowerHall" "ep_griddedIon" "ep_pulsedInductive" "nuc_flightDesignNTR" "nuc_particleBedNTR" }
+  { rank=same; "cryo_reusableEngineUprating" "nuc_advancedCoreNTR" }
   "hire_JPL" -> "charter_usEarly" [style=solid];
   "charter_usEarly" -> "charter_usApp" [style=solid];
   "hire_OKB" -> "charter_sovietEarly" [style=solid];
@@ -610,6 +637,32 @@ digraph AXE {
   "aero_liftingReentry" -> "int_shuttleOrbiter" [style=solid];
   "life_spaceplaneCockpit" -> "int_shuttleOrbiter" [style=solid];
   "str_aircraftAirframe" -> "int_shuttleOrbiter" [style=solid];
+  "cryo_refinedExpander" -> "cryo_deployableNozzleExpander" [style=solid];
+  "cryo_gasGeneratorHydrolox" -> "cryo_operationalHydroloxUpper" [style=solid];
+  "cryo_largeHydrolox" -> "cryo_boosterGasGenHydrolox" [style=solid];
+  "cryo_ssme" -> "cryo_operationalFRSC" [style=solid];
+  "cryo_operationalFRSC" -> "cryo_reusableEngineUprating" [style=solid];
+  "cryo_ssme" -> "cryo_tripropellant" [style=solid];
+  "pc_zenitKerolox" -> "cryo_tripropellant" [style=solid];
+  "pc_zenitKerolox" -> "cryo_methaloxStagedCombustion" [style=solid];
+  "pc_zenitKerolox" -> "pc_multiChamberORSC" [style=solid];
+  "pc_multiChamberORSC" -> "pc_modularORSC" [style=solid];
+  "pc_refinedStorableORSCII" -> "pc_operationalStorableORSC" [style=solid];
+  "fd_restartableUpperMaturation" -> "fd_multiRestartStorableUpper" [style=solid];
+  "fd_gasGeneratorApex" -> "fd_terminalGasGenKerolox" [style=solid];
+  "fd_gasGeneratorApex" -> "fd_advancedGasGenKerolox" [style=solid];
+  "pc_shuttleSRB" -> "pc_filamentWoundSolid" [style=solid];
+  "pc_filamentWoundSolid" -> "pc_gemStrapOnCatalog" [style=solid];
+  "ep_higherPowerHallThruster" -> "ep_operationalHall" [style=solid];
+  "ep_operationalHall" -> "ep_highPowerHall" [style=solid];
+  "ep_hallEffectThruster" -> "ep_griddedIon" [style=solid];
+  "ep_higherPowerHallThruster" -> "ep_pulsedInductive" [style=solid];
+  "nuc_flightRatedNTR" -> "nuc_flightDesignNTR" [style=solid];
+  "nuc_flightRatedNTR" -> "nuc_particleBedNTR" [style=solid];
+  "nuc_particleBedNTR" -> "nuc_advancedCoreNTR" [style=solid];
+  "av_secondGenTurbofan" -> "av_vtolVectoredTurbofan" [style=solid];
+  "av_secondGenTurbofan" -> "av_fourthGenFighterTurbofan" [style=solid];
+  "gnc_bipropAttitudeThrust" -> "gnc_deepSpaceApogeeEngine" [style=solid];
   labelloc="t"; fontcolor="#eeeeee"; fontsize=16;
   label="RP-AXE tech tree — vertical slice  (dashed = multi-entry / anyToUnlock=True)";
 }
