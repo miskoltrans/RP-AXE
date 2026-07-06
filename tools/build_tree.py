@@ -827,9 +827,10 @@ def emit_placement_patch(p2n, u2n, parking="parking"):
 PROBE_SUBTREE = {"RN_US_Probes": "hire_JPL", "RN_Soviet_Probes": "hire_OKB"}
 
 def route_probe_mods(by, p2n):
-    """Route every part from the OPTIONAL US/Soviet probe packs into its charter subtree node
-    (hire_JPL / hire_OKB) instead of parking. Config-only containment; the per-probe prerequisite-tech
-    checklist is the deferred requirements engine. Skips DEPRECATED parts and absent subtree nodes."""
+    """FALLBACK ONLY: route any OPTIONAL US/Soviet probe-pack part NOT already hand-placed in nodes.yaml
+    into its charter GATE (hire_JPL / hire_OKB) so it never silently vanishes. Hand placement in the
+    chronological charter chains (jpl_* / okb_*) is authoritative and WINS — this only catches new or
+    unplaced pack parts. Skips DEPRECATED parts and absent gate nodes."""
     path = os.path.join(REPO, "manifest", "curated-parts.tsv")
     if not os.path.exists(path): return
     n = 0
@@ -838,11 +839,13 @@ def route_probe_mods(by, p2n):
         for line in f:
             c = line.rstrip("\n").split("\t")
             if len(c) < 3 or c[0] not in PROBE_SUBTREE: continue
+            if c[1] in p2n: continue                        # already hand-placed -> respect it (no override)
             node = PROBE_SUBTREE[c[0]]
             if node not in by or "DEPRECATED" in c[2].upper(): continue
             p2n[c[1]] = node
             by[node].setdefault("parts", []).append(c[1]); n += 1
-    if n: print(f"probe subtree: routed {n} US/Soviet probe parts -> hire_JPL / hire_OKB")
+    print(f"probe subtree: {n} UNPLACED probe part(s) fell back to hire_JPL / hire_OKB"
+          if n else "probe subtree: all RN probe parts hand-placed (no fallback needed)")
 
 def check_probe_requirements(nodes):
     """Cross-check manifest/probe-requirements.tsv against the spine + library.yaml vocabulary: each
