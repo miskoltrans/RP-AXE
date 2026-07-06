@@ -54,6 +54,12 @@ Each phase gates the next; avionics + contracts ride alongside, off the critical
 - **P6 — Expansion + ship.** Author gap-fill configs (Nertea/Orion/probes); finalize mod set
   ("RP-1 Express minus RP-1" baseline); the two test workflows (add-a-part-mod loop;
   clean+recommended install test); RAM-trim submod; packaging. **Prove:** clean-room install runs.
+  **Colonization-scaffold endgame (2026-07, user call):** all 8 milestone partlists are now fully placed
+  except RP-1's own post-2051 scaffold (~60 bare tech-gate nodes, zero real hardware in any of them — the
+  one real batch, `largeScaleHabitats`, is placed). Deliberately **not** recreating that empty scaffold now
+  — inventing a genuine endgame (fusion propulsion, O'Neill-cylinder-class habitats, terraforming, whatever
+  fits) is its own substantial design project, explicitly deferred to a dedicated future pass, not folded
+  into the milestone-porting work.
 
 ## Tasks
 
