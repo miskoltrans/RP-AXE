@@ -378,6 +378,16 @@ namespace RPAxe.RnD
             Debug.Log($"[AXE] GEOM {tag}: aPos={rt.anchoredPosition} pivot={rt.pivot} size={rt.sizeDelta} worldC=({wc.x:F1},{wc.y:F1}) parent={(rt.parent != null ? rt.parent.name : "-")}");
         }
 
+        private static void LogComps(string tag, Transform t)
+        {
+            if (t == null) { Debug.Log($"[AXE] COMP {tag}=null"); return; }
+            var sb = new System.Text.StringBuilder();
+            foreach (Component c in t.GetComponents<Component>()) { if (c != null) sb.Append(c.GetType().Name); sb.Append(' '); }
+            RectTransform rt = t as RectTransform;
+            string rti = rt != null ? $" | anchorMin={rt.anchorMin} anchorMax={rt.anchorMax} offMin={rt.offsetMin} offMax={rt.offsetMax}" : "";
+            Debug.Log($"[AXE] COMP {tag} '{t.name}': [ {sb}]{rti}");
+        }
+
         private static void DumpNow()
         {
             try
@@ -399,7 +409,12 @@ namespace RPAxe.RnD
                     if (sr.content != null) Debug.Log($"[AXE] DUMP content rect={sr.content.rect} sizeDelta={sr.content.sizeDelta} anchoredPos={sr.content.anchoredPosition} pivot={sr.content.pivot} anchorMin={sr.content.anchorMin} anchorMax={sr.content.anchorMax}");
                     if (sr.viewport != null) Debug.Log($"[AXE] DUMP viewport rect={sr.viewport.rect}");
                 }
-                RDNode s = ctrl.nodes[0];
+                RDNode s = null;   // a node my postfix DEFINITELY processes (in meta + researchable)
+                foreach (RDNode n in ctrl.nodes)
+                    if (n != null && n.tech != null && AxeTreeMeta.Nodes.ContainsKey(n.tech.techID) && n.state == RDNode.State.RESEARCHABLE) { s = n; break; }
+                bool startInMeta = ctrl.nodes[0] != null && ctrl.nodes[0].tech != null && AxeTreeMeta.Nodes.ContainsKey(ctrl.nodes[0].tech.techID);
+                Debug.Log($"[AXE] DUMP dumped node='{(s != null ? s.tech.techID : "none-researchable")}' startInMeta={startInMeta}");
+                if (s == null) s = ctrl.nodes[0];
                 float w = WidthF != null ? (float)WidthF.GetValue(s) : -1f;
                 float h = HeightF != null ? (float)HeightF.GetValue(s) : -1f;
                 Vector3 gp = s.graphics != null ? s.graphics.transform.position : Vector3.zero;
@@ -432,6 +447,13 @@ namespace RPAxe.RnD
                     LogGeom("icon", TechIconF != null && TechIconF.GetValue(g0) is Graphic gic ? gic.rectTransform : null);
                     LogGeom("gfxRoot", g0.transform as RectTransform);
                     LogGeom("node", s.transform as RectTransform);
+                    // components on the chain -> is there a LayoutGroup / ContentSizeFitter / ILayoutController?
+                    Transform tileT = g0.button != null && g0.button.Image != null ? g0.button.Image.transform : null;
+                    LogComps("tile", tileT);
+                    LogComps("tile.parent", tileT != null ? tileT.parent : null);
+                    LogComps("StateButton", g0.searchHighlight != null ? g0.searchHighlight.transform.parent : null);
+                    LogComps("gfxRoot", g0.transform);
+                    LogComps("gfxRoot.parent", g0.transform.parent);
                 }
                 Transform root = ctrl.RDNodeRoot;
                 if (root != null) Debug.Log($"[AXE] DUMP RDNodeRoot pos={root.position} localScale={root.localScale} euler={root.eulerAngles}");
@@ -594,6 +616,7 @@ namespace RPAxe.RnD
                 string id = __instance?.tech?.techID;
                 if (id == null || !AxeTreeMeta.Nodes.TryGetValue(id, out AxeTreeMeta.NodeMeta m)) return;
                 StateRing(__instance);   // per-node state halo (researchable = cyan; researched/locked = off)
+                AlignNode(__instance);   // trim the 70x70 tile rect to the logical 64x64 + centre the ring/icon
                 if (!AxeTreeMeta.Render.DiscColor) return;
                 // Tile colour by state: RESEARCHED -> the whole tile turns green (matches the prototype
                 // doneStyle='tile'); RESEARCHABLE -> discipline colour; locked (FADED) -> desaturated + dim.
@@ -666,6 +689,24 @@ namespace RPAxe.RnD
 
         private static readonly Color RingAvailable = new Color(0.32f, 0.78f, 0.97f, 1f);   // researchable = cyan frontier
         internal static readonly Color DoneTile = new Color(0.184f, 0.635f, 0.373f, 1f);    // #2fa25f — researched tile (prototype doneStyle='tile')
+
+        // Fix the stock prefab's mismatch: the tile (StateButton Image) rect is 70x70 top-left-anchored, but the
+        // logical node ('scalar'/gfxRoot) is 64x64, so our flat fill overflows ~3px down-right. Trim the tile
+        // rect to 64x64 (matching 'scalar') and zero the ring/icon offsets so they sit on the node centre. No
+        // LayoutGroup drives these, so the change holds.
+        private static void AlignNode(RDNode rd)
+        {
+            RDNodePrefab g = rd != null ? rd.graphics : null;
+            if (g == null) return;
+            if (g.button != null && g.button.Image != null)
+            {
+                RectTransform t = g.button.Image.rectTransform;
+                t.offsetMin = new Vector2(0f, -64f);   // top-left anchor -> rect x[0,64] y[-64,0] = the 64x64 logical node
+                t.offsetMax = new Vector2(64f, 0f);
+            }
+            if (g.searchHighlight != null) g.searchHighlight.rectTransform.anchoredPosition = Vector2.zero;
+            if (TechIconF != null && TechIconF.GetValue(g) is Graphic ic) ic.rectTransform.anchoredPosition = Vector2.zero;
+        }
 
         // Per-node research-state halo. Only the RESEARCHABLE frontier gets a ring (cyan) — the actionable
         // "what to research next". Researched needs no ring now that its whole tile is green; locked = off.
