@@ -3280,3 +3280,19 @@ nodes:
     # A real generational breakthrough (film -> vidicon/TV -> true digital sensor), not another vidicon
     # mark - PH05 is explicitly a digital imaging device, not a VI-series (vidicon) part, so it earns its
     # own node rather than folding into opt_refinedTV alongside RO-AdvancedImager.
+
+  # ================================================================================================
+  # ============ BAND 4 * SHUTTLE & STATION ERA -- AJ10-190 (the missed engine, 2026-07) =============
+  # ================================================================================================
+  - id: fd_reusableOMSEngine
+    title: "Reusable Orbital-Maneuvering Combustion"
+    discipline: FluidDynamics
+    tier: 9
+    parents: [fd_pressureFedRestart]
+    flavor: "Take the pressure-fed multi-restart engine that once had to fire once, perfectly, on the way to the Moon, and shrink it into a routine orbital-maneuvering thruster - sized for a dozen burns a mission instead of one, flown on the same shape for decades after. The Shuttle's OMS, and the same lineage still flying on Orion."
+    parts: [ROE-AJ10-190]
+    # King AJ10-190 - the real Shuttle OMS engine (Aerojet), direct descendant of the Apollo SPS
+    # (ROE-AJ10-137, fd_pressureFedRestart T8) - same pressure-fed hypergolic mechanism, refined from a
+    # one-shot translunar burn into a reusable, many-restart orbital engine. The gap flagged at the end of
+    # the original engine-only pass (missed because its RP-1 config carries no explicit techRequired of its
+    # own - ground-truthed via partTech instead).
