@@ -2176,7 +2176,7 @@ nodes:
     parts: [turboJet, aje_f404, RO-D30F6]
     # King F100 (turboJet). F404 + D-30 ride along. F100-PW-220 upgrade -> av_advancedJetEngines (doctrine-4).
   - id: av_advancedJetEngines
-    title: "Advanced Jet Engines"
+    title: "Mature Jet Refinement"
     discipline: AirBreathing
     tier: 8
     parents: [av_highBypassTurbofan, av_lowBypassTurbofan, av_mach2Turbojet]
@@ -2237,7 +2237,7 @@ nodes:
   # ============ BAND 3 * CREWED-LUNAR-LANDING TAIL (abort / service / maturation, 2026-07) =========
   # ================================================================================================
   - id: int_heavyLaunchEscape
-    title: "Heavy Launch-Escape Motor"
+    title: "High-Impulse Abort Motor"
     discipline: SystemsIntegration
     tier: 7
     parents: [int_launchEscape]
@@ -2287,7 +2287,7 @@ nodes:
 
   # ---- Lane A: crewed lunar capsules ----
   - id: int_apolloCSM
-    title: "Three-Crew Command and Service Module"
+    title: "Trans-Lunar Crew Vehicle"
     discipline: SystemsIntegration
     tier: 8
     parents: [int_geminiCapsule]
@@ -2335,11 +2335,12 @@ nodes:
   - id: int_orbitalLab
     title: "Crewed Orbital Laboratory"
     discipline: SystemsIntegration
-    tier: 8
-    parents: [life_openLoopECLSS]
+    tier: 9
+    parents: [life_stationHabitation]
     flavor: "A module built not to live in but to work in - a crewed laboratory where astronauts process experiments and samples by hand, turning a station from a place to survive into a place to do science."
     parts: [Large_Crewed_Lab, L25mSci]
-    # King mobile processing lab (the crewed-science multiplier). Sibling of life_stationHabitation at T8.
+    # King mobile processing lab (the crewed-science multiplier). Re-parented onto life_stationHabitation
+    # (build the habitat, THEN add the lab) - also trims the life_openLoopECLSS fan-out from 6 to 5.
 
   # ---- Lane F: fields-and-particles science ----
   - id: mic_plasmaWave
