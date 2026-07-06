@@ -937,7 +937,8 @@ nodes:
     tier: 6
     parents: [fd_matureOrbital]
     flavor: "Extend the nozzle bell far past what any sea-level engine could survive, tuned so the exhaust expands to near-vacuum pressure and wrings out the last dozen seconds of specific impulse. The refinement that lets an upper stage do more on the same propellant — the RD-119 alone gains nearly thirty seconds over its predecessor."
-    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_X-405H-3, RFUpgrade_RD-0108, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_LR89-NA-6, RFUpgrade_S-3FH, RFUpgrade_LR79-NA-13, RFUpgrade_XLR11-RM-13-10K]
+    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_X-405H-3, RFUpgrade_RD-0108, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_LR89-NA-6, RFUpgrade_S-3FH, RFUpgrade_LR79-NA-13, RFUpgrade_XLR11-RM-13-10K, RFUpgrade_LR105-NA-7.1, RFUpgrade_LR105-NA-7.2, RFUpgrade_LR89-NA-7.1, RFUpgrade_LR89-NA-7.2, RFUpgrade_X-405H-4]
+    # NA-7.x + X-405H-4 marks added 2026-07 (tail): next Atlas LR105/LR89 + Vanguard marks, continuing NA-6.
     parts: [ROE-LR87_LH2]
     # Part-count-pass finds (2026-07): 6 more upgrades in this same "combustion/injector refinement, no
     # chemistry change" character (Atlas vernier/sustainer, Thor sustainer, Thor's fuel-swap experiment,
@@ -965,8 +966,10 @@ nodes:
     tier: 5
     parents: [fd_restartableUpper]
     flavor: "Shrink the restartable engine to a spacecraft's own propulsion: a small, deeply-throttleable, many-times-restartable motor for the midcourse nudge and the retro burn a probe or capsule steers itself home with. Agena's secondary fires twenty times; a lunar probe lives or dies on one clean correction."
-    parts: [ROE-AgenaSPS, RO-KDU414, ROE-RangerRetro]
-    upgrades: [RFUpgrade_XLR81-BA-1, RFUpgrade_XLR81-BA-3]
+    parts: [ROE-AgenaSPS, RO-KDU414, ROE-RangerRetro, ROE-C1]
+    upgrades: [RFUpgrade_XLR81-BA-1, RFUpgrade_XLR81-BA-3, RFUpgrade_Model8096-HDA]
+    # 2026-07 (tail): C-1 (small Aerozine50 maneuvering thruster) joins the small-spacecraft-engine family;
+    # Model8096-HDA = an uprated Agena secondary-propulsion (SPS) mark.
   # ---- FluidDynamics: hardware chambers (gated by lineage [+ enabler]) ----
   - id: fd_storableSustainer
     title: "Storable Single-Chamber Combustion"
@@ -1192,14 +1195,16 @@ nodes:
     tier: 7
     parents: [fd_longMarchStorable]
     flavor: "Squeeze more thrust from the same four-chamber cluster without touching the chemistry — the storable engines already flying, simply pushed harder."
-    upgrades: [RFUpgrade_YF-20B, RFUpgrade_YF-25K]
+    upgrades: [RFUpgrade_YF-20B, RFUpgrade_YF-25K, RFUpgrade_YF-20C, RFUpgrade_YF-22E]
+    # YF-20C/22E added 2026-07 (tail): next Long March YF-20/22 marks, continuing YF-20B.
   - id: fd_blendedStorableFuel
     title: "Blended Storable Fuel"
     discipline: FluidDynamics
     tier: 7
     parents: [fd_storableSustainer]
     flavor: "Cut the UDMH with hydrazine and the same engine burns denser — real thrust for free, Isp along for the ride either way. Viking's own uprate, not a new engine."
-    upgrades: [RFUpgrade_Viking-4B, RFUpgrade_Viking-5B]
+    upgrades: [RFUpgrade_Viking-4B, RFUpgrade_Viking-5B, RFUpgrade_Viking-4C, RFUpgrade_Viking-5C, RFUpgrade_Viking-6]
+    # Viking-4C/5C/6 added 2026-07 (tail): next Ariane Viking marks, continuing 4B/5B.
     # Re-scoped (2026-07): previously recommended skipping this as "~flat" — wrong. Real numbers: Viking-4B
     # +8.8% thrust, Viking-5B +8.0% thrust, Isp a wash either direction. A genuine uprate, doctrine-4 forces
     # it off fd_storableSustainer's own base parts (Viking 2/4/5), same pattern as fd_clusteredThrustGrowth.
@@ -1216,7 +1221,8 @@ nodes:
     tier: 7
     parents: [fd_titanTandem, pc_ntoHypergolics]
     flavor: "Trade kerosene for a hypergolic that ignites on contact and sits fuelled in a silo for years — some engines keep the old chemistry and simply grow, others convert outright. A missile built to launch now, not after a fuelling countdown."
-    upgrades: [RFUpgrade_LR87-AJ-5, RFUpgrade_LR87-AJ-5-Kero, RFUpgrade_LR87-AJ-7, RFUpgrade_LR87-AJ-7-Kero, RFUpgrade_LR91-AJ-5, RFUpgrade_LR91-AJ-5-Kero, RFUpgrade_LR91-AJ-7, RFUpgrade_LR91-AJ-7-Kero]
+    upgrades: [RFUpgrade_LR87-AJ-5, RFUpgrade_LR87-AJ-5-Kero, RFUpgrade_LR87-AJ-7, RFUpgrade_LR87-AJ-7-Kero, RFUpgrade_LR91-AJ-5, RFUpgrade_LR91-AJ-5-Kero, RFUpgrade_LR91-AJ-7, RFUpgrade_LR91-AJ-7-Kero, RFUpgrade_LR87-AJ-9, RFUpgrade_LR87-AJ-9-Kero, RFUpgrade_LR87-AJ-11, RFUpgrade_LR87-AJ-11-Kero, RFUpgrade_LR91-AJ-9, RFUpgrade_LR91-AJ-9-Kero, RFUpgrade_LR91-AJ-11]
+    # AJ-9/AJ-11 marks added 2026-07 (tail): next Titan LR87/LR91 production marks, continuing AJ-5/AJ-7.
   - id: pc_juno_ClF3
     title: "Chlorine-Trifluoride Oxidiser"
     discipline: PropellantChemistry
@@ -1244,7 +1250,8 @@ nodes:
     parents: [fd_saturnKerolox]
     flavor: "Push the simple gas-generator cycle as far as it goes — bigger turbopumps, higher flow, more thrust from the same open-cycle plumbing. The last uprate before the cycle itself runs out of room to grow."
     parts: [ROE-F1]
-    upgrades: [RFUpgrade_H-1-188K, RFUpgrade_H-1-200K, RFUpgrade_E-1-468k, RFUpgrade_E-1-500k, RFUpgrade_E-1-Upgrade, RFUpgrade_RD-111-8D716A]
+    upgrades: [RFUpgrade_H-1-188K, RFUpgrade_H-1-200K, RFUpgrade_E-1-468k, RFUpgrade_E-1-500k, RFUpgrade_E-1-Upgrade, RFUpgrade_RD-111-8D716A, RFUpgrade_H-2-250K]
+    # H-2-250K added 2026-07 (tail): the next H-1 gas-generator uprate mark.
     # F-1 (2026-07, band-3 lunar batch): the king this node was named for - the largest gas-generator
     # engine ever built. Its own uprate (F-1-1.52M) is barred from here by doctrine-4 -> fd_gasGeneratorApex.
   - id: pc_orscDebut
@@ -1885,51 +1892,81 @@ nodes:
     title: "Solid-Core Nuclear Thermal Propulsion"
     discipline: NuclearEngineering
     tier: 9
-    parents: [cryo_hydrogen]
+    parents: [cryo_hydrogen, nuc_fissionReactor]
     flavor: "Heat liquid hydrogen in a fission reactor and blow it out a nozzle - twice the specific impulse of the best chemical engine, bought as a heavy, low-thrust, radioactive gamble. The road to deep space forks here."
     parts: [KIWIB48, KIWIA24]
     # King KIWI-B4E. Opens NuclearEngineering as a PROPULSION discipline (was radiation science only).
-    # PENDING: a fission-reactor parent (SNAP-10A, power lane) joins later and closes the T1->T9 gap - the
-    # LH2-handling edge is the only prereq placed so far.
+    # Reactor parent WIRED 2026-07: nuc_fissionReactor (SNAP/BES) + cryo_hydrogen (LH2) = the two prereqs.
   - id: nuc_nuclearRamjet
     title: "Reactor-Heated Ramjet"
     discipline: NuclearEngineering
-    tier: 10
-    parents: [nuc_nuclearThermalRocket, av_ramjet]
+    tier: 9
+    parents: [nuc_fissionReactor, av_ramjet]
     flavor: "Skip the propellant entirely: ram air through a live reactor and let the heat do the rest - an engine that could fly for weeks and irradiate everything it passed. A frontier curiosity that goes nowhere, on purpose."
     parts: [RO-A136]
-    # Provisional tier/parent (pending the reactor node). The Pluto dead-end crossover: NuclearEngineering
-    # x AirBreathing.
+    # 2026-07: reactor parent WIRED (nuc_fissionReactor) + av_ramjet - the Pluto dead-end crossover, now a
+    # direct reactor x ramjet (T9), no longer routed through the NTR rocket.
 
   # ================================================================================================
-  # ===================== BAND 3 * AVIONICS GRANTS LADDER + DSN LEVELS (T7 -> T8) ==================
+  # ===================== BAND 3 * AVIONICS GRANTS LADDER + DSN LEVELS (T7 -> T10) =================
   # `Science-Core-*`/`RP0Level*TrackingStation` are RP-1 PARTUPGRADE names marked REFERENCE in the T3
   # curation audit (AXE doesn't emit the literal RP-1 upgrade) — but the SAME names are already reused
   # live as `grants:` values by AXE's own plugin-facing tier system (gnc_basicAvionics/tel_dopplerRanging/
   # tel_pcmTelemetry already do this). These are the next rungs of that same already-live ladder, not
-  # superseded content — confirmed by checking disposition consistency before placing.
+  # superseded content — confirmed by checking disposition consistency before placing. Real generation
+  # order ground-truthed against RP-1's own RP0TechTree.cfg (x-position, not guessed): basicAvionics(T5)
+  # -> interplanetaryProbes(1961) -> improvedAvionics(1962-63) -> matureAvionics(1964-66) ->
+  # largeScaleAvionics(1967-71) — confirms the tier order below IS the real generation order.
+  #
+  # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #3): the three rungs were named after their
+  # raw RP-1 tier label ("...Avionics Tier"), breaking with every earlier rung's mechanism-named
+  # precedent (Gyroscopic Autopilot, Analog Inertial Guidance, Stable-Platform Guidance...). Renamed
+  # AND re-categorized, not just relabeled: 1961-63 is exactly the real transition from analog guidance
+  # hardware to digital, integrated-circuit-built flight computers (Minuteman II's D-17B, 1962, was
+  # among the first guidance computers built from ICs) — a genuine discipline change, not decoration.
+  # `Computing` (disciplines.yaml order:15) already existed as a defined-but-unused lane, exactly
+  # earmarked for this by docs/PLACEHOLDERS.md's own open question ("confirm discipline: GuidanceControl
+  # vs Computing"). Split here: GuidanceControl keeps the analog-instrumentation ladder through the 1961
+  # endurance rung; Computing picks up the moment a real digital computer arrives and carries it
+  # forward. The new elec_integratedCircuit enabler (Microelectronics) makes that crossover concrete
+  # instead of asserted — same crossover pattern as gnc_earlyAvionics x elec_transistor in band 1, one
+  # generation on. Also fills a real gap: largeScaleAvionics (the 4th of the doc's 8 Science-Core tiers)
+  # was never authored at all until now.
   # ================================================================================================
   - id: gnc_interplanetaryAvionics
-    title: "Interplanetary Avionics Tier"
+    title: "Long-Duration Cruise Guidance"
     discipline: GuidanceControl
     tier: 7
     parents: [gnc_basicAvionics]
-    flavor: "The same miniaturised guidance stack, qualified for a mission measured in months past Earth instead of weeks in its own orbit."
+    flavor: "Stretch the same miniaturised inertial stack to survive a cruise measured in months instead of an orbit measured in hours — redundant circuitry and a sun-and-star reference that never loses its lock on the long coast out to another planet."
     grants: [Science-Core-interplanetaryProbes]
-  - id: gnc_improvedAvionics
-    title: "Improved Avionics Tier"
-    discipline: GuidanceControl
+  - id: elec_integratedCircuit
+    title: "Monolithic Integrated Circuits"
+    discipline: Microelectronics
+    tier: 7
+    parents: [elec_transistor]
+    flavor: "Print a whole handful of transistors, resistors and their wiring onto one slice of silicon instead of soldering each one by hand — a logic circuit that shrinks from a rack to a fingertip, and survives a launch the discrete parts never could. Minuteman II flew guidance built from these in 1962; nothing that follows goes back to wires."
+  - id: comp_digitalGuidanceComputer
+    title: "Digital Guidance Computer"
+    discipline: Computing
     tier: 8
-    parents: [gnc_interplanetaryAvionics]
-    flavor: "The next rung of the same ladder — more capability in the same mass and power budget."
+    parents: [gnc_interplanetaryAvionics, elec_integratedCircuit]
+    flavor: "Trade the analog integrator for a true digital computer, built from the first integrated circuits — a machine that computes a fresh trajectory correction instead of just holding one, fast enough to fly a booster instead of merely stabilizing it. The line between an instrument and a computer, crossed for good."
     grants: [Science-Core-improvedAvionics]
-  - id: gnc_matureAvionics
-    title: "Mature Avionics Tier"
-    discipline: GuidanceControl
+  - id: comp_realTimeFlightComputer
+    title: "Priority-Interrupt Flight Computer"
+    discipline: Computing
     tier: 9
-    parents: [gnc_improvedAvionics]
-    flavor: "The ladder's most capable rung reached in this file — everything the earlier tiers proved, running longer and doing more of it."
+    parents: [comp_digitalGuidanceComputer]
+    flavor: "One flight computer that juggles guidance, navigation and engine control at once, always answering whichever task is most urgent instead of finishing one program before starting the next — real-time computing built to fly a crew, not just a probe. The Apollo Guidance Computer's real trick, and the reason it could do five jobs on hardware that could barely do one."
     grants: [Science-Core-matureAvionics]
+  - id: comp_networkedAvionics
+    title: "Multi-Vehicle Avionics Integration"
+    discipline: Computing
+    tier: 10
+    parents: [comp_realTimeFlightComputer]
+    flavor: "Coordinate guidance, power and data across several docked modules as one system instead of one hull — the avionics architecture a space station, not just a single spacecraft, needs to hold together."
+    grants: [Science-Core-largeScaleAvionics]
 
   # ================================================================================================
   # ============ BAND 3 * AVIATION (turbofans) + SOLIDS CONTINUATION (engines, 2026-07) =============
@@ -1993,7 +2030,9 @@ nodes:
     tier: 8
     parents: [pc_ntoHypergolics, gnc_smallRcsCatalog]
     flavor: "The same reaction-control block, filled with whatever storable hypergolic blend the mission calls for — five real combinations flown across five different programs, none of them meaningfully better than the others. A menu, not a ladder."
-    upgrades: [RFUpgrade_MMH+NTO, RFUpgrade_MMH+MON3, RFUpgrade_MMH+MON10, RFUpgrade_UDMH+NTO, RFUpgrade_Aerozine50+NTO, RFTech-rcs-tltech2]
+    upgrades: [RFUpgrade_MMH+NTO, RFUpgrade_MMH+MON3, RFUpgrade_MMH+MON10, RFUpgrade_UDMH+NTO, RFUpgrade_Aerozine50+NTO, RFUpgrade_Hydrazine, RFUpgrade_ISPS, RFUpgrade_ISPS-HDA, RFTech-rcs-tltech2, RFTech-rcs-tltech3]
+    # 2026-07 (tail): Hydrazine/ISPS/ISPS-HDA extend the storable-RCS propellant menu; rcs-tltech3 continues
+    # the RCS tech-level ladder (bases in gnc_rcs, doctrine-4 clean).
     # Confirmed via the live RealismOverhaul config (thrusterPower 0.442-0.455, ALL specLevel=operational):
     # a genuine simultaneous menu, not a sequence — matches why no era-ordering was ever findable.
   - id: pc_caveaB
@@ -2003,3 +2042,50 @@ nodes:
     parents: [pc_storableRcsPropellants]
     flavor: "A storable blend studied but never flown — specLevel=concept in its own source data, the one entry in this family that never left the bench. A small edge over the operational choices, for whoever wants to gamble on it anyway."
     upgrades: [RFUpgrade_Cavea-B]
+
+  # ================================================================================================
+  # ============ BAND 3 * CREWED-LUNAR-LANDING TAIL (abort / service / maturation, 2026-07) =========
+  # ================================================================================================
+  - id: int_heavyLaunchEscape
+    title: "Heavy Launch-Escape Motor"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [int_launchEscape]
+    flavor: "A solid escape tower sized to yank a three-seat lunar capsule clear of a fully-fuelled Moon rocket - the same abort mechanism as Mercury's, scaled to the mass it now has to save."
+    parts: [ROC-ApolloLESBDB, LaunchEscapeSystem, ROC-D2Block1LES, ROC-D2Block2LES]
+    # King Apollo LES. D-2 Block I/II are the Soviet lunar-capsule aborts, same era/class. Scaled from the
+    # Mercury/mk1 towers in int_launchEscape (T5).
+  - id: fd_advancedSpacecraftPropulsion
+    title: "Sustained-Duty Service Propulsion"
+    discipline: FluidDynamics
+    tier: 8
+    parents: [fd_spacecraftPropulsion]
+    flavor: "Grow the spacecraft's own engine from a probe's one-shot nudge into a crewed ship's workhorse - deep-throttling, fifty restarts, the service engine a Soyuz-class vehicle steers and brakes itself home on across a whole mission."
+    parts: [ROE-KTDU425A]
+    # KTDU-425 (18.85 kN, 50 ignitions, deep throttle) - the higher-thrust many-restart successor to Agena's
+    # SPS. Its own node (not a direct-add) so it doesn't unlock at fd_spacecraftPropulsion's T5.
+  - id: fd_engineMaturation
+    title: "Flight-Proven Reliability Uprating"
+    discipline: FluidDynamics
+    tier: 6
+    parents: [fd_orbitalSoviet, fd_sovietStorable]
+    flavor: "Take an engine already proven in flight and refine it in place - more thrust, higher reliability, crew-rating - without changing what it burns. The unglamorous production engineering that turns a working booster into a dependable one."
+    upgrades: [RFUpgrade_RD-107-8D728, RFUpgrade_RD-108-8D727, RFUpgrade_RD-0110, RFUpgrade_RD-215M-8D613, RFUpgrade_RD-250PM, RFUpgrade_RD-262-11D26, RFUpgrade_Isayev-R17, RFUpgrade_AJ10-118E, RFUpgrade_G-1A]
+    # Broad doctrine-4 collector (FLAGGED): production/reliability uprate marks whose lineages lack a
+    # dedicated maturation node - mostly Soviet R-7/Kosmos/Tsyklon boosters, plus a few US/misc marks
+    # (AJ10-118E, G-1A fluorine). All bases live elsewhere, so all are doctrine-4-legal here. Split later
+    # if a cleaner per-family home is wanted.
+
+  # ================================================================================================
+  # ============ BAND 3 * COMPACT FISSION REACTOR (power + the NTR's reactor root, 2026-07) =========
+  # ================================================================================================
+  - id: nuc_fissionReactor
+    title: "Compact Fission Reactor"
+    discipline: NuclearEngineering
+    tier: 8
+    parents: [nuc_isotopePower, nuc_cosmicRay]
+    flavor: "Sustain a controlled fission chain reaction in a core small enough to launch - kilowatts of steady electrical power that never needs the Sun, and the same reactor physics a nuclear rocket runs hot. The root that nuclear power and nuclear propulsion both grow from."
+    parts: [RO-reactor-snap10a, RO-reactor-snap2, RO-reactor-snap8, RO-reactor-snap50, RO-reactor-BES5]
+    # King SNAP-10A (first flown space fission reactor); SNAP-2/8/50 + Soviet BES-5 are the size catalog.
+    # Crossover root: radioisotope power (nuc_isotopePower) + nuclear-radiation physics (nuc_cosmicRay) ->
+    # a critical reactor. This is the reactor parent that nuc_nuclearThermalRocket + nuc_nuclearRamjet needed.
