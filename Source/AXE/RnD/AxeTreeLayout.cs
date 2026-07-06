@@ -509,6 +509,40 @@ namespace RPAxe.RnD
             return outp;
         }
 
+        // Detour any long horizontal run that plows through a node box (port of renderer.js avoidNodes).
+        // For each crossed node, hop into the gutter just past it at a clear y (above/below, whichever is
+        // nearer) and rejoin the row. Local + per-edge (not globally planar, but clears the obvious
+        // crossings). `nodeH` is SIGNED (the Y-flip), so a node's y-span is taken as [min,max]. Re-rounds.
+        internal static List<Vector2> AvoidNodes(List<Vector2> pts, List<LNode> nodes, float nodeW, float nodeH)
+        {
+            if (pts == null || pts.Count < 3) return pts;
+            const float M = 8f;
+            var outp = new List<Vector2> { pts[0] };
+            for (int i = 1; i < pts.Count; i++)
+            {
+                Vector2 a = outp[outp.Count - 1], b = pts[i];
+                bool horiz = Mathf.Abs(a.y - b.y) < 0.5f && Mathf.Abs(b.x - a.x) > nodeW * 0.8f;   // only long horizontals offend
+                if (!horiz) { outp.Add(b); continue; }
+                float y = a.y, dir = Mathf.Sign(b.x - a.x), x1 = Mathf.Min(a.x, b.x), x2 = Mathf.Max(a.x, b.x);
+                var hit = new List<LNode>();
+                foreach (var n in nodes)
+                {
+                    float lo = Mathf.Min(n.Y, n.Y + nodeH), hi = Mathf.Max(n.Y, n.Y + nodeH);
+                    if (y > lo + 2f && y < hi - 2f && n.X + nodeW > x1 + 2f && n.X < x2 - 2f) hit.Add(n);
+                }
+                hit.Sort((p, q) => dir > 0 ? p.X.CompareTo(q.X) : q.X.CompareTo(p.X));   // in the run's direction
+                foreach (var nb in hit)
+                {
+                    float lo = Mathf.Min(nb.Y, nb.Y + nodeH), hi = Mathf.Max(nb.Y, nb.Y + nodeH);
+                    float clear1 = lo - M, clear2 = hi + M, jy = Mathf.Abs(y - clear1) <= Mathf.Abs(y - clear2) ? clear1 : clear2;
+                    float L = dir > 0 ? nb.X - M : nb.X + nodeW + M, R = dir > 0 ? nb.X + nodeW + M : nb.X - M;
+                    outp.Add(new Vector2(L, y)); outp.Add(new Vector2(L, jy)); outp.Add(new Vector2(R, jy)); outp.Add(new Vector2(R, y));
+                }
+                outp.Add(b);
+            }
+            return RoundPolyline(outp, CORNER_R, CORNER_SEGS);
+        }
+
         private static float MedianCost(List<LNode> nodes)
         {
             var cs = new List<int>();

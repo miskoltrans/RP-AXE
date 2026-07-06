@@ -236,6 +236,9 @@ namespace RPAxe.RnD
                         case "junction":    AxeTreeLayout.RouteJunctionBus(edges, byId, NODE_W, signedH, Dots); break;
                         default:            AxeTreeLayout.BuildLaneRoutes(lnodes, edges, NODE_W, signedH, AxeTreeMeta.Render.LanePitch); break;
                     }
+                    if (AxeTreeMeta.Render.Avoid)   // detour edge runs around the node boxes they'd cross
+                        foreach (AxeTreeLayout.LEdge e in edges)
+                            if (e.Geom != null) e.Geom = AxeTreeLayout.AvoidNodes(e.Geom, lnodes, NODE_W, signedH);
                     foreach (AxeTreeLayout.LEdge e in edges)
                         if (e.Geom != null) Routes[e.From + ">" + e.To] = e.Geom;
                     BuildJunctionDots(ctrl);   // instantiate/refresh bus branch dots (no-op unless routing=junction)
