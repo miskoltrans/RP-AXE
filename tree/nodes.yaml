@@ -2008,12 +2008,26 @@ nodes:
     tier: 9
     parents: [fd_gasGeneratorCeiling]
     flavor: "One more percent of thrust from a cycle with nothing left to give. The mightiest engine ever built is also the end of its line - spend a whole tier here and you have bought a rounding error while staged combustion and hydrolox walk past you."
-    upgrades: [RFUpgrade_F-1-1.52M, RFUpgrade_F-1A, RFUpgrade_H-1-205K, RFUpgrade_H-1-250K, RFUpgrade_H-2-300K, RFUpgrade_RS-27, RFUpgrade_E-1-575k, RFUpgrade_E-1-Upgrade2, RFUpgrade_E-1A_KS]
-    # 2026-07 (shuttle/station batch): widened - E-1/H-1/RS-27's own late marks join F-1's uprate here.
-    # Same family, same trap: marginal gas-generator-kerolox uprating while ORSC/hydrolox move on. Bases
-    # (ROE-E1/ROE-H1C/ROE-H1D/ROE-RS27) live in fd_saturnKerolox, so doctrine-4 is clean.
+    upgrades: [RFUpgrade_F-1-1.52M, RFUpgrade_F-1A]
+    # RFUpgrade_F-1A added (2026-07, shuttle/station batch): F-1's own next uprate mark after F-1-1.52M -
+    # same trap, same base (ROE-F1, fd_gasGeneratorCeiling).
     # Deliberate opportunity-cost TRAP (user call): dead-end parentage, marginal F-1 uprate, sitting at
     # the same tier as the lander and NTR.
+    # REVISED (2026-07): E-1/H-1/RS-27 marks originally widened in here were pulled back out into their
+    # own node (fd_matureKeroloxClusterUprating, below) once upgrades were re-weighted at 0.8 parts each
+    # toward the 6-part cap - the combined 9 upgrades (7.2 weighted) broke this node's "thin single-focus
+    # trap" shape.
+
+  # ---- Lane 2b: mature kerolox cluster uprating (E-1/H-1/RS-27 production marks) ----
+  - id: fd_matureKeroloxClusterUprating
+    title: "Mature Kerolox Cluster Uprating"
+    discipline: FluidDynamics
+    tier: 9
+    parents: [fd_saturnKerolox]
+    flavor: "Refine the whole family of clustered gas-generator kerolox boosters mark by mark - more thrust, longer service life, no change to the chemistry. The same diminishing-return story as F-1's own trap, one tier over, for its smaller siblings."
+    upgrades: [RFUpgrade_H-1-205K, RFUpgrade_RS-27, RFUpgrade_E-1-575k, RFUpgrade_E-1-Upgrade2, RFUpgrade_E-1A_KS, RFUpgrade_H-1-250K, RFUpgrade_H-2-300K]
+    # Bases (ROE-E1/ROE-H1C/ROE-H1D/ROE-RS27) live in fd_saturnKerolox (T6), so doctrine-4 is clean.
+    # Split out from fd_gasGeneratorApex (2026-07) once upgrades started counting 0.8-parts toward the cap.
 
   # ---- Lane 3: hydrolox uppers ----
   - id: cryo_gasGeneratorHydrolox
@@ -2415,11 +2429,22 @@ nodes:
     parents: [cryo_deepThrottleHydrolox]
     flavor: "Scale the restartable hydrolox engine toward booster thrust while keeping the reusable engine's whole point - deep throttle, many restarts, margin instead of a one-shot redline. Rocketdyne's own HG-3 studies fed straight into the engine still to come."
     parts: [ROE-HG3]
-    upgrades: [RFUpgrade_HM-7B, RFUpgrade_J-2S, RFUpgrade_YF-75D, RFUpgrade_M-1, RFUpgrade_M-1SL, RFUpgrade_HG-3-SL, RFUpgrade_KVD-1, RFUpgrade_LR129-P-1]
-    # King HG-3 (real SSME-precursor study). Doctrine-4 catches: HM-7B/J-2S/YF-75D/M-1/M-1SL are later
-    # configs of the gas-generator family already kinged in cryo_gasGeneratorHydrolox/cryo_largeHydrolox;
-    # HG-3-SL/KVD-1/LR129-P-1 are later configs of this node's own parent (cryo_deepThrottleHydrolox).
-    # The 1972-76 gas-generator engines maturing in the shadow of the new reusable-engine programme.
+    upgrades: [RFUpgrade_HG-3-SL, RFUpgrade_KVD-1, RFUpgrade_LR129-P-1]
+    # King HG-3 (real SSME-precursor study). Doctrine-4 catches: HG-3-SL/KVD-1/LR129-P-1 are later configs
+    # of this node's own parent (cryo_deepThrottleHydrolox).
+    # REVISED (2026-07): HM-7B/J-2S/YF-75D/M-1/M-1SL originally caught here were pulled out into their own
+    # node (cryo_matureGasGeneratorHydrolox, below) once upgrades were re-weighted at 0.8 parts each - the
+    # combined 8 upgrades (7.4 weighted) broke the 6-part cap.
+
+  - id: cryo_matureGasGeneratorHydrolox
+    title: "Mature Gas-Generator Hydrolox Uprating"
+    discipline: Cryogenics
+    tier: 10
+    parents: [cryo_largeHydrolox]
+    flavor: "The 1972-76 gas-generator hydrolox engines maturing mark by mark in the shadow of the new reusable-engine programme - more thrust, tighter margins, no change to the single-start cycle underneath."
+    upgrades: [RFUpgrade_HM-7B, RFUpgrade_J-2S, RFUpgrade_YF-75D, RFUpgrade_M-1, RFUpgrade_M-1SL]
+    # Bases (J-2/HM-7/YF-75/M-1) already king cryo_gasGeneratorHydrolox/cryo_largeHydrolox. Split out from
+    # cryo_uprateRestartableHydrolox (2026-07) once upgrades started counting 0.8-parts toward the cap.
   - id: cryo_ssme
     title: "Reusable Staged-Combustion Hydrolox"
     discipline: Cryogenics
@@ -2610,13 +2635,26 @@ nodes:
 
   # ---- Lane 10: second-generation bypass turbofans ----
   - id: av_secondGenTurbofan
-    title: "Second-Generation Bypass Turbofans"
+    title: "Second-Generation High-Bypass Turbofans"
     discipline: AirBreathing
     tier: 9
     parents: [av_advancedJetEngines]
-    flavor: "The high-bypass and low-bypass turbofan families, matured a generation past their first marks - more bypass, hotter cores, real production engines flying airliners and fighters instead of prototypes on a test stand."
-    parts: [SXTKe90TurboJet, aje_al31]
-    upgrades: [RFUpgrade_CF6-50E2, RFUpgrade_CF6-80A, RFUpgrade_CF34-1A, RFUpgrade_GE4-J6H, RFUpgrade_J79-IAI-J1E, RFUpgrade_WP-13]
-    # King D-18T (SXTKe90TurboJet) + AL-31F (aje_al31) - genuine next-generation base-part kings past the
-    # CF6/JetEngine/F100 family homed at T7-T8. Doctrine-4 catches: CF6-50E2/CF6-80A/CF34-1A (bases in
-    # av_highBypassTurbofan T7), GE4-J6H/J79-IAI-J1E/WP-13 (bases in av_variableStator/av_afterburner T4).
+    flavor: "The high-bypass turbofan family, matured a generation past its first marks - more bypass, hotter cores, a real production engine flying airliners instead of a prototype on a test stand."
+    parts: [SXTKe90TurboJet]
+    upgrades: [RFUpgrade_CF6-50E2, RFUpgrade_CF6-80A, RFUpgrade_CF34-1A]
+    # King D-18T (SXTKe90TurboJet) - genuine next-generation base-part king past the CF6/JetEngine family
+    # homed at T7-T8. Doctrine-4 catches: CF6-50E2/CF6-80A/CF34-1A, same high-bypass lineage (bases in
+    # av_highBypassTurbofan T7).
+    # REVISED (2026-07): AL-31F + its afterburning-lineage catches were split into their own node
+    # (av_secondGenAfterburner, below) once upgrades were re-weighted at 0.8 parts each - the combined 2
+    # parts + 6 upgrades (6.8 weighted) broke the 6-part cap, and the two kings were different lineages anyway.
+  - id: av_secondGenAfterburner
+    title: "Second-Generation Afterburning Turbofans"
+    discipline: AirBreathing
+    tier: 9
+    parents: [av_advancedJetEngines]
+    flavor: "The afterburning low-bypass/variable-stator turbojet families, matured a generation past their first marks - hotter cores, a real production fighter engine instead of a prototype on a test stand."
+    parts: [aje_al31]
+    upgrades: [RFUpgrade_GE4-J6H, RFUpgrade_J79-IAI-J1E, RFUpgrade_WP-13]
+    # King AL-31F (aje_al31) - genuine next-generation base-part king past the F100/variable-stator family
+    # homed at T4-T8. Doctrine-4 catches: GE4-J6H/J79-IAI-J1E/WP-13 (bases in av_variableStator/av_afterburner T4).
