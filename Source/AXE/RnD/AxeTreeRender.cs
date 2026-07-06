@@ -659,7 +659,11 @@ namespace RPAxe.RnD
             RDNodePrefab g = rd != null ? rd.graphics : null;
             if (g == null || g.searchHighlight == null) return;
             g.searchHighlight.raycastTarget = false;   // the ring must never intercept the node's click
-            g.searchHighlight.rectTransform.anchoredPosition = Vector2.zero;   // centre the ring on the tile (the prefab offsets it -3,+3)
+            // Centre the ring on the TILE exactly (the prefab offsets the ring, and the tile itself may sit a
+            // hair off the button origin) — align to the tile's own centre rather than the button's origin.
+            UIStateButton btn = g.button;
+            if (btn != null && btn.Image != null) g.searchHighlight.rectTransform.position = btn.Image.rectTransform.position;
+            else g.searchHighlight.rectTransform.anchoredPosition = Vector2.zero;
             if (rd.state == RDNode.State.RESEARCHABLE) { g.searchHighlight.color = RingAvailable; g.searchHighlight.enabled = true; }
             else g.searchHighlight.enabled = false;     // researched (green tile signals it) + locked = no ring
         }
