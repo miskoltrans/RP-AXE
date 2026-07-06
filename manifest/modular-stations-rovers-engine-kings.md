@@ -1,8 +1,19 @@
 # Modular Stations, Rovers & ISS-Assembly Era — Engine/Propulsion KING PARTS
 
-**STATUS: PROPOSAL (2026-07-06) — nothing authored into `tree/nodes.yaml` yet.** This is the
-engine-axis design for the batch *after* `space-stations-shuttle`, to be authored ahead of the
-non-engine parts (stations, rovers, probes, comms, science) exactly as the shuttle pass was.
+**STATUS: AUTHORED (2026-07-06, commit `0f232cd`) — all 25 new nodes + 11 mark-appends are live in
+`tree/nodes.yaml`; `python tools/build_tree.py` reports `design checks: clean`, 301 nodes.** This doc is
+now the design record for that pass, not a pending proposal. It's the engine-axis design for the batch
+*after* `space-stations-shuttle`; the non-engine parts (stations, rovers, probes, comms, science) come in
+a later pass, exactly as the shuttle pass was staged.
+
+**Authoring note — the append set grew from 6 to 11 for doctrine-4 completeness.** Working every upgrade
+to a home off its own base's node surfaced marks whose bases sit on the new king nodes; those routed to
+*existing* nodes: RL-10 A-4/B-2 config marks + LE-5A/B → `cryo_refinedExpander`; AJ10/Agena marks →
+`fd_restartableUpperMaturation`; LEROS-1c/2b → `gnc_bipropAttitudeThrust`; F135-PW-600/WS-10B (own-king
+marks) → `av_secondGenTurbofan`; PT6A-34AG → `av_refinedTurboprop`. SPT/457M/PIT marks split across the EP
+king nodes (each off its own base). Two same-tier edges were corrected at authoring: `pc_gemStrapOnCatalog`
+T10→**T11** (dead-end below its T10 composite-case king) and `nuc_particleBedNTR` re-parented onto
+`nuc_flightRatedNTR` (T11) as a T12 sibling of `nuc_flightDesignNTR`.
 
 Derived from `modular-stations-rovers-partlist.md` (RP-1 x=-1507..-1167 — the operational-launch-fleet
 era: 1986/1992/1998 engine columns + International Cooperation). This pass covers **only the propulsion
