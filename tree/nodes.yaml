@@ -2196,9 +2196,15 @@ nodes:
     tier: 7
     parents: [life_openLoopECLSS]
     flavor: "The smallest sealed cabin that still keeps a single Kerbal alive and working — no service module, no full capsule program, just a can with a hatch and an experiment slot built in."
-    parts: [landerCabinSmall, ROC-LEMAscentBDB, landerCabinMedium, mk2LanderCabin_v2, ROC-LEMAscentTaxiBDB, ROC-LEMShelterBDB]
+    parts: [landerCabinSmall, ROC-LEMAscentBDB, landerCabinMedium, mk2LanderCabin_v2, ROC-LEMAscentTaxiBDB, ROC-LEMShelterBDB, ShieldCapLarge]
     # mk2LanderCabin_v2 added (2026-07, power+science pass): a refined next mark of the same
     # minimal-cabin concept, Mk2-family.
+    # ShieldCapLarge RESTORED (2026-07, full-manifest re-audit, corrected a real mistake): an earlier pass
+    # dropped this (VenStockRevamp's "Mk 2 Escape Cover") for being mismatched against landerCabinSmall
+    # (Mk1-family, Squad) - correct, no Mk1-compatible cover exists. But that conclusion never reconsidered
+    # mk2LanderCabin_v2, added to this SAME node in a later pass - the two ARE the matching Mk2-family
+    # pair the escape cover was always meant for. Ground-truthed against VenStockRevamp/PartBin/Data/
+    # Structural.cfg (title "Mk 2 Escape Cover," real category=Aero, real cost/mass).
     # ROC-LEMAscentTaxiBDB/ROC-LEMShelterBDB added (2026-07, same pass): the AES LM Taxi (crew-ferry
     # variant of the same ascent cabin, ROC-LEMAscentBDB, already here) and Shelter (extended-stay habitat
     # can) - both minimal-cabin variants, not a separate vehicle bundle, matching the "no vehicle bundle"
@@ -3441,6 +3447,21 @@ nodes:
     parts: [SXTVTOLturboFan, RO-WS10]
     upgrades: [RFUpgrade_CF34-3B, RFUpgrade_F100-PW-229, RFUpgrade_F100-PW-229PYBBN, RFUpgrade_F404-GE-402, RFUpgrade_J58-P-4A, RFUpgrade_J58-P-4B, RFUpgrade_RM12, RFUpgrade_WP-13A-II, RFUpgrade_WP-13F, RFUpgrade_WP-13FI, RFUpgrade_AL-31FM, RFUpgrade_AL-41F-1S, RFUpgrade_R-79M-300, RFUpgrade_R-79V-300]
 
+  - id: av_combinedCycleSSTO
+    title: "Combined-Cycle Air-Breathing Rocket"
+    discipline: AirBreathing
+    tier: 13
+    parents: [av_fourthGenFighterTurbofan, fd_reusableGasGenKerolox]
+    flavor: "One engine, two regimes: breathe air like a turbojet up through the atmosphere, then seal the intakes and burn stored oxidiser like a rocket the rest of the way to orbit - the single-stage-to-orbit dream in one nacelle, real turbojet and real rocket hardware, never quite proven at full scale."
+    parts: [RAPIER]
+    # 2026-07 (full-manifest re-audit, corrected a real mistake): RAPIER was wrongly parked earlier this
+    # pass as "no RealFuels config, not a real engine" - WRONG. Ground-truthed directly against RP-1's own
+    # TREE-Parts.cfg: `%TechRequired = commercialSpaceplanes`, real cost/entryCost, `ModuleTagList tag =
+    # EngineLiquidTurbo` - a genuinely tech-gated, curated, buildable part (it just stays on stock
+    # LiquidFuel+IntakeAir chemistry rather than getting an RF reconfiguration, which is NOT the same as
+    # being unbuildable). Crossover parent: real turbojet-mode hardware (AirBreathing) + the modern
+    # cost-optimized rocket ethos its rocket mode belongs to (FluidDynamics).
+
   # ---- GuidanceControl: deep-space bipropellant apogee engine ----
   - id: gnc_deepSpaceApogeeEngine
     title: "Deep-Space Bipropellant Apogee Engine"
@@ -4115,7 +4136,13 @@ nodes:
     tier: 13
     parents: [cryo_methaloxStagedCombustion]
     flavor: "Burn both turbopump drive-gas streams through combustion at once - a fuel-rich preburner AND an oxidiser-rich preburner, nothing vented overboard at all. The thermodynamic endpoint of the staged-combustion idea, and the only cycle that ever reached it in metal."
-    parts: [ROE-Raptor, ROE-RaptorVac]
+    parts: [ROE-Raptor, ROE-RaptorVac, cryoengine-eagle-1]
+    # cryoengine-eagle-1 (2026-07, full-manifest re-audit, corrected a real mistake): NOT actually a
+    # "duplicate to skip" as earlier claimed - ground-truthed against RP-1's own TREE-Parts.cfg, it gets
+    # its own real patch, identical to ROE-RaptorVac's (TechRequired=stagedCombustion2019, cost=1608) -
+    # RP-1's standard "two mods model the same real engine, both playable" pattern. A real, separately
+    # curated, separately buildable part (CryoEngines' own model/take on Raptor Vacuum) that happens to
+    # always unlock at the same node as its ROEngines twin - listed explicitly rather than silently omitted.
     # King Raptor/Raptor-Vacuum. No RP-1 tech gate exists for this (too recent for RP-1's own tree) -
     # ground-truthed via partTech=stagedCombustion2019, same technique as the AJ10-190 gap.
 
