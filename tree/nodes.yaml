@@ -366,7 +366,10 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Expose photographic film to the scene and bring the physical emulsion home — the highest resolution there is, at the price of recovering the capsule. Reconnaissance before anyone could downlink a picture."
-    parts: [science_module, RO-BasicFilmCamera]
+    parts: [science_module, RO-BasicFilmCamera, RP0-SampleReturnCapsule, RP0-SampleReturnCommand]
+    # RP0-SampleReturnCapsule/Command (2026-07, band-5 gap sweep): the actual recoverable capsule that
+    # brings the exposed film home (Corona/Discoverer) - deprecated-but-unique per T1 curation (no
+    # non-deprecated sample-return craft exists anywhere in the manifest), closing this node's own loop.
   - id: opt_vidicon
     title: "Vidicon Imaging"
     discipline: OpticsPhotonics
@@ -421,7 +424,9 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Beyond the bare procedural wing you begin with, the craft of subsonic aerodynamics: the control surfaces and all-moving tail that make it a controllable platform, and the pitot and radial intakes that feed an engine cleanly. The root the rest of aerodynamics grows from."
-    parts: [RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, RO-IntakeRadialLongPitot, SXTInlineAirIntake, airScoop, miniIntake]
+    parts: [RO-B9ProcCS-Early, RO-B9ProcAMWing-Early, CircularIntake, LRadialAirIntake, RO-IntakeRadialLongPitot, IntakeRadialLong, SXTInlineAirIntake, airScoop, miniIntake]
+    # IntakeRadialLong (2026-07, band-5 gap sweep): a distinct radial ramp intake, missed sibling of
+    # RO-IntakeRadialLongPitot in the same fixed-catalog dead-end.
   - id: str_landingGear
     title: "Oleo-Strut Undercarriage"
     discipline: StructuresMechanisms
@@ -2046,7 +2051,10 @@ nodes:
     tier: 9
     parents: [fd_gasGeneratorCeiling]
     flavor: "One more percent of thrust from a cycle with nothing left to give. The mightiest engine ever built is also the end of its line - spend a whole tier here and you have bought a rounding error while staged combustion and hydrolox walk past you."
+    parts: [ROE-F1B]
     upgrades: [RFUpgrade_F-1-1.52M, RFUpgrade_F-1A]
+    # ROE-F1B (2026-07, band-5 gap sweep): the modern simplified F-1 remake (SLS advanced-booster study) -
+    # same trap, one generation later: still lost to solids on cost despite the simpler injector.
     # RFUpgrade_F-1A added (2026-07, shuttle/station batch): F-1's own next uprate mark after F-1-1.52M -
     # same trap, same base (ROE-F1, fd_gasGeneratorCeiling).
     # Deliberate opportunity-cost TRAP (user call): dead-end parentage, marginal F-1 uprate, sitting at
@@ -2084,8 +2092,10 @@ nodes:
     tier: 9
     parents: [cryo_gasGeneratorHydrolox]
     flavor: "Scale the gas-generator hydrolox engine until it rivals a kerolox booster - a hydrogen engine of five thousand kilonewtons. The hydrolox twin of the F-1 ceiling: colossal, thirsty, never flown, and the end of its own line."
-    parts: [ROE-M1]
+    parts: [ROE-M1, ROE-J2X]
     upgrades: [RFUpgrade_J-2-225K, RFUpgrade_J-2-230K]
+    # ROE-J2X (2026-07, band-5 gap sweep): the Constellation-era uprated J-2 (Ares I upper stage) - same
+    # "colossal, never flew" story as M-1, one generation later.
     # J-2 uprates land here (doctrine-4: J-2 base is one tier down in cryo_gasGeneratorHydrolox).
   - id: cryo_refinedExpander
     title: "Refined Expander-Cycle Combustion"
@@ -2556,9 +2566,11 @@ nodes:
     tier: 10
     parents: [pc_n1ClosedCycle]
     flavor: "Where the N1's oxidiser-rich engines never got to prove themselves in flight, the same staged-combustion chemistry finally does - a kerolox engine that reaches orbit for real, with steering verniers built in rather than bolted on."
-    parts: [ROE-RD120, ROE-RD8]
+    parts: [ROE-RD120, ROE-RD8, ROE-RD0124, ROE-RD0110R]
     # King RD-120 (the real Zenit second-stage engine). RD-8 = its steering-vernier sibling, same engine
     # family, ride-along. Nice narrative contrast one tier above pc_n1ClosedCycle's NK-33/NK-43 (which never flew).
+    # RD-0124/RD-0110R (2026-07, band-5 gap sweep): the Kosberg side of the same operational-kerolox-ORSC
+    # story - modern Soyuz-2.1b upper-stage engines, same generation, different bureau.
 
   # ---- Lane 4: storable ORSC refinement (pure doctrine-4 catch, no new king) ----
   - id: pc_refinedStorableORSCII
@@ -2961,7 +2973,11 @@ nodes:
     tier: 13
     parents: [cryo_operationalFRSC]
     flavor: "Every reusable and staged-combustion hydrolox engine now in service settles into its production marks - the SSME Block-I and Block-II, the RD-0120M, the LE-7A, the maturing HG-3 and deep-throttle chains - the unglamorous decade of squeezing margin out of engines already flying."
+    parts: [rmm_arsia]
     upgrades: [RFUpgrade_RS-25A, RFUpgrade_RS-25C, RFUpgrade_RS-25D-50X, RFUpgrade_RS-25D-E, RFUpgrade_RD-0120M, RFUpgrade_RD-0122, RFUpgrade_LE-7A, RFUpgrade_LE-7A-2, RFUpgrade_HG-3B, RFUpgrade_HG-3B-2, RFUpgrade_HG-3B-SL, RFUpgrade_HG-3B-SL-2, RFUpgrade_LR129-P-3, RFUpgrade_RD-57M, RFUpgrade_RD-57A-1, RFUpgrade_LRBE-BlockII, RFUpgrade_SSBE-BlockII]
+    # rmm_arsia/RS-25-650 (2026-07, band-5 gap sweep): a real uprated-SSME production-study mark - fits
+    # this node's own "production marks maturing in service" theme exactly, breaks its former upgrades-only
+    # shape but that was incidental, not a design rule.
   - id: cryo_tripropellant
     title: "Tripropellant Staged Combustion"
     discipline: Cryogenics
@@ -3671,8 +3687,10 @@ nodes:
     tier: 12
     parents: [cryo_deployableNozzleExpander]
     flavor: "Scale the closed expander cycle past the RL-10's own ceiling - two parallel American and European programs converge on the same bigger turbopump, the same clean cycle, roughly triple the thrust."
-    parts: [cryoengine-pavonis-1, cryoengine-tharsis-1]
+    parts: [cryoengine-pavonis-1, cryoengine-tharsis-1, ROE-MB35, ROE-MB60]
     upgrades: [RFUpgrade_Vinci-180]
+    # ROE-MB35/MB60 (2026-07, band-5 gap sweep): the same closed-expander thrust class (XCOR/Aerojet
+    # Rocketdyne MB-XX study family) - direct siblings of RL60/Vinci, not a separate lineage.
     # King RL60/Vinci (two thrust variants of the same real convergent-design story: Aerojet Rocketdyne's
     # RL60 and ESA's Vinci, never flown but studied in parallel).
   - id: cryo_smallScaleMethalox

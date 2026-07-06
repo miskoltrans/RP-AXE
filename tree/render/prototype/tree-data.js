@@ -2088,6 +2088,16 @@ window.TREE = {
      "title": "PH02 - Basic Film Camera"
     },
     {
+     "name": "RP0-SampleReturnCapsule",
+     "mod": "RP-1",
+     "title": "Science Sample Return Capsule (DEPRECATED)"
+    },
+    {
+     "name": "RP0-SampleReturnCommand",
+     "mod": "RP-1",
+     "title": "Sample Return Command Module (DEPRECATED)"
+    },
+    {
      "name": "science_module",
      "mod": "Squad",
      "title": "PH01 - Early Film Camera"
@@ -2320,6 +2330,11 @@ window.TREE = {
      "name": "CircularIntake",
      "mod": "Squad",
      "title": "Pitot Intake"
+    },
+    {
+     "name": "IntakeRadialLong",
+     "mod": "Squad",
+     "title": "Adjustable Ramp Intake (Radial)"
     },
     {
      "name": "LRadialAirIntake",
@@ -9635,7 +9650,13 @@ window.TREE = {
    "cost": 1700,
    "anyToUnlock": false,
    "flavor": "One more percent of thrust from a cycle with nothing left to give. The mightiest engine ever built is also the end of its line - spend a whole tier here and you have bought a rounding error while staged combustion and hydrolox walk past you.",
-   "parts": [],
+   "parts": [
+    {
+     "name": "ROE-F1B",
+     "mod": "ROEngines",
+     "title": "F-1B"
+    }
+   ],
    "upgrades": [
     "RFUpgrade_F-1-1.52M",
     "RFUpgrade_F-1A"
@@ -9726,6 +9747,11 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Scale the gas-generator hydrolox engine until it rivals a kerolox booster - a hydrogen engine of five thousand kilonewtons. The hydrolox twin of the F-1 ceiling: colossal, thirsty, never flown, and the end of its own line.",
    "parts": [
+    {
+     "name": "ROE-J2X",
+     "mod": "ROEngines",
+     "title": "J-2X"
+    },
     {
      "name": "ROE-M1",
      "mod": "ROEngines",
@@ -11121,6 +11147,16 @@ window.TREE = {
    "flavor": "Where the N1's oxidiser-rich engines never got to prove themselves in flight, the same staged-combustion chemistry finally does - a kerolox engine that reaches orbit for real, with steering verniers built in rather than bolted on.",
    "parts": [
     {
+     "name": "ROE-RD0110R",
+     "mod": "ROEngines",
+     "title": "RD-0110R"
+    },
+    {
+     "name": "ROE-RD0124",
+     "mod": "ROEngines",
+     "title": "RD-0124"
+    },
+    {
      "name": "ROE-RD120",
      "mod": "ROEngines",
      "title": "RD-120"
@@ -12274,7 +12310,13 @@ window.TREE = {
    "cost": 0,
    "anyToUnlock": false,
    "flavor": "Every reusable and staged-combustion hydrolox engine now in service settles into its production marks - the SSME Block-I and Block-II, the RD-0120M, the LE-7A, the maturing HG-3 and deep-throttle chains - the unglamorous decade of squeezing margin out of engines already flying.",
-   "parts": [],
+   "parts": [
+    {
+     "name": "rmm_arsia",
+     "mod": "RocketMotorMenagerie",
+     "title": "RS-25-650 (SSME-650)"
+    }
+   ],
    "upgrades": [
     "RFUpgrade_HG-3B",
     "RFUpgrade_HG-3B-2",
@@ -15147,6 +15189,16 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Scale the closed expander cycle past the RL-10's own ceiling - two parallel American and European programs converge on the same bigger turbopump, the same clean cycle, roughly triple the thrust.",
    "parts": [
+    {
+     "name": "ROE-MB35",
+     "mod": "ROEngines",
+     "title": "MB-35"
+    },
+    {
+     "name": "ROE-MB60",
+     "mod": "ROEngines",
+     "title": "MB-60"
+    },
     {
      "name": "cryoengine-pavonis-1",
      "mod": "CryoEngines",
