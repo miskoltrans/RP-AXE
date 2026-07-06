@@ -184,25 +184,38 @@ no tail) vs. keep a deliberate handful as high-value deep-space targets (JUNO/so
 
 ---
 
-## 4. Tree-cost decision — PROVISIONAL: ~300k total, front-loaded bite
+## 4. Tree-cost decision — LOCKED (2026-07-06): ~298k via a per-tier rate table
 
 Total budget (§3b): **~3.93M theoretical (39% crewed / 61% uncrewed)**; realistic collection is lower and
 uncrewed-weighted. Anchors considered: RP-1 = **115k** (≈3% of pool, completable); VISION-literal "tree cost ≈
-total science" = ~3.93M (you'd unlock ~5% — absurd). **PROVISIONAL DECISION (2026-06-30): total tree cost
-≈ 300k** (≈ 2.6× RP-1, ≈ 8% of pool).
+total science" = ~3.93M (you'd unlock ~5% — absurd). **DECISION: total tree cost ≈ 298k** (≈ 2.6× RP-1,
+≈ 8% of pool), implemented as a **monotonic per-tier rate table** in `tree/nodes.yaml` meta (`tier_cost`),
+NOT a global scalar. `cost(node) = tier_cost[tier]`, per-node `cost:` overrides win.
 
-- **Why 300k:** AXE drops RP-1's *other* gates (reliability/run-data grind, time pressure), so science is
+- **Why ~300k:** AXE drops RP-1's *other* gates (reliability/run-data grind, time pressure), so science is
   the **sole** pacing axis and must do more work than RP-1's 115k. ~300k is finishable by a **broad-
   exploration** playthrough (banks ~300–500k realistically) but not a focused rush → matches VISION's
   "not expected to finish in one playthrough." Bracket: ~150k RP-1-comfortable … ~500k grand-tour-only.
-- **Shape = FRONT-LOAD the bite (NOT mirror availability):** cheap **bootstrap** (tiers 1–2 — can't gate
-  *reaching* orbit behind orbital science); **peak bite** in tiers 3–6 (orbit→Moon→inner planets) holding
-  ~55–60% of the 300k — the science-tight struggle VISION wants early; then **taper** late (outer/modern)
-  where science is flush and VISION hands the gate to *other* axes (power/heat/materials/money). Crewed-lab's
-  realistic ~5–15k lands in the early-mid, helping fund the peak-bite window.
-- **It's a dial, validated by play.** Implement as **one global science-cost scalar**; final tune comes
-  from the **P3 solvency play-session**, not more spreadsheet work. The budget fixes the *constraints*
-  (can't charge above availability; the curve); 300k is the working *choice*.
+  Total is a dial (rescale the table); final tune comes from the **P3 solvency play-session**.
+- **The rate table (per node, by tier):**
+
+  | T | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+  |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+  | rate | 1 | 4 | 15 | 40 | 80 | 160 | 300 | 450 | 700 | 1000 | 1450 | 2000 | 2650 | 3500 | 4500 | 5650 |
+
+  **Monotonic non-decreasing, T1 = 1** (bootstrap ~free — can't gate *reaching* orbit behind orbital science).
+- **Shape EMERGES from node count × a rising rate — NOT hand-forced (supersedes the earlier "front-load
+  tiers 3–6" plan).** Node count already humps mid/late (T7 = 52, T9 = 54, T10 = 45, T11 = 41; then craters
+  T13–16 = 11/4/2/2). A monotonic per-node rate over that count puts the cumulative bite in the **reachable
+  T9–T13 outer-planet grind** (cumulative-cost peaks ~62% at T11), tapering at the top where node count dies
+  and VISION hands the gate to *other* axes (power/heat/materials/money). Early (T1–6) is only ~3% of total —
+  **capability-gated, not science-gated**, exactly as VISION wants.
+- **RP-1 reference (ground-truth from `RP0TechTree.cfg`, ORPHANS 99999 sink excluded):** RP-1's real 115k is
+  *far more back-loaded* — its **final era column alone is 60%** of the tree — but it gets there via **node
+  count** (78 cheap nodes dumped in that column; per-node median **233**, max **1000**), an aspirational
+  endgame wall most players never reach. AXE's node count **tapers** at the top instead, so AXE back-loads via
+  **per-node rate** (up to 5650) and spreads the bite across the *reachable* mid-late game. Same philosophy
+  (monotonic, back-loaded), different lever — and the smoother curve is the healthier pacing.
 
 **For P3 (KerbalismLab integration) — DECIDED: re-author as plain `Experiment` modules.**
 Reimplement the 65 experiments as plain Kerbalism `Experiment` + `EXPERIMENT_DEFINITION` configs wired

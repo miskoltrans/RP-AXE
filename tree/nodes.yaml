@@ -15,7 +15,13 @@
 meta:
   scalar: 1.0
   auto_placement: false
-  tier_cost: { 0: 0, 1: 20, 2: 90, 3: 400, 4: 900, 5: 1500, 6: 2000, 7: 2300, 8: 2100, 9: 1700, 10: 1300, 11: 900 }
+  # Science node cost = tier_cost[tier] * scalar (per-node `cost:` overrides win). MONOTONIC non-decreasing,
+  # T1=1 (bootstrap ~free; can't gate reaching orbit behind orbital science). The front-loaded-difficulty
+  # SHAPE emerges from node COUNT (which humps mid/late) x this rising rate -- see docs/SCIENCE.md 4. Total
+  # ~= 297k (~2.6x RP-1's real 115k, ~8% of the 3.93M collectable pool); bite spreads across the reachable
+  # T9-T13 outer-planet grind (peak cum% at T11) rather than RP-1's aspirational endgame wall. Total is a
+  # dial (scalar, or rescale the table); tune in the P3 solvency play-session.
+  tier_cost: { 0: 0, 1: 1, 2: 4, 3: 15, 4: 40, 5: 80, 6: 160, 7: 300, 8: 450, 9: 700, 10: 1000, 11: 1450, 12: 2000, 13: 2650, 14: 3500, 15: 4500, 16: 5650 }
 
 nodes:
   # ================================= ROOTS =================================
