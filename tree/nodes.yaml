@@ -3355,6 +3355,15 @@ nodes:
     # Opens ResourceEngineering as a working discipline (previously defined but unused). Crosses into
     # surface mobility (rob_surfaceMobility) rather than any propulsion lane - drilling needs a lander
     # already down and a motor, not thrust.
+  - id: res_oreStorageTankage
+    title: "Ore Storage Tankage"
+    discipline: ResourceEngineering
+    tier: 10
+    parents: [res_regolithExtraction]
+    flavor: "Somewhere to put what the drill brings up - bulk hopper tankage sized for raw, unprocessed ore rather than a refined propellant."
+    parts: [proceduralTankOre]
+    # 2026-07 backlog sweep: a distinct thing from the drill itself (storage vs. extraction) - own node,
+    # sibling of res_regolithExtraction rather than folded into it.
   - id: res_largeRegolithExtraction
     title: "Large-Scale Regolith Extraction"
     discipline: ResourceEngineering
