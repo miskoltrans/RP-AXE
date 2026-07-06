@@ -7449,11 +7449,6 @@ window.TREE = {
    "flavor": "Stop spinning the whole spacecraft and instead hold it steady on three independent axes — a camera can finally be pointed and kept there. Spin-stabilization was simple and blind; this bus can aim.",
    "parts": [
     {
-     "name": "SXTAlouetteI",
-     "mod": "SXT",
-     "title": "Alouette Core"
-    },
-    {
      "name": "ca_argo-mk2",
      "mod": "CoatlAerospace",
      "title": "Mariner Mars & Venus Spacecraft Bus"
@@ -7477,11 +7472,6 @@ window.TREE = {
      "name": "sp_mariner_a",
      "mod": "CoatlAerospace",
      "title": "CA-E100 1x2 Solar Panel"
-    },
-    {
-     "name": "sp_mariner_b",
-     "mod": "CoatlAerospace",
-     "title": "CA-E100-SPV 1x2 Solar Panel"
     }
    ],
    "upgrades": [],
@@ -8197,6 +8187,11 @@ window.TREE = {
      "name": "ROS-HingedSolarPanel",
      "mod": "ROSolar",
      "title": "Hinged Solar Panel"
+    },
+    {
+     "name": "sp_mariner_b",
+     "mod": "CoatlAerospace",
+     "title": "CA-E100-SPV 1x2 Solar Panel"
     }
    ],
    "upgrades": [
@@ -8773,6 +8768,11 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Spin a flywheel up or down and the whole spacecraft turns the other way — attitude held and changed with no propellant spent at all, as long as a star tracker keeps telling it which way it's actually pointed.",
    "parts": [
+    {
+     "name": "SXTAlouetteI",
+     "mod": "SXT",
+     "title": "Alouette Core"
+    },
     {
      "name": "ca_rw_small",
      "mod": "CoatlAerospace",

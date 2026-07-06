@@ -1393,18 +1393,22 @@ nodes:
     tier: 7
     parents: [gnc_spacecraftRCS]
     flavor: "Stop spinning the whole spacecraft and instead hold it steady on three independent axes — a camera can finally be pointed and kept there. Spin-stabilization was simple and blind; this bus can aim."
-    parts: [ca_argo-mk2, ca_argo-mk2-solar, ca_argo-mk2-hga, ca_argo-mk2-mast, sp_mariner_a, sp_mariner_b, SXTAlouetteI]
-    # SXTAlouetteI added (2026-07): Alouette 1 (Canada's first satellite) is a complete 3-axis-capable,
-    # RealAntenna-equipped probe bus — same mechanism class as Mariner's, not tied to the US/Soviet charter
-    # (mod=SXT, not RN_*_Probes, so it never auto-routes). Rides along here rather than getting its own
-    # node for one satellite.
-    # +4 ride-alongs (2026-07, comms/power pass): Mariner's own HGA/LGA antennas + its own solar panels —
+    parts: [ca_argo-mk2, ca_argo-mk2-solar, ca_argo-mk2-hga, ca_argo-mk2-mast, sp_mariner_a]
+    # +3 ride-alongs (2026-07, comms/power pass): Mariner's own HGA/LGA antenna + its own solar panel —
     # genuinely part of this bus, not new breakthroughs.
     # RE-SCOPED (2026-07 fix): rn_mariner1_2 is mod=RN_US_Probes, auto-routed to hire_JPL regardless of
     # nodes.yaml — removed (was a silent no-op). ca_argo-mk2/-solar are mod=CoatlAerospace, genuinely
     # normal-tree parts. hire_JPL dropped as parent too: per standing rule, the charter subtree (hire_JPL/
     # hire_OKB) never cross-depends on the normal tree, and nothing charter-routed remains in this node to
     # justify the edge.
+    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #high): SXTAlouetteI and sp_mariner_b were
+    # both added here as ride-alongs but ground-truth (era-bucket x-position) puts them one to two tech
+    # generations LATER than this node's real T7 anchor parts — the exact "check era before merging"
+    # lesson this same node's own comment trail already applied once to rn_mariner1_2/hire_JPL above,
+    # missed for these two. Moved: SXTAlouetteI -> gnc_reactionWheelAttitude (T8, era-correct, and that
+    # node is explicitly the generic/catalog successor to THIS node's mission-specific hardware — a better
+    # conceptual fit, not just an era fix). sp_mariner_b -> elec_refinedSolarSimulation (T8, matches its
+    # real era; sp_mariner_a, one generation earlier, correctly stays here).
 
   # ================================================================================================
   # ===================== BAND 3 * APOLLO SERVICE PROPULSION SYSTEM (T8) ===========================
@@ -1609,10 +1613,13 @@ nodes:
     tier: 8
     parents: [elec_deployablePanelII]
     flavor: "Model the cell string, the sun angle and the shadowing properly instead of a flat output curve — the same panel, understood well enough to size it exactly instead of overbuilding it."
-    parts: [ROS-HingedSolarPanel, ROS-FoldingSolarPanel]
+    parts: [ROS-HingedSolarPanel, ROS-FoldingSolarPanel, sp_mariner_b]
     upgrades: [solarTL3, solarTL4]
     # solarTL3/4 added (2026-07): same fix as solarTL2 — ROSolar's own upgrades, re-pointed here since the
     # next two rungs of that same efficiency ladder land on this node's own generation.
+    # sp_mariner_b moved IN (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #high): a later-revision Mariner
+    # panel (x=-2612, one generation past sp_mariner_a which stays in gnc_threeAxisStabilizedBus) —
+    # era-correct here, and still a real deployable-array part like this node's own hardware.
 
   # ================================================================================================
   # ===================== BAND 3 * SCIENCE OPPORTUNITIES (T7) =======================================
@@ -1801,10 +1808,15 @@ nodes:
     tier: 8
     parents: [gnc_threeAxisStabilizedBus]
     flavor: "Spin a flywheel up or down and the whole spacecraft turns the other way — attitude held and changed with no propellant spent at all, as long as a star tracker keeps telling it which way it's actually pointed."
-    parts: [ca_rw_small, ca_rw_xsmall, ca_startrack]
+    parts: [ca_rw_small, ca_rw_xsmall, ca_startrack, SXTAlouetteI]
     # Generic CoatlAerospace hardware (not Mariner-branded like ca_argo-mk2-*), so it's the catalog/general
     # implementation of 3-axis stabilization rather than a ride-along on Mariner's own bus — successor node,
     # not a direct-add, to keep the generic hardware separate from the vehicle-specific parts.
+    # SXTAlouetteI moved IN (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #high): Alouette 1 (Canada's first
+    # satellite, mod=SXT so never charter-routed) is era-correct here (x=-2867, matches T8, one generation
+    # past gnc_threeAxisStabilizedBus's Mariner-era anchor parts) and a better conceptual fit besides — a
+    # complete, non-mission-branded 3-axis-capable probe bus is exactly the "generic/catalog successor"
+    # this node already exists to hold.
 
   - id: th_activeLouvers
     title: "Active Thermal Louvers"
