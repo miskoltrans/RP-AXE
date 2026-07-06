@@ -191,6 +191,7 @@ digraph AXE {
   "str_fuelCrossfeed" [label="Inter-Tank Fuel Crossfeed\nStructuresMechanisms T7 · 2300",fillcolor="#bfb08d",fontcolor="#111111"];
   "tel_realAntennaTelemetry" [label="Modeled Antenna Telemetry\nTelecommunications T7 · 2300",fillcolor="#3f7bf5",fontcolor="#111111"];
   "cmp_lunarReturnAblator" [label="Lunar-Return Ablator Rating\nCompositeMaterials T8 · 2100",fillcolor="#9caf6a",fontcolor="#111111"];
+  "cmp_lunarLandingAblator" [label="Refined Ablator Formulation\nCompositeMaterials T9 · 1700",fillcolor="#9caf6a",fontcolor="#111111"];
   "nuc_isotopePower" [label="Radioisotope Thermoelectric Power\nElectricalPower T7 · 2300",fillcolor="#ffd23f",fontcolor="#111111"];
   "nuc_isotopePowerII" [label="Long-Lived Isotope Power\nElectricalPower T8 · 2100",fillcolor="#ffd23f",fontcolor="#111111"];
   "av_mach2Turbojet" [label="Sustained-Cruise Afterburning Turbojet\nAirBreathing T7 · 2300",fillcolor="#6cc4b0",fontcolor="#111111"];
@@ -234,7 +235,7 @@ digraph AXE {
   { rank=same; "gs_saturnPad" "opt_irRadiometry" "opt_twoChannelIR" "opt_uvSpectrometry" "opt_refinedTV" "tel_pcmTelemetry" "pc_larchPeroxide" "pc_fluorine" "fd_vacuumExpansion" "fd_saturnKerolox" "av_ramjetAdvanced" "cmp_ablativeRefinement" "int_mercuryCapsule" "int_vostokCapsule" "int_zenitRecon" "edl_crewedRecovery" "opt_orbitalMapping" "fd_engineMaturation" }
   { rank=same; "str_fixedLanderLegs" "gs_shuttlePad" "life_crewedExperimentBay" "fd_clusteredThrustGrowth" "fd_blendedStorableFuel" "fd_ammoniaCombustionRefinement" "fd_titanStorableConversion" "pc_juno_ClF3" "int_geminiCapsule" "int_voskhodCabin" "gnc_smallRcsCatalog" "fd_continuousThrottleDescent" "cmp_airbagTouchdown" "gnc_threeAxisStabilizedBus" "fd_propellantUllage" "pc_scoutMarkII" "pc_strapOnMarkII" "pc_allSolidStaging" "pc_segmentedCasting" "pc_apogeeKickStage" "pc_storableVernierFamily" "tel_deployableHighGainDish" "tel_antennaCatalog" "elec_deployablePanelII" "elec_fuelCellPower" "opt_radarAltimetry" "opt_infraredInterferometry" "mic_ionMassSpec" "opt_multiSpectralImaging" "rob_heavyRotorActuation" "rob_hingeActuation" "rob_linearActuation" "rob_precisionRotationServo" "rob_sequencedControl" "rob_surfaceMobility" "str_fuelCrossfeed" "tel_realAntennaTelemetry" "nuc_isotopePower" "av_mach2Turbojet" "av_dedicatedLiftJet" "th_activeLouvers" "int_compactCrewPod" "cryo_refinedExpander" "gnc_interplanetaryAvionics" "elec_integratedCircuit" "av_highBypassTurbofan" "av_lowBypassTurbofan" "int_heavyLaunchEscape" }
   { rank=same; "fd_gasGeneratorCeiling" "pc_orscDebut" "gnc_rendezvousDocking" "gnc_fixedRcsCatalog" "fd_pressureFedRestart" "pc_apogeeKickCatalog" "int_surveyorLanderBus" "int_surveyorOrbiter" "tel_compactHighGainAntenna" "tel_phasedArrayRelay" "elec_refinedSolarSimulation" "mic_boomMagnetometryII" "gnc_orbitalGravimetry" "cmp_lunarReturnAblator" "nuc_isotopePowerII" "gnc_reactionWheelAttitude" "cryo_gasGeneratorHydrolox" "pc_protonStagedCombustion" "comp_digitalGuidanceComputer" "av_advancedJetEngines" "pc_largeSegmentedBooster" "pc_storableRcsPropellants" "fd_advancedSpacecraftPropulsion" "nuc_fissionReactor" }
-  { rank=same; "fd_deepThrottleLanding" "fd_gasGeneratorApex" "cryo_largeHydrolox" "pc_n1ClosedCycle" "pc_refinedStorableORSC" "nuc_nuclearThermalRocket" "nuc_nuclearRamjet" "comp_realTimeFlightComputer" "pc_caveaB" }
+  { rank=same; "cmp_lunarLandingAblator" "fd_deepThrottleLanding" "fd_gasGeneratorApex" "cryo_largeHydrolox" "pc_n1ClosedCycle" "pc_refinedStorableORSC" "nuc_nuclearThermalRocket" "nuc_nuclearRamjet" "comp_realTimeFlightComputer" "pc_caveaB" }
   { rank=same; "fd_lunarSurfaceMobility" "comp_networkedAvionics" }
   "hire_JPL" -> "charter_usEarly" [style=solid];
   "charter_usEarly" -> "charter_usApp" [style=solid];
@@ -446,6 +447,7 @@ digraph AXE {
   "str_staging" -> "str_fuelCrossfeed" [style=solid];
   "tel_pcmTelemetry" -> "tel_realAntennaTelemetry" [style=solid];
   "cmp_ablativeRefinement" -> "cmp_lunarReturnAblator" [style=solid];
+  "cmp_lunarReturnAblator" -> "cmp_lunarLandingAblator" [style=solid];
   "nuc_geiger" -> "nuc_isotopePower" [style=solid];
   "nuc_isotopePower" -> "nuc_isotopePowerII" [style=solid];
   "av_afterburner" -> "av_mach2Turbojet" [style=solid];

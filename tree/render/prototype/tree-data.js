@@ -8654,6 +8654,24 @@ window.TREE = {
    ]
   },
   {
+   "id": "cmp_lunarLandingAblator",
+   "title": "Refined Ablator Formulation",
+   "discipline": "CompositeMaterials",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "Push the same ablator formulation a margin further — the heat load of an actual landing-and-return mission rather than a single translunar pass, still bolted to whichever airframe happens to need it.",
+   "parts": [],
+   "upgrades": [
+    "LunarHS"
+   ],
+   "grants": [],
+   "pos": [
+    852,
+    1202
+   ]
+  },
+  {
    "id": "nuc_isotopePower",
    "title": "Radioisotope Thermoelectric Power",
    "discipline": "ElectricalPower",
@@ -13186,6 +13204,21 @@ window.TREE = {
     ],
     [
      472,
+     1202
+    ]
+   ]
+  },
+  {
+   "from": "cmp_lunarReturnAblator",
+   "to": "cmp_lunarLandingAblator",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     472,
+     1202
+    ],
+    [
+     852,
      1202
     ]
    ]

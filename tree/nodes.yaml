@@ -1808,10 +1808,23 @@ nodes:
     # EarlyLunarHS added (2026-07): the SAME material-ladder rung, as a PARTUPGRADE preset on the
     # procedural ROH-AdjustableHS (already in cmp_ablativeTPS) instead of a named part — same mechanism,
     # different delivery.
-    # DEFERRED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #low): the ladder's next rung, `LunarHS`
-    # (manifest/upgrades-curated.tsv, KEEP-capability, techRequired=lunarLanding), isn't placed anywhere
-    # yet. Not a gap in this node — it belongs on the Apollo CM/CSM capsule node, which hasn't been
-    # authored yet (crewed-lunar-landing content so far is engines-only). Placeholder for that pass.
+    # CORRECTED (2026-07, user call): earlier comment here wrongly deferred the ladder's next rung
+    # pending "the Apollo CM/CSM capsule node" — wrong model. The ablator ladder depends on ablation
+    # tech, not on any specific capsule existing (same as EarlyLunarHS above, which isn't tied to a
+    # capsule node either); it's fine for it to scatter. Placed properly below as cmp_lunarLandingAblator.
+  - id: cmp_lunarLandingAblator
+    title: "Refined Ablator Formulation"
+    discipline: CompositeMaterials
+    tier: 9
+    parents: [cmp_lunarReturnAblator]
+    flavor: "Push the same ablator formulation a margin further — the heat load of an actual landing-and-return mission rather than a single translunar pass, still bolted to whichever airframe happens to need it."
+    upgrades: [LunarHS]
+    # NEW (2026-07, user call — ablator ladder scatters by tech, not by vehicle): LunarHS
+    # (manifest/upgrades-curated.tsv, KEEP-capability) is the next PARTUPGRADE preset on the same
+    # procedural ROH-AdjustableHS as EarlyLunarHS. Ground-truthed against RP-1's own RP0TechTree.cfg: its
+    # real bucket (lunarLanding, 1968-69, x=-2187) is a genuine generation past EarlyLunarHS's
+    # (lunarRatedHeatshields, 1966, x=-2442) — a real T8->T9 jump, not the same rung twice, hence a
+    # sibling node rather than a second upgrade bolted onto cmp_lunarReturnAblator.
 
   # ================================================================================================
   # ===================== BAND 3 * RADIOISOTOPE POWER (T7 -> T8) ===================================
