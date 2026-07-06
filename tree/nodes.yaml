@@ -25,7 +25,9 @@ nodes:
     tier: 0
     parents: []
     flavor: "1950. You begin with the de Laval nozzle, a procedural airframe, avionics, the first instruments and a handful of sounding motors — enough to fly above the Karman line turn one. Rocketry is the default; whether to fly aeroplanes at all is yours to choose."
-    parts: [proceduralNoseCone, proceduralStructural, RO-B9ProcWing-Early, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, groundAnchor]
+    parts: [proceduralNoseCone, proceduralStructural, RO-B9ProcWing-Early, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, groundAnchor, conformaldecals-flag, conformaldecals-generic, conformaldecals-munar, conformaldecals-semiotic, conformaldecals-text]
+    # +5 conformal decals (2026-07, backlog sweep): purely cosmetic labeling, no tech story of their own -
+    # every vehicle can carry one from day one, same as RP-1's own "Starting Parts" placement.
   - id: parking
     title: "Unsorted Parts (Parking)"
     discipline: SystemsIntegration
@@ -39,41 +41,128 @@ nodes:
     discipline: SystemsIntegration
     tier: 1
     cost: 300
-    parents: [start]
+    parents: []
     flavor: "Stand up a jet-propulsion lab — the home of integrated US robotic spacecraft. Charter the programme; the spacecraft arrive by era."
   - id: hire_OKB
     title: "Charter a Design Bureau (OKB)"
     discipline: SystemsIntegration
     tier: 1
     cost: 300
-    parents: [start]
+    parents: []
     flavor: "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. Charter the programme; the spacecraft arrive by era."
 
-  # ===================== BAND 2 * CHARTER PACKS (era-tiered off the JPL/OKB entries) =====================
-  # Fixes the mission-feasibility leapfrog: integrated appsats no longer unlock at T1 before their instrument
-  # lanes. Entries (hire_JPL/OKB, T1) charter the programme; packs arrive by era — first sats when orbit is
-  # reachable (~T4), application sats (~T5) alongside opt_tvRecon/opt_remoteSensing.
-  - id: charter_usEarly
-    title: "First-Generation Satellites"
+  # ===================== CHARTER SUBTREE — chronological probe chains (2026-07 redesign) =====================
+  # Two OFF-START roots (hire_JPL / hire_OKB above): each an EMPTY "charter the programme" gate, purchasable
+  # from game open (a parentless node is a root, unlockable turn 1; hideEmpty=False keeps the empty gate
+  # visible). From each gate a FLAT linear chain places every integrated RN spacecraft by REAL FLIGHT DATE,
+  # one node per tech-generation tier. Multi-part missions (Galileo, Cassini/Huygens, the Luna soft-lander
+  # family) stay TOGETHER in their era node — integrated-spacecraft catch-alls, so they run past the usual
+  # ~6-part cap by design. Chronology = mission launch year, calibrated to the tree's era bands
+  # (T4~1957-58 first orbit .. T12~2005+). No cross-deps into the main tree: probe-requirements.tsv keeps the
+  # per-probe enabling-tech list for a future requirements engine; the tree edge stays a flat chain.
+  # build_tree.route_probe_mods now RESPECTS these hand placements (only UNPLACED RN parts fall back to a gate).
+
+  # ---- US chain (JPL): T4 first sats -> T12 modern robotic explorers ----
+  - id: jpl_firstSats
+    title: "First American Satellites"
     discipline: SystemsIntegration
     tier: 4
     parents: [hire_JPL]
-    flavor: "Vanguard, the early Pioneers and the Explorers — the first American satellites, flown to prove a nation could reach orbit and read back the space it found there."
-    parts: [vanguard-1, pioneer_0_1_2, pioneer_3_4, explorer_6, vanguard-2, vanguard-3]
-  - id: charter_usApp
-    title: "Application Satellites"
+    flavor: "Vanguard, the first Pioneers and Explorer 6 — the earliest American satellites, flown to prove a nation could reach orbit and read back the space it found there."
+    parts: [vanguard-1, vanguard-2, vanguard-3, pioneer_0_1_2, pioneer1_booster, p1_decoupler, pioneer_3_4, explorer_6]
+  - id: jpl_appSats
+    title: "American Application Satellites"
     discipline: SystemsIntegration
     tier: 5
-    parents: [charter_usEarly]
-    flavor: "Satellites that earn their launch: Tiros watching the weather, Transit fixing a ship's position, GRAB listening for enemy radar. The first American spacecraft flown for a service, not a first."
+    parents: [jpl_firstSats]
+    flavor: "Satellites that earn their launch: Tiros watching the weather, Transit fixing a ship's position, GRAB listening for enemy radar, Pioneer 5 sounding deep space. The first American spacecraft flown for a service, not a first."
     parts: [tiros-1, transit2a, grab-1, pioneer_5]
-  - id: charter_sovietEarly
+  - id: jpl_firstMariner
+    title: "First Interplanetary Probes"
+    discipline: SystemsIntegration
+    tier: 6
+    parents: [jpl_appSats]
+    flavor: "Mariner leaves Earth behind — the first American craft to fly past another planet, Venus in '62 and Mars in '64, on a bus that had to survive months of cruise and aim itself across the solar system."
+    parts: [rn_mariner1_2, rn_mariner3-4]
+  - id: jpl_lunarPlanetaryRecon
+    title: "Lunar & Planetary Reconnaissance"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [jpl_firstMariner]
+    flavor: "Survey the Moon up close and keep flying the planets: Surveyor soft-lands to prove the regolith will bear a lander's weight, while Mariner returns to Venus and the Pioneer field satellites watch the Sun."
+    parts: [rn_surveyor3, rn_surveyor_engines, rn_surveyor_retro, rn_surveyor_s_engine, rn_surveyor_solar, rn_mariner5, rn_mariner6-7, pioneer_6_7_8_9]
+  - id: jpl_outerPlanetPrecursors
+    title: "Outer-Planet Precursors"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [jpl_lunarPlanetaryRecon]
+    flavor: "Map Mars from orbit and cross the asteroid belt for the first time: Mariner 9 becomes the first spacecraft to orbit another planet, Mariner 10 slingshots past Venus to Mercury, and the Pioneers strike out for Jupiter."
+    parts: [rn_mariner8-9, rn_mariner10, pioneer_10_11]
+  - id: jpl_grandTour
+    title: "The Grand Tour"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [jpl_outerPlanetPrecursors]
+    flavor: "The once-in-176-years alignment of the outer planets, taken at a run. Voyager threads Jupiter, Saturn, Uranus and Neptune on a single launch; Helios dives closer to the Sun than anything before it."
+    parts: [rn_heliosa_b, rn_voyager, rn_sphinx_t3e]
+  - id: jpl_shuttleFlagships
+    title: "Shuttle-Era Flagships"
+    discipline: SystemsIntegration
+    tier: 10
+    parents: [jpl_grandTour]
+    flavor: "The Shuttle lifts the big orbiters and the Inertial Upper Stage kicks them out of Earth orbit: Galileo to Jupiter with an atmospheric probe, Magellan to map Venus by radar, all relayed home through the TDRS network."
+    parts: [ius_bottom, ius_top, ius_dec_fs, ius_dec_ss, rn_tdrs_ag, galileo_mb, galileo_aprobe, galileo_hs_bot, galileo_hs_mid, galileo_hs_top, galileo_probe_hs_parachute, galileo_probe_parachute, gdish_actual, gdish_intended, rn_galileo_scanner, magellan, rn_magellan_scanner]
+  - id: jpl_discoveryEra
+    title: "Discovery & Cassini-Huygens Era"
+    discipline: SystemsIntegration
+    tier: 11
+    parents: [jpl_shuttleFlagships]
+    flavor: "Faster-better-cheaper meets the last of the flagships. NEAR orbits an asteroid, Stardust flies through a comet's tail, Deep Space 1 proves ion propulsion — and Cassini carries Huygens down to land on Titan."
+    parts: [neo_ulysses, rn_mars_observer, neo_near, neo_ds1, neo_stardust, neo_stardust_collector, neo_stardust_para, rn_cassini, rn_huygens, rn_huygens_chute, rn_huygen_hs_bottom, rn_huygen_hs_top, rn_huygen_hs_chute, eos_terra]
+  - id: jpl_modernRobotic
+    title: "Modern Robotic Explorers"
+    discipline: SystemsIntegration
+    tier: 12
+    parents: [jpl_discoveryEra]
+    flavor: "The current fleet. New Horizons runs to Pluto, Dawn orbits two asteroids on ion drive, Juno threads Jupiter's radiation, MESSENGER settles at Mercury, and a line of Earth observers watches the home planet through the modern relay network."
+    parts: [neo_deepimpact, neo_deepimpact_impactor, neo_dawn, rn_messenger, rn_new_horizons, rn_juno_spacecraft, rn_lro, rn_lcross_mb, rn_ladee, rn_ladee_scanner, eos_aqua, eos_aura, eos_tdrs]
+
+  # ---- Soviet chain (OKB): T4 Sputnik -> T7 Luna landers, then T10 modern comsats ----
+  - id: okb_firstSputniks
     title: "First Soviet Satellites"
     discipline: SystemsIntegration
     tier: 4
     parents: [hire_OKB]
-    flavor: "Sputnik 2 and 3 — the heavy early Soviet satellites that carried first a dog and then a laboratory into orbit while the West was still counting its failures."
-    parts: [sputnik2, sputnik3]
+    flavor: "Sputnik — the beeping sphere that opened the space age — then the heavy Sputnik 2 and 3 that carried first a dog and then a laboratory into orbit while the West was still counting its failures."
+    parts: [sputnik1, sputnik2, sputnik3]
+  - id: okb_firstLuna
+    title: "First Lunar Probes"
+    discipline: SystemsIntegration
+    tier: 5
+    parents: [okb_firstSputniks]
+    flavor: "The first machines to leave Earth's pull for another world: Luna reaches escape velocity, strikes the Moon, and photographs its hidden far side for the first time in history."
+    parts: [luna2, luna3]
+  - id: okb_earlyPlanetaryComsats
+    title: "Early Planetary Probes & Comsats"
+    discipline: SystemsIntegration
+    tier: 6
+    parents: [okb_firstLuna]
+    flavor: "Reach for the planets and wire the country together: Venera strikes out for Venus, Polyot manoeuvres in orbit, Molniya opens the high-latitude comms net and the first Proton payloads fly."
+    parts: [rn_venera1, polyot, polyot_side_engine, molniya1, rn_protonn4_1, rn_protonn6_4]
+  - id: okb_lunaLanders
+    title: "Luna Soft-Landers & Orbiters"
+    discipline: SystemsIntegration
+    tier: 7
+    parents: [okb_earlyPlanetaryComsats]
+    flavor: "The first soft landing on another world and the first lunar orbiters: the Luna 9-13 family throttles down onto the regolith on an airbag-cushioned capsule, and circles the Moon returning data from orbit."
+    parts: [luna9_als, luna9_airbag_cvr, luna_als, luna_astro, luna_ktdu, luna_radio, luna_vernier, luna13_als, l11_astro, l11_radio, luna11_als]
+  - id: okb_modernComsats
+    title: "Modern Soviet & Russian Comsats"
+    discipline: SystemsIntegration
+    tier: 10
+    parents: [okb_lunaLanders]
+    flavor: "The operational communications constellation: Strela and its Gonets successors — the low-orbit store-and-forward bus that kept a continent's messages moving into the modern era."
+    parts: [rn_strela3_gonets]
 
   # ===================== BAND 1 * KEROLOX BOOSTER SPINE (T1 -> T5) =====================
   # sounding -> turbopump(V-2) -> first boosters (Western || Soviet fork) -> orbital -> uprated orbital.
@@ -1368,6 +1457,29 @@ nodes:
     parts: [ROC-VoskhodCapsule, ROC-VoskhodAirlock, evaCylinder, evaJetpack]
     # +2 ride-alongs (2026-07): EVA fuel cylinders + jetpack — the actual gear the airlock breakthrough
     # exists to use. Genuinely part of this vehicle's capability, not a new breakthrough.
+
+  - id: str_evaAccessLadder
+    title: "Fixed Rung Ladder"
+    discipline: StructuresMechanisms
+    tier: 8
+    parents: [int_voskhodCabin]
+    flavor: "A cosmonaut can finally leave the capsule - now give them a way back to the hatch. Bolted rungs up the hull, sized to whatever the vehicle stands, from a short reach to a full multi-stage climb."
+    parts: [SMLadderUtility, MedLadderUtility, LGLadderUtility, ladder1, MedLadder, LongLadder]
+    # 2026-07 backlog sweep: gated behind EVA capability itself (int_voskhodCabin) rather than left free
+    # from turn one like RP-1's own placement - there's no reason to need a ladder before EVA exists as a
+    # mechanic. Two parallel size-catalog brands (MK I-III, Pegasus I-III), same fixed-rung mechanism -
+    # a utility catalog, cap-exempt.
+  - id: str_deployableAccessLadder
+    title: "Deployable Telescoping Ladder"
+    discipline: StructuresMechanisms
+    tier: 8
+    parents: [int_compactCrewPod]
+    flavor: "A ladder that stows flush against the hull for the ride down and telescopes out only once boots are on the ground - no permanent drag or snag risk, real travel savings on a vehicle that can't spare the mass to carry a fixed one."
+    parts: [telescopicLadder, telescopicLadderBay]
+    # 2026-07 backlog sweep: tied to the first compact lander cabin (int_compactCrewPod) rather than the
+    # fixed-ladder catalog above - genuinely useful for landers specifically (crew standing on a surface,
+    # climbing back up to a hatch above them), not just "the next ladder size."
+
   - id: gnc_rendezvousDocking
     title: "Orbital Rendezvous and Docking"
     discipline: GuidanceControl
