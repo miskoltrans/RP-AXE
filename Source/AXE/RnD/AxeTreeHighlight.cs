@@ -69,6 +69,7 @@ namespace RPAxe.RnD
                 if (n.graphics != null)
                 {
                     if (!inLineage) AxeTreeRenderHost.PaintTile(n, GhostTile(n));                           // ghost the tile
+                    else if (n.state == RDNode.State.RESEARCHED) AxeTreeRenderHost.PaintTile(n, AxeTreeRenderHost.DoneTile);   // researched stays green on the lineage
                     else if (AxeTreeMeta.TryDisciplineColor(n.tech?.techID, out Color dc)) AxeTreeRenderHost.PaintTile(n, dc);  // pop
                     else AxeTreeRenderHost.PaintTile(n, Color.white);
                     if (!inLineage && n.graphics.searchHighlight != null) n.graphics.searchHighlight.enabled = false;   // hide state ring on ghosts

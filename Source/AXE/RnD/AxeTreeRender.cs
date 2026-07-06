@@ -512,12 +512,14 @@ namespace RPAxe.RnD
             {
                 string id = __instance?.tech?.techID;
                 if (id == null || !AxeTreeMeta.Nodes.TryGetValue(id, out AxeTreeMeta.NodeMeta m)) return;
-                StateRing(__instance);   // per-node state halo (researchable / researched / locked = off)
+                StateRing(__instance);   // per-node state halo (researchable = cyan; researched/locked = off)
                 if (!AxeTreeMeta.Render.DiscColor) return;
-                // The discipline tile overrides stock's state frame, so the ring above carries the state read;
-                // the tile adds discipline colour (locked = desaturated + dim).
+                // Tile colour by state: RESEARCHED -> the whole tile turns green (matches the prototype
+                // doneStyle='tile'); RESEARCHABLE -> discipline colour; locked (FADED) -> desaturated + dim.
                 if (AxeTreeMeta.Disciplines.TryGetValue(m.Discipline, out AxeTreeMeta.DiscMeta d))
-                    PaintTile(__instance, StateTint(d.Color, __instance.state == RDNode.State.FADED));
+                    PaintTile(__instance, __instance.state == RDNode.State.RESEARCHED
+                        ? DoneTile
+                        : StateTint(d.Color, __instance.state == RDNode.State.FADED));
                 if (__instance.parents == null) return;
                 foreach (RDNode.Parent par in __instance.parents)   // edge coloured by its SOURCE discipline
                 {
@@ -568,18 +570,17 @@ namespace RPAxe.RnD
         }
 
         private static readonly Color RingAvailable = new Color(0.32f, 0.78f, 0.97f, 1f);   // researchable = cyan frontier
-        private static readonly Color RingDone = new Color(0.30f, 0.86f, 0.50f, 1f);         // researched = green
+        internal static readonly Color DoneTile = new Color(0.184f, 0.635f, 0.373f, 1f);    // #2fa25f — researched tile (prototype doneStyle='tile')
 
-        // Per-node research-state halo. The discipline tile overrides stock's state frame, so we carry the
-        // researchable/researched read on the (otherwise search-only) searchHighlight overlay; locked = off.
+        // Per-node research-state halo. Only the RESEARCHABLE frontier gets a ring (cyan) — the actionable
+        // "what to research next". Researched needs no ring now that its whole tile is green; locked = off.
         internal static void StateRing(RDNode rd)
         {
             RDNodePrefab g = rd != null ? rd.graphics : null;
             if (g == null || g.searchHighlight == null) return;
             g.searchHighlight.raycastTarget = false;   // the ring must never intercept the node's click
             if (rd.state == RDNode.State.RESEARCHABLE) { g.searchHighlight.color = RingAvailable; g.searchHighlight.enabled = true; }
-            else if (rd.state == RDNode.State.RESEARCHED) { g.searchHighlight.color = RingDone; g.searchHighlight.enabled = true; }
-            else g.searchHighlight.enabled = false;
+            else g.searchHighlight.enabled = false;     // researched (green tile signals it) + locked = no ring
         }
 
         // Hover-trace lineage (like the HTML) + click empty background to deselect. Both key off the node
