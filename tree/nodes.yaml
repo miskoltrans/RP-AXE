@@ -3296,3 +3296,33 @@ nodes:
     # one-shot translunar burn into a reusable, many-restart orbital engine. The gap flagged at the end of
     # the original engine-only pass (missed because its RP-1 config carries no explicit techRequired of its
     # own - ground-truthed via partTech instead).
+
+  # ================================================================================================
+  # ===== SPACE-STATIONS-SHUTTLE ERA -- 2 MORE STRAYS FOUND IN A FULL-TREE ENGINE SWEEP (2026-07) ====
+  # ================================================================================================
+  - id: cryo_toroidalAerospikeNozzle
+    title: "Toroidal Aerospike Nozzle"
+    discipline: Cryogenics
+    tier: 9
+    parents: [cryo_gasGeneratorHydrolox]
+    flavor: "Bend the bell into an open ring around a truncated plug and let the atmosphere itself complete the nozzle - an annular chamber that keeps its thrust efficient from the pad to vacuum without ever changing shape. Ground-tested for a shortened Saturn upper stage that was never built."
+    parts: [ROE-J2T]
+    # King J-2T (J-2 Toroidal) - real Rocketdyne program, an altitude-compensating annular/aerospike
+    # derivative of the J-2 (T8) studied for a shortened S-II ("Saturn INT-20"); its own RP-1 configs span
+    # 1976-1985 (hydrolox1976/1981), squarely the already-authored space-stations-shuttle batch
+    # (x=-1932..-1592, docs/shuttle-station-engine-kings.md) - missed entirely in that engine-only pass.
+    # Distinct mechanism from a plain thrust uprate (nozzle geometry, not just a bigger bell), so it earns
+    # its own node rather than folding into cryo_largeHydrolox.
+
+  - id: pc_fluorineOxidizerChemistry
+    title: "Fluorine Oxidizer Chemistry"
+    discipline: PropellantChemistry
+    tier: 10
+    parents: [pc_refinedStorableORSC]
+    flavor: "Trade nitrogen tetroxide for liquid fluorine and gain the highest specific impulse any storable propellant will ever deliver - at the cost of an oxidiser that ignites concrete and dissolves glass. Fired on a test stand exactly as many times as good sense allowed, then never again."
+    parts: [ROE-RD301]
+    # King RD-301 - real Soviet 1970s exotic-oxidiser program (LqdFluorine+LqdAmmonia, Isp 400s vacuum -
+    # beats RD-270's NTO chemistry outright). The second stray from the same sweep: its RP-1 config
+    # (FRSC1976, x=-1762) also falls inside the already-authored space-stations-shuttle batch. Sibling to
+    # pc_stagedCombustionCeiling (RD-270, T10) rather than a variant of it - a different oxidiser family,
+    # not a re-fuelled RD-270 config.
