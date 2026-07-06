@@ -2201,12 +2201,32 @@ nodes:
     discipline: AirBreathing
     tier: 8
     parents: [av_highBypassTurbofan, av_lowBypassTurbofan, av_mach2Turbojet]
-    flavor: "The mature marks of every jet in the hangar - hotter turbines, tighter tolerances, a few percent more thrust and a few percent less fuel, engine by engine."
-    upgrades: [RFUpgrade_CF6-50A, RFUpgrade_F100-PW-220, RFUpgrade_TF34-GE-400A, RFUpgrade_J79-GE-119, RFUpgrade_J79-MTU-J1K, RFUpgrade_J85-GE-21, RFUpgrade_WP-6Z, RFUpgrade_WP-7B, RFUpgrade_R-13F-300, RFUpgrade_R-13F2-300, RFUpgrade_R-15BF2-300, RFUpgrade_RB162-81, RFUpgrade_WP-7BM]
-    # RFUpgrade_WP-7BM added (2026-07, shuttle/station batch): same WP-7 base as RFUpgrade_WP-7B already here.
-    # Doctrine-4 collector for late-mark jet refinements whose bases live across av_highBypassTurbofan,
-    # av_lowBypassTurbofan, av_variableStator, av_afterburner, av_highTempTurbojet, av_mach2Turbojet,
-    # av_dedicatedLiftJet - none of those bases live here, so all are legal.
+    flavor: "The mature marks of the bypass turbofans in the hangar - hotter turbines, tighter tolerances, a few percent more thrust and a few percent less fuel, engine by engine."
+    upgrades: [RFUpgrade_CF6-50A, RFUpgrade_F100-PW-220, RFUpgrade_TF34-GE-400A]
+    # Doctrine-4 collector for late-mark bypass-turbofan refinements (bases in av_highBypassTurbofan/
+    # av_lowBypassTurbofan).
+    # REVISED (2026-07, shuttle/station batch): this node hit 13 upgrades (10.4 weighted, already over
+    # cap before RFUpgrade_WP-7BM was even added) once upgrades started counting 0.8-parts toward the
+    # 6-part cap. Split by lineage into three: this node keeps the bypass-turbofan marks; the
+    # variable-stator fighter-turbojet marks and the Mach-2/lift-jet marks move to the two new sibling
+    # nodes below. Parent list left as-is (pre-existing, not touched).
+  - id: av_advancedFighterTurbojets
+    title: "Variable-Stator Fighter Turbojet Uprating"
+    discipline: AirBreathing
+    tier: 8
+    parents: [av_variableStator]
+    flavor: "The mature marks of the variable-stator fighter turbojets - J79, J85 and their Chinese WP derivatives, refined engine by engine for a few more percent of thrust."
+    upgrades: [RFUpgrade_J79-GE-119, RFUpgrade_J79-MTU-J1K, RFUpgrade_J85-GE-21, RFUpgrade_WP-6Z, RFUpgrade_WP-7B, RFUpgrade_WP-7BM]
+    # Split out of av_advancedJetEngines (2026-07). Bases (aje_j79/RO-J85GE5) live in av_variableStator (T4).
+  - id: av_advancedHighSpeedTurbojets
+    title: "Sustained Mach-2 & Lift-Jet Uprating"
+    discipline: AirBreathing
+    tier: 8
+    parents: [av_mach2Turbojet, av_dedicatedLiftJet]
+    flavor: "The mature marks of the sustained-Mach-2 cruise engines (the MiG-21's R-13, the MiG-25's R-15) and the dedicated hover lift-jets - two unrelated missions, both refined mark by mark past their first cut."
+    upgrades: [RFUpgrade_R-13F-300, RFUpgrade_R-13F2-300, RFUpgrade_R-15BF2-300, RFUpgrade_RB162-81]
+    # Split out of av_advancedJetEngines (2026-07). Bases live in av_mach2Turbojet (T7, R-13/R-15 kings)
+    # and av_dedicatedLiftJet (T7, RB162 king).
   - id: av_refinedTurboprop
     title: "Refined Free-Turbine Turboprop"
     discipline: AirBreathing
