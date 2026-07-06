@@ -1438,15 +1438,20 @@ nodes:
   # ===================== BAND 3 * SOLIDS FAMILY (1962/64/66, T7) =================================
   # ================================================================================================
   - id: pc_scoutMarkII
-    title: "Composite-Binder Solid Stages"
+    title: "Refined Propellant-Grain Casting"
     discipline: PropellantChemistry
     tier: 7
     parents: [pc_scoutSolids]
-    flavor: "Swap the early polysulfide binder for a composite polybutadiene grain — tougher, higher-energy, and lighter for the same impulse. Scout's own stages, uprated stage by stage."
+    flavor: "Cast the same grain to a truer shape and the same chemistry burns cleaner — Algol and Antares hold their exact propellant and simply gain thrust and Isp from the refined pour; Altair's own upper stage goes one step further, crossing to a tougher composite polybutadiene binder outright. Scout's own stages, uprated stage by stage."
     parts: [ROE-Algol2, ROE-Algol2_Inline, ROE-Antares2, ROE-Antares2_Inline, ROE-AltairII, ROE-AltairIII]
     upgrades: [RFTech-solids-tltech1]
     # RFTech-solids-tltech1 added (2026-07): RealFuels per-engine-TYPE tech-level for solids, confirmed
     # KEEP-engine-typelevel — matches this era's solids generation (bucket=solids1962).
+    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): title/flavor claimed a universal
+    # binder-chemistry breakthrough, but engine-stats.tsv shows Algol I->II stays PUPE and Antares I->II
+    # stays PBAA (same chemistry both times, only thrust/Isp improve) — only Altair II->III actually
+    # changes binder (PBAA->PBAN). Renamed to the mechanism true for all three (a grain-casting
+    # refinement), with the flavor now naming the mixed reality instead of a false universal claim.
   - id: pc_strapOnMarkII
     title: "Composite-Binder Strap-On Solid"
     discipline: PropellantChemistry
@@ -1461,12 +1466,16 @@ nodes:
     # (Thiokol M55A1 / Aerojet SR19-AJ-1 / Chemical Systems SR73-AJ-1) far better than a strap-on
     # booster lineage. Moved to the new pc_allSolidStaging node below.
   - id: pc_allSolidStaging
-    title: "Instant-Readiness Solid Staging"
+    title: "All-Solid Stage Stacking"
     discipline: PropellantChemistry
     tier: 7
     parents: [pc_compositeSolid]
     flavor: "Stack three solid stages instead of one liquid and one solid — nothing to fuel, nothing to chill, ready to fly from a cold silo the instant the order comes. The missile that trades some performance for never needing a countdown at all."
     parts: [ROE-M55, ROE-SR19, ROE-SR73]
+    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): title named the outcome
+    # ("instant-readiness") rather than the mechanism (replacing a liquid stage with a solid one) — the
+    # exact drift this same authoring pass already caught and fixed once for fd_pressureFedRestart
+    # ("reliability is the outcome, not the mechanism"). Renamed; flavor kept, still tells the same story.
   - id: pc_segmentedCasting
     title: "Segmented Solid-Grain Casting"
     discipline: PropellantChemistry
@@ -1480,9 +1489,19 @@ nodes:
     tier: 7
     parents: [pc_retroKick]
     flavor: "A precise, vacuum-reliable solid burn timed to the moment of highest altitude — not to come home, but to finish the job: circularise an orbit or send a probe on its way."
-    parts: [ROE-Star13D, ROE-Star13, ROE-Star13A, ROE-Star37, ROE-Star37E, ROE-Star17, ROE-Star17A, SXTWaxWing]
-    # STAR-17/17A + Waxwing added 2026-07 (band-3 lunar batch): the spin-stabilized solid-kick CATALOG (a
-    # fixed family of sizes, cap-exempt) - Waxwing is Black Arrow's spin-stabilized orbital-insertion motor.
+    parts: [ROE-Star13D, ROE-Star13, ROE-Star13A, ROE-Star37, ROE-Star37E]
+  - id: pc_apogeeKickCatalog
+    title: "Extended Apogee-Kick Motor Catalog"
+    discipline: PropellantChemistry
+    tier: 8
+    parents: [pc_apogeeKickStage]
+    flavor: "A later run of the same family, sized wherever a mission needs a bigger or smaller kick than the first generation offers — Star-17, Star-17A and Black Arrow's own spin-stabilized Waxwing among them. The procedural motor stays the default; research this only for the specific named performance."
+    parts: [ROE-Star17, ROE-Star17A, SXTWaxWing]
+    # NEW (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): split out of pc_apogeeKickStage, which had
+    # grown to 8 parts (over the hard 6-part cap) once these three were added — they're also a genuinely
+    # later era (solids1967-71 per engine-stats.tsv) than the T7 node's other five (solids1962-66). Framed
+    # as an opt-in size/era-extension catalog off the main king, the same pattern as the RCS small/fixed
+    # split and tel_antennaCatalog, rather than inventing a new chemistry mechanism that isn't really there.
   - id: pc_storableVernierFamily
     title: "Storable Vernier Chamber Family"
     discipline: PropellantChemistry
@@ -2061,8 +2080,13 @@ nodes:
     discipline: PropellantChemistry
     tier: 9
     parents: [pc_storableRcsPropellants]
-    flavor: "A storable blend studied but never flown — specLevel=concept in its own source data, the one entry in this family that never left the bench. A small edge over the operational choices, for whoever wants to gamble on it anyway."
+    flavor: "A storable blend studied but never flown — specLevel=concept in its own source data, the one entry in this family that never left the bench. Worse thrust and worse Isp than every operational choice beside it; nobody flew it because it never won the argument, but a completionist can still burn it."
     upgrades: [RFUpgrade_Cavea-B]
+    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #high): flavor claimed "a small edge over
+    # the operational choices" — ground truth (RCS_Config.cfg/engine-stats.tsv) says the opposite:
+    # thrusterPower=0.425 and IspV=0.939 are BELOW all five operational alternatives in this same node
+    # (weakest of those, UDMH+NTO, is still IspV=0.943). Corrected to the true story: a bench-only loser,
+    # not a hidden edge.
 
   # ================================================================================================
   # ============ BAND 3 * CREWED-LUNAR-LANDING TAIL (abort / service / maturation, 2026-07) =========

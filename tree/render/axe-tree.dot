@@ -159,11 +159,12 @@ digraph AXE {
   "gnc_threeAxisStabilizedBus" [label="Three-Axis Attitude Stabilization\nGuidanceControl T7 · 2300",fillcolor="#8a5cd6",fontcolor="#111111"];
   "fd_propellantUllage" [label="Propellant Ullage Settling\nFluidDynamics T7 · 2300",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_pressureFedRestart" [label="Pressure-Fed Multi-Restart Combustion\nFluidDynamics T8 · 2100",fillcolor="#23b9a0",fontcolor="#111111"];
-  "pc_scoutMarkII" [label="Composite-Binder Solid Stages\nPropellantChemistry T7 · 2300",fillcolor="#e5533b",fontcolor="#111111"];
+  "pc_scoutMarkII" [label="Refined Propellant-Grain Casting\nPropellantChemistry T7 · 2300",fillcolor="#e5533b",fontcolor="#111111"];
   "pc_strapOnMarkII" [label="Composite-Binder Strap-On Solid\nPropellantChemistry T7 · 2300",fillcolor="#e5533b",fontcolor="#111111"];
-  "pc_allSolidStaging" [label="Instant-Readiness Solid Staging\nPropellantChemistry T7 · 2300",fillcolor="#e5533b",fontcolor="#111111"];
+  "pc_allSolidStaging" [label="All-Solid Stage Stacking\nPropellantChemistry T7 · 2300",fillcolor="#e5533b",fontcolor="#111111"];
   "pc_segmentedCasting" [label="Segmented Solid-Grain Casting\nPropellantChemistry T7 · 2300",fillcolor="#e5533b",fontcolor="#111111"];
   "pc_apogeeKickStage" [label="Solid Apogee-Kick Stage\nPropellantChemistry T7 · 2300",fillcolor="#e5533b",fontcolor="#111111"];
+  "pc_apogeeKickCatalog" [label="Extended Apogee-Kick Motor Catalog\nPropellantChemistry T8 · 2100",fillcolor="#e5533b",fontcolor="#111111"];
   "pc_storableVernierFamily" [label="Storable Vernier Chamber Family\nPropellantChemistry T7 · 2300",fillcolor="#e5533b",fontcolor="#111111"];
   "int_surveyorLanderBus" [label="Soft-Lander Probe Bus\nSystemsIntegration T8 · 2100",fillcolor="#ededed",fontcolor="#111111"];
   "int_surveyorOrbiter" [label="Lunar Orbiter Bus\nSystemsIntegration T8 · 2100",fillcolor="#ededed",fontcolor="#111111"];
@@ -231,7 +232,7 @@ digraph AXE {
   { rank=same; "charter_usApp" "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_tvRecon" "opt_remoteSensing" "mic_boomMagnetometry" "opt_precisionOptics" "elec_deployableArrays" "gnc_basicAvionics" "tel_dopplerRanging" "str_equipmentBays" "fd_spacecraftPropulsion" "fd_titanTandem" "fd_longMarchStorable" "fd_sovietStorable" "av_highTempTurbojet" "cmp_ablativeTPS" "life_openLoopECLSS" "gnc_spacecraftRCS" "life_pressurisedCabin" "int_launchEscape" "av_refinedTurboprop" }
   { rank=same; "gs_saturnPad" "opt_irRadiometry" "opt_twoChannelIR" "opt_uvSpectrometry" "opt_refinedTV" "tel_pcmTelemetry" "pc_larchPeroxide" "pc_fluorine" "fd_vacuumExpansion" "fd_saturnKerolox" "av_ramjetAdvanced" "cmp_ablativeRefinement" "int_mercuryCapsule" "int_vostokCapsule" "int_zenitRecon" "edl_crewedRecovery" "opt_orbitalMapping" "fd_engineMaturation" }
   { rank=same; "str_fixedLanderLegs" "gs_shuttlePad" "life_crewedExperimentBay" "fd_clusteredThrustGrowth" "fd_blendedStorableFuel" "fd_ammoniaCombustionRefinement" "fd_titanStorableConversion" "pc_juno_ClF3" "int_geminiCapsule" "int_voskhodCabin" "gnc_smallRcsCatalog" "fd_continuousThrottleDescent" "cmp_airbagTouchdown" "gnc_threeAxisStabilizedBus" "fd_propellantUllage" "pc_scoutMarkII" "pc_strapOnMarkII" "pc_allSolidStaging" "pc_segmentedCasting" "pc_apogeeKickStage" "pc_storableVernierFamily" "tel_deployableHighGainDish" "tel_antennaCatalog" "elec_deployablePanelII" "elec_fuelCellPower" "opt_radarAltimetry" "opt_infraredInterferometry" "mic_ionMassSpec" "opt_multiSpectralImaging" "rob_heavyRotorActuation" "rob_hingeActuation" "rob_linearActuation" "rob_precisionRotationServo" "rob_sequencedControl" "rob_surfaceMobility" "str_fuelCrossfeed" "tel_realAntennaTelemetry" "nuc_isotopePower" "av_mach2Turbojet" "av_dedicatedLiftJet" "th_activeLouvers" "int_compactCrewPod" "cryo_refinedExpander" "gnc_interplanetaryAvionics" "elec_integratedCircuit" "av_highBypassTurbofan" "av_lowBypassTurbofan" "int_heavyLaunchEscape" }
-  { rank=same; "fd_gasGeneratorCeiling" "pc_orscDebut" "gnc_rendezvousDocking" "gnc_fixedRcsCatalog" "fd_pressureFedRestart" "int_surveyorLanderBus" "int_surveyorOrbiter" "tel_compactHighGainAntenna" "tel_phasedArrayRelay" "elec_refinedSolarSimulation" "mic_boomMagnetometryII" "gnc_orbitalGravimetry" "cmp_lunarReturnAblator" "nuc_isotopePowerII" "gnc_reactionWheelAttitude" "cryo_gasGeneratorHydrolox" "pc_protonStagedCombustion" "comp_digitalGuidanceComputer" "av_advancedJetEngines" "pc_largeSegmentedBooster" "pc_storableRcsPropellants" "fd_advancedSpacecraftPropulsion" "nuc_fissionReactor" }
+  { rank=same; "fd_gasGeneratorCeiling" "pc_orscDebut" "gnc_rendezvousDocking" "gnc_fixedRcsCatalog" "fd_pressureFedRestart" "pc_apogeeKickCatalog" "int_surveyorLanderBus" "int_surveyorOrbiter" "tel_compactHighGainAntenna" "tel_phasedArrayRelay" "elec_refinedSolarSimulation" "mic_boomMagnetometryII" "gnc_orbitalGravimetry" "cmp_lunarReturnAblator" "nuc_isotopePowerII" "gnc_reactionWheelAttitude" "cryo_gasGeneratorHydrolox" "pc_protonStagedCombustion" "comp_digitalGuidanceComputer" "av_advancedJetEngines" "pc_largeSegmentedBooster" "pc_storableRcsPropellants" "fd_advancedSpacecraftPropulsion" "nuc_fissionReactor" }
   { rank=same; "fd_deepThrottleLanding" "fd_gasGeneratorApex" "cryo_largeHydrolox" "pc_n1ClosedCycle" "pc_refinedStorableORSC" "nuc_nuclearThermalRocket" "nuc_nuclearRamjet" "comp_realTimeFlightComputer" "pc_caveaB" }
   { rank=same; "fd_lunarSurfaceMobility" "comp_networkedAvionics" }
   "hire_JPL" -> "charter_usEarly" [style=solid];
@@ -415,6 +416,7 @@ digraph AXE {
   "pc_compositeSolid" -> "pc_allSolidStaging" [style=solid];
   "pc_compositeSolid" -> "pc_segmentedCasting" [style=solid];
   "pc_retroKick" -> "pc_apogeeKickStage" [style=solid];
+  "pc_apogeeKickStage" -> "pc_apogeeKickCatalog" [style=solid];
   "pc_ntoHypergolics" -> "pc_storableVernierFamily" [style=solid];
   "fd_continuousThrottleDescent" -> "int_surveyorLanderBus" [style=solid];
   "rob_linearActuation" -> "int_surveyorLanderBus" [style=solid];
