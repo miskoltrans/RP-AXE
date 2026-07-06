@@ -64,6 +64,7 @@ namespace RPAxe.RnD
         private static readonly FieldInfo WidthF = AccessTools.Field(typeof(RDNode), "width");
         private static readonly FieldInfo HeightF = AccessTools.Field(typeof(RDNode), "height");
         private static readonly FieldInfo TechIconF = AccessTools.Field(typeof(RDNodePrefab), "techIcon");   // the node glyph (Image 'ImageIcon')
+        private static readonly FieldInfo SelectionF = AccessTools.Field(typeof(RDNodePrefab), "selection");   // the green selection halo (Image 'Selection', twin of searchHighlight)
         private const float ICON_SCALE = 0.78f;   // shrink the glyph a bit for easier navigation (prototype icon ~0.72 of tile)
 
         private void Awake()
@@ -409,11 +410,13 @@ namespace RPAxe.RnD
                     if (sr.content != null) Debug.Log($"[AXE] DUMP content rect={sr.content.rect} sizeDelta={sr.content.sizeDelta} anchoredPos={sr.content.anchoredPosition} pivot={sr.content.pivot} anchorMin={sr.content.anchorMin} anchorMax={sr.content.anchorMax}");
                     if (sr.viewport != null) Debug.Log($"[AXE] DUMP viewport rect={sr.viewport.rect}");
                 }
-                RDNode s = null;   // a node my postfix DEFINITELY processes (in meta + researchable)
+                RDNode s = null;   // a real (non-start) in-meta node my postfix processes + AlignNode holds on
                 foreach (RDNode n in ctrl.nodes)
                     if (n != null && n.tech != null && AxeTreeMeta.Nodes.ContainsKey(n.tech.techID) && n.state == RDNode.State.RESEARCHABLE) { s = n; break; }
-                bool startInMeta = ctrl.nodes[0] != null && ctrl.nodes[0].tech != null && AxeTreeMeta.Nodes.ContainsKey(ctrl.nodes[0].tech.techID);
-                Debug.Log($"[AXE] DUMP dumped node='{(s != null ? s.tech.techID : "none-researchable")}' startInMeta={startInMeta}");
+                if (s == null)   // states may not be ready at dump time -> any in-meta node except the special start
+                    foreach (RDNode n in ctrl.nodes)
+                        if (n != null && n != ctrl.nodes[0] && n.tech != null && AxeTreeMeta.Nodes.ContainsKey(n.tech.techID)) { s = n; break; }
+                Debug.Log($"[AXE] DUMP dumped node='{(s != null ? s.tech.techID : "none")}'");
                 if (s == null) s = ctrl.nodes[0];
                 float w = WidthF != null ? (float)WidthF.GetValue(s) : -1f;
                 float h = HeightF != null ? (float)HeightF.GetValue(s) : -1f;
@@ -454,6 +457,19 @@ namespace RPAxe.RnD
                     LogComps("StateButton", g0.searchHighlight != null ? g0.searchHighlight.transform.parent : null);
                     LogComps("gfxRoot", g0.transform);
                     LogComps("gfxRoot.parent", g0.transform.parent);
+                }
+                // SELECTION-GLOW diagnosis: light the selection glow on s, then dump every Graphic in the node's
+                // subtree -> which element is the green selection halo, and how far it's offset from the centre.
+                {
+                    Vector3 nc = (s.GetPosition(RDNode.Anchor.LEFT, Vector3.zero) + s.GetPosition(RDNode.Anchor.RIGHT, Vector3.zero)) * 0.5f;
+                    Debug.Log($"[AXE] SELGLOW node-centre=({nc.x:F1},{nc.y:F1})");
+                    try { s.SelectNode(); } catch (Exception e) { Debug.Log($"[AXE] SELGLOW SelectNode threw: {e.Message}"); }
+                    foreach (Graphic gr in s.gameObject.GetComponentsInChildren<Graphic>(true))
+                    {
+                        RectTransform grt = gr.rectTransform;
+                        Vector3 wc = grt.TransformPoint(grt.rect.center);
+                        Debug.Log($"[AXE] SELGLOW '{gr.name}' {gr.GetType().Name} en={gr.enabled} act={gr.gameObject.activeInHierarchy} col={gr.color:F2} wc=({wc.x:F1},{wc.y:F1}) size={grt.sizeDelta}");
+                    }
                 }
                 Transform root = ctrl.RDNodeRoot;
                 if (root != null) Debug.Log($"[AXE] DUMP RDNodeRoot pos={root.position} localScale={root.localScale} euler={root.eulerAngles}");
@@ -705,6 +721,7 @@ namespace RPAxe.RnD
                 t.offsetMax = new Vector2(64f, 0f);
             }
             if (g.searchHighlight != null) g.searchHighlight.rectTransform.anchoredPosition = Vector2.zero;
+            if (SelectionF != null && SelectionF.GetValue(g) is Graphic sel) sel.rectTransform.anchoredPosition = Vector2.zero;   // green selection halo -> centre it too
             if (TechIconF != null && TechIconF.GetValue(g) is Graphic ic) ic.rectTransform.anchoredPosition = Vector2.zero;
         }
 
@@ -715,8 +732,8 @@ namespace RPAxe.RnD
             RDNodePrefab g = rd != null ? rd.graphics : null;
             if (g == null || g.searchHighlight == null) return;
             g.searchHighlight.raycastTarget = false;   // the ring must never intercept the node's click
-            if (rd.state == RDNode.State.RESEARCHABLE) { g.searchHighlight.color = RingAvailable; g.searchHighlight.enabled = true; }
-            else g.searchHighlight.enabled = false;     // researched (green tile signals it) + locked = no ring
+            g.searchHighlight.enabled = false;         // blue researchable ring HIDDEN for now (per request);
+            // to restore: if (rd.state == RDNode.State.RESEARCHABLE) { g.searchHighlight.color = RingAvailable; g.searchHighlight.enabled = true; } else enabled = false;
         }
 
         // Hover-trace lineage (like the HTML) + click empty background to deselect. Both key off the node
