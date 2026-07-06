@@ -1,0 +1,255 @@
+node	node_title	x	kind	name	curated	prev	title
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	SXTMTVGirder	yes	no	Strongback Truss (Closed Long)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	SXTMTVGirderBasic	yes	no	Strongback Truss (Closed Short)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	SXTMTVGirderOpen	yes	no	Strongback Truss (Open Long)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	SXTMTVGirderOpenMedium	yes	no	Strongback Truss (Open Medium)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	SXTMTVGirderOpenSmall	yes	no	Strongback Truss (Open Short)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	cupola	yes	no	Cupola Observatory Module
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	sspx-cargo-container-25-1	yes	no	4.5m Storage Module (Long)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	sspx-cargo-container-375-2	yes	no	6.225m Storage Module (Medium)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	sspx-cargo-container-radial-huge-1	yes	no	Large Radial Cargo Container (Long)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	sspx-cargo-container-radial-huge-2	yes	no	Large Radial Cargo Container (Short)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	sspx-core-25-1	yes	no	4.5m Station Core
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	sspx-core-375-1	yes	no	6.75m Station Core
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	sspx-habitation-375-1	yes	no	6.75m Habitation Module (Large)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	sspx-habitation-375-3	yes	no	6.75m Habitation Module (Shielded)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	sspx-tube-25-1	yes	no	4.5m Pressurized Crew Tube (Long)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	sspx-tube-375-2	yes	no	6.75m Pressurized Crew Tube (Medium)
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	truss-circular-01	yes	no	Annular Modular Truss XL
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	truss-circular-02	yes	no	Annular Modular Truss
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	truss-circular-03	yes	no	Annular Modular Truss Mini
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	truss-circular-04	yes	no	Annular Modular Truss Micro
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	truss-circular-adapter-01	yes	no	Annular Truss Adapter
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	truss-circular-adapter-02	yes	no	Annular Truss Adapter V2
+improvedOrbitalConstruction	Improved Orbital Construction	-1082	part	truss-circular-docking-01	yes	no	Annular Truss Docking Connector
+largeDockingPorts	Large Docking Ports	-1082	upgrade	RFUpgrade_R-42DM	KEEP-engine		
+largeDockingPorts	Large Docking Ports	-1082	upgrade	RFUpgrade_R-42DM-NTO	KEEP-engine		
+largeRoverDesigns	Large Rover Designs	-1082	part	KF-WheelLarge	yes	no	KF Large Wheel
+largeRoverDesigns	Large Rover Designs	-1082	part	ROE-MR80B	yes	no	MR-80B (MLE)
+largeRoverDesigns	Large Rover Designs	-1082	part	roverWheel3	yes	no	RoveMax Model XL3
+orbitalRocketry2004	2004-2008 Orbital Rocketry	-1082	part	ROE-Merlin1A	yes	no	Merlin 1A
+orbitalRocketry2004	2004-2008 Orbital Rocketry	-1082	part	ROE-Merlin1C	yes	no	Merlin 1C
+orbitalRocketry2004	2004-2008 Orbital Rocketry	-1082	upgrade	RFUpgrade_AestusMod	KEEP-engine		
+orbitalRocketry2004	2004-2008 Orbital Rocketry	-1082	upgrade	RFUpgrade_Merlin1C	KEEP-engine		
+stagedCombustion2004	2004-2008 ORSC Engines	-1082	part	ROE-RD0124	yes	no	RD-0124
+stagedCombustion2004	2004-2008 ORSC Engines	-1082	upgrade	RFUpgrade_AJ26-58	KEEP-engine		
+stagedCombustion2004	2004-2008 ORSC Engines	-1082	upgrade	RFUpgrade_AJ26-59	KEEP-engine		
+stagedCombustion2004	2004-2008 ORSC Engines	-1082	upgrade	RFUpgrade_AJ26-60	KEEP-engine		
+stagedCombustion2004	2004-2008 ORSC Engines	-1082	upgrade	RFUpgrade_RD-171M	KEEP-engine		
+stagedCombustion2004	2004-2008 ORSC Engines	-1082	upgrade	RFUpgrade_RD-275M	KEEP-engine		
+stagedCombustion2004	2004-2008 ORSC Engines	-1082	upgrade	RFUpgrade_RD-58M-CCN	KEEP-engine		
+materialsScienceCommercial	Commercial Spaceflight Era Materials Science	-997	upgrade	PFTech-Fairing-VI	KEEP-capability		
+materialsScienceCommercial	Commercial Spaceflight Era Materials Science	-997	upgrade	RFTech-Tank-Iso-Comp	KEEP-tank-typelevel		
+materialsScienceCommercial	Commercial Spaceflight Era Materials Science	-997	upgrade	RFTech-Tank-Sep-Stir	KEEP-tank-typelevel		
+materialsScienceCommercial	Commercial Spaceflight Era Materials Science	-997	upgrade	rp0EngineerUpgradeCommercial	DROP-axed-career		
+electronicsCommercial	Commercial Spaceflight Era Electronics Research	-997	upgrade	rp0ResearcherUpgradeCommercial	DROP-axed-career		
+advancedTurbofans	Advanced Turbofans	-912	upgrade	RFUpgrade_F100-PW-229EEP	KEEP-engine		
+advancedTurbofans	Advanced Turbofans	-912	upgrade	RFUpgrade_WS-10B-III	KEEP-engine		
+gridFins	Grid Fins	-912	part	ROC-CSTNDSActive	yes	no	NASA Docking System (Active)
+gridFins	Grid Fins	-912	part	ROC-CSTNDSPassive	yes	no	NASA Docking System (Passive)
+gridFins	Grid Fins	-912	part	ROE-LEROS4	yes	no	LEROS-4 (1100N)
+gridFins	Grid Fins	-912	part	ROE-SuperDraco	yes	no	SuperDraco
+gridFins	Grid Fins	-912	part	ROE-SuperDracoDouble	yes	no	Twin SuperDraco
+gridFins	Grid Fins	-912	part	dockingPort1	yes	no	NASA Docking System (Shielded)
+gridFins	Grid Fins	-912	part	dockingPort2	yes	no	NASA Docking System
+gridFins	Grid Fins	-912	part	dockingPortLateral	yes	no	NASA Docking System
+gridFins	Grid Fins	-912	upgrade	RFTech-rcs-tltech7	KEEP-engine-typelevel		
+reusability	Reusability	-912	part	KF-WheelMedium	yes	no	KF Medium Wheel
+reusability	Reusability	-912	part	largeLandingLeg	yes	no	LT-5 Macro Super Landing Strut
+reusability	Reusability	-912	part	wheelMed	yes	no	TR-2L Ruggedized Vehicular Wheel
+hydrolox2009	2009-2013 Hydrolox Engines	-912	part	ROE-J2X	yes	no	J-2X
+hydrolox2009	2009-2013 Hydrolox Engines	-912	part	ROE-MB35	yes	no	MB-35
+hydrolox2009	2009-2013 Hydrolox Engines	-912	part	ROE-MB60	yes	no	MB-60
+hydrolox2009	2009-2013 Hydrolox Engines	-912	upgrade	RFUpgrade_LE-5B-2	KEEP-engine		
+hydrolox2009	2009-2013 Hydrolox Engines	-912	upgrade	RFUpgrade_RS-68A	KEEP-engine		
+FRSC2009	2009-2013 FRSC Engines	-912	part	rmm_arsia	yes	no	RS-25-650 (SSME-650)
+FRSC2009	2009-2013 FRSC Engines	-912	upgrade	RFUpgrade_CE-7.5	KEEP-engine		
+orbitalRocketry2009	2009-2013 Orbital Rocketry	-912	part	ROE-Merlin1CV	yes	no	Merlin 1C Vacuum
+orbitalRocketry2009	2009-2013 Orbital Rocketry	-912	part	ROE-Merlin1D	yes	no	Merlin 1D
+orbitalRocketry2009	2009-2013 Orbital Rocketry	-912	part	ROE-Merlin1DV	yes	no	Merlin 1D Vacuum
+orbitalRocketry2009	2009-2013 Orbital Rocketry	-912	part	ROE-RD0110R	yes	no	RD-0110R
+orbitalRocketry2009	2009-2013 Orbital Rocketry	-912	upgrade	RFUpgrade_Merlin1CVac	KEEP-engine		
+orbitalRocketry2009	2009-2013 Orbital Rocketry	-912	upgrade	RFUpgrade_Merlin1D	KEEP-engine		
+orbitalRocketry2009	2009-2013 Orbital Rocketry	-912	upgrade	RFUpgrade_Merlin1DVac	KEEP-engine		
+stagedCombustion2009	2009-2013 ORSC Engines	-912	part	ROE-RD191	yes	no	RD-191
+stagedCombustion2009	2009-2013 ORSC Engines	-912	part	nflv-engine-rs84-1	yes	no	RS-84
+stagedCombustion2009	2009-2013 ORSC Engines	-912	upgrade	RFUpgrade_AJ26-62	KEEP-engine		
+stagedCombustion2009	2009-2013 ORSC Engines	-912	upgrade	RFUpgrade_RD-193	KEEP-engine		
+stagedCombustion2009	2009-2013 ORSC Engines	-912	upgrade	RFUpgrade_RD-277M-14D16M	KEEP-engine		
+solids2009	2009-2018 Solid Rocket Engines	-912	part	ROE-Castor30	yes	no	Castor 30A
+solids2009	2009-2018 Solid Rocket Engines	-912	part	ROE-Castor30XL	yes	no	Castor 30XL
+solids2009	2009-2018 Solid Rocket Engines	-912	part	ROE-GEM63	yes	no	GEM 63
+solids2009	2009-2018 Solid Rocket Engines	-912	upgrade	RFUpgrade_STAR-37FMV	KEEP-engine		
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	part	RO-nupit	yes	no	NuPIT Pulsed Inductive Thruster
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	part	ionArgon-0625-2	yes	no	P5 5kW Hall Effect Thruster
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	part	ionArgon-0625-3	yes	no	X3 Hall-Effect Thruster
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	part	ionXenon-0625-2	yes	no	HiPEP Gridded Ion Thruster
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	part	ionXenon-0625-3	yes	no	DS4G Gridded Ion Thruster
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	part	pit-0625	yes	no	FARAD Pulsed Inductive Thruster
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	upgrade	RFUpgrade_457M-V2	KEEP-engine		
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	upgrade	RFUpgrade_DS4G-25-hi	KEEP-engine		
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	upgrade	RFUpgrade_DS4G-25-mid	KEEP-engine		
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	upgrade	RFUpgrade_NuPIT-7000	KEEP-engine		
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	upgrade	RFUpgrade_PITV-Ammonia-1200	KEEP-engine		
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	upgrade	RFUpgrade_PITV-Hydrazine-1200	KEEP-engine		
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	upgrade	RFUpgrade_SPT-100D	KEEP-engine		
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	upgrade	RFUpgrade_SPT-100M	KEEP-engine		
+elecPropulsion2009	2009-2018 Electric Propulsion	-912	upgrade	RFUpgrade_SPT-140D	KEEP-engine		
+efficientNuclearPropulsion	Efficient Nuclear Propulsion	-912	upgrade	RFUpgrade_LPNTR-3600HP	KEEP-engine		
+efficientNuclearPropulsion	Efficient Nuclear Propulsion	-912	upgrade	RFUpgrade_SNTPPFE100-Hydrogen	KEEP-engine		
+modernNuclearPower	Modern Nuclear Power Generation	-912	part	RO-MMRTG	yes	no	Multi-Mission RTG
+modernNuclearPower	Modern Nuclear Power Generation	-912	part	RO-reactor-SAFE400	yes	no	NASA SAFE-400 Nuclear Reactor
+modernNuclearPower	Modern Nuclear Power Generation	-912	part	RO-reactor-prometheus	yes	no	Prometheus 200 KWe Nuclear Reactor
+modernNuclearPower	Modern Nuclear Power Generation	-912	part	USRTGWedgeMM	yes	no	Universal Storage: Multi-Mission RTG
+modernNuclearPower	Modern Nuclear Power Generation	-912	part	nfe-rtg-asrg-1	yes	no	NASA & DOE Advanced Sterling RG
+modernNuclearPower	Modern Nuclear Power Generation	-912	part	nfe-rtg-mmrtg-1	yes	no	Multi-Mission RTG
+modernNuclearPower	Modern Nuclear Power Generation	-912	part	reactor-0625	no	no	DEPRECATED (DEPRECATED)
+modernNuclearPower	Modern Nuclear Power Generation	-912	part	rtg-0625	no	no	DEPRECATED (DEPRECATED)
+modernPower	Modern Power Generation and Storage	-912	upgrade	solarTL10	KEEP-techlevel-TODO		
+modernComms	Modern Communications	-912	part	dish_hera	yes	no	Juno Parabolic Antenna
+modernComms	Modern Communications	-912	part	dish_tatsujin	yes	no	MAVEN Parabolic Antenna
+modernComms	Modern Communications	-912	upgrade	RP0Level11TrackingStation	REFERENCE-comms-dsn		
+modernComms	Modern Communications	-912	upgrade	commsTL10	KEEP-techlevel-TODO		
+modernAvionics	Modern Avionics and Probes	-912	part	ca_hera	yes	no	Juno Spacecraft Bus
+modernAvionics	Modern Avionics and Probes	-912	upgrade	Deep-Space-modernAvionics	REFERENCE-avionics		
+modernAvionics	Modern Avionics and Probes	-912	upgrade	HDD-Upgrade-2010	KEEP-capability		
+modernAvionics	Modern Avionics and Probes	-912	upgrade	Near-Earth-modernAvionics	REFERENCE-avionics		
+modernAvionics	Modern Avionics and Probes	-912	upgrade	Science-Core-modernAvionics	REFERENCE-avionics		
+advancedSurfaceScience	Advanced Surface Experiments	-912	part	scansat-multi-abi-1	yes	no	ABI Multi-Spectral Imager
+advancedSurfaceScience	Advanced Surface Experiments	-912	part	scansat-multi-msi-1	yes	no	MSI Multi-Spectral Imager
+advancedSurfaceScience	Advanced Surface Experiments	-912	part	scansat-sar-paz-1	yes	no	PAZ-SAR Radar Antenna
+inflatableHabitats	Inflatable Habitats	-827	part	InflatableHAB	yes	no	IKU-03 Kerbal Safety Bubble
+inflatableHabitats	Inflatable Habitats	-827	part	SXTDLK83EHabitat	yes	no	Ares LK-S3E Heavy Planetary Habitat
+inflatableHabitats	Inflatable Habitats	-827	part	sspx-cargo-container-375-1	yes	no	6.75m Storage Module (Long)
+inflatableHabitats	Inflatable Habitats	-827	part	sspx-cupola-375-1	yes	no	6.75m Cupola
+inflatableHabitats	Inflatable Habitats	-827	part	sspx-docking-125-1	yes	no	Extendable NASA Docking System
+inflatableHabitats	Inflatable Habitats	-827	part	sspx-extendable-tube-125-1	yes	no	2.25m Extendable Crew Tube
+inflatableHabitats	Inflatable Habitats	-827	part	sspx-inflatable-centrifuge-125-2	yes	no	2.25m Inflatable Centrifuge (13m Diameter)
+inflatableHabitats	Inflatable Habitats	-827	part	sspx-inflatable-hab-125-2	yes	no	2.25m Inflatable Habitat (Medium)
+inflatableHabitats	Inflatable Habitats	-827	part	sspx-inflatable-hab-125-3	yes	no	2.25m Inflatable Habitat (Short)
+inflatableHabitats	Inflatable Habitats	-827	part	sspx-lab-375-1	yes	no	6.75m Station Science Lab
+inflatableHabitats	Inflatable Habitats	-827	part	sspx-observation-25-1	yes	no	4.5m Cupola (Large)
+hydrolox2014	2014-2018 Hydrolox Engines	-827	part	ROE-BE3	yes	no	BE-3PM
+hydrolox2014	2014-2018 Hydrolox Engines	-827	upgrade	RFUpgrade_CECE-Base	KEEP-engine		
+hydrolox2014	2014-2018 Hydrolox Engines	-827	upgrade	RFUpgrade_CECE-High	KEEP-engine		
+hydrolox2014	2014-2018 Hydrolox Engines	-827	upgrade	RFUpgrade_CECE-Methane	KEEP-engine		
+hydrolox2014	2014-2018 Hydrolox Engines	-827	upgrade	RFUpgrade_RD-0146D	KEEP-engine		
+hydrolox2014	2014-2018 Hydrolox Engines	-827	upgrade	RFUpgrade_RL10C-1	KEEP-engine		
+hydrolox2014	2014-2018 Hydrolox Engines	-827	upgrade	RFUpgrade_RL10C-1A	KEEP-engine		
+hydrolox2014	2014-2018 Hydrolox Engines	-827	upgrade	RFUpgrade_RS-68B	KEEP-engine		
+hydrolox2014	2014-2018 Hydrolox Engines	-827	upgrade	RFUpgrade_RS-68K	KEEP-engine		
+orbitalRocketry2014	2014-2018 Orbital Rocketry	-827	part	ROE-Rutherford	yes	no	Rutherford
+orbitalRocketry2014	2014-2018 Orbital Rocketry	-827	part	ROE-RutherfordVac	yes	no	Rutherford Vacuum
+orbitalRocketry2014	2014-2018 Orbital Rocketry	-827	upgrade	RFUpgrade_Aestus-II	KEEP-engine		
+orbitalRocketry2014	2014-2018 Orbital Rocketry	-827	upgrade	RFUpgrade_Merlin1D+	KEEP-engine		
+orbitalRocketry2014	2014-2018 Orbital Rocketry	-827	upgrade	RFUpgrade_Merlin1D++	KEEP-engine		
+orbitalRocketry2014	2014-2018 Orbital Rocketry	-827	upgrade	RFUpgrade_Merlin1DVac+	KEEP-engine		
+stagedCombustion2014	2014-2018 ORSC Engines	-827	part	nflv-engine-ar1-1	yes	no	AR-1
+stagedCombustion2014	2014-2018 ORSC Engines	-827	part	nflv-engine-ar1c-1	yes	no	AR-1
+stagedCombustion2014	2014-2018 ORSC Engines	-827	upgrade	RFUpgrade_RD-181	KEEP-engine		
+stagedCombustion2014	2014-2018 ORSC Engines	-827	upgrade	RFUpgrade_RD-191	KEEP-engine		
+stagedCombustion2014	2014-2018 ORSC Engines	-827	upgrade	RFUpgrade_YF-100K	KEEP-engine		
+materialsScienceMatureCommercial	Mature Commercial Spaceflight Era Materials Science	-742	part	fft-fueltank-fission-25-1	yes	no	10 m Fissiles Tank (Long)
+materialsScienceMatureCommercial	Mature Commercial Spaceflight Era Materials Science	-742	part	fft-fueltank-fission-25-2	yes	no	10 m Fissiles Tank (Medium)
+materialsScienceMatureCommercial	Mature Commercial Spaceflight Era Materials Science	-742	part	fft-fueltank-fission-radial-1	yes	no	3.2 m Fissiles Tank (Long)
+materialsScienceMatureCommercial	Mature Commercial Spaceflight Era Materials Science	-742	part	fft-fueltank-fission-radial-2	yes	no	3.2 m Fissiles Tank (Medium)
+materialsScienceMatureCommercial	Mature Commercial Spaceflight Era Materials Science	-742	part	fft-fueltank-fission-radial-3	yes	no	3.2 m Fissiles Tank (Short)
+commercialSpaceplanes	Commercial Spaceplanes	-657	part	RAPIER	yes	no	CR-7 R.A.P.I.E.R.
+commercialCapsules	Commercial Capsules	-657	part	ROC-CSTCM	yes	no	CST-100 Command Module
+commercialCapsules	Commercial Capsules	-657	part	ROC-CSTNoseCone	yes	no	CST-100 Nose Cone
+commercialCapsules	Commercial Capsules	-657	part	ROC-CSTParachute	yes	no	CST-100 Parachute Pack
+commercialCapsules	Commercial Capsules	-657	part	ROC-CSTRS88	yes	no	CST-100 Launch Abort Engines (LAE)
+commercialCapsules	Commercial Capsules	-657	part	ROC-CSTSM	yes	no	CST-100 Service Module
+commercialCapsules	Commercial Capsules	-657	part	ROC-OrionCM	yes	no	Orion Command Module
+commercialCapsules	Commercial Capsules	-657	part	ROC-OrionCover1	yes	no	Orion SM Fairing - 1
+commercialCapsules	Commercial Capsules	-657	part	ROC-OrionCover2	yes	no	Orion SM Fairing - 2
+commercialCapsules	Commercial Capsules	-657	part	ROC-OrionCover3	yes	no	Orion ESM Fairing - 3
+commercialCapsules	Commercial Capsules	-657	part	ROC-OrionESM	yes	no	Orion European Service Module
+commercialCapsules	Commercial Capsules	-657	part	ROC-OrionEUSDecoupler	yes	no	Orion Decoupler
+commercialCapsules	Commercial Capsules	-657	part	ROC-OrionForwardHS	yes	no	Orion Forward Heat Shield and Docking Port
+commercialCapsules	Commercial Capsules	-657	part	ROC-OrionHS	yes	no	Orion Heatshield
+commercialCapsules	Commercial Capsules	-657	part	ROC-OrionLAS	yes	no	Orion LAS and BPC
+commercialCapsules	Commercial Capsules	-657	part	ROC-OrionParachute	yes	no	Orion Main Parachute
+improvedHabitats	Improved Habitats	-657	part	sspx-adapter-375-5-1	yes	no	Station Conical Adapter [6.75m to 9m]
+improvedHabitats	Improved Habitats	-657	part	sspx-adapter-375-5-2	yes	no	Station Flat Adapter [6.75m to 9m]
+improvedHabitats	Improved Habitats	-657	part	sspx-aquaculture-375-1	yes	no	6.75m Aquaculture Module
+improvedHabitats	Improved Habitats	-657	part	sspx-core-5-1	yes	no	9m Station Core
+improvedHabitats	Improved Habitats	-657	part	sspx-greenhouse-375-1	yes	no	6.75m Greenhouse Module
+improvedHabitats	Improved Habitats	-657	part	sspx-inflatable-centrifuge-125-1	yes	no	2.25m Inflatable Centrifuge (16m Diameter)
+improvedHabitats	Improved Habitats	-657	part	sspx-inflatable-hab-125-1	yes	no	2.25m Inflatable Habitat (Long)
+improvedHabitats	Improved Habitats	-657	part	sspx-inflatable-hab-25-1	yes	no	4.5m Inflatable Habitat (Long)
+improvedHabitats	Improved Habitats	-657	part	sspx-inflatable-hab-25-2	yes	no	4.5m Inflatable Habitat (Short)
+improvedHabitats	Improved Habitats	-657	part	sspx-tube-375-1	yes	no	6.75m Pressurized Crew Tube (Long)
+improvedHabitats	Improved Habitats	-657	upgrade	Upgrade-Colony	not-in-curated		
+reusableControl	Reusable Attitude Control	-657	part	ROC-OrionRCS	yes	no	Orion RCS Thrusters
+reusableControl	Reusable Attitude Control	-657	upgrade	RFUpgrade_ASCENT	KEEP-engine		
+reusableControl	Reusable Attitude Control	-657	upgrade	RFUpgrade_CH4+O2	KEEP-engine		
+reusableControl	Reusable Attitude Control	-657	upgrade	RFUpgrade_H2+O2	KEEP-engine		
+SIAD	Supersonic Inflatable Aerodynamic Decelerator	-657	part	ROC-CSTHS	yes	no	CST-100 Heat Shield
+SIAD	Supersonic Inflatable Aerodynamic Decelerator	-657	part	ROH-AdjustableHIAD	yes	no	Adjustable HIAD
+SIAD	Supersonic Inflatable Aerodynamic Decelerator	-657	upgrade	Inflatable	KEEP-capability		
+hydrolox2019	2019-2028 Hydrolox Engines	-657	part	cryoengine-fuji-1	yes	no	LE-9
+hydrolox2019	2019-2028 Hydrolox Engines	-657	part	cryoengine-pavonis-1	yes	no	RL60/Vinci
+hydrolox2019	2019-2028 Hydrolox Engines	-657	part	cryoengine-tharsis-1	yes	no	RL60/Vinci
+hydrolox2019	2019-2028 Hydrolox Engines	-657	upgrade	RFUpgrade_LE-5B-3	KEEP-engine		
+hydrolox2019	2019-2028 Hydrolox Engines	-657	upgrade	RFUpgrade_RL10C-1-1	KEEP-engine		
+hydrolox2019	2019-2028 Hydrolox Engines	-657	upgrade	RFUpgrade_RL10C-2	KEEP-engine		
+hydrolox2019	2019-2028 Hydrolox Engines	-657	upgrade	RFUpgrade_RL10C-2-1	KEEP-engine		
+hydrolox2019	2019-2028 Hydrolox Engines	-657	upgrade	RFUpgrade_RS-800	KEEP-engine		
+hydrolox2019	2019-2028 Hydrolox Engines	-657	upgrade	RFUpgrade_Vinci-180	KEEP-engine		
+orbitalRocketry2019	2019-2028 Orbital Rocketry	-657	part	ROE-F1B	yes	no	F-1B
+orbitalRocketry2019	2019-2028 Orbital Rocketry	-657	part	cryoengine-buzzard-1	yes	no	M10
+orbitalRocketry2019	2019-2028 Orbital Rocketry	-657	upgrade	RFUpgrade_RS-18	KEEP-engine		
+stagedCombustion2019	2019-2028 ORSC Engines	-657	part	ROE-BE4	yes	no	BE-4
+stagedCombustion2019	2019-2028 ORSC Engines	-657	part	ROE-Raptor	yes	no	Raptor (Surface Variant)
+stagedCombustion2019	2019-2028 ORSC Engines	-657	part	ROE-RaptorVac	yes	no	Raptor-Vacuum
+stagedCombustion2019	2019-2028 ORSC Engines	-657	part	cryoengine-eagle-1	yes	no	Raptor-Vacuum
+solids2019	2019-2028 Solid Rocket Engines	-657	part	MassiveBooster	yes	no	RSRMV
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	part	RO-ID500	yes	no	ID-500 Gridded Ion Thruster
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	part	ionArgon-0625	yes	no	HERMeS Hall Effect Thruster
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	part	ionXenon-0625	yes	no	NEXT Gridded Ion Thruster
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	part	mpdt-125	yes	no	SX3 MPD Thruster
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	part	vasimr-0625	yes	no	VX-200SS VASIMR
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	part	vasimr-125	yes	no	VF-200 VASIMR
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	upgrade	RFUpgrade_AEPS	KEEP-engine		
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	upgrade	RFUpgrade_DS4G-50-hi	KEEP-engine		
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	upgrade	RFUpgrade_DS4G-50-low	KEEP-engine		
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	upgrade	RFUpgrade_SPT-70M	KEEP-engine		
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	upgrade	RFUpgrade_SPT-70MK	KEEP-engine		
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	upgrade	RFUpgrade_VF-200-Kr	KEEP-engine		
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	upgrade	RFUpgrade_VX-200SS-Kr	KEEP-engine		
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	upgrade	RFUpgrade_X3-HV	KEEP-engine		
+elecPropulsion2019	2019-2028 Electric Propulsion	-657	upgrade	RFUpgrade_X3-HV-K	KEEP-engine		
+nuclearPropulsionNF	Bimodal Nuclear Propulsion	-657	part	RO-fftdustyplasmaffre	yes	no	Dusty Plasma Fission Fragment Rocket Engine
+nuclearPropulsionNF	Bimodal Nuclear Propulsion	-657	part	ROE-BNTR	yes	no	Bimodal NTR
+advModernNuclearPower	Advanced Modern Nuclear Power Generation	-657	part	RO-reactor-RAPIDL	yes	no	RAPID-L Nuclear Reactor
+advModernNuclearPower	Advanced Modern Nuclear Power Generation	-657	part	RO-reactor-kilopower	yes	no	NASA Kilopower 10kWe Reactor
+advModernNuclearPower	Advanced Modern Nuclear Power Generation	-657	part	reactor-25	no	no	DEPRECATED (DEPRECATED)
+advModernPower	Advanced Modern Power Generation and Storage	-657	part	ROC-OrionSolar	yes	no	Orion Solar Panels
+advModernAvionics	Advanced Modern Avionics and Probes	-657	upgrade	HDD-Upgrade-2020	KEEP-capability		
+advModernScience	Advanced Modern Science	-657	part	scansat-resources-mise-1	yes	no	MISE Multi-Spectral Resource Scanner
+materialsScienceNF	Near Future Era Materials Science	-487	part	RO-fft20mMMOtank	yes	no	20 m "Mini-Mag" Orion Pulse Unit Magazine
+materialsScienceNF	Near Future Era Materials Science	-487	part	fft-fueltank-fission-25-3	yes	no	10 m Fissiles Tank (Short)
+materialsScienceNF	Near Future Era Materials Science	-487	part	fft-fueltank-fission-5-1	yes	no	20 m Fissiles Tank (Long)
+materialsScienceNF	Near Future Era Materials Science	-487	part	fft-fueltank-fission-5-2	yes	no	20 m Fissiles Tank (Short)
+materialsScienceNF	Near Future Era Materials Science	-487	part	fft-fueltank-targets-5-1	yes	no	10 m "Mini-Mag" Orion Pulse Unit Magazine
+materialsScienceNF	Near Future Era Materials Science	-487	upgrade	RFTech-Tank-Iso-Magic	KEEP-tank-typelevel		
+materialsScienceNF	Near Future Era Materials Science	-487	upgrade	RFTech-Tank-Sep-Starship	KEEP-tank-typelevel		
+materialsScienceNF	Near Future Era Materials Science	-487	upgrade	rp0EngineerUpgradeNF	DROP-axed-career		
+electronicsNF	Near Future Era Electronics Research	-487	upgrade	rp0ResearcherUpgradeNF	DROP-axed-career		
+advancedHabitats	Advanced Habitats	-402	part	sspx-expandable-centrifuge-375-2	yes	no	6.75m Expandable Centrifuge (36m Diameter)
+advancedHabitats	Advanced Habitats	-402	part	sspx-greenhouse-5-1	yes	no	9m Greenhouse
+advancedHabitats	Advanced Habitats	-402	part	sspx-habitation-5-1	yes	no	9m Habitation Module (Large)
+advancedHabitats	Advanced Habitats	-402	part	sspx-habitation-5-2	yes	no	9m Habitation Module (Small)
+advancedHabitats	Advanced Habitats	-402	part	sspx-inflatable-centrifuge-25-1	yes	no	4.5m Inflatable Centrifuge (25m Diameter)
+advancedHabitats	Advanced Habitats	-402	part	sspx-lab-5-1	yes	no	9m Station Science Lab
+advancedHabitats	Advanced Habitats	-402	part	sspx-logistics-5-1	yes	no	9m Logistics Module (Long)
+advancedHabitats	Advanced Habitats	-402	part	sspx-logistics-5-2	yes	no	9m Logistics Module (Short)
+hydroloxNF	Near Future Hydrolox Engines	-402	upgrade	RFUpgrade_RL10C-3	KEEP-engine		
+hydroloxNF	Near Future Hydrolox Engines	-402	upgrade	RFUpgrade_RL10E-1	KEEP-engine		
+hydroloxNF	Near Future Hydrolox Engines	-402	upgrade	RFUpgrade_RL10E-3EL	KEEP-engine		
+hydroloxNF	Near Future Hydrolox Engines	-402	upgrade	RFUpgrade_RL10E-3ELL	KEEP-engine		
+nuclearPropulsionNF2	Near Future Nuclear Propulsion	-402	part	RO-fft20mMMO	yes	no	20 m "Mini-Mag" Orion Drive
+nuclearPropulsionNF2	Near Future Nuclear Propulsion	-402	part	fft-ffre-plasma-1	yes	no	Dusty Plasma Afterburning Fission Fragment Rocket Engine
+nuclearPropulsionNF2	Near Future Nuclear Propulsion	-402	part	fft-fission-zpinch-1	yes	no	10 m "Mini-Mag" Orion Drive
+nuclearPropulsionNF2	Near Future Nuclear Propulsion	-402	part	fft-nswr-2	yes	no	20 m Nuclear Salt Water Rocket
