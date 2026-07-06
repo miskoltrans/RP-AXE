@@ -22,6 +22,14 @@ meta:
   # T9-T13 outer-planet grind (peak cum% at T11) rather than RP-1's aspirational endgame wall. Total is a
   # dial (scalar, or rescale the table); tune in the P3 solvency play-session.
   tier_cost: { 0: 0, 1: 1, 2: 4, 3: 15, 4: 40, 5: 80, 6: 160, 7: 300, 8: 450, 9: 700, 10: 1000, 11: 1450, 12: 2000, 13: 2650, 14: 3500, 15: 4500, 16: 5650 }
+  # Part unlock (funds) cost = part_cost_base[tier] * part_cost_weight[costcat]  (docs/SCIENCE.md 5, AxePartCost.cfg).
+  # FUNDS ARE TEXTURE, NOT A WALL. Tier-driven + category weight; calibrated to REPRODUCE RP-1's real entryCosts
+  # for the categories it priced (science/crewpod/power/antenna/gear) and to PRICE the procedural categories RP-1
+  # left at ~0 because its tooling system (deleted with RP0.dll) did that gating. NO earliness premium -- the AXE
+  # tier already encodes 'how advanced, when'. Upgrades get a light flat fraction (upgrade_cost_scalar) of the base.
+  part_cost_base: { 1: 100, 2: 200, 3: 350, 4: 600, 5: 900, 6: 1300, 7: 1800, 8: 2400, 9: 3200, 10: 4200, 11: 5500, 12: 7000, 13: 9000, 14: 11500, 15: 14500, 16: 18000 }
+  part_cost_weight: { engine: 1.8, tank: 1.0, crewpod: 2.0, avionics: 1.0, science: 2.5, power: 1.5, antenna: 0.8, rcs: 0.8, gear: 2.0, aero: 0.5, separator: 0.5, structural: 0.4, chute: 0.3, ground: 0.2, misc: 1.0 }
+  upgrade_cost_scalar: 0.3
 
 nodes:
   # ================================= ROOTS =================================

@@ -242,3 +242,45 @@ deep-space tail is overpowered. Because we re-author, body-scope is **ours to se
    most to home-system (`HomeBody`/`HomeBodyAndMoons`/`Moon`, like RP-1's own crewed exp) → matches the
    "stations live in LEO" reality and kills the runaway tail; keep a deliberate **handful** as high-value
    deep-space targets (JUNO=gas-giant, SOLAR=sun) so there's a reason to fly an ambitious lab out.
+
+---
+
+## 5. Part unlock (funds) cost — LOCKED (2026-07-06): tier × category, calibrated to RP-1
+
+Science (§4) is the **primary** gate. Funds are the **secondary** axis — VISION's "abstract non-simulated
+engineering tradeoffs": part `entryCost` = R&D, launch cost = ops. **Funds are TEXTURE, NOT A WALL** — you
+prioritise, you don't go bankrupt. Generated to `GameData/RP-AXE/design/Tree/AxePartCost.cfg` by
+`build_tree.py` (tables in `tree/nodes.yaml` meta), a `%entryCost` patch per part/upgrade.
+
+**Model:**
+- `entryCost(part) = part_cost_base[tier] × part_cost_weight[costcat(part)]`
+- `entryCost(upgrade) = part_cost_base[tier] × upgrade_cost_scalar` (= 0.3; light, no category — RP-1 left
+  upgrades ~free and engine variants are already paid via the base part's engine weight)
+- `tier` = the AXE node the part/upgrade is placed on (T0 start-parts → 0, i.e. free). Result: 1774/1790
+  parts priced, span **20–32,400 funds, median 1,440**.
+
+**`part_cost_base`** (weight-1.0 part, monotonic): T1 100 · T4 600 · T7 1800 · T10 4200 · T13 9000 · T16 18000.
+**`part_cost_weight`:** science 2.5 · crewpod 2.0 · gear 2.0 · engine 1.8 · power 1.5 · tank/avionics/misc 1.0 ·
+antenna/rcs 0.8 · aero/separator 0.5 · structural 0.4 · chute 0.3 · ground 0.2.
+
+**Why these numbers — calibrated to RP-1 (the reference you asked for).** Ground-truthed RP-1's real
+`entryCost`s from the `ksp_rp1_expanded` ConfigCache, joined to `part-capabilities.tsv` (category/modules) +
+AXE tier. Two findings drove the design:
+- **RP-1 prices sharply BY CATEGORY.** The categories it hand-priced come out on RP-1's own medians:
+  science ≈ 10.5k (RP-1 10k), crewpod ≈ 3.6k (RP-1 3.4k), gear ≈ 11k (10k), power ≈ 3.6k (5k),
+  antenna ≈ 1.4k (1k). So the model **reproduces RP-1's economy** where RP-1 had one.
+- **RP-1 left engines/tanks/structural/aero/rcs at ~0 at the part level** — because it gated their funds through
+  the **tooling system** (per-size), which AXE **deleted with RP0.dll**, and engine-variant unlock through
+  **RealFuels' dynamic config cost** (static `entryCost`s are ~0: 572/609 upgrades = 0). Those categories are
+  currently **free-to-unlock in AXE** — so the tier×weight formula **rebuilds that gate** as a clean number
+  (engines carry real cost via weight 1.8 on the base part; structural stays texture).
+
+**No earliness premium.** The idea (pull a part in earlier than RP-1 → charge more) is already captured: the
+**AXE tier** encodes "how advanced, when." A part placed early sits at a low tier and is naturally cheaper —
+adding an RP-1-era-delta premium would reintroduce RP-1's tree as a second axis and fight the clean tier model.
+
+**`costcat` classifier** (in `build_tree.py`): signal = PartModules + stock category + AXE discipline + source
+mod, most-specific-first; stock-category clauses (Science/Coupling/Electrical/Thermal) + `ground`
+(ModularLaunchPads / LaunchClamp) are fallbacks for parts whose modules dodge the module check; uncovered →
+`misc` (weight 1.0, ~107 parts). **Magnitude is a P3 dial** — absolute funds calibrate against *income*
+(contracts), which the P3 solvency play-session tunes; the category *ratios* are the RP-1-grounded part.
