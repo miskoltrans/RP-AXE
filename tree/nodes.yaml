@@ -2448,6 +2448,46 @@ nodes:
     parents: [comp_realTimeFlightComputer]
     flavor: "Coordinate guidance, power and data across several docked modules as one system instead of one hull — the avionics architecture a space station, not just a single spacecraft, needs to hold together."
     grants: [Science-Core-largeScaleAvionics]
+  - id: comp_multiplyRedundantFlightComputer
+    title: "Multiply-Redundant General-Purpose Computer"
+    discipline: Computing
+    tier: 11
+    parents: [comp_networkedAvionics]
+    flavor: "Four identical general-purpose computers vote on every result, and a fifth arbitrates a tie - fly-by-wire trusted with a crew's life because no single failure, or even a single disagreement, can bring it down. The Shuttle's own avionics generation."
+    grants: [Science-Core-advancedAvionics]
+    # 2026-07 (full-manifest re-audit): closes a real gap - the Science-Core avionics grants ladder
+    # dead-ended at comp_networkedAvionics (T10) even though the tree runs to T16 elsewhere. 5 REFERENCE-
+    # tagged rungs (docs/UPGRADES.md T3 audit) were never granted anywhere. Continued linearly, same
+    # pattern as comp_digitalGuidanceComputer/comp_realTimeFlightComputer/comp_networkedAvionics
+    # (pure grants nodes, no parts - these mark an avionics-generation milestone, not new hardware).
+  - id: comp_distributedAvionicsBus
+    title: "Distributed Avionics Data Bus"
+    discipline: Computing
+    tier: 12
+    parents: [comp_multiplyRedundantFlightComputer]
+    flavor: "Stop wiring every sensor and actuator straight to the computer and put them all on one shared data bus instead - a single twisted pair carrying every subsystem's traffic, addressed and time-sliced instead of home-run cabled. The wiring-harness weight a modular station can no longer afford to carry."
+    grants: [Science-Core-nextGenAvionics]
+  - id: comp_softwareDefinedFlightControl
+    title: "Software-Defined Flight Control"
+    discipline: Computing
+    tier: 13
+    parents: [comp_distributedAvionicsBus]
+    flavor: "Move the control laws out of hardwired logic and into software that can be patched after launch - a flight computer whose behaviour is a file to update, not a board to re-etch, for a vehicle meant to keep flying for years."
+    grants: [Science-Core-longTermAvionics]
+  - id: comp_interoperableAvionicsStandard
+    title: "Interoperable Avionics Standard"
+    discipline: Computing
+    tier: 14
+    parents: [comp_softwareDefinedFlightControl]
+    flavor: "Agree on a common data-bus protocol and command format across national space programmes, so a module built on one continent can dock, hand off power and share telemetry with one built on another without a custom adapter for every pairing."
+    grants: [Science-Core-internationalAvionics]
+  - id: comp_commercialOffTheShelfAvionics
+    title: "Commercial Off-The-Shelf Flight Computer"
+    discipline: Computing
+    tier: 15
+    parents: [comp_interoperableAvionicsStandard]
+    flavor: "Skip the custom-built, radiation-hardened rack and fly triple-redundant commercial processors instead - orders of magnitude more computing power for a fraction of the cost and years off the schedule, the same bet the whole modern commercial launch industry made."
+    grants: [Science-Core-modernAvionics]
 
   # ================================================================================================
   # ============ BAND 3 * AVIATION (turbofans) + SOLIDS CONTINUATION (engines, 2026-07) =============
