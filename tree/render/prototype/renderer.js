@@ -651,7 +651,7 @@ function drawNode(n, focusing){
 
   const ink = lum(disc.color)>140 ? '#10181f' : '#f3f3f3';   // contrast text (fixes dark-on-dark)
   if(opt.square){                                   // KSP-faithful: square tile = icon only, name on hover/panel
-    if(opt.icons && iconReady(disc.icon)){ const s=Math.min(w,h)*0.82; ctx.globalAlpha=alpha;
+    if(opt.icons && iconReady(disc.icon)){ const s=Math.min(w,h)*0.72; ctx.globalAlpha=alpha;   // glyph a bit smaller for easier navigation (KSP ICON_SCALE)
       ctx.drawImage(iconImg[disc.icon], x+(w-s)/2, y+(h-s)/2, s, s); }
     else if(cam.s>0.25){ ctx.globalAlpha=alpha; ctx.fillStyle=ink; ctx.textAlign='center'; ctx.textBaseline='middle';
       ctx.font=`600 ${Math.max(7,9*cam.s)}px Segoe UI,Helvetica,Arial`; ctx.fillText(clip(n.title,w*0.86), x+w/2, y+h/2); }
