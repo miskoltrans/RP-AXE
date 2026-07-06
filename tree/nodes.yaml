@@ -3663,8 +3663,53 @@ nodes:
     # tech-level ladder off tel_phasedArrayRelay (Level5/commsTL4) with its next rung, Level6/commsTL5 —
     # RP-1 gates exactly this pair at its own `advancedComms` node, the first of the advanced/deep-space
     # comms tiers. Capability node (no new dish — the deep-space parabolics are separate hardware catalogs).
-    # The remaining rungs (deepSpaceComms/Level7+commsTL6 ... modernComms/Level11+commsTL10) still belong to
-    # later station/deep-space telecom nodes per the station+ISS partlists; this closes only the X-band gap.
+    # The remaining rungs (commsTL6-10 / DSN Level7-11) continue as the modern-comms ladder below.
+  - id: tel_kaBandDownlink
+    title: "Ka-Band High-Rate Downlink"
+    discipline: Telecommunications
+    tier: 10
+    parents: [tel_xBandDownlink]
+    flavor: "Climb the band again, from X to Ka — near four times the frequency once more, the beam tightening to a needle and the data rate leaping with it. The band a modern flagship saves for its high-rate science: the step from an X-band trickle to a torrent, on a carrier so narrow the dish must be aimed to a hair."
+    grants: [RP0Level7TrackingStation]
+    upgrades: [commsTL6]
+    # 2026-07 (extends the comms ladder past tel_xBandDownlink, at the user's request). commsTL6-10 are
+    # RealAntennas' onboard tech levels (KEEP-techlevel-TODO — the live, real progression). The RP0Level7-11
+    # grants map to RP-1's deepSpaceComms->modernComms DSN rungs but are REFERENCE-comms-dsn (docs/UPGRADES.md
+    # C2: the tracking-station facility mechanic is axed); they are kept here only to continue the L2-6 grants
+    # pattern already live in the tree. If the DSN axis is later handled another way, drop the `grants:` lines
+    # from these five nodes and keep the `upgrades:`.
+  - id: tel_concatenatedCoding
+    title: "Concatenated Channel Coding"
+    discipline: Telecommunications
+    tier: 11
+    parents: [tel_kaBandDownlink]
+    flavor: "Stop reaching for a bigger dish and start encoding smarter: wrap a Reed-Solomon block code around a convolutional inner code and the receiver rebuilds bits it would once have lost in the hiss — coding gain worth more than doubling the antenna. The same hardware suddenly carries several times the data, for the price of arithmetic. Voyager came home this way."
+    grants: [RP0Level8TrackingStation]
+    upgrades: [commsTL7]
+  - id: tel_antennaArraying
+    title: "Ground-Station Antenna Arraying"
+    discipline: Telecommunications
+    tier: 12
+    parents: [tel_concatenatedCoding]
+    flavor: "Phase a whole field of ground dishes together and they act as one impossible aperture — a 70-metre giant and a cluster of 34-metre beam-waveguide antennas combined to hear a probe going quiet at the edge of the Solar System. When Voyager reached Neptune, it took the whole array to keep the pictures coming."
+    grants: [RP0Level9TrackingStation]
+    upgrades: [commsTL8]
+  - id: tel_bandwidthEfficientModulation
+    title: "Bandwidth-Efficient Modulation"
+    discipline: Telecommunications
+    tier: 13
+    parents: [tel_antennaArraying]
+    flavor: "Spectrum is finite and crowded, so pack more bits into every hertz of it — shaped, suppressed-carrier schemes and modern low-density coding that push the link toward its theoretical limit instead of simply shouting louder. The efficient radio a whole fleet of spacecraft can share without drowning one another out."
+    grants: [RP0Level10TrackingStation]
+    upgrades: [commsTL9]
+  - id: tel_opticalDownlink
+    title: "Optical Deep-Space Downlink"
+    discipline: Telecommunications
+    tier: 14
+    parents: [tel_bandwidthEfficientModulation]
+    flavor: "Leave radio behind and modulate a laser: an optical carrier tens of thousands of times higher in frequency than X-band, packing orders of magnitude more data onto a beam so tight it must be pointed to the arc-second across light-minutes of empty space. The downlink of the present frontier — flown from lunar orbit, and now from the asteroid belt."
+    grants: [RP0Level11TrackingStation]
+    upgrades: [commsTL10]
 
   # ---- Lane 7: antennas (probe-specific parabolic dishes + generic giant reflectors, split by mechanism) ----
   - id: tel_deepSpaceProbeAntennas
