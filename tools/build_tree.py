@@ -21,9 +21,10 @@ REND = os.path.join(TREE, "render")
 XSPACING = 0.8                  # horizontal tier-spacing multiplier (1.0 = 380px columns; 0.8 = tighter, tree fits x<0)
 X0, TIERW = 0, round(380 * XSPACING)   # x = X0 + tier*TIERW (X anchored to MARGIN_X below); matches renderer.js sugiyama COLW base
 Y0, DISCH, SUBH = 300, 100, 34  # y = Y0 + (order-1)*DISCH + sub-stack (lane-grid fallback)
-MARGIN_X, MARGIN_Y = -3200, 711 # left origin: chosen so the whole tree sits at x<0, inside the R&D scroll
-                                # content whose right edge is pivot-pinned at x=0 (else the last tiers clip).
-                                # = -160 - maxTier*TIERW at maxTier~10; nudge more negative if tiers grow.
+MARGIN_X, MARGIN_Y = -3200, 711 # MARGIN_X is RE-COMPUTED in sugiyama_layout to right-anchor the tree
+                                # (rightmost tier at x=-RIGHT_PAD) so it always sits at x<0 inside the R&D
+                                # scroll content (right edge pivot-pinned at x=0), for ANY tier count.
+RIGHT_PAD = 400                 # px between the rightmost tier and x=0 (right scroll-past padding)
 SPACING_Y = 94                  # vertical px per rank unit; matches renderer.js sugiyama SPACING_Y base (94*spacing=1.0)
 COORDS_BK = True                # sugiyama_layout coordinate stage: True = Brandes-Kopf block alignment
                                 # (straight edges, the in-game default); False = isotonic (PAV) neighbour-mean
@@ -99,6 +100,8 @@ def sugiyama_layout(disc, nodes, by, sweeps=8):
     [(parentId, childId, [(tier, y_px), ...]), ...] tracing each edge through its dummies
     (adjacent-tier edges = 2 points = straight)."""
     tier = {n["id"]: n["tier"] for n in nodes}
+    global MARGIN_X                                     # right-anchor: rightmost tier at -RIGHT_PAD, tree grows
+    MARGIN_X = -((max(tier.values()) if tier else 0) * TIERW + RIGHT_PAD)   #  leftward as tiers are added
     layers = collections.defaultdict(list)              # tier -> [vertex keys] (real ids + dummies)
     for n in nodes: layers[tier[n["id"]]].append(n["id"])
     prev, nxt = collections.defaultdict(list), collections.defaultdict(list)
