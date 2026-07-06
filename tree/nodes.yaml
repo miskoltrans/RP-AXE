@@ -2259,8 +2259,9 @@ nodes:
     parents: [fd_continuousThrottleDescent, fd_pressureFedRestart]
     flavor: "Throttle a crewed descent engine ten-to-one for a controlled touchdown, and trust a pressure-fed ascent engine to light once - or the crew stays. Surveyor learned to throttle a descent; the Service Module learned to relight on faith; here the two meet and land people."
     parts: [ROE-LMDE, ROC-LEMLMDEBDB, ROE-LMAE, ROC-LEMLMAEBDB, RO-KTDU417]
-    upgrades: [RFUpgrade_RS-18, RFUpgrade_TR-201]  # TR-201 added 2026-07 (gap-fill; base LMDE here, TR-201 = LMDE-derived Delta upper)
-    # RFUpgrade_RS-18 (2026-07, band-5 sweep): further LMAE config, added here by doctrine-4.
+    # doctrine-4 fix (2026-07): RS-18/TR-201 are later marks of this node's own base parts (LMAE/LMDE,
+    # each duplicated as a BDB-compat part - both copies live here too) - moved down to
+    # fd_lunarSurfaceMobility, which already hosts their own LMDE-J sibling.
     # King LMDE (10:1 deep-throttle descent). LMAE = the one-shot pressure-fed ascent; KTDU-417 = the
     # Soviet LK lander, homed by ROLE not chemistry (turbopump UDMH/NTO). Crossover, both parents load-
     # bearing. LMDE's own upgrade (LMDE-J) barred here by doctrine-4 -> fd_lunarSurfaceMobility.
@@ -2271,7 +2272,7 @@ nodes:
     parents: [fd_deepThrottleLanding]
     flavor: "Once you are down, get around - a throttleable open-cockpit rocket to hop the surface, and the uprated descent engine of the longer, heavier missions that follow the first footprints."
     parts: [ROC-LFVBDB, ROC-LEMRover]
-    upgrades: [RFUpgrade_LMDE-J]
+    upgrades: [RFUpgrade_LMDE-J, RFUpgrade_TR-201, RFUpgrade_RS-18]  # TR-201/RS-18 moved down from fd_deepThrottleLanding (own base parts LMDE/LMAE there), doctrine-4 fix 2026-07
     # Thin now (LFV + the doctrine-4-displaced LMDE-J uprate); grows into the extended-surface-ops home
     # (LRV rover / MESA) when non-engine parts are curated.
     # RENAMED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): "Mobility" named the outcome; the
@@ -2351,9 +2352,12 @@ nodes:
     parents: [pc_orscDebut]
     flavor: "Chill the propellants until they are dense enough, then run oxidiser-rich staged combustion at booster scale - the most efficient kerosene engine anyone ever fired. The rocket it flew on failed; the engine never did."
     parts: [ROE-NK33, ROE-NK43, SXTNK21BlockV]
-    upgrades: [RFUpgrade_NK-19, RFUpgrade_NK-21, RFUpgrade_11D33, RFUpgrade_11D33M, RFUpgrade_RD-58, RFUpgrade_AJ26-58, RFUpgrade_AJ26-59, RFUpgrade_AJ26-62, RFUpgrade_AJ26-60, RFUpgrade_RD-58M-CCN, RFUpgrade_NK-31, RFUpgrade_NK-33, RFUpgrade_NK-39, RFUpgrade_NK-43, RFUpgrade_4x_NK-39, RFUpgrade_RD-58M, RFUpgrade_17D12]  # NK-31/33/39/43 + 4x_NK-39 + RD-58M/17D12 added 2026-07 (gap-fill; bases NK33/NK43/NK9V/RD58 + AJ26 siblings here)
+    upgrades: [RFUpgrade_NK-19, RFUpgrade_NK-21, RFUpgrade_11D33, RFUpgrade_11D33M, RFUpgrade_RD-58, RFUpgrade_RD-58M-CCN, RFUpgrade_NK-31, RFUpgrade_NK-39, RFUpgrade_RD-58M, RFUpgrade_17D12]
     # King NK-33. Fillers cascade UP by doctrine-4: NK-9/NK-9V's upgrades (NK-19/21) + the whole RD-58
-    # chain (11D33/11D33M/RD-58) - all their base parts live one tier down in pc_orscDebut.
+    # chain (11D33/11D33M/RD-58) - all their base parts live one tier down in pc_orscDebut. FIXED 2026-07:
+    # the previous gap-fill pass wrongly co-located NK-33/NK-43's OWN later marks (NK-33/43 configs + the
+    # whole AJ-26 family) here, alongside their own base parts (ROE-NK33/ROE-NK43/SXTNK21BlockV, doctrine-4
+    # violation) - moved down to pc_zenitKerolox.
 
   # ---- Lane 5: NTO ORSC (Proton) ----
   - id: pc_protonStagedCombustion
@@ -2363,16 +2367,17 @@ nodes:
     parents: [fd_regenCooling, fd_sovietStorable]
     flavor: "Bring staged combustion to the storables: route the preburner exhaust back through the chamber on nitrogen tetroxide and hydrazine, and the workhorse hypergolic booster gets its efficiency jump without ever needing a cryogen. The engine that is still flying."
     parts: [ROE-RD275, ROE-RD254, ROE-RD0210]
-    upgrades: [RFUpgrade_RD-277M-14D16M, RFUpgrade_RD-275M]
     # King RD-253/275. Parallel storable ORSC debut, sharing the regen-cooling root with the kerolox debut
     # (pc_orscDebut) in a different propellant branch. Lower Isp than kerolox ORSC -> a tier below N1.
+    # doctrine-4 fix (2026-07): RD-277M-14D16M/RD-275M are later marks of this node's own base parts
+    # (ROE-RD254/ROE-RD275) - moved down to pc_refinedStorableORSC, which already hosts their Mk2 siblings.
   - id: pc_refinedStorableORSC
     title: "Refined Storable Staged Combustion"
     discipline: PropellantChemistry
     tier: 9
     parents: [pc_protonStagedCombustion, pc_storableVernierFamily]
     flavor: "Squeeze the storable staged-combustion boosters a little further - Mk-II chambers, higher flow, the same dependable poison."
-    upgrades: [RFUpgrade_RD-253-Mk2, RFUpgrade_RD-254-11D44-Mk2, RFUpgrade_RD-0210, RFUpgrade_RD-0203U, RFUpgrade_RD-0212, RFUpgrade_RD-0213, RFUpgrade_RD-0214]
+    upgrades: [RFUpgrade_RD-253-Mk2, RFUpgrade_RD-254-11D44-Mk2, RFUpgrade_RD-0210, RFUpgrade_RD-0203U, RFUpgrade_RD-0212, RFUpgrade_RD-0213, RFUpgrade_RD-0214, RFUpgrade_RD-277M-14D16M, RFUpgrade_RD-275M]  # RD-277M/RD-275M moved down from pc_protonStagedCombustion (doctrine-4 fix, 2026-07) - direct continuation of their own Mk2 siblings already here
     # Pure doctrine-4 catch node: every upgrade's base lives in pc_protonStagedCombustion or
     # pc_storableVernierFamily, so none can sit with its base.
 
@@ -2635,7 +2640,8 @@ nodes:
     parents: [fd_spacecraftPropulsion]
     flavor: "Grow the spacecraft's own engine from a probe's one-shot nudge into a crewed ship's workhorse - deep-throttling, fifty restarts, the service engine a Soyuz-class vehicle steers and brakes itself home on across a whole mission."
     parts: [ROE-KTDU425A]
-    upgrades: [RFUpgrade_KTDU-425A]  # added 2026-07 (gap-fill: config of base ROE-KTDU425A)
+    # doctrine-4 fix (2026-07): KTDU-425A is this node's own base part's later mark - moved down to
+    # fd_restartableUpperMaturation.
     # KTDU-425 (18.85 kN, 50 ignitions, deep throttle) - the higher-thrust many-restart successor to Agena's
     # SPS. Its own node (not a direct-add) so it doesn't unlock at fd_spacecraftPropulsion's T5.
   - id: fd_engineMaturation
@@ -2796,7 +2802,8 @@ nodes:
     parents: [cryo_gasGeneratorHydrolox]
     flavor: "Redesign the hydrolox engine to restart on command and throttle across a wide range instead of firing once at full bore - the deliberate first step toward an engine built to fly again, not just fly. LR129 was drawn for exactly that job; RD-57 and KVD-1 are the Soviet answer, chasing the same restartable, reusable goal from the other side of the Iron Curtain."
     parts: [ROE-LR129, ROE-RD57, RO_KVD1]
-    upgrades: [RFUpgrade_CE-7.5]
+    # doctrine-4 fix (2026-07): CE-7.5 is this node's own base part's (RO_KVD1) later mark - moved down to
+    # cryo_uprateRestartableHydrolox.
     # Scales cryo_gasGeneratorHydrolox's thrust (J-2/HM-7 lineage) with restart know-how the same node
     # already draws on (cryo_expanderCycle is one of its own parents - listing it again here was a
     # redundant transitive edge, dropped per build_tree.py's check). KVD-1 RESEARCHED (2026-07): fuel-rich
@@ -2811,9 +2818,11 @@ nodes:
     parents: [cryo_deepThrottleHydrolox]
     flavor: "Scale the restartable hydrolox engine toward booster thrust while keeping the reusable engine's whole point - deep throttle, many restarts, margin instead of a one-shot redline. Rocketdyne's own HG-3 studies fed straight into the engine still to come."
     parts: [ROE-HG3]
-    upgrades: [RFUpgrade_HG-3-SL, RFUpgrade_KVD-1, RFUpgrade_LR129-P-1]
-    # King HG-3 (real SSME-precursor study). Doctrine-4 catches: HG-3-SL/KVD-1/LR129-P-1 are later configs
-    # of this node's own parent (cryo_deepThrottleHydrolox).
+    upgrades: [RFUpgrade_KVD-1, RFUpgrade_LR129-P-1, RFUpgrade_CE-7.5]
+    # King HG-3 (real SSME-precursor study). Doctrine-4 catches: KVD-1/LR129-P-1 are later configs
+    # of this node's own parent (cryo_deepThrottleHydrolox); CE-7.5 moved down here 2026-07 for the same
+    # reason (KVD-1's own next mark). HG-3-SL (this node's OWN base part's later mark) moved further down
+    # to cryo_ssme - it was wrongly co-located with ROE-HG3 by the previous gap-fill pass.
     # REVISED (2026-07): HM-7B/J-2S/YF-75D/M-1/M-1SL originally caught here were pulled out into their own
     # node (cryo_matureGasGeneratorHydrolox, below) once upgrades were re-weighted at 0.8 parts each - the
     # combined 8 upgrades (7.4 weighted) broke the 6-part cap.
@@ -2834,10 +2843,12 @@ nodes:
     parents: [cryo_uprateRestartableHydrolox]
     flavor: "Close the cycle for good: burn the fuel-rich preburner exhaust back through the main chamber at a pressure no earlier hydrolox engine touched, throttleable across a wide range and rated to fly the same hardware again and again. The engine the whole restartable-hydrolox lineage was built toward - the Shuttle's main engine."
     parts: [ROE-RS25]
-    upgrades: [RFUpgrade_HG-3A, RFUpgrade_HG-3A-SL, RFUpgrade_LR129-P-2]
+    upgrades: [RFUpgrade_HG-3A, RFUpgrade_HG-3A-SL, RFUpgrade_LR129-P-2, RFUpgrade_HG-3-SL]
     # King RS-25 (SSME) - the headline engine of the whole era. Doctrine-4 catches: HG-3A/HG-3A-SL (later
     # configs of this node's own parent) and LR129-P-2 (LR129's own final config). Deepest tier of this
     # pass alongside nuc_flightRatedNTR (T11) - both are real flight-design capstones of multi-step programmes.
+    # HG-3-SL moved down from cryo_uprateRestartableHydrolox (doctrine-4 fix, 2026-07): same-era sibling of
+    # its own base part ROE-HG3, bundled with the next real mark rather than left colliding.
 
   # ---- Lane 2: storable ORSC thrust ceiling (RD-270) ----
   - id: pc_stagedCombustionCeiling
@@ -2868,10 +2879,15 @@ nodes:
     parents: [pc_n1ClosedCycle]
     flavor: "Where the N1's oxidiser-rich engines never got to prove themselves in flight, the same staged-combustion chemistry finally does - a kerolox engine that reaches orbit for real, with steering verniers built in rather than bolted on."
     parts: [ROE-RD120, ROE-RD8, ROE-RD0124, ROE-RD0110R]
+    upgrades: [RFUpgrade_NK-33, RFUpgrade_NK-43, RFUpgrade_4x_NK-39, RFUpgrade_AJ26-58, RFUpgrade_AJ26-59, RFUpgrade_AJ26-62, RFUpgrade_AJ26-60]
     # King RD-120 (the real Zenit second-stage engine). RD-8 = its steering-vernier sibling, same engine
     # family, ride-along. Nice narrative contrast one tier above pc_n1ClosedCycle's NK-33/NK-43 (which never flew).
     # RD-0124/RD-0110R (2026-07, band-5 gap sweep): the Kosberg side of the same operational-kerolox-ORSC
     # story - modern Soyuz-2.1b upper-stage engines, same generation, different bureau.
+    # doctrine-4 fix (2026-07): NK-33/43's own later marks + the AJ-26 conversions moved down from
+    # pc_n1ClosedCycle (their base parts' own node) - fittingly, these ARE the marks that eventually flew
+    # (AJ-26 on Antares; NK-33 pulled from storage decades later), landing right where the flavor text
+    # already contrasts "proved in flight" against the N1-era engines that never got the chance.
 
   # ---- Lane 4: storable ORSC refinement (pure doctrine-4 catch, no new king) ----
   - id: pc_refinedStorableORSCII
@@ -2912,9 +2928,18 @@ nodes:
     parents: [pc_apogeeKickCatalog]
     flavor: "A later run of the same kick-motor family, sized for whatever a mission needs one generation on - heavier payloads to geostationary transfer, a bigger burn from the same solid-motor playbook."
     parts: [ROE-Star48B, ROE-Star37FM, ROE-Antares3, ROE-Antares3_Inline, ROE-Star5D, ROE-Star8]
-    upgrades: [RFUpgrade_STAR-37FMV]
     # King Star-48B (still flown today on real upper-stage kicks, e.g. New Horizons). Star-37FM and
     # Antares III (Star-31) ride along - same size-extension shape as pc_apogeeKickStage -> pc_apogeeKickCatalog.
+    # doctrine-4 fix (2026-07): STAR-37FMV is this node's own base part's (ROE-Star37FM) later mark -
+    # moved down to pc_apogeeKickCatalogIII (new node, no existing child here).
+  - id: pc_apogeeKickCatalogIII
+    title: "Extended-Range Solid Kick Motors III"
+    discipline: PropellantChemistry
+    tier: 10
+    parents: [pc_apogeeKickCatalogII]
+    flavor: "The Star-37FM casing pushed once more - a longer burn and a wider velocity envelope from the same solid-motor family, one generation further down the same catalog."
+    upgrades: [RFUpgrade_STAR-37FMV]
+    # doctrine-4 catch: STAR-37FMV's own base part (ROE-Star37FM) lives in pc_apogeeKickCatalogII.
   - id: pc_solidUpperStage
     title: "Solid-Fuel Upper Stage"
     discipline: PropellantChemistry
@@ -2937,7 +2962,7 @@ nodes:
     tier: 9
     parents: [fd_advancedSpacecraftPropulsion]
     flavor: "Refine the whole family of restartable storable engines mark by mark - more thrust, longer restart life, no change to the chemistry or the mission they were built for."
-    upgrades: [RFUpgrade_AJ10-118F, RFUpgrade_Model8096-39, RFUpgrade_Model8096A, RFUpgrade_Model8096L, RFUpgrade_Model8096B, RFUpgrade_AJ10-138A, RFUpgrade_AJ10-118K, RFUpgrade_AJ10-153, RFUpgrade_AJ10-154, RFUpgrade_AJ10-156, RFUpgrade_Agena-2000, RFUpgrade_AJ10-133-Hylas, RFUpgrade_AJ10-133-LH]  # AJ10-133 Hylas/LH added 2026-07 (gap-fill; AJ10Adv config siblings here)
+    upgrades: [RFUpgrade_AJ10-118F, RFUpgrade_Model8096-39, RFUpgrade_Model8096A, RFUpgrade_Model8096L, RFUpgrade_Model8096B, RFUpgrade_AJ10-138A, RFUpgrade_AJ10-118K, RFUpgrade_AJ10-153, RFUpgrade_AJ10-154, RFUpgrade_AJ10-156, RFUpgrade_Agena-2000, RFUpgrade_AJ10-133-Hylas, RFUpgrade_AJ10-133-LH, RFUpgrade_KTDU-425A]  # AJ10-133 Hylas/LH added 2026-07 (gap-fill; AJ10Adv config siblings here); KTDU-425A moved down from fd_advancedSpacecraftPropulsion (doctrine-4 fix, 2026-07)
     # Pure doctrine-4 collector: bases (ROE-Agena/ROE-AJ10Adv) live in fd_restartableUpper (T4). Parented
     # one tier above fd_advancedSpacecraftPropulsion (T8, KTDU-425 - this lineage's most recent batch)
     # rather than fd_restartableUpper directly, for consistency with every other lane in this pass.
@@ -3005,8 +3030,8 @@ nodes:
     parents: [ep_hallEffectThruster]
     flavor: "The same magnetic bottle, fed more power and more propellant - still a whisper of thrust, still an Isp no chemical engine will ever touch."
     parts: [RO-SPT70]
-    upgrades: [RFUpgrade_SPT-70M, RFUpgrade_SPT-70MK]
-    # Direct next mark, same mechanism, scaled up.
+    # doctrine-4 fix (2026-07): SPT-70M/SPT-70MK are this node's own base part's later marks - moved down
+    # to ep_operationalHall.
 
   # ---- Lane 9: bipropellant attitude/apogee thrust (a real step above monoprop RCS) ----
   - id: gnc_bipropAttitudeThrust
@@ -3016,7 +3041,7 @@ nodes:
     parents: [pc_storableRcsPropellants]
     flavor: "Trade the reaction-control block's simple storable monopropellant for a genuine two-propellant combustion chamber - a real flame instead of a catalytic fizz, and a meaningful jump in specific impulse for every correction burn and apogee kick a spacecraft makes on its own."
     parts: [ROE-HiPAT, ca_trident, ROE-R40B, ca_lahar, ROC-OrionRCS, ROC-OrionESM]
-    upgrades: [RFUpgrade_LEROS-1c, RFUpgrade_LEROS-2b, RFUpgrade_R-4D-15, RFUpgrade_R-4D-15DM]  # R-4D-15/DM added 2026-07 (gap-fill; base ROE-HiPAT = R-4D here)
+    upgrades: [RFUpgrade_LEROS-1c, RFUpgrade_LEROS-2b]  # R-4D-15/DM (own base part ROE-HiPAT here) moved down to gnc_deepSpaceApogeeEngine, doctrine-4 fix 2026-07
     # ROC-OrionESM (2026-07, band-5 sweep): 8x R-4D-11 cluster - same real R-4D family as king ROE-HiPAT,
     # just a service-module application. Reaches the 6-part cap.
     # King R-4D (HiPAT) - the real, still-flying OMS/RCS workhorse (Apollo and many modern spacecraft).
@@ -3368,7 +3393,7 @@ nodes:
     parents: [cryo_refinedExpander]
     flavor: "The expander cycle's payoff arrives: a radiatively-cooled nozzle that unfolds after staging trades stowed length for the highest vacuum Isp of any engine that flies. The RL-10B-2's carbon-carbon skirt reaches 465 seconds; the RD-0146 is the Russian closed-expander answer. The long RL-10 chain, idle since its last refinement, leaps a full fleet-generation here."
     parts: [ROE-RL10B2, ROE-RL10A4N, ROE-RD0146]
-    upgrades: [RFUpgrade_RD-0146D, RFUpgrade_CECE-High, RFUpgrade_RL10C-2, RFUpgrade_RL10C-2-1, RFUpgrade_CECE-Base, RFUpgrade_CECE-Methane, RFUpgrade_RL10C-1, RFUpgrade_RL10C-1-1, RFUpgrade_RL10C-1A, RFUpgrade_RL10C-3, RFUpgrade_RL10E-1, RFUpgrade_RL10E-3EL, RFUpgrade_RL10E-3ELL]  # RL10C-3 + RL10E family added 2026-07 (gap-fill; RL10C-1/2 siblings here)
+    upgrades: [RFUpgrade_CECE-Base, RFUpgrade_CECE-Methane, RFUpgrade_RL10C-1, RFUpgrade_RL10C-1-1, RFUpgrade_RL10C-1A, RFUpgrade_RL10C-3, RFUpgrade_RL10E-1, RFUpgrade_RL10E-3EL, RFUpgrade_RL10E-3ELL]  # RL10C-3 + RL10E family added 2026-07 (gap-fill; RL10C-1/2 siblings here). RD-0146D/CECE-High/RL10C-2/RL10C-2-1 (own base parts ROE-RD0146/ROE-RL10B2 here) moved down to cryo_highThrustExpander, doctrine-4 fix 2026-07
     # 2026-07 (band-5 sweep): the RL-10C/CECE marks route here (downstream continuation of the RL10Fixed
     # lineage, same "idle-then-leap" precedent already used for this node's own T7->T11 jump).
   - id: cryo_operationalHydroloxUpper
@@ -3378,7 +3403,16 @@ nodes:
     parents: [cryo_gasGeneratorHydrolox]
     flavor: "The gas-generator hydrolox upper grows up. Where the J-2 fired once, the LE-5 coasts and reignites ten times across a mission - the workhorse restartable upper of an operational launcher. Its own expander-bleed descendants split off to the expander lane."
     parts: [ROE-LE5]
+    # doctrine-4 fix (2026-07): LE-5B-2/LE-5B-3 are this node's own base part's (ROE-LE5) later marks -
+    # moved down to cryo_operationalHydroloxUpperII (new node, no existing child here).
+  - id: cryo_operationalHydroloxUpperII
+    title: "Further-Matured Restartable Hydrolox Upper"
+    discipline: Cryogenics
+    tier: 12
+    parents: [cryo_operationalHydroloxUpper]
+    flavor: "The LE-5 keeps maturing mark by mark - more restarts, a little more thrust, the same workhorse upper stage refined rather than replaced."
     upgrades: [RFUpgrade_LE-5B-2, RFUpgrade_LE-5B-3]
+    # doctrine-4 catch: LE-5B-2/LE-5B-3's own base part (ROE-LE5) lives in cryo_operationalHydroloxUpper.
   - id: cryo_boosterGasGenHydrolox
     title: "Booster-Class Gas-Generator Hydrolox"
     discipline: Cryogenics
@@ -3386,7 +3420,8 @@ nodes:
     parents: [cryo_largeHydrolox]
     flavor: "Having proven the reusable staged-combustion engine is buildable, the world's launch fleet turns around and walks away from it. The RS-68 - the most powerful hydrogen engine ever flown - is deliberately a gas-generator with an ablative nozzle, trading Isp for a price tag; Vulcain and the YF-77 make the same bargain for Ariane and Long March. The anti-SSME: simplicity at booster scale."
     parts: [ROE-RS68, cryoengine-vesuvius-1, YF77_Engine, YF77_Engine-double-withShell, rmm_rainier]
-    upgrades: [RFUpgrade_RS-68A, RFUpgrade_RS-68B, RFUpgrade_RS-68K, RFUpgrade_RS-800]
+    # doctrine-4 fix (2026-07): RS-68A/RS-68B/RS-68K/RS-800 are this node's own base part's (ROE-RS68)
+    # later marks - moved down to cryo_combustionTapOff.
 
   # ---- Cryogenics: the SSME cycle goes international & exotic (FRSC) ----
   - id: cryo_operationalFRSC
@@ -3432,7 +3467,8 @@ nodes:
     parents: [pc_zenitKerolox]
     flavor: "Oxidiser-rich staged combustion hits its ceiling. The RD-170 - four chambers off one turbopump, 7900 kilonewtons - is the most powerful liquid-propellant engine ever built, the monster that lifts Energia and Zenit. Where the N1's engines never flew and Zenit's was only an upper, this is the chemistry's operational record."
     parts: [ROE-RD170, YF100_Engine_S, YF100_Engine-double-withShell2]
-    upgrades: [RFUpgrade_RD-171M, RFUpgrade_YF-100K]
+    # doctrine-4 fix (2026-07): RD-171M (own base part ROE-RD170) and YF-100K (own base parts YF100_Engine_S
+    # / YF100_Engine-double-withShell2, both live here) moved down to pc_modularORSC.
   - id: pc_modularORSC
     title: "Modular Oxidiser-Rich Kerolox"
     discipline: PropellantChemistry
@@ -3440,10 +3476,21 @@ nodes:
     parents: [pc_multiChamberORSC]
     flavor: "The record engine gets cut into pieces you can sell. Halve the RD-170's four chambers and you have the RD-180 for Atlas; quarter it and you have the single-chamber Angara engine. Same core hardware, packaged into a modular family for the export and commercial market."
     parts: [ROE-RD180, ROE-RD191]
-    upgrades: [RFUpgrade_RD-171, RFUpgrade_RD-172-173, RFUpgrade_RD-120F, RFUpgrade_RD-120K, RFUpgrade_RD-181, RFUpgrade_RD-191, RFUpgrade_RD-193]
+    upgrades: [RFUpgrade_RD-171, RFUpgrade_RD-172-173, RFUpgrade_RD-120F, RFUpgrade_RD-120K, RFUpgrade_RD-191, RFUpgrade_RD-171M, RFUpgrade_YF-100K]
+    # doctrine-4 fix (2026-07): RD-171M/YF-100K moved down from pc_multiChamberORSC (own base parts there).
+    # RD-181/RD-193 (this node's OWN base part ROE-RD191's later marks) moved further down to
+    # pc_modularORSCII, since this node has no other child.
     # ROE-RD191 (2026-07, band-5 sweep): the single-chamber Angara engine this node's own flavor text
     # already narrated ("quarter it and you have the single-chamber Angara engine") - its base part was
     # simply never added. Same real RD-170-derived hardware family as RD-180.
+  - id: pc_modularORSCII
+    title: "Modular Kerolox Re-Sizing"
+    discipline: PropellantChemistry
+    tier: 13
+    parents: [pc_modularORSC]
+    flavor: "Cut the same modular RD-170 hardware into two more shapes - a lighter single-chamber mark for a smaller booster, and an export version re-plumbed for someone else's pad."
+    upgrades: [RFUpgrade_RD-181, RFUpgrade_RD-193]
+    # doctrine-4 catch: RD-181/RD-193's own base part (ROE-RD191) lives in pc_modularORSC.
   - id: pc_operationalStorableORSC
     title: "Operational Storable Staged Combustion"
     discipline: PropellantChemistry
@@ -3460,7 +3507,16 @@ nodes:
     parents: [fd_restartableUpperMaturation]
     flavor: "Coast, reignite, coast again - dozens of times, across days. The Fregat and Briz upper stages and their kin are storable propulsion modules built for the choreography of an interplanetary or multi-orbit mission, restarting on demand where the single-shot Agena and early AJ10 could not. The Transtar rates five hundred ignitions."
     parts: [ROE-S592, restock-engine-125-pug, ROE-AJ10-transtar, ROE-S598M, ROE-AJ10AdvLong]
-    upgrades: [RFUpgrade_Aestus-II, RFUpgrade_AestusMod]
+    # doctrine-4 fix (2026-07): Aestus-II/AestusMod are this node's own base part's (restock-engine-125-pug)
+    # later marks - moved down to fd_multiRestartStorableUpperII (new node, no existing child here).
+  - id: fd_multiRestartStorableUpperII
+    title: "Further-Refined Multi-Restart Storable Upper Stage"
+    discipline: FluidDynamics
+    tier: 12
+    parents: [fd_multiRestartStorableUpper]
+    flavor: "Aestus keeps pace with the rest of the multi-restart storable family - a modified chamber, then a second-generation successor, the same choreography refined one mark further."
+    upgrades: [RFUpgrade_AestusMod, RFUpgrade_Aestus-II]
+    # doctrine-4 catch: AestusMod/Aestus-II's own base part (restock-engine-125-pug) lives in fd_multiRestartStorableUpper.
   - id: fd_terminalGasGenKerolox
     title: "Terminal Gas-Generator Kerolox Uprating"
     discipline: FluidDynamics
@@ -3504,7 +3560,10 @@ nodes:
     parents: [ep_higherPowerHallThruster]
     flavor: "The Hall thruster leaves the laboratory. The SPT-100 and its bigger siblings become flight-qualified hardware, first for stationkeeping and then as primary propulsion - a few grams-force of thrust at sixteen hundred seconds of Isp, the electric workhorse of the coming decades."
     parts: [RO-SPT100, RO-SPT140, RO-PPS1350]
-    upgrades: [RFUpgrade_SPT-50M, RFUpgrade_457M-V1-K, RFUpgrade_SPT-100D, RFUpgrade_SPT-100M, RFUpgrade_SPT-140D]
+    upgrades: [RFUpgrade_SPT-50M, RFUpgrade_457M-V1-K, RFUpgrade_SPT-70M, RFUpgrade_SPT-70MK]
+    # doctrine-4 fix (2026-07): SPT-70M/SPT-70MK moved down from ep_higherPowerHallThruster (own base part's
+    # later marks there); SPT-100D/SPT-100M/SPT-140D moved further down to ep_highPowerHall for the same
+    # reason (this node's own base parts RO-SPT100/RO-SPT140).
   - id: ep_highPowerHall
     title: "High-Power Nested Hall Thruster"
     discipline: ElectricalPower
@@ -3512,7 +3571,10 @@ nodes:
     parents: [ep_operationalHall]
     flavor: "Scale the Hall thruster into the tens of kilowatts. The 457M's nested channels swallow seventy-two kilowatts and push the Isp past two thousand seconds - the class of electric engine that could one day move cargo rather than just trim an orbit."
     parts: [RO-457M]
-    upgrades: [RFUpgrade_SPT-100B, RFUpgrade_PITV-Hydrazine-40, RFUpgrade_457M-V2]
+    upgrades: [RFUpgrade_SPT-100B, RFUpgrade_PITV-Hydrazine-40, RFUpgrade_SPT-100D, RFUpgrade_SPT-100M, RFUpgrade_SPT-140D]
+    # doctrine-4 fix (2026-07): SPT-100D/SPT-100M/SPT-140D moved down from ep_operationalHall (own base
+    # parts' later marks there); 457M-V2 moved further down to ep_nasaHighPowerHall for the same reason
+    # (this node's own base part RO-457M).
   - id: ep_griddedIon
     title: "Gridded Ion Electrostatic Thruster"
     discipline: ElectricalPower
@@ -3527,9 +3589,18 @@ nodes:
     parents: [ep_higherPowerHallThruster]
     flavor: "No electrodes to erode - a pulsed magnetic field ionises and flings a puff of ammonia, and repeats thousands of times a second. The PIT reaches seven thousand seconds of Isp, an experimental high-power concept for the kind of cruise no chemical stage could sustain."
     parts: [pit-125, pit-0625, RO-nupit]
-    upgrades: [RFUpgrade_PITV-Ammonia-1200, RFUpgrade_PITV-Hydrazine-1200, RFUpgrade_NuPIT-7000]
     # pit-0625 (FARAD)/RO-nupit (NuPIT) (2026-07, band-5 sweep): both pulsed-inductive thrusters, the exact
     # mechanism this node already hosts - widened rather than a duplicate node.
+    # doctrine-4 fix (2026-07): PITV-Ammonia-1200/PITV-Hydrazine-1200/NuPIT-7000 are this node's own base
+    # parts' (pit-125/RO-nupit) later marks - moved down to ep_pulsedInductiveII (new node).
+  - id: ep_pulsedInductiveII
+    title: "Higher-Energy Pulsed Inductive Thruster"
+    discipline: ElectricalPower
+    tier: 13
+    parents: [ep_pulsedInductive]
+    flavor: "The same electrodeless pulse scaled up - more energy per pulse, a heavier propellant puff, chasing higher thrust from the same repetitively-pulsed magnetic field."
+    upgrades: [RFUpgrade_PITV-Ammonia-1200, RFUpgrade_PITV-Hydrazine-1200, RFUpgrade_NuPIT-7000]
+    # doctrine-4 catch: these configs' own base parts (pit-125/RO-nupit) live in ep_pulsedInductive.
 
   # ---- NuclearEngineering: NTR matures past NERVA ----
   - id: nuc_flightDesignNTR
@@ -3546,7 +3617,8 @@ nodes:
     parents: [nuc_flightRatedNTR]
     flavor: "Pack the reactor fuel as loose particles instead of solid rods and the coolant can pull heat out far faster - more power in less core. The particle-bed NTR of the Timberwind program is a denser, hotter path to the same nuclear thrust."
     parts: [ROE-SNTPPFE100]
-    upgrades: [RFUpgrade_SNTPPFE100-Hydrogen]  # added 2026-07 (gap-fill: config of base ROE-SNTPPFE100)
+    # doctrine-4 fix (2026-07): SNTPPFE100-Hydrogen is this node's own base part's later mark - moved down
+    # to nuc_advancedCoreNTR.
   - id: nuc_advancedCoreNTR
     title: "Advanced-Core NTR Concepts"
     discipline: NuclearEngineering
@@ -3554,7 +3626,9 @@ nodes:
     parents: [nuc_particleBedNTR]
     flavor: "Let the fuel melt, or turn to gas, and the temperature ceiling - and the Isp - rises with it. The liquid-core NTR reaches fourteen hundred seconds; the low-pressure gas-core start pushes further. Engineering fiction for now, and the doorway to the gas-core lane a later era will open."
     parts: [RO-KA-LRCNTR, ntr-gc-25-1]
-    upgrades: [RFUpgrade_PrincetonLNTR-WCH, RFUpgrade_LPNTR-3600HP]  # LPNTR-3600HP added 2026-07 (gap-fill; base ntr-gc-25-1 here)
+    upgrades: [RFUpgrade_PrincetonLNTR-WCH, RFUpgrade_SNTPPFE100-Hydrogen]  # SNTPPFE100-Hydrogen moved down from nuc_particleBedNTR, doctrine-4 fix 2026-07
+    # doctrine-4 fix (2026-07): LPNTR-3600HP (this node's OWN base part ntr-gc-25-1's later mark) moved
+    # further down to nuc_bimodalNTR.
 
   # ---- AirBreathing: VTOL vectored + fourth-generation fighter turbofans ----
   - id: av_vtolVectoredTurbofan
@@ -3571,7 +3645,7 @@ nodes:
     parents: [av_secondGenTurbofan]
     flavor: "The fourth-generation fighter engine: high bypass for a combat turbofan, high pressure ratio, high turbine temperature. The F135 that powers the F-35 is the most powerful fighter engine ever built; the WS-10 is its Chinese contemporary. The long tail of teen-series and Flanker engine marks matures here."
     parts: [SXTVTOLturboFan, RO-WS10]
-    upgrades: [RFUpgrade_CF34-3B, RFUpgrade_F100-PW-229, RFUpgrade_F100-PW-229PYBBN, RFUpgrade_F404-GE-402, RFUpgrade_J58-P-4A, RFUpgrade_J58-P-4B, RFUpgrade_RM12, RFUpgrade_WP-13A-II, RFUpgrade_WP-13F, RFUpgrade_WP-13FI, RFUpgrade_AL-31FM, RFUpgrade_AL-41F-1S, RFUpgrade_R-79M-300, RFUpgrade_R-79V-300, RFUpgrade_F100-PW-229EEP, RFUpgrade_WS-10B-III]  # F100-PW-229EEP + WS-10B-III added 2026-07 (gap-fill; F100-PW-229 sibling + RO-WS10 base here)
+    upgrades: [RFUpgrade_CF34-3B, RFUpgrade_F100-PW-229, RFUpgrade_F100-PW-229PYBBN, RFUpgrade_F404-GE-402, RFUpgrade_J58-P-4A, RFUpgrade_J58-P-4B, RFUpgrade_RM12, RFUpgrade_WP-13A-II, RFUpgrade_WP-13F, RFUpgrade_WP-13FI, RFUpgrade_AL-31FM, RFUpgrade_AL-41F-1S, RFUpgrade_R-79M-300, RFUpgrade_R-79V-300, RFUpgrade_F100-PW-229EEP]  # F100-PW-229EEP added 2026-07 (gap-fill; F100-PW-229 sibling here). WS-10B-III (own base part RO-WS10 here) moved down to av_combinedCycleSSTO, doctrine-4 fix 2026-07
 
   - id: av_combinedCycleSSTO
     title: "Combined-Cycle Air-Breathing Rocket"
@@ -3580,6 +3654,7 @@ nodes:
     parents: [av_fourthGenFighterTurbofan, fd_reusableGasGenKerolox]
     flavor: "One engine, two regimes: breathe air like a turbojet up through the atmosphere, then seal the intakes and burn stored oxidiser like a rocket the rest of the way to orbit - the single-stage-to-orbit dream in one nacelle, real turbojet and real rocket hardware, never quite proven at full scale."
     parts: [RAPIER]
+    upgrades: [RFUpgrade_WS-10B-III]  # moved down from av_fourthGenFighterTurbofan (own base part RO-WS10 there), doctrine-4 fix 2026-07
     # 2026-07 (full-manifest re-audit, corrected a real mistake): RAPIER was wrongly parked earlier this
     # pass as "no RealFuels config, not a real engine" - WRONG. Ground-truthed directly against RP-1's own
     # TREE-Parts.cfg: `%TechRequired = commercialSpaceplanes`, real cost/entryCost, `ModuleTagList tag =
@@ -3596,8 +3671,10 @@ nodes:
     parents: [gnc_bipropAttitudeThrust]
     flavor: "The little bipropellant engine that inserts a probe into orbit around another planet. The LEROS-1b - flight-proven on NEAR, MESSENGER and Juno - and the R-42 are the mature descendants of the R-4D thruster, built to sit cold through years of cruise and then fire once, exactly right, at the far end."
     parts: [ROE-LEROS1B, ROE-R42, ca_mer_ft, ROE-LEROS4]
-    upgrades: [RFUpgrade_R-42DM, RFUpgrade_R-42DM-NTO]  # added 2026-07 (gap-fill: configs of base ROE-R42)
+    upgrades: [RFUpgrade_R-4D-15, RFUpgrade_R-4D-15DM]  # moved down from gnc_bipropAttitudeThrust (own base part ROE-HiPAT there), doctrine-4 fix 2026-07
     # ROE-LEROS4 (2026-07, band-5 sweep): bigger mark of the same real LEROS manufacturer lineage.
+    # doctrine-4 fix (2026-07): R-42DM/R-42DM-NTO are this node's own base part's (ROE-R42) later marks -
+    # moved down to gnc_deepThrottlingAbortLandingEngine.
 
   # ================================================================================================
   # ========= BAND 4 * SHUTTLE & STATION ERA -- LANDING/POWER/COMMS/AVIONICS/SCIENCE (2026-07) =======
@@ -3907,13 +3984,22 @@ nodes:
     parents: [cryo_gasGeneratorHydrolox]
     flavor: "Bend the bell into an open ring around a truncated plug and let the atmosphere itself complete the nozzle - an annular chamber that keeps its thrust efficient from the pad to vacuum without ever changing shape. Ground-tested for a shortened Saturn upper stage that was never built."
     parts: [ROE-J2T]
-    upgrades: [RFUpgrade_J-2T-250K]  # added 2026-07 (gap-fill: config of base ROE-J2T)
     # King J-2T (J-2 Toroidal) - real Rocketdyne program, an altitude-compensating annular/aerospike
     # derivative of the J-2 (T8) studied for a shortened S-II ("Saturn INT-20"); its own RP-1 configs span
     # 1976-1985 (hydrolox1976/1981), squarely the already-authored space-stations-shuttle batch
     # (x=-1932..-1592, docs/shuttle-station-engine-kings.md) - missed entirely in that engine-only pass.
     # Distinct mechanism from a plain thrust uprate (nozzle geometry, not just a bigger bell), so it earns
     # its own node rather than folding into cryo_largeHydrolox.
+    # doctrine-4 fix (2026-07): J-2T-250K is this node's own base part's (ROE-J2T) later mark - moved down
+    # to cryo_toroidalAerospikeNozzleII (new node, no existing child here).
+  - id: cryo_toroidalAerospikeNozzleII
+    title: "Uprated Toroidal Aerospike Nozzle"
+    discipline: Cryogenics
+    tier: 10
+    parents: [cryo_toroidalAerospikeNozzle]
+    flavor: "The same annular aerospike, pushed to a longer burn and higher chamber pressure - the J-2T's own final study mark before the program quietly ended."
+    upgrades: [RFUpgrade_J-2T-250K]
+    # doctrine-4 catch: J-2T-250K's own base part (ROE-J2T) lives in cryo_toroidalAerospikeNozzle.
 
   - id: pc_fluorineOxidizerChemistry
     title: "Fluorine Oxidizer Chemistry"
@@ -4272,6 +4358,7 @@ nodes:
     parents: [cryo_boosterGasGenHydrolox]
     flavor: "Skip the separate gas-generator combustor entirely - bleed hot gas straight off the main chamber wall to spin the turbopump, then dump it overboard. Simpler than a gas generator, cheaper than staged combustion: the operational middle path Blue Origin bet New Shepard and New Glenn's upper stage on."
     parts: [ROE-BE3]
+    upgrades: [RFUpgrade_RS-68A, RFUpgrade_RS-68B, RFUpgrade_RS-68K, RFUpgrade_RS-800]  # moved down from cryo_boosterGasGenHydrolox (own base part ROE-RS68 there), doctrine-4 fix 2026-07
     # King BE-3PM. A genuinely third hydrolox cycle (neither gas-generator nor expander nor staged
     # combustion) - sibling of RS-68/Vulcain 2's "anti-SSME" simplicity-over-Isp story, one tier later.
   - id: cryo_highThrustExpander
@@ -4281,7 +4368,12 @@ nodes:
     parents: [cryo_deployableNozzleExpander]
     flavor: "Scale the closed expander cycle past the RL-10's own ceiling - two parallel American and European programs converge on the same bigger turbopump, the same clean cycle, roughly triple the thrust."
     parts: [cryoengine-pavonis-1, cryoengine-tharsis-1, ROE-MB35, ROE-MB60]
-    upgrades: [RFUpgrade_Vinci-180]
+    upgrades: [RFUpgrade_RD-0146D, RFUpgrade_CECE-High, RFUpgrade_RL10C-2, RFUpgrade_RL10C-2-1]
+    # doctrine-4 fix (2026-07): Vinci-180 (this node's OWN base parts' - cryoengine-pavonis-1/tharsis-1 -
+    # same-era parallel-program sibling config, per this node's own flavor text) moved down to
+    # cryo_expanderBoosterScale, its nearest later-tier sibling.
+    # RD-0146D/CECE-High/RL10C-2/RL10C-2-1 moved down from cryo_deployableNozzleExpander
+    # (own base parts ROE-RD0146/ROE-RL10B2 there).
     # ROE-MB35/MB60 (2026-07, band-5 gap sweep): the same closed-expander thrust class (XCOR/Aerojet
     # Rocketdyne MB-XX study family) - direct siblings of RL60/Vinci, not a separate lineage.
     # King RL60/Vinci (two thrust variants of the same real convergent-design story: Aerojet Rocketdyne's
@@ -4302,6 +4394,7 @@ nodes:
     parents: [cryo_deployableNozzleExpander]
     flavor: "Vent a little of the cooling-jacket gas overboard instead of routing every drop through the turbopump, and the expander cycle's thrust ceiling - always capped by a small upper-stage engine's own heat-exchange area - breaks wide open. The expander cycle finally reaches core-stage scale."
     parts: [cryoengine-fuji-1]
+    upgrades: [RFUpgrade_Vinci-180]  # moved down from cryo_highThrustExpander (own base parts cryoengine-pavonis-1/tharsis-1 there), doctrine-4 fix 2026-07
     # King LE-9 (real H3 core engine, 1471 kN - triple the thrust of any prior expander in this tree).
   - id: cryo_fullFlowMethalox
     title: "Full-Flow Staged-Combustion Methalox"
@@ -4336,8 +4429,18 @@ nodes:
     parents: [fd_reusableGasGenKerolox]
     flavor: "Chill both propellants below their normal boiling points before loading, and more mass packs into the same tanks and the same engine - the real refinement behind a two-thirds thrust jump on the same basic cycle, no new chemistry required."
     parts: [ROE-Merlin1D, ROE-Merlin1DV]
-    upgrades: [RFUpgrade_Merlin1D, RFUpgrade_Merlin1D+, RFUpgrade_Merlin1D++, RFUpgrade_Merlin1DVac, RFUpgrade_Merlin1DVac+]
+    upgrades: [RFUpgrade_Merlin1D, RFUpgrade_Merlin1DVac]
     # King Merlin 1D/1D Vacuum.
+    # doctrine-4 fix (2026-07): Merlin1D+/Merlin1D++/Merlin1DVac+ are this node's own base parts' later
+    # marks - moved down to fd_densifiedPropellantKeroloxII (new node, no existing child here).
+  - id: fd_densifiedPropellantKeroloxII
+    title: "Further-Densified Kerolox Uprating"
+    discipline: FluidDynamics
+    tier: 14
+    parents: [fd_densifiedPropellantKerolox]
+    flavor: "Push the densified Merlin further still - the Full Thrust and Block 5 marks that let the same basic engine carry a reusable booster home and fly it again."
+    upgrades: [RFUpgrade_Merlin1D+, RFUpgrade_Merlin1D++, RFUpgrade_Merlin1DVac+]
+    # doctrine-4 catch: these configs' own base parts (ROE-Merlin1D/ROE-Merlin1DV) live in fd_densifiedPropellantKerolox.
 
   # ---- PropellantChemistry: American ORSC studies + solid boosters ----
   - id: pc_americanORSCKerolox
@@ -4367,6 +4470,7 @@ nodes:
     parents: [gnc_deepSpaceApogeeEngine]
     flavor: "A launch-abort engine that can also fly a controlled, propulsive touchdown - pressure-fed hypergolics deep-throttled and restarted enough times to trust a crew's life to it twice in one mission, once going up wrong and once coming down right."
     parts: [ROE-SuperDraco, ROE-SuperDracoDouble, ROC-CSTRS88, ROC-OrionLAS, ROC-OrionCover1, ROC-OrionCover2, ROC-OrionCover3]
+    upgrades: [RFUpgrade_R-42DM, RFUpgrade_R-42DM-NTO]  # moved down from gnc_deepSpaceApogeeEngine (own base part ROE-R42 there), doctrine-4 fix 2026-07
     # King SuperDraco/Twin SuperDraco (Dragon 2) - real breakthrough beyond any prior abort motor. CSTRS88
     # (CST-100's own abort-only cluster) rides along as the parallel commercial-crew system without the
     # landing capability. Orion's own solid LAS + its 3 jettisoned fairing covers ride along too (same
@@ -4392,10 +4496,19 @@ nodes:
     parents: [ep_griddedIon]
     flavor: "NSTAR's direct successor - the same electrostatic-grid acceleration, refined for higher throughput and, in its most extreme sibling, a second acceleration stage for even higher exhaust velocity."
     parts: [ionXenon-0625, ionXenon-0625-2, RO-ID500, ionXenon-0625-3]
-    upgrades: [RFUpgrade_DS4G-25-hi, RFUpgrade_DS4G-25-mid, RFUpgrade_DS4G-50-hi, RFUpgrade_DS4G-50-low]
     # King NEXT (NASA's real successor to NSTAR). HiPEP (highest-Isp gridded ion here) and ID-500 ride
     # along as sibling refinements of the same electrostatic-grid family; DS4G's dual-stage configs are
     # its own further marks.
+    # doctrine-4 fix (2026-07): DS4G-25-hi/DS4G-25-mid/DS4G-50-hi/DS4G-50-low are this node's own base
+    # part's (ionXenon-0625-3) marks - moved down to ep_nextGenGriddedIonII (new node, no existing child here).
+  - id: ep_nextGenGriddedIonII
+    title: "Tuned Dual-Stage Gridded Ion Thruster"
+    discipline: ElectricalPower
+    tier: 14
+    parents: [ep_nextGenGriddedIon]
+    flavor: "DS4G's dual-stage grid pushed across its own family of ratings - the same second-acceleration-stage trick, retuned for every thrust/Isp trade the design study explored."
+    upgrades: [RFUpgrade_DS4G-25-hi, RFUpgrade_DS4G-25-mid, RFUpgrade_DS4G-50-hi, RFUpgrade_DS4G-50-low]
+    # doctrine-4 catch: these configs' own base part (ionXenon-0625-3) lives in ep_nextGenGriddedIon.
   - id: ep_nasaHighPowerHall
     title: "NASA High-Power Hall Thruster"
     discipline: ElectricalPower
@@ -4403,9 +4516,20 @@ nodes:
     parents: [ep_highPowerHall]
     flavor: "Purpose-built for deep-space station-keeping on a crewed outpost, not just trimming a satellite's orbit - the next mark past the 457M, and in its nested-channel sibling, the highest-power Hall thruster ever built."
     parts: [ionArgon-0625, ionArgon-0625-3, ionArgon-0625-2]
-    upgrades: [RFUpgrade_AEPS, RFUpgrade_X3-HV, RFUpgrade_X3-HV-K]  # added 2026-07 (gap-fill: configs of ionArgon-0625/-3 bases here; AEPS + X3 nested Hall)
+    upgrades: [RFUpgrade_457M-V2]
     # King HERMeS (built for NASA's Gateway/PPE). X3 (nested-channel, highest power ever built) and P5
     # (mid-power NASA test article) ride along.
+    # doctrine-4 fix (2026-07): 457M-V2 moved down from ep_highPowerHall (own base part's later mark
+    # there). AEPS/X3-HV/X3-HV-K (this node's OWN base parts' later marks) moved further down to
+    # ep_nasaHighPowerHallII, since this node has no other child.
+  - id: ep_nasaHighPowerHallII
+    title: "Matured NASA High-Power Hall Thruster"
+    discipline: ElectricalPower
+    tier: 14
+    parents: [ep_nasaHighPowerHall]
+    flavor: "HERMeS and X3 mature mark by mark - the Gateway-bound AEPS thruster's flight configuration, and the nested-channel X3 tuned across its own voltage range."
+    upgrades: [RFUpgrade_AEPS, RFUpgrade_X3-HV, RFUpgrade_X3-HV-K]
+    # doctrine-4 catch: these configs' own base parts (ionArgon-0625/ionArgon-0625-3) live in ep_nasaHighPowerHall.
   - id: ep_magnetoplasmadynamic
     title: "Magnetoplasmadynamic Thruster"
     discipline: ElectricalPower
@@ -4421,9 +4545,19 @@ nodes:
     parents: [ep_magnetoplasmadynamic]
     flavor: "RF-heat a plasma instead of arcing through it, then steer it out through a magnetic nozzle - and unlike every other electric thruster in this tree, trade thrust for Isp continuously, in flight, instead of picking one number at build time."
     parts: [vasimr-125, vasimr-0625]
-    upgrades: [RFUpgrade_VF-200-Kr, RFUpgrade_VX-200SS-Kr]
     # King VF-200/VX-200SS VASIMR - a third distinct electric-propulsion mechanism, the most exotic and
     # least-flown of this batch's concepts.
+    # doctrine-4 fix (2026-07): VF-200-Kr/VX-200SS-Kr are this node's own base parts' (vasimr-125/vasimr-0625)
+    # same-era propellant-swap variants - moved down to ep_variableSpecificImpulsePlasmaII (new node, no
+    # existing child here).
+  - id: ep_variableSpecificImpulsePlasmaII
+    title: "Krypton-Fuelled Variable-Isp Plasma Rocket"
+    discipline: ElectricalPower
+    tier: 15
+    parents: [ep_variableSpecificImpulsePlasma]
+    flavor: "Swap the VASIMR's working gas from argon to krypton - denser propellant, a further tuned exhaust velocity, the same RF-heated plasma and magnetic nozzle."
+    upgrades: [RFUpgrade_VF-200-Kr, RFUpgrade_VX-200SS-Kr]
+    # doctrine-4 catch: these configs' own base parts (vasimr-125/vasimr-0625) live in ep_variableSpecificImpulsePlasma.
 
   # ---- NuclearEngineering: past NTR into fusion pulse and continuous-criticality concepts ----
   - id: nuc_bimodalNTR
@@ -4432,6 +4566,7 @@ nodes:
     tier: 14
     parents: [nuc_advancedCoreNTR]
     flavor: "The same reactor that heats propellant for thrust keeps running between burns as a power source - real NASA bimodal-NTR design studies, squeezing a second job out of the mass a nuclear stage already has to carry."
+    upgrades: [RFUpgrade_LPNTR-3600HP]  # moved down from nuc_advancedCoreNTR (own base part ntr-gc-25-1 there), doctrine-4 fix 2026-07
     parts: [ROE-BNTR]
   - id: nuc_fissionFragmentRocket
     title: "Fission-Fragment Rocket"

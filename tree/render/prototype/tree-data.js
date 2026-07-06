@@ -223,7 +223,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -5264,
-    7230
+    6613
    ]
   },
   {
@@ -239,7 +239,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -5264,
-    7136
+    6519
    ]
   },
   {
@@ -247,7 +247,7 @@ window.TREE = {
    "title": "Experimental Hardware",
    "discipline": "SystemsIntegration",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "Off-program hardware that never earned a place in the main tree - redundant instruments, third-party curiosities, flight-proven gear with nothing new left to teach. Available to build, not required to progress; a side branch for flavour and player choice, not the story the rest of the tree tells.",
    "parts": [
@@ -266,7 +266,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    12925
+    12863
    ]
   },
   {
@@ -282,7 +282,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    13150
+    13088
    ]
   },
   {
@@ -298,7 +298,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    13338
+    13276
    ]
   },
   {
@@ -306,7 +306,7 @@ window.TREE = {
    "title": "First American Satellites",
    "discipline": "SystemsIntegration",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Vanguard, the first Pioneers and Explorer 6 — the earliest American satellites, flown to prove a nation could reach orbit and read back the space it found there.",
    "parts": [
@@ -355,7 +355,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    13150
+    13088
    ]
   },
   {
@@ -363,7 +363,7 @@ window.TREE = {
    "title": "American Application Satellites",
    "discipline": "SystemsIntegration",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Satellites that earn their launch: Tiros watching the weather, Transit fixing a ship's position, GRAB listening for enemy radar, Pioneer 5 sounding deep space. The first American spacecraft flown for a service, not a first.",
    "parts": [
@@ -392,7 +392,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    13150
+    13088
    ]
   },
   {
@@ -400,7 +400,7 @@ window.TREE = {
    "title": "First Interplanetary Probes",
    "discipline": "SystemsIntegration",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Mariner leaves Earth behind — the first American craft to fly past another planet, Venus in '62 and Mars in '64, on a bus that had to survive months of cruise and aim itself across the solar system.",
    "parts": [
@@ -419,7 +419,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    13150
+    13088
    ]
   },
   {
@@ -427,7 +427,7 @@ window.TREE = {
    "title": "Lunar & Planetary Reconnaissance",
    "discipline": "SystemsIntegration",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Survey the Moon up close and keep flying the planets: Surveyor soft-lands to prove the regolith will bear a lander's weight, while Mariner returns to Venus and the Pioneer field satellites watch the Sun.",
    "parts": [
@@ -476,7 +476,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    13150
+    13088
    ]
   },
   {
@@ -484,7 +484,7 @@ window.TREE = {
    "title": "Outer-Planet Precursors",
    "discipline": "SystemsIntegration",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Map Mars from orbit and cross the asteroid belt for the first time: Mariner 9 becomes the first spacecraft to orbit another planet, Mariner 10 slingshots past Venus to Mercury, and the Pioneers strike out for Jupiter.",
    "parts": [
@@ -508,7 +508,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    13150
+    13088
    ]
   },
   {
@@ -516,7 +516,7 @@ window.TREE = {
    "title": "The Grand Tour",
    "discipline": "SystemsIntegration",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "The once-in-176-years alignment of the outer planets, taken at a run. Voyager threads Jupiter, Saturn, Uranus and Neptune on a single launch; Helios dives closer to the Sun than anything before it.",
    "parts": [
@@ -540,7 +540,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    13150
+    13088
    ]
   },
   {
@@ -548,7 +548,7 @@ window.TREE = {
    "title": "Shuttle-Era Flagships",
    "discipline": "SystemsIntegration",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The Shuttle lifts the big orbiters and the Inertial Upper Stage kicks them out of Earth orbit: Galileo to Jupiter with an atmospheric probe, Magellan to map Venus by radar, all relayed home through the TDRS network.",
    "parts": [
@@ -597,7 +597,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    13150
+    13088
    ]
   },
   {
@@ -605,7 +605,7 @@ window.TREE = {
    "title": "Discovery & Cassini-Huygens Era",
    "discipline": "SystemsIntegration",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Faster-better-cheaper meets the last of the flagships. NEAR orbits an asteroid, Stardust flies through a comet's tail, Deep Space 1 proves ion propulsion — and Cassini carries Huygens down to land on Titan.",
    "parts": [
@@ -684,7 +684,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    13150
+    13088
    ]
   },
   {
@@ -692,7 +692,7 @@ window.TREE = {
    "title": "Modern Robotic Explorers",
    "discipline": "SystemsIntegration",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "The current fleet. New Horizons runs to Pluto, Dawn orbits two asteroids on ion drive, Juno threads Jupiter's radiation, MESSENGER settles at Mercury, and a line of Earth observers watches the home planet through the modern relay network.",
    "parts": [
@@ -766,7 +766,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    13150
+    13088
    ]
   },
   {
@@ -774,7 +774,7 @@ window.TREE = {
    "title": "First Soviet Satellites",
    "discipline": "SystemsIntegration",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Sputnik — the beeping sphere that opened the space age — then the heavy Sputnik 2 and 3 that carried first a dog and then a laboratory into orbit while the West was still counting its failures.",
    "parts": [
@@ -798,7 +798,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    13338
+    13276
    ]
   },
   {
@@ -806,7 +806,7 @@ window.TREE = {
    "title": "First Lunar Probes",
    "discipline": "SystemsIntegration",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "The first machines to leave Earth's pull for another world: Luna reaches escape velocity, strikes the Moon, and photographs its hidden far side for the first time in history.",
    "parts": [
@@ -825,7 +825,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    13338
+    13276
    ]
   },
   {
@@ -833,7 +833,7 @@ window.TREE = {
    "title": "Early Planetary Probes & Comsats",
    "discipline": "SystemsIntegration",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Reach for the planets and wire the country together: Venera strikes out for Venus, Polyot manoeuvres in orbit, Molniya opens the high-latitude comms net and the first Proton payloads fly.",
    "parts": [
@@ -872,7 +872,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    13338
+    13276
    ]
   },
   {
@@ -880,7 +880,7 @@ window.TREE = {
    "title": "Luna Soft-Landers & Orbiters",
    "discipline": "SystemsIntegration",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "The first soft landing on another world and the first lunar orbiters: the Luna 9-13 family throttles down onto the regolith on an airbag-cushioned capsule, and circles the Moon returning data from orbit.",
    "parts": [
@@ -944,7 +944,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    13338
+    13276
    ]
   },
   {
@@ -952,7 +952,7 @@ window.TREE = {
    "title": "Modern Soviet & Russian Comsats",
    "discipline": "SystemsIntegration",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The operational communications constellation: Strela and its Gonets successors — the low-orbit store-and-forward bus that kept a continent's messages moving into the modern era.",
    "parts": [
@@ -966,7 +966,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    13338
+    13276
    ]
   },
   {
@@ -974,7 +974,7 @@ window.TREE = {
    "title": "Nitric-Acid Storable Propellants",
    "discipline": "PropellantChemistry",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "An oxidiser you can keep in the tank for months — fuming nitric acid — that ignites on contact with its fuel, so the engine needs no igniter and no turbopump. The chemistry of the first cheap storable rockets: the sounding motors that clear the Karman line and return the first data from the edge of space.",
    "parts": [
@@ -998,7 +998,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    8141
+    8156
    ]
   },
   {
@@ -1006,7 +1006,7 @@ window.TREE = {
    "title": "Turbopump Feed",
    "discipline": "FluidDynamics",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": true,
    "flavor": "Drive the propellants with a turbine-spun pump instead of tank pressure — the tank stops being a heavy pressure vessel and the chamber can run far harder than any sounding motor reaches. The step from a powder dart to the turbopump-fed V-2: a large liquid rocket at last.",
    "parts": [
@@ -1035,7 +1035,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    9335
+    8776
    ]
   },
   {
@@ -1043,7 +1043,7 @@ window.TREE = {
    "title": "Single-Chamber Combustion",
    "discipline": "FluidDynamics",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "A single small chamber held stable by careful injector design — the first purpose-built kerosene-oxygen boosters a satellite could ride: Vanguard's X-405, and the Atlas sustainer that runs on to orbit after the boosters drop away.",
    "parts": [
@@ -1067,7 +1067,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    9583
+    8976
    ]
   },
   {
@@ -1075,7 +1075,7 @@ window.TREE = {
    "title": "Combustion-Instability Damping",
    "discipline": "FluidDynamics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Scale a single combustion chamber to a meganewton and its own acoustics threaten to tear it apart — injector design and damping hold the burn stable at a size the small chambers never faced. The hard way the West reached orbit: one big stable chamber, where the Soviets clustered many small ones. Atlas, Thor, Blue Streak.",
    "parts": [
@@ -1099,7 +1099,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    9536
+    8929
    ]
   },
   {
@@ -1107,7 +1107,7 @@ window.TREE = {
    "title": "Parallel Engine Clustering",
    "discipline": "FluidDynamics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Twenty combustion chambers across four strap-on boosters and a core, all lit on the pad and synchronised — the R-7 that carried Sputnik to orbit. Brute multiplicity where the West built single chambers. Unflyable without vernier steering, which its engines carry built-in.",
    "parts": [
@@ -1126,7 +1126,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    9267
+    8708
    ]
   },
   {
@@ -1134,7 +1134,7 @@ window.TREE = {
    "title": "Multi-Chamber Combustion",
    "discipline": "FluidDynamics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Scale the clustered-chamber approach to a meganewton — a bank of chambers on a common turbopump delivering booster thrust without ever risking one large unstable chamber. The storable orbital boosters (RD-211, YF-2) that lofted payloads on propellant you could keep in the tank for years.",
    "parts": [
@@ -1158,7 +1158,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    9173
+    8614
    ]
   },
   {
@@ -1166,7 +1166,7 @@ window.TREE = {
    "title": "High-Expansion Vacuum Nozzles",
    "discipline": "FluidDynamics",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "A nozzle bell too large to fire at sea level — the flow would rip away from the walls — but in vacuum it extracts every last metre-per-second from the exhaust. The dedicated upper-stage engines that let the R-7 reach past low orbit toward the Moon: high specific impulse where there is no air to fight.",
    "parts": [
@@ -1190,7 +1190,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    9421
+    8814
    ]
   },
   {
@@ -1198,7 +1198,7 @@ window.TREE = {
    "title": "Auxiliary-Chamber Thrust Vectoring",
    "discipline": "FluidDynamics",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Steer and roll a large rocket in powered flight with small gimballed auxiliary chambers — full three-axis control, roll especially, before a single main engine can be trusted to gimbal for it. The R-7's verniers are integral to its engines, so you cannot fly the cluster without this; Atlas and Jupiter bolt theirs on.",
    "parts": [
@@ -1222,7 +1222,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    9220
+    8661
    ]
   },
   {
@@ -1230,7 +1230,7 @@ window.TREE = {
    "title": "Cryogenic Hydrogen Handling",
    "discipline": "Cryogenics",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "No doctrine says burn kerosene first. Bet early on hydrogen: vacuum-jacketed tanks, multilayer insulation and enormous pumps for a low-density fuel, all for the highest specific impulse chemistry there is. It costs a whole node of program time up front just to commit - and this is that commitment.",
    "parts": [],
@@ -1238,7 +1238,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    5972
+    6076
    ]
   },
   {
@@ -1246,7 +1246,7 @@ window.TREE = {
    "title": "Hydrogen-Oxygen Combustion",
    "discipline": "Cryogenics",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "The first hydrolox engine that runs at all — low thrust, finicky, expensive, its great specific impulse not yet worth the trouble. Kerolox still wins the early climb; this is the down payment on a better long game.",
    "parts": [
@@ -1260,7 +1260,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    6113
+    5280
    ]
   },
   {
@@ -1268,7 +1268,7 @@ window.TREE = {
    "title": "Expander-Cycle Combustion",
    "discipline": "Cryogenics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Let the fuel boil in the cooling jacket and use that gas to drive the pumps — no preburner, beautifully clean, the highest specific impulse a chemical engine reaches. The RL-10: the tier where hydrogen finally overtakes kerosene.",
    "parts": [
@@ -1282,7 +1282,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    6045
+    5280
    ]
   },
   {
@@ -1290,7 +1290,7 @@ window.TREE = {
    "title": "Double-Base Solid Propellant",
    "discipline": "PropellantChemistry",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "Nitrocellulose plasticised with nitroglycerin and extruded into a grain that carries its own oxygen — the older solid chemistry: simple, dense, storable, lit once and done. The JATO boosters and the first Nike stages.",
    "parts": [
@@ -1329,7 +1329,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    993
+    4496
    ]
   },
   {
@@ -1337,7 +1337,7 @@ window.TREE = {
    "title": "Double-Base Booster Grains",
    "discipline": "PropellantChemistry",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Cast a double-base grain large enough to boost a stack off the pad — case-bonded to the motor wall so it burns from the core out without cracking. The Nike booster and the heavy JATO units, where double-base is pushed to its size limit before composite takes over.",
    "parts": [
@@ -1361,7 +1361,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    993
+    4496
    ]
   },
   {
@@ -1369,7 +1369,7 @@ window.TREE = {
    "title": "Ammonium-Perchlorate Composite Grains",
    "discipline": "PropellantChemistry",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Ammonium-perchlorate oxidiser bound in a rubbery polysulfide matrix, cast to shape around an integral nozzle — higher energy than double-base and castable to any size. The Baby Sergeant cluster that spun Explorer 1 to orbit.",
    "parts": [
@@ -1398,7 +1398,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    993
+    4496
    ]
   },
   {
@@ -1406,7 +1406,7 @@ window.TREE = {
    "title": "Amine-Nitrate Hypergolics",
    "discipline": "PropellantChemistry",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "An amine fuel and a nitric-acid oxidiser that ignite on contact — no igniter, storable for years, restartable after a cold coast. The propellant of upper stages and spacecraft engines that must light every time.",
    "parts": [
@@ -1432,7 +1432,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    7129
+    7323
    ]
   },
   {
@@ -1440,7 +1440,7 @@ window.TREE = {
    "title": "High-Test Peroxide Combustion",
    "discipline": "PropellantChemistry",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Concentrated hydrogen peroxide decomposed across a silver catalyst into a hot oxidising gas — a storable oxidiser that needs no cryogenics and lights a kerosene engine cleanly. Britain's Gamma sustainers ran on it.",
    "parts": [
@@ -1456,7 +1456,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    7009
+    7023
    ]
   },
   {
@@ -1464,7 +1464,7 @@ window.TREE = {
    "title": "Deep-Throttling Peroxide Combustion",
    "discipline": "PropellantChemistry",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "A two-chamber peroxide engine whose small cruise chamber throttles deeply while a fixed chamber boosts — variable thrust from a storable propellant, built for a missile that had to coast and correct. (Britain's Stentor.)",
    "parts": [
@@ -1478,7 +1478,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    7009
+    7023
    ]
   },
   {
@@ -1486,7 +1486,7 @@ window.TREE = {
    "title": "Austenitic Stainless Steel",
    "discipline": "Metallurgy",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Chromium-nickel steel that keeps its strength while hot and holds a higher chamber pressure without a thicker, heavier wall — the metallurgy that turned the V-2's chamber into the Redstone's. Push the pressure, take the thrust.",
    "parts": [],
@@ -1515,7 +1515,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    3671
+    3681
    ]
   },
   {
@@ -1523,7 +1523,7 @@ window.TREE = {
    "title": "Impinging-Jet Injectors",
    "discipline": "FluidDynamics",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "Aim paired fuel and oxidiser jets to collide and atomise on contact, across a flat plate drilled for even mixing over the whole injector face — more complete combustion, a little more specific impulse from the same propellants. Get it right and a small pressure-fed chamber burns clean enough to fly: the four-chamber engine of a rocket aeroplane, and the combustion craft the turbopump-fed boosters are built on.",
    "parts": [],
@@ -1535,7 +1535,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    10010
+    9356
    ]
   },
   {
@@ -1543,7 +1543,7 @@ window.TREE = {
    "title": "Nimonic Turbine Alloys",
    "discipline": "Metallurgy",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Nickel-chromium superalloy that keeps its strength at red heat — a turbopump turbine that spins hotter and harder feeds a higher chamber pressure, and the very same alloy is what lets a jet turbine run at all. The metallurgy where rockets and jets cross over.",
    "parts": [],
@@ -1569,7 +1569,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    4350
+    3775
    ]
   },
   {
@@ -1577,7 +1577,7 @@ window.TREE = {
    "title": "Fusion-Welded Pressure Vessels",
    "discipline": "Metallurgy",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "Roll, fusion-weld and proof-test a thin metal cylinder that holds its propellant under pressure without bursting — the first tank that flies, and the steel the first engine chambers are cut from. Heavy, but honest.",
    "parts": [
@@ -1647,11 +1647,14 @@ window.TREE = {
      "title": "CA-MT10 Propellant Tank (Pressurized)"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFTech-Tank-Sep-Al",
+    "RFTech-Tank-Sep-Al2"
+   ],
    "grants": [],
    "pos": [
     -4960,
-    2969
+    2369
    ]
   },
   {
@@ -1659,7 +1662,7 @@ window.TREE = {
    "title": "Machined Isogrid Stiffening",
    "discipline": "Metallurgy",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Machine a triangular-rib isogrid into thick plate — cutting metal away everywhere the load path doesn't run, leaving only the ribs that carry it. The same stiffness at a fraction of the mass; the light conventional tankage that flies most orbital rockets.",
    "parts": [
@@ -1728,7 +1731,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    2497
+    1771
    ]
   },
   {
@@ -1736,7 +1739,7 @@ window.TREE = {
    "title": "Pressure-Stabilized Monocoque",
    "discipline": "StructuresMechanisms",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Make the stainless wall so thin it only holds its shape under internal pressure — the Atlas 'steel balloon' reached orbit weighing almost nothing empty, and would crumple if you ever let it depressurise. As much an orbital enabler as any engine.",
    "parts": [
@@ -1770,7 +1773,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    3602
+    3429
    ]
   },
   {
@@ -1778,7 +1781,7 @@ window.TREE = {
    "title": "Pyrotechnic Frangible Separation",
    "discipline": "StructuresMechanisms",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one burn.",
    "parts": [
@@ -1812,7 +1815,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    10651
+    7852
    ]
   },
   {
@@ -1820,7 +1823,7 @@ window.TREE = {
    "title": "Jettisonable Payload Fairings",
    "discipline": "Aerodynamics",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command.",
    "parts": [
@@ -1854,7 +1857,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    7317
+    6651
    ]
   },
   {
@@ -1862,7 +1865,7 @@ window.TREE = {
    "title": "Pulse-Interval Telemetry",
    "discipline": "Telecommunications",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "Encode a reading as the gap between radio pulses and beam it down on a fixed carrier — the beep-beep that proved a satellite was alive and returned its first data. The whole point of orbit, if you can't hear it.",
    "parts": [
@@ -1891,7 +1894,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    11911
+    11754
    ]
   },
   {
@@ -1899,7 +1902,7 @@ window.TREE = {
    "title": "Hermetic Thermal-Control Bus",
    "discipline": "Thermodynamics",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Seal the electronics in a pressurised sphere with a circulating gas and a polished radiating skin, holding them at room temperature through the swing from sunlight to shadow. Sputnik was mostly this: a bus that keeps its instruments alive.",
    "parts": [
@@ -1925,7 +1928,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    2497
+    1771
    ]
   },
   {
@@ -1933,7 +1936,7 @@ window.TREE = {
    "title": "Semiconductor Diodes",
    "discipline": "ElectricalPower",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "A sliver of doped crystal that passes current one way only — grown up from the cat's-whisker radio detector into a rugged solid-state device. It lights an indicator on almost no power, and it is the seed of everything solid-state: rectifiers, transistors, the integrated circuit still to come. Microelectronics grows from here.",
    "parts": [
@@ -2017,7 +2020,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    11702
+    11544
    ]
   },
   {
@@ -2025,7 +2028,7 @@ window.TREE = {
    "title": "Transistor Amplification",
    "discipline": "Microelectronics",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Replace the fragile, power-hungry vacuum tube with a sliver of doped germanium that amplifies and switches a signal cold, on almost nothing — the active device the diode could never be. Microelectronics proper begins here: every transistorised instrument, guidance platform and television camera that follows is built on this one breakthrough.",
    "parts": [],
@@ -2033,7 +2036,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    11749
+    11591
    ]
   },
   {
@@ -2041,7 +2044,7 @@ window.TREE = {
    "title": "Diffused-Junction Photovoltaics",
    "discipline": "ElectricalPower",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Diffuse a shallow junction into a silicon wafer so sunlight knocks a current across it — grams of cells that trickle-charge a battery indefinitely, outliving every chemical primary. Vanguard 1 is still up there, still lit.",
    "parts": [
@@ -2060,7 +2063,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    11232
+    11079
    ]
   },
   {
@@ -2068,7 +2071,7 @@ window.TREE = {
    "title": "Electric Rotor Actuation",
    "discipline": "Robotics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "A brushless electric motor married to a solid-state controller that holds it at any commanded speed or angle — the first actuator a machine can move on its own. Nothing in an unmanned launcher spins one yet, but every arm, rover wheel, tracking mount and deployable to come turns on this.",
    "parts": [
@@ -2087,7 +2090,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    12125
+    12042
    ]
   },
   {
@@ -2095,7 +2098,7 @@ window.TREE = {
    "title": "Cold-Gas Reaction Control",
    "discipline": "GuidanceControl",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Bleed compressed nitrogen through opposed nozzles to nudge a craft's attitude — no combustion, nothing to go wrong, just enough impulse to point. The simplest way to hold an orientation in vacuum.",
    "parts": [
@@ -2119,7 +2122,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    9058
+    8383
    ]
   },
   {
@@ -2127,7 +2130,7 @@ window.TREE = {
    "title": "Drogue-Stabilized Deceleration",
    "discipline": "Aerodynamics",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "A small drogue bites the thin high air to hold a falling body straight and slow it enough that a main canopy can open without tearing — the difference between a returned payload and a crater.",
    "parts": [
@@ -2181,7 +2184,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    8870
+    6929
    ]
   },
   {
@@ -2189,7 +2192,7 @@ window.TREE = {
    "title": "Film-Return Imaging",
    "discipline": "OpticsPhotonics",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "Expose photographic film to the scene and bring the physical emulsion home — the highest resolution there is, at the price of recovering the capsule. Reconnaissance before anyone could downlink a picture.",
    "parts": [
@@ -2218,7 +2221,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    9916
+    9236
    ]
   },
   {
@@ -2226,7 +2229,7 @@ window.TREE = {
    "title": "Vidicon Imaging",
    "discipline": "OpticsPhotonics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Scan a photoconductive target with an electron beam and read the image off as a video signal — lower resolution than film, but it comes down the radio link the instant you take it. No capsule to recover.",
    "parts": [
@@ -2295,7 +2298,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    11185
+    11006
    ]
   },
   {
@@ -2303,7 +2306,7 @@ window.TREE = {
    "title": "Geiger-Müller Ionization Counting",
    "discipline": "NuclearEngineering",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "A wire at high voltage in a gas tube: a single charged particle triggers an avalanche you can read as a click. The instrument that found the radiation belts on the first American satellite.",
    "parts": [
@@ -2322,7 +2325,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    6228
+    8823
    ]
   },
   {
@@ -2330,7 +2333,7 @@ window.TREE = {
    "title": "Magnetic-Sector Mass Spectrometry",
    "discipline": "Microelectronics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there.",
    "parts": [
@@ -2349,7 +2352,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    12987
+    12926
    ]
   },
   {
@@ -2357,7 +2360,7 @@ window.TREE = {
    "title": "Fluxgate Magnetometry",
    "discipline": "Microelectronics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron.",
    "parts": [
@@ -2371,7 +2374,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    12522
+    12461
    ]
   },
   {
@@ -2379,7 +2382,7 @@ window.TREE = {
    "title": "Space-Exposed Biology",
    "discipline": "LifeSupport",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "Fly gels, spores and living cultures sealed in a capsule, then recover them to see what vacuum, cold and raw radiation did — the first read on whether anything alive survives above the atmosphere. The seed of every later life-sciences payload.",
    "parts": [
@@ -2408,7 +2411,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    2619
+    4590
    ]
   },
   {
@@ -2416,7 +2419,7 @@ window.TREE = {
    "title": "Upper-Atmosphere Sounding",
    "discipline": "Microelectronics",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "A wedge of thermometers, barometers and sample cells flown up a sounding rocket to log temperature, pressure and density where balloons can't reach — the first instruments to tell us what the air is doing at the edge of space.",
    "parts": [
@@ -2430,7 +2433,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    12831
+    12769
    ]
   },
   {
@@ -2438,7 +2441,7 @@ window.TREE = {
    "title": "Subsonic Aerodynamics",
    "discipline": "Aerodynamics",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "Beyond the bare procedural wing you begin with, the craft of subsonic aerodynamics: the control surfaces and all-moving tail that make it a controllable platform, and the pitot and radial intakes that feed an engine cleanly. The root the rest of aerodynamics grows from.",
    "parts": [
@@ -2492,7 +2495,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    8444
+    6719
    ]
   },
   {
@@ -2500,7 +2503,7 @@ window.TREE = {
    "title": "Oleo-Strut Undercarriage",
    "discipline": "StructuresMechanisms",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, from a fixed skid on a light trainer up to a steerable retractable leg.",
    "parts": [
@@ -2549,7 +2552,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    10557
+    8011
    ]
   },
   {
@@ -2557,7 +2560,7 @@ window.TREE = {
    "title": "Fixed Landing Struts",
    "discipline": "StructuresMechanisms",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "No wheels, no retraction — just a shock-absorbing strut that swings out once and takes the full load of touching down somewhere with no runway at all.",
    "parts": [
@@ -2601,7 +2604,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    10579
+    8446
    ]
   },
   {
@@ -2609,7 +2612,7 @@ window.TREE = {
    "title": "Adjustable Heavy Undercarriage",
    "discipline": "StructuresMechanisms",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Load-rated landing gear with adjustable ride height and stance, sized from a light trainer to a heavy jet — the sophisticated oleo strut for aircraft too big or too fast for the basic legs it grows past. A separate research, off the stock undercarriage.",
    "parts": [
@@ -2658,7 +2661,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    10536
+    7990
    ]
   },
   {
@@ -2666,7 +2669,7 @@ window.TREE = {
    "title": "Centrifugal-Flow Turbojet",
    "discipline": "AirBreathing",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "A single centrifugal impeller flings air outward into the combustor — robust, simple, and the first jet to fly a fighter, though its fat frontal area caps the speed. Continuous thrust with no propeller.",
    "parts": [
@@ -2685,7 +2688,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    6894
+    4988
    ]
   },
   {
@@ -2693,7 +2696,7 @@ window.TREE = {
    "title": "Chamber-Staged Aircraft Rocket",
    "discipline": "FluidDynamics",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Four small ethanol-oxygen chambers lit one at a time to step the thrust up and down — no throttle valve, but control enough to push a piloted aeroplane past the sound barrier and glide it home. The X-1's engine.",
    "parts": [
@@ -2717,7 +2720,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    11138
+    10985
    ]
   },
   {
@@ -2725,7 +2728,7 @@ window.TREE = {
    "title": "Axial-Flow Turbojet",
    "discipline": "AirBreathing",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Stack many stages of bladed rotor and stator so the air is squeezed along the axis instead of flung sideways — a slim engine that swallows far more air and scales to real thrust. The architecture every later jet keeps.",
    "parts": [
@@ -2754,7 +2757,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    6894
+    4988
    ]
   },
   {
@@ -2762,7 +2765,7 @@ window.TREE = {
    "title": "Swept-Wing Planform",
    "discipline": "Aerodynamics",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Rake the wing back so the flow across it stays subsonic while the aircraft goes supersonic, delaying the shock stall — with a shock-cone intake that decelerates the air before it reaches the compressor. What makes level supersonic flight possible at all.",
    "parts": [
@@ -2816,7 +2819,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    8056
+    6813
    ]
   },
   {
@@ -2824,7 +2827,7 @@ window.TREE = {
    "title": "Afterburning Turbojet",
    "discipline": "AirBreathing",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Dump raw fuel into the hot exhaust behind the turbine and light it — a burst of thrust that shoves a fighter through the transonic drag rise, at a ruinous fuel cost. Reheat: the supersonic dash.",
    "parts": [
@@ -2863,7 +2866,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    7590
+    6384
    ]
   },
   {
@@ -2871,7 +2874,7 @@ window.TREE = {
    "title": "Variable-Stator Turbojet",
    "discipline": "AirBreathing",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Pivot the compressor's stator vanes to keep the airflow attached across a huge speed range — the engine that holds Mach 2 without stalling its own compressor. The Starfighter's powerplant.",
    "parts": [
@@ -2900,7 +2903,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    7092
+    6101
    ]
   },
   {
@@ -2908,7 +2911,7 @@ window.TREE = {
    "title": "Ramjet Compression",
    "discipline": "AirBreathing",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Above Mach 2 the forward speed alone rams and compresses the air — no compressor, no turbine, just an inlet, a flame and a nozzle. Useless from a standstill, unbeatable once you are already fast. Missiles and interceptors.",
    "parts": [
@@ -2947,7 +2950,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    7134
+    6144
    ]
   },
   {
@@ -2955,7 +2958,7 @@ window.TREE = {
    "title": "Throttle-Valve Aircraft Rocket",
    "discipline": "FluidDynamics",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "A throttle valve on an aircraft rocket at last — the Curtiss-Wright XLR25 could be modulated continuously in flight instead of stepped chamber by chamber, the first US rocket a pilot flew on the stick. The X-2's engine: the bridge from the X-1's fixed chambers to the X-15's man-rated throttle.",
    "parts": [
@@ -2969,7 +2972,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    11138
+    10985
    ]
   },
   {
@@ -2977,7 +2980,7 @@ window.TREE = {
    "title": "Throttleable Restartable Rocket",
    "discipline": "FluidDynamics",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "A rocket a pilot can throttle deeply and relight in flight, burning ammonia and oxygen with control enough to fly the edge of space and come back. The X-15's XLR99: the first man-rated throttleable engine, and the doorway to hypersonics.",
    "parts": [
@@ -2991,7 +2994,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    10788
+    10609
    ]
   },
   {
@@ -2999,7 +3002,7 @@ window.TREE = {
    "title": "Riveted Airframe Structure",
    "discipline": "StructuresMechanisms",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "Rivet and weld sheet, extrusion and tube into a load-bearing frame — the everyday structural craft of 1950: struts, I-beams, panels, mounts and nose cones, the skeleton every vehicle hangs on. The root the rest of structures grows from.",
    "parts": [
@@ -3133,7 +3136,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    9519
+    8428
    ]
   },
   {
@@ -3141,7 +3144,7 @@ window.TREE = {
    "title": "Rigid Airframe Bracing",
    "discipline": "StructuresMechanisms",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Tie two points of a flexing structure together with a diagonal strut and the whole assembly stops working against itself — the cure for the strap-on booster that whips and the stack that wobbles under its own thrust. The same principle drawn as an invisible rigid link is the autostrut, stiffening any joint on the vehicle with no part to place — which is why unlocking the humble EAS-4 is what switches autostrut on.",
    "parts": [
@@ -3155,7 +3158,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    10463
+    7643
    ]
   },
   {
@@ -3163,7 +3166,7 @@ window.TREE = {
    "title": "Gyroscopic Autopilot",
    "discipline": "GuidanceControl",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "Spinning-mass gyroscopes sense a vehicle's drift and an analog computer swings the controls to correct it — the first machine that flies a rocket straight with no hand on the stick. Crude and heavy, but it holds a heading.",
    "parts": [],
@@ -3173,7 +3176,7 @@ window.TREE = {
    ],
    "pos": [
     -4960,
-    9425
+    8729
    ]
   },
   {
@@ -3181,7 +3184,7 @@ window.TREE = {
    "title": "Analog Inertial Guidance",
    "discipline": "GuidanceControl",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Pair the gyros with accelerometers on a stabilized platform and integrate the motion in analog circuitry — the craft knows where it is and where it is going with no word from the ground. Guidance you can trust to a warhead or an orbit.",
    "parts": [],
@@ -3191,7 +3194,7 @@ window.TREE = {
    ],
    "pos": [
     -4656,
-    8964
+    8289
    ]
   },
   {
@@ -3199,7 +3202,7 @@ window.TREE = {
    "title": "Stable-Platform Guidance",
    "discipline": "GuidanceControl",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "A gimballed, gyro-held platform that stays fixed in space while the vehicle rotates around it, read by transistorized electronics light enough to fly — the guidance package that steers a satellite launcher through its whole ascent.",
    "parts": [],
@@ -3212,7 +3215,7 @@ window.TREE = {
    ],
    "pos": [
     -4048,
-    10442
+    10294
    ]
   },
   {
@@ -3220,7 +3223,7 @@ window.TREE = {
    "title": "Interchangeable-Part Manufacture",
    "discipline": "GuidanceControl",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Precision jigs, fixtures and go/no-go gauges let unskilled hands turn out thousands of identical, interchangeable thruster blocks — pull the one you want off the shelf and bolt it on, no machinist required. The procedural block is lighter, cleaner and always the default; research this only if you truly, really must have the fixed catalog hardware.",
    "parts": [
@@ -3439,7 +3442,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    9037
+    8362
    ]
   },
   {
@@ -3447,7 +3450,7 @@ window.TREE = {
    "title": "Stamped Aerofoil Panels",
    "discipline": "Aerodynamics",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Press and rivet standardized wing panels, elevons and connectors from sheet stock — a catalog of fixed aerofoil sections you bolt straight on, no shaping required. The procedural wing is lighter, cleaner and always the default; research this only if you would rather build from off-the-shelf panels.",
    "parts": [
@@ -3586,7 +3589,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    7223
+    6557
    ]
   },
   {
@@ -3594,7 +3597,7 @@ window.TREE = {
    "title": "Boattail Aft-Fairings",
    "discipline": "Aerodynamics",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "A blunt tail drags a low-pressure wake behind it; taper the aft body into a boattail and the flow closes cleanly, shaving base drag off a rocket or airframe stern for the price of a little length. The contoured aft-fairings and adapters that earn their keep in the transonic climb.",
    "parts": [
@@ -3628,7 +3631,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    7270
+    6604
    ]
   },
   {
@@ -3636,7 +3639,7 @@ window.TREE = {
    "title": "Modular Diameter Adapters",
    "discipline": "StructuresMechanisms",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Procedural ribbed, truss and hollow adapters that mate one diameter to another and carry the load across an interstage or under a payload — the structural handshake between a fat booster and a slim upper, or a stage and the satellite it lifts.",
    "parts": [
@@ -3725,7 +3728,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    9698
+    7549
    ]
   },
   {
@@ -3733,7 +3736,7 @@ window.TREE = {
    "title": "Prefabricated Adapters",
    "discipline": "StructuresMechanisms",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "The fixed-size shelf: stock diameter adapters, bi- and tri-couplers, cubic-strut mounts and a service bay, pressed and cast to set dimensions — bolt one on when you would rather not shape a procedural adapter. The procedural adapter stays the default; this is the catalogue.",
    "parts": [
@@ -3782,7 +3785,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    9677
+    7527
    ]
   },
   {
@@ -3790,7 +3793,7 @@ window.TREE = {
    "title": "Structural Propellant Tankage",
    "discipline": "StructuresMechanisms",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Let the propellant tank be the spacecraft spine - its walls carry the flight loads and mount the engine, thrusters, power and radios behind the payload, so the service module needs no separate airframe. The integrated tankage a satellite or probe bus is built around.",
    "parts": [
@@ -3854,7 +3857,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    3555
+    3476
    ]
   },
   {
@@ -3862,17 +3865,18 @@ window.TREE = {
    "title": "Aluminium Stringer Fairings",
    "discipline": "Metallurgy",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Stiffen a spun-aluminium payload shroud with riveted stringers instead of casting it thick - the first step off dead-weight spun metal, shaving shroud mass on every launch. The opening rung of a fairing-materials ladder that runs on through magnesium and fibreglass to composite shells in the bands ahead.",
    "parts": [],
    "upgrades": [
-    "PFTech-Fairing-I"
+    "PFTech-Fairing-I",
+    "PFTech-Fairing-II"
    ],
    "grants": [],
    "pos": [
     -4048,
-    7879
+    6604
    ]
   },
   {
@@ -3880,7 +3884,7 @@ window.TREE = {
    "title": "Anti-Reflective Cell Coatings",
    "discipline": "ElectricalPower",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Etch and coat the cell face so less sunlight reflects away and more drives current - a few points of efficiency per generation, compounding across the tech tree. The first rung of the solar-cell efficiency ladder.",
    "parts": [],
@@ -3890,7 +3894,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    11608
+    11530
    ]
   },
   {
@@ -3898,7 +3902,7 @@ window.TREE = {
    "title": "Reciprocating Piston Propulsion",
    "discipline": "AirBreathing",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "A supercharged piston engine swinging a propeller - the powerplant that flew every fighter and bomber before the jet, wringing altitude and speed from high-octane fuel and forced induction. Merlin, Jumo, Double Wasp: the sound of the propeller age.",
    "parts": [
@@ -3952,7 +3956,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    6894
+    4988
    ]
   },
   {
@@ -3960,7 +3964,7 @@ window.TREE = {
    "title": "Enclosed Crew Compartment",
    "discipline": "LifeSupport",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "A cockpit shaped around a pilot — canopy, seat, sticks and dials — and the tail surfaces that keep the aeroplane pointed where he aims it. The crew accommodation of the propeller age: everything a piston fighter, bomber or light aircraft needs, and nothing a spacecraft will. A dead-end for aeroplane builders.",
    "parts": [
@@ -4019,7 +4023,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    2833
+    1865
    ]
   },
   {
@@ -4027,7 +4031,7 @@ window.TREE = {
    "title": "High-Altitude Crew Compartment",
    "discipline": "LifeSupport",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "A cockpit sealed and fed with oxygen to keep a pilot alive where the air runs out — the jet trainer, the high-flying bomber, the rocket aeroplane at the edge of space. The crew compartment that must hold an environment, not just a windscreen: the first rung toward a sealed cabin and, past it, a capsule.",
    "parts": [
@@ -4047,11 +4051,13 @@ window.TREE = {
      "title": "B-52 Stratofortress cockpit"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "X2CockpitUpgrade"
+   ],
    "grants": [],
    "pos": [
     -4352,
-    2975
+    2007
    ]
   },
   {
@@ -4059,7 +4065,7 @@ window.TREE = {
    "title": "Prefabricated Radial Decouplers",
    "discipline": "StructuresMechanisms",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "The catalogue shelf of radial decouplers — the sprung and pyrotechnic blocks that hold a strap-on booster or drop tank to the core and fling it clear when it's spent, in fixed sizes off the shelf. The procedural radial decoupler stays the default; this is where the specific booster hardware lives.",
    "parts": [
@@ -4103,7 +4109,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    10630
+    7831
    ]
   },
   {
@@ -4111,7 +4117,7 @@ window.TREE = {
    "title": "Prefabricated Stack Decouplers",
    "discipline": "StructuresMechanisms",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "The rest of the catalogue shelf: pre-made in-line decouplers, separators and the skirt rings that drop a spent booster, in fixed sizes — for when you would rather bolt on a stock part than shape a procedural one. The procedural decoupler stays the default; this is the shelf.",
    "parts": [
@@ -4205,7 +4211,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    10630
+    7831
    ]
   },
   {
@@ -4213,7 +4219,7 @@ window.TREE = {
    "title": "Radio-Relay Payloads",
    "discipline": "Telecommunications",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "A satellite built not to explore but to work: a stabilised bus carrying a communications relay or a navigation beacon, earning its launch by the service it sells back to the ground. The first spacecraft with a customer.",
    "parts": [
@@ -4232,7 +4238,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    1839
+    1160
    ]
   },
   {
@@ -4240,7 +4246,7 @@ window.TREE = {
    "title": "Launch Hold-Down Clamps",
    "discipline": "StructuresMechanisms",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "Clamps that grip the vehicle to the pad and let go the instant the engines prove good for flight — the ground half of every launch. The simplest hold-down: a stability clamp for a small stack on a light stand.",
    "parts": [
@@ -4274,7 +4280,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    10348
+    7737
    ]
   },
   {
@@ -4282,7 +4288,7 @@ window.TREE = {
    "title": "Radial Hold-Down Clamps",
    "discipline": "StructuresMechanisms",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Grip a rocket radially around its base rather than underneath it — the hold-down a wider, heavier stack needs to sit still against its own thrust until the engines are proven and released.",
    "parts": [
@@ -4306,7 +4312,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    10348
+    7737
    ]
   },
   {
@@ -4314,7 +4320,7 @@ window.TREE = {
    "title": "Swing-Arm Hold-Downs",
    "discipline": "StructuresMechanisms",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Massive arms that pin the largest rockets to the pad and swing clear on the launch command, with an umbilical tower feeding propellant, power and data until the last second. The hold-down of a crewed heavy.",
    "parts": [
@@ -4343,7 +4349,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    10348
+    7737
    ]
   },
   {
@@ -4351,7 +4357,7 @@ window.TREE = {
    "title": "Sounding-Rocket Stands",
    "discipline": "GroundSupport",
    "tier": 1,
-   "cost": 20,
+   "cost": 1,
    "anyToUnlock": false,
    "flavor": "A rail or a light stand and a mast to fuel it: all a sounding rocket needs to leave the ground. Where the launch-pad line begins.",
    "parts": [
@@ -4395,7 +4401,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    13244
+    13182
    ]
   },
   {
@@ -4403,7 +4409,7 @@ window.TREE = {
    "title": "Fixed Launch Bases",
    "discipline": "GroundSupport",
    "tier": 2,
-   "cost": 90,
+   "cost": 4,
    "anyToUnlock": false,
    "flavor": "A proper base with hold-down arms to grip a turbopump-fed rocket against its own thrust until the engines are proven. The first real pad.",
    "parts": [
@@ -4687,7 +4693,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    13244
+    13182
    ]
   },
   {
@@ -4695,7 +4701,7 @@ window.TREE = {
    "title": "Umbilical Service Towers",
    "discipline": "GroundSupport",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Umbilical masts and a service gantry to fuel, power and check out a rocket standing on the pad: the tower beside the stack.",
    "parts": [
@@ -4769,7 +4775,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    13244
+    13182
    ]
   },
   {
@@ -4777,7 +4783,7 @@ window.TREE = {
    "title": "Dedicated Launch Complexes",
    "discipline": "GroundSupport",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "A complex built for one launcher: Soyuz's flame-trench tulip, the US stands from Atlas to Titan, the flat plates of the heavies. Bases you cannot reuse for anything else.",
    "parts": [
@@ -5016,7 +5022,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    13244
+    13182
    ]
   },
   {
@@ -5024,7 +5030,7 @@ window.TREE = {
    "title": "Crew-Access Gantries",
    "discipline": "GroundSupport",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Elevators and swing-arms to carry a crew up the stack and across to the hatch: the pad-side of putting people atop a rocket.",
    "parts": [
@@ -5143,7 +5149,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    13244
+    13182
    ]
   },
   {
@@ -5151,7 +5157,7 @@ window.TREE = {
    "title": "Saturn Mobile Launcher",
    "discipline": "GroundSupport",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The mobile launcher and milkstool of a Moon rocket, assembled and rolled out whole.",
    "parts": [
@@ -5360,7 +5366,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    13244
+    13182
    ]
   },
   {
@@ -5368,7 +5374,7 @@ window.TREE = {
    "title": "Shuttle Launch Platform",
    "discipline": "GroundSupport",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The fixed and rotating service structures of a reusable orbiter's pad.",
    "parts": [
@@ -5502,7 +5508,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    13244
+    13182
    ]
   },
   {
@@ -5510,7 +5516,7 @@ window.TREE = {
    "title": "Modern Launch Complexes",
    "discipline": "GroundSupport",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The pads of the EELV and commercial era: Energia's Soviet super-heavy, the Delta II and Delta IV stands, the Atlas II and Atlas V towers, and the Falcon 9 launch plate — vehicle-specific complexes for rockets that flew decades after the first stands. SPLIT (2026-07) out of gs_dedicatedComplexes, which had them unlockable in 1957.",
    "parts": [
@@ -5634,7 +5640,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    13244
+    13182
    ]
   },
   {
@@ -5642,7 +5648,7 @@ window.TREE = {
    "title": "Prefabricated Nose Cones",
    "discipline": "Aerodynamics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "A rack of pre-made nose cones in fixed sizes and profiles, pressed and spun to shape, for when you would rather bolt on a stock cap than draw a procedural one. The procedural nose cone is lighter and always the default; nothing depends on this shelf.",
    "parts": [
@@ -5706,7 +5712,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    7973
+    6698
    ]
   },
   {
@@ -5714,7 +5720,7 @@ window.TREE = {
    "title": "Cosmic-Ray Telescopy",
    "discipline": "NuclearEngineering",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Stack scintillators and photomultipliers in coincidence so only a particle passing clean through every layer is counted: a telescope not for light but for cosmic rays, reading their energy and direction. The photomultiplier and its fast coincidence circuit run on the vacuum-tube electronics of the day — no transistor required.",
    "parts": [
@@ -5733,7 +5739,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    6207
+    10367
    ]
   },
   {
@@ -5741,7 +5747,7 @@ window.TREE = {
    "title": "Film Reconnaissance",
    "discipline": "OpticsPhotonics",
    "tier": 3,
-   "cost": 400,
+   "cost": 15,
    "anyToUnlock": false,
    "flavor": "Long-focal-length optics and fine-grain emulsion resolve a vehicle from orbit and drop the exposed film home in a capsule — the high-resolution reconnaissance that was the real reason the first satellites flew. No electronics, just better glass and finer grain: it gets there before the television does.",
    "parts": [
@@ -5760,7 +5766,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    11044
+    10865
    ]
   },
   {
@@ -5768,7 +5774,7 @@ window.TREE = {
    "title": "Television Reconnaissance",
    "discipline": "OpticsPhotonics",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Higher-resolution vidicon cameras that scan the reconnaissance image down a radio link the moment it is taken — no capsule to recover, the picture on the ground in minutes. The electronic eye catching up to the spy film.",
    "parts": [
@@ -5782,7 +5788,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    11467
+    11363
    ]
   },
   {
@@ -5790,7 +5796,7 @@ window.TREE = {
    "title": "Infrared Remote Sensing",
    "discipline": "OpticsPhotonics",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Scan the planet in wavelengths the eye cannot see: an infrared radiometer maps cloud-top temperature, an ultraviolet spectrometer reads the high atmosphere. The first weather and earth-resource sensing from orbit.",
    "parts": [
@@ -5804,7 +5810,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    11138
+    10959
    ]
   },
   {
@@ -5812,7 +5818,7 @@ window.TREE = {
    "title": "High-Resolution Radiometry",
    "discipline": "OpticsPhotonics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "A finer detector and a tighter scan resolve the infrared scene into detail the first radiometer blurred — the warm and cold of a coastline or a storm system mapped sharply, still in a single band but now worth the downlink.",
    "parts": [
@@ -5831,7 +5837,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    11279
+    11175
    ]
   },
   {
@@ -5839,7 +5845,7 @@ window.TREE = {
    "title": "Two-Channel Radiometry",
    "discipline": "OpticsPhotonics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Read the infrared in two bands at once and difference them — a warm channel against an atmospheric window — and the ratio gives the true surface temperature, not merely its brightness. The harder instrument (IR03 above IR02): the two detectors must be held at a stable temperature, or the radiometer reads its own warmth instead of the world's.",
    "parts": [
@@ -5853,7 +5859,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    7590
+    6835
    ]
   },
   {
@@ -5861,7 +5867,7 @@ window.TREE = {
    "title": "Ultraviolet Spectrometry",
    "discipline": "OpticsPhotonics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Disperse the ultraviolet an atmosphere emits and absorbs into a spectrum — the fingerprints of ozone, hydrogen and the rest of the high air, in wavelengths the eye and the film both miss entirely. The first instrument to read the atmosphere's chemistry from above it.",
    "parts": [
@@ -5880,7 +5886,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    11373
+    11269
    ]
   },
   {
@@ -5888,7 +5894,7 @@ window.TREE = {
    "title": "Refined Vidicon Imaging",
    "discipline": "OpticsPhotonics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "A finer vidicon target and a denser scan resolve detail the early television camera smeared away — reconnaissance and weather imagery sharp enough to be worth the bandwidth to send it down. The electronic eye growing up.",
    "parts": [
@@ -5907,7 +5913,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    11467
+    11363
    ]
   },
   {
@@ -5915,7 +5921,7 @@ window.TREE = {
    "title": "Boom-Deployed Magnetometry",
    "discipline": "Microelectronics",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Swing the magnetometer out on a long boom, far from the spacecraft's own motors and wiring, so it reads the planet's field instead of the craft's — a boom that has to unfold and lock rigid on command. The measurement that only works once the sensor is metres from everything electric, and something can put it there.",
    "parts": [
@@ -5929,7 +5935,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    12522
+    12461
    ]
   },
   {
@@ -5937,7 +5943,7 @@ window.TREE = {
    "title": "Precision Orbital Optics",
    "discipline": "OpticsPhotonics",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "A long-focal-length telescope trained on the surface from orbit, resolving detail a wide-angle camera smears into a blur — the optical reconnaissance that reads a runway, not just a coastline. Glass figured to the edge of the aperture and held rock-steady on a stabilised platform, for at this focal length the smallest jitter is a smear.",
    "parts": [
@@ -5951,7 +5957,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    10626
+    10499
    ]
   },
   {
@@ -5959,7 +5965,7 @@ window.TREE = {
    "title": "Deployable Photovoltaic Arrays",
    "discipline": "ElectricalPower",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Fold banks of silicon cells onto paddles that swing out once the satellite is clear of its shroud — far more collecting area than the body could ever carry, and the power to run a real payload through the sunlit half of every orbit. The array that outgrows the trickle-charge patch.",
    "parts": [
@@ -5975,7 +5981,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    11608
+    11530
    ]
   },
   {
@@ -5983,7 +5989,7 @@ window.TREE = {
    "title": "Miniaturised Inertial Guidance",
    "discipline": "GuidanceControl",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Shrink the whole gyro-and-accelerometer platform onto transistorised boards light enough that a probe, not just a launcher, can carry its own guidance — and keep pointing through a mission measured in weeks. Inertial reference, miniaturised.",
    "parts": [],
@@ -6000,7 +6006,7 @@ window.TREE = {
    ],
    "pos": [
     -3744,
-    10442
+    10294
    ]
   },
   {
@@ -6008,7 +6014,7 @@ window.TREE = {
    "title": "Coherent Doppler Ranging",
    "discipline": "Telecommunications",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Lock a ground receiver to the exact frequency of a spacecraft's carrier and read the Doppler shift as it climbs away — velocity to a fraction of a metre per second, and range from the round-trip time of a coded tone. The two-way link that tracks a probe out past the Moon.",
    "parts": [],
@@ -6020,7 +6026,7 @@ window.TREE = {
    ],
    "pos": [
     -3744,
-    12778
+    12717
    ]
   },
   {
@@ -6028,7 +6034,7 @@ window.TREE = {
    "title": "Pulse-Code Modulation Telemetry",
    "discipline": "Telecommunications",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Sample each reading, digitise it, and interleave the bits into one clocked stream — telemetry that arrives exact instead of drifting, and packs a dozen instruments down a single carrier, picked up on a helical antenna that does not care how the craft is tumbling. Pulse-code modulation: the beginning of digital spaceflight.",
    "parts": [
@@ -6046,7 +6052,7 @@ window.TREE = {
    ],
    "pos": [
     -3440,
-    12778
+    12717
    ]
   },
   {
@@ -6054,7 +6060,7 @@ window.TREE = {
    "title": "Enclosed Equipment Bays",
    "discipline": "StructuresMechanisms",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "A sealed structural bay behind the payload that shelters avionics, batteries and radios from launch acoustics and the vacuum beyond — the enclosed volume a working spacecraft is built around, from a service bay to a universal-storage rack, capped by a jettisonable nose.",
    "parts": [
@@ -6095,7 +6101,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    3555
+    3476
    ]
   },
   {
@@ -6103,7 +6109,7 @@ window.TREE = {
    "title": "Dinitrogen-Tetroxide Oxidiser",
    "discipline": "PropellantChemistry",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Swap the fuming-nitric oxidiser for dinitrogen tetroxide — denser, hotter-burning, storable in the same tank — paired with unsymmetrical dimethylhydrazine that ignites the instant the two meet. The combination that scales the storable rocket from a spacecraft thruster up to a full orbital booster; every hypergolic launcher for decades runs on it.",
    "parts": [],
@@ -6125,7 +6131,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    7747
+    7480
    ]
   },
   {
@@ -6133,7 +6139,7 @@ window.TREE = {
    "title": "Multi-Chamber Peroxide Combustion",
    "discipline": "PropellantChemistry",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Bank many small peroxide-kerosene chambers into one sustainer, decomposing high-test peroxide over a silver catalyst for a clean, throttle-friendly burn with no cryogen. Britain's Gamma engines — eight chambers under the Black Arrow — carry a satellite to orbit on propellant that waits in the tank.",
    "parts": [
@@ -6152,7 +6158,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    6651
+    7023
    ]
   },
   {
@@ -6160,7 +6166,7 @@ window.TREE = {
    "title": "Refined Peroxide Combustion",
    "discipline": "PropellantChemistry",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Push the peroxide sustainer harder — a hotter catalyst pack and a higher chamber pressure wring more thrust and a dozen seconds of specific impulse from the same hydrogen peroxide. The Larch uprates that turned the Gamma engines into an orbital launcher's powerplant, a decade after the chemistry was written off.",
    "parts": [],
@@ -6173,7 +6179,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    6651
+    7023
    ]
   },
   {
@@ -6181,7 +6187,7 @@ window.TREE = {
    "title": "Liquid-Fluorine Oxidiser",
    "discipline": "PropellantChemistry",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Burn hydrazine in liquid fluorine, the most aggressive oxidiser there is — a specific impulse no storable can touch, bought with a propellant that corrodes its own plumbing and poisons everything it escapes into. A high-energy gamble the Soviets ran on the bench and few dared fly.",
    "parts": [
@@ -6197,7 +6203,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    7726
+    7454
    ]
   },
   {
@@ -6205,7 +6211,7 @@ window.TREE = {
    "title": "Staged Solid Boost",
    "discipline": "PropellantChemistry",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Cast a composite grain into a full upper stage and fire it in vacuum — a stack of solid motors, each lighting as the last burns out, that reaches orbit with no liquid engine at all. Scout's Algol, Antares and Altair: the all-solid launcher, cheap and ready, needing no pad crew to fuel it.",
    "parts": [
@@ -6242,7 +6248,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    711
+    4146
    ]
   },
   {
@@ -6250,7 +6256,7 @@ window.TREE = {
    "title": "Strap-On Thrust Augmentation",
    "discipline": "PropellantChemistry",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Strap solid motors around a liquid core and light them on the ground for a burst of extra liftoff thrust, then drop the burnt-out cases and fly on — augmentation you bolt on when the payload grows, with no change to the engine beneath. The Castor that turns a Thor into a Delta.",
    "parts": [
@@ -6269,7 +6275,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    1249
+    4616
    ]
   },
   {
@@ -6277,7 +6283,7 @@ window.TREE = {
    "title": "Vacuum-Start Solid Impulse",
    "discipline": "PropellantChemistry",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "A small solid motor precise and reliable enough to fire once in vacuum after a long cold coast: the retro burn that drops a capsule out of orbit exactly where it must come down, the posigrade that shoves it clear of the spent stage, the spin-up that steadies it. Nothing comes home from orbit — film, sample or pilot — without a retrofire that does not fail.",
    "parts": [
@@ -6316,7 +6322,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    993
+    4423
    ]
   },
   {
@@ -6324,7 +6330,7 @@ window.TREE = {
    "title": "Regenerative Chamber Cooling",
    "discipline": "FluidDynamics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Route the fuel through milled channels in the chamber wall before it burns, carrying the heat back into the cycle instead of letting it melt the throat — so the same engine holds a higher chamber pressure without burning through. The quiet enabler behind every thrust uprate of the era: Atlas, Thor and Blue Streak all grow harder on the same hardware.",
    "parts": [],
@@ -6354,7 +6360,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    4491
+    4052
    ]
   },
   {
@@ -6362,7 +6368,7 @@ window.TREE = {
    "title": "Extended Vacuum Expansion",
    "discipline": "FluidDynamics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Extend the nozzle bell far past what any sea-level engine could survive, tuned so the exhaust expands to near-vacuum pressure and wrings out the last dozen seconds of specific impulse. The refinement that lets an upper stage do more on the same propellant — the RD-119 alone gains nearly thirty seconds over its predecessor.",
    "parts": [
@@ -6400,7 +6406,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    9421
+    8814
    ]
   },
   {
@@ -6408,7 +6414,7 @@ window.TREE = {
    "title": "Restartable Vacuum Ignition",
    "discipline": "FluidDynamics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "A storable-hypergolic upper that coasts dark through a long parking orbit and relights on command — the engine that stops being a single burn and becomes a manoeuvring stage. Agena's XLR81 shuts down and restarts in space: the key to circularising, changing plane, and the rendezvous still to come.",
    "parts": [
@@ -6468,7 +6474,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    6813
+    7159
    ]
   },
   {
@@ -6476,7 +6482,7 @@ window.TREE = {
    "title": "Restartable Deep-Throttling",
    "discipline": "FluidDynamics",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Shrink the restartable engine to a spacecraft's own propulsion: a small, deeply-throttleable, many-times-restartable motor for the midcourse nudge and the retro burn a probe or capsule steers itself home with. Agena's secondary fires twenty times; a lunar probe lives or dies on one clean correction.",
    "parts": [
@@ -6514,7 +6520,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    6882
+    7227
    ]
   },
   {
@@ -6522,7 +6528,7 @@ window.TREE = {
    "title": "Storable Single-Chamber Combustion",
    "discipline": "FluidDynamics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "A single-chamber sustainer on the new storable hypergolics — all the convenience of a propellant that waits in the tank, now at the thrust a first stage needs. Vanguard's Viking and China's YF-3 lift off on oxidiser that never has to be loaded at the last minute.",
    "parts": [
@@ -6556,7 +6562,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    10191
+    10179
    ]
   },
   {
@@ -6564,7 +6570,7 @@ window.TREE = {
    "title": "Altitude-Start Tandem Staging",
    "discipline": "FluidDynamics",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Design the two stages as one propulsion system: a twin-chamber booster handing off to a dedicated second-stage engine built to ignite at altitude, in the thin air its bell is shaped for. Titan's LR87 and LR91 — the first purpose-built tandem, where the upper engine is no afterthought but half the design.",
    "parts": [
@@ -6598,7 +6604,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    9515
+    8908
    ]
   },
   {
@@ -6606,7 +6612,7 @@ window.TREE = {
    "title": "Storable Chamber Clustering",
    "discipline": "FluidDynamics",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Bolt four storable chambers to a common frame and fire them as one — three thousand kilonewtons of hypergolic thrust off the pad with no cryogenic plumbing to chill down or top off. The clustered first stage that lets a storable rocket match a kerolox booster for liftoff, ready to go at a moment's notice.",
    "parts": [
@@ -6640,7 +6646,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    8177
+    7717
    ]
   },
   {
@@ -6648,7 +6654,7 @@ window.TREE = {
    "title": "Integrated Booster Boattail",
    "discipline": "FluidDynamics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Wrap the clustered first stage in its aerodynamic boattail and it stops being a bare cluster of chambers and becomes a complete, flight-configured stage — the CZ-2, CZ-2C and CZ-2D as they actually stacked. Same four storable chambers as the king; procedural structure builds the same fairing for nothing, so this is off-the-shelf convenience, not a new engine.",
    "parts": [
@@ -6672,7 +6678,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    8109
+    7649
    ]
   },
   {
@@ -6680,7 +6686,7 @@ window.TREE = {
    "title": "China's First Satellite",
    "discipline": "SystemsIntegration",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "A third nation reaches orbit on its own hardware — a small sphere broadcasting a patriotic melody instead of a beeping tone, riding the same clustered-storable first stage into space.",
    "parts": [
@@ -6694,7 +6700,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    8203
+    7743
    ]
   },
   {
@@ -6702,7 +6708,7 @@ window.TREE = {
    "title": "Storable Tandem Staging",
    "discipline": "FluidDynamics",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "The storable answer as a tandem missile stack: a paired-chamber first stage and a vacuum second stage, all on dimethylhydrazine and nitric-acid oxidiser, sat fuelled in a silo for years. The R-14 and R-16 engines — propulsion built to wait, then go.",
    "parts": [
@@ -6736,7 +6742,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    8356
+    7854
    ]
   },
   {
@@ -6744,7 +6750,7 @@ window.TREE = {
    "title": "High-Pressure Kerolox Combustion",
    "discipline": "FluidDynamics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Uprate the kerosene-oxygen booster and build it to be mass-produced — a rugged, high-thrust engine you cluster eight at a time under a heavy first stage. The H-1 that becomes the Saturn I's power, and the RD-111 pushing kerolox to its pre-staged-combustion ceiling: the last and largest of the simple gas-generator boosters.",
    "parts": [
@@ -6778,7 +6784,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    9096
+    8715
    ]
   },
   {
@@ -6786,7 +6792,7 @@ window.TREE = {
    "title": "Air-Cooled Turbine Blades",
    "discipline": "Metallurgy",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Drill fine passages through each turbine blade and bleed compressor air through them, filming the metal in cool gas so the turbine can face a far hotter gas stream than it could survive bare. The step past a better alloy — run the fire hotter and every jet behind it gains thrust.",
    "parts": [],
@@ -6824,7 +6830,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    4303
+    3728
    ]
   },
   {
@@ -6832,7 +6838,7 @@ window.TREE = {
    "title": "Geared Turboprop",
    "discipline": "AirBreathing",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Gear the axial turbine down to swing a large propeller instead of blasting a jet — trading top speed for the fuel economy and heavy-lift pull a jet cannot match down low. The Tu-95's monstrous contra-rotating NK-12 and the workhorse PT6: turbine power delivered through a propeller.",
    "parts": [
@@ -6851,7 +6857,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    6557
+    5009
    ]
   },
   {
@@ -6859,7 +6865,7 @@ window.TREE = {
    "title": "Hydrogen-Fuelled Turbojet",
    "discipline": "AirBreathing",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Feed the jet liquid hydrogen instead of kerosene — a fuel so energetic it promises altitude and range no kerosene burner can reach, at the price of a vacuum-jacketed fuel system feeding a red-hot engine. The Model 304 of the CL-400 Suntan spyplane: a gamble that flew on the coldest fuel there is, then stayed on the bench.",
    "parts": [
@@ -6873,7 +6879,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    6139
+    5103
    ]
   },
   {
@@ -6881,7 +6887,7 @@ window.TREE = {
    "title": "High-Temperature Turbojet",
    "discipline": "AirBreathing",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "With a cooled turbine able to take the heat, run the combustor hotter and lighter for the thrust-to-weight a supersonic fighter lives on — a compact afterburning turbojet that holds Mach 2 on internal fuel. The R-11 of the MiG-21, the Atar 09 of the Mirage.",
    "parts": [
@@ -6905,7 +6911,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    6160
+    4804
    ]
   },
   {
@@ -6913,7 +6919,7 @@ window.TREE = {
    "title": "Refined Ramjet Compression",
    "discipline": "AirBreathing",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Tune the inlet and flame-holders for sustained cruise at the top of the supersonic range — the long-burning ramjet of a missile that flies for minutes, not seconds. Where the ramjet stops being a boost phase and becomes the whole propulsion.",
    "parts": [
@@ -6931,7 +6937,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    7113
+    6123
    ]
   },
   {
@@ -6939,7 +6945,7 @@ window.TREE = {
    "title": "Variable-Geometry Intake",
    "discipline": "Aerodynamics",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Move a ramp or a translating cone inside the inlet to hold the shock exactly where it must sit across a wide speed range — feeding the compressor smooth subsonic air whether the aircraft is transonic or deep in the Mach-2 régime. The fixed shock cone, made adjustable.",
    "parts": [
@@ -6953,7 +6959,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    8686
+    6813
    ]
   },
   {
@@ -6961,7 +6967,7 @@ window.TREE = {
    "title": "Large Aircraft Undercarriage",
    "discipline": "StructuresMechanisms",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "Legs rated for the weight of a heavy jet or transport, spreading the load on a soft field and soaking up a fast, heavy touchdown. The biggest undercarriage on the shelf, where the adjustable struts run out of rating.",
    "parts": [
@@ -6990,7 +6996,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    10536
+    7990
    ]
   },
   {
@@ -6998,7 +7004,7 @@ window.TREE = {
    "title": "Ablative Reentry Shielding",
    "discipline": "CompositeMaterials",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Face the reentry fireball with a shield built to be destroyed: a resin-and-fibre composite that chars and boils away layer by layer, carrying the heat off with the vapour and holding the structure behind it cool. The one thing between a returning capsule and cremation.",
    "parts": [
@@ -7019,7 +7025,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    1886
+    1207
    ]
   },
   {
@@ -7027,7 +7033,7 @@ window.TREE = {
    "title": "Advanced Ablator Formulation",
    "discipline": "CompositeMaterials",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "A denser char layer and a slower burn-through rate let the same shield shrug off a hotter, faster reentry — the material getting better, not the shape changing. Mercury's ablator becomes Gemini's.",
    "parts": [
@@ -7044,7 +7050,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    1630
+    998
    ]
   },
   {
@@ -7052,7 +7058,7 @@ window.TREE = {
    "title": "Open-Loop Life Support",
    "discipline": "LifeSupport",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Keep a human alive in vacuum the simple way — bottled oxygen bled into a sealed cabin, carbon dioxide scrubbed from the air with lithium hydroxide, heat and moisture carried off — all of it vented or consumed, nothing recycled. Hours of life for a first flight, no more asked.",
    "parts": [
@@ -7071,7 +7077,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    2686
+    1960
    ]
   },
   {
@@ -7079,7 +7085,7 @@ window.TREE = {
    "title": "Crew-Tended Experiment Locker",
    "discipline": "LifeSupport",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "A modular science bay built into the cabin wall, serviced by hand instead of run by a timer — the same slot-in experiment rig whichever crewed vehicle happens to carry it, so long as someone is aboard to work it.",
    "parts": [
@@ -7095,7 +7101,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    2990
+    2144
    ]
   },
   {
@@ -7103,7 +7109,7 @@ window.TREE = {
    "title": "Storable-Propellant Reaction Control",
    "discipline": "GuidanceControl",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Trade the cold-gas puffers for small liquid thrusters on a storable propellant — peroxide, or hypergolics that light on contact — for many times the impulse in the same mass. The reaction control a manoeuvring spacecraft needs to point, hold and turn through a whole mission.",
    "parts": [
@@ -7144,7 +7150,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    9079
+    8404
    ]
   },
   {
@@ -7152,7 +7158,7 @@ window.TREE = {
    "title": "Sealed Cabin Pressurisation",
    "discipline": "LifeSupport",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Seal a cabin tight enough to hold near sea-level pressure while the air outside thins to nothing, feeding it breathing gas and bleeding off the heat of hypersonic flight — the pilot rides to the edge of space in something close to shirtsleeves. The X-15's sealed cabin and the pressurised fuselage behind it.",
    "parts": [
@@ -7181,7 +7187,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    3342
+    2421
    ]
   },
   {
@@ -7189,7 +7195,7 @@ window.TREE = {
    "title": "Tractor Escape Rocket",
    "discipline": "SystemsIntegration",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "A solid rocket on a lattice tower above the capsule that, at the first sign of a failing booster, fires to haul the crew up and clear faster than the fireball can climb — then throws itself away once the ascent is safe. The one system on a manned rocket that exists only to go unused.",
    "parts": [
@@ -7208,7 +7214,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    1296
+    4710
    ]
   },
   {
@@ -7216,7 +7222,7 @@ window.TREE = {
    "title": "Blunt-Body Reentry Capsule",
    "discipline": "SystemsIntegration",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "A blunt cone that rides its own shockwave down, the heatshield taking the fire while the crewman lies on his back against the deceleration. Mercury: one seat, a retrofire to leave orbit, a splashdown under a single canopy. The first American in orbit.",
    "parts": [
@@ -7240,7 +7246,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    2054
+    1375
    ]
   },
   {
@@ -7248,7 +7254,7 @@ window.TREE = {
    "title": "Spherical Reentry Capsule",
    "discipline": "SystemsIntegration",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "A perfect sphere, its mass offset so it finds its own heat-shielded attitude with no active control — crude, heavy, utterly reliable. Vostok brought the first human back from orbit, the cosmonaut ejecting to land under his own parachute while the ball thumped down nearby.",
    "parts": [
@@ -7267,7 +7273,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    1819
+    1187
    ]
   },
   {
@@ -7275,7 +7281,7 @@ window.TREE = {
    "title": "Film-Return Reconnaissance Capsule",
    "discipline": "SystemsIntegration",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Strip the cosmonaut out of the sphere and fill it with cameras — the same descent capsule flown unmanned, exposing long rolls of film over the target and dropping them home to be recovered. Vostok and Zenit are one airframe: one carries a man, the other carries the eyes.",
    "parts": [
@@ -7289,7 +7295,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    7505
+    6536
    ]
   },
   {
@@ -7297,7 +7303,7 @@ window.TREE = {
    "title": "Crewed Descent Recovery",
    "discipline": "Aerodynamics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point.",
    "parts": [
@@ -7406,7 +7412,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    8336
+    6929
    ]
   },
   {
@@ -7414,7 +7420,7 @@ window.TREE = {
    "title": "Synoptic Orbital Scanning",
    "discipline": "OpticsPhotonics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Sweep a body strip by strip as the orbit carries the scanner across it, assembling a complete map from thousands of passes — terrain, altimetry and anomaly built from coverage no single frame could give. The first instrument that maps a world instead of photographing a scene. The seed of the mapping lane that fills out among the planets.",
    "parts": [
@@ -7433,7 +7439,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    11185
+    11081
    ]
   },
   {
@@ -7441,7 +7447,7 @@ window.TREE = {
    "title": "Clustered-Chamber Thrust Uprating",
    "discipline": "FluidDynamics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Squeeze more thrust from the same four-chamber cluster without touching the chemistry — the storable engines already flying, simply pushed harder.",
    "parts": [],
@@ -7454,7 +7460,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    8246
+    7785
    ]
   },
   {
@@ -7462,7 +7468,7 @@ window.TREE = {
    "title": "Blended Storable Fuel",
    "discipline": "FluidDynamics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Cut the UDMH with hydrazine and the same engine burns denser — real thrust for free, Isp along for the ride either way. Viking's own uprate, not a new engine.",
    "parts": [],
@@ -7476,7 +7482,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    10191
+    10179
    ]
   },
   {
@@ -7484,7 +7490,7 @@ window.TREE = {
    "title": "Stabilized Ammonia Combustion",
    "discipline": "FluidDynamics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Retune the X-15's ammonia-lox chamber for a cleaner burn at higher pressure, wringing a real jump in specific impulse from the same volatile propellant. The rocket-plane's engine, refined rather than replaced.",
    "parts": [],
@@ -7495,7 +7501,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    10788
+    10609
    ]
   },
   {
@@ -7503,7 +7509,7 @@ window.TREE = {
    "title": "Storable-Propellant Booster Conversion",
    "discipline": "FluidDynamics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Trade kerosene for a hypergolic that ignites on contact and sits fuelled in a silo for years — some engines keep the old chemistry and simply grow, others convert outright. A missile built to launch now, not after a fuelling countdown.",
    "parts": [],
@@ -7527,7 +7533,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    8798
+    8352
    ]
   },
   {
@@ -7535,7 +7541,7 @@ window.TREE = {
    "title": "Chlorine-Trifluoride Oxidiser",
    "discipline": "PropellantChemistry",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Burn hydrazine in chlorine trifluoride, a storable oxidiser so aggressive it ignites on contact with almost anything — glass, sand, the operators. A sliver more Isp for a propellant few would trust near a launch pad.",
    "parts": [],
@@ -7546,7 +7552,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    6839
+    7185
    ]
   },
   {
@@ -7554,7 +7560,7 @@ window.TREE = {
    "title": "Solid Vernier Trim Motor",
    "discipline": "PropellantChemistry",
    "tier": 4,
-   "cost": 900,
+   "cost": 40,
    "anyToUnlock": false,
    "flavor": "A small solid motor that nudges a spinning spacecraft's trajectory without ever touching the main stage — a trim burn with no throttle and no restart, just a single precise kick. The adjustment motor riding along on Pioneer's booster.",
    "parts": [
@@ -7570,7 +7576,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    899
+    4522
    ]
   },
   {
@@ -7578,7 +7584,7 @@ window.TREE = {
    "title": "Gas-Generator Thrust Ceiling",
    "discipline": "FluidDynamics",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Push the simple gas-generator cycle as far as it goes — bigger turbopumps, higher flow, more thrust from the same open-cycle plumbing. The last uprate before the cycle itself runs out of room to grow.",
    "parts": [
@@ -7600,7 +7606,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9703
+    9991
    ]
   },
   {
@@ -7608,7 +7614,7 @@ window.TREE = {
    "title": "Oxidiser-Rich Staged Combustion",
    "discipline": "PropellantChemistry",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Burn the turbine's exhaust back into the main chamber instead of dumping it overboard — every drop of propellant makes thrust, not waste heat. The first staged-combustion engine in the fleet, and a real jump in specific impulse for it.",
    "parts": [
@@ -7632,7 +7638,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    4479
+    4041
    ]
   },
   {
@@ -7640,7 +7646,7 @@ window.TREE = {
    "title": "Powered Orbital Maneuvering",
    "discipline": "SystemsIntegration",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Give the capsule its own thrusters and it stops merely falling around the Earth — it can change its orbit, chase a target, hold a heading. Gemini: not a bigger Mercury, a spacecraft that flies itself.",
    "parts": [
@@ -7673,7 +7679,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    2054
+    1375
    ]
   },
   {
@@ -7681,7 +7687,7 @@ window.TREE = {
    "title": "Inflatable-Airlock Descent Module",
    "discipline": "SystemsIntegration",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Bolt an inflatable fabric tunnel to the hatch and a cosmonaut can leave the capsule entirely — the first door opened in vacuum. Voskhod, stripped down to fit three, then opened up to let one of them out.",
    "parts": [
@@ -7710,7 +7716,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    1819
+    1187
    ]
   },
   {
@@ -7718,7 +7724,7 @@ window.TREE = {
    "title": "Fixed Rung Ladder",
    "discipline": "StructuresMechanisms",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "A cosmonaut can finally leave the capsule - now give them a way back to the hatch. Bolted rungs up the hull, sized to whatever the vehicle stands, from a short reach to a full multi-stage climb.",
    "parts": [
@@ -7757,7 +7763,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    1725
+    1093
    ]
   },
   {
@@ -7765,7 +7771,7 @@ window.TREE = {
    "title": "Deployable Telescoping Ladder",
    "discipline": "StructuresMechanisms",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "A ladder that stows flush against the hull for the ride down and telescopes out only once boots are on the ground - no permanent drag or snag risk, real travel savings on a vehicle that can't spare the mass to carry a fixed one.",
    "parts": [
@@ -7784,7 +7790,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    2661
+    2259
    ]
   },
   {
@@ -7792,7 +7798,7 @@ window.TREE = {
    "title": "Orbital Rendezvous and Docking",
    "discipline": "GuidanceControl",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": true,
    "flavor": "Close the last few metres by eye and thruster, then latch two spacecraft nose to nose in orbit — the manoeuvre every later mission depends on. Any maneuverable crewed vehicle can get you here; it isn't tied to one program's specific propulsion choice.",
    "parts": [
@@ -7856,7 +7862,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    1913
+    1281
    ]
   },
   {
@@ -7864,7 +7870,7 @@ window.TREE = {
    "title": "Inflatable Docking Airlock",
    "discipline": "GuidanceControl",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Fold Voskhod's inflatable fabric tunnel into a compact module that latches onto a docking port instead of a single hatch - one lightweight ring that gives a crew both a way to meet another spacecraft and a way outside it, without the mass of two separate systems.",
    "parts": [
@@ -7878,7 +7884,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1960
+    1234
    ]
   },
   {
@@ -7886,7 +7892,7 @@ window.TREE = {
    "title": "Small-Class RCS Catalog",
    "discipline": "GuidanceControl",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "The same storable-propellant reaction control, in fixed off-the-shelf block sizes instead of a sized-to-fit procedural unit — the first size class off the shelf, before spacecraft grew heavy enough to need more.",
    "parts": [
@@ -7955,7 +7961,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    8892
+    8541
    ]
   },
   {
@@ -7963,7 +7969,7 @@ window.TREE = {
    "title": "Fixed Reaction-Control Block Catalog",
    "discipline": "GuidanceControl",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The same catalog, scaled up — bigger blocks for spacecraft that outgrew the first size class. The procedural thruster stays the default; this is the shelf of named hardware for whoever wants the specific part.",
    "parts": [
@@ -8052,7 +8058,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    8939
+    9284
    ]
   },
   {
@@ -8060,7 +8066,7 @@ window.TREE = {
    "title": "Continuous-Throttle Descent",
    "discipline": "FluidDynamics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Fly the last stretch of a landing on gimbaled, throttleable liquid thrusters that can be told to slow down instead of just shutting off. The generic hardware behind any soft landing — the historical Surveyor-branded version of this same engine ships separately, through the charter.",
    "parts": [
@@ -8084,7 +8090,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    6557
+    6788
    ]
   },
   {
@@ -8092,7 +8098,7 @@ window.TREE = {
    "title": "Airbag-Cushioned Touchdown",
    "discipline": "CompositeMaterials",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Skip the throttled engine entirely — kill your speed with one solid burn, then just bounce. A cluster of inflated bags absorbs the impact a precision-landed craft would rather not risk on a bad sensor reading. Nobody has actually tried landing this way here; go find out if it holds.",
    "parts": [
@@ -8111,7 +8117,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    1014
+    4428
    ]
   },
   {
@@ -8119,7 +8125,7 @@ window.TREE = {
    "title": "Three-Axis Attitude Stabilization",
    "discipline": "GuidanceControl",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Stop spinning the whole spacecraft and instead hold it steady on three independent axes — a camera can finally be pointed and kept there. Spin-stabilization was simple and blind; this bus can aim.",
    "parts": [
@@ -8153,7 +8159,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    9195
+    8818
    ]
   },
   {
@@ -8161,7 +8167,7 @@ window.TREE = {
    "title": "Propellant Ullage Settling",
    "discipline": "FluidDynamics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Fire a small motor for a few seconds first, just to press the propellant to the aft end of a weightless tank — so the main engine's feed line draws liquid, not the vapour that floats free after a long coast. The unglamorous fix for the one failure mode that kills a perfect restart.",
    "parts": [
@@ -8175,7 +8181,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    6745
+    7091
    ]
   },
   {
@@ -8183,7 +8189,7 @@ window.TREE = {
    "title": "Pressure-Fed Multi-Restart Combustion",
    "discipline": "FluidDynamics",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Strip out the turbopump and push propellant with tank pressure alone — less performance, but nothing left to fail on the one burn that has to work, months into the mission, with no one able to reach it.",
    "parts": [
@@ -8197,7 +8203,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    6745
+    7206
    ]
   },
   {
@@ -8205,7 +8211,7 @@ window.TREE = {
    "title": "Refined Propellant-Grain Casting",
    "discipline": "PropellantChemistry",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Cast the same grain to a truer shape and the same chemistry burns cleaner — Algol and Antares hold their exact propellant and simply gain thrust and Isp from the refined pour; Altair's own upper stage goes one step further, crossing to a tougher composite polybutadiene binder outright. Scout's own stages, uprated stage by stage.",
    "parts": [
@@ -8246,7 +8252,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    711
+    4146
    ]
   },
   {
@@ -8254,7 +8260,7 @@ window.TREE = {
    "title": "Composite-Binder Strap-On Solid",
    "discipline": "PropellantChemistry",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "The same composite-binder propellant chemistry, scaled up for a strap-on booster instead of a stage — augmentation thrust that grows with the chemistry, not just the casing.",
    "parts": [
@@ -8290,7 +8296,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    1202
+    4522
    ]
   },
   {
@@ -8298,7 +8304,7 @@ window.TREE = {
    "title": "All-Solid Stage Stacking",
    "discipline": "PropellantChemistry",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Stack three solid stages instead of one liquid and one solid — nothing to fuel, nothing to chill, ready to fly from a cold silo the instant the order comes. The missile that trades some performance for never needing a countdown at all.",
    "parts": [
@@ -8322,7 +8328,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    805
+    4240
    ]
   },
   {
@@ -8330,7 +8336,7 @@ window.TREE = {
    "title": "Segmented Solid-Grain Casting",
    "discipline": "PropellantChemistry",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Cast the grain in stacked segments and bolt them together instead of pouring one impossibly large piece — the only way to build a solid motor bigger than a single mould allows.",
    "parts": [
@@ -8369,7 +8375,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    1108
+    4847
    ]
   },
   {
@@ -8377,7 +8383,7 @@ window.TREE = {
    "title": "Solid Apogee-Kick Stage",
    "discipline": "PropellantChemistry",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "A precise, vacuum-reliable solid burn timed to the moment of highest altitude — not to come home, but to finish the job: circularise an orbit or send a probe on its way.",
    "parts": [
@@ -8411,7 +8417,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    920
+    4334
    ]
   },
   {
@@ -8419,7 +8425,7 @@ window.TREE = {
    "title": "Extended Apogee-Kick Motor Catalog",
    "discipline": "PropellantChemistry",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "A later run of the same family, sized wherever a mission needs a bigger or smaller kick than the first generation offers — Star-17, Star-17A and Black Arrow's own spin-stabilized Waxwing among them. The procedural motor stays the default; research this only for the specific named performance.",
    "parts": [
@@ -8443,7 +8449,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    920
+    4334
    ]
   },
   {
@@ -8451,7 +8457,7 @@ window.TREE = {
    "title": "Storable Vernier Chamber Family",
    "discipline": "PropellantChemistry",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "One chemistry, cast into a whole range of chamber sizes from a tiny corrector to a full sustainer — the same NTO-hypergolic combustion scaled to whatever the mission needs, not one engine per role.",
    "parts": [
@@ -8480,7 +8486,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    7811
+    7507
    ]
   },
   {
@@ -8488,7 +8494,7 @@ window.TREE = {
    "title": "Soft-Lander Probe Bus",
    "discipline": "SystemsIntegration",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The command core, low/high-gain antennas and a scissoring arm that reaches out to dig and scoop the ground beside the lander — the bus built around a vehicle that has to work once it stops moving, not just while it's flying.",
    "parts": [
@@ -8517,7 +8523,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9567
+    9881
    ]
   },
   {
@@ -8525,7 +8531,7 @@ window.TREE = {
    "title": "Lunar Orbiter Bus",
    "discipline": "SystemsIntegration",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The same lander program's core and antenna, built instead to stay in orbit and look down rather than land — a sibling vehicle from the same soft-landing effort, aimed at the whole map instead of one spot. It never touches down, so it's the three-axis point-and-hold breakthrough it actually flies on, not a descent engine it never carries.",
    "parts": [
@@ -8549,7 +8555,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9033
+    9378
    ]
   },
   {
@@ -8557,7 +8563,7 @@ window.TREE = {
    "title": "Deployable High-Gain Dish",
    "discipline": "Telecommunications",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Fold a dish bigger than the launch shroud allows, then open it once clear — the gain a distant probe needs to be heard at all, in a package that first has to fit under a nose cone.",
    "parts": [
@@ -8595,7 +8601,7 @@ window.TREE = {
    ],
    "pos": [
     -3136,
-    12663
+    12602
    ]
   },
   {
@@ -8603,7 +8609,7 @@ window.TREE = {
    "title": "Fixed Antenna Catalog",
    "discipline": "Telecommunications",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "The same deployable-dish generation, off the shelf in whatever size and gain a given mission needs — omni for a simple always-on link, small relay dishes through a 4m high-gain reflector. The procedural antenna stays the default; this is the named-hardware shelf.",
    "parts": [
@@ -8712,7 +8718,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12799
+    12738
    ]
   },
   {
@@ -8720,7 +8726,7 @@ window.TREE = {
    "title": "Miniaturized High-Gain Antenna",
    "discipline": "Telecommunications",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The same dish gain in a fraction of the mass and volume — small enough to ride on a rover or a craft that never had room for the first generation's hardware.",
    "parts": [
@@ -8744,7 +8750,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    12710
+    12649
    ]
   },
   {
@@ -8752,7 +8758,7 @@ window.TREE = {
    "title": "Phased-Array Relay Antenna",
    "discipline": "Telecommunications",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Steer the beam electronically across an array of fixed elements instead of physically pointing a dish — no motor, no gimbal, nothing to jam, and it can track two things at once.",
    "parts": [
@@ -8795,7 +8801,7 @@ window.TREE = {
    ],
    "pos": [
     -2832,
-    12616
+    12555
    ]
   },
   {
@@ -8803,7 +8809,7 @@ window.TREE = {
    "title": "Larger Deployable Solar Array",
    "discipline": "ElectricalPower",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "More cells on a bigger paddle — the same fold-out array scaled up for a hungrier payload, nothing new about how it works.",
    "parts": [
@@ -8864,7 +8870,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11608
+    11504
    ]
   },
   {
@@ -8872,7 +8878,7 @@ window.TREE = {
    "title": "Chemical Fuel-Cell Power",
    "discipline": "ElectricalPower",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Combine hydrogen and oxygen across a membrane and draw off the current instead of burning them — power on demand with no sun angle to worry about, for as long as the reactant tanks last.",
    "parts": [
@@ -8906,7 +8912,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4575
+    6494
    ]
   },
   {
@@ -8914,7 +8920,7 @@ window.TREE = {
    "title": "Refined Solar-Array Simulation",
    "discipline": "ElectricalPower",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Model the cell string, the sun angle and the shadowing properly instead of a flat output curve — the same panel, understood well enough to size it exactly instead of overbuilding it.",
    "parts": [
@@ -8946,7 +8952,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    11608
+    11504
    ]
   },
   {
@@ -8954,7 +8960,7 @@ window.TREE = {
    "title": "Extended Boom Magnetometry",
    "discipline": "Microelectronics",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "A second, more sensitive sensor, now riding a boom that extends itself on command instead of just unfolding once — the field measured finer, and from exactly the distance the mission wants.",
    "parts": [
@@ -8973,7 +8979,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    12522
+    12461
    ]
   },
   {
@@ -8981,7 +8987,7 @@ window.TREE = {
    "title": "Radar Altimetry",
    "discipline": "OpticsPhotonics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Bounce a radar pulse straight down and time the echo — terrain height where a camera only gives shape, filling in the mapping lane's one missing dimension.",
    "parts": [
@@ -9005,7 +9011,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11232
+    11128
    ]
   },
   {
@@ -9013,7 +9019,7 @@ window.TREE = {
    "title": "Orbital Perturbation Gravimetry",
    "discipline": "GuidanceControl",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Track a stable bus precisely enough to see the tiny course changes a mass concentration in the ground below pulls it into — gravity mapped from how the orbit itself misbehaves.",
    "parts": [
@@ -9032,7 +9038,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9311
+    9472
    ]
   },
   {
@@ -9040,7 +9046,7 @@ window.TREE = {
    "title": "Infrared Interferometer Spectrometry",
    "discipline": "OpticsPhotonics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Split the incoming light and recombine it after an offset path to read the whole spectrum from the interference pattern at once, rather than filtering it band by band — composition, not just temperature.",
    "parts": [
@@ -9054,7 +9060,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11023
+    10844
    ]
   },
   {
@@ -9062,7 +9068,7 @@ window.TREE = {
    "title": "Ion-Mass Spectrometry",
    "discipline": "Microelectronics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Steer ions through a magnetic sector built for the ion environment of open space rather than a lab bench atmosphere — the same sorting-by-mass principle, reading the solar wind instead of the upper air.",
    "parts": [
@@ -9081,7 +9087,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12987
+    12926
    ]
   },
   {
@@ -9089,7 +9095,7 @@ window.TREE = {
    "title": "Multi-Spectral Imaging",
    "discipline": "OpticsPhotonics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Capture several wavelength bands of the same scene at once instead of one — a surface picked apart by what it reflects in each band, not just what it looks like.",
    "parts": [
@@ -9103,7 +9109,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    10929
+    10750
    ]
   },
   {
@@ -9111,7 +9117,7 @@ window.TREE = {
    "title": "Heavy-Duty Rotor Actuation",
    "discipline": "Robotics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "The same brushless motor and controller, built to carry real load instead of just proving the concept — a rotor that can turn a solar array or an antenna mount, not just a test rig.",
    "parts": [
@@ -9140,7 +9146,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12172
+    12110
    ]
   },
   {
@@ -9148,7 +9154,7 @@ window.TREE = {
    "title": "Hinged Joint Actuation",
    "discipline": "Robotics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Limit the same servo to a fixed arc instead of a full turn — a joint that folds and locks rather than spins, the shape a deployable panel or an arm elbow actually needs.",
    "parts": [
@@ -9182,7 +9188,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12078
+    12016
    ]
   },
   {
@@ -9190,7 +9196,7 @@ window.TREE = {
    "title": "Linear Servo Extension",
    "discipline": "Robotics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Turn the same rotary motor into a push instead of a spin — a telescoping actuator that extends a boom or a leg exactly as far as commanded, then holds it there.",
    "parts": [
@@ -9219,7 +9225,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11984
+    11922
    ]
   },
   {
@@ -9227,7 +9233,7 @@ window.TREE = {
    "title": "Precision Rotation Servo",
    "discipline": "Robotics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Close the loop on the same motor with real position and speed feedback — commanded to an exact angle and held there, not just spun and hoped for.",
    "parts": [
@@ -9256,7 +9262,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12266
+    12204
    ]
   },
   {
@@ -9264,7 +9270,7 @@ window.TREE = {
    "title": "Programmable Actuator Sequencing",
    "discipline": "Robotics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "One controller that steps every hinge, piston and rotor through an ordered sequence on command — deployment stops being one actuator at a time and becomes a single scripted motion.",
    "parts": [
@@ -9278,7 +9284,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12360
+    12298
    ]
   },
   {
@@ -9286,7 +9292,7 @@ window.TREE = {
    "title": "Wheel-Hub Motor Drive",
    "discipline": "Robotics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Put the same motor in a wheel hub and drive instead of just standing there — a lander that can cross the ground it touched down on, not just sit and look at it.",
    "parts": [
@@ -9320,7 +9326,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11796
+    11807
    ]
   },
   {
@@ -9328,7 +9334,7 @@ window.TREE = {
    "title": "Heavy-Class Wheel Drive",
    "discipline": "Robotics",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The same wheel-hub motor, scaled up for a heavier chassis — plus a passive skid to steady a long rover without spending another drive on it.",
    "parts": [
@@ -9372,7 +9378,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    11775
+    11786
    ]
   },
   {
@@ -9380,7 +9386,7 @@ window.TREE = {
    "title": "Continuous-Track Drive",
    "discipline": "Robotics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Wrap the same motor in a loop of tread instead of a wheel — more contact area for soft ground, at the cost of more rolling resistance and moving parts.",
    "parts": [
@@ -9414,7 +9420,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11890
+    11692
    ]
   },
   {
@@ -9422,7 +9428,7 @@ window.TREE = {
    "title": "Heavy-Class Track Drive",
    "discipline": "Robotics",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The same tread mechanism, built for a bigger and heavier vehicle — including a track meant to dig into and displace the ground rather than just roll over it.",
    "parts": [
@@ -9446,7 +9452,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    11890
+    11692
    ]
   },
   {
@@ -9454,7 +9460,7 @@ window.TREE = {
    "title": "Archimedes Screw Propulsion",
    "discipline": "Robotics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Wind a helical fin around a rotating drum and it corkscrews forward through mud, snow or water alike, where a wheel or a track would just dig in and stop.",
    "parts": [
@@ -9468,7 +9474,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12454
+    12392
    ]
   },
   {
@@ -9476,7 +9482,7 @@ window.TREE = {
    "title": "Inter-Tank Fuel Crossfeed",
    "discipline": "StructuresMechanisms",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Pipe propellant across a strut between two tanks still bolted together — drain the strap-on boosters first and keep the core stage topped off, so when the boosters finally drop away the core is still full. Asparagus staging: three half-empty cores flying like one that never emptied at all.",
    "parts": [
@@ -9490,7 +9496,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    10673
+    7896
    ]
   },
   {
@@ -9498,7 +9504,7 @@ window.TREE = {
    "title": "Modeled Antenna Telemetry",
    "discipline": "Telecommunications",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "A comms antenna simulated as a real system — gain, pattern and tracking modelled, not just a data-rate number — the same telemetry hardware whichever crewed vehicle happens to carry it.",
    "parts": [
@@ -9522,7 +9528,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12893
+    12832
    ]
   },
   {
@@ -9530,7 +9536,7 @@ window.TREE = {
    "title": "Lunar-Return Ablator Rating",
    "discipline": "CompositeMaterials",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Rate the same ablator for a translunar-return entry instead of a low-orbit one — the ladder's next real step is speed, not shape, and it doesn't care which airframe it's bolted to.",
    "parts": [
@@ -9576,7 +9582,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    1578
+    945
    ]
   },
   {
@@ -9584,7 +9590,7 @@ window.TREE = {
    "title": "Refined Ablator Formulation",
    "discipline": "CompositeMaterials",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Push the same ablator formulation a margin further — the heat load of an actual landing-and-return mission rather than a single translunar pass, still bolted to whichever airframe happens to need it.",
    "parts": [
@@ -9610,7 +9616,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1578
+    945
    ]
   },
   {
@@ -9618,7 +9624,7 @@ window.TREE = {
    "title": "Radioisotope Thermoelectric Power",
    "discipline": "ElectricalPower",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Stack thermocouples across a radioactive pellet and draw current straight from the heat of its own decay — power with no sun angle and no moving part, fuelled with whatever isotope happens to be on hand. Polonium-210 proves the generator works; it does not prove it lasts — the source itself is mostly spent within a season.",
    "parts": [
@@ -9632,7 +9638,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    6369
+    10456
    ]
   },
   {
@@ -9640,7 +9646,7 @@ window.TREE = {
    "title": "Long-Lived Isotope Power",
    "discipline": "ElectricalPower",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Swap in plutonium-238 for the same generator and the output barely sags in a decade instead of collapsing in a season — the fuel choice that turns a demonstration into a power source you can fly past the orbit of Mars and still hear from.",
    "parts": [
@@ -9684,7 +9690,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    5924
+    10243
    ]
   },
   {
@@ -9692,7 +9698,7 @@ window.TREE = {
    "title": "Sustained-Cruise Afterburning Turbojet",
    "discipline": "AirBreathing",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Push the afterburning and variable-stator tricks together into one engine built for sustained Mach 2 cruise, not just a burst through the transonic wall — Concorde's Olympus, the MiG-21's R-13, the MiG-25's R-15.",
    "parts": [
@@ -9731,7 +9737,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    7112
+    5469
    ]
   },
   {
@@ -9739,7 +9745,7 @@ window.TREE = {
    "title": "Dedicated Lift Jet",
    "discipline": "AirBreathing",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "A turbojet built to point straight down and do nothing but hold a hover — no forward thrust to speak of, the whole engine is the vertical-lift half of a VTOL aircraft.",
    "parts": [
@@ -9758,7 +9764,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    6463
+    4966
    ]
   },
   {
@@ -9766,7 +9772,7 @@ window.TREE = {
    "title": "Reaction-Wheel Attitude Control",
    "discipline": "GuidanceControl",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Spin a flywheel up or down and the whole spacecraft turns the other way — attitude held and changed with no propellant spent at all, as long as a star tracker keeps telling it which way it's actually pointed.",
    "parts": [
@@ -9805,7 +9811,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9405
+    9650
    ]
   },
   {
@@ -9813,7 +9819,7 @@ window.TREE = {
    "title": "Active Thermal Louvers",
    "discipline": "Thermodynamics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Blades that open to radiate heat away and close to hold it in, driven by the bus temperature itself — the hermetic sphere's fixed skin becomes a thermostat instead of a single fixed compromise.",
    "parts": [
@@ -9837,7 +9843,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    1390
+    711
    ]
   },
   {
@@ -9845,7 +9851,7 @@ window.TREE = {
    "title": "Minimal Life-Support Cabin",
    "discipline": "SystemsIntegration",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "The smallest sealed cabin that still keeps a single Kerbal alive and working — no service module, no full capsule program, just a can with a hatch and an experiment slot built in.",
    "parts": [
@@ -9889,7 +9895,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    2682
+    2238
    ]
   },
   {
@@ -9897,7 +9903,7 @@ window.TREE = {
    "title": "LK-700 Single-Stage Lunar Return",
    "discipline": "SystemsIntegration",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Land the whole crew cabin on the Moon and fly the same cabin straight home - no separate ascent stage, no lunar-orbit rendezvous to trust your life to. The Soviet answer that skips the rendezvous entirely, betting everything on one vehicle instead of two.",
    "parts": [
@@ -9911,7 +9917,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    2703
+    2097
    ]
   },
   {
@@ -9919,7 +9925,7 @@ window.TREE = {
    "title": "Deep-Throttle Descent",
    "discipline": "FluidDynamics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Throttle a crewed descent engine ten-to-one for a controlled touchdown, and trust a pressure-fed ascent engine to light once - or the crew stays. Surveyor learned to throttle a descent; the Service Module learned to relight on faith; here the two meet and land people.",
    "parts": [
@@ -9949,13 +9955,11 @@ window.TREE = {
      "title": "Lunar Module Descent Engine (LMDE)"
     }
    ],
-   "upgrades": [
-    "RFUpgrade_RS-18"
-   ],
+   "upgrades": [],
    "grants": [],
    "pos": [
     -2528,
-    5771
+    5836
    ]
   },
   {
@@ -9963,7 +9967,7 @@ window.TREE = {
    "title": "Powered Hop Transit",
    "discipline": "FluidDynamics",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Once you are down, get around - a throttleable open-cockpit rocket to hop the surface, and the uprated descent engine of the longer, heavier missions that follow the first footprints.",
    "parts": [
@@ -9979,12 +9983,14 @@ window.TREE = {
     }
    ],
    "upgrades": [
-    "RFUpgrade_LMDE-J"
+    "RFUpgrade_LMDE-J",
+    "RFUpgrade_RS-18",
+    "RFUpgrade_TR-201"
    ],
    "grants": [],
    "pos": [
     -2224,
-    5771
+    5836
    ]
   },
   {
@@ -9992,7 +9998,7 @@ window.TREE = {
    "title": "Diminishing-Return Thrust Uprating",
    "discipline": "FluidDynamics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "One more percent of thrust from a cycle with nothing left to give. The mightiest engine ever built is also the end of its line - spend a whole tier here and you have bought a rounding error while staged combustion and hydrolox walk past you.",
    "parts": [
@@ -10009,7 +10015,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    9703
+    9991
    ]
   },
   {
@@ -10017,7 +10023,7 @@ window.TREE = {
    "title": "Mature Kerolox Cluster Uprating",
    "discipline": "FluidDynamics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Refine the whole family of clustered gas-generator kerolox boosters mark by mark - more thrust, longer service life, no change to the chemistry. The same diminishing-return story as F-1's own trap, one tier over, for its smaller siblings.",
    "parts": [],
@@ -10033,7 +10039,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    9797
+    9838
    ]
   },
   {
@@ -10041,7 +10047,7 @@ window.TREE = {
    "title": "Gas-Generator Hydrolox Combustion",
    "discipline": "Cryogenics",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Drive a hydrogen turbopump with a gas generator instead of the expander's own bleed - trade the closed cycle's elegance for the raw thrust to push a Moon rocket's upper stages. The high-thrust hydrolox engine the expander could never be.",
    "parts": [
@@ -10080,7 +10086,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    6933
+    8121
    ]
   },
   {
@@ -10088,7 +10094,7 @@ window.TREE = {
    "title": "Hydrolox Thrust Ceiling",
    "discipline": "Cryogenics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Scale the gas-generator hydrolox engine until it rivals a kerolox booster - a hydrogen engine of five thousand kilonewtons. The hydrolox twin of the F-1 ceiling: colossal, thirsty, never flown, and the end of its own line.",
    "parts": [
@@ -10110,7 +10116,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    6803
+    7728
    ]
   },
   {
@@ -10118,7 +10124,7 @@ window.TREE = {
    "title": "Refined Expander-Cycle Combustion",
    "discipline": "Cryogenics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Wring more specific impulse out of the closed expander cycle - hotter, tighter plumbing on the efficient small upper stage.",
    "parts": [],
@@ -10127,6 +10133,7 @@ window.TREE = {
     "RFUpgrade_LE-5B",
     "RFUpgrade_RL10A-3-3",
     "RFUpgrade_RL10A-3-3A",
+    "RFUpgrade_RL10A-3-3B",
     "RFUpgrade_RL10A-3-7",
     "RFUpgrade_RL10A-3-9",
     "RFUpgrade_RL10A-4",
@@ -10140,7 +10147,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4742
+    5218
    ]
   },
   {
@@ -10148,7 +10155,7 @@ window.TREE = {
    "title": "Subcooled-Propellant Staged Combustion",
    "discipline": "PropellantChemistry",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Chill the propellants until they are dense enough, then run oxidiser-rich staged combustion at booster scale - the most efficient kerosene engine anyone ever fired. The rocket it flew on failed; the engine never did.",
    "parts": [
@@ -10171,19 +10178,19 @@ window.TREE = {
    "upgrades": [
     "RFUpgrade_11D33",
     "RFUpgrade_11D33M",
-    "RFUpgrade_AJ26-58",
-    "RFUpgrade_AJ26-59",
-    "RFUpgrade_AJ26-60",
-    "RFUpgrade_AJ26-62",
+    "RFUpgrade_17D12",
     "RFUpgrade_NK-19",
     "RFUpgrade_NK-21",
+    "RFUpgrade_NK-31",
+    "RFUpgrade_NK-39",
     "RFUpgrade_RD-58",
+    "RFUpgrade_RD-58M",
     "RFUpgrade_RD-58M-CCN"
    ],
    "grants": [],
    "pos": [
     -2528,
-    4479
+    4041
    ]
   },
   {
@@ -10191,7 +10198,7 @@ window.TREE = {
    "title": "Storable Staged Combustion",
    "discipline": "PropellantChemistry",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Bring staged combustion to the storables: route the preburner exhaust back through the chamber on nitrogen tetroxide and hydrazine, and the workhorse hypergolic booster gets its efficiency jump without ever needing a cryogen. The engine that is still flying.",
    "parts": [
@@ -10211,14 +10218,11 @@ window.TREE = {
      "title": "RD-253/RD-275"
     }
    ],
-   "upgrades": [
-    "RFUpgrade_RD-275M",
-    "RFUpgrade_RD-277M-14D16M"
-   ],
+   "upgrades": [],
    "grants": [],
    "pos": [
     -2832,
-    6463
+    5819
    ]
   },
   {
@@ -10226,7 +10230,7 @@ window.TREE = {
    "title": "Refined Storable Staged Combustion",
    "discipline": "PropellantChemistry",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Squeeze the storable staged-combustion boosters a little further - Mk-II chambers, higher flow, the same dependable poison.",
    "parts": [],
@@ -10237,12 +10241,14 @@ window.TREE = {
     "RFUpgrade_RD-0213",
     "RFUpgrade_RD-0214",
     "RFUpgrade_RD-253-Mk2",
-    "RFUpgrade_RD-254-11D44-Mk2"
+    "RFUpgrade_RD-254-11D44-Mk2",
+    "RFUpgrade_RD-275M",
+    "RFUpgrade_RD-277M-14D16M"
    ],
    "grants": [],
    "pos": [
     -2528,
-    6265
+    7236
    ]
   },
   {
@@ -10250,7 +10256,7 @@ window.TREE = {
    "title": "Solid-Core Nuclear Thermal Propulsion",
    "discipline": "NuclearEngineering",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Heat liquid hydrogen in a fission reactor and blow it out a nozzle - twice the specific impulse of the best chemical engine, bought as a heavy, low-thrust, radioactive gamble. The road to deep space forks here.",
    "parts": [
@@ -10269,7 +10275,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    4857
+    7984
    ]
   },
   {
@@ -10277,7 +10283,7 @@ window.TREE = {
    "title": "Reactor-Heated Ramjet",
    "discipline": "NuclearEngineering",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Skip the propellant entirely: ram air through a live reactor and let the heat do the rest - an engine that could fly for weeks and irradiate everything it passed. A frontier curiosity that goes nowhere, on purpose.",
    "parts": [
@@ -10291,7 +10297,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    5934
+    8266
    ]
   },
   {
@@ -10299,7 +10305,7 @@ window.TREE = {
    "title": "Long-Duration Cruise Guidance",
    "discipline": "GuidanceControl",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Stretch the same miniaturised inertial stack to survive a cruise measured in months instead of an orbit measured in hours — redundant circuitry and a sun-and-star reference that never loses its lock on the long coast out to another planet.",
    "parts": [],
@@ -10309,7 +10315,7 @@ window.TREE = {
    ],
    "pos": [
     -3136,
-    10442
+    10294
    ]
   },
   {
@@ -10317,7 +10323,7 @@ window.TREE = {
    "title": "Monolithic Integrated Circuits",
    "discipline": "Microelectronics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Print a whole handful of transistors, resistors and their wiring onto one slice of silicon instead of soldering each one by hand — a logic circuit that shrinks from a rack to a fingertip, and survives a launch the discrete parts never could. Minuteman II flew guidance built from these in 1962; nothing that follows goes back to wires.",
    "parts": [],
@@ -10325,7 +10331,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11702
+    11598
    ]
   },
   {
@@ -10333,7 +10339,7 @@ window.TREE = {
    "title": "Digital Guidance Computer",
    "discipline": "Computing",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Trade the analog integrator for a true digital computer, built from the first integrated circuits — a machine that computes a fresh trajectory correction instead of just holding one, fast enough to fly a booster instead of merely stabilizing it. The line between an instrument and a computer, crossed for good.",
    "parts": [
@@ -10349,7 +10355,7 @@ window.TREE = {
    ],
    "pos": [
     -2832,
-    10814
+    10661
    ]
   },
   {
@@ -10357,7 +10363,7 @@ window.TREE = {
    "title": "Priority-Interrupt Flight Computer",
    "discipline": "Computing",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "One flight computer that juggles guidance, navigation and engine control at once, always answering whichever task is most urgent instead of finishing one program before starting the next — real-time computing built to fly a crew, not just a probe. The Apollo Guidance Computer's real trick, and the reason it could do five jobs on hardware that could barely do one.",
    "parts": [
@@ -10373,7 +10379,7 @@ window.TREE = {
    ],
    "pos": [
     -2528,
-    10814
+    10661
    ]
   },
   {
@@ -10381,17 +10387,21 @@ window.TREE = {
    "title": "Multi-Vehicle Avionics Integration",
    "discipline": "Computing",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Coordinate guidance, power and data across several docked modules as one system instead of one hull — the avionics architecture a space station, not just a single spacecraft, needs to hold together.",
    "parts": [],
-   "upgrades": [],
+   "upgrades": [
+    "HDD-Upgrade-1969",
+    "RFTech-ComSat-III",
+    "RFTech-NavSat-III"
+   ],
    "grants": [
     "Science-Core-largeScaleAvionics"
    ],
    "pos": [
     -2224,
-    10814
+    10661
    ]
   },
   {
@@ -10399,17 +10409,19 @@ window.TREE = {
    "title": "Multiply-Redundant General-Purpose Computer",
    "discipline": "Computing",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Four identical general-purpose computers vote on every result, and a fifth arbitrates a tie - fly-by-wire trusted with a crew's life because no single failure, or even a single disagreement, can bring it down. The Shuttle's own avionics generation.",
    "parts": [],
-   "upgrades": [],
+   "upgrades": [
+    "HDD-Upgrade-1975"
+   ],
    "grants": [
     "Science-Core-advancedAvionics"
    ],
    "pos": [
     -1920,
-    10814
+    10661
    ]
   },
   {
@@ -10417,7 +10429,7 @@ window.TREE = {
    "title": "Distributed Avionics Data Bus",
    "discipline": "Computing",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Stop wiring every sensor and actuator straight to the computer and put them all on one shared data bus instead - a single twisted pair carrying every subsystem's traffic, addressed and time-sliced instead of home-run cabled. The wiring-harness weight a modular station can no longer afford to carry.",
    "parts": [],
@@ -10427,7 +10439,7 @@ window.TREE = {
    ],
    "pos": [
     -1616,
-    10814
+    10661
    ]
   },
   {
@@ -10435,17 +10447,19 @@ window.TREE = {
    "title": "Software-Defined Flight Control",
    "discipline": "Computing",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "Move the control laws out of hardwired logic and into software that can be patched after launch - a flight computer whose behaviour is a file to update, not a board to re-etch, for a vehicle meant to keep flying for years.",
    "parts": [],
-   "upgrades": [],
+   "upgrades": [
+    "HDD-Upgrade-1990"
+   ],
    "grants": [
     "Science-Core-longTermAvionics"
    ],
    "pos": [
     -1312,
-    10814
+    10661
    ]
   },
   {
@@ -10453,17 +10467,19 @@ window.TREE = {
    "title": "Interoperable Avionics Standard",
    "discipline": "Computing",
    "tier": 14,
-   "cost": 0,
+   "cost": 3500,
    "anyToUnlock": false,
    "flavor": "Agree on a common data-bus protocol and command format across national space programmes, so a module built on one continent can dock, hand off power and share telemetry with one built on another without a custom adapter for every pairing.",
    "parts": [],
-   "upgrades": [],
+   "upgrades": [
+    "HDD-Upgrade-1998"
+   ],
    "grants": [
     "Science-Core-internationalAvionics"
    ],
    "pos": [
     -1008,
-    10814
+    10661
    ]
   },
   {
@@ -10471,17 +10487,20 @@ window.TREE = {
    "title": "Commercial Off-The-Shelf Flight Computer",
    "discipline": "Computing",
    "tier": 15,
-   "cost": 0,
+   "cost": 4500,
    "anyToUnlock": false,
    "flavor": "Skip the custom-built, radiation-hardened rack and fly triple-redundant commercial processors instead - orders of magnitude more computing power for a fraction of the cost and years off the schedule, the same bet the whole modern commercial launch industry made.",
    "parts": [],
-   "upgrades": [],
+   "upgrades": [
+    "HDD-Upgrade-2010",
+    "HDD-Upgrade-2020"
+   ],
    "grants": [
     "Science-Core-modernAvionics"
    ],
    "pos": [
     -704,
-    10814
+    10661
    ]
   },
   {
@@ -10489,7 +10508,7 @@ window.TREE = {
    "title": "High-Bypass Turbofan",
    "discipline": "AirBreathing",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Wrap the core in a huge ducted fan and let most of the air bypass the burner entirely - the quiet, thrifty engine that made long-haul jets economical, trading raw exhaust speed for fuel it never has to carry.",
    "parts": [
@@ -10513,7 +10532,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    7018
+    5375
    ]
   },
   {
@@ -10521,7 +10540,7 @@ window.TREE = {
    "title": "Low-Bypass Turbofan",
    "discipline": "AirBreathing",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "A modest bypass fan bolted to a fighter's afterburning core - some of the turbofan's thrift without giving up the supersonic dash. The engine of the teen-series fighters.",
    "parts": [
@@ -10545,7 +10564,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    7632
+    6400
    ]
   },
   {
@@ -10553,7 +10572,7 @@ window.TREE = {
    "title": "Turbine-Temperature Uprating",
    "discipline": "AirBreathing",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The mature marks of the bypass turbofans in the hangar - hotter turbines, tighter tolerances, a few percent more thrust and a few percent less fuel, engine by engine.",
    "parts": [],
@@ -10565,7 +10584,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    6839
+    5563
    ]
   },
   {
@@ -10573,7 +10592,7 @@ window.TREE = {
    "title": "Variable-Stator Fighter Turbojet Uprating",
    "discipline": "AirBreathing",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The mature marks of the variable-stator fighter turbojets - J79, J85 and their Chinese WP derivatives, refined engine by engine for a few more percent of thrust.",
    "parts": [],
@@ -10588,7 +10607,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    6651
+    5448
    ]
   },
   {
@@ -10596,7 +10615,7 @@ window.TREE = {
    "title": "Sustained Mach-2 & Lift-Jet Uprating",
    "discipline": "AirBreathing",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The mature marks of the sustained-Mach-2 cruise engines (the MiG-21's R-13, the MiG-25's R-15) and the dedicated hover lift-jets - two unrelated missions, both refined mark by mark past their first cut.",
    "parts": [],
@@ -10609,7 +10628,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    6369
+    5354
    ]
   },
   {
@@ -10617,7 +10636,7 @@ window.TREE = {
    "title": "Refined Free-Turbine Turboprop",
    "discipline": "AirBreathing",
    "tier": 5,
-   "cost": 1500,
+   "cost": 80,
    "anyToUnlock": false,
    "flavor": "Squeeze more shaft power out of the free-turbine turboprop - the small, efficient propjet, refined mark by mark.",
    "parts": [],
@@ -10634,7 +10653,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    6557
+    5009
    ]
   },
   {
@@ -10642,7 +10661,7 @@ window.TREE = {
    "title": "Large-Segment Solid Casting",
    "discipline": "PropellantChemistry",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Stack more segments and the solid grows without a ceiling - the largest strap-on boosters ever fired, out to a Titan's full seven segments, and the monster that was drawn but never poured. The same segmented mechanism, taken to its limit.",
    "parts": [
@@ -10684,7 +10703,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    1108
+    4847
    ]
   },
   {
@@ -10692,7 +10711,7 @@ window.TREE = {
    "title": "Storable RCS Propellant Selection",
    "discipline": "PropellantChemistry",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The same reaction-control block, filled with whatever storable hypergolic blend the mission calls for — five real combinations flown across five different programs, none of them meaningfully better than the others. A menu, not a ladder.",
    "parts": [],
@@ -10701,8 +10720,11 @@ window.TREE = {
     "RFTech-rcs-tltech2",
     "RFTech-rcs-tltech3",
     "RFTech-rcs-tltech6",
+    "RFUpgrade_ASCENT",
     "RFUpgrade_Aerozine50+NTO",
+    "RFUpgrade_CH4+O2",
     "RFUpgrade_Ethanol+O2",
+    "RFUpgrade_H2+O2",
     "RFUpgrade_Hydrazine",
     "RFUpgrade_ISPS",
     "RFUpgrade_ISPS-HDA",
@@ -10716,7 +10738,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    8845
+    8771
    ]
   },
   {
@@ -10724,7 +10746,7 @@ window.TREE = {
    "title": "Cavea-B Oxidiser (gamble)",
    "discipline": "PropellantChemistry",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "A storable blend studied but never flown — specLevel=concept in its own source data, the one entry in this family that never left the bench. Worse thrust and worse Isp than every operational choice beside it; nobody flew it because it never won the argument, but a completionist can still burn it.",
    "parts": [],
@@ -10734,7 +10756,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    7528
+    8078
    ]
   },
   {
@@ -10742,7 +10764,7 @@ window.TREE = {
    "title": "High-Impulse Abort Motor",
    "discipline": "SystemsIntegration",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "A solid escape tower sized to yank a three-seat lunar capsule clear of a fully-fuelled Moon rocket - the same abort mechanism as Mercury's, scaled to the mass it now has to save.",
    "parts": [
@@ -10776,7 +10798,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    1296
+    4710
    ]
   },
   {
@@ -10784,7 +10806,7 @@ window.TREE = {
    "title": "Sustained-Duty Service Propulsion",
    "discipline": "FluidDynamics",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Grow the spacecraft's own engine from a probe's one-shot nudge into a crewed ship's workhorse - deep-throttling, fifty restarts, the service engine a Soyuz-class vehicle steers and brakes itself home on across a whole mission.",
    "parts": [
@@ -10798,7 +10820,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    6557
+    7112
    ]
   },
   {
@@ -10806,7 +10828,7 @@ window.TREE = {
    "title": "In-Place Production Uprating",
    "discipline": "FluidDynamics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Take an engine already proven in flight and refine it in place - more thrust, higher reliability, crew-rating - without changing what it burns. The unglamorous production engineering that turns a working booster into a dependable one.",
    "parts": [],
@@ -10830,7 +10852,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    8623
+    8273
    ]
   },
   {
@@ -10838,7 +10860,7 @@ window.TREE = {
    "title": "Compact Fission Reactor",
    "discipline": "NuclearEngineering",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Sustain a controlled fission chain reaction in a core small enough to launch - kilowatts of steady electrical power that never needs the Sun, and the same reactor physics a nuclear rocket runs hot. The root that nuclear power and nuclear propulsion both grow from.",
    "parts": [
@@ -10877,7 +10899,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    5092
+    10127
    ]
   },
   {
@@ -10885,7 +10907,7 @@ window.TREE = {
    "title": "Three-Crew Reentry Capsule",
    "discipline": "SystemsIntegration",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "A conical command module for three, mated to a service module that carries the propulsion, power and consumables for a two-week voyage - the first spacecraft built to leave Earth orbit with a crew and bring them back.",
    "parts": [
@@ -10904,7 +10926,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    2054
+    1516
    ]
   },
   {
@@ -10912,7 +10934,7 @@ window.TREE = {
    "title": "Circumlunar Descent Craft",
    "discipline": "SystemsIntegration",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The Eastern-bloc answer to a manned Moon shot: a descent module, a mission module for the crew to live in, and a service module - a whole spacecraft rather than a scaled-up capsule.",
    "parts": [
@@ -10941,7 +10963,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    1819
+    1187
    ]
   },
   {
@@ -10949,7 +10971,7 @@ window.TREE = {
    "title": "Long-Duration Habitation Module",
    "discipline": "LifeSupport",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "A pressurised volume built for people to live in for weeks, not the hours a capsule allows - room to stand, sleep and work while a life-support loop keeps the air breathable. The core a space station grows around.",
    "parts": [
@@ -10988,7 +11010,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    3032
+    2353
    ]
   },
   {
@@ -10996,7 +11018,7 @@ window.TREE = {
    "title": "TKS Ferry and Return Capsule",
    "discipline": "SystemsIntegration",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "A cargo-and-crew ferry built around a reusable habitation module in front and a small, separately-landable descent capsule behind it - the same real hardware that resupplied the early Soviet stations and, unlike its American cargo-Gemini counterpart, actually flew.",
    "parts": [
@@ -11020,7 +11042,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    3079
+    2400
    ]
   },
   {
@@ -11028,7 +11050,7 @@ window.TREE = {
    "title": "Pressurised Station Connectors",
    "discipline": "StructuresMechanisms",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The plumbing of an orbital outpost - pressurised passage tubes, diameter adapters and storage volumes that let separate modules dock into one continuous habitable structure.",
    "parts": [
@@ -11192,7 +11214,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    3555
+    3476
    ]
   },
   {
@@ -11200,7 +11222,7 @@ window.TREE = {
    "title": "Crewed Orbital Laboratory",
    "discipline": "SystemsIntegration",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "A module built not to live in but to work in - a crewed laboratory where astronauts process experiments and samples by hand, turning a station from a place to survive into a place to do science.",
    "parts": [
@@ -11219,7 +11241,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    2985
+    2212
    ]
   },
   {
@@ -11227,7 +11249,7 @@ window.TREE = {
    "title": "Plasma-Wave Spectrometry",
    "discipline": "Microelectronics",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "Listen to the electric and magnetic oscillations of the plasma a spacecraft flies through - the radio song of a magnetosphere, measured across frequency to map fields no camera can see.",
    "parts": [
@@ -11256,7 +11278,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    12966
+    12905
    ]
   },
   {
@@ -11264,7 +11286,7 @@ window.TREE = {
    "title": "Heat-Tolerant Procedural Wing",
    "discipline": "Aerodynamics",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "Procedural wings and control surfaces cut for the loads and heat of a lifting body - the default aerofoil of anything meant to fly fast and come back through the atmosphere on its own lift.",
    "parts": [
@@ -11293,7 +11315,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    8015
+    6741
    ]
   },
   {
@@ -11301,7 +11323,7 @@ window.TREE = {
    "title": "Winged Atmospheric Entry",
    "discipline": "Aerodynamics",
    "tier": 7,
-   "cost": 2300,
+   "cost": 300,
    "anyToUnlock": false,
    "flavor": "Come home on wings instead of a parachute: a crewed vehicle that trades a ballistic plunge for a controlled hypersonic glide, bleeding off orbital speed across a runway approach. High-speed lift and a reentry heatshield, together, let a crew fly their own descent.",
    "parts": [
@@ -11350,7 +11372,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    6651
+    4616
    ]
   },
   {
@@ -11358,7 +11380,7 @@ window.TREE = {
    "title": "Winged-Vehicle Flight Deck",
    "discipline": "LifeSupport",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "A pressurised cockpit sized and shaped for a wing, not a nose cone - forward visibility for a runway landing, from a fighter's canopy to an airliner's flight deck to a spaceplane's reentry windows.",
    "parts": [
@@ -11437,7 +11459,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    3342
+    2421
    ]
   },
   {
@@ -11445,7 +11467,7 @@ window.TREE = {
    "title": "Monocoque Aircraft Airframe",
    "discipline": "StructuresMechanisms",
    "tier": 6,
-   "cost": 2000,
+   "cost": 160,
    "anyToUnlock": false,
    "flavor": "The load-bearing body of a winged vehicle - fuselages, cargo bays, tails and shielded tankage that carry flight loads a stacked rocket never sees, from an airliner tube to a spaceplane's flat-bottomed hull.",
    "parts": [
@@ -11524,7 +11546,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    9190
+    7369
    ]
   },
   {
@@ -11532,7 +11554,7 @@ window.TREE = {
    "title": "Deep-Throttle Restartable Hydrolox Combustion",
    "discipline": "Cryogenics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Redesign the hydrolox engine to restart on command and throttle across a wide range instead of firing once at full bore - the deliberate first step toward an engine built to fly again, not just fly. LR129 was drawn for exactly that job; RD-57 and KVD-1 are the Soviet answer, chasing the same restartable, reusable goal from the other side of the Iron Curtain.",
    "parts": [
@@ -11552,13 +11574,11 @@ window.TREE = {
      "title": "RD-56/KVD-1/CE-7.5"
     }
    ],
-   "upgrades": [
-    "RFUpgrade_CE-7.5"
-   ],
+   "upgrades": [],
    "grants": [],
    "pos": [
     -2528,
-    6688
+    7518
    ]
   },
   {
@@ -11566,7 +11586,7 @@ window.TREE = {
    "title": "Uprated Restartable Hydrolox Combustion",
    "discipline": "Cryogenics",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Scale the restartable hydrolox engine toward booster thrust while keeping the reusable engine's whole point - deep throttle, many restarts, margin instead of a one-shot redline. Rocketdyne's own HG-3 studies fed straight into the engine still to come.",
    "parts": [
@@ -11577,14 +11597,14 @@ window.TREE = {
     }
    ],
    "upgrades": [
-    "RFUpgrade_HG-3-SL",
+    "RFUpgrade_CE-7.5",
     "RFUpgrade_KVD-1",
     "RFUpgrade_LR129-P-1"
    ],
    "grants": [],
    "pos": [
     -2224,
-    6688
+    7518
    ]
   },
   {
@@ -11592,12 +11612,13 @@ window.TREE = {
    "title": "Mature Gas-Generator Hydrolox Uprating",
    "discipline": "Cryogenics",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The 1972-76 gas-generator hydrolox engines maturing mark by mark in the shadow of the new reusable-engine programme - more thrust, tighter margins, no change to the single-start cycle underneath.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_HM-7B",
+    "RFUpgrade_HM-7B+",
     "RFUpgrade_HM-7B++",
     "RFUpgrade_J-2S",
     "RFUpgrade_M-1",
@@ -11611,7 +11632,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    6782
+    7706
    ]
   },
   {
@@ -11619,7 +11640,7 @@ window.TREE = {
    "title": "Reusable Staged-Combustion Hydrolox",
    "discipline": "Cryogenics",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Close the cycle for good: burn the fuel-rich preburner exhaust back through the main chamber at a pressure no earlier hydrolox engine touched, throttleable across a wide range and rated to fly the same hardware again and again. The engine the whole restartable-hydrolox lineage was built toward - the Shuttle's main engine.",
    "parts": [
@@ -11630,6 +11651,7 @@ window.TREE = {
     }
    ],
    "upgrades": [
+    "RFUpgrade_HG-3-SL",
     "RFUpgrade_HG-3A",
     "RFUpgrade_HG-3A-SL",
     "RFUpgrade_LR129-P-2"
@@ -11637,7 +11659,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    6688
+    7518
    ]
   },
   {
@@ -11645,7 +11667,7 @@ window.TREE = {
    "title": "Storable Staged-Combustion Thrust Ceiling",
    "discipline": "PropellantChemistry",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Push oxidiser-rich staged combustion on storable hypergolics as far as raw chemistry allows - the largest hypergolic engine ever built, drawn for a booster that never flew. A record nobody has beaten since, and nobody needed to.",
    "parts": [
@@ -11659,7 +11681,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    6359
+    7330
    ]
   },
   {
@@ -11667,7 +11689,7 @@ window.TREE = {
    "title": "Re-Fuelled Ceiling Variants",
    "discipline": "PropellantChemistry",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The same enormous chamber, tried on two propellant combinations nobody ultimately chose - an exotic boron-fuel blend, and a plain kerolox re-fuelling of hardware built for hypergolics. Neither changed the verdict; the ceiling stands where it stood.",
    "parts": [],
@@ -11678,7 +11700,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    6359
+    7330
    ]
   },
   {
@@ -11686,7 +11708,7 @@ window.TREE = {
    "title": "Operational Oxidiser-Rich Kerolox",
    "discipline": "PropellantChemistry",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Where the N1's oxidiser-rich engines never got to prove themselves in flight, the same staged-combustion chemistry finally does - a kerolox engine that reaches orbit for real, with steering verniers built in rather than bolted on.",
    "parts": [
@@ -11711,11 +11733,19 @@ window.TREE = {
      "title": "RD-8"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_4x_NK-39",
+    "RFUpgrade_AJ26-58",
+    "RFUpgrade_AJ26-59",
+    "RFUpgrade_AJ26-60",
+    "RFUpgrade_AJ26-62",
+    "RFUpgrade_NK-33",
+    "RFUpgrade_NK-43"
+   ],
    "grants": [],
    "pos": [
     -2224,
-    4479
+    4041
    ]
   },
   {
@@ -11723,7 +11753,7 @@ window.TREE = {
    "title": "Further-Refined Storable Staged Combustion",
    "discipline": "PropellantChemistry",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "One more pass at the same storable staged-combustion hardware - tighter tolerances, higher chamber pressure, the same dependable poison burning a little more completely each mark.",
    "parts": [],
@@ -11736,7 +11766,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    6265
+    7236
    ]
   },
   {
@@ -11744,7 +11774,7 @@ window.TREE = {
    "title": "Third-Generation Scout Solid",
    "discipline": "PropellantChemistry",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The Scout stack's own first stage, cast and refined once more - the same all-solid launcher, still cheap, still ready, still needing no pad crew to fuel it.",
    "parts": [
@@ -11763,7 +11793,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    711
+    4146
    ]
   },
   {
@@ -11771,7 +11801,7 @@ window.TREE = {
    "title": "Human-Rated Segmented Solid Booster",
    "discipline": "PropellantChemistry",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Scale segmented casting to a booster big enough to loft a crewed orbiter, and rate it to fly people - the largest solid rocket motor ever flown, proven over a hundred missions where the drawing-board monsters before it never left the test stand.",
    "parts": [
@@ -11790,7 +11820,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1155
+    4941
    ]
   },
   {
@@ -11798,7 +11828,7 @@ window.TREE = {
    "title": "Extended-Range Solid Kick Motors II",
    "discipline": "PropellantChemistry",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "A later run of the same kick-motor family, sized for whatever a mission needs one generation on - heavier payloads to geostationary transfer, a bigger burn from the same solid-motor playbook.",
    "parts": [
@@ -11833,13 +11863,29 @@ window.TREE = {
      "title": "STAR 8 (RAD)"
     }
    ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -2528,
+    4287
+   ]
+  },
+  {
+   "id": "pc_apogeeKickCatalogIII",
+   "title": "Extended-Range Solid Kick Motors III",
+   "discipline": "PropellantChemistry",
+   "tier": 10,
+   "cost": 1000,
+   "anyToUnlock": false,
+   "flavor": "The Star-37FM casing pushed once more - a longer burn and a wider velocity envelope from the same solid-motor family, one generation further down the same catalog.",
+   "parts": [],
    "upgrades": [
     "RFUpgrade_STAR-37FMV"
    ],
    "grants": [],
    "pos": [
-    -2528,
-    873
+    -2224,
+    4287
    ]
   },
   {
@@ -11847,7 +11893,7 @@ window.TREE = {
    "title": "Solid-Fuel Upper Stage",
    "discipline": "PropellantChemistry",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Stage two solid motors together and call it a whole upper stage, not just a kick - the segmented-casting size and the kick-motor precision, combined into hardware that can send a payload all the way to geostationary transfer or escape velocity from a bay that never carries its own liquid stage.",
    "parts": [
@@ -11876,7 +11922,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1014
+    4590
    ]
   },
   {
@@ -11884,18 +11930,21 @@ window.TREE = {
    "title": "Restartable Storable Upper Maturation",
    "discipline": "FluidDynamics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Refine the whole family of restartable storable engines mark by mark - more thrust, longer restart life, no change to the chemistry or the mission they were built for.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_AJ10-118F",
     "RFUpgrade_AJ10-118K",
+    "RFUpgrade_AJ10-133-Hylas",
+    "RFUpgrade_AJ10-133-LH",
     "RFUpgrade_AJ10-138A",
     "RFUpgrade_AJ10-153",
     "RFUpgrade_AJ10-154",
     "RFUpgrade_AJ10-156",
     "RFUpgrade_Agena-2000",
+    "RFUpgrade_KTDU-425A",
     "RFUpgrade_Model8096-39",
     "RFUpgrade_Model8096A",
     "RFUpgrade_Model8096B",
@@ -11904,7 +11953,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    6028
+    6186
    ]
   },
   {
@@ -11912,7 +11961,7 @@ window.TREE = {
    "title": "Full-Scale Nuclear Thermal Testing",
    "discipline": "NuclearEngineering",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Move on from a demonstration reactor to full engine-scale ground tests - NRX proves the reactor survives real duty, Phoebus proves it can run bigger still, NERVA-XE proves the whole engine system together. The ground-test programme a flight engine still has to earn its way out of.",
    "parts": [
@@ -11936,7 +11985,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    4857
+    7984
    ]
   },
   {
@@ -11944,7 +11993,7 @@ window.TREE = {
    "title": "Flight-Rated Nuclear Thermal Engine",
    "discipline": "NuclearEngineering",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The design NASA actually meant to fly - bracketed by Pewee's efficiency record and Phoebus-2A's raw power, the ground tests that shaped it. Cancelled in 1972 before it ever left the test stand; build it here instead.",
    "parts": [
@@ -11973,7 +12022,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    4857
+    7984
    ]
   },
   {
@@ -11981,7 +12030,7 @@ window.TREE = {
    "title": "Ablative Pusher Plate & Shock Absorption",
    "discipline": "StructuresMechanisms",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "A thick steel plate that shrugs off a nuclear detonation close enough to push it, backed by a two-stage shock absorber that turns a violent kick into an acceleration a crew can survive. Nothing about the fission itself is the hard part - surviving your own propulsion is.",
    "parts": [],
@@ -11997,7 +12046,7 @@ window.TREE = {
    "title": "Nuclear Pulse Propulsion",
    "discipline": "NuclearEngineering",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Skip the reactor and the nozzle entirely - drop small fission charges out the back and ride the shockwave off an ablative plate, one controlled detonation at a time. Absurd, filthy, and on paper the only chemistry-free way to put a truly heavy ship anywhere in the solar system fast. Project Orion never flew; here, it can.",
    "parts": [
@@ -12046,7 +12095,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    4040
+    7424
    ]
   },
   {
@@ -12054,7 +12103,7 @@ window.TREE = {
    "title": "Hall-Effect Ion Acceleration",
    "discipline": "ElectricalPower",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Trap electrons in a magnetic field to ionise a noble gas, then let an electric field fling the ions out far faster than any flame - thrust measured in millinewtons, specific impulse measured in the thousands of seconds. Too weak to launch anything, and exactly what a satellite needs to hold its station for a decade on a tank of xenon.",
    "parts": [
@@ -12078,7 +12127,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    7622
+    10938
    ]
   },
   {
@@ -12086,7 +12135,7 @@ window.TREE = {
    "title": "Higher-Power Hall Thrusters",
    "discipline": "ElectricalPower",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The same magnetic bottle, fed more power and more propellant - still a whisper of thrust, still an Isp no chemical engine will ever touch.",
    "parts": [
@@ -12096,14 +12145,11 @@ window.TREE = {
      "title": "SPT-70 Hall Effect Thruster"
     }
    ],
-   "upgrades": [
-    "RFUpgrade_SPT-70M",
-    "RFUpgrade_SPT-70MK"
-   ],
+   "upgrades": [],
    "grants": [],
    "pos": [
     -2224,
-    7669
+    10944
    ]
   },
   {
@@ -12111,7 +12157,7 @@ window.TREE = {
    "title": "Bipropellant Attitude & Apogee Thrust",
    "discipline": "GuidanceControl",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Trade the reaction-control block's simple storable monopropellant for a genuine two-propellant combustion chamber - a real flame instead of a catalytic fizz, and a meaningful jump in specific impulse for every correction burn and apogee kick a spacecraft makes on its own.",
    "parts": [
@@ -12153,7 +12199,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    7371
+    8172
    ]
   },
   {
@@ -12161,7 +12207,7 @@ window.TREE = {
    "title": "Second-Generation High-Bypass Turbofans",
    "discipline": "AirBreathing",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "The high-bypass turbofan family, matured a generation past its first marks - more bypass, hotter cores, a real production engine flying airliners instead of a prototype on a test stand.",
    "parts": [
@@ -12181,7 +12227,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    6500
+    5516
    ]
   },
   {
@@ -12189,7 +12235,7 @@ window.TREE = {
    "title": "Second-Generation Afterburning Turbofans",
    "discipline": "AirBreathing",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "The afterburning low-bypass/variable-stator turbojet families, matured a generation past their first marks - hotter cores, a real production fighter engine instead of a prototype on a test stand.",
    "parts": [
@@ -12207,7 +12253,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    6594
+    5610
    ]
   },
   {
@@ -12215,17 +12261,18 @@ window.TREE = {
    "title": "Extended Multi-Layer Insulation",
    "discipline": "Thermodynamics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Wrap the bus in another few layers of aluminised film and the heat leak keeps dropping further still - the same passive blanket, thickened for a mission measured in months rather than weeks.",
    "parts": [],
    "upgrades": [
+    "MLI.Upgrade2",
     "MLI.Upgrade3"
    ],
    "grants": [],
    "pos": [
     -2528,
-    1484
+    805
    ]
   },
   {
@@ -12233,7 +12280,7 @@ window.TREE = {
    "title": "Pumped-Loop Radiator Panels",
    "discipline": "Thermodynamics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Stop relying on the hull's own skin to shed heat and circulate coolant out to dedicated panels instead - a heat-rejection system sized independently of the spacecraft it serves, because a crewed orbiter or a station generates more waste heat than any body-mounted radiator could ever carry alone.",
    "parts": [
@@ -12272,7 +12319,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1390
+    711
    ]
   },
   {
@@ -12280,17 +12327,156 @@ window.TREE = {
    "title": "Aluminium-Copper Balloon Tankage",
    "discipline": "Metallurgy",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Swap the pressure-stabilised tank's stainless skin for an aluminium-copper alloy and the same trick - a wall so thin it needs its own pressure to stand - sheds a third of its weight again. The material the Shuttle's own External Tank flies on.",
    "parts": [],
    "upgrades": [
-    "RFTech-Tank-Balloon-SteelAlCu"
+    "RFTech-SM-IV",
+    "RFTech-Tank-Balloon-SteelAlCu",
+    "RFTech-Tank-Iso-AlCu"
    ],
    "grants": [],
    "pos": [
     -2528,
-    4260
+    3173
+   ]
+  },
+  {
+   "id": "met_aluminiumLithiumTankage",
+   "title": "Aluminium-Lithium Alloy Tankage",
+   "discipline": "Metallurgy",
+   "tier": 11,
+   "cost": 1450,
+   "anyToUnlock": false,
+   "flavor": "Alloy the tank wall with lithium and it comes out several percent lighter and stiffer at the same strength — the dry-mass saving that goes straight into payload. The alloy the Shuttle's Super-Lightweight Tank and a generation of launchers after it are built from.",
+   "parts": [],
+   "upgrades": [
+    "RFTech-Tank-Balloon-SteelAlLi",
+    "RFTech-Tank-Iso-AlLi",
+    "RFTech-Tank-Sep-AlLi",
+    "RFTech-Tank-Wet-Wing2"
+   ],
+   "grants": [],
+   "pos": [
+    -1920,
+    3173
+   ]
+  },
+  {
+   "id": "met_stirWeldedTankage",
+   "title": "Friction-Stir-Welded Tankage",
+   "discipline": "Metallurgy",
+   "tier": 13,
+   "cost": 2650,
+   "anyToUnlock": false,
+   "flavor": "Join the tank barrel with a spinning shoulder that stirs the metal together below its melting point instead of melting it — a weld with none of the porosity or heat-warp of an arc, strong enough to trust an integral tank wall to. The process behind the friction-stir-welded barrels of the modern launch fleet.",
+   "parts": [],
+   "upgrades": [
+    "RFTech-Tank-Iso-Comp",
+    "RFTech-Tank-Sep-Stir"
+   ],
+   "grants": [],
+   "pos": [
+    -1312,
+    3173
+   ]
+  },
+  {
+   "id": "met_stainlessSteelTankage",
+   "title": "Stir-Welded Stainless-Steel Tankage",
+   "discipline": "Metallurgy",
+   "tier": 15,
+   "cost": 4500,
+   "anyToUnlock": false,
+   "flavor": "Go back to steel — but a cryo-tough stainless that keeps its strength through re-entry heat and down to liquid-oxygen cold, cheap enough to build a reusable tank-and-hull as one piece. The counter-intuitive material choice behind a fully-reusable heavy launcher.",
+   "parts": [],
+   "upgrades": [
+    "RFTech-Tank-Iso-Magic",
+    "RFTech-Tank-Sep-Starship"
+   ],
+   "grants": [],
+   "pos": [
+    -704,
+    3173
+   ]
+  },
+  {
+   "id": "cmp_advancedCompositeFairings",
+   "title": "High-Temperature Composite Fairings",
+   "discipline": "CompositeMaterials",
+   "tier": 12,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Cure the fairing from higher-temperature resins and out-of-autoclave layups — lighter shells that also take the aerothermal load of a faster ascent, and come off a production line instead of a hand-layup bench. The payload shroud grown into a manufactured part.",
+   "parts": [],
+   "upgrades": [
+    "PFTech-Fairing-V",
+    "PFTech-Fairing-VI"
+   ],
+   "grants": [],
+   "pos": [
+    -1616,
+    3800
+   ]
+  },
+  {
+   "id": "th_advancedMLI",
+   "title": "Perforated Double-Aluminised Insulation",
+   "discipline": "Thermodynamics",
+   "tier": 11,
+   "cost": 1450,
+   "anyToUnlock": false,
+   "flavor": "Refine the multi-layer blanket — more and thinner double-aluminised layers, perforated to vent the trapped gas so they pack tighter without conducting — and the parasitic heat leak into a cryogenic tank or a cold instrument drops again. The insulation that lets propellant and coolant last a long mission.",
+   "parts": [],
+   "upgrades": [
+    "MLI.Upgrade4",
+    "MLI.Upgrade5",
+    "RFTech-MLI-UpgradeBalloon"
+   ],
+   "grants": [],
+   "pos": [
+    -1920,
+    805
+   ]
+  },
+  {
+   "id": "gnc_longLifeRCS",
+   "title": "Long-Life Reaction-Control Thrusters",
+   "discipline": "GuidanceControl",
+   "tier": 11,
+   "cost": 1450,
+   "anyToUnlock": false,
+   "flavor": "Build the reaction-control thruster to fire tens of thousands of times without eroding its throat or coking its injector — the durability a space station holds attitude with for decades, and a reusable stage relights on descent after descent. The RCS that stops being a consumable.",
+   "parts": [],
+   "upgrades": [
+    "RFTech-rcs-tltech4",
+    "RFTech-rcs-tltech5",
+    "RFTech-rcs-tltech7"
+   ],
+   "grants": [],
+   "pos": [
+    -1920,
+    8219
+   ]
+  },
+  {
+   "id": "elec_secondaryBatteries",
+   "title": "Sealed Rechargeable Battery Cells",
+   "discipline": "ElectricalPower",
+   "tier": 6,
+   "cost": 160,
+   "anyToUnlock": false,
+   "flavor": "Seal a rechargeable cell so it cycles through orbital night after orbital night without venting or dying — nickel-cadmium, then nickel-hydrogen — and a spacecraft can finally store the power its arrays make in daylight. The other half of every solar power system.",
+   "parts": [],
+   "upgrades": [
+    "RFTech-Battery-II",
+    "RFTech-Battery-IV"
+   ],
+   "grants": [],
+   "pos": [
+    -3440,
+    11551
    ]
   },
   {
@@ -12298,7 +12484,7 @@ window.TREE = {
    "title": "Composite Fairing Shells",
    "discipline": "CompositeMaterials",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Carry the resin-and-fibre layup learned for a reentry heatshield over to a payload shroud instead - a fairing that sheds the last of the aluminium stringer's dead weight, built from the same composite technique that already keeps a capsule cool on the way down.",
    "parts": [
@@ -12309,12 +12495,13 @@ window.TREE = {
     }
    ],
    "upgrades": [
+    "PFTech-Fairing-III",
     "PFTech-Fairing-IV"
    ],
    "grants": [],
    "pos": [
     -2528,
-    4606
+    3800
    ]
   },
   {
@@ -12322,7 +12509,7 @@ window.TREE = {
    "title": "Converted-Stage Station Module",
    "discipline": "LifeSupport",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Build the station module out of a spent launch-vehicle stage's own tooling and diameter instead of designing a bespoke pressure vessel from scratch - decks and stowage where the tankage used to be. Skylab flew fitted-out on the ground rather than converted in orbit as first planned, but the trick is the same: a station's worth of volume for the price of hardware already proven to fly.",
    "parts": [
@@ -12351,7 +12538,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    3173
+    2494
    ]
   },
   {
@@ -12359,7 +12546,7 @@ window.TREE = {
    "title": "Extended Habitation Module Catalog",
    "discipline": "LifeSupport",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "The same pressurised-module family, in more sizes and roles - habitation decks and utility bays scaled to whatever the mission needs, off the same shelf the core module came from.",
    "parts": [
@@ -12388,7 +12575,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    2797
+    2306
    ]
   },
   {
@@ -12396,7 +12583,7 @@ window.TREE = {
    "title": "Mir Core Module",
    "discipline": "LifeSupport",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The first module of the first station meant to be added to, not just launched whole - a working/living core section, a transfer compartment and a docking front end, built from day one expecting company.",
    "parts": [
@@ -12420,7 +12607,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3079
+    2588
    ]
   },
   {
@@ -12428,7 +12615,7 @@ window.TREE = {
    "title": "Kvant-1 Astrophysics Module",
    "discipline": "SystemsIntegration",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The station's first add-on: a small module built around an X-ray/UV observatory, bolted to a permanent outpost instead of flown as its own standalone mission.",
    "parts": [
@@ -12447,7 +12634,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2985
+    2494
    ]
   },
   {
@@ -12455,7 +12642,7 @@ window.TREE = {
    "title": "Kvant-2 EVA and Biology Module",
    "discipline": "SystemsIntegration",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "A dedicated airlock and a biological-research bay in one add-on - the module that gave the station its own independent way outside, instead of relying on whatever happened to be docked.",
    "parts": [
@@ -12479,7 +12666,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    3079
+    2588
    ]
   },
   {
@@ -12487,7 +12674,7 @@ window.TREE = {
    "title": "Kristall Materials-Processing Module",
    "discipline": "SystemsIntegration",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "A furnace bay for growing crystals and processing alloys in freefall, on a module built with androgynous docking hardware flexible enough to one day catch a visitor nobody designed it for.",
    "parts": [
@@ -12506,7 +12693,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2891
+    2400
    ]
   },
   {
@@ -12514,7 +12701,7 @@ window.TREE = {
    "title": "Spektr Remote-Sensing Module",
    "discipline": "SystemsIntegration",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "An Earth-observation and remote-sensing add-on, its own solar wings feeding a bay of imaging instruments pointed at the ground instead of the sky.",
    "parts": [
@@ -12538,7 +12725,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    3267
+    2776
    ]
   },
   {
@@ -12546,7 +12733,7 @@ window.TREE = {
    "title": "Priroda Earth-Observation Module",
    "discipline": "SystemsIntegration",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The station's last add-on: a dedicated Earth-sciences module, an experiment rack and laboratory turned toward agriculture, oceanography and environmental monitoring from orbit.",
    "parts": [
@@ -12570,7 +12757,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    3173
+    2682
    ]
   },
   {
@@ -12578,7 +12765,7 @@ window.TREE = {
    "title": "External Truss Structure",
    "discipline": "StructuresMechanisms",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Bolt an unpressurised scaffold onto the station instead of cramming everything inside a hull - a lattice to hang solar arrays, radiators and berthing ports from, structure that never needs to hold air. The adjustable mounting frames and radial berthing points that let a station grow module by module instead of launching whole.",
    "parts": [
@@ -12637,7 +12824,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    4166
+    3591
    ]
   },
   {
@@ -12645,7 +12832,7 @@ window.TREE = {
    "title": "EVA-Assembled External Truss",
    "discipline": "StructuresMechanisms",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "A lattice tower built piece by piece by a spacewalking crew instead of arriving pre-built on a single launch - the first truss put together by hand in orbit, proving a station's own structure could grow past whatever fit under one payload fairing.",
    "parts": [
@@ -12669,7 +12856,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3737
+    3497
    ]
   },
   {
@@ -12677,7 +12864,7 @@ window.TREE = {
    "title": "Advanced Docking and Berthing Adapters",
    "discipline": "GuidanceControl",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "A new generation of docking hardware built for a permanent outpost instead of a single rendezvous - androgynous ports that don't care which side is active, a dedicated berthing adapter for joining two different national programmes' hardware, and the instruments riding along on the join itself.",
    "parts": [
@@ -12716,7 +12903,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1866
+    1328
    ]
   },
   {
@@ -12724,7 +12911,7 @@ window.TREE = {
    "title": "Large-Class Reaction Wheels",
    "discipline": "GuidanceControl",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "The same momentum-exchange trick, sized for a station instead of a probe - a flywheel heavy enough to hold a whole crewed module steady without spending a gram of propellant.",
    "parts": [
@@ -12753,7 +12940,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    9405
+    9556
    ]
   },
   {
@@ -12761,7 +12948,7 @@ window.TREE = {
    "title": "Robotic Grapple End-Effector",
    "discipline": "Robotics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Close a powered claw around a grapple fixture instead of threading a docking port together by eye - the business end of a robotic arm, built to catch and hold a vehicle that never has to fly all the way in.",
    "parts": [
@@ -12775,7 +12962,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    12031
+    11969
    ]
   },
   {
@@ -12783,7 +12970,7 @@ window.TREE = {
    "title": "Extended-Duration Apollo Block III+",
    "discipline": "SystemsIntegration",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Stretch the same Apollo stack for a mission measured in months instead of weeks - a bigger service module, a mission module bolted on for the extra volume a Skylab-length stay demands, and a high-gain antenna that can still find Earth from wherever the longer mission sends it. The same capsule, built to not come home so soon.",
    "parts": [
@@ -12822,7 +13009,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    2054
+    1516
    ]
   },
   {
@@ -12830,7 +13017,7 @@ window.TREE = {
    "title": "Enlarged Station-Logistics Capsule",
    "discipline": "SystemsIntegration",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Scale the maneuvering capsule up from two seats to nine, or trade the crew for cargo entirely - Gemini's own OAMS-powered airframe, stretched into a ferry built to keep a station supplied rather than chase a target in orbit. Where Apollo forked toward the Moon, this is Gemini's other road: never flown, but the shape every later space-station taxi and cargo hauler still borrows from.",
    "parts": [
@@ -12864,7 +13051,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    2195
+    1422
    ]
   },
   {
@@ -12872,7 +13059,7 @@ window.TREE = {
    "title": "Reusable Winged Orbiter",
    "discipline": "SystemsIntegration",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Put the wing, the heatshield, the flight deck and a cargo bay big enough to carry a whole satellite all on one airframe that lands on a runway and flies again - the Shuttle orbiter, the vehicle this whole era is named for. Winged reentry, a spaceplane flight deck and large-fuselage airframe structure, each already proven separately, converge here for the first time into one reusable machine.",
    "parts": [
@@ -12911,7 +13098,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    5280
+    4778
    ]
   },
   {
@@ -12919,7 +13106,7 @@ window.TREE = {
    "title": "Deployable-Nozzle Expander Cycle",
    "discipline": "Cryogenics",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The expander cycle's payoff arrives: a radiatively-cooled nozzle that unfolds after staging trades stowed length for the highest vacuum Isp of any engine that flies. The RL-10B-2's carbon-carbon skirt reaches 465 seconds; the RD-0146 is the Russian closed-expander answer. The long RL-10 chain, idle since its last refinement, leaps a full fleet-generation here.",
    "parts": [
@@ -12941,19 +13128,19 @@ window.TREE = {
    ],
    "upgrades": [
     "RFUpgrade_CECE-Base",
-    "RFUpgrade_CECE-High",
     "RFUpgrade_CECE-Methane",
-    "RFUpgrade_RD-0146D",
     "RFUpgrade_RL10C-1",
     "RFUpgrade_RL10C-1-1",
     "RFUpgrade_RL10C-1A",
-    "RFUpgrade_RL10C-2",
-    "RFUpgrade_RL10C-2-1"
+    "RFUpgrade_RL10C-3",
+    "RFUpgrade_RL10E-1",
+    "RFUpgrade_RL10E-3EL",
+    "RFUpgrade_RL10E-3ELL"
    ],
    "grants": [],
    "pos": [
     -1920,
-    4742
+    5218
    ]
   },
   {
@@ -12961,7 +13148,7 @@ window.TREE = {
    "title": "Operational Restartable Hydrolox Upper",
    "discipline": "Cryogenics",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The gas-generator hydrolox upper grows up. Where the J-2 fired once, the LE-5 coasts and reignites ten times across a mission - the workhorse restartable upper of an operational launcher. Its own expander-bleed descendants split off to the expander lane.",
    "parts": [
@@ -12971,14 +13158,30 @@ window.TREE = {
      "title": "LE-5"
     }
    ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    7843
+   ]
+  },
+  {
+   "id": "cryo_operationalHydroloxUpperII",
+   "title": "Further-Matured Restartable Hydrolox Upper",
+   "discipline": "Cryogenics",
+   "tier": 12,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "The LE-5 keeps maturing mark by mark - more restarts, a little more thrust, the same workhorse upper stage refined rather than replaced.",
+   "parts": [],
    "upgrades": [
     "RFUpgrade_LE-5B-2",
     "RFUpgrade_LE-5B-3"
    ],
    "grants": [],
    "pos": [
-    -1920,
-    6939
+    -1616,
+    7843
    ]
   },
   {
@@ -12986,7 +13189,7 @@ window.TREE = {
    "title": "Booster-Class Gas-Generator Hydrolox",
    "discipline": "Cryogenics",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Having proven the reusable staged-combustion engine is buildable, the world's launch fleet turns around and walks away from it. The RS-68 - the most powerful hydrogen engine ever flown - is deliberately a gas-generator with an ablative nozzle, trading Isp for a price tag; Vulcain and the YF-77 make the same bargain for Ariane and Long March. The anti-SSME: simplicity at booster scale.",
    "parts": [
@@ -13016,16 +13219,11 @@ window.TREE = {
      "title": "Space Transportation Main Engine (STME)"
     }
    ],
-   "upgrades": [
-    "RFUpgrade_RS-68A",
-    "RFUpgrade_RS-68B",
-    "RFUpgrade_RS-68K",
-    "RFUpgrade_RS-800"
-   ],
+   "upgrades": [],
    "grants": [],
    "pos": [
     -1920,
-    6824
+    7749
    ]
   },
   {
@@ -13033,7 +13231,7 @@ window.TREE = {
    "title": "Operational Fuel-Rich Staged-Combustion Hydrolox",
    "discipline": "Cryogenics",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "The hardest cycle in rocketry stops being one nation's secret. Fuel-rich staged-combustion hydrolox - the SSME's cycle - is rebuilt by two more programs: the RD-0120 lifts Energia, the LE-7 lifts the H-II. What took a superpower to master becomes something three space programs can pour.",
    "parts": [
@@ -13057,7 +13255,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    6688
+    7518
    ]
   },
   {
@@ -13065,7 +13263,7 @@ window.TREE = {
    "title": "Reusable-Engine Production Uprating",
    "discipline": "Cryogenics",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "Every reusable and staged-combustion hydrolox engine now in service settles into its production marks - the SSME Block-I and Block-II, the RD-0120M, the LE-7A, the maturing HG-3 and deep-throttle chains - the unglamorous decade of squeezing margin out of engines already flying.",
    "parts": [
@@ -13097,7 +13295,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    6453
+    7518
    ]
   },
   {
@@ -13105,7 +13303,7 @@ window.TREE = {
    "title": "Tripropellant Staged Combustion",
    "discipline": "Cryogenics",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "One engine, two fuels, switched in flight. At liftoff it burns dense kerosene for thrust off the pad; at altitude it crosses over to hydrogen for Isp - a single powerplant doing the job of a two-propellant staircase. The RD-701 was meant to lift the MAKS spaceplane; making it work needs both the staged-combustion hydrolox cycle and oxidiser-rich kerolox at once.",
    "parts": [
@@ -13129,7 +13327,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    4851
+    5631
    ]
   },
   {
@@ -13137,7 +13335,7 @@ window.TREE = {
    "title": "Methalox Staged Combustion",
    "discipline": "Cryogenics",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Methane splits the difference: colder than kerosene, denser than hydrogen, clean-burning and one day makeable on Mars. The LRBE is the tree's first methalox engine - a staged-combustion booster on a fuel nobody flew yet, the seed of a lane that a later era will grow into.",
    "parts": [
@@ -13156,7 +13354,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    4108
+    3894
    ]
   },
   {
@@ -13164,7 +13362,7 @@ window.TREE = {
    "title": "High-Thrust Multi-Chamber ORSC",
    "discipline": "PropellantChemistry",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Oxidiser-rich staged combustion hits its ceiling. The RD-170 - four chambers off one turbopump, 7900 kilonewtons - is the most powerful liquid-propellant engine ever built, the monster that lifts Energia and Zenit. Where the N1's engines never flew and Zenit's was only an upper, this is the chemistry's operational record.",
    "parts": [
@@ -13184,14 +13382,11 @@ window.TREE = {
      "title": "YF-100"
     }
    ],
-   "upgrades": [
-    "RFUpgrade_RD-171M",
-    "RFUpgrade_YF-100K"
-   ],
+   "upgrades": [],
    "grants": [],
    "pos": [
     -1920,
-    4343
+    4035
    ]
   },
   {
@@ -13199,7 +13394,7 @@ window.TREE = {
    "title": "Modular Oxidiser-Rich Kerolox",
    "discipline": "PropellantChemistry",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "The record engine gets cut into pieces you can sell. Halve the RD-170's four chambers and you have the RD-180 for Atlas; quarter it and you have the single-chamber Angara engine. Same core hardware, packaged into a modular family for the export and commercial market.",
    "parts": [
@@ -13218,15 +13413,34 @@ window.TREE = {
     "RFUpgrade_RD-120F",
     "RFUpgrade_RD-120K",
     "RFUpgrade_RD-171",
+    "RFUpgrade_RD-171M",
     "RFUpgrade_RD-172-173",
-    "RFUpgrade_RD-181",
     "RFUpgrade_RD-191",
-    "RFUpgrade_RD-193"
+    "RFUpgrade_YF-100K"
    ],
    "grants": [],
    "pos": [
     -1616,
-    4390
+    3988
+   ]
+  },
+  {
+   "id": "pc_modularORSCII",
+   "title": "Modular Kerolox Re-Sizing",
+   "discipline": "PropellantChemistry",
+   "tier": 13,
+   "cost": 2650,
+   "anyToUnlock": false,
+   "flavor": "Cut the same modular RD-170 hardware into two more shapes - a lighter single-chamber mark for a smaller booster, and an export version re-plumbed for someone else's pad.",
+   "parts": [],
+   "upgrades": [
+    "RFUpgrade_RD-181",
+    "RFUpgrade_RD-193"
+   ],
+   "grants": [],
+   "pos": [
+    -1312,
+    3988
    ]
   },
   {
@@ -13234,7 +13448,7 @@ window.TREE = {
    "title": "Operational Storable Staged Combustion",
    "discipline": "PropellantChemistry",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The storable staged-combustion engines of Proton and its kin reach their final operational marks - the RD-275 first stage, the Kosberg upper stages - the last refinements of a hypergolic booster line that has been flying since the sixties.",
    "parts": [],
@@ -13243,6 +13457,7 @@ window.TREE = {
     "RFUpgrade_RD-0212-Mk3",
     "RFUpgrade_RD-0213-Mk3",
     "RFUpgrade_RD-253-Mk4",
+    "RFUpgrade_RD-254-11D44-Mk3",
     "RFUpgrade_RD-254-11D44-Mk4",
     "RFUpgrade_RD-275",
     "RFUpgrade_RD-277-14D16"
@@ -13250,7 +13465,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    6265
+    7236
    ]
   },
   {
@@ -13258,7 +13473,7 @@ window.TREE = {
    "title": "Multi-Restart Storable Upper Stage",
    "discipline": "FluidDynamics",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Coast, reignite, coast again - dozens of times, across days. The Fregat and Briz upper stages and their kin are storable propulsion modules built for the choreography of an interplanetary or multi-orbit mission, restarting on demand where the single-shot Agena and early AJ10 could not. The Transtar rates five hundred ignitions.",
    "parts": [
@@ -13288,14 +13503,30 @@ window.TREE = {
      "title": "Aestus"
     }
    ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1920,
+    6186
+   ]
+  },
+  {
+   "id": "fd_multiRestartStorableUpperII",
+   "title": "Further-Refined Multi-Restart Storable Upper Stage",
+   "discipline": "FluidDynamics",
+   "tier": 12,
+   "cost": 2000,
+   "anyToUnlock": false,
+   "flavor": "Aestus keeps pace with the rest of the multi-restart storable family - a modified chamber, then a second-generation successor, the same choreography refined one mark further.",
+   "parts": [],
    "upgrades": [
     "RFUpgrade_Aestus-II",
     "RFUpgrade_AestusMod"
    ],
    "grants": [],
    "pos": [
-    -1920,
-    6028
+    -1616,
+    6186
    ]
   },
   {
@@ -13303,7 +13534,7 @@ window.TREE = {
    "title": "Terminal Gas-Generator Kerolox Uprating",
    "discipline": "FluidDynamics",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The gas-generator kerolox engines that built the space age take their final bow. The last production marks of Delta's RS-27, Atlas's RS-56 and Titan's LR87/LR91 - a lineage of open-cycle workhorses being uprated one last time as staged combustion walks past them.",
    "parts": [],
@@ -13322,7 +13553,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    9635
+    9949
    ]
   },
   {
@@ -13330,7 +13561,7 @@ window.TREE = {
    "title": "Advanced Gas-Generator Kerolox Booster",
    "discipline": "FluidDynamics",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "America's answer to the imported RD-180 that never got built. The STBE was a big, simple gas-generator kerolox booster engine drawn for the next launcher - the domestic alternative to buying Russian staged combustion, shelved when the RD-180 won on price.",
    "parts": [
@@ -13354,7 +13585,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    9772
+    10033
    ]
   },
   {
@@ -13362,7 +13593,7 @@ window.TREE = {
    "title": "Filament-Wound Composite-Case Solids",
    "discipline": "PropellantChemistry",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Wind the motor case out of graphite and epoxy instead of forging it from steel, and the dead weight falls away. The filament-wound composite case - on the giant SRMU, the standalone Castor 120, the Titan solids - is the material leap past the heavy segmented steel of the Shuttle booster, more impulse for less structure.",
    "parts": [
@@ -13398,6 +13629,7 @@ window.TREE = {
     }
    ],
    "upgrades": [
+    "RFTech-solids-tltech4",
     "RFTech-solids-tltech6",
     "RFTech-solids-tltech7",
     "RFUpgrade_FWC-SRM",
@@ -13406,7 +13638,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    1155
+    4941
    ]
   },
   {
@@ -13414,7 +13646,7 @@ window.TREE = {
    "title": "Graphite-Epoxy Strap-On Catalog",
    "discipline": "PropellantChemistry",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The commercial strap-on aisle. Bolt on as many graphite-epoxy motors as the payload needs - the Delta GEM family in three lengths, the Atlas AJ-60 - a fixed catalogue of composite boosters sized to order off the composite-case breakthrough.",
    "parts": [
@@ -13448,7 +13680,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    1202
+    4988
    ]
   },
   {
@@ -13456,7 +13688,7 @@ window.TREE = {
    "title": "Operational Hall-Effect Thruster",
    "discipline": "ElectricalPower",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The Hall thruster leaves the laboratory. The SPT-100 and its bigger siblings become flight-qualified hardware, first for stationkeeping and then as primary propulsion - a few grams-force of thrust at sixteen hundred seconds of Isp, the electric workhorse of the coming decades.",
    "parts": [
@@ -13478,15 +13710,14 @@ window.TREE = {
    ],
    "upgrades": [
     "RFUpgrade_457M-V1-K",
-    "RFUpgrade_SPT-100D",
-    "RFUpgrade_SPT-100M",
-    "RFUpgrade_SPT-140D",
-    "RFUpgrade_SPT-50M"
+    "RFUpgrade_SPT-50M",
+    "RFUpgrade_SPT-70M",
+    "RFUpgrade_SPT-70MK"
    ],
    "grants": [],
    "pos": [
     -1920,
-    7622
+    10897
    ]
   },
   {
@@ -13494,7 +13725,7 @@ window.TREE = {
    "title": "High-Power Nested Hall Thruster",
    "discipline": "ElectricalPower",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Scale the Hall thruster into the tens of kilowatts. The 457M's nested channels swallow seventy-two kilowatts and push the Isp past two thousand seconds - the class of electric engine that could one day move cargo rather than just trim an orbit.",
    "parts": [
@@ -13505,14 +13736,16 @@ window.TREE = {
     }
    ],
    "upgrades": [
-    "RFUpgrade_457M-V2",
     "RFUpgrade_PITV-Hydrazine-40",
-    "RFUpgrade_SPT-100B"
+    "RFUpgrade_SPT-100B",
+    "RFUpgrade_SPT-100D",
+    "RFUpgrade_SPT-100M",
+    "RFUpgrade_SPT-140D"
    ],
    "grants": [],
    "pos": [
     -1616,
-    7622
+    11018
    ]
   },
   {
@@ -13520,7 +13753,7 @@ window.TREE = {
    "title": "Gridded Ion Electrostatic Thruster",
    "discipline": "ElectricalPower",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "A different way to throw ions: accelerate them through charged grids instead of a magnetic field, and the exhaust speed climbs higher still. NSTAR flew on Deep Space 1 - the first time an ion engine, not a chemical rocket, was the main drive of a probe to another world.",
    "parts": [
@@ -13534,7 +13767,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    7528
+    10924
    ]
   },
   {
@@ -13542,7 +13775,7 @@ window.TREE = {
    "title": "Pulsed Inductive Thruster",
    "discipline": "ElectricalPower",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "No electrodes to erode - a pulsed magnetic field ionises and flings a puff of ammonia, and repeats thousands of times a second. The PIT reaches seven thousand seconds of Isp, an experimental high-power concept for the kind of cruise no chemical stage could sustain.",
    "parts": [
@@ -13562,6 +13795,22 @@ window.TREE = {
      "title": "PIT Mk Va Pulsed Inductive Thruster"
     }
    ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1616,
+    11112
+   ]
+  },
+  {
+   "id": "ep_pulsedInductiveII",
+   "title": "Higher-Energy Pulsed Inductive Thruster",
+   "discipline": "ElectricalPower",
+   "tier": 13,
+   "cost": 2650,
+   "anyToUnlock": false,
+   "flavor": "The same electrodeless pulse scaled up - more energy per pulse, a heavier propellant puff, chasing higher thrust from the same repetitively-pulsed magnetic field.",
+   "parts": [],
    "upgrades": [
     "RFUpgrade_NuPIT-7000",
     "RFUpgrade_PITV-Ammonia-1200",
@@ -13569,8 +13818,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1616,
-    7716
+    -1312,
+    11112
    ]
   },
   {
@@ -13578,7 +13827,7 @@ window.TREE = {
    "title": "Flight-Design Solid-Core NTR",
    "discipline": "NuclearEngineering",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "The nuclear rocket stops being a ground-test article and becomes a flight design. The Soviet RD-0410 was actually built and fired; NERVA II is the largest solid-core engine ever drawn. The end of the solid-core line - reactors meant, at last, to leave the ground.",
    "parts": [
@@ -13602,7 +13851,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    4663
+    8031
    ]
   },
   {
@@ -13610,7 +13859,7 @@ window.TREE = {
    "title": "Particle-Bed NTR",
    "discipline": "NuclearEngineering",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Pack the reactor fuel as loose particles instead of solid rods and the coolant can pull heat out far faster - more power in less core. The particle-bed NTR of the Timberwind program is a denser, hotter path to the same nuclear thrust.",
    "parts": [
@@ -13624,7 +13873,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    4569
+    7937
    ]
   },
   {
@@ -13632,7 +13881,7 @@ window.TREE = {
    "title": "Advanced-Core NTR Concepts",
    "discipline": "NuclearEngineering",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "Let the fuel melt, or turn to gas, and the temperature ceiling - and the Isp - rises with it. The liquid-core NTR reaches fourteen hundred seconds; the low-pressure gas-core start pushes further. Engineering fiction for now, and the doorway to the gas-core lane a later era will open.",
    "parts": [
@@ -13648,12 +13897,13 @@ window.TREE = {
     }
    ],
    "upgrades": [
-    "RFUpgrade_PrincetonLNTR-WCH"
+    "RFUpgrade_PrincetonLNTR-WCH",
+    "RFUpgrade_SNTPPFE100-Hydrogen"
    ],
    "grants": [],
    "pos": [
     -1312,
-    4569
+    8538
    ]
   },
   {
@@ -13661,7 +13911,7 @@ window.TREE = {
    "title": "Vectored-Thrust VTOL Turbofan",
    "discipline": "AirBreathing",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Point the thrust down and a fighter takes off with no runway. The R-79's swivelling nozzle lifts the Yak-141 vertically then rotates aft for supersonic flight, the lift jets handling the hover - vectored thrust as a whole new way to leave the ground.",
    "parts": [
@@ -13680,7 +13930,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    6547
+    5563
    ]
   },
   {
@@ -13688,7 +13938,7 @@ window.TREE = {
    "title": "Fourth-Generation Fighter Turbofan",
    "discipline": "AirBreathing",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The fourth-generation fighter engine: high bypass for a combat turbofan, high pressure ratio, high turbine temperature. The F135 that powers the F-35 is the most powerful fighter engine ever built; the WS-10 is its Chinese contemporary. The long tail of teen-series and Flanker engine marks matures here.",
    "parts": [
@@ -13708,6 +13958,7 @@ window.TREE = {
     "RFUpgrade_AL-41F-1S",
     "RFUpgrade_CF34-3B",
     "RFUpgrade_F100-PW-229",
+    "RFUpgrade_F100-PW-229EEP",
     "RFUpgrade_F100-PW-229PYBBN",
     "RFUpgrade_F404-GE-402",
     "RFUpgrade_J58-P-4A",
@@ -13722,7 +13973,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    6453
+    5469
    ]
   },
   {
@@ -13730,7 +13981,7 @@ window.TREE = {
    "title": "Combined-Cycle Air-Breathing Rocket",
    "discipline": "AirBreathing",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "One engine, two regimes: breathe air like a turbojet up through the atmosphere, then seal the intakes and burn stored oxidiser like a rocket the rest of the way to orbit - the single-stage-to-orbit dream in one nacelle, real turbojet and real rocket hardware, never quite proven at full scale.",
    "parts": [
@@ -13740,11 +13991,13 @@ window.TREE = {
      "title": "CR-7 R.A.P.I.E.R."
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_WS-10B-III"
+   ],
    "grants": [],
    "pos": [
     -1312,
-    7513
+    8444
    ]
   },
   {
@@ -13752,7 +14005,7 @@ window.TREE = {
    "title": "Deep-Space Bipropellant Apogee Engine",
    "discipline": "GuidanceControl",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The little bipropellant engine that inserts a probe into orbit around another planet. The LEROS-1b - flight-proven on NEAR, MESSENGER and Juno - and the R-42 are the mature descendants of the R-4D thruster, built to sit cold through years of cruise and then fire once, exactly right, at the far end.",
    "parts": [
@@ -13777,11 +14030,14 @@ window.TREE = {
      "title": "Cassini Propulsion Module"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_R-4D-15",
+    "RFUpgrade_R-4D-15DM"
+   ],
    "grants": [],
    "pos": [
     -1920,
-    7371
+    8125
    ]
   },
   {
@@ -13789,7 +14045,7 @@ window.TREE = {
    "title": "High-Pressure Atmospheric Entry Shielding",
    "discipline": "CompositeMaterials",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Face an atmosphere ninety times denser than Earth's and hot enough to melt lead at the surface - the Venera aeroshell's heatshield and twin parachutes, built for a descent that ends in a furnace no matter how gently you land in it.",
    "parts": [
@@ -13818,7 +14074,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1672
+    1039
    ]
   },
   {
@@ -13826,7 +14082,7 @@ window.TREE = {
    "title": "Extreme Atmospheric-Entry Shielding",
    "discipline": "CompositeMaterials",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Hit a gas giant's atmosphere at tens of kilometres a second and shed more heat in two minutes than a lunar return sheds in the whole reentry - the most extreme ablator ever asked to survive, carried on a probe built to transmit for as long as it can before it's cooked.",
    "parts": [
@@ -13850,7 +14106,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    1578
+    945
    ]
   },
   {
@@ -13858,7 +14114,7 @@ window.TREE = {
    "title": "Extreme-Entry Recovery Parachutes",
    "discipline": "CompositeMaterials",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "A parachute stack timed to deploy only once the heatshield has done its worst work and the shockwave has finally fallen behind - Galileo's own descent sequence, the last mechanical step between the hottest entry in the tree and a working probe.",
    "parts": [
@@ -13887,7 +14143,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    1531
+    899
    ]
   },
   {
@@ -13895,7 +14151,7 @@ window.TREE = {
    "title": "Regolith Extraction",
    "discipline": "ResourceEngineering",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Bore into loose surface material with a motorised bit and bring up what you find - the first step of living off a world instead of just visiting it. Needs nothing more than the same motor already turning a rover's wheels, aimed down instead of forward.",
    "parts": [
@@ -13909,7 +14165,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    11817
+    11828
    ]
   },
   {
@@ -13917,7 +14173,7 @@ window.TREE = {
    "title": "Ore Storage Tankage",
    "discipline": "ResourceEngineering",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Somewhere to put what the drill brings up - bulk hopper tankage sized for raw, unprocessed ore rather than a refined propellant.",
    "parts": [
@@ -13931,7 +14187,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11864
+    11875
    ]
   },
   {
@@ -13939,7 +14195,7 @@ window.TREE = {
    "title": "Large-Scale Regolith Extraction",
    "discipline": "ResourceEngineering",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The same drill, scaled up for a real mining rate instead of a proof of concept - the difference between sampling a world and living off it.",
    "parts": [
@@ -13953,7 +14209,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11770
+    11781
    ]
   },
   {
@@ -13961,7 +14217,7 @@ window.TREE = {
    "title": "Soviet Interplanetary Bus Family",
    "discipline": "GuidanceControl",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "One bus architecture, flown as both an orbiter and a lander carrier - the 4MV core that became Venera, Zond and Mars probes across a decade, with its own tankage and reentry-module release built in from the start.",
    "parts": [
@@ -13995,7 +14251,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    9499
+    9744
    ]
   },
   {
@@ -14003,7 +14259,7 @@ window.TREE = {
    "title": "US Deep-Space Probe Bus Family",
    "discipline": "GuidanceControl",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "The generic 3-axis deep-space probe bus catalog — the spin-stabilised and fully-3-axis-stabilised cores, the attitude-control hardware and the ultraviolet-explorer bus that ride the same shelf. The flagship craft built on them (Pioneer, Voyager) arrive through the charter.",
    "parts": [
@@ -14032,7 +14288,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    9311
+    9650
    ]
   },
   {
@@ -14040,7 +14296,7 @@ window.TREE = {
    "title": "Station-Class Solar Arrays",
    "discipline": "ElectricalPower",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "The same fold-out array, sized for a station's appetite instead of a probe's - more cells on a bigger paddle, nothing new about how it works.",
    "parts": [
@@ -14066,7 +14322,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    11561
+    11551
    ]
   },
   {
@@ -14074,7 +14330,7 @@ window.TREE = {
    "title": "Probe-Bus Solar Wings",
    "discipline": "ElectricalPower",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "A deployable wing cut to the exact power budget of one bus family - the IUE, Venera and 4MV arrays, each sized for its own mission rather than pulled off a generic shelf.",
    "parts": [
@@ -14113,7 +14369,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    11655
+    11457
    ]
   },
   {
@@ -14121,7 +14377,7 @@ window.TREE = {
    "title": "Mature Solar Arrays",
    "discipline": "ElectricalPower",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The generic array's last uprate in this era - more efficient cells, the same fold-out paddle, still the default choice for anything that doesn't need a dedicated mission-sized wing.",
    "parts": [
@@ -14147,7 +14403,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11561
+    11551
    ]
   },
   {
@@ -14155,7 +14411,7 @@ window.TREE = {
    "title": "Roll-Out Blanket Solar Array",
    "discipline": "ElectricalPower",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Replace the rigid folding paddle with a flexible photovoltaic blanket that unrolls off a spool like a tape measure - a fraction of the stowed volume and mass of a hinged panel of the same area, at three mission scales.",
    "parts": [
@@ -14179,7 +14435,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    11702
+    11692
    ]
   },
   {
@@ -14187,7 +14443,7 @@ window.TREE = {
    "title": "Concentrating Photovoltaic Array",
    "discipline": "ElectricalPower",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Focus sunlight onto a small strip of the most efficient (and most expensive) cells with lenses instead of covering the whole panel in them - the same power from far less exotic photovoltaic material.",
    "parts": [
@@ -14201,7 +14457,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    11514
+    11504
    ]
   },
   {
@@ -14209,7 +14465,7 @@ window.TREE = {
    "title": "Large Rigid Photovoltaic Array",
    "discipline": "ElectricalPower",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "No new mechanism, just scale: the same hinged rigid panel the whole tree has used since the first fold-out paddle, built one size class larger than anything before it.",
    "parts": [
@@ -14223,7 +14479,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    11420
+    11410
    ]
   },
   {
@@ -14231,7 +14487,7 @@ window.TREE = {
    "title": "Curved Expanding Solar Array",
    "discipline": "ElectricalPower",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Stow the array wrapped into a tight curve instead of folded flat, and let it spring open into its working shape - a third distinct way to pack more panel into less volume.",
    "parts": [
@@ -14245,7 +14501,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    11608
+    11598
    ]
   },
   {
@@ -14253,7 +14509,7 @@ window.TREE = {
    "title": "Multi-Hundred-Watt RTG",
    "discipline": "ElectricalPower",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Stack enough plutonium-238 to clear several hundred watts instead of a bare trickle - the generator class that powered Voyager past every planet it flew and is still transmitting today.",
    "parts": [
@@ -14277,7 +14533,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    5092
+    10243
    ]
   },
   {
@@ -14285,7 +14541,7 @@ window.TREE = {
    "title": "GPHS-RTG Generation",
    "discipline": "ElectricalPower",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Standardise the RTG into modular General-Purpose Heat Source bricks, stack as many as the mission needs, and the same design flies Galileo, Ulysses, Cassini and every deep-space mission after them for the next forty years.",
    "parts": [
@@ -14334,7 +14590,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    5092
+    10243
    ]
   },
   {
@@ -14342,7 +14598,7 @@ window.TREE = {
    "title": "X-Band Deep-Space Downlink",
    "discipline": "Telecommunications",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Move the deep-space link up from S-band to X-band — roughly four times the frequency, and with it the beam narrows and the data rate climbs, wringing a usable stream out of a signal smeared across the outer Solar System. It takes both ends at once: an onboard transponder that transmits on the new band, and a DSN dish upgraded to hear it. Voyager flew its whole grand tour home on X-band.",
    "parts": [],
@@ -14354,7 +14610,7 @@ window.TREE = {
    ],
    "pos": [
     -2528,
-    12616
+    12555
    ]
   },
   {
@@ -14362,7 +14618,7 @@ window.TREE = {
    "title": "Ka-Band High-Rate Downlink",
    "discipline": "Telecommunications",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Climb the band again, from X to Ka — near four times the frequency once more, the beam tightening to a needle and the data rate leaping with it. The band a modern flagship saves for its high-rate science: the step from an X-band trickle to a torrent, on a carrier so narrow the dish must be aimed to a hair.",
    "parts": [],
@@ -14374,7 +14630,7 @@ window.TREE = {
    ],
    "pos": [
     -2224,
-    12616
+    12555
    ]
   },
   {
@@ -14382,7 +14638,7 @@ window.TREE = {
    "title": "Concatenated Channel Coding",
    "discipline": "Telecommunications",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Stop reaching for a bigger dish and start encoding smarter: wrap a Reed-Solomon block code around a convolutional inner code and the receiver rebuilds bits it would once have lost in the hiss — coding gain worth more than doubling the antenna. The same hardware suddenly carries several times the data, for the price of arithmetic. Voyager came home this way.",
    "parts": [],
@@ -14394,7 +14650,7 @@ window.TREE = {
    ],
    "pos": [
     -1920,
-    12616
+    12555
    ]
   },
   {
@@ -14402,7 +14658,7 @@ window.TREE = {
    "title": "Ground-Station Antenna Arraying",
    "discipline": "Telecommunications",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Phase a whole field of ground dishes together and they act as one impossible aperture — a 70-metre giant and a cluster of 34-metre beam-waveguide antennas combined to hear a probe going quiet at the edge of the Solar System. When Voyager reached Neptune, it took the whole array to keep the pictures coming.",
    "parts": [],
@@ -14414,7 +14670,7 @@ window.TREE = {
    ],
    "pos": [
     -1616,
-    12616
+    12555
    ]
   },
   {
@@ -14422,7 +14678,7 @@ window.TREE = {
    "title": "Bandwidth-Efficient Modulation",
    "discipline": "Telecommunications",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "Spectrum is finite and crowded, so pack more bits into every hertz of it — shaped, suppressed-carrier schemes and modern low-density coding that push the link toward its theoretical limit instead of simply shouting louder. The efficient radio a whole fleet of spacecraft can share without drowning one another out.",
    "parts": [],
@@ -14434,7 +14690,7 @@ window.TREE = {
    ],
    "pos": [
     -1312,
-    12616
+    12555
    ]
   },
   {
@@ -14442,7 +14698,7 @@ window.TREE = {
    "title": "Optical Deep-Space Downlink",
    "discipline": "Telecommunications",
    "tier": 14,
-   "cost": 0,
+   "cost": 3500,
    "anyToUnlock": false,
    "flavor": "Leave radio behind and modulate a laser: an optical carrier tens of thousands of times higher in frequency than X-band, packing orders of magnitude more data onto a beam so tight it must be pointed to the arc-second across light-minutes of empty space. The downlink of the present frontier — flown from lunar orbit, and now from the asteroid belt.",
    "parts": [],
@@ -14454,7 +14710,7 @@ window.TREE = {
    ],
    "pos": [
     -1008,
-    12616
+    12555
    ]
   },
   {
@@ -14462,7 +14718,7 @@ window.TREE = {
    "title": "Deep-Space Probe Antennas",
    "discipline": "Telecommunications",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "A parabolic dish or omni cut to one bus family's own link budget - Pioneer's spin-scan dish, Voyager's high-gain reflector, the 4MV's own array and dish, GPS's simple omni. The named-hardware shelf, one entry per flagship mission.",
    "parts": [
@@ -14496,7 +14752,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    12846
+    12785
    ]
   },
   {
@@ -14504,7 +14760,7 @@ window.TREE = {
    "title": "Large-Aperture Reflector Antennas",
    "discipline": "Telecommunications",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "The same parabolic-reflector mechanism, scaled past what any single mission needs - giant, huge and large dish reflectors off the shelf for whatever downlink budget the mission calls for.",
    "parts": [
@@ -14528,7 +14784,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    12752
+    12691
    ]
   },
   {
@@ -14536,7 +14792,7 @@ window.TREE = {
    "title": "Gas Chromatograph-Mass Spectrometry",
    "discipline": "Microelectronics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Separate a gas sample by how fast each component moves through a column, then weigh what comes out in the mass spectrometer behind it - two instruments in series reading a single sample far more precisely than either alone.",
    "parts": [
@@ -14555,7 +14811,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    13009
+    12947
    ]
   },
   {
@@ -14563,7 +14819,7 @@ window.TREE = {
    "title": "Solid-State Digital Imaging",
    "discipline": "OpticsPhotonics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Replace the vidicon's scanned electron beam with a solid-state sensor read out electronically, line by line - the same instinct that took reconnaissance from film to television, one generation further. Higher resolution than any vidicon, and nothing left to wear out or burn in.",
    "parts": [
@@ -14577,7 +14833,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    11467
+    11363
    ]
   },
   {
@@ -14585,7 +14841,7 @@ window.TREE = {
    "title": "Reusable Orbital-Maneuvering Combustion",
    "discipline": "FluidDynamics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Take the pressure-fed multi-restart engine that once had to fire once, perfectly, on the way to the Moon, and shrink it into a routine orbital-maneuvering thruster - sized for a dozen burns a mission instead of one, flown on the same shape for decades after. The Shuttle's OMS, and the same lineage still flying on Orion.",
    "parts": [
@@ -14599,7 +14855,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    6143
+    7330
    ]
   },
   {
@@ -14607,7 +14863,7 @@ window.TREE = {
    "title": "Toroidal Aerospike Nozzle",
    "discipline": "Cryogenics",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Bend the bell into an open ring around a truncated plug and let the atmosphere itself complete the nozzle - an annular chamber that keeps its thrust efficient from the pad to vacuum without ever changing shape. Ground-tested for a shortened Saturn upper stage that was never built.",
    "parts": [
@@ -14621,7 +14877,25 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    6897
+    7612
+   ]
+  },
+  {
+   "id": "cryo_toroidalAerospikeNozzleII",
+   "title": "Uprated Toroidal Aerospike Nozzle",
+   "discipline": "Cryogenics",
+   "tier": 10,
+   "cost": 1000,
+   "anyToUnlock": false,
+   "flavor": "The same annular aerospike, pushed to a longer burn and higher chamber pressure - the J-2T's own final study mark before the program quietly ended.",
+   "parts": [],
+   "upgrades": [
+    "RFUpgrade_J-2T-250K"
+   ],
+   "grants": [],
+   "pos": [
+    -2224,
+    7612
    ]
   },
   {
@@ -14629,7 +14903,7 @@ window.TREE = {
    "title": "Fluorine Oxidizer Chemistry",
    "discipline": "PropellantChemistry",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Trade nitrogen tetroxide for liquid fluorine and gain the highest specific impulse any storable propellant will ever deliver - at the cost of an oxidiser that ignites concrete and dissolves glass. Fired on a test stand exactly as many times as good sense allowed, then never again.",
    "parts": [
@@ -14643,7 +14917,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    6171
+    7142
    ]
   },
   {
@@ -14651,7 +14925,7 @@ window.TREE = {
    "title": "Modular Station Habitat",
    "discipline": "LifeSupport",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The station stops being a converted rocket stage and becomes a purpose-built module you launch, dock and inhabit. A rigid pressurised core with dedicated habitation and science modules - the Mir/ISS way of building a station out of standardised, connectable rooms.",
    "parts": [
@@ -14685,7 +14959,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    2562
+    2071
    ]
   },
   {
@@ -14693,7 +14967,7 @@ window.TREE = {
    "title": "Large-Diameter Habitat Modules",
    "discipline": "LifeSupport",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "The same rigid pressurised module family, in the largest diameter anyone builds - a 9-metre-class hull, room enough for a real neighbourhood instead of a corridor of rooms.",
    "parts": [
@@ -14712,7 +14986,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    2327
+    1836
    ]
   },
   {
@@ -14720,7 +14994,7 @@ window.TREE = {
    "title": "Artificial-Gravity Centrifuge Habitat",
    "discipline": "LifeSupport",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Spin a section of the station and simulated weight comes back - the one countermeasure to long-duration weightlessness that doesn't need a treadmill, a drug, or a trip home. Never flown at station scale, drawn more than once.",
    "parts": [
@@ -14739,7 +15013,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    2421
+    1930
    ]
   },
   {
@@ -14747,7 +15021,7 @@ window.TREE = {
    "title": "Pressurised Crew Tubes",
    "discipline": "LifeSupport",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Pressurised passageways that let a crew move between modules without an EVA - straight, angled and extendable crew tubes that turn a cluster of docked modules into one shirtsleeve interior.",
    "parts": [
@@ -14796,7 +15070,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    2374
+    1883
    ]
   },
   {
@@ -14804,7 +15078,7 @@ window.TREE = {
    "title": "Station Logistics Modules",
    "discipline": "LifeSupport",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Keeping a station supplied: pressurised stores, cargo containers and radial logistics modules for the water, air, food and spares that a permanent crew consumes faster than any single launch can carry.",
    "parts": [
@@ -14898,7 +15172,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3455
+    2964
    ]
   },
   {
@@ -14906,7 +15180,7 @@ window.TREE = {
    "title": "External Stowage Platforms",
    "discipline": "LifeSupport",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Not everything needs to be kept warm and pressurised. External stowage pallets bolt spares, experiments and replacement units to the outside of the station, exposed to vacuum and reachable by arm or spacewalk.",
    "parts": [
@@ -14925,7 +15199,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    3455
+    2964
    ]
   },
   {
@@ -14933,7 +15207,7 @@ window.TREE = {
    "title": "Bioregenerative Life Support",
    "discipline": "LifeSupport",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Close the loop with living things: a greenhouse that grows food and scrubs carbon dioxide back into oxygen, turning the open-loop consumables chain toward a self-sustaining one. The first bioregenerative step for missions too long to resupply.",
    "parts": [
@@ -14952,7 +15226,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2562
+    2071
    ]
   },
   {
@@ -14960,7 +15234,7 @@ window.TREE = {
    "title": "Large-Scale Greenhouse Dome",
    "discipline": "LifeSupport",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Scale the greenhouse from a growth-trial rack to a walkable dome - real crop area instead of a proof of concept, the difference between supplementing a diet and actually growing a meaningful share of it.",
    "parts": [
@@ -14974,7 +15248,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    2609
+    2118
    ]
   },
   {
@@ -14982,7 +15256,7 @@ window.TREE = {
    "title": "Observation Cupola",
    "discipline": "LifeSupport",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "A windowed dome that gives the crew a direct, wide-angle eye on the vehicle and the world below - the cupola from which an arm operator berths an incoming module, or a crew simply watches the Earth turn. A telescope dome shares the pressure-vessel design.",
    "parts": [
@@ -15021,7 +15295,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3361
+    2870
    ]
   },
   {
@@ -15029,7 +15303,7 @@ window.TREE = {
    "title": "Large-Scale Observation Dome",
    "discipline": "LifeSupport",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The same windowed pressure vessel, big enough to hold more than a couple of crew at once - a shared viewing deck rather than a one-person porthole.",
    "parts": [
@@ -15043,7 +15317,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    3361
+    2870
    ]
   },
   {
@@ -15051,7 +15325,7 @@ window.TREE = {
    "title": "Station Service Airlock",
    "discipline": "LifeSupport",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "A dedicated way out. A service airlock lets the crew step into vacuum and back without depressurising the whole station - the front door for every spacewalk, assembly task and external repair.",
    "parts": [
@@ -15065,7 +15339,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    2468
+    1977
    ]
   },
   {
@@ -15073,7 +15347,7 @@ window.TREE = {
    "title": "In-Situ Resource Utilisation",
    "discipline": "LifeSupport",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Stop hauling every gram from Earth. Extract water and volatiles from the ground, liquefy them into cryogenic propellant and run the chemistry to make more - the in-situ resource utilisation that makes a surface base, rather than a visit, affordable.",
    "parts": [
@@ -15107,7 +15381,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    2238
+    1652
    ]
   },
   {
@@ -15115,7 +15389,7 @@ window.TREE = {
    "title": "Modular Truss Assembly System",
    "discipline": "StructuresMechanisms",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The backbone you assemble in orbit. A kit of standardised girder segments, angled connectors, hubs and pressurised passages - plus the free-flying guidance unit that flies each segment into place - that bolt together into an arbitrarily large truss, the structural skeleton of a modular station built one launch at a time.",
    "parts": [
@@ -15199,7 +15473,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3925
+    3685
    ]
   },
   {
@@ -15207,7 +15481,7 @@ window.TREE = {
    "title": "Spinal Truss Keel",
    "discipline": "StructuresMechanisms",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "A single load-bearing spine down the length of a large vehicle or station, with its own adapters and docking connector - the central keel that everything else hangs off.",
    "parts": [
@@ -15246,7 +15520,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3831
+    3591
    ]
   },
   {
@@ -15254,7 +15528,7 @@ window.TREE = {
    "title": "Station Multi-Point Hubs",
    "discipline": "StructuresMechanisms",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Multi-point connectors - the junction boxes of a station - that let one node join four, six or more modules at once, turning a linear stack into a branching structure.",
    "parts": [
@@ -15303,7 +15577,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3549
+    3309
    ]
   },
   {
@@ -15311,7 +15585,7 @@ window.TREE = {
    "title": "Station Mounting Bases",
    "discipline": "StructuresMechanisms",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Adjustable base frames, cradles and radial attachment points that mount a module, a payload or a whole vehicle onto a station or a launch stack at any angle it's needed.",
    "parts": [
@@ -15350,7 +15624,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3643
+    3403
    ]
   },
   {
@@ -15358,7 +15632,7 @@ window.TREE = {
    "title": "Heavy Transport Airframe",
    "discipline": "StructuresMechanisms",
    "tier": 8,
-   "cost": 2100,
+   "cost": 450,
    "anyToUnlock": false,
    "flavor": "The strategic-airlift airframe class - the huge fuselage, cockpit and tail sections of an An-124-scale cargo aircraft, big enough to swallow a rocket stage or an outsized payload. A fixed-catalogue dead-end off the monocoque airframe.",
    "parts": [
@@ -15402,7 +15676,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9871
+    8215
    ]
   },
   {
@@ -15410,7 +15684,7 @@ window.TREE = {
    "title": "Androgynous Docking & Berthing",
    "discipline": "GuidanceControl",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Two identical ports that can each play either role, so any two vehicles can mate - the androgynous docking mechanism that let the Shuttle meet Mir and built the International Space Station, past the gendered probe-and-drogue of the first rendezvous era.",
    "parts": [
@@ -15459,7 +15733,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    1866
+    1328
    ]
   },
   {
@@ -15467,7 +15741,7 @@ window.TREE = {
    "title": "Flagship Deep-Space Bus",
    "discipline": "GuidanceControl",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The big, fully three-axis stabilised spacecraft bus that a flagship deep-space mission is built on - a stable platform carrying a payload of instruments across the Solar System, holding its aim for years at a time.",
    "parts": [
@@ -15496,7 +15770,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    9311
+    9650
    ]
   },
   {
@@ -15504,7 +15778,7 @@ window.TREE = {
    "title": "Commercial Comsat Bus",
    "discipline": "GuidanceControl",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The workhorse commercial bus. A standardised three-axis platform, sold by the dozen, that carries a communications or earth-observation payload to its slot and station-keeps there for a decade - spaceflight as a product line.",
    "parts": [
@@ -15528,7 +15802,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    9196
+    9514
    ]
   },
   {
@@ -15536,7 +15810,7 @@ window.TREE = {
    "title": "Thermionic Space Reactor",
    "discipline": "NuclearEngineering",
    "tier": 9,
-   "cost": 1700,
+   "cost": 700,
    "anyToUnlock": false,
    "flavor": "Convert reactor heat straight to electricity with no moving parts, using the thermionic effect - the TOPAZ space reactor, a kilowatt-class fission power source for payloads no solar array or isotope pellet can feed, the step past thermoelectric SNAP.",
    "parts": [
@@ -15555,7 +15829,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    4998
+    10149
    ]
   },
   {
@@ -15563,7 +15837,7 @@ window.TREE = {
    "title": "Hyperspectral Imaging",
    "discipline": "OpticsPhotonics",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Not three colours but hundreds. A hyperspectral imager splits each pixel into a continuous spectrum, reading the mineral, chemical and biological signature of the surface below - the scanner that maps what a place is made of, not just what it looks like.",
    "parts": [
@@ -15602,7 +15876,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    10626
+    10473
    ]
   },
   {
@@ -15610,7 +15884,7 @@ window.TREE = {
    "title": "Thermal-Mapping Spectrometry",
    "discipline": "OpticsPhotonics",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Map a world by its heat and its infrared fingerprint. A thermal-mapping spectrometer builds up the temperature and composition of a surface or atmosphere band by band - the Cassini/Mars-class instrument for reading planets in the infrared.",
    "parts": [
@@ -15629,7 +15903,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    10720
+    10567
    ]
   },
   {
@@ -15637,7 +15911,7 @@ window.TREE = {
    "title": "High-Resolution Orbital Imager",
    "discipline": "OpticsPhotonics",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "The sharpest eye yet - a large-optics, solid-state imager that resolves fine surface detail from orbit, the reconnaissance-grade camera turned on other worlds.",
    "parts": [
@@ -15651,7 +15925,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11467
+    11363
    ]
   },
   {
@@ -15659,7 +15933,7 @@ window.TREE = {
    "title": "Synthetic-Aperture Radar",
    "discipline": "OpticsPhotonics",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "See through cloud and darkness by making your own illumination. Synthetic-aperture radar bounces a beam off the surface and reconstructs a high-resolution image from the echoes - the instrument that mapped the whole cloud-shrouded surface of Venus.",
    "parts": [
@@ -15678,7 +15952,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11232
+    11128
    ]
   },
   {
@@ -15686,7 +15960,7 @@ window.TREE = {
    "title": "Orbital Resource Scanning",
    "discipline": "OpticsPhotonics",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "Survey a whole body from orbit for what's worth landing on - narrow-band and surface scanners that build global maps of terrain, resources and anomalies, the reconnaissance a surface mission is planned from.",
    "parts": [
@@ -15705,7 +15979,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11138
+    11034
    ]
   },
   {
@@ -15713,7 +15987,7 @@ window.TREE = {
    "title": "Deep-Space Parabolic Dish",
    "discipline": "Telecommunications",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "A large steerable parabolic dish - the high-gain antenna that closes the link across hundreds of millions of kilometres, turning a whisper from the outer Solar System into a usable data stream.",
    "parts": [
@@ -15752,7 +16026,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    12752
+    12691
    ]
   },
   {
@@ -15760,7 +16034,7 @@ window.TREE = {
    "title": "Atmospheric Entry Probe",
    "discipline": "SystemsIntegration",
    "tier": 10,
-   "cost": 1300,
+   "cost": 1000,
    "anyToUnlock": false,
    "flavor": "A probe built to survive falling into an atmosphere: an aeroshell and a descent body that ride a fireball down and then float the rest of the way, returning data from inside a world's air rather than from orbit above it - the Huygens way to reach a surface.",
    "parts": [
@@ -15779,7 +16053,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    9567
+    9881
    ]
   },
   {
@@ -15787,7 +16061,7 @@ window.TREE = {
    "title": "Inflatable Habitat",
    "discipline": "LifeSupport",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Launch it packed tight, inflate it to full volume in orbit. An expandable habitat trades a rigid metal shell for a soft, layered one that unfolds into far more living space than its launch diameter would allow - the BEAM/Bigelow way to fly a big room in a small fairing.",
    "parts": [
@@ -15836,7 +16110,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2703
+    2212
    ]
   },
   {
@@ -15844,7 +16118,7 @@ window.TREE = {
    "title": "Centrifuge Habitat",
    "discipline": "LifeSupport",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Spin for gravity. A rotating habitat module generates centrifugal weight for its crew, holding off the bone and muscle loss of long-duration freefall - the first artificial-gravity station rooms, inflatable and expandable to the diameter a comfortable spin needs.",
    "parts": [
@@ -15873,7 +16147,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    2703
+    2212
    ]
   },
   {
@@ -15881,7 +16155,7 @@ window.TREE = {
    "title": "Large Station Module",
    "discipline": "LifeSupport",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The heavy station module class - nine-metre cores, habitation blocks and science labs that dwarf the early ISS parts, the pressurised volume of a permanent orbital or surface base built for a large crew.",
    "parts": [
@@ -15935,7 +16209,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2797
+    2306
    ]
   },
   {
@@ -15943,7 +16217,7 @@ window.TREE = {
    "title": "Aquaculture & Greenhouse Modules",
    "discipline": "LifeSupport",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Grow protein, not just greens. Aquaculture and full-scale greenhouse modules extend bioregenerative life support from air and vegetables to a fuller closed food chain - the ecosystem a base needs to feed itself for years.",
    "parts": [
@@ -15967,7 +16241,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    2515
+    2024
    ]
   },
   {
@@ -15975,7 +16249,7 @@ window.TREE = {
    "title": "Annular Truss Structure",
    "discipline": "StructuresMechanisms",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "A ring rather than a beam. Annular truss segments close a structure back on itself - the circular backbone for a rotating habitat, a large aperture or a torus station.",
    "parts": [
@@ -16019,7 +16293,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    3878
+    3638
    ]
   },
   {
@@ -16027,7 +16301,7 @@ window.TREE = {
    "title": "Strongback Truss",
    "discipline": "StructuresMechanisms",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The strongback - a heavy closed or open girder that carries the primary loads of a large integrated vehicle or launch stack, in a family of lengths sized to the payload.",
    "parts": [
@@ -16061,7 +16335,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    3972
+    3732
    ]
   },
   {
@@ -16069,7 +16343,7 @@ window.TREE = {
    "title": "Reusable Booster Landing Leg",
    "discipline": "StructuresMechanisms",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Bring the booster home standing up. A heavy, energy-absorbing landing leg that lets a returning stage touch down on its own tail and be flown again - the strut that made propulsive recovery routine.",
    "parts": [
@@ -16083,7 +16357,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    10395
+    9215
    ]
   },
   {
@@ -16091,7 +16365,7 @@ window.TREE = {
    "title": "NASA Docking System",
    "discipline": "GuidanceControl",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "The modern international standard: the NASA Docking System and its IDSS-compatible ports, a low-impact androgynous mechanism that any commercial-crew vehicle can use to berth at the station - docking as an interface everyone builds to.",
    "parts": [
@@ -16130,7 +16404,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    1866
+    1328
    ]
   },
   {
@@ -16138,7 +16412,7 @@ window.TREE = {
    "title": "Commercial Crew Capsule",
    "discipline": "SystemsIntegration",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Crew to orbit, bought as a service. The Orion and CST-100 command modules - a new generation of reusable crew capsules with modern avionics, glass cockpits and their own service modules, flown by contractors rather than a single national programme.",
    "parts": [
@@ -16162,7 +16436,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2054
+    1516
    ]
   },
   {
@@ -16170,7 +16444,7 @@ window.TREE = {
    "title": "Inflatable Aerodynamic Decelerator",
    "discipline": "CompositeMaterials",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Slow down with an umbrella instead of a wall. An inflatable heat shield deploys a wide, soft aeroshell that decelerates a heavy payload high in a thin atmosphere - the HIAD, the way to land tonnes on Mars where a rigid shield can't be built big enough.",
    "parts": [
@@ -16180,11 +16454,13 @@ window.TREE = {
      "title": "Adjustable HIAD"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "Inflatable"
+   ],
    "grants": [],
    "pos": [
     -1920,
-    1625
+    993
    ]
   },
   {
@@ -16192,7 +16468,7 @@ window.TREE = {
    "title": "Compact Fission Power Reactor",
    "discipline": "NuclearEngineering",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Compact fission power for the surface and deep space, sized to the mission - a few to a few hundred kilowatts from a reactor that fits on a lander. Kilopower, SAFE-400 and their kin: the power source a crewed base or a nuclear-electric tug runs on, past what any array or isotope pellet delivers.",
    "parts": [
@@ -16221,7 +16497,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    4998
+    10149
    ]
   },
   {
@@ -16229,7 +16505,7 @@ window.TREE = {
    "title": "Fissile Propellant Magazine",
    "discipline": "NuclearEngineering",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Storing the fuel for a nuclear engine - fissile-material magazines that feed a fission-fragment or gas-core drive, the tankage an advanced nuclear stage carries its reactor charge in.",
    "parts": [
@@ -16278,7 +16554,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    4757
+    10149
    ]
   },
   {
@@ -16286,7 +16562,7 @@ window.TREE = {
    "title": "Combustion Tap-Off Cycle",
    "discipline": "Cryogenics",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Skip the separate gas-generator combustor entirely - bleed hot gas straight off the main chamber wall to spin the turbopump, then dump it overboard. Simpler than a gas generator, cheaper than staged combustion: the operational middle path Blue Origin bet New Shepard and New Glenn's upper stage on.",
    "parts": [
@@ -16296,11 +16572,16 @@ window.TREE = {
      "title": "BE-3PM"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_RS-68A",
+    "RFUpgrade_RS-68B",
+    "RFUpgrade_RS-68K",
+    "RFUpgrade_RS-800"
+   ],
    "grants": [],
    "pos": [
     -1616,
-    6824
+    7749
    ]
   },
   {
@@ -16308,7 +16589,7 @@ window.TREE = {
    "title": "Higher-Thrust Closed Expander",
    "discipline": "Cryogenics",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Scale the closed expander cycle past the RL-10's own ceiling - two parallel American and European programs converge on the same bigger turbopump, the same clean cycle, roughly triple the thrust.",
    "parts": [
@@ -16334,12 +16615,15 @@ window.TREE = {
     }
    ],
    "upgrades": [
-    "RFUpgrade_Vinci-180"
+    "RFUpgrade_CECE-High",
+    "RFUpgrade_RD-0146D",
+    "RFUpgrade_RL10C-2",
+    "RFUpgrade_RL10C-2-1"
    ],
    "grants": [],
    "pos": [
     -1616,
-    4475
+    5239
    ]
   },
   {
@@ -16347,7 +16631,7 @@ window.TREE = {
    "title": "Small-Scale Methalox Upper Stage",
    "discipline": "Cryogenics",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "A simpler, plainer methalox debut at small scale - no staged-combustion preburner, just a clean upper-stage engine sized for a commercial small-satellite launcher. The unglamorous sibling to the booster-scale methalox story unfolding one node over.",
    "parts": [
@@ -16361,7 +16645,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    4202
+    4176
    ]
   },
   {
@@ -16369,7 +16653,7 @@ window.TREE = {
    "title": "Expander-Bleed Cycle at Booster Scale",
    "discipline": "Cryogenics",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "Vent a little of the cooling-jacket gas overboard instead of routing every drop through the turbopump, and the expander cycle's thrust ceiling - always capped by a small upper-stage engine's own heat-exchange area - breaks wide open. The expander cycle finally reaches core-stage scale.",
    "parts": [
@@ -16379,11 +16663,13 @@ window.TREE = {
      "title": "LE-9"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_Vinci-180"
+   ],
    "grants": [],
    "pos": [
     -1312,
-    4432
+    5197
    ]
   },
   {
@@ -16391,7 +16677,7 @@ window.TREE = {
    "title": "Full-Flow Staged-Combustion Methalox",
    "discipline": "Cryogenics",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "Burn both turbopump drive-gas streams through combustion at once - a fuel-rich preburner AND an oxidiser-rich preburner, nothing vented overboard at all. The thermodynamic endpoint of the staged-combustion idea, and the only cycle that ever reached it in metal.",
    "parts": [
@@ -16415,7 +16701,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    4108
+    3894
    ]
   },
   {
@@ -16423,7 +16709,7 @@ window.TREE = {
    "title": "Reusable Gas-Generator Kerolox",
    "discipline": "FluidDynamics",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "After a whole tree of gas-generator kerolox engines chasing diminishing returns while staged combustion walked past, one company bets the other way: keep the simple open cycle, keep it deliberately unglamorous, and win on cost and reusability instead of chasing one more second of Isp.",
    "parts": [
@@ -16450,7 +16736,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    9635
+    9949
    ]
   },
   {
@@ -16458,7 +16744,7 @@ window.TREE = {
    "title": "Densified-Propellant Kerolox Uprating",
    "discipline": "FluidDynamics",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "Chill both propellants below their normal boiling points before loading, and more mass packs into the same tanks and the same engine - the real refinement behind a two-thirds thrust jump on the same basic cycle, no new chemistry required.",
    "parts": [
@@ -16475,15 +16761,32 @@ window.TREE = {
    ],
    "upgrades": [
     "RFUpgrade_Merlin1D",
-    "RFUpgrade_Merlin1D+",
-    "RFUpgrade_Merlin1D++",
-    "RFUpgrade_Merlin1DVac",
-    "RFUpgrade_Merlin1DVac+"
+    "RFUpgrade_Merlin1DVac"
    ],
    "grants": [],
    "pos": [
     -1312,
-    9776
+    10043
+   ]
+  },
+  {
+   "id": "fd_densifiedPropellantKeroloxII",
+   "title": "Further-Densified Kerolox Uprating",
+   "discipline": "FluidDynamics",
+   "tier": 14,
+   "cost": 3500,
+   "anyToUnlock": false,
+   "flavor": "Push the densified Merlin further still - the Full Thrust and Block 5 marks that let the same basic engine carry a reusable booster home and fly it again.",
+   "parts": [],
+   "upgrades": [
+    "RFUpgrade_Merlin1D+",
+    "RFUpgrade_Merlin1D++",
+    "RFUpgrade_Merlin1DVac+"
+   ],
+   "grants": [],
+   "pos": [
+    -1008,
+    10043
    ]
   },
   {
@@ -16491,7 +16794,7 @@ window.TREE = {
    "title": "American ORSC Kerolox Studies",
    "discipline": "PropellantChemistry",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Two separately-funded American answers to the imported RD-180 - oxidiser-rich staged combustion on kerosene, drawn to compete on the same contract the Russians won on price. Real hardware, real test stands, and no flight between them.",
    "parts": [
@@ -16515,7 +16818,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    4296
+    4082
    ]
   },
   {
@@ -16523,7 +16826,7 @@ window.TREE = {
    "title": "Five-Segment Solid Booster Scale-Up",
    "discipline": "PropellantChemistry",
    "tier": 11,
-   "cost": 900,
+   "cost": 1450,
    "anyToUnlock": false,
    "flavor": "Add one more segment to the Shuttle's own composite-case booster and it becomes the largest solid rocket motor ever flown - the same casting and winding technique, scaled up one more time for a heavier successor vehicle.",
    "parts": [
@@ -16533,11 +16836,13 @@ window.TREE = {
      "title": "RSRMV"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFTech-solids-tltech5"
+   ],
    "grants": [],
    "pos": [
     -1920,
-    1108
+    4894
    ]
   },
   {
@@ -16545,7 +16850,7 @@ window.TREE = {
    "title": "Deep-Throttling Pressure-Fed Abort/Landing Engine",
    "discipline": "GuidanceControl",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "A launch-abort engine that can also fly a controlled, propulsive touchdown - pressure-fed hypergolics deep-throttled and restarted enough times to trust a crew's life to it twice in one mission, once going up wrong and once coming down right.",
    "parts": [
@@ -16585,11 +16890,14 @@ window.TREE = {
      "title": "Twin SuperDraco"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_R-42DM",
+    "RFUpgrade_R-42DM-NTO"
+   ],
    "grants": [],
    "pos": [
     -1616,
-    7371
+    8125
    ]
   },
   {
@@ -16597,7 +16905,7 @@ window.TREE = {
    "title": "Electric-Pump-Fed Kerolox",
    "discipline": "ElectricalPower",
    "tier": 12,
-   "cost": 0,
+   "cost": 2000,
    "anyToUnlock": false,
    "flavor": "Spin the propellant pumps with a battery and a brushless motor instead of a gas generator or a preburner turbine - no exhaust-driven turbine at all. A little less thrust-to-weight bought back with radical simplicity and a bill of materials any workshop can assemble.",
    "parts": [
@@ -16616,7 +16924,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    9729
+    10830
    ]
   },
   {
@@ -16624,7 +16932,7 @@ window.TREE = {
    "title": "Next-Generation Gridded Ion Thruster",
    "discipline": "ElectricalPower",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "NSTAR's direct successor - the same electrostatic-grid acceleration, refined for higher throughput and, in its most extreme sibling, a second acceleration stage for even higher exhaust velocity.",
    "parts": [
@@ -16649,6 +16957,22 @@ window.TREE = {
      "title": "DS4G Gridded Ion Thruster"
     }
    ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1312,
+    10924
+   ]
+  },
+  {
+   "id": "ep_nextGenGriddedIonII",
+   "title": "Tuned Dual-Stage Gridded Ion Thruster",
+   "discipline": "ElectricalPower",
+   "tier": 14,
+   "cost": 3500,
+   "anyToUnlock": false,
+   "flavor": "DS4G's dual-stage grid pushed across its own family of ratings - the same second-acceleration-stage trick, retuned for every thrust/Isp trade the design study explored.",
+   "parts": [],
    "upgrades": [
     "RFUpgrade_DS4G-25-hi",
     "RFUpgrade_DS4G-25-mid",
@@ -16657,8 +16981,8 @@ window.TREE = {
    ],
    "grants": [],
    "pos": [
-    -1312,
-    7926
+    -1008,
+    10924
    ]
   },
   {
@@ -16666,7 +16990,7 @@ window.TREE = {
    "title": "NASA High-Power Hall Thruster",
    "discipline": "ElectricalPower",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "Purpose-built for deep-space station-keeping on a crewed outpost, not just trimming a satellite's orbit - the next mark past the 457M, and in its nested-channel sibling, the highest-power Hall thruster ever built.",
    "parts": [
@@ -16686,11 +17010,33 @@ window.TREE = {
      "title": "X3 Hall-Effect Thruster"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_457M-V2"
+   ],
    "grants": [],
    "pos": [
     -1312,
-    8020
+    11018
+   ]
+  },
+  {
+   "id": "ep_nasaHighPowerHallII",
+   "title": "Matured NASA High-Power Hall Thruster",
+   "discipline": "ElectricalPower",
+   "tier": 14,
+   "cost": 3500,
+   "anyToUnlock": false,
+   "flavor": "HERMeS and X3 mature mark by mark - the Gateway-bound AEPS thruster's flight configuration, and the nested-channel X3 tuned across its own voltage range.",
+   "parts": [],
+   "upgrades": [
+    "RFUpgrade_AEPS",
+    "RFUpgrade_X3-HV",
+    "RFUpgrade_X3-HV-K"
+   ],
+   "grants": [],
+   "pos": [
+    -1008,
+    11018
    ]
   },
   {
@@ -16698,7 +17044,7 @@ window.TREE = {
    "title": "Magnetoplasmadynamic Thruster",
    "discipline": "ElectricalPower",
    "tier": 13,
-   "cost": 0,
+   "cost": 2650,
    "anyToUnlock": false,
    "flavor": "Skip both the Hall channel and the ion grid - drive a plasma arc straight through an electromagnetic pinch and let the field itself do the accelerating. High power density, real hardware, and a genuinely different mechanism from anything else this tree calls electric propulsion.",
    "parts": [
@@ -16712,7 +17058,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    7094
+    10755
    ]
   },
   {
@@ -16720,7 +17066,7 @@ window.TREE = {
    "title": "Variable-Specific-Impulse Plasma Rocket",
    "discipline": "ElectricalPower",
    "tier": 14,
-   "cost": 0,
+   "cost": 3500,
    "anyToUnlock": false,
    "flavor": "RF-heat a plasma instead of arcing through it, then steer it out through a magnetic nozzle - and unlike every other electric thruster in this tree, trade thrust for Isp continuously, in flight, instead of picking one number at build time.",
    "parts": [
@@ -16735,14 +17081,30 @@ window.TREE = {
      "title": "VF-200 VASIMR"
     }
    ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -1008,
+    10755
+   ]
+  },
+  {
+   "id": "ep_variableSpecificImpulsePlasmaII",
+   "title": "Krypton-Fuelled Variable-Isp Plasma Rocket",
+   "discipline": "ElectricalPower",
+   "tier": 15,
+   "cost": 4500,
+   "anyToUnlock": false,
+   "flavor": "Swap the VASIMR's working gas from argon to krypton - denser propellant, a further tuned exhaust velocity, the same RF-heated plasma and magnetic nozzle.",
+   "parts": [],
    "upgrades": [
     "RFUpgrade_VF-200-Kr",
     "RFUpgrade_VX-200SS-Kr"
    ],
    "grants": [],
    "pos": [
-    -1008,
-    7094
+    -704,
+    10755
    ]
   },
   {
@@ -16750,7 +17112,7 @@ window.TREE = {
    "title": "Bimodal Nuclear Thermal + Power",
    "discipline": "NuclearEngineering",
    "tier": 14,
-   "cost": 0,
+   "cost": 3500,
    "anyToUnlock": false,
    "flavor": "The same reactor that heats propellant for thrust keeps running between burns as a power source - real NASA bimodal-NTR design studies, squeezing a second job out of the mass a nuclear stage already has to carry.",
    "parts": [
@@ -16760,11 +17122,13 @@ window.TREE = {
      "title": "Bimodal NTR"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_LPNTR-3600HP"
+   ],
    "grants": [],
    "pos": [
     -1008,
-    4569
+    8538
    ]
   },
   {
@@ -16772,7 +17136,7 @@ window.TREE = {
    "title": "Fission-Fragment Rocket",
    "discipline": "NuclearEngineering",
    "tier": 15,
-   "cost": 0,
+   "cost": 4500,
    "anyToUnlock": false,
    "flavor": "Let the fission fragments themselves be the exhaust - no propellant to heat, no working fluid at all, just the reaction products flying straight out at a meaningful fraction of the speed of light. The highest specific impulse anything in this tree will ever reach.",
    "parts": [
@@ -16791,7 +17155,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -704,
-    4569
+    8538
    ]
   },
   {
@@ -16799,7 +17163,7 @@ window.TREE = {
    "title": "Magnetically-Confined Fusion Pulse Drive",
    "discipline": "NuclearEngineering",
    "tier": 16,
-   "cost": 0,
+   "cost": 5650,
    "anyToUnlock": false,
    "flavor": "Compress a small fusion-fuel target with a magnetic pulse and ride the shockwave off a plate - Project Orion's own pusher-plate trick, but the charge is a magnetically-confined fusion pellet instead of a fission bomb. Real theoretical NASA/MSNW study, one full generation past classic Orion.",
    "parts": [
@@ -16818,7 +17182,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -400,
-    4040
+    7424
    ]
   },
   {
@@ -16826,7 +17190,7 @@ window.TREE = {
    "title": "Nuclear Salt Water Rocket",
    "discipline": "NuclearEngineering",
    "tier": 16,
-   "cost": 0,
+   "cost": 5650,
    "anyToUnlock": false,
    "flavor": "Dissolve fissile salts in water and let the mixture go critical continuously as it streams through the chamber - the reactor doesn't heat the propellant, the reactor IS the propellant. The wildest, most engineering-fiction concept in the curated set.",
    "parts": [
@@ -16840,7 +17204,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -400,
-    4569
+    8538
    ]
   }
  ],
@@ -16852,19 +17216,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     13150
+     13088
     ],
     [
      -4656,
-     13150
+     13088
     ],
     [
      -4352,
-     13150
+     13088
     ],
     [
      -4048,
-     13150
+     13088
     ]
    ]
   },
@@ -16875,11 +17239,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     13150
+     13088
     ],
     [
      -3744,
-     13150
+     13088
     ]
    ]
   },
@@ -16890,11 +17254,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     13150
+     13088
     ],
     [
      -3440,
-     13150
+     13088
     ]
    ]
   },
@@ -16905,11 +17269,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     13150
+     13088
     ],
     [
      -3136,
-     13150
+     13088
     ]
    ]
   },
@@ -16920,11 +17284,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     13150
+     13088
     ],
     [
      -2832,
-     13150
+     13088
     ]
    ]
   },
@@ -16935,11 +17299,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     13150
+     13088
     ],
     [
      -2528,
-     13150
+     13088
     ]
    ]
   },
@@ -16950,11 +17314,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     13150
+     13088
     ],
     [
      -2224,
-     13150
+     13088
     ]
    ]
   },
@@ -16965,11 +17329,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     13150
+     13088
     ],
     [
      -1920,
-     13150
+     13088
     ]
    ]
   },
@@ -16980,11 +17344,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     13150
+     13088
     ],
     [
      -1616,
-     13150
+     13088
     ]
    ]
   },
@@ -16995,19 +17359,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     13338
+     13276
     ],
     [
      -4656,
-     13338
+     13276
     ],
     [
      -4352,
-     13338
+     13276
     ],
     [
      -4048,
-     13338
+     13276
     ]
    ]
   },
@@ -17018,11 +17382,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     13338
+     13276
     ],
     [
      -3744,
-     13338
+     13276
     ]
    ]
   },
@@ -17033,11 +17397,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     13338
+     13276
     ],
     [
      -3440,
-     13338
+     13276
     ]
    ]
   },
@@ -17048,11 +17412,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     13338
+     13276
     ],
     [
      -3136,
-     13338
+     13276
     ]
    ]
   },
@@ -17063,19 +17427,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     13338
+     13276
     ],
     [
      -2832,
-     13338
+     13276
     ],
     [
      -2528,
-     13338
+     13276
     ],
     [
      -2224,
-     13338
+     13276
     ]
    ]
   },
@@ -17086,11 +17450,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     8141
+     8156
     ]
    ]
   },
@@ -17101,11 +17465,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8141
+     8156
     ],
     [
      -4656,
-     9335
+     8776
     ]
    ]
   },
@@ -17116,11 +17480,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     10010
+     9356
     ],
     [
      -4656,
-     9335
+     8776
     ]
    ]
   },
@@ -17131,11 +17495,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     9335
+     8776
     ],
     [
      -4352,
-     9583
+     8976
     ]
    ]
   },
@@ -17146,11 +17510,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     9583
+     8976
     ],
     [
      -4048,
-     9536
+     8929
     ]
    ]
   },
@@ -17161,11 +17525,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     9220
+     8661
     ],
     [
      -4048,
-     9267
+     8708
     ]
    ]
   },
@@ -17176,11 +17540,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     9220
+     8661
     ],
     [
      -4048,
-     9173
+     8614
     ]
    ]
   },
@@ -17191,11 +17555,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     9267
+     8708
     ],
     [
      -3744,
-     9421
+     8814
     ]
    ]
   },
@@ -17206,11 +17570,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     9335
+     8776
     ],
     [
      -4352,
-     9220
+     8661
     ]
    ]
   },
@@ -17221,11 +17585,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     5972
+     6076
     ]
    ]
   },
@@ -17236,11 +17600,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     5972
+     6076
     ],
     [
      -4656,
-     6113
+     5280
     ]
    ]
   },
@@ -17251,15 +17615,15 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     6113
+     5280
     ],
     [
      -4352,
-     6113
+     5280
     ],
     [
      -4048,
-     6045
+     5280
     ]
    ]
   },
@@ -17270,11 +17634,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     993
+     4496
     ]
    ]
   },
@@ -17285,11 +17649,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     993
+     4496
     ],
     [
      -4656,
-     993
+     4496
     ]
    ]
   },
@@ -17300,11 +17664,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     993
+     4496
     ],
     [
      -4352,
-     993
+     4496
     ]
    ]
   },
@@ -17315,11 +17679,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8141
+     8156
     ],
     [
      -4656,
-     7129
+     7323
     ]
    ]
   },
@@ -17330,11 +17694,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8141
+     8156
     ],
     [
      -4656,
-     7009
+     7023
     ]
    ]
   },
@@ -17345,11 +17709,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7009
+     7023
     ],
     [
      -4352,
-     7009
+     7023
     ]
    ]
   },
@@ -17360,11 +17724,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     2969
+     2369
     ],
     [
      -4656,
-     3671
+     3681
     ]
    ]
   },
@@ -17375,11 +17739,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     10010
+     9356
     ]
    ]
   },
@@ -17390,11 +17754,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     3671
+     3681
     ],
     [
      -4352,
-     4350
+     3775
     ]
    ]
   },
@@ -17405,11 +17769,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     2969
+     2369
     ]
    ]
   },
@@ -17420,11 +17784,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     2969
+     2369
     ],
     [
      -4656,
-     2497
+     1771
     ]
    ]
   },
@@ -17435,11 +17799,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     3671
+     3681
     ],
     [
      -4352,
-     3602
+     3429
     ]
    ]
   },
@@ -17450,11 +17814,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9519
+     8428
     ],
     [
      -4656,
-     10651
+     7852
     ]
    ]
   },
@@ -17465,11 +17829,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7270
+     6604
     ],
     [
      -4352,
-     7317
+     6651
     ]
    ]
   },
@@ -17480,11 +17844,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     11911
+     11754
     ]
    ]
   },
@@ -17495,11 +17859,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     2497
+     1771
     ],
     [
      -4352,
-     2497
+     1771
     ]
    ]
   },
@@ -17510,11 +17874,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     11911
+     11754
     ],
     [
      -4656,
-     11702
+     11544
     ]
    ]
   },
@@ -17525,11 +17889,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     11702
+     11544
     ],
     [
      -4352,
-     11749
+     11591
     ]
    ]
   },
@@ -17540,11 +17904,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     11702
+     11544
     ],
     [
      -4352,
-     11232
+     11079
     ]
    ]
   },
@@ -17555,11 +17919,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11749
+     11591
     ],
     [
      -4048,
-     12125
+     12042
     ]
    ]
   },
@@ -17570,11 +17934,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9425
+     8729
     ],
     [
      -4656,
-     9058
+     8383
     ]
    ]
   },
@@ -17585,11 +17949,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8444
+     6719
     ],
     [
      -4656,
-     8870
+     6929
     ]
    ]
   },
@@ -17600,11 +17964,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     9916
+     9236
     ]
    ]
   },
@@ -17615,11 +17979,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11044
+     10865
     ],
     [
      -4048,
-     11185
+     11006
     ]
    ]
   },
@@ -17630,11 +17994,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11749
+     11591
     ],
     [
      -4048,
-     11185
+     11006
     ]
    ]
   },
@@ -17645,11 +18009,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     6228
+     8823
     ]
    ]
   },
@@ -17660,19 +18024,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     12831
+     12769
     ],
     [
      -4656,
-     12987
+     12926
     ],
     [
      -4352,
-     12987
+     12926
     ],
     [
      -4048,
-     12987
+     12926
     ]
    ]
   },
@@ -17683,11 +18047,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11749
+     11591
     ],
     [
      -4048,
-     12987
+     12926
     ]
    ]
   },
@@ -17698,19 +18062,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     12831
+     12769
     ],
     [
      -4656,
-     12825
+     12764
     ],
     [
      -4352,
-     12825
+     12764
     ],
     [
      -4048,
-     12522
+     12461
     ]
    ]
   },
@@ -17721,11 +18085,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11749
+     11591
     ],
     [
      -4048,
-     12522
+     12461
     ]
    ]
   },
@@ -17736,11 +18100,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     2619
+     4590
     ]
    ]
   },
@@ -17751,11 +18115,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     12831
+     12769
     ]
    ]
   },
@@ -17766,11 +18130,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     8444
+     6719
     ]
    ]
   },
@@ -17781,11 +18145,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9519
+     8428
     ],
     [
      -4656,
-     10557
+     8011
     ]
    ]
   },
@@ -17796,27 +18160,27 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     10557
+     8011
     ],
     [
      -4352,
-     10579
+     8032
     ],
     [
      -4048,
-     10579
+     8032
     ],
     [
      -3744,
-     10579
+     8032
     ],
     [
      -3440,
-     10579
+     8032
     ],
     [
      -3136,
-     10579
+     8446
     ]
    ]
   },
@@ -17827,11 +18191,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     10557
+     8011
     ],
     [
      -4352,
-     10536
+     7990
     ]
    ]
   },
@@ -17842,11 +18206,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     6894
+     4988
     ],
     [
      -4656,
-     6894
+     4988
     ]
    ]
   },
@@ -17857,11 +18221,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     10010
+     9356
     ],
     [
      -4656,
-     11138
+     10985
     ]
    ]
   },
@@ -17872,11 +18236,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     6894
+     4988
     ],
     [
      -4352,
-     6894
+     4988
     ]
    ]
   },
@@ -17887,15 +18251,15 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8444
+     6719
     ],
     [
      -4656,
-     8056
+     6813
     ],
     [
      -4352,
-     8056
+     6813
     ]
    ]
   },
@@ -17906,11 +18270,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6894
+     4988
     ],
     [
      -4048,
-     7590
+     6384
     ]
    ]
   },
@@ -17921,11 +18285,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     8056
+     6813
     ],
     [
      -4048,
-     7590
+     6384
     ]
    ]
   },
@@ -17936,11 +18300,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6894
+     4988
     ],
     [
      -4048,
-     7092
+     6101
     ]
    ]
   },
@@ -17951,11 +18315,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     8056
+     6813
     ],
     [
      -4048,
-     7092
+     6101
     ]
    ]
   },
@@ -17966,11 +18330,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7092
+     6101
     ],
     [
      -3744,
-     7134
+     6144
     ]
    ]
   },
@@ -17981,11 +18345,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     11138
+     10985
     ],
     [
      -4352,
-     11138
+     10985
     ]
    ]
   },
@@ -17996,15 +18360,15 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11138
+     10985
     ],
     [
      -4048,
-     10788
+     10609
     ],
     [
      -3744,
-     10788
+     10609
     ]
    ]
   },
@@ -18015,11 +18379,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     9519
+     8428
     ]
    ]
   },
@@ -18030,11 +18394,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9519
+     8428
     ],
     [
      -4656,
-     10463
+     7643
     ]
    ]
   },
@@ -18045,11 +18409,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     9425
+     8729
     ]
    ]
   },
@@ -18060,11 +18424,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9425
+     8729
     ],
     [
      -4656,
-     8964
+     8289
     ]
    ]
   },
@@ -18075,15 +18439,15 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     8964
+     8289
     ],
     [
      -4352,
-     8964
+     8289
     ],
     [
      -4048,
-     10442
+     10294
     ]
    ]
   },
@@ -18094,11 +18458,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11749
+     11591
     ],
     [
      -4048,
-     10442
+     10294
     ]
    ]
   },
@@ -18109,11 +18473,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     9058
+     8383
     ],
     [
      -4352,
-     9037
+     8362
     ]
    ]
   },
@@ -18124,11 +18488,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7270
+     6604
     ],
     [
      -4352,
-     7223
+     6557
     ]
    ]
   },
@@ -18139,11 +18503,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8444
+     6719
     ],
     [
      -4656,
-     7270
+     6604
     ]
    ]
   },
@@ -18154,11 +18518,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9519
+     8428
     ],
     [
      -4656,
-     9698
+     7549
     ]
    ]
   },
@@ -18169,11 +18533,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     9698
+     7549
     ],
     [
      -4352,
-     9677
+     7527
     ]
    ]
   },
@@ -18184,11 +18548,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     3602
+     3429
     ],
     [
      -4048,
-     3555
+     3476
     ]
    ]
   },
@@ -18199,11 +18563,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     7317
+     6651
     ],
     [
      -4048,
-     7879
+     6604
     ]
    ]
   },
@@ -18214,11 +18578,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11232
+     11079
     ],
     [
      -4048,
-     11608
+     11530
     ]
    ]
   },
@@ -18229,11 +18593,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     7230
+     6613
     ],
     [
      -4960,
-     6894
+     4988
     ]
    ]
   },
@@ -18244,11 +18608,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     2969
+     2369
     ],
     [
      -4656,
-     2833
+     1865
     ]
    ]
   },
@@ -18259,15 +18623,15 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     2969
+     2369
     ],
     [
      -4656,
-     2975
+     2007
     ],
     [
      -4352,
-     2975
+     2007
     ]
    ]
   },
@@ -18278,11 +18642,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     10651
+     7852
     ],
     [
      -4352,
-     10630
+     7831
     ]
    ]
   },
@@ -18293,11 +18657,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     10630
+     7831
     ],
     [
      -4048,
-     10630
+     7831
     ]
    ]
   },
@@ -18308,11 +18672,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     2497
+     1771
     ],
     [
      -4048,
-     1839
+     1160
     ]
    ]
   },
@@ -18323,11 +18687,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9519
+     8428
     ],
     [
      -4656,
-     10348
+     7737
     ]
    ]
   },
@@ -18338,11 +18702,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     10348
+     7737
     ],
     [
      -4352,
-     10348
+     7737
     ]
    ]
   },
@@ -18353,11 +18717,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     10348
+     7737
     ],
     [
      -4048,
-     10348
+     7737
     ]
    ]
   },
@@ -18368,11 +18732,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     13244
+     13182
     ],
     [
      -4656,
-     13244
+     13182
     ]
    ]
   },
@@ -18383,11 +18747,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     13244
+     13182
     ],
     [
      -4352,
-     13244
+     13182
     ]
    ]
   },
@@ -18398,11 +18762,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     13244
+     13182
     ],
     [
      -4048,
-     13244
+     13182
     ]
    ]
   },
@@ -18413,15 +18777,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     13244
+     13182
     ],
     [
      -3744,
-     13244
+     13182
     ],
     [
      -3440,
-     13244
+     13182
     ]
    ]
   },
@@ -18432,15 +18796,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     13244
+     13182
     ],
     [
      -3136,
-     13244
+     13182
     ],
     [
      -2832,
-     13244
+     13182
     ]
    ]
   },
@@ -18451,15 +18815,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     13244
+     13182
     ],
     [
      -2528,
-     13244
+     13182
     ],
     [
      -2224,
-     13244
+     13182
     ]
    ]
   },
@@ -18470,11 +18834,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     13244
+     13182
     ],
     [
      -1920,
-     13244
+     13182
     ]
    ]
   },
@@ -18485,11 +18849,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     7317
+     6651
     ],
     [
      -4048,
-     7973
+     6698
     ]
    ]
   },
@@ -18500,15 +18864,15 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     6228
+     8823
     ],
     [
      -4656,
-     6207
+     10367
     ],
     [
      -4352,
-     6207
+     10367
     ]
    ]
   },
@@ -18519,15 +18883,15 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9916
+     9236
     ],
     [
      -4656,
-     11044
+     10865
     ],
     [
      -4352,
-     11044
+     10865
     ]
    ]
   },
@@ -18538,11 +18902,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     11185
+     11006
     ],
     [
      -3744,
-     11467
+     11363
     ]
    ]
   },
@@ -18553,11 +18917,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     11185
+     11006
     ],
     [
      -3744,
-     11138
+     10959
     ]
    ]
   },
@@ -18568,11 +18932,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11138
+     10959
     ],
     [
      -3440,
-     11279
+     11175
     ]
    ]
   },
@@ -18583,11 +18947,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11138
+     10959
     ],
     [
      -3440,
-     7590
+     6835
     ]
    ]
   },
@@ -18598,19 +18962,19 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     2497
+     1771
     ],
     [
      -4048,
-     2613
+     1886
     ],
     [
      -3744,
-     2613
+     1886
     ],
     [
      -3440,
-     7590
+     6835
     ]
    ]
   },
@@ -18621,11 +18985,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11138
+     10959
     ],
     [
      -3440,
-     11373
+     11269
     ]
    ]
   },
@@ -18636,11 +19000,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11467
+     11363
     ],
     [
      -3440,
-     11467
+     11363
     ]
    ]
   },
@@ -18651,11 +19015,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12522
+     12461
     ],
     [
      -3744,
-     12522
+     12461
     ]
    ]
   },
@@ -18666,11 +19030,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12125
+     12042
     ],
     [
      -3744,
-     12522
+     12461
     ]
    ]
   },
@@ -18681,15 +19045,15 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11044
+     10865
     ],
     [
      -4048,
-     10741
+     10562
     ],
     [
      -3744,
-     10626
+     10499
     ]
    ]
   },
@@ -18700,11 +19064,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     10442
+     10294
     ],
     [
      -3744,
-     10626
+     10499
     ]
    ]
   },
@@ -18715,11 +19079,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     11608
+     11530
     ],
     [
      -3744,
-     11608
+     11530
     ]
    ]
   },
@@ -18730,11 +19094,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     10442
+     10294
     ],
     [
      -3744,
-     10442
+     10294
     ]
    ]
   },
@@ -18745,23 +19109,23 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     11911
+     11754
     ],
     [
      -4656,
-     12778
+     12717
     ],
     [
      -4352,
-     12778
+     12717
     ],
     [
      -4048,
-     12778
+     12717
     ],
     [
      -3744,
-     12778
+     12717
     ]
    ]
   },
@@ -18772,11 +19136,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     12778
+     12717
     ],
     [
      -3440,
-     12778
+     12717
     ]
    ]
   },
@@ -18787,11 +19151,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     3555
+     3476
     ],
     [
      -3744,
-     3555
+     3476
     ]
    ]
   },
@@ -18802,15 +19166,15 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7129
+     7323
     ],
     [
      -4352,
-     7135
+     7480
     ],
     [
      -4048,
-     7747
+     7480
     ]
    ]
   },
@@ -18821,11 +19185,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     7009
+     7023
     ],
     [
      -4048,
-     6651
+     7023
     ]
    ]
   },
@@ -18836,15 +19200,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6651
+     7023
     ],
     [
      -3744,
-     6651
+     7023
     ],
     [
      -3440,
-     6651
+     7023
     ]
    ]
   },
@@ -18855,15 +19219,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7747
+     7480
     ],
     [
      -3744,
-     7726
+     7454
     ],
     [
      -3440,
-     7726
+     7454
     ]
    ]
   },
@@ -18874,11 +19238,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     993
+     4496
     ],
     [
      -4048,
-     711
+     4146
     ]
    ]
   },
@@ -18889,11 +19253,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     993
+     4496
     ],
     [
      -4048,
-     1249
+     4616
     ]
    ]
   },
@@ -18904,11 +19268,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     993
+     4496
     ],
     [
      -4048,
-     993
+     4423
     ]
    ]
   },
@@ -18919,11 +19283,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4350
+     3775
     ],
     [
      -4048,
-     4491
+     4052
     ]
    ]
   },
@@ -18934,11 +19298,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     9421
+     8814
     ],
     [
      -3440,
-     9421
+     8814
     ]
    ]
   },
@@ -18949,15 +19313,15 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7129
+     7323
     ],
     [
      -4352,
-     7124
+     7159
     ],
     [
      -4048,
-     6813
+     7159
     ]
    ]
   },
@@ -18968,11 +19332,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6813
+     7159
     ],
     [
      -3744,
-     6882
+     7227
     ]
    ]
   },
@@ -18983,11 +19347,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     9583
+     8976
     ],
     [
      -4048,
-     10191
+     10179
     ]
    ]
   },
@@ -18998,11 +19362,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     9536
+     8929
     ],
     [
      -3744,
-     9515
+     8908
     ]
    ]
   },
@@ -19013,11 +19377,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     9173
+     8614
     ],
     [
      -3744,
-     8177
+     7717
     ]
    ]
   },
@@ -19028,11 +19392,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7747
+     7480
     ],
     [
      -3744,
-     8177
+     7717
     ]
    ]
   },
@@ -19043,11 +19407,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     8177
+     7717
     ],
     [
      -3440,
-     8109
+     7649
     ]
    ]
   },
@@ -19058,11 +19422,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     8177
+     7717
     ],
     [
      -3440,
-     8203
+     7743
     ]
    ]
   },
@@ -19073,11 +19437,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     9173
+     8614
     ],
     [
      -3744,
-     8356
+     7854
     ]
    ]
   },
@@ -19088,11 +19452,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7747
+     7480
     ],
     [
      -3744,
-     8356
+     7854
     ]
    ]
   },
@@ -19103,15 +19467,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     9536
+     8929
     ],
     [
      -3744,
-     9557
+     8950
     ],
     [
      -3440,
-     9096
+     8715
     ]
    ]
   },
@@ -19122,15 +19486,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     9267
+     8708
     ],
     [
      -3744,
-     9241
+     8656
     ],
     [
      -3440,
-     9096
+     8715
     ]
    ]
   },
@@ -19141,15 +19505,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4491
+     4052
     ],
     [
      -3744,
-     4491
+     4052
     ],
     [
      -3440,
-     9096
+     8715
     ]
    ]
   },
@@ -19160,11 +19524,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4350
+     3775
     ],
     [
      -4048,
-     4303
+     3728
     ]
    ]
   },
@@ -19175,11 +19539,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6894
+     4988
     ],
     [
      -4048,
-     6557
+     5009
     ]
    ]
   },
@@ -19190,11 +19554,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6894
+     4988
     ],
     [
      -4048,
-     6139
+     5103
     ]
    ]
   },
@@ -19205,19 +19569,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     5972
+     6076
     ],
     [
      -4656,
-     5978
+     5103
     ],
     [
      -4352,
-     5978
+     5103
     ],
     [
      -4048,
-     6139
+     5103
     ]
    ]
   },
@@ -19228,11 +19592,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7092
+     6101
     ],
     [
      -3744,
-     6160
+     4804
     ]
    ]
   },
@@ -19243,11 +19607,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4303
+     3728
     ],
     [
      -3744,
-     6160
+     4804
     ]
    ]
   },
@@ -19258,11 +19622,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     7134
+     6144
     ],
     [
      -3440,
-     7113
+     6123
     ]
    ]
   },
@@ -19273,11 +19637,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     8056
+     6813
     ],
     [
      -4048,
-     8686
+     6813
     ]
    ]
   },
@@ -19288,11 +19652,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     10536
+     7990
     ],
     [
      -4048,
-     10536
+     7990
     ]
    ]
   },
@@ -19303,15 +19667,15 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     2497
+     1771
     ],
     [
      -4048,
-     1886
+     1207
     ],
     [
      -3744,
-     1886
+     1207
     ]
    ]
   },
@@ -19322,11 +19686,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1886
+     1207
     ],
     [
      -3440,
-     1630
+     998
     ]
    ]
   },
@@ -19337,15 +19701,15 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     2975
+     2007
     ],
     [
      -4048,
-     2686
+     1960
     ],
     [
      -3744,
-     2686
+     1960
     ]
    ]
   },
@@ -19356,15 +19720,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     2686
+     1960
     ],
     [
      -3440,
-     2990
+     2144
     ],
     [
      -3136,
-     2990
+     2144
     ]
    ]
   },
@@ -19375,19 +19739,19 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     9058
+     8383
     ],
     [
      -4352,
-     9079
+     8404
     ],
     [
      -4048,
-     9079
+     8404
     ],
     [
      -3744,
-     9079
+     8404
     ]
    ]
   },
@@ -19398,15 +19762,15 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     2975
+     2007
     ],
     [
      -4048,
-     3342
+     2421
     ],
     [
      -3744,
-     3342
+     2421
     ]
    ]
   },
@@ -19417,11 +19781,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     1249
+     4616
     ],
     [
      -3744,
-     1296
+     4710
     ]
    ]
   },
@@ -19432,11 +19796,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1886
+     1207
     ],
     [
      -3440,
-     2054
+     1375
     ]
    ]
   },
@@ -19447,11 +19811,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     2686
+     1960
     ],
     [
      -3440,
-     2054
+     1375
     ]
    ]
   },
@@ -19462,11 +19826,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1886
+     1207
     ],
     [
      -3440,
-     1819
+     1187
     ]
    ]
   },
@@ -19477,11 +19841,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     2686
+     1960
     ],
     [
      -3440,
-     1819
+     1187
     ]
    ]
   },
@@ -19492,11 +19856,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1886
+     1207
     ],
     [
      -3440,
-     7505
+     6536
     ]
    ]
   },
@@ -19507,19 +19871,19 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11044
+     10865
     ],
     [
      -4048,
-     10720
+     10541
     ],
     [
      -3744,
-     10720
+     10541
     ],
     [
      -3440,
-     7505
+     6536
     ]
    ]
   },
@@ -19530,23 +19894,23 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     8870
+     6929
     ],
     [
      -4352,
-     8870
+     6929
     ],
     [
      -4048,
-     8870
+     6929
     ],
     [
      -3744,
-     8870
+     6929
     ],
     [
      -3440,
-     8336
+     6929
     ]
    ]
   },
@@ -19557,11 +19921,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11138
+     10959
     ],
     [
      -3440,
-     11185
+     11081
     ]
    ]
   },
@@ -19572,15 +19936,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     8177
+     7717
     ],
     [
      -3440,
-     8246
+     7785
     ],
     [
      -3136,
-     8246
+     7785
     ]
    ]
   },
@@ -19591,19 +19955,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     10191
+     10179
     ],
     [
      -3744,
-     10191
+     10179
     ],
     [
      -3440,
-     10191
+     10179
     ],
     [
      -3136,
-     10191
+     10179
     ]
    ]
   },
@@ -19614,15 +19978,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     10788
+     10609
     ],
     [
      -3440,
-     10788
+     10609
     ],
     [
      -3136,
-     10788
+     10609
     ]
    ]
   },
@@ -19633,15 +19997,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     9515
+     8908
     ],
     [
      -3440,
-     9515
+     8908
     ],
     [
      -3136,
-     8798
+     8352
     ]
    ]
   },
@@ -19652,19 +20016,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7747
+     7480
     ],
     [
      -3744,
-     7790
+     7496
     ],
     [
      -3440,
-     7790
+     7496
     ],
     [
      -3136,
-     8798
+     8352
     ]
    ]
   },
@@ -19675,19 +20039,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6813
+     7159
     ],
     [
      -3744,
-     6839
+     7185
     ],
     [
      -3440,
-     6839
+     7185
     ],
     [
      -3136,
-     6839
+     7185
     ]
    ]
   },
@@ -19698,11 +20062,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     993
+     4496
     ],
     [
      -4048,
-     899
+     4522
     ]
    ]
   },
@@ -19713,15 +20077,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     9096
+     8715
     ],
     [
      -3136,
-     9703
+     9991
     ],
     [
      -2832,
-     9703
+     9991
     ]
    ]
   },
@@ -19732,23 +20096,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4491
+     4052
     ],
     [
      -3744,
-     4479
+     4041
     ],
     [
      -3440,
-     4479
+     4041
     ],
     [
      -3136,
-     4479
+     4041
     ],
     [
      -2832,
-     4479
+     4041
     ]
    ]
   },
@@ -19759,11 +20123,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     2054
+     1375
     ],
     [
      -3136,
-     2054
+     1375
     ]
    ]
   },
@@ -19774,11 +20138,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     1819
+     1187
     ],
     [
      -3136,
-     1819
+     1187
     ]
    ]
   },
@@ -19789,11 +20153,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1819
+     1187
     ],
     [
      -2832,
-     1725
+     1093
     ]
    ]
   },
@@ -19804,11 +20168,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     2682
+     2238
     ],
     [
      -2832,
-     2661
+     2259
     ]
    ]
   },
@@ -19819,11 +20183,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     2054
+     1375
     ],
     [
      -2832,
-     1913
+     1281
     ]
    ]
   },
@@ -19834,11 +20198,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1819
+     1187
     ],
     [
      -2832,
-     1913
+     1281
     ]
    ]
   },
@@ -19849,11 +20213,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     1913
+     1281
     ],
     [
      -2528,
-     1960
+     1234
     ]
    ]
   },
@@ -19864,15 +20228,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     9079
+     8404
     ],
     [
      -3440,
-     8677
+     8326
     ],
     [
      -3136,
-     8892
+     8541
     ]
    ]
   },
@@ -19883,11 +20247,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     8892
+     8541
     ],
     [
      -2832,
-     8939
+     9284
     ]
    ]
   },
@@ -19898,19 +20262,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     993
+     4423
     ],
     [
      -3744,
-     1045
+     4475
     ],
     [
      -3440,
-     1045
+     4475
     ],
     [
      -3136,
-     6557
+     6788
     ]
    ]
   },
@@ -19921,15 +20285,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     9079
+     8404
     ],
     [
      -3440,
-     8666
+     8315
     ],
     [
      -3136,
-     6557
+     6788
     ]
    ]
   },
@@ -19940,19 +20304,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     993
+     4423
     ],
     [
      -3744,
-     1014
+     4428
     ],
     [
      -3440,
-     1014
+     4428
     ],
     [
      -3136,
-     1014
+     4428
     ]
    ]
   },
@@ -19963,15 +20327,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     9079
+     8404
     ],
     [
      -3440,
-     8892
+     8562
     ],
     [
      -3136,
-     9195
+     8818
     ]
    ]
   },
@@ -19982,19 +20346,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6813
+     7159
     ],
     [
      -3744,
-     6745
+     7091
     ],
     [
      -3440,
-     6745
+     7091
     ],
     [
      -3136,
-     6745
+     7091
     ]
    ]
   },
@@ -20005,23 +20369,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7747
+     7480
     ],
     [
      -3744,
-     7684
+     7411
     ],
     [
      -3440,
-     7684
+     7411
     ],
     [
      -3136,
-     7684
+     7411
     ],
     [
      -2832,
-     6745
+     7206
     ]
    ]
   },
@@ -20032,11 +20396,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     6745
+     7091
     ],
     [
      -2832,
-     6745
+     7206
     ]
    ]
   },
@@ -20047,19 +20411,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     711
+     4146
     ],
     [
      -3744,
-     711
+     4146
     ],
     [
      -3440,
-     711
+     4146
     ],
     [
      -3136,
-     711
+     4146
     ]
    ]
   },
@@ -20070,19 +20434,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     1249
+     4616
     ],
     [
      -3744,
-     1202
+     4522
     ],
     [
      -3440,
-     1202
+     4522
     ],
     [
      -3136,
-     1202
+     4522
     ]
    ]
   },
@@ -20093,23 +20457,23 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     993
+     4496
     ],
     [
      -4048,
-     805
+     4240
     ],
     [
      -3744,
-     805
+     4240
     ],
     [
      -3440,
-     805
+     4240
     ],
     [
      -3136,
-     805
+     4240
     ]
    ]
   },
@@ -20120,23 +20484,23 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     993
+     4496
     ],
     [
      -4048,
-     1108
+     4847
     ],
     [
      -3744,
-     1108
+     4847
     ],
     [
      -3440,
-     1108
+     4847
     ],
     [
      -3136,
-     1108
+     4847
     ]
    ]
   },
@@ -20147,19 +20511,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     993
+     4423
     ],
     [
      -3744,
-     920
+     4334
     ],
     [
      -3440,
-     920
+     4334
     ],
     [
      -3136,
-     920
+     4334
     ]
    ]
   },
@@ -20170,11 +20534,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     920
+     4334
     ],
     [
      -2832,
-     920
+     4334
     ]
    ]
   },
@@ -20185,19 +20549,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7747
+     7480
     ],
     [
      -3744,
-     7811
+     7507
     ],
     [
      -3440,
-     7811
+     7507
     ],
     [
      -3136,
-     7811
+     7507
     ]
    ]
   },
@@ -20208,11 +20572,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     6557
+     6788
     ],
     [
      -2832,
-     9567
+     9881
     ]
    ]
   },
@@ -20223,11 +20587,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11984
+     11922
     ],
     [
      -2832,
-     9567
+     9881
     ]
    ]
   },
@@ -20238,11 +20602,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     9195
+     8818
     ],
     [
      -2832,
-     9033
+     9378
     ]
    ]
   },
@@ -20253,11 +20617,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     12778
+     12717
     ],
     [
      -3136,
-     12663
+     12602
     ]
    ]
   },
@@ -20268,11 +20632,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     12778
+     12717
     ],
     [
      -3136,
-     12799
+     12738
     ]
    ]
   },
@@ -20283,11 +20647,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12663
+     12602
     ],
     [
      -2832,
-     12710
+     12649
     ]
    ]
   },
@@ -20298,11 +20662,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12663
+     12602
     ],
     [
      -2832,
-     12616
+     12555
     ]
    ]
   },
@@ -20313,15 +20677,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11608
+     11530
     ],
     [
      -3440,
-     11608
+     11504
     ],
     [
      -3136,
-     11608
+     11504
     ]
    ]
   },
@@ -20332,31 +20696,31 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     5972
+     6076
     ],
     [
      -4656,
-     4575
+     6494
     ],
     [
      -4352,
-     4575
+     6494
     ],
     [
      -4048,
-     4575
+     6494
     ],
     [
      -3744,
-     4575
+     6494
     ],
     [
      -3440,
-     4575
+     6494
     ],
     [
      -3136,
-     4575
+     6494
     ]
    ]
   },
@@ -20367,11 +20731,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11608
+     11504
     ],
     [
      -2832,
-     11608
+     11504
     ]
    ]
   },
@@ -20382,19 +20746,19 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     12522
+     12461
     ],
     [
      -3440,
-     12522
+     12461
     ],
     [
      -3136,
-     12522
+     12461
     ],
     [
      -2832,
-     12522
+     12461
     ]
    ]
   },
@@ -20405,11 +20769,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11984
+     11922
     ],
     [
      -2832,
-     12522
+     12461
     ]
    ]
   },
@@ -20420,11 +20784,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     11185
+     11081
     ],
     [
      -3136,
-     11232
+     11128
     ]
    ]
   },
@@ -20435,11 +20799,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     9195
+     8818
     ],
     [
      -2832,
-     9311
+     9472
     ]
    ]
   },
@@ -20450,15 +20814,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11138
+     10959
     ],
     [
      -3440,
-     11023
+     10844
     ],
     [
      -3136,
-     11023
+     10844
     ]
    ]
   },
@@ -20469,19 +20833,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12987
+     12926
     ],
     [
      -3744,
-     12987
+     12926
     ],
     [
      -3440,
-     12987
+     12926
     ],
     [
      -3136,
-     12987
+     12926
     ]
    ]
   },
@@ -20492,15 +20856,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11138
+     10959
     ],
     [
      -3440,
-     10929
+     10750
     ],
     [
      -3136,
-     10929
+     10750
     ]
    ]
   },
@@ -20511,19 +20875,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12125
+     12042
     ],
     [
      -3744,
-     12172
+     12110
     ],
     [
      -3440,
-     12172
+     12110
     ],
     [
      -3136,
-     12172
+     12110
     ]
    ]
   },
@@ -20534,19 +20898,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12125
+     12042
     ],
     [
      -3744,
-     12078
+     12016
     ],
     [
      -3440,
-     12078
+     12016
     ],
     [
      -3136,
-     12078
+     12016
     ]
    ]
   },
@@ -20557,19 +20921,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12125
+     12042
     ],
     [
      -3744,
-     11984
+     11922
     ],
     [
      -3440,
-     11984
+     11922
     ],
     [
      -3136,
-     11984
+     11922
     ]
    ]
   },
@@ -20580,19 +20944,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12125
+     12042
     ],
     [
      -3744,
-     12266
+     12204
     ],
     [
      -3440,
-     12266
+     12204
     ],
     [
      -3136,
-     12266
+     12204
     ]
    ]
   },
@@ -20603,19 +20967,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12125
+     12042
     ],
     [
      -3744,
-     12360
+     12298
     ],
     [
      -3440,
-     12360
+     12298
     ],
     [
      -3136,
-     12360
+     12298
     ]
    ]
   },
@@ -20626,19 +20990,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12125
+     12042
     ],
     [
      -3744,
-     11796
+     11807
     ],
     [
      -3440,
-     11796
+     11807
     ],
     [
      -3136,
-     11796
+     11807
     ]
    ]
   },
@@ -20649,11 +21013,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11796
+     11807
     ],
     [
      -2832,
-     11775
+     11786
     ]
    ]
   },
@@ -20664,19 +21028,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12125
+     12042
     ],
     [
      -3744,
-     11890
+     11692
     ],
     [
      -3440,
-     11890
+     11692
     ],
     [
      -3136,
-     11890
+     11692
     ]
    ]
   },
@@ -20687,11 +21051,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11890
+     11692
     ],
     [
      -2832,
-     11890
+     11692
     ]
    ]
   },
@@ -20702,19 +21066,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12125
+     12042
     ],
     [
      -3744,
-     12454
+     12392
     ],
     [
      -3440,
-     12454
+     12392
     ],
     [
      -3136,
-     12454
+     12392
     ]
    ]
   },
@@ -20725,27 +21089,27 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     10651
+     7852
     ],
     [
      -4352,
-     10673
+     7896
     ],
     [
      -4048,
-     10673
+     7896
     ],
     [
      -3744,
-     10673
+     7896
     ],
     [
      -3440,
-     10673
+     7896
     ],
     [
      -3136,
-     10673
+     7896
     ]
    ]
   },
@@ -20756,11 +21120,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     12778
+     12717
     ],
     [
      -3136,
-     12893
+     12832
     ]
    ]
   },
@@ -20771,15 +21135,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     1630
+     998
     ],
     [
      -3136,
-     1578
+     945
     ],
     [
      -2832,
-     1578
+     945
     ]
    ]
   },
@@ -20790,11 +21154,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     1578
+     945
     ],
     [
      -2528,
-     1578
+     945
     ]
    ]
   },
@@ -20805,31 +21169,31 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     6228
+     8823
     ],
     [
      -4656,
-     6369
+     10456
     ],
     [
      -4352,
-     6369
+     10456
     ],
     [
      -4048,
-     6369
+     10456
     ],
     [
      -3744,
-     6369
+     10456
     ],
     [
      -3440,
-     6369
+     10456
     ],
     [
      -3136,
-     6369
+     10456
     ]
    ]
   },
@@ -20840,11 +21204,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     6369
+     10456
     ],
     [
      -2832,
-     5924
+     10243
     ]
    ]
   },
@@ -20855,19 +21219,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7590
+     6384
     ],
     [
      -3744,
-     7548
+     6379
     ],
     [
      -3440,
-     7548
+     6379
     ],
     [
      -3136,
-     7112
+     5469
     ]
    ]
   },
@@ -20878,19 +21242,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7092
+     6101
     ],
     [
      -3744,
-     7049
+     5407
     ],
     [
      -3440,
-     7049
+     5407
     ],
     [
      -3136,
-     7112
+     5469
     ]
    ]
   },
@@ -20901,23 +21265,23 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6894
+     4988
     ],
     [
      -4048,
-     6463
+     4966
     ],
     [
      -3744,
-     6463
+     4966
     ],
     [
      -3440,
-     6463
+     4966
     ],
     [
      -3136,
-     6463
+     4966
     ]
    ]
   },
@@ -20928,11 +21292,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     9195
+     8818
     ],
     [
      -2832,
-     9405
+     9650
     ]
    ]
   },
@@ -20943,23 +21307,23 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     2497
+     1771
     ],
     [
      -4048,
-     1390
+     711
     ],
     [
      -3744,
-     1390
+     711
     ],
     [
      -3440,
-     1390
+     711
     ],
     [
      -3136,
-     1390
+     711
     ]
    ]
   },
@@ -20970,15 +21334,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     2686
+     1960
     ],
     [
      -3440,
-     2682
+     2238
     ],
     [
      -3136,
-     2682
+     2238
     ]
    ]
   },
@@ -20989,15 +21353,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     2682
+     2238
     ],
     [
      -2832,
-     2703
+     2097
     ],
     [
      -2528,
-     2703
+     2097
     ]
    ]
   },
@@ -21008,15 +21372,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     6557
+     6788
     ],
     [
      -2832,
-     6039
+     6788
     ],
     [
      -2528,
-     5771
+     5836
     ]
    ]
   },
@@ -21027,11 +21391,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     6745
+     7206
     ],
     [
      -2528,
-     5771
+     5836
     ]
    ]
   },
@@ -21042,11 +21406,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     5771
+     5836
     ],
     [
      -2224,
-     5771
+     5836
     ]
    ]
   },
@@ -21057,11 +21421,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     9703
+     9991
     ],
     [
      -2528,
-     9703
+     9991
     ]
    ]
   },
@@ -21072,19 +21436,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     9096
+     8715
     ],
     [
      -3136,
-     9797
+     9838
     ],
     [
      -2832,
-     9797
+     9838
     ],
     [
      -2528,
-     9797
+     9838
     ]
    ]
   },
@@ -21095,23 +21459,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6045
+     5280
     ],
     [
      -3744,
-     6066
+     5301
     ],
     [
      -3440,
-     6066
+     5301
     ],
     [
      -3136,
-     6066
+     5301
     ],
     [
      -2832,
-     6933
+     8121
     ]
    ]
   },
@@ -21122,15 +21486,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     9096
+     8715
     ],
     [
      -3136,
-     9347
+     8881
     ],
     [
      -2832,
-     6933
+     8121
     ]
    ]
   },
@@ -21141,11 +21505,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     6933
+     8121
     ],
     [
      -2528,
-     6803
+     7728
     ]
    ]
   },
@@ -21156,19 +21520,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6045
+     5280
     ],
     [
      -3744,
-     4742
+     5218
     ],
     [
      -3440,
-     4742
+     5218
     ],
     [
      -3136,
-     4742
+     5218
     ]
    ]
   },
@@ -21179,11 +21543,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     4479
+     4041
     ],
     [
      -2528,
-     4479
+     4041
     ]
    ]
   },
@@ -21194,23 +21558,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4491
+     4052
     ],
     [
      -3744,
-     4502
+     4063
     ],
     [
      -3440,
-     4502
+     4063
     ],
     [
      -3136,
-     4502
+     4063
     ],
     [
      -2832,
-     6463
+     5819
     ]
    ]
   },
@@ -21221,19 +21585,19 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     8356
+     7854
     ],
     [
      -3440,
-     8288
+     7854
     ],
     [
      -3136,
-     8288
+     7854
     ],
     [
      -2832,
-     6463
+     5819
     ]
    ]
   },
@@ -21244,11 +21608,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     6463
+     5819
     ],
     [
      -2528,
-     6265
+     7236
     ]
    ]
   },
@@ -21259,15 +21623,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     7811
+     7507
     ],
     [
      -2832,
-     7811
+     8305
     ],
     [
      -2528,
-     6265
+     7236
     ]
    ]
   },
@@ -21278,39 +21642,39 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     5972
+     6076
     ],
     [
      -4656,
-     4533
+     5145
     ],
     [
      -4352,
-     4533
+     5145
     ],
     [
      -4048,
-     4533
+     5145
     ],
     [
      -3744,
-     4533
+     5145
     ],
     [
      -3440,
-     4533
+     5145
     ],
     [
      -3136,
-     4533
+     5145
     ],
     [
      -2832,
-     4533
+     5145
     ],
     [
      -2528,
-     4857
+     7984
     ]
    ]
   },
@@ -21321,11 +21685,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     5092
+     10127
     ],
     [
      -2528,
-     4857
+     7984
     ]
    ]
   },
@@ -21336,11 +21700,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     5092
+     10127
     ],
     [
      -2528,
-     5934
+     8266
     ]
    ]
   },
@@ -21351,23 +21715,23 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     7134
+     6144
     ],
     [
      -3440,
-     7463
+     6332
     ],
     [
      -3136,
-     7463
+     6332
     ],
     [
      -2832,
-     7463
+     6332
     ],
     [
      -2528,
-     5934
+     8266
     ]
    ]
   },
@@ -21378,15 +21742,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     10442
+     10294
     ],
     [
      -3440,
-     10442
+     10294
     ],
     [
      -3136,
-     10442
+     10294
     ]
    ]
   },
@@ -21397,23 +21761,23 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11749
+     11591
     ],
     [
      -4048,
-     11702
+     11598
     ],
     [
      -3744,
-     11702
+     11598
     ],
     [
      -3440,
-     11702
+     11598
     ],
     [
      -3136,
-     11702
+     11598
     ]
    ]
   },
@@ -21424,11 +21788,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     10442
+     10294
     ],
     [
      -2832,
-     10814
+     10661
     ]
    ]
   },
@@ -21439,11 +21803,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11702
+     11598
     ],
     [
      -2832,
-     10814
+     10661
     ]
    ]
   },
@@ -21454,11 +21818,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     10814
+     10661
     ],
     [
      -2528,
-     10814
+     10661
     ]
    ]
   },
@@ -21469,11 +21833,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     10814
+     10661
     ],
     [
      -2224,
-     10814
+     10661
     ]
    ]
   },
@@ -21484,11 +21848,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     10814
+     10661
     ],
     [
      -1920,
-     10814
+     10661
     ]
    ]
   },
@@ -21499,11 +21863,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     10814
+     10661
     ],
     [
      -1616,
-     10814
+     10661
     ]
    ]
   },
@@ -21514,11 +21878,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     10814
+     10661
     ],
     [
      -1312,
-     10814
+     10661
     ]
    ]
   },
@@ -21529,11 +21893,11 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     10814
+     10661
     ],
     [
      -1008,
-     10814
+     10661
     ]
    ]
   },
@@ -21544,11 +21908,11 @@ window.TREE = {
    "waypoints": [
     [
      -1008,
-     10814
+     10661
     ],
     [
      -704,
-     10814
+     10661
     ]
    ]
   },
@@ -21559,19 +21923,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7092
+     6101
     ],
     [
      -3744,
-     7071
+     6080
     ],
     [
      -3440,
-     7071
+     6080
     ],
     [
      -3136,
-     7018
+     5375
     ]
    ]
   },
@@ -21582,19 +21946,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7590
+     6384
     ],
     [
      -3744,
-     7632
+     6400
     ],
     [
      -3440,
-     7632
+     6400
     ],
     [
      -3136,
-     7632
+     6400
     ]
    ]
   },
@@ -21605,11 +21969,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     7018
+     5375
     ],
     [
      -2832,
-     6839
+     5563
     ]
    ]
   },
@@ -21620,11 +21984,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     7632
+     6400
     ],
     [
      -2832,
-     6839
+     5563
     ]
    ]
   },
@@ -21635,11 +21999,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     7112
+     5469
     ],
     [
      -2832,
-     6839
+     5563
     ]
    ]
   },
@@ -21650,23 +22014,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7092
+     6101
     ],
     [
      -3744,
-     6976
+     5333
     ],
     [
      -3440,
-     6976
+     5333
     ],
     [
      -3136,
-     6976
+     5333
     ],
     [
      -2832,
-     6651
+     5448
     ]
    ]
   },
@@ -21677,11 +22041,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     7112
+     5469
     ],
     [
      -2832,
-     6369
+     5354
     ]
    ]
   },
@@ -21692,11 +22056,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     6463
+     4966
     ],
     [
      -2832,
-     6369
+     5354
     ]
    ]
   },
@@ -21707,11 +22071,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6557
+     5009
     ],
     [
      -3744,
-     6557
+     5009
     ]
    ]
   },
@@ -21722,11 +22086,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1108
+     4847
     ],
     [
      -2832,
-     1108
+     4847
     ]
    ]
   },
@@ -21737,23 +22101,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7747
+     7480
     ],
     [
      -3744,
-     7768
+     7549
     ],
     [
      -3440,
-     7768
+     7549
     ],
     [
      -3136,
-     7768
+     7549
     ],
     [
      -2832,
-     8845
+     8771
     ]
    ]
   },
@@ -21764,11 +22128,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     8892
+     8541
     ],
     [
      -2832,
-     8845
+     8771
     ]
    ]
   },
@@ -21779,11 +22143,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     8845
+     8771
     ],
     [
      -2528,
-     7528
+     8078
     ]
    ]
   },
@@ -21794,15 +22158,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1296
+     4710
     ],
     [
      -3440,
-     1296
+     4710
     ],
     [
      -3136,
-     1296
+     4710
     ]
    ]
   },
@@ -21813,19 +22177,19 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     6882
+     7227
     ],
     [
      -3440,
-     6882
+     7227
     ],
     [
      -3136,
-     6882
+     7227
     ],
     [
      -2832,
-     6557
+     7112
     ]
    ]
   },
@@ -21836,15 +22200,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     9267
+     8708
     ],
     [
      -3744,
-     9252
+     8692
     ],
     [
      -3440,
-     8623
+     8273
     ]
    ]
   },
@@ -21855,11 +22219,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     8356
+     7854
     ],
     [
      -3440,
-     8623
+     8273
     ]
    ]
   },
@@ -21870,11 +22234,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     6369
+     10456
     ],
     [
      -2832,
-     5092
+     10127
     ]
    ]
   },
@@ -21885,27 +22249,27 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6207
+     10367
     ],
     [
      -4048,
-     6207
+     10367
     ],
     [
      -3744,
-     6207
+     10367
     ],
     [
      -3440,
-     6207
+     10367
     ],
     [
      -3136,
-     6207
+     10367
     ],
     [
      -2832,
-     5092
+     10127
     ]
    ]
   },
@@ -21916,11 +22280,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     2054
+     1375
     ],
     [
      -2832,
-     2054
+     1516
     ]
    ]
   },
@@ -21931,11 +22295,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1819
+     1187
     ],
     [
      -2832,
-     1819
+     1187
     ]
    ]
   },
@@ -21946,19 +22310,19 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     2686
+     1960
     ],
     [
      -3440,
-     3032
+     2353
     ],
     [
      -3136,
-     3032
+     2353
     ],
     [
      -2832,
-     3032
+     2353
     ]
    ]
   },
@@ -21969,11 +22333,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3032
+     2353
     ],
     [
      -2528,
-     3079
+     2400
     ]
    ]
   },
@@ -21984,19 +22348,19 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     3555
+     3476
     ],
     [
      -3440,
-     3555
+     3476
     ],
     [
      -3136,
-     3555
+     3476
     ],
     [
      -2832,
-     3555
+     3476
     ]
    ]
   },
@@ -22007,11 +22371,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3032
+     2353
     ],
     [
      -2528,
-     2985
+     2212
     ]
    ]
   },
@@ -22022,11 +22386,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12987
+     12926
     ],
     [
      -2832,
-     12966
+     12905
     ]
    ]
   },
@@ -22037,19 +22401,19 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     8056
+     6813
     ],
     [
      -4048,
-     8015
+     6741
     ],
     [
      -3744,
-     8015
+     6741
     ],
     [
      -3440,
-     8015
+     6741
     ]
    ]
   },
@@ -22060,11 +22424,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     8015
+     6741
     ],
     [
      -3136,
-     6651
+     4616
     ]
    ]
   },
@@ -22075,15 +22439,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1886
+     1207
     ],
     [
      -3440,
-     1745
+     1113
     ],
     [
      -3136,
-     6651
+     4616
     ]
    ]
   },
@@ -22094,11 +22458,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     3342
+     2421
     ],
     [
      -3440,
-     3342
+     2421
     ]
    ]
   },
@@ -22109,23 +22473,23 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     9698
+     7549
     ],
     [
      -4352,
-     10280
+     7602
     ],
     [
      -4048,
-     10280
+     7602
     ],
     [
      -3744,
-     10280
+     7602
     ],
     [
      -3440,
-     9190
+     7369
     ]
    ]
   },
@@ -22136,19 +22500,19 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     8056
+     6813
     ],
     [
      -4048,
-     8843
+     6856
     ],
     [
      -3744,
-     8843
+     6856
     ],
     [
      -3440,
-     9190
+     7369
     ]
    ]
   },
@@ -22159,11 +22523,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     6933
+     8121
     ],
     [
      -2528,
-     6688
+     7518
     ]
    ]
   },
@@ -22174,11 +22538,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     6688
+     7518
     ],
     [
      -2224,
-     6688
+     7518
     ]
    ]
   },
@@ -22189,11 +22553,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     6803
+     7728
     ],
     [
      -2224,
-     6782
+     7706
     ]
    ]
   },
@@ -22204,11 +22568,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     6688
+     7518
     ],
     [
      -1920,
-     6688
+     7518
     ]
    ]
   },
@@ -22219,11 +22583,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     6265
+     7236
     ],
     [
      -2224,
-     6359
+     7330
     ]
    ]
   },
@@ -22234,11 +22598,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     6359
+     7330
     ],
     [
      -1920,
-     6359
+     7330
     ]
    ]
   },
@@ -22249,11 +22613,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     4479
+     4041
     ],
     [
      -2224,
-     4479
+     4041
     ]
    ]
   },
@@ -22264,11 +22628,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     6265
+     7236
     ],
     [
      -2224,
-     6265
+     7236
     ]
    ]
   },
@@ -22279,11 +22643,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     711
+     4146
     ],
     [
      -2832,
-     711
+     4146
     ]
    ]
   },
@@ -22294,11 +22658,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     1108
+     4847
     ],
     [
      -2528,
-     1155
+     4941
     ]
    ]
   },
@@ -22309,11 +22673,26 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     920
+     4334
     ],
     [
      -2528,
-     873
+     4287
+    ]
+   ]
+  },
+  {
+   "from": "pc_apogeeKickCatalogII",
+   "to": "pc_apogeeKickCatalogIII",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     4287
+    ],
+    [
+     -2224,
+     4287
     ]
    ]
   },
@@ -22324,11 +22703,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     920
+     4334
     ],
     [
      -2528,
-     1014
+     4590
     ]
    ]
   },
@@ -22339,11 +22718,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     1108
+     4847
     ],
     [
      -2528,
-     1014
+     4590
     ]
    ]
   },
@@ -22354,11 +22733,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     6557
+     7112
     ],
     [
      -2528,
-     6028
+     6186
     ]
    ]
   },
@@ -22369,11 +22748,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     4857
+     7984
     ],
     [
      -2224,
-     4857
+     7984
     ]
    ]
   },
@@ -22384,11 +22763,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4857
+     7984
     ],
     [
      -1920,
-     4857
+     7984
     ]
    ]
   },
@@ -22399,7 +22778,7 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3555
+     3476
     ],
     [
      -2528,
@@ -22414,15 +22793,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     5092
+     10127
     ],
     [
      -2528,
-     4904
+     10106
     ],
     [
      -2224,
-     4040
+     7424
     ]
    ]
   },
@@ -22437,7 +22816,7 @@ window.TREE = {
     ],
     [
      -2224,
-     4040
+     7424
     ]
    ]
   },
@@ -22448,31 +22827,31 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11232
+     11079
     ],
     [
      -4048,
-     11561
+     11457
     ],
     [
      -3744,
-     11561
+     11457
     ],
     [
      -3440,
-     11561
+     11457
     ],
     [
      -3136,
-     11561
+     11457
     ],
     [
      -2832,
-     11561
+     11457
     ],
     [
      -2528,
-     7622
+     10938
     ]
    ]
   },
@@ -22483,11 +22862,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     5924
+     10243
     ],
     [
      -2528,
-     7622
+     10938
     ]
    ]
   },
@@ -22498,11 +22877,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7622
+     10938
     ],
     [
      -2224,
-     7669
+     10944
     ]
    ]
   },
@@ -22513,11 +22892,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     8845
+     8771
     ],
     [
      -2528,
-     7371
+     8172
     ]
    ]
   },
@@ -22528,11 +22907,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     6839
+     5563
     ],
     [
      -2528,
-     6500
+     5516
     ]
    ]
   },
@@ -22543,11 +22922,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     6839
+     5563
     ],
     [
      -2528,
-     6594
+     5610
     ]
    ]
   },
@@ -22558,31 +22937,31 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     2497
+     1771
     ],
     [
      -4048,
-     1484
+     805
     ],
     [
      -3744,
-     1484
+     805
     ],
     [
      -3440,
-     1484
+     805
     ],
     [
      -3136,
-     1484
+     805
     ],
     [
      -2832,
-     1484
+     805
     ],
     [
      -2528,
-     1484
+     805
     ]
    ]
   },
@@ -22593,15 +22972,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1390
+     711
     ],
     [
      -2832,
-     1390
+     711
     ],
     [
      -2528,
-     1390
+     711
     ]
    ]
   },
@@ -22612,31 +22991,164 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     3602
+     3429
     ],
     [
      -4048,
-     4260
+     3173
     ],
     [
      -3744,
-     4260
+     3173
     ],
     [
      -3440,
-     4260
+     3173
     ],
     [
      -3136,
-     4260
+     3173
     ],
     [
      -2832,
-     4260
+     3173
     ],
     [
      -2528,
-     4260
+     3173
+    ]
+   ]
+  },
+  {
+   "from": "met_aluminiumCopperBalloonTank",
+   "to": "met_aluminiumLithiumTankage",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     3173
+    ],
+    [
+     -2224,
+     3173
+    ],
+    [
+     -1920,
+     3173
+    ]
+   ]
+  },
+  {
+   "from": "met_aluminiumLithiumTankage",
+   "to": "met_stirWeldedTankage",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     3173
+    ],
+    [
+     -1616,
+     3173
+    ],
+    [
+     -1312,
+     3173
+    ]
+   ]
+  },
+  {
+   "from": "met_stirWeldedTankage",
+   "to": "met_stainlessSteelTankage",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1312,
+     3173
+    ],
+    [
+     -1008,
+     3173
+    ],
+    [
+     -704,
+     3173
+    ]
+   ]
+  },
+  {
+   "from": "cmp_compositeFairingShells",
+   "to": "cmp_advancedCompositeFairings",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     3800
+    ],
+    [
+     -2224,
+     3800
+    ],
+    [
+     -1920,
+     3800
+    ],
+    [
+     -1616,
+     3800
+    ]
+   ]
+  },
+  {
+   "from": "th_extendedMLIWrapping",
+   "to": "th_advancedMLI",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     805
+    ],
+    [
+     -2224,
+     805
+    ],
+    [
+     -1920,
+     805
+    ]
+   ]
+  },
+  {
+   "from": "gnc_bipropAttitudeThrust",
+   "to": "gnc_longLifeRCS",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     8172
+    ],
+    [
+     -2224,
+     8219
+    ],
+    [
+     -1920,
+     8219
+    ]
+   ]
+  },
+  {
+   "from": "elec_deployableArrays",
+   "to": "elec_secondaryBatteries",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3744,
+     11530
+    ],
+    [
+     -3440,
+     11551
     ]
    ]
   },
@@ -22647,27 +23159,27 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7879
+     6604
     ],
     [
      -3744,
-     7879
+     6604
     ],
     [
      -3440,
-     7879
+     6604
     ],
     [
      -3136,
-     7879
+     6604
     ],
     [
      -2832,
-     7879
+     6604
     ],
     [
      -2528,
-     4606
+     3800
     ]
    ]
   },
@@ -22678,19 +23190,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     1630
+     998
     ],
     [
      -3136,
-     1683
+     1051
     ],
     [
      -2832,
-     1683
+     1051
     ],
     [
      -2528,
-     4606
+     3800
     ]
    ]
   },
@@ -22701,11 +23213,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3032
+     2353
     ],
     [
      -2528,
-     3173
+     2494
     ]
    ]
   },
@@ -22716,11 +23228,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3032
+     2353
     ],
     [
      -2528,
-     2797
+     2306
     ]
    ]
   },
@@ -22731,11 +23243,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2797
+     2306
     ],
     [
      -2224,
-     3079
+     2588
     ]
    ]
   },
@@ -22746,11 +23258,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3079
+     2588
     ],
     [
      -1920,
-     2985
+     2494
     ]
    ]
   },
@@ -22761,11 +23273,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3079
+     2588
     ],
     [
      -1920,
-     3079
+     2588
     ]
    ]
   },
@@ -22776,11 +23288,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3079
+     2588
     ],
     [
      -1920,
-     2891
+     2400
     ]
    ]
   },
@@ -22791,11 +23303,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3079
+     2588
     ],
     [
      -1920,
-     3267
+     2776
     ]
    ]
   },
@@ -22806,11 +23318,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3079
+     2588
     ],
     [
      -1920,
-     3173
+     2682
     ]
    ]
   },
@@ -22821,11 +23333,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3555
+     3476
     ],
     [
      -2528,
-     4166
+     3591
     ]
    ]
   },
@@ -22836,11 +23348,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     4166
+     3591
     ],
     [
      -2224,
-     3737
+     3497
     ]
    ]
   },
@@ -22851,11 +23363,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     1913
+     1281
     ],
     [
      -2528,
-     1866
+     1328
     ]
    ]
   },
@@ -22866,11 +23378,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     9405
+     9650
     ],
     [
      -2528,
-     9405
+     9556
     ]
    ]
   },
@@ -22881,15 +23393,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11984
+     11922
     ],
     [
      -2832,
-     11984
+     11922
     ],
     [
      -2528,
-     12031
+     11969
     ]
    ]
   },
@@ -22900,15 +23412,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12078
+     12016
     ],
     [
      -2832,
-     12078
+     12016
     ],
     [
      -2528,
-     12031
+     11969
     ]
    ]
   },
@@ -22919,11 +23431,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     2054
+     1516
     ],
     [
      -2528,
-     2054
+     1516
     ]
    ]
   },
@@ -22934,15 +23446,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     2054
+     1375
     ],
     [
      -2832,
-     2195
+     1422
     ],
     [
      -2528,
-     2195
+     1422
     ]
    ]
   },
@@ -22953,15 +23465,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     6651
+     4616
     ],
     [
      -2832,
-     6092
+     4616
     ],
     [
      -2528,
-     5280
+     4778
     ]
    ]
   },
@@ -22972,19 +23484,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     3342
+     2421
     ],
     [
      -3136,
-     3342
+     2421
     ],
     [
      -2832,
-     3342
+     2421
     ],
     [
      -2528,
-     5280
+     4778
     ]
    ]
   },
@@ -22995,19 +23507,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     9190
+     7369
     ],
     [
      -3136,
-     9829
+     7301
     ],
     [
      -2832,
-     9829
+     7301
     ],
     [
      -2528,
-     5280
+     4778
     ]
    ]
   },
@@ -23018,23 +23530,23 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     4742
+     5218
     ],
     [
      -2832,
-     4742
+     5218
     ],
     [
      -2528,
-     4742
+     5218
     ],
     [
      -2224,
-     4742
+     5218
     ],
     [
      -1920,
-     4742
+     5218
     ]
    ]
   },
@@ -23045,19 +23557,34 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     6933
+     8121
     ],
     [
      -2528,
-     6939
+     7843
     ],
     [
      -2224,
-     6939
+     7843
     ],
     [
      -1920,
-     6939
+     7843
+    ]
+   ]
+  },
+  {
+   "from": "cryo_operationalHydroloxUpper",
+   "to": "cryo_operationalHydroloxUpperII",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     7843
+    ],
+    [
+     -1616,
+     7843
     ]
    ]
   },
@@ -23068,15 +23595,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     6803
+     7728
     ],
     [
      -2224,
-     6824
+     7749
     ],
     [
      -1920,
-     6824
+     7749
     ]
    ]
   },
@@ -23087,11 +23614,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     6688
+     7518
     ],
     [
      -1616,
-     6688
+     7518
     ]
    ]
   },
@@ -23102,11 +23629,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     6688
+     7518
     ],
     [
      -1312,
-     6453
+     7518
     ]
    ]
   },
@@ -23117,11 +23644,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     6688
+     7518
     ],
     [
      -1616,
-     4851
+     5631
     ]
    ]
   },
@@ -23132,15 +23659,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4479
+     4041
     ],
     [
      -1920,
-     4595
+     4188
     ],
     [
      -1616,
-     4851
+     5631
     ]
    ]
   },
@@ -23151,15 +23678,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4479
+     4041
     ],
     [
      -1920,
-     4108
+     3894
     ],
     [
      -1616,
-     4108
+     3894
     ]
    ]
   },
@@ -23170,11 +23697,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4479
+     4041
     ],
     [
      -1920,
-     4343
+     4035
     ]
    ]
   },
@@ -23185,11 +23712,26 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     4343
+     4035
     ],
     [
      -1616,
-     4390
+     3988
+    ]
+   ]
+  },
+  {
+   "from": "pc_modularORSC",
+   "to": "pc_modularORSCII",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1616,
+     3988
+    ],
+    [
+     -1312,
+     3988
     ]
    ]
   },
@@ -23200,11 +23742,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     6265
+     7236
     ],
     [
      -1920,
-     6265
+     7236
     ]
    ]
   },
@@ -23215,15 +23757,30 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     6028
+     6186
     ],
     [
      -2224,
-     6028
+     6186
     ],
     [
      -1920,
-     6028
+     6186
+    ]
+   ]
+  },
+  {
+   "from": "fd_multiRestartStorableUpper",
+   "to": "fd_multiRestartStorableUpperII",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1920,
+     6186
+    ],
+    [
+     -1616,
+     6186
     ]
    ]
   },
@@ -23234,15 +23791,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     9703
+     9991
     ],
     [
      -2224,
-     9635
+     9949
     ],
     [
      -1920,
-     9635
+     9949
     ]
    ]
   },
@@ -23253,15 +23810,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     9703
+     9991
     ],
     [
      -2224,
-     9772
+     10033
     ],
     [
      -1920,
-     9772
+     10033
     ]
    ]
   },
@@ -23272,11 +23829,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     1155
+     4941
     ],
     [
      -2224,
-     1155
+     4941
     ]
    ]
   },
@@ -23287,11 +23844,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     1155
+     4941
     ],
     [
      -1920,
-     1202
+     4988
     ]
    ]
   },
@@ -23302,11 +23859,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     7669
+     10944
     ],
     [
      -1920,
-     7622
+     10897
     ]
    ]
   },
@@ -23317,11 +23874,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     7622
+     10897
     ],
     [
      -1616,
-     7622
+     11018
     ]
    ]
   },
@@ -23332,19 +23889,19 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7622
+     10938
     ],
     [
      -2224,
-     7528
+     10829
     ],
     [
      -1920,
-     7528
+     10829
     ],
     [
      -1616,
-     7528
+     10924
     ]
    ]
   },
@@ -23355,15 +23912,30 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     7669
+     10944
     ],
     [
      -1920,
-     7716
+     10965
     ],
     [
      -1616,
-     7716
+     11112
+    ]
+   ]
+  },
+  {
+   "from": "ep_pulsedInductive",
+   "to": "ep_pulsedInductiveII",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1616,
+     11112
+    ],
+    [
+     -1312,
+     11112
     ]
    ]
   },
@@ -23374,11 +23946,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     4857
+     7984
     ],
     [
      -1616,
-     4663
+     8031
     ]
    ]
   },
@@ -23389,11 +23961,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     4857
+     7984
     ],
     [
      -1616,
-     4569
+     7937
     ]
    ]
   },
@@ -23404,11 +23976,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     4569
+     7937
     ],
     [
      -1312,
-     4569
+     8538
     ]
    ]
   },
@@ -23419,11 +23991,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     6500
+     5516
     ],
     [
      -2224,
-     6547
+     5563
     ]
    ]
   },
@@ -23434,11 +24006,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     6500
+     5516
     ],
     [
      -2224,
-     6453
+     5469
     ]
    ]
   },
@@ -23449,19 +24021,19 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     6453
+     5469
     ],
     [
      -1920,
-     6453
+     5469
     ],
     [
      -1616,
-     6453
+     5469
     ],
     [
      -1312,
-     7513
+     8444
     ]
    ]
   },
@@ -23472,11 +24044,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     9635
+     9949
     ],
     [
      -1312,
-     7513
+     8444
     ]
    ]
   },
@@ -23487,15 +24059,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7371
+     8172
     ],
     [
      -2224,
-     7371
+     8125
     ],
     [
      -1920,
-     7371
+     8125
     ]
    ]
   },
@@ -23506,19 +24078,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     1630
+     998
     ],
     [
      -3136,
-     1672
+     1039
     ],
     [
      -2832,
-     1672
+     1039
     ],
     [
      -2528,
-     1672
+     1039
     ]
    ]
   },
@@ -23529,11 +24101,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     1578
+     945
     ],
     [
      -2224,
-     1578
+     945
     ]
    ]
   },
@@ -23544,11 +24116,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     1578
+     945
     ],
     [
      -1920,
-     1531
+     899
     ]
    ]
   },
@@ -23559,15 +24131,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11796
+     11807
     ],
     [
      -2832,
-     11817
+     11828
     ],
     [
      -2528,
-     11817
+     11828
     ]
    ]
   },
@@ -23578,11 +24150,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     11817
+     11828
     ],
     [
      -2224,
-     11864
+     11875
     ]
    ]
   },
@@ -23593,11 +24165,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     11817
+     11828
     ],
     [
      -2224,
-     11770
+     11781
     ]
    ]
   },
@@ -23608,11 +24180,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     9405
+     9650
     ],
     [
      -2528,
-     9499
+     9744
     ]
    ]
   },
@@ -23623,11 +24195,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     9405
+     9650
     ],
     [
      -2528,
-     9311
+     9650
     ]
    ]
   },
@@ -23638,11 +24210,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     11608
+     11504
     ],
     [
      -2528,
-     11561
+     11551
     ]
    ]
   },
@@ -23653,11 +24225,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     11608
+     11504
     ],
     [
      -2528,
-     11655
+     11457
     ]
    ]
   },
@@ -23668,11 +24240,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     11561
+     11551
     ],
     [
      -2224,
-     11561
+     11551
     ]
    ]
   },
@@ -23683,11 +24255,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     11561
+     11551
     ],
     [
      -1920,
-     11702
+     11692
     ]
    ]
   },
@@ -23698,11 +24270,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     11561
+     11551
     ],
     [
      -1920,
-     11514
+     11504
     ]
    ]
   },
@@ -23713,11 +24285,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     11561
+     11551
     ],
     [
      -1920,
-     11420
+     11410
     ]
    ]
   },
@@ -23728,11 +24300,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     11561
+     11551
     ],
     [
      -1920,
-     11608
+     11598
     ]
    ]
   },
@@ -23743,11 +24315,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     5924
+     10243
     ],
     [
      -2528,
-     5092
+     10243
     ]
    ]
   },
@@ -23758,11 +24330,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     5092
+     10243
     ],
     [
      -2224,
-     5092
+     10243
     ]
    ]
   },
@@ -23773,11 +24345,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     12616
+     12555
     ],
     [
      -2528,
-     12616
+     12555
     ]
    ]
   },
@@ -23788,11 +24360,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     12616
+     12555
     ],
     [
      -2224,
-     12616
+     12555
     ]
    ]
   },
@@ -23803,11 +24375,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     12616
+     12555
     ],
     [
      -1920,
-     12616
+     12555
     ]
    ]
   },
@@ -23818,11 +24390,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     12616
+     12555
     ],
     [
      -1616,
-     12616
+     12555
     ]
    ]
   },
@@ -23833,11 +24405,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     12616
+     12555
     ],
     [
      -1312,
-     12616
+     12555
     ]
    ]
   },
@@ -23848,11 +24420,11 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     12616
+     12555
     ],
     [
      -1008,
-     12616
+     12555
     ]
    ]
   },
@@ -23863,15 +24435,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12799
+     12738
     ],
     [
      -2832,
-     12846
+     12785
     ],
     [
      -2528,
-     12846
+     12785
     ]
    ]
   },
@@ -23882,15 +24454,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12799
+     12738
     ],
     [
      -2832,
-     12752
+     12691
     ],
     [
      -2528,
-     12752
+     12691
     ]
    ]
   },
@@ -23901,15 +24473,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12987
+     12926
     ],
     [
      -2832,
-     13009
+     12947
     ],
     [
      -2528,
-     13009
+     12947
     ]
    ]
   },
@@ -23920,19 +24492,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     11467
+     11363
     ],
     [
      -3136,
-     11467
+     11363
     ],
     [
      -2832,
-     11467
+     11363
     ],
     [
      -2528,
-     11467
+     11363
     ]
    ]
   },
@@ -23943,11 +24515,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     6745
+     7206
     ],
     [
      -2528,
-     6143
+     7330
     ]
    ]
   },
@@ -23958,11 +24530,26 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     6933
+     8121
     ],
     [
      -2528,
-     6897
+     7612
+    ]
+   ]
+  },
+  {
+   "from": "cryo_toroidalAerospikeNozzle",
+   "to": "cryo_toroidalAerospikeNozzleII",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -2528,
+     7612
+    ],
+    [
+     -2224,
+     7612
     ]
    ]
   },
@@ -23973,11 +24560,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     6265
+     7236
     ],
     [
      -2224,
-     6171
+     7142
     ]
    ]
   },
@@ -23988,11 +24575,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2797
+     2306
     ],
     [
      -2224,
-     2562
+     2071
     ]
    ]
   },
@@ -24003,15 +24590,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2562
+     2071
     ],
     [
      -1920,
-     2327
+     1836
     ],
     [
      -1616,
-     2327
+     1836
     ]
    ]
   },
@@ -24022,15 +24609,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2562
+     2071
     ],
     [
      -1920,
-     2421
+     1930
     ],
     [
      -1616,
-     2421
+     1930
     ]
    ]
   },
@@ -24041,11 +24628,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2797
+     2306
     ],
     [
      -2224,
-     2374
+     1883
     ]
    ]
   },
@@ -24056,11 +24643,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2797
+     2306
     ],
     [
      -2224,
-     3455
+     2964
     ]
    ]
   },
@@ -24071,11 +24658,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3455
+     2964
     ],
     [
      -1920,
-     3455
+     2964
     ]
    ]
   },
@@ -24086,11 +24673,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2562
+     2071
     ],
     [
      -1920,
-     2562
+     2071
     ]
    ]
   },
@@ -24101,11 +24688,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     2562
+     2071
     ],
     [
      -1616,
-     2609
+     2118
     ]
    ]
   },
@@ -24116,11 +24703,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2797
+     2306
     ],
     [
      -2224,
-     3361
+     2870
     ]
    ]
   },
@@ -24131,11 +24718,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3361
+     2870
     ],
     [
      -1920,
-     3361
+     2870
     ]
    ]
   },
@@ -24146,11 +24733,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2797
+     2306
     ],
     [
      -2224,
-     2468
+     1977
     ]
    ]
   },
@@ -24161,27 +24748,27 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     2686
+     1960
     ],
     [
      -3440,
-     2238
+     1652
     ],
     [
      -3136,
-     2238
+     1652
     ],
     [
      -2832,
-     2238
+     1652
     ],
     [
      -2528,
-     2238
+     1652
     ],
     [
      -2224,
-     2238
+     1652
     ]
    ]
   },
@@ -24192,11 +24779,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     4166
+     3591
     ],
     [
      -2224,
-     3925
+     3685
     ]
    ]
   },
@@ -24207,11 +24794,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     4166
+     3591
     ],
     [
      -2224,
-     3831
+     3591
     ]
    ]
   },
@@ -24222,15 +24809,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3555
+     3476
     ],
     [
      -2528,
-     4046
+     3309
     ],
     [
      -2224,
-     3549
+     3309
     ]
    ]
   },
@@ -24241,15 +24828,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3555
+     3476
     ],
     [
      -2528,
-     4098
+     3403
     ],
     [
      -2224,
-     3643
+     3403
     ]
    ]
   },
@@ -24260,15 +24847,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     9190
+     7369
     ],
     [
      -3136,
-     9871
+     7375
     ],
     [
      -2832,
-     9871
+     8215
     ]
    ]
   },
@@ -24279,11 +24866,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     1866
+     1328
     ],
     [
      -2224,
-     1866
+     1328
     ]
    ]
   },
@@ -24294,11 +24881,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     9311
+     9650
     ],
     [
      -2224,
-     9311
+     9650
     ]
    ]
   },
@@ -24309,19 +24896,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     9195
+     8818
     ],
     [
      -2832,
-     9196
+     9514
     ],
     [
      -2528,
-     9196
+     9514
     ],
     [
      -2224,
-     9196
+     9514
     ]
    ]
   },
@@ -24332,11 +24919,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     5092
+     10127
     ],
     [
      -2528,
-     4998
+     10149
     ]
    ]
   },
@@ -24347,19 +24934,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     10929
+     10750
     ],
     [
      -2832,
-     10626
+     10473
     ],
     [
      -2528,
-     10626
+     10473
     ],
     [
      -2224,
-     10626
+     10473
     ]
    ]
   },
@@ -24370,19 +24957,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11023
+     10844
     ],
     [
      -2832,
-     10720
+     10567
     ],
     [
      -2528,
-     10720
+     10567
     ],
     [
      -2224,
-     10720
+     10567
     ]
    ]
   },
@@ -24393,11 +24980,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     11467
+     11363
     ],
     [
      -2224,
-     11467
+     11363
     ]
    ]
   },
@@ -24408,19 +24995,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11232
+     11128
     ],
     [
      -2832,
-     11232
+     11128
     ],
     [
      -2528,
-     11232
+     11128
     ],
     [
      -2224,
-     11232
+     11128
     ]
    ]
   },
@@ -24431,23 +25018,23 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     11185
+     11081
     ],
     [
      -3136,
-     11138
+     11034
     ],
     [
      -2832,
-     11138
+     11034
     ],
     [
      -2528,
-     11138
+     11034
     ],
     [
      -2224,
-     11138
+     11034
     ]
    ]
   },
@@ -24458,11 +25045,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     12752
+     12691
     ],
     [
      -2224,
-     12752
+     12691
     ]
    ]
   },
@@ -24473,15 +25060,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     9567
+     9881
     ],
     [
      -2528,
-     9567
+     9881
     ],
     [
      -2224,
-     9567
+     9881
     ]
    ]
   },
@@ -24492,11 +25079,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2562
+     2071
     ],
     [
      -1920,
-     2703
+     2212
     ]
    ]
   },
@@ -24507,11 +25094,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     2703
+     2212
     ],
     [
      -1616,
-     2703
+     2212
     ]
    ]
   },
@@ -24522,11 +25109,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2562
+     2071
     ],
     [
      -1920,
-     2797
+     2306
     ]
    ]
   },
@@ -24537,11 +25124,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     2562
+     2071
     ],
     [
      -1616,
-     2515
+     2024
     ]
    ]
   },
@@ -24552,11 +25139,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3925
+     3685
     ],
     [
      -1920,
-     3878
+     3638
     ]
    ]
   },
@@ -24567,11 +25154,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3925
+     3685
     ],
     [
      -1920,
-     3972
+     3732
     ]
    ]
   },
@@ -24582,23 +25169,23 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     10579
+     8446
     ],
     [
      -2832,
-     10395
+     9215
     ],
     [
      -2528,
-     10395
+     9215
     ],
     [
      -2224,
-     10395
+     9215
     ],
     [
      -1920,
-     10395
+     9215
     ]
    ]
   },
@@ -24609,11 +25196,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     1866
+     1328
     ],
     [
      -1920,
-     1866
+     1328
     ]
    ]
   },
@@ -24624,15 +25211,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2054
+     1516
     ],
     [
      -2224,
-     2054
+     1516
     ],
     [
      -1920,
-     2054
+     1516
     ]
    ]
   },
@@ -24643,11 +25230,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     1578
+     945
     ],
     [
      -1920,
-     1625
+     993
     ]
    ]
   },
@@ -24658,15 +25245,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     4998
+     10149
     ],
     [
      -2224,
-     4998
+     10149
     ],
     [
      -1920,
-     4998
+     10149
     ]
    ]
   },
@@ -24677,11 +25264,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     4998
+     10149
     ],
     [
      -1616,
-     4757
+     10149
     ]
    ]
   },
@@ -24692,11 +25279,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     6824
+     7749
     ],
     [
      -1616,
-     6824
+     7749
     ]
    ]
   },
@@ -24707,11 +25294,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     4742
+     5218
     ],
     [
      -1616,
-     4475
+     5239
     ]
    ]
   },
@@ -24722,15 +25309,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4479
+     4041
     ],
     [
      -1920,
-     4202
+     4176
     ],
     [
      -1616,
-     4202
+     4176
     ]
    ]
   },
@@ -24741,15 +25328,15 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     4742
+     5218
     ],
     [
      -1616,
-     4432
+     5197
     ],
     [
      -1312,
-     4432
+     5197
     ]
    ]
   },
@@ -24760,11 +25347,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     4108
+     3894
     ],
     [
      -1312,
-     4108
+     3894
     ]
    ]
   },
@@ -24775,11 +25362,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     9635
+     9949
     ],
     [
      -1616,
-     9635
+     9949
     ]
    ]
   },
@@ -24790,11 +25377,26 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     9635
+     9949
     ],
     [
      -1312,
-     9776
+     10043
+    ]
+   ]
+  },
+  {
+   "from": "fd_densifiedPropellantKerolox",
+   "to": "fd_densifiedPropellantKeroloxII",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1312,
+     10043
+    ],
+    [
+     -1008,
+     10043
     ]
    ]
   },
@@ -24805,11 +25407,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     4343
+     4035
     ],
     [
      -1616,
-     4296
+     4082
     ]
    ]
   },
@@ -24820,11 +25422,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     1155
+     4941
     ],
     [
      -1920,
-     1108
+     4894
     ]
    ]
   },
@@ -24835,11 +25437,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     7371
+     8125
     ],
     [
      -1616,
-     7371
+     8125
     ]
    ]
   },
@@ -24850,19 +25452,19 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     9703
+     9991
     ],
     [
      -2224,
-     9729
+     9991
     ],
     [
      -1920,
-     9729
+     9991
     ],
     [
      -1616,
-     9729
+     10830
     ]
    ]
   },
@@ -24873,19 +25475,19 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7622
+     10938
     ],
     [
      -2224,
-     7743
+     10992
     ],
     [
      -1920,
-     7743
+     10992
     ],
     [
      -1616,
-     9729
+     10830
     ]
    ]
   },
@@ -24896,11 +25498,26 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     7528
+     10924
     ],
     [
      -1312,
-     7926
+     10924
+    ]
+   ]
+  },
+  {
+   "from": "ep_nextGenGriddedIon",
+   "to": "ep_nextGenGriddedIonII",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1312,
+     10924
+    ],
+    [
+     -1008,
+     10924
     ]
    ]
   },
@@ -24911,11 +25528,26 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     7622
+     11018
     ],
     [
      -1312,
-     8020
+     11018
+    ]
+   ]
+  },
+  {
+   "from": "ep_nasaHighPowerHall",
+   "to": "ep_nasaHighPowerHallII",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1312,
+     11018
+    ],
+    [
+     -1008,
+     11018
     ]
    ]
   },
@@ -24926,23 +25558,23 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7622
+     10938
     ],
     [
      -2224,
-     7486
+     10755
     ],
     [
      -1920,
-     7486
+     10755
     ],
     [
      -1616,
-     7486
+     10755
     ],
     [
      -1312,
-     7094
+     10755
     ]
    ]
   },
@@ -24953,11 +25585,26 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     7094
+     10755
     ],
     [
      -1008,
-     7094
+     10755
+    ]
+   ]
+  },
+  {
+   "from": "ep_variableSpecificImpulsePlasma",
+   "to": "ep_variableSpecificImpulsePlasmaII",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1008,
+     10755
+    ],
+    [
+     -704,
+     10755
     ]
    ]
   },
@@ -24968,11 +25615,11 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     4569
+     8538
     ],
     [
      -1008,
-     4569
+     8538
     ]
    ]
   },
@@ -24983,11 +25630,11 @@ window.TREE = {
    "waypoints": [
     [
      -1008,
-     4569
+     8538
     ],
     [
      -704,
-     4569
+     8538
     ]
    ]
   },
@@ -24998,31 +25645,31 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4040
+     7424
     ],
     [
      -1920,
-     4040
+     7424
     ],
     [
      -1616,
-     4040
+     7424
     ],
     [
      -1312,
-     4040
+     7424
     ],
     [
      -1008,
-     4040
+     7424
     ],
     [
      -704,
-     4040
+     7424
     ],
     [
      -400,
-     4040
+     7424
     ]
    ]
   },
@@ -25033,11 +25680,11 @@ window.TREE = {
    "waypoints": [
     [
      -704,
-     4569
+     8538
     ],
     [
      -400,
-     4569
+     8538
     ]
    ]
   }
