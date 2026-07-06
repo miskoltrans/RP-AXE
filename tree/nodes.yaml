@@ -35,7 +35,10 @@ nodes:
     cost: 999
     parents: []
     flavor: "Everything unplaced or purely cosmetic — a dev holding pen, off the main tree."
-    parts: [YF21_with_shell_CZ-2, YF21_with_shell_CZ-2C, YF21_with_shell_CZ-2D, ROE-Agena_EquipmentRack, RP0HumanRatedFlag]
+    # Emptied 2026-07: the 3 YF-21/CZ-2 boattail shells -> fd_longMarchBoattail (dead-end off their
+    # clustered-first-stage king), ROE-Agena_EquipmentRack -> gnc_rcs (RCS mechanism), RP0HumanRatedFlag ->
+    # int_mercuryCapsule (its intended home per docs/HUMAN-ORBITAL-TREE.md). Kept as an empty holding pen.
+    parts: []
   - id: experimental
     title: "Experimental Hardware"
     discipline: SystemsIntegration
@@ -462,10 +465,15 @@ nodes:
     tier: 2
     parents: [gnc_postWarAvionics]
     flavor: "Bleed compressed nitrogen through opposed nozzles to nudge a craft's attitude — no combustion, nothing to go wrong, just enough impulse to point. The simplest way to hold an orientation in vacuum."
-    parts: [ROE-ModularRCS, RO-2kN-Thruster]
+    parts: [ROE-ModularRCS, RO-2kN-Thruster, ROE-Agena_EquipmentRack]
     # RO-2kN-Thruster added (2026-07): Nitrogen cold-gas thruster, exact same mechanism as this node's own
     # part. RP-1 itself gates it at "Starting Parts" (even earlier than this node's own T2) — close enough
     # and the mechanism match is what matters; not worth re-opening the T0/T1 band-1 fence for one thruster.
+    # ROE-Agena_EquipmentRack added (2026-07, parking cleanup): the Agena's forward attitude-control rack —
+    # capability=rcs (ModuleRCSFX + integrated tankage). Scatter-by-mechanism homes it at the base RCS king,
+    # not with the Agena engine; storable-RCS (gnc_spacecraftRCS) is a T5 node already at its 6-part cap and
+    # this 1960 rack predates it, so the base node is the era-right home (same mechanism-match logic as
+    # RO-2kN-Thruster above).
   - id: aero_recovery
     title: "Drogue-Stabilized Deceleration"
     discipline: Aerodynamics
@@ -1160,6 +1168,18 @@ nodes:
     parents: [fd_orbitalMultiChamber, pc_ntoHypergolics]
     flavor: "Bolt four storable chambers to a common frame and fire them as one — three thousand kilonewtons of hypergolic thrust off the pad with no cryogenic plumbing to chill down or top off. The clustered first stage that lets a storable rocket match a kerolox booster for liftoff, ready to go at a moment's notice."
     parts: [YF20_Engine, YF21_Engine, YF22_Engine, YF23_Engine, YF25K_Engine]
+  - id: fd_longMarchBoattail
+    title: "Integrated Booster Boattail"
+    discipline: FluidDynamics
+    tier: 6
+    parents: [fd_longMarchStorable]
+    flavor: "Wrap the clustered first stage in its aerodynamic boattail and it stops being a bare cluster of chambers and becomes a complete, flight-configured stage — the CZ-2, CZ-2C and CZ-2D as they actually stacked. Same four storable chambers as the king; procedural structure builds the same fairing for nothing, so this is off-the-shelf convenience, not a new engine."
+    parts: [YF21_with_shell_CZ-2, YF21_with_shell_CZ-2C, YF21_with_shell_CZ-2D]
+    # 2026-07 (parking cleanup): fixed-catalog opt-in dead-end off fd_longMarchStorable, same pattern as the
+    # RCS catalogs. These 3 are the YF-21 cluster (identical 3358 kN hypergolic engine, shared YF-20B/25K/20C
+    # upgrade configs already unlocked via the base YF21_Engine in the parent) wearing the CZ-2/2C/2D boattail
+    # aeroshell. Cosmetic/aero shells, not a breakthrough, so they don't belong in the king node (and would
+    # push it to 8 parts over the 6-cap); the +1 tier is the standard "dig one deeper for the fixed catalog" tax.
   - id: int_dongFangHong1
     title: "China's First Satellite"
     discipline: SystemsIntegration
@@ -1330,7 +1350,11 @@ nodes:
     tier: 6
     parents: [cmp_ablativeTPS, life_openLoopECLSS]
     flavor: "A blunt cone that rides its own shockwave down, the heatshield taking the fire while the crewman lies on his back against the deceleration. Mercury: one seat, a retrofire to leave orbit, a splashdown under a single canopy. The first American in orbit."
-    parts: [ROC-MercuryCMBDB, ROC-MercuryAirbrakeBDB]
+    parts: [ROC-MercuryCMBDB, ROC-MercuryAirbrakeBDB, RP0HumanRatedFlag]
+    # RP0HumanRatedFlag added (2026-07, parking cleanup): the cosmetic human-rating flag decal, listed as a
+    # ride-along of this exact capsule king (ROC-MercuryCMBDB) in the original design (docs/HUMAN-ORBITAL-TREE.md)
+    # and just missed during authoring. Belongs with the first crewed capsule — it only means anything once
+    # you are flying people.
   - id: int_vostokCapsule
     title: "Spherical Reentry Capsule"
     discipline: SystemsIntegration
