@@ -9,6 +9,18 @@
 > **Review run:** 6 lane agents (one per discipline cluster, one doubling as a cross-cutting
 > sweep) -> ~24 raw candidates -> adversarial self-verify -> **14 survived** (4 High, 6 Medium,
 > 4 Low), plus 6 untriaged-hub items and a set of confirmed non-findings.
+>
+> **Fix pass (2026-07-06, commits `de6dfeb`..`e887989`):** all 14 findings + all 6 hub items
+> addressed. `tools/build_tree.py` clean throughout, one commit per logical fix. Highlights:
+> the avionics-tier ladder (#3) was redesigned, not just renamed — real generation order
+> ground-truthed against RP-1's own `RP0TechTree.cfg`, and the dormant `Computing` discipline
+> (defined, never used) activated to carry the digital-flight-computer generations, crossed in
+> from a new `elec_integratedCircuit` Microelectronics enabler; `largeScaleAvionics`, the 4th of
+> the doc's own 8 Science-Core tiers, was authored for the first time. `int_geminiCapsule` (#1)
+> got both its title and its mis-homed science part fixed, with the locker moved to a new
+> `life_crewedExperimentBay`. The two era-mismatched ride-alongs in
+> `gnc_threeAxisStabilizedBus` moved to their real generations. Full list of every
+> finding -> fix in the per-commit messages (`git log --grep=band3-review`).
 
 ## 1. Verdict
 
