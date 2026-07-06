@@ -1494,6 +1494,18 @@ nodes:
     anyToUnlock: true
     flavor: "Close the last few metres by eye and thruster, then latch two spacecraft nose to nose in orbit — the manoeuvre every later mission depends on. Any maneuverable crewed vehicle can get you here; it isn't tied to one program's specific propulsion choice."
     parts: [ROC-AgenaPort, ROC-AgenaFairing, ROC-GeminiNoseconeBDB, dockingPort3, RO-ApolloDockingPort, ROC-ApolloDrogueDockPortBDB, ROC-ApolloProbeDockPortBDB, ROC-D2DockDrogue, ROC-D2DockProbe, ROC-DynaDockingArms, ROC-DynaDockingSystem]
+
+  - id: gnc_inflatableDockingAirlock
+    title: "Inflatable Docking Airlock"
+    discipline: GuidanceControl
+    tier: 9
+    parents: [gnc_rendezvousDocking]
+    flavor: "Fold Voskhod's inflatable fabric tunnel into a compact module that latches onto a docking port instead of a single hatch - one lightweight ring that gives a crew both a way to meet another spacecraft and a way outside it, without the mass of two separate systems."
+    parts: [restock-airlock-1]
+    # 2026-07 backlog sweep: AL-1 'Lychee' combines the inflatable-airlock lineage (int_voskhodCabin, T7 -
+    # already reachable via gnc_rendezvousDocking's own parent, so not re-listed here) with docking-adapter
+    # function into one integrated module - a genuine crossover, not a plain docking port or plain airlock.
+    # Sibling of gnc_stationBerthing (T9).
     # FIXED (2026-07): was an AND-gate on [int_geminiCapsule, gnc_spacecraftRCS]. Docking doesn't need
     # storable-propellant RCS specifically (ahistorical — a different maneuvering approach could reach the
     # same milestone), and it shouldn't be tied exclusively to Gemini either — anyToUnlock against BOTH
@@ -2325,14 +2337,22 @@ nodes:
     tier: 8
     parents: [gnc_interplanetaryAvionics, elec_integratedCircuit]
     flavor: "Trade the analog integrator for a true digital computer, built from the first integrated circuits — a machine that computes a fresh trajectory correction instead of just holding one, fast enough to fly a booster instead of merely stabilizing it. The line between an instrument and a computer, crossed for good."
+    parts: [RO-SaturnI-IU]
     grants: [Science-Core-improvedAvionics]
+    # RO-SaturnI-IU (2026-07, backlog sweep): the Saturn I's own instrument-unit ring, contemporaneous with
+    # this generation of digital guidance hardware (early-mid 1960s) - tagged for AXE's own avionics module
+    # at the P4 config-patch pass, per docs/PARTLIST.md.
   - id: comp_realTimeFlightComputer
     title: "Priority-Interrupt Flight Computer"
     discipline: Computing
     tier: 9
     parents: [comp_digitalGuidanceComputer]
     flavor: "One flight computer that juggles guidance, navigation and engine control at once, always answering whichever task is most urgent instead of finishing one program before starting the next — real-time computing built to fly a crew, not just a probe. The Apollo Guidance Computer's real trick, and the reason it could do five jobs on hardware that could barely do one."
+    parts: [restock-drone-core-375-1]
     grants: [Science-Core-matureAvionics]
+    # restock-drone-core-375-1 (2026-07, backlog sweep): the Saturn IB/V instrument unit - the real ring
+    # that carried the actual Apollo Guidance Computer's ground-side LVDC counterpart. Tagged for AXE's
+    # own avionics module at the P4 config-patch pass, per docs/PARTLIST.md.
   - id: comp_networkedAvionics
     title: "Multi-Vehicle Avionics Integration"
     discipline: Computing
