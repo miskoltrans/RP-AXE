@@ -36,6 +36,22 @@ nodes:
     parents: []
     flavor: "Everything unplaced or purely cosmetic — a dev holding pen, off the main tree."
     parts: [YF21_with_shell_CZ-2, YF21_with_shell_CZ-2C, YF21_with_shell_CZ-2D, ROE-Agena_EquipmentRack, RP0HumanRatedFlag]
+  - id: experimental
+    title: "Experimental Hardware"
+    discipline: SystemsIntegration
+    tier: 1
+    parents: []
+    flavor: "Off-program hardware that never earned a place in the main tree - redundant instruments, third-party curiosities, flight-proven gear with nothing new left to teach. Available to build, not required to progress; a side branch for flavour and player choice, not the story the rest of the tree tells."
+    parts: [aquila_sensor_synthetic_aperture_radar_srf_1, aquila_sensor_visible_light_telescope_s0_1]
+    # 2026-07: the standalone Experimental side-node from docs/RESTART.md ("uncurated/3rd-party parts fall
+    # to a standalone Experimental side-node - visible, low science, off the main tree, excluded from
+    # balance") - designed but never actually built until now. First tenants: Spektr's SAR radar and
+    # Priroda's visible-light telescope (Tantares), both explicitly remapped here at T1 curation
+    # (docs/PARTLIST.md) as redundant with instruments already in the main science backbone. A permanent
+    # player-facing home (unlike `parking` above, a temporary dev holding pen meant to end up empty) - a
+    # root node like parking/hire_JPL/hire_OKB, available immediately, gates nothing, isn't gated by
+    # anything. Future uncurated/3rd-party additions belong here too; excluded from the deferred science-
+    # budget/balance pass (P3) when that lands.
   - id: hire_JPL
     title: "Charter a Deep-Space Probe Lab (JPL)"
     discipline: SystemsIntegration
@@ -373,7 +389,9 @@ nodes:
     tier: 2
     parents: [str_structuralHardware]
     flavor: "Frangible joints and shaped charges cut a spent stage away on a millisecond's command; small motors settle the propellant for the next light. The only way to the velocities chemistry can't reach in one burn."
-    parts: [proceduralStackDecoupler, radialDecoupler, ROT-RingDecoupler, ROE-120XDecoupler]
+    parts: [proceduralStackDecoupler, radialDecoupler, ROT-RingDecoupler, ROE-120XDecoupler, sargas_decoupler_s1p5_1]
+    # sargas_decoupler_s1p5_1 (2026-07, Tantares placement pass): the TKS ferry's own stage decoupler -
+    # same mechanism as everything else in this fixed catalog.
     # ROE-120XDecoupler added (2026-07): pure structure (disc=structure, no engine module), pairs with
     # pc_segmentedCasting's UA120X booster family by NAME but belongs in the structural decoupler catalog,
     # not the propellant-chemistry node — same lesson as the parachute/landing-leg mistakes this session.
@@ -535,7 +553,9 @@ nodes:
     tier: 7
     parents: [str_landingGear]
     flavor: "No wheels, no retraction — just a shock-absorbing strut that swings out once and takes the full load of touching down somewhere with no runway at all."
-    parts: [landingLeg1, landingLeg1-2, ROC-LEMLegsBDB, ROC-LEMDescentBDB, ROC-LEMTruckPlatformBDB]
+    parts: [landingLeg1, landingLeg1-2, ROC-LEMLegsBDB, ROC-LEMDescentBDB, ROC-LEMTruckPlatformBDB, vela_landing_leg_srf_1, vela_landing_leg_srf_2]
+    # vela_landing_leg_srf_1/2 (2026-07, Tantares placement pass): LK-700's own legs - same fixed-strut
+    # mechanism as the LM's, a different lunar-lander programme.
     # ROC-LEMTruckPlatformBDB added (2026-07, power+science pass): the AES LM Truck's cargo pallet - a
     # landed-structure variant of the same descent-stage lineage already here, no crew cabin of its own.
     # NEW (2026-07 fix, user call — "make them a simple one off node"): split out of
@@ -1331,7 +1351,9 @@ nodes:
     tier: 6
     parents: [aero_recovery]
     flavor: "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point."
-    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, ROC-GeminiParachuteBDB, ROC-GeminiParachuteDrogueBDB, ROC-GeminiRetrogradeSectionBDB, ROC-ReentryControlSystemBDB, ROC-RetrogradeDecouplerBDB, ROC-VoskhodRetroDecoupler, ROC-ApolloParachuteBDB, ROC-ApolloDrogueParachuteBDB, ROC-D2Parachute, ROC-GeminiBRetrogradeSection, ROC-GeminiBEquipmentSection, ROC-BigGeminiParachute, ROC-BigGeminiParachuteDrogue, ROC-OrionParachute, ROC-CSTParachute]
+    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, ROC-GeminiParachuteBDB, ROC-GeminiParachuteDrogueBDB, ROC-GeminiRetrogradeSectionBDB, ROC-ReentryControlSystemBDB, ROC-RetrogradeDecouplerBDB, ROC-VoskhodRetroDecoupler, ROC-ApolloParachuteBDB, ROC-ApolloDrogueParachuteBDB, ROC-D2Parachute, ROC-GeminiBRetrogradeSection, ROC-GeminiBEquipmentSection, ROC-BigGeminiParachute, ROC-BigGeminiParachuteDrogue, ROC-OrionParachute, ROC-CSTParachute, aquarius_drogue_parachute_s0_1, aquarius_parachute_s0p5_1]
+    # aquarius_drogue_parachute_s0_1/aquarius_parachute_s0p5_1 (2026-07, Tantares placement pass): LK-700's
+    # own drogue+main canopy, same catalog as every other capsule's recovery hardware here.
     # ROC-BigGeminiParachute/ParachuteDrogue added (2026-07, capsules+orbiter pass): Big Gemini's own
     # recovery canopy/drogue, same mechanism/catalog as every other capsule's here. Fixed catalog, cap-exempt.
     # ROC-VoskhodRetroDecoupler added (2026-07): pure structure (disc=structure, no engine module), pairs
@@ -1754,7 +1776,8 @@ nodes:
     tier: 7
     parents: [tel_pcmTelemetry]
     flavor: "Fold a dish bigger than the launch shroud allows, then open it once clear — the gain a distant probe needs to be heard at all, in a package that first has to fit under a nose cone."
-    parts: [HighGainAntenna, HighGainAntenna5_v2, dish_deploy_S, dish_deploy_S2]
+    parts: [HighGainAntenna, HighGainAntenna5_v2, dish_deploy_S, dish_deploy_S2, vela_high_gain_antenna_srf_1]
+    # vela_high_gain_antenna_srf_1 (2026-07, Tantares placement pass): LK-700's own deployable dish.
     upgrades: [commsTL3]
     # commsTL3 added (2026-07): RealAntennas' own tech-level upgrade, same :NEEDS[RP-0] re-pointing fix.
     grants: [RP0Level4TrackingStation]
@@ -2038,7 +2061,9 @@ nodes:
     tier: 9
     parents: [cmp_lunarReturnAblator]
     flavor: "Push the same ablator formulation a margin further — the heat load of an actual landing-and-return mission rather than a single translunar pass, still bolted to whichever airframe happens to need it."
-    parts: [ROC-BigGeminiHS, ROC-BigGeminiHSLunar]
+    parts: [ROC-BigGeminiHS, ROC-BigGeminiHSLunar, aquarius_heatshield_s1p5_1]
+    # aquarius_heatshield_s1p5_1 (2026-07, Tantares placement pass): LK-700's own heatshield - the ladder
+    # scatters by tech, not by vehicle, same rule already applied to Big Gemini's above.
     upgrades: [LunarHS]
     # ROC-BigGeminiHS/ROC-BigGeminiHSLunar added (2026-07, power+science pass): Big Gemini's own
     # heatshields land here (not the T8 node above, already at cap) - a good tier match besides, since
@@ -2158,6 +2183,19 @@ nodes:
     # cover (VenStockRevamp), two incompatible catalog lines, and no real Mk1-compatible cover exists
     # anywhere in the curated manifest. Dropped the mismatched cover rather than guess again; renamed off
     # the bare artifact word "Pod" to the real mechanism this node actually represents.
+
+  - id: int_lk700Lander
+    title: "LK-700 Single-Stage Lunar Return"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [int_compactCrewPod]
+    flavor: "Land the whole crew cabin on the Moon and fly the same cabin straight home - no separate ascent stage, no lunar-orbit rendezvous to trust your life to. The Soviet answer that skips the rendezvous entirely, betting everything on one vehicle instead of two."
+    parts: [aquarius_crew_s1p5_1]
+    # 2026-07 (Tantares placement pass): the real architectural alternative to the Apollo LM's two-stage,
+    # rendezvous-dependent design (fd_deepThrottleLanding, T9) - own node rather than folded into the
+    # generic compact-crew-pod catalog, since the whole point is a genuinely different mission architecture,
+    # not just another can with a hatch. Legs/heatshield/parachute/antenna scatter to their own mechanism
+    # nodes per doctrine (str_fixedLanderLegs/cmp_lunarLandingAblator/edl_crewedRecovery/tel_deployableHighGainDish).
 
   # ================================================================================================
   # ============ BAND 3 * CREWED LUNAR LANDING + MOON-ROCKET PROPULSION (engines, 2026-07) ==========
@@ -2569,13 +2607,26 @@ nodes:
     flavor: "A pressurised volume built for people to live in for weeks, not the hours a capsule allows - room to stand, sleep and work while a life-support loop keeps the air breathable. The core a space station grows around."
     parts: [crewCabin, sspx-core-125-1, sspx-habitation-1875-2, SXTCrewCabSSP10, SXTCrewCabSSP20, ROC-GeminiLCMBDB]
     # King habitation module. The station's crewed volume; structural tubes/adapters live in str_stationStructures.
+  - id: int_tksFerry
+    title: "TKS Ferry and Return Capsule"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [life_stationHabitation]
+    flavor: "A cargo-and-crew ferry built around a reusable habitation module in front and a small, separately-landable descent capsule behind it - the same real hardware that resupplied the early Soviet stations and, unlike its American cargo-Gemini counterpart, actually flew."
+    parts: [aquila_control_s2_1, ro_TKS_crew_s1p5_2, alnair_les_s0_2]
+    # 2026-07 (Tantares placement pass): real TKS/VA hardware (Salyut/Almaz resupply, 1970s), own node
+    # matching int_bigGeminiLogistics's treatment of the same era's parallel American concept - except this
+    # one flew. Decoupler/adapters split to their generic catalogs (str_staging/str_stationStructures).
   - id: str_stationStructures
     title: "Pressurised Station Connectors"
     discipline: StructuresMechanisms
     tier: 8
     parents: [str_equipmentBays]
     flavor: "The plumbing of an orbital outpost - pressurised passage tubes, diameter adapters and storage volumes that let separate modules dock into one continuous habitable structure."
-    parts: [proceduralCrewTube, sspx-tube-125-2, sspx-tube-125-3, sspx-tube-1875-2, sspx-tube-1875-3, sspx-adapter-0625-125-1, sspx-adapter-125-25-1, sspx-adapter-125-25-2, sspx-adapter-1875-0625-1, sspx-adapter-1875-125-1, sspx-adapter-1875-125-2, sspx-adapter-25-1875-1, sspx-cargo-125-1, sspx-tube-125-1, sspx-tube-1875-1, sspx-cargo-container-25-3, sspx-adapter-25-375-1, sspx-adapter-25-375-2]
+    parts: [proceduralCrewTube, sspx-tube-125-2, sspx-tube-125-3, sspx-tube-1875-2, sspx-tube-1875-3, sspx-adapter-0625-125-1, sspx-adapter-125-25-1, sspx-adapter-125-25-2, sspx-adapter-1875-0625-1, sspx-adapter-1875-125-1, sspx-adapter-1875-125-2, sspx-adapter-25-1875-1, sspx-cargo-125-1, sspx-tube-125-1, sspx-tube-1875-1, sspx-cargo-container-25-3, sspx-adapter-25-375-1, sspx-adapter-25-375-2, eridani_node_adapter_s1p5_s0p5_1, acamar_adapter_s2_s0p5_1, ro_kvant-2_adapter_s2_s0p5_1, ro_kvant-2_adapter_s2_s1p5_1, aquila_adapter_s2_s0p5_1, aquila_adapter_s2_s1p5_1, aquila_adapter_s1p5_1, ro_spektr_adapter_s2_s0p5_1, ro_spektr_adapter_s2_s1p5_1, ro_priroda_adapter_s2_s0p5_1, ro_priroda_adapter_s2_s1p5_1, ro_TKS_adapter_s2_s0p5_1, ro_TKS_adapter_s2_s1p5_1]
+    # +13 Tantares diameter adapters (2026-07, Tantares placement pass): the same real function (diameter
+    # transitions between docked modules) as the SSPX catalog already here, just Mir/Kvant/Kristall/Spektr/
+    # Priroda/TKS-branded. Fixed catalog, cap-exempt.
     # Widened (2026-07, stations pass): sspx-tube-125-1/1875-1 (same tube family, a longer/later-gated
     # size), sspx-cargo-container-25-3 (same storage-volume theme as sspx-cargo-125-1), sspx-adapter-25-
     # 375-1/2 (the new 6.75m<->4.5m diameter step Skylab-class modules need). Fixed catalog, cap-exempt.
@@ -2990,6 +3041,61 @@ nodes:
     # gnc_fixedRcsCatalog/pc_apogeeKickCatalog. Kept separate from life_convertedStageStation so Skylab
     # keeps its own spotlight rather than sharing a node with generic catalog parts.
 
+  # ---- Lane 1b: Mir - a real named station, own spotlight (2026-07, Tantares placement pass) ----
+  - id: life_mirCore
+    title: "Mir Core Module"
+    discipline: LifeSupport
+    tier: 10
+    parents: [life_habitatModuleCatalog]
+    flavor: "The first module of the first station meant to be added to, not just launched whole - a working/living core section, a transfer compartment and a docking front end, built from day one expecting company."
+    parts: [eridani_crew_s2_1, eridani_crew_s2_s1p5_1, eridani_crew_s1p5_1]
+    # King Mir base block (1986) - the real headline of this whole lane, own dedicated node rather than
+    # folded into the generic SSPX catalog above (same "own spotlight" treatment as Skylab gets in
+    # life_convertedStageStation). Docking node/adapter split out to str_stationHubs/str_stationStructures
+    # (generic connector hardware, not this module's own distinctive breakthrough).
+  - id: int_kvant1Module
+    title: "Kvant-1 Astrophysics Module"
+    discipline: SystemsIntegration
+    tier: 11
+    parents: [life_mirCore]
+    flavor: "The station's first add-on: a small module built around an X-ray/UV observatory, bolted to a permanent outpost instead of flown as its own standalone mission."
+    parts: [acamar_crew_s2_1, acamar_science_processor_s2_1]
+    # 1987 addition. Own node (real, distinct mission from the core) rather than folded into life_mirCore.
+  - id: int_kvant2Module
+    title: "Kvant-2 EVA and Biology Module"
+    discipline: SystemsIntegration
+    tier: 11
+    parents: [life_mirCore]
+    flavor: "A dedicated airlock and a biological-research bay in one add-on - the module that gave the station its own independent way outside, instead of relying on whatever happened to be docked."
+    parts: [ro_kvant-2_crew_s1p5_2, aquila_crew_s1_3, aquila_lab_s1_1]
+    # 1989 addition.
+  - id: int_kristallModule
+    title: "Kristall Materials-Processing Module"
+    discipline: SystemsIntegration
+    tier: 11
+    parents: [life_mirCore]
+    flavor: "A furnace bay for growing crystals and processing alloys in freefall, on a module built with androgynous docking hardware flexible enough to one day catch a visitor nobody designed it for."
+    parts: [aquila_crew_s1p5_2, aquila_crew_s1_1]
+    # 1990 addition (later modified to host the Shuttle - the androgynous port's real payoff).
+  - id: int_spektrModule
+    title: "Spektr Remote-Sensing Module"
+    discipline: SystemsIntegration
+    tier: 11
+    parents: [life_mirCore]
+    flavor: "An Earth-observation and remote-sensing add-on, its own solar wings feeding a bay of imaging instruments pointed at the ground instead of the sky."
+    parts: [ro_spektr_crew_s1p5_2, aquila_structural_cone_s1p5_1, aquila_lab_s1p5_1]
+    # 1995 addition. Its own SAR-radar instrument is deliberately NOT here - remapped to the standalone
+    # `experimental` side-node per the original T1 curation call (redundant with the main science backbone).
+  - id: int_prirodaModule
+    title: "Priroda Earth-Observation Module"
+    discipline: SystemsIntegration
+    tier: 11
+    parents: [life_mirCore]
+    flavor: "The station's last add-on: a dedicated Earth-sciences module, an experiment rack and laboratory turned toward agriculture, oceanography and environmental monitoring from orbit."
+    parts: [ro_priroda_crew_s1p5_2, aquila_experiment_rack_s1p5_1, aquila_lab_s1p5_2]
+    # 1996 addition, completing the real Mir complex. Its own visible-light telescope is deliberately NOT
+    # here - remapped to the standalone `experimental` side-node, same call as Spektr's SAR radar above.
+
   # ---- Lane 2: external truss structure (a genuinely new mechanism - unpressurised scaffold) ----
   - id: str_externalTrussStructure
     title: "External Truss Structure"
@@ -3002,6 +3108,16 @@ nodes:
     # from str_stationStructures' pressurised tubes/adapters). Adjustable base frames/cradles (mounting
     # hardware) and radial pressurised attachment points (berthing, not axial docking) ride along - same
     # "station assembly hardware" theme. Fixed catalog, cap-exempt, matching its str_stationStructures parent.
+  - id: str_soforaTruss
+    title: "EVA-Assembled External Truss"
+    discipline: StructuresMechanisms
+    tier: 10
+    parents: [str_externalTrussStructure]
+    flavor: "A lattice tower built piece by piece by a spacewalking crew instead of arriving pre-built on a single launch - the first truss put together by hand in orbit, proving a station's own structure could grow past whatever fit under one payload fairing."
+    parts: [rana_mount_srf_1, rana_truss_srf_1, rana_truss_srf_2]
+    # 2026-07 (Tantares placement pass): Mir's Sofora truss (1991) - a genuine first (EVA-assembled, not
+    # launched whole) distinct enough from the pre-fabricated Hexa-Girder/octo/spinal/circular truss
+    # families already in this tree to earn its own node.
 
   # ---- Lane 3: station docking/berthing generation + attitude-control size classes ----
   - id: gnc_stationBerthing
@@ -3663,7 +3779,9 @@ nodes:
     tier: 10
     parents: [str_stationStructures]
     flavor: "Multi-point connectors - the junction boxes of a station - that let one node join four, six or more modules at once, turning a linear stack into a branching structure."
-    parts: [stationHubLarge, stationHub, sspx-hub-125-1, sspx-hub-1875-1, sspx-hub-25-1]
+    parts: [stationHubLarge, stationHub, sspx-hub-125-1, sspx-hub-1875-1, sspx-hub-25-1, aquila_node_s0p5_1, aquila_node_s0p5_2, aquila_node_adapter_s1_1]
+    # +3 Tantares multi-port docking nodes (2026-07, Tantares placement pass): Mir's own front node +
+    # Kristall's docking node/adapter - same junction-box function as the SSPX hubs already here.
   - id: str_stationMountingBases
     title: "Station Mounting Bases"
     discipline: StructuresMechanisms
