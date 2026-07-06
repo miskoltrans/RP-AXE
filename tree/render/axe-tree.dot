@@ -221,14 +221,14 @@ digraph AXE {
   "comp_networkedAvionics" [label="Multi-Vehicle Avionics Integration\nComputing T10 · 1300",fillcolor="#d13bc4",fontcolor="#111111"];
   "av_highBypassTurbofan" [label="High-Bypass Turbofan\nAirBreathing T7 · 2300",fillcolor="#6cc4b0",fontcolor="#111111"];
   "av_lowBypassTurbofan" [label="Low-Bypass Turbofan\nAirBreathing T7 · 2300",fillcolor="#6cc4b0",fontcolor="#111111"];
-  "av_advancedJetEngines" [label="Mature Jet Refinement\nAirBreathing T8 · 2100",fillcolor="#6cc4b0",fontcolor="#111111"];
+  "av_advancedJetEngines" [label="Turbine-Temperature Uprating\nAirBreathing T8 · 2100",fillcolor="#6cc4b0",fontcolor="#111111"];
   "av_refinedTurboprop" [label="Refined Free-Turbine Turboprop\nAirBreathing T5 · 1500",fillcolor="#6cc4b0",fontcolor="#111111"];
   "pc_largeSegmentedBooster" [label="Large-Segment Solid Casting\nPropellantChemistry T8 · 2100",fillcolor="#e5533b",fontcolor="#111111"];
   "pc_storableRcsPropellants" [label="Storable RCS Propellant Selection\nPropellantChemistry T8 · 2100",fillcolor="#e5533b",fontcolor="#111111"];
   "pc_caveaB" [label="Cavea-B Oxidiser (gamble)\nPropellantChemistry T9 · 1700",fillcolor="#e5533b",fontcolor="#111111"];
   "int_heavyLaunchEscape" [label="High-Impulse Abort Motor\nSystemsIntegration T7 · 2300",fillcolor="#ededed",fontcolor="#111111"];
   "fd_advancedSpacecraftPropulsion" [label="Sustained-Duty Service Propulsion\nFluidDynamics T8 · 2100",fillcolor="#23b9a0",fontcolor="#111111"];
-  "fd_engineMaturation" [label="Flight-Proven Reliability Uprating\nFluidDynamics T6 · 2000",fillcolor="#23b9a0",fontcolor="#111111"];
+  "fd_engineMaturation" [label="In-Place Production Uprating\nFluidDynamics T6 · 2000",fillcolor="#23b9a0",fontcolor="#111111"];
   "nuc_fissionReactor" [label="Compact Fission Reactor\nNuclearEngineering T8 · 2100",fillcolor="#83c341",fontcolor="#111111"];
   "int_apolloCSM" [label="Trans-Lunar Crew Vehicle\nSystemsIntegration T8 · 2100",fillcolor="#ededed",fontcolor="#111111"];
   "int_d2LunarCraft" [label="Circumlunar Descent Craft\nSystemsIntegration T8 · 2100",fillcolor="#ededed",fontcolor="#111111"];

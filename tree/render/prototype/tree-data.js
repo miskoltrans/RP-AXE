@@ -1832,6 +1832,16 @@ window.TREE = {
    "flavor": "A sliver of doped crystal that passes current one way only — grown up from the cat's-whisker radio detector into a rugged solid-state device. It lights an indicator on almost no power, and it is the seed of everything solid-state: rectifiers, transistors, the integrated circuit still to come. Microelectronics grows from here.",
    "parts": [
     {
+     "name": "ROC-ApolloDockingLightBDB",
+     "mod": "ROCapsules",
+     "title": "Apollo Docking Spotlight"
+    },
+    {
+     "name": "ROC-ApolloEVALightBDB",
+     "mod": "ROCapsules",
+     "title": "Apollo EVA Spotlight"
+    },
+    {
      "name": "SmallPointLight",
      "mod": "VenStockRevamp",
      "title": "MK 4 Point Light"
@@ -3822,6 +3832,11 @@ window.TREE = {
      "name": "airplaneTailB",
      "mod": "Squad",
      "title": "Tail Connector B"
+    },
+    {
+     "name": "seatExternalCmd",
+     "mod": "Squad",
+     "title": "EAS-1 External Command Seat"
     }
    ],
    "upgrades": [],
@@ -7593,11 +7608,6 @@ window.TREE = {
      "name": "RO_RCSBlock_restock_825",
      "mod": "ReStockPlus",
      "title": "Angled RCS Block [ 825/1335 N Class]"
-    },
-    {
-     "name": "sasModule",
-     "mod": "Squad",
-     "title": "Small Inline Reaction Wheel"
     }
    ],
    "upgrades": [],
@@ -9265,6 +9275,11 @@ window.TREE = {
      "name": "ca_startrack",
      "mod": "CoatlAerospace",
      "title": "CA-ACS 'StarTrack' Attitude Control System"
+    },
+    {
+     "name": "sasModule",
+     "mod": "Squad",
+     "title": "Small Inline Reaction Wheel"
     }
    ],
    "upgrades": [],
@@ -9795,7 +9810,7 @@ window.TREE = {
   },
   {
    "id": "av_advancedJetEngines",
-   "title": "Mature Jet Refinement",
+   "title": "Turbine-Temperature Uprating",
    "discipline": "AirBreathing",
    "tier": 8,
    "cost": 2100,
@@ -9863,6 +9878,16 @@ window.TREE = {
      "name": "ROE-1207sepMotor",
      "mod": "ROEngines",
      "title": "UA1207 Nosecone & Separation Motor"
+    },
+    {
+     "name": "ROE-AJ260FLA",
+     "mod": "ROEngines",
+     "title": "AJ-260 FL Radial Solid Rocket Booster"
+    },
+    {
+     "name": "ROE-AJ260FLF",
+     "mod": "ROEngines",
+     "title": "AJ-260 FL"
     },
     {
      "name": "ROE-UA1206",
@@ -9991,7 +10016,7 @@ window.TREE = {
   },
   {
    "id": "fd_engineMaturation",
-   "title": "Flight-Proven Reliability Uprating",
+   "title": "In-Place Production Uprating",
    "discipline": "FluidDynamics",
    "tier": 6,
    "cost": 2000,
@@ -10077,16 +10102,6 @@ window.TREE = {
      "title": "Apollo Command/Service Module Decoupler"
     },
     {
-     "name": "ROC-ApolloDockingLightBDB",
-     "mod": "ROCapsules",
-     "title": "Apollo Docking Spotlight"
-    },
-    {
-     "name": "ROC-ApolloEVALightBDB",
-     "mod": "ROCapsules",
-     "title": "Apollo EVA Spotlight"
-    },
-    {
      "name": "ROC-ApolloEngineMountBDB",
      "mod": "ROCapsules",
      "title": "Apollo Service Module Engine Mount"
@@ -10102,19 +10117,9 @@ window.TREE = {
      "title": "Apollo Service Module (SM)"
     },
     {
-     "name": "ROC-GeminiLCMBDB",
-     "mod": "ROCapsules",
-     "title": "Gemini L Cabin"
-    },
-    {
      "name": "mk1-3pod",
      "mod": "Squad",
      "title": "Mk1-3 Command Pod (4m)"
-    },
-    {
-     "name": "seatExternalCmd",
-     "mod": "Squad",
-     "title": "EAS-1 External Command Seat"
     }
    ],
    "upgrades": [],
@@ -10232,6 +10237,11 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "A pressurised volume built for people to live in for weeks, not the hours a capsule allows - room to stand, sleep and work while a life-support loop keeps the air breathable. The core a space station grows around.",
    "parts": [
+    {
+     "name": "ROC-GeminiLCMBDB",
+     "mod": "ROCapsules",
+     "title": "Gemini L Cabin"
+    },
     {
      "name": "SXTCrewCabSSP10",
      "mod": "SXT",

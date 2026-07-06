@@ -322,7 +322,7 @@ nodes:
     tier: 2
     parents: [tel_telemetry]
     flavor: "A sliver of doped crystal that passes current one way only — grown up from the cat's-whisker radio detector into a rugged solid-state device. It lights an indicator on almost no power, and it is the seed of everything solid-state: rectifiers, transistors, the integrated circuit still to come. Microelectronics grows from here."
-    parts: [SmallPointLight, SmallSpotLight, SmallStripLight, domeLight1, groundLight1, groundLight2, navLight1, spotLight1, spotLight1_v2, spotLight2, spotLight2_v2, spotLight3, stripLight1]
+    parts: [SmallPointLight, SmallSpotLight, SmallStripLight, domeLight1, groundLight1, groundLight2, navLight1, spotLight1, spotLight1_v2, spotLight2, spotLight2_v2, spotLight3, stripLight1, ROC-ApolloDockingLightBDB, ROC-ApolloEVALightBDB]
   - id: elec_transistor
     title: "Transistor Amplification"
     discipline: Microelectronics
@@ -643,7 +643,7 @@ nodes:
     tier: 2
     parents: [met_weldedTank]
     flavor: "A cockpit shaped around a pilot — canopy, seat, sticks and dials — and the tail surfaces that keep the aeroplane pointed where he aims it. The crew accommodation of the propeller age: everything a piston fighter, bomber or light aircraft needs, and nothing a spacecraft will. A dead-end for aeroplane builders."
-    parts: [RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow]
+    parts: [RO-OldFighterCockpit, SXTBuzzard, SXTClyde, SXTke111, 625mBonny, LMiniAircaftTail, airplaneTail, airplaneTailB, SXTradialWindow, seatExternalCmd]
   - id: life_highAltCompartment
     title: "High-Altitude Crew Compartment"
     discipline: LifeSupport
@@ -1379,7 +1379,7 @@ nodes:
     tier: 8
     parents: [gnc_smallRcsCatalog]
     flavor: "The same catalog, scaled up — bigger blocks for spacecraft that outgrew the first size class. The procedural thruster stays the default; this is the shelf of named hardware for whoever wants the specific part."
-    parts: [HeavyRcs, RCSBlock_413, RCSBlock_550, RO_RCSBlock_restock_413, RO_RCSBlock_restock_550, ROC-ApolloRCS, ROC-D2RCS, sasModule, RCSBlock_825, RCSBlock_1100, RCSBlock_2200, RO_RCSBlock_restock_825, RO_RCSBlock_restock_1100, RO_RCSBlock_restock_2200]
+    parts: [HeavyRcs, RCSBlock_413, RCSBlock_550, RO_RCSBlock_restock_413, RO_RCSBlock_restock_550, ROC-ApolloRCS, ROC-D2RCS, RCSBlock_825, RCSBlock_1100, RCSBlock_2200, RO_RCSBlock_restock_825, RO_RCSBlock_restock_1100, RO_RCSBlock_restock_2200]
     # SPLIT (2026-07, user catch): checked era data before merging this time — the 275N-class parts I'd
     # just added are `improvedFlightControl` (x=-2782), genuinely earlier than this node's own `earlyDocking`
     # (x=-2612), not the same generation. Real successor relationship (small→big RCS blocks), not one
@@ -1934,7 +1934,7 @@ nodes:
     tier: 8
     parents: [gnc_threeAxisStabilizedBus]
     flavor: "Spin a flywheel up or down and the whole spacecraft turns the other way — attitude held and changed with no propellant spent at all, as long as a star tracker keeps telling it which way it's actually pointed."
-    parts: [ca_rw_small, ca_rw_xsmall, ca_startrack, SXTAlouetteI, ca_rw_medium]
+    parts: [ca_rw_small, ca_rw_xsmall, ca_startrack, SXTAlouetteI, ca_rw_medium, sasModule]
     # Generic CoatlAerospace hardware (not Mariner-branded like ca_argo-mk2-*), so it's the catalog/general
     # implementation of 3-axis stabilization rather than a ride-along on Mariner's own bus — successor node,
     # not a direct-add, to keep the generic hardware separate from the vehicle-specific parts.
@@ -2176,7 +2176,7 @@ nodes:
     parts: [turboJet, aje_f404, RO-D30F6]
     # King F100 (turboJet). F404 + D-30 ride along. F100-PW-220 upgrade -> av_advancedJetEngines (doctrine-4).
   - id: av_advancedJetEngines
-    title: "Mature Jet Refinement"
+    title: "Turbine-Temperature Uprating"
     discipline: AirBreathing
     tier: 8
     parents: [av_highBypassTurbofan, av_lowBypassTurbofan, av_mach2Turbojet]
@@ -2201,7 +2201,7 @@ nodes:
     tier: 8
     parents: [pc_segmentedCasting]
     flavor: "Stack more segments and the solid grows without a ceiling - the largest strap-on boosters ever fired, out to a Titan's full seven segments, and the monster that was drawn but never poured. The same segmented mechanism, taken to its limit."
-    parts: [ROE-UA1206, ROE-UA1207, ROE-1206sepMotor, ROE-1207sepMotor]
+    parts: [ROE-UA1206, ROE-UA1207, ROE-1206sepMotor, ROE-1207sepMotor, ROE-AJ260FLA, ROE-AJ260FLF]
     upgrades: [RFUpgrade_AJ260-SL3, RFTech-solids-tltech3]
     # King UA1206/UA1207 (larger Titan SRBs). AJ260-SL3 uprate lands here (base AJ260-SL in pc_segmentedCasting,
     # doctrine-4). RFTech-solids-tltech3 = the next solid propellant tech-level after tltech1/2.
@@ -2255,7 +2255,7 @@ nodes:
     # KTDU-425 (18.85 kN, 50 ignitions, deep throttle) - the higher-thrust many-restart successor to Agena's
     # SPS. Its own node (not a direct-add) so it doesn't unlock at fd_spacecraftPropulsion's T5.
   - id: fd_engineMaturation
-    title: "Flight-Proven Reliability Uprating"
+    title: "In-Place Production Uprating"
     discipline: FluidDynamics
     tier: 6
     parents: [fd_orbitalSoviet, fd_sovietStorable]
@@ -2292,7 +2292,7 @@ nodes:
     tier: 8
     parents: [int_geminiCapsule]
     flavor: "A conical command module for three, mated to a service module that carries the propulsion, power and consumables for a two-week voyage - the first spacecraft built to leave Earth orbit with a crew and bring them back."
-    parts: [ROC-ApolloCMBDB, ROC-ApolloSMB2BDB, ROC-ApolloNoseconeBDB, ROC-ApolloDecouplerBDB, ROC-ApolloEngineMountBDB, mk1-3pod, ROC-ApolloDockingLightBDB, ROC-ApolloEVALightBDB, seatExternalCmd, ROC-GeminiLCMBDB]
+    parts: [ROC-ApolloCMBDB, ROC-ApolloSMB2BDB, ROC-ApolloNoseconeBDB, ROC-ApolloDecouplerBDB, ROC-ApolloEngineMountBDB, mk1-3pod]
     # King Apollo CM. mk1-3pod = the generic 4m 3-crew pod. Lights/seat/Big-Gemini cabin = utility ride-alongs.
     # The SPS engine (AJ10-137) already lives in fd_pressureFedRestart; the heatshield in cmp_lunarReturnAblator.
   - id: int_d2LunarCraft
@@ -2322,7 +2322,7 @@ nodes:
     tier: 8
     parents: [life_openLoopECLSS]
     flavor: "A pressurised volume built for people to live in for weeks, not the hours a capsule allows - room to stand, sleep and work while a life-support loop keeps the air breathable. The core a space station grows around."
-    parts: [crewCabin, sspx-core-125-1, sspx-habitation-1875-2, SXTCrewCabSSP10, SXTCrewCabSSP20]
+    parts: [crewCabin, sspx-core-125-1, sspx-habitation-1875-2, SXTCrewCabSSP10, SXTCrewCabSSP20, ROC-GeminiLCMBDB]
     # King habitation module. The station's crewed volume; structural tubes/adapters live in str_stationStructures.
   - id: str_stationStructures
     title: "Pressurised Station Connectors"
