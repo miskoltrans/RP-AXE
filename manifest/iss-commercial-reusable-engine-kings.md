@@ -65,6 +65,12 @@ Traced via `upgrades-curated.tsv`'s `reason` field (names the curated base each 
 | `RFUpgrade_PITV-Ammonia-1200`, `PITV-Hydrazine-1200` | `pit-125` @ `ep_pulsedInductive` (T12) |
 | `RFUpgrade_Aestus-II`, `AestusMod` | `restock-engine-125-pug` @ `fd_multiRestartStorableUpper` (T11) |
 
+**Gap caught during authoring:** `pit-0625` (FARAD Pulsed Inductive Thruster, Isp 2500s) and `RO-nupit`
+(NuPIT, Isp 7000s) are themselves new **base** parts, not upgrade catches — both are pulsed-inductive
+thrusters, the exact mechanism `ep_pulsedInductive` (T12, king `pit-125`/PIT Mk Va) already hosts. ⟳
+Widened that node's parts instead of spinning up a duplicate node. `RFUpgrade_NuPIT-7000` (NuPIT's own
+further config) joins as that node's upgrade list.
+
 **Dormant, no host in our curated set (T3-audited `KEEP-engine-dormant`, no action):** `RFUpgrade_ATCRE-BlockII`,
 `Aeon1-V`, `Engine-2Vac`, `Kestrel-2`, `Merlin1B`, `Merlin1BVac`, `RD-0126A`, `RD-0162A`, `RS-76A`,
 `TR-312-100MN`, `TR-312-100YN`, `TRITON`, `Vikas-1+`, `Vikas-2`, `Vikas-2B`.
@@ -94,7 +100,7 @@ Traced via `upgrades-curated.tsv`'s `reason` field (names the curated base each 
 |---|---|---|---|
 | 🆕 **Reusable Gas-Generator Kerolox** `fd_reusableGasGenKerolox` | `ROE-Merlin1A` + `ROE-Merlin1C` (369/483 kN, Isp 288/305s) | **T12** (`fd_terminalGasGenKerolox` T11) | The gas-generator kerolox lineage's real modern twist: after the tree's own `fd_gasGeneratorApex`/`fd_terminalGasGenKerolox` narrative of "diminishing returns while staged combustion walks past," Merlin proves the *opposite* — plain gas-generator kerolox, kept deliberately simple, wins on cost and reusability instead of chasing Isp. `ROE-Merlin1CV` (vacuum-optimized 1C) rides along as a nozzle variant, not a new generation. |
 | 🆕 **Densified-Propellant Kerolox Uprating** `fd_densifiedPropellantKerolox` | `ROE-Merlin1D`/`ROE-Merlin1DV` (914/934 kN, Isp 311/348s — `CooledRP-1+CooledLqdOxygen`) | **T13** (`fd_reusableGasGenKerolox` above) | Subcool ("densify") both propellants below their boiling points and pack more mass into the same tank/engine — a real, distinct refinement (not just a bigger chamber) that raised Merlin's thrust ~65% with the same basic cycle. |
-| 🆕 **Electric-Pump-Fed Kerolox** `pc_electricPumpFeed` | `ROE-Rutherford`/`ROE-RutherfordVac` (25/26 kN, Isp 317/343s — `RP-1+LqdOxygen+ElectricCharge`) | **T12**, crossover parent = `fd_gasGeneratorApex` × `ep_hallEffectThruster` (both established propulsion/electric roots) | Genuinely new mechanism, not a refinement of anything: brushless battery-driven electric motors spin the propellant pumps instead of a gas-generator or preburner turbine. Trades a little thrust-to-weight for radical simplicity and cheap manufacturing (Rocket Lab Electron) — the tree's first crossover between chemical propulsion and battery/electric-power engineering. |
+| 🆕 **Electric-Pump-Fed Kerolox** `ep_electricPumpFeed` | `ROE-Rutherford`/`ROE-RutherfordVac` (25/26 kN, Isp 317/343s — `RP-1+LqdOxygen+ElectricCharge`) | **T12**, discipline **ElectricalPower** (moved from PropellantChemistry — the breakthrough itself outweighs the unchanged propellant, per your call), crossover parents = `fd_gasGeneratorApex` × `ep_hallEffectThruster` | Genuinely new mechanism, not a refinement of anything: brushless battery-driven electric motors spin the propellant pumps instead of a gas-generator or preburner turbine. Trades a little thrust-to-weight for radical simplicity and cheap manufacturing (Rocket Lab Electron) — the tree's first crossover between chemical propulsion and battery/electric-power engineering. |
 | 🆕 **American ORSC Kerolox Studies** `pc_americanORSCKerolox` | `nflv-engine-ar1-1`/`nflv-engine-ar1c-1` (AR-1, 2487/14922 kN) + `nflv-engine-rs84-1` (RS-84, 5026 kN, Isp 324s) | **T12** (`pc_multiChamberORSC` T11) | Two real, separately-funded 2000s Rocketdyne oxidiser-rich staged-combustion kerolox programs built to compete with/replace the imported RD-180 — both lost the contract and never flew. Same "drawn but never poured" flavor as RD-270/AJ-260/STBE, this time the story is American ORSC losing to Russian ORSC on price, not physics. |
 | ⟳ **widen `pc_modularORSC`** (T12) | += `ROE-RD191` (2085 kN, Isp 337.5s) | existing T12, no change | RD-191 *is* the single-chamber, one-quarter-of-an-RD-170 engine this node's own flavor text already describes (Angara) — its base part was simply never added despite being narrated. Upgrades `RFUpgrade_RD-181`/`RD-191`/`RD-193` join here too. |
 | ⟳ **widen `pc_gemStrapOnCatalog`** (T11) | += `ROE-GEM63` (1658 kN) | existing T11, no change | The fourth Delta/Vulcan graphite-epoxy strap-on length — same catalog as GEM-40/46/60 + AJ-60A. |
@@ -123,9 +129,9 @@ Traced via `upgrades-curated.tsv`'s `reason` field (names the curated base each 
 | Breakthrough | KING(s) | tier (parent) | notes |
 |---|---|---|---|
 | 🆕 **Bimodal Nuclear Thermal + Power** `nuc_bimodalNTR` | `ROE-BNTR` (Bimodal NTR, 121 kN, Isp 512s) | **T14** (`nuc_advancedCoreNTR` T13) | The same reactor that heats propellant for thrust also runs continuously as a power source between burns — real NASA bimodal-NTR design studies, one generation past the pure-thrust advanced-core concepts. |
-| 🆕 **Fission-Fragment Rocket** `nuc_fissionFragmentRocket` | `RO-fftdustyplasmaffre` (Dusty Plasma FFRE, Isp **527,000s**) | **T14** (`nuc_bimodalNTR` above) | The fission fragments themselves *are* the exhaust — no propellant to heat at all, the highest-Isp concept in the whole tree. `fft-ffre-plasma-1` ("Afterburning" variant, same absurd Isp, one tech tier later at `nuclearPropulsionNF2`) continues as the direct next mark — inject propellant into the fragment stream to trade some of that Isp for usable thrust. |
-| 🆕 **Magnetically-Confined Fusion Pulse Drive** `nuc_magneticFusionPulsePropulsion` | `fft-fission-zpinch-1` (10m Mini-Mag Orion, 642 kN, Isp 9500s) + `RO-fft20mMMO` (20m, 1870 kN, Isp 16000s) | **T15** (`nuc_pulsePropulsion` T10, the classic fission-Orion node) | Real theoretical NASA/MSNW concept: magnetically compress a small fusion-fuel pellet and let the pulse itself do the pushing — mechanically a pulsed-drive sibling of the classic external-detonation Orion, but fusion instead of fission, one full generation past it. |
-| 🆕 **Nuclear Salt Water Rocket** `nuc_nuclearSaltWaterRocket` | `fft-nswr-2` (20m NSWR, 8697 kN, Isp 8000s) | **T15** (`nuc_fissionFragmentRocket` above) | Zubrin's concept: dissolve fissile salts in water and let the mixture go critical continuously as it flows through the chamber — the reactor **is** the propellant stream, no separate core at all. The wildest, most engineering-fiction concept in the curated set; capstone of the exotic-nuclear cluster, deliberate what-if/fun curation per [[rp-axe-fun-over-history]]. |
+| 🆕 **Fission-Fragment Rocket** `nuc_fissionFragmentRocket` | `RO-fftdustyplasmaffre` (Dusty Plasma FFRE, Isp **527,000s**) | **T15** (`nuc_bimodalNTR` above) | The fission fragments themselves *are* the exhaust — no propellant to heat at all, the highest-Isp concept in the whole tree. `fft-ffre-plasma-1` ("Afterburning" variant, same absurd Isp, one tech tier later at `nuclearPropulsionNF2`) continues as the direct next mark — inject propellant into the fragment stream to trade some of that Isp for usable thrust. (Tier bumped from T14 to fix a same-tier parent→child edge against `nuc_bimodalNTR`, and it conveniently opens the room for #2 below.) |
+| 🆕 **Magnetically-Confined Fusion Pulse Drive** `nuc_magneticFusionPulsePropulsion` | `fft-fission-zpinch-1` (10m Mini-Mag Orion, 642 kN, Isp 9500s) + `RO-fft20mMMO` (20m, 1870 kN, Isp 16000s) | **T16** (`nuc_pulsePropulsion` T10, the classic fission-Orion node) | Real theoretical NASA/MSNW concept: magnetically compress a small fusion-fuel pellet and let the pulse itself do the pushing — mechanically a pulsed-drive sibling of the classic external-detonation Orion, but fusion instead of fission, one full generation past it. Pushed to the T16 ceiling per your go-ahead — same "idle-then-leap" precedent already accepted for the RL-10 chain. |
+| 🆕 **Nuclear Salt Water Rocket** `nuc_nuclearSaltWaterRocket` | `fft-nswr-2` (20m NSWR, 8697 kN, Isp 8000s) | **T16** (`nuc_fissionFragmentRocket` above) | Zubrin's concept: dissolve fissile salts in water and let the mixture go critical continuously as it flows through the chamber — the reactor **is** the propellant stream, no separate core at all. The wildest, most engineering-fiction concept in the curated set; capstone of the exotic-nuclear cluster and the tree's new tier ceiling, deliberate what-if/fun curation per [[rp-axe-fun-over-history]]. |
 
 ---
 
@@ -144,9 +150,11 @@ Traced via `upgrades-curated.tsv`'s `reason` field (names the curated base each 
 | T12 | Cryogenics | 🆕 `cryo_highThrustExpander` (RL60/Vinci) | `cryo_deployableNozzleExpander` |
 | T12 | Cryogenics | 🆕 `cryo_smallScaleMethalox` (M10) | `pc_zenitKerolox` |
 | T12 | FluidDynamics | 🆕 `fd_reusableGasGenKerolox` (Merlin 1A/1C) | `fd_terminalGasGenKerolox` |
-| T12 | PropellantChemistry | 🆕 `pc_electricPumpFeed` (Rutherford) | `fd_gasGeneratorApex` × `ep_hallEffectThruster` |
+| T12 | ElectricalPower | 🆕 `ep_electricPumpFeed` (Rutherford) | `fd_gasGeneratorApex` × `ep_hallEffectThruster` |
 | T12 | PropellantChemistry | 🆕 `pc_americanORSCKerolox` (AR-1, RS-84) | `pc_multiChamberORSC` |
 | T12 | GuidanceControl | 🆕 `gnc_deepThrottlingAbortLandingEngine` (SuperDraco) | `gnc_deepSpaceApogeeEngine` |
+| T9 (existing, append) | GuidanceControl | `gnc_bipropAttitudeThrust` (+Orion ESM, same R-4D family as its king) | — |
+| T12 (existing, append) | ElectricalPower | `ep_pulsedInductive` (+FARAD, +NuPIT) | — |
 | T13 | Cryogenics | 🆕 `cryo_expanderBoosterScale` (LE-9) | `cryo_deployableNozzleExpander` |
 | T13 | Cryogenics | 🆕 `cryo_fullFlowMethalox` (Raptor/RaptorVac) | `cryo_methaloxStagedCombustion` |
 | T13 | FluidDynamics | 🆕 `fd_densifiedPropellantKerolox` (Merlin 1D/1DV) | `fd_reusableGasGenKerolox` |
@@ -155,28 +163,27 @@ Traced via `upgrades-curated.tsv`'s `reason` field (names the curated base each 
 | T13 | ElectricalPower | 🆕 `ep_magnetoplasmadynamic` (SX3 MPD) | `ep_hallEffectThruster` |
 | T14 | ElectricalPower | 🆕 `ep_variableSpecificImpulsePlasma` (VASIMR) | `ep_magnetoplasmadynamic` |
 | T14 | NuclearEngineering | 🆕 `nuc_bimodalNTR` (BNTR) | `nuc_advancedCoreNTR` |
-| T14 | NuclearEngineering | 🆕 `nuc_fissionFragmentRocket` (Dusty Plasma FFRE + Afterburning) | `nuc_bimodalNTR` |
-| T15 | NuclearEngineering | 🆕 `nuc_magneticFusionPulsePropulsion` (Mini-Mag Orion 10m/20m) | `nuc_pulsePropulsion` |
-| T15 | NuclearEngineering | 🆕 `nuc_nuclearSaltWaterRocket` (NSWR) | `nuc_fissionFragmentRocket` |
+| T15 | NuclearEngineering | 🆕 `nuc_fissionFragmentRocket` (Dusty Plasma FFRE + Afterburning) | `nuc_bimodalNTR` |
+| T16 | NuclearEngineering | 🆕 `nuc_magneticFusionPulsePropulsion` (Mini-Mag Orion 10m/20m) | `nuc_pulsePropulsion` |
+| T16 | NuclearEngineering | 🆕 `nuc_nuclearSaltWaterRocket` (NSWR) — **new tree ceiling** | `nuc_fissionFragmentRocket` |
 
-**19 new nodes** (1 at T11, 8 at T12, 5 at T13, 3 at T14, 2 at T15) + **7 existing nodes widened** with no
-tier change (`fd_continuousThrottleDescent`, `pc_filamentWoundSolid`, `pc_gemStrapOnCatalog`,
-`gnc_deepSpaceApogeeEngine`, `pc_modularORSC`, `cryo_methaloxStagedCombustion`) + **~23 upgrade-only
-doctrine-4 catches** appended to already-existing nodes per the table above.
+**19 new nodes** (1 at T11, 7 at T12, 5 at T13, 2 at T14, 1 at T15, 2 at T16) + **9 existing nodes widened**
+with no tier change (`fd_continuousThrottleDescent`, `pc_filamentWoundSolid`, `pc_gemStrapOnCatalog`,
+`gnc_deepSpaceApogeeEngine`, `pc_modularORSC`, `cryo_methaloxStagedCombustion`, `gnc_bipropAttitudeThrust`,
+`ep_pulsedInductive`) + **~23 upgrade-only doctrine-4 catches** appended to already-existing nodes per the
+table above.
 
-## Open questions for you
-1. **Tier ceiling → T15?** Matches the "one generation deeper than the last era" pattern, but this batch
-   spans real years 2004-2028+ *plus* pure-theoretical far-future concepts (fusion pulse, NSWR) — happy to
-   compress the NuclearEngineering exotic cluster (T14-T15) into fewer tiers if you'd rather not stretch
-   the ceiling that far this early.
-2. **`pc_electricPumpFeed` discipline/crossover** — Rutherford is PropellantChemistry-flavored (still
-   kerolox) but the actual breakthrough is electric, hence the crossover parent. Open to moving it to
-   ElectricalPower outright if you'd rather the discipline follow the breakthrough, not the propellant.
-3. **Raptor/Orion-capsule "no RP-1 tech gate" parts** — ground-truthed via `partTech` (same technique as
-   the AJ10-190 fix), but flagging since it's now happened three times; fine to keep doing this, or say if
-   you'd rather these wait for a dedicated AXE-authored pass instead of riding in with the RP-1-gated majority.
-4. **Tantares Mir/LK-700/TKS (48 parts, entirely unplaced)** — not part of this pass (no RP-1 tech gate
-   at all), but flagging it exists as a known gap since the sweep surfaced it. Separate thread, your call
-   on when to tackle it.
+## Resolved (2026-07-06 — user decisions)
+1. **Tier ceiling → pushed to T16** (not just T15). Fixed a same-tier parent→child edge in the process
+   (`nuc_fissionFragmentRocket` was T14 off a T14 parent — bumped to T15), which opened the room to push
+   `nuc_magneticFusionPulsePropulsion`/`nuc_nuclearSaltWaterRocket` to T16 as requested. New tree ceiling.
+2. **`ep_electricPumpFeed` → ElectricalPower**, not PropellantChemistry. "Breakthrough over propellant" —
+   moved wholesale (id renamed from `pc_electricPumpFeed`); crossover parents unchanged.
+3. **Ground-truth-via-`partTech` when RP-1's `techRequired` is blank → confirmed as standing practice**
+   ("we wanna place more parts than RP-1"). Applies to Raptor/RaptorVac and the Orion capsule propulsion
+   parts in this pass; no dedicated AXE-authored side-pass needed for these.
+4. **Tantares Mir/LK-700/TKS → deliberately LAST**, after `modular-stations-rovers` is fully placed (both
+   its engine pass, already authored, and its non-engine pass). Not touched by this pass; queued as its
+   own later thread once that era's non-engine placement is confirmed complete.
 
-**Ready to author into `tree/nodes.yaml` on your go-ahead.**
+**Ready to author into `tree/nodes.yaml`.**
