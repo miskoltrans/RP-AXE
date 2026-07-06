@@ -1207,7 +1207,9 @@ nodes:
     tier: 6
     parents: [aero_recovery]
     flavor: "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point."
-    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, ROC-GeminiParachuteBDB, ROC-GeminiParachuteDrogueBDB, ROC-GeminiRetrogradeSectionBDB, ROC-ReentryControlSystemBDB, ROC-RetrogradeDecouplerBDB, ROC-VoskhodRetroDecoupler, ROC-ApolloParachuteBDB, ROC-ApolloDrogueParachuteBDB, ROC-D2Parachute, ROC-GeminiBRetrogradeSection, ROC-GeminiBEquipmentSection]
+    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, ROC-GeminiParachuteBDB, ROC-GeminiParachuteDrogueBDB, ROC-GeminiRetrogradeSectionBDB, ROC-ReentryControlSystemBDB, ROC-RetrogradeDecouplerBDB, ROC-VoskhodRetroDecoupler, ROC-ApolloParachuteBDB, ROC-ApolloDrogueParachuteBDB, ROC-D2Parachute, ROC-GeminiBRetrogradeSection, ROC-GeminiBEquipmentSection, ROC-BigGeminiParachute, ROC-BigGeminiParachuteDrogue]
+    # ROC-BigGeminiParachute/ParachuteDrogue added (2026-07, capsules+orbiter pass): Big Gemini's own
+    # recovery canopy/drogue, same mechanism/catalog as every other capsule's here. Fixed catalog, cap-exempt.
     # ROC-VoskhodRetroDecoupler added (2026-07): pure structure (disc=structure, no engine module), pairs
     # with the decouplers already here rather than pc_retroKick (which holds the actual motor,
     # ROC-VoskhodRetroBooster) — same split as Gemini's own retro section/decoupler.
@@ -2289,7 +2291,10 @@ nodes:
     tier: 7
     parents: [int_launchEscape]
     flavor: "A solid escape tower sized to yank a three-seat lunar capsule clear of a fully-fuelled Moon rocket - the same abort mechanism as Mercury's, scaled to the mass it now has to save."
-    parts: [ROC-ApolloLESBDB, LaunchEscapeSystem, ROC-D2Block1LES, ROC-D2Block2LES]
+    parts: [ROC-ApolloLESBDB, LaunchEscapeSystem, ROC-D2Block1LES, ROC-D2Block2LES, ROC-BigGeminiLES]
+    # ROC-BigGeminiLES added (2026-07, capsules+orbiter pass): same heavy-capsule abort-tower mechanism,
+    # scaled for Big Gemini's own crew mass - not homed with the Big Gemini capsule itself, matching the
+    # precedent that Apollo's own LES lives here too, not in int_apolloCSM.
     # King Apollo LES. D-2 Block I/II are the Soviet lunar-capsule aborts, same era/class. Scaled from the
     # Mercury/mk1 towers in int_launchEscape (T5).
   - id: fd_advancedSpacecraftPropulsion
@@ -2815,3 +2820,46 @@ nodes:
     # Crossover: needs both the reach (rob_linearActuation) and the articulated joint (rob_hingeActuation)
     # already established for arms/booms. A real alternative to precision docking, not a docking-port
     # variant, so it's homed in Robotics rather than folded into gnc_stationBerthing.
+
+  # ================================================================================================
+  # ============ BAND 4 * SHUTTLE & STATION ERA -- CAPSULES + ORBITER (2026-07) ====================
+  # ========= Fourth pass over space-stations-shuttle-partlist.md: improvedCapsules (12 parts) +  ==
+  # ========= spaceShuttles (6 parts, the batch's own namesake).                                  ==
+  # ================================================================================================
+
+  # ---- Lane 1: Apollo's own next generation (extended-duration, Skylab-support era) ----
+  - id: int_apolloBlockIII
+    title: "Extended-Duration Apollo Block III+"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [int_apolloCSM]
+    flavor: "Stretch the same Apollo stack for a mission measured in months instead of weeks - a bigger service module, a mission module bolted on for the extra volume a Skylab-length stay demands, and a high-gain antenna that can still find Earth from wherever the longer mission sends it. The same capsule, built to not come home so soon."
+    parts: [ROC-ApolloCMBDBBlockIII, ROC-ApolloSMBlockIII, ROC-ApolloMissionModule, ROC-ApolloHGABlockIII]
+    # King Apollo Block III+ CM. Direct next generation of int_apolloCSM's own CM/SM (not a doctrine-4
+    # catch - these are new parts, not upgrade configs of the Block I/II parts already there).
+
+  # ---- Lane 2: Gemini's other fork (station logistics, never flown) ----
+  - id: int_bigGeminiLogistics
+    title: "Enlarged Station-Logistics Capsule"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [int_geminiCapsule]
+    flavor: "Scale the maneuvering capsule up from two seats to nine, or trade the crew for cargo entirely - Gemini's own OAMS-powered airframe, stretched into a ferry built to keep a station supplied rather than chase a target in orbit. Where Apollo forked toward the Moon, this is Gemini's other road: never flown, but the shape every later space-station taxi and cargo hauler still borrows from."
+    parts: [ROC-BigGeminiCabinBDB, ROC-BigGeminiSM, ROC-BigGeminiDecoupler, ROC-BigGeminiDockingAdapter, ROC-BigGeminiNose]
+    # King Big Gemini crew module - direct scale-up of int_geminiCapsule's own airframe, a divergent
+    # lineage from int_apolloCSM (Gemini forked toward the Moon there, toward station logistics here).
+    # LES -> int_heavyLaunchEscape, parachutes -> edl_crewedRecovery, MOL docking port -> gnc_stationBerthing
+    # (all matching the standing precedent that abort/recovery/docking hardware splits out even when it's
+    # vehicle-specific - Apollo's own LES/parachutes/docking already live in those same three nodes).
+
+  # ---- Lane 3: the Shuttle orbiter itself (this batch's own namesake) ----
+  - id: int_shuttleOrbiter
+    title: "Reusable Winged Orbiter"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [aero_liftingReentry, life_spaceplaneCockpit, str_aircraftAirframe]
+    flavor: "Put the wing, the heatshield, the flight deck and a cargo bay big enough to carry a whole satellite all on one airframe that lands on a runway and flies again - the Shuttle orbiter, the vehicle this whole era is named for. Winged reentry, a spaceplane flight deck and large-fuselage airframe structure, each already proven separately, converge here for the first time into one reusable machine."
+    parts: [mk3Cockpit_Shuttle, mk3CrewCabin, mk3CargoBayL, mk3CargoBayM, mk3CargoBayS, mk3CargoRamp]
+    # King Mk3 Cockpit + Mk3 Passenger Module. Cargo bay (3 sizes) + ramp ride along - the orbiter's whole
+    # point, a payload bay it can open in orbit and close for reentry. Genuine 3-way crossover, not a
+    # do-nothing convergence gate: real new parts (Mk3 airframe class), one tier bigger than Mk1/Mk2.
