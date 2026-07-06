@@ -428,14 +428,14 @@ nodes:
     tier: 2
     parents: [str_structuralHardware]
     flavor: "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, from a fixed skid on a light trainer up to a steerable retractable leg."
-    parts: [GearFixed, SmallGearBay, GearSmall, GearFree]
+    parts: [GearFixed, SmallGearBay, GearSmall, GearFree, GearSmallSpaceplane, SmallGearBaySpaceplane, ROC-DynaSkidFront, ROC-DynaSkidRear]
   - id: str_fixedLanderLegs
     title: "Fixed Landing Struts"
     discipline: StructuresMechanisms
     tier: 7
     parents: [str_landingGear]
     flavor: "No wheels, no retraction — just a shock-absorbing strut that swings out once and takes the full load of touching down somewhere with no runway at all."
-    parts: [landingLeg1]
+    parts: [landingLeg1, landingLeg1-2]
     # NEW (2026-07 fix, user call — "make them a simple one off node"): split out of
     # fd_continuousThrottleDescent, where it had been bundled with a throttleable engine just because
     # Surveyor happened to use both — a structural touchdown strut isn't a propellant/combustion
@@ -447,7 +447,7 @@ nodes:
     tier: 3
     parents: [str_landingGear]
     flavor: "Load-rated landing gear with adjustable ride height and stance, sized from a light trainer to a heavy jet — the sophisticated oleo strut for aircraft too big or too fast for the basic legs it grows past. A separate research, off the stock undercarriage."
-    parts: [KF-ALG-Small, KF-ALG-Medium, KF-ALG-Large, KF-ALG-SmallSide]
+    parts: [KF-ALG-Small, KF-ALG-Medium, KF-ALG-Large, KF-ALG-SmallSide, KF-ALG-Small-Spaceplane, KF-ALG-Medium-Spaceplane, KF-ALG-Large-Spaceplane, KF-ALG-SmallSide-Spaceplane]
   - id: av_centrifugalJet
     title: "Centrifugal-Flow Turbojet"
     discipline: AirBreathing
@@ -597,7 +597,7 @@ nodes:
     tier: 2
     parents: [str_structuralHardware]
     flavor: "Procedural ribbed, truss and hollow adapters that mate one diameter to another and carry the load across an interstage or under a payload — the structural handshake between a fat booster and a slim upper, or a stage and the satellite it lifts."
-    parts: [RSBRibbedBase, RSBTrussBase, SSTUBase, SSTUHollowRing, KzFlatAdapter, RSBRibbedBase_Interstage, RSBTrussBase_Interstage, SSTUBase_Interstage, SSTUHollowRing_Interstage, ROT-OpenInterstage]
+    parts: [RSBRibbedBase, RSBTrussBase, SSTUBase, SSTUHollowRing, KzFlatAdapter, RSBRibbedBase_Interstage, RSBTrussBase_Interstage, SSTUBase_Interstage, SSTUHollowRing_Interstage, ROT-OpenInterstage, ROC-D2Interstage, ROC-D2Interstage2, ROC-D2Interstage3, ROC-D2Skirt1, ROC-D2Skirt2]
   - id: str_prefabAdapters
     title: "Prefabricated Adapters"
     discipline: StructuresMechanisms
@@ -612,7 +612,7 @@ nodes:
     tier: 4
     parents: [str_balloonTank]
     flavor: "Let the propellant tank be the spacecraft spine - its walls carry the flight loads and mount the engine, thrusters, power and radios behind the payload, so the service module needs no separate airframe. The integrated tankage a satellite or probe bus is built around."
-    parts: [RO-RFTank-SM, ROT-LanderTank-SM, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-ServiceModule]
+    parts: [RO-RFTank-SM, ROT-LanderTank-SM, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-ServiceModule, LFUELM3, LSVCM3, LSmallFuelMod]
 
   - id: met_stiffenedFairings
     title: "Aluminium Stringer Fairings"
@@ -665,7 +665,7 @@ nodes:
     tier: 4
     parents: [str_radialDecouplers]
     flavor: "The rest of the catalogue shelf: pre-made in-line decouplers, separators and the skirt rings that drop a spent booster, in fixed sizes — for when you would rather bolt on a stock part than shape a procedural one. The procedural decoupler stays the default; this is the shelf."
-    parts: [Decoupler_0, Decoupler_1, Decoupler_2, restock-decoupler-1875-1, restock-separator-1875-1, shortDecoupler1-2, ROT-AtlasDecoupler]
+    parts: [Decoupler_0, Decoupler_1, Decoupler_2, restock-decoupler-1875-1, restock-separator-1875-1, shortDecoupler1-2, ROT-AtlasDecoupler, SXTK1Decoupler, SXTK1Decoupler2, ROC-D2Block1LESDecoupler]
   - id: tel_appSatellites
     title: "Radio-Relay Payloads"
     discipline: Telecommunications
@@ -987,7 +987,7 @@ nodes:
     tier: 4
     parents: [pc_hypergolics]
     flavor: "A storable-hypergolic upper that coasts dark through a long parking orbit and relights on command — the engine that stops being a single burn and becomes a manoeuvring stage. Agena's XLR81 shuts down and restarts in space: the key to circularising, changing plane, and the rendezvous still to come."
-    parts: [ROE-Agena, ROE-AJ10Mid, ROE-Juno45K, ROE-Juno6K, ROE-AJ10Adv, RO-KTDU5A, ROE-KTDU35, ROE-S523]
+    parts: [ROE-Agena, ROE-AJ10Mid, ROE-Juno45K, ROE-Juno6K, ROE-AJ10Adv, RO-KTDU5A, ROE-KTDU35, ROE-S523, LargeOMS]
     upgrades: [RFUpgrade_AJ10-42, RFUpgrade_AJ10-101A, RFUpgrade_AJ10-142, RFUpgrade_AJ10-118, RFUpgrade_AJ10-118D]
     # 4 more base parts added (2026-07, part-count-pass find), all the same restartable-storable-vernier
     # mechanism this node already covers: ROE-AJ10Adv (another AJ10-family vernier), RO-KTDU5A/ROE-KTDU35
@@ -1102,7 +1102,7 @@ nodes:
     tier: 4
     parents: [str_adjustableGear]
     flavor: "Legs rated for the weight of a heavy jet or transport, spreading the load on a soft field and soaking up a fast, heavy touchdown. The biggest undercarriage on the shelf, where the adjustable struts run out of rating."
-    parts: [GearMedium, GearLarge]
+    parts: [GearMedium, GearLarge, GearMediumSpaceplane, GearLargeSpaceplane]
 
   # ================================================================================================
   # ===================== BAND 2 * CREWED SPINE (T5 subsystems -> T6 vehicles) =====================
@@ -1207,7 +1207,7 @@ nodes:
     tier: 6
     parents: [aero_recovery]
     flavor: "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point."
-    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, ROC-GeminiParachuteBDB, ROC-GeminiParachuteDrogueBDB, ROC-GeminiRetrogradeSectionBDB, ROC-ReentryControlSystemBDB, ROC-RetrogradeDecouplerBDB, ROC-VoskhodRetroDecoupler]
+    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, ROC-GeminiParachuteBDB, ROC-GeminiParachuteDrogueBDB, ROC-GeminiRetrogradeSectionBDB, ROC-ReentryControlSystemBDB, ROC-RetrogradeDecouplerBDB, ROC-VoskhodRetroDecoupler, ROC-ApolloParachuteBDB, ROC-ApolloDrogueParachuteBDB, ROC-D2Parachute, ROC-GeminiBRetrogradeSection, ROC-GeminiBEquipmentSection]
     # ROC-VoskhodRetroDecoupler added (2026-07): pure structure (disc=structure, no engine module), pairs
     # with the decouplers already here rather than pc_retroKick (which holds the actual motor,
     # ROC-VoskhodRetroBooster) — same split as Gemini's own retro section/decoupler.
@@ -1360,7 +1360,7 @@ nodes:
     parents: [int_geminiCapsule, int_voskhodCabin]
     anyToUnlock: true
     flavor: "Close the last few metres by eye and thruster, then latch two spacecraft nose to nose in orbit — the manoeuvre every later mission depends on. Any maneuverable crewed vehicle can get you here; it isn't tied to one program's specific propulsion choice."
-    parts: [ROC-AgenaPort, ROC-AgenaFairing, ROC-GeminiNoseconeBDB, dockingPort3]
+    parts: [ROC-AgenaPort, ROC-AgenaFairing, ROC-GeminiNoseconeBDB, dockingPort3, RO-ApolloDockingPort, ROC-ApolloDrogueDockPortBDB, ROC-ApolloProbeDockPortBDB, ROC-D2DockDrogue, ROC-D2DockProbe, ROC-DynaDockingArms, ROC-DynaDockingSystem]
     # FIXED (2026-07): was an AND-gate on [int_geminiCapsule, gnc_spacecraftRCS]. Docking doesn't need
     # storable-propellant RCS specifically (ahistorical — a different maneuvering approach could reach the
     # same milestone), and it shouldn't be tied exclusively to Gemini either — anyToUnlock against BOTH
@@ -1379,7 +1379,7 @@ nodes:
     tier: 8
     parents: [gnc_smallRcsCatalog]
     flavor: "The same catalog, scaled up — bigger blocks for spacecraft that outgrew the first size class. The procedural thruster stays the default; this is the shelf of named hardware for whoever wants the specific part."
-    parts: [HeavyRcs, RCSBlock_413, RCSBlock_550, RO_RCSBlock_restock_413, RO_RCSBlock_restock_550, ROC-ApolloRCS, ROC-D2RCS, sasModule]
+    parts: [HeavyRcs, RCSBlock_413, RCSBlock_550, RO_RCSBlock_restock_413, RO_RCSBlock_restock_550, ROC-ApolloRCS, ROC-D2RCS, sasModule, RCSBlock_825, RCSBlock_1100, RCSBlock_2200, RO_RCSBlock_restock_825, RO_RCSBlock_restock_1100, RO_RCSBlock_restock_2200]
     # SPLIT (2026-07, user catch): checked era data before merging this time — the 275N-class parts I'd
     # just added are `improvedFlightControl` (x=-2782), genuinely earlier than this node's own `earlyDocking`
     # (x=-2612), not the same generation. Real successor relationship (small→big RCS blocks), not one
@@ -1596,7 +1596,7 @@ nodes:
     tier: 7
     parents: [tel_pcmTelemetry]
     flavor: "The same deployable-dish generation, off the shelf in whatever size and gain a given mission needs — omni for a simple always-on link, small relay dishes through a 4m high-gain reflector. The procedural antenna stays the default; this is the named-hardware shelf."
-    parts: [RelayAntenna5, RelayAntenna50, RelayAntenna3m, RelayAntenna100, restock-antenna-stack-2, restock-antenna-stack-3, restock-relay-radial-2, antenna_quetzal, nfex-antenna-reflector-side-1, nfex-antenna-reflector-side-2, nfex-antenna-reflector-side-3, nfex-antenna-deploy-wv3-1, nfex-antenna-feeder-direct-1, nfex-antenna-static-mini-1, nfex-antenna-top-dish-1, nfex-antenna-top-dish-2, nfex-antenna-relay-tiny-1, ROC-D2Antenna]
+    parts: [RelayAntenna5, RelayAntenna50, RelayAntenna3m, RelayAntenna100, restock-antenna-stack-2, restock-antenna-stack-3, restock-relay-radial-2, antenna_quetzal, nfex-antenna-reflector-side-1, nfex-antenna-reflector-side-2, nfex-antenna-reflector-side-3, nfex-antenna-deploy-wv3-1, nfex-antenna-feeder-direct-1, nfex-antenna-static-mini-1, nfex-antenna-top-dish-1, nfex-antenna-top-dish-2, nfex-antenna-relay-tiny-1, ROC-D2Antenna, ROC-ApolloVHFBDB, ROC-ApolloScimitarBDB]
     # FIXED (2026-07, user catch): checked real era data (the partlist's own x-position) instead of
     # assuming — 17 of these 19 parts are `interplanetaryComms` (x=-2952), the EXACT SAME era as
     # `tel_deployableHighGainDish`'s own 4 parts. This was never a "later catalog" — it's more vendor
@@ -1610,7 +1610,7 @@ nodes:
     tier: 8
     parents: [tel_deployableHighGainDish]
     flavor: "The same dish gain in a fraction of the mass and volume — small enough to ride on a rover or a craft that never had room for the first generation's hardware."
-    parts: [mediumDishAntenna, nfex-antenna-rover-3]
+    parts: [mediumDishAntenna, nfex-antenna-rover-3, ROC-ApolloHGABDB]
     # Catalog dead-end (19 parts, well past the usual cap) — matches the standing "procedural default,
     # fixed-catalog exempt" pattern used elsewhere (e.g. str_standardDecouplers).
   - id: tel_phasedArrayRelay
@@ -1635,7 +1635,7 @@ nodes:
     tier: 7
     parents: [elec_deployableArrays]
     flavor: "More cells on a bigger paddle — the same fold-out array scaled up for a hungrier payload, nothing new about how it works."
-    parts: [RO-rangerSolarPanel, solarPanels4, solarPanels5, 1x3SPanels]
+    parts: [RO-rangerSolarPanel, solarPanels4, solarPanels5, 1x3SPanels, 1x3WPanels, aje_solarPanels, LgRadialSolarPanel, ROC-D2Solar, solarPanels2, solarPanels5HiTech]
     upgrades: [solarTL2]
     # solarTL2 added (2026-07): ROSolar's own PARTUPGRADE, techRequired patch is `:NEEDS[RP-0]` (never
     # fires under AXE) — re-pointed here, same fix as the RFUpgrade_*/RFTech_* configs all session.
@@ -1656,7 +1656,7 @@ nodes:
     tier: 8
     parents: [elec_deployablePanelII]
     flavor: "Model the cell string, the sun angle and the shadowing properly instead of a flat output curve — the same panel, understood well enough to size it exactly instead of overbuilding it."
-    parts: [ROS-HingedSolarPanel, ROS-FoldingSolarPanel, sp_mariner_b]
+    parts: [ROS-HingedSolarPanel, ROS-FoldingSolarPanel, sp_mariner_b, ROS-BlanketSolarPanel]
     upgrades: [solarTL3, solarTL4]
     # solarTL3/4 added (2026-07): same fix as solarTL2 — ROSolar's own upgrades, re-pointed here since the
     # next two rungs of that same efficiency ladder land on this node's own generation.
@@ -1680,7 +1680,7 @@ nodes:
     tier: 7
     parents: [opt_orbitalMapping]
     flavor: "Bounce a radar pulse straight down and time the echo — terrain height where a camera only gives shape, filling in the mapping lane's one missing dimension."
-    parts: [scansat-radar-poseidon-3b-1]
+    parts: [scansat-radar-poseidon-3b-1, ROC-ApolloDipoleBDB]
   - id: gnc_orbitalGravimetry
     title: "Orbital Perturbation Gravimetry"
     discipline: GuidanceControl
@@ -1701,7 +1701,7 @@ nodes:
     tier: 7
     parents: [mic_massSpec]
     flavor: "Steer ions through a magnetic sector built for the ion environment of open space rather than a lab bench atmosphere — the same sorting-by-mass principle, reading the solar wind instead of the upper air."
-    parts: [RO-MIMS]
+    parts: [RO-MIMS, RO-QuadropoleMassSpectrometer]
   - id: opt_multiSpectralImaging
     title: "Multi-Spectral Imaging"
     discipline: OpticsPhotonics
@@ -1714,8 +1714,9 @@ nodes:
   # ===================== BAND 3 * ROBOTICS (T7) ====================================================
   # `rob_rotorActuation` (T4, band 1) is the whole lane's foundation — its own flavor text already
   # anticipates this fan-out ("every arm, rover wheel, tracking mount and deployable to come turns on
-  # this"). 6 new nodes all descend from it directly; that's a 7-dependent hub, well past the usual >3
-  # flag, but this is the single most self-justified case of it in the tree — the root node predicted
+  # this"). 8 nodes now descend from it directly (6 original + rob_trackDrive/rob_screwDrive added
+  # 2026-07 to close the KF-Track*/KF-ScrewDrive coverage gap); a 9-dependent hub, well past the usual
+  # >3 flag, but this is the single most self-justified case of it in the tree — the root node predicted
   # this exact spread when it was written in band 1.
   # ================================================================================================
   - id: rob_heavyRotorActuation
@@ -1759,15 +1760,55 @@ nodes:
     tier: 7
     parents: [rob_rotorActuation]
     flavor: "Put the same motor in a wheel hub and drive instead of just standing there — a lander that can cross the ground it touched down on, not just sit and look at it."
-    parts: [KF-WheelSmall, KF-WheelTiny, roverWheel1, roverWheel2]
+    parts: [KF-WheelSmall, KF-WheelTiny, roverWheel1, roverWheel2, roverBody_v2]
     # RENAMED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): "Mobility" named the outcome, not
     # the mechanism (the motor moving into the wheel hub itself) — matches its own flavor text already.
-    # PARKED, not placed (2026-07, review-flagged coverage gap): the curated manifest also carries
-    # KF-WheelLarge/Medium/Truck-Dual/Truck-Single (bigger wheels) plus the whole KerbalFoundries
-    # continuous-track family (KF-Track*, 7 parts) and KF-ScrewDrive/KF-Skid — genuinely different
-    # locomotion mechanisms (continuous tread, screw drive) from a wheel-and-axle, so per scatter-by-
-    # mechanism they'd earn their own node(s) rather than folding in here. Deferred to a later pass, not
-    # dropped.
+    # COVERAGE GAP CLOSED (2026-07): the bigger wheels, the KF-Track* family and KF-ScrewDrive/KF-Skid
+    # are placed below (rob_heavyWheelDrive, rob_trackDrive, rob_heavyTrackDrive, rob_screwDrive) — there
+    # was no real blocker, just scope during the earlier review-fix pass. Ground-truthed: all 14 parts
+    # share the exact same real RP-1 tech bucket (`advancedMotors`) as this node's own KF-Wheel parts —
+    # no generation gap, same era throughout.
+  - id: rob_heavyWheelDrive
+    title: "Heavy-Class Wheel Drive"
+    discipline: Robotics
+    tier: 8
+    parents: [rob_surfaceMobility]
+    flavor: "The same wheel-hub motor, scaled up for a heavier chassis — plus a passive skid to steady a long rover without spending another drive on it."
+    parts: [KF-WheelLarge, KF-WheelMedium, KF-WheelTruck-Dual, KF-WheelTruck-Single, KF-Skid]
+    # NEW (2026-07): same real tech bucket as rob_surfaceMobility (advancedMotors, no generation gap) —
+    # split into a sibling node purely for the 6-part cap, same pacing device already used for
+    # gnc_smallRcsCatalog -> gnc_fixedRcsCatalog (also same-bucket, tiered one apart for cap reasons, not
+    # a real generation claim). KF-Skid rides along: same KSPWheelBase/Suspension lineage as the wheels,
+    # just missing KSPWheelMotor/Rotation/Steering (a passive stabilizer skid, not its own breakthrough).
+  - id: rob_trackDrive
+    title: "Continuous-Track Drive"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_rotorActuation]
+    flavor: "Wrap the same motor in a loop of tread instead of a wheel — more contact area for soft ground, at the cost of more rolling resistance and moving parts."
+    parts: [KF-TrackTiny, KF-TrackSurface, KF-TrackSimple, KF-TrackSmall, KF-TrackMedium]
+    # NEW (2026-07): a genuinely different locomotion mechanism from rob_surfaceMobility's wheel-hub
+    # drive (continuous tread vs. wheel-and-axle), not a lineage of it — parented directly on
+    # rob_rotorActuation like every other actuator sibling, not forced under the wheel node. Same real
+    # tech bucket as the wheels (advancedMotors); split by mass into small/heavy classes below.
+  - id: rob_heavyTrackDrive
+    title: "Heavy-Class Track Drive"
+    discipline: Robotics
+    tier: 8
+    parents: [rob_trackDrive]
+    flavor: "The same tread mechanism, built for a bigger and heavier vehicle — including a track meant to dig into and displace the ground rather than just roll over it."
+    parts: [KF-TrackInverting, KF-TrackLong, KF-TrackMole]
+    # NEW (2026-07): same cap-driven, same-bucket sibling split as rob_heavyWheelDrive above.
+  - id: rob_screwDrive
+    title: "Archimedes Screw Propulsion"
+    discipline: Robotics
+    tier: 7
+    parents: [rob_rotorActuation]
+    flavor: "Wind a helical fin around a rotating drum and it corkscrews forward through mud, snow or water alike, where a wheel or a track would just dig in and stop."
+    parts: [KF-ScrewDrive]
+    # NEW (2026-07): a third distinct locomotion mechanism (screw propulsion, real amphibious use —
+    # carries KSPWheelWaterPropulsion), genuinely different from both wheels and tracks. Single-part king,
+    # same precedent as rob_sequencedControl (controller1000, also a lone-part node in this same batch).
 
   - id: str_fuelCrossfeed
     title: "Inter-Tank Fuel Crossfeed"
@@ -1803,7 +1844,7 @@ nodes:
     tier: 8
     parents: [cmp_ablativeRefinement]
     flavor: "Rate the same ablator for a translunar-return entry instead of a low-orbit one — the ladder's next real step is speed, not shape, and it doesn't care which airframe it's bolted to."
-    parts: [ROC-ApolloHSBDB, ROC-GeminiHSLunarBDB]
+    parts: [ROC-ApolloHSBDB, ROC-GeminiHSLunarBDB, ROC-ApolloForwardHSBDB]
     upgrades: [EarlyLunarHS]
     # EarlyLunarHS added (2026-07): the SAME material-ladder rung, as a PARTUPGRADE preset on the
     # procedural ROH-AdjustableHS (already in cmp_ablativeTPS) instead of a named part — same mechanism,
@@ -1851,7 +1892,7 @@ nodes:
     tier: 8
     parents: [nuc_isotopePower]
     flavor: "Swap in plutonium-238 for the same generator and the output barely sags in a decade instead of collapsing in a season — the fuel choice that turns a demonstration into a power source you can fly past the orbit of Mars and still hear from."
-    parts: [rtgMini, RO-SNAP-9-RTG]
+    parts: [rtgMini, RO-SNAP-9-RTG, RO-SNAP-19-RTG, ca_rtg2000, nfe-rtg-snap27-1, ROC-LEMFoldingSNAP27BDB, ROC-LEMRackSNAP9BDB]
 
   # ================================================================================================
   # ===================== BAND 3 * ADVANCED JETS + ATTITUDE HARDWARE (T7 -> T8) ====================
@@ -1893,7 +1934,7 @@ nodes:
     tier: 8
     parents: [gnc_threeAxisStabilizedBus]
     flavor: "Spin a flywheel up or down and the whole spacecraft turns the other way — attitude held and changed with no propellant spent at all, as long as a star tracker keeps telling it which way it's actually pointed."
-    parts: [ca_rw_small, ca_rw_xsmall, ca_startrack, SXTAlouetteI]
+    parts: [ca_rw_small, ca_rw_xsmall, ca_startrack, SXTAlouetteI, ca_rw_medium]
     # Generic CoatlAerospace hardware (not Mariner-branded like ca_argo-mk2-*), so it's the catalog/general
     # implementation of 3-axis stabilization rather than a ride-along on Mariner's own bus — successor node,
     # not a direct-add, to keep the generic hardware separate from the vehicle-specific parts.
@@ -1909,7 +1950,7 @@ nodes:
     tier: 7
     parents: [th_hermeticBus]
     flavor: "Blades that open to radiate heat away and close to hold it in, driven by the bus temperature itself — the hermetic sphere's fixed skin becomes a thermostat instead of a single fixed compromise."
-    parts: [ca_louver_s]
+    parts: [ca_louver_s, ca_louver_s2]
     # NEW: th_hermeticBus (T3, band 1) was passive-only (a fixed radiating skin) — this is the real next
     # step, active/dynamic heat rejection, not just a bigger version of the same passive bus.
 
@@ -1950,7 +1991,7 @@ nodes:
     tier: 10
     parents: [fd_deepThrottleLanding]
     flavor: "Once you are down, get around - a throttleable open-cockpit rocket to hop the surface, and the uprated descent engine of the longer, heavier missions that follow the first footprints."
-    parts: [ROC-LFVBDB]
+    parts: [ROC-LFVBDB, ROC-LEMRover]
     upgrades: [RFUpgrade_LMDE-J]
     # Thin now (LFV + the doctrine-4-displaced LMDE-J uprate); grows into the extended-surface-ops home
     # (LRV rover / MESA) when non-engine parts are curated.
@@ -2238,3 +2279,109 @@ nodes:
     # King SNAP-10A (first flown space fission reactor); SNAP-2/8/50 + Soviet BES-5 are the size catalog.
     # Crossover root: radioisotope power (nuc_isotopePower) + nuclear-radiation physics (nuc_cosmicRay) ->
     # a critical reactor. This is the reactor parent that nuc_nuclearThermalRocket + nuc_nuclearRamjet needed.
+
+  # ================================================================================================
+  # ============ BAND 3 * CREWED-LUNAR-LANDING NON-ENGINE PARTS (capsules/stations/spaceplanes) =====
+  # ============ Authored 2026-07 from crewed-lunar-landing-partlist.tsv (non-engine).  ============
+  # ================================================================================================
+
+  # ---- Lane A: crewed lunar capsules ----
+  - id: int_apolloCSM
+    title: "Three-Crew Command and Service Module"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [int_geminiCapsule]
+    flavor: "A conical command module for three, mated to a service module that carries the propulsion, power and consumables for a two-week voyage - the first spacecraft built to leave Earth orbit with a crew and bring them back."
+    parts: [ROC-ApolloCMBDB, ROC-ApolloSMB2BDB, ROC-ApolloNoseconeBDB, ROC-ApolloDecouplerBDB, ROC-ApolloEngineMountBDB, mk1-3pod, ROC-ApolloDockingLightBDB, ROC-ApolloEVALightBDB, seatExternalCmd, ROC-GeminiLCMBDB]
+    # King Apollo CM. mk1-3pod = the generic 4m 3-crew pod. Lights/seat/Big-Gemini cabin = utility ride-alongs.
+    # The SPS engine (AJ10-137) already lives in fd_pressureFedRestart; the heatshield in cmp_lunarReturnAblator.
+  - id: int_d2LunarCraft
+    title: "Circumlunar Descent Craft"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [int_voskhodCabin]
+    flavor: "The Eastern-bloc answer to a manned Moon shot: a descent module, a mission module for the crew to live in, and a service module - a whole spacecraft rather than a scaled-up capsule."
+    parts: [ROC-D2CM, ROC-D2ServiceModule, ROC-D2MissionModule1, ROC-D2MissionModule2, ROC-D2Adaptor, ROC-D2Block2Nosecone, MK2VApod]
+    # King D-2 descent module. MK2VApod (TKS VA) = a Soviet crew-return capsule ride-along of the same era.
+
+  # ---- Lane B: lunar module ----
+  - id: int_lunarModule
+    title: "Two-Stage Lunar Module"
+    discipline: SystemsIntegration
+    tier: 9
+    parents: [int_apolloCSM]
+    flavor: "A spacecraft that only ever flies in vacuum: a descent stage with legs to set down on, and a separate ascent stage that leaves the legs behind and flies the crew back to lunar orbit. The airframe the deep-throttle engines were built for."
+    parts: [ROC-LEMDescentBDB, ROC-LEMAscentBDB, ROC-LEMLegsBDB, ROC-LEMDecouplerBDB, ROC-LEMMESABDB, landerCabinMedium]
+    # King LM descent stage. Pairs with the engines in fd_deepThrottleLanding (LMDE/LMAE). Deprecated MEM
+    # parts (MEMDescentMod/MEMLanderSXT) intentionally NOT placed - superseded by these ROC-LEM parts.
+
+  # ---- Lane D: space stations ----
+  - id: life_stationHabitation
+    title: "Long-Duration Habitation Module"
+    discipline: LifeSupport
+    tier: 8
+    parents: [life_openLoopECLSS]
+    flavor: "A pressurised volume built for people to live in for weeks, not the hours a capsule allows - room to stand, sleep and work while a life-support loop keeps the air breathable. The core a space station grows around."
+    parts: [crewCabin, sspx-core-125-1, sspx-habitation-1875-2, SXTCrewCabSSP10, SXTCrewCabSSP20]
+    # King habitation module. The station's crewed volume; structural tubes/adapters live in str_stationStructures.
+  - id: str_stationStructures
+    title: "Pressurised Station Connectors"
+    discipline: StructuresMechanisms
+    tier: 8
+    parents: [str_equipmentBays]
+    flavor: "The plumbing of an orbital outpost - pressurised passage tubes, diameter adapters and storage volumes that let separate modules dock into one continuous habitable structure."
+    parts: [proceduralCrewTube, sspx-tube-125-2, sspx-tube-125-3, sspx-tube-1875-2, sspx-tube-1875-3, sspx-adapter-0625-125-1, sspx-adapter-125-25-1, sspx-adapter-125-25-2, sspx-adapter-1875-0625-1, sspx-adapter-1875-125-1, sspx-adapter-1875-125-2, sspx-adapter-25-1875-1, sspx-cargo-125-1]
+    # Fixed catalog (cap-exempt): station tubes/adapters/storage. proceduralCrewTube is the procedural default.
+  - id: int_orbitalLab
+    title: "Crewed Orbital Laboratory"
+    discipline: SystemsIntegration
+    tier: 8
+    parents: [life_openLoopECLSS]
+    flavor: "A module built not to live in but to work in - a crewed laboratory where astronauts process experiments and samples by hand, turning a station from a place to survive into a place to do science."
+    parts: [Large_Crewed_Lab, L25mSci]
+    # King mobile processing lab (the crewed-science multiplier). Sibling of life_stationHabitation at T8.
+
+  # ---- Lane F: fields-and-particles science ----
+  - id: mic_plasmaWave
+    title: "Plasma-Wave Spectrometry"
+    discipline: Microelectronics
+    tier: 8
+    parents: [mic_ionMassSpec]
+    flavor: "Listen to the electric and magnetic oscillations of the plasma a spacecraft flies through - the radio song of a magnetosphere, measured across frequency to map fields no camera can see."
+    parts: [RO-PlasmaWave, dmUS2RPWS]
+    # King RPWS plasma-wave detector; dmUS2RPWS is its Universal-Storage-2 wedge form (a band-3 US2 wedge).
+
+  # ---- Lane H: spaceplanes (procedural wing + winged reentry + toolkit catalogs) ----
+  - id: aero_spaceplaneWing
+    title: "Heat-Tolerant Procedural Wing"
+    discipline: Aerodynamics
+    tier: 6
+    parents: [aero_supersonicWing]
+    flavor: "Procedural wings and control surfaces cut for the loads and heat of a lifting body - the default aerofoil of anything meant to fly fast and come back through the atmosphere on its own lift."
+    parts: [B9_Aero_Wing_Procedural_TypeA, B9_Aero_Wing_Procedural_TypeB, B9_Aero_Wing_Procedural_TypeC, AdvancedCanard]
+    # Procedural default (per doctrine); the fixed Dynasoar/Gemini reentry wings live in aero_liftingReentry.
+  - id: aero_liftingReentry
+    title: "Winged Atmospheric Entry"
+    discipline: Aerodynamics
+    tier: 7
+    parents: [aero_spaceplaneWing, cmp_ablativeTPS]
+    flavor: "Come home on wings instead of a parachute: a crewed vehicle that trades a ballistic plunge for a controlled hypersonic glide, bleeding off orbital speed across a runway approach. High-speed lift and a reentry heatshield, together, let a crew fly their own descent."
+    parts: [ROC-DynaWingMoroz, ROC-DynaElevonMoroz, ROC-DynaRudderMoroz, ROC-DynaShieldMoroz, ROC-GeminiWing, ROC-GeminiWingContSurf, ROC-GeminiFlightPack, ROC-GeminiFlightPackContSurf]
+    # King Dynasoar wing. The crossover breakthrough (aero x TPS): Dynasoar (X-20) + Gemini's paraglider. Skids
+    # -> str_landingGear; cockpits/cabins -> life_spaceplaneCockpit; bays -> str_aircraftAirframe.
+  - id: life_spaceplaneCockpit
+    title: "Winged-Vehicle Flight Deck"
+    discipline: LifeSupport
+    tier: 6
+    parents: [life_pressurisedCabin]
+    flavor: "A pressurised cockpit sized and shaped for a wing, not a nose cone - forward visibility for a runway landing, from a fighter's canopy to an airliner's flight deck to a spaceplane's reentry windows."
+    parts: [mk2Cockpit_Standard, mk2Cockpit_Inline, mk2CrewCabin, mk2DroneCore, RO-Mk1Cockpit, RO-Mk1CockpitInline, RO-Mk1CrewModule, MK1CrewCabin, ROC-DynaCockpitMoroz, ROC-DynaCockpitAltMoroz, ROC-DynaCabinMoroz, 25mKossak, SXTEntenteCordiale, KerbCan]
+    # Fixed catalog (cap-exempt): Mk1/Mk2 + Dynasoar cockpits/cabins + folded-in airliner flight decks (737, Concorde).
+  - id: str_aircraftAirframe
+    title: "Monocoque Aircraft Airframe"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_diameterAdapters, aero_supersonicWing]
+    flavor: "The load-bearing body of a winged vehicle - fuselages, cargo bays, tails and shielded tankage that carry flight loads a stacked rocket never sees, from an airliner tube to a spaceplane's flat-bottomed hull."
+    parts: [RO-Mk1Fuselage, RO-Mk1FuselagePres, RO-MK1Cargobay, mk2CargoBayL, mk2CargoBayS, LMkIIIAircaftFus, LMkIIAircaftTail, ROC-DynaCrewTubeMoroz, ROC-DynaBayMoroz, ROC-DynaButtMoroz, ROC-DynaAdapterBigMoroz, RO-ProcTankSpaceplane, ROT-MiscTank-Shielded, ROT-ModularCargoBay]
+    # Fixed catalog (cap-exempt): Mk1/Mk2/Dynasoar fuselages+bays, folded-in airliner fus/tail, shielded tanks.
