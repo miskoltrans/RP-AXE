@@ -2556,7 +2556,10 @@ nodes:
     tier: 9
     parents: [pc_apogeeKickCatalog, pc_largeSegmentedBooster]
     flavor: "Stage two solid motors together and call it a whole upper stage, not just a kick - the segmented-casting size and the kick-motor precision, combined into hardware that can send a payload all the way to geostationary transfer or escape velocity from a bay that never carries its own liquid stage."
-    parts: [ius_bottom, ius_top]
+    parts: [ius_bottom, ius_top, ius_dec_fs, ius_dec_ss]
+    # ius_dec_fs/ius_dec_ss added (2026-07, materials pass): the IUS's own dedicated first/second-stage
+    # decouplers, not a generic catalog part - rides with its vehicle's king, same pattern as
+    # ROC-BigGeminiDecoupler riding with the Big Gemini capsule.
     # Paired 2-stage king: the real Inertial Upper Stage (Orbus-21 + Orbus-6E) - Magellan/Galileo/Ulysses
     # all rode one out of the Shuttle's bay. Crossover: kick-motor precision (pc_apogeeKickCatalog) x
     # large-segment casting scale (pc_largeSegmentedBooster). A genuinely bigger breakthrough than a kick
@@ -2609,7 +2612,9 @@ nodes:
     tier: 10
     parents: [nuc_fissionReactor, str_pusherPlate]
     flavor: "Skip the reactor and the nozzle entirely - drop small fission charges out the back and ride the shockwave off an ablative plate, one controlled detonation at a time. Absurd, filthy, and on paper the only chemistry-free way to put a truly heavy ship anywhere in the solar system fast. Project Orion never flew; here, it can."
-    parts: [RO-fftorion8, RO-fftorion12, fft-fission-orion-5-1]
+    parts: [RO-fftorion8, RO-fftorion12, fft-fission-orion-5-1, fft-fueltank-pulseunits-5-1, fft-fueltank-pulseunits-5-2, fft-fueltank-pulseunits-5-3]
+    # Pulse-unit magazines (small/medium/large) added (2026-07, materials pass): the drive's own ammunition
+    # tankage - rides with its king, same pattern as any engine + its dedicated fuel tank.
     # Crossover: fissile-material access (nuc_fissionReactor) x the pusher-plate/shock-absorber enabler
     # above. Deliberately NOT parented on nuc_nuclearThermalRocket - mechanically unrelated to a reactor
     # heating propellant (RP-1 only grouped Orion with NRX/Phoebus/NERVA-XE by calendar year). What-if/fun
@@ -2678,3 +2683,54 @@ nodes:
     upgrades: [RFUpgrade_GE4-J6H, RFUpgrade_J79-IAI-J1E, RFUpgrade_WP-13]
     # King AL-31F (aje_al31) - genuine next-generation base-part king past the F100/variable-stator family
     # homed at T4-T8. Doctrine-4 catches: GE4-J6H/J79-IAI-J1E/WP-13 (bases in av_variableStator/av_afterburner T4).
+
+  # ================================================================================================
+  # ================= BAND 4 * SHUTTLE & STATION ERA -- MATERIALS (2026-07) =======================
+  # ========= Second pass over space-stations-shuttle-partlist.md: the materialsScienceSpaceStation/ ==
+  # ========= materialsScienceSpaceplanes groups. Venera/4MV probe-bus tankage (ca_vor_mptank/         =
+  # ========= ca_vor_sep1/ca_vor_tank) deliberately DEFERRED - real home is riding with the ca_vor_core/ =
+  # ========= ca_fom_lander probe-bus king, not authored until the avionics/probes pass.             ==
+  # ================================================================================================
+
+  - id: th_extendedMLIWrapping
+    title: "Extended Multi-Layer Insulation"
+    discipline: Thermodynamics
+    tier: 9
+    parents: [th_hermeticBus]
+    flavor: "Wrap the bus in another few layers of aluminised film and the heat leak keeps dropping further still - the same passive blanket, thickened for a mission measured in months rather than weeks."
+    upgrades: [MLI.Upgrade3]
+    # Continues th_hermeticBus's passive-insulation ladder (MLI.Upgrade1 there). MLI.Upgrade2 is a known
+    # gap (never curated/placed - see the band-2 handover note) skipped over here, not silently absorbed.
+  - id: th_pumpedLoopRadiators
+    title: "Pumped-Loop Radiator Panels"
+    discipline: Thermodynamics
+    tier: 9
+    parents: [th_activeLouvers]
+    flavor: "Stop relying on the hull's own skin to shed heat and circulate coolant out to dedicated panels instead - a heat-rejection system sized independently of the spacecraft it serves, because a crewed orbiter or a station generates more waste heat than any body-mounted radiator could ever carry alone."
+    parts: [radPanelLg, radPanelSm, radPanelEdge]
+    # King EATCS radiator panels (the Shuttle orbiter's own payload-bay radiators). Continues
+    # th_activeLouvers' ACTIVE heat-rejection side (th_hermeticBus's passive side continues separately in
+    # th_extendedMLIWrapping, above) - scaled from a probe's small adjustable louvers to a pumped-coolant-
+    # loop panel array sized for station/Shuttle-class waste heat.
+  - id: met_aluminiumCopperBalloonTank
+    title: "Aluminium-Copper Balloon Tankage"
+    discipline: Metallurgy
+    tier: 9
+    parents: [str_balloonTank]
+    flavor: "Swap the pressure-stabilised tank's stainless skin for an aluminium-copper alloy and the same trick - a wall so thin it needs its own pressure to stand - sheds a third of its weight again. The material the Shuttle's own External Tank flies on."
+    upgrades: [RFTech-Tank-Balloon-SteelAlCu]
+    # Real crossover: the upgrade token name itself (SteelAlCu) names the actual Space Shuttle External
+    # Tank alloy transition (steel -> 2219 aluminium-copper alloy). Continues str_balloonTank's
+    # pressure-stabilised-tank lineage (T3) with a Metallurgy-side alloy upgrade, not a new tank shape.
+  - id: cmp_compositeFairingShells
+    title: "Composite Fairing Shells"
+    discipline: CompositeMaterials
+    tier: 9
+    parents: [met_stiffenedFairings, cmp_ablativeRefinement]
+    flavor: "Carry the resin-and-fibre layup learned for a reentry heatshield over to a payload shroud instead - a fairing that sheds the last of the aluminium stringer's dead weight, built from the same composite technique that already keeps a capsule cool on the way down."
+    upgrades: [PFTech-Fairing-IV]
+    # Real crossover, flagged by a prior author: met_stiffenedFairings' own flavor text promised the
+    # fairing-materials ladder "runs on through magnesium and fibreglass to composite shells" - this is
+    # that promised rung, crossing into CompositeMaterials by reusing cmp_ablativeRefinement's fibre-resin
+    # composite technique (established for heatshields) on a fairing instead. PFTech-Fairing-II/III are a
+    # known gap in the middle of this ladder (never curated), skipped over, not silently absorbed.
