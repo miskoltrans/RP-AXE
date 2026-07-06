@@ -3708,6 +3708,24 @@ nodes:
     parents: [life_habitatModuleCatalog]
     flavor: "The station stops being a converted rocket stage and becomes a purpose-built module you launch, dock and inhabit. A rigid pressurised core with dedicated habitation and science modules - the Mir/ISS way of building a station out of standardised, connectable rooms."
     parts: [sspx-core-1875-1, sspx-habitation-25-1, sspx-habitation-375-2, sspx-science-1875-1, STXCANIOT]
+  - id: life_largeScaleHabitat
+    title: "Large-Diameter Habitat Modules"
+    discipline: LifeSupport
+    tier: 12
+    parents: [life_modularHabitat]
+    flavor: "The same rigid pressurised module family, in the largest diameter anyone builds - a 9-metre-class hull, room enough for a real neighbourhood instead of a corridor of rooms."
+    parts: [sspx-dome-5-1, sspx-dome-habitation-5-1]
+    # 2026-07 (colonization-scaffold pass): same catalog logic as life_habitatModuleCatalog, one size class
+    # further out - RP-1's own last real hardware batch before the tree goes pure scaffold.
+  - id: life_artificialGravityCentrifuge
+    title: "Artificial-Gravity Centrifuge Habitat"
+    discipline: LifeSupport
+    tier: 12
+    parents: [life_modularHabitat]
+    flavor: "Spin a section of the station and simulated weight comes back - the one countermeasure to long-duration weightlessness that doesn't need a treadmill, a drug, or a trip home. Never flown at station scale, drawn more than once."
+    parts: [sspx-expandable-centrifuge-375-1, sspx-expandable-centrifuge-5-1]
+    # 2026-07 (colonization-scaffold pass): a genuinely new mechanism (rotation for gravity, not just more
+    # pressurised volume) - own node rather than folded into the plain habitat-module size catalog above.
   - id: life_pressurizedCrewTubes
     title: "Pressurised Crew Tubes"
     discipline: LifeSupport
@@ -3736,6 +3754,15 @@ nodes:
     parents: [life_modularHabitat]
     flavor: "Close the loop with living things: a greenhouse that grows food and scrubs carbon dioxide back into oxygen, turning the open-loop consumables chain toward a self-sustaining one. The first bioregenerative step for missions too long to resupply."
     parts: [sspx-greenhouse-25-1, sspx-cupola-greenhouse-125-1]
+  - id: life_largeGreenhouseDome
+    title: "Large-Scale Greenhouse Dome"
+    discipline: LifeSupport
+    tier: 12
+    parents: [life_bioregenerativeECLSS]
+    flavor: "Scale the greenhouse from a growth-trial rack to a walkable dome - real crop area instead of a proof of concept, the difference between supplementing a diet and actually growing a meaningful share of it."
+    parts: [sspx-dome-greenhouse-5-1]
+    # 2026-07 (colonization-scaffold pass): RP-1 stops modeling real hardware past the present day - this
+    # is the one real curated batch (largeScaleHabitats) in an otherwise-empty post-2051 scaffold.
   - id: life_observationCupola
     title: "Observation Cupola"
     discipline: LifeSupport
@@ -3743,6 +3770,14 @@ nodes:
     parents: [life_habitatModuleCatalog]
     flavor: "A windowed dome that gives the crew a direct, wide-angle eye on the vehicle and the world below - the cupola from which an arm operator berths an incoming module, or a crew simply watches the Earth turn. A telescope dome shares the pressure-vessel design."
     parts: [sspx-cupola-1875-1, sspx-cupola-125-1, sspx-cupola-telescope-125-1, cupola, sspx-cupola-375-1, sspx-observation-25-1]
+  - id: life_largeObservationDome
+    title: "Large-Scale Observation Dome"
+    discipline: LifeSupport
+    tier: 11
+    parents: [life_observationCupola]
+    flavor: "The same windowed pressure vessel, big enough to hold more than a couple of crew at once - a shared viewing deck rather than a one-person porthole."
+    parts: [sspx-dome-cupola-5-1]
+    # 2026-07 (colonization-scaffold pass): parent node at its 6-part cap, genuine size-class continuation.
   - id: life_stationAirlock
     title: "Station Service Airlock"
     discipline: LifeSupport
