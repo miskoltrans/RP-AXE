@@ -194,6 +194,11 @@ nodes:
     tier: 3
     parents: [pc_doubleBaseBooster]
     flavor: "Ammonium-perchlorate oxidiser bound in a rubbery polysulfide matrix, cast to shape around an integral nozzle — higher energy than double-base and castable to any size. The Baby Sergeant cluster that spun Explorer 1 to orbit."
+    # HUB ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #5): 6 real dependents after band 3
+    # (pc_scoutSolids, pc_strapOnSolids, pc_retroKick, pc_pioneerVernierTrim, pc_allSolidStaging,
+    # pc_segmentedCasting) — over the >3 flag threshold, but the same foundational-chemistry-root shape
+    # as the already-accepted elec_transistor/aero_subsonicWing hubs. Each dependent is a genuinely
+    # distinct lineage drawing on the same AP-composite breakthrough, not padding. Accepted as-is.
     parts: [ROE-BabySergeant, ROE-BabySergeantX3, ROE-BabySergeantX11, ROE-GCRC]
   - id: pc_hypergolics
     title: "Amine-Nitrate Hypergolics"
@@ -303,6 +308,9 @@ nodes:
     tier: 3
     parents: [met_isogrid]
     flavor: "Seal the electronics in a pressurised sphere with a circulating gas and a polished radiating skin, holding them at room temperature through the swing from sunlight to shadow. Sputnik was mostly this: a bus that keeps its instruments alive."
+    # HUB ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #6): 4 dependents (tel_appSatellites,
+    # cmp_ablativeTPS, opt_twoChannelIR, th_activeLouvers) — matches the already-accepted
+    # str_structuralHardware precedent exactly (4). Each is a clearly distinct downstream need. Accepted.
     parts: [SXTSputnik, probeCoreSphere_v2, sputnik1, ROT-ProbeCore]
     upgrades: [MLI.Upgrade1]
     # MLI.Upgrade1 added (2026-07): multi-layer-insulation wrapping-density tier, confirmed KEEP-capability
@@ -481,6 +489,10 @@ nodes:
     tier: 4
     parents: [av_axialJet, aero_supersonicWing]
     flavor: "Pivot the compressor's stator vanes to keep the airflow attached across a huge speed range — the engine that holds Mach 2 without stalling its own compressor. The Starfighter's powerplant."
+    # HUB ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #6): 4 dependents after band 3
+    # (av_afterburner-family successors + av_mach2Turbojet, av_highBypassTurbofan). The real
+    # tech-transfer story holds — variable-stator compressor control genuinely underlies both Mach-2
+    # fighter engines and large turbofans' stall margin. Accepted.
     parts: [aje_j79, aje_j75, turboFanEngine, RO-J85GE5]
   - id: av_ramjet
     title: "Ramjet Compression"
@@ -766,6 +778,12 @@ nodes:
     tier: 5
     parents: [opt_vidicon]
     flavor: "Scan the planet in wavelengths the eye cannot see: an infrared radiometer maps cloud-top temperature, an ultraviolet spectrometer reads the high atmosphere. The first weather and earth-resource sensing from orbit."
+    # HUB ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #6): grew to 6 real dependents across
+    # bands 2-3 (opt_irRadiometry, opt_twoChannelIR, opt_uvSpectrometry, opt_orbitalMapping,
+    # opt_infraredInterferometry, opt_multiSpectralImaging) with no accept ever recorded — the one hub in
+    # this review that most deserved a documented decision rather than silent growth. Each dependent is a
+    # genuinely distinct sensing modality, the same foundational-root shape as the already-accepted
+    # elec_transistor hub. Accepted as-is.
     parts: [RO-IRRadiometer]
 
   # ===================== BAND 2 * SCIENCE INSTRUMENT GATES (numbered-family progressions) =====================
@@ -882,6 +900,12 @@ nodes:
     tier: 4
     parents: [pc_hypergolics]
     flavor: "Swap the fuming-nitric oxidiser for dinitrogen tetroxide — denser, hotter-burning, storable in the same tank — paired with unsymmetrical dimethylhydrazine that ignites the instant the two meet. The combination that scales the storable rocket from a spacecraft thruster up to a full orbital booster; every hypergolic launcher for decades runs on it."
+    # HUB RE-ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #4): grown to 7 real dependents
+    # (pc_fluorine, fd_longMarchStorable, fd_sovietStorable, fd_titanStorableConversion,
+    # fd_pressureFedRestart, pc_storableVernierFamily, pc_storableRcsPropellants) — docs/BAND3-TREE.md's
+    # last recorded count was 5, "recommend accepting as flavor... your call to override." Every
+    # dependent is still a genuinely distinct vehicle/chemistry lineage drawing on the same foundational
+    # breakthrough; re-confirmed and accepted at the current count rather than left stale.
     upgrades: [RFUpgrade_YF-1A, RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_RD-217-8D515, RFUpgrade_S5.2, RFUpgrade_XLR81-BA-5, RFUpgrade_XLR81-BA-7, RFUpgrade_RD-250-8D518, RFUpgrade_RD-252-8D724, RFUpgrade_RD-855, RFUpgrade_RD-856]
   - id: pc_htpSustainer
     title: "Multi-Chamber Peroxide Combustion"
@@ -1756,6 +1780,10 @@ nodes:
     # to be waved off as a generic utility part. Real mechanism (`CModuleFuelLine`) is cross-tank propellant
     # feed while stages are still attached — genuinely distinct from str_staging's separation mechanism
     # (severing a spent stage), which is why it's a sibling here, not folded into that node.
+    # TIER RATIONALE (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #low): the T2->T7 jump had no stated
+    # reason, unlike str_fixedLanderLegs' similarly large jump next to it. Deliberate: asparagus staging is
+    # powerful enough (every strap-on drains before dropping, instead of dropping half-full) to be worth a
+    # late gameplay gate on its own, not just a T2 utility part — a gating tax, not a lineage claim.
 
   # ================================================================================================
   # ===================== BAND 3 * SCATTERED-BY-MECHANISM PARTS (T7 -> T8) =========================
@@ -1780,6 +1808,10 @@ nodes:
     # EarlyLunarHS added (2026-07): the SAME material-ladder rung, as a PARTUPGRADE preset on the
     # procedural ROH-AdjustableHS (already in cmp_ablativeTPS) instead of a named part — same mechanism,
     # different delivery.
+    # DEFERRED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #low): the ladder's next rung, `LunarHS`
+    # (manifest/upgrades-curated.tsv, KEEP-capability, techRequired=lunarLanding), isn't placed anywhere
+    # yet. Not a gap in this node — it belongs on the Apollo CM/CSM capsule node, which hasn't been
+    # authored yet (crewed-lunar-landing content so far is engines-only). Placeholder for that pass.
 
   # ================================================================================================
   # ===================== BAND 3 * RADIOISOTOPE POWER (T7 -> T8) ===================================
