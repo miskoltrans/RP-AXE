@@ -63,6 +63,8 @@ namespace RPAxe.RnD
         private static readonly FieldInfo PosField = AccessTools.Field(typeof(RDNode), "pos");
         private static readonly FieldInfo WidthF = AccessTools.Field(typeof(RDNode), "width");
         private static readonly FieldInfo HeightF = AccessTools.Field(typeof(RDNode), "height");
+        private static readonly FieldInfo TechIconF = AccessTools.Field(typeof(RDNodePrefab), "techIcon");   // the node glyph (Image 'ImageIcon')
+        private const float ICON_SCALE = 0.78f;   // shrink the glyph a bit for easier navigation (prototype icon ~0.72 of tile)
 
         private void Awake()
         {
@@ -294,19 +296,22 @@ namespace RPAxe.RnD
 
                 const float PAD = 160f;
                 Rect r = content.rect;
-                // Union the current rect with the padded node bbox -> never lose stock coverage, only grow.
-                // Keep the bottom at the content's y-origin (pivot.y stays ~0; the emitter keeps node y > 0).
-                float xMin = Mathf.Min(r.xMin, mnx - PAD), xMax = Mathf.Max(r.xMax, mxx + PAD);
-                float yMin = Mathf.Min(r.yMin, 0f),        yMax = Mathf.Max(r.yMax, mxy + PAD);
-                float newW = xMax - xMin, newH = yMax - yMin;
-                if (newW <= r.width + 1f && newH <= r.height + 1f) return;   // already contains everything
+                Vector2 pv = content.pivot;
+                // Grow ONLY sizeDelta — never pivot or position — so KSP's zoom-to-cursor and scroll math stay
+                // intact (changing the pivot reset the view on zoom and shifted the junction dots). sizeDelta
+                // growth moves each rect edge by a pivot-weighted share, so cover each overflowing side where the
+                // pivot allows; the emitter's tighter x-spacing keeps the tree left of the (pivot-pinned) right edge.
+                float overTop = Mathf.Max(0f, (mxy + PAD) - r.yMax), overBot = Mathf.Max(0f, r.yMin - (mny - PAD));
+                float overRight = Mathf.Max(0f, (mxx + PAD) - r.xMax), overLeft = Mathf.Max(0f, r.xMin - (mnx - PAD));
+                float dH = 0f, dW = 0f;
+                if (overTop > 0f && pv.y < 0.999f) dH = Mathf.Max(dH, overTop / (1f - pv.y));
+                if (overBot > 0f && pv.y > 0.001f) dH = Mathf.Max(dH, overBot / pv.y);
+                if (overRight > 0f && pv.x < 0.999f) dW = Mathf.Max(dW, overRight / (1f - pv.x));
+                if (overLeft > 0f && pv.x > 0.001f) dW = Mathf.Max(dW, overLeft / pv.x);
+                if (dW <= 1f && dH <= 1f) return;   // already contains everything
 
-                Vector3 worldBefore = content.position;                      // pivot is the transform origin; children
-                content.pivot = new Vector2(-xMin / newW, -yMin / newH);     //   move with it -> restore position so the
-                content.sizeDelta = new Vector2(newW, newH);                 //   tree stays put while the rect re-brackets it
-                content.position = worldBefore;
-
-                Debug.Log($"[AXE] content-fit: nodes x[{mnx:F0}..{mxx:F0}] y[{mny:F0}..{mxy:F0}] -> rect x[{xMin:F0}..{xMax:F0}] y[{yMin:F0}..{yMax:F0}] size=({newW:F0},{newH:F0}) pivot={content.pivot}");
+                content.sizeDelta = new Vector2(content.sizeDelta.x + dW, content.sizeDelta.y + dH);
+                Debug.Log($"[AXE] content-fit: nodes x[{mnx:F0}..{mxx:F0}] y[{mny:F0}..{mxy:F0}] grow=({dW:F0},{dH:F0}) -> sizeDelta={content.sizeDelta} (pivot {pv} unchanged)");
             }
             catch (Exception e) { Debug.LogError("[AXE] content-fit failed: " + e); }
         }
@@ -359,6 +364,26 @@ namespace RPAxe.RnD
                 Vector3 gp = s.graphics != null ? s.graphics.transform.position : Vector3.zero;
                 Debug.Log($"[AXE] DUMP node0 id={s.tech?.techID} w={w:F1} h={h:F1} transform.pos={s.transform.position} localPos={s.transform.localPosition} graphics.pos={gp}");
                 Debug.Log($"[AXE] DUMP node0 anchorR={s.GetPosition(RDNode.Anchor.RIGHT, Vector3.zero)} anchorL={s.GetPosition(RDNode.Anchor.LEFT, Vector3.zero)}");
+                RectTransform s0 = s.transform as RectTransform;
+                if (s0 != null) Debug.Log($"[AXE] ANCHDUMP node0 anchorMin={s0.anchorMin} anchorMax={s0.anchorMax} pivot={s0.pivot} anchoredPos={s0.anchoredPosition} sizeDelta={s0.sizeDelta}");
+                RDNodePrefab g0 = s.graphics;
+                if (g0 != null && g0.searchHighlight != null)   // halo (researchable ring) offset diagnosis
+                {
+                    RectTransform hr = g0.searchHighlight.rectTransform;
+                    Debug.Log($"[AXE] HALODUMP searchHighlight anchorMin={hr.anchorMin} anchorMax={hr.anchorMax} pivot={hr.pivot} anchoredPos={hr.anchoredPosition} sizeDelta={hr.sizeDelta} parent={(hr.parent != null ? hr.parent.name : "null")}");
+                }
+                if (g0 != null)   // RDNodePrefab's Graphic-typed fields -> find the icon field to shrink it
+                    foreach (System.Reflection.FieldInfo fi in g0.GetType().GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance))
+                    {
+                        object val = fi.GetValue(g0);
+                        if (val is Graphic gr)
+                            Debug.Log($"[AXE] FIELDDUMP RDNodePrefab.{fi.Name} = {gr.GetType().Name} '{gr.name}' size={gr.rectTransform.sizeDelta} scale={gr.transform.localScale}");
+                    }
+                if (DotPool.Count > 0 && DotPool[0] != null)   // a junction dot's anchor (vs node's)
+                {
+                    RectTransform dr = DotPool[0].GetComponent<RectTransform>();
+                    Debug.Log($"[AXE] DOTDUMP dot0 anchorMin={dr.anchorMin} anchorMax={dr.anchorMax} pivot={dr.pivot} anchoredPos={dr.anchoredPosition} localPos={dr.localPosition} active={DotPool[0].activeSelf}");
+                }
                 Transform root = ctrl.RDNodeRoot;
                 if (root != null) Debug.Log($"[AXE] DUMP RDNodeRoot pos={root.position} localScale={root.localScale} euler={root.eulerAngles}");
                 // BACKGROUND diagnosis: ancestor chain + the host's children, to locate the stock grid.
@@ -428,6 +453,12 @@ namespace RPAxe.RnD
             Transform root = ctrl != null ? ctrl.RDNodeRoot : null;
             if (root == null) return;
             if (DotSprite == null) DotSprite = MakeCircleSprite(20);
+            // Anchor the dots at the content's PIVOT: a child anchored at its parent's pivot keeps
+            // localPosition == anchoredPosition no matter how the parent's sizeDelta grows (the content-fit).
+            // RDNodes are plain Transforms (immune already); the dots are RectTransforms, so without this a
+            // content-fit grow drifts them ~half a tree (center-anchored -> the anchor reference moves).
+            RectTransform contentRT = ctrl.gridArea != null && ctrl.gridArea.scrollRect != null ? ctrl.gridArea.scrollRect.content : root as RectTransform;
+            Vector2 dotAnchor = contentRT != null ? contentRT.pivot : new Vector2(1f, 0f);
             for (int i = 0; i < Dots.Count; i++)
             {
                 GameObject go = i < DotPool.Count ? DotPool[i] : null;
@@ -440,7 +471,8 @@ namespace RPAxe.RnD
                 }
                 RectTransform rt = go.GetComponent<RectTransform>();
                 rt.SetParent(root, false);
-                rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
+                rt.anchorMin = dotAnchor; rt.anchorMax = dotAnchor;   // = content pivot -> immune to the content-fit resize
+                rt.pivot = new Vector2(0.5f, 0.5f);            // centre the 9x9 dot on its point
                 rt.sizeDelta = new Vector2(9f, 9f);
                 rt.localPosition = new Vector3(Dots[i].Pos.x, Dots[i].Pos.y, 0f);   // same space as the routed points
                 go.GetComponent<Image>().color = DotBaseColor(i);
@@ -567,6 +599,8 @@ namespace RPAxe.RnD
             // are dark line-art that reads on every (bright) discipline tile. White = no multiply; carry the
             // tile's alpha so faded / ghosted nodes dim the icon in step with the tile.
             rd.graphics.SetIconColor(new Color(1f, 1f, 1f, tile.a));
+            if (TechIconF != null && TechIconF.GetValue(rd.graphics) is Graphic ic)   // shrink the glyph for easier navigation
+                ic.transform.localScale = new Vector3(ICON_SCALE, ICON_SCALE, 1f);
         }
 
         private static readonly Color RingAvailable = new Color(0.32f, 0.78f, 0.97f, 1f);   // researchable = cyan frontier
@@ -579,6 +613,7 @@ namespace RPAxe.RnD
             RDNodePrefab g = rd != null ? rd.graphics : null;
             if (g == null || g.searchHighlight == null) return;
             g.searchHighlight.raycastTarget = false;   // the ring must never intercept the node's click
+            g.searchHighlight.rectTransform.anchoredPosition = Vector2.zero;   // centre the ring on the tile (the prefab offsets it -3,+3)
             if (rd.state == RDNode.State.RESEARCHABLE) { g.searchHighlight.color = RingAvailable; g.searchHighlight.enabled = true; }
             else g.searchHighlight.enabled = false;     // researched (green tile signals it) + locked = no ring
         }
