@@ -1379,7 +1379,10 @@ nodes:
     tier: 8
     parents: [gnc_smallRcsCatalog]
     flavor: "The same catalog, scaled up — bigger blocks for spacecraft that outgrew the first size class. The procedural thruster stays the default; this is the shelf of named hardware for whoever wants the specific part."
-    parts: [HeavyRcs, RCSBlock_413, RCSBlock_550, RO_RCSBlock_restock_413, RO_RCSBlock_restock_550, ROC-ApolloRCS, ROC-D2RCS, RCSBlock_825, RCSBlock_1100, RCSBlock_2200, RO_RCSBlock_restock_825, RO_RCSBlock_restock_1100, RO_RCSBlock_restock_2200, ROC-MercuryRCS2BDB]
+    parts: [HeavyRcs, RCSBlock_413, RCSBlock_550, RO_RCSBlock_restock_413, RO_RCSBlock_restock_550, ROC-ApolloRCS, ROC-D2RCS, RCSBlock_825, RCSBlock_1100, RCSBlock_2200, RO_RCSBlock_restock_825, RO_RCSBlock_restock_1100, RO_RCSBlock_restock_2200, ROC-MercuryRCS2BDB, ROC-LEMTruckRCS3BDB, ROC-LEMTruckRCS4BDB]
+    # ROC-LEMTruckRCS3BDB/RCS4BDB added (2026-07, stations pass): AES LM Truck's RCS clusters - same
+    # generic fixed-block mechanism (a 3x/4x thruster count variant), not tied to the LM Truck platform
+    # itself (not yet authored). Fixed catalog, cap-exempt.
     # SPLIT (2026-07, user catch): checked era data before merging this time — the 275N-class parts I'd
     # just added are `improvedFlightControl` (x=-2782), genuinely earlier than this node's own `earlyDocking`
     # (x=-2612), not the same generation. Real successor relationship (small→big RCS blocks), not one
@@ -2364,7 +2367,10 @@ nodes:
     tier: 8
     parents: [str_equipmentBays]
     flavor: "The plumbing of an orbital outpost - pressurised passage tubes, diameter adapters and storage volumes that let separate modules dock into one continuous habitable structure."
-    parts: [proceduralCrewTube, sspx-tube-125-2, sspx-tube-125-3, sspx-tube-1875-2, sspx-tube-1875-3, sspx-adapter-0625-125-1, sspx-adapter-125-25-1, sspx-adapter-125-25-2, sspx-adapter-1875-0625-1, sspx-adapter-1875-125-1, sspx-adapter-1875-125-2, sspx-adapter-25-1875-1, sspx-cargo-125-1]
+    parts: [proceduralCrewTube, sspx-tube-125-2, sspx-tube-125-3, sspx-tube-1875-2, sspx-tube-1875-3, sspx-adapter-0625-125-1, sspx-adapter-125-25-1, sspx-adapter-125-25-2, sspx-adapter-1875-0625-1, sspx-adapter-1875-125-1, sspx-adapter-1875-125-2, sspx-adapter-25-1875-1, sspx-cargo-125-1, sspx-tube-125-1, sspx-tube-1875-1, sspx-cargo-container-25-3, sspx-adapter-25-375-1, sspx-adapter-25-375-2]
+    # Widened (2026-07, stations pass): sspx-tube-125-1/1875-1 (same tube family, a longer/later-gated
+    # size), sspx-cargo-container-25-3 (same storage-volume theme as sspx-cargo-125-1), sspx-adapter-25-
+    # 375-1/2 (the new 6.75m<->4.5m diameter step Skylab-class modules need). Fixed catalog, cap-exempt.
     # Fixed catalog (cap-exempt): station tubes/adapters/storage. proceduralCrewTube is the procedural default.
   - id: int_orbitalLab
     title: "Crewed Orbital Laboratory"
@@ -2734,3 +2740,78 @@ nodes:
     # that promised rung, crossing into CompositeMaterials by reusing cmp_ablativeRefinement's fibre-resin
     # composite technique (established for heatshields) on a fairing instead. PFTech-Fairing-II/III are a
     # known gap in the middle of this ladder (never curated), skipped over, not silently absorbed.
+
+  # ================================================================================================
+  # ================= BAND 4 * SHUTTLE & STATION ERA -- STATIONS (2026-07) ========================
+  # ========= Third pass over space-stations-shuttle-partlist.md: earlySpaceStations (22 parts) +  ==
+  # ========= the non-engine half of spaceStationControl (11 of 13 - engines already done).        ==
+  # ================================================================================================
+
+  # ---- Lane 1: the station habitat (headline king + size-catalog extension) ----
+  - id: life_convertedStageStation
+    title: "Converted-Stage Station Module"
+    discipline: LifeSupport
+    tier: 9
+    parents: [life_stationHabitation]
+    flavor: "Build the station module out of a spent launch-vehicle stage's own tooling and diameter instead of designing a bespoke pressure vessel from scratch - decks and stowage where the tankage used to be. Skylab flew fitted-out on the ground rather than converted in orbit as first planned, but the trick is the same: a station's worth of volume for the price of hardware already proven to fly."
+    parts: [SXTISSHabISK30, SXTSPKTRCabin, sspx-airlock-125-1]
+    # King Skylab (SXTISSHabISK30) - the first space station, the headline part of this whole batch.
+    # SPKTR-10 (Soviet large storage module, same converted-stage-class scale) rides along; the airlock
+    # rides along too (a proper station needs EVA access, not just a hatch).
+  - id: life_habitatModuleCatalog
+    title: "Extended Habitation Module Catalog"
+    discipline: LifeSupport
+    tier: 9
+    parents: [life_stationHabitation]
+    flavor: "The same pressurised-module family, in more sizes and roles - habitation decks and utility bays scaled to whatever the mission needs, off the same shelf the core module came from."
+    parts: [sspx-habitation-125-1, sspx-habitation-1875-1, sspx-utility-125-1, sspx-utility-1875-1]
+    # Procedural stays default; this is the named-hardware size/role catalog, same shape as
+    # gnc_fixedRcsCatalog/pc_apogeeKickCatalog. Kept separate from life_convertedStageStation so Skylab
+    # keeps its own spotlight rather than sharing a node with generic catalog parts.
+
+  # ---- Lane 2: external truss structure (a genuinely new mechanism - unpressurised scaffold) ----
+  - id: str_externalTrussStructure
+    title: "External Truss Structure"
+    discipline: StructuresMechanisms
+    tier: 9
+    parents: [str_stationStructures]
+    flavor: "Bolt an unpressurised scaffold onto the station instead of cramming everything inside a hull - a lattice to hang solar arrays, radiators and berthing ports from, structure that never needs to hold air. The adjustable mounting frames and radial berthing points that let a station grow module by module instead of launching whole."
+    parts: [truss-hex-01, truss-hex-02, truss-hex-03, truss-hex-adapter-01, sspx-adjusting-base-125-1, sspx-adjusting-base-25-1, sspx-adjusting-base-cradle-125-1, sspx-adjusting-base-cradle-25-1, sspx-attach-125-1, sspx-attach-1875-1]
+    # King Hexa-Girder truss family (external unpressurised structure, a genuinely different mechanism
+    # from str_stationStructures' pressurised tubes/adapters). Adjustable base frames/cradles (mounting
+    # hardware) and radial pressurised attachment points (berthing, not axial docking) ride along - same
+    # "station assembly hardware" theme. Fixed catalog, cap-exempt, matching its str_stationStructures parent.
+
+  # ---- Lane 3: station docking/berthing generation + attitude-control size classes ----
+  - id: gnc_stationBerthing
+    title: "Advanced Docking and Berthing Adapters"
+    discipline: GuidanceControl
+    tier: 9
+    parents: [gnc_rendezvousDocking]
+    flavor: "A new generation of docking hardware built for a permanent outpost instead of a single rendezvous - androgynous ports that don't care which side is active, a dedicated berthing adapter for joining two different national programmes' hardware, and the instruments riding along on the join itself."
+    parts: [ROC-ApolloAPAS75BDB, ROC-ApolloASTPAdapterBDB, ROC-ApolloASTPUVXBDB, ROC-ApolloASTPVHFBDB, ROC-BigGeminiMOLPort, mk2DockingPort]
+    # King APAS-75 (androgynous, the design lineage that outlives every program-specific port before it) +
+    # the ASTP docking module. Its UV experiment/VHF antenna ride along (mission-specific bolt-ons on the
+    # same docking module, not separate science/comms breakthroughs). MOL port + Mk2 Clamp-O-Tron = the
+    # same docking-hardware generation, parallel programs.
+  - id: gnc_largeReactionWheels
+    title: "Large-Class Reaction Wheels"
+    discipline: GuidanceControl
+    tier: 9
+    parents: [gnc_reactionWheelAttitude]
+    flavor: "The same momentum-exchange trick, sized for a station instead of a probe - a flywheel heavy enough to hold a whole crewed module steady without spending a gram of propellant."
+    parts: [ca_rw_large, advSasModule]
+    # Bases (ca_rw_small/medium/xsmall, sasModule) already king gnc_reactionWheelAttitude, which is at its
+    # 6-part cap - genuine next size class, not a doctrine-4 upgrade catch.
+
+  # ---- Lane 4: robotic grapple (a genuinely new capability - Robotics, not GuidanceControl) ----
+  - id: rob_grappleEndEffector
+    title: "Robotic Grapple End-Effector"
+    discipline: Robotics
+    tier: 9
+    parents: [rob_linearActuation, rob_hingeActuation]
+    flavor: "Close a powered claw around a grapple fixture instead of threading a docking port together by eye - the business end of a robotic arm, built to catch and hold a vehicle that never has to fly all the way in."
+    parts: [GrapplingDevice]
+    # Crossover: needs both the reach (rob_linearActuation) and the articulated joint (rob_hingeActuation)
+    # already established for arms/booms. A real alternative to precision docking, not a docking-port
+    # variant, so it's homed in Robotics rather than folded into gnc_stationBerthing.
