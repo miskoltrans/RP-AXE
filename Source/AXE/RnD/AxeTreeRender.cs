@@ -325,7 +325,7 @@ namespace RPAxe.RnD
                 }
                 if (mxx < mnx) return;
 
-                const float PAD = 160f;
+                const float PAD = 400f;   // scroll a bit past the tree on the grown sides (left/top)
                 Rect r = content.rect;
                 Vector2 pv = content.pivot;
                 // Grow ONLY sizeDelta — never pivot or position — so KSP's zoom-to-cursor and scroll math stay
@@ -665,17 +665,14 @@ namespace RPAxe.RnD
         // under the pointer (UI raycast). Stock R&D only deselects when you re-click the node.
         private Vector3 _downPos;
         private bool _dragged;
-        private RDNode _hoverNode;       // node currently under the pointer (drives the hover name label)
         private RDNode _lastHilite;      // last node the lineage highlight was applied for (change detection)
-        private static GUIStyle _hoverLabel;
         private static readonly List<RaycastResult> _rayHits = new List<RaycastResult>();
 
         private void Update()
         {
             RDController ctrl = RDController.Instance;
-            if (ctrl == null) { _hoverNode = null; return; }
+            if (ctrl == null) return;
             RDNode over = NodeUnderPointer();
-            _hoverNode = over;   // every frame, for the hover name label
 
             // Hover: highlight the hovered node's lineage; on hover-out revert to the pinned selection (or
             // stock). Only re-highlight when the hovered node changes. Click still pins via ShowNodePanel.
@@ -713,6 +710,39 @@ namespace RPAxe.RnD
             }
         }
 
+        // Zoom-to-cursor: KSP zooms by scaling the content around its bottom-right pivot, which on our huge
+        // tree swings the view wildly (the aPos jump). After KSP applies the scale (its Update), nudge the
+        // content so the point that was under the cursor stays under it — LateUpdate runs after Update.
+        private float _zoomLastScale = -1f;
+        private Vector3 _zoomLastLocal, _zoomStablePos;
+        private bool _zoomHaveRef, _zoomHaveStable;
+        private void LateUpdate()
+        {
+            RDController ctrl = RDController.Instance;
+            RectTransform content = ctrl != null && ctrl.gridArea != null && ctrl.gridArea.scrollRect != null ? ctrl.gridArea.scrollRect.content : null;
+            if (content == null) { _zoomHaveRef = false; _zoomHaveStable = false; return; }
+            try
+            {
+                Canvas canvas = content.GetComponentInParent<Canvas>();
+                Camera cam = canvas != null ? canvas.worldCamera : null;
+                bool haveCursor = RectTransformUtility.ScreenPointToWorldPointInRectangle(content, Input.mousePosition, cam, out Vector3 cursorWorld);
+                float scale = content.localScale.x;
+                bool scaleChanged = _zoomHaveRef && Mathf.Abs(scale - _zoomLastScale) > 1e-5f;
+
+                if (scaleChanged && haveCursor)
+                    content.position += cursorWorld - content.TransformPoint(_zoomLastLocal);   // zoom: keep the cursor point fixed
+                else if (!scaleChanged && _zoomHaveStable && Mathf.Abs(Input.mouseScrollDelta.y) > 0.001f)
+                    content.position = _zoomStablePos;   // wheel at the zoom LIMIT (scale clamped): KSP yanks aPos -> hold still
+
+                if (haveCursor) _zoomLastLocal = content.InverseTransformPoint(cursorWorld);
+                _zoomLastScale = scale;
+                _zoomHaveRef = haveCursor;
+                _zoomStablePos = content.position;   // authoritative position after correction
+                _zoomHaveStable = true;
+            }
+            catch (Exception e) { Debug.LogException(e); _zoomHaveRef = false; _zoomHaveStable = false; }
+        }
+
         private static RDNode NodeUnderPointer()
         {
             if (EventSystem.current == null) return null;
@@ -733,24 +763,8 @@ namespace RPAxe.RnD
         private void OnGUI()
         {
             if (!ready || RDController.Instance == null) return;
-            Color prev = GUI.color;
+            // No hover name label — stock R&D already shows the node title on hover.
             if (AxeTreeMeta.Render.Legend && AxeTreeMeta.Disciplines.Count > 0) DrawLegend();
-            // Hover name label (the prototype's on-hover node name), following the cursor.
-            if (AxeTreeMeta.Render.Hover && _hoverNode != null)
-            {
-                string nm = _hoverNode.tech != null ? _hoverNode.tech.title : _hoverNode.name;
-                if (!string.IsNullOrEmpty(nm))
-                {
-                    if (_hoverLabel == null) _hoverLabel = new GUIStyle(GUI.skin.label) { fontSize = 14, alignment = TextAnchor.MiddleLeft };
-                    Vector2 sz = _hoverLabel.CalcSize(new GUIContent(nm));
-                    float mx = Input.mousePosition.x, my = Screen.height - Input.mousePosition.y;
-                    var lr = new Rect(mx + 16f, my + 2f, sz.x + 14f, sz.y + 8f);
-                    GUI.color = new Color(0f, 0f, 0f, 0.85f); GUI.DrawTexture(lr, Texture2D.whiteTexture);
-                    GUI.color = Color.white;
-                    GUI.Label(new Rect(lr.x + 7f, lr.y + 4f, sz.x + 2f, sz.y), nm, _hoverLabel);
-                }
-            }
-            GUI.color = prev;
         }
 
         private static void DrawLegend()
