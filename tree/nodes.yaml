@@ -667,7 +667,7 @@ nodes:
     tier: 4
     parents: [str_radialDecouplers]
     flavor: "The rest of the catalogue shelf: pre-made in-line decouplers, separators and the skirt rings that drop a spent booster, in fixed sizes — for when you would rather bolt on a stock part than shape a procedural one. The procedural decoupler stays the default; this is the shelf."
-    parts: [Decoupler_0, Decoupler_1, Decoupler_2, restock-decoupler-1875-1, restock-separator-1875-1, shortDecoupler1-2, ROT-AtlasDecoupler, SXTK1Decoupler, SXTK1Decoupler2, ROC-D2Block1LESDecoupler, ROC-LEMDecouplerBDB, ROC-MercuryDecouplerAtlasBDB, ROC-MercuryDecouplerBDB, ROC-VostokDecoupler, ROC-ApolloDecouplerBDB, mer_ringDecoupler]
+    parts: [Decoupler_0, Decoupler_1, Decoupler_2, restock-decoupler-1875-1, restock-separator-1875-1, shortDecoupler1-2, ROT-AtlasDecoupler, SXTK1Decoupler, SXTK1Decoupler2, ROC-D2Block1LESDecoupler, ROC-LEMDecouplerBDB, ROC-MercuryDecouplerAtlasBDB, ROC-MercuryDecouplerBDB, ROC-VostokDecoupler, ROC-ApolloDecouplerBDB, mer_ringDecoupler, ROC-OrionEUSDecoupler]
   - id: tel_appSatellites
     title: "Radio-Relay Payloads"
     discipline: Telecommunications
@@ -1213,7 +1213,7 @@ nodes:
     tier: 6
     parents: [aero_recovery]
     flavor: "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point."
-    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, ROC-GeminiParachuteBDB, ROC-GeminiParachuteDrogueBDB, ROC-GeminiRetrogradeSectionBDB, ROC-ReentryControlSystemBDB, ROC-RetrogradeDecouplerBDB, ROC-VoskhodRetroDecoupler, ROC-ApolloParachuteBDB, ROC-ApolloDrogueParachuteBDB, ROC-D2Parachute, ROC-GeminiBRetrogradeSection, ROC-GeminiBEquipmentSection, ROC-BigGeminiParachute, ROC-BigGeminiParachuteDrogue]
+    parts: [ROC-MercuryParachuteBDB, ROC-MercuryRetropackBDB, ROC-VostokParachute, ROC-GeminiParachuteBDB, ROC-GeminiParachuteDrogueBDB, ROC-GeminiRetrogradeSectionBDB, ROC-ReentryControlSystemBDB, ROC-RetrogradeDecouplerBDB, ROC-VoskhodRetroDecoupler, ROC-ApolloParachuteBDB, ROC-ApolloDrogueParachuteBDB, ROC-D2Parachute, ROC-GeminiBRetrogradeSection, ROC-GeminiBEquipmentSection, ROC-BigGeminiParachute, ROC-BigGeminiParachuteDrogue, ROC-OrionParachute, ROC-CSTParachute]
     # ROC-BigGeminiParachute/ParachuteDrogue added (2026-07, capsules+orbiter pass): Big Gemini's own
     # recovery canopy/drogue, same mechanism/catalog as every other capsule's here. Fixed catalog, cap-exempt.
     # ROC-VoskhodRetroDecoupler added (2026-07): pure structure (disc=structure, no engine module), pairs
@@ -1793,7 +1793,7 @@ nodes:
     tier: 8
     parents: [rob_surfaceMobility]
     flavor: "The same wheel-hub motor, scaled up for a heavier chassis — plus a passive skid to steady a long rover without spending another drive on it."
-    parts: [KF-WheelLarge, KF-WheelMedium, KF-WheelTruck-Dual, KF-WheelTruck-Single, KF-Skid]
+    parts: [KF-WheelLarge, KF-WheelMedium, KF-WheelTruck-Dual, KF-WheelTruck-Single, KF-Skid, roverWheel3, wheelMed]
     # NEW (2026-07): same real tech bucket as rob_surfaceMobility (advancedMotors, no generation gap) —
     # split into a sibling node purely for the 6-part cap, same pacing device already used for
     # gnc_smallRcsCatalog -> gnc_fixedRcsCatalog (also same-bucket, tiered one apart for cap reasons, not
@@ -1863,7 +1863,7 @@ nodes:
     tier: 8
     parents: [cmp_ablativeRefinement]
     flavor: "Rate the same ablator for a translunar-return entry instead of a low-orbit one — the ladder's next real step is speed, not shape, and it doesn't care which airframe it's bolted to."
-    parts: [ROC-ApolloHSBDB, ROC-GeminiHSLunarBDB, ROC-ApolloForwardHSBDB, ROC-ApolloHSBDBBlockIII]
+    parts: [ROC-ApolloHSBDB, ROC-GeminiHSLunarBDB, ROC-ApolloForwardHSBDB, ROC-ApolloHSBDBBlockIII, ROC-OrionHS, ROC-OrionForwardHS, ROC-CSTHS]
     upgrades: [EarlyLunarHS]
     # ROC-ApolloHSBDBBlockIII added (2026-07, capsules+orbiter's heatshield, deferred to this pass): the
     # ladder "doesn't care which airframe it's bolted to" per its own flavor - Apollo Block III+'s own
@@ -2657,7 +2657,7 @@ nodes:
     tier: 10
     parents: [nuc_fissionReactor, str_pusherPlate]
     flavor: "Skip the reactor and the nozzle entirely - drop small fission charges out the back and ride the shockwave off an ablative plate, one controlled detonation at a time. Absurd, filthy, and on paper the only chemistry-free way to put a truly heavy ship anywhere in the solar system fast. Project Orion never flew; here, it can."
-    parts: [RO-fftorion8, RO-fftorion12, fft-fission-orion-5-1, fft-fueltank-pulseunits-5-1, fft-fueltank-pulseunits-5-2, fft-fueltank-pulseunits-5-3]
+    parts: [RO-fftorion8, RO-fftorion12, fft-fission-orion-5-1, fft-fueltank-pulseunits-5-1, fft-fueltank-pulseunits-5-2, fft-fueltank-pulseunits-5-3, RO-fft20mMMOtank, fft-fueltank-targets-5-1]
     # Pulse-unit magazines (small/medium/large) added (2026-07, materials pass): the drive's own ammunition
     # tankage - rides with its king, same pattern as any engine + its dedicated fuel tank.
     # Crossover: fissile-material access (nuc_fissionReactor) x the pusher-plate/shock-absorber enabler
@@ -2694,7 +2694,7 @@ nodes:
     tier: 9
     parents: [pc_storableRcsPropellants]
     flavor: "Trade the reaction-control block's simple storable monopropellant for a genuine two-propellant combustion chamber - a real flame instead of a catalytic fizz, and a meaningful jump in specific impulse for every correction burn and apogee kick a spacecraft makes on its own."
-    parts: [ROE-HiPAT, ca_trident, ROE-R40B, ca_lahar]
+    parts: [ROE-HiPAT, ca_trident, ROE-R40B, ca_lahar, ROC-OrionRCS]
     upgrades: [RFUpgrade_LEROS-1c, RFUpgrade_LEROS-2b]
     # King R-4D (HiPAT) - the real, still-flying OMS/RCS workhorse (Apollo and many modern spacecraft).
     # R-40/ca_lahar (same R-40 engine, two curated hosts) and the Bi-Propellant Apogee Engine ride along.
@@ -2774,6 +2774,7 @@ nodes:
     tier: 9
     parents: [met_stiffenedFairings, cmp_ablativeRefinement]
     flavor: "Carry the resin-and-fibre layup learned for a reentry heatshield over to a payload shroud instead - a fairing that sheds the last of the aluminium stringer's dead weight, built from the same composite technique that already keeps a capsule cool on the way down."
+    parts: [ROC-CSTNoseCone]
     upgrades: [PFTech-Fairing-IV]
     # Real crossover, flagged by a prior author: met_stiffenedFairings' own flavor text promised the
     # fairing-materials ladder "runs on through magnesium and fibreglass to composite shells" - this is
@@ -3216,7 +3217,7 @@ nodes:
     tier: 10
     parents: [elec_stationClassSolarArrays]
     flavor: "The generic array's last uprate in this era - more efficient cells, the same fold-out paddle, still the default choice for anything that doesn't need a dedicated mission-sized wing."
-    parts: [largeSolarPanel, ROC-ApolloSolarBlockV]
+    parts: [largeSolarPanel, ROC-ApolloSolarBlockV, ROC-OrionSolar]
     upgrades: [solarTL7]
 
   # ---- Lane 6: RTG generations (multi-hundred-watt -> GPHS) ----
@@ -3235,7 +3236,7 @@ nodes:
     tier: 10
     parents: [elec_multiHundredWattRTG]
     flavor: "Standardise the RTG into modular General-Purpose Heat Source bricks, stack as many as the mission needs, and the same design flies Galileo, Ulysses, Cassini and every deep-space mission after them for the next forty years."
-    parts: [SXTDepolyRTGI, SXTDepolyRTGII, ca_mer_rtg, nfe-rtg-gphs-1]
+    parts: [SXTDepolyRTGI, SXTDepolyRTGII, ca_mer_rtg, nfe-rtg-gphs-1, RO-MMRTG, nfe-rtg-mmrtg-1, nfe-rtg-asrg-1, USRTGWedgeMM]
 
   # ---- Lane 7: antennas (probe-specific parabolic dishes + generic giant reflectors, split by mechanism) ----
   - id: tel_deepSpaceProbeAntennas
@@ -3348,14 +3349,14 @@ nodes:
     tier: 10
     parents: [life_habitatModuleCatalog]
     flavor: "Pressurised passageways that let a crew move between modules without an EVA - straight, angled and extendable crew tubes that turn a cluster of docked modules into one shirtsleeve interior."
-    parts: [sspx-tube-25-2, sspx-tube-25-3, sspx-tube-375-3, sspx-tube-1875-angled-1, sspx-extendable-tube-25-1]
+    parts: [sspx-tube-25-2, sspx-tube-25-3, sspx-tube-375-3, sspx-tube-1875-angled-1, sspx-extendable-tube-25-1, sspx-tube-25-1, sspx-tube-375-1, sspx-tube-375-2]
   - id: life_stationLogistics
     title: "Station Logistics Modules"
     discipline: LifeSupport
     tier: 10
     parents: [life_habitatModuleCatalog]
     flavor: "Keeping a station supplied: pressurised stores, cargo containers and radial logistics modules for the water, air, food and spares that a permanent crew consumes faster than any single launch can carry."
-    parts: [sspx-cargo-25-1, sspx-cargo-25-2, sspx-cargo-container-25-2, sspx-cargo-container-375-3, sspx-cargo-container-radial-small-1, sspx-cargo-container-radial-small-2, sspx-cargo-container-radial-small-3, sspx-cargo-container-radial-medium-1, sspx-cargo-container-radial-medium-2, sspx-cargo-container-radial-medium-3]
+    parts: [sspx-cargo-25-1, sspx-cargo-25-2, sspx-cargo-container-25-2, sspx-cargo-container-375-3, sspx-cargo-container-radial-small-1, sspx-cargo-container-radial-small-2, sspx-cargo-container-radial-small-3, sspx-cargo-container-radial-medium-1, sspx-cargo-container-radial-medium-2, sspx-cargo-container-radial-medium-3, sspx-cargo-container-25-1, sspx-cargo-container-375-1, sspx-cargo-container-375-2, sspx-cargo-container-radial-huge-1, sspx-cargo-container-radial-huge-2, sspx-logistics-5-1, sspx-logistics-5-2]
   - id: life_externalStowage
     title: "External Stowage Platforms"
     discipline: LifeSupport
@@ -3376,7 +3377,7 @@ nodes:
     tier: 10
     parents: [life_habitatModuleCatalog]
     flavor: "A windowed dome that gives the crew a direct, wide-angle eye on the vehicle and the world below - the cupola from which an arm operator berths an incoming module, or a crew simply watches the Earth turn. A telescope dome shares the pressure-vessel design."
-    parts: [sspx-cupola-1875-1, sspx-cupola-125-1, sspx-cupola-telescope-125-1]
+    parts: [sspx-cupola-1875-1, sspx-cupola-125-1, sspx-cupola-telescope-125-1, cupola, sspx-cupola-375-1, sspx-observation-25-1]
   - id: life_stationAirlock
     title: "Station Service Airlock"
     discipline: LifeSupport
@@ -3420,7 +3421,7 @@ nodes:
     tier: 10
     parents: [str_stationStructures]
     flavor: "Adjustable base frames, cradles and radial attachment points that mount a module, a payload or a whole vehicle onto a station or a launch stack at any angle it's needed."
-    parts: [sspx-adjusting-base-375-1, sspx-adjusting-base-cradle-375-1, sspx-attach-25-1, sspx-attach-375-1]
+    parts: [sspx-adjusting-base-375-1, sspx-adjusting-base-cradle-375-1, sspx-attach-25-1, sspx-attach-375-1, sspx-adapter-375-5-1, sspx-adapter-375-5-2]
   - id: str_heavyTransportAirframe
     title: "Heavy Transport Airframe"
     discipline: StructuresMechanisms
@@ -3443,7 +3444,7 @@ nodes:
     tier: 10
     parents: [gnc_usProbeBusFamily]
     flavor: "The big, fully three-axis stabilised spacecraft bus that a flagship deep-space mission is built on - a stable platform carrying a payload of instruments across the Solar System, holding its aim for years at a time."
-    parts: [meridiani, ca_mer_leu, xihe]
+    parts: [meridiani, ca_mer_leu, xihe, ca_hera]
   - id: gnc_commercialComsatBus
     title: "Commercial Comsat Bus"
     discipline: GuidanceControl
@@ -3468,7 +3469,7 @@ nodes:
     tier: 10
     parents: [opt_multiSpectralImaging]
     flavor: "Not three colours but hundreds. A hyperspectral imager splits each pixel into a continuous spectrum, reading the mineral, chemical and biological signature of the surface below - the scanner that maps what a place is made of, not just what it looks like."
-    parts: [scansat-multi-modis-1, scansat-resources-crism-1, scansat-resources-hyperion-1]
+    parts: [scansat-multi-modis-1, scansat-resources-crism-1, scansat-resources-hyperion-1, scansat-multi-abi-1, scansat-multi-msi-1, scansat-resources-mise-1]
   - id: opt_thermalMappingSpectrometry
     title: "Thermal-Mapping Spectrometry"
     discipline: OpticsPhotonics
@@ -3489,7 +3490,7 @@ nodes:
     tier: 10
     parents: [opt_radarAltimetry]
     flavor: "See through cloud and darkness by making your own illumination. Synthetic-aperture radar bounces a beam off the surface and reconstructs a high-resolution image from the echoes - the instrument that mapped the whole cloud-shrouded surface of Venus."
-    parts: [RO-MagellanRadar]
+    parts: [RO-MagellanRadar, scansat-sar-paz-1]
   - id: opt_orbitalResourceScanning
     title: "Orbital Resource Scanning"
     discipline: OpticsPhotonics
@@ -3505,7 +3506,7 @@ nodes:
     tier: 10
     parents: [tel_largeApertureReflectors]
     flavor: "A large steerable parabolic dish - the high-gain antenna that closes the link across hundreds of millions of kilometres, turning a whisper from the outer Solar System into a usable data stream."
-    parts: [mer_dish, dish_S, dish_xihe, ROC-ApolloHGABlockV]
+    parts: [mer_dish, dish_S, dish_xihe, ROC-ApolloHGABlockV, dish_hera, dish_tatsujin]
 
   # ---- SystemsIntegration: atmospheric entry probe ----
   - id: int_atmosphericEntryProbe
@@ -3515,3 +3516,107 @@ nodes:
     parents: [int_surveyorLanderBus]
     flavor: "A probe built to survive falling into an atmosphere: an aeroshell and a descent body that ride a fireball down and then float the rest of the way, returning data from inside a world's air rather than from orbit above it - the Huygens way to reach a surface."
     parts: [ca_draco, ca_draco_as]
+
+  # =========================================================================================
+  # BAND 5 * ISS-COMMERCIAL-REUSABLE ERA - NON-ENGINE parts (RP-1 x=-1082..-402)
+  # Modern reusable/commercial era (2004-2028+). Design record:
+  # manifest/iss-commercial-reusable-nonengine-kings.md. 98 hand-placed (engine parts excluded -
+  # SuperDraco/MR-80B/LEROS-4/Orion-ESM+LAS+covers/CST-RS88/RAPIER are owned by the engine pass).
+  # Decisions carried from batch 6: RN-only charter, non-RN buses main-tree, fine slicing, science = own nodes.
+  # =========================================================================================
+
+  # ---- LifeSupport: modern habitats (inflatable / centrifuge / large module / aquaculture) ----
+  - id: life_inflatableHabitat
+    title: "Inflatable Habitat"
+    discipline: LifeSupport
+    tier: 11
+    parents: [life_modularHabitat]
+    flavor: "Launch it packed tight, inflate it to full volume in orbit. An expandable habitat trades a rigid metal shell for a soft, layered one that unfolds into far more living space than its launch diameter would allow - the BEAM/Bigelow way to fly a big room in a small fairing."
+    parts: [sspx-inflatable-hab-125-1, sspx-inflatable-hab-125-2, sspx-inflatable-hab-125-3, sspx-inflatable-hab-25-1, sspx-inflatable-hab-25-2, InflatableHAB, SXTDLK83EHabitat, sspx-extendable-tube-125-1]
+  - id: life_centrifugeHabitat
+    title: "Centrifuge Habitat"
+    discipline: LifeSupport
+    tier: 12
+    parents: [life_inflatableHabitat]
+    flavor: "Spin for gravity. A rotating habitat module generates centrifugal weight for its crew, holding off the bone and muscle loss of long-duration freefall - the first artificial-gravity station rooms, inflatable and expandable to the diameter a comfortable spin needs."
+    parts: [sspx-inflatable-centrifuge-125-1, sspx-inflatable-centrifuge-125-2, sspx-inflatable-centrifuge-25-1, sspx-expandable-centrifuge-375-2]
+  - id: life_largeStationModule
+    title: "Large Station Module"
+    discipline: LifeSupport
+    tier: 11
+    parents: [life_modularHabitat]
+    flavor: "The heavy station module class - nine-metre cores, habitation blocks and science labs that dwarf the early ISS parts, the pressurised volume of a permanent orbital or surface base built for a large crew."
+    parts: [sspx-core-25-1, sspx-core-375-1, sspx-core-5-1, sspx-habitation-375-1, sspx-habitation-375-3, sspx-habitation-5-1, sspx-habitation-5-2, sspx-lab-375-1, sspx-lab-5-1]
+  - id: life_aquacultureModule
+    title: "Aquaculture & Greenhouse Modules"
+    discipline: LifeSupport
+    tier: 12
+    parents: [life_bioregenerativeECLSS]
+    flavor: "Grow protein, not just greens. Aquaculture and full-scale greenhouse modules extend bioregenerative life support from air and vegetables to a fuller closed food chain - the ecosystem a base needs to feed itself for years."
+    parts: [sspx-aquaculture-375-1, sspx-greenhouse-375-1, sspx-greenhouse-5-1]
+
+  # ---- StructuresMechanisms: annular / strongback trusses + reusable landing leg ----
+  - id: str_annularTruss
+    title: "Annular Truss Structure"
+    discipline: StructuresMechanisms
+    tier: 11
+    parents: [str_modularTrussSystem]
+    flavor: "A ring rather than a beam. Annular truss segments close a structure back on itself - the circular backbone for a rotating habitat, a large aperture or a torus station."
+    parts: [truss-circular-01, truss-circular-02, truss-circular-03, truss-circular-04, truss-circular-adapter-01, truss-circular-adapter-02, truss-circular-docking-01]
+  - id: str_strongbackTruss
+    title: "Strongback Truss"
+    discipline: StructuresMechanisms
+    tier: 11
+    parents: [str_modularTrussSystem]
+    flavor: "The strongback - a heavy closed or open girder that carries the primary loads of a large integrated vehicle or launch stack, in a family of lengths sized to the payload."
+    parts: [SXTMTVGirder, SXTMTVGirderBasic, SXTMTVGirderOpen, SXTMTVGirderOpenMedium, SXTMTVGirderOpenSmall]
+  - id: str_reusableLandingLeg
+    title: "Reusable Booster Landing Leg"
+    discipline: StructuresMechanisms
+    tier: 11
+    parents: [str_fixedLanderLegs]
+    flavor: "Bring the booster home standing up. A heavy, energy-absorbing landing leg that lets a returning stage touch down on its own tail and be flown again - the strut that made propulsive recovery routine."
+    parts: [largeLandingLeg]
+
+  # ---- GuidanceControl: NASA Docking System ----
+  - id: gnc_nasaDockingSystem
+    title: "NASA Docking System"
+    discipline: GuidanceControl
+    tier: 11
+    parents: [gnc_androgynousDocking]
+    flavor: "The modern international standard: the NASA Docking System and its IDSS-compatible ports, a low-impact androgynous mechanism that any commercial-crew vehicle can use to berth at the station - docking as an interface everyone builds to."
+    parts: [ROC-CSTNDSActive, ROC-CSTNDSPassive, dockingPort1, dockingPort2, dockingPortLateral, sspx-docking-125-1]
+
+  # ---- SystemsIntegration: commercial crew capsule ----
+  - id: int_commercialCrewCapsule
+    title: "Commercial Crew Capsule"
+    discipline: SystemsIntegration
+    tier: 11
+    parents: [int_apolloBlockIII]
+    flavor: "Crew to orbit, bought as a service. The Orion and CST-100 command modules - a new generation of reusable crew capsules with modern avionics, glass cockpits and their own service modules, flown by contractors rather than a single national programme."
+    parts: [ROC-OrionCM, ROC-CSTCM, ROC-CSTSM]
+
+  # ---- CompositeMaterials: inflatable decelerator ----
+  - id: cmp_inflatableDecelerator
+    title: "Inflatable Aerodynamic Decelerator"
+    discipline: CompositeMaterials
+    tier: 11
+    parents: [cmp_extremeAtmosphericEntry]
+    flavor: "Slow down with an umbrella instead of a wall. An inflatable heat shield deploys a wide, soft aeroshell that decelerates a heavy payload high in a thin atmosphere - the HIAD, the way to land tonnes on Mars where a rigid shield can't be built big enough."
+    parts: [ROH-AdjustableHIAD]
+
+  # ---- NuclearEngineering: modern compact fission + fissile magazine ----
+  - id: nuc_modernFissionReactor
+    title: "Compact Fission Power Reactor"
+    discipline: NuclearEngineering
+    tier: 11
+    parents: [nuc_thermionicReactor]
+    flavor: "Compact fission power for the surface and deep space, sized to the mission - a few to a few hundred kilowatts from a reactor that fits on a lander. Kilopower, SAFE-400 and their kin: the power source a crewed base or a nuclear-electric tug runs on, past what any array or isotope pellet delivers."
+    parts: [RO-reactor-kilopower, RO-reactor-SAFE400, RO-reactor-prometheus, RO-reactor-RAPIDL]
+  - id: nuc_fissilePropellantMagazine
+    title: "Fissile Propellant Magazine"
+    discipline: NuclearEngineering
+    tier: 12
+    parents: [nuc_modernFissionReactor]
+    flavor: "Storing the fuel for a nuclear engine - fissile-material magazines that feed a fission-fragment or gas-core drive, the tankage an advanced nuclear stage carries its reactor charge in."
+    parts: [fft-fueltank-fission-25-1, fft-fueltank-fission-25-2, fft-fueltank-fission-25-3, fft-fueltank-fission-radial-1, fft-fueltank-fission-radial-2, fft-fueltank-fission-radial-3, fft-fueltank-fission-5-1, fft-fueltank-fission-5-2]
