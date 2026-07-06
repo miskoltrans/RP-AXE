@@ -1133,6 +1133,17 @@ nodes:
     parents: [fd_orbitalMultiChamber, pc_ntoHypergolics]
     flavor: "Bolt four storable chambers to a common frame and fire them as one — three thousand kilonewtons of hypergolic thrust off the pad with no cryogenic plumbing to chill down or top off. The clustered first stage that lets a storable rocket match a kerolox booster for liftoff, ready to go at a moment's notice."
     parts: [YF20_Engine, YF21_Engine, YF22_Engine, YF23_Engine, YF25K_Engine]
+  - id: int_dongFangHong1
+    title: "China's First Satellite"
+    discipline: SystemsIntegration
+    tier: 6
+    parents: [fd_longMarchStorable]
+    flavor: "A third nation reaches orbit on its own hardware — a small sphere broadcasting a patriotic melody instead of a beeping tone, riding the same clustered-storable first stage into space."
+    parts: [DFH-1]
+    # 2026-07 backlog sweep: DongFangHong-1 (1970) - decided KEEP for historical-firsts education
+    # (docs/PARTLIST.md), but Kerwis isn't in the RN_US/RN_Soviet probe auto-router and this is the mod's
+    # only satellite (not an ongoing charter-worthy program) - a standalone node tied to the real hardware
+    # it actually flew on, rather than inventing a third charter house for one part.
   - id: fd_sovietStorable
     title: "Storable Tandem Staging"
     discipline: FluidDynamics
