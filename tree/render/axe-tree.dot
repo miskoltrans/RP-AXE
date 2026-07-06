@@ -63,6 +63,7 @@ digraph AXE {
   "fd_throttleableRocketplane" [label="Throttle-Valve Aircraft Rocket\nFluidDynamics T3 · 400",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_throttlingRocket" [label="Throttleable Restartable Rocket\nFluidDynamics T5 · 1500",fillcolor="#23b9a0",fontcolor="#111111"];
   "str_structuralHardware" [label="Riveted Airframe Structure\nStructuresMechanisms T1 · 20",fillcolor="#bfb08d",fontcolor="#111111"];
+  "str_rigidBracing" [label="Rigid Airframe Bracing\nStructuresMechanisms T2 · 90",fillcolor="#bfb08d",fontcolor="#111111"];
   "gnc_postWarAvionics" [label="Gyroscopic Autopilot\nGuidanceControl T1 · 20",fillcolor="#8a5cd6",fontcolor="#111111"];
   "gnc_avionicsPrototypes" [label="Analog Inertial Guidance\nGuidanceControl T2 · 90",fillcolor="#8a5cd6",fontcolor="#111111"];
   "gnc_earlyAvionics" [label="Stable-Platform Guidance\nGuidanceControl T4 · 900",fillcolor="#8a5cd6",fontcolor="#111111"];
@@ -186,7 +187,7 @@ digraph AXE {
   "rob_linearActuation" [label="Linear Servo Extension\nRobotics T7 · 2300",fillcolor="#d98c2b",fontcolor="#111111"];
   "rob_precisionRotationServo" [label="Precision Rotation Servo\nRobotics T7 · 2300",fillcolor="#d98c2b",fontcolor="#111111"];
   "rob_sequencedControl" [label="Programmable Actuator Sequencing\nRobotics T7 · 2300",fillcolor="#d98c2b",fontcolor="#111111"];
-  "rob_surfaceMobility" [label="Powered Rover Mobility\nRobotics T7 · 2300",fillcolor="#d98c2b",fontcolor="#111111"];
+  "rob_surfaceMobility" [label="Wheel-Hub Motor Drive\nRobotics T7 · 2300",fillcolor="#d98c2b",fontcolor="#111111"];
   "str_fuelCrossfeed" [label="Inter-Tank Fuel Crossfeed\nStructuresMechanisms T7 · 2300",fillcolor="#bfb08d",fontcolor="#111111"];
   "tel_realAntennaTelemetry" [label="Modeled Antenna Telemetry\nTelecommunications T7 · 2300",fillcolor="#3f7bf5",fontcolor="#111111"];
   "cmp_lunarReturnAblator" [label="Lunar-Return Ablator Rating\nCompositeMaterials T8 · 2100",fillcolor="#9caf6a",fontcolor="#111111"];
@@ -196,9 +197,9 @@ digraph AXE {
   "av_dedicatedLiftJet" [label="Dedicated Lift Jet\nAirBreathing T7 · 2300",fillcolor="#6cc4b0",fontcolor="#111111"];
   "gnc_reactionWheelAttitude" [label="Reaction-Wheel Attitude Control\nGuidanceControl T8 · 2100",fillcolor="#8a5cd6",fontcolor="#111111"];
   "th_activeLouvers" [label="Active Thermal Louvers\nThermodynamics T7 · 2300",fillcolor="#f4813a",fontcolor="#111111"];
-  "int_compactCrewPod" [label="Compact Crew Pod\nSystemsIntegration T7 · 2300",fillcolor="#ededed",fontcolor="#111111"];
+  "int_compactCrewPod" [label="Minimal Life-Support Cabin\nSystemsIntegration T7 · 2300",fillcolor="#ededed",fontcolor="#111111"];
   "fd_deepThrottleLanding" [label="Deep-Throttle Descent\nFluidDynamics T9 · 1700",fillcolor="#23b9a0",fontcolor="#111111"];
-  "fd_lunarSurfaceMobility" [label="Lunar Surface Mobility\nFluidDynamics T10 · 1300",fillcolor="#23b9a0",fontcolor="#111111"];
+  "fd_lunarSurfaceMobility" [label="Powered Hop Transit\nFluidDynamics T10 · 1300",fillcolor="#23b9a0",fontcolor="#111111"];
   "fd_gasGeneratorApex" [label="Diminishing-Return Thrust Uprating\nFluidDynamics T9 · 1700",fillcolor="#23b9a0",fontcolor="#111111"];
   "cryo_gasGeneratorHydrolox" [label="Gas-Generator Hydrolox Combustion\nCryogenics T8 · 2100",fillcolor="#37c6e8",fontcolor="#111111"];
   "cryo_largeHydrolox" [label="Hydrolox Thrust Ceiling\nCryogenics T9 · 1700",fillcolor="#37c6e8",fontcolor="#111111"];
@@ -226,7 +227,7 @@ digraph AXE {
   "nuc_fissionReactor" [label="Compact Fission Reactor\nNuclearEngineering T8 · 2100",fillcolor="#83c341",fontcolor="#111111"];
   { rank=same; "start" "parking" }
   { rank=same; "hire_JPL" "hire_OKB" "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
-  { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
+  { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "str_rigidBracing" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
   { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "fd_throttleableRocketplane" "gnc_standardRCS" "aero_stampedWings" "str_prefabAdapters" "life_highAltCompartment" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" "nuc_cosmicRay" "opt_recon" }
   { rank=same; "charter_usEarly" "charter_sovietEarly" "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "met_stiffenedFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" "pc_ntoHypergolics" "pc_htpSustainer" "pc_scoutSolids" "pc_strapOnSolids" "pc_retroKick" "fd_regenCooling" "fd_restartableUpper" "fd_storableSustainer" "met_cooledTurbine" "av_turboprop" "av_hydrogenJet" "aero_variableIntake" "str_heavyGear" "pc_pioneerVernierTrim" }
   { rank=same; "charter_usApp" "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "gs_crewGantries" "opt_tvRecon" "opt_remoteSensing" "mic_boomMagnetometry" "opt_precisionOptics" "elec_deployableArrays" "gnc_basicAvionics" "tel_dopplerRanging" "str_equipmentBays" "fd_spacecraftPropulsion" "fd_titanTandem" "fd_longMarchStorable" "fd_sovietStorable" "av_highTempTurbojet" "cmp_ablativeTPS" "life_openLoopECLSS" "gnc_spacecraftRCS" "life_pressurisedCabin" "int_launchEscape" "av_refinedTurboprop" }
@@ -298,6 +299,7 @@ digraph AXE {
   "fd_rocketplaneRocket" -> "fd_throttleableRocketplane" [style=solid];
   "fd_throttleableRocketplane" -> "fd_throttlingRocket" [style=solid];
   "start" -> "str_structuralHardware" [style=solid];
+  "str_structuralHardware" -> "str_rigidBracing" [style=solid];
   "start" -> "gnc_postWarAvionics" [style=solid];
   "gnc_postWarAvionics" -> "gnc_avionicsPrototypes" [style=solid];
   "gnc_avionicsPrototypes" -> "gnc_earlyAvionics" [style=solid];
@@ -420,13 +422,12 @@ digraph AXE {
   "pc_ntoHypergolics" -> "pc_storableVernierFamily" [style=solid];
   "fd_continuousThrottleDescent" -> "int_surveyorLanderBus" [style=solid];
   "rob_linearActuation" -> "int_surveyorLanderBus" [style=solid];
-  "fd_continuousThrottleDescent" -> "int_surveyorOrbiter" [style=solid];
+  "gnc_threeAxisStabilizedBus" -> "int_surveyorOrbiter" [style=solid];
   "tel_pcmTelemetry" -> "tel_deployableHighGainDish" [style=solid];
   "tel_pcmTelemetry" -> "tel_antennaCatalog" [style=solid];
   "tel_deployableHighGainDish" -> "tel_compactHighGainAntenna" [style=solid];
   "tel_deployableHighGainDish" -> "tel_phasedArrayRelay" [style=solid];
   "elec_deployableArrays" -> "elec_deployablePanelII" [style=solid];
-  "elec_deployableArrays" -> "elec_fuelCellPower" [style=solid];
   "cryo_hydrogen" -> "elec_fuelCellPower" [style=solid];
   "elec_deployablePanelII" -> "elec_refinedSolarSimulation" [style=solid];
   "mic_boomMagnetometry" -> "mic_boomMagnetometryII" [style=solid];
@@ -445,7 +446,6 @@ digraph AXE {
   "str_staging" -> "str_fuelCrossfeed" [style=solid];
   "tel_pcmTelemetry" -> "tel_realAntennaTelemetry" [style=solid];
   "cmp_ablativeRefinement" -> "cmp_lunarReturnAblator" [style=solid];
-  "elec_deployableArrays" -> "nuc_isotopePower" [style=solid];
   "nuc_geiger" -> "nuc_isotopePower" [style=solid];
   "nuc_isotopePower" -> "nuc_isotopePowerII" [style=solid];
   "av_afterburner" -> "av_mach2Turbojet" [style=solid];

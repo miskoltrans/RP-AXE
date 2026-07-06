@@ -514,7 +514,18 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Rivet and weld sheet, extrusion and tube into a load-bearing frame — the everyday structural craft of 1950: struts, I-beams, panels, mounts and nose cones, the skeleton every vehicle hangs on. The root the rest of structures grows from."
-    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, Angledpanel, structuralPylon, structuralMiniNode, smallHardpoint, strutConnector, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount]
+    parts: [structuralIBeam1, structuralIBeam2, structuralIBeam3, structuralPanel1, structuralPanel2, Angledpanel, structuralPylon, structuralMiniNode, smallHardpoint, strutCube, strutCube3way, strutCube90, strutCubeLarge, strutCubeMedium, strutCubeSmall, strutOcto, microIbeam, stackPoint1, truss-micro-01, truss-micro-02, trussPiece1x, trussPiece3x, KzThrustPlate, strutCubeMountingPlate, ROT-Mount]
+    # strutConnector (EAS-4) split OUT to str_rigidBracing (2026-07-06, user call) — the manual strut is the
+    # part that switches on autostrut in career (KSP gates the autostrut PAW toggle on strutConnector being
+    # unlocked), so it earns its own node rather than riding along in the passive-structure catch-all.
+
+  - id: str_rigidBracing
+    title: "Rigid Airframe Bracing"
+    discipline: StructuresMechanisms
+    tier: 2
+    parents: [str_structuralHardware]
+    flavor: "Tie two points of a flexing structure together with a diagonal strut and the whole assembly stops working against itself — the cure for the strap-on booster that whips and the stack that wobbles under its own thrust. The same principle drawn as an invisible rigid link is the autostrut, stiffening any joint on the vehicle with no part to place — which is why unlocking the humble EAS-4 is what switches autostrut on."
+    parts: [strutConnector]
 
   # ===================== BAND 1 * AVIONICS (capability tiers — grants:, no physical part) =====================
   # RP-1's Science-Core avionics ladder as ONE track (user). Each node grants the avionics tier; names are my
@@ -1532,9 +1543,13 @@ nodes:
     title: "Lunar Orbiter Bus"
     discipline: SystemsIntegration
     tier: 8
-    parents: [fd_continuousThrottleDescent]
-    flavor: "The same lander program's core and antenna, built instead to stay in orbit and look down rather than land — a sibling vehicle from the same soft-landing effort, aimed at the whole map instead of one spot."
+    parents: [gnc_threeAxisStabilizedBus]
+    flavor: "The same lander program's core and antenna, built instead to stay in orbit and look down rather than land — a sibling vehicle from the same soft-landing effort, aimed at the whole map instead of one spot. It never touches down, so it's the three-axis point-and-hold breakthrough it actually flies on, not a descent engine it never carries."
     parts: [ca_landv_orbiter_core, ca_landv_orbiter_HGA, ca_landv_sp]
+    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): was parented on
+    # fd_continuousThrottleDescent, but this bus carries none of that node's engine parts and never lands —
+    # the sentence test failed. Re-parented on gnc_threeAxisStabilizedBus (same tier band, the real
+    # mechanism a mapping orbiter needs: "a camera can finally be pointed and kept there").
 
   # ================================================================================================
   # ===================== BAND 3 * DEEP-SPACE COMMUNICATIONS (T7 -> T8) ============================
@@ -1604,9 +1619,13 @@ nodes:
     title: "Chemical Fuel-Cell Power"
     discipline: ElectricalPower
     tier: 7
-    parents: [elec_deployableArrays, cryo_hydrogen]
+    parents: [cryo_hydrogen]
     flavor: "Combine hydrogen and oxygen across a membrane and draw off the current instead of burning them — power on demand with no sun angle to worry about, for as long as the reactant tanks last."
     parts: [FuelCell, FuelCellArray, USFuelCellMedium, USFuelCellSmal, kerbalism-fuelcell]
+    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): dropped elec_deployableArrays as
+    # an unlabeled second parent — the sentence test fails ("deployable photovoltaic arrays led to
+    # chemical fuel-cell power" shares no mechanism), and nothing in the flavor ever mentioned solar
+    # cells. cryo_hydrogen alone is the real, load-bearing prerequisite (handling the reactant).
   - id: elec_refinedSolarSimulation
     title: "Refined Solar-Array Simulation"
     discipline: ElectricalPower
@@ -1711,12 +1730,20 @@ nodes:
     flavor: "One controller that steps every hinge, piston and rotor through an ordered sequence on command — deployment stops being one actuator at a time and becomes a single scripted motion."
     parts: [controller1000]
   - id: rob_surfaceMobility
-    title: "Powered Rover Mobility"
+    title: "Wheel-Hub Motor Drive"
     discipline: Robotics
     tier: 7
     parents: [rob_rotorActuation]
     flavor: "Put the same motor in a wheel hub and drive instead of just standing there — a lander that can cross the ground it touched down on, not just sit and look at it."
     parts: [KF-WheelSmall, KF-WheelTiny, roverWheel1, roverWheel2]
+    # RENAMED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): "Mobility" named the outcome, not
+    # the mechanism (the motor moving into the wheel hub itself) — matches its own flavor text already.
+    # PARKED, not placed (2026-07, review-flagged coverage gap): the curated manifest also carries
+    # KF-WheelLarge/Medium/Truck-Dual/Truck-Single (bigger wheels) plus the whole KerbalFoundries
+    # continuous-track family (KF-Track*, 7 parts) and KF-ScrewDrive/KF-Skid — genuinely different
+    # locomotion mechanisms (continuous tread, screw drive) from a wheel-and-axle, so per scatter-by-
+    # mechanism they'd earn their own node(s) rather than folding in here. Deferred to a later pass, not
+    # dropped.
 
   - id: str_fuelCrossfeed
     title: "Inter-Tank Fuel Crossfeed"
@@ -1766,9 +1793,13 @@ nodes:
     title: "Radioisotope Thermoelectric Power"
     discipline: ElectricalPower
     tier: 7
-    parents: [elec_deployableArrays, nuc_geiger]
+    parents: [nuc_geiger]
     flavor: "Stack thermocouples across a radioactive pellet and draw current straight from the heat of its own decay — power with no sun angle and no moving part, fuelled with whatever isotope happens to be on hand. Polonium-210 proves the generator works; it does not prove it lasts — the source itself is mostly spent within a season."
     parts: [RO-SNAP-3-RTGPo210]
+    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): dropped elec_deployableArrays as
+    # an unlabeled second parent — same issue as elec_fuelCellPower below: photovoltaic tech shares no
+    # mechanism with RTG thermoelectrics, and nothing in the flavor mentioned solar cells. nuc_geiger
+    # alone (radioactive-material handling preceding deliberate isotope-heat use) is the real lineage.
   - id: nuc_isotopePowerII
     title: "Long-Lived Isotope Power"
     discipline: ElectricalPower
@@ -1838,14 +1869,18 @@ nodes:
     # step, active/dynamic heat rejection, not just a bigger version of the same passive bus.
 
   - id: int_compactCrewPod
-    title: "Compact Crew Pod"
+    title: "Minimal Life-Support Cabin"
     discipline: SystemsIntegration
     tier: 7
     parents: [life_openLoopECLSS]
-    flavor: "A minimal cabin and its own protective nose cover — not a full capsule program, just the smallest crewed pod that still counts as one."
-    parts: [landerCabinSmall, ShieldCapLarge]
-    # LOWER CONFIDENCE: paired on "small generic crew pod + a protective cover," not a confirmed real
-    # mission lineage like everything else this batch — flagging rather than asserting.
+    flavor: "The smallest sealed cabin that still keeps a single Kerbal alive and working — no service module, no full capsule program, just a can with a hatch and an experiment slot built in."
+    parts: [landerCabinSmall]
+    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): this node's own comment already
+    # flagged the landerCabinSmall+ShieldCapLarge pairing as unconfirmed; ground-truthing confirms it was
+    # actually wrong — landerCabinSmall is a Mk1-family pod (Squad) and ShieldCapLarge is a Mk2-family
+    # cover (VenStockRevamp), two incompatible catalog lines, and no real Mk1-compatible cover exists
+    # anywhere in the curated manifest. Dropped the mismatched cover rather than guess again; renamed off
+    # the bare artifact word "Pod" to the real mechanism this node actually represents.
 
   # ================================================================================================
   # ============ BAND 3 * CREWED LUNAR LANDING + MOON-ROCKET PROPULSION (engines, 2026-07) ==========
@@ -1865,7 +1900,7 @@ nodes:
     # Soviet LK lander, homed by ROLE not chemistry (turbopump UDMH/NTO). Crossover, both parents load-
     # bearing. LMDE's own upgrade (LMDE-J) barred here by doctrine-4 -> fd_lunarSurfaceMobility.
   - id: fd_lunarSurfaceMobility
-    title: "Lunar Surface Mobility"
+    title: "Powered Hop Transit"
     discipline: FluidDynamics
     tier: 10
     parents: [fd_deepThrottleLanding]
@@ -1874,6 +1909,9 @@ nodes:
     upgrades: [RFUpgrade_LMDE-J]
     # Thin now (LFV + the doctrine-4-displaced LMDE-J uprate); grows into the extended-surface-ops home
     # (LRV rover / MESA) when non-engine parts are curated.
+    # RENAMED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): "Mobility" named the outcome; the
+    # real mechanism (per its own flavor) is thrust-vectored hopping, not driving — a hand-flown hover
+    # rocket, not a rover.
 
   # ---- Lane 2: F-1 uprate trap ----
   - id: fd_gasGeneratorApex
