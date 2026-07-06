@@ -1105,6 +1105,20 @@ nodes:
     parents: [life_highAltCompartment]
     flavor: "Keep a human alive in vacuum the simple way — bottled oxygen bled into a sealed cabin, carbon dioxide scrubbed from the air with lithium hydroxide, heat and moisture carried off — all of it vented or consumed, nothing recycled. Hours of life for a first flight, no more asked."
     parts: [RO-LifeSupport-DummyEngine, kerbalism-lifesupportmodule]
+  - id: life_crewedExperimentBay
+    title: "Crew-Tended Experiment Locker"
+    discipline: LifeSupport
+    tier: 7
+    parents: [life_openLoopECLSS]
+    flavor: "A modular science bay built into the cabin wall, serviced by hand instead of run by a timer — the same slot-in experiment rig whichever crewed vehicle happens to carry it, so long as someone is aboard to work it."
+    parts: [USMatBayWedge]
+    # NEW (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #1): pulled USMatBayWedge out of int_geminiCapsule,
+    # where it was bundled by MISSION (Gemini) instead of by mechanism — a generic crewed science locker,
+    # not OAMS propulsion. Every other UniversalStorage2 wedge already homes at its own science-mechanism
+    # node (USThermoBaroWedge->mic_atmoSounding, USGooBayWedge->bio_cultures, USAccelGravWedge->
+    # gnc_orbitalGravimetry); this one needed a crew-tended-science home of its own since none of those fit
+    # (it's not automated, not gravimetry, not atmospheric). Parented on life_openLoopECLSS rather than a
+    # specific vehicle — the real prerequisite is simply a human being aboard long enough to run it.
     # kerbalism-lifesupportmodule added (2026-07): "External ECLSS Module" — same open-loop mechanism,
     # packaged as an external add-on unit. No conflict, direct-add.
     upgrades: [RFTech-AddLifeSupport]
@@ -1269,12 +1283,12 @@ nodes:
   # ===================== BAND 3 * SECOND GENERATION CAPSULES (Gemini vs Voskhod, T7 -> T8) =======
   # ================================================================================================
   - id: int_geminiCapsule
-    title: "Orbital Attitude and Maneuvering Propulsion"
+    title: "Powered Orbital Maneuvering"
     discipline: SystemsIntegration
     tier: 7
     parents: [int_mercuryCapsule]
     flavor: "Give the capsule its own thrusters and it stops merely falling around the Earth — it can change its orbit, chase a target, hold a heading. Gemini: not a bigger Mercury, a spacecraft that flies itself."
-    parts: [ROC-GeminiCMBDB, ROC-GeminiEquipmentSectionBDB, ROC-GeminiNoseCapBDB, ROC-GeminiNoseconeAeroBDB, ROC-GeminiOAMSBDB, ROC-GeminiOAMSRCSBDB, ROAdvCapsule, USMatBayWedge]
+    parts: [ROC-GeminiCMBDB, ROC-GeminiEquipmentSectionBDB, ROC-GeminiNoseCapBDB, ROC-GeminiNoseconeAeroBDB, ROC-GeminiOAMSBDB, ROC-GeminiOAMSRCSBDB, ROAdvCapsule]
     upgrades: [RFTech-Battery-III, RFTech-SM-III, RFTech-Tank-Sep-AlCu]
     # +3 upgrades (2026-07): RealFuels per-tank-type tech tier (battery/service-module/separate-tank alloy),
     # confirmed KEEP-tank-typelevel, bucket=materialsScienceAdvCapsules — this IS the advanced-capsule
@@ -1288,6 +1302,13 @@ nodes:
     # 2-seat), just a non-historical generic skin rather than the BDB-branded parts. Rides along here rather
     # than getting its own node; 7 parts, one over the usual cap, justified as the same king twice
     # (historical + generic), not a second breakthrough.
+    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #1): title had drifted back to the real
+    # part's own name (Gemini's actual OAMS = "Orbit Attitude and Maneuvering System") — an artifact name,
+    # not the mechanism, and it reversed this node's own already-recorded rename decision. Restored.
+    # `USMatBayWedge` ("Crewed Experiment Bay") also pulled back out — a science locker has no relation to
+    # OAMS propulsion and pushed the node one part over the cap with no comment justifying it; the same
+    # MISSION-vs-MECHANISM mistake already caught twice above for this node. Moved to the new
+    # life_crewedExperimentBay, the same mechanism-home treatment every other UniversalStorage2 wedge gets.
   - id: int_voskhodCabin
     title: "Inflatable-Airlock Descent Module"
     discipline: SystemsIntegration
