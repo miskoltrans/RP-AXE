@@ -435,7 +435,9 @@ nodes:
     tier: 7
     parents: [str_landingGear]
     flavor: "No wheels, no retraction — just a shock-absorbing strut that swings out once and takes the full load of touching down somewhere with no runway at all."
-    parts: [landingLeg1, landingLeg1-2, ROC-LEMLegsBDB, ROC-LEMDescentBDB]
+    parts: [landingLeg1, landingLeg1-2, ROC-LEMLegsBDB, ROC-LEMDescentBDB, ROC-LEMTruckPlatformBDB]
+    # ROC-LEMTruckPlatformBDB added (2026-07, power+science pass): the AES LM Truck's cargo pallet - a
+    # landed-structure variant of the same descent-stage lineage already here, no crew cabin of its own.
     # NEW (2026-07 fix, user call — "make them a simple one off node"): split out of
     # fd_continuousThrottleDescent, where it had been bundled with a throttleable engine just because
     # Surveyor happened to use both — a structural touchdown strut isn't a propellant/combustion
@@ -813,14 +815,18 @@ nodes:
     tier: 6
     parents: [opt_remoteSensing]
     flavor: "Disperse the ultraviolet an atmosphere emits and absorbs into a spectrum — the fingerprints of ozone, hydrogen and the rest of the high air, in wavelengths the eye and the film both miss entirely. The first instrument to read the atmosphere's chemistry from above it."
-    parts: [RO-UVSpectrometer]
+    parts: [RO-UVSpectrometer, RO-NIMS]
+    # RO-NIMS added (2026-07, power+science pass): IS03, the next rung of the same Infrared/UV-Spectrometer
+    # series as RO-UVSpectrometer (IS02) already here - a combined NIR+UV instrument, traced by series code.
   - id: opt_refinedTV
     title: "Refined Vidicon Imaging"
     discipline: OpticsPhotonics
     tier: 6
     parents: [opt_tvRecon]
     flavor: "A finer vidicon target and a denser scan resolve detail the early television camera smeared away — reconnaissance and weather imagery sharp enough to be worth the bandwidth to send it down. The electronic eye growing up."
-    parts: [RO-ImprovedTVCamera]
+    parts: [RO-ImprovedTVCamera, RO-AdvancedImager]
+    # RO-AdvancedImager added (2026-07, power+science pass): VI04, the next rung of the same
+    # Visible-Imaging series as RO-ImprovedTVCamera (VI03) already here - traced by series code.
   # US2 wedges (config from RP-1): magnetometer boom gates above MG01; the "Orbital Telescope" is a
   # long-focal-length SURFACE imager (scopeScan/Terrain, hirise tag) -> recon/optics lane, not astronomy.
   - id: mic_boomMagnetometry
@@ -1233,7 +1239,9 @@ nodes:
     tier: 6
     parents: [opt_remoteSensing]
     flavor: "Sweep a body strip by strip as the orbit carries the scanner across it, assembling a complete map from thousands of passes — terrain, altimetry and anomaly built from coverage no single frame could give. The first instrument that maps a world instead of photographing a scene. The seed of the mapping lane that fills out among the planets."
-    parts: [SCANsat_Tracker]
+    parts: [SCANsat_Tracker, SurveyScanner]
+    # SurveyScanner added (2026-07, power+science pass): cashing in this node's own promised "mapping lane
+    # that fills out among the planets."
 
   # ================================================================================================
   # ===================== BAND 3 * ENGINE SPINE CONTINUATION (T7 -> T8) ===========================
@@ -1680,14 +1688,18 @@ nodes:
     tier: 8
     parents: [mic_boomMagnetometry, rob_linearActuation]
     flavor: "A second, more sensitive sensor, now riding a boom that extends itself on command instead of just unfolding once — the field measured finer, and from exactly the distance the mission wants."
-    parts: [RO-HeliumMagnet]
+    parts: [RO-HeliumMagnet, RO-FluxgateMagnet]
+    # RO-FluxgateMagnet added (2026-07, power+science pass): MG03, the next mark of the same
+    # boom-magnetometer family - this node (T8), not the T5 root, is the correct tier-generation match.
   - id: opt_radarAltimetry
     title: "Radar Altimetry"
     discipline: OpticsPhotonics
     tier: 7
     parents: [opt_orbitalMapping]
     flavor: "Bounce a radar pulse straight down and time the echo — terrain height where a camera only gives shape, filling in the mapping lane's one missing dimension."
-    parts: [scansat-radar-poseidon-3b-1, ROC-ApolloDipoleBDB]
+    parts: [scansat-radar-poseidon-3b-1, ROC-ApolloDipoleBDB, scansat-radar-seasat-1]
+    # scansat-radar-seasat-1 added (2026-07, power+science pass): the real Seasat SAR antenna, cashing in
+    # opt_orbitalMapping's own promised "mapping lane that fills out among the planets."
   - id: gnc_orbitalGravimetry
     title: "Orbital Perturbation Gravimetry"
     discipline: GuidanceControl
@@ -1851,8 +1863,13 @@ nodes:
     tier: 8
     parents: [cmp_ablativeRefinement]
     flavor: "Rate the same ablator for a translunar-return entry instead of a low-orbit one — the ladder's next real step is speed, not shape, and it doesn't care which airframe it's bolted to."
-    parts: [ROC-ApolloHSBDB, ROC-GeminiHSLunarBDB, ROC-ApolloForwardHSBDB]
+    parts: [ROC-ApolloHSBDB, ROC-GeminiHSLunarBDB, ROC-ApolloForwardHSBDB, ROC-ApolloHSBDBBlockIII]
     upgrades: [EarlyLunarHS]
+    # ROC-ApolloHSBDBBlockIII added (2026-07, capsules+orbiter's heatshield, deferred to this pass): the
+    # ladder "doesn't care which airframe it's bolted to" per its own flavor - Apollo Block III+'s own
+    # heatshield fits directly. Matches the established precedent that a capsule's heatshield splits out
+    # from the capsule's own SystemsIntegration node. (Big Gemini's own heatshields went to
+    # cmp_lunarLandingAblator instead, below - this node was already at its 6-part cap.)
     # EarlyLunarHS added (2026-07): the SAME material-ladder rung, as a PARTUPGRADE preset on the
     # procedural ROH-AdjustableHS (already in cmp_ablativeTPS) instead of a named part — same mechanism,
     # different delivery.
@@ -1866,7 +1883,11 @@ nodes:
     tier: 9
     parents: [cmp_lunarReturnAblator]
     flavor: "Push the same ablator formulation a margin further — the heat load of an actual landing-and-return mission rather than a single translunar pass, still bolted to whichever airframe happens to need it."
+    parts: [ROC-BigGeminiHS, ROC-BigGeminiHSLunar]
     upgrades: [LunarHS]
+    # ROC-BigGeminiHS/ROC-BigGeminiHSLunar added (2026-07, power+science pass): Big Gemini's own
+    # heatshields land here (not the T8 node above, already at cap) - a good tier match besides, since
+    # Big Gemini itself (int_bigGeminiLogistics) is T9.
     # NEW (2026-07, user call — ablator ladder scatters by tech, not by vehicle): LunarHS
     # (manifest/upgrades-curated.tsv, KEEP-capability) is the next PARTUPGRADE preset on the same
     # procedural ROH-AdjustableHS as EarlyLunarHS. Ground-truthed against RP-1's own RP0TechTree.cfg: its
@@ -1957,7 +1978,9 @@ nodes:
     tier: 7
     parents: [th_hermeticBus]
     flavor: "Blades that open to radiate heat away and close to hold it in, driven by the bus temperature itself — the hermetic sphere's fixed skin becomes a thermostat instead of a single fixed compromise."
-    parts: [ca_louver_s, ca_louver_s2]
+    parts: [ca_louver_s, ca_louver_s2, ca_louver_m]
+    # ca_louver_m added (2026-07, power+science pass): CA-TCL8, a medium-size louver - RP-1 buckets it
+    # under "Solar Panels" by era, but it's the same active-heat-rejection mechanism, next size class.
     # NEW: th_hermeticBus (T3, band 1) was passive-only (a fixed radiating skin) — this is the real next
     # step, active/dynamic heat rejection, not just a bigger version of the same passive bus.
 
@@ -1967,7 +1990,13 @@ nodes:
     tier: 7
     parents: [life_openLoopECLSS]
     flavor: "The smallest sealed cabin that still keeps a single Kerbal alive and working — no service module, no full capsule program, just a can with a hatch and an experiment slot built in."
-    parts: [landerCabinSmall, ROC-LEMAscentBDB, landerCabinMedium]
+    parts: [landerCabinSmall, ROC-LEMAscentBDB, landerCabinMedium, mk2LanderCabin_v2, ROC-LEMAscentTaxiBDB, ROC-LEMShelterBDB]
+    # mk2LanderCabin_v2 added (2026-07, power+science pass): a refined next mark of the same
+    # minimal-cabin concept, Mk2-family.
+    # ROC-LEMAscentTaxiBDB/ROC-LEMShelterBDB added (2026-07, same pass): the AES LM Taxi (crew-ferry
+    # variant of the same ascent cabin, ROC-LEMAscentBDB, already here) and Shelter (extended-stay habitat
+    # can) - both minimal-cabin variants, not a separate vehicle bundle, matching the "no vehicle bundle"
+    # precedent the parallel session established for the rest of the LM family (ca37314).
     # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): this node's own comment already
     # flagged the landerCabinSmall+ShieldCapLarge pairing as unconfirmed; ground-truthing confirms it was
     # actually wrong — landerCabinSmall is a Mk1-family pod (Squad) and ShieldCapLarge is a Mk2-family
@@ -2330,7 +2359,10 @@ nodes:
     tier: 8
     parents: [nuc_isotopePower, nuc_cosmicRay]
     flavor: "Sustain a controlled fission chain reaction in a core small enough to launch - kilowatts of steady electrical power that never needs the Sun, and the same reactor physics a nuclear rocket runs hot. The root that nuclear power and nuclear propulsion both grow from."
-    parts: [RO-reactor-snap10a, RO-reactor-snap2, RO-reactor-snap8, RO-reactor-snap50, RO-reactor-BES5]
+    parts: [RO-reactor-snap10a, RO-reactor-snap2, RO-reactor-snap8, RO-reactor-snap50, RO-reactor-BES5, RO-reactor-snap50-300]
+    # RO-reactor-snap50-300 added (2026-07, power+science pass): RP-1 buckets it under "Multi-Hundred Watt
+    # RTGs" by era, but it's a 300 kWe uprated SNAP-50 config - a REACTOR, not an RTG. Same king family
+    # already here (RO-reactor-snap50), just a bigger config.
     # King SNAP-10A (first flown space fission reactor); SNAP-2/8/50 + Soviet BES-5 are the size catalog.
     # Crossover root: radioisotope power (nuc_isotopePower) + nuclear-radiation physics (nuc_cosmicRay) ->
     # a critical reactor. This is the reactor parent that nuc_nuclearThermalRocket + nuc_nuclearRamjet needed.
@@ -2394,7 +2426,9 @@ nodes:
     tier: 8
     parents: [mic_ionMassSpec]
     flavor: "Listen to the electric and magnetic oscillations of the plasma a spacecraft flies through - the radio song of a magnetosphere, measured across frequency to map fields no camera can see."
-    parts: [RO-PlasmaWave, dmUS2RPWS]
+    parts: [RO-PlasmaWave, dmUS2RPWS, RO-SWPlasmaAnalyzer]
+    # RO-SWPlasmaAnalyzer added (2026-07, power+science pass): RPWS02, the same Radio-and-Plasma-Wave
+    # instrument series as RO-PlasmaWave already here (traced by series code, not RP-1's era bucket).
     # King RPWS plasma-wave detector; dmUS2RPWS is its Universal-Storage-2 wedge form (a band-3 US2 wedge).
 
   # ---- Lane H: spaceplanes (procedural wing + winged reentry + toolkit catalogs) ----
@@ -2760,7 +2794,9 @@ nodes:
     tier: 9
     parents: [life_stationHabitation]
     flavor: "Build the station module out of a spent launch-vehicle stage's own tooling and diameter instead of designing a bespoke pressure vessel from scratch - decks and stowage where the tankage used to be. Skylab flew fitted-out on the ground rather than converted in orbit as first planned, but the trick is the same: a station's worth of volume for the price of hardware already proven to fly."
-    parts: [SXTISSHabISK30, SXTSPKTRCabin, sspx-airlock-125-1]
+    parts: [SXTISSHabISK30, SXTSPKTRCabin, sspx-airlock-125-1, sspx-adjusting-stairs-1]
+    # sspx-adjusting-stairs-1 added (2026-07, power+science pass): station access hardware, same theme as
+    # the airlock already here.
     # King Skylab (SXTISSHabISK30) - the first space station, the headline part of this whole batch.
     # SPKTR-10 (Soviet large storage module, same converted-stage-class scale) rides along; the airlock
     # rides along too (a proper station needs EVA access, not just a hatch).
@@ -3070,3 +3106,177 @@ nodes:
     parents: [gnc_bipropAttitudeThrust]
     flavor: "The little bipropellant engine that inserts a probe into orbit around another planet. The LEROS-1b - flight-proven on NEAR, MESSENGER and Juno - and the R-42 are the mature descendants of the R-4D thruster, built to sit cold through years of cruise and then fire once, exactly right, at the far end."
     parts: [ROE-LEROS1B, ROE-R42, ca_mer_ft]
+
+  # ================================================================================================
+  # ========= BAND 4 * SHUTTLE & STATION ERA -- LANDING/POWER/COMMS/AVIONICS/SCIENCE (2026-07) =======
+  # ========= Fifth pass over space-stations-shuttle-partlist.md: everything left except the        ==
+  # ========= widens above (already applied). Ground-truthed against the combined tree (including   ==
+  # ========= the parallel modular-stations-rovers session's 0f232cd) before authoring.              ==
+  # ================================================================================================
+
+  # ---- Lane 1: extended-stay Lunar Module (Apollo Extension System) - NOT a new bundle node. ----
+  # int_lunarModule no longer exists (scattered into part-type nodes by the parallel session's ca37314,
+  # "no vehicle bundle" - discovered here via a build error, since my own research predated that commit).
+  # Following the same established philosophy: scattered by part type below instead of reviving a bundle.
+
+  # ---- Lane 2: dedicated planetary-entry aeroshells (Venera, Galileo) ----
+  - id: cmp_venusEntryAeroshell
+    title: "High-Pressure Atmospheric Entry Shielding"
+    discipline: CompositeMaterials
+    tier: 9
+    parents: [cmp_ablativeRefinement]
+    flavor: "Face an atmosphere ninety times denser than Earth's and hot enough to melt lead at the surface - the Venera aeroshell's heatshield and twin parachutes, built for a descent that ends in a furnace no matter how gently you land in it."
+    parts: [ca_fom_heatS, ca_fom_drogue, ca_fom_parachute]
+    # Dedicated single-mission entry hardware (heatshield + drogue + main chute), same pattern as every
+    # other capsule's abort/recovery hardware splitting out from its own vehicle node.
+  - id: cmp_extremeAtmosphericEntry
+    title: "Extreme Atmospheric-Entry Shielding"
+    discipline: CompositeMaterials
+    tier: 10
+    parents: [cmp_lunarLandingAblator]
+    flavor: "Hit a gas giant's atmosphere at tens of kilometres a second and shed more heat in two minutes than a lunar return sheds in the whole reentry - the most extreme ablator ever asked to survive, carried on a probe built to transmit for as long as it can before it's cooked."
+    parts: [galileo_hs_bot, galileo_hs_mid, galileo_hs_top]
+    # King Galileo atmospheric-entry heatshield stack - Jupiter entry is the hardest atmospheric entry
+    # condition anything in this tree attempts, a genuine capstone matching the RD-270/RSRM/SSME "give the
+    # true extreme its own dramatic node" pattern from the propulsion pass.
+  - id: cmp_extremeEntryParachutes
+    title: "Extreme-Entry Recovery Parachutes"
+    discipline: CompositeMaterials
+    tier: 11
+    parents: [cmp_extremeAtmosphericEntry]
+    flavor: "A parachute stack timed to deploy only once the heatshield has done its worst work and the shockwave has finally fallen behind - Galileo's own descent sequence, the last mechanical step between the hottest entry in the tree and a working probe."
+    parts: [galileo_probe_hs_parachute, galileo_probe_parachute]
+    # Split from the heatshield stack (doctrine-4-shaped: same king's own recovery hardware, thin enough
+    # for its own node rather than crowding the heatshield's 3-part cap).
+
+  # ---- Lane 3: ISRU opens (Regolith Extraction, first ResourceEngineering nodes) ----
+  - id: res_regolithExtraction
+    title: "Regolith Extraction"
+    discipline: ResourceEngineering
+    tier: 9
+    parents: [rob_surfaceMobility]
+    flavor: "Bore into loose surface material with a motorised bit and bring up what you find - the first step of living off a world instead of just visiting it. Needs nothing more than the same motor already turning a rover's wheels, aimed down instead of forward."
+    parts: [kerbalism-drill]
+    # Opens ResourceEngineering as a working discipline (previously defined but unused). Crosses into
+    # surface mobility (rob_surfaceMobility) rather than any propulsion lane - drilling needs a lander
+    # already down and a motor, not thrust.
+  - id: res_largeRegolithExtraction
+    title: "Large-Scale Regolith Extraction"
+    discipline: ResourceEngineering
+    tier: 10
+    parents: [res_regolithExtraction]
+    flavor: "The same drill, scaled up for a real mining rate instead of a proof of concept - the difference between sampling a world and living off it."
+    parts: [kerbalism-large-drill]
+
+  # ---- Lane 4: probe bus families (generic, non-Mariner-branded, split US/Soviet) ----
+  - id: gnc_sovietProbeBusFamily
+    title: "Soviet Interplanetary Bus Family"
+    discipline: GuidanceControl
+    tier: 9
+    parents: [gnc_reactionWheelAttitude]
+    flavor: "One bus architecture, flown as both an orbiter and a lander carrier - the 4MV core that became Venera, Zond and Mars probes across a decade, with its own tankage and reentry-module release built in from the start."
+    parts: [ca_vor_core, ca_fom_lander, ca_vor_mptank, ca_vor_tank, ca_vor_sep1]
+    # King 4MV Spacecraft Bus. Venera Lander Bus rides along (same family). Propellant tanks + reentry-
+    # module decoupler (ca_vor_mptank/ca_vor_tank/ca_vor_sep1) FOLDED IN from the materials pass, where they
+    # were deferred waiting for exactly this king - vehicle-specific tankage rides with its own bus, same
+    # precedent as ca_argo-mk2-solar/ca_argo-mk2-hga riding with the Mariner bus.
+  - id: gnc_usProbeBusFamily
+    title: "US Deep-Space Probe Bus Family"
+    discipline: GuidanceControl
+    tier: 9
+    parents: [gnc_reactionWheelAttitude]
+    flavor: "The generic 3-axis bus catalog grows two flagship members - Pioneer's spin-stabilised core and Voyager's fully 3-axis one - plus the attitude-control hardware and ultraviolet-explorer bus that ride the same shelf."
+    parts: [pioneer_10_11, quetzal, rn_voyager, torekka, ca_explorer, ca_aacs]
+    # Pioneer (probe+core pair) and Voyager (probe+core pair) as parallel kings, same non-Mariner-branded
+    # generic-bus successor as gnc_sovietProbeBusFamily. IUE bus (ca_explorer) + CA-AACS ride along.
+
+  # ---- Lane 5: solar arrays (station-class generic + probe-bus-specific, split by mechanism) ----
+  - id: elec_stationClassSolarArrays
+    title: "Station-Class Solar Arrays"
+    discipline: ElectricalPower
+    tier: 9
+    parents: [elec_refinedSolarSimulation]
+    flavor: "The same fold-out array, sized for a station's appetite instead of a probe's - more cells on a bigger paddle, nothing new about how it works."
+    parts: [largeSolarPanelEarly, solarPanels1, solarPanels3]
+    upgrades: [solarTL6]
+    # Generic XT-series size-catalog continuation (not vehicle-specific) - solarTL6 lands here as the
+    # general tech-level rung.
+  - id: elec_probeBusSolarWings
+    title: "Probe-Bus Solar Wings"
+    discipline: ElectricalPower
+    tier: 9
+    parents: [elec_refinedSolarSimulation]
+    flavor: "A deployable wing cut to the exact power budget of one bus family - the IUE, Venera and 4MV arrays, each sized for its own mission rather than pulled off a generic shelf."
+    parts: [ca_explorer_solar, ca_fom_sp, ca_vor_sp, ca_vor_sp2, SXTsolarPanelLarge, SXTsolarPanelhex]
+    # Vehicle-specific solar wings, split from the generic size-catalog above (same "scatter by mechanism,
+    # not vehicle, but keep the vehicle-specific shelf separate" pattern as the RTG/antenna splits below).
+  - id: elec_matureSolarArrays
+    title: "Mature Solar Arrays"
+    discipline: ElectricalPower
+    tier: 10
+    parents: [elec_stationClassSolarArrays]
+    flavor: "The generic array's last uprate in this era - more efficient cells, the same fold-out paddle, still the default choice for anything that doesn't need a dedicated mission-sized wing."
+    parts: [largeSolarPanel]
+    upgrades: [solarTL7]
+
+  # ---- Lane 6: RTG generations (multi-hundred-watt -> GPHS) ----
+  - id: elec_multiHundredWattRTG
+    title: "Multi-Hundred-Watt RTG"
+    discipline: ElectricalPower
+    tier: 9
+    parents: [nuc_isotopePowerII]
+    flavor: "Stack enough plutonium-238 to clear several hundred watts instead of a bare trickle - the generator class that powered Voyager past every planet it flew and is still transmitting today."
+    parts: [USRTGWedge, rtg, ca_rtg3900]
+    # Bases already king nuc_isotopePowerII (at its 6-part cap) - genuine next size class, not a catch.
+    # ca_rtg3900 = Voyager's own MHW-RTG.
+  - id: elec_gphsRTGGeneration
+    title: "GPHS-RTG Generation"
+    discipline: ElectricalPower
+    tier: 10
+    parents: [elec_multiHundredWattRTG]
+    flavor: "Standardise the RTG into modular General-Purpose Heat Source bricks, stack as many as the mission needs, and the same design flies Galileo, Ulysses, Cassini and every deep-space mission after them for the next forty years."
+    parts: [SXTDepolyRTGI, SXTDepolyRTGII, ca_mer_rtg, nfe-rtg-gphs-1]
+
+  # ---- Lane 7: antennas (probe-specific parabolic dishes + generic giant reflectors, split by mechanism) ----
+  - id: tel_deepSpaceProbeAntennas
+    title: "Deep-Space Probe Antennas"
+    discipline: Telecommunications
+    tier: 9
+    parents: [tel_antennaCatalog]
+    flavor: "A parabolic dish or omni cut to one bus family's own link budget - Pioneer's spin-scan dish, Voyager's high-gain reflector, the 4MV's own array and dish, GPS's simple omni. The named-hardware shelf, one entry per flagship mission."
+    parts: [ca_ant_gps, ca_vor_comm, ca_vor_dish, dish_quetzal, dish_L]
+    # Fixed catalog, cap-exempt, matching tel_antennaCatalog's own precedent - one dish per named mission,
+    # not a size ladder.
+  - id: tel_largeApertureReflectors
+    title: "Large-Aperture Reflector Antennas"
+    discipline: Telecommunications
+    tier: 9
+    parents: [tel_antennaCatalog]
+    flavor: "The same parabolic-reflector mechanism, scaled past what any single mission needs - giant, huge and large dish reflectors off the shelf for whatever downlink budget the mission calls for."
+    parts: [nfex-antenna-reflector-giant-1, nfex-antenna-reflector-huge-1, nfex-antenna-reflector-large-1]
+    # Generic size ladder (not vehicle-specific), kept separate from the probe-specific dishes above -
+    # different real distinction (mission-specific link budget vs generic giant-aperture size class).
+
+  # ---- Lane 8: gas chromatograph-mass spectrometry (a genuine science x comms dual-function part) ----
+  - id: mic_gasChromatographMassSpec
+    title: "Gas Chromatograph-Mass Spectrometry"
+    discipline: Microelectronics
+    tier: 9
+    parents: [mic_ionMassSpec]
+    flavor: "Separate a gas sample by how fast each component moves through a column, then weigh what comes out in the mass spectrometer behind it - two instruments in series reading a single sample far more precisely than either alone."
+    parts: [sensorAtmosphere, SXTsciencenosecone]
+    # King GC-MS (sensorAtmosphere). SXTsciencenosecone rides along - it's a genuine dual-function part
+    # (GC-MS fused with an antenna in one nosecone), homed here by its science mechanism; the antenna half
+    # is a real but secondary crossover, not worth a second node for one part's second function.
+
+  # ---- Lane 9: digital imaging (a genuine 3rd-generation breakthrough, not a vidicon mark) ----
+  - id: opt_digitalImaging
+    title: "Solid-State Digital Imaging"
+    discipline: OpticsPhotonics
+    tier: 9
+    parents: [opt_refinedTV]
+    flavor: "Replace the vidicon's scanned electron beam with a solid-state sensor read out electronically, line by line - the same instinct that took reconnaissance from film to television, one generation further. Higher resolution than any vidicon, and nothing left to wear out or burn in."
+    parts: [RO-DigitalCamera]
+    # A real generational breakthrough (film -> vidicon/TV -> true digital sensor), not another vidicon
+    # mark - PH05 is explicitly a digital imaging device, not a VI-series (vidicon) part, so it earns its
+    # own node rather than folding into opt_refinedTV alongside RO-AdvancedImager.

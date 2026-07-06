@@ -198,7 +198,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3200,
-    5414
+    5467
    ]
   },
   {
@@ -240,7 +240,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3200,
-    5320
+    5373
    ]
   },
   {
@@ -617,7 +617,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    9584
+    10085
    ]
   },
   {
@@ -749,7 +749,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    9678
+    10179
    ]
   },
   {
@@ -796,7 +796,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    9584
+    10085
    ]
   },
   {
@@ -833,7 +833,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    9584
+    10085
    ]
   },
   {
@@ -860,7 +860,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    9678
+    10179
    ]
   },
   {
@@ -892,7 +892,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    4092
+    4124
    ]
   },
   {
@@ -929,7 +929,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    4554
+    4590
    ]
   },
   {
@@ -961,7 +961,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    4413
+    4449
    ]
   },
   {
@@ -993,7 +993,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    4366
+    4402
    ]
   },
   {
@@ -1020,7 +1020,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    4879
+    4915
    ]
   },
   {
@@ -1052,7 +1052,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    4695
+    4731
    ]
   },
   {
@@ -1084,7 +1084,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    4906
+    4942
    ]
   },
   {
@@ -1116,7 +1116,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    4601
+    4637
    ]
   },
   {
@@ -1132,7 +1132,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    4417
+    4449
    ]
   },
   {
@@ -1154,7 +1154,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    4139
+    4119
    ]
   },
   {
@@ -1176,7 +1176,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    4139
+    4119
    ]
   },
   {
@@ -1223,7 +1223,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    2792
+    2751
    ]
   },
   {
@@ -1255,7 +1255,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    2792
+    2751
    ]
   },
   {
@@ -1292,7 +1292,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    2792
+    2751
    ]
   },
   {
@@ -1326,7 +1326,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    3593
+    3432
    ]
   },
   {
@@ -1350,7 +1350,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    3195
+    3154
    ]
   },
   {
@@ -1372,7 +1372,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    3195
+    3154
    ]
   },
   {
@@ -1409,7 +1409,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    2316
+    2274
    ]
   },
   {
@@ -1429,7 +1429,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    4648
+    4684
    ]
   },
   {
@@ -1463,7 +1463,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    2269
+    2227
    ]
   },
   {
@@ -1545,7 +1545,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    2111
+    2070
    ]
   },
   {
@@ -1622,7 +1622,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    1876
+    1835
    ]
   },
   {
@@ -1664,7 +1664,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    2421
+    2379
    ]
   },
   {
@@ -1701,7 +1701,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    6744
+    6989
    ]
   },
   {
@@ -1743,7 +1743,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    6091
+    6336
    ]
   },
   {
@@ -1780,7 +1780,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    8072
+    8338
    ]
   },
   {
@@ -1819,7 +1819,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    1876
+    1835
    ]
   },
   {
@@ -1911,7 +1911,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    7931
+    8176
    ]
   },
   {
@@ -1927,7 +1927,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    7978
+    8223
    ]
   },
   {
@@ -1954,7 +1954,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    7508
+    7753
    ]
   },
   {
@@ -1981,7 +1981,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    8067
+    8312
    ]
   },
   {
@@ -2008,7 +2008,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    7392
+    7638
    ]
   },
   {
@@ -2070,7 +2070,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    6253
+    6498
    ]
   },
   {
@@ -2097,7 +2097,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    9238
+    9740
    ]
   },
   {
@@ -2169,7 +2169,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    9211
+    9713
    ]
   },
   {
@@ -2196,7 +2196,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    5528
+    5565
    ]
   },
   {
@@ -2223,7 +2223,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    6953
+    7198
    ]
   },
   {
@@ -2245,7 +2245,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    7371
+    7617
    ]
   },
   {
@@ -2282,7 +2282,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    9332
+    9834
    ]
   },
   {
@@ -2304,7 +2304,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    7114
+    7360
    ]
   },
   {
@@ -2361,7 +2361,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    5833
+    5869
    ]
   },
   {
@@ -2418,7 +2418,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    6556
+    6801
    ]
   },
   {
@@ -2441,6 +2441,11 @@ window.TREE = {
      "title": "Apollo LM Legs"
     },
     {
+     "name": "ROC-LEMTruckPlatformBDB",
+     "mod": "ROCapsules",
+     "title": "AES LM Truck Payload Platform"
+    },
+    {
      "name": "landingLeg1",
      "mod": "Squad",
      "title": "LT-1 Landing Struts"
@@ -2455,7 +2460,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    6535
+    6780
    ]
   },
   {
@@ -2512,7 +2517,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    6577
+    6822
    ]
   },
   {
@@ -2539,7 +2544,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    4909
+    4945
    ]
   },
   {
@@ -2571,7 +2576,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    4742
+    4778
    ]
   },
   {
@@ -2608,7 +2613,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    4909
+    4945
    ]
   },
   {
@@ -2670,7 +2675,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    5645
+    5681
    ]
   },
   {
@@ -2717,7 +2722,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    5418
+    5454
    ]
   },
   {
@@ -2754,7 +2759,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    5628
+    5664
    ]
   },
   {
@@ -2801,7 +2806,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    5790
+    6036
    ]
   },
   {
@@ -2823,7 +2828,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    4742
+    4778
    ]
   },
   {
@@ -2845,7 +2850,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    5068
+    5104
    ]
   },
   {
@@ -2987,7 +2992,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    6535
+    6780
    ]
   },
   {
@@ -3009,7 +3014,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    6650
+    6895
    ]
   },
   {
@@ -3027,7 +3032,7 @@ window.TREE = {
    ],
    "pos": [
     -2896,
-    7345
+    7591
    ]
   },
   {
@@ -3045,7 +3050,7 @@ window.TREE = {
    ],
    "pos": [
     -2592,
-    7182
+    7428
    ]
   },
   {
@@ -3066,7 +3071,7 @@ window.TREE = {
    ],
    "pos": [
     -1984,
-    7465
+    7711
    ]
   },
   {
@@ -3293,7 +3298,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    7414
+    7659
    ]
   },
   {
@@ -3440,7 +3445,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    6185
+    6430
    ]
   },
   {
@@ -3482,7 +3487,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    6138
+    6383
    ]
   },
   {
@@ -3579,7 +3584,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    6441
+    6686
    ]
   },
   {
@@ -3636,7 +3641,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    6462
+    6707
    ]
   },
   {
@@ -3708,7 +3713,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    2468
+    2426
    ]
   },
   {
@@ -3726,7 +3731,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    6044
+    6289
    ]
   },
   {
@@ -3744,7 +3749,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    7644
+    7889
    ]
   },
   {
@@ -3806,7 +3811,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    4909
+    4945
    ]
   },
   {
@@ -3873,7 +3878,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    2619
+    2577
    ]
   },
   {
@@ -3957,7 +3962,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    6765
+    7010
    ]
   },
   {
@@ -4049,7 +4054,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    6765
+    7010
    ]
   },
   {
@@ -4076,7 +4081,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    2128
+    2086
    ]
   },
   {
@@ -4118,7 +4123,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    6347
+    6592
    ]
   },
   {
@@ -4150,7 +4155,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    6347
+    6592
    ]
   },
   {
@@ -4187,7 +4192,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    6347
+    6592
    ]
   },
   {
@@ -4239,7 +4244,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2896,
-    6859
+    7104
    ]
   },
   {
@@ -4531,7 +4536,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2592,
-    6859
+    7104
    ]
   },
   {
@@ -4613,7 +4618,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    6859
+    7104
    ]
   },
   {
@@ -4975,7 +4980,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    6859
+    7104
    ]
   },
   {
@@ -5102,7 +5107,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    6859
+    7104
    ]
   },
   {
@@ -5319,7 +5324,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    6859
+    7104
    ]
   },
   {
@@ -5461,7 +5466,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    6859
+    7104
    ]
   },
   {
@@ -5533,7 +5538,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    6138
+    6383
    ]
   },
   {
@@ -5560,7 +5565,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    5550
+    5586
    ]
   },
   {
@@ -5587,7 +5592,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2288,
-    9238
+    9740
    ]
   },
   {
@@ -5609,7 +5614,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    9421
+    9922
    ]
   },
   {
@@ -5631,7 +5636,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    9164
+    9666
    ]
   },
   {
@@ -5658,7 +5663,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    9139
+    9640
    ]
   },
   {
@@ -5680,7 +5685,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    5026
+    5062
    ]
   },
   {
@@ -5693,6 +5698,11 @@ window.TREE = {
    "flavor": "Disperse the ultraviolet an atmosphere emits and absorbs into a spectrum — the fingerprints of ozone, hydrogen and the rest of the high air, in wavelengths the eye and the film both miss entirely. The first instrument to read the atmosphere's chemistry from above it.",
    "parts": [
     {
+     "name": "RO-NIMS",
+     "mod": "RP-1",
+     "title": "IS03 - Near Infrared Mapping Spectrometer (NIMS) and Ultraviolet Spectrometer (UVS)"
+    },
+    {
      "name": "RO-UVSpectrometer",
      "mod": "RP-1",
      "title": "IS02 - Ultraviolet Spectrometer"
@@ -5702,7 +5712,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    9327
+    9828
    ]
   },
   {
@@ -5715,6 +5725,11 @@ window.TREE = {
    "flavor": "A finer vidicon target and a denser scan resolve detail the early television camera smeared away — reconnaissance and weather imagery sharp enough to be worth the bandwidth to send it down. The electronic eye growing up.",
    "parts": [
     {
+     "name": "RO-AdvancedImager",
+     "mod": "RP-1",
+     "title": "VI04 - Advanced Visible Imaging Device"
+    },
+    {
      "name": "RO-ImprovedTVCamera",
      "mod": "RP-1",
      "title": "VI03 - Improved TV Camera"
@@ -5724,7 +5739,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    9421
+    9922
    ]
   },
   {
@@ -5746,7 +5761,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    7644
+    7889
    ]
   },
   {
@@ -5768,7 +5783,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    8537
+    8902
    ]
   },
   {
@@ -5792,7 +5807,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    7738
+    8103
    ]
   },
   {
@@ -5817,7 +5832,7 @@ window.TREE = {
    ],
    "pos": [
     -1680,
-    7465
+    7711
    ]
   },
   {
@@ -5837,7 +5852,7 @@ window.TREE = {
    ],
    "pos": [
     -1680,
-    8772
+    9295
    ]
   },
   {
@@ -5863,7 +5878,7 @@ window.TREE = {
    ],
    "pos": [
     -1376,
-    8772
+    9295
    ]
   },
   {
@@ -5912,7 +5927,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    2468
+    2426
    ]
   },
   {
@@ -5942,7 +5957,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    3332
+    3291
    ]
   },
   {
@@ -5969,7 +5984,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    3195
+    3154
    ]
   },
   {
@@ -5990,7 +6005,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    3195
+    3154
    ]
   },
   {
@@ -6014,7 +6029,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    3305
+    3264
    ]
   },
   {
@@ -6059,7 +6074,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    2939
+    2897
    ]
   },
   {
@@ -6086,7 +6101,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    3080
+    3038
    ]
   },
   {
@@ -6133,7 +6148,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    2792
+    2751
    ]
   },
   {
@@ -6171,7 +6186,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    2316
+    2274
    ]
   },
   {
@@ -6217,7 +6232,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    4906
+    4942
    ]
   },
   {
@@ -6285,7 +6300,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    3709
+    3548
    ]
   },
   {
@@ -6331,7 +6346,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    3803
+    3642
    ]
   },
   {
@@ -6373,7 +6388,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    4460
+    4496
    ]
   },
   {
@@ -6415,7 +6430,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    4643
+    4679
    ]
   },
   {
@@ -6457,7 +6472,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    4421
+    4401
    ]
   },
   {
@@ -6499,7 +6514,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    4558
+    4595
    ]
   },
   {
@@ -6541,7 +6556,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    4537
+    4543
    ]
   },
   {
@@ -6587,7 +6602,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    2222
+    2180
    ]
   },
   {
@@ -6614,7 +6629,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    5256
+    5292
    ]
   },
   {
@@ -6636,7 +6651,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    4601
+    4637
    ]
   },
   {
@@ -6668,7 +6683,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    3961
+    3936
    ]
   },
   {
@@ -6694,7 +6709,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    5811
+    6057
    ]
   },
   {
@@ -6716,7 +6731,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    5950
+    6195
    ]
   },
   {
@@ -6753,7 +6768,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    6577
+    6822
    ]
   },
   {
@@ -6782,7 +6797,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    2085
+    2044
    ]
   },
   {
@@ -6807,7 +6822,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    2111
+    2070
    ]
   },
   {
@@ -6907,7 +6922,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    7235
+    7480
    ]
   },
   {
@@ -6971,7 +6986,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1680,
-    3127
+    3085
    ]
   },
   {
@@ -7047,7 +7062,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    5256
+    5292
    ]
   },
   {
@@ -7144,7 +7159,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    6394
+    6639
    ]
   },
   {
@@ -7160,13 +7175,18 @@ window.TREE = {
      "name": "SCANsat_Tracker",
      "mod": "SCANsat",
      "title": "SCAN MapTraq®"
+    },
+    {
+     "name": "SurveyScanner",
+     "mod": "Squad",
+     "title": "M700 Survey Scanner"
     }
    ],
    "upgrades": [],
    "grants": [],
    "pos": [
     -1376,
-    9233
+    9734
    ]
   },
   {
@@ -7187,7 +7207,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    4421
+    4401
    ]
   },
   {
@@ -7209,7 +7229,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    4732
+    4768
    ]
   },
   {
@@ -7228,7 +7248,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    5068
+    5104
    ]
   },
   {
@@ -7260,7 +7280,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    3888
+    3726
    ]
   },
   {
@@ -7279,7 +7299,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    3495
+    3454
    ]
   },
   {
@@ -7303,7 +7323,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1984,
-    2698
+    2657
    ]
   },
   {
@@ -7333,7 +7353,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    4558
+    4564
    ]
   },
   {
@@ -7365,7 +7385,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    2327
+    2285
    ]
   },
   {
@@ -7592,7 +7612,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    7094
+    7339
    ]
   },
   {
@@ -7689,7 +7709,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    7094
+    7339
    ]
   },
   {
@@ -7716,7 +7736,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    4967
+    5003
    ]
   },
   {
@@ -7743,7 +7763,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    2751
+    2709
    ]
   },
   {
@@ -7785,7 +7805,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    7282
+    7527
    ]
   },
   {
@@ -7807,7 +7827,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    3589
+    3548
    ]
   },
   {
@@ -7829,7 +7849,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    3589
+    3548
    ]
   },
   {
@@ -7878,7 +7898,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    2939
+    2897
    ]
   },
   {
@@ -7904,6 +7924,16 @@ window.TREE = {
      "name": "ROE-Castor4",
      "mod": "ROEngines",
      "title": "Castor 4"
+    },
+    {
+     "name": "ROE-Castor4A",
+     "mod": "ROEngines",
+     "title": "Castor 4A"
+    },
+    {
+     "name": "ROE-Castor4AXL",
+     "mod": "ROEngines",
+     "title": "Castor 4AXL"
     }
    ],
    "upgrades": [
@@ -7912,7 +7942,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    3033
+    2991
    ]
   },
   {
@@ -7944,7 +7974,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    2510
+    2469
    ]
   },
   {
@@ -7991,7 +8021,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    2630
+    2589
    ]
   },
   {
@@ -8033,7 +8063,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    2845
+    2803
    ]
   },
   {
@@ -8065,7 +8095,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    2845
+    2803
    ]
   },
   {
@@ -8102,7 +8132,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    3401
+    3360
    ]
   },
   {
@@ -8139,7 +8169,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    6650
+    6900
    ]
   },
   {
@@ -8171,7 +8201,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    7188
+    7433
    ]
   },
   {
@@ -8212,7 +8242,7 @@ window.TREE = {
    ],
    "pos": [
     -1072,
-    8814
+    9316
    ]
   },
   {
@@ -8329,7 +8359,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    8678
+    9179
    ]
   },
   {
@@ -8361,7 +8391,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    8767
+    9269
    ]
   },
   {
@@ -8412,7 +8442,7 @@ window.TREE = {
    ],
    "pos": [
     -768,
-    8861
+    9363
    ]
   },
   {
@@ -8481,7 +8511,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    7738
+    8103
    ]
   },
   {
@@ -8523,7 +8553,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    4076
+    4055
    ]
   },
   {
@@ -8563,7 +8593,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    7644
+    8009
    ]
   },
   {
@@ -8576,6 +8606,11 @@ window.TREE = {
    "flavor": "A second, more sensitive sensor, now riding a boom that extends itself on command instead of just unfolding once — the field measured finer, and from exactly the distance the mission wants.",
    "parts": [
     {
+     "name": "RO-FluxgateMagnet",
+     "mod": "RP-1",
+     "title": "MG03 - Fluxgate Magnetometer Boom"
+    },
+    {
      "name": "RO-HeliumMagnet",
      "mod": "RP-1",
      "title": "MG02 - Helium Magnetometer Boom"
@@ -8585,7 +8620,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    7738
+    8103
    ]
   },
   {
@@ -8606,13 +8641,18 @@ window.TREE = {
      "name": "scansat-radar-poseidon-3b-1",
      "mod": "SCANsat",
      "title": "Early Radar Altimeter"
+    },
+    {
+     "name": "scansat-radar-seasat-1",
+     "mod": "SCANsat",
+     "title": "Seasat SAR Radar Antenna"
     }
    ],
    "upgrades": [],
    "grants": [],
    "pos": [
     -1072,
-    9233
+    9734
    ]
   },
   {
@@ -8639,7 +8679,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    7282
+    7527
    ]
   },
   {
@@ -8661,7 +8701,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    9002
+    9504
    ]
   },
   {
@@ -8688,7 +8728,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    6953
+    7198
    ]
   },
   {
@@ -8710,7 +8750,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    9096
+    9598
    ]
   },
   {
@@ -8747,7 +8787,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    8396
+    8761
    ]
   },
   {
@@ -8789,7 +8829,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    8490
+    8855
    ]
   },
   {
@@ -8826,7 +8866,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    7832
+    8197
    ]
   },
   {
@@ -8863,7 +8903,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    7926
+    8291
    ]
   },
   {
@@ -8885,7 +8925,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    8020
+    8385
    ]
   },
   {
@@ -8927,7 +8967,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    8114
+    8479
    ]
   },
   {
@@ -8969,7 +9009,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    8396
+    8782
    ]
   },
   {
@@ -9011,7 +9051,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    8208
+    8573
    ]
   },
   {
@@ -9043,7 +9083,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    8490
+    8876
    ]
   },
   {
@@ -9065,7 +9105,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    8302
+    8667
    ]
   },
   {
@@ -9087,7 +9127,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    6723
+    6968
    ]
   },
   {
@@ -9119,7 +9159,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    8908
+    9410
    ]
   },
   {
@@ -9140,6 +9180,11 @@ window.TREE = {
      "name": "ROC-ApolloHSBDB",
      "mod": "ROCapsules",
      "title": "Apollo Command Module Heatshield"
+    },
+    {
+     "name": "ROC-ApolloHSBDBBlockIII",
+     "mod": "ROCapsules",
+     "title": "Apollo Block III+ Heatshield"
     },
     {
      "name": "ROC-GeminiHSLunarBDB",
@@ -9164,7 +9209,18 @@ window.TREE = {
    "cost": 1700,
    "anyToUnlock": false,
    "flavor": "Push the same ablator formulation a margin further — the heat load of an actual landing-and-return mission rather than a single translunar pass, still bolted to whichever airframe happens to need it.",
-   "parts": [],
+   "parts": [
+    {
+     "name": "ROC-BigGeminiHS",
+     "mod": "ROCapsules",
+     "title": "Big G Heat Shield"
+    },
+    {
+     "name": "ROC-BigGeminiHSLunar",
+     "mod": "ROCapsules",
+     "title": "Big G Lunar Heat Shield"
+    }
+   ],
    "upgrades": [
     "LunarHS"
    ],
@@ -9193,7 +9249,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    5303
+    5339
    ]
   },
   {
@@ -9245,7 +9301,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    5162
+    5198
    ]
   },
   {
@@ -9292,7 +9348,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    5518
+    5554
    ]
   },
   {
@@ -9319,7 +9375,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    5162
+    5198
    ]
   },
   {
@@ -9366,7 +9422,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    7376
+    7621
    ]
   },
   {
@@ -9378,6 +9434,11 @@ window.TREE = {
    "anyToUnlock": false,
    "flavor": "Blades that open to radiate heat away and close to hold it in, driven by the bus temperature itself — the hermetic sphere's fixed skin becomes a thermostat instead of a single fixed compromise.",
    "parts": [
+    {
+     "name": "ca_louver_m",
+     "mod": "CoatlAerospace",
+     "title": "CA-TCL8 Thermal Control Louver"
+    },
     {
      "name": "ca_louver_s",
      "mod": "CoatlAerospace",
@@ -9411,6 +9472,16 @@ window.TREE = {
      "title": "Apollo LM Ascent Stage"
     },
     {
+     "name": "ROC-LEMAscentTaxiBDB",
+     "mod": "ROCapsules",
+     "title": "AES LM Taxi Ascent Stage"
+    },
+    {
+     "name": "ROC-LEMShelterBDB",
+     "mod": "ROCapsules",
+     "title": "AES LM Shelter"
+    },
+    {
      "name": "landerCabinMedium",
      "mod": "Squad",
      "title": "Mk1 Lander Can Advanced"
@@ -9419,6 +9490,11 @@ window.TREE = {
      "name": "landerCabinSmall",
      "mod": "Squad",
      "title": "Mk1 Lander Can"
+    },
+    {
+     "name": "mk2LanderCabin_v2",
+     "mod": "Squad",
+     "title": "Mk2 Lander Can"
     }
    ],
    "upgrades": [],
@@ -9467,7 +9543,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    4963
+    4354
    ]
   },
   {
@@ -9496,7 +9572,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -160,
-    5360
+    4354
    ]
   },
   {
@@ -9515,7 +9591,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    5151
+    4837
    ]
   },
   {
@@ -9539,7 +9615,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    5057
+    4743
    ]
   },
   {
@@ -9586,7 +9662,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    4118
+    4140
    ]
   },
   {
@@ -9611,7 +9687,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    4869
+    4601
    ]
   },
   {
@@ -9624,15 +9700,24 @@ window.TREE = {
    "flavor": "Wring more specific impulse out of the closed expander cycle - hotter, tighter plumbing on the efficient small upper stage.",
    "parts": [],
    "upgrades": [
+    "RFUpgrade_LE-5A",
+    "RFUpgrade_LE-5B",
     "RFUpgrade_RL10A-3-3",
     "RFUpgrade_RL10A-3-3A",
     "RFUpgrade_RL10A-3-7",
-    "RFUpgrade_RL10A-3-9"
+    "RFUpgrade_RL10A-3-9",
+    "RFUpgrade_RL10A-4",
+    "RFUpgrade_RL10A-4-1-2",
+    "RFUpgrade_RL10A-4-1N",
+    "RFUpgrade_RL10A-4-2N",
+    "RFUpgrade_RL10A-4N",
+    "RFUpgrade_RL10A-5",
+    "RFUpgrade_RL10B-2"
    ],
    "grants": [],
    "pos": [
     -1072,
-    4160
+    4140
    ]
   },
   {
@@ -9670,7 +9755,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    1695
+    1742
    ]
   },
   {
@@ -9702,7 +9787,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    3196
+    3155
    ]
   },
   {
@@ -9726,7 +9811,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    2520
+    2473
    ]
   },
   {
@@ -9753,7 +9838,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    5339
+    5063
    ]
   },
   {
@@ -9775,7 +9860,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    6094
+    5643
    ]
   },
   {
@@ -9793,7 +9878,7 @@ window.TREE = {
    ],
    "pos": [
     -1072,
-    7465
+    7711
    ]
   },
   {
@@ -9809,7 +9894,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    8584
+    8949
    ]
   },
   {
@@ -9827,7 +9912,7 @@ window.TREE = {
    ],
    "pos": [
     -768,
-    8302
+    8646
    ]
   },
   {
@@ -9845,7 +9930,7 @@ window.TREE = {
    ],
    "pos": [
     -464,
-    8302
+    8646
    ]
   },
   {
@@ -9863,7 +9948,7 @@ window.TREE = {
    ],
    "pos": [
     -160,
-    8302
+    8646
    ]
   },
   {
@@ -9881,6 +9966,11 @@ window.TREE = {
      "title": "TF/CF34 High-Bypass Turbofan"
     },
     {
+     "name": "SXTMiniJet",
+     "mod": "SXT",
+     "title": "Williams/Rolls-Royce FJ44-2A turbofan"
+    },
+    {
      "name": "turboFanSize2",
      "mod": "Squad",
      "title": "CF6 High-Bypass Turbofan"
@@ -9890,7 +9980,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    5612
+    5648
    ]
   },
   {
@@ -9922,7 +10012,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    5424
+    5460
    ]
   },
   {
@@ -9942,7 +10032,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    5424
+    5460
    ]
   },
   {
@@ -9965,7 +10055,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    5727
+    5763
    ]
   },
   {
@@ -9986,7 +10076,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    5330
+    5366
    ]
   },
   {
@@ -10005,12 +10095,13 @@ window.TREE = {
     "RFUpgrade_PT6A-20A",
     "RFUpgrade_PT6A-21",
     "RFUpgrade_PT6A-34",
+    "RFUpgrade_PT6A-34AG",
     "RFUpgrade_PT6A-42"
    ],
    "grants": [],
    "pos": [
     -1680,
-    5256
+    5292
    ]
   },
   {
@@ -10060,7 +10151,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    2630
+    2589
    ]
   },
   {
@@ -10073,21 +10164,26 @@ window.TREE = {
    "flavor": "The same reaction-control block, filled with whatever storable hypergolic blend the mission calls for — five real combinations flown across five different programs, none of them meaningfully better than the others. A menu, not a ladder.",
    "parts": [],
    "upgrades": [
+    "RFTech-AddOxygenGas",
     "RFTech-rcs-tltech2",
     "RFTech-rcs-tltech3",
+    "RFTech-rcs-tltech6",
     "RFUpgrade_Aerozine50+NTO",
+    "RFUpgrade_Ethanol+O2",
     "RFUpgrade_Hydrazine",
     "RFUpgrade_ISPS",
     "RFUpgrade_ISPS-HDA",
     "RFUpgrade_MMH+MON10",
     "RFUpgrade_MMH+MON3",
     "RFUpgrade_MMH+NTO",
+    "RFUpgrade_RP-1+O2",
+    "RFUpgrade_Syntin+O2",
     "RFUpgrade_UDMH+NTO"
    ],
    "grants": [],
    "pos": [
     -768,
-    4789
+    4752
    ]
   },
   {
@@ -10105,7 +10201,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    5245
+    5157
    ]
   },
   {
@@ -10147,7 +10243,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    3127
+    3085
    ]
   },
   {
@@ -10169,7 +10265,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    3803
+    3642
    ]
   },
   {
@@ -10189,9 +10285,11 @@ window.TREE = {
     "RFUpgrade_RD-107-11D512",
     "RFUpgrade_RD-107-11D512P",
     "RFUpgrade_RD-107-8D728",
+    "RFUpgrade_RD-107A-14D22",
     "RFUpgrade_RD-108-11D511",
     "RFUpgrade_RD-108-11D511P",
     "RFUpgrade_RD-108-8D727",
+    "RFUpgrade_RD-108A-14D21",
     "RFUpgrade_RD-215M-8D613",
     "RFUpgrade_RD-250PM",
     "RFUpgrade_RD-262-11D26"
@@ -10199,7 +10297,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    4622
+    4658
    ]
   },
   {
@@ -10232,6 +10330,11 @@ window.TREE = {
      "title": "NASA SNAP-50 35 kWe Nuclear Reactor"
     },
     {
+     "name": "RO-reactor-snap50-300",
+     "mod": "NearFutureElectrical",
+     "title": "NASA SNAP-50 300 kWe Nuclear Reactor"
+    },
+    {
      "name": "RO-reactor-snap8",
      "mod": "NearFutureElectrical",
      "title": "NASA SNAP-8 Nuclear Reactor"
@@ -10241,7 +10344,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    5518
+    5554
    ]
   },
   {
@@ -10459,7 +10562,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    2468
+    2426
    ]
   },
   {
@@ -10504,6 +10607,11 @@ window.TREE = {
      "title": "RPWS01 - Plasma Wave Detector"
     },
     {
+     "name": "RO-SWPlasmaAnalyzer",
+     "mod": "RP-1",
+     "title": "RPWS02 - Solar Wind Plasma Analyzer"
+    },
+    {
      "name": "dmUS2RPWS",
      "mod": "",
      "title": ""
@@ -10513,7 +10621,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    6953
+    7220
    ]
   },
   {
@@ -10550,7 +10658,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    5896
+    6141
    ]
   },
   {
@@ -10607,7 +10715,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1072,
-    3982
+    3825
    ]
   },
   {
@@ -10781,7 +10889,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1376,
-    6300
+    6545
    ]
   },
   {
@@ -10813,7 +10921,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    4775
+    4486
    ]
   },
   {
@@ -10839,7 +10947,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -160,
-    3797
+    5109
    ]
   },
   {
@@ -10853,15 +10961,20 @@ window.TREE = {
    "parts": [],
    "upgrades": [
     "RFUpgrade_HM-7B",
+    "RFUpgrade_HM-7B++",
     "RFUpgrade_J-2S",
     "RFUpgrade_M-1",
     "RFUpgrade_M-1SL",
-    "RFUpgrade_YF-75D"
+    "RFUpgrade_M-1U",
+    "RFUpgrade_M-1U-SL",
+    "RFUpgrade_Vulcain-2",
+    "RFUpgrade_YF-75D",
+    "RFUpgrade_YF-75E"
    ],
    "grants": [],
    "pos": [
     -160,
-    3891
+    5245
    ]
   },
   {
@@ -10887,7 +11000,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     144,
-    3797
+    5109
    ]
   },
   {
@@ -10909,7 +11022,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -160,
-    2238
+    2520
    ]
   },
   {
@@ -10928,7 +11041,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     144,
-    2238
+    2520
    ]
   },
   {
@@ -10955,7 +11068,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -160,
-    1695
+    1742
    ]
   },
   {
@@ -10976,7 +11089,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -160,
-    2144
+    2426
    ]
   },
   {
@@ -11003,7 +11116,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -768,
-    2939
+    2897
    ]
   },
   {
@@ -11030,7 +11143,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    2165
+    2118
    ]
   },
   {
@@ -11061,13 +11174,23 @@ window.TREE = {
      "name": "ROE-Star48B",
      "mod": "ROEngines",
      "title": "STAR 48B"
+    },
+    {
+     "name": "ROE-Star5D",
+     "mod": "ROEngines",
+     "title": "STAR 5D"
+    },
+    {
+     "name": "ROE-Star8",
+     "mod": "ROEngines",
+     "title": "STAR 8 (RAD)"
     }
    ],
    "upgrades": [],
    "grants": [],
    "pos": [
     -464,
-    2426
+    2379
    ]
   },
   {
@@ -11104,7 +11227,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    2332
+    2285
    ]
   },
   {
@@ -11118,7 +11241,12 @@ window.TREE = {
    "parts": [],
    "upgrades": [
     "RFUpgrade_AJ10-118F",
+    "RFUpgrade_AJ10-118K",
     "RFUpgrade_AJ10-138A",
+    "RFUpgrade_AJ10-153",
+    "RFUpgrade_AJ10-154",
+    "RFUpgrade_AJ10-156",
+    "RFUpgrade_Agena-2000",
     "RFUpgrade_Model8096-39",
     "RFUpgrade_Model8096A",
     "RFUpgrade_Model8096B",
@@ -11127,7 +11255,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    2893
+    2846
    ]
   },
   {
@@ -11159,7 +11287,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -160,
-    5595
+    5554
    ]
   },
   {
@@ -11196,7 +11324,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     144,
-    5595
+    5554
    ]
   },
   {
@@ -11212,7 +11340,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    2071
+    2024
    ]
   },
   {
@@ -11259,7 +11387,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -160,
-    4335
+    5015
    ]
   },
   {
@@ -11291,7 +11419,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    6299
+    6544
    ]
   },
   {
@@ -11313,7 +11441,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -160,
-    6299
+    6591
    ]
   },
   {
@@ -11346,11 +11474,14 @@ window.TREE = {
      "title": "Bi-Propellant Apogee Engine"
     }
    ],
-   "upgrades": [],
+   "upgrades": [
+    "RFUpgrade_LEROS-1c",
+    "RFUpgrade_LEROS-2b"
+   ],
    "grants": [],
    "pos": [
     -464,
-    5822
+    5251
    ]
   },
   {
@@ -11371,12 +11502,14 @@ window.TREE = {
    "upgrades": [
     "RFUpgrade_CF34-1A",
     "RFUpgrade_CF6-50E2",
-    "RFUpgrade_CF6-80A"
+    "RFUpgrade_CF6-80A",
+    "RFUpgrade_F135-PW-600",
+    "RFUpgrade_WS-10B"
    ],
    "grants": [],
    "pos": [
     -464,
-    6010
+    5533
    ]
   },
   {
@@ -11402,7 +11535,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    5916
+    5439
    ]
   },
   {
@@ -11470,7 +11603,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    1883
+    1836
    ]
   },
   {
@@ -11488,7 +11621,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    4079
+    2940
    ]
   },
   {
@@ -11509,6 +11642,11 @@ window.TREE = {
      "name": "SXTSPKTRCabin",
      "mod": "SXT",
      "title": "SPKTR-10 Lacuga Storage Container"
+    },
+    {
+     "name": "sspx-adjusting-stairs-1",
+     "mod": "StationPartsExpansionRedux",
+     "title": "Extensible Stairs"
     },
     {
      "name": "sspx-airlock-125-1",
@@ -11624,7 +11762,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    1977
+    1930
    ]
   },
   {
@@ -11698,7 +11836,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    7465
+    7664
    ]
   },
   {
@@ -11720,7 +11858,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    8652
+    9038
    ]
   },
   {
@@ -11846,7 +11984,1295 @@ window.TREE = {
    "grants": [],
    "pos": [
     -464,
-    4681
+    3825
+   ]
+  },
+  {
+   "id": "cryo_deployableNozzleExpander",
+   "title": "Deployable-Nozzle Expander Cycle",
+   "discipline": "Cryogenics",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The expander cycle's payoff arrives: a radiatively-cooled nozzle that unfolds after staging trades stowed length for the highest vacuum Isp of any engine that flies. The RL-10B-2's carbon-carbon skirt reaches 465 seconds; the RD-0146 is the Russian closed-expander answer. The long RL-10 chain, idle since its last refinement, leaps a full fleet-generation here.",
+   "parts": [
+    {
+     "name": "ROE-RD0146",
+     "mod": "ROEngines",
+     "title": "RD-0146"
+    },
+    {
+     "name": "ROE-RL10A4N",
+     "mod": "ROEngines",
+     "title": "RL-10A-4N Series (46\" Extendable Nozzle)"
+    },
+    {
+     "name": "ROE-RL10B2",
+     "mod": "ROEngines",
+     "title": "RL-10B/C Series (84.1\" Extendable Nozzle)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    144,
+    3936
+   ]
+  },
+  {
+   "id": "cryo_operationalHydroloxUpper",
+   "title": "Operational Restartable Hydrolox Upper",
+   "discipline": "Cryogenics",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The gas-generator hydrolox upper grows up. Where the J-2 fired once, the LE-5 coasts and reignites ten times across a mission - the workhorse restartable upper of an operational launcher. Its own expander-bleed descendants split off to the expander lane.",
+   "parts": [
+    {
+     "name": "ROE-LE5",
+     "mod": "ROEngines",
+     "title": "LE-5"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    144,
+    4396
+   ]
+  },
+  {
+   "id": "cryo_boosterGasGenHydrolox",
+   "title": "Booster-Class Gas-Generator Hydrolox",
+   "discipline": "Cryogenics",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Having proven the reusable staged-combustion engine is buildable, the world's launch fleet turns around and walks away from it. The RS-68 - the most powerful hydrogen engine ever flown - is deliberately a gas-generator with an ablative nozzle, trading Isp for a price tag; Vulcain and the YF-77 make the same bargain for Ariane and Long March. The anti-SSME: simplicity at booster scale.",
+   "parts": [
+    {
+     "name": "ROE-RS68",
+     "mod": "ROEngines",
+     "title": "RS-68"
+    },
+    {
+     "name": "YF77_Engine",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-77"
+    },
+    {
+     "name": "YF77_Engine-double-withShell",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-77 with CZ-5 Boattail"
+    },
+    {
+     "name": "cryoengine-vesuvius-1",
+     "mod": "CryoEngines",
+     "title": "Vulcain 2"
+    },
+    {
+     "name": "rmm_rainier",
+     "mod": "RocketMotorMenagerie",
+     "title": "Space Transportation Main Engine (STME)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    144,
+    5203
+   ]
+  },
+  {
+   "id": "cryo_operationalFRSC",
+   "title": "Operational Fuel-Rich Staged-Combustion Hydrolox",
+   "discipline": "Cryogenics",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "The hardest cycle in rocketry stops being one nation's secret. Fuel-rich staged-combustion hydrolox - the SSME's cycle - is rebuilt by two more programs: the RD-0120 lifts Energia, the LE-7 lifts the H-II. What took a superpower to master becomes something three space programs can pour.",
+   "parts": [
+    {
+     "name": "ROE-LE7",
+     "mod": "ROEngines",
+     "title": "LE-7"
+    },
+    {
+     "name": "ROE-RD0120",
+     "mod": "ROEngines",
+     "title": "RD-0120"
+    },
+    {
+     "name": "rmm_ishtar",
+     "mod": "RocketMotorMenagerie",
+     "title": "RS-25-50X (SSME-50X)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    448,
+    5156
+   ]
+  },
+  {
+   "id": "cryo_reusableEngineUprating",
+   "title": "Reusable-Engine Production Uprating",
+   "discipline": "Cryogenics",
+   "tier": 13,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Every reusable and staged-combustion hydrolox engine now in service settles into its production marks - the SSME Block-I and Block-II, the RD-0120M, the LE-7A, the maturing HG-3 and deep-throttle chains - the unglamorous decade of squeezing margin out of engines already flying.",
+   "parts": [],
+   "upgrades": [
+    "RFUpgrade_HG-3B",
+    "RFUpgrade_HG-3B-2",
+    "RFUpgrade_HG-3B-SL",
+    "RFUpgrade_HG-3B-SL-2",
+    "RFUpgrade_LE-7A",
+    "RFUpgrade_LE-7A-2",
+    "RFUpgrade_LR129-P-3",
+    "RFUpgrade_LRBE-BlockII",
+    "RFUpgrade_RD-0120M",
+    "RFUpgrade_RD-0122",
+    "RFUpgrade_RD-57A-1",
+    "RFUpgrade_RD-57M",
+    "RFUpgrade_RS-25A",
+    "RFUpgrade_RS-25C",
+    "RFUpgrade_RS-25D-50X",
+    "RFUpgrade_RS-25D-E",
+    "RFUpgrade_SSBE-BlockII"
+   ],
+   "grants": [],
+   "pos": [
+    752,
+    5156
+   ]
+  },
+  {
+   "id": "cryo_tripropellant",
+   "title": "Tripropellant Staged Combustion",
+   "discipline": "Cryogenics",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "One engine, two fuels, switched in flight. At liftoff it burns dense kerosene for thrust off the pad; at altitude it crosses over to hydrogen for Isp - a single powerplant doing the job of a two-propellant staircase. The RD-701 was meant to lift the MAKS spaceplane; making it work needs both the staged-combustion hydrolox cycle and oxidiser-rich kerolox at once.",
+   "parts": [
+    {
+     "name": "nflv-engine-rd701-1",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "RD-701"
+    },
+    {
+     "name": "nflv-engine-rd704-1",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "RD-704"
+    },
+    {
+     "name": "rmm_dugong",
+     "mod": "RocketMotorMenagerie",
+     "title": "SSBE"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    448,
+    3684
+   ]
+  },
+  {
+   "id": "cryo_methaloxStagedCombustion",
+   "title": "Methalox Staged Combustion",
+   "discipline": "Cryogenics",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Methane splits the difference: colder than kerosene, denser than hydrogen, clean-burning and one day makeable on Mars. The LRBE is the tree's first methalox engine - a staged-combustion booster on a fuel nobody flew yet, the seed of a lane that a later era will grow into.",
+   "parts": [
+    {
+     "name": "rmm_arenysaurus",
+     "mod": "RocketMotorMenagerie",
+     "title": "LRBE"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    448,
+    1627
+   ]
+  },
+  {
+   "id": "pc_multiChamberORSC",
+   "title": "High-Thrust Multi-Chamber ORSC",
+   "discipline": "PropellantChemistry",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Oxidiser-rich staged combustion hits its ceiling. The RD-170 - four chambers off one turbopump, 7900 kilonewtons - is the most powerful liquid-propellant engine ever built, the monster that lifts Energia and Zenit. Where the N1's engines never flew and Zenit's was only an upper, this is the chemistry's operational record.",
+   "parts": [
+    {
+     "name": "ROE-RD170",
+     "mod": "ROEngines",
+     "title": "RD-170"
+    },
+    {
+     "name": "YF100_Engine-double-withShell2",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-100 with CZ-5 Boattail"
+    },
+    {
+     "name": "YF100_Engine_S",
+     "mod": "KerwisChineseAerospacePack",
+     "title": "YF-100"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    144,
+    1794
+   ]
+  },
+  {
+   "id": "pc_modularORSC",
+   "title": "Modular Oxidiser-Rich Kerolox",
+   "discipline": "PropellantChemistry",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "The record engine gets cut into pieces you can sell. Halve the RD-170's four chambers and you have the RD-180 for Atlas; quarter it and you have the single-chamber Angara engine. Same core hardware, packaged into a modular family for the export and commercial market.",
+   "parts": [
+    {
+     "name": "ROE-RD180",
+     "mod": "ROEngines",
+     "title": "RD-180"
+    }
+   ],
+   "upgrades": [
+    "RFUpgrade_RD-120F",
+    "RFUpgrade_RD-120K",
+    "RFUpgrade_RD-171",
+    "RFUpgrade_RD-172-173"
+   ],
+   "grants": [],
+   "pos": [
+    448,
+    1721
+   ]
+  },
+  {
+   "id": "pc_operationalStorableORSC",
+   "title": "Operational Storable Staged Combustion",
+   "discipline": "PropellantChemistry",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The storable staged-combustion engines of Proton and its kin reach their final operational marks - the RD-275 first stage, the Kosberg upper stages - the last refinements of a hypergolic booster line that has been flying since the sixties.",
+   "parts": [],
+   "upgrades": [
+    "RFUpgrade_RD-0210-Mk3",
+    "RFUpgrade_RD-0212-Mk3",
+    "RFUpgrade_RD-0213-Mk3",
+    "RFUpgrade_RD-253-Mk4",
+    "RFUpgrade_RD-254-11D44-Mk4",
+    "RFUpgrade_RD-275",
+    "RFUpgrade_RD-277-14D16"
+   ],
+   "grants": [],
+   "pos": [
+    144,
+    2426
+   ]
+  },
+  {
+   "id": "fd_multiRestartStorableUpper",
+   "title": "Multi-Restart Storable Upper Stage",
+   "discipline": "FluidDynamics",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "Coast, reignite, coast again - dozens of times, across days. The Fregat and Briz upper stages and their kin are storable propulsion modules built for the choreography of an interplanetary or multi-orbit mission, restarting on demand where the single-shot Agena and early AJ10 could not. The Transtar rates five hundred ignitions.",
+   "parts": [
+    {
+     "name": "ROE-AJ10-transtar",
+     "mod": "ROEngines",
+     "title": "AJ23 Transtar"
+    },
+    {
+     "name": "ROE-AJ10AdvLong",
+     "mod": "ROEngines",
+     "title": "AJ10 Series (Advanced Long Nozzle)"
+    },
+    {
+     "name": "ROE-S592",
+     "mod": "ROEngines",
+     "title": "S5.92"
+    },
+    {
+     "name": "ROE-S598M",
+     "mod": "ROEngines",
+     "title": "S5.98M"
+    },
+    {
+     "name": "restock-engine-125-pug",
+     "mod": "ReStockPlus",
+     "title": "Aestus"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    144,
+    2846
+   ]
+  },
+  {
+   "id": "fd_terminalGasGenKerolox",
+   "title": "Terminal Gas-Generator Kerolox Uprating",
+   "discipline": "FluidDynamics",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The gas-generator kerolox engines that built the space age take their final bow. The last production marks of Delta's RS-27, Atlas's RS-56 and Titan's LR87/LR91 - a lineage of open-cycle workhorses being uprated one last time as staged combustion walks past them.",
+   "parts": [],
+   "upgrades": [
+    "RFUpgrade_LR101-NA-15",
+    "RFUpgrade_LR87-AJ-11A",
+    "RFUpgrade_LR87-AJ-11A-Kero",
+    "RFUpgrade_LR91-AJ-11A",
+    "RFUpgrade_LR91-AJ-11A-Kero",
+    "RFUpgrade_Model8096C",
+    "RFUpgrade_RD-58S",
+    "RFUpgrade_RS-27A",
+    "RFUpgrade_RS-56-OBA",
+    "RFUpgrade_RS-56-OSA"
+   ],
+   "grants": [],
+   "pos": [
+    144,
+    5366
+   ]
+  },
+  {
+   "id": "fd_advancedGasGenKerolox",
+   "title": "Advanced Gas-Generator Kerolox Booster",
+   "discipline": "FluidDynamics",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "America's answer to the imported RD-180 that never got built. The STBE was a big, simple gas-generator kerolox booster engine drawn for the next launcher - the domestic alternative to buying Russian staged combustion, shelved when the RD-180 won on price.",
+   "parts": [
+    {
+     "name": "cryoengine-allosaur-1",
+     "mod": "CryoEngines",
+     "title": "STBE-3"
+    },
+    {
+     "name": "nflv-engine-stbe-kero-1",
+     "mod": "NearFutureLaunchVehicles",
+     "title": "STBE (Pratt & Whitney)"
+    },
+    {
+     "name": "rmm_turiasaurus",
+     "mod": "RocketMotorMenagerie",
+     "title": "STBE (Pratt & Whitney)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    144,
+    5460
+   ]
+  },
+  {
+   "id": "pc_filamentWoundSolid",
+   "title": "Filament-Wound Composite-Case Solids",
+   "discipline": "PropellantChemistry",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Wind the motor case out of graphite and epoxy instead of forging it from steel, and the dead weight falls away. The filament-wound composite case - on the giant SRMU, the standalone Castor 120, the Titan solids - is the material leap past the heavy segmented steel of the Shuttle booster, more impulse for less structure.",
+   "parts": [
+    {
+     "name": "ROE-1208sepMotor",
+     "mod": "ROEngines",
+     "title": "UA1208 Nosecone & Separation Motor"
+    },
+    {
+     "name": "ROE-Castor120",
+     "mod": "ROEngines",
+     "title": "Castor 120"
+    },
+    {
+     "name": "ROE-SRMU",
+     "mod": "ROEngines",
+     "title": "SRMU"
+    },
+    {
+     "name": "ROE-UA1208",
+     "mod": "ROEngines",
+     "title": "UA1208"
+    }
+   ],
+   "upgrades": [
+    "RFTech-solids-tltech6",
+    "RFTech-solids-tltech7",
+    "RFUpgrade_FWC-SRM",
+    "RFUpgrade_RSRM-1986"
+   ],
+   "grants": [],
+   "pos": [
+    -160,
+    2118
+   ]
+  },
+  {
+   "id": "pc_gemStrapOnCatalog",
+   "title": "Graphite-Epoxy Strap-On Catalog",
+   "discipline": "PropellantChemistry",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The commercial strap-on aisle. Bolt on as many graphite-epoxy motors as the payload needs - the Delta GEM family in three lengths, the Atlas AJ-60 - a fixed catalogue of composite boosters sized to order off the composite-case breakthrough.",
+   "parts": [
+    {
+     "name": "ROE-AJ60",
+     "mod": "ROEngines",
+     "title": "AJ-60A"
+    },
+    {
+     "name": "ROE-GEM40",
+     "mod": "ROEngines",
+     "title": "GEM 40"
+    },
+    {
+     "name": "ROE-GEM46",
+     "mod": "ROEngines",
+     "title": "GEM 46"
+    },
+    {
+     "name": "ROE-GEM60",
+     "mod": "ROEngines",
+     "title": "GEM 60"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    144,
+    2118
+   ]
+  },
+  {
+   "id": "ep_operationalHall",
+   "title": "Operational Hall-Effect Thruster",
+   "discipline": "ElectricalPower",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The Hall thruster leaves the laboratory. The SPT-100 and its bigger siblings become flight-qualified hardware, first for stationkeeping and then as primary propulsion - a few grams-force of thrust at sixteen hundred seconds of Isp, the electric workhorse of the coming decades.",
+   "parts": [
+    {
+     "name": "RO-PPS1350",
+     "mod": "NearFuturePropulsion",
+     "title": "PPS-1350 Hall Effect Thruster"
+    },
+    {
+     "name": "RO-SPT100",
+     "mod": "NearFuturePropulsion",
+     "title": "SPT-100 Hall Effect Thruster"
+    },
+    {
+     "name": "RO-SPT140",
+     "mod": "NearFuturePropulsion",
+     "title": "SPT-140 Hall Effect Thruster"
+    }
+   ],
+   "upgrades": [
+    "RFUpgrade_457M-V1-K",
+    "RFUpgrade_SPT-50M"
+   ],
+   "grants": [],
+   "pos": [
+    144,
+    6638
+   ]
+  },
+  {
+   "id": "ep_highPowerHall",
+   "title": "High-Power Nested Hall Thruster",
+   "discipline": "ElectricalPower",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Scale the Hall thruster into the tens of kilowatts. The 457M's nested channels swallow seventy-two kilowatts and push the Isp past two thousand seconds - the class of electric engine that could one day move cargo rather than just trim an orbit.",
+   "parts": [
+    {
+     "name": "RO-457M",
+     "mod": "NearFuturePropulsion",
+     "title": "457M 72kW Hall Effect Thruster"
+    }
+   ],
+   "upgrades": [
+    "RFUpgrade_PITV-Hydrazine-40",
+    "RFUpgrade_SPT-100B"
+   ],
+   "grants": [],
+   "pos": [
+    448,
+    6638
+   ]
+  },
+  {
+   "id": "ep_griddedIon",
+   "title": "Gridded Ion Electrostatic Thruster",
+   "discipline": "ElectricalPower",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "A different way to throw ions: accelerate them through charged grids instead of a magnetic field, and the exhaust speed climbs higher still. NSTAR flew on Deep Space 1 - the first time an ion engine, not a chemical rocket, was the main drive of a probe to another world.",
+   "parts": [
+    {
+     "name": "ionEngine",
+     "mod": "Squad",
+     "title": "NSTAR Gridded Ion Thruster"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    448,
+    6450
+   ]
+  },
+  {
+   "id": "ep_pulsedInductive",
+   "title": "Pulsed Inductive Thruster",
+   "discipline": "ElectricalPower",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "No electrodes to erode - a pulsed magnetic field ionises and flings a puff of ammonia, and repeats thousands of times a second. The PIT reaches seven thousand seconds of Isp, an experimental high-power concept for the kind of cruise no chemical stage could sustain.",
+   "parts": [
+    {
+     "name": "pit-125",
+     "mod": "NearFuturePropulsion",
+     "title": "PIT Mk Va Pulsed Inductive Thruster"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    448,
+    6544
+   ]
+  },
+  {
+   "id": "nuc_flightDesignNTR",
+   "title": "Flight-Design Solid-Core NTR",
+   "discipline": "NuclearEngineering",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "The nuclear rocket stops being a ground-test article and becomes a flight design. The Soviet RD-0410 was actually built and fired; NERVA II is the largest solid-core engine ever drawn. The end of the solid-core line - reactors meant, at last, to leave the ground.",
+   "parts": [
+    {
+     "name": "RD0410MID",
+     "mod": "Squad",
+     "title": "RD-0410"
+    },
+    {
+     "name": "ROE-NERVAII",
+     "mod": "ROEngines",
+     "title": "NERVA II"
+    },
+    {
+     "name": "restock-engine-cherenkov",
+     "mod": "ReStockPlus",
+     "title": "RD-0410"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    448,
+    5507
+   ]
+  },
+  {
+   "id": "nuc_particleBedNTR",
+   "title": "Particle-Bed NTR",
+   "discipline": "NuclearEngineering",
+   "tier": 12,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Pack the reactor fuel as loose particles instead of solid rods and the coolant can pull heat out far faster - more power in less core. The particle-bed NTR of the Timberwind program is a denser, hotter path to the same nuclear thrust.",
+   "parts": [
+    {
+     "name": "ROE-SNTPPFE100",
+     "mod": "ROEngines",
+     "title": "SNTP-PFE100 Atomic Rocket Motor"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    448,
+    5601
+   ]
+  },
+  {
+   "id": "nuc_advancedCoreNTR",
+   "title": "Advanced-Core NTR Concepts",
+   "discipline": "NuclearEngineering",
+   "tier": 13,
+   "cost": 0,
+   "anyToUnlock": false,
+   "flavor": "Let the fuel melt, or turn to gas, and the temperature ceiling - and the Isp - rises with it. The liquid-core NTR reaches fourteen hundred seconds; the low-pressure gas-core start pushes further. Engineering fiction for now, and the doorway to the gas-core lane a later era will open.",
+   "parts": [
+    {
+     "name": "RO-KA-LRCNTR",
+     "mod": "KerbalAtomics",
+     "title": "Lewis Research Center LNTR"
+    },
+    {
+     "name": "ntr-gc-25-1",
+     "mod": "KerbalAtomics",
+     "title": "Low-Pressure NTR"
+    }
+   ],
+   "upgrades": [
+    "RFUpgrade_PrincetonLNTR-WCH"
+   ],
+   "grants": [],
+   "pos": [
+    752,
+    5601
+   ]
+  },
+  {
+   "id": "av_vtolVectoredTurbofan",
+   "title": "Vectored-Thrust VTOL Turbofan",
+   "discipline": "AirBreathing",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Point the thrust down and a fighter takes off with no runway. The R-79's swivelling nozzle lifts the Yak-141 vertically then rotates aft for supersonic flight, the lift jets handling the hover - vectored thrust as a whole new way to leave the ground.",
+   "parts": [
+    {
+     "name": "RO-SXT-R79",
+     "mod": "SXT",
+     "title": "R-79 Turbofan"
+    },
+    {
+     "name": "RO-nfa-RD41",
+     "mod": "NearFutureAeronautics",
+     "title": "2x RD-41 Turbojet"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -160,
+    5951
+   ]
+  },
+  {
+   "id": "av_fourthGenFighterTurbofan",
+   "title": "Fourth-Generation Fighter Turbofan",
+   "discipline": "AirBreathing",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "The fourth-generation fighter engine: high bypass for a combat turbofan, high pressure ratio, high turbine temperature. The F135 that powers the F-35 is the most powerful fighter engine ever built; the WS-10 is its Chinese contemporary. The long tail of teen-series and Flanker engine marks matures here.",
+   "parts": [
+    {
+     "name": "RO-WS10",
+     "mod": "Squad",
+     "title": "WS-10 Low-Bypass Turbofan"
+    },
+    {
+     "name": "SXTVTOLturboFan",
+     "mod": "SXT",
+     "title": "F135 Low-Bypass Turbofan"
+    }
+   ],
+   "upgrades": [
+    "RFUpgrade_AL-31FM",
+    "RFUpgrade_AL-41F-1S",
+    "RFUpgrade_CF34-3B",
+    "RFUpgrade_F100-PW-229",
+    "RFUpgrade_F100-PW-229PYBBN",
+    "RFUpgrade_F404-GE-402",
+    "RFUpgrade_J58-P-4A",
+    "RFUpgrade_J58-P-4B",
+    "RFUpgrade_R-79M-300",
+    "RFUpgrade_R-79V-300",
+    "RFUpgrade_RM12",
+    "RFUpgrade_WP-13A-II",
+    "RFUpgrade_WP-13F",
+    "RFUpgrade_WP-13FI"
+   ],
+   "grants": [],
+   "pos": [
+    -160,
+    5857
+   ]
+  },
+  {
+   "id": "gnc_deepSpaceApogeeEngine",
+   "title": "Deep-Space Bipropellant Apogee Engine",
+   "discipline": "GuidanceControl",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "The little bipropellant engine that inserts a probe into orbit around another planet. The LEROS-1b - flight-proven on NEAR, MESSENGER and Juno - and the R-42 are the mature descendants of the R-4D thruster, built to sit cold through years of cruise and then fire once, exactly right, at the far end.",
+   "parts": [
+    {
+     "name": "ROE-LEROS1B",
+     "mod": "ROEngines",
+     "title": "LEROS-1b (635N)"
+    },
+    {
+     "name": "ROE-R42",
+     "mod": "ROEngines",
+     "title": "R-42"
+    },
+    {
+     "name": "ca_mer_ft",
+     "mod": "CoatlAerospace",
+     "title": "Cassini Propulsion Module"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    144,
+    5695
+   ]
+  },
+  {
+   "id": "cmp_venusEntryAeroshell",
+   "title": "High-Pressure Atmospheric Entry Shielding",
+   "discipline": "CompositeMaterials",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "Face an atmosphere ninety times denser than Earth's and hot enough to melt lead at the surface - the Venera aeroshell's heatshield and twin parachutes, built for a descent that ends in a furnace no matter how gently you land in it.",
+   "parts": [
+    {
+     "name": "ca_fom_drogue",
+     "mod": "CoatlAerospace",
+     "title": "Venera Lander Aeroshell (Drogue Parachute)"
+    },
+    {
+     "name": "ca_fom_heatS",
+     "mod": "CoatlAerospace",
+     "title": "Venera Lander Aeroshell (Heat Shield)"
+    },
+    {
+     "name": "ca_fom_parachute",
+     "mod": "CoatlAerospace",
+     "title": "Venera Lander Aeroshell (Main Parachute)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -464,
+    1641
+   ]
+  },
+  {
+   "id": "cmp_extremeAtmosphericEntry",
+   "title": "Extreme Atmospheric-Entry Shielding",
+   "discipline": "CompositeMaterials",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Hit a gas giant's atmosphere at tens of kilometres a second and shed more heat in two minutes than a lunar return sheds in the whole reentry - the most extreme ablator ever asked to survive, carried on a probe built to transmit for as long as it can before it's cooked.",
+   "parts": [
+    {
+     "name": "galileo_hs_bot",
+     "mod": "RN_US_Probes",
+     "title": "Galileo Atmospheric Probe Heatshield Bottom"
+    },
+    {
+     "name": "galileo_hs_mid",
+     "mod": "RN_US_Probes",
+     "title": "Galileo Atmospheric Probe Heatshield Middle"
+    },
+    {
+     "name": "galileo_hs_top",
+     "mod": "RN_US_Probes",
+     "title": "Galileo Atmospheric Probe Heatshield Top"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -160,
+    1547
+   ]
+  },
+  {
+   "id": "cmp_extremeEntryParachutes",
+   "title": "Extreme-Entry Recovery Parachutes",
+   "discipline": "CompositeMaterials",
+   "tier": 11,
+   "cost": 900,
+   "anyToUnlock": false,
+   "flavor": "A parachute stack timed to deploy only once the heatshield has done its worst work and the shockwave has finally fallen behind - Galileo's own descent sequence, the last mechanical step between the hottest entry in the tree and a working probe.",
+   "parts": [
+    {
+     "name": "galileo_probe_hs_parachute",
+     "mod": "RN_US_Probes",
+     "title": "Galileo Probe Heatshield Parachute"
+    },
+    {
+     "name": "galileo_probe_parachute",
+     "mod": "RN_US_Probes",
+     "title": "Galileo Probe Parachute"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    144,
+    1547
+   ]
+  },
+  {
+   "id": "res_regolithExtraction",
+   "title": "Regolith Extraction",
+   "discipline": "ResourceEngineering",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "Bore into loose surface material with a motorised bit and bring up what you find - the first step of living off a world instead of just visiting it. Needs nothing more than the same motor already turning a rover's wheels, aimed down instead of forward.",
+   "parts": [
+    {
+     "name": "kerbalism-drill",
+     "mod": "Squad",
+     "title": "Regolith Harvester"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -464,
+    8740
+   ]
+  },
+  {
+   "id": "res_largeRegolithExtraction",
+   "title": "Large-Scale Regolith Extraction",
+   "discipline": "ResourceEngineering",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "The same drill, scaled up for a real mining rate instead of a proof of concept - the difference between sampling a world and living off it.",
+   "parts": [
+    {
+     "name": "kerbalism-large-drill",
+     "mod": "Squad",
+     "title": "Large Regolith Harvester"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -160,
+    8740
+   ]
+  },
+  {
+   "id": "gnc_sovietProbeBusFamily",
+   "title": "Soviet Interplanetary Bus Family",
+   "discipline": "GuidanceControl",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "One bus architecture, flown as both an orbiter and a lander carrier - the 4MV core that became Venera, Zond and Mars probes across a decade, with its own tankage and reentry-module release built in from the start.",
+   "parts": [
+    {
+     "name": "ca_fom_lander",
+     "mod": "CoatlAerospace",
+     "title": "Venera Lander Bus"
+    },
+    {
+     "name": "ca_vor_core",
+     "mod": "CoatlAerospace",
+     "title": "4MV Spacecraft Bus"
+    },
+    {
+     "name": "ca_vor_mptank",
+     "mod": "CoatlAerospace",
+     "title": "CAE-MT12 Propellant Tank (Pressurized)"
+    },
+    {
+     "name": "ca_vor_sep1",
+     "mod": "CoatlAerospace",
+     "title": "Venera Reentry Module Decoupler"
+    },
+    {
+     "name": "ca_vor_tank",
+     "mod": "CoatlAerospace",
+     "title": "4MV-1/2 Spacecraft Bus Propellant Tank"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -464,
+    7758
+   ]
+  },
+  {
+   "id": "gnc_usProbeBusFamily",
+   "title": "US Deep-Space Probe Bus Family",
+   "discipline": "GuidanceControl",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "The generic 3-axis bus catalog grows two flagship members - Pioneer's spin-stabilised core and Voyager's fully 3-axis one - plus the attitude-control hardware and ultraviolet-explorer bus that ride the same shelf.",
+   "parts": [
+    {
+     "name": "ca_aacs",
+     "mod": "CoatlAerospace",
+     "title": "CA-AACS Advanced Attitude Control System"
+    },
+    {
+     "name": "ca_explorer",
+     "mod": "CoatlAerospace",
+     "title": "IUE Spacecraft Bus"
+    },
+    {
+     "name": "pioneer_10_11",
+     "mod": "RN_US_Probes",
+     "title": "Pioneer 10/11 Probe"
+    },
+    {
+     "name": "quetzal",
+     "mod": "CoatlAerospace",
+     "title": "Pioneer 10/11 Core"
+    },
+    {
+     "name": "rn_voyager",
+     "mod": "RN_US_Probes",
+     "title": "Voyager 1/2 Probe"
+    },
+    {
+     "name": "torekka",
+     "mod": "CoatlAerospace",
+     "title": "Voyager Core"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -464,
+    7852
+   ]
+  },
+  {
+   "id": "elec_stationClassSolarArrays",
+   "title": "Station-Class Solar Arrays",
+   "discipline": "ElectricalPower",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "The same fold-out array, sized for a station's appetite instead of a probe's - more cells on a bigger paddle, nothing new about how it works.",
+   "parts": [
+    {
+     "name": "largeSolarPanelEarly",
+     "mod": "Squad",
+     "title": "XT3 Solar Panel Array Mk1"
+    },
+    {
+     "name": "solarPanels1",
+     "mod": "Squad",
+     "title": "XT2 Solar Panel Array Mk2"
+    },
+    {
+     "name": "solarPanels3",
+     "mod": "Squad",
+     "title": "XT1 Solar Panel Array Mk2"
+    }
+   ],
+   "upgrades": [
+    "solarTL6"
+   ],
+   "grants": [],
+   "pos": [
+    -464,
+    8056
+   ]
+  },
+  {
+   "id": "elec_probeBusSolarWings",
+   "title": "Probe-Bus Solar Wings",
+   "discipline": "ElectricalPower",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "A deployable wing cut to the exact power budget of one bus family - the IUE, Venera and 4MV arrays, each sized for its own mission rather than pulled off a generic shelf.",
+   "parts": [
+    {
+     "name": "SXTsolarPanelLarge",
+     "mod": "SXT",
+     "title": "OX-VL Photovoltaic Array"
+    },
+    {
+     "name": "SXTsolarPanelhex",
+     "mod": "SXT",
+     "title": "OX-HEX Photovoltaic Panels"
+    },
+    {
+     "name": "ca_explorer_solar",
+     "mod": "CoatlAerospace",
+     "title": "IUE Solar Array Wing (SAW)"
+    },
+    {
+     "name": "ca_fom_sp",
+     "mod": "CoatlAerospace",
+     "title": "Venera Lander Bus Solar Array"
+    },
+    {
+     "name": "ca_vor_sp",
+     "mod": "CoatlAerospace",
+     "title": "4MV Spacecraft Bus SAW & TCS (Standard)"
+    },
+    {
+     "name": "ca_vor_sp2",
+     "mod": "CoatlAerospace",
+     "title": "4MV Spacecraft Bus SAW & TCS (Small)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -464,
+    7962
+   ]
+  },
+  {
+   "id": "elec_matureSolarArrays",
+   "title": "Mature Solar Arrays",
+   "discipline": "ElectricalPower",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "The generic array's last uprate in this era - more efficient cells, the same fold-out paddle, still the default choice for anything that doesn't need a dedicated mission-sized wing.",
+   "parts": [
+    {
+     "name": "largeSolarPanel",
+     "mod": "Squad",
+     "title": "XT4 Solar Panel Array Mk1"
+    }
+   ],
+   "upgrades": [
+    "solarTL7"
+   ],
+   "grants": [],
+   "pos": [
+    -160,
+    8056
+   ]
+  },
+  {
+   "id": "elec_multiHundredWattRTG",
+   "title": "Multi-Hundred-Watt RTG",
+   "discipline": "ElectricalPower",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "Stack enough plutonium-238 to clear several hundred watts instead of a bare trickle - the generator class that powered Voyager past every planet it flew and is still transmitting today.",
+   "parts": [
+    {
+     "name": "USRTGWedge",
+     "mod": "UniversalStorage2",
+     "title": "Universal Storage: Multi-hundred Watt RTG"
+    },
+    {
+     "name": "ca_rtg3900",
+     "mod": "CoatlAerospace",
+     "title": "Voyager MHW-RTG"
+    },
+    {
+     "name": "rtg",
+     "mod": "Squad",
+     "title": "Multi-Hundred Watt RTG"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -464,
+    5345
+   ]
+  },
+  {
+   "id": "elec_gphsRTGGeneration",
+   "title": "GPHS-RTG Generation",
+   "discipline": "ElectricalPower",
+   "tier": 10,
+   "cost": 1300,
+   "anyToUnlock": false,
+   "flavor": "Standardise the RTG into modular General-Purpose Heat Source bricks, stack as many as the mission needs, and the same design flies Galileo, Ulysses, Cassini and every deep-space mission after them for the next forty years.",
+   "parts": [
+    {
+     "name": "SXTDepolyRTGI",
+     "mod": "SXT",
+     "title": "GPHS-RTG"
+    },
+    {
+     "name": "SXTDepolyRTGII",
+     "mod": "SXT",
+     "title": "GPHS-RTG [Shielded]"
+    },
+    {
+     "name": "ca_mer_rtg",
+     "mod": "CoatlAerospace",
+     "title": "GPHS-RTG"
+    },
+    {
+     "name": "nfe-rtg-gphs-1",
+     "mod": "NearFutureElectrical",
+     "title": "GPHS-RTG"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -160,
+    5763
+   ]
+  },
+  {
+   "id": "tel_deepSpaceProbeAntennas",
+   "title": "Deep-Space Probe Antennas",
+   "discipline": "Telecommunications",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "A parabolic dish or omni cut to one bus family's own link budget - Pioneer's spin-scan dish, Voyager's high-gain reflector, the 4MV's own array and dish, GPS's simple omni. The named-hardware shelf, one entry per flagship mission.",
+   "parts": [
+    {
+     "name": "ca_ant_gps",
+     "mod": "CoatlAerospace",
+     "title": "CA-GPS Omnidirectional Antenna"
+    },
+    {
+     "name": "ca_vor_comm",
+     "mod": "CoatlAerospace",
+     "title": "4MV Spacecraft Bus Antenna Array"
+    },
+    {
+     "name": "ca_vor_dish",
+     "mod": "CoatlAerospace",
+     "title": "4MV-1 Spacecraft Bus Parabolic Antenna"
+    },
+    {
+     "name": "dish_L",
+     "mod": "CoatlAerospace",
+     "title": "Voyager 1 & 2 Parabolic Antenna"
+    },
+    {
+     "name": "dish_quetzal",
+     "mod": "CoatlAerospace",
+     "title": "Pioneer 10 & 11 Parabolic Antenna"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -464,
+    9132
+   ]
+  },
+  {
+   "id": "tel_largeApertureReflectors",
+   "title": "Large-Aperture Reflector Antennas",
+   "discipline": "Telecommunications",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "The same parabolic-reflector mechanism, scaled past what any single mission needs - giant, huge and large dish reflectors off the shelf for whatever downlink budget the mission calls for.",
+   "parts": [
+    {
+     "name": "nfex-antenna-reflector-giant-1",
+     "mod": "NearFutureExploration",
+     "title": "RFL-2000 Dish Reflector Array"
+    },
+    {
+     "name": "nfex-antenna-reflector-huge-1",
+     "mod": "NearFutureExploration",
+     "title": "RFL-100 Giant Dish Reflector"
+    },
+    {
+     "name": "nfex-antenna-reflector-large-1",
+     "mod": "NearFutureExploration",
+     "title": "RFL-50 Large Dish Reflector"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -464,
+    9226
+   ]
+  },
+  {
+   "id": "mic_gasChromatographMassSpec",
+   "title": "Gas Chromatograph-Mass Spectrometry",
+   "discipline": "Microelectronics",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "Separate a gas sample by how fast each component moves through a column, then weigh what comes out in the mass spectrometer behind it - two instruments in series reading a single sample far more precisely than either alone.",
+   "parts": [
+    {
+     "name": "SXTsciencenosecone",
+     "mod": "SXT",
+     "title": "GC-MS + Antenna"
+    },
+    {
+     "name": "sensorAtmosphere",
+     "mod": "Squad",
+     "title": "MS04 - Gas Chromatograph-Mass Spectrometer (GC/MS)"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -464,
+    7502
+   ]
+  },
+  {
+   "id": "opt_digitalImaging",
+   "title": "Solid-State Digital Imaging",
+   "discipline": "OpticsPhotonics",
+   "tier": 9,
+   "cost": 1700,
+   "anyToUnlock": false,
+   "flavor": "Replace the vidicon's scanned electron beam with a solid-state sensor read out electronically, line by line - the same instinct that took reconnaissance from film to television, one generation further. Higher resolution than any vidicon, and nothing left to wear out or burn in.",
+   "parts": [
+    {
+     "name": "RO-DigitalCamera",
+     "mod": "RP-1",
+     "title": "PH05 - Ultra Resolution Digital Imaging Camera"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -464,
+    9922
    ]
   }
  ],
@@ -11858,19 +13284,19 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     9584
+     10085
     ],
     [
      -2592,
-     9584
+     10085
     ],
     [
      -2288,
-     9584
+     10085
     ],
     [
      -1984,
-     9584
+     10085
     ]
    ]
   },
@@ -11881,11 +13307,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     9584
+     10085
     ],
     [
      -1680,
-     9584
+     10085
     ]
    ]
   },
@@ -11896,19 +13322,19 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     9678
+     10179
     ],
     [
      -2592,
-     9678
+     10179
     ],
     [
      -2288,
-     9678
+     10179
     ],
     [
      -1984,
-     9678
+     10179
     ]
    ]
   },
@@ -11919,11 +13345,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     4092
+     4124
     ]
    ]
   },
@@ -11934,11 +13360,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     4092
+     4124
     ],
     [
      -2592,
-     4554
+     4590
     ]
    ]
   },
@@ -11949,11 +13375,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     4648
+     4684
     ],
     [
      -2592,
-     4554
+     4590
     ]
    ]
   },
@@ -11964,11 +13390,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     4554
+     4590
     ],
     [
      -2288,
-     4413
+     4449
     ]
    ]
   },
@@ -11979,11 +13405,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     4413
+     4449
     ],
     [
      -1984,
-     4366
+     4402
     ]
    ]
   },
@@ -11994,11 +13420,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     4601
+     4637
     ],
     [
      -1984,
-     4879
+     4915
     ]
    ]
   },
@@ -12009,11 +13435,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     4601
+     4637
     ],
     [
      -1984,
-     4695
+     4731
     ]
    ]
   },
@@ -12024,11 +13450,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     4879
+     4915
     ],
     [
      -1680,
-     4906
+     4942
     ]
    ]
   },
@@ -12039,11 +13465,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     4554
+     4590
     ],
     [
      -2288,
-     4601
+     4637
     ]
    ]
   },
@@ -12054,11 +13480,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     4417
+     4449
     ]
    ]
   },
@@ -12069,11 +13495,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     4417
+     4449
     ],
     [
      -2592,
-     4139
+     4119
     ]
    ]
   },
@@ -12084,15 +13510,15 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     4139
+     4119
     ],
     [
      -2288,
-     4139
+     4119
     ],
     [
      -1984,
-     4139
+     4119
     ]
    ]
   },
@@ -12103,11 +13529,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     2792
+     2751
     ]
    ]
   },
@@ -12118,11 +13544,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     2792
+     2751
     ],
     [
      -2592,
-     2792
+     2751
     ]
    ]
   },
@@ -12133,11 +13559,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     2792
+     2751
     ],
     [
      -2288,
-     2792
+     2751
     ]
    ]
   },
@@ -12148,11 +13574,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     4092
+     4124
     ],
     [
      -2592,
-     3593
+     3432
     ]
    ]
   },
@@ -12163,11 +13589,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     4092
+     4124
     ],
     [
      -2592,
-     3195
+     3154
     ]
    ]
   },
@@ -12178,11 +13604,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     3195
+     3154
     ],
     [
      -2288,
-     3195
+     3154
     ]
    ]
   },
@@ -12193,11 +13619,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     2111
+     2070
     ],
     [
      -2592,
-     2316
+     2274
     ]
    ]
   },
@@ -12208,11 +13634,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     4648
+     4684
     ]
    ]
   },
@@ -12223,11 +13649,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     2316
+     2274
     ],
     [
      -2288,
-     2269
+     2227
     ]
    ]
   },
@@ -12238,11 +13664,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     2111
+     2070
     ]
    ]
   },
@@ -12253,11 +13679,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     2111
+     2070
     ],
     [
      -2592,
-     1876
+     1835
     ]
    ]
   },
@@ -12268,11 +13694,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     2316
+     2274
     ],
     [
      -2288,
-     2421
+     2379
     ]
    ]
   },
@@ -12283,11 +13709,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     6535
+     6780
     ],
     [
      -2592,
-     6744
+     6989
     ]
    ]
   },
@@ -12298,11 +13724,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6138
+     6383
     ],
     [
      -2288,
-     6091
+     6336
     ]
    ]
   },
@@ -12313,11 +13739,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     8072
+     8338
     ]
    ]
   },
@@ -12328,11 +13754,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     1876
+     1835
     ],
     [
      -2288,
-     1876
+     1835
     ]
    ]
   },
@@ -12343,11 +13769,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     8072
+     8338
     ],
     [
      -2592,
-     7931
+     8176
     ]
    ]
   },
@@ -12358,11 +13784,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     7931
+     8176
     ],
     [
      -2288,
-     7978
+     8223
     ]
    ]
   },
@@ -12373,11 +13799,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     7931
+     8176
     ],
     [
      -2288,
-     7508
+     7753
     ]
    ]
   },
@@ -12388,11 +13814,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     7978
+     8223
     ],
     [
      -1984,
-     8067
+     8312
     ]
    ]
   },
@@ -12403,11 +13829,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     7345
+     7591
     ],
     [
      -2592,
-     7392
+     7638
     ]
    ]
   },
@@ -12418,11 +13844,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     5833
+     5869
     ],
     [
      -2592,
-     6253
+     6498
     ]
    ]
   },
@@ -12433,11 +13859,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     9238
+     9740
     ]
    ]
   },
@@ -12448,11 +13874,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     9238
+     9740
     ],
     [
      -1984,
-     9211
+     9713
     ]
    ]
   },
@@ -12463,11 +13889,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     7978
+     8223
     ],
     [
      -1984,
-     9211
+     9713
     ]
    ]
   },
@@ -12478,11 +13904,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     5528
+     5565
     ]
    ]
   },
@@ -12493,19 +13919,19 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     7114
+     7360
     ],
     [
      -2592,
-     6953
+     7198
     ],
     [
      -2288,
-     6953
+     7198
     ],
     [
      -1984,
-     6953
+     7198
     ]
    ]
   },
@@ -12516,11 +13942,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     7978
+     8223
     ],
     [
      -1984,
-     6953
+     7198
     ]
    ]
   },
@@ -12531,19 +13957,19 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     7114
+     7360
     ],
     [
      -2592,
-     7120
+     7365
     ],
     [
      -2288,
-     7120
+     7365
     ],
     [
      -1984,
-     7371
+     7617
     ]
    ]
   },
@@ -12554,11 +13980,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     7978
+     8223
     ],
     [
      -1984,
-     7371
+     7617
     ]
    ]
   },
@@ -12569,11 +13995,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     9332
+     9834
     ]
    ]
   },
@@ -12584,11 +14010,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     7114
+     7360
     ]
    ]
   },
@@ -12599,11 +14025,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     5833
+     5869
     ]
    ]
   },
@@ -12614,11 +14040,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     6535
+     6780
     ],
     [
      -2592,
-     6556
+     6801
     ]
    ]
   },
@@ -12629,27 +14055,27 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6556
+     6801
     ],
     [
      -2288,
-     6535
+     6780
     ],
     [
      -1984,
-     6535
+     6780
     ],
     [
      -1680,
-     6535
+     6780
     ],
     [
      -1376,
-     6535
+     6780
     ],
     [
      -1072,
-     6535
+     6780
     ]
    ]
   },
@@ -12660,11 +14086,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6556
+     6801
     ],
     [
      -2288,
-     6577
+     6822
     ]
    ]
   },
@@ -12675,11 +14101,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     4909
+     4945
     ],
     [
      -2592,
-     4909
+     4945
     ]
    ]
   },
@@ -12690,11 +14116,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     4648
+     4684
     ],
     [
      -2592,
-     4742
+     4778
     ]
    ]
   },
@@ -12705,11 +14131,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     4909
+     4945
     ],
     [
      -2288,
-     4909
+     4945
     ]
    ]
   },
@@ -12720,15 +14146,15 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     5833
+     5869
     ],
     [
      -2592,
-     5645
+     5681
     ],
     [
      -2288,
-     5645
+     5681
     ]
    ]
   },
@@ -12739,11 +14165,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     4909
+     4945
     ],
     [
      -1984,
-     5418
+     5454
     ]
    ]
   },
@@ -12754,11 +14180,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     5645
+     5681
     ],
     [
      -1984,
-     5418
+     5454
     ]
    ]
   },
@@ -12769,11 +14195,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     4909
+     4945
     ],
     [
      -1984,
-     5628
+     5664
     ]
    ]
   },
@@ -12784,11 +14210,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     5645
+     5681
     ],
     [
      -1984,
-     5628
+     5664
     ]
    ]
   },
@@ -12799,11 +14225,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     5628
+     5664
     ],
     [
      -1680,
-     5790
+     6036
     ]
    ]
   },
@@ -12814,11 +14240,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     4742
+     4778
     ],
     [
      -2288,
-     4742
+     4778
     ]
    ]
   },
@@ -12829,15 +14255,15 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     4742
+     4778
     ],
     [
      -1984,
-     5068
+     5104
     ],
     [
      -1680,
-     5068
+     5104
     ]
    ]
   },
@@ -12848,11 +14274,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     6535
+     6780
     ]
    ]
   },
@@ -12863,11 +14289,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     6535
+     6780
     ],
     [
      -2592,
-     6650
+     6895
     ]
    ]
   },
@@ -12878,11 +14304,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     7345
+     7591
     ]
    ]
   },
@@ -12893,11 +14319,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     7345
+     7591
     ],
     [
      -2592,
-     7182
+     7428
     ]
    ]
   },
@@ -12908,15 +14334,15 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     7182
+     7428
     ],
     [
      -2288,
-     7182
+     7428
     ],
     [
      -1984,
-     7465
+     7711
     ]
    ]
   },
@@ -12927,11 +14353,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     7978
+     8223
     ],
     [
      -1984,
-     7465
+     7711
     ]
    ]
   },
@@ -12942,11 +14368,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     7392
+     7638
     ],
     [
      -2288,
-     7414
+     7659
     ]
    ]
   },
@@ -12957,11 +14383,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6138
+     6383
     ],
     [
      -2288,
-     6185
+     6430
     ]
    ]
   },
@@ -12972,11 +14398,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     5833
+     5869
     ],
     [
      -2592,
-     6138
+     6383
     ]
    ]
   },
@@ -12987,11 +14413,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     6535
+     6780
     ],
     [
      -2592,
-     6441
+     6686
     ]
    ]
   },
@@ -13002,11 +14428,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6441
+     6686
     ],
     [
      -2288,
-     6462
+     6707
     ]
    ]
   },
@@ -13017,11 +14443,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     2421
+     2379
     ],
     [
      -1984,
-     2468
+     2426
     ]
    ]
   },
@@ -13032,11 +14458,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     6091
+     6336
     ],
     [
      -1984,
-     6044
+     6289
     ]
    ]
   },
@@ -13047,11 +14473,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     7508
+     7753
     ],
     [
      -1984,
-     7644
+     7889
     ]
    ]
   },
@@ -13062,11 +14488,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     4909
+     4945
     ]
    ]
   },
@@ -13077,11 +14503,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     2111
+     2070
     ],
     [
      -2592,
-     2619
+     2577
     ]
    ]
   },
@@ -13092,7 +14518,7 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     2111
+     2070
     ],
     [
      -2592,
@@ -13111,11 +14537,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6744
+     6989
     ],
     [
      -2288,
-     6765
+     7010
     ]
    ]
   },
@@ -13126,11 +14552,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     6765
+     7010
     ],
     [
      -1984,
-     6765
+     7010
     ]
    ]
   },
@@ -13141,11 +14567,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     1876
+     1835
     ],
     [
      -1984,
-     2128
+     2086
     ]
    ]
   },
@@ -13156,11 +14582,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     6535
+     6780
     ],
     [
      -2592,
-     6347
+     6592
     ]
    ]
   },
@@ -13171,11 +14597,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6347
+     6592
     ],
     [
      -2288,
-     6347
+     6592
     ]
    ]
   },
@@ -13186,11 +14612,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     6347
+     6592
     ],
     [
      -1984,
-     6347
+     6592
     ]
    ]
   },
@@ -13201,11 +14627,11 @@ window.TREE = {
    "waypoints": [
     [
      -3200,
-     5414
+     5467
     ],
     [
      -2896,
-     6859
+     7104
     ]
    ]
   },
@@ -13216,11 +14642,11 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     6859
+     7104
     ],
     [
      -2592,
-     6859
+     7104
     ]
    ]
   },
@@ -13231,11 +14657,11 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6859
+     7104
     ],
     [
      -2288,
-     6859
+     7104
     ]
    ]
   },
@@ -13246,11 +14672,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     6859
+     7104
     ],
     [
      -1984,
-     6859
+     7104
     ]
    ]
   },
@@ -13261,11 +14687,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     6859
+     7104
     ],
     [
      -1680,
-     6859
+     7104
     ]
    ]
   },
@@ -13276,11 +14702,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     6859
+     7104
     ],
     [
      -1376,
-     6859
+     7104
     ]
    ]
   },
@@ -13291,11 +14717,11 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     6859
+     7104
     ],
     [
      -1072,
-     6859
+     7104
     ]
    ]
   },
@@ -13306,11 +14732,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     6091
+     6336
     ],
     [
      -1984,
-     6138
+     6383
     ]
    ]
   },
@@ -13321,15 +14747,15 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     5528
+     5565
     ],
     [
      -2592,
-     5550
+     5586
     ],
     [
      -2288,
-     5550
+     5586
     ]
    ]
   },
@@ -13340,15 +14766,15 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     9238
+     9740
     ],
     [
      -2592,
-     9238
+     9740
     ],
     [
      -2288,
-     9238
+     9740
     ]
    ]
   },
@@ -13359,11 +14785,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     9211
+     9713
     ],
     [
      -1680,
-     9421
+     9922
     ]
    ]
   },
@@ -13374,11 +14800,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     9211
+     9713
     ],
     [
      -1680,
-     9164
+     9666
     ]
    ]
   },
@@ -13389,11 +14815,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     9164
+     9666
     ],
     [
      -1376,
-     9139
+     9640
     ]
    ]
   },
@@ -13404,11 +14830,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     9164
+     9666
     ],
     [
      -1376,
-     5026
+     5062
     ]
    ]
   },
@@ -13419,7 +14845,7 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     1876
+     1835
     ],
     [
      -1984,
@@ -13431,7 +14857,7 @@ window.TREE = {
     ],
     [
      -1376,
-     5026
+     5062
     ]
    ]
   },
@@ -13442,11 +14868,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     9164
+     9666
     ],
     [
      -1376,
-     9327
+     9828
     ]
    ]
   },
@@ -13457,11 +14883,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     9421
+     9922
     ],
     [
      -1376,
-     9421
+     9922
     ]
    ]
   },
@@ -13472,11 +14898,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     7371
+     7617
     ],
     [
      -1680,
-     7644
+     7889
     ]
    ]
   },
@@ -13487,11 +14913,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     8067
+     8312
     ],
     [
      -1680,
-     7644
+     7889
     ]
    ]
   },
@@ -13502,15 +14928,15 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     9238
+     9740
     ],
     [
      -1984,
-     9254
+     9755
     ],
     [
      -1680,
-     8537
+     8902
     ]
    ]
   },
@@ -13521,11 +14947,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     7465
+     7711
     ],
     [
      -1680,
-     8537
+     8902
     ]
    ]
   },
@@ -13536,11 +14962,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     7644
+     7889
     ],
     [
      -1680,
-     7738
+     8103
     ]
    ]
   },
@@ -13551,11 +14977,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     7465
+     7711
     ],
     [
      -1680,
-     7465
+     7711
     ]
    ]
   },
@@ -13566,23 +14992,23 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     8072
+     8338
     ],
     [
      -2592,
-     8772
+     9295
     ],
     [
      -2288,
-     8772
+     9295
     ],
     [
      -1984,
-     8772
+     9295
     ],
     [
      -1680,
-     8772
+     9295
     ]
    ]
   },
@@ -13593,11 +15019,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     8772
+     9295
     ],
     [
      -1376,
-     8772
+     9295
     ]
    ]
   },
@@ -13608,11 +15034,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     2468
+     2426
     ],
     [
      -1680,
-     2468
+     2426
     ]
    ]
   },
@@ -13623,15 +15049,15 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     3593
+     3432
     ],
     [
      -2288,
-     3332
+     3291
     ],
     [
      -1984,
-     3332
+     3291
     ]
    ]
   },
@@ -13642,11 +15068,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     3195
+     3154
     ],
     [
      -1984,
-     3195
+     3154
     ]
    ]
   },
@@ -13657,15 +15083,15 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3195
+     3154
     ],
     [
      -1680,
-     3195
+     3154
     ],
     [
      -1376,
-     3195
+     3154
     ]
    ]
   },
@@ -13676,15 +15102,15 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3332
+     3291
     ],
     [
      -1680,
-     3305
+     3264
     ],
     [
      -1376,
-     3305
+     3264
     ]
    ]
   },
@@ -13695,11 +15121,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     2792
+     2751
     ],
     [
      -1984,
-     2939
+     2897
     ]
    ]
   },
@@ -13710,11 +15136,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     2792
+     2751
     ],
     [
      -1984,
-     3080
+     3038
     ]
    ]
   },
@@ -13725,11 +15151,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     2792
+     2751
     ],
     [
      -1984,
-     2792
+     2751
     ]
    ]
   },
@@ -13740,11 +15166,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     2269
+     2227
     ],
     [
      -1984,
-     2316
+     2274
     ]
    ]
   },
@@ -13755,11 +15181,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     4906
+     4942
     ],
     [
      -1376,
-     4906
+     4942
     ]
    ]
   },
@@ -13770,15 +15196,15 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     3593
+     3432
     ],
     [
      -2288,
-     3709
+     3548
     ],
     [
      -1984,
-     3709
+     3548
     ]
    ]
   },
@@ -13789,11 +15215,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3709
+     3548
     ],
     [
      -1680,
-     3803
+     3642
     ]
    ]
   },
@@ -13804,11 +15230,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     4413
+     4449
     ],
     [
      -1984,
-     4460
+     4496
     ]
    ]
   },
@@ -13819,11 +15245,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     4366
+     4402
     ],
     [
      -1680,
-     4643
+     4679
     ]
    ]
   },
@@ -13834,11 +15260,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     4695
+     4731
     ],
     [
      -1680,
-     4421
+     4401
     ]
    ]
   },
@@ -13849,11 +15275,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3332
+     3291
     ],
     [
      -1680,
-     4421
+     4401
     ]
    ]
   },
@@ -13864,11 +15290,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     4695
+     4731
     ],
     [
      -1680,
-     4558
+     4595
     ]
    ]
   },
@@ -13879,11 +15305,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3332
+     3291
     ],
     [
      -1680,
-     4558
+     4595
     ]
    ]
   },
@@ -13894,15 +15320,15 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     4366
+     4402
     ],
     [
      -1680,
-     4601
+     4637
     ],
     [
      -1376,
-     4537
+     4543
     ]
    ]
   },
@@ -13913,15 +15339,15 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     4879
+     4915
     ],
     [
      -1680,
-     4863
+     4900
     ],
     [
      -1376,
-     4537
+     4543
     ]
    ]
   },
@@ -13932,15 +15358,15 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     2316
+     2274
     ],
     [
      -1680,
-     2316
+     2274
     ],
     [
      -1376,
-     4537
+     4543
     ]
    ]
   },
@@ -13951,11 +15377,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     2269
+     2227
     ],
     [
      -1984,
-     2222
+     2180
     ]
    ]
   },
@@ -13966,11 +15392,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     4909
+     4945
     ],
     [
      -1984,
-     5256
+     5292
     ]
    ]
   },
@@ -13981,11 +15407,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     4909
+     4945
     ],
     [
      -1984,
-     4601
+     4637
     ]
    ]
   },
@@ -13996,19 +15422,19 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     4417
+     4449
     ],
     [
      -2592,
-     3961
+     3936
     ],
     [
      -2288,
-     3961
+     3936
     ],
     [
      -1984,
-     4601
+     4637
     ]
    ]
   },
@@ -14019,11 +15445,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     5628
+     5664
     ],
     [
      -1680,
-     3961
+     3936
     ]
    ]
   },
@@ -14034,11 +15460,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     2222
+     2180
     ],
     [
      -1680,
-     3961
+     3936
     ]
    ]
   },
@@ -14049,11 +15475,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     5790
+     6036
     ],
     [
      -1376,
-     5811
+     6057
     ]
    ]
   },
@@ -14064,11 +15490,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     5645
+     5681
     ],
     [
      -1984,
-     5950
+     6195
     ]
    ]
   },
@@ -14079,11 +15505,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     6577
+     6822
     ],
     [
      -1984,
-     6577
+     6822
     ]
    ]
   },
@@ -14094,15 +15520,15 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     1876
+     1835
     ],
     [
      -1984,
-     2085
+     2044
     ],
     [
      -1680,
-     2085
+     2044
     ]
    ]
   },
@@ -14113,11 +15539,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     2085
+     2044
     ],
     [
      -1376,
-     2111
+     2070
     ]
    ]
   },
@@ -14166,19 +15592,19 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     7392
+     7638
     ],
     [
      -2288,
-     7235
+     7480
     ],
     [
      -1984,
-     7235
+     7480
     ],
     [
      -1680,
-     7235
+     7480
     ]
    ]
   },
@@ -14208,11 +15634,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3080
+     3038
     ],
     [
      -1680,
-     3127
+     3085
     ]
    ]
   },
@@ -14223,7 +15649,7 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     2085
+     2044
     ],
     [
      -1376,
@@ -14253,7 +15679,7 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     2085
+     2044
     ],
     [
      -1376,
@@ -14283,11 +15709,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     2085
+     2044
     ],
     [
      -1376,
-     5256
+     5292
     ]
    ]
   },
@@ -14298,19 +15724,19 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     9238
+     9740
     ],
     [
      -1984,
-     9468
+     9970
     ],
     [
      -1680,
-     9468
+     9970
     ],
     [
      -1376,
-     5256
+     5292
     ]
    ]
   },
@@ -14321,23 +15747,23 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6253
+     6498
     ],
     [
      -2288,
-     6253
+     6498
     ],
     [
      -1984,
-     6253
+     6498
     ],
     [
      -1680,
-     6253
+     6498
     ],
     [
      -1376,
-     6394
+     6639
     ]
    ]
   },
@@ -14348,11 +15774,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     9164
+     9666
     ],
     [
      -1376,
-     9233
+     9734
     ]
    ]
   },
@@ -14363,15 +15789,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     4421
+     4401
     ],
     [
      -1376,
-     4421
+     4401
     ],
     [
      -1072,
-     4421
+     4401
     ]
    ]
   },
@@ -14382,19 +15808,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     4460
+     4496
     ],
     [
      -1680,
-     4732
+     4768
     ],
     [
      -1376,
-     4732
+     4768
     ],
     [
      -1072,
-     4732
+     4768
     ]
    ]
   },
@@ -14405,15 +15831,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     5068
+     5104
     ],
     [
      -1376,
-     5068
+     5104
     ],
     [
      -1072,
-     5068
+     5104
     ]
    ]
   },
@@ -14424,15 +15850,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     4643
+     4679
     ],
     [
      -1376,
-     4580
+     4616
     ],
     [
      -1072,
-     3888
+     3726
     ]
    ]
   },
@@ -14443,19 +15869,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3332
+     3291
     ],
     [
      -1680,
-     3348
+     3306
     ],
     [
      -1376,
-     3348
+     3306
     ],
     [
      -1072,
-     3888
+     3726
     ]
    ]
   },
@@ -14466,19 +15892,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3709
+     3548
     ],
     [
      -1680,
-     3495
+     3454
     ],
     [
      -1376,
-     3495
+     3454
     ],
     [
      -1072,
-     3495
+     3454
     ]
    ]
   },
@@ -14489,11 +15915,11 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     2792
+     2751
     ],
     [
      -1984,
-     2698
+     2657
     ]
    ]
   },
@@ -14504,15 +15930,15 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     4537
+     4543
     ],
     [
      -1072,
-     4558
+     4564
     ],
     [
      -768,
-     4558
+     4564
     ]
    ]
   },
@@ -14523,23 +15949,23 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     2316
+     2274
     ],
     [
      -1680,
-     2327
+     2285
     ],
     [
      -1376,
-     2327
+     2285
     ],
     [
      -1072,
-     2327
+     2285
     ],
     [
      -768,
-     2327
+     2285
     ]
    ]
   },
@@ -14610,15 +16036,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     7235
+     7480
     ],
     [
      -1376,
-     7094
+     7339
     ],
     [
      -1072,
-     7094
+     7339
     ]
    ]
   },
@@ -14629,11 +16055,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     7094
+     7339
     ],
     [
      -768,
-     7094
+     7339
     ]
    ]
   },
@@ -14644,19 +16070,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     2792
+     2751
     ],
     [
      -1680,
-     2739
+     2698
     ],
     [
      -1376,
-     2739
+     2698
     ],
     [
      -1072,
-     4967
+     5003
     ]
    ]
   },
@@ -14667,15 +16093,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     7235
+     7480
     ],
     [
      -1376,
-     7235
+     7480
     ],
     [
      -1072,
-     4967
+     5003
     ]
    ]
   },
@@ -14686,19 +16112,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     2792
+     2751
     ],
     [
      -1680,
-     2751
+     2709
     ],
     [
      -1376,
-     2751
+     2709
     ],
     [
      -1072,
-     2751
+     2709
     ]
    ]
   },
@@ -14709,15 +16135,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     7235
+     7480
     ],
     [
      -1376,
-     7282
+     7527
     ],
     [
      -1072,
-     7282
+     7527
     ]
    ]
   },
@@ -14728,19 +16154,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3709
+     3548
     ],
     [
      -1680,
-     3589
+     3548
     ],
     [
      -1376,
-     3589
+     3548
     ],
     [
      -1072,
-     3589
+     3548
     ]
    ]
   },
@@ -14751,23 +16177,23 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3332
+     3291
     ],
     [
      -1680,
-     3359
+     3318
     ],
     [
      -1376,
-     3359
+     3318
     ],
     [
      -1072,
-     3359
+     3318
     ],
     [
      -768,
-     3589
+     3548
     ]
    ]
   },
@@ -14778,11 +16204,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     3589
+     3548
     ],
     [
      -768,
-     3589
+     3548
     ]
    ]
   },
@@ -14793,19 +16219,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     2939
+     2897
     ],
     [
      -1680,
-     2939
+     2897
     ],
     [
      -1376,
-     2939
+     2897
     ],
     [
      -1072,
-     2939
+     2897
     ]
    ]
   },
@@ -14816,19 +16242,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3080
+     3038
     ],
     [
      -1680,
-     3033
+     2991
     ],
     [
      -1376,
-     3033
+     2991
     ],
     [
      -1072,
-     3033
+     2991
     ]
    ]
   },
@@ -14839,23 +16265,23 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     2792
+     2751
     ],
     [
      -1984,
-     2510
+     2469
     ],
     [
      -1680,
-     2510
+     2469
     ],
     [
      -1376,
-     2510
+     2469
     ],
     [
      -1072,
-     2510
+     2469
     ]
    ]
   },
@@ -14866,23 +16292,23 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     2792
+     2751
     ],
     [
      -1984,
-     2630
+     2589
     ],
     [
      -1680,
-     2630
+     2589
     ],
     [
      -1376,
-     2630
+     2589
     ],
     [
      -1072,
-     2630
+     2589
     ]
    ]
   },
@@ -14893,19 +16319,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     2792
+     2751
     ],
     [
      -1680,
-     2845
+     2803
     ],
     [
      -1376,
-     2845
+     2803
     ],
     [
      -1072,
-     2845
+     2803
     ]
    ]
   },
@@ -14916,11 +16342,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     2845
+     2803
     ],
     [
      -768,
-     2845
+     2803
     ]
    ]
   },
@@ -14931,19 +16357,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3332
+     3291
     ],
     [
      -1680,
-     3401
+     3360
     ],
     [
      -1376,
-     3401
+     3360
     ],
     [
      -1072,
-     3401
+     3360
     ]
    ]
   },
@@ -14954,11 +16380,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     4967
+     5003
     ],
     [
      -768,
-     6650
+     6900
     ]
    ]
   },
@@ -14969,11 +16395,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     7832
+     8197
     ],
     [
      -768,
-     6650
+     6900
     ]
    ]
   },
@@ -14984,11 +16410,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     7282
+     7527
     ],
     [
      -768,
-     7188
+     7433
     ]
    ]
   },
@@ -14999,11 +16425,11 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     8772
+     9295
     ],
     [
      -1072,
-     8814
+     9316
     ]
    ]
   },
@@ -15014,11 +16440,11 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     8772
+     9295
     ],
     [
      -1072,
-     8678
+     9179
     ]
    ]
   },
@@ -15029,11 +16455,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     8814
+     9316
     ],
     [
      -768,
-     8767
+     9269
     ]
    ]
   },
@@ -15044,11 +16470,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     8814
+     9316
     ],
     [
      -768,
-     8861
+     9363
     ]
    ]
   },
@@ -15059,15 +16485,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     7738
+     8103
     ],
     [
      -1376,
-     7738
+     8103
     ],
     [
      -1072,
-     7738
+     8103
     ]
    ]
   },
@@ -15078,31 +16504,31 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     4417
+     4449
     ],
     [
      -2592,
-     4076
+     4055
     ],
     [
      -2288,
-     4076
+     4055
     ],
     [
      -1984,
-     4076
+     4055
     ],
     [
      -1680,
-     4076
+     4055
     ],
     [
      -1376,
-     4076
+     4055
     ],
     [
      -1072,
-     4076
+     4055
     ]
    ]
   },
@@ -15113,11 +16539,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     7738
+     8103
     ],
     [
      -768,
-     7644
+     8009
     ]
    ]
   },
@@ -15128,19 +16554,19 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     7644
+     7889
     ],
     [
      -1376,
-     7644
+     7889
     ],
     [
      -1072,
-     7644
+     7889
     ],
     [
      -768,
-     7738
+     8103
     ]
    ]
   },
@@ -15151,11 +16577,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     7832
+     8197
     ],
     [
      -768,
-     7738
+     8103
     ]
    ]
   },
@@ -15166,11 +16592,11 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     9233
+     9734
     ],
     [
      -1072,
-     9233
+     9734
     ]
    ]
   },
@@ -15181,11 +16607,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     7282
+     7527
     ],
     [
      -768,
-     7282
+     7527
     ]
    ]
   },
@@ -15196,15 +16622,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     9164
+     9666
     ],
     [
      -1376,
-     9002
+     9504
     ],
     [
      -1072,
-     9002
+     9504
     ]
    ]
   },
@@ -15215,19 +16641,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     6953
+     7198
     ],
     [
      -1680,
-     6953
+     7198
     ],
     [
      -1376,
-     6953
+     7198
     ],
     [
      -1072,
-     6953
+     7198
     ]
    ]
   },
@@ -15238,15 +16664,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     9164
+     9666
     ],
     [
      -1376,
-     9096
+     9598
     ],
     [
      -1072,
-     9096
+     9598
     ]
    ]
   },
@@ -15257,19 +16683,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     8067
+     8312
     ],
     [
      -1680,
-     8396
+     8761
     ],
     [
      -1376,
-     8396
+     8761
     ],
     [
      -1072,
-     8396
+     8761
     ]
    ]
   },
@@ -15280,19 +16706,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     8067
+     8312
     ],
     [
      -1680,
-     8490
+     8855
     ],
     [
      -1376,
-     8490
+     8855
     ],
     [
      -1072,
-     8490
+     8855
     ]
    ]
   },
@@ -15303,19 +16729,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     8067
+     8312
     ],
     [
      -1680,
-     7832
+     8197
     ],
     [
      -1376,
-     7832
+     8197
     ],
     [
      -1072,
-     7832
+     8197
     ]
    ]
   },
@@ -15326,19 +16752,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     8067
+     8312
     ],
     [
      -1680,
-     7926
+     8291
     ],
     [
      -1376,
-     7926
+     8291
     ],
     [
      -1072,
-     7926
+     8291
     ]
    ]
   },
@@ -15349,19 +16775,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     8067
+     8312
     ],
     [
      -1680,
-     8020
+     8385
     ],
     [
      -1376,
-     8020
+     8385
     ],
     [
      -1072,
-     8020
+     8385
     ]
    ]
   },
@@ -15372,19 +16798,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     8067
+     8312
     ],
     [
      -1680,
-     8114
+     8479
     ],
     [
      -1376,
-     8114
+     8479
     ],
     [
      -1072,
-     8114
+     8479
     ]
    ]
   },
@@ -15395,11 +16821,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     8114
+     8479
     ],
     [
      -768,
-     8396
+     8782
     ]
    ]
   },
@@ -15410,19 +16836,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     8067
+     8312
     ],
     [
      -1680,
-     8208
+     8573
     ],
     [
      -1376,
-     8208
+     8573
     ],
     [
      -1072,
-     8208
+     8573
     ]
    ]
   },
@@ -15433,11 +16859,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     8208
+     8573
     ],
     [
      -768,
-     8490
+     8876
     ]
    ]
   },
@@ -15448,19 +16874,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     8067
+     8312
     ],
     [
      -1680,
-     8302
+     8667
     ],
     [
      -1376,
-     8302
+     8667
     ],
     [
      -1072,
-     8302
+     8667
     ]
    ]
   },
@@ -15471,27 +16897,27 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6744
+     6989
     ],
     [
      -2288,
-     6723
+     6968
     ],
     [
      -1984,
-     6723
+     6968
     ],
     [
      -1680,
-     6723
+     6968
     ],
     [
      -1376,
-     6723
+     6968
     ],
     [
      -1072,
-     6723
+     6968
     ]
    ]
   },
@@ -15502,11 +16928,11 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     8772
+     9295
     ],
     [
      -1072,
-     8908
+     9410
     ]
    ]
   },
@@ -15517,7 +16943,7 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     2111
+     2070
     ],
     [
      -1072,
@@ -15551,31 +16977,31 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     5528
+     5565
     ],
     [
      -2592,
-     5303
+     5339
     ],
     [
      -2288,
-     5303
+     5339
     ],
     [
      -1984,
-     5303
+     5339
     ],
     [
      -1680,
-     5303
+     5339
     ],
     [
      -1376,
-     5303
+     5339
     ],
     [
      -1072,
-     5303
+     5339
     ]
    ]
   },
@@ -15586,11 +17012,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     5303
+     5339
     ],
     [
      -768,
-     5162
+     5198
     ]
    ]
   },
@@ -15601,19 +17027,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     5418
+     5454
     ],
     [
      -1680,
-     5412
+     5449
     ],
     [
      -1376,
-     5412
+     5449
     ],
     [
      -1072,
-     5518
+     5554
     ]
    ]
   },
@@ -15624,19 +17050,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     5628
+     5664
     ],
     [
      -1680,
-     5518
+     5554
     ],
     [
      -1376,
-     5518
+     5554
     ],
     [
      -1072,
-     5518
+     5554
     ]
    ]
   },
@@ -15647,23 +17073,23 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     4909
+     4945
     ],
     [
      -1984,
-     5162
+     5198
     ],
     [
      -1680,
-     5162
+     5198
     ],
     [
      -1376,
-     5162
+     5198
     ],
     [
      -1072,
-     5162
+     5198
     ]
    ]
   },
@@ -15674,11 +17100,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     7282
+     7527
     ],
     [
      -768,
-     7376
+     7621
     ]
    ]
   },
@@ -15689,7 +17115,7 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     1876
+     1835
     ],
     [
      -1984,
@@ -15735,15 +17161,15 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     4967
+     5003
     ],
     [
      -768,
-     4967
+     5003
     ],
     [
      -464,
-     4963
+     4354
     ]
    ]
   },
@@ -15754,11 +17180,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     3589
+     3548
     ],
     [
      -464,
-     4963
+     4354
     ]
    ]
   },
@@ -15769,11 +17195,11 @@ window.TREE = {
    "waypoints": [
     [
      -464,
-     4963
+     4354
     ],
     [
      -160,
-     5360
+     4354
     ]
    ]
   },
@@ -15784,11 +17210,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     4558
+     4564
     ],
     [
      -464,
-     5151
+     4837
     ]
    ]
   },
@@ -15799,19 +17225,19 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     4537
+     4543
     ],
     [
      -1072,
-     4516
+     4496
     ],
     [
      -768,
-     4516
+     4496
     ],
     [
      -464,
-     5057
+     4743
     ]
    ]
   },
@@ -15822,23 +17248,23 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     4139
+     4119
     ],
     [
      -1680,
-     4118
+     4098
     ],
     [
      -1376,
-     4118
+     4098
     ],
     [
      -1072,
-     4118
+     4098
     ],
     [
      -768,
-     4118
+     4140
     ]
    ]
   },
@@ -15849,15 +17275,15 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     4537
+     4543
     ],
     [
      -1072,
-     4537
+     4543
     ],
     [
      -768,
-     4118
+     4140
     ]
    ]
   },
@@ -15868,11 +17294,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     4118
+     4140
     ],
     [
      -464,
-     4869
+     4601
     ]
    ]
   },
@@ -15883,19 +17309,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     4139
+     4119
     ],
     [
      -1680,
-     4160
+     4140
     ],
     [
      -1376,
-     4160
+     4140
     ],
     [
      -1072,
-     4160
+     4140
     ]
    ]
   },
@@ -15906,11 +17332,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     2327
+     2285
     ],
     [
      -464,
-     1695
+     1742
     ]
    ]
   },
@@ -15921,23 +17347,23 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     2316
+     2274
     ],
     [
      -1680,
-     2304
+     2263
     ],
     [
      -1376,
-     2304
+     2263
     ],
     [
      -1072,
-     2304
+     2263
     ],
     [
      -768,
-     3196
+     3155
     ]
    ]
   },
@@ -15948,19 +17374,19 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     4558
+     4595
     ],
     [
      -1376,
-     4489
+     4469
     ],
     [
      -1072,
-     4489
+     4469
     ],
     [
      -768,
-     3196
+     3155
     ]
    ]
   },
@@ -15971,11 +17397,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     3196
+     3155
     ],
     [
      -464,
-     2520
+     2473
     ]
    ]
   },
@@ -15986,15 +17412,15 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     3401
+     3360
     ],
     [
      -768,
-     3401
+     3360
     ],
     [
      -464,
-     2520
+     2473
     ]
    ]
   },
@@ -16005,39 +17431,39 @@ window.TREE = {
    "waypoints": [
     [
      -2896,
-     4417
+     4449
     ],
     [
      -2592,
-     3845
+     3684
     ],
     [
      -2288,
-     3845
+     3684
     ],
     [
      -1984,
-     3845
+     3684
     ],
     [
      -1680,
-     3845
+     3684
     ],
     [
      -1376,
-     3845
+     3684
     ],
     [
      -1072,
-     3845
+     3684
     ],
     [
      -768,
-     3845
+     3684
     ],
     [
      -464,
-     5339
+     5063
     ]
    ]
   },
@@ -16048,11 +17474,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     5518
+     5554
     ],
     [
      -464,
-     5339
+     5063
     ]
    ]
   },
@@ -16063,11 +17489,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     5518
+     5554
     ],
     [
      -464,
-     6094
+     5643
     ]
    ]
   },
@@ -16078,23 +17504,23 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     5790
+     6036
     ],
     [
      -1376,
-     5769
+     6014
     ],
     [
      -1072,
-     5769
+     6014
     ],
     [
      -768,
-     5769
+     6014
     ],
     [
      -464,
-     6094
+     5643
     ]
    ]
   },
@@ -16105,15 +17531,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     7465
+     7711
     ],
     [
      -1376,
-     7465
+     7711
     ],
     [
      -1072,
-     7465
+     7711
     ]
    ]
   },
@@ -16124,23 +17550,23 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     7978
+     8223
     ],
     [
      -1984,
-     8584
+     8949
     ],
     [
      -1680,
-     8584
+     8949
     ],
     [
      -1376,
-     8584
+     8949
     ],
     [
      -1072,
-     8584
+     8949
     ]
    ]
   },
@@ -16151,11 +17577,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     7465
+     7711
     ],
     [
      -768,
-     8302
+     8646
     ]
    ]
   },
@@ -16166,11 +17592,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     8584
+     8949
     ],
     [
      -768,
-     8302
+     8646
     ]
    ]
   },
@@ -16181,11 +17607,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     8302
+     8646
     ],
     [
      -464,
-     8302
+     8646
     ]
    ]
   },
@@ -16196,11 +17622,11 @@ window.TREE = {
    "waypoints": [
     [
      -464,
-     8302
+     8646
     ],
     [
      -160,
-     8302
+     8646
     ]
    ]
   },
@@ -16211,19 +17637,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     5628
+     5664
     ],
     [
      -1680,
-     5612
+     5648
     ],
     [
      -1376,
-     5612
+     5648
     ],
     [
      -1072,
-     5612
+     5648
     ]
    ]
   },
@@ -16234,19 +17660,19 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     5418
+     5454
     ],
     [
      -1680,
-     5424
+     5460
     ],
     [
      -1376,
-     5424
+     5460
     ],
     [
      -1072,
-     5424
+     5460
     ]
    ]
   },
@@ -16257,11 +17683,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     5612
+     5648
     ],
     [
      -768,
-     5424
+     5460
     ]
    ]
   },
@@ -16272,11 +17698,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     5424
+     5460
     ],
     [
      -768,
-     5424
+     5460
     ]
    ]
   },
@@ -16287,11 +17713,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     5518
+     5554
     ],
     [
      -768,
-     5424
+     5460
     ]
    ]
   },
@@ -16302,23 +17728,23 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     5628
+     5664
     ],
     [
      -1680,
-     5727
+     5763
     ],
     [
      -1376,
-     5727
+     5763
     ],
     [
      -1072,
-     5727
+     5763
     ],
     [
      -768,
-     5727
+     5763
     ]
    ]
   },
@@ -16329,11 +17755,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     5518
+     5554
     ],
     [
      -768,
-     5330
+     5366
     ]
    ]
   },
@@ -16344,11 +17770,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     5162
+     5198
     ],
     [
      -768,
-     5330
+     5366
     ]
    ]
   },
@@ -16359,11 +17785,11 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     5256
+     5292
     ],
     [
      -1680,
-     5256
+     5292
     ]
    ]
   },
@@ -16374,11 +17800,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     2630
+     2589
     ],
     [
      -768,
-     2630
+     2589
     ]
    ]
   },
@@ -16389,23 +17815,23 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     3332
+     3291
     ],
     [
      -1680,
-     3263
+     3222
     ],
     [
      -1376,
-     3263
+     3222
     ],
     [
      -1072,
-     3263
+     3222
     ],
     [
      -768,
-     4789
+     4752
     ]
    ]
   },
@@ -16416,11 +17842,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     7094
+     7339
     ],
     [
      -768,
-     4789
+     4752
     ]
    ]
   },
@@ -16431,11 +17857,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     4789
+     4752
     ],
     [
      -464,
-     5245
+     5157
     ]
    ]
   },
@@ -16446,15 +17872,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     3127
+     3085
     ],
     [
      -1376,
-     3127
+     3085
     ],
     [
      -1072,
-     3127
+     3085
     ]
    ]
   },
@@ -16465,19 +17891,19 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     3803
+     3642
     ],
     [
      -1376,
-     3803
+     3642
     ],
     [
      -1072,
-     3803
+     3642
     ],
     [
      -768,
-     3803
+     3642
     ]
    ]
   },
@@ -16488,15 +17914,15 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     4879
+     4915
     ],
     [
      -1680,
-     4852
+     4888
     ],
     [
      -1376,
-     4622
+     4658
     ]
    ]
   },
@@ -16507,11 +17933,11 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     4558
+     4595
     ],
     [
      -1376,
-     4622
+     4658
     ]
    ]
   },
@@ -16522,11 +17948,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     5303
+     5339
     ],
     [
      -768,
-     5518
+     5554
     ]
    ]
   },
@@ -16537,27 +17963,27 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     5550
+     5586
     ],
     [
      -1984,
-     5854
+     6099
     ],
     [
      -1680,
-     5854
+     6099
     ],
     [
      -1376,
-     5854
+     6099
     ],
     [
      -1072,
-     5854
+     6099
     ],
     [
      -768,
-     5518
+     5554
     ]
    ]
   },
@@ -16621,19 +18047,19 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     2468
+     2426
     ],
     [
      -1376,
-     2468
+     2426
     ],
     [
      -1072,
-     2468
+     2426
     ],
     [
      -768,
-     2468
+     2426
     ]
    ]
   },
@@ -16659,11 +18085,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     6953
+     7198
     ],
     [
      -768,
-     6953
+     7220
     ]
    ]
   },
@@ -16674,19 +18100,19 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     5645
+     5681
     ],
     [
      -1984,
-     5896
+     6141
     ],
     [
      -1680,
-     5896
+     6141
     ],
     [
      -1376,
-     5896
+     6141
     ]
    ]
   },
@@ -16697,11 +18123,11 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     5896
+     6141
     ],
     [
      -1072,
-     3982
+     3825
     ]
    ]
   },
@@ -16712,15 +18138,15 @@ window.TREE = {
    "waypoints": [
     [
      -1680,
-     2085
+     2044
     ],
     [
      -1376,
-     2064
+     2023
     ],
     [
      -1072,
-     3982
+     3825
     ]
    ]
   },
@@ -16746,23 +18172,23 @@ window.TREE = {
    "waypoints": [
     [
      -2592,
-     6441
+     6686
     ],
     [
      -2288,
-     6420
+     6665
     ],
     [
      -1984,
-     6420
+     6665
     ],
     [
      -1680,
-     6420
+     6665
     ],
     [
      -1376,
-     6300
+     6545
     ]
    ]
   },
@@ -16773,19 +18199,19 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     5645
+     5681
     ],
     [
      -1984,
-     5907
+     6153
     ],
     [
      -1680,
-     5907
+     6153
     ],
     [
      -1376,
-     6300
+     6545
     ]
    ]
   },
@@ -16796,11 +18222,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     4118
+     4140
     ],
     [
      -464,
-     4775
+     4486
     ]
    ]
   },
@@ -16811,11 +18237,11 @@ window.TREE = {
    "waypoints": [
     [
      -464,
-     4775
+     4486
     ],
     [
      -160,
-     3797
+     5109
     ]
    ]
   },
@@ -16826,11 +18252,11 @@ window.TREE = {
    "waypoints": [
     [
      -464,
-     4869
+     4601
     ],
     [
      -160,
-     3891
+     5245
     ]
    ]
   },
@@ -16841,11 +18267,11 @@ window.TREE = {
    "waypoints": [
     [
      -160,
-     3797
+     5109
     ],
     [
      144,
-     3797
+     5109
     ]
    ]
   },
@@ -16856,11 +18282,11 @@ window.TREE = {
    "waypoints": [
     [
      -464,
-     2520
+     2473
     ],
     [
      -160,
-     2238
+     2520
     ]
    ]
   },
@@ -16871,11 +18297,11 @@ window.TREE = {
    "waypoints": [
     [
      -160,
-     2238
+     2520
     ],
     [
      144,
-     2238
+     2520
     ]
    ]
   },
@@ -16886,11 +18312,11 @@ window.TREE = {
    "waypoints": [
     [
      -464,
-     1695
+     1742
     ],
     [
      -160,
-     1695
+     1742
     ]
    ]
   },
@@ -16901,11 +18327,11 @@ window.TREE = {
    "waypoints": [
     [
      -464,
-     2520
+     2473
     ],
     [
      -160,
-     2144
+     2426
     ]
    ]
   },
@@ -16916,11 +18342,11 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     2939
+     2897
     ],
     [
      -768,
-     2939
+     2897
     ]
    ]
   },
@@ -16931,11 +18357,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     2630
+     2589
     ],
     [
      -464,
-     2165
+     2118
     ]
    ]
   },
@@ -16946,11 +18372,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     2845
+     2803
     ],
     [
      -464,
-     2426
+     2379
     ]
    ]
   },
@@ -16961,11 +18387,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     2845
+     2803
     ],
     [
      -464,
-     2332
+     2285
     ]
    ]
   },
@@ -16976,11 +18402,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     2630
+     2589
     ],
     [
      -464,
-     2332
+     2285
     ]
    ]
   },
@@ -16991,11 +18417,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     3803
+     3642
     ],
     [
      -464,
-     2893
+     2846
     ]
    ]
   },
@@ -17006,11 +18432,11 @@ window.TREE = {
    "waypoints": [
     [
      -464,
-     5339
+     5063
     ],
     [
      -160,
-     5595
+     5554
     ]
    ]
   },
@@ -17021,11 +18447,11 @@ window.TREE = {
    "waypoints": [
     [
      -160,
-     5595
+     5554
     ],
     [
      144,
-     5595
+     5554
     ]
    ]
   },
@@ -17036,11 +18462,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     2468
+     2426
     ],
     [
      -464,
-     2071
+     2024
     ]
    ]
   },
@@ -17051,15 +18477,15 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     5518
+     5554
     ],
     [
      -464,
-     6052
+     5601
     ],
     [
      -160,
-     4335
+     5015
     ]
    ]
   },
@@ -17070,11 +18496,11 @@ window.TREE = {
    "waypoints": [
     [
      -464,
-     2071
+     2024
     ],
     [
      -160,
-     4335
+     5015
     ]
    ]
   },
@@ -17085,31 +18511,31 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     7508
+     7753
     ],
     [
      -1984,
-     7508
+     7753
     ],
     [
      -1680,
-     7508
+     7753
     ],
     [
      -1376,
-     7508
+     7753
     ],
     [
      -1072,
-     7508
+     7753
     ],
     [
      -768,
-     7508
+     7753
     ],
     [
      -464,
-     6299
+     6544
     ]
    ]
   },
@@ -17120,11 +18546,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     5162
+     5198
     ],
     [
      -464,
-     6299
+     6544
     ]
    ]
   },
@@ -17135,11 +18561,11 @@ window.TREE = {
    "waypoints": [
     [
      -464,
-     6299
+     6544
     ],
     [
      -160,
-     6299
+     6591
     ]
    ]
   },
@@ -17150,11 +18576,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     4789
+     4752
     ],
     [
      -464,
-     5822
+     5251
     ]
    ]
   },
@@ -17165,11 +18591,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     5424
+     5460
     ],
     [
      -464,
-     6010
+     5533
     ]
    ]
   },
@@ -17180,11 +18606,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     5424
+     5460
     ],
     [
      -464,
-     5916
+     5439
     ]
    ]
   },
@@ -17195,7 +18621,7 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     1876
+     1835
     ],
     [
      -1984,
@@ -17249,31 +18675,31 @@ window.TREE = {
    "waypoints": [
     [
      -2288,
-     2421
+     2379
     ],
     [
      -1984,
-     2400
+     2358
     ],
     [
      -1680,
-     2400
+     2358
     ],
     [
      -1376,
-     2400
+     2358
     ],
     [
      -1072,
-     2400
+     2358
     ],
     [
      -768,
-     2400
+     2358
     ],
     [
      -464,
-     1883
+     1836
     ]
    ]
   },
@@ -17284,27 +18710,27 @@ window.TREE = {
    "waypoints": [
     [
      -1984,
-     6044
+     6289
     ],
     [
      -1680,
-     6044
+     6289
     ],
     [
      -1376,
-     6044
+     6289
     ],
     [
      -1072,
-     6044
+     6289
     ],
     [
      -768,
-     6044
+     6289
     ],
     [
      -464,
-     4079
+     2940
     ]
    ]
   },
@@ -17315,19 +18741,19 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     2111
+     2070
     ],
     [
      -1072,
-     2132
+     2085
     ],
     [
      -768,
-     2132
+     2085
     ],
     [
      -464,
-     4079
+     2940
     ]
    ]
   },
@@ -17368,11 +18794,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     2468
+     2426
     ],
     [
      -464,
-     1977
+     1930
     ]
    ]
   },
@@ -17398,11 +18824,11 @@ window.TREE = {
    "waypoints": [
     [
      -768,
-     7376
+     7621
     ],
     [
      -464,
-     7465
+     7664
     ]
    ]
   },
@@ -17413,15 +18839,15 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     7832
+     8197
     ],
     [
      -768,
-     7853
+     8218
     ],
     [
      -464,
-     8652
+     9038
     ]
    ]
   },
@@ -17432,15 +18858,15 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     8490
+     8855
     ],
     [
      -768,
-     8652
+     9038
     ],
     [
      -464,
-     8652
+     9038
     ]
    ]
   },
@@ -17485,15 +18911,15 @@ window.TREE = {
    "waypoints": [
     [
      -1072,
-     3982
+     3825
     ],
     [
      -768,
-     3982
+     3825
     ],
     [
      -464,
-     4681
+     3825
     ]
    ]
   },
@@ -17516,7 +18942,7 @@ window.TREE = {
     ],
     [
      -464,
-     4681
+     3825
     ]
    ]
   },
@@ -17527,19 +18953,741 @@ window.TREE = {
    "waypoints": [
     [
      -1376,
-     6300
+     6545
     ],
     [
      -1072,
-     6300
+     6545
     ],
     [
      -768,
-     6300
+     6545
     ],
     [
      -464,
-     4681
+     3825
+    ]
+   ]
+  },
+  {
+   "from": "cryo_refinedExpander",
+   "to": "cryo_deployableNozzleExpander",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1072,
+     4140
+    ],
+    [
+     -768,
+     3936
+    ],
+    [
+     -464,
+     3936
+    ],
+    [
+     -160,
+     3936
+    ],
+    [
+     144,
+     3936
+    ]
+   ]
+  },
+  {
+   "from": "cryo_gasGeneratorHydrolox",
+   "to": "cryo_operationalHydroloxUpper",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -768,
+     4140
+    ],
+    [
+     -464,
+     4396
+    ],
+    [
+     -160,
+     4396
+    ],
+    [
+     144,
+     4396
+    ]
+   ]
+  },
+  {
+   "from": "cryo_largeHydrolox",
+   "to": "cryo_boosterGasGenHydrolox",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     4601
+    ],
+    [
+     -160,
+     5203
+    ],
+    [
+     144,
+     5203
+    ]
+   ]
+  },
+  {
+   "from": "cryo_ssme",
+   "to": "cryo_operationalFRSC",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     144,
+     5109
+    ],
+    [
+     448,
+     5156
+    ]
+   ]
+  },
+  {
+   "from": "cryo_operationalFRSC",
+   "to": "cryo_reusableEngineUprating",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     448,
+     5156
+    ],
+    [
+     752,
+     5156
+    ]
+   ]
+  },
+  {
+   "from": "cryo_ssme",
+   "to": "cryo_tripropellant",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     144,
+     5109
+    ],
+    [
+     448,
+     3684
+    ]
+   ]
+  },
+  {
+   "from": "pc_zenitKerolox",
+   "to": "cryo_tripropellant",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -160,
+     1742
+    ],
+    [
+     144,
+     1715
+    ],
+    [
+     448,
+     3684
+    ]
+   ]
+  },
+  {
+   "from": "pc_zenitKerolox",
+   "to": "cryo_methaloxStagedCombustion",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -160,
+     1742
+    ],
+    [
+     144,
+     1726
+    ],
+    [
+     448,
+     1627
+    ]
+   ]
+  },
+  {
+   "from": "pc_zenitKerolox",
+   "to": "pc_multiChamberORSC",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -160,
+     1742
+    ],
+    [
+     144,
+     1794
+    ]
+   ]
+  },
+  {
+   "from": "pc_multiChamberORSC",
+   "to": "pc_modularORSC",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     144,
+     1794
+    ],
+    [
+     448,
+     1721
+    ]
+   ]
+  },
+  {
+   "from": "pc_refinedStorableORSCII",
+   "to": "pc_operationalStorableORSC",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -160,
+     2426
+    ],
+    [
+     144,
+     2426
+    ]
+   ]
+  },
+  {
+   "from": "fd_restartableUpperMaturation",
+   "to": "fd_multiRestartStorableUpper",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     2846
+    ],
+    [
+     -160,
+     2846
+    ],
+    [
+     144,
+     2846
+    ]
+   ]
+  },
+  {
+   "from": "fd_gasGeneratorApex",
+   "to": "fd_terminalGasGenKerolox",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     4837
+    ],
+    [
+     -160,
+     5366
+    ],
+    [
+     144,
+     5366
+    ]
+   ]
+  },
+  {
+   "from": "fd_gasGeneratorApex",
+   "to": "fd_advancedGasGenKerolox",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     4837
+    ],
+    [
+     -160,
+     5460
+    ],
+    [
+     144,
+     5460
+    ]
+   ]
+  },
+  {
+   "from": "pc_shuttleSRB",
+   "to": "pc_filamentWoundSolid",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     2118
+    ],
+    [
+     -160,
+     2118
+    ]
+   ]
+  },
+  {
+   "from": "pc_filamentWoundSolid",
+   "to": "pc_gemStrapOnCatalog",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -160,
+     2118
+    ],
+    [
+     144,
+     2118
+    ]
+   ]
+  },
+  {
+   "from": "ep_higherPowerHallThruster",
+   "to": "ep_operationalHall",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -160,
+     6591
+    ],
+    [
+     144,
+     6638
+    ]
+   ]
+  },
+  {
+   "from": "ep_operationalHall",
+   "to": "ep_highPowerHall",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     144,
+     6638
+    ],
+    [
+     448,
+     6638
+    ]
+   ]
+  },
+  {
+   "from": "ep_hallEffectThruster",
+   "to": "ep_griddedIon",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     6544
+    ],
+    [
+     -160,
+     6450
+    ],
+    [
+     144,
+     6450
+    ],
+    [
+     448,
+     6450
+    ]
+   ]
+  },
+  {
+   "from": "ep_higherPowerHallThruster",
+   "to": "ep_pulsedInductive",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -160,
+     6591
+    ],
+    [
+     144,
+     6544
+    ],
+    [
+     448,
+     6544
+    ]
+   ]
+  },
+  {
+   "from": "nuc_flightRatedNTR",
+   "to": "nuc_flightDesignNTR",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     144,
+     5554
+    ],
+    [
+     448,
+     5507
+    ]
+   ]
+  },
+  {
+   "from": "nuc_flightRatedNTR",
+   "to": "nuc_particleBedNTR",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     144,
+     5554
+    ],
+    [
+     448,
+     5601
+    ]
+   ]
+  },
+  {
+   "from": "nuc_particleBedNTR",
+   "to": "nuc_advancedCoreNTR",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     448,
+     5601
+    ],
+    [
+     752,
+     5601
+    ]
+   ]
+  },
+  {
+   "from": "av_secondGenTurbofan",
+   "to": "av_vtolVectoredTurbofan",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     5533
+    ],
+    [
+     -160,
+     5951
+    ]
+   ]
+  },
+  {
+   "from": "av_secondGenTurbofan",
+   "to": "av_fourthGenFighterTurbofan",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     5533
+    ],
+    [
+     -160,
+     5857
+    ]
+   ]
+  },
+  {
+   "from": "gnc_bipropAttitudeThrust",
+   "to": "gnc_deepSpaceApogeeEngine",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     5251
+    ],
+    [
+     -160,
+     5695
+    ],
+    [
+     144,
+     5695
+    ]
+   ]
+  },
+  {
+   "from": "cmp_ablativeRefinement",
+   "to": "cmp_venusEntryAeroshell",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1376,
+     2070
+    ],
+    [
+     -1072,
+     2117
+    ],
+    [
+     -768,
+     2117
+    ],
+    [
+     -464,
+     1641
+    ]
+   ]
+  },
+  {
+   "from": "cmp_lunarLandingAblator",
+   "to": "cmp_extremeAtmosphericEntry",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     1547
+    ],
+    [
+     -160,
+     1547
+    ]
+   ]
+  },
+  {
+   "from": "cmp_extremeAtmosphericEntry",
+   "to": "cmp_extremeEntryParachutes",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -160,
+     1547
+    ],
+    [
+     144,
+     1547
+    ]
+   ]
+  },
+  {
+   "from": "rob_surfaceMobility",
+   "to": "res_regolithExtraction",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1072,
+     8479
+    ],
+    [
+     -768,
+     8740
+    ],
+    [
+     -464,
+     8740
+    ]
+   ]
+  },
+  {
+   "from": "res_regolithExtraction",
+   "to": "res_largeRegolithExtraction",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     8740
+    ],
+    [
+     -160,
+     8740
+    ]
+   ]
+  },
+  {
+   "from": "gnc_reactionWheelAttitude",
+   "to": "gnc_sovietProbeBusFamily",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -768,
+     7621
+    ],
+    [
+     -464,
+     7758
+    ]
+   ]
+  },
+  {
+   "from": "gnc_reactionWheelAttitude",
+   "to": "gnc_usProbeBusFamily",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -768,
+     7621
+    ],
+    [
+     -464,
+     7852
+    ]
+   ]
+  },
+  {
+   "from": "elec_refinedSolarSimulation",
+   "to": "elec_stationClassSolarArrays",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -768,
+     8009
+    ],
+    [
+     -464,
+     8056
+    ]
+   ]
+  },
+  {
+   "from": "elec_refinedSolarSimulation",
+   "to": "elec_probeBusSolarWings",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -768,
+     8009
+    ],
+    [
+     -464,
+     7962
+    ]
+   ]
+  },
+  {
+   "from": "elec_stationClassSolarArrays",
+   "to": "elec_matureSolarArrays",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     8056
+    ],
+    [
+     -160,
+     8056
+    ]
+   ]
+  },
+  {
+   "from": "nuc_isotopePowerII",
+   "to": "elec_multiHundredWattRTG",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -768,
+     5198
+    ],
+    [
+     -464,
+     5345
+    ]
+   ]
+  },
+  {
+   "from": "elec_multiHundredWattRTG",
+   "to": "elec_gphsRTGGeneration",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -464,
+     5345
+    ],
+    [
+     -160,
+     5763
+    ]
+   ]
+  },
+  {
+   "from": "tel_antennaCatalog",
+   "to": "tel_deepSpaceProbeAntennas",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1072,
+     9179
+    ],
+    [
+     -768,
+     9132
+    ],
+    [
+     -464,
+     9132
+    ]
+   ]
+  },
+  {
+   "from": "tel_antennaCatalog",
+   "to": "tel_largeApertureReflectors",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1072,
+     9179
+    ],
+    [
+     -768,
+     9226
+    ],
+    [
+     -464,
+     9226
+    ]
+   ]
+  },
+  {
+   "from": "mic_ionMassSpec",
+   "to": "mic_gasChromatographMassSpec",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1072,
+     7198
+    ],
+    [
+     -768,
+     7177
+    ],
+    [
+     -464,
+     7502
+    ]
+   ]
+  },
+  {
+   "from": "opt_refinedTV",
+   "to": "opt_digitalImaging",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -1376,
+     9922
+    ],
+    [
+     -1072,
+     9922
+    ],
+    [
+     -768,
+     9922
+    ],
+    [
+     -464,
+     9922
     ]
    ]
   }
