@@ -111,7 +111,11 @@ nodes:
     tier: 10
     parents: [jpl_grandTour]
     flavor: "The Shuttle lifts the big orbiters and the Inertial Upper Stage kicks them out of Earth orbit: Galileo to Jupiter with an atmospheric probe, Magellan to map Venus by radar, all relayed home through the TDRS network."
-    parts: [ius_bottom, ius_top, ius_dec_fs, ius_dec_ss, rn_tdrs_ag, galileo_mb, galileo_aprobe, galileo_hs_bot, galileo_hs_mid, galileo_hs_top, galileo_probe_hs_parachute, galileo_probe_parachute, gdish_actual, gdish_intended, rn_galileo_scanner, magellan, rn_magellan_scanner]
+    parts: [rn_tdrs_ag, galileo_mb, galileo_aprobe, gdish_actual, gdish_intended, rn_galileo_scanner, magellan, rn_magellan_scanner]
+    # SPLIT (2026-07): Galileo's descent hardware (heatshield galileo_hs_*, parachutes galileo_probe_*) and the
+    # IUS solid upper stage (ius_*) stay SCATTERED to their mechanism nodes (cmp_extremeAtmosphericEntry /
+    # cmp_extremeEntryParachutes / pc_solidUpperStage) — gated by their defining breakthrough. This node keeps
+    # the integrated orbiter + atmospheric-probe bus, Magellan's mapping radar, and the TDRS relay sats.
   - id: jpl_discoveryEra
     title: "Discovery & Cassini-Huygens Era"
     discipline: SystemsIntegration
@@ -400,7 +404,9 @@ nodes:
     # HUB ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #6): 4 dependents (tel_appSatellites,
     # cmp_ablativeTPS, opt_twoChannelIR, th_activeLouvers) — matches the already-accepted
     # str_structuralHardware precedent exactly (4). Each is a clearly distinct downstream need. Accepted.
-    parts: [SXTSputnik, probeCoreSphere_v2, sputnik1, ROT-ProbeCore]
+    parts: [SXTSputnik, probeCoreSphere_v2, ROT-ProbeCore]
+    # sputnik1 (the integrated RN craft) moved to the charter chronology (2026-07 split); SXTSputnik stays
+    # as this node's hermetic-sphere exemplar.
     upgrades: [MLI.Upgrade1]
     # MLI.Upgrade1 added (2026-07): multi-layer-insulation wrapping-density tier, confirmed KEEP-capability
     # — a passive thermal-blanketing improvement, fits this node's own passive hermetic-sealing mechanism
@@ -3343,10 +3349,11 @@ nodes:
     discipline: GuidanceControl
     tier: 9
     parents: [gnc_reactionWheelAttitude]
-    flavor: "The generic 3-axis bus catalog grows two flagship members - Pioneer's spin-stabilised core and Voyager's fully 3-axis one - plus the attitude-control hardware and ultraviolet-explorer bus that ride the same shelf."
-    parts: [pioneer_10_11, quetzal, rn_voyager, torekka, ca_explorer, ca_aacs]
-    # Pioneer (probe+core pair) and Voyager (probe+core pair) as parallel kings, same non-Mariner-branded
-    # generic-bus successor as gnc_sovietProbeBusFamily. IUE bus (ca_explorer) + CA-AACS ride along.
+    flavor: "The generic 3-axis deep-space probe bus catalog — the spin-stabilised and fully-3-axis-stabilised cores, the attitude-control hardware and the ultraviolet-explorer bus that ride the same shelf. The flagship craft built on them (Pioneer, Voyager) arrive through the charter."
+    parts: [quetzal, torekka, ca_explorer, ca_aacs]
+    # Generic non-Mariner-branded bus successor (peer of gnc_sovietProbeBusFamily): quetzal/torekka cores +
+    # IUE bus (ca_explorer) + CA-AACS attitude hardware. Pioneer 10/11 + Voyager (the integrated RN craft)
+    # moved to the charter chronology (2026-07 split); this node keeps the generic bus/attitude tech.
 
   # ---- Lane 5: solar arrays (station-class generic + probe-bus-specific, split by mechanism) ----
   - id: elec_stationClassSolarArrays
@@ -3376,6 +3383,44 @@ nodes:
     flavor: "The generic array's last uprate in this era - more efficient cells, the same fold-out paddle, still the default choice for anything that doesn't need a dedicated mission-sized wing."
     parts: [largeSolarPanel, ROC-ApolloSolarBlockV, ROC-OrionSolar]
     upgrades: [solarTL7]
+
+  # ---- Lane 5b: the fold-out paddle's generation ends -- four parallel, unrelated next mechanisms ----
+  - id: elec_deployableBlanketArray
+    title: "Roll-Out Blanket Solar Array"
+    discipline: ElectricalPower
+    tier: 11
+    parents: [elec_matureSolarArrays]
+    flavor: "Replace the rigid folding paddle with a flexible photovoltaic blanket that unrolls off a spool like a tape measure - a fraction of the stowed volume and mass of a hinged panel of the same area, at three mission scales."
+    parts: [nfs-panel-deploying-blanket-starship-1, nfs-panel-deploying-blanket-dsg-1, nfs-panel-deploying-blanket-arm-1]
+    # 2026-07 backlog sweep: real ROSA/Gateway-heritage roll-out blanket mechanism, one lineage, three
+    # sizes (small vehicle / station / large circular) - a single breakthrough, kept as one node.
+  - id: elec_concentratingPhotovoltaic
+    title: "Concentrating Photovoltaic Array"
+    discipline: ElectricalPower
+    tier: 11
+    parents: [elec_matureSolarArrays]
+    flavor: "Focus sunlight onto a small strip of the most efficient (and most expensive) cells with lenses instead of covering the whole panel in them - the same power from far less exotic photovoltaic material."
+    parts: [nfs-panel-deploying-concentrator-1x4-juno-1]
+    # 2026-07 backlog sweep: a genuinely different mechanism (optical concentration vs. flat-cell coverage)
+    # from the blanket/rigid/curved siblings - split into its own node rather than a shared catalog.
+  - id: elec_advancedRigidArray
+    title: "Large Rigid Photovoltaic Array"
+    discipline: ElectricalPower
+    tier: 11
+    parents: [elec_matureSolarArrays]
+    flavor: "No new mechanism, just scale: the same hinged rigid panel the whole tree has used since the first fold-out paddle, built one size class larger than anything before it."
+    parts: [nfs-panel-deploying-advanced-2x20-hub-1]
+    # 2026-07 backlog sweep: brute-force scaling of the familiar rigid-panel mechanism - kept separate from
+    # the blanket/concentrating/curved siblings since it's a different design lineage (rigid vs flexible).
+  - id: elec_curvedExpandingArray
+    title: "Curved Expanding Solar Array"
+    discipline: ElectricalPower
+    tier: 11
+    parents: [elec_matureSolarArrays]
+    flavor: "Stow the array wrapped into a tight curve instead of folded flat, and let it spring open into its working shape - a third distinct way to pack more panel into less volume."
+    parts: [nfs-panel-deploying-curved-375-1]
+    # 2026-07 backlog sweep: a third, separate stowage mechanism (curved/wrapped vs. rigid-fold vs.
+    # roll-out blanket) - own node, not folded into either sibling.
 
   # ---- Lane 6: RTG generations (multi-hundred-watt -> GPHS) ----
   - id: elec_multiHundredWattRTG
