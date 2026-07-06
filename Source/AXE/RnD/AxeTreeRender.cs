@@ -371,6 +371,13 @@ namespace RPAxe.RnD
             catch (Exception e) { Debug.LogError("[AXE] backdrop override failed: " + e); }
         }
 
+        private static void LogGeom(string tag, RectTransform rt)
+        {
+            if (rt == null) { Debug.Log($"[AXE] GEOM {tag}=null"); return; }
+            Vector3 wc = rt.TransformPoint(rt.rect.center);
+            Debug.Log($"[AXE] GEOM {tag}: aPos={rt.anchoredPosition} pivot={rt.pivot} size={rt.sizeDelta} worldC=({wc.x:F1},{wc.y:F1}) parent={(rt.parent != null ? rt.parent.name : "-")}");
+        }
+
         private static void DumpNow()
         {
             try
@@ -417,6 +424,14 @@ namespace RPAxe.RnD
                 {
                     RectTransform dr = DotPool[0].GetComponent<RectTransform>();
                     Debug.Log($"[AXE] DOTDUMP dot0 anchorMin={dr.anchorMin} anchorMax={dr.anchorMax} pivot={dr.pivot} anchoredPos={dr.anchoredPosition} localPos={dr.localPosition} active={DotPool[0].activeSelf}");
+                }
+                if (g0 != null)   // GEOM: world-centre of tile / ring / icon -> see how they're offset
+                {
+                    LogGeom("tile", g0.button != null && g0.button.Image != null ? g0.button.Image.rectTransform : null);
+                    LogGeom("ring", g0.searchHighlight != null ? g0.searchHighlight.rectTransform : null);
+                    LogGeom("icon", TechIconF != null && TechIconF.GetValue(g0) is Graphic gic ? gic.rectTransform : null);
+                    LogGeom("gfxRoot", g0.transform as RectTransform);
+                    LogGeom("node", s.transform as RectTransform);
                 }
                 Transform root = ctrl.RDNodeRoot;
                 if (root != null) Debug.Log($"[AXE] DUMP RDNodeRoot pos={root.position} localScale={root.localScale} euler={root.eulerAngles}");
@@ -659,11 +674,6 @@ namespace RPAxe.RnD
             RDNodePrefab g = rd != null ? rd.graphics : null;
             if (g == null || g.searchHighlight == null) return;
             g.searchHighlight.raycastTarget = false;   // the ring must never intercept the node's click
-            // Centre the ring on the TILE exactly (the prefab offsets the ring, and the tile itself may sit a
-            // hair off the button origin) — align to the tile's own centre rather than the button's origin.
-            UIStateButton btn = g.button;
-            if (btn != null && btn.Image != null) g.searchHighlight.rectTransform.position = btn.Image.rectTransform.position;
-            else g.searchHighlight.rectTransform.anchoredPosition = Vector2.zero;
             if (rd.state == RDNode.State.RESEARCHABLE) { g.searchHighlight.color = RingAvailable; g.searchHighlight.enabled = true; }
             else g.searchHighlight.enabled = false;     // researched (green tile signals it) + locked = no ring
         }
