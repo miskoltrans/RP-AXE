@@ -56,9 +56,9 @@ composite cases**; and (6) the nuclear lane matured past NERVA into flight-desig
 
 | Breakthrough | KING(s) | doctrine-4 catches | tier (parent) | notes |
 |---|---|---|---|---|
-| 🆕 **Deployable-Nozzle Expander Cycle** `cryo_deployableNozzleExpander` | `ROE-RL10B2` (RL-10B/C, 110 kN, **Isp 465.5s — the highest of any flown engine**, 84" carbon-carbon extendable nozzle), `ROE-RL10A4N` (RL-10A-4N, 92.5 kN, Isp 449s, 46" extendable), `ROE-RD0146` (98 kN, Isp 463s — Russian closed-expander, Angara upper) | `RFUpgrade_RL10A-4`, `RL10A-4-1N`, `RL10A-4N`, `RL10A-5`, `RL10A-4-1-2`, `RL10A-4-2N`, `RL10B-2`, plus the expander-bleed `RFUpgrade_LE-5A`/`LE-5B` (their base LE-5 is gas-gen, homed at A2) | **T11** (parent = `cryo_refinedExpander` T7) | The RL-10 lane's real next step: the **deployable radiative nozzle** that trades stowed length for record vacuum Isp. **Flag:** T7→T11 is a 4-tier lineage edge (the intermediate RL10A-3 marks were appended to `cryo_refinedExpander` in the shuttle pass) — an idle-then-leap lane, acceptable but call it out. |
+| 🆕 **Deployable-Nozzle Expander Cycle** `cryo_deployableNozzleExpander` | `ROE-RL10B2` (RL-10B/C, 110 kN, **Isp 465.5s — the highest of any flown engine**, 84" carbon-carbon extendable nozzle), `ROE-RL10A4N` (RL-10A-4N, 92.5 kN, Isp 449s, 46" extendable), `ROE-RD0146` (98 kN, Isp 463s — Russian closed-expander, Angara upper) | `RFUpgrade_RL10A-4`, `RL10A-4-1N`, `RL10A-4N`, `RL10A-5`, `RL10A-4-1-2`, `RL10A-4-2N`, `RL10B-2`, plus the expander-bleed `RFUpgrade_LE-5A`/`LE-5B` (their base LE-5 is gas-gen, homed at A2) | **T11** (parent = `cryo_refinedExpander` T7) | The RL-10 lane's real next step: the **deployable radiative nozzle** that trades stowed length for record vacuum Isp. **Accepted (your call):** T7→T11 is a 4-tier lineage edge (the intermediate RL10A-3 marks were appended to `cryo_refinedExpander` in the shuttle pass) — an idle-then-leap lane, kept as-is with no intermediate rung. |
 | 🆕 **Operational Restartable Hydrolox Upper** `cryo_operationalHydroloxUpper` | `ROE-LE5` (LE-5, 102.9 kN, Isp 450s, **10 restarts** — the H-I/H-II multi-burn upper) | — (its own expander-bleed marks LE-5A/B home at A1; `RFUpgrade_HM-7B++`, `M-1U`, `M-1U-SL` → append `cryo_matureGasGeneratorHydrolox` T10) | **T11** (parent = `cryo_gasGeneratorHydrolox` T8) | The gas-generator hydrolox *upper* (J-2 → LE-5 lineage) matures into an operational, many-restart stage. Thin king node; its interesting descendants (expander-bleed LE-5A/B) deliberately split off to A1 per doctrine-4. |
-| 🆕 **Booster-Class Gas-Generator Hydrolox** `cryo_boosterGasGenHydrolox` | `ROE-RS68` (**3380 kN — the most powerful hydrolox engine ever flown**, gas-gen + ablative nozzle, deliberately cheap), `cryoengine-vesuvius-1` (Vulcain 2, 1350 kN — Ariane 5 core), `YF77_Engine` (YF-77, 700 kN — Long March 5 core), `rmm_rainier` (STME, 2891 kN — NLS study) | — | **T12** (parent = `cryo_largeHydrolox` T9 × `cryo_gasGeneratorHydrolox` T8) | The **deliberate anti-SSME**: after staged combustion was proven, the operational fleet went *back* to gas-generator hydrolox scaled to core-stage thrust, trading Isp for cost/manufacturability (RS-68 the textbook case). Good narrative contrast to `cryo_ssme`. |
+| 🆕 **Booster-Class Gas-Generator Hydrolox** `cryo_boosterGasGenHydrolox` | `ROE-RS68` (**3380 kN — the most powerful hydrolox engine ever flown**, gas-gen + ablative nozzle, deliberately cheap), `cryoengine-vesuvius-1` (Vulcain 2, 1350 kN — Ariane 5 core), `YF77_Engine` (YF-77, 700 kN — Long March 5 core), `rmm_rainier` (STME, 2891 kN — NLS study) | — | **T11** (parent = `cryo_largeHydrolox` T9 × `cryo_gasGeneratorHydrolox` T8) | The **deliberate anti-SSME**: after staged combustion was proven, the operational fleet went *back* to gas-generator hydrolox scaled to core-stage thrust, trading Isp for cost/manufacturability (RS-68 the textbook case). **Tiered T11 as a *sibling* of `cryo_ssme` (your call)** — later by calendar but not more advanced; it trades Isp for cost, so it sits beside the SSME, not beyond it. |
 
 ## B. Cryogenics — the SSME cycle goes international & exotic (fuel-rich staged combustion)
 
@@ -66,8 +66,8 @@ composite cases**; and (6) the nuclear lane matured past NERVA into flight-desig
 |---|---|---|---|---|
 | 🆕 **Operational Fuel-Rich Staged-Combustion Hydrolox** `cryo_operationalFRSC` | `ROE-RD0120` (RD-0120, 1961 kN, Isp 454.5s — **Energia core, the Soviet SSME**), `ROE-LE7` (LE-7, 1096 kN, Isp 446.5s — H-II core, Japan) | `rmm_ishtar` (RS-25-50X uprated-SSME study) rides along | **T12** (parent = `cryo_ssme` T11) | The RS-25's fuel-rich staged-combustion cycle proven by **two more space programs** — the theme is "the hardest cycle in rocketry becomes something three nations can build." |
 | 🆕 **Reusable-Engine Production Uprating** `cryo_reusableEngineUprating` | *(none — pure doctrine-4 collector)* | `RFUpgrade_RS-25A`, `RS-25C`, `RS-25D-50X`, `RS-25D-E` (base RS-25 @ `cryo_ssme`), `RD-0120M` (@ B1), `LE-7A`, `LE-7A-2` (@ B1), `RD-0122`, `HG-3B`/`-2`/`-SL`/`-SL-2` (base HG-3 @ `cryo_uprateRestartableHydrolox` T10), `LR129-P-3`, `RD-57M`, `RD-57A-1` (bases @ `cryo_deepThrottleHydrolox` T9) | **T13** (parent = B1) | One catch node for every *production mark* of the reusable/staged-hydrolox engines whose bases are already placed — the SSME Block-I/II, RD-0120M, LE-7A, HG-3B chain "maturing in service." |
-| 🆕 **Tripropellant Staged Combustion** `cryo_tripropellant` | `nflv-engine-rd701-1` (RD-701, 4004 kN — MAKS spaceplane, RG-1+LH2+LOX), `nflv-engine-rd704-1` (RD-704, 2002 kN), `rmm_dugong` (SSBE, 2265 kN — RP-1+LOX+LH2) | `RFUpgrade_SSBE-BlockII` | **T12** (crossover parent = `cryo_ssme` T11 × `pc_zenitKerolox` T10) | A genuinely different mechanism: **one engine burning kerosene+LOX at liftoff and switching to hydrogen+LOX at altitude** — needs both staged-combustion-hydrolox *and* oxidiser-rich-kerolox mastery, so a real justified crossover. What-if flavor (MAKS never flew). **Disc call:** filed Cryogenics (hydrogen-bearing); could be PropellantChemistry. |
-| 🆕 **Methalox Staged Combustion** `cryo_methaloxStagedCombustion` | `rmm_arenysaurus` (LRBE, 2429 kN — **the tree's first methane engine**, LqdMethane+LqdOxygen) | `RFUpgrade_LRBE-BlockII` | **T12** (parent = `pc_zenitKerolox` T10) | Methane sits between kerosene and hydrogen; the first methalox part is the **seed of a future methalox lane** (Raptor-era). Thin king. **Disc call:** filed Cryogenics (cryogenic methane); could be PropellantChemistry. |
+| 🆕 **Tripropellant Staged Combustion** `cryo_tripropellant` | `nflv-engine-rd701-1` (RD-701, 4004 kN — MAKS spaceplane, RG-1+LH2+LOX), `nflv-engine-rd704-1` (RD-704, 2002 kN), `rmm_dugong` (SSBE, 2265 kN — RP-1+LOX+LH2) | `RFUpgrade_SSBE-BlockII` | **T12** (crossover parent = `cryo_ssme` T11 × `pc_zenitKerolox` T10) | A genuinely different mechanism: **one engine burning kerosene+LOX at liftoff and switching to hydrogen+LOX at altitude** — needs both staged-combustion-hydrolox *and* oxidiser-rich-kerolox mastery, so a real justified crossover. What-if flavor (MAKS never flew). **Disc → Cryogenics (resolved):** the bottleneck is the hydrolox staged-combustion cycle (a Cryogenics concern); the kerolox side is carried by the `pc_zenitKerolox` crossover edge, so it needn't *live* in PropChem. |
+| 🆕 **Methalox Staged Combustion** `cryo_methaloxStagedCombustion` | `rmm_arenysaurus` (LRBE, 2429 kN — **the tree's first methane engine**, LqdMethane+LqdOxygen) | `RFUpgrade_LRBE-BlockII` | **T12** (parent = `pc_zenitKerolox` T10) | Methane sits between kerosene and hydrogen; the first methalox part is the **seed of a future methalox lane** (Raptor-era). Thin king. **Disc → Cryogenics (resolved):** matches the `cryo_hydrogen` precedent — the tree files *cryogenic-fuel introduction* under Cryogenics, not PropChem; methane is a cryogenic fuel with the same handling concern (the `pc_zenitKerolox` parent gives the ORSC-cycle flavor via the edge). |
 
 ## C. PropellantChemistry — the oxidiser-rich kerolox dynasty (RD-170 → RD-180)
 
@@ -90,7 +90,8 @@ composite cases**; and (6) the nuclear lane matured past NERVA into flight-desig
 | Breakthrough | KING(s) | doctrine-4 catches | tier (parent) | notes |
 |---|---|---|---|---|
 | 🆕 **Filament-Wound Composite-Case Solids** `pc_filamentWoundSolid` | `ROE-SRMU` (**8234 kN — the composite-case Titan IV motor**, the largest here), `ROE-Castor120` (1875 kN — commercial composite standalone, Athena/Taurus stage-1), `ROE-UA1208` (7450 kN — Titan) + `ROE-1208sepMotor` | `RFUpgrade_FWC-SRM` (the filament-wound Shuttle SRB), `RSRM-1986`, `RFTech-solids-tltech6`, `RFTech-solids-tltech7` | **T10** (parent = `pc_shuttleSRB` T9) | A real **material breakthrough**: the filament-wound graphite/epoxy composite case replaces heavy steel segments → higher mass fraction. Next casing generation after the human-rated *steel* segmented RSRM. |
-| 🆕 **Composite-Case Strap-On Catalog** `pc_compositeStrapOnCatalog` | `ROE-GEM60` (GEM-60, 1236 kN — Delta IV) as catalog king | `ROE-GEM40`, `ROE-GEM46`, `ROE-Castor4A`, `ROE-Castor4AXL`, `ROE-AJ60` (Atlas V) as the graphite-epoxy strap-on family | **T10** (parent = E1) | The commercial **strap-on catalog** (Delta GEM-40/46/60, Atlas V AJ-60A, Castor 4A/4AXL) — a fixed-catalog **dead-end** off the composite-case king, per the catalog-dead-end pattern. 6 parts = at cap; split GEM vs Castor if it grows. |
+| 🆕 **Graphite-Epoxy Strap-On Catalog** `pc_gemStrapOnCatalog` | `ROE-GEM60` (GEM-60, 1236 kN — Delta IV) | `ROE-GEM40`, `ROE-GEM46` (Delta II/III), `ROE-AJ60` (AJ-60A, Atlas V) — the modern composite EELV strap-on family | **T10** (parent = E1) | **Split (your call):** the Delta/Atlas graphite-epoxy composite strap-on **catalog dead-end** off the composite-case king. |
+| ⟳ **append to `pc_strapOnMarkII`** (T7) | — | `ROE-Castor4A`, `ROE-Castor4AXL` | existing **T7**, no change | **Split (your call):** Castor-4's own later marks continue the existing Castor strap-on lineage (`pc_strapOnMarkII` already hosts Castor 1/2/4) — GEM gets a new node, Castor stays on its family line. |
 | ⟳ **append to `pc_apogeeKickCatalogII`** (T9) | — | `ROE-Star5D` (STAR 5D), `ROE-Star8` (STAR 8 RAD) | existing **T9**, no change | Two more small STAR kick motors — same catalog, next marks. No new node. |
 
 ## F. ElectricalPower — electric propulsion comes of age (Hall operational + gridded ion flies)
@@ -132,7 +133,7 @@ composite cases**; and (6) the nuclear lane matured past NERVA into flight-desig
 | T10 | AirBreathing | 🆕 `av_vtolVectoredTurbofan` (R-79/RD-41) | `av_secondGenTurbofan` |
 | T10 | AirBreathing | 🆕 `av_fourthGenFighterTurbofan` (F135/WS-10) | `av_secondGenTurbofan` |
 | T10 | PropellantChemistry | 🆕 `pc_filamentWoundSolid` (SRMU/Castor 120/UA1208) | `pc_shuttleSRB` |
-| T10 | PropellantChemistry | 🆕 `pc_compositeStrapOnCatalog` (GEM/Castor-4/AJ-60) | `pc_filamentWoundSolid` |
+| T10 | PropellantChemistry | 🆕 `pc_gemStrapOnCatalog` (GEM-40/46/60 + AJ-60A) | `pc_filamentWoundSolid` |
 | T9 (existing, append) | PropellantChemistry | `pc_apogeeKickCatalogII` (+Star-5D/Star-8) | — |
 | T11 | Cryogenics | 🆕 `cryo_deployableNozzleExpander` (RL-10B-2/A-4N/RD-0146) | `cryo_refinedExpander` |
 | T11 | Cryogenics | 🆕 `cryo_operationalHydroloxUpper` (LE-5) | `cryo_gasGeneratorHydrolox` |
@@ -143,11 +144,12 @@ composite cases**; and (6) the nuclear lane matured past NERVA into flight-desig
 | T11 | FluidDynamics | 🆕 `fd_advancedGasGenKerolox` (STBE) | `fd_gasGeneratorApex` |
 | T11 | ElectricalPower | 🆕 `ep_operationalHall` (SPT-100/140/PPS-1350) | `ep_higherPowerHallThruster` |
 | T11 | GuidanceControl | 🆕 `gnc_deepSpaceApogeeEngine` (LEROS-1b/R-42/Cassini) | `gnc_bipropAttitudeThrust` |
+| T11 | Cryogenics | 🆕 `cryo_boosterGasGenHydrolox` (RS-68/Vulcain 2/YF-77/STME) | `cryo_largeHydrolox` × `cryo_gasGeneratorHydrolox` |
 | T6 (existing, append) | FluidDynamics | `fd_engineMaturation` (+RD-107A/108A marks) | — |
 | T7 (existing, append) | AirBreathing | `av_highBypassTurbofan` (+FJ44-2A) | — |
+| T7 (existing, append) | PropellantChemistry | `pc_strapOnMarkII` (+Castor 4A/4AXL) | — |
 | T8 (existing, append) | PropellantChemistry | `pc_storableRcsPropellants` (+exotic RCS propellant type-levels) | — |
 | T10 (existing, append) | Cryogenics | `cryo_matureGasGeneratorHydrolox` (+HM-7B++/M-1U marks) | — |
-| T12 | Cryogenics | 🆕 `cryo_boosterGasGenHydrolox` (RS-68/Vulcain 2/YF-77/STME) | `cryo_largeHydrolox` × `cryo_gasGeneratorHydrolox` |
 | T12 | Cryogenics | 🆕 `cryo_operationalFRSC` (RD-0120/LE-7) | `cryo_ssme` |
 | T12 | Cryogenics | 🆕 `cryo_tripropellant` (RD-701/704/SSBE) | `cryo_ssme` × `pc_zenitKerolox` |
 | T12 | Cryogenics | 🆕 `cryo_methaloxStagedCombustion` (LRBE) | `pc_zenitKerolox` |
@@ -160,19 +162,21 @@ composite cases**; and (6) the nuclear lane matured past NERVA into flight-desig
 | T13 | Cryogenics | 🆕 `cryo_reusableEngineUprating` (RS-25/RD-0120/LE-7 marks catch) | `cryo_operationalFRSC` |
 | T13 | NuclearEngineering | 🆕 `nuc_advancedCoreNTR` (liquid/gas-core LNTR) | `nuc_particleBedNTR` |
 
-**~25 new nodes** (2 at T10, 8 at T11, 13 at T12, 2 at T13) + **5 existing nodes appended** with no tier
-change (`pc_apogeeKickCatalogII`, `fd_engineMaturation`, `av_highBypassTurbofan`,
+**~25 new nodes** (2 at T10, 9 at T11, 12 at T12, 2 at T13) + **6 existing nodes appended** with no tier
+change (`pc_apogeeKickCatalogII`, `pc_strapOnMarkII`, `fd_engineMaturation`, `av_highBypassTurbofan`,
 `pc_storableRcsPropellants`, `cryo_matureGasGeneratorHydrolox`).
 
-## Open questions / flags (for the user before authoring)
-1. **Tier ceiling.** Proposal tops out at **T13**. OK to extend past T11, or compress (e.g. cap the era
-   at T12 and fold the two T13 catch/concept nodes up)? Cost is 0 until the deferred cost pass — no build
-   blocker either way.
-2. **Discipline for exotic fuels.** `cryo_tripropellant` and `cryo_methaloxStagedCombustion` filed under
-   **Cryogenics** (hydrogen/methane-bearing) rather than PropellantChemistry. Reasonable, or move them?
-3. **RL-10 tier gap.** `cryo_deployableNozzleExpander` parents on `cryo_refinedExpander` (T7) but lands
-   T11 — a 4-tier lineage edge (idle-then-leap). Accept, or insert an intermediate RL-10A-4 rung?
-4. **Solid-catalog split.** `pc_compositeStrapOnCatalog` is at the 6-part cap (GEM ×3, AJ-60, Castor
-   4A/4AXL). Keep as one catalog dead-end, or split GEM (Delta) from Castor (Delta strap-on) lineages?
-5. **RS-68 tier.** Filed T12 for calendar reasons, but it's arguably *not* more advanced than the SSME —
-   it trades Isp for cost (gas-gen + ablative). Weight it to T11 (sibling, not descendant) instead?
+## Resolved (2026-07-06 — user decisions)
+1. **Tier ceiling → T13.** Kept as proposed (extend past T11; cost defaults to 0 until the deferred cost pass).
+2. **Exotic-fuel discipline → both Cryogenics.** `cryo_tripropellant` (bottleneck = the hydrolox
+   staged-combustion cycle) and `cryo_methaloxStagedCombustion` (a cryogenic fuel, per the `cryo_hydrogen`
+   precedent) both stay in Cryogenics; their kerolox side is carried by the `pc_zenitKerolox` crossover
+   edge, not by the discipline.
+3. **RL-10 tier gap → accepted.** `cryo_deployableNozzleExpander` keeps the T7→T11 lineage edge; no
+   intermediate rung.
+4. **Solid catalog → split.** GEM gets its own `pc_gemStrapOnCatalog` (GEM-40/46/60 + AJ-60A, off the
+   composite-case king); Castor 4A/4AXL append to their existing lineage node `pc_strapOnMarkII` (T7).
+5. **RS-68 → T11.** `cryo_boosterGasGenHydrolox` tiered as a *sibling* of `cryo_ssme` (later by calendar,
+   not more advanced), not a descendant.
+
+**Ready to author into `tree/nodes.yaml` on your go-ahead.**
