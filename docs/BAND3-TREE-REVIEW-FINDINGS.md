@@ -21,6 +21,12 @@
 > `life_crewedExperimentBay`. The two era-mismatched ride-alongs in
 > `gnc_threeAxisStabilizedBus` moved to their real generations. Full list of every
 > finding -> fix in the per-commit messages (`git log --grep=band3-review`).
+>
+> **User sign-off (2026-07-06):** confirmed correct on all of the above except one correction —
+> `cmp_lunarReturnAblator`'s deferred note was wrong (the ablator ladder scatters by ablation
+> tech, not by vehicle; it never needed a capsule node). `LunarHS` placed as `cmp_lunarLandingAblator`
+> (commit `04982d3`). **Everything in this fix pass is signed off except `rob_surfaceMobility`**
+> (the parked KerbalFoundries tracks/screw-drive/larger-wheel coverage gap) — still open.
 
 ## 1. Verdict
 
