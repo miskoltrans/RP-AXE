@@ -497,7 +497,9 @@ nodes:
     tier: 4
     parents: [opt_recon, elec_transistor]
     flavor: "Scan a photoconductive target with an electron beam and read the image off as a video signal — lower resolution than film, but it comes down the radio link the instant you take it. No capsule to recover."
-    parts: [RO-EarlyTVCamera, aerocam, aerocam180, hc_booster, hc_kazzelblad, hc_launchcam, hc_navcam, hc_nightvision, hc_scicam, hc_wideangle, mumech_hullcam]
+    parts: [RO-EarlyTVCamera, aerocam, aerocam180, hc_booster, hc_kazzelblad, hc_launchcam, hc_navcam, hc_nightvision, hc_scicam, hc_wideangle, mumech_hullcam, kerbpro]
+    # kerbpro (2026-07, full-manifest re-audit): the lone HullCameraVDS straggler - same camera-model
+    # catalog as its 10 siblings already here.
   - id: nuc_geiger
     title: "Geiger-Müller Ionization Counting"
     discipline: NuclearEngineering
