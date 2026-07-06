@@ -18,9 +18,12 @@ TREE = os.path.join(REPO, "tree")
 OUTD = os.path.join(REPO, "GameData", "RP-AXE", "design", "Tree")
 REND = os.path.join(TREE, "render")
 
-X0, TIERW = 0, 380              # x = X0 + tier*TIERW (X anchored to MARGIN_X below); matches renderer.js sugiyama COLW base
+XSPACING = 0.8                  # horizontal tier-spacing multiplier (1.0 = 380px columns; 0.8 = tighter, tree fits x<0)
+X0, TIERW = 0, round(380 * XSPACING)   # x = X0 + tier*TIERW (X anchored to MARGIN_X below); matches renderer.js sugiyama COLW base
 Y0, DISCH, SUBH = 300, 100, 34  # y = Y0 + (order-1)*DISCH + sub-stack (lane-grid fallback)
-MARGIN_X, MARGIN_Y = -2568, 711 # anchor top-left to the editor's stock-tree origin
+MARGIN_X, MARGIN_Y = -3200, 711 # left origin: chosen so the whole tree sits at x<0, inside the R&D scroll
+                                # content whose right edge is pivot-pinned at x=0 (else the last tiers clip).
+                                # = -160 - maxTier*TIERW at maxTier~10; nudge more negative if tiers grow.
 SPACING_Y = 94                  # vertical px per rank unit; matches renderer.js sugiyama SPACING_Y base (94*spacing=1.0)
 COORDS_BK = True                # sugiyama_layout coordinate stage: True = Brandes-Kopf block alignment
                                 # (straight edges, the in-game default); False = isotonic (PAV) neighbour-mean
