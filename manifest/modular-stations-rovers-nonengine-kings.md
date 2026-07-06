@@ -1,8 +1,23 @@
 # Modular Stations, Rovers & ISS-Assembly Era — NON-ENGINE KING PARTS
 
-**STATUS: PROPOSAL (2026-07-06) — nothing authored yet.** The non-engine axis of batch 6
-(`modular-stations-rovers`), the pass after its engine kings (authored, `0f232cd`). Design record for
-the stations, probes, science, comms, ISRU, power, thermal, docking and spaceplane parts.
+**STATUS: AUTHORED (2026-07-06, commit `8e5e768`) — build clean, 344 nodes.** The non-engine axis of
+batch 6 (`modular-stations-rovers`), the pass after its engine kings (`0f232cd`). All 114 hand-placed
+parts homed (26 RN probes auto-route to `hire_JPL`); design record below.
+
+**Authored differs from the original proposal per user decisions (2026-07-06):**
+- **Charter subtree = RN US/Soviet packs only, no branch-offs.** Regions L's proposed `charter_*` packs
+  were dropped. The non-RN integrated buses go **main-tree**: `gnc_flagshipProbeBus` (Cassini `meridiani`
+  +LEU, STEREO `xihe`) and `gnc_commercialComsatBus` (Boeing 702, LM900, LM-DS). Huygens components
+  **scatter by mechanism**: `int_atmosphericEntryProbe` (lander+aeroshell), heat shield →
+  `cmp_venusEntryAeroshell`, chutes → `cmp_extremeEntryParachutes`, adapter → `str_standardDecouplers`.
+- **Station catalogs sliced fine** (user: more nodes): 8 LifeSupport (habitat / crew-tubes / logistics /
+  external-stowage / bioregenerative-ECLSS / cupola / airlock / ISRU) + 4 Structures (modular-truss /
+  spinal-truss / hubs / mounting-bases) instead of the 6 proposed.
+- **Science = its own nodes, not appends** (finest curation): `opt_hyperspectralImaging`,
+  `opt_thermalMappingSpectrometry`, `opt_highResolutionImager`, `opt_syntheticApertureRadar`,
+  `opt_orbitalResourceScanning`; RPWS → `mic_plasmaWave` append.
+- **24 new nodes + 8 appends.** Same-tier parent edges fixed at authoring (crew-tubes/logistics/cupola/
+  airlock parent the T9 catalog; spinal truss parents T9 truss; external stowage → T11).
 
 ## Scope — ground-truthed by pack, not guessed
 Of the 140 unplaced curated non-engine parts:
