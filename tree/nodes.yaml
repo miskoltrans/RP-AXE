@@ -1781,7 +1781,7 @@ nodes:
   # ===================== BAND 3 * ADVANCED JETS + ATTITUDE HARDWARE (T7 -> T8) ====================
   # ================================================================================================
   - id: av_mach2Turbojet
-    title: "Mach-2-Class Turbojet"
+    title: "Sustained-Cruise Afterburning Turbojet"
     discipline: AirBreathing
     tier: 7
     parents: [av_afterburner, av_variableStator]
@@ -1791,17 +1791,26 @@ nodes:
     # nfa-turbofan-25-2 is the SAME Olympus 593 engine as RO-Olympus593, just the NearFutureAeronautics
     # mod's own wrapper — same part-count-pass pattern as ROE-AJ10Mid/Early (two curated sources, one
     # real engine), placed together rather than treated as a second breakthrough.
+    # RENAMED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #high): "Mach-2-Class Turbojet" named a
+    # performance capability, not the mechanism (a unique outlier pattern across all 217 node titles in
+    # the tree) — renamed to what the flavor already describes: combining afterburning with variable-
+    # stator control for sustained cruise, not a burst.
   - id: av_dedicatedLiftJet
     title: "Dedicated Lift Jet"
     discipline: AirBreathing
     tier: 7
-    parents: [av_afterburner]
+    parents: [av_axialJet]
     flavor: "A turbojet built to point straight down and do nothing but hold a hover — no forward thrust to speak of, the whole engine is the vertical-lift half of a VTOL aircraft."
     parts: [nfa-vtol-0625-1, nfa-vtol-125-1]
     # Base parts for the RB.162 family — RFUpgrade_RB162-4D (their upgrade) was already placed in
     # met_cooledTurbine; the base engines themselves were the part-count-pass gap. Kept separate from
     # av_mach2Turbojet: a lift jet is a genuinely different role (vertical thrust only), not a faster cruise
     # engine.
+    # RE-PARENTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): was parented on av_afterburner,
+    # but the RB.162 is a stripped, non-afterburning lift engine with no reheat at all — the sentence test
+    # ("afterburning led to a dedicated lift jet") fails. av_axialJet (a plain axial-flow turbojet, no
+    # afterburner) is the true same-family parent; the RB.162's own later uprate still lives at
+    # met_cooledTurbine (T4), unaffected by this change.
   - id: gnc_reactionWheelAttitude
     title: "Reaction-Wheel Attitude Control"
     discipline: GuidanceControl

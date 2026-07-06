@@ -192,7 +192,7 @@ digraph AXE {
   "cmp_lunarReturnAblator" [label="Lunar-Return Ablator Rating\nCompositeMaterials T8 · 2100",fillcolor="#9caf6a",fontcolor="#111111"];
   "nuc_isotopePower" [label="Radioisotope Thermoelectric Power\nElectricalPower T7 · 2300",fillcolor="#ffd23f",fontcolor="#111111"];
   "nuc_isotopePowerII" [label="Long-Lived Isotope Power\nElectricalPower T8 · 2100",fillcolor="#ffd23f",fontcolor="#111111"];
-  "av_mach2Turbojet" [label="Mach-2-Class Turbojet\nAirBreathing T7 · 2300",fillcolor="#6cc4b0",fontcolor="#111111"];
+  "av_mach2Turbojet" [label="Sustained-Cruise Afterburning Turbojet\nAirBreathing T7 · 2300",fillcolor="#6cc4b0",fontcolor="#111111"];
   "av_dedicatedLiftJet" [label="Dedicated Lift Jet\nAirBreathing T7 · 2300",fillcolor="#6cc4b0",fontcolor="#111111"];
   "gnc_reactionWheelAttitude" [label="Reaction-Wheel Attitude Control\nGuidanceControl T8 · 2100",fillcolor="#8a5cd6",fontcolor="#111111"];
   "th_activeLouvers" [label="Active Thermal Louvers\nThermodynamics T7 · 2300",fillcolor="#f4813a",fontcolor="#111111"];
@@ -450,7 +450,7 @@ digraph AXE {
   "nuc_isotopePower" -> "nuc_isotopePowerII" [style=solid];
   "av_afterburner" -> "av_mach2Turbojet" [style=solid];
   "av_variableStator" -> "av_mach2Turbojet" [style=solid];
-  "av_afterburner" -> "av_dedicatedLiftJet" [style=solid];
+  "av_axialJet" -> "av_dedicatedLiftJet" [style=solid];
   "gnc_threeAxisStabilizedBus" -> "gnc_reactionWheelAttitude" [style=solid];
   "th_hermeticBus" -> "th_activeLouvers" [style=solid];
   "life_openLoopECLSS" -> "int_compactCrewPod" [style=solid];
