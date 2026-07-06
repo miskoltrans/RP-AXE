@@ -2454,6 +2454,7 @@ nodes:
     parents: [comp_realTimeFlightComputer]
     flavor: "Coordinate guidance, power and data across several docked modules as one system instead of one hull — the avionics architecture a space station, not just a single spacecraft, needs to hold together."
     grants: [Science-Core-largeScaleAvionics]
+    upgrades: [HDD-Upgrade-1969, RFTech-ComSat-III, RFTech-NavSat-III]  # 2026-07 tech-level fill: HDD/comsat/navsat rungs of the largeScaleAvionics era (siblings on the earlier avionics nodes)
   - id: comp_multiplyRedundantFlightComputer
     title: "Multiply-Redundant General-Purpose Computer"
     discipline: Computing
@@ -2461,6 +2462,7 @@ nodes:
     parents: [comp_networkedAvionics]
     flavor: "Four identical general-purpose computers vote on every result, and a fifth arbitrates a tie - fly-by-wire trusted with a crew's life because no single failure, or even a single disagreement, can bring it down. The Shuttle's own avionics generation."
     grants: [Science-Core-advancedAvionics]
+    upgrades: [HDD-Upgrade-1975]  # 2026-07 tech-level fill: HDD rung of the advancedAvionics era
     # 2026-07 (full-manifest re-audit): closes a real gap - the Science-Core avionics grants ladder
     # dead-ended at comp_networkedAvionics (T10) even though the tree runs to T16 elsewhere. 5 REFERENCE-
     # tagged rungs (docs/UPGRADES.md T3 audit) were never granted anywhere. Continued linearly, same
@@ -2480,6 +2482,7 @@ nodes:
     parents: [comp_distributedAvionicsBus]
     flavor: "Move the control laws out of hardwired logic and into software that can be patched after launch - a flight computer whose behaviour is a file to update, not a board to re-etch, for a vehicle meant to keep flying for years."
     grants: [Science-Core-longTermAvionics]
+    upgrades: [HDD-Upgrade-1990]  # 2026-07 tech-level fill: HDD rung of the longTermAvionics era
   - id: comp_interoperableAvionicsStandard
     title: "Interoperable Avionics Standard"
     discipline: Computing
@@ -2487,6 +2490,7 @@ nodes:
     parents: [comp_softwareDefinedFlightControl]
     flavor: "Agree on a common data-bus protocol and command format across national space programmes, so a module built on one continent can dock, hand off power and share telemetry with one built on another without a custom adapter for every pairing."
     grants: [Science-Core-internationalAvionics]
+    upgrades: [HDD-Upgrade-1998]  # 2026-07 tech-level fill: HDD rung of the internationalAvionics era
   - id: comp_commercialOffTheShelfAvionics
     title: "Commercial Off-The-Shelf Flight Computer"
     discipline: Computing
@@ -2494,6 +2498,7 @@ nodes:
     parents: [comp_interoperableAvionicsStandard]
     flavor: "Skip the custom-built, radiation-hardened rack and fly triple-redundant commercial processors instead - orders of magnitude more computing power for a fraction of the cost and years off the schedule, the same bet the whole modern commercial launch industry made."
     grants: [Science-Core-modernAvionics]
+    upgrades: [HDD-Upgrade-2010, HDD-Upgrade-2020]  # 2026-07 tech-level fill: HDD rungs of the modern/advModern era (avionics ladder tops out here, no separate advModern node)
 
   # ================================================================================================
   # ============ BAND 3 * AVIATION (turbofans) + SOLIDS CONTINUATION (engines, 2026-07) =============
@@ -4163,6 +4168,7 @@ nodes:
     parents: [cmp_extremeAtmosphericEntry]
     flavor: "Slow down with an umbrella instead of a wall. An inflatable heat shield deploys a wide, soft aeroshell that decelerates a heavy payload high in a thin atmosphere - the HIAD, the way to land tonnes on Mars where a rigid shield can't be built big enough."
     parts: [ROH-AdjustableHIAD]
+    upgrades: [Inflatable]  # 2026-07 tech-level fill: the SIAD (supersonic inflatable decelerator) tech-level rides its own decelerator node
 
   # ---- NuclearEngineering: modern compact fission + fissile magazine ----
   - id: nuc_modernFissionReactor
