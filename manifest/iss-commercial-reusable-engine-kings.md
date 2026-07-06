@@ -1,6 +1,9 @@
 # ISS Completion -> Commercial/Reusable Era — Engine/Propulsion KING PARTS
 
-**STATUS: PROPOSAL — not yet authored.** Derived from `iss-commercial-reusable-partlist.md` (RP-1
+**STATUS: AUTHORED (2026-07-06, commit `0222fa6`) — all 19 new nodes + 9 widened nodes are live in
+`tree/nodes.yaml`; `python tools/build_tree.py` reports `design checks: clean`, 375 nodes / 21
+disciplines.** This doc is now the design record for that pass, not a pending proposal. Derived from
+`iss-commercial-reusable-partlist.md` (RP-1
 x=-1082..-402, real years ~2004-2028: the batch after `modular-stations-rovers`). This pass covers
 **only the propulsion axis** — every new engine base part plus every upgrade-only `RFUpgrade_*` entry
 whose tech node falls in this batch — ahead of authoring the non-engine parts (habitats, rovers, comms,
