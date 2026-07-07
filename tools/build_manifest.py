@@ -103,6 +103,8 @@ ADD={  # our divergences (names; mod/title resolved from ro_expanded)
   # NF-Solar tier (6)
   "nfs-panel-deploying-concentrator-1x4-juno-1","nfs-panel-deploying-blanket-starship-1","nfs-panel-deploying-blanket-dsg-1",
   "nfs-panel-deploying-blanket-arm-1","nfs-panel-deploying-advanced-2x20-hub-1","nfs-panel-deploying-curved-375-1",
+  # NFE nuclear fuel cycle (4) -- reprocessor + fuel drums, home the RO reactors' EnrichedUranium/DepletedFuel loop
+  "nuclear-recycler-25","nuclearfuel-0625","nuclearfuel-125","nuclearfuel-25",
   # Kerwis DFH-1 + clean-drop reversals
   "DFH-1","proceduralTankOre","RO-SaturnI-IU","restock-drone-core-375-1","restock-airlock-1",
   "KF-ScrewDrive","KF-Skid","KF-TrackInverting","KF-TrackLong","KF-TrackMedium","KF-TrackMole","KF-TrackSimple",

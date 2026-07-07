@@ -465,6 +465,10 @@ nfe-rtg-asrg-1
 nfe-rtg-gphs-1
 nfe-rtg-mmrtg-1
 nfe-rtg-snap27-1
+nuclear-recycler-25
+nuclearfuel-0625
+nuclearfuel-125
+nuclearfuel-25
 nfex-antenna-deploy-wv3-1
 nfex-antenna-feeder-direct-1
 nfex-antenna-phased-array-1

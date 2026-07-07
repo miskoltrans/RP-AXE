@@ -466,6 +466,10 @@ NearFutureElectrical	nfe-rtg-asrg-1	NASA & DOE Advanced Sterling RG
 NearFutureElectrical	nfe-rtg-gphs-1	GPHS-RTG
 NearFutureElectrical	nfe-rtg-mmrtg-1	Multi-Mission RTG
 NearFutureElectrical	nfe-rtg-snap27-1	SNAP-27 Series RTG
+NearFutureElectrical	nuclear-recycler-25	Whirlijig Nuclear Reprocessor
+NearFutureElectrical	nuclearfuel-0625	MF-0 Nuclear Fuel Drum
+NearFutureElectrical	nuclearfuel-125	MF-1 Nuclear Fuel Drum
+NearFutureElectrical	nuclearfuel-25	MF-2 Nuclear Fuel Drum
 NearFutureExploration	nfex-antenna-deploy-wv3-1	DR-3 Deployable High Gain Antenna
 NearFutureExploration	nfex-antenna-feeder-direct-1	F-DA Direct Antenna Feed
 NearFutureExploration	nfex-antenna-phased-array-1	RA-X1 Phased Relay Antenna
