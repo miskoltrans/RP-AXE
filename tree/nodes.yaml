@@ -2561,7 +2561,7 @@ nodes:
     upgrades: [RFUpgrade_J79-GE-119, RFUpgrade_J79-MTU-J1K, RFUpgrade_J85-GE-21, RFUpgrade_WP-6Z, RFUpgrade_WP-7B, RFUpgrade_WP-7BM]
     # Split out of av_advancedJetEngines (2026-07). Bases (aje_j79/RO-J85GE5) live in av_variableStator (T4).
   - id: av_advancedHighSpeedTurbojets
-    title: "Sustained Mach-2 & Lift-Jet Uprating"
+    title: "High-Speed Turbojet Uprating"
     discipline: AirBreathing
     tier: 8
     parents: [av_mach2Turbojet, av_dedicatedLiftJet]
@@ -2989,7 +2989,7 @@ nodes:
     # article) and Phoebus-2A (most powerful test) ride along; Princeton LNTR (a modern LEU what-if
     # design) too. Ties cryo_ssme for the deepest tier in this pass - both real flight-design capstones.
   - id: str_pusherPlate
-    title: "Ablative Pusher Plate & Shock Absorption"
+    title: "Pusher-Plate Shock Absorption"
     discipline: StructuresMechanisms
     tier: 9
     parents: [str_stationStructures]
@@ -3036,7 +3036,7 @@ nodes:
 
   # ---- Lane 9: bipropellant attitude/apogee thrust (a real step above monoprop RCS) ----
   - id: gnc_bipropAttitudeThrust
-    title: "Bipropellant Attitude & Apogee Thrust"
+    title: "Bipropellant Attitude Thrusters"
     discipline: GuidanceControl
     tier: 9
     parents: [pc_storableRcsPropellants]
@@ -3304,11 +3304,11 @@ nodes:
 
   # ---- Lane 3: station docking/berthing generation + attitude-control size classes ----
   - id: gnc_stationBerthing
-    title: "Advanced Docking and Berthing Adapters"
+    title: "Station Berthing Adapters"
     discipline: GuidanceControl
     tier: 9
     parents: [gnc_rendezvousDocking]
-    flavor: "A new generation of docking hardware built for a permanent outpost instead of a single rendezvous — androgynous ports that don't care which side is active, a dedicated berthing adapter for joining two different national programmes' hardware, and the instruments riding along on the join itself."
+    flavor: "A new generation of station-joining hardware built for a permanent outpost instead of a single rendezvous — a dedicated berthing adapter for mating two different national programmes' hardware, androgynous ports that don't care which side is active, and the instruments riding along on the join itself."
     parts: [ROC-ApolloAPAS75BDB, ROC-ApolloASTPAdapterBDB, ROC-ApolloASTPUVXBDB, ROC-ApolloASTPVHFBDB, ROC-BigGeminiMOLPort, mk2DockingPort]
     # King APAS-75 (androgynous, the design lineage that outlives every program-specific port before it) +
     # the ASTP docking module. Its UV experiment/VHF antenna ride along (mission-specific bolt-ons on the
@@ -4156,7 +4156,7 @@ nodes:
 
   # ---- GuidanceControl: androgynous docking + modern buses ----
   - id: gnc_androgynousDocking
-    title: "Androgynous Docking & Berthing"
+    title: "Androgynous Docking Mechanism"
     discipline: GuidanceControl
     tier: 10
     parents: [gnc_stationBerthing]
@@ -4272,7 +4272,7 @@ nodes:
     flavor: "The heavy station module class — nine-metre cores, habitation blocks and science labs that dwarf the early ISS parts, the pressurised volume of a permanent orbital or surface base built for a large crew."
     parts: [sspx-core-25-1, sspx-core-375-1, sspx-core-5-1, sspx-habitation-375-1, sspx-habitation-375-3, sspx-habitation-5-1, sspx-habitation-5-2, sspx-lab-375-1, sspx-lab-5-1]
   - id: life_aquacultureModule
-    title: "Aquaculture & Greenhouse Modules"
+    title: "Closed-Loop Food Modules"
     discipline: LifeSupport
     tier: 12
     parents: [life_bioregenerativeECLSS]
