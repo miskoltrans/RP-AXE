@@ -1192,6 +1192,18 @@ RocketMotorMenagerie	rmm_dugong	SSBE
 RocketMotorMenagerie	rmm_ishtar	RS-25-50X (SSME-50X)
 RocketMotorMenagerie	rmm_rainier	Space Transportation Main Engine (STME)
 RocketMotorMenagerie	rmm_turiasaurus	STBE (Pratt & Whitney)
+SCANsat	RO-MagellanRadar	RDRS Radar Antenna
+SCANsat	SCANsat_Scanner32	SCAN Anomaly Scanner (DEPRECATED)
+SCANsat	SCANsat_Tracker	SCAN MapTraq®
+SCANsat	scansat-multi-abi-1	ABI Multi-Spectral Imager
+SCANsat	scansat-multi-modis-1	MODIS Multi-Spectral Imager
+SCANsat	scansat-multi-msi-1	MSI Multi-Spectral Imager
+SCANsat	scansat-radar-poseidon-3b-1	Early Radar Altimeter
+SCANsat	scansat-radar-seasat-1	Seasat SAR Radar Antenna
+SCANsat	scansat-resources-crism-1	CRISM Multi-Spectral Resource Scanner
+SCANsat	scansat-resources-hyperion-1	Hyperion Multi-Spectral Resource Scanner
+SCANsat	scansat-resources-mise-1	MISE Multi-Spectral Resource Scanner
+SCANsat	scansat-sar-paz-1	PAZ-SAR Radar Antenna
 SXT	25mKossak	Boeing 737 cockpit
 SXT	625mBonny	Bonanza Cabin
 SXT	BioCapsule	Advanced Biological Capsule

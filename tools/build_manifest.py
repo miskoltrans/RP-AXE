@@ -9,11 +9,15 @@ manifest = RP-1 base (rp1_clean)
          - 2 deprecated SXT parts
 DMagic + NearFutureSpacecraft are excluded (dropped).
 
+SCANsat is treated as an expansion mod too: RP-1 loads 12 of the 16 parts RO loads (4 more --
+SCANsat_Scanner/2/24 and RO-PVO-ORAD -- are stuck on stock-only tech IDs with no RP-1 tree entry and
+get pruned by RP-1's tree-validity cleanup). We keep RP-1's 12; see SCANSAT_CUTS below.
+
 Sources: ksp_rp1_clean cache, ksp_ro_expanded cache, scratchpad/rp1_cuts_from_packs.txt.
 Outputs: manifest/curated-parts.tsv (mod<TAB>name<TAB>title), curated-parts.txt (names).
 """
 import os, collections
-G=r"C:\git"
+G=r"C:\git\ksp"
 SCRATCH=r"C:\Users\User\AppData\Local\Temp\claude\C--git-ksp\8108a075-9f8b-4a7c-89f0-2cd28a7f8a8f\scratchpad"
 OUTDIR=os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","manifest")
 
@@ -61,11 +65,16 @@ with open(os.path.join(SCRATCH,"rp1_cuts_from_packs.txt"),encoding="utf-8",error
         matches=[nm for nm in ro_names_by_mod.get(mod,()) if cand==nm or cand.startswith(nm)]
         cuts.add(max(matches,key=len) if matches else cand)
 
+# RP-1's own cuts from SCANsat (see docstring): the 3 deprecated hidden placeholders plus the one RO
+# clone (RO-PVO-ORAD) that never got a TREE-Parts.cfg tech-node remap.
+cuts|={"SCANsat_Scanner","SCANsat_Scanner2","SCANsat_Scanner24","RO-PVO-ORAD"}
+
 # the curated expansion part-mods we inherit RP-1's keep from (DMagic + NF-Spacecraft excluded; KF treated as base)
 EXPANSION_MODS={"CoatlAerospace","CryoEngines","FarFutureTechnologies","HullCameraVDS","KerbalAtomics",
   "KerwisChineseAerospacePack","NearFutureAeronautics","NearFutureConstruction","NearFutureElectrical",
   "NearFutureExploration","NearFutureLaunchVehicles","NearFuturePropulsion","NearFutureSolar","Tantares",
-  "RN_Soviet_Probes","RN_US_Probes","RocketMotorMenagerie","StationPartsExpansionRedux","UniversalStorage2"}
+  "RN_Soviet_Probes","RN_US_Probes","RocketMotorMenagerie","StationPartsExpansionRedux","UniversalStorage2",
+  "SCANsat"}
 
 US2_WEDGES={  # RP-1-authored, not present in ro_expanded
   "USGooBayWedge":"Biological Sample Capsule","USMatBayWedge":"Crewed Experiment Bay",
@@ -118,7 +127,10 @@ os.makedirs(OUTDIR,exist_ok=True)
 # EXCEPT parts that are deprecated-but-UNIQUE (no non-deprecated counterpart exists): the sample-return
 # capsule is the only buildable film/sample-return craft (closes opt_filmReturn's Corona/Discoverer loop;
 # kings cmp_ablativeTPS). Nuking it would remove a capability, not a dupe.
-KEEP_DEPRECATED={"RP0-SampleReturnCapsule","RP0-SampleReturnCommand"}
+# SCANsat_Scanner32 (BTDT) is a false positive of this heuristic: RO's generic cleanup title-tags it
+# "(DEPRECATED)" for setting %RODeprecated=True, but RP-1's own TREE-Parts.cfg explicitly re-enables and
+# tech-places it (unlike its RADAR/SAR/MULTI siblings, which really are dead and stay cut).
+KEEP_DEPRECATED={"RP0-SampleReturnCapsule","RP0-SampleReturnCommand","SCANsat_Scanner32"}
 manifest={n:mt for n,mt in manifest.items() if n in KEEP_DEPRECATED or "DEPRECATED" not in mt[1].upper()}
 rows=sorted(manifest.items(),key=lambda kv:(kv[1][0],kv[0]))
 with open(os.path.join(OUTDIR,"curated-parts.tsv"),"w",encoding="utf-8") as f:
@@ -131,9 +143,9 @@ print(f"MANIFEST: {len(manifest)} parts  | cuts loaded {len(cuts)}")
 print("missing ADD names:", missing or "none")
 bymod=collections.Counter(m for m,_ in manifest.values())
 print("\nsanity — curated keeps (expect): Coatl 74, RN_US 75, RN_Soviet 23, Tantares 48, Kerwis 19,")
-print("  NF-Propulsion 20, NF-Solar 6, US2 10, SSPX 108, DMagic 0, NF-Spacecraft 0:")
+print("  NF-Propulsion 20, NF-Solar 6, US2 10, SSPX 108, SCANsat 12, DMagic 0, NF-Spacecraft 0:")
 for mod in ["CoatlAerospace","RN_US_Probes","RN_Soviet_Probes","Tantares","KerwisChineseAerospacePack",
             "NearFuturePropulsion","NearFutureSolar","UniversalStorage2","StationPartsExpansionRedux",
-            "DMagicOrbitalScience","NearFutureSpacecraft","KerbalFoundries","SXT","VenStockRevamp"]:
+            "SCANsat","DMagicOrbitalScience","NearFutureSpacecraft","KerbalFoundries","SXT","VenStockRevamp"]:
     print(f"   {mod:<28}{bymod.get(mod,0)}")
 print(f"\ntotal mods contributing: {len(bymod)}")
