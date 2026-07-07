@@ -257,6 +257,17 @@ is stripped.
    every tier, not a player-chosen toggle. Different mechanic, not a gap: AXE's Hibernate (§ above) already
    covers the "trade control for power" use case, uniformly, from the start.
 
+## Planned — not yet built
+
+**Decouple battery volume from box volume.** Today `ApplyVolumeReservation` sends *all* leftover volume
+(box volume − hardware volume) to RealFuels as tank capacity, unconditionally — a bigger box always means
+proportionally more EC, with no way to build a bigger box without also getting more battery than you want
+(e.g. to match a stack diameter, or to leave headroom to grow EC later without a rebuild). Neither RP-1 nor
+current AXE support this — RP-1's `SendRemainingVolume()`/`GetAvailableVolume()` has the identical
+unconditional-leftover behavior. Shape sketched 2026-07-08: a second AXE-owned fraction (how much of `avail`
+actually gets sent onward to RealFuels; the rest stays dead volume in the box) — needs design first, not
+started.
+
 ## Where the numbers live
 - RP-1 coeffs: `RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg` (`AVIONICSCONFIGS`: Near-Earth …)
 - RP-1 formulas: `RP-1/Source/RP0/Avionics/ModuleProceduralAvionics.cs` (`GetPolynomial`, `GetAvionicsMass`,
