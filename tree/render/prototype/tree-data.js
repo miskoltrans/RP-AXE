@@ -223,7 +223,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -5264,
-    6613
+    5232
    ]
   },
   {
@@ -239,7 +239,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -5264,
-    6519
+    5157
    ]
   },
   {
@@ -249,7 +249,7 @@ window.TREE = {
    "tier": 1,
    "cost": 1,
    "anyToUnlock": false,
-   "flavor": "Off-program hardware that never earned a place in the main tree - redundant instruments, third-party curiosities, flight-proven gear with nothing new left to teach. Available to build, not required to progress; a side branch for flavour and player choice, not the story the rest of the tree tells.",
+   "flavor": "Off-program hardware that never earned a place in the main tree — redundant instruments, third-party curiosities, flight-proven gear with nothing new left to teach. Available to build, not required to progress; a side branch for flavour and player choice, not the story the rest of the tree tells.",
    "parts": [
     {
      "name": "aquila_sensor_synthetic_aperture_radar_srf_1",
@@ -266,7 +266,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    12863
+    10032
    ]
   },
   {
@@ -282,7 +282,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    13088
+    10211
    ]
   },
   {
@@ -298,7 +298,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    13276
+    10361
    ]
   },
   {
@@ -355,7 +355,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    13088
+    10211
    ]
   },
   {
@@ -392,7 +392,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    13088
+    10211
    ]
   },
   {
@@ -419,7 +419,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    13088
+    10211
    ]
   },
   {
@@ -476,7 +476,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    13088
+    10211
    ]
   },
   {
@@ -508,7 +508,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    13088
+    10211
    ]
   },
   {
@@ -540,7 +540,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    13088
+    10211
    ]
   },
   {
@@ -597,7 +597,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    13088
+    10211
    ]
   },
   {
@@ -684,7 +684,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    13088
+    10211
    ]
   },
   {
@@ -766,7 +766,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    13088
+    10211
    ]
   },
   {
@@ -798,7 +798,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    13276
+    10361
    ]
   },
   {
@@ -825,7 +825,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    13276
+    10361
    ]
   },
   {
@@ -872,7 +872,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    13276
+    10361
    ]
   },
   {
@@ -944,7 +944,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    13276
+    10361
    ]
   },
   {
@@ -966,7 +966,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    13276
+    10361
    ]
   },
   {
@@ -998,7 +998,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    8156
+    6445
    ]
   },
   {
@@ -1035,7 +1035,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    8776
+    6801
    ]
   },
   {
@@ -1067,7 +1067,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    8976
+    7039
    ]
   },
   {
@@ -1099,7 +1099,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    8929
+    6722
    ]
   },
   {
@@ -1126,7 +1126,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    8708
+    6555
    ]
   },
   {
@@ -1158,7 +1158,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    8614
+    6392
    ]
   },
   {
@@ -1190,7 +1190,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    8814
+    6630
    ]
   },
   {
@@ -1222,7 +1222,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    8661
+    6763
    ]
   },
   {
@@ -1232,13 +1232,13 @@ window.TREE = {
    "tier": 1,
    "cost": 1,
    "anyToUnlock": false,
-   "flavor": "No doctrine says burn kerosene first. Bet early on hydrogen: vacuum-jacketed tanks, multilayer insulation and enormous pumps for a low-density fuel, all for the highest specific impulse chemistry there is. It costs a whole node of program time up front just to commit - and this is that commitment.",
+   "flavor": "No doctrine says burn kerosene first. Bet early on hydrogen: vacuum-jacketed tanks, multilayer insulation and enormous pumps for a low-density fuel, all for the highest specific impulse chemistry there is. It costs a whole node of program time up front just to commit — and this is that commitment.",
    "parts": [],
    "upgrades": [],
    "grants": [],
    "pos": [
     -4960,
-    6076
+    4164
    ]
   },
   {
@@ -1260,7 +1260,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    5280
+    4180
    ]
   },
   {
@@ -1282,7 +1282,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    5280
+    4180
    ]
   },
   {
@@ -1329,7 +1329,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    4496
+    3556
    ]
   },
   {
@@ -1361,7 +1361,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    4496
+    3556
    ]
   },
   {
@@ -1398,7 +1398,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    4496
+    3556
    ]
   },
   {
@@ -1432,7 +1432,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    7323
+    5665
    ]
   },
   {
@@ -1456,7 +1456,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    7023
+    5202
    ]
   },
   {
@@ -1478,7 +1478,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    7023
+    5202
    ]
   },
   {
@@ -1515,7 +1515,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    3681
+    2884
    ]
   },
   {
@@ -1535,7 +1535,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    9356
+    7376
    ]
   },
   {
@@ -1569,7 +1569,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    3775
+    2959
    ]
   },
   {
@@ -1654,7 +1654,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    2369
+    1933
    ]
   },
   {
@@ -1731,7 +1731,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    1771
+    1503
    ]
   },
   {
@@ -1773,7 +1773,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    3429
+    2730
    ]
   },
   {
@@ -1815,7 +1815,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    7852
+    4659
    ]
   },
   {
@@ -1857,7 +1857,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    6651
+    3873
    ]
   },
   {
@@ -1894,7 +1894,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    11754
+    9201
    ]
   },
   {
@@ -1928,7 +1928,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    1771
+    1503
    ]
   },
   {
@@ -2020,7 +2020,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    11544
+    9034
    ]
   },
   {
@@ -2036,7 +2036,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    11591
+    9071
    ]
   },
   {
@@ -2063,7 +2063,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    11079
+    8792
    ]
   },
   {
@@ -2090,7 +2090,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    12042
+    9506
    ]
   },
   {
@@ -2122,7 +2122,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    8383
+    5870
    ]
   },
   {
@@ -2184,7 +2184,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    6929
+    4021
    ]
   },
   {
@@ -2221,7 +2221,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    9236
+    7281
    ]
   },
   {
@@ -2298,7 +2298,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    11006
+    8734
    ]
   },
   {
@@ -2325,7 +2325,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    8823
+    6838
    ]
   },
   {
@@ -2352,7 +2352,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    12926
+    10081
    ]
   },
   {
@@ -2374,7 +2374,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    12461
+    9710
    ]
   },
   {
@@ -2411,7 +2411,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    4590
+    3252
    ]
   },
   {
@@ -2433,7 +2433,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    12769
+    9957
    ]
   },
   {
@@ -2495,7 +2495,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    6719
+    3724
    ]
   },
   {
@@ -2552,7 +2552,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    8011
+    5019
    ]
   },
   {
@@ -2604,7 +2604,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    8446
+    5073
    ]
   },
   {
@@ -2661,7 +2661,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    7990
+    4964
    ]
   },
   {
@@ -2688,7 +2688,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    4988
+    6613
    ]
   },
   {
@@ -2720,7 +2720,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    10985
+    8717
    ]
   },
   {
@@ -2757,7 +2757,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    4988
+    6613
    ]
   },
   {
@@ -2819,7 +2819,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    6813
+    3966
    ]
   },
   {
@@ -2866,7 +2866,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    6384
+    4876
    ]
   },
   {
@@ -2903,7 +2903,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    6101
+    4642
    ]
   },
   {
@@ -2950,7 +2950,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    6144
+    4805
    ]
   },
   {
@@ -2972,7 +2972,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    10985
+    8717
    ]
   },
   {
@@ -2994,7 +2994,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    10609
+    8304
    ]
   },
   {
@@ -3136,7 +3136,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    8428
+    4617
    ]
   },
   {
@@ -3158,7 +3158,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    7643
+    4417
    ]
   },
   {
@@ -3176,7 +3176,7 @@ window.TREE = {
    ],
    "pos": [
     -4960,
-    8729
+    6575
    ]
   },
   {
@@ -3194,7 +3194,7 @@ window.TREE = {
    ],
    "pos": [
     -4656,
-    8289
+    6501
    ]
   },
   {
@@ -3215,7 +3215,7 @@ window.TREE = {
    ],
    "pos": [
     -4048,
-    10294
+    7590
    ]
   },
   {
@@ -3442,7 +3442,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    8362
+    5853
    ]
   },
   {
@@ -3589,7 +3589,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    6557
+    3631
    ]
   },
   {
@@ -3631,7 +3631,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    6604
+    3669
    ]
   },
   {
@@ -3728,7 +3728,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    7549
+    4307
    ]
   },
   {
@@ -3785,7 +3785,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    7527
+    4290
    ]
   },
   {
@@ -3795,7 +3795,7 @@ window.TREE = {
    "tier": 4,
    "cost": 40,
    "anyToUnlock": false,
-   "flavor": "Let the propellant tank be the spacecraft spine - its walls carry the flight loads and mount the engine, thrusters, power and radios behind the payload, so the service module needs no separate airframe. The integrated tankage a satellite or probe bus is built around.",
+   "flavor": "Let the propellant tank be the spacecraft spine — its walls carry the flight loads and mount the engine, thrusters, power and radios behind the payload, so the service module needs no separate airframe. The integrated tankage a satellite or probe bus is built around.",
    "parts": [
     {
      "name": "LFUELM3",
@@ -3857,7 +3857,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    3476
+    2767
    ]
   },
   {
@@ -3867,7 +3867,7 @@ window.TREE = {
    "tier": 4,
    "cost": 40,
    "anyToUnlock": false,
-   "flavor": "Stiffen a spun-aluminium payload shroud with riveted stringers instead of casting it thick - the first step off dead-weight spun metal, shaving shroud mass on every launch. The opening rung of a fairing-materials ladder that runs on through magnesium and fibreglass to composite shells in the bands ahead.",
+   "flavor": "Stiffen a spun-aluminium payload shroud with riveted stringers instead of casting it thick — the first step off dead-weight spun metal, shaving shroud mass on every launch. The opening rung of a fairing-materials ladder that runs on through magnesium and fibreglass to composite shells in the bands ahead.",
    "parts": [],
    "upgrades": [
     "PFTech-Fairing-I",
@@ -3876,7 +3876,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    6604
+    3835
    ]
   },
   {
@@ -3886,7 +3886,7 @@ window.TREE = {
    "tier": 4,
    "cost": 40,
    "anyToUnlock": false,
-   "flavor": "Etch and coat the cell face so less sunlight reflects away and more drives current - a few points of efficiency per generation, compounding across the tech tree. The first rung of the solar-cell efficiency ladder.",
+   "flavor": "Etch and coat the cell face so less sunlight reflects away and more drives current — a few points of efficiency per generation, compounding across the tech tree. The first rung of the solar-cell efficiency ladder.",
    "parts": [],
    "upgrades": [
     "solarTL0"
@@ -3894,7 +3894,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    11530
+    9226
    ]
   },
   {
@@ -3904,7 +3904,7 @@ window.TREE = {
    "tier": 1,
    "cost": 1,
    "anyToUnlock": false,
-   "flavor": "A supercharged piston engine swinging a propeller - the powerplant that flew every fighter and bomber before the jet, wringing altitude and speed from high-octane fuel and forced induction. Merlin, Jumo, Double Wasp: the sound of the propeller age.",
+   "flavor": "A supercharged piston engine swinging a propeller — the powerplant that flew every fighter and bomber before the jet, wringing altitude and speed from high-octane fuel and forced induction. Merlin, Jumo, Double Wasp: the sound of the propeller age.",
    "parts": [
     {
      "name": "SXTJ213",
@@ -3956,7 +3956,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    4988
+    6763
    ]
   },
   {
@@ -4023,7 +4023,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    1865
+    2046
    ]
   },
   {
@@ -4057,7 +4057,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    2007
+    1691
    ]
   },
   {
@@ -4109,7 +4109,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    7831
+    4567
    ]
   },
   {
@@ -4211,7 +4211,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    7831
+    4567
    ]
   },
   {
@@ -4238,7 +4238,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    1160
+    1069
    ]
   },
   {
@@ -4280,7 +4280,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    7737
+    4492
    ]
   },
   {
@@ -4312,7 +4312,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    7737
+    4492
    ]
   },
   {
@@ -4349,7 +4349,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    7737
+    4492
    ]
   },
   {
@@ -4401,7 +4401,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4960,
-    13182
+    10286
    ]
   },
   {
@@ -4693,7 +4693,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4656,
-    13182
+    10286
    ]
   },
   {
@@ -4775,7 +4775,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    13182
+    10286
    ]
   },
   {
@@ -5022,7 +5022,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    13182
+    10286
    ]
   },
   {
@@ -5149,7 +5149,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    13182
+    10286
    ]
   },
   {
@@ -5366,7 +5366,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    13182
+    10286
    ]
   },
   {
@@ -5508,7 +5508,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    13182
+    10286
    ]
   },
   {
@@ -5518,7 +5518,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The pads of the EELV and commercial era: Energia's Soviet super-heavy, the Delta II and Delta IV stands, the Atlas II and Atlas V towers, and the Falcon 9 launch plate — vehicle-specific complexes for rockets that flew decades after the first stands. SPLIT (2026-07) out of gs_dedicatedComplexes, which had them unlockable in 1957.",
+   "flavor": "The pads of the EELV and commercial era: Energia's Soviet super-heavy, the Delta II and Delta IV stands, the Atlas II and Atlas V towers, and the Falcon 9 launch plate — vehicle-specific complexes for rockets that flew decades after the first stands.",
    "parts": [
     {
      "name": "AM_MLP_Atlas2UmbilicalArm1",
@@ -5640,7 +5640,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    13182
+    10286
    ]
   },
   {
@@ -5712,7 +5712,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    6698
+    3910
    ]
   },
   {
@@ -5739,7 +5739,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    10367
+    7781
    ]
   },
   {
@@ -5766,7 +5766,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4352,
-    10865
+    8621
    ]
   },
   {
@@ -5788,7 +5788,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    11363
+    9093
    ]
   },
   {
@@ -5810,7 +5810,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    10959
+    8696
    ]
   },
   {
@@ -5837,7 +5837,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    11175
+    8943
    ]
   },
   {
@@ -5859,7 +5859,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    6835
+    4713
    ]
   },
   {
@@ -5886,7 +5886,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    11269
+    9018
    ]
   },
   {
@@ -5913,7 +5913,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    11363
+    9093
    ]
   },
   {
@@ -5935,7 +5935,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    12461
+    9710
    ]
   },
   {
@@ -5957,7 +5957,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    10499
+    8216
    ]
   },
   {
@@ -5981,7 +5981,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    11530
+    9226
    ]
   },
   {
@@ -6006,7 +6006,7 @@ window.TREE = {
    ],
    "pos": [
     -3744,
-    10294
+    7590
    ]
   },
   {
@@ -6026,7 +6026,7 @@ window.TREE = {
    ],
    "pos": [
     -3744,
-    12717
+    9915
    ]
   },
   {
@@ -6052,7 +6052,7 @@ window.TREE = {
    ],
    "pos": [
     -3440,
-    12717
+    9915
    ]
   },
   {
@@ -6101,7 +6101,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    3476
+    2767
    ]
   },
   {
@@ -6131,7 +6131,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    7480
+    5703
    ]
   },
   {
@@ -6158,7 +6158,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    7023
+    5202
    ]
   },
   {
@@ -6179,7 +6179,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    7023
+    5202
    ]
   },
   {
@@ -6203,7 +6203,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    7454
+    5557
    ]
   },
   {
@@ -6248,7 +6248,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    4146
+    3327
    ]
   },
   {
@@ -6275,7 +6275,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    4616
+    3669
    ]
   },
   {
@@ -6322,7 +6322,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    4423
+    3519
    ]
   },
   {
@@ -6360,7 +6360,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    4052
+    3197
    ]
   },
   {
@@ -6406,7 +6406,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    8814
+    6630
    ]
   },
   {
@@ -6474,7 +6474,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    7159
+    5461
    ]
   },
   {
@@ -6520,7 +6520,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    7227
+    5478
    ]
   },
   {
@@ -6562,7 +6562,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    10179
+    7386
    ]
   },
   {
@@ -6604,7 +6604,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    8908
+    6705
    ]
   },
   {
@@ -6646,7 +6646,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    7717
+    6262
    ]
   },
   {
@@ -6656,7 +6656,7 @@ window.TREE = {
    "tier": 6,
    "cost": 160,
    "anyToUnlock": false,
-   "flavor": "Wrap the clustered first stage in its aerodynamic boattail and it stops being a bare cluster of chambers and becomes a complete, flight-configured stage — the CZ-2, CZ-2C and CZ-2D as they actually stacked. Same four storable chambers as the king; procedural structure builds the same fairing for nothing, so this is off-the-shelf convenience, not a new engine.",
+   "flavor": "Wrap the clustered first stage in its aerodynamic boattail and it stops being a bare cluster of chambers and becomes a complete, flight-configured stage — the CZ-2, CZ-2C and CZ-2D as they actually stacked. Same four storable chambers as the clustered first stage it branches from; procedural structure builds the same fairing for nothing, so this is off-the-shelf convenience, not a new engine.",
    "parts": [
     {
      "name": "YF21_with_shell_CZ-2",
@@ -6678,7 +6678,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    7649
+    6242
    ]
   },
   {
@@ -6700,7 +6700,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    7743
+    6317
    ]
   },
   {
@@ -6742,7 +6742,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    7854
+    6371
    ]
   },
   {
@@ -6784,7 +6784,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    8715
+    6555
    ]
   },
   {
@@ -6830,7 +6830,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    3728
+    2922
    ]
   },
   {
@@ -6857,7 +6857,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    5009
+    6242
    ]
   },
   {
@@ -6879,7 +6879,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    5103
+    5039
    ]
   },
   {
@@ -6911,7 +6911,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    4804
+    3890
    ]
   },
   {
@@ -6937,7 +6937,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    6123
+    4788
    ]
   },
   {
@@ -6959,7 +6959,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    6813
+    3987
    ]
   },
   {
@@ -6996,7 +6996,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    7990
+    4964
    ]
   },
   {
@@ -7025,7 +7025,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    1207
+    1107
    ]
   },
   {
@@ -7050,7 +7050,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    998
+    940
    ]
   },
   {
@@ -7077,7 +7077,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    1960
+    1653
    ]
   },
   {
@@ -7101,7 +7101,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    2144
+    3068
    ]
   },
   {
@@ -7150,7 +7150,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    8404
+    5941
    ]
   },
   {
@@ -7187,7 +7187,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    2421
+    1988
    ]
   },
   {
@@ -7214,7 +7214,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    4710
+    3706
    ]
   },
   {
@@ -7246,7 +7246,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    1375
+    1241
    ]
   },
   {
@@ -7273,7 +7273,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    1187
+    1091
    ]
   },
   {
@@ -7295,7 +7295,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    6536
+    4495
    ]
   },
   {
@@ -7305,7 +7305,7 @@ window.TREE = {
    "tier": 6,
    "cost": 160,
    "anyToUnlock": false,
-   "flavor": "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a retro-pack to drop it from orbit on time, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point.",
+   "flavor": "Bring a crewed capsule down soft enough to survive: a heavy main canopy that will not tear at the loads a manned mass demands, a drogue to hold it straight and slow it first, and airbags or crushable legs to soften the final thump. The last minutes of every flight, where recovery is the whole point.",
    "parts": [
     {
      "name": "ROC-ApolloDrogueParachuteBDB",
@@ -7338,16 +7338,6 @@ window.TREE = {
      "title": "D-2 Parachute"
     },
     {
-     "name": "ROC-GeminiBEquipmentSection",
-     "mod": "ROCapsules",
-     "title": "Gemini B Adapter Module"
-    },
-    {
-     "name": "ROC-GeminiBRetrogradeSection",
-     "mod": "ROCapsules",
-     "title": "Gemini B Retro Module"
-    },
-    {
      "name": "ROC-GeminiParachuteBDB",
      "mod": "ROCapsules",
      "title": "Gemini Landing Parachute System"
@@ -7358,39 +7348,14 @@ window.TREE = {
      "title": "Gemini Drogue Parachute"
     },
     {
-     "name": "ROC-GeminiRetrogradeSectionBDB",
-     "mod": "ROCapsules",
-     "title": "Gemini Retrograde Section"
-    },
-    {
      "name": "ROC-MercuryParachuteBDB",
      "mod": "ROCapsules",
      "title": "Mercury M-ASD Main Parachute"
     },
     {
-     "name": "ROC-MercuryRetropackBDB",
-     "mod": "ROCapsules",
-     "title": "Mercury Retropack"
-    },
-    {
      "name": "ROC-OrionParachute",
      "mod": "ROCapsules",
      "title": "Orion Main Parachute"
-    },
-    {
-     "name": "ROC-ReentryControlSystemBDB",
-     "mod": "ROCapsules",
-     "title": "Gemini Re-entry Control System"
-    },
-    {
-     "name": "ROC-RetrogradeDecouplerBDB",
-     "mod": "ROCapsules",
-     "title": "Gemini Retrograde Section Decoupler"
-    },
-    {
-     "name": "ROC-VoskhodRetroDecoupler",
-     "mod": "ROCapsules",
-     "title": "Voskhod Retro Decoupler"
     },
     {
      "name": "ROC-VostokParachute",
@@ -7412,7 +7377,59 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    6929
+    4021
+   ]
+  },
+  {
+   "id": "int_crewedRetroPack",
+   "title": "Crewed Retro-Deorbit Pack",
+   "discipline": "SystemsIntegration",
+   "tier": 6,
+   "cost": 160,
+   "anyToUnlock": false,
+   "flavor": "A cluster of solid retro-rockets carried behind a crewed capsule and fired against the flight path to drop it out of orbit on time and on target — Mercury's retropack, Gemini's retrograde section, the Voskhod and Gemini-B modules with their own reentry attitude control. The deliberate deorbit burn a returning crew's life turns on, thrown away with its adapter once the one job is done.",
+   "parts": [
+    {
+     "name": "ROC-GeminiBEquipmentSection",
+     "mod": "ROCapsules",
+     "title": "Gemini B Adapter Module"
+    },
+    {
+     "name": "ROC-GeminiBRetrogradeSection",
+     "mod": "ROCapsules",
+     "title": "Gemini B Retro Module"
+    },
+    {
+     "name": "ROC-GeminiRetrogradeSectionBDB",
+     "mod": "ROCapsules",
+     "title": "Gemini Retrograde Section"
+    },
+    {
+     "name": "ROC-MercuryRetropackBDB",
+     "mod": "ROCapsules",
+     "title": "Mercury Retropack"
+    },
+    {
+     "name": "ROC-ReentryControlSystemBDB",
+     "mod": "ROCapsules",
+     "title": "Gemini Re-entry Control System"
+    },
+    {
+     "name": "ROC-RetrogradeDecouplerBDB",
+     "mod": "ROCapsules",
+     "title": "Gemini Retrograde Section Decoupler"
+    },
+    {
+     "name": "ROC-VoskhodRetroDecoupler",
+     "mod": "ROCapsules",
+     "title": "Voskhod Retro Decoupler"
+    }
+   ],
+   "upgrades": [],
+   "grants": [],
+   "pos": [
+    -3440,
+    3514
    ]
   },
   {
@@ -7439,7 +7456,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    11081
+    8868
    ]
   },
   {
@@ -7460,7 +7477,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    7785
+    6208
    ]
   },
   {
@@ -7482,7 +7499,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    10179
+    7386
    ]
   },
   {
@@ -7501,7 +7518,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    10609
+    8304
    ]
   },
   {
@@ -7533,7 +7550,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    8352
+    6321
    ]
   },
   {
@@ -7552,7 +7569,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    7185
+    5557
    ]
   },
   {
@@ -7576,7 +7593,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -4048,
-    4522
+    3594
    ]
   },
   {
@@ -7606,7 +7623,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9991
+    7239
    ]
   },
   {
@@ -7638,7 +7655,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    4041
+    3177
    ]
   },
   {
@@ -7679,7 +7696,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    1375
+    1241
    ]
   },
   {
@@ -7716,7 +7733,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    1187
+    1091
    ]
   },
   {
@@ -7726,7 +7743,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "A cosmonaut can finally leave the capsule - now give them a way back to the hatch. Bolted rungs up the hull, sized to whatever the vehicle stands, from a short reach to a full multi-stage climb.",
+   "flavor": "A cosmonaut can finally leave the capsule — now give them a way back to the hatch. Bolted rungs up the hull, sized to whatever the vehicle stands, from a short reach to a full multi-stage climb.",
    "parts": [
     {
      "name": "LGLadderUtility",
@@ -7763,7 +7780,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    1093
+    1016
    ]
   },
   {
@@ -7773,7 +7790,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "A ladder that stows flush against the hull for the ride down and telescopes out only once boots are on the ground - no permanent drag or snag risk, real travel savings on a vehicle that can't spare the mass to carry a fixed one.",
+   "flavor": "A ladder that stows flush against the hull for the ride down and telescopes out only once boots are on the ground — no permanent drag or snag risk, real travel savings on a vehicle that can't spare the mass to carry a fixed one.",
    "parts": [
     {
      "name": "telescopicLadder",
@@ -7790,7 +7807,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    2259
+    1833
    ]
   },
   {
@@ -7862,7 +7879,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    1281
+    1166
    ]
   },
   {
@@ -7872,7 +7889,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Fold Voskhod's inflatable fabric tunnel into a compact module that latches onto a docking port instead of a single hatch - one lightweight ring that gives a crew both a way to meet another spacecraft and a way outside it, without the mass of two separate systems.",
+   "flavor": "Fold Voskhod's inflatable fabric tunnel into a compact module that latches onto a docking port instead of a single hatch — one lightweight ring that gives a crew both a way to meet another spacecraft and a way outside it, without the mass of two separate systems.",
    "parts": [
     {
      "name": "restock-airlock-1",
@@ -7884,7 +7901,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1234
+    1128
    ]
   },
   {
@@ -7961,7 +7978,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    8541
+    5983
    ]
   },
   {
@@ -8058,7 +8075,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9284
+    6909
    ]
   },
   {
@@ -8090,7 +8107,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    6788
+    4604
    ]
   },
   {
@@ -8117,7 +8134,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4428
+    3477
    ]
   },
   {
@@ -8159,7 +8176,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    8818
+    5908
    ]
   },
   {
@@ -8181,7 +8198,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    7091
+    5257
    ]
   },
   {
@@ -8203,7 +8220,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    7206
+    5257
    ]
   },
   {
@@ -8252,7 +8269,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4146
+    3327
    ]
   },
   {
@@ -8296,7 +8313,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4522
+    3631
    ]
   },
   {
@@ -8328,7 +8345,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4240
+    3402
    ]
   },
   {
@@ -8375,7 +8392,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4847
+    3781
    ]
   },
   {
@@ -8417,7 +8434,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4334
+    3552
    ]
   },
   {
@@ -8449,7 +8466,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    4334
+    3552
    ]
   },
   {
@@ -8486,7 +8503,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    7507
+    5632
    ]
   },
   {
@@ -8523,7 +8540,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9881
+    7151
    ]
   },
   {
@@ -8533,7 +8550,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "The same lander program's core and antenna, built instead to stay in orbit and look down rather than land — a sibling vehicle from the same soft-landing effort, aimed at the whole map instead of one spot. It never touches down, so it's the three-axis point-and-hold breakthrough it actually flies on, not a descent engine it never carries.",
+   "flavor": "The same lander program's core and antenna, built instead to stay in orbit and look down rather than land — a sibling vehicle from the same soft-landing effort, aimed at the whole map instead of one spot. It never touches down, so it holds its aim on the same three-axis point-and-hold system it flies on, not a descent engine it never carries.",
    "parts": [
     {
      "name": "ca_landv_orbiter_HGA",
@@ -8555,7 +8572,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9378
+    6146
    ]
   },
   {
@@ -8601,7 +8618,7 @@ window.TREE = {
    ],
    "pos": [
     -3136,
-    12602
+    9823
    ]
   },
   {
@@ -8718,7 +8735,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12738
+    9931
    ]
   },
   {
@@ -8750,7 +8767,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    12649
+    9860
    ]
   },
   {
@@ -8801,7 +8818,7 @@ window.TREE = {
    ],
    "pos": [
     -2832,
-    12555
+    9785
    ]
   },
   {
@@ -8870,7 +8887,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11504
+    9206
    ]
   },
   {
@@ -8912,7 +8929,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    6494
+    4054
    ]
   },
   {
@@ -8952,7 +8969,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    11504
+    9206
    ]
   },
   {
@@ -8979,7 +8996,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    12461
+    9710
    ]
   },
   {
@@ -9011,7 +9028,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11128
+    8906
    ]
   },
   {
@@ -9038,7 +9055,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9472
+    6609
    ]
   },
   {
@@ -9060,7 +9077,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    10844
+    8417
    ]
   },
   {
@@ -9087,7 +9104,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12926
+    10081
    ]
   },
   {
@@ -9109,7 +9126,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    10750
+    8642
    ]
   },
   {
@@ -9146,7 +9163,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12110
+    9581
    ]
   },
   {
@@ -9188,7 +9205,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12016
+    9506
    ]
   },
   {
@@ -9225,7 +9242,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11922
+    9356
    ]
   },
   {
@@ -9262,7 +9279,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12204
+    9656
    ]
   },
   {
@@ -9284,7 +9301,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12298
+    8492
    ]
   },
   {
@@ -9326,7 +9343,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11807
+    9431
    ]
   },
   {
@@ -9378,7 +9395,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    11786
+    9414
    ]
   },
   {
@@ -9420,7 +9437,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11692
+    8567
    ]
   },
   {
@@ -9452,7 +9469,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    11692
+    8124
    ]
   },
   {
@@ -9474,7 +9491,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12392
+    8717
    ]
   },
   {
@@ -9496,7 +9513,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    7896
+    4930
    ]
   },
   {
@@ -9528,7 +9545,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    12832
+    10006
    ]
   },
   {
@@ -9582,7 +9599,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    945
+    898
    ]
   },
   {
@@ -9616,7 +9633,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    945
+    898
    ]
   },
   {
@@ -9638,7 +9655,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    10456
+    8182
    ]
   },
   {
@@ -9690,7 +9707,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    10243
+    7845
    ]
   },
   {
@@ -9737,7 +9754,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    5469
+    4679
    ]
   },
   {
@@ -9764,7 +9781,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4966
+    6058
    ]
   },
   {
@@ -9811,7 +9828,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    9650
+    6834
    ]
   },
   {
@@ -9895,7 +9912,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    2238
+    1816
    ]
   },
   {
@@ -9905,7 +9922,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Land the whole crew cabin on the Moon and fly the same cabin straight home - no separate ascent stage, no lunar-orbit rendezvous to trust your life to. The Soviet answer that skips the rendezvous entirely, betting everything on one vehicle instead of two.",
+   "flavor": "Land the whole crew cabin on the Moon and fly the same cabin straight home — no separate ascent stage, no lunar-orbit rendezvous to trust your life to. The Soviet answer that skips the rendezvous entirely, betting everything on one vehicle instead of two.",
    "parts": [
     {
      "name": "aquarius_crew_s1p5_1",
@@ -9917,7 +9934,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    2097
+    1704
    ]
   },
   {
@@ -9927,7 +9944,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Throttle a crewed descent engine ten-to-one for a controlled touchdown, and trust a pressure-fed ascent engine to light once - or the crew stays. Surveyor learned to throttle a descent; the Service Module learned to relight on faith; here the two meet and land people.",
+   "flavor": "Throttle a crewed descent engine ten-to-one for a controlled touchdown, and trust a pressure-fed ascent engine to light once — or the crew stays. Surveyor learned to throttle a descent; the Service Module learned to relight on faith; here the two meet and land people.",
    "parts": [
     {
      "name": "RO-KTDU417",
@@ -9959,7 +9976,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    5836
+    4717
    ]
   },
   {
@@ -9969,7 +9986,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Once you are down, get around - a throttleable open-cockpit rocket to hop the surface, and the uprated descent engine of the longer, heavier missions that follow the first footprints.",
+   "flavor": "Once you are down, get around — a throttleable open-cockpit rocket to hop the surface, and the uprated descent engine of the longer, heavier missions that follow the first footprints.",
    "parts": [
     {
      "name": "ROC-LEMRover",
@@ -9990,7 +10007,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    5836
+    4717
    ]
   },
   {
@@ -10000,7 +10017,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "One more percent of thrust from a cycle with nothing left to give. The mightiest engine ever built is also the end of its line - spend a whole tier here and you have bought a rounding error while staged combustion and hydrolox walk past you.",
+   "flavor": "One more percent of thrust from a cycle with nothing left to give. The mightiest engine ever built is also the end of its line — spend a whole tier here and you have bought a rounding error while staged combustion and hydrolox walk past you.",
    "parts": [
     {
      "name": "ROE-F1B",
@@ -10015,7 +10032,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    9991
+    7552
    ]
   },
   {
@@ -10025,7 +10042,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Refine the whole family of clustered gas-generator kerolox boosters mark by mark - more thrust, longer service life, no change to the chemistry. The same diminishing-return story as F-1's own trap, one tier over, for its smaller siblings.",
+   "flavor": "Refine the whole family of clustered gas-generator kerolox boosters mark by mark — more thrust, longer service life, no change to the chemistry. The same diminishing-return story as F-1's own trap, one tier over, for its smaller siblings.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_E-1-575k",
@@ -10039,7 +10056,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    9838
+    7477
    ]
   },
   {
@@ -10049,7 +10066,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "Drive a hydrogen turbopump with a gas generator instead of the expander's own bleed - trade the closed cycle's elegance for the raw thrust to push a Moon rocket's upper stages. The high-thrust hydrolox engine the expander could never be.",
+   "flavor": "Drive a hydrogen turbopump with a gas generator instead of the expander's own bleed — trade the closed cycle's elegance for the raw thrust to push a Moon rocket's upper stages. The high-thrust hydrolox engine the expander could never be.",
    "parts": [
     {
      "name": "ROC-D2AJ10-133",
@@ -10086,7 +10103,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    8121
+    5904
    ]
   },
   {
@@ -10096,7 +10113,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Scale the gas-generator hydrolox engine until it rivals a kerolox booster - a hydrogen engine of five thousand kilonewtons. The hydrolox twin of the F-1 ceiling: colossal, thirsty, never flown, and the end of its own line.",
+   "flavor": "Scale the gas-generator hydrolox engine until it rivals a kerolox booster — a hydrogen engine of five thousand kilonewtons. The hydrolox twin of the F-1 ceiling: colossal, thirsty, never flown, and the end of its own line.",
    "parts": [
     {
      "name": "ROE-J2X",
@@ -10116,7 +10133,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    7728
+    6184
    ]
   },
   {
@@ -10126,7 +10143,7 @@ window.TREE = {
    "tier": 7,
    "cost": 300,
    "anyToUnlock": false,
-   "flavor": "Wring more specific impulse out of the closed expander cycle - hotter, tighter plumbing on the efficient small upper stage.",
+   "flavor": "Wring more specific impulse out of the closed expander cycle — hotter, tighter plumbing on the efficient small upper stage.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_LE-5A",
@@ -10147,7 +10164,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    5218
+    4129
    ]
   },
   {
@@ -10157,7 +10174,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Chill the propellants until they are dense enough, then run oxidiser-rich staged combustion at booster scale - the most efficient kerosene engine anyone ever fired. The rocket it flew on failed; the engine never did.",
+   "flavor": "Chill the propellants until they are dense enough, then run oxidiser-rich staged combustion at booster scale — the most efficient kerosene engine anyone ever fired. The rocket it flew on failed; the engine never did.",
    "parts": [
     {
      "name": "ROE-NK33",
@@ -10190,7 +10207,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    4041
+    3177
    ]
   },
   {
@@ -10222,7 +10239,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    5819
+    4554
    ]
   },
   {
@@ -10232,7 +10249,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Squeeze the storable staged-combustion boosters a little further - Mk-II chambers, higher flow, the same dependable poison.",
+   "flavor": "Squeeze the storable staged-combustion boosters a little further — Mk-II chambers, higher flow, the same dependable poison.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_RD-0203U",
@@ -10248,7 +10265,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    7236
+    5792
    ]
   },
   {
@@ -10258,7 +10275,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Heat liquid hydrogen in a fission reactor and blow it out a nozzle - twice the specific impulse of the best chemical engine, bought as a heavy, low-thrust, radioactive gamble. The road to deep space forks here.",
+   "flavor": "Heat liquid hydrogen in a fission reactor and blow it out a nozzle — twice the specific impulse of the best chemical engine, bought as a heavy, low-thrust, radioactive gamble. The road to deep space forks here.",
    "parts": [
     {
      "name": "KIWIA24",
@@ -10275,7 +10292,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    7984
+    6463
    ]
   },
   {
@@ -10285,7 +10302,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Skip the propellant entirely: ram air through a live reactor and let the heat do the rest - an engine that could fly for weeks and irradiate everything it passed. A frontier curiosity that goes nowhere, on purpose.",
+   "flavor": "Skip the propellant entirely: ram air through a live reactor and let the heat do the rest — an engine that could fly for weeks and irradiate everything it passed. A frontier curiosity that goes nowhere, on purpose.",
    "parts": [
     {
      "name": "RO-A136",
@@ -10297,7 +10314,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    8266
+    6793
    ]
   },
   {
@@ -10315,7 +10332,7 @@ window.TREE = {
    ],
    "pos": [
     -3136,
-    10294
+    7590
    ]
   },
   {
@@ -10331,7 +10348,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    11598
+    9281
    ]
   },
   {
@@ -10355,7 +10372,7 @@ window.TREE = {
    ],
    "pos": [
     -2832,
-    10661
+    8254
    ]
   },
   {
@@ -10379,7 +10396,7 @@ window.TREE = {
    ],
    "pos": [
     -2528,
-    10661
+    8254
    ]
   },
   {
@@ -10401,7 +10418,7 @@ window.TREE = {
    ],
    "pos": [
     -2224,
-    10661
+    8254
    ]
   },
   {
@@ -10411,7 +10428,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Four identical general-purpose computers vote on every result, and a fifth arbitrates a tie - fly-by-wire trusted with a crew's life because no single failure, or even a single disagreement, can bring it down. The Shuttle's own avionics generation.",
+   "flavor": "Four identical general-purpose computers vote on every result, and a fifth arbitrates a tie — fly-by-wire trusted with a crew's life because no single failure, or even a single disagreement, can bring it down. The Shuttle's own avionics generation.",
    "parts": [],
    "upgrades": [
     "HDD-Upgrade-1975"
@@ -10421,7 +10438,7 @@ window.TREE = {
    ],
    "pos": [
     -1920,
-    10661
+    8254
    ]
   },
   {
@@ -10431,7 +10448,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Stop wiring every sensor and actuator straight to the computer and put them all on one shared data bus instead - a single twisted pair carrying every subsystem's traffic, addressed and time-sliced instead of home-run cabled. The wiring-harness weight a modular station can no longer afford to carry.",
+   "flavor": "Stop wiring every sensor and actuator straight to the computer and put them all on one shared data bus instead — a single twisted pair carrying every subsystem's traffic, addressed and time-sliced instead of home-run cabled. The wiring-harness weight a modular station can no longer afford to carry.",
    "parts": [],
    "upgrades": [],
    "grants": [
@@ -10439,7 +10456,7 @@ window.TREE = {
    ],
    "pos": [
     -1616,
-    10661
+    8254
    ]
   },
   {
@@ -10449,7 +10466,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "Move the control laws out of hardwired logic and into software that can be patched after launch - a flight computer whose behaviour is a file to update, not a board to re-etch, for a vehicle meant to keep flying for years.",
+   "flavor": "Move the control laws out of hardwired logic and into software that can be patched after launch — a flight computer whose behaviour is a file to update, not a board to re-etch, for a vehicle meant to keep flying for years.",
    "parts": [],
    "upgrades": [
     "HDD-Upgrade-1990"
@@ -10459,7 +10476,7 @@ window.TREE = {
    ],
    "pos": [
     -1312,
-    10661
+    8254
    ]
   },
   {
@@ -10479,7 +10496,7 @@ window.TREE = {
    ],
    "pos": [
     -1008,
-    10661
+    8254
    ]
   },
   {
@@ -10489,7 +10506,7 @@ window.TREE = {
    "tier": 15,
    "cost": 4500,
    "anyToUnlock": false,
-   "flavor": "Skip the custom-built, radiation-hardened rack and fly triple-redundant commercial processors instead - orders of magnitude more computing power for a fraction of the cost and years off the schedule, the same bet the whole modern commercial launch industry made.",
+   "flavor": "Skip the custom-built, radiation-hardened rack and fly triple-redundant commercial processors instead — orders of magnitude more computing power for a fraction of the cost and years off the schedule, the same bet the whole modern commercial launch industry made.",
    "parts": [],
    "upgrades": [
     "HDD-Upgrade-2010",
@@ -10500,7 +10517,7 @@ window.TREE = {
    ],
    "pos": [
     -704,
-    10661
+    8254
    ]
   },
   {
@@ -10510,7 +10527,7 @@ window.TREE = {
    "tier": 7,
    "cost": 300,
    "anyToUnlock": false,
-   "flavor": "Wrap the core in a huge ducted fan and let most of the air bypass the burner entirely - the quiet, thrifty engine that made long-haul jets economical, trading raw exhaust speed for fuel it never has to carry.",
+   "flavor": "Wrap the core in a huge ducted fan and let most of the air bypass the burner entirely — the quiet, thrifty engine that made long-haul jets economical, trading raw exhaust speed for fuel it never has to carry.",
    "parts": [
     {
      "name": "JetEngine",
@@ -10532,7 +10549,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    5375
+    4529
    ]
   },
   {
@@ -10542,7 +10559,7 @@ window.TREE = {
    "tier": 7,
    "cost": 300,
    "anyToUnlock": false,
-   "flavor": "A modest bypass fan bolted to a fighter's afterburning core - some of the turbofan's thrift without giving up the supersonic dash. The engine of the teen-series fighters.",
+   "flavor": "A modest bypass fan bolted to a fighter's afterburning core — some of the turbofan's thrift without giving up the supersonic dash. The engine of the teen-series fighters.",
    "parts": [
     {
      "name": "RO-D30F6",
@@ -10564,7 +10581,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    6400
+    4855
    ]
   },
   {
@@ -10574,7 +10591,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "The mature marks of the bypass turbofans in the hangar - hotter turbines, tighter tolerances, a few percent more thrust and a few percent less fuel, engine by engine.",
+   "flavor": "The mature marks of the bypass turbofans in the hangar — hotter turbines, tighter tolerances, a few percent more thrust and a few percent less fuel, engine by engine.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_CF6-50A",
@@ -10584,7 +10601,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    5563
+    4679
    ]
   },
   {
@@ -10594,7 +10611,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "The mature marks of the variable-stator fighter turbojets - J79, J85 and their Chinese WP derivatives, refined engine by engine for a few more percent of thrust.",
+   "flavor": "The mature marks of the variable-stator fighter turbojets — J79, J85 and their Chinese WP derivatives, refined engine by engine for a few more percent of thrust.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_J79-GE-119",
@@ -10607,17 +10624,17 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    5448
+    4462
    ]
   },
   {
    "id": "av_advancedHighSpeedTurbojets",
-   "title": "Sustained Mach-2 & Lift-Jet Uprating",
+   "title": "High-Speed Turbojet Uprating",
    "discipline": "AirBreathing",
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "The mature marks of the sustained-Mach-2 cruise engines (the MiG-21's R-13, the MiG-25's R-15) and the dedicated hover lift-jets - two unrelated missions, both refined mark by mark past their first cut.",
+   "flavor": "The mature marks of the sustained-Mach-2 cruise engines (the MiG-21's R-13, the MiG-25's R-15) and the dedicated hover lift-jets — two unrelated missions, both refined mark by mark past their first cut.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_R-13F-300",
@@ -10628,7 +10645,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    5354
+    6079
    ]
   },
   {
@@ -10638,7 +10655,7 @@ window.TREE = {
    "tier": 5,
    "cost": 80,
    "anyToUnlock": false,
-   "flavor": "Squeeze more shaft power out of the free-turbine turboprop - the small, efficient propjet, refined mark by mark.",
+   "flavor": "Squeeze more shaft power out of the free-turbine turboprop — the small, efficient propjet, refined mark by mark.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_PT6A-11AG",
@@ -10653,7 +10670,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3744,
-    5009
+    6446
    ]
   },
   {
@@ -10663,7 +10680,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "Stack more segments and the solid grows without a ceiling - the largest strap-on boosters ever fired, out to a Titan's full seven segments, and the monster that was drawn but never poured. The same segmented mechanism, taken to its limit.",
+   "flavor": "Stack more segments and the solid grows without a ceiling — the largest strap-on boosters ever fired, out to a Titan's full seven segments, and the monster that was drawn but never poured. The same segmented mechanism, taken to its limit.",
    "parts": [
     {
      "name": "ROE-1206sepMotor",
@@ -10703,7 +10720,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    4847
+    3781
    ]
   },
   {
@@ -10738,17 +10755,17 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    8771
+    6684
    ]
   },
   {
    "id": "pc_caveaB",
-   "title": "Cavea-B Oxidiser (gamble)",
+   "title": "Cavea-B Oxidiser",
    "discipline": "PropellantChemistry",
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "A storable blend studied but never flown — specLevel=concept in its own source data, the one entry in this family that never left the bench. Worse thrust and worse Isp than every operational choice beside it; nobody flew it because it never won the argument, but a completionist can still burn it.",
+   "flavor": "A storable blend studied but never flown — a paper concept, the one entry in this family that never left the bench. Worse thrust and worse Isp than every operational choice beside it; nobody flew it because it never won the argument, but a completionist can still burn it.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_Cavea-B"
@@ -10756,7 +10773,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    8078
+    6868
    ]
   },
   {
@@ -10766,7 +10783,7 @@ window.TREE = {
    "tier": 7,
    "cost": 300,
    "anyToUnlock": false,
-   "flavor": "A solid escape tower sized to yank a three-seat lunar capsule clear of a fully-fuelled Moon rocket - the same abort mechanism as Mercury's, scaled to the mass it now has to save.",
+   "flavor": "A solid escape tower sized to yank a three-seat lunar capsule clear of a fully-fuelled Moon rocket — the same abort mechanism as Mercury's, scaled to the mass it now has to save.",
    "parts": [
     {
      "name": "LaunchEscapeSystem",
@@ -10798,7 +10815,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4710
+    3706
    ]
   },
   {
@@ -10808,7 +10825,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "Grow the spacecraft's own engine from a probe's one-shot nudge into a crewed ship's workhorse - deep-throttling, fifty restarts, the service engine a Soyuz-class vehicle steers and brakes itself home on across a whole mission.",
+   "flavor": "Grow the spacecraft's own engine from a probe's one-shot nudge into a crewed ship's workhorse — deep-throttling, fifty restarts, the service engine a Soyuz-class vehicle steers and brakes itself home on across a whole mission.",
    "parts": [
     {
      "name": "ROE-KTDU425A",
@@ -10820,7 +10837,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    7112
+    5979
    ]
   },
   {
@@ -10830,7 +10847,7 @@ window.TREE = {
    "tier": 6,
    "cost": 160,
    "anyToUnlock": false,
-   "flavor": "Take an engine already proven in flight and refine it in place - more thrust, higher reliability, crew-rating - without changing what it burns. The unglamorous production engineering that turns a working booster into a dependable one.",
+   "flavor": "Take an engine already proven in flight and refine it in place — more thrust, higher reliability, crew-rating — without changing what it burns. The unglamorous production engineering that turns a working booster into a dependable one.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_AJ10-118E",
@@ -10852,7 +10869,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    8273
+    6480
    ]
   },
   {
@@ -10862,7 +10879,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "Sustain a controlled fission chain reaction in a core small enough to launch - kilowatts of steady electrical power that never needs the Sun, and the same reactor physics a nuclear rocket runs hot. The root that nuclear power and nuclear propulsion both grow from.",
+   "flavor": "Sustain a controlled fission chain reaction in a core small enough to launch — kilowatts of steady electrical power that never needs the Sun, and the same reactor physics a nuclear rocket runs hot. The root that nuclear power and nuclear propulsion both grow from.",
    "parts": [
     {
      "name": "RO-reactor-BES5",
@@ -10899,7 +10916,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    10127
+    7423
    ]
   },
   {
@@ -10909,7 +10926,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "A conical command module for three, mated to a service module that carries the propulsion, power and consumables for a two-week voyage - the first spacecraft built to leave Earth orbit with a crew and bring them back.",
+   "flavor": "A conical command module for three, mated to a service module that carries the propulsion, power and consumables for a two-week voyage — the first spacecraft built to leave Earth orbit with a crew and bring them back.",
    "parts": [
     {
      "name": "ROC-ApolloCMBDB",
@@ -10926,7 +10943,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    1516
+    1353
    ]
   },
   {
@@ -10936,7 +10953,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "The Eastern-bloc answer to a manned Moon shot: a descent module, a mission module for the crew to live in, and a service module - a whole spacecraft rather than a scaled-up capsule.",
+   "flavor": "The Eastern-bloc answer to a manned Moon shot: a descent module, a mission module for the crew to live in, and a service module — a whole spacecraft rather than a scaled-up capsule.",
    "parts": [
     {
      "name": "MK2VApod",
@@ -10963,7 +10980,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    1187
+    1091
    ]
   },
   {
@@ -10973,7 +10990,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "A pressurised volume built for people to live in for weeks, not the hours a capsule allows - room to stand, sleep and work while a life-support loop keeps the air breathable. The core a space station grows around.",
+   "flavor": "A pressurised volume built for people to live in for weeks, not the hours a capsule allows — room to stand, sleep and work while a life-support loop keeps the air breathable. The core a space station grows around.",
    "parts": [
     {
      "name": "ROC-GeminiLCMBDB",
@@ -11010,7 +11027,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    2353
+    1908
    ]
   },
   {
@@ -11020,7 +11037,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "A cargo-and-crew ferry built around a reusable habitation module in front and a small, separately-landable descent capsule behind it - the same real hardware that resupplied the early Soviet stations and, unlike its American cargo-Gemini counterpart, actually flew.",
+   "flavor": "A cargo-and-crew ferry built around a reusable habitation module in front and a small, separately-landable descent capsule behind it — the same real hardware that resupplied the early Soviet stations and, unlike its American cargo-Gemini counterpart, actually flew.",
    "parts": [
     {
      "name": "alnair_les_s0_2",
@@ -11042,7 +11059,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    2400
+    1946
    ]
   },
   {
@@ -11052,7 +11069,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "The plumbing of an orbital outpost - pressurised passage tubes, diameter adapters and storage volumes that let separate modules dock into one continuous habitable structure.",
+   "flavor": "The plumbing of an orbital outpost — pressurised passage tubes, diameter adapters and storage volumes that let separate modules dock into one continuous habitable structure.",
    "parts": [
     {
      "name": "acamar_adapter_s2_s0p5_1",
@@ -11214,7 +11231,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    3476
+    2767
    ]
   },
   {
@@ -11224,7 +11241,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "A module built not to live in but to work in - a crewed laboratory where astronauts process experiments and samples by hand, turning a station from a place to survive into a place to do science.",
+   "flavor": "A module built not to live in but to work in — a crewed laboratory where astronauts process experiments and samples by hand, turning a station from a place to survive into a place to do science.",
    "parts": [
     {
      "name": "L25mSci",
@@ -11241,7 +11258,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    2212
+    1796
    ]
   },
   {
@@ -11251,7 +11268,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "Listen to the electric and magnetic oscillations of the plasma a spacecraft flies through - the radio song of a magnetosphere, measured across frequency to map fields no camera can see.",
+   "flavor": "Listen to the electric and magnetic oscillations of the plasma a spacecraft flies through — the radio song of a magnetosphere, measured across frequency to map fields no camera can see.",
    "parts": [
     {
      "name": "RO-PlasmaWave",
@@ -11278,7 +11295,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    12905
+    10065
    ]
   },
   {
@@ -11288,7 +11305,7 @@ window.TREE = {
    "tier": 6,
    "cost": 160,
    "anyToUnlock": false,
-   "flavor": "Procedural wings and control surfaces cut for the loads and heat of a lifting body - the default aerofoil of anything meant to fly fast and come back through the atmosphere on its own lift.",
+   "flavor": "Procedural wings and control surfaces cut for the loads and heat of a lifting body — the default aerofoil of anything meant to fly fast and come back through the atmosphere on its own lift.",
    "parts": [
     {
      "name": "AdvancedCanard",
@@ -11315,7 +11332,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    6741
+    3944
    ]
   },
   {
@@ -11372,7 +11389,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3136,
-    4616
+    3252
    ]
   },
   {
@@ -11382,7 +11399,7 @@ window.TREE = {
    "tier": 6,
    "cost": 160,
    "anyToUnlock": false,
-   "flavor": "A pressurised cockpit sized and shaped for a wing, not a nose cone - forward visibility for a runway landing, from a fighter's canopy to an airliner's flight deck to a spaceplane's reentry windows.",
+   "flavor": "A pressurised cockpit sized and shaped for a wing, not a nose cone — forward visibility for a runway landing, from a fighter's canopy to an airliner's flight deck to a spaceplane's reentry windows.",
    "parts": [
     {
      "name": "25mKossak",
@@ -11459,7 +11476,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    2421
+    1988
    ]
   },
   {
@@ -11469,7 +11486,7 @@ window.TREE = {
    "tier": 6,
    "cost": 160,
    "anyToUnlock": false,
-   "flavor": "The load-bearing body of a winged vehicle - fuselages, cargo bays, tails and shielded tankage that carry flight loads a stacked rocket never sees, from an airliner tube to a spaceplane's flat-bottomed hull.",
+   "flavor": "The load-bearing body of a winged vehicle — fuselages, cargo bays, tails and shielded tankage that carry flight loads a stacked rocket never sees, from an airliner tube to a spaceplane's flat-bottomed hull.",
    "parts": [
     {
      "name": "LMkIIAircaftTail",
@@ -11546,7 +11563,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    7369
+    4180
    ]
   },
   {
@@ -11556,7 +11573,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Redesign the hydrolox engine to restart on command and throttle across a wide range instead of firing once at full bore - the deliberate first step toward an engine built to fly again, not just fly. LR129 was drawn for exactly that job; RD-57 and KVD-1 are the Soviet answer, chasing the same restartable, reusable goal from the other side of the Iron Curtain.",
+   "flavor": "Redesign the hydrolox engine to restart on command and throttle across a wide range instead of firing once at full bore — the deliberate first step toward an engine built to fly again, not just fly. LR129 was drawn for exactly that job; RD-57 and KVD-1 are the Soviet answer, chasing the same restartable, reusable goal from the other side of the Iron Curtain.",
    "parts": [
     {
      "name": "ROE-LR129",
@@ -11578,7 +11595,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    7518
+    6017
    ]
   },
   {
@@ -11588,7 +11605,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Scale the restartable hydrolox engine toward booster thrust while keeping the reusable engine's whole point - deep throttle, many restarts, margin instead of a one-shot redline. Rocketdyne's own HG-3 studies fed straight into the engine still to come.",
+   "flavor": "Scale the restartable hydrolox engine toward booster thrust while keeping the reusable engine's whole point — deep throttle, many restarts, margin instead of a one-shot redline. Rocketdyne's own HG-3 studies fed straight into the engine still to come.",
    "parts": [
     {
      "name": "ROE-HG3",
@@ -11604,7 +11621,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    7518
+    6017
    ]
   },
   {
@@ -11614,7 +11631,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The 1972-76 gas-generator hydrolox engines maturing mark by mark in the shadow of the new reusable-engine programme - more thrust, tighter margins, no change to the single-start cycle underneath.",
+   "flavor": "The 1972-76 gas-generator hydrolox engines maturing mark by mark in the shadow of the new reusable-engine programme — more thrust, tighter margins, no change to the single-start cycle underneath.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_HM-7B",
@@ -11632,7 +11649,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    7706
+    6167
    ]
   },
   {
@@ -11642,7 +11659,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Close the cycle for good: burn the fuel-rich preburner exhaust back through the main chamber at a pressure no earlier hydrolox engine touched, throttleable across a wide range and rated to fly the same hardware again and again. The engine the whole restartable-hydrolox lineage was built toward - the Shuttle's main engine.",
+   "flavor": "Close the cycle for good: burn the fuel-rich preburner exhaust back through the main chamber at a pressure no earlier hydrolox engine touched, throttleable across a wide range and rated to fly the same hardware again and again. The engine the whole restartable-hydrolox lineage was built toward — the Shuttle's main engine.",
    "parts": [
     {
      "name": "ROE-RS25",
@@ -11659,7 +11676,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    7518
+    6017
    ]
   },
   {
@@ -11669,7 +11686,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Push oxidiser-rich staged combustion on storable hypergolics as far as raw chemistry allows - the largest hypergolic engine ever built, drawn for a booster that never flew. A record nobody has beaten since, and nobody needed to.",
+   "flavor": "Push oxidiser-rich staged combustion on storable hypergolics as far as raw chemistry allows — the largest hypergolic engine ever built, drawn for a booster that never flew. A record nobody has beaten since, and nobody needed to.",
    "parts": [
     {
      "name": "ROE-RD270",
@@ -11681,7 +11698,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    7330
+    5867
    ]
   },
   {
@@ -11691,7 +11708,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The same enormous chamber, tried on two propellant combinations nobody ultimately chose - an exotic boron-fuel blend, and a plain kerolox re-fuelling of hardware built for hypergolics. Neither changed the verdict; the ceiling stands where it stood.",
+   "flavor": "The same enormous chamber, tried on two propellant combinations nobody ultimately chose — an exotic boron-fuel blend, and a plain kerolox re-fuelling of hardware built for hypergolics. Neither changed the verdict; the ceiling stands where it stood.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_RD-116-8D420K",
@@ -11700,7 +11717,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    7330
+    5867
    ]
   },
   {
@@ -11710,7 +11727,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Where the N1's oxidiser-rich engines never got to prove themselves in flight, the same staged-combustion chemistry finally does - a kerolox engine that reaches orbit for real, with steering verniers built in rather than bolted on.",
+   "flavor": "Where the N1's oxidiser-rich engines never got to prove themselves in flight, the same staged-combustion chemistry finally does — a kerolox engine that reaches orbit for real, with steering verniers built in rather than bolted on.",
    "parts": [
     {
      "name": "ROE-RD0110R",
@@ -11745,7 +11762,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    4041
+    3177
    ]
   },
   {
@@ -11755,7 +11772,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "One more pass at the same storable staged-combustion hardware - tighter tolerances, higher chamber pressure, the same dependable poison burning a little more completely each mark.",
+   "flavor": "One more pass at the same storable staged-combustion hardware — tighter tolerances, higher chamber pressure, the same dependable poison burning a little more completely each mark.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_RD-0210-Mk2",
@@ -11766,7 +11783,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    7236
+    5792
    ]
   },
   {
@@ -11776,7 +11793,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "The Scout stack's own first stage, cast and refined once more - the same all-solid launcher, still cheap, still ready, still needing no pad crew to fuel it.",
+   "flavor": "The Scout stack's own first stage, cast and refined once more — the same all-solid launcher, still cheap, still ready, still needing no pad crew to fuel it.",
    "parts": [
     {
      "name": "ROE-Algol3",
@@ -11793,7 +11810,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    4146
+    3327
    ]
   },
   {
@@ -11803,7 +11820,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Scale segmented casting to a booster big enough to loft a crewed orbiter, and rate it to fly people - the largest solid rocket motor ever flown, proven over a hundred missions where the drawing-board monsters before it never left the test stand.",
+   "flavor": "Scale segmented casting to a booster big enough to loft a crewed orbiter, and rate it to fly people — the largest solid rocket motor ever flown, proven over a hundred missions where the drawing-board monsters before it never left the test stand.",
    "parts": [
     {
      "name": "RO-RSRM",
@@ -11820,7 +11837,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    4941
+    3819
    ]
   },
   {
@@ -11830,7 +11847,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "A later run of the same kick-motor family, sized for whatever a mission needs one generation on - heavier payloads to geostationary transfer, a bigger burn from the same solid-motor playbook.",
+   "flavor": "A later run of the same kick-motor family, sized for whatever a mission needs one generation on — heavier payloads to geostationary transfer, a bigger burn from the same solid-motor playbook.",
    "parts": [
     {
      "name": "ROE-Antares3",
@@ -11867,7 +11884,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    4287
+    3514
    ]
   },
   {
@@ -11877,7 +11894,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The Star-37FM casing pushed once more - a longer burn and a wider velocity envelope from the same solid-motor family, one generation further down the same catalog.",
+   "flavor": "The Star-37FM casing pushed once more — a longer burn and a wider velocity envelope from the same solid-motor family, one generation further down the same catalog.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_STAR-37FMV"
@@ -11885,7 +11902,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    4287
+    3514
    ]
   },
   {
@@ -11895,7 +11912,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Stage two solid motors together and call it a whole upper stage, not just a kick - the segmented-casting size and the kick-motor precision, combined into hardware that can send a payload all the way to geostationary transfer or escape velocity from a bay that never carries its own liquid stage.",
+   "flavor": "Stage two solid motors together and call it a whole upper stage, not just a kick — the segmented-casting size and the kick-motor precision, combined into hardware that can send a payload all the way to geostationary transfer or escape velocity from a bay that never carries its own liquid stage.",
    "parts": [
     {
      "name": "ius_bottom",
@@ -11922,7 +11939,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    4590
+    3664
    ]
   },
   {
@@ -11932,7 +11949,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Refine the whole family of restartable storable engines mark by mark - more thrust, longer restart life, no change to the chemistry or the mission they were built for.",
+   "flavor": "Refine the whole family of restartable storable engines mark by mark — more thrust, longer restart life, no change to the chemistry or the mission they were built for.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_AJ10-118F",
@@ -11953,7 +11970,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    6186
+    6351
    ]
   },
   {
@@ -11963,7 +11980,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Move on from a demonstration reactor to full engine-scale ground tests - NRX proves the reactor survives real duty, Phoebus proves it can run bigger still, NERVA-XE proves the whole engine system together. The ground-test programme a flight engine still has to earn its way out of.",
+   "flavor": "Move on from a demonstration reactor to full engine-scale ground tests — NRX proves the reactor survives real duty, Phoebus proves it can run bigger still, NERVA-XE proves the whole engine system together. The ground-test programme a flight engine still has to earn its way out of.",
    "parts": [
     {
      "name": "NERVA_NRX",
@@ -11985,7 +12002,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    7984
+    6463
    ]
   },
   {
@@ -11995,7 +12012,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The design NASA actually meant to fly - bracketed by Pewee's efficiency record and Phoebus-2A's raw power, the ground tests that shaped it. Cancelled in 1972 before it ever left the test stand; build it here instead.",
+   "flavor": "The design NASA actually meant to fly — bracketed by Pewee's efficiency record and Phoebus-2A's raw power, the ground tests that shaped it. Cancelled in 1972 before it ever left the test stand; build it here instead.",
    "parts": [
     {
      "name": "PEWEE100",
@@ -12022,23 +12039,23 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    7984
+    6463
    ]
   },
   {
    "id": "str_pusherPlate",
-   "title": "Ablative Pusher Plate & Shock Absorption",
+   "title": "Pusher-Plate Shock Absorption",
    "discipline": "StructuresMechanisms",
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "A thick steel plate that shrugs off a nuclear detonation close enough to push it, backed by a two-stage shock absorber that turns a violent kick into an acceleration a crew can survive. Nothing about the fission itself is the hard part - surviving your own propulsion is.",
+   "flavor": "A thick steel plate that shrugs off a nuclear detonation close enough to push it, backed by a two-stage shock absorber that turns a violent kick into an acceleration a crew can survive. Nothing about the fission itself is the hard part — surviving your own propulsion is.",
    "parts": [],
    "upgrades": [],
    "grants": [],
    "pos": [
     -2528,
-    3267
+    2600
    ]
   },
   {
@@ -12048,7 +12065,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Skip the reactor and the nozzle entirely - drop small fission charges out the back and ride the shockwave off an ablative plate, one controlled detonation at a time. Absurd, filthy, and on paper the only chemistry-free way to put a truly heavy ship anywhere in the solar system fast. Project Orion never flew; here, it can.",
+   "flavor": "Skip the reactor and the nozzle entirely — drop small fission charges out the back and ride the shockwave off an ablative plate, one controlled detonation at a time. Absurd, filthy, and on paper the only chemistry-free way to put a truly heavy ship anywhere in the solar system fast. Project Orion never flew; here, it can.",
    "parts": [
     {
      "name": "RO-fft20mMMOtank",
@@ -12095,7 +12112,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    7424
+    5942
    ]
   },
   {
@@ -12105,7 +12122,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Trap electrons in a magnetic field to ionise a noble gas, then let an electric field fling the ions out far faster than any flame - thrust measured in millinewtons, specific impulse measured in the thousands of seconds. Too weak to launch anything, and exactly what a satellite needs to hold its station for a decade on a tank of xenon.",
+   "flavor": "Trap electrons in a magnetic field to ionise a noble gas, then let an electric field fling the ions out far faster than any flame — thrust measured in millinewtons, specific impulse measured in the thousands of seconds. Too weak to launch anything, and exactly what a satellite needs to hold its station for a decade on a tank of xenon.",
    "parts": [
     {
      "name": "RO-SPT50",
@@ -12127,7 +12144,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    10938
+    8754
    ]
   },
   {
@@ -12137,7 +12154,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The same magnetic bottle, fed more power and more propellant - still a whisper of thrust, still an Isp no chemical engine will ever touch.",
+   "flavor": "The same magnetic bottle, fed more power and more propellant — still a whisper of thrust, still an Isp no chemical engine will ever touch.",
    "parts": [
     {
      "name": "RO-SPT70",
@@ -12149,17 +12166,17 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    10944
+    8759
    ]
   },
   {
    "id": "gnc_bipropAttitudeThrust",
-   "title": "Bipropellant Attitude & Apogee Thrust",
+   "title": "Bipropellant Attitude Thrusters",
    "discipline": "GuidanceControl",
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Trade the reaction-control block's simple storable monopropellant for a genuine two-propellant combustion chamber - a real flame instead of a catalytic fizz, and a meaningful jump in specific impulse for every correction burn and apogee kick a spacecraft makes on its own.",
+   "flavor": "Trade the reaction-control block's simple storable monopropellant for a genuine two-propellant combustion chamber — a real flame instead of a catalytic fizz, and a meaningful jump in specific impulse for every correction burn and apogee kick a spacecraft makes on its own.",
    "parts": [
     {
      "name": "ROC-OrionESM",
@@ -12199,7 +12216,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    8172
+    6943
    ]
   },
   {
@@ -12209,7 +12226,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "The high-bypass turbofan family, matured a generation past its first marks - more bypass, hotter cores, a real production engine flying airliners instead of a prototype on a test stand.",
+   "flavor": "The high-bypass turbofan family, matured a generation past its first marks — more bypass, hotter cores, a real production engine flying airliners instead of a prototype on a test stand.",
    "parts": [
     {
      "name": "SXTKe90TurboJet",
@@ -12227,7 +12244,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    5516
+    4567
    ]
   },
   {
@@ -12237,7 +12254,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "The afterburning low-bypass/variable-stator turbojet families, matured a generation past their first marks - hotter cores, a real production fighter engine instead of a prototype on a test stand.",
+   "flavor": "The afterburning low-bypass/variable-stator turbojet families, matured a generation past their first marks — hotter cores, a real production fighter engine instead of a prototype on a test stand.",
    "parts": [
     {
      "name": "aje_al31",
@@ -12253,7 +12270,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    5610
+    4642
    ]
   },
   {
@@ -12263,7 +12280,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Wrap the bus in another few layers of aluminised film and the heat leak keeps dropping further still - the same passive blanket, thickened for a mission measured in months rather than weeks.",
+   "flavor": "Wrap the bus in another few layers of aluminised film and the heat leak keeps dropping further still — the same passive blanket, thickened for a mission measured in months rather than weeks.",
    "parts": [],
    "upgrades": [
     "MLI.Upgrade2",
@@ -12272,7 +12289,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    805
+    786
    ]
   },
   {
@@ -12282,7 +12299,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Stop relying on the hull's own skin to shed heat and circulate coolant out to dedicated panels instead - a heat-rejection system sized independently of the spacecraft it serves, because a crewed orbiter or a station generates more waste heat than any body-mounted radiator could ever carry alone.",
+   "flavor": "Stop relying on the hull's own skin to shed heat and circulate coolant out to dedicated panels instead — a heat-rejection system sized independently of the spacecraft it serves, because a crewed orbiter or a station generates more waste heat than any body-mounted radiator could ever carry alone.",
    "parts": [
     {
      "name": "foldingRadLarge",
@@ -12329,7 +12346,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Swap the pressure-stabilised tank's stainless skin for an aluminium-copper alloy and the same trick - a wall so thin it needs its own pressure to stand - sheds a third of its weight again. The material the Shuttle's own External Tank flies on.",
+   "flavor": "Swap the pressure-stabilised tank's stainless skin for an aluminium-copper alloy and the same trick — a wall so thin it needs its own pressure to stand — sheds a third of its weight again. The material the Shuttle's own External Tank flies on.",
    "parts": [],
    "upgrades": [
     "RFTech-SM-IV",
@@ -12339,7 +12356,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    3173
+    2525
    ]
   },
   {
@@ -12360,7 +12377,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    3173
+    2525
    ]
   },
   {
@@ -12379,7 +12396,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    3173
+    2525
    ]
   },
   {
@@ -12398,7 +12415,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -704,
-    3173
+    2525
    ]
   },
   {
@@ -12417,7 +12434,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    3800
+    2450
    ]
   },
   {
@@ -12437,7 +12454,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    805
+    786
    ]
   },
   {
@@ -12457,7 +12474,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    8219
+    6981
    ]
   },
   {
@@ -12476,7 +12493,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -3440,
-    11551
+    9243
    ]
   },
   {
@@ -12486,7 +12503,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Carry the resin-and-fibre layup learned for a reentry heatshield over to a payload shroud instead - a fairing that sheds the last of the aluminium stringer's dead weight, built from the same composite technique that already keeps a capsule cool on the way down.",
+   "flavor": "Carry the resin-and-fibre layup learned for a reentry heatshield over to a payload shroud instead — a fairing that sheds the last of the aluminium stringer's dead weight, built from the same composite technique that already keeps a capsule cool on the way down.",
    "parts": [
     {
      "name": "ROC-CSTNoseCone",
@@ -12501,7 +12518,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    3800
+    2450
    ]
   },
   {
@@ -12511,7 +12528,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Build the station module out of a spent launch-vehicle stage's own tooling and diameter instead of designing a bespoke pressure vessel from scratch - decks and stowage where the tankage used to be. Skylab flew fitted-out on the ground rather than converted in orbit as first planned, but the trick is the same: a station's worth of volume for the price of hardware already proven to fly.",
+   "flavor": "Build the station module out of a spent launch-vehicle stage's own tooling and diameter instead of designing a bespoke pressure vessel from scratch — decks and stowage where the tankage used to be. Skylab flew fitted-out on the ground rather than converted in orbit as first planned, but the trick is the same: a station's worth of volume for the price of hardware already proven to fly.",
    "parts": [
     {
      "name": "SXTISSHabISK30",
@@ -12538,7 +12555,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    2494
+    2021
    ]
   },
   {
@@ -12548,7 +12565,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "The same pressurised-module family, in more sizes and roles - habitation decks and utility bays scaled to whatever the mission needs, off the same shelf the core module came from.",
+   "flavor": "The same pressurised-module family, in more sizes and roles — habitation decks and utility bays scaled to whatever the mission needs, off the same shelf the core module came from.",
    "parts": [
     {
      "name": "sspx-habitation-125-1",
@@ -12575,7 +12592,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    2306
+    1871
    ]
   },
   {
@@ -12585,7 +12602,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The first module of the first station meant to be added to, not just launched whole - a working/living core section, a transfer compartment and a docking front end, built from day one expecting company.",
+   "flavor": "The first module of the first station meant to be added to, not just launched whole — a working/living core section, a transfer compartment and a docking front end, built from day one expecting company.",
    "parts": [
     {
      "name": "eridani_crew_s1p5_1",
@@ -12607,7 +12624,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    2588
+    2021
    ]
   },
   {
@@ -12634,7 +12651,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2494
+    1946
    ]
   },
   {
@@ -12644,7 +12661,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "A dedicated airlock and a biological-research bay in one add-on - the module that gave the station its own independent way outside, instead of relying on whatever happened to be docked.",
+   "flavor": "A dedicated airlock and a biological-research bay in one add-on — the module that gave the station its own independent way outside, instead of relying on whatever happened to be docked.",
    "parts": [
     {
      "name": "aquila_crew_s1_3",
@@ -12666,7 +12683,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2588
+    2021
    ]
   },
   {
@@ -12693,7 +12710,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2400
+    1871
    ]
   },
   {
@@ -12725,7 +12742,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2776
+    2171
    ]
   },
   {
@@ -12757,7 +12774,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2682
+    2096
    ]
   },
   {
@@ -12767,7 +12784,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Bolt an unpressurised scaffold onto the station instead of cramming everything inside a hull - a lattice to hang solar arrays, radiators and berthing ports from, structure that never needs to hold air. The adjustable mounting frames and radial berthing points that let a station grow module by module instead of launching whole.",
+   "flavor": "Bolt an unpressurised scaffold onto the station instead of cramming everything inside a hull — a lattice to hang solar arrays, radiators and berthing ports from, structure that never needs to hold air. The adjustable mounting frames and radial berthing points that let a station grow module by module instead of launching whole.",
    "parts": [
     {
      "name": "sspx-adjusting-base-125-1",
@@ -12824,7 +12841,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    3591
+    2859
    ]
   },
   {
@@ -12834,7 +12851,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "A lattice tower built piece by piece by a spacewalking crew instead of arriving pre-built on a single launch - the first truss put together by hand in orbit, proving a station's own structure could grow past whatever fit under one payload fairing.",
+   "flavor": "A lattice tower built piece by piece by a spacewalking crew instead of arriving pre-built on a single launch — the first truss put together by hand in orbit, proving a station's own structure could grow past whatever fit under one payload fairing.",
    "parts": [
     {
      "name": "rana_mount_srf_1",
@@ -12856,17 +12873,17 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3497
+    2784
    ]
   },
   {
    "id": "gnc_stationBerthing",
-   "title": "Advanced Docking and Berthing Adapters",
+   "title": "Station Berthing Adapters",
    "discipline": "GuidanceControl",
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "A new generation of docking hardware built for a permanent outpost instead of a single rendezvous - androgynous ports that don't care which side is active, a dedicated berthing adapter for joining two different national programmes' hardware, and the instruments riding along on the join itself.",
+   "flavor": "A new generation of station-joining hardware built for a permanent outpost instead of a single rendezvous — a dedicated berthing adapter for mating two different national programmes' hardware, androgynous ports that don't care which side is active, and the instruments riding along on the join itself.",
    "parts": [
     {
      "name": "ROC-ApolloAPAS75BDB",
@@ -12903,7 +12920,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1328
+    1203
    ]
   },
   {
@@ -12913,7 +12930,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "The same momentum-exchange trick, sized for a station instead of a probe - a flywheel heavy enough to hold a whole crewed module steady without spending a gram of propellant.",
+   "flavor": "The same momentum-exchange trick, sized for a station instead of a probe — a flywheel heavy enough to hold a whole crewed module steady without spending a gram of propellant.",
    "parts": [
     {
      "name": "advSasModule",
@@ -12940,7 +12957,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    9556
+    7110
    ]
   },
   {
@@ -12950,7 +12967,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Close a powered claw around a grapple fixture instead of threading a docking port together by eye - the business end of a robotic arm, built to catch and hold a vehicle that never has to fly all the way in.",
+   "flavor": "Close a powered claw around a grapple fixture instead of threading a docking port together by eye — the business end of a robotic arm, built to catch and hold a vehicle that never has to fly all the way in.",
    "parts": [
     {
      "name": "GrapplingDevice",
@@ -12962,7 +12979,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    11969
+    9356
    ]
   },
   {
@@ -12972,7 +12989,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Stretch the same Apollo stack for a mission measured in months instead of weeks - a bigger service module, a mission module bolted on for the extra volume a Skylab-length stay demands, and a high-gain antenna that can still find Earth from wherever the longer mission sends it. The same capsule, built to not come home so soon.",
+   "flavor": "Stretch the same Apollo stack for a mission measured in months instead of weeks — a bigger service module, a mission module bolted on for the extra volume a Skylab-length stay demands, and a high-gain antenna that can still find Earth from wherever the longer mission sends it. The same capsule, built to not come home so soon.",
    "parts": [
     {
      "name": "ROC-ApolloCMBDBBlockIII",
@@ -13009,7 +13026,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1516
+    1353
    ]
   },
   {
@@ -13019,7 +13036,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Scale the maneuvering capsule up from two seats to nine, or trade the crew for cargo entirely - Gemini's own OAMS-powered airframe, stretched into a ferry built to keep a station supplied rather than chase a target in orbit. Where Apollo forked toward the Moon, this is Gemini's other road: never flown, but the shape every later space-station taxi and cargo hauler still borrows from.",
+   "flavor": "Scale the maneuvering capsule up from two seats to nine, or trade the crew for cargo entirely — Gemini's own OAMS-powered airframe, stretched into a ferry built to keep a station supplied rather than chase a target in orbit. Where Apollo forked toward the Moon, this is Gemini's other road: never flown, but the shape every later space-station taxi and cargo hauler still borrows from.",
    "parts": [
     {
      "name": "ROC-BigGeminiCabinBDB",
@@ -13051,7 +13068,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1422
+    1278
    ]
   },
   {
@@ -13061,7 +13078,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Put the wing, the heatshield, the flight deck and a cargo bay big enough to carry a whole satellite all on one airframe that lands on a runway and flies again - the Shuttle orbiter, the vehicle this whole era is named for. Winged reentry, a spaceplane flight deck and large-fuselage airframe structure, each already proven separately, converge here for the first time into one reusable machine.",
+   "flavor": "Put the wing, the heatshield, the flight deck and a cargo bay big enough to carry a whole satellite all on one airframe that lands on a runway and flies again — the Shuttle orbiter, the vehicle this whole era is named for. Winged reentry, a spaceplane flight deck and large-fuselage airframe structure, each already proven separately, converge here for the first time into one reusable machine.",
    "parts": [
     {
      "name": "mk3CargoBayL",
@@ -13098,7 +13115,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    4778
+    3252
    ]
   },
   {
@@ -13140,7 +13157,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    5218
+    4129
    ]
   },
   {
@@ -13150,7 +13167,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The gas-generator hydrolox upper grows up. Where the J-2 fired once, the LE-5 coasts and reignites ten times across a mission - the workhorse restartable upper of an operational launcher. Its own expander-bleed descendants split off to the expander lane.",
+   "flavor": "The gas-generator hydrolox upper grows up. Where the J-2 fired once, the LE-5 coasts and reignites ten times across a mission — the workhorse restartable upper of an operational launcher. Its own expander-bleed descendants split off to the expander lane.",
    "parts": [
     {
      "name": "ROE-LE5",
@@ -13162,7 +13179,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    7843
+    6276
    ]
   },
   {
@@ -13172,7 +13189,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "The LE-5 keeps maturing mark by mark - more restarts, a little more thrust, the same workhorse upper stage refined rather than replaced.",
+   "flavor": "The LE-5 keeps maturing mark by mark — more restarts, a little more thrust, the same workhorse upper stage refined rather than replaced.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_LE-5B-2",
@@ -13181,7 +13198,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    7843
+    6276
    ]
   },
   {
@@ -13191,7 +13208,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Having proven the reusable staged-combustion engine is buildable, the world's launch fleet turns around and walks away from it. The RS-68 - the most powerful hydrogen engine ever flown - is deliberately a gas-generator with an ablative nozzle, trading Isp for a price tag; Vulcain and the YF-77 make the same bargain for Ariane and Long March. The anti-SSME: simplicity at booster scale.",
+   "flavor": "Having proven the reusable staged-combustion engine is buildable, the world's launch fleet turns around and walks away from it. The RS-68 — the most powerful hydrogen engine ever flown — is deliberately a gas-generator with an ablative nozzle, trading Isp for a price tag; Vulcain and the YF-77 make the same bargain for Ariane and Long March. The anti-SSME: simplicity at booster scale.",
    "parts": [
     {
      "name": "ROE-RS68",
@@ -13223,7 +13240,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    7749
+    6201
    ]
   },
   {
@@ -13233,7 +13250,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "The hardest cycle in rocketry stops being one nation's secret. Fuel-rich staged-combustion hydrolox - the SSME's cycle - is rebuilt by two more programs: the RD-0120 lifts Energia, the LE-7 lifts the H-II. What took a superpower to master becomes something three space programs can pour.",
+   "flavor": "The hardest cycle in rocketry stops being one nation's secret. Fuel-rich staged-combustion hydrolox — the SSME's cycle — is rebuilt by two more programs: the RD-0120 lifts Energia, the LE-7 lifts the H-II. What took a superpower to master becomes something three space programs can pour.",
    "parts": [
     {
      "name": "ROE-LE7",
@@ -13255,7 +13272,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    7518
+    6017
    ]
   },
   {
@@ -13265,7 +13282,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "Every reusable and staged-combustion hydrolox engine now in service settles into its production marks - the SSME Block-I and Block-II, the RD-0120M, the LE-7A, the maturing HG-3 and deep-throttle chains - the unglamorous decade of squeezing margin out of engines already flying.",
+   "flavor": "Every reusable and staged-combustion hydrolox engine now in service settles into its production marks — the SSME Block-I and Block-II, the RD-0120M, the LE-7A, the maturing HG-3 and deep-throttle chains — the unglamorous decade of squeezing margin out of engines already flying.",
    "parts": [
     {
      "name": "rmm_arsia",
@@ -13295,7 +13312,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    7518
+    6017
    ]
   },
   {
@@ -13305,7 +13322,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "One engine, two fuels, switched in flight. At liftoff it burns dense kerosene for thrust off the pad; at altitude it crosses over to hydrogen for Isp - a single powerplant doing the job of a two-propellant staircase. The RD-701 was meant to lift the MAKS spaceplane; making it work needs both the staged-combustion hydrolox cycle and oxidiser-rich kerolox at once.",
+   "flavor": "One engine, two fuels, switched in flight. At liftoff it burns dense kerosene for thrust off the pad; at altitude it crosses over to hydrogen for Isp — a single powerplant doing the job of a two-propellant staircase. The RD-701 was meant to lift the MAKS spaceplane; making it work needs both the staged-combustion hydrolox cycle and oxidiser-rich kerolox at once.",
    "parts": [
     {
      "name": "nflv-engine-rd701-1",
@@ -13327,7 +13344,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    5631
+    5005
    ]
   },
   {
@@ -13337,7 +13354,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Methane splits the difference: colder than kerosene, denser than hydrogen, clean-burning and one day makeable on Mars. The LRBE is the tree's first methalox engine - a staged-combustion booster on a fuel nobody flew yet, the seed of a lane that a later era will grow into.",
+   "flavor": "Methane splits the difference: colder than kerosene, denser than hydrogen, clean-burning and one day makeable on Mars. The LRBE is the tree's first methalox engine — a staged-combustion booster on a fuel nobody flew yet, the seed of a lane that a later era will grow into.",
    "parts": [
     {
      "name": "ROE-BE4",
@@ -13354,7 +13371,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    3894
+    3060
    ]
   },
   {
@@ -13364,7 +13381,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Oxidiser-rich staged combustion hits its ceiling. The RD-170 - four chambers off one turbopump, 7900 kilonewtons - is the most powerful liquid-propellant engine ever built, the monster that lifts Energia and Zenit. Where the N1's engines never flew and Zenit's was only an upper, this is the chemistry's operational record.",
+   "flavor": "Oxidiser-rich staged combustion hits its ceiling. The RD-170 — four chambers off one turbopump, 7900 kilonewtons — is the most powerful liquid-propellant engine ever built, the monster that lifts Energia and Zenit. Where the N1's engines never flew and Zenit's was only an upper, this is the chemistry's operational record.",
    "parts": [
     {
      "name": "ROE-RD170",
@@ -13386,7 +13403,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    4035
+    3172
    ]
   },
   {
@@ -13421,7 +13438,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    3988
+    3135
    ]
   },
   {
@@ -13431,7 +13448,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "Cut the same modular RD-170 hardware into two more shapes - a lighter single-chamber mark for a smaller booster, and an export version re-plumbed for someone else's pad.",
+   "flavor": "Cut the same modular RD-170 hardware into two more shapes — a lighter single-chamber mark for a smaller booster, and an export version re-plumbed for someone else's pad.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_RD-181",
@@ -13440,7 +13457,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    3988
+    3135
    ]
   },
   {
@@ -13450,7 +13467,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The storable staged-combustion engines of Proton and its kin reach their final operational marks - the RD-275 first stage, the Kosberg upper stages - the last refinements of a hypergolic booster line that has been flying since the sixties.",
+   "flavor": "The storable staged-combustion engines of Proton and its kin reach their final operational marks — the RD-275 first stage, the Kosberg upper stages — the last refinements of a hypergolic booster line that has been flying since the sixties.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_RD-0210-Mk3",
@@ -13465,7 +13482,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    7236
+    5792
    ]
   },
   {
@@ -13475,7 +13492,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Coast, reignite, coast again - dozens of times, across days. The Fregat and Briz upper stages and their kin are storable propulsion modules built for the choreography of an interplanetary or multi-orbit mission, restarting on demand where the single-shot Agena and early AJ10 could not. The Transtar rates five hundred ignitions.",
+   "flavor": "Coast, reignite, coast again — dozens of times, across days. The Fregat and Briz upper stages and their kin are storable propulsion modules built for the choreography of an interplanetary or multi-orbit mission, restarting on demand where the single-shot Agena and early AJ10 could not. The Transtar rates five hundred ignitions.",
    "parts": [
     {
      "name": "ROE-AJ10-transtar",
@@ -13507,7 +13524,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    6186
+    6351
    ]
   },
   {
@@ -13517,7 +13534,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Aestus keeps pace with the rest of the multi-restart storable family - a modified chamber, then a second-generation successor, the same choreography refined one mark further.",
+   "flavor": "Aestus keeps pace with the rest of the multi-restart storable family — a modified chamber, then a second-generation successor, the same choreography refined one mark further.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_Aestus-II",
@@ -13526,7 +13543,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    6186
+    6351
    ]
   },
   {
@@ -13536,7 +13553,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The gas-generator kerolox engines that built the space age take their final bow. The last production marks of Delta's RS-27, Atlas's RS-56 and Titan's LR87/LR91 - a lineage of open-cycle workhorses being uprated one last time as staged combustion walks past them.",
+   "flavor": "The gas-generator kerolox engines that built the space age take their final bow. The last production marks of Delta's RS-27, Atlas's RS-56 and Titan's LR87/LR91 — a lineage of open-cycle workhorses being uprated one last time as staged combustion walks past them.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_LR101-NA-15",
@@ -13553,7 +13570,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    9949
+    7519
    ]
   },
   {
@@ -13563,7 +13580,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "America's answer to the imported RD-180 that never got built. The STBE was a big, simple gas-generator kerolox booster engine drawn for the next launcher - the domestic alternative to buying Russian staged combustion, shelved when the RD-180 won on price.",
+   "flavor": "America's answer to the imported RD-180 that never got built. The STBE was a big, simple gas-generator kerolox booster engine drawn for the next launcher — the domestic alternative to buying Russian staged combustion, shelved when the RD-180 won on price.",
    "parts": [
     {
      "name": "cryoengine-allosaur-1",
@@ -13585,7 +13602,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    10033
+    7586
    ]
   },
   {
@@ -13595,7 +13612,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Wind the motor case out of graphite and epoxy instead of forging it from steel, and the dead weight falls away. The filament-wound composite case - on the giant SRMU, the standalone Castor 120, the Titan solids - is the material leap past the heavy segmented steel of the Shuttle booster, more impulse for less structure.",
+   "flavor": "Wind the motor case out of graphite and epoxy instead of forging it from steel, and the dead weight falls away. The filament-wound composite case — on the giant SRMU, the standalone Castor 120, the Titan solids — is the material leap past the heavy segmented steel of the Shuttle booster, more impulse for less structure.",
    "parts": [
     {
      "name": "ROE-1208sepMotor",
@@ -13638,7 +13655,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    4941
+    3819
    ]
   },
   {
@@ -13648,7 +13665,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The commercial strap-on aisle. Bolt on as many graphite-epoxy motors as the payload needs - the Delta GEM family in three lengths, the Atlas AJ-60 - a fixed catalogue of composite boosters sized to order off the composite-case breakthrough.",
+   "flavor": "The commercial strap-on aisle. Bolt on as many graphite-epoxy motors as the payload needs — the Delta GEM family in three lengths, the Atlas AJ-60 — a fixed catalogue of composite boosters sized to order off the composite-case breakthrough.",
    "parts": [
     {
      "name": "ROE-AJ60",
@@ -13680,7 +13697,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    4988
+    3856
    ]
   },
   {
@@ -13690,7 +13707,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The Hall thruster leaves the laboratory. The SPT-100 and its bigger siblings become flight-qualified hardware, first for stationkeeping and then as primary propulsion - a few grams-force of thrust at sixteen hundred seconds of Isp, the electric workhorse of the coming decades.",
+   "flavor": "The Hall thruster leaves the laboratory. The SPT-100 and its bigger siblings become flight-qualified hardware, first for stationkeeping and then as primary propulsion — a few grams-force of thrust at sixteen hundred seconds of Isp, the electric workhorse of the coming decades.",
    "parts": [
     {
      "name": "RO-PPS1350",
@@ -13717,7 +13734,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    10897
+    8721
    ]
   },
   {
@@ -13727,7 +13744,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Scale the Hall thruster into the tens of kilowatts. The 457M's nested channels swallow seventy-two kilowatts and push the Isp past two thousand seconds - the class of electric engine that could one day move cargo rather than just trim an orbit.",
+   "flavor": "Scale the Hall thruster into the tens of kilowatts. The 457M's nested channels swallow seventy-two kilowatts and push the Isp past two thousand seconds — the class of electric engine that could one day move cargo rather than just trim an orbit.",
    "parts": [
     {
      "name": "RO-457M",
@@ -13745,7 +13762,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    11018
+    8818
    ]
   },
   {
@@ -13755,7 +13772,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "A different way to throw ions: accelerate them through charged grids instead of a magnetic field, and the exhaust speed climbs higher still. NSTAR flew on Deep Space 1 - the first time an ion engine, not a chemical rocket, was the main drive of a probe to another world.",
+   "flavor": "A different way to throw ions: accelerate them through charged grids instead of a magnetic field, and the exhaust speed climbs higher still. NSTAR flew on Deep Space 1 — the first time an ion engine, not a chemical rocket, was the main drive of a probe to another world.",
    "parts": [
     {
      "name": "ionEngine",
@@ -13767,7 +13784,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    10924
+    8743
    ]
   },
   {
@@ -13777,7 +13794,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "No electrodes to erode - a pulsed magnetic field ionises and flings a puff of ammonia, and repeats thousands of times a second. The PIT reaches seven thousand seconds of Isp, an experimental high-power concept for the kind of cruise no chemical stage could sustain.",
+   "flavor": "No electrodes to erode — a pulsed magnetic field ionises and flings a puff of ammonia, and repeats thousands of times a second. The PIT reaches seven thousand seconds of Isp, an experimental high-power concept for the kind of cruise no chemical stage could sustain.",
    "parts": [
     {
      "name": "RO-nupit",
@@ -13799,7 +13816,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    11112
+    8893
    ]
   },
   {
@@ -13809,7 +13826,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "The same electrodeless pulse scaled up - more energy per pulse, a heavier propellant puff, chasing higher thrust from the same repetitively-pulsed magnetic field.",
+   "flavor": "The same electrodeless pulse scaled up — more energy per pulse, a heavier propellant puff, chasing higher thrust from the same repetitively-pulsed magnetic field.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_NuPIT-7000",
@@ -13819,7 +13836,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    11112
+    8893
    ]
   },
   {
@@ -13829,7 +13846,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "The nuclear rocket stops being a ground-test article and becomes a flight design. The Soviet RD-0410 was actually built and fired; NERVA II is the largest solid-core engine ever drawn. The end of the solid-core line - reactors meant, at last, to leave the ground.",
+   "flavor": "The nuclear rocket stops being a ground-test article and becomes a flight design. The Soviet RD-0410 was actually built and fired; NERVA II is the largest solid-core engine ever drawn. The end of the solid-core line — reactors meant, at last, to leave the ground.",
    "parts": [
     {
      "name": "RD0410MID",
@@ -13851,7 +13868,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    8031
+    6501
    ]
   },
   {
@@ -13861,7 +13878,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Pack the reactor fuel as loose particles instead of solid rods and the coolant can pull heat out far faster - more power in less core. The particle-bed NTR of the Timberwind program is a denser, hotter path to the same nuclear thrust.",
+   "flavor": "Pack the reactor fuel as loose particles instead of solid rods and the coolant can pull heat out far faster — more power in less core. The particle-bed NTR of the Timberwind program is a denser, hotter path to the same nuclear thrust.",
    "parts": [
     {
      "name": "ROE-SNTPPFE100",
@@ -13873,7 +13890,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    7937
+    6426
    ]
   },
   {
@@ -13883,7 +13900,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "Let the fuel melt, or turn to gas, and the temperature ceiling - and the Isp - rises with it. The liquid-core NTR reaches fourteen hundred seconds; the low-pressure gas-core start pushes further. Engineering fiction for now, and the doorway to the gas-core lane a later era will open.",
+   "flavor": "Let the fuel melt, or turn to gas, and the temperature ceiling — and the Isp — rises with it. The liquid-core NTR reaches fourteen hundred seconds; the low-pressure gas-core start pushes further. Engineering fiction for now, and the doorway to the gas-core lane a later era will open.",
    "parts": [
     {
      "name": "RO-KA-LRCNTR",
@@ -13903,7 +13920,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    8538
+    7014
    ]
   },
   {
@@ -13913,7 +13930,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Point the thrust down and a fighter takes off with no runway. The R-79's swivelling nozzle lifts the Yak-141 vertically then rotates aft for supersonic flight, the lift jets handling the hover - vectored thrust as a whole new way to leave the ground.",
+   "flavor": "Point the thrust down and a fighter takes off with no runway. The R-79's swivelling nozzle lifts the Yak-141 vertically then rotates aft for supersonic flight, the lift jets handling the hover — vectored thrust as a whole new way to leave the ground.",
    "parts": [
     {
      "name": "RO-SXT-R79",
@@ -13930,7 +13947,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    5563
+    4604
    ]
   },
   {
@@ -13973,7 +13990,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    5469
+    4529
    ]
   },
   {
@@ -13983,7 +14000,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "One engine, two regimes: breathe air like a turbojet up through the atmosphere, then seal the intakes and burn stored oxidiser like a rocket the rest of the way to orbit - the single-stage-to-orbit dream in one nacelle, real turbojet and real rocket hardware, never quite proven at full scale.",
+   "flavor": "One engine, two regimes: breathe air like a turbojet up through the atmosphere, then seal the intakes and burn stored oxidiser like a rocket the rest of the way to orbit — the single-stage-to-orbit dream in one nacelle, real turbojet and real rocket hardware, never quite proven at full scale.",
    "parts": [
     {
      "name": "RAPIER",
@@ -13997,7 +14014,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    8444
+    6939
    ]
   },
   {
@@ -14007,7 +14024,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The little bipropellant engine that inserts a probe into orbit around another planet. The LEROS-1b - flight-proven on NEAR, MESSENGER and Juno - and the R-42 are the mature descendants of the R-4D thruster, built to sit cold through years of cruise and then fire once, exactly right, at the far end.",
+   "flavor": "The little bipropellant engine that inserts a probe into orbit around another planet. The LEROS-1b — flight-proven on NEAR, MESSENGER and Juno — and the R-42 are the mature descendants of the R-4D thruster, built to sit cold through years of cruise and then fire once, exactly right, at the far end.",
    "parts": [
     {
      "name": "ROE-LEROS1B",
@@ -14037,7 +14054,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    8125
+    6906
    ]
   },
   {
@@ -14047,7 +14064,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Face an atmosphere ninety times denser than Earth's and hot enough to melt lead at the surface - the Venera aeroshell's heatshield and twin parachutes, built for a descent that ends in a furnace no matter how gently you land in it.",
+   "flavor": "Face an atmosphere ninety times denser than Earth's and hot enough to melt lead at the surface — the Venera aeroshell's heatshield and twin parachutes, built for a descent that ends in a furnace no matter how gently you land in it.",
    "parts": [
     {
      "name": "ca_draco_hs",
@@ -14074,7 +14091,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    1039
+    973
    ]
   },
   {
@@ -14084,7 +14101,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Hit a gas giant's atmosphere at tens of kilometres a second and shed more heat in two minutes than a lunar return sheds in the whole reentry - the most extreme ablator ever asked to survive, carried on a probe built to transmit for as long as it can before it's cooked.",
+   "flavor": "Hit a gas giant's atmosphere at tens of kilometres a second and shed more heat in two minutes than a lunar return sheds in the whole reentry — the most extreme ablator ever asked to survive, carried on a probe built to transmit for as long as it can before it's cooked.",
    "parts": [
     {
      "name": "galileo_hs_bot",
@@ -14106,7 +14123,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    945
+    898
    ]
   },
   {
@@ -14116,7 +14133,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "A parachute stack timed to deploy only once the heatshield has done its worst work and the shockwave has finally fallen behind - Galileo's own descent sequence, the last mechanical step between the hottest entry in the tree and a working probe.",
+   "flavor": "A parachute stack timed to deploy only once the heatshield has done its worst work and the shockwave has finally fallen behind — Galileo's own descent sequence, the last mechanical step between the hottest entry in the tree and a working probe.",
    "parts": [
     {
      "name": "ca_draco_drogue",
@@ -14143,7 +14160,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    899
+    861
    ]
   },
   {
@@ -14153,7 +14170,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Bore into loose surface material with a motorised bit and bring up what you find - the first step of living off a world instead of just visiting it. Needs nothing more than the same motor already turning a rover's wheels, aimed down instead of forward.",
+   "flavor": "Bore into loose surface material with a motorised bit and bring up what you find — the first step of living off a world instead of just visiting it. Needs nothing more than the same motor already turning a rover's wheels, aimed down instead of forward.",
    "parts": [
     {
      "name": "kerbalism-drill",
@@ -14165,7 +14182,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    11828
+    9448
    ]
   },
   {
@@ -14175,7 +14192,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Somewhere to put what the drill brings up - bulk hopper tankage sized for raw, unprocessed ore rather than a refined propellant.",
+   "flavor": "Somewhere to put what the drill brings up — bulk hopper tankage sized for raw, unprocessed ore rather than a refined propellant.",
    "parts": [
     {
      "name": "proceduralTankOre",
@@ -14187,7 +14204,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11875
+    9485
    ]
   },
   {
@@ -14197,7 +14214,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The same drill, scaled up for a real mining rate instead of a proof of concept - the difference between sampling a world and living off it.",
+   "flavor": "The same drill, scaled up for a real mining rate instead of a proof of concept — the difference between sampling a world and living off it.",
    "parts": [
     {
      "name": "kerbalism-large-drill",
@@ -14209,7 +14226,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11781
+    9410
    ]
   },
   {
@@ -14219,7 +14236,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "One bus architecture, flown as both an orbiter and a lander carrier - the 4MV core that became Venera, Zond and Mars probes across a decade, with its own tankage and reentry-module release built in from the start.",
+   "flavor": "One bus architecture, flown as both an orbiter and a lander carrier — the 4MV core that became Venera, Zond and Mars probes across a decade, with its own tankage and reentry-module release built in from the start.",
    "parts": [
     {
      "name": "ca_fom_lander",
@@ -14251,7 +14268,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    9744
+    7185
    ]
   },
   {
@@ -14288,7 +14305,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    9650
+    7035
    ]
   },
   {
@@ -14298,7 +14315,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "The same fold-out array, sized for a station's appetite instead of a probe's - more cells on a bigger paddle, nothing new about how it works.",
+   "flavor": "The same fold-out array, sized for a station's appetite instead of a probe's — more cells on a bigger paddle, nothing new about how it works.",
    "parts": [
     {
      "name": "largeSolarPanelEarly",
@@ -14322,7 +14339,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    11551
+    9243
    ]
   },
   {
@@ -14332,7 +14349,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "A deployable wing cut to the exact power budget of one bus family - the IUE, Venera and 4MV arrays, each sized for its own mission rather than pulled off a generic shelf.",
+   "flavor": "A deployable wing cut to the exact power budget of one bus family — the IUE, Venera and 4MV arrays, each sized for its own mission rather than pulled off a generic shelf.",
    "parts": [
     {
      "name": "SXTsolarPanelLarge",
@@ -14369,7 +14386,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    11457
+    9168
    ]
   },
   {
@@ -14379,7 +14396,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The generic array's last uprate in this era - more efficient cells, the same fold-out paddle, still the default choice for anything that doesn't need a dedicated mission-sized wing.",
+   "flavor": "The generic array's last uprate in this era — more efficient cells, the same fold-out paddle, still the default choice for anything that doesn't need a dedicated mission-sized wing.",
    "parts": [
     {
      "name": "ROC-ApolloSolarBlockV",
@@ -14403,7 +14420,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11551
+    9243
    ]
   },
   {
@@ -14413,7 +14430,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Replace the rigid folding paddle with a flexible photovoltaic blanket that unrolls off a spool like a tape measure - a fraction of the stowed volume and mass of a hinged panel of the same area, at three mission scales.",
+   "flavor": "Replace the rigid folding paddle with a flexible photovoltaic blanket that unrolls off a spool like a tape measure — a fraction of the stowed volume and mass of a hinged panel of the same area, at three mission scales.",
    "parts": [
     {
      "name": "nfs-panel-deploying-blanket-arm-1",
@@ -14435,7 +14452,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    11692
+    9356
    ]
   },
   {
@@ -14445,7 +14462,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Focus sunlight onto a small strip of the most efficient (and most expensive) cells with lenses instead of covering the whole panel in them - the same power from far less exotic photovoltaic material.",
+   "flavor": "Focus sunlight onto a small strip of the most efficient (and most expensive) cells with lenses instead of covering the whole panel in them — the same power from far less exotic photovoltaic material.",
    "parts": [
     {
      "name": "nfs-panel-deploying-concentrator-1x4-juno-1",
@@ -14457,7 +14474,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    11504
+    9206
    ]
   },
   {
@@ -14479,7 +14496,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    11410
+    9131
    ]
   },
   {
@@ -14489,7 +14506,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Stow the array wrapped into a tight curve instead of folded flat, and let it spring open into its working shape - a third distinct way to pack more panel into less volume.",
+   "flavor": "Stow the array wrapped into a tight curve instead of folded flat, and let it spring open into its working shape — a third distinct way to pack more panel into less volume.",
    "parts": [
     {
      "name": "nfs-panel-deploying-curved-375-1",
@@ -14501,7 +14518,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    11598
+    9281
    ]
   },
   {
@@ -14511,7 +14528,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Stack enough plutonium-238 to clear several hundred watts instead of a bare trickle - the generator class that powered Voyager past every planet it flew and is still transmitting today.",
+   "flavor": "Stack enough plutonium-238 to clear several hundred watts instead of a bare trickle — the generator class that powered Voyager past every planet it flew and is still transmitting today.",
    "parts": [
     {
      "name": "USRTGWedge",
@@ -14533,7 +14550,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    10243
+    7845
    ]
   },
   {
@@ -14590,7 +14607,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    10243
+    7845
    ]
   },
   {
@@ -14610,7 +14627,7 @@ window.TREE = {
    ],
    "pos": [
     -2528,
-    12555
+    9785
    ]
   },
   {
@@ -14630,7 +14647,7 @@ window.TREE = {
    ],
    "pos": [
     -2224,
-    12555
+    9785
    ]
   },
   {
@@ -14650,7 +14667,7 @@ window.TREE = {
    ],
    "pos": [
     -1920,
-    12555
+    9785
    ]
   },
   {
@@ -14670,7 +14687,7 @@ window.TREE = {
    ],
    "pos": [
     -1616,
-    12555
+    9785
    ]
   },
   {
@@ -14690,7 +14707,7 @@ window.TREE = {
    ],
    "pos": [
     -1312,
-    12555
+    9785
    ]
   },
   {
@@ -14710,7 +14727,7 @@ window.TREE = {
    ],
    "pos": [
     -1008,
-    12555
+    9785
    ]
   },
   {
@@ -14720,7 +14737,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "A parabolic dish or omni cut to one bus family's own link budget - Pioneer's spin-scan dish, Voyager's high-gain reflector, the 4MV's own array and dish, GPS's simple omni. The named-hardware shelf, one entry per flagship mission.",
+   "flavor": "A parabolic dish or omni cut to one bus family's own link budget — Pioneer's spin-scan dish, Voyager's high-gain reflector, the 4MV's own array and dish, GPS's simple omni. The named-hardware shelf, one entry per flagship mission.",
    "parts": [
     {
      "name": "ca_ant_gps",
@@ -14752,7 +14769,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    12785
+    9969
    ]
   },
   {
@@ -14762,7 +14779,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "The same parabolic-reflector mechanism, scaled past what any single mission needs - giant, huge and large dish reflectors off the shelf for whatever downlink budget the mission calls for.",
+   "flavor": "The same parabolic-reflector mechanism, scaled past what any single mission needs — giant, huge and large dish reflectors off the shelf for whatever downlink budget the mission calls for.",
    "parts": [
     {
      "name": "nfex-antenna-reflector-giant-1",
@@ -14784,7 +14801,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    12691
+    9894
    ]
   },
   {
@@ -14794,7 +14811,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Separate a gas sample by how fast each component moves through a column, then weigh what comes out in the mass spectrometer behind it - two instruments in series reading a single sample far more precisely than either alone.",
+   "flavor": "Separate a gas sample by how fast each component moves through a column, then weigh what comes out in the mass spectrometer behind it — two instruments in series reading a single sample far more precisely than either alone.",
    "parts": [
     {
      "name": "SXTsciencenosecone",
@@ -14811,7 +14828,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    12947
+    10098
    ]
   },
   {
@@ -14821,7 +14838,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Replace the vidicon's scanned electron beam with a solid-state sensor read out electronically, line by line - the same instinct that took reconnaissance from film to television, one generation further. Higher resolution than any vidicon, and nothing left to wear out or burn in.",
+   "flavor": "Replace the vidicon's scanned electron beam with a solid-state sensor read out electronically, line by line — the same instinct that took reconnaissance from film to television, one generation further. Higher resolution than any vidicon, and nothing left to wear out or burn in.",
    "parts": [
     {
      "name": "RO-DigitalCamera",
@@ -14833,7 +14850,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    11363
+    9093
    ]
   },
   {
@@ -14843,7 +14860,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Take the pressure-fed multi-restart engine that once had to fire once, perfectly, on the way to the Moon, and shrink it into a routine orbital-maneuvering thruster - sized for a dozen burns a mission instead of one, flown on the same shape for decades after. The Shuttle's OMS, and the same lineage still flying on Orion.",
+   "flavor": "Take the pressure-fed multi-restart engine that once had to fire once, perfectly, on the way to the Moon, and shrink it into a routine orbital-maneuvering thruster — sized for a dozen burns a mission instead of one, flown on the same shape for decades after. The Shuttle's OMS, and the same lineage still flying on Orion.",
    "parts": [
     {
      "name": "ROE-AJ10-190",
@@ -14855,7 +14872,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    7330
+    5867
    ]
   },
   {
@@ -14865,7 +14882,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Bend the bell into an open ring around a truncated plug and let the atmosphere itself complete the nozzle - an annular chamber that keeps its thrust efficient from the pad to vacuum without ever changing shape. Ground-tested for a shortened Saturn upper stage that was never built.",
+   "flavor": "Bend the bell into an open ring around a truncated plug and let the atmosphere itself complete the nozzle — an annular chamber that keeps its thrust efficient from the pad to vacuum without ever changing shape. Ground-tested for a shortened Saturn upper stage that was never built.",
    "parts": [
     {
      "name": "ROE-J2T",
@@ -14877,7 +14894,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    7612
+    6092
    ]
   },
   {
@@ -14887,7 +14904,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The same annular aerospike, pushed to a longer burn and higher chamber pressure - the J-2T's own final study mark before the program quietly ended.",
+   "flavor": "The same annular aerospike, pushed to a longer burn and higher chamber pressure — the J-2T's own final study mark before the program quietly ended.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_J-2T-250K"
@@ -14895,7 +14912,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    7612
+    6092
    ]
   },
   {
@@ -14905,7 +14922,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Trade nitrogen tetroxide for liquid fluorine and gain the highest specific impulse any storable propellant will ever deliver - at the cost of an oxidiser that ignites concrete and dissolves glass. Fired on a test stand exactly as many times as good sense allowed, then never again.",
+   "flavor": "Trade nitrogen tetroxide for liquid fluorine and gain the highest specific impulse any storable propellant will ever deliver — at the cost of an oxidiser that ignites concrete and dissolves glass. Fired on a test stand exactly as many times as good sense allowed, then never again.",
    "parts": [
     {
      "name": "ROE-RD301",
@@ -14917,7 +14934,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    7142
+    5717
    ]
   },
   {
@@ -14927,7 +14944,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The station stops being a converted rocket stage and becomes a purpose-built module you launch, dock and inhabit. A rigid pressurised core with dedicated habitation and science modules - the Mir/ISS way of building a station out of standardised, connectable rooms.",
+   "flavor": "The station stops being a converted rocket stage and becomes a purpose-built module you launch, dock and inhabit. A rigid pressurised core with dedicated habitation and science modules — the Mir/ISS way of building a station out of standardised, connectable rooms.",
    "parts": [
     {
      "name": "STXCANIOT",
@@ -14959,7 +14976,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    2071
+    1683
    ]
   },
   {
@@ -14969,7 +14986,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "The same rigid pressurised module family, in the largest diameter anyone builds - a 9-metre-class hull, room enough for a real neighbourhood instead of a corridor of rooms.",
+   "flavor": "The same rigid pressurised module family, in the largest diameter anyone builds — a 9-metre-class hull, room enough for a real neighbourhood instead of a corridor of rooms.",
    "parts": [
     {
      "name": "sspx-dome-5-1",
@@ -14986,7 +15003,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    1836
+    1571
    ]
   },
   {
@@ -14996,7 +15013,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Spin a section of the station and simulated weight comes back - the one countermeasure to long-duration weightlessness that doesn't need a treadmill, a drug, or a trip home. Never flown at station scale, drawn more than once.",
+   "flavor": "Spin a section of the station and simulated weight comes back — the one countermeasure to long-duration weightlessness that doesn't need a treadmill, a drug, or a trip home. Never flown at station scale, drawn more than once.",
    "parts": [
     {
      "name": "sspx-expandable-centrifuge-375-1",
@@ -15013,7 +15030,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    1930
+    1646
    ]
   },
   {
@@ -15023,7 +15040,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Pressurised passageways that let a crew move between modules without an EVA - straight, angled and extendable crew tubes that turn a cluster of docked modules into one shirtsleeve interior.",
+   "flavor": "Pressurised passageways that let a crew move between modules without an EVA — straight, angled and extendable crew tubes that turn a cluster of docked modules into one shirtsleeve interior.",
    "parts": [
     {
      "name": "sspx-extendable-tube-25-1",
@@ -15070,7 +15087,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    1883
+    1533
    ]
   },
   {
@@ -15172,7 +15189,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    2964
+    2321
    ]
   },
   {
@@ -15199,7 +15216,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2964
+    2321
    ]
   },
   {
@@ -15226,7 +15243,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2071
+    2876
    ]
   },
   {
@@ -15236,7 +15253,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Scale the greenhouse from a growth-trial rack to a walkable dome - real crop area instead of a proof of concept, the difference between supplementing a diet and actually growing a meaningful share of it.",
+   "flavor": "Scale the greenhouse from a growth-trial rack to a walkable dome — real crop area instead of a proof of concept, the difference between supplementing a diet and actually growing a meaningful share of it.",
    "parts": [
     {
      "name": "sspx-dome-greenhouse-5-1",
@@ -15248,7 +15265,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    2118
+    2913
    ]
   },
   {
@@ -15258,7 +15275,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "A windowed dome that gives the crew a direct, wide-angle eye on the vehicle and the world below - the cupola from which an arm operator berths an incoming module, or a crew simply watches the Earth turn. A telescope dome shares the pressure-vessel design.",
+   "flavor": "A windowed dome that gives the crew a direct, wide-angle eye on the vehicle and the world below — the cupola from which an arm operator berths an incoming module, or a crew simply watches the Earth turn. A telescope dome shares the pressure-vessel design.",
    "parts": [
     {
      "name": "cupola",
@@ -15295,7 +15312,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    2870
+    2246
    ]
   },
   {
@@ -15305,7 +15322,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The same windowed pressure vessel, big enough to hold more than a couple of crew at once - a shared viewing deck rather than a one-person porthole.",
+   "flavor": "The same windowed pressure vessel, big enough to hold more than a couple of crew at once — a shared viewing deck rather than a one-person porthole.",
    "parts": [
     {
      "name": "sspx-dome-cupola-5-1",
@@ -15317,7 +15334,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2870
+    2246
    ]
   },
   {
@@ -15327,7 +15344,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "A dedicated way out. A service airlock lets the crew step into vacuum and back without depressurising the whole station - the front door for every spacewalk, assembly task and external repair.",
+   "flavor": "A dedicated way out. A service airlock lets the crew step into vacuum and back without depressurising the whole station — the front door for every spacewalk, assembly task and external repair.",
    "parts": [
     {
      "name": "sspx-airlock-25-1",
@@ -15339,7 +15356,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    1977
+    1608
    ]
   },
   {
@@ -15349,7 +15366,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Stop hauling every gram from Earth. Extract water and volatiles from the ground, liquefy them into cryogenic propellant and run the chemistry to make more - the in-situ resource utilisation that makes a surface base, rather than a visit, affordable.",
+   "flavor": "Stop hauling every gram from Earth. Extract water and volatiles from the ground, liquefy them into cryogenic propellant and run the chemistry to make more — the in-situ resource utilisation that makes a surface base, rather than a visit, affordable.",
    "parts": [
     {
      "name": "LiquefactionArray",
@@ -15381,7 +15398,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    1652
+    1387
    ]
   },
   {
@@ -15391,7 +15408,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The backbone you assemble in orbit. A kit of standardised girder segments, angled connectors, hubs and pressurised passages - plus the free-flying guidance unit that flies each segment into place - that bolt together into an arbitrarily large truss, the structural skeleton of a modular station built one launch at a time.",
+   "flavor": "The backbone you assemble in orbit. A kit of standardised girder segments, angled connectors, hubs and pressurised passages — plus the free-flying guidance unit that flies each segment into place — that bolt together into an arbitrarily large truss, the structural skeleton of a modular station built one launch at a time.",
    "parts": [
     {
      "name": "truss-octo-01",
@@ -15473,7 +15490,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3685
+    2934
    ]
   },
   {
@@ -15483,7 +15500,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "A single load-bearing spine down the length of a large vehicle or station, with its own adapters and docking connector - the central keel that everything else hangs off.",
+   "flavor": "A single load-bearing spine down the length of a large vehicle or station, with its own adapters and docking connector — the central keel that everything else hangs off.",
    "parts": [
     {
      "name": "truss-spinal-01",
@@ -15520,7 +15537,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3591
+    2859
    ]
   },
   {
@@ -15530,7 +15547,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Multi-point connectors - the junction boxes of a station - that let one node join four, six or more modules at once, turning a linear stack into a branching structure.",
+   "flavor": "Multi-point connectors — the junction boxes of a station — that let one node join four, six or more modules at once, turning a linear stack into a branching structure.",
    "parts": [
     {
      "name": "aquila_node_adapter_s1_1",
@@ -15577,7 +15594,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3309
+    2634
    ]
   },
   {
@@ -15624,7 +15641,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    3403
+    2709
    ]
   },
   {
@@ -15634,7 +15651,7 @@ window.TREE = {
    "tier": 8,
    "cost": 450,
    "anyToUnlock": false,
-   "flavor": "The strategic-airlift airframe class - the huge fuselage, cockpit and tail sections of an An-124-scale cargo aircraft, big enough to swallow a rocket stage or an outsized payload. A fixed-catalogue dead-end off the monocoque airframe.",
+   "flavor": "The strategic-airlift airframe class — the huge fuselage, cockpit and tail sections of an An-124-scale cargo aircraft, big enough to swallow a rocket stage or an outsized payload. A fixed-catalogue dead-end off the monocoque airframe.",
    "parts": [
     {
      "name": "MK1IntakeFuselage",
@@ -15676,17 +15693,17 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2832,
-    8215
+    4197
    ]
   },
   {
    "id": "gnc_androgynousDocking",
-   "title": "Androgynous Docking & Berthing",
+   "title": "Androgynous Docking Mechanism",
    "discipline": "GuidanceControl",
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Two identical ports that can each play either role, so any two vehicles can mate - the androgynous docking mechanism that let the Shuttle meet Mir and built the International Space Station, past the gendered probe-and-drogue of the first rendezvous era.",
+   "flavor": "Two identical ports that can each play either role, so any two vehicles can mate — the androgynous docking mechanism that let the Shuttle meet Mir and built the International Space Station, past the gendered probe-and-drogue of the first rendezvous era.",
    "parts": [
     {
      "name": "APAS89-95",
@@ -15733,7 +15750,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    1328
+    1203
    ]
   },
   {
@@ -15743,7 +15760,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The big, fully three-axis stabilised spacecraft bus that a flagship deep-space mission is built on - a stable platform carrying a payload of instruments across the Solar System, holding its aim for years at a time.",
+   "flavor": "The big, fully three-axis stabilised spacecraft bus that a flagship deep-space mission is built on — a stable platform carrying a payload of instruments across the Solar System, holding its aim for years at a time.",
    "parts": [
     {
      "name": "ca_hera",
@@ -15770,7 +15787,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    9650
+    7035
    ]
   },
   {
@@ -15780,7 +15797,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The workhorse commercial bus. A standardised three-axis platform, sold by the dozen, that carries a communications or earth-observation payload to its slot and station-keeps there for a decade - spaceflight as a product line.",
+   "flavor": "The workhorse commercial bus. A standardised three-axis platform, sold by the dozen, that carries a communications or earth-observation payload to its slot and station-keeps there for a decade — spaceflight as a product line.",
    "parts": [
     {
      "name": "RO_boeing702",
@@ -15802,7 +15819,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    9514
+    6538
    ]
   },
   {
@@ -15812,7 +15829,7 @@ window.TREE = {
    "tier": 9,
    "cost": 700,
    "anyToUnlock": false,
-   "flavor": "Convert reactor heat straight to electricity with no moving parts, using the thermionic effect - the TOPAZ space reactor, a kilowatt-class fission power source for payloads no solar array or isotope pellet can feed, the step past thermoelectric SNAP.",
+   "flavor": "Convert reactor heat straight to electricity with no moving parts, using the thermionic effect — the TOPAZ space reactor, a kilowatt-class fission power source for payloads no solar array or isotope pellet can feed, the step past thermoelectric SNAP.",
    "parts": [
     {
      "name": "RO-reactor-TOPAZI",
@@ -15829,7 +15846,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2528,
-    10149
+    7770
    ]
   },
   {
@@ -15839,7 +15856,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Not three colours but hundreds. A hyperspectral imager splits each pixel into a continuous spectrum, reading the mineral, chemical and biological signature of the surface below - the scanner that maps what a place is made of, not just what it looks like.",
+   "flavor": "Not three colours but hundreds. A hyperspectral imager splits each pixel into a continuous spectrum, reading the mineral, chemical and biological signature of the surface below — the scanner that maps what a place is made of, not just what it looks like.",
    "parts": [
     {
      "name": "scansat-multi-abi-1",
@@ -15876,7 +15893,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    10473
+    8179
    ]
   },
   {
@@ -15886,7 +15903,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Map a world by its heat and its infrared fingerprint. A thermal-mapping spectrometer builds up the temperature and composition of a surface or atmosphere band by band - the Cassini/Mars-class instrument for reading planets in the infrared.",
+   "flavor": "Map a world by its heat and its infrared fingerprint. A thermal-mapping spectrometer builds up the temperature and composition of a surface or atmosphere band by band — the Cassini/Mars-class instrument for reading planets in the infrared.",
    "parts": [
     {
      "name": "RO-PMIRR",
@@ -15903,7 +15920,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    10567
+    8029
    ]
   },
   {
@@ -15913,7 +15930,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "The sharpest eye yet - a large-optics, solid-state imager that resolves fine surface detail from orbit, the reconnaissance-grade camera turned on other worlds.",
+   "flavor": "The sharpest eye yet — a large-optics, solid-state imager that resolves fine surface detail from orbit, the reconnaissance-grade camera turned on other worlds.",
    "parts": [
     {
      "name": "RO-HIRES",
@@ -15925,7 +15942,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11363
+    9093
    ]
   },
   {
@@ -15935,7 +15952,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "See through cloud and darkness by making your own illumination. Synthetic-aperture radar bounces a beam off the surface and reconstructs a high-resolution image from the echoes - the instrument that mapped the whole cloud-shrouded surface of Venus.",
+   "flavor": "See through cloud and darkness by making your own illumination. Synthetic-aperture radar bounces a beam off the surface and reconstructs a high-resolution image from the echoes — the instrument that mapped the whole cloud-shrouded surface of Venus.",
    "parts": [
     {
      "name": "RO-MagellanRadar",
@@ -15952,7 +15969,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11128
+    8906
    ]
   },
   {
@@ -15962,7 +15979,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "Survey a whole body from orbit for what's worth landing on - narrow-band and surface scanners that build global maps of terrain, resources and anomalies, the reconnaissance a surface mission is planned from.",
+   "flavor": "Survey a whole body from orbit for what's worth landing on — narrow-band and surface scanners that build global maps of terrain, resources and anomalies, the reconnaissance a surface mission is planned from.",
    "parts": [
     {
      "name": "OrbitalScanner",
@@ -15979,7 +15996,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    11034
+    8831
    ]
   },
   {
@@ -15989,7 +16006,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "A large steerable parabolic dish - the high-gain antenna that closes the link across hundreds of millions of kilometres, turning a whisper from the outer Solar System into a usable data stream.",
+   "flavor": "A large steerable parabolic dish — the high-gain antenna that closes the link across hundreds of millions of kilometres, turning a whisper from the outer Solar System into a usable data stream.",
    "parts": [
     {
      "name": "ROC-ApolloHGABlockV",
@@ -16026,7 +16043,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    12691
+    9894
    ]
   },
   {
@@ -16036,7 +16053,7 @@ window.TREE = {
    "tier": 10,
    "cost": 1000,
    "anyToUnlock": false,
-   "flavor": "A probe built to survive falling into an atmosphere: an aeroshell and a descent body that ride a fireball down and then float the rest of the way, returning data from inside a world's air rather than from orbit above it - the Huygens way to reach a surface.",
+   "flavor": "A probe built to survive falling into an atmosphere: an aeroshell and a descent body that ride a fireball down and then float the rest of the way, returning data from inside a world's air rather than from orbit above it — the Huygens way to reach a surface.",
    "parts": [
     {
      "name": "ca_draco",
@@ -16053,7 +16070,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -2224,
-    9881
+    7444
    ]
   },
   {
@@ -16063,7 +16080,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Launch it packed tight, inflate it to full volume in orbit. An expandable habitat trades a rigid metal shell for a soft, layered one that unfolds into far more living space than its launch diameter would allow - the BEAM/Bigelow way to fly a big room in a small fairing.",
+   "flavor": "Launch it packed tight, inflate it to full volume in orbit. An expandable habitat trades a rigid metal shell for a soft, layered one that unfolds into far more living space than its launch diameter would allow — the BEAM/Bigelow way to fly a big room in a small fairing.",
    "parts": [
     {
      "name": "InflatableHAB",
@@ -16110,7 +16127,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2212
+    1721
    ]
   },
   {
@@ -16120,7 +16137,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Spin for gravity. A rotating habitat module generates centrifugal weight for its crew, holding off the bone and muscle loss of long-duration freefall - the first artificial-gravity station rooms, inflatable and expandable to the diameter a comfortable spin needs.",
+   "flavor": "Spin for gravity. A rotating habitat module generates centrifugal weight for its crew, holding off the bone and muscle loss of long-duration freefall — the first artificial-gravity station rooms, inflatable and expandable to the diameter a comfortable spin needs.",
    "parts": [
     {
      "name": "sspx-expandable-centrifuge-375-2",
@@ -16147,7 +16164,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    2212
+    1721
    ]
   },
   {
@@ -16157,7 +16174,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The heavy station module class - nine-metre cores, habitation blocks and science labs that dwarf the early ISS parts, the pressurised volume of a permanent orbital or surface base built for a large crew.",
+   "flavor": "The heavy station module class — nine-metre cores, habitation blocks and science labs that dwarf the early ISS parts, the pressurised volume of a permanent orbital or surface base built for a large crew.",
    "parts": [
     {
      "name": "sspx-core-25-1",
@@ -16209,17 +16226,17 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    2306
+    1796
    ]
   },
   {
    "id": "life_aquacultureModule",
-   "title": "Aquaculture & Greenhouse Modules",
+   "title": "Closed-Loop Food Modules",
    "discipline": "LifeSupport",
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Grow protein, not just greens. Aquaculture and full-scale greenhouse modules extend bioregenerative life support from air and vegetables to a fuller closed food chain - the ecosystem a base needs to feed itself for years.",
+   "flavor": "Grow protein, not just greens. Aquaculture and full-scale greenhouse modules extend bioregenerative life support from air and vegetables to a fuller closed food chain — the ecosystem a base needs to feed itself for years.",
    "parts": [
     {
      "name": "sspx-aquaculture-375-1",
@@ -16241,7 +16258,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    2024
+    2838
    ]
   },
   {
@@ -16251,7 +16268,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "A ring rather than a beam. Annular truss segments close a structure back on itself - the circular backbone for a rotating habitat, a large aperture or a torus station.",
+   "flavor": "A ring rather than a beam. Annular truss segments close a structure back on itself — the circular backbone for a rotating habitat, a large aperture or a torus station.",
    "parts": [
     {
      "name": "truss-circular-01",
@@ -16293,7 +16310,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    3638
+    2951
    ]
   },
   {
@@ -16303,7 +16320,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The strongback - a heavy closed or open girder that carries the primary loads of a large integrated vehicle or launch stack, in a family of lengths sized to the payload.",
+   "flavor": "The strongback — a heavy closed or open girder that carries the primary loads of a large integrated vehicle or launch stack, in a family of lengths sized to the payload.",
    "parts": [
     {
      "name": "SXTMTVGirder",
@@ -16335,7 +16352,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    3732
+    3026
    ]
   },
   {
@@ -16345,7 +16362,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Bring the booster home standing up. A heavy, energy-absorbing landing leg that lets a returning stage touch down on its own tail and be flown again - the strut that made propulsive recovery routine.",
+   "flavor": "Bring the booster home standing up. A heavy, energy-absorbing landing leg that lets a returning stage touch down on its own tail and be flown again — the strut that made propulsive recovery routine.",
    "parts": [
     {
      "name": "largeLandingLeg",
@@ -16357,7 +16374,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    9215
+    5073
    ]
   },
   {
@@ -16367,7 +16384,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "The modern international standard: the NASA Docking System and its IDSS-compatible ports, a low-impact androgynous mechanism that any commercial-crew vehicle can use to berth at the station - docking as an interface everyone builds to.",
+   "flavor": "The modern international standard: the NASA Docking System and its IDSS-compatible ports, a low-impact androgynous mechanism that any commercial-crew vehicle can use to berth at the station — docking as an interface everyone builds to.",
    "parts": [
     {
      "name": "ROC-CSTNDSActive",
@@ -16404,7 +16421,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    1328
+    1203
    ]
   },
   {
@@ -16414,7 +16431,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Crew to orbit, bought as a service. The Orion and CST-100 command modules - a new generation of reusable crew capsules with modern avionics, glass cockpits and their own service modules, flown by contractors rather than a single national programme.",
+   "flavor": "Crew to orbit, bought as a service. The Orion and CST-100 command modules — a new generation of reusable crew capsules with modern avionics, glass cockpits and their own service modules, flown by contractors rather than a single national programme.",
    "parts": [
     {
      "name": "ROC-CSTCM",
@@ -16436,7 +16453,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    1516
+    1353
    ]
   },
   {
@@ -16446,7 +16463,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Slow down with an umbrella instead of a wall. An inflatable heat shield deploys a wide, soft aeroshell that decelerates a heavy payload high in a thin atmosphere - the HIAD, the way to land tonnes on Mars where a rigid shield can't be built big enough.",
+   "flavor": "Slow down with an umbrella instead of a wall. An inflatable heat shield deploys a wide, soft aeroshell that decelerates a heavy payload high in a thin atmosphere — the HIAD, the way to land tonnes on Mars where a rigid shield can't be built big enough.",
    "parts": [
     {
      "name": "ROH-AdjustableHIAD",
@@ -16460,7 +16477,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    993
+    936
    ]
   },
   {
@@ -16470,7 +16487,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Compact fission power for the surface and deep space, sized to the mission - a few to a few hundred kilowatts from a reactor that fits on a lander. Kilopower, SAFE-400 and their kin: the power source a crewed base or a nuclear-electric tug runs on, past what any array or isotope pellet delivers.",
+   "flavor": "Compact fission power for the surface and deep space, sized to the mission — a few to a few hundred kilowatts from a reactor that fits on a lander. Kilopower, SAFE-400 and their kin: the power source a crewed base or a nuclear-electric tug runs on, past what any array or isotope pellet delivers.",
    "parts": [
     {
      "name": "RO-reactor-RAPIDL",
@@ -16497,7 +16514,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    10149
+    7770
    ]
   },
   {
@@ -16507,7 +16524,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Storing the fuel for a nuclear engine - fissile-material magazines that feed a fission-fragment or gas-core drive, the tankage an advanced nuclear stage carries its reactor charge in.",
+   "flavor": "Storing the fuel for a nuclear engine — fissile-material magazines that feed a fission-fragment or gas-core drive, the tankage an advanced nuclear stage carries its reactor charge in.",
    "parts": [
     {
      "name": "fft-fueltank-fission-25-1",
@@ -16554,7 +16571,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    10149
+    7770
    ]
   },
   {
@@ -16564,7 +16581,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Skip the separate gas-generator combustor entirely - bleed hot gas straight off the main chamber wall to spin the turbopump, then dump it overboard. Simpler than a gas generator, cheaper than staged combustion: the operational middle path Blue Origin bet New Shepard and New Glenn's upper stage on.",
+   "flavor": "Skip the separate gas-generator combustor entirely — bleed hot gas straight off the main chamber wall to spin the turbopump, then dump it overboard. Simpler than a gas generator, cheaper than staged combustion: the operational middle path Blue Origin bet New Shepard and New Glenn's upper stage on.",
    "parts": [
     {
      "name": "ROE-BE3",
@@ -16581,7 +16598,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    7749
+    6201
    ]
   },
   {
@@ -16591,7 +16608,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Scale the closed expander cycle past the RL-10's own ceiling - two parallel American and European programs converge on the same bigger turbopump, the same clean cycle, roughly triple the thrust.",
+   "flavor": "Scale the closed expander cycle past the RL-10's own ceiling — two parallel American and European programs converge on the same bigger turbopump, the same clean cycle, roughly triple the thrust.",
    "parts": [
     {
      "name": "ROE-MB35",
@@ -16623,7 +16640,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    5239
+    4146
    ]
   },
   {
@@ -16633,7 +16650,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "A simpler, plainer methalox debut at small scale - no staged-combustion preburner, just a clean upper-stage engine sized for a commercial small-satellite launcher. The unglamorous sibling to the booster-scale methalox story unfolding one node over.",
+   "flavor": "A simpler, plainer methalox debut at small scale — no staged-combustion preburner, just a clean upper-stage engine sized for a commercial small-satellite launcher. The unglamorous sibling to the booster-scale methalox story unfolding one node over.",
    "parts": [
     {
      "name": "cryoengine-buzzard-1",
@@ -16645,7 +16662,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    4176
+    3285
    ]
   },
   {
@@ -16655,7 +16672,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "Vent a little of the cooling-jacket gas overboard instead of routing every drop through the turbopump, and the expander cycle's thrust ceiling - always capped by a small upper-stage engine's own heat-exchange area - breaks wide open. The expander cycle finally reaches core-stage scale.",
+   "flavor": "Vent a little of the cooling-jacket gas overboard instead of routing every drop through the turbopump, and the expander cycle's thrust ceiling — always capped by a small upper-stage engine's own heat-exchange area — breaks wide open. The expander cycle finally reaches core-stage scale.",
    "parts": [
     {
      "name": "cryoengine-fuji-1",
@@ -16669,7 +16686,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    5197
+    4113
    ]
   },
   {
@@ -16679,7 +16696,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "Burn both turbopump drive-gas streams through combustion at once - a fuel-rich preburner AND an oxidiser-rich preburner, nothing vented overboard at all. The thermodynamic endpoint of the staged-combustion idea, and the only cycle that ever reached it in metal.",
+   "flavor": "Burn both turbopump drive-gas streams through combustion at once — a fuel-rich preburner AND an oxidiser-rich preburner, nothing vented overboard at all. The thermodynamic endpoint of the staged-combustion idea, and the only cycle that ever reached it in metal.",
    "parts": [
     {
      "name": "ROE-Raptor",
@@ -16701,7 +16718,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    3894
+    3060
    ]
   },
   {
@@ -16736,7 +16753,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    9949
+    7519
    ]
   },
   {
@@ -16746,7 +16763,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "Chill both propellants below their normal boiling points before loading, and more mass packs into the same tanks and the same engine - the real refinement behind a two-thirds thrust jump on the same basic cycle, no new chemistry required.",
+   "flavor": "Chill both propellants below their normal boiling points before loading, and more mass packs into the same tanks and the same engine — the real refinement behind a two-thirds thrust jump on the same basic cycle, no new chemistry required.",
    "parts": [
     {
      "name": "ROE-Merlin1D",
@@ -16766,7 +16783,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    10043
+    7594
    ]
   },
   {
@@ -16776,7 +16793,7 @@ window.TREE = {
    "tier": 14,
    "cost": 3500,
    "anyToUnlock": false,
-   "flavor": "Push the densified Merlin further still - the Full Thrust and Block 5 marks that let the same basic engine carry a reusable booster home and fly it again.",
+   "flavor": "Push the densified Merlin further still — the Full Thrust and Block 5 marks that let the same basic engine carry a reusable booster home and fly it again.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_Merlin1D+",
@@ -16786,7 +16803,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1008,
-    10043
+    7594
    ]
   },
   {
@@ -16796,7 +16813,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Two separately-funded American answers to the imported RD-180 - oxidiser-rich staged combustion on kerosene, drawn to compete on the same contract the Russians won on price. Real hardware, real test stands, and no flight between them.",
+   "flavor": "Two separately-funded American answers to the imported RD-180 — oxidiser-rich staged combustion on kerosene, drawn to compete on the same contract the Russians won on price. Real hardware, real test stands, and no flight between them.",
    "parts": [
     {
      "name": "nflv-engine-ar1-1",
@@ -16818,7 +16835,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    4082
+    3210
    ]
   },
   {
@@ -16828,7 +16845,7 @@ window.TREE = {
    "tier": 11,
    "cost": 1450,
    "anyToUnlock": false,
-   "flavor": "Add one more segment to the Shuttle's own composite-case booster and it becomes the largest solid rocket motor ever flown - the same casting and winding technique, scaled up one more time for a heavier successor vehicle.",
+   "flavor": "Add one more segment to the Shuttle's own composite-case booster and it becomes the largest solid rocket motor ever flown — the same casting and winding technique, scaled up one more time for a heavier successor vehicle.",
    "parts": [
     {
      "name": "MassiveBooster",
@@ -16842,7 +16859,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1920,
-    4894
+    3781
    ]
   },
   {
@@ -16852,7 +16869,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "A launch-abort engine that can also fly a controlled, propulsive touchdown - pressure-fed hypergolics deep-throttled and restarted enough times to trust a crew's life to it twice in one mission, once going up wrong and once coming down right.",
+   "flavor": "A launch-abort engine that can also fly a controlled, propulsive touchdown — pressure-fed hypergolics deep-throttled and restarted enough times to trust a crew's life to it twice in one mission, once going up wrong and once coming down right.",
    "parts": [
     {
      "name": "ROC-CSTRS88",
@@ -16897,7 +16914,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    8125
+    6906
    ]
   },
   {
@@ -16907,7 +16924,7 @@ window.TREE = {
    "tier": 12,
    "cost": 2000,
    "anyToUnlock": false,
-   "flavor": "Spin the propellant pumps with a battery and a brushless motor instead of a gas generator or a preburner turbine - no exhaust-driven turbine at all. A little less thrust-to-weight bought back with radical simplicity and a bill of materials any workshop can assemble.",
+   "flavor": "Spin the propellant pumps with a battery and a brushless motor instead of a gas generator or a preburner turbine — no exhaust-driven turbine at all. A little less thrust-to-weight bought back with radical simplicity and a bill of materials any workshop can assemble.",
    "parts": [
     {
      "name": "ROE-Rutherford",
@@ -16924,7 +16941,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1616,
-    10830
+    8668
    ]
   },
   {
@@ -16934,7 +16951,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "NSTAR's direct successor - the same electrostatic-grid acceleration, refined for higher throughput and, in its most extreme sibling, a second acceleration stage for even higher exhaust velocity.",
+   "flavor": "NSTAR's direct successor — the same electrostatic-grid acceleration, refined for higher throughput and, in its most extreme sibling, a second acceleration stage for even higher exhaust velocity.",
    "parts": [
     {
      "name": "RO-ID500",
@@ -16961,7 +16978,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    10924
+    8743
    ]
   },
   {
@@ -16971,7 +16988,7 @@ window.TREE = {
    "tier": 14,
    "cost": 3500,
    "anyToUnlock": false,
-   "flavor": "DS4G's dual-stage grid pushed across its own family of ratings - the same second-acceleration-stage trick, retuned for every thrust/Isp trade the design study explored.",
+   "flavor": "DS4G's dual-stage grid pushed across its own family of ratings — the same second-acceleration-stage trick, retuned for every thrust/Isp trade the design study explored.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_DS4G-25-hi",
@@ -16982,7 +16999,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1008,
-    10924
+    8743
    ]
   },
   {
@@ -16992,7 +17009,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "Purpose-built for deep-space station-keeping on a crewed outpost, not just trimming a satellite's orbit - the next mark past the 457M, and in its nested-channel sibling, the highest-power Hall thruster ever built.",
+   "flavor": "Purpose-built for deep-space station-keeping on a crewed outpost, not just trimming a satellite's orbit — the next mark past the 457M, and in its nested-channel sibling, the highest-power Hall thruster ever built.",
    "parts": [
     {
      "name": "ionArgon-0625",
@@ -17016,7 +17033,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    11018
+    8818
    ]
   },
   {
@@ -17026,7 +17043,7 @@ window.TREE = {
    "tier": 14,
    "cost": 3500,
    "anyToUnlock": false,
-   "flavor": "HERMeS and X3 mature mark by mark - the Gateway-bound AEPS thruster's flight configuration, and the nested-channel X3 tuned across its own voltage range.",
+   "flavor": "HERMeS and X3 mature mark by mark — the Gateway-bound AEPS thruster's flight configuration, and the nested-channel X3 tuned across its own voltage range.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_AEPS",
@@ -17036,7 +17053,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1008,
-    11018
+    8818
    ]
   },
   {
@@ -17046,7 +17063,7 @@ window.TREE = {
    "tier": 13,
    "cost": 2650,
    "anyToUnlock": false,
-   "flavor": "Skip both the Hall channel and the ion grid - drive a plasma arc straight through an electromagnetic pinch and let the field itself do the accelerating. High power density, real hardware, and a genuinely different mechanism from anything else this tree calls electric propulsion.",
+   "flavor": "Skip both the Hall channel and the ion grid — drive a plasma arc straight through an electromagnetic pinch and let the field itself do the accelerating. High power density, real hardware, and a genuinely different mechanism from anything else this tree calls electric propulsion.",
    "parts": [
     {
      "name": "mpdt-125",
@@ -17058,7 +17075,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1312,
-    10755
+    8608
    ]
   },
   {
@@ -17068,7 +17085,7 @@ window.TREE = {
    "tier": 14,
    "cost": 3500,
    "anyToUnlock": false,
-   "flavor": "RF-heat a plasma instead of arcing through it, then steer it out through a magnetic nozzle - and unlike every other electric thruster in this tree, trade thrust for Isp continuously, in flight, instead of picking one number at build time.",
+   "flavor": "RF-heat a plasma instead of arcing through it, then steer it out through a magnetic nozzle — and unlike every other electric thruster in this tree, trade thrust for Isp continuously, in flight, instead of picking one number at build time.",
    "parts": [
     {
      "name": "vasimr-0625",
@@ -17085,7 +17102,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1008,
-    10755
+    8608
    ]
   },
   {
@@ -17095,7 +17112,7 @@ window.TREE = {
    "tier": 15,
    "cost": 4500,
    "anyToUnlock": false,
-   "flavor": "Swap the VASIMR's working gas from argon to krypton - denser propellant, a further tuned exhaust velocity, the same RF-heated plasma and magnetic nozzle.",
+   "flavor": "Swap the VASIMR's working gas from argon to krypton — denser propellant, a further tuned exhaust velocity, the same RF-heated plasma and magnetic nozzle.",
    "parts": [],
    "upgrades": [
     "RFUpgrade_VF-200-Kr",
@@ -17104,7 +17121,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -704,
-    10755
+    8608
    ]
   },
   {
@@ -17114,7 +17131,7 @@ window.TREE = {
    "tier": 14,
    "cost": 3500,
    "anyToUnlock": false,
-   "flavor": "The same reactor that heats propellant for thrust keeps running between burns as a power source - real NASA bimodal-NTR design studies, squeezing a second job out of the mass a nuclear stage already has to carry.",
+   "flavor": "The same reactor that heats propellant for thrust keeps running between burns as a power source — real NASA bimodal-NTR design studies, squeezing a second job out of the mass a nuclear stage already has to carry.",
    "parts": [
     {
      "name": "ROE-BNTR",
@@ -17128,7 +17145,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -1008,
-    8538
+    7014
    ]
   },
   {
@@ -17138,7 +17155,7 @@ window.TREE = {
    "tier": 15,
    "cost": 4500,
    "anyToUnlock": false,
-   "flavor": "Let the fission fragments themselves be the exhaust - no propellant to heat, no working fluid at all, just the reaction products flying straight out at a meaningful fraction of the speed of light. The highest specific impulse anything in this tree will ever reach.",
+   "flavor": "Let the fission fragments themselves be the exhaust — no propellant to heat, no working fluid at all, just the reaction products flying straight out at a meaningful fraction of the speed of light. The highest specific impulse anything in this tree will ever reach.",
    "parts": [
     {
      "name": "RO-fftdustyplasmaffre",
@@ -17155,7 +17172,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -704,
-    8538
+    7014
    ]
   },
   {
@@ -17165,7 +17182,7 @@ window.TREE = {
    "tier": 16,
    "cost": 5650,
    "anyToUnlock": false,
-   "flavor": "Compress a small fusion-fuel target with a magnetic pulse and ride the shockwave off a plate - Project Orion's own pusher-plate trick, but the charge is a magnetically-confined fusion pellet instead of a fission bomb. Real theoretical NASA/MSNW study, one full generation past classic Orion.",
+   "flavor": "Compress a small fusion-fuel target with a magnetic pulse and ride the shockwave off a plate — Project Orion's own pusher-plate trick, but the charge is a magnetically-confined fusion pellet instead of a fission bomb. Real theoretical NASA/MSNW study, one full generation past classic Orion.",
    "parts": [
     {
      "name": "RO-fft20mMMO",
@@ -17182,7 +17199,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -400,
-    7424
+    5942
    ]
   },
   {
@@ -17192,7 +17209,7 @@ window.TREE = {
    "tier": 16,
    "cost": 5650,
    "anyToUnlock": false,
-   "flavor": "Dissolve fissile salts in water and let the mixture go critical continuously as it streams through the chamber - the reactor doesn't heat the propellant, the reactor IS the propellant. The wildest, most engineering-fiction concept in the curated set.",
+   "flavor": "Dissolve fissile salts in water and let the mixture go critical continuously as it streams through the chamber — the reactor doesn't heat the propellant, the reactor IS the propellant. The wildest, most engineering-fiction concept in the curated set.",
    "parts": [
     {
      "name": "fft-nswr-2",
@@ -17204,7 +17221,7 @@ window.TREE = {
    "grants": [],
    "pos": [
     -400,
-    8538
+    7014
    ]
   }
  ],
@@ -17216,19 +17233,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     13088
+     10211
     ],
     [
      -4656,
-     13088
+     10211
     ],
     [
      -4352,
-     13088
+     10211
     ],
     [
      -4048,
-     13088
+     10211
     ]
    ]
   },
@@ -17239,11 +17256,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     13088
+     10211
     ],
     [
      -3744,
-     13088
+     10211
     ]
    ]
   },
@@ -17254,11 +17271,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     13088
+     10211
     ],
     [
      -3440,
-     13088
+     10211
     ]
    ]
   },
@@ -17269,11 +17286,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     13088
+     10211
     ],
     [
      -3136,
-     13088
+     10211
     ]
    ]
   },
@@ -17284,11 +17301,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     13088
+     10211
     ],
     [
      -2832,
-     13088
+     10211
     ]
    ]
   },
@@ -17299,11 +17316,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     13088
+     10211
     ],
     [
      -2528,
-     13088
+     10211
     ]
    ]
   },
@@ -17314,11 +17331,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     13088
+     10211
     ],
     [
      -2224,
-     13088
+     10211
     ]
    ]
   },
@@ -17329,11 +17346,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     13088
+     10211
     ],
     [
      -1920,
-     13088
+     10211
     ]
    ]
   },
@@ -17344,11 +17361,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     13088
+     10211
     ],
     [
      -1616,
-     13088
+     10211
     ]
    ]
   },
@@ -17359,19 +17376,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     13276
+     10361
     ],
     [
      -4656,
-     13276
+     10361
     ],
     [
      -4352,
-     13276
+     10361
     ],
     [
      -4048,
-     13276
+     10361
     ]
    ]
   },
@@ -17382,11 +17399,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     13276
+     10361
     ],
     [
      -3744,
-     13276
+     10361
     ]
    ]
   },
@@ -17397,11 +17414,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     13276
+     10361
     ],
     [
      -3440,
-     13276
+     10361
     ]
    ]
   },
@@ -17412,11 +17429,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     13276
+     10361
     ],
     [
      -3136,
-     13276
+     10361
     ]
    ]
   },
@@ -17427,19 +17444,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     13276
+     10361
     ],
     [
      -2832,
-     13276
+     10361
     ],
     [
      -2528,
-     13276
+     10361
     ],
     [
      -2224,
-     13276
+     10361
     ]
    ]
   },
@@ -17450,11 +17467,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     8156
+     6445
     ]
    ]
   },
@@ -17465,11 +17482,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8156
+     6445
     ],
     [
      -4656,
-     8776
+     6801
     ]
    ]
   },
@@ -17480,11 +17497,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9356
+     7376
     ],
     [
      -4656,
-     8776
+     6801
     ]
    ]
   },
@@ -17495,11 +17512,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     8776
+     6801
     ],
     [
      -4352,
-     8976
+     7039
     ]
    ]
   },
@@ -17510,11 +17527,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     8976
+     7039
     ],
     [
      -4048,
-     8929
+     6722
     ]
    ]
   },
@@ -17525,11 +17542,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     8661
+     6763
     ],
     [
      -4048,
-     8708
+     6555
     ]
    ]
   },
@@ -17540,11 +17557,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     8661
+     6763
     ],
     [
      -4048,
-     8614
+     6392
     ]
    ]
   },
@@ -17555,11 +17572,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     8708
+     6555
     ],
     [
      -3744,
-     8814
+     6630
     ]
    ]
   },
@@ -17570,11 +17587,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     8776
+     6801
     ],
     [
      -4352,
-     8661
+     6763
     ]
    ]
   },
@@ -17585,11 +17602,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     6076
+     4164
     ]
    ]
   },
@@ -17600,11 +17617,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     6076
+     4164
     ],
     [
      -4656,
-     5280
+     4180
     ]
    ]
   },
@@ -17615,15 +17632,15 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     5280
+     4180
     ],
     [
      -4352,
-     5280
+     4180
     ],
     [
      -4048,
-     5280
+     4180
     ]
    ]
   },
@@ -17634,11 +17651,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     4496
+     3556
     ]
    ]
   },
@@ -17649,11 +17666,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     4496
+     3556
     ],
     [
      -4656,
-     4496
+     3556
     ]
    ]
   },
@@ -17664,11 +17681,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     4496
+     3556
     ],
     [
      -4352,
-     4496
+     3556
     ]
    ]
   },
@@ -17679,11 +17696,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8156
+     6445
     ],
     [
      -4656,
-     7323
+     5665
     ]
    ]
   },
@@ -17694,11 +17711,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8156
+     6445
     ],
     [
      -4656,
-     7023
+     5202
     ]
    ]
   },
@@ -17709,11 +17726,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7023
+     5202
     ],
     [
      -4352,
-     7023
+     5202
     ]
    ]
   },
@@ -17724,11 +17741,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     2369
+     1933
     ],
     [
      -4656,
-     3681
+     2884
     ]
    ]
   },
@@ -17739,11 +17756,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     9356
+     7376
     ]
    ]
   },
@@ -17754,11 +17771,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     3681
+     2884
     ],
     [
      -4352,
-     3775
+     2959
     ]
    ]
   },
@@ -17769,11 +17786,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     2369
+     1933
     ]
    ]
   },
@@ -17784,11 +17801,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     2369
+     1933
     ],
     [
      -4656,
-     1771
+     1503
     ]
    ]
   },
@@ -17799,11 +17816,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     3681
+     2884
     ],
     [
      -4352,
-     3429
+     2730
     ]
    ]
   },
@@ -17814,11 +17831,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8428
+     4617
     ],
     [
      -4656,
-     7852
+     4659
     ]
    ]
   },
@@ -17829,11 +17846,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     6604
+     3669
     ],
     [
      -4352,
-     6651
+     3873
     ]
    ]
   },
@@ -17844,11 +17861,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     11754
+     9201
     ]
    ]
   },
@@ -17859,11 +17876,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     1771
+     1503
     ],
     [
      -4352,
-     1771
+     1503
     ]
    ]
   },
@@ -17874,11 +17891,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     11754
+     9201
     ],
     [
      -4656,
-     11544
+     9034
     ]
    ]
   },
@@ -17889,11 +17906,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     11544
+     9034
     ],
     [
      -4352,
-     11591
+     9071
     ]
    ]
   },
@@ -17904,11 +17921,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     11544
+     9034
     ],
     [
      -4352,
-     11079
+     8792
     ]
    ]
   },
@@ -17919,11 +17936,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11591
+     9071
     ],
     [
      -4048,
-     12042
+     9506
     ]
    ]
   },
@@ -17934,11 +17951,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8729
+     6575
     ],
     [
      -4656,
-     8383
+     5870
     ]
    ]
   },
@@ -17949,11 +17966,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     6719
+     3724
     ],
     [
      -4656,
-     6929
+     4021
     ]
    ]
   },
@@ -17964,11 +17981,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     9236
+     7281
     ]
    ]
   },
@@ -17979,11 +17996,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     10865
+     8621
     ],
     [
      -4048,
-     11006
+     8734
     ]
    ]
   },
@@ -17994,11 +18011,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11591
+     9071
     ],
     [
      -4048,
-     11006
+     8734
     ]
    ]
   },
@@ -18009,11 +18026,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     8823
+     6838
     ]
    ]
   },
@@ -18024,19 +18041,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     12769
+     9957
     ],
     [
      -4656,
-     12926
+     10081
     ],
     [
      -4352,
-     12926
+     10081
     ],
     [
      -4048,
-     12926
+     10081
     ]
    ]
   },
@@ -18047,11 +18064,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11591
+     9071
     ],
     [
      -4048,
-     12926
+     10081
     ]
    ]
   },
@@ -18062,19 +18079,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     12769
+     9957
     ],
     [
      -4656,
-     12764
+     9952
     ],
     [
      -4352,
-     12764
+     9952
     ],
     [
      -4048,
-     12461
+     9710
     ]
    ]
   },
@@ -18085,11 +18102,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11591
+     9071
     ],
     [
      -4048,
-     12461
+     9710
     ]
    ]
   },
@@ -18100,11 +18117,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     4590
+     3252
     ]
    ]
   },
@@ -18115,11 +18132,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     12769
+     9957
     ]
    ]
   },
@@ -18130,11 +18147,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     6719
+     3724
     ]
    ]
   },
@@ -18145,11 +18162,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8428
+     4617
     ],
     [
      -4656,
-     8011
+     5019
     ]
    ]
   },
@@ -18160,27 +18177,27 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     8011
+     5019
     ],
     [
      -4352,
-     8032
+     5073
     ],
     [
      -4048,
-     8032
+     5073
     ],
     [
      -3744,
-     8032
+     5073
     ],
     [
      -3440,
-     8032
+     5073
     ],
     [
      -3136,
-     8446
+     5073
     ]
    ]
   },
@@ -18191,11 +18208,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     8011
+     5019
     ],
     [
      -4352,
-     7990
+     4964
     ]
    ]
   },
@@ -18206,11 +18223,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     4988
+     6763
     ],
     [
      -4656,
-     4988
+     6613
     ]
    ]
   },
@@ -18221,11 +18238,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9356
+     7376
     ],
     [
      -4656,
-     10985
+     8717
     ]
    ]
   },
@@ -18236,11 +18253,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     4988
+     6613
     ],
     [
      -4352,
-     4988
+     6613
     ]
    ]
   },
@@ -18251,15 +18268,15 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     6719
+     3724
     ],
     [
      -4656,
-     6813
+     3966
     ],
     [
      -4352,
-     6813
+     3966
     ]
    ]
   },
@@ -18270,11 +18287,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4988
+     6613
     ],
     [
      -4048,
-     6384
+     4876
     ]
    ]
   },
@@ -18285,11 +18302,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6813
+     3966
     ],
     [
      -4048,
-     6384
+     4876
     ]
    ]
   },
@@ -18300,11 +18317,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4988
+     6613
     ],
     [
      -4048,
-     6101
+     4642
     ]
    ]
   },
@@ -18315,11 +18332,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6813
+     3966
     ],
     [
      -4048,
-     6101
+     4642
     ]
    ]
   },
@@ -18330,11 +18347,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6101
+     4642
     ],
     [
      -3744,
-     6144
+     4805
     ]
    ]
   },
@@ -18345,11 +18362,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     10985
+     8717
     ],
     [
      -4352,
-     10985
+     8717
     ]
    ]
   },
@@ -18360,15 +18377,15 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     10985
+     8717
     ],
     [
      -4048,
-     10609
+     8304
     ],
     [
      -3744,
-     10609
+     8304
     ]
    ]
   },
@@ -18379,11 +18396,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     8428
+     4617
     ]
    ]
   },
@@ -18394,11 +18411,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8428
+     4617
     ],
     [
      -4656,
-     7643
+     4417
     ]
    ]
   },
@@ -18409,11 +18426,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     8729
+     6575
     ]
    ]
   },
@@ -18424,11 +18441,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8729
+     6575
     ],
     [
      -4656,
-     8289
+     6501
     ]
    ]
   },
@@ -18439,15 +18456,15 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     8289
+     6501
     ],
     [
      -4352,
-     8289
+     6501
     ],
     [
      -4048,
-     10294
+     7590
     ]
    ]
   },
@@ -18458,11 +18475,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11591
+     9071
     ],
     [
      -4048,
-     10294
+     7590
     ]
    ]
   },
@@ -18473,11 +18490,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     8383
+     5870
     ],
     [
      -4352,
-     8362
+     5853
     ]
    ]
   },
@@ -18488,11 +18505,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     6604
+     3669
     ],
     [
      -4352,
-     6557
+     3631
     ]
    ]
   },
@@ -18503,11 +18520,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     6719
+     3724
     ],
     [
      -4656,
-     6604
+     3669
     ]
    ]
   },
@@ -18518,11 +18535,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8428
+     4617
     ],
     [
      -4656,
-     7549
+     4307
     ]
    ]
   },
@@ -18533,11 +18550,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7549
+     4307
     ],
     [
      -4352,
-     7527
+     4290
     ]
    ]
   },
@@ -18548,11 +18565,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     3429
+     2730
     ],
     [
      -4048,
-     3476
+     2767
     ]
    ]
   },
@@ -18563,11 +18580,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6651
+     3873
     ],
     [
      -4048,
-     6604
+     3835
     ]
    ]
   },
@@ -18578,11 +18595,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11079
+     8792
     ],
     [
      -4048,
-     11530
+     9226
     ]
    ]
   },
@@ -18593,11 +18610,11 @@ window.TREE = {
    "waypoints": [
     [
      -5264,
-     6613
+     5232
     ],
     [
      -4960,
-     4988
+     6763
     ]
    ]
   },
@@ -18608,11 +18625,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     2369
+     1933
     ],
     [
      -4656,
-     1865
+     2046
     ]
    ]
   },
@@ -18623,15 +18640,15 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     2369
+     1933
     ],
     [
      -4656,
-     2007
+     1691
     ],
     [
      -4352,
-     2007
+     1691
     ]
    ]
   },
@@ -18642,11 +18659,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7852
+     4659
     ],
     [
      -4352,
-     7831
+     4567
     ]
    ]
   },
@@ -18657,11 +18674,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     7831
+     4567
     ],
     [
      -4048,
-     7831
+     4567
     ]
    ]
   },
@@ -18672,11 +18689,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     1771
+     1503
     ],
     [
      -4048,
-     1160
+     1069
     ]
    ]
   },
@@ -18687,11 +18704,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8428
+     4617
     ],
     [
      -4656,
-     7737
+     4492
     ]
    ]
   },
@@ -18702,11 +18719,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7737
+     4492
     ],
     [
      -4352,
-     7737
+     4492
     ]
    ]
   },
@@ -18717,11 +18734,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     7737
+     4492
     ],
     [
      -4048,
-     7737
+     4492
     ]
    ]
   },
@@ -18732,11 +18749,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     13182
+     10286
     ],
     [
      -4656,
-     13182
+     10286
     ]
    ]
   },
@@ -18747,11 +18764,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     13182
+     10286
     ],
     [
      -4352,
-     13182
+     10286
     ]
    ]
   },
@@ -18762,11 +18779,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     13182
+     10286
     ],
     [
      -4048,
-     13182
+     10286
     ]
    ]
   },
@@ -18777,15 +18794,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     13182
+     10286
     ],
     [
      -3744,
-     13182
+     10286
     ],
     [
      -3440,
-     13182
+     10286
     ]
    ]
   },
@@ -18796,15 +18813,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     13182
+     10286
     ],
     [
      -3136,
-     13182
+     10286
     ],
     [
      -2832,
-     13182
+     10286
     ]
    ]
   },
@@ -18815,15 +18832,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     13182
+     10286
     ],
     [
      -2528,
-     13182
+     10286
     ],
     [
      -2224,
-     13182
+     10286
     ]
    ]
   },
@@ -18834,11 +18851,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     13182
+     10286
     ],
     [
      -1920,
-     13182
+     10286
     ]
    ]
   },
@@ -18849,11 +18866,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6651
+     3873
     ],
     [
      -4048,
-     6698
+     3910
     ]
    ]
   },
@@ -18864,15 +18881,15 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8823
+     6838
     ],
     [
      -4656,
-     10367
+     7781
     ],
     [
      -4352,
-     10367
+     7781
     ]
    ]
   },
@@ -18883,15 +18900,15 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     9236
+     7281
     ],
     [
      -4656,
-     10865
+     8621
     ],
     [
      -4352,
-     10865
+     8621
     ]
    ]
   },
@@ -18902,11 +18919,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     11006
+     8734
     ],
     [
      -3744,
-     11363
+     9093
     ]
    ]
   },
@@ -18917,11 +18934,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     11006
+     8734
     ],
     [
      -3744,
-     10959
+     8696
     ]
    ]
   },
@@ -18932,11 +18949,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     10959
+     8696
     ],
     [
      -3440,
-     11175
+     8943
     ]
    ]
   },
@@ -18947,11 +18964,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     10959
+     8696
     ],
     [
      -3440,
-     6835
+     4713
     ]
    ]
   },
@@ -18962,19 +18979,19 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     1771
+     1503
     ],
     [
      -4048,
-     1886
+     1594
     ],
     [
      -3744,
-     1886
+     1594
     ],
     [
      -3440,
-     6835
+     4713
     ]
    ]
   },
@@ -18985,11 +19002,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     10959
+     8696
     ],
     [
      -3440,
-     11269
+     9018
     ]
    ]
   },
@@ -19000,11 +19017,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11363
+     9093
     ],
     [
      -3440,
-     11363
+     9093
     ]
    ]
   },
@@ -19015,11 +19032,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12461
+     9710
     ],
     [
      -3744,
-     12461
+     9710
     ]
    ]
   },
@@ -19030,11 +19047,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12042
+     9506
     ],
     [
      -3744,
-     12461
+     9710
     ]
    ]
   },
@@ -19045,15 +19062,15 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     10865
+     8621
     ],
     [
      -4048,
-     10562
+     8267
     ],
     [
      -3744,
-     10499
+     8216
     ]
    ]
   },
@@ -19064,11 +19081,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     10294
+     7590
     ],
     [
      -3744,
-     10499
+     8216
     ]
    ]
   },
@@ -19079,11 +19096,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     11530
+     9226
     ],
     [
      -3744,
-     11530
+     9226
     ]
    ]
   },
@@ -19094,11 +19111,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     10294
+     7590
     ],
     [
      -3744,
-     10294
+     7590
     ]
    ]
   },
@@ -19109,23 +19126,23 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     11754
+     9201
     ],
     [
      -4656,
-     12717
+     9915
     ],
     [
      -4352,
-     12717
+     9915
     ],
     [
      -4048,
-     12717
+     9915
     ],
     [
      -3744,
-     12717
+     9915
     ]
    ]
   },
@@ -19136,11 +19153,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     12717
+     9915
     ],
     [
      -3440,
-     12717
+     9915
     ]
    ]
   },
@@ -19151,11 +19168,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     3476
+     2767
     ],
     [
      -3744,
-     3476
+     2767
     ]
    ]
   },
@@ -19166,15 +19183,15 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7323
+     5665
     ],
     [
      -4352,
-     7480
+     5703
     ],
     [
      -4048,
-     7480
+     5703
     ]
    ]
   },
@@ -19185,11 +19202,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     7023
+     5202
     ],
     [
      -4048,
-     7023
+     5202
     ]
    ]
   },
@@ -19200,15 +19217,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7023
+     5202
     ],
     [
      -3744,
-     7023
+     5202
     ],
     [
      -3440,
-     7023
+     5202
     ]
    ]
   },
@@ -19219,15 +19236,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7480
+     5703
     ],
     [
      -3744,
-     7454
+     5557
     ],
     [
      -3440,
-     7454
+     5557
     ]
    ]
   },
@@ -19238,11 +19255,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4496
+     3556
     ],
     [
      -4048,
-     4146
+     3327
     ]
    ]
   },
@@ -19253,11 +19270,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4496
+     3556
     ],
     [
      -4048,
-     4616
+     3669
     ]
    ]
   },
@@ -19268,11 +19285,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4496
+     3556
     ],
     [
      -4048,
-     4423
+     3519
     ]
    ]
   },
@@ -19283,11 +19300,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     3775
+     2959
     ],
     [
      -4048,
-     4052
+     3197
     ]
    ]
   },
@@ -19298,11 +19315,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     8814
+     6630
     ],
     [
      -3440,
-     8814
+     6630
     ]
    ]
   },
@@ -19313,15 +19330,15 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7323
+     5665
     ],
     [
      -4352,
-     7159
+     5461
     ],
     [
      -4048,
-     7159
+     5461
     ]
    ]
   },
@@ -19332,11 +19349,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7159
+     5461
     ],
     [
      -3744,
-     7227
+     5478
     ]
    ]
   },
@@ -19347,11 +19364,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     8976
+     7039
     ],
     [
      -4048,
-     10179
+     7386
     ]
    ]
   },
@@ -19362,11 +19379,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     8929
+     6722
     ],
     [
      -3744,
-     8908
+     6705
     ]
    ]
   },
@@ -19377,11 +19394,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     8614
+     6392
     ],
     [
      -3744,
-     7717
+     6262
     ]
    ]
   },
@@ -19392,11 +19409,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7480
+     5703
     ],
     [
      -3744,
-     7717
+     6262
     ]
    ]
   },
@@ -19407,11 +19424,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     7717
+     6262
     ],
     [
      -3440,
-     7649
+     6242
     ]
    ]
   },
@@ -19422,11 +19439,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     7717
+     6262
     ],
     [
      -3440,
-     7743
+     6317
     ]
    ]
   },
@@ -19437,11 +19454,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     8614
+     6392
     ],
     [
      -3744,
-     7854
+     6371
     ]
    ]
   },
@@ -19452,11 +19469,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7480
+     5703
     ],
     [
      -3744,
-     7854
+     6371
     ]
    ]
   },
@@ -19467,15 +19484,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     8929
+     6722
     ],
     [
      -3744,
-     8950
+     6739
     ],
     [
      -3440,
-     8715
+     6555
     ]
    ]
   },
@@ -19486,15 +19503,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     8708
+     6555
     ],
     [
      -3744,
-     8656
+     6555
     ],
     [
      -3440,
-     8715
+     6555
     ]
    ]
   },
@@ -19505,15 +19522,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4052
+     3197
     ],
     [
      -3744,
-     4052
+     3206
     ],
     [
      -3440,
-     8715
+     6555
     ]
    ]
   },
@@ -19524,11 +19541,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     3775
+     2959
     ],
     [
      -4048,
-     3728
+     2922
     ]
    ]
   },
@@ -19539,11 +19556,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4988
+     6613
     ],
     [
      -4048,
-     5009
+     6242
     ]
    ]
   },
@@ -19554,11 +19571,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4988
+     6613
     ],
     [
      -4048,
-     5103
+     5039
     ]
    ]
   },
@@ -19569,19 +19586,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     6076
+     4164
     ],
     [
      -4656,
-     5103
+     4257
     ],
     [
      -4352,
-     5103
+     4257
     ],
     [
      -4048,
-     5103
+     5039
     ]
    ]
   },
@@ -19592,11 +19609,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6101
+     4642
     ],
     [
      -3744,
-     4804
+     3890
     ]
    ]
   },
@@ -19607,11 +19624,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     3728
+     2922
     ],
     [
      -3744,
-     4804
+     3890
     ]
    ]
   },
@@ -19622,11 +19639,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     6144
+     4805
     ],
     [
      -3440,
-     6123
+     4788
     ]
    ]
   },
@@ -19637,11 +19654,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6813
+     3966
     ],
     [
      -4048,
-     6813
+     3987
     ]
    ]
   },
@@ -19652,11 +19669,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     7990
+     4964
     ],
     [
      -4048,
-     7990
+     4964
     ]
    ]
   },
@@ -19667,15 +19684,15 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     1771
+     1503
     ],
     [
      -4048,
-     1207
+     1107
     ],
     [
      -3744,
-     1207
+     1107
     ]
    ]
   },
@@ -19686,11 +19703,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1207
+     1107
     ],
     [
      -3440,
-     998
+     940
     ]
    ]
   },
@@ -19701,15 +19718,15 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     2007
+     1691
     ],
     [
      -4048,
-     1960
+     1653
     ],
     [
      -3744,
-     1960
+     1653
     ]
    ]
   },
@@ -19720,15 +19737,50 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1960
+     1653
     ],
     [
      -3440,
-     2144
+     1933
     ],
     [
      -3136,
-     2144
+     3068
+    ]
+   ]
+  },
+  {
+   "from": "bio_cultures",
+   "to": "life_crewedExperimentBay",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -4960,
+     3252
+    ],
+    [
+     -4656,
+     3252
+    ],
+    [
+     -4352,
+     3252
+    ],
+    [
+     -4048,
+     3252
+    ],
+    [
+     -3744,
+     3252
+    ],
+    [
+     -3440,
+     3252
+    ],
+    [
+     -3136,
+     3068
     ]
    ]
   },
@@ -19739,19 +19791,19 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     8383
+     5870
     ],
     [
      -4352,
-     8404
+     5941
     ],
     [
      -4048,
-     8404
+     5941
     ],
     [
      -3744,
-     8404
+     5941
     ]
    ]
   },
@@ -19762,15 +19814,15 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     2007
+     1691
     ],
     [
      -4048,
-     2421
+     1988
     ],
     [
      -3744,
-     2421
+     1988
     ]
    ]
   },
@@ -19781,11 +19833,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4616
+     3669
     ],
     [
      -3744,
-     4710
+     3706
     ]
    ]
   },
@@ -19796,11 +19848,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1207
+     1107
     ],
     [
      -3440,
-     1375
+     1241
     ]
    ]
   },
@@ -19811,11 +19863,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1960
+     1653
     ],
     [
      -3440,
-     1375
+     1241
     ]
    ]
   },
@@ -19826,11 +19878,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1207
+     1107
     ],
     [
      -3440,
-     1187
+     1091
     ]
    ]
   },
@@ -19841,11 +19893,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1960
+     1653
     ],
     [
      -3440,
-     1187
+     1091
     ]
    ]
   },
@@ -19856,11 +19908,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1207
+     1107
     ],
     [
      -3440,
-     6536
+     4495
     ]
    ]
   },
@@ -19871,19 +19923,19 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     10865
+     8621
     ],
     [
      -4048,
-     10541
+     8250
     ],
     [
      -3744,
-     10541
+     8250
     ],
     [
      -3440,
-     6536
+     4495
     ]
    ]
   },
@@ -19894,23 +19946,42 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     6929
+     4021
     ],
     [
      -4352,
-     6929
+     4021
     ],
     [
      -4048,
-     6929
+     4021
     ],
     [
      -3744,
-     6929
+     4021
     ],
     [
      -3440,
-     6929
+     4021
+    ]
+   ]
+  },
+  {
+   "from": "pc_retroKick",
+   "to": "int_crewedRetroPack",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -4048,
+     3519
+    ],
+    [
+     -3744,
+     3514
+    ],
+    [
+     -3440,
+     3514
     ]
    ]
   },
@@ -19921,11 +19992,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     10959
+     8696
     ],
     [
      -3440,
-     11081
+     8868
     ]
    ]
   },
@@ -19936,15 +20007,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     7717
+     6262
     ],
     [
      -3440,
-     7785
+     6208
     ],
     [
      -3136,
-     7785
+     6208
     ]
    ]
   },
@@ -19955,19 +20026,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     10179
+     7386
     ],
     [
      -3744,
-     10179
+     7386
     ],
     [
      -3440,
-     10179
+     7386
     ],
     [
      -3136,
-     10179
+     7386
     ]
    ]
   },
@@ -19978,15 +20049,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     10609
+     8304
     ],
     [
      -3440,
-     10609
+     8304
     ],
     [
      -3136,
-     10609
+     8304
     ]
    ]
   },
@@ -19997,15 +20068,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     8908
+     6705
     ],
     [
      -3440,
-     8908
+     6705
     ],
     [
      -3136,
-     8352
+     6321
     ]
    ]
   },
@@ -20016,42 +20087,34 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7480
+     5703
     ],
     [
      -3744,
-     7496
+     5607
     ],
     [
      -3440,
-     7496
+     5607
     ],
     [
      -3136,
-     8352
+     6321
     ]
    ]
   },
   {
-   "from": "fd_restartableUpper",
+   "from": "pc_fluorine",
    "to": "pc_juno_ClF3",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -4048,
-     7159
-    ],
-    [
-     -3744,
-     7185
-    ],
-    [
      -3440,
-     7185
+     5557
     ],
     [
      -3136,
-     7185
+     5557
     ]
    ]
   },
@@ -20062,11 +20125,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4496
+     3556
     ],
     [
      -4048,
-     4522
+     3594
     ]
    ]
   },
@@ -20077,15 +20140,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     8715
+     6555
     ],
     [
      -3136,
-     9991
+     7239
     ],
     [
      -2832,
-     9991
+     7239
     ]
    ]
   },
@@ -20096,23 +20159,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4052
+     3197
     ],
     [
      -3744,
-     4041
+     3177
     ],
     [
      -3440,
-     4041
+     3177
     ],
     [
      -3136,
-     4041
+     3177
     ],
     [
      -2832,
-     4041
+     3177
     ]
    ]
   },
@@ -20123,11 +20186,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     1375
+     1241
     ],
     [
      -3136,
-     1375
+     1241
     ]
    ]
   },
@@ -20138,11 +20201,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     1187
+     1091
     ],
     [
      -3136,
-     1187
+     1091
     ]
    ]
   },
@@ -20153,11 +20216,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1187
+     1091
     ],
     [
      -2832,
-     1093
+     1016
     ]
    ]
   },
@@ -20168,11 +20231,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     2238
+     1816
     ],
     [
      -2832,
-     2259
+     1833
     ]
    ]
   },
@@ -20183,11 +20246,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1375
+     1241
     ],
     [
      -2832,
-     1281
+     1166
     ]
    ]
   },
@@ -20198,11 +20261,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1187
+     1091
     ],
     [
      -2832,
-     1281
+     1166
     ]
    ]
   },
@@ -20213,11 +20276,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     1281
+     1166
     ],
     [
      -2528,
-     1234
+     1128
     ]
    ]
   },
@@ -20228,15 +20291,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     8404
+     5941
     ],
     [
      -3440,
-     8326
+     5983
     ],
     [
      -3136,
-     8541
+     5983
     ]
    ]
   },
@@ -20247,11 +20310,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     8541
+     5983
     ],
     [
      -2832,
-     9284
+     6909
     ]
    ]
   },
@@ -20262,19 +20325,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4423
+     3519
     ],
     [
      -3744,
-     4475
+     3561
     ],
     [
      -3440,
-     4475
+     3561
     ],
     [
      -3136,
-     6788
+     4604
     ]
    ]
   },
@@ -20285,15 +20348,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     8404
+     5941
     ],
     [
      -3440,
-     8315
+     5899
     ],
     [
      -3136,
-     6788
+     4604
     ]
    ]
   },
@@ -20304,19 +20367,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4423
+     3519
     ],
     [
      -3744,
-     4428
+     3477
     ],
     [
      -3440,
-     4428
+     3477
     ],
     [
      -3136,
-     4428
+     3477
     ]
    ]
   },
@@ -20327,15 +20390,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     8404
+     5941
     ],
     [
      -3440,
-     8562
+     5908
     ],
     [
      -3136,
-     8818
+     5908
     ]
    ]
   },
@@ -20346,19 +20409,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7159
+     5461
     ],
     [
      -3744,
-     7091
+     5257
     ],
     [
      -3440,
-     7091
+     5257
     ],
     [
      -3136,
-     7091
+     5257
     ]
    ]
   },
@@ -20369,23 +20432,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7480
+     5703
     ],
     [
      -3744,
-     7411
+     5523
     ],
     [
      -3440,
-     7411
+     5523
     ],
     [
      -3136,
-     7411
+     5523
     ],
     [
      -2832,
-     7206
+     5257
     ]
    ]
   },
@@ -20396,11 +20459,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     7091
+     5257
     ],
     [
      -2832,
-     7206
+     5257
     ]
    ]
   },
@@ -20411,19 +20474,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4146
+     3327
     ],
     [
      -3744,
-     4146
+     3327
     ],
     [
      -3440,
-     4146
+     3327
     ],
     [
      -3136,
-     4146
+     3327
     ]
    ]
   },
@@ -20434,19 +20497,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4616
+     3669
     ],
     [
      -3744,
-     4522
+     3631
     ],
     [
      -3440,
-     4522
+     3631
     ],
     [
      -3136,
-     4522
+     3631
     ]
    ]
   },
@@ -20457,23 +20520,23 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4496
+     3556
     ],
     [
      -4048,
-     4240
+     3402
     ],
     [
      -3744,
-     4240
+     3402
     ],
     [
      -3440,
-     4240
+     3402
     ],
     [
      -3136,
-     4240
+     3402
     ]
    ]
   },
@@ -20484,23 +20547,23 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4496
+     3556
     ],
     [
      -4048,
-     4847
+     3781
     ],
     [
      -3744,
-     4847
+     3781
     ],
     [
      -3440,
-     4847
+     3781
     ],
     [
      -3136,
-     4847
+     3781
     ]
    ]
   },
@@ -20511,19 +20574,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4423
+     3519
     ],
     [
      -3744,
-     4334
+     3552
     ],
     [
      -3440,
-     4334
+     3552
     ],
     [
      -3136,
-     4334
+     3552
     ]
    ]
   },
@@ -20534,11 +20597,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     4334
+     3552
     ],
     [
      -2832,
-     4334
+     3552
     ]
    ]
   },
@@ -20549,19 +20612,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7480
+     5703
     ],
     [
      -3744,
-     7507
+     5632
     ],
     [
      -3440,
-     7507
+     5632
     ],
     [
      -3136,
-     7507
+     5632
     ]
    ]
   },
@@ -20572,11 +20635,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     6788
+     4604
     ],
     [
      -2832,
-     9881
+     7151
     ]
    ]
   },
@@ -20587,11 +20650,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11922
+     9356
     ],
     [
      -2832,
-     9881
+     7151
     ]
    ]
   },
@@ -20602,11 +20665,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     8818
+     5908
     ],
     [
      -2832,
-     9378
+     6146
     ]
    ]
   },
@@ -20617,11 +20680,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     12717
+     9915
     ],
     [
      -3136,
-     12602
+     9823
     ]
    ]
   },
@@ -20632,11 +20695,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     12717
+     9915
     ],
     [
      -3136,
-     12738
+     9931
     ]
    ]
   },
@@ -20647,11 +20710,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12602
+     9823
     ],
     [
      -2832,
-     12649
+     9860
     ]
    ]
   },
@@ -20662,11 +20725,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12602
+     9823
     ],
     [
      -2832,
-     12555
+     9785
     ]
    ]
   },
@@ -20677,15 +20740,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11530
+     9226
     ],
     [
      -3440,
-     11504
+     9206
     ],
     [
      -3136,
-     11504
+     9206
     ]
    ]
   },
@@ -20696,31 +20759,31 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     6076
+     4164
     ],
     [
      -4656,
-     6494
+     4054
     ],
     [
      -4352,
-     6494
+     4054
     ],
     [
      -4048,
-     6494
+     4054
     ],
     [
      -3744,
-     6494
+     4054
     ],
     [
      -3440,
-     6494
+     4054
     ],
     [
      -3136,
-     6494
+     4054
     ]
    ]
   },
@@ -20731,11 +20794,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11504
+     9206
     ],
     [
      -2832,
-     11504
+     9206
     ]
    ]
   },
@@ -20746,19 +20809,19 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     12461
+     9710
     ],
     [
      -3440,
-     12461
+     9710
     ],
     [
      -3136,
-     12461
+     9710
     ],
     [
      -2832,
-     12461
+     9710
     ]
    ]
   },
@@ -20769,11 +20832,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11922
+     9356
     ],
     [
      -2832,
-     12461
+     9710
     ]
    ]
   },
@@ -20784,11 +20847,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     11081
+     8868
     ],
     [
      -3136,
-     11128
+     8906
     ]
    ]
   },
@@ -20799,11 +20862,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     8818
+     5908
     ],
     [
      -2832,
-     9472
+     6609
     ]
    ]
   },
@@ -20814,15 +20877,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     10959
+     8696
     ],
     [
      -3440,
-     10844
+     8417
     ],
     [
      -3136,
-     10844
+     8417
     ]
    ]
   },
@@ -20833,19 +20896,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12926
+     10081
     ],
     [
      -3744,
-     12926
+     10081
     ],
     [
      -3440,
-     12926
+     10081
     ],
     [
      -3136,
-     12926
+     10081
     ]
    ]
   },
@@ -20856,15 +20919,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     10959
+     8696
     ],
     [
      -3440,
-     10750
+     8642
     ],
     [
      -3136,
-     10750
+     8642
     ]
    ]
   },
@@ -20875,19 +20938,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12042
+     9506
     ],
     [
      -3744,
-     12110
+     9581
     ],
     [
      -3440,
-     12110
+     9581
     ],
     [
      -3136,
-     12110
+     9581
     ]
    ]
   },
@@ -20898,19 +20961,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12042
+     9506
     ],
     [
      -3744,
-     12016
+     9506
     ],
     [
      -3440,
-     12016
+     9506
     ],
     [
      -3136,
-     12016
+     9506
     ]
    ]
   },
@@ -20921,19 +20984,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12042
+     9506
     ],
     [
      -3744,
-     11922
+     9356
     ],
     [
      -3440,
-     11922
+     9356
     ],
     [
      -3136,
-     11922
+     9356
     ]
    ]
   },
@@ -20944,42 +21007,34 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12042
+     9506
     ],
     [
      -3744,
-     12204
+     9656
     ],
     [
      -3440,
-     12204
+     9656
     ],
     [
      -3136,
-     12204
+     9656
     ]
    ]
   },
   {
-   "from": "rob_rotorActuation",
+   "from": "rob_linearActuation",
    "to": "rob_sequencedControl",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -4048,
-     12042
-    ],
-    [
-     -3744,
-     12298
-    ],
-    [
-     -3440,
-     12298
+     -3136,
+     9356
     ],
     [
      -3136,
-     12298
+     8492
     ]
    ]
   },
@@ -20990,19 +21045,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     12042
+     9506
     ],
     [
      -3744,
-     11807
+     9431
     ],
     [
      -3440,
-     11807
+     9431
     ],
     [
      -3136,
-     11807
+     9431
     ]
    ]
   },
@@ -21013,34 +21068,26 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11807
+     9431
     ],
     [
      -2832,
-     11786
+     9414
     ]
    ]
   },
   {
-   "from": "rob_rotorActuation",
+   "from": "rob_surfaceMobility",
    "to": "rob_trackDrive",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -4048,
-     12042
-    ],
-    [
-     -3744,
-     11692
-    ],
-    [
-     -3440,
-     11692
+     -3136,
+     9431
     ],
     [
      -3136,
-     11692
+     8567
     ]
    ]
   },
@@ -21051,34 +21098,26 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11692
+     8567
     ],
     [
      -2832,
-     11692
+     8124
     ]
    ]
   },
   {
-   "from": "rob_rotorActuation",
+   "from": "rob_surfaceMobility",
    "to": "rob_screwDrive",
    "anyToUnlock": false,
    "waypoints": [
     [
-     -4048,
-     12042
-    ],
-    [
-     -3744,
-     12392
-    ],
-    [
-     -3440,
-     12392
+     -3136,
+     9431
     ],
     [
      -3136,
-     12392
+     8717
     ]
    ]
   },
@@ -21089,27 +21128,27 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7852
+     4659
     ],
     [
      -4352,
-     7896
+     4930
     ],
     [
      -4048,
-     7896
+     4930
     ],
     [
      -3744,
-     7896
+     4930
     ],
     [
      -3440,
-     7896
+     4930
     ],
     [
      -3136,
-     7896
+     4930
     ]
    ]
   },
@@ -21120,11 +21159,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     12717
+     9915
     ],
     [
      -3136,
-     12832
+     10006
     ]
    ]
   },
@@ -21135,15 +21174,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     998
+     940
     ],
     [
      -3136,
-     945
+     898
     ],
     [
      -2832,
-     945
+     898
     ]
    ]
   },
@@ -21154,11 +21193,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     945
+     898
     ],
     [
      -2528,
-     945
+     898
     ]
    ]
   },
@@ -21169,31 +21208,31 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     8823
+     6838
     ],
     [
      -4656,
-     10456
+     8182
     ],
     [
      -4352,
-     10456
+     8182
     ],
     [
      -4048,
-     10456
+     8182
     ],
     [
      -3744,
-     10456
+     8182
     ],
     [
      -3440,
-     10456
+     8182
     ],
     [
      -3136,
-     10456
+     8182
     ]
    ]
   },
@@ -21204,11 +21243,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     10456
+     8182
     ],
     [
      -2832,
-     10243
+     7845
     ]
    ]
   },
@@ -21219,19 +21258,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6384
+     4876
     ],
     [
      -3744,
-     6379
+     4881
     ],
     [
      -3440,
-     6379
+     4881
     ],
     [
      -3136,
-     5469
+     4679
     ]
    ]
   },
@@ -21242,19 +21281,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6101
+     4642
     ],
     [
      -3744,
-     5407
+     4679
     ],
     [
      -3440,
-     5407
+     4679
     ],
     [
      -3136,
-     5469
+     4679
     ]
    ]
   },
@@ -21265,23 +21304,23 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     4988
+     6613
     ],
     [
      -4048,
-     4966
+     6058
     ],
     [
      -3744,
-     4966
+     6058
     ],
     [
      -3440,
-     4966
+     6058
     ],
     [
      -3136,
-     4966
+     6058
     ]
    ]
   },
@@ -21292,11 +21331,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     8818
+     5908
     ],
     [
      -2832,
-     9650
+     6834
     ]
    ]
   },
@@ -21307,7 +21346,7 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     1771
+     1503
     ],
     [
      -4048,
@@ -21334,15 +21373,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1960
+     1653
     ],
     [
      -3440,
-     2238
+     1816
     ],
     [
      -3136,
-     2238
+     1816
     ]
    ]
   },
@@ -21353,15 +21392,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     2238
+     1816
     ],
     [
      -2832,
-     2097
+     1704
     ],
     [
      -2528,
-     2097
+     1704
     ]
    ]
   },
@@ -21372,15 +21411,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     6788
+     4604
     ],
     [
      -2832,
-     6788
+     4604
     ],
     [
      -2528,
-     5836
+     4717
     ]
    ]
   },
@@ -21391,11 +21430,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     7206
+     5257
     ],
     [
      -2528,
-     5836
+     4717
     ]
    ]
   },
@@ -21406,11 +21445,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     5836
+     4717
     ],
     [
      -2224,
-     5836
+     4717
     ]
    ]
   },
@@ -21421,11 +21460,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     9991
+     7239
     ],
     [
      -2528,
-     9991
+     7552
     ]
    ]
   },
@@ -21436,19 +21475,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     8715
+     6555
     ],
     [
      -3136,
-     9838
+     7185
     ],
     [
      -2832,
-     9838
+     7185
     ],
     [
      -2528,
-     9838
+     7477
     ]
    ]
   },
@@ -21459,23 +21498,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     5280
+     4180
     ],
     [
      -3744,
-     5301
+     4218
     ],
     [
      -3440,
-     5301
+     4218
     ],
     [
      -3136,
-     5301
+     4218
     ],
     [
      -2832,
-     8121
+     5904
     ]
    ]
   },
@@ -21486,15 +21525,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     8715
+     6555
     ],
     [
      -3136,
-     8881
+     6513
     ],
     [
      -2832,
-     8121
+     5904
     ]
    ]
   },
@@ -21505,11 +21544,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     8121
+     5904
     ],
     [
      -2528,
-     7728
+     6184
     ]
    ]
   },
@@ -21520,19 +21559,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     5280
+     4180
     ],
     [
      -3744,
-     5218
+     4129
     ],
     [
      -3440,
-     5218
+     4129
     ],
     [
      -3136,
-     5218
+     4129
     ]
    ]
   },
@@ -21543,11 +21582,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     4041
+     3177
     ],
     [
      -2528,
-     4041
+     3177
     ]
    ]
   },
@@ -21558,23 +21597,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     4052
+     3197
     ],
     [
      -3744,
-     4063
+     3197
     ],
     [
      -3440,
-     4063
+     3197
     ],
     [
      -3136,
-     4063
+     3197
     ],
     [
      -2832,
-     5819
+     4554
     ]
    ]
   },
@@ -21585,19 +21624,19 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     7854
+     6371
     ],
     [
      -3440,
-     7854
+     6371
     ],
     [
      -3136,
-     7854
+     6371
     ],
     [
      -2832,
-     5819
+     4554
     ]
    ]
   },
@@ -21608,11 +21647,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     5819
+     4554
     ],
     [
      -2528,
-     7236
+     5792
     ]
    ]
   },
@@ -21623,15 +21662,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     7507
+     5632
     ],
     [
      -2832,
-     8305
+     6112
     ],
     [
      -2528,
-     7236
+     5792
     ]
    ]
   },
@@ -21642,39 +21681,39 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     6076
+     4164
     ],
     [
      -4656,
-     5145
+     4248
     ],
     [
      -4352,
-     5145
+     4248
     ],
     [
      -4048,
-     5145
+     4248
     ],
     [
      -3744,
-     5145
+     4248
     ],
     [
      -3440,
-     5145
+     4248
     ],
     [
      -3136,
-     5145
+     4248
     ],
     [
      -2832,
-     5145
+     4248
     ],
     [
      -2528,
-     7984
+     6463
     ]
    ]
   },
@@ -21685,11 +21724,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     10127
+     7423
     ],
     [
      -2528,
-     7984
+     6463
     ]
    ]
   },
@@ -21700,11 +21739,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     10127
+     7423
     ],
     [
      -2528,
-     8266
+     6793
     ]
    ]
   },
@@ -21715,23 +21754,23 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     6144
+     4805
     ],
     [
      -3440,
-     6332
+     4822
     ],
     [
      -3136,
-     6332
+     4822
     ],
     [
      -2832,
-     6332
+     4822
     ],
     [
      -2528,
-     8266
+     6793
     ]
    ]
   },
@@ -21742,15 +21781,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     10294
+     7590
     ],
     [
      -3440,
-     10294
+     7590
     ],
     [
      -3136,
-     10294
+     7590
     ]
    ]
   },
@@ -21761,23 +21800,23 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11591
+     9071
     ],
     [
      -4048,
-     11598
+     9281
     ],
     [
      -3744,
-     11598
+     9281
     ],
     [
      -3440,
-     11598
+     9281
     ],
     [
      -3136,
-     11598
+     9281
     ]
    ]
   },
@@ -21788,11 +21827,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     10294
+     7590
     ],
     [
      -2832,
-     10661
+     8254
     ]
    ]
   },
@@ -21803,11 +21842,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11598
+     9281
     ],
     [
      -2832,
-     10661
+     8254
     ]
    ]
   },
@@ -21818,11 +21857,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     10661
+     8254
     ],
     [
      -2528,
-     10661
+     8254
     ]
    ]
   },
@@ -21833,11 +21872,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     10661
+     8254
     ],
     [
      -2224,
-     10661
+     8254
     ]
    ]
   },
@@ -21848,11 +21887,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     10661
+     8254
     ],
     [
      -1920,
-     10661
+     8254
     ]
    ]
   },
@@ -21863,11 +21902,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     10661
+     8254
     ],
     [
      -1616,
-     10661
+     8254
     ]
    ]
   },
@@ -21878,11 +21917,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     10661
+     8254
     ],
     [
      -1312,
-     10661
+     8254
     ]
    ]
   },
@@ -21893,11 +21932,11 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     10661
+     8254
     ],
     [
      -1008,
-     10661
+     8254
     ]
    ]
   },
@@ -21908,11 +21947,11 @@ window.TREE = {
    "waypoints": [
     [
      -1008,
-     10661
+     8254
     ],
     [
      -704,
-     10661
+     8254
     ]
    ]
   },
@@ -21923,19 +21962,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6101
+     4642
     ],
     [
      -3744,
-     6080
+     4529
     ],
     [
      -3440,
-     6080
+     4529
     ],
     [
      -3136,
-     5375
+     4529
     ]
    ]
   },
@@ -21946,19 +21985,19 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6384
+     4876
     ],
     [
      -3744,
-     6400
+     4855
     ],
     [
      -3440,
-     6400
+     4855
     ],
     [
      -3136,
-     6400
+     4855
     ]
    ]
   },
@@ -21969,11 +22008,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     5375
+     4529
     ],
     [
      -2832,
-     5563
+     4679
     ]
    ]
   },
@@ -21984,11 +22023,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     6400
+     4855
     ],
     [
      -2832,
-     5563
+     4679
     ]
    ]
   },
@@ -21999,11 +22038,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     5469
+     4679
     ],
     [
      -2832,
-     5563
+     4679
     ]
    ]
   },
@@ -22014,23 +22053,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6101
+     4642
     ],
     [
      -3744,
-     5333
+     4462
     ],
     [
      -3440,
-     5333
+     4462
     ],
     [
      -3136,
-     5333
+     4462
     ],
     [
      -2832,
-     5448
+     4462
     ]
    ]
   },
@@ -22041,11 +22080,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     5469
+     4679
     ],
     [
      -2832,
-     5354
+     6079
     ]
    ]
   },
@@ -22056,11 +22095,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     4966
+     6058
     ],
     [
      -2832,
-     5354
+     6079
     ]
    ]
   },
@@ -22071,11 +22110,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     5009
+     6242
     ],
     [
      -3744,
-     5009
+     6446
     ]
    ]
   },
@@ -22086,11 +22125,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     4847
+     3781
     ],
     [
      -2832,
-     4847
+     3781
     ]
    ]
   },
@@ -22101,23 +22140,23 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     7480
+     5703
     ],
     [
      -3744,
-     7549
+     5774
     ],
     [
      -3440,
-     7549
+     5774
     ],
     [
      -3136,
-     7549
+     5774
     ],
     [
      -2832,
-     8771
+     6684
     ]
    ]
   },
@@ -22128,11 +22167,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     8541
+     5983
     ],
     [
      -2832,
-     8771
+     6684
     ]
    ]
   },
@@ -22143,11 +22182,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     8771
+     6684
     ],
     [
      -2528,
-     8078
+     6868
     ]
    ]
   },
@@ -22158,15 +22197,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     4710
+     3706
     ],
     [
      -3440,
-     4710
+     3706
     ],
     [
      -3136,
-     4710
+     3706
     ]
    ]
   },
@@ -22177,19 +22216,19 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     7227
+     5478
     ],
     [
      -3440,
-     7227
+     5478
     ],
     [
      -3136,
-     7227
+     5478
     ],
     [
      -2832,
-     7112
+     5979
     ]
    ]
   },
@@ -22200,15 +22239,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     8708
+     6555
     ],
     [
      -3744,
-     8692
+     6480
     ],
     [
      -3440,
-     8273
+     6480
     ]
    ]
   },
@@ -22219,11 +22258,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     7854
+     6371
     ],
     [
      -3440,
-     8273
+     6480
     ]
    ]
   },
@@ -22234,11 +22273,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     10456
+     8182
     ],
     [
      -2832,
-     10127
+     7423
     ]
    ]
   },
@@ -22249,27 +22288,27 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     10367
+     7781
     ],
     [
      -4048,
-     10367
+     7423
     ],
     [
      -3744,
-     10367
+     7423
     ],
     [
      -3440,
-     10367
+     7423
     ],
     [
      -3136,
-     10367
+     7423
     ],
     [
      -2832,
-     10127
+     7423
     ]
    ]
   },
@@ -22280,11 +22319,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1375
+     1241
     ],
     [
      -2832,
-     1516
+     1353
     ]
    ]
   },
@@ -22295,11 +22334,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1187
+     1091
     ],
     [
      -2832,
-     1187
+     1091
     ]
    ]
   },
@@ -22310,19 +22349,19 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1960
+     1653
     ],
     [
      -3440,
-     2353
+     1908
     ],
     [
      -3136,
-     2353
+     1908
     ],
     [
      -2832,
-     2353
+     1908
     ]
    ]
   },
@@ -22333,11 +22372,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     2353
+     1908
     ],
     [
      -2528,
-     2400
+     1946
     ]
    ]
   },
@@ -22348,19 +22387,19 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     3476
+     2767
     ],
     [
      -3440,
-     3476
+     2767
     ],
     [
      -3136,
-     3476
+     2767
     ],
     [
      -2832,
-     3476
+     2767
     ]
    ]
   },
@@ -22371,11 +22410,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     2353
+     1908
     ],
     [
      -2528,
-     2212
+     1796
     ]
    ]
   },
@@ -22386,11 +22425,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12926
+     10081
     ],
     [
      -2832,
-     12905
+     10065
     ]
    ]
   },
@@ -22401,19 +22440,19 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6813
+     3966
     ],
     [
      -4048,
-     6741
+     3944
     ],
     [
      -3744,
-     6741
+     3944
     ],
     [
      -3440,
-     6741
+     3944
     ]
    ]
   },
@@ -22424,11 +22463,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     6741
+     3944
     ],
     [
      -3136,
-     4616
+     3252
     ]
    ]
   },
@@ -22439,15 +22478,15 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1207
+     1107
     ],
     [
      -3440,
-     1113
+     1032
     ],
     [
      -3136,
-     4616
+     3252
     ]
    ]
   },
@@ -22458,11 +22497,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     2421
+     1988
     ],
     [
      -3440,
-     2421
+     1988
     ]
    ]
   },
@@ -22473,23 +22512,23 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     7549
+     4307
     ],
     [
      -4352,
-     7602
+     4324
     ],
     [
      -4048,
-     7602
+     4324
     ],
     [
      -3744,
-     7602
+     4324
     ],
     [
      -3440,
-     7369
+     4180
     ]
    ]
   },
@@ -22500,19 +22539,19 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     6813
+     3966
     ],
     [
      -4048,
-     6856
+     3953
     ],
     [
      -3744,
-     6856
+     3953
     ],
     [
      -3440,
-     7369
+     4180
     ]
    ]
   },
@@ -22523,11 +22562,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     8121
+     5904
     ],
     [
      -2528,
-     7518
+     6017
     ]
    ]
   },
@@ -22538,11 +22577,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7518
+     6017
     ],
     [
      -2224,
-     7518
+     6017
     ]
    ]
   },
@@ -22553,11 +22592,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7728
+     6184
     ],
     [
      -2224,
-     7706
+     6167
     ]
    ]
   },
@@ -22568,11 +22607,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     7518
+     6017
     ],
     [
      -1920,
-     7518
+     6017
     ]
    ]
   },
@@ -22583,11 +22622,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7236
+     5792
     ],
     [
      -2224,
-     7330
+     5867
     ]
    ]
   },
@@ -22598,11 +22637,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     7330
+     5867
     ],
     [
      -1920,
-     7330
+     5867
     ]
    ]
   },
@@ -22613,11 +22652,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     4041
+     3177
     ],
     [
      -2224,
-     4041
+     3177
     ]
    ]
   },
@@ -22628,11 +22667,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7236
+     5792
     ],
     [
      -2224,
-     7236
+     5792
     ]
    ]
   },
@@ -22643,11 +22682,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     4146
+     3327
     ],
     [
      -2832,
-     4146
+     3327
     ]
    ]
   },
@@ -22658,11 +22697,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     4847
+     3781
     ],
     [
      -2528,
-     4941
+     3819
     ]
    ]
   },
@@ -22673,11 +22712,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     4334
+     3552
     ],
     [
      -2528,
-     4287
+     3514
     ]
    ]
   },
@@ -22688,11 +22727,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     4287
+     3514
     ],
     [
      -2224,
-     4287
+     3514
     ]
    ]
   },
@@ -22703,11 +22742,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     4334
+     3552
     ],
     [
      -2528,
-     4590
+     3664
     ]
    ]
   },
@@ -22718,11 +22757,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     4847
+     3781
     ],
     [
      -2528,
-     4590
+     3664
     ]
    ]
   },
@@ -22733,11 +22772,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     7112
+     5979
     ],
     [
      -2528,
-     6186
+     6351
     ]
    ]
   },
@@ -22748,11 +22787,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7984
+     6463
     ],
     [
      -2224,
-     7984
+     6463
     ]
    ]
   },
@@ -22763,11 +22802,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     7984
+     6463
     ],
     [
      -1920,
-     7984
+     6463
     ]
    ]
   },
@@ -22778,11 +22817,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3476
+     2767
     ],
     [
      -2528,
-     3267
+     2600
     ]
    ]
   },
@@ -22793,15 +22832,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     10127
+     7423
     ],
     [
      -2528,
-     10106
+     7699
     ],
     [
      -2224,
-     7424
+     5942
     ]
    ]
   },
@@ -22812,11 +22851,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     3267
+     2600
     ],
     [
      -2224,
-     7424
+     5942
     ]
    ]
   },
@@ -22827,31 +22866,31 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11079
+     8792
     ],
     [
      -4048,
-     11457
+     9168
     ],
     [
      -3744,
-     11457
+     9168
     ],
     [
      -3440,
-     11457
+     9168
     ],
     [
      -3136,
-     11457
+     9168
     ],
     [
      -2832,
-     11457
+     9168
     ],
     [
      -2528,
-     10938
+     8754
     ]
    ]
   },
@@ -22862,11 +22901,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     10243
+     7845
     ],
     [
      -2528,
-     10938
+     8754
     ]
    ]
   },
@@ -22877,11 +22916,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     10938
+     8754
     ],
     [
      -2224,
-     10944
+     8759
     ]
    ]
   },
@@ -22892,11 +22931,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     8771
+     6684
     ],
     [
      -2528,
-     8172
+     6943
     ]
    ]
   },
@@ -22907,11 +22946,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     5563
+     4679
     ],
     [
      -2528,
-     5516
+     4567
     ]
    ]
   },
@@ -22922,11 +22961,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     5563
+     4679
     ],
     [
      -2528,
-     5610
+     4642
     ]
    ]
   },
@@ -22937,31 +22976,31 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     1771
+     1503
     ],
     [
      -4048,
-     805
+     786
     ],
     [
      -3744,
-     805
+     786
     ],
     [
      -3440,
-     805
+     786
     ],
     [
      -3136,
-     805
+     786
     ],
     [
      -2832,
-     805
+     786
     ],
     [
      -2528,
-     805
+     786
     ]
    ]
   },
@@ -22991,31 +23030,31 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     3429
+     2730
     ],
     [
      -4048,
-     3173
+     2525
     ],
     [
      -3744,
-     3173
+     2525
     ],
     [
      -3440,
-     3173
+     2525
     ],
     [
      -3136,
-     3173
+     2525
     ],
     [
      -2832,
-     3173
+     2525
     ],
     [
      -2528,
-     3173
+     2525
     ]
    ]
   },
@@ -23026,15 +23065,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     3173
+     2525
     ],
     [
      -2224,
-     3173
+     2525
     ],
     [
      -1920,
-     3173
+     2525
     ]
    ]
   },
@@ -23045,15 +23084,15 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     3173
+     2525
     ],
     [
      -1616,
-     3173
+     2525
     ],
     [
      -1312,
-     3173
+     2525
     ]
    ]
   },
@@ -23064,15 +23103,15 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     3173
+     2525
     ],
     [
      -1008,
-     3173
+     2525
     ],
     [
      -704,
-     3173
+     2525
     ]
    ]
   },
@@ -23083,19 +23122,19 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     3800
+     2450
     ],
     [
      -2224,
-     3800
+     2450
     ],
     [
      -1920,
-     3800
+     2450
     ],
     [
      -1616,
-     3800
+     2450
     ]
    ]
   },
@@ -23106,15 +23145,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     805
+     786
     ],
     [
      -2224,
-     805
+     786
     ],
     [
      -1920,
-     805
+     786
     ]
    ]
   },
@@ -23125,15 +23164,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     8172
+     6943
     ],
     [
      -2224,
-     8219
+     6981
     ],
     [
      -1920,
-     8219
+     6981
     ]
    ]
   },
@@ -23144,11 +23183,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11530
+     9226
     ],
     [
      -3440,
-     11551
+     9243
     ]
    ]
   },
@@ -23159,27 +23198,27 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     6604
+     3835
     ],
     [
      -3744,
-     6604
+     3835
     ],
     [
      -3440,
-     6604
+     3835
     ],
     [
      -3136,
-     6604
+     3835
     ],
     [
      -2832,
-     6604
+     3835
     ],
     [
      -2528,
-     3800
+     2450
     ]
    ]
   },
@@ -23190,19 +23229,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     998
+     940
     ],
     [
      -3136,
-     1051
+     982
     ],
     [
      -2832,
-     1051
+     982
     ],
     [
      -2528,
-     3800
+     2450
     ]
    ]
   },
@@ -23213,11 +23252,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     2353
+     1908
     ],
     [
      -2528,
-     2494
+     2021
     ]
    ]
   },
@@ -23228,11 +23267,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     2353
+     1908
     ],
     [
      -2528,
-     2306
+     1871
     ]
    ]
   },
@@ -23243,11 +23282,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2306
+     1871
     ],
     [
      -2224,
-     2588
+     2021
     ]
    ]
   },
@@ -23258,11 +23297,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2588
+     2021
     ],
     [
      -1920,
-     2494
+     1946
     ]
    ]
   },
@@ -23273,11 +23312,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2588
+     2021
     ],
     [
      -1920,
-     2588
+     2021
     ]
    ]
   },
@@ -23288,11 +23327,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2588
+     2021
     ],
     [
      -1920,
-     2400
+     1871
     ]
    ]
   },
@@ -23303,11 +23342,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2588
+     2021
     ],
     [
      -1920,
-     2776
+     2171
     ]
    ]
   },
@@ -23318,11 +23357,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2588
+     2021
     ],
     [
      -1920,
-     2682
+     2096
     ]
    ]
   },
@@ -23333,11 +23372,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3476
+     2767
     ],
     [
      -2528,
-     3591
+     2859
     ]
    ]
   },
@@ -23348,11 +23387,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     3591
+     2859
     ],
     [
      -2224,
-     3497
+     2784
     ]
    ]
   },
@@ -23363,11 +23402,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     1281
+     1166
     ],
     [
      -2528,
-     1328
+     1203
     ]
    ]
   },
@@ -23378,11 +23417,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     9650
+     6834
     ],
     [
      -2528,
-     9556
+     7110
     ]
    ]
   },
@@ -23393,15 +23432,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11922
+     9356
     ],
     [
      -2832,
-     11922
+     9356
     ],
     [
      -2528,
-     11969
+     9356
     ]
    ]
   },
@@ -23412,15 +23451,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12016
+     9506
     ],
     [
      -2832,
-     12016
+     9506
     ],
     [
      -2528,
-     11969
+     9356
     ]
    ]
   },
@@ -23431,11 +23470,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     1516
+     1353
     ],
     [
      -2528,
-     1516
+     1353
     ]
    ]
   },
@@ -23446,15 +23485,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     1375
+     1241
     ],
     [
      -2832,
-     1422
+     1278
     ],
     [
      -2528,
-     1422
+     1278
     ]
    ]
   },
@@ -23465,15 +23504,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     4616
+     3252
     ],
     [
      -2832,
-     4616
+     3252
     ],
     [
      -2528,
-     4778
+     3252
     ]
    ]
   },
@@ -23484,19 +23523,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     2421
+     1988
     ],
     [
      -3136,
-     2421
+     1988
     ],
     [
      -2832,
-     2421
+     1988
     ],
     [
      -2528,
-     4778
+     3252
     ]
    ]
   },
@@ -23507,19 +23546,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     7369
+     4180
     ],
     [
      -3136,
-     7301
+     4163
     ],
     [
      -2832,
-     7301
+     4163
     ],
     [
      -2528,
-     4778
+     3252
     ]
    ]
   },
@@ -23530,23 +23569,23 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     5218
+     4129
     ],
     [
      -2832,
-     5218
+     4129
     ],
     [
      -2528,
-     5218
+     4129
     ],
     [
      -2224,
-     5218
+     4129
     ],
     [
      -1920,
-     5218
+     4129
     ]
    ]
   },
@@ -23557,19 +23596,19 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     8121
+     5904
     ],
     [
      -2528,
-     7843
+     6276
     ],
     [
      -2224,
-     7843
+     6276
     ],
     [
      -1920,
-     7843
+     6276
     ]
    ]
   },
@@ -23580,11 +23619,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     7843
+     6276
     ],
     [
      -1616,
-     7843
+     6276
     ]
    ]
   },
@@ -23595,15 +23634,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7728
+     6184
     ],
     [
      -2224,
-     7749
+     6201
     ],
     [
      -1920,
-     7749
+     6201
     ]
    ]
   },
@@ -23614,11 +23653,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     7518
+     6017
     ],
     [
      -1616,
-     7518
+     6017
     ]
    ]
   },
@@ -23629,11 +23668,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     7518
+     6017
     ],
     [
      -1312,
-     7518
+     6017
     ]
    ]
   },
@@ -23644,11 +23683,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     7518
+     6017
     ],
     [
      -1616,
-     5631
+     5005
     ]
    ]
   },
@@ -23659,15 +23698,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4041
+     3177
     ],
     [
      -1920,
-     4188
+     3294
     ],
     [
      -1616,
-     5631
+     5005
     ]
    ]
   },
@@ -23678,15 +23717,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4041
+     3177
     ],
     [
      -1920,
-     3894
+     3060
     ],
     [
      -1616,
-     3894
+     3060
     ]
    ]
   },
@@ -23697,11 +23736,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4041
+     3177
     ],
     [
      -1920,
-     4035
+     3172
     ]
    ]
   },
@@ -23712,11 +23751,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     4035
+     3172
     ],
     [
      -1616,
-     3988
+     3135
     ]
    ]
   },
@@ -23727,11 +23766,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     3988
+     3135
     ],
     [
      -1312,
-     3988
+     3135
     ]
    ]
   },
@@ -23742,11 +23781,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     7236
+     5792
     ],
     [
      -1920,
-     7236
+     5792
     ]
    ]
   },
@@ -23757,15 +23796,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     6186
+     6351
     ],
     [
      -2224,
-     6186
+     6351
     ],
     [
      -1920,
-     6186
+     6351
     ]
    ]
   },
@@ -23776,11 +23815,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     6186
+     6351
     ],
     [
      -1616,
-     6186
+     6351
     ]
    ]
   },
@@ -23791,15 +23830,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     9991
+     7552
     ],
     [
      -2224,
-     9949
+     7519
     ],
     [
      -1920,
-     9949
+     7519
     ]
    ]
   },
@@ -23810,15 +23849,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     9991
+     7552
     ],
     [
      -2224,
-     10033
+     7586
     ],
     [
      -1920,
-     10033
+     7586
     ]
    ]
   },
@@ -23829,11 +23868,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     4941
+     3819
     ],
     [
      -2224,
-     4941
+     3819
     ]
    ]
   },
@@ -23844,11 +23883,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4941
+     3819
     ],
     [
      -1920,
-     4988
+     3856
     ]
    ]
   },
@@ -23859,11 +23898,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     10944
+     8759
     ],
     [
      -1920,
-     10897
+     8721
     ]
    ]
   },
@@ -23874,11 +23913,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     10897
+     8721
     ],
     [
      -1616,
-     11018
+     8818
     ]
    ]
   },
@@ -23889,19 +23928,19 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     10938
+     8754
     ],
     [
      -2224,
-     10829
+     8667
     ],
     [
      -1920,
-     10829
+     8667
     ],
     [
      -1616,
-     10924
+     8743
     ]
    ]
   },
@@ -23912,15 +23951,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     10944
+     8759
     ],
     [
      -1920,
-     10965
+     8776
     ],
     [
      -1616,
-     11112
+     8893
     ]
    ]
   },
@@ -23931,11 +23970,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     11112
+     8893
     ],
     [
      -1312,
-     11112
+     8893
     ]
    ]
   },
@@ -23946,11 +23985,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     7984
+     6463
     ],
     [
      -1616,
-     8031
+     6501
     ]
    ]
   },
@@ -23961,11 +24000,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     7984
+     6463
     ],
     [
      -1616,
-     7937
+     6426
     ]
    ]
   },
@@ -23976,11 +24015,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     7937
+     6426
     ],
     [
      -1312,
-     8538
+     7014
     ]
    ]
   },
@@ -23991,11 +24030,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     5516
+     4567
     ],
     [
      -2224,
-     5563
+     4604
     ]
    ]
   },
@@ -24006,11 +24045,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     5516
+     4567
     ],
     [
      -2224,
-     5469
+     4529
     ]
    ]
   },
@@ -24021,19 +24060,19 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     5469
+     4529
     ],
     [
      -1920,
-     5469
+     4529
     ],
     [
      -1616,
-     5469
+     4529
     ],
     [
      -1312,
-     8444
+     6939
     ]
    ]
   },
@@ -24044,11 +24083,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     9949
+     7519
     ],
     [
      -1312,
-     8444
+     6939
     ]
    ]
   },
@@ -24059,15 +24098,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     8172
+     6943
     ],
     [
      -2224,
-     8125
+     6906
     ],
     [
      -1920,
-     8125
+     6906
     ]
    ]
   },
@@ -24078,19 +24117,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     998
+     940
     ],
     [
      -3136,
-     1039
+     973
     ],
     [
      -2832,
-     1039
+     973
     ],
     [
      -2528,
-     1039
+     973
     ]
    ]
   },
@@ -24101,11 +24140,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     945
+     898
     ],
     [
      -2224,
-     945
+     898
     ]
    ]
   },
@@ -24116,11 +24155,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     945
+     898
     ],
     [
      -1920,
-     899
+     861
     ]
    ]
   },
@@ -24131,15 +24170,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11807
+     9431
     ],
     [
      -2832,
-     11828
+     9448
     ],
     [
      -2528,
-     11828
+     9448
     ]
    ]
   },
@@ -24150,11 +24189,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     11828
+     9448
     ],
     [
      -2224,
-     11875
+     9485
     ]
    ]
   },
@@ -24165,11 +24204,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     11828
+     9448
     ],
     [
      -2224,
-     11781
+     9410
     ]
    ]
   },
@@ -24180,11 +24219,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     9650
+     6834
     ],
     [
      -2528,
-     9744
+     7185
     ]
    ]
   },
@@ -24195,11 +24234,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     9650
+     6834
     ],
     [
      -2528,
-     9650
+     7035
     ]
    ]
   },
@@ -24210,11 +24249,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     11504
+     9206
     ],
     [
      -2528,
-     11551
+     9243
     ]
    ]
   },
@@ -24225,11 +24264,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     11504
+     9206
     ],
     [
      -2528,
-     11457
+     9168
     ]
    ]
   },
@@ -24240,11 +24279,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     11551
+     9243
     ],
     [
      -2224,
-     11551
+     9243
     ]
    ]
   },
@@ -24255,11 +24294,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     11551
+     9243
     ],
     [
      -1920,
-     11692
+     9356
     ]
    ]
   },
@@ -24270,11 +24309,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     11551
+     9243
     ],
     [
      -1920,
-     11504
+     9206
     ]
    ]
   },
@@ -24285,11 +24324,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     11551
+     9243
     ],
     [
      -1920,
-     11410
+     9131
     ]
    ]
   },
@@ -24300,11 +24339,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     11551
+     9243
     ],
     [
      -1920,
-     11598
+     9281
     ]
    ]
   },
@@ -24315,11 +24354,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     10243
+     7845
     ],
     [
      -2528,
-     10243
+     7845
     ]
    ]
   },
@@ -24330,11 +24369,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     10243
+     7845
     ],
     [
      -2224,
-     10243
+     7845
     ]
    ]
   },
@@ -24345,11 +24384,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     12555
+     9785
     ],
     [
      -2528,
-     12555
+     9785
     ]
    ]
   },
@@ -24360,11 +24399,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     12555
+     9785
     ],
     [
      -2224,
-     12555
+     9785
     ]
    ]
   },
@@ -24375,11 +24414,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     12555
+     9785
     ],
     [
      -1920,
-     12555
+     9785
     ]
    ]
   },
@@ -24390,11 +24429,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     12555
+     9785
     ],
     [
      -1616,
-     12555
+     9785
     ]
    ]
   },
@@ -24405,11 +24444,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     12555
+     9785
     ],
     [
      -1312,
-     12555
+     9785
     ]
    ]
   },
@@ -24420,11 +24459,11 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     12555
+     9785
     ],
     [
      -1008,
-     12555
+     9785
     ]
    ]
   },
@@ -24435,15 +24474,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12738
+     9931
     ],
     [
      -2832,
-     12785
+     9969
     ],
     [
      -2528,
-     12785
+     9969
     ]
    ]
   },
@@ -24454,15 +24493,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12738
+     9931
     ],
     [
      -2832,
-     12691
+     9894
     ],
     [
      -2528,
-     12691
+     9894
     ]
    ]
   },
@@ -24473,15 +24512,15 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     12926
+     10081
     ],
     [
      -2832,
-     12947
+     10098
     ],
     [
      -2528,
-     12947
+     10098
     ]
    ]
   },
@@ -24492,19 +24531,19 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     11363
+     9093
     ],
     [
      -3136,
-     11363
+     9093
     ],
     [
      -2832,
-     11363
+     9093
     ],
     [
      -2528,
-     11363
+     9093
     ]
    ]
   },
@@ -24515,11 +24554,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     7206
+     5257
     ],
     [
      -2528,
-     7330
+     5867
     ]
    ]
   },
@@ -24530,11 +24569,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     8121
+     5904
     ],
     [
      -2528,
-     7612
+     6092
     ]
    ]
   },
@@ -24545,11 +24584,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7612
+     6092
     ],
     [
      -2224,
-     7612
+     6092
     ]
    ]
   },
@@ -24560,11 +24599,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     7236
+     5792
     ],
     [
      -2224,
-     7142
+     5717
     ]
    ]
   },
@@ -24575,11 +24614,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2306
+     1871
     ],
     [
      -2224,
-     2071
+     1683
     ]
    ]
   },
@@ -24590,15 +24629,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2071
+     1683
     ],
     [
      -1920,
-     1836
+     1571
     ],
     [
      -1616,
-     1836
+     1571
     ]
    ]
   },
@@ -24609,15 +24648,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2071
+     1683
     ],
     [
      -1920,
-     1930
+     1646
     ],
     [
      -1616,
-     1930
+     1646
     ]
    ]
   },
@@ -24628,11 +24667,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2306
+     1871
     ],
     [
      -2224,
-     1883
+     1533
     ]
    ]
   },
@@ -24643,11 +24682,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2306
+     1871
     ],
     [
      -2224,
-     2964
+     2321
     ]
    ]
   },
@@ -24658,11 +24697,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2964
+     2321
     ],
     [
      -1920,
-     2964
+     2321
     ]
    ]
   },
@@ -24673,11 +24712,38 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2071
+     1683
     ],
     [
      -1920,
-     2071
+     2876
+    ]
+   ]
+  },
+  {
+   "from": "life_crewedExperimentBay",
+   "to": "life_bioregenerativeECLSS",
+   "anyToUnlock": false,
+   "waypoints": [
+    [
+     -3136,
+     3068
+    ],
+    [
+     -2832,
+     3068
+    ],
+    [
+     -2528,
+     3068
+    ],
+    [
+     -2224,
+     3068
+    ],
+    [
+     -1920,
+     2876
     ]
    ]
   },
@@ -24688,11 +24754,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     2071
+     2876
     ],
     [
      -1616,
-     2118
+     2913
     ]
    ]
   },
@@ -24703,11 +24769,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2306
+     1871
     ],
     [
      -2224,
-     2870
+     2246
     ]
    ]
   },
@@ -24718,11 +24784,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2870
+     2246
     ],
     [
      -1920,
-     2870
+     2246
     ]
    ]
   },
@@ -24733,11 +24799,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     2306
+     1871
     ],
     [
      -2224,
-     1977
+     1608
     ]
    ]
   },
@@ -24748,27 +24814,27 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     1960
+     1653
     ],
     [
      -3440,
-     1652
+     1387
     ],
     [
      -3136,
-     1652
+     1387
     ],
     [
      -2832,
-     1652
+     1387
     ],
     [
      -2528,
-     1652
+     1387
     ],
     [
      -2224,
-     1652
+     1387
     ]
    ]
   },
@@ -24779,11 +24845,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     3591
+     2859
     ],
     [
      -2224,
-     3685
+     2934
     ]
    ]
   },
@@ -24794,11 +24860,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     3591
+     2859
     ],
     [
      -2224,
-     3591
+     2859
     ]
    ]
   },
@@ -24809,15 +24875,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3476
+     2767
     ],
     [
      -2528,
-     3309
+     2634
     ],
     [
      -2224,
-     3309
+     2634
     ]
    ]
   },
@@ -24828,15 +24894,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     3476
+     2767
     ],
     [
      -2528,
-     3403
+     2709
     ],
     [
      -2224,
-     3403
+     2709
     ]
    ]
   },
@@ -24847,15 +24913,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     7369
+     4180
     ],
     [
      -3136,
-     7375
+     4197
     ],
     [
      -2832,
-     8215
+     4197
     ]
    ]
   },
@@ -24866,11 +24932,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     1328
+     1203
     ],
     [
      -2224,
-     1328
+     1203
     ]
    ]
   },
@@ -24881,11 +24947,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     9650
+     7035
     ],
     [
      -2224,
-     9650
+     7035
     ]
    ]
   },
@@ -24896,19 +24962,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     8818
+     5908
     ],
     [
      -2832,
-     9514
+     6538
     ],
     [
      -2528,
-     9514
+     6538
     ],
     [
      -2224,
-     9514
+     6538
     ]
    ]
   },
@@ -24919,11 +24985,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     10127
+     7423
     ],
     [
      -2528,
-     10149
+     7770
     ]
    ]
   },
@@ -24934,19 +25000,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     10750
+     8642
     ],
     [
      -2832,
-     10473
+     8179
     ],
     [
      -2528,
-     10473
+     8179
     ],
     [
      -2224,
-     10473
+     8179
     ]
    ]
   },
@@ -24957,19 +25023,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     10844
+     8417
     ],
     [
      -2832,
-     10567
+     8029
     ],
     [
      -2528,
-     10567
+     8029
     ],
     [
      -2224,
-     10567
+     8029
     ]
    ]
   },
@@ -24980,11 +25046,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     11363
+     9093
     ],
     [
      -2224,
-     11363
+     9093
     ]
    ]
   },
@@ -24995,19 +25061,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11128
+     8906
     ],
     [
      -2832,
-     11128
+     8906
     ],
     [
      -2528,
-     11128
+     8906
     ],
     [
      -2224,
-     11128
+     8906
     ]
    ]
   },
@@ -25018,23 +25084,23 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     11081
+     8868
     ],
     [
      -3136,
-     11034
+     8831
     ],
     [
      -2832,
-     11034
+     8831
     ],
     [
      -2528,
-     11034
+     8831
     ],
     [
      -2224,
-     11034
+     8831
     ]
    ]
   },
@@ -25045,11 +25111,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     12691
+     9894
     ],
     [
      -2224,
-     12691
+     9894
     ]
    ]
   },
@@ -25060,15 +25126,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     9881
+     7151
     ],
     [
      -2528,
-     9881
+     7444
     ],
     [
      -2224,
-     9881
+     7444
     ]
    ]
   },
@@ -25079,11 +25145,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2071
+     1683
     ],
     [
      -1920,
-     2212
+     1721
     ]
    ]
   },
@@ -25094,11 +25160,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     2212
+     1721
     ],
     [
      -1616,
-     2212
+     1721
     ]
    ]
   },
@@ -25109,11 +25175,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     2071
+     1683
     ],
     [
      -1920,
-     2306
+     1796
     ]
    ]
   },
@@ -25124,11 +25190,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     2071
+     2876
     ],
     [
      -1616,
-     2024
+     2838
     ]
    ]
   },
@@ -25139,11 +25205,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3685
+     2934
     ],
     [
      -1920,
-     3638
+     2951
     ]
    ]
   },
@@ -25154,11 +25220,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     3685
+     2934
     ],
     [
      -1920,
-     3732
+     3026
     ]
    ]
   },
@@ -25169,23 +25235,23 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     8446
+     5073
     ],
     [
      -2832,
-     9215
+     5073
     ],
     [
      -2528,
-     9215
+     5073
     ],
     [
      -2224,
-     9215
+     5073
     ],
     [
      -1920,
-     9215
+     5073
     ]
    ]
   },
@@ -25196,11 +25262,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     1328
+     1203
     ],
     [
      -1920,
-     1328
+     1203
     ]
    ]
   },
@@ -25211,15 +25277,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     1516
+     1353
     ],
     [
      -2224,
-     1516
+     1353
     ],
     [
      -1920,
-     1516
+     1353
     ]
    ]
   },
@@ -25230,11 +25296,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     945
+     898
     ],
     [
      -1920,
-     993
+     936
     ]
    ]
   },
@@ -25245,15 +25311,15 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     10149
+     7770
     ],
     [
      -2224,
-     10149
+     7770
     ],
     [
      -1920,
-     10149
+     7770
     ]
    ]
   },
@@ -25264,11 +25330,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     10149
+     7770
     ],
     [
      -1616,
-     10149
+     7770
     ]
    ]
   },
@@ -25279,11 +25345,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     7749
+     6201
     ],
     [
      -1616,
-     7749
+     6201
     ]
    ]
   },
@@ -25294,11 +25360,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     5218
+     4129
     ],
     [
      -1616,
-     5239
+     4146
     ]
    ]
   },
@@ -25309,15 +25375,15 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4041
+     3177
     ],
     [
      -1920,
-     4176
+     3285
     ],
     [
      -1616,
-     4176
+     3285
     ]
    ]
   },
@@ -25328,15 +25394,15 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     5218
+     4129
     ],
     [
      -1616,
-     5197
+     4113
     ],
     [
      -1312,
-     5197
+     4113
     ]
    ]
   },
@@ -25347,11 +25413,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     3894
+     3060
     ],
     [
      -1312,
-     3894
+     3060
     ]
    ]
   },
@@ -25362,11 +25428,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     9949
+     7519
     ],
     [
      -1616,
-     9949
+     7519
     ]
    ]
   },
@@ -25377,11 +25443,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     9949
+     7519
     ],
     [
      -1312,
-     10043
+     7594
     ]
    ]
   },
@@ -25392,11 +25458,11 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     10043
+     7594
     ],
     [
      -1008,
-     10043
+     7594
     ]
    ]
   },
@@ -25407,11 +25473,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     4035
+     3172
     ],
     [
      -1616,
-     4082
+     3210
     ]
    ]
   },
@@ -25422,11 +25488,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     4941
+     3819
     ],
     [
      -1920,
-     4894
+     3781
     ]
    ]
   },
@@ -25437,11 +25503,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     8125
+     6906
     ],
     [
      -1616,
-     8125
+     6906
     ]
    ]
   },
@@ -25452,19 +25518,19 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     9991
+     7552
     ],
     [
      -2224,
-     9991
+     7552
     ],
     [
      -1920,
-     9991
+     7552
     ],
     [
      -1616,
-     10830
+     8668
     ]
    ]
   },
@@ -25475,19 +25541,19 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     10938
+     8754
     ],
     [
      -2224,
-     10992
+     8797
     ],
     [
      -1920,
-     10992
+     8797
     ],
     [
      -1616,
-     10830
+     8668
     ]
    ]
   },
@@ -25498,11 +25564,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     10924
+     8743
     ],
     [
      -1312,
-     10924
+     8743
     ]
    ]
   },
@@ -25513,11 +25579,11 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     10924
+     8743
     ],
     [
      -1008,
-     10924
+     8743
     ]
    ]
   },
@@ -25528,11 +25594,11 @@ window.TREE = {
    "waypoints": [
     [
      -1616,
-     11018
+     8818
     ],
     [
      -1312,
-     11018
+     8818
     ]
    ]
   },
@@ -25543,11 +25609,11 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     11018
+     8818
     ],
     [
      -1008,
-     11018
+     8818
     ]
    ]
   },
@@ -25558,23 +25624,23 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     10938
+     8754
     ],
     [
      -2224,
-     10755
+     8608
     ],
     [
      -1920,
-     10755
+     8608
     ],
     [
      -1616,
-     10755
+     8608
     ],
     [
      -1312,
-     10755
+     8608
     ]
    ]
   },
@@ -25585,11 +25651,11 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     10755
+     8608
     ],
     [
      -1008,
-     10755
+     8608
     ]
    ]
   },
@@ -25600,11 +25666,11 @@ window.TREE = {
    "waypoints": [
     [
      -1008,
-     10755
+     8608
     ],
     [
      -704,
-     10755
+     8608
     ]
    ]
   },
@@ -25615,11 +25681,11 @@ window.TREE = {
    "waypoints": [
     [
      -1312,
-     8538
+     7014
     ],
     [
      -1008,
-     8538
+     7014
     ]
    ]
   },
@@ -25630,11 +25696,11 @@ window.TREE = {
    "waypoints": [
     [
      -1008,
-     8538
+     7014
     ],
     [
      -704,
-     8538
+     7014
     ]
    ]
   },
@@ -25645,31 +25711,31 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     7424
+     5942
     ],
     [
      -1920,
-     7424
+     5942
     ],
     [
      -1616,
-     7424
+     5942
     ],
     [
      -1312,
-     7424
+     5942
     ],
     [
      -1008,
-     7424
+     5942
     ],
     [
      -704,
-     7424
+     5942
     ],
     [
      -400,
-     7424
+     5942
     ]
    ]
   },
@@ -25680,11 +25746,11 @@ window.TREE = {
    "waypoints": [
     [
      -704,
-     8538
+     7014
     ],
     [
      -400,
-     8538
+     7014
     ]
    ]
   }
