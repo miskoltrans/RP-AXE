@@ -82,6 +82,22 @@ nodes:
     # tree, but their mounting CORES were dropped -> this restores the full system so it can be evaluated
     # whole. Deliberately NOT in curated-parts.tsv (on trial); if kept, formalize via build_manifest ADD and
     # split into real nodes. Detached root like experimental/parking/hire_JPL: unlockable, gates nothing.
+  - id: coatl_scienceSandbox
+    title: "Coatl Science Instruments (Sandbox)"
+    discipline: SystemsIntegration
+    tier: 1
+    parents: []
+    flavor: "Dropped Coatl instruments that carry science the main tree doesn't — an infrared spectrometer and a gamma-ray spectrometer where none exist, plus dust, solar-wind, ionization and surface-exposure experiments. A detached sandbox: unlock it and fly them to confirm each returns data before any earns a real home."
+    parts: [ca_KLIR, ca_GRS, ca_DUSTX, ca_SWIS, ca_ELIX, ca_landv_soilScoop]
+    # SANDBOX (2026-07): 6 dropped CoatlAerospace instruments, one clean single-purpose part per DISTINCT
+    # experiment absent from the tree. Clear gaps: ca_KLIR (ca_IRspec "Infrared Spectrometry" - the node
+    # opt_thermalMappingSpectrometry holds only a radiometer), ca_GRS (ca_gammaRay "Gamma Ray Spectrometry"
+    # - kept ca_radsci is dosimetry, not spectroscopy). Borderline (distinct ID, shadows a kept experiment):
+    # ca_DUSTX (ca_kdex vs kept ca_micrometeoroid), ca_SWIS (ca_solarWind vs ProbePlasma), ca_ELIX (ca_ionElec
+    # vs ProbePlasma), ca_landv_soilScoop (ca_soilScoop vs surfaceSample). Confirmed-redundant Coatl science
+    # (rpws/orbitalScope/filmCamera) and multi-experiment platforms deliberately EXCLUDED. Off-start, NOT in
+    # curated-parts.tsv (on trial); if kept, home ca_KLIR at opt_thermalMappingSpectrometry + pick homes for
+    # the rest, then formalize via build_manifest ADD. Residual risk = does Kerbalism return their data in flight.
   - id: hire_JPL
     title: "Charter a Deep-Space Probe Lab (JPL)"
     discipline: SystemsIntegration
