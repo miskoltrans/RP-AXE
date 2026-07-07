@@ -21,3 +21,7 @@ dist/
 
 # Python cache
 __pycache__/
+
+# Repo-root scratch / analysis working files (no tool consumes them)
+/scratch_*
+/scratchpad_*
