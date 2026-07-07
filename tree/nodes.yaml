@@ -1465,11 +1465,13 @@ nodes:
     flavor: "Trade kerosene for a hypergolic that ignites on contact and sits fuelled in a silo for years — some engines keep the old chemistry and simply grow, others convert outright. A missile built to launch now, not after a fuelling countdown."
     upgrades: [RFUpgrade_LR87-AJ-5, RFUpgrade_LR87-AJ-5-Kero, RFUpgrade_LR87-AJ-7, RFUpgrade_LR87-AJ-7-Kero, RFUpgrade_LR91-AJ-5, RFUpgrade_LR91-AJ-5-Kero, RFUpgrade_LR91-AJ-7, RFUpgrade_LR91-AJ-7-Kero, RFUpgrade_LR87-AJ-9, RFUpgrade_LR87-AJ-9-Kero, RFUpgrade_LR87-AJ-11, RFUpgrade_LR87-AJ-11-Kero, RFUpgrade_LR91-AJ-9, RFUpgrade_LR91-AJ-9-Kero, RFUpgrade_LR91-AJ-11]
     # AJ-9/AJ-11 marks added 2026-07 (tail): next Titan LR87/LR91 production marks, continuing AJ-5/AJ-7.
+  # 2026-07-07 story review: re-homed fd_restartableUpper -> pc_fluorine. ClF3 is an aggressive
+  # fluorine-bearing OXIDISER; its precursor is the fluorine-oxidiser gamble, not a restart cycle.
   - id: pc_juno_ClF3
     title: "Chlorine-Trifluoride Oxidiser"
     discipline: PropellantChemistry
     tier: 7
-    parents: [fd_restartableUpper]
+    parents: [pc_fluorine]
     flavor: "Burn hydrazine in chlorine trifluoride, a storable oxidiser so aggressive it ignites on contact with almost anything — glass, sand, the operators. A sliver more Isp for a propellant few would trust near a launch pad."
     upgrades: [RFUpgrade_Juno45k-BII, RFUpgrade_Juno6k-BII]
   - id: pc_pioneerVernierTrim
