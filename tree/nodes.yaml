@@ -69,6 +69,19 @@ nodes:
     # root node like parking/hire_JPL/hire_OKB, available immediately, gates nothing, isn't gated by
     # anything. Future uncurated/3rd-party additions belong here too; excluded from the deferred science-
     # budget/balance pass (P3) when that lands.
+  - id: us2_serviceSandbox
+    title: "Universal Storage Service Modules (Sandbox)"
+    discipline: SystemsIntegration
+    tier: 1
+    parents: []
+    flavor: "The full Universal Storage modular service-module kit — bay cores, swappable wedges for power, propellant and life-support consumables, and the Sabatier/Elektron plants that recycle them. A detached sandbox: unlock it to fold the whole system out in the editor and see how it fits before it earns a place in the tree."
+    parts: [USQuadcore, USPenticore, USHexcore, USOctocore, USDoubleProbeCore, USACDTiny, USACDSmall, USACD1500, USACDMedium, USACDLarge, USBatteryWedge, USFoodWedge, USWaterWedge, USOxygenWedge, USCarbonDioxideWedge, USGreyWaterWedge, USSolidWasteWedge, USHydrazineWedge, USHydrogenWedge, USAerozineWedge, USSabatier, USElektron, USWaterPurifier, USAdaptorShroud0625, USAdaptorShroud1250, USAdaptorShroud1250Soyuz, USAdaptorShroud1250Vostok, USAdaptorShroud1500, USAdaptorShroud1875, USCylindricalShroud0625, USCylindricalShroud125, USCylindricalShroud125ResizedTo1875-1, USCylindricalShroud1500, USCylindricalShroud1500ResizedTo1875-2, USCylindricalShroud250]
+    # SANDBOX (2026-07): all 35 dropped UniversalStorage2 parts (cores + ECLSS/propellant/power wedges +
+    # chemical plants + shrouds), placed off-start for in-game inspection before deciding whether to promote
+    # US2 into the tree. The 10 US2 wedges RP-1 kept (fuel-cell/RTG/science) are ALREADY placed across the
+    # tree, but their mounting CORES were dropped -> this restores the full system so it can be evaluated
+    # whole. Deliberately NOT in curated-parts.tsv (on trial); if kept, formalize via build_manifest ADD and
+    # split into real nodes. Detached root like experimental/parking/hire_JPL: unlockable, gates nothing.
   - id: hire_JPL
     title: "Charter a Deep-Space Probe Lab (JPL)"
     discipline: SystemsIntegration

@@ -323,10 +323,11 @@ def validate_design(disc, nodes, by):
             if any(p2 != p and reaches(p, p2) for p2 in ps):
                 warns.append(f"redundant (transitively-implied) edge: {p} -> {n['id']} "
                              f"(reaches it via another parent)")
-    # Intentional off-start roots: start/parking/experimental, the charter gates (hire_*), and the MLP
-    # subtree (gs_soundingStands) — each a standalone-but-startable line detached from the main tree by design.
+    # Intentional off-start roots: start/parking/experimental, the charter gates (hire_*), the MLP subtree
+    # (gs_soundingStands), and the US2 evaluation sandbox (us2_serviceSandbox) — each a standalone-but-
+    # startable line detached from the main tree by design.
     for r in roots:
-        if r not in ("start", "parking", "experimental", "gs_soundingStands") and not r.startswith("hire_"):
+        if r not in ("start", "parking", "experimental", "gs_soundingStands", "us2_serviceSandbox") and not r.startswith("hire_"):
             warns.append(f"extra root (no parents besides start): {r}")
     print(f"design checks: {'clean' if not warns else str(len(warns))+' warning(s)'}")
     for w in warns: print(f"   ! {w}")
