@@ -1,4 +1,4 @@
-# RP-AXE vs RP-1 — Avionics Comparison & Grounding (2026-06-27)
+# RP-AXE vs RP-1 — Avionics Comparison & Grounding (2026-06-27, updated 2026-07-07)
 
 Grounds RP-AXE's avionics core against RP-1's procedural avionics. **RP-AXE adopts RP-1's formulas directly**,
 so the old divergences (flat un-scaling mass; the tier freeze at ~1960) are resolved. A VAB-only toggle picks
@@ -6,6 +6,13 @@ the **model**: **guided = Near-Earth** (RP-1's vessel-scaled, full-control curve
 (RP-1's light flat-mass sequencer). Deep-Space is intentionally dropped (range is handled by comms, not
 avionics). Script: `tools/avionics_compare.py` (parses the shipped `TIER` ladder from `AxeAvionicsCore.cfg`;
 re-run after editing it to refresh the tables below).
+
+**2026-07-07 update**: closed the three gaps item 7 (below) used to call "planned" — **hardware cost**
+(`GetModuleCost`, RP-1's hump-shaped curve), **science-container tier gating** (on from `basicAvionics`,
+matching RP-1), and a **kOS per-tier scaling bridge** (reflected onto a `kOSProcessor` module if present —
+inert today since kOS isn't an AXE dependency, but no longer silently frozen at a flat value the way the old
+RP-1 kOS patch would leave it once `ModuleProceduralAvionics` is stripped). See sections H/I and the
+"what still differs" list below.
 
 ## Headline — two RP-1 models on one toggle, draw keyed off live dry mass
 
@@ -22,6 +29,9 @@ curve + the battery you size.
 | Control cliff | hard — vessel > massLimit ⇒ **no control** | **none** — bigger just costs more |
 | Low-power | Deep-Space hibernation only | **Hibernate toggle on every core** (draw → 5%) |
 | Battery | leftover part volume after hardware | **same** — hardware reserves vol, rest is EC |
+| Cost | `(M^0.46172+3.034)·costFactor`, hump-shaped | **same formula**, frozen at launch like mass (§H) |
+| Science container | on from `basicAvionics` (both models) | **same** — checked off at flight start if tier lacks it |
+| kOS | per-tier `kosDiskSpace`/etc via `ModuleProceduralAvionics` | reflected onto `kOSProcessor` if present (§I) — inert, kOS isn't an AXE dep |
 | Tiers | 13 (powerFactor 56.4 → 7.8) | **same 13**, 1:1 by tech node |
 | SAS | level 3 from TL0 | level 3 once guidance is active |
 
@@ -34,19 +44,29 @@ vs RP-1's static, mass *freezes at launch* (RP-1-like), guidance is gated at `po
 
 RP-1 `GetPolynomial(v,e,c,f) = (v^e + c)·f` — from `ModuleProceduralAvionics.cs`:
 - hardware **mass** (t) = `(M^0.46172 + 0.96)·massFactor / 1000`  (M = `controllableMass`)
+- hardware **cost** (funds) = `(M^0.46172 + 3.034)·costFactor`  — same `M`, **no** `/1000` (§H)
 - **EC draw** (kW) = `(M^0.57853 + 1.035)·powerFactor / 1000`
-- Science-Core: `controllableMass = 0` ⇒ flat **mass** = `scMassFactor/1000` t, flat **draw** = `scPowerFactor/1000` kW
+- Science-Core: `controllableMass = 0` ⇒ flat **mass** = `scMassFactor/1000` t, flat **draw** = `scPowerFactor/1000`
+  kW, flat **cost** = `costFactor` funds (default zero exponent/constant collapse the polynomial to the factor)
 - hardware **volume** = mass / `avionicsDensity`; leftover part volume → EC battery
+- `hasScienceContainer` gates `ModuleScienceContainer` on from `basicAvionics` (both configs)
+- `kosDiskSpace`/`kosSpaceCostFactor`/`kosSpaceMassFactor`/`kosECPerInstruction` per tier scale a `kOSProcessor`
+  module's disk space / EC-per-instruction / cost / mass, read off `CurrentProceduralAvionicsTechNode`
 
 RP-AXE — from `ModuleAxeAvionics.cs` (the guided/unguided toggle picks the model, frozen at launch):
-- **Near-Earth (guided)**: mass (t) = `(load^0.46172 + 0.96)·massFactor / 1000`, `load` ≈ vessel mass; full control
-- **Science-Core (unguided)**: mass (t) = `scMassFactor / 1000`, **flat per tier** (size-independent); no steering
-  (axial-thrust only from `improvedAvionics` up)
+- **Near-Earth (guided)**: mass (t) = `(load^0.46172 + 0.96)·massFactor / 1000`, cost (funds) =
+  `(load^0.46172 + 3.034)·costFactor` (same `load`, no `/1000`), `load` ≈ vessel mass; full control
+- **Science-Core (unguided)**: mass (t) = `scMassFactor / 1000`, cost (funds) = `scCostFactor` flat — **size-
+  independent**; no steering (axial-thrust only from `improvedAvionics` up)
 - **EC draw** (W) = `(dryMass^0.57853 + 1.035)·powerFactor` for NE (live), or flat `scPowerFactor` for SC;
   ×0.1 when a NE core is dumb, ×0.05 when **hibernating** (either model)
 - hardware **volume** = mass / density (NE 0.5; SC per-tier); the part auto-grows to fit, leftover → **RealFuels
   EC battery** you size
 - guidance gated at `postWarAvionics`; runs **dumb** if the battery goes flat in flight or the core is hibernated
+- `ModuleScienceContainer` (seed-added, static) is stripped at flight start if the as-built tier's
+  `hasScienceContainer` is false — same node/gate as RP-1, checked once like RP-1's own `Start()` logic
+- a `kOSProcessor` module, if present, is kept in sync with the tier's `kos*` ladder via reflection (duck-typed,
+  same pattern as the RealFuels bridge) — currently a no-op since kOS isn't an AXE dependency
 
 ## A) Tier ladder — AXE tech node → (massFactor, powerFactor), matched 1:1 to RP-1 Near-Earth
 
@@ -148,6 +168,60 @@ but axial-thrust spin-stabilization is allowed from `improvedAvionics` up. For s
 vs Near-Earth at the same node (e.g. `basicAvionics`): **1.5 kg / 0.1 W** unguided vs **193 kg / 166 W** for 10 t
 of guided control — a featherweight, near-zero-power sequencer that simply can't steer.
 
+RP-1's own Science-Core ladder has one rung AXE doesn't: a `start` tech level (48 kg / 100 W / density 3.35)
+*below* `postWarAvionics`. AXE's tier-0 (index 0, unconditional — no research gate) already carries the
+`postWarAvionics` numbers (33 kg / 50 W), so **AXE's earliest Science-Core is lighter and lower-draw than RP-1's
+actual starting Science-Core**, from the very first launch of a career. Intentional simplification (one ladder,
+no pre-`postWarAvionics` rung), not a bug — flagged here since nothing else documents it.
+
+## H) Hardware COST (funds) — RP-1's hump, not monotonic; peaks `matureAvionics`
+
+`GetModuleCost`/`IPartCostModifier`, same load basis + freeze-at-launch as mass. Distinct signal from the
+monotonic mass/power curves: early sophistication costs *more* before mass production brings it back down.
+
+| AXE tech (`TIER` node) | NE @10t | NE @100t | SC (flat) |
+|---|--:|--:|--:|
+| postWarAvionics | 285 | 549 | 6.0 |
+| avionicsPrototypes | 306 | 589 | 8.0 |
+| earlyAvionics | 321 | 618 | 10.0 |
+| basicAvionics | 337 | 649 | 12.0 |
+| interplanetaryProbes | 354 | 681 | 12.0 |
+| improvedAvionics | 372 | 716 | 12.0 |
+| matureAvionics | **390** | **751** | 12.0 (peak) |
+| largeScaleAvionics | 349 | 672 | 10.0 |
+| advancedAvionics | 279 | 538 | 9.0 |
+| nextGenAvionics | 223 | 430 | 8.1 |
+| longTermAvionics | 179 | 344 | 7.3 |
+| internationalAvionics | 143 | 275 | 6.6 |
+| modernAvionics | 114 | 220 | 5.9 |
+
+## I) Science container gating + kOS per-tier scaling
+
+`ModuleScienceContainer` is checked off at flight start if the as-built tier's `hasScienceContainer` is false
+(same node RP-1 gates it at, `basicAvionics`, both models) — matches RP-1's own `Start()`-only gating (the
+editor always shows the module present; only flight strips it). A `kOSProcessor` module, if present on the
+part, has its `diskSpace`/`baseDiskSpace`/`diskSpaceCostFactor`/`diskSpaceMassFactor`/`ECPerInstruction`
+fields kept in sync with the tier via reflection (duck-typed, same pattern as the RealFuels bridge) — **inert
+today**, since kOS isn't an AXE dependency, but no longer the flat non-scaling disk space the seed's old
+`:NEEDS[kOS]` patch would silently leave once `ModuleProceduralAvionics` (which drove RP-1's own kOS scaling)
+is stripped.
+
+| AXE tech (`TIER` node) | science container | kOS disk space |
+|---|:--:|--:|
+| postWarAvionics | no | 500 B |
+| avionicsPrototypes | no | 500 B |
+| earlyAvionics | no | 500 B |
+| basicAvionics | **yes** | 500 B |
+| interplanetaryProbes | yes | 5,120 B |
+| improvedAvionics | yes | 10,240 B |
+| matureAvionics | yes | 20,480 B |
+| largeScaleAvionics | yes | 51,200 B |
+| advancedAvionics | yes | 102,400 B |
+| nextGenAvionics | yes | 204,800 B |
+| longTermAvionics | yes | 307,200 B |
+| internationalAvionics | yes | 409,600 B |
+| modernAvionics | yes | 512,000 B |
+
 ## What still differs (all intended, all easier)
 
 1. **Two models on the guided/unguided toggle.** Guided = Near-Earth, unguided = Science-Core (RP-1's third
@@ -160,19 +234,24 @@ of guided control — a featherweight, near-zero-power sequencer that simply can
    to Deep-Space only.
 5. **Guidance gate** at `postWarAvionics` vs RP-1's `start` — so the very start flies Science-Core only.
 6. **SAS** is a flat level 3 (config), suppressed while dumb/axial by `AxeAvionicsController`.
-7. **Funds**: control is currently free (only the battery costs) — but a **hardware-cost /
-   efficiency-optimization dimension is planned** (revises the old "out of scope" stance). RP-1's
-   avionics cost curve is the reference: `cost = (load^0.46172 + 3.034)·costFactor`, a *hump*
-   (`costFactor` 48→66 peak ~1964-66→19 modern) so cost captures hardware-efficiency optimization
-   across the tree, distinct from the monotonic mass/power gains. To build: add
-   `costExponent`/`costConstant`/`costFactor` to the `TIER` nodes + `GetModuleCost` in
-   `ModuleAxeAvionics`. See `docs/UPGRADES.md` §C1.
+7. **Funds, science storage, kOS — closed 2026-07-07.** Cost now has a real hardware-efficiency curve
+   (§H, `GetModuleCost`), science storage is tier-gated like RP-1 (§I), and a kOS reflection bridge exists
+   (§I, inert until kOS is an AXE dependency). See `docs/UPGRADES.md` §C1.
+8. **No manual "disable for power" toggle.** RP-1 lets the player switch Near-Earth avionics fully off from
+   `advancedAvionics` on (`disabledPowerFactor`, a deliberate power/control trade). AXE's idle multiplier
+   (`idleFactor`, 0.1×) is automatic — it applies whenever guidance isn't active (unresearched/unpowered), at
+   every tier, not a player-chosen toggle. Different mechanic, not a gap: AXE's Hibernate (§ above) already
+   covers the "trade control for power" use case, uniformly, from the start.
 
 ## Where the numbers live
 - RP-1 coeffs: `RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg` (`AVIONICSCONFIGS`: Near-Earth …)
-- RP-1 formulas: `RP-1/Source/RP0/Avionics/ModuleProceduralAvionics.cs` (`GetPolynomial`, `GetAvionicsMass`)
+- RP-1 formulas: `RP-1/Source/RP0/Avionics/ModuleProceduralAvionics.cs` (`GetPolynomial`, `GetAvionicsMass`,
+  `GetAvionicsCost`, `SetScienceContainer`)
 - RP-AXE model: `Source/AXE/Avionics/ModuleAxeAvionics.cs`
 - RP-AXE ladder (source of truth): `GameData/RP-AXE/design/Tree/AxeAvionicsCore.cfg` (`TIER` nodes)
 - Battery tanks: `Instance/GameData/RealismOverhaul/RO_RealFuels.cfg` (`Battery-I..IV`)
+- kOS field reference (not vendored — kOS isn't an AXE dependency): `kOSProcessor` fields `diskSpace` /
+  `baseDiskSpace` (int) / `diskSpaceCostFactor` / `diskSpaceMassFactor` / `ECPerInstruction` (float), per
+  https://ksp-kos.github.io/KOS/general/kospartmodule.html
 
 Related: [[rp-axe-avionics-core]] memory.

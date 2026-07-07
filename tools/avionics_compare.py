@@ -71,13 +71,15 @@ def _field(body, key):
     return m.group(1) if m else None
 
 def load_axe_ladder():
-    """(NE list of (name, massFactor, powerFactor), SC dict name -> (scMass kg, scPower W, scDensity, axial))."""
+    """(NE list of (name, massFactor, powerFactor), SC dict name -> (scMass kg, scPower W, scDensity, axial),
+    COST dict name -> (costFactor, scCostFactor), SCI dict name -> hasScienceContainer,
+    KOS dict name -> (diskSpace, costFactor, massFactor, ecPerInstruction))."""
     try:
         with open(CFG, encoding="utf-8") as f:
             text = f.read()
     except OSError:
-        return [], {}
-    ne, sc = [], {}
+        return [], {}, {}, {}, {}
+    ne, sc, cost, sci, kos = [], {}, {}, {}, {}
     for blk in TIER_RE.finditer(text):
         body = blk.group(1)
         tech, mf, pf = _field(body, "tech"), _field(body, "massFactor"), _field(body, "powerFactor")
@@ -87,9 +89,17 @@ def load_axe_ladder():
         scm, scp, scd = _field(body, "scMassFactor"), _field(body, "scPowerFactor"), _field(body, "scDensity")
         if scm and scp and scd:
             sc[tech] = (float(scm), float(scp), float(scd), (_field(body, "scAllowAxial") or "").lower() == "true")
-    return ne, sc
+        cf, scc = _field(body, "costFactor"), _field(body, "scCostFactor")
+        if cf and scc:
+            cost[tech] = (float(cf), float(scc))
+        sci[tech] = (_field(body, "hasScienceContainer") or "").lower() == "true"
+        kd, kcf, kmf, kec = (_field(body, "kosDiskSpace"), _field(body, "kosSpaceCostFactor"),
+                             _field(body, "kosSpaceMassFactor"), _field(body, "kosECPerInstruction"))
+        if kd and kcf and kmf and kec:
+            kos[tech] = (float(kd), float(kcf), float(kmf), float(kec))
+    return ne, sc, cost, sci, kos
 
-AXE, AXE_SC = load_axe_ladder()
+AXE, AXE_SC, AXE_COST, AXE_SCI, AXE_KOS = load_axe_ladder()
 
 # ---- RealFuels battery chemistries: name -> (kg/1000EC, funds/1000EC, maxUtil, unlock) ----
 BATT = {
@@ -158,6 +168,29 @@ def main():
         print("  (mass = scMassFactor/1000 t and draw = scPowerFactor/1000 kW are FLAT — no vessel scaling;")
         print("   axial = axial-thrust spin-stabilization allowed from improvedAvionics up. vs Near-Earth at the")
         print("   same node: a fraction of the mass + near-zero power, but no steering.)")
+
+    if AXE_COST:
+        def hw_cost(M, cf): return poly(M, MASS_EXP, 3.034, cf)  # same exponent, cost's own constant, no /1000
+        print(); print(bar); print("H) HARDWARE COST (funds) — RP-1's hump, not monotonic; peaks matureAvionics"); print(bar)
+        print(f"{'AXE tech (TIER node)':22} {'NE @10t':>9} {'NE @100t':>9} {'SC (flat)':>10}")
+        for name, _mf, _pf in AXE:
+            if name not in AXE_COST: continue
+            cf, scc = AXE_COST[name]
+            print(f"{name:22} {hw_cost(10, cf):9.0f} {hw_cost(100, cf):9.0f} {scc:10.1f}")
+        print("  (Near-Earth cost = (load^0.46172 + 3.034)*costFactor, same load/freeze basis as mass, no /1000;")
+        print("   Science-Core cost = scCostFactor flat funds. Distinct from mass/power: this curve is a HUMP —")
+        print("   early sophistication costs more, before mass production brings it back down.)")
+
+    if AXE_SCI:
+        print(); print(bar); print("I) SCIENCE CONTAINER gating + kOS per-tier scaling (kOS: no-op until installed)"); print(bar)
+        print(f"{'AXE tech (TIER node)':22} {'sciContainer':>13} {'kosDiskSpace':>13}")
+        for name, _mf, _pf in AXE:
+            sci = "yes" if AXE_SCI.get(name) else "no"
+            kd = f"{AXE_KOS[name][0]:.0f} B" if name in AXE_KOS else "—"
+            print(f"{name:22} {sci:>13} {kd:>13}")
+        print("  (sciContainer: ModuleScienceContainer checked off at flight start if the as-built tier lacks it,")
+        print("   matching RP-1's own Start()-only gating. kosDiskSpace: reflected onto a kOSProcessor module if")
+        print("   present — kOS isn't an AXE dependency today, so this is currently inert.)")
 
 if __name__ == "__main__":
     main()

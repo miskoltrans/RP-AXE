@@ -94,22 +94,22 @@ AXE already **supersedes** RP-1's procedural-avionics progression: `ModuleAxeAvi
 reference**. AXE's TIER ladder already covers `massFactor`/`powerFactor` (Near-Earth) and
 `scMassFactor`/`scPowerFactor`/`scDensity`/`scAllowAxial` (Science-Core), 1:1 (`tools/avionics_compare.py`).
 
-**What RP-1 encodes that AXE has NOT built** (the "implement some of them" surface, per-tier):
+**What RP-1 encodes, and what AXE has built** (per-tier; updated 2026-07-07):
 
 | RP-1 `TECHLIMIT` field | AXE status | note |
 |---|---|---|
 | `massFactor` / `powerFactor` | ✅ in TIER ladder | Near-Earth, verbatim |
 | `scMassFactor` / `scPowerFactor` / `allowAxial` | ✅ in TIER ladder | Science-Core |
-| `costExponent` / `costConstant` / `costFactor` | 🔲 **to build** | **hardware-cost / efficiency-optimization dimension — needs to exist** (see below) |
-| `kosDiskSpace`, `kosECPerInstruction`, `kosSpaceCostFactor`, `kosSpaceMassFactor` | 🔲 **to build** | per-tier **kOS** (programmable flight computer) integration — the big one |
-| `hasScienceContainer` (from `basicAvionics`) | ⚠️ ungated | AXE gives science storage always-on; RP-1 gates it per tier |
+| `costExponent` / `costConstant` / `costFactor` | ✅ **built** | `GetModuleCost`/`IPartCostModifier`, RP-1's hump curve verbatim (see below) |
+| `hasScienceContainer` (from `basicAvionics`) | ✅ **built** | gated in `ModuleAxeAvionics`, checked at flight start like RP-1's own `Start()` logic |
+| `kosDiskSpace`, `kosECPerInstruction`, `kosSpaceCostFactor`, `kosSpaceMassFactor` | ✅ **bridge built, inert** | reflected onto a `kOSProcessor` module if present; no-op today since kOS isn't an AXE dependency |
 | `interplanetary` (Deep-Space range model) | ❌ dropped (intended) | **Deep-Space does not exist in AXE**; range = comms (RealAntennas), not avionics |
 
-**Cost / hardware-efficiency optimization — required (revises the old "control is free" stance).**
-Avionics hardware must carry a funds cost, and that cost is where **hardware-efficiency optimization**
-shows up across tech progression. RP-1's curve is the reference and tells the story well — it is a
-**hump, not a monotonic drop**: `cost = (M^0.46172 + 3.034)·costFactor`, with `costFactor` rising
-through the early era (sophistication costs more), peaking, then falling as manufacturing matures:
+**Cost / hardware-efficiency optimization.** Avionics hardware carries a funds cost, and that cost is
+where **hardware-efficiency optimization** shows up across tech progression. RP-1's curve is the
+reference and tells the story well — it is a **hump, not a monotonic drop**:
+`cost = (M^0.46172 + 3.034)·costFactor`, with `costFactor` rising through the early era (sophistication
+costs more), peaking, then falling as manufacturing matures:
 
 ```
 start 48.12 → prototypes 51.56 → early 54.13 → basic 56.84 → interplanetary 59.68 →
@@ -119,11 +119,15 @@ nextGen 37.67 → longTerm 30.13 → international 24.11 → modern 19.29
 
 Contrast the mass/power factors AXE already has, which fall **monotonically** (pure efficiency gain):
 the cost hump is a distinct, richer signal — early IC/transistor avionics are expensive before
-mass-production efficiency brings advanced hardware down below where it started. **Schema/impl impact
-when built:** add `costExponent`/`costConstant`/`costFactor` to the `TIER` nodes and a
-`GetModuleCost` in `ModuleAxeAvionics` (same polynomial as mass, keyed off the as-built load). So the
-"implement some of them" surface is **kOS, tier-gated science storage, and this cost/efficiency
-dimension**; only Deep-Space/`interplanetary` stays dropped.
+mass-production efficiency brings advanced hardware down below where it started. Built as
+`costExponent`/`costConstant`/`costFactor` on the `TIER` nodes + `GetModuleCost` in
+`ModuleAxeAvionics` (same polynomial as mass, keyed off the as-built load, frozen at launch);
+Science-Core cost is `scCostFactor` flat. See `docs/AVIONICS_COMPARISON.md` §H.
+
+kOS integration is wired the same duck-typed-reflection way as the RealFuels/ProceduralPart bridge —
+it will activate automatically (per-tier disk space, EC-per-instruction, cost, mass) the moment kOS is
+added as a dependency, rather than needing a follow-up implementation pass. See
+`docs/AVIONICS_COMPARISON.md` §I. Only Deep-Space/`interplanetary` stays intentionally dropped.
 
 ### C2. Comms / DSN tracking-station (10, `Tree/TechFacilityUpgrades.cfg`)
 

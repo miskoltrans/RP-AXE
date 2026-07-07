@@ -134,9 +134,11 @@ RealAntennas, ROSolar…), present via their mods.
     X2Cockpit (1), ComSat/NavSat bus (6), **HDD data-storage (10, KEPT** — Kerbalism `KERBALISM_HDD_SIZES` subsystem,
     `Science/HardDriveConfigs.cfg`). Each pairs with a `%UPGRADES`/companion patch to vendor.
   - **35 REFERENCE-avionics** (`Tree/ProceduralAvionics.cfg`) — AXE's `ModuleAxeAvionics` TIER ladder already supersedes
-    them (and `AxeAvionicsCore.cfg:115-118` deletes the icons); **keep `AVIONICSCONFIGS` as the impl reference.** Gap AXE
-    hasn't built = per-tier **kOS** integration (`kosDiskSpace`/`kosECPerInstruction`/…) + `hasScienceContainer` gating;
-    `costFactor` + Deep-Space/`interplanetary` deliberately dropped. See [[rp-axe-avionics-core]], UPGRADES.md §C1.
+    them (and `AxeAvionicsCore.cfg:115-118` deletes the icons); **keep `AVIONICSCONFIGS` as the impl reference.**
+    2026-07-07: `costFactor` (hardware-efficiency hump, `GetModuleCost`), `hasScienceContainer` gating, and a per-tier
+    **kOS** bridge (`kosDiskSpace`/`kosECPerInstruction`/…, reflected onto `kOSProcessor` if present — inert, kOS isn't
+    an AXE dep) are all now built. Only Deep-Space/`interplanetary` stays dropped. See [[rp-axe-avionics-core]],
+    UPGRADES.md §C1, AVIONICS_COMPARISON.md §H/I.
   - **10 REFERENCE-comms-dsn** (`Tree/TechFacilityUpgrades.cfg`) — DSN tracking-station tech gated by comms nodes; ref for
     AXE comms/ground-station axis, pairs with live RealAntennas `commsTL1-10`.
   - **26 DROP-axed-career** — `rp0Engineer/ResearcherUpgrade*` (22, KCT personnel efficiency, `description=unset`, dead) +

@@ -13,8 +13,10 @@ namespace RPAxe
     ///   * SCIENCE-CORE (unguided) — RP-1's Science-Core flat per-tier mass (scMassFactor/1000 t, size-independent):
     ///     no steering (axial-thrust spin-stabilization from improvedAvionics up), a fraction of the mass + power.
     /// Plus a BATTERY curve — the RealFuels EC tank the player sizes; the hardware reserves its own footprint out
-    /// of the procedural volume (RP-1-style), the rest is EC. The hardware mass is computed in the editor and
-    /// FROZEN at launch (persisted), so the model cannot change in flight.
+    /// of the procedural volume (RP-1-style), the rest is EC. The hardware mass AND COST are computed in the
+    /// editor and FROZEN at launch (persisted), so the model cannot change in flight. Cost follows the same
+    /// polynomial/flat split as mass (RP-1's hardware-efficiency curve — a hump, not monotonic, since early
+    /// sophistication costs more before mass-production brings it back down).
     ///
     /// The EC DRAW runs LIVE off the vehicle's DRY mass (steady as fuel burns, steps down as stages drop) and gets
     /// cheaper per researched tier. There is NO controllable-mass and NO distance gate — a bigger/farther rocket
@@ -23,10 +25,20 @@ namespace RPAxe
     /// power: run the battery flat, or HIBERNATE the core (deep sleep, in flight), and the craft goes dumb
     /// (throttle + staging only) until power returns / it is woken.
     ///
-    /// The per-tier mass/power ladders (Near-Earth + Science-Core) live in config as TIER nodes (single source of
-    /// truth, mirrored by tools/avionics_compare.py); a hardcoded copy is kept as a fallback.
+    /// Science storage (ModuleScienceContainer) is tier-gated like RP-1 (on from basicAvionics, both models) —
+    /// the seed part carries the module statically; this checks it off at flight start if the as-built tier
+    /// doesn't have it yet (matches RP-1's own Start()-only gating).
+    ///
+    /// kOS integration (disk space / EC-per-instruction / cost / mass, all per tier) is reflected onto a
+    /// kOSProcessor module if one is present on the part — same duck-typed pattern as the RealFuels/ProceduralPart
+    /// bridge below. kOS isn't currently an AXE dependency, so today this is a no-op; it activates automatically
+    /// if kOS is ever added, instead of the flat non-scaling disk space the old RP-1 kOS patch would otherwise give.
+    ///
+    /// The per-tier ladders (mass/power/cost, Near-Earth + Science-Core, plus kOS + science-container gating)
+    /// live in config as TIER nodes (single source of truth, mirrored by tools/avionics_compare.py); a hardcoded
+    /// copy of the required mass/power fields is kept as a fallback.
     /// </summary>
-    public class ModuleAxeAvionics : PartModule, IPartMassModifier
+    public class ModuleAxeAvionics : PartModule, IPartMassModifier, IPartCostModifier
     {
         const string PAWGroup = "AxeAvionics";
         const string GroupDisplay = "Avionics Core";
@@ -44,6 +56,10 @@ namespace RPAxe
         // ---- hardware MASS curve (RP-1 Near-Earth): tons = (load^exp + const) * massFactor(tier) / 1000 ----
         [KSPField] public float massExponent = 0.46172f;
         [KSPField] public float massConstant = 0.96f;
+
+        // ---- hardware COST curve (RP-1 Near-Earth): funds = (load^exp + const) * costFactor(tier), no /1000 ----
+        [KSPField] public float costExponent = 0.46172f;
+        [KSPField] public float costConstant = 3.034f;
 
         // ---- volume emulation: hardware reserves part volume (mass/density), the rest is EC battery ----
         [KSPField] public float avionicsDensity = 0.5f;   // t/m^3
@@ -71,6 +87,13 @@ namespace RPAxe
                   guiFormat = "F3", guiUnits = " t", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public float avionicsMass = 0f;
 
+        // Frozen hardware cost (funds): same load basis + freeze-at-launch as avionicsMass. RP-1's hump-shaped
+        // costFactor ladder (peaks ~matureAvionics) — a distinct hardware-efficiency signal from the monotonic
+        // mass/power curves. GetModuleCost returns this; the battery's funds cost is RealFuels'.
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "Avionics Cost",
+                  guiFormat = "F0", guiUnits = " f", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public float avionicsCost = 0f;
+
         // VAB sizing readout: full-battery endurance at operating draw (editor-only — in flight it would read
         // as total, not remaining, which misleads).
         [KSPField(guiActiveEditor = true, guiName = "Endurance",
@@ -84,10 +107,18 @@ namespace RPAxe
         // ---- runtime ----
         float _massFactor = 87.99f;   // current tier's Near-Earth mass factor
         float _powerFactor = 56.415f; // current tier's Near-Earth power factor
+        float _costFactor = 48.12f;   // current tier's Near-Earth cost factor
         float _scMassFactor = 33f;    // current tier's Science-Core flat mass factor (kg)
         float _scPowerFactor = 50f;   // current tier's Science-Core flat power (W)
+        float _scCostFactor = 6f;     // current tier's Science-Core flat cost factor (funds)
         float _scDensity = 2.4f;      // current tier's Science-Core hardware density (t/m^3)
         bool _scAllowAxial = false;   // current tier: Science-Core permits axial-thrust control
+        bool _hasScienceContainer = false; // current tier: RP-1 gates science storage on from basicAvionics
+        // current tier's kOS ladder (applied to a kOSProcessor module if present; no-op otherwise)
+        float _kosDiskSpace = 500f;
+        float _kosSpaceCostFactor = 0.1f;
+        float _kosSpaceMassFactor = 0.0001f;
+        float _kosEcPerInstruction = 0.000001f;
         bool _powered = true;
         KeyValuePair<string, double> _ecConsumption = new KeyValuePair<string, double>(EcName, 0);
         ModuleResource _commandEC;
@@ -106,6 +137,18 @@ namespace RPAxe
         float _lastAppliedMass = -1f;
         float _lastAppliedVolume = -1f;
 
+        // kOS bridge (reflected — AXE.dll doesn't reference kOS, same duck-typed pattern as RealFuels above).
+        // Not currently an AXE dependency, so ResolveKosBridge finds nothing and ApplyKosTier is a no-op; wired
+        // so per-tier disk/power/cost/mass scaling activates automatically if kOS is ever added, instead of the
+        // flat non-scaling disk space the RP-1 kOS patch would otherwise give now that ModuleProceduralAvionics
+        // (which drove that scaling in RP-1) is stripped.
+        PartModule _kosPM;
+        FieldInfo _kosDiskSpaceField;         // int — current disk space (raised to the new floor, never lowered)
+        FieldInfo _kosBaseDiskSpaceField;     // int — floor of the VAB slider
+        FieldInfo _kosDiskSpaceCostFactorField; // float
+        FieldInfo _kosDiskSpaceMassFactorField; // float
+        FieldInfo _kosEcPerInstructionField;    // float
+
         // ---- config-driven tier ladder (RP-1 Near-Earth coeffs), with a hardcoded fallback ----
         static string[] _ladTech =
         {
@@ -117,16 +160,34 @@ namespace RPAxe
         { 87.99f, 69.712f, 59.13f, 50.153f, 42.54f, 36.082f, 30.605f, 25.959f, 22.018f, 18.675f, 15.84f, 13.436f, 11.396f };
         static float[] _ladPower =
         { 56.415f, 47.851f, 40.587f, 34.426f, 29.2f, 24.767f, 21.007f, 17.818f, 15.113f, 12.819f, 10.873f, 9.222f, 7.822f };
+        // Near-Earth cost ladder (RP-1's hardware-efficiency hump, funds): peaks at matureAvionics.
+        static float[] _ladCost =
+        { 48.12f, 51.56f, 54.13f, 56.84f, 59.68f, 62.67f, 65.8f, 58.85f, 47.08f, 37.67f, 30.13f, 24.11f, 19.29f };
         // Science-Core ladder (RP-1 Science-Core coeffs): flat mass = scMass/1000 t, flat draw = scPower/1000 kW,
-        // hardware density scDensity, and axial-thrust control allowed from improvedAvionics up. Index-aligned with _ladTech.
+        // flat cost = scCost funds, hardware density scDensity, and axial-thrust control allowed from
+        // improvedAvionics up. Index-aligned with _ladTech.
         static float[] _ladScMass =
         { 33f, 17f, 4f, 1.5f, 1f, 0.81f, 0.73f, 0.66f, 0.59f, 0.53f, 0.48f, 0.43f, 0.39f };
         static float[] _ladScPower =
         { 50f, 25f, 0.15f, 0.1f, 0.09f, 0.081f, 0.073f, 0.066f, 0.059f, 0.053f, 0.048f, 0.043f, 0.039f };
+        static float[] _ladScCost =
+        { 6f, 8f, 10f, 12f, 12f, 12f, 12f, 10f, 9f, 8.1f, 7.3f, 6.6f, 5.9f };
         static float[] _ladScDensity =
         { 2.4f, 1.4f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
         static bool[] _ladScAxial =
         { false, false, false, false, false, true, true, true, true, true, true, true, true };
+        // RP-1 gates ModuleScienceContainer on from basicAvionics — same tier for both models.
+        static bool[] _ladHasSci =
+        { false, false, false, true, true, true, true, true, true, true, true, true, true };
+        // kOS per-tier ladder (RP-1 Near-Earth's kOS numbers; shared by both models — see class remarks).
+        static float[] _ladKosDisk =
+        { 500f, 500f, 500f, 500f, 5120f, 10240f, 20480f, 51200f, 102400f, 204800f, 307200f, 409600f, 512000f };
+        static float[] _ladKosCostFactor =
+        { 0.1f, 0.1f, 0.1f, 0.1f, 0.01f, 0.005f, 0.0025f, 0.001f, 0.0005f, 0.00025f, 0.0001f, 0.0001f, 0.0001f };
+        static float[] _ladKosMassFactor =
+        { 0.0001f, 0.0001f, 0.0001f, 0.0001f, 0.0000005f, 0.0000002f, 0.0000001f, 0.00000005f, 0.000000005f, 0.000000002f, 0.000000001f, 0.0000000005f, 0.0000000002f };
+        static float[] _ladKosEcPerInstr =
+        { 0.000001f, 0.000004f, 0.000002f, 0.000001f, 0.0000004f, 0.0000002f, 0.0000001f, 0.00000008f, 0.00000004f, 0.00000001f, 0.00000001f, 0.00000001f, 0.00000001f };
 
         public bool GuidanceUnlocked => Researched(guidanceTech);
         // Near-Earth full 3-axis guidance: needs the model (guidanceEnabled), the tech, POWER, and not hibernating.
@@ -168,10 +229,17 @@ namespace RPAxe
             var tech = new List<string>();
             var mass = new List<float>();
             var power = new List<float>();
+            var cost = new List<float>();
             var scMass = new List<float>();
             var scPower = new List<float>();
+            var scCost = new List<float>();
             var scDensity = new List<float>();
             var scAxial = new List<bool>();
+            var hasSci = new List<bool>();
+            var kosDisk = new List<float>();
+            var kosCostFactor = new List<float>();
+            var kosMassFactor = new List<float>();
+            var kosEcPerInstr = new List<float>();
             foreach (ConfigNode t in tiers)
             {
                 string tn = t.GetValue("tech");
@@ -187,15 +255,35 @@ namespace RPAxe
                 if (mf <= 0f || pf <= 0f || scm <= 0f || scp <= 0f || scd <= 0f) continue; // all-or-nothing per tier
                 tech.Add(tn); mass.Add(mf); power.Add(pf);
                 scMass.Add(scm); scPower.Add(scp); scDensity.Add(scd); scAxial.Add(sca);
+
+                // Cost/kOS/science-container are optional per tier (default to 0/false, not tier-dropping).
+                float cf = 0f, scc = 0f, kd = 0f, kcf = 0f, kmf = 0f, kec = 0f;
+                bool hsc = false;
+                t.TryGetValue("costFactor", ref cf);
+                t.TryGetValue("scCostFactor", ref scc);
+                t.TryGetValue("hasScienceContainer", ref hsc);
+                t.TryGetValue("kosDiskSpace", ref kd);
+                t.TryGetValue("kosSpaceCostFactor", ref kcf);
+                t.TryGetValue("kosSpaceMassFactor", ref kmf);
+                t.TryGetValue("kosECPerInstruction", ref kec);
+                cost.Add(cf); scCost.Add(scc); hasSci.Add(hsc);
+                kosDisk.Add(kd); kosCostFactor.Add(kcf); kosMassFactor.Add(kmf); kosEcPerInstr.Add(kec);
             }
             if (tech.Count == 0) return; // no complete tiers ⇒ keep the hardcoded fallback ladders
             _ladTech = tech.ToArray();
             _ladMass = mass.ToArray();
             _ladPower = power.ToArray();
+            _ladCost = cost.ToArray();
             _ladScMass = scMass.ToArray();
             _ladScPower = scPower.ToArray();
+            _ladScCost = scCost.ToArray();
             _ladScDensity = scDensity.ToArray();
             _ladScAxial = scAxial.ToArray();
+            _ladHasSci = hasSci.ToArray();
+            _ladKosDisk = kosDisk.ToArray();
+            _ladKosCostFactor = kosCostFactor.ToArray();
+            _ladKosMassFactor = kosMassFactor.ToArray();
+            _ladKosEcPerInstr = kosEcPerInstr.ToArray();
         }
 
         public override void OnStartFinished(StartState state)
@@ -219,6 +307,15 @@ namespace RPAxe
                 // Flight: hardware mass is frozen (persisted). Legacy craft (mass 0) get one fallback compute.
                 if (avionicsMass <= 0f) UpdateHardwareMass();
                 GameEvents.onStageActivate.Add(OnStage);
+
+                // Science storage is tier-gated (RP-1: on from basicAvionics). Checked once at flight start,
+                // same as RP-1's own Start()-only gating — a mid-flight tech unlock doesn't retroactively add
+                // it back to an already-flying craft (matches RP-1; the module is always present in the editor).
+                if (!_hasScienceContainer)
+                {
+                    ModuleScienceContainer sci = part.FindModuleImplementing<ModuleScienceContainer>();
+                    if (sci != null) part.RemoveModule(sci);
+                }
             }
 
             UpdateRate();
@@ -267,6 +364,7 @@ namespace RPAxe
 
         // Resolve RealFuels' ModuleFuelTanks + the ProceduralPart volume property by reflection (RealFuels and
         // ProceduralParts aren't referenced by AXE.dll). Missing either ⇒ skip volume reservation gracefully.
+        // Also resolves a kOSProcessor module, if present, for the kOS tier bridge below.
         void ResolveTankBridge()
         {
             const BindingFlags F = BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy;
@@ -287,7 +385,37 @@ namespace RPAxe
                     _procShapeProp = pt.GetProperty("CurrentShape", F);
                     _procSeekVolume = pt.GetMethod("SeekVolume", BindingFlags.Public | BindingFlags.Instance);
                 }
+                else if (_kosPM == null && n == "kOSProcessor")
+                {
+                    _kosPM = m;
+                    Type kt = m.GetType();
+                    _kosDiskSpaceField = kt.GetField("diskSpace", F);
+                    _kosBaseDiskSpaceField = kt.GetField("baseDiskSpace", F);
+                    _kosDiskSpaceCostFactorField = kt.GetField("diskSpaceCostFactor", F);
+                    _kosDiskSpaceMassFactorField = kt.GetField("diskSpaceMassFactor", F);
+                    _kosEcPerInstructionField = kt.GetField("ECPerInstruction", F);
+                }
             }
+        }
+
+        // Push the current tier's kOS ladder onto the resolved kOSProcessor (no-op if kOS isn't installed).
+        // Raises the disk-space floor (baseDiskSpace) and the current disk space if it's now below that floor,
+        // but never lowers disk space the player already sized up — same "floor, don't clobber" rule as the
+        // procedural-part volume reservation.
+        void ApplyKosTier()
+        {
+            if (_kosPM == null) return;
+            try
+            {
+                int floor = Mathf.RoundToInt(_kosDiskSpace);
+                _kosBaseDiskSpaceField?.SetValue(_kosPM, floor);
+                if (_kosDiskSpaceField != null && (int)_kosDiskSpaceField.GetValue(_kosPM) < floor)
+                    _kosDiskSpaceField.SetValue(_kosPM, floor);
+                _kosDiskSpaceCostFactorField?.SetValue(_kosPM, _kosSpaceCostFactor);
+                _kosDiskSpaceMassFactorField?.SetValue(_kosPM, _kosSpaceMassFactor);
+                _kosEcPerInstructionField?.SetValue(_kosPM, _kosEcPerInstruction);
+            }
+            catch { }
         }
 
         float ReadProceduralVolume()
@@ -306,10 +434,18 @@ namespace RPAxe
                 if (Researched(_ladTech[i]) && _ladMass[i] < _ladMass[best]) best = i;
             _massFactor = _ladMass[best];
             _powerFactor = _ladPower[best];
+            _costFactor = _ladCost[best];
             _scMassFactor = _ladScMass[best];
             _scPowerFactor = _ladScPower[best];
+            _scCostFactor = _ladScCost[best];
             _scDensity = _ladScDensity[best];
             _scAllowAxial = _ladScAxial[best];
+            _hasScienceContainer = _ladHasSci[best];
+            _kosDiskSpace = _ladKosDisk[best];
+            _kosSpaceCostFactor = _ladKosCostFactor[best];
+            _kosSpaceMassFactor = _ladKosMassFactor[best];
+            _kosEcPerInstruction = _ladKosEcPerInstr[best];
+            ApplyKosTier();
         }
 
         // Editor only: the frozen hardware mass.
@@ -323,10 +459,12 @@ namespace RPAxe
                 float load = VesselMassTons() - avionicsMass;
                 if (load < 0f) load = 0f;
                 avionicsMass = Poly(load, massExponent, massConstant, _massFactor) / 1000f;
+                avionicsCost = Poly(load, costExponent, costConstant, _costFactor);
             }
             else
             {
                 avionicsMass = _scMassFactor / 1000f;
+                avionicsCost = _scCostFactor;
             }
         }
 
@@ -534,6 +672,10 @@ namespace RPAxe
         public float GetModuleMass(float defaultMass, ModifierStagingSituation sit) => avionicsMass;
         public ModifierChangeWhen GetModuleMassChangeWhen() => ModifierChangeWhen.CONSTANTLY;
 
+        // ---- IPartCostModifier: the frozen hardware cost (RP-1's hardware-efficiency hump; battery funds cost is RealFuels') ----
+        public float GetModuleCost(float defaultCost, ModifierStagingSituation sit) => avionicsCost;
+        public ModifierChangeWhen GetModuleCostChangeWhen() => ModifierChangeWhen.CONSTANTLY;
+
         public override string GetInfo()
         {
             return "Unified avionics core: command, guidance, electric power, science storage and flight computer.\n\n"
@@ -550,7 +692,11 @@ namespace RPAxe
                  + "trickle and suspending control until woken. No mass gate — a bigger rocket just costs more, never "
                  + "lost control.\n\n"
                  + "<b>Battery</b>: the hardware reserves part of the procedural volume; size the rest for your "
-                 + "mission's endurance and choose the battery chemistry in the tank menu as you unlock better cells.";
+                 + "mission's endurance and choose the battery chemistry in the tank menu as you unlock better cells.\n\n"
+                 + "<b>Cost</b> follows the vehicle load like mass, but peaks mid-tree before falling — early "
+                 + "sophistication costs more, before mass production brings it back down.\n\n"
+                 + "<b>Science storage</b> is unlocked from Basic Avionics on; earlier tiers are pure sequencers "
+                 + "with no onboard data storage.";
         }
 
         #region Kerbalism (duck-typed; invoked by reflection only if Kerbalism is present)
