@@ -137,8 +137,9 @@ RealAntennas, ROSolar…), present via their mods.
     them (and `AxeAvionicsCore.cfg:115-118` deletes the icons); **keep `AVIONICSCONFIGS` as the impl reference.**
     2026-07-07: `costFactor` (hardware-efficiency hump, `GetModuleCost`), `hasScienceContainer` gating, and a per-tier
     **kOS** bridge (`kosDiskSpace`/`kosECPerInstruction`/…, reflected onto `kOSProcessor` if present — inert, kOS isn't
-    an AXE dep) are all now built. Only Deep-Space/`interplanetary` stays dropped. See [[rp-axe-avionics-core]],
-    UPGRADES.md §C1, AVIONICS_COMPARISON.md §H/I.
+    an AXE dep) are all now built. 2026-07-08: added RP-1 Science-Core's own `start` floor rung (48kg/100W/density
+    3.35, below `postWarAvionics`) that AXE's ladder had been missing. Only Deep-Space/`interplanetary` stays dropped.
+    See [[rp-axe-avionics-core]], UPGRADES.md §C1, AVIONICS_COMPARISON.md §H/I.
   - **10 REFERENCE-comms-dsn** (`Tree/TechFacilityUpgrades.cfg`) — DSN tracking-station tech gated by comms nodes; ref for
     AXE comms/ground-station axis, pairs with live RealAntennas `commsTL1-10`.
   - **26 DROP-axed-career** — `rp0Engineer/ResearcherUpgrade*` (22, KCT personnel efficiency, `description=unset`, dead) +

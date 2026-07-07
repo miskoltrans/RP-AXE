@@ -87,12 +87,20 @@ vendor that patch with the bare `PARTUPGRADE`.
 ### C1. Avionics (35, `Tree/ProceduralAvionics.cfg`)
 
 AXE already **supersedes** RP-1's procedural-avionics progression: `ModuleAxeAvionics` +
-`design/Tree/AxeAvionicsCore.cfg` reimplement the per-tier factors as a 13-node `TIER` ladder, and
-`AxeAvionicsCore.cfg:115-118` **actively deletes** these icons
+`design/Tree/AxeAvionicsCore.cfg` reimplement the per-tier factors as a `TIER` ladder (13 tech-gated tiers
++ a `start` floor rung — see below), and `AxeAvionicsCore.cfg:115-118` **actively deletes** these icons
 (`!PARTUPGRADE[Near-Earth-*|Science-Core-*|Deep-Space-*]:FINAL`). So the 35 are dead as a
 *mechanism*. Their value is the source `AVIONICSCONFIGS` data — kept as the **implementation
 reference**. AXE's TIER ladder already covers `massFactor`/`powerFactor` (Near-Earth) and
 `scMassFactor`/`scPowerFactor`/`scDensity`/`scAllowAxial` (Science-Core), 1:1 (`tools/avionics_compare.py`).
+
+**2026-07-08: Science-Core `start` floor added.** RP-1's own Science-Core config has a rung below
+`postWarAvionics` (its literal `start` techLevel, 48 kg/100 W/density 3.35) that AXE's ladder was missing —
+AXE's floor tier (index 0, unconditional, no research gate) previously carried the `postWarAvionics` numbers
+directly, making AXE's earliest Science-Core lighter than RP-1's actual starting one. Added a `start` `TIER`
+node as the true floor; Near-Earth ties on it (RP-1 has no NE rung below `start`) so nothing changed there,
+but `ApplyTier`'s tier-selection comparison had to move from `<` to `<=` so research can still step Science-
+Core off a mass-tied floor. See `docs/AVIONICS_COMPARISON.md` §G/A.
 
 **What RP-1 encodes, and what AXE has built** (per-tier; updated 2026-07-07):
 

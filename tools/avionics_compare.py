@@ -9,8 +9,9 @@ of two curves:
   * BATTERY        — the RealFuels EC tank the player sizes; the hardware reserves (mass / avionicsDensity)
     m^3 of the procedural part, the rest is EC.
 EC DRAW (W) = (dryMass^0.57853 + 1.035) * powerFactor(tier), evaluated LIVE (steady as fuel burns, steps
-down on staging). massFactor/powerFactor per tier come from the 13 TIER nodes in AxeAvionicsCore.cfg (parsed
-below, so this script and the game share one source of truth).
+down on staging). massFactor/powerFactor per tier come from the TIER nodes in AxeAvionicsCore.cfg (parsed
+below, so this script and the game share one source of truth) — 13 tech-gated tiers (postWarAvionics..
+modernAvionics) plus an unconditional "start" floor tier below them (matters for Science-Core only; see G).
 
 The guided/unguided toggle is the MODEL selector (VAB-only, frozen at launch): guided = Near-Earth (above),
 unguided = Science-Core (RP-1's flat per-tier scMassFactor/scPowerFactor — section G). A flight-only Hibernate
@@ -100,6 +101,7 @@ def load_axe_ladder():
     return ne, sc, cost, sci, kos
 
 AXE, AXE_SC, AXE_COST, AXE_SCI, AXE_KOS = load_axe_ladder()
+AXE_BY_NAME = {name: (name, mf, pf) for name, mf, pf in AXE}  # name-anchored, not positional (tier count/order can change)
 
 # ---- RealFuels battery chemistries: name -> (kg/1000EC, funds/1000EC, maxUtil, unlock) ----
 BATT = {
@@ -127,18 +129,20 @@ def main():
     masses = [1, 3, 10, 30, 100, 300, 1000]
     print(); print(bar); print("B) HARDWARE MASS (kg) vs per-craft load — AXE == RP-1 at equal load"); print(bar)
     print(f"{'tier':22} | " + " ".join(f"{m:>7}t" for m in masses))
-    for name, mf, pf in [AXE[0], AXE[3], AXE[8], AXE[12]]:
+    for name, mf, pf in [AXE_BY_NAME["postWarAvionics"], AXE_BY_NAME["basicAvionics"],
+                         AXE_BY_NAME["advancedAvionics"], AXE_BY_NAME["modernAvionics"]]:
         print(f"{name:22} | " + " ".join(f"{hw_mass_t(m, mf)*1000:8.0f}" for m in masses))
     print("  (AXE is fed ACTUAL vessel load and freezes it; RP-1 uses rated controllableMass>=load, with")
     print("   margin, and AXE's load drops as stages separate -> AXE <= RP-1 in play)")
 
     print(); print(bar); print("C) EC DRAW (W) vs DRY mass — AXE == RP-1 per tier, live (steady on burn, steps on staging)"); print(bar)
     print(f"{'tier':22} | " + " ".join(f"{m:>7}t" for m in masses))
-    for name, mf, pf in [AXE[0], AXE[3], AXE[8], AXE[12]]:
+    for name, mf, pf in [AXE_BY_NAME["postWarAvionics"], AXE_BY_NAME["basicAvionics"],
+                         AXE_BY_NAME["advancedAvionics"], AXE_BY_NAME["modernAvionics"]]:
         print(f"{name:22} | " + " ".join(f"{draw_W(m, pf):8.0f}" for m in masses))
 
     print(); print(bar); print("D) GROUNDED: V-2 — RP-1 (Near-Earth, controllableMass 15 t) vs AXE (live load ~12.5 t)"); print(bar)
-    mf0, pf0 = AXE[0][1], AXE[0][2]
+    mf0, pf0 = AXE_BY_NAME["start"][1], AXE_BY_NAME["start"][2]
     print(f"  RP-1 (rated 15 t):  hardware {hw_mass_t(15, mf0)*1000:6.0f} kg | draw {draw_W(15, pf0):6.0f} W | "
           f"footprint {hw_vol_L(15, mf0):5.0f} L")
     print(f"  AXE  (load 12.5 t): hardware {hw_mass_t(12.5, mf0)*1000:6.0f} kg | draw {draw_W(12.5, pf0):6.0f} W | "
@@ -151,7 +155,8 @@ def main():
 
     print(); print(bar); print("E) VOLUME — hardware reserves (mass / 0.5) m^3 of the part; the rest is EC battery (L)"); print(bar)
     print(f"{'tier':22} | " + " ".join(f"{m:>7}t" for m in masses))
-    for name, mf, pf in [AXE[0], AXE[3], AXE[8], AXE[12]]:
+    for name, mf, pf in [AXE_BY_NAME["postWarAvionics"], AXE_BY_NAME["basicAvionics"],
+                         AXE_BY_NAME["advancedAvionics"], AXE_BY_NAME["modernAvionics"]]:
         print(f"{name:22} | " + " ".join(f"{hw_vol_L(m, mf):8.0f}" for m in masses))
 
     print(); print(bar); print("F) BATTERY chemistries (RO electronics line); EC per kg: I 222 II 346 III 556 IV 694"); print(bar)

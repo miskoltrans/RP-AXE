@@ -150,44 +150,48 @@ namespace RPAxe
         FieldInfo _kosEcPerInstructionField;    // float
 
         // ---- config-driven tier ladder (RP-1 Near-Earth coeffs), with a hardcoded fallback ----
+        // Tier 0 ("start") is the unconditional floor — no tech required, ApplyTier always starts there. Its
+        // NE numbers equal postWarAvionics' (RP-1 Near-Earth has no rung below start); its SC numbers are RP-1
+        // Science-Core's own heavier start techLevel (48 kg/100 W/density 3.35), one rung below RP-1 SC's
+        // postWarAvionics — without it, AXE's earliest Science-Core was lighter than RP-1's actual starting one.
         static string[] _ladTech =
         {
-            "postWarAvionics", "avionicsPrototypes", "earlyAvionics", "basicAvionics", "interplanetaryProbes",
-            "improvedAvionics", "matureAvionics", "largeScaleAvionics", "advancedAvionics", "nextGenAvionics",
-            "longTermAvionics", "internationalAvionics", "modernAvionics"
+            "start", "postWarAvionics", "avionicsPrototypes", "earlyAvionics", "basicAvionics",
+            "interplanetaryProbes", "improvedAvionics", "matureAvionics", "largeScaleAvionics",
+            "advancedAvionics", "nextGenAvionics", "longTermAvionics", "internationalAvionics", "modernAvionics"
         };
         static float[] _ladMass =
-        { 87.99f, 69.712f, 59.13f, 50.153f, 42.54f, 36.082f, 30.605f, 25.959f, 22.018f, 18.675f, 15.84f, 13.436f, 11.396f };
+        { 87.99f, 87.99f, 69.712f, 59.13f, 50.153f, 42.54f, 36.082f, 30.605f, 25.959f, 22.018f, 18.675f, 15.84f, 13.436f, 11.396f };
         static float[] _ladPower =
-        { 56.415f, 47.851f, 40.587f, 34.426f, 29.2f, 24.767f, 21.007f, 17.818f, 15.113f, 12.819f, 10.873f, 9.222f, 7.822f };
+        { 56.415f, 56.415f, 47.851f, 40.587f, 34.426f, 29.2f, 24.767f, 21.007f, 17.818f, 15.113f, 12.819f, 10.873f, 9.222f, 7.822f };
         // Near-Earth cost ladder (RP-1's hardware-efficiency hump, funds): peaks at matureAvionics.
         static float[] _ladCost =
-        { 48.12f, 51.56f, 54.13f, 56.84f, 59.68f, 62.67f, 65.8f, 58.85f, 47.08f, 37.67f, 30.13f, 24.11f, 19.29f };
+        { 48.12f, 48.12f, 51.56f, 54.13f, 56.84f, 59.68f, 62.67f, 65.8f, 58.85f, 47.08f, 37.67f, 30.13f, 24.11f, 19.29f };
         // Science-Core ladder (RP-1 Science-Core coeffs): flat mass = scMass/1000 t, flat draw = scPower/1000 kW,
         // flat cost = scCost funds, hardware density scDensity, and axial-thrust control allowed from
         // improvedAvionics up. Index-aligned with _ladTech.
         static float[] _ladScMass =
-        { 33f, 17f, 4f, 1.5f, 1f, 0.81f, 0.73f, 0.66f, 0.59f, 0.53f, 0.48f, 0.43f, 0.39f };
+        { 48f, 33f, 17f, 4f, 1.5f, 1f, 0.81f, 0.73f, 0.66f, 0.59f, 0.53f, 0.48f, 0.43f, 0.39f };
         static float[] _ladScPower =
-        { 50f, 25f, 0.15f, 0.1f, 0.09f, 0.081f, 0.073f, 0.066f, 0.059f, 0.053f, 0.048f, 0.043f, 0.039f };
+        { 100f, 50f, 25f, 0.15f, 0.1f, 0.09f, 0.081f, 0.073f, 0.066f, 0.059f, 0.053f, 0.048f, 0.043f, 0.039f };
         static float[] _ladScCost =
-        { 6f, 8f, 10f, 12f, 12f, 12f, 12f, 10f, 9f, 8.1f, 7.3f, 6.6f, 5.9f };
+        { 3f, 6f, 8f, 10f, 12f, 12f, 12f, 12f, 10f, 9f, 8.1f, 7.3f, 6.6f, 5.9f };
         static float[] _ladScDensity =
-        { 2.4f, 1.4f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
+        { 3.35f, 2.4f, 1.4f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
         static bool[] _ladScAxial =
-        { false, false, false, false, false, true, true, true, true, true, true, true, true };
+        { false, false, false, false, false, false, true, true, true, true, true, true, true, true };
         // RP-1 gates ModuleScienceContainer on from basicAvionics — same tier for both models.
         static bool[] _ladHasSci =
-        { false, false, false, true, true, true, true, true, true, true, true, true, true };
+        { false, false, false, false, true, true, true, true, true, true, true, true, true, true };
         // kOS per-tier ladder (RP-1 Near-Earth's kOS numbers; shared by both models — see class remarks).
         static float[] _ladKosDisk =
-        { 500f, 500f, 500f, 500f, 5120f, 10240f, 20480f, 51200f, 102400f, 204800f, 307200f, 409600f, 512000f };
+        { 500f, 500f, 500f, 500f, 500f, 5120f, 10240f, 20480f, 51200f, 102400f, 204800f, 307200f, 409600f, 512000f };
         static float[] _ladKosCostFactor =
-        { 0.1f, 0.1f, 0.1f, 0.1f, 0.01f, 0.005f, 0.0025f, 0.001f, 0.0005f, 0.00025f, 0.0001f, 0.0001f, 0.0001f };
+        { 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.01f, 0.005f, 0.0025f, 0.001f, 0.0005f, 0.00025f, 0.0001f, 0.0001f, 0.0001f };
         static float[] _ladKosMassFactor =
-        { 0.0001f, 0.0001f, 0.0001f, 0.0001f, 0.0000005f, 0.0000002f, 0.0000001f, 0.00000005f, 0.000000005f, 0.000000002f, 0.000000001f, 0.0000000005f, 0.0000000002f };
+        { 0.0001f, 0.0001f, 0.0001f, 0.0001f, 0.0001f, 0.0000005f, 0.0000002f, 0.0000001f, 0.00000005f, 0.000000005f, 0.000000002f, 0.000000001f, 0.0000000005f, 0.0000000002f };
         static float[] _ladKosEcPerInstr =
-        { 0.000001f, 0.000004f, 0.000002f, 0.000001f, 0.0000004f, 0.0000002f, 0.0000001f, 0.00000008f, 0.00000004f, 0.00000001f, 0.00000001f, 0.00000001f, 0.00000001f };
+        { 0.000001f, 0.000001f, 0.000004f, 0.000002f, 0.000001f, 0.0000004f, 0.0000002f, 0.0000001f, 0.00000008f, 0.00000004f, 0.00000001f, 0.00000001f, 0.00000001f, 0.00000001f };
 
         public bool GuidanceUnlocked => Researched(guidanceTech);
         // Near-Earth full 3-axis guidance: needs the model (guidanceEnabled), the tech, POWER, and not hibernating.
@@ -425,13 +429,16 @@ namespace RPAxe
             catch { return _cachedVolume; }
         }
 
-        // Pick the best researched tier (lowest mass factor; tier 0 if none researched) and apply its
-        // mass + power factors. SAS is no longer touched here — it is a flat level 3 set in config.
+        // Pick the best researched tier (lowest-or-tied NE mass factor; tier 0 — the unconditional floor — if
+        // none researched) and apply its mass + power factors. <= (not <) so a researched tier that ties the
+        // floor on NE mass (tier 0 "start" vs tier 1 postWarAvionics currently tie: RP-1 has no NE rung below
+        // start) still advances — otherwise research could never step Science-Core down off the tied floor.
+        // SAS is no longer touched here — it is a flat level 3 set in config.
         void ApplyTier()
         {
             int best = 0;
             for (int i = 1; i < _ladTech.Length; i++)
-                if (Researched(_ladTech[i]) && _ladMass[i] < _ladMass[best]) best = i;
+                if (Researched(_ladTech[i]) && _ladMass[i] <= _ladMass[best]) best = i;
             _massFactor = _ladMass[best];
             _powerFactor = _ladPower[best];
             _costFactor = _ladCost[best];

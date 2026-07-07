@@ -1,4 +1,4 @@
-# RP-AXE vs RP-1 — Avionics Comparison & Grounding (2026-06-27, updated 2026-07-07)
+# RP-AXE vs RP-1 — Avionics Comparison & Grounding (2026-06-27, updated 2026-07-08)
 
 Grounds RP-AXE's avionics core against RP-1's procedural avionics. **RP-AXE adopts RP-1's formulas directly**,
 so the old divergences (flat un-scaling mass; the tier freeze at ~1960) are resolved. A VAB-only toggle picks
@@ -13,6 +13,10 @@ matching RP-1), and a **kOS per-tier scaling bridge** (reflected onto a `kOSProc
 inert today since kOS isn't an AXE dependency, but no longer silently frozen at a flat value the way the old
 RP-1 kOS patch would leave it once `ModuleProceduralAvionics` is stripped). See sections H/I and the
 "what still differs" list below.
+
+**2026-07-08 update**: closed a fourth gap the 07-07 pass had only documented — AXE's Science-Core ladder
+now has RP-1's real `start` floor rung (48 kg/100 W/density 3.35), one step below `postWarAvionics`. See
+the note under §G.
 
 ## Headline — two RP-1 models on one toggle, draw keyed off live dry mass
 
@@ -32,7 +36,7 @@ curve + the battery you size.
 | Cost | `(M^0.46172+3.034)·costFactor`, hump-shaped | **same formula**, frozen at launch like mass (§H) |
 | Science container | on from `basicAvionics` (both models) | **same** — checked off at flight start if tier lacks it |
 | kOS | per-tier `kosDiskSpace`/etc via `ModuleProceduralAvionics` | reflected onto `kOSProcessor` if present (§I) — inert, kOS isn't an AXE dep |
-| Tiers | 13 (powerFactor 56.4 → 7.8) | **same 13**, 1:1 by tech node |
+| Tiers | 13 tech-gated (powerFactor 56.4 → 7.8) | **same 13**, 1:1 by tech node, + a `start` floor rung below them |
 | SAS | level 3 from TL0 | level 3 once guidance is active |
 
 The result lands on RP-1's numbers at every craft size, and what differs is all **easier**: AXE keys hardware
@@ -72,6 +76,7 @@ RP-AXE — from `ModuleAxeAvionics.cs` (the guided/unguided toggle picks the mod
 
 | AXE tech (`TIER` node) | massFactor | powerFactor | RP-1 Near-Earth tier (era) |
 |---|--:|--:|---|
+| start (unconditional floor) | 87.99 | 56.415 | start/postWar (1945-51) |
 | postWarAvionics | 87.99 | 56.415 | start/postWar (1945-51) |
 | avionicsPrototypes | 69.712 | 47.851 | avionicsPrototypes (1952-55) |
 | earlyAvionics | 59.13 | 40.587 | earlyAvionics (1956-58) |
@@ -85,6 +90,9 @@ RP-AXE — from `ModuleAxeAvionics.cs` (the guided/unguided toggle picks the mod
 | longTermAvionics | 15.84 | 10.873 | longTermAvionics (1988-93) |
 | internationalAvionics | 13.436 | 9.222 | internationalAvionics (1994-99) |
 | modernAvionics | 11.396 | 7.822 | modernAvionics (2000s) |
+
+`start` and `postWarAvionics` tie on Near-Earth numbers (RP-1 has no NE rung below `start`) — the split only
+matters for Science-Core (§G), where `start` carries RP-1's own heavier starting values.
 
 The ladder lives in `AxeAvionicsCore.cfg` as `TIER` nodes — the single source of truth this script parses.
 
@@ -151,6 +159,7 @@ but axial-thrust spin-stabilization is allowed from `improvedAvionics` up. For s
 
 | AXE tech (`TIER` node) | mass (kg) | draw (W) | density | axial |
 |---|--:|--:|--:|:--:|
+| start (unconditional floor) | 48 | 100 | 3.35 | no |
 | postWarAvionics | 33 | 50 | 2.4 | no |
 | avionicsPrototypes | 17 | 25 | 1.4 | no |
 | earlyAvionics | 4 | 0.15 | 0.5 | no |
@@ -168,11 +177,14 @@ but axial-thrust spin-stabilization is allowed from `improvedAvionics` up. For s
 vs Near-Earth at the same node (e.g. `basicAvionics`): **1.5 kg / 0.1 W** unguided vs **193 kg / 166 W** for 10 t
 of guided control — a featherweight, near-zero-power sequencer that simply can't steer.
 
-RP-1's own Science-Core ladder has one rung AXE doesn't: a `start` tech level (48 kg / 100 W / density 3.35)
-*below* `postWarAvionics`. AXE's tier-0 (index 0, unconditional — no research gate) already carries the
-`postWarAvionics` numbers (33 kg / 50 W), so **AXE's earliest Science-Core is lighter and lower-draw than RP-1's
-actual starting Science-Core**, from the very first launch of a career. Intentional simplification (one ladder,
-no pre-`postWarAvionics` rung), not a bug — flagged here since nothing else documents it.
+**Closed 2026-07-08.** RP-1's own Science-Core ladder had one rung AXE was missing: a `start` tech level
+(48 kg / 100 W / density 3.35) *below* `postWarAvionics`. AXE now carries a matching `start` `TIER` node —
+the unconditional floor (no research gate, `ApplyTier` always begins there) — with RP-1's real starting
+Science-Core numbers; `postWarAvionics` only takes over once that tech is actually researched. Near-Earth is
+unaffected (RP-1 has no NE rung below `start`, so `start`'s NE numbers are identical to `postWarAvionics`'s —
+`ApplyTier`'s tie-break was changed from `<` to `<=` so research can still step off an NE-tied floor). Before
+this fix AXE's earliest Science-Core was lighter/lower-draw than RP-1's actual starting one, from turn 0 of
+career — see `tools/avionics_compare.py` §G for the corrected ladder.
 
 ## H) Hardware COST (funds) — RP-1's hump, not monotonic; peaks `matureAvionics`
 
@@ -181,6 +193,7 @@ monotonic mass/power curves: early sophistication costs *more* before mass produ
 
 | AXE tech (`TIER` node) | NE @10t | NE @100t | SC (flat) |
 |---|--:|--:|--:|
+| start (unconditional floor) | 285 | 549 | 3.0 |
 | postWarAvionics | 285 | 549 | 6.0 |
 | avionicsPrototypes | 306 | 589 | 8.0 |
 | earlyAvionics | 321 | 618 | 10.0 |
@@ -208,6 +221,7 @@ is stripped.
 
 | AXE tech (`TIER` node) | science container | kOS disk space |
 |---|:--:|--:|
+| start (unconditional floor) | no | 500 B |
 | postWarAvionics | no | 500 B |
 | avionicsPrototypes | no | 500 B |
 | earlyAvionics | no | 500 B |
