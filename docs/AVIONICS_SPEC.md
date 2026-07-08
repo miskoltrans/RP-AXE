@@ -54,21 +54,34 @@ probe-hibernation fallback (`%hasHibernation = False`), so today draw just freez
 keeps applying for the whole warp unless the player manually hits Hibernate first. Port RP-1's hook pattern
 directly: same events, same "auto-drop during warp regardless of manual state, auto-restore on load" behavior.
 
-**Radiation reliability — NUMBERS LOCKED (2026-07-08), verified against real mission profiles, not just
-eyeballed.** Confirmed real and buildable via Kerbalism (not cosmetic — RP-1's own `shieldingMassFactor` was
-checked and confirmed to connect to nothing; this is a different, verified-real mechanism instead): author a
-new `Reliability` module on the avionics part (none exists there today), set `rated_radiation`/
-`radiation_decay_rate` via runtime reflection (same duck-typed pattern as the existing RealFuels/kOS
-bridges), keyed to the shielded/unshielded toggle. **Final numbers: unshielded `rated_radiation=1.0` rad/h,
-`radiation_decay_rate=1.0`; shielded `rated_radiation=15` rad/h, `radiation_decay_rate=0.1`.** The mechanic is
-a hard threshold (zero effect below `rated_radiation`, not gradual) — checked against 4 real mission shapes:
-LEO and quick Mars/Venus transits show negligible effect either way (correct — real interplanetary cruises
-don't linger in the belts); a belt-dwelling elliptical Earth orbit burns ~553 days off an unshielded core's
-failure clock over a 5-year mission (immune if shielded); a Jupiter/Jool orbiter pushes unshielded to
-near-guaranteed early failure vs. shielded surviving-if-lucky (~255 days, ~14× better). Real, meaningful
-differentiation exactly where it should show up, near-zero noise where it shouldn't. Kerbalism's global MTBF
-floor (~108 days) only clamps the base `mtbf` at config-load and doesn't fight this mechanic afterward —
-confirmed no conflict.
+**Radiation reliability — NUMBERS RELOCKED (2026-07-08, second pass), NOT ported from RP-1.** Important
+correction to how this is described: RP-1 has zero real radiation mechanic for avionics (`shieldingMassFactor`
+confirmed cosmetic — reads into the mass display only, no failure/reliability connection anywhere), so this
+whole mechanic is new AXE design, not a port. First-pass numbers (unshielded `1.0/1.0`, shielded `15/0.1`)
+were invented from reasoning about Kerbalism's body radiation data with no anchor — checked properly and
+found to have **no precedent anywhere in the ecosystem**: not in this instance, not in RP-1/RO's actual
+Kerbalism fork (`ROKerbalism`, confirmed to predate this feature entirely, zero references), not even
+documented by Kerbalism's own upstream maintainers beyond a formula comment. The one real precedent that
+exists anywhere — base Kerbalism's default profile, applied only to solar panels/reaction wheels/data
+transmitters, never avionics — sits at `rated_radiation 0.11-0.26` rad/h, `decay_rate 1-3`, and even those
+real values needed 10-20× downward retuning after being found too punishing in practice.
+
+**Final design, simpler than the first pass:**
+- **Shielded: leave the `Reliability` module's `rated_radiation` unset (defaults to 0).** Kerbalism's own
+  code short-circuits to zero decay whenever `rated_radiation <= 0` — so "shielded behaves normal, no
+  radiation damage" requires no special-casing, it's just the default, identical to how literally every
+  other avionics/probe part in the game already behaves today.
+- **Unshielded: `rated_radiation = 0.10` rad/h, `radiation_decay_rate = 30`.** Threshold sits just below the
+  real solar-panel precedent floor (grounded, not invented from nothing); the decay rate is deliberately far
+  above the real 1-3 range because threshold barely matters once it's anywhere near that low relative to
+  Earth's belts (2.2-10.4 rad/h) — decay rate is the actual lever for "how much does a brief pass hurt."
+  Tuned so a single ordinary departure crossing (~3h outer belt + ~30min inner belt) burns **~14 days off the
+  ~135-day failure buffer — about 10% of an unshielded core's reliability window, gone in one pass**,
+  genuinely felt without being instant death. Sustained belt-dwelling (e.g. a long-duration Earth radiation-
+  belt science orbit) is correspondingly much more severe — appropriately so. Kerbalism's global MTBF floor
+  (~108 days) only clamps the base `mtbf` at config-load and doesn't fight this mechanic afterward — confirmed
+  no conflict. Still recommend confirming this feels right in actual play once built, same as any new mechanic
+  with no prior playtesting anywhere in the ecosystem to lean on.
 
 **Quality toggle — DECIDED (2026-07-08): do not expose it.** Kerbalism has a standard "quality" PAW toggle
 (`Settings.QualityScale=4.0` in this profile) that would scale `rated_radiation` up 4× for unshielded (clears
