@@ -20,18 +20,26 @@ and scales the procedural-avionics part's capacity up across the avionics tech l
 Mechanism is **stock KSP part upgrades** (no RP0.dll): the module's `UPGRADES { UPGRADE { name__ = … } }`
 is stock KSP's upgrade-reference syntax (the `__` is a field name, not a disable).
 
-### Remap table (RP-1 avionics node → AXE node), era-matched, all verified in `AxeTechTree.cfg`
+### Remap table — **defers to AXE's existing tree curation**
+
+AXE's tree already **places** these 10 upgrades (`AxeTechTree.cfg` `partUpgrade = HDD-Upgrade-*`),
+**gates** them (`AxePartPlacement.cfg` `@PARTUPGRADE[…]{ %techRequired = … }`), and **costs** them
+(`AxePartCost.cfg`) — the T3 upgrade curation anticipated them; they were dormant until this file
+shipped the definitions. So the authoritative RP-1→AXE mapping is AxePartPlacement's, and the
+`techRequired` here is set to **match** it (AxePartPlacement's `%techRequired` overrides the
+PARTUPGRADE side anyway; the module-`UPGRADE` `techRequired__` in `HardDriveConfigs.cfg` is NOT
+overridden, so it must match — that is the reason these values are kept in sync here):
 
 | RP-1 (HDD tier / era) | AXE node | | RP-1 | AXE node |
 |---|---|---|---|---|
-| `earlyAvionics` (1958 tape) | `gnc_earlyAvionics` | | `advancedAvionics` (1975) | `comp_networkedAvionics` |
-| `basicAvionics` (1960 tape) | `gnc_basicAvionics` | | `longTermAvionics` (1990) | `comp_multiplyRedundantFlightComputer` |
-| `interplanetaryProbes` (1961) | `gnc_interplanetaryAvionics` | | `internationalAvionics` (1998 SSR) | `comp_distributedAvionicsBus` |
-| `matureAvionics` (1964 transistor) | `comp_digitalGuidanceComputer` | | `modernAvionics` (2010 flash) | `comp_softwareDefinedFlightControl` |
-| `largeScaleAvionics` (1969 digital) | `comp_realTimeFlightComputer` | | `advModernAvionics` (2020 flash) | `comp_interoperableAvionicsStandard` |
+| `earlyAvionics` (Early tape) | `gnc_earlyAvionics` | | `advancedAvionics` (1975) | `comp_multiplyRedundantFlightComputer` |
+| `basicAvionics` (Basic) | `gnc_basicAvionics` | | `longTermAvionics` (1990) | `comp_softwareDefinedFlightControl` |
+| `interplanetaryProbes` (1961) | `gnc_basicAvionics` | | `internationalAvionics` (1998) | `comp_interoperableAvionicsStandard` |
+| `matureAvionics` (1964) | `gnc_basicAvionics` | | `modernAvionics` (2010) | `comp_commercialOffTheShelfAvionics` |
+| `largeScaleAvionics` (1969) | `comp_networkedAvionics` | | `advModernAvionics` (2020) | `comp_commercialOffTheShelfAvionics` |
 
-Applied to both `techRequired =` (PARTUPGRADE) and `techRequired__ =` (module UPGRADE) so the gate is
-consistent on both sides.
+If the tree's HDD-Upgrade placement changes (re-run `build_tree.py`), re-sync these `techRequired`/
+`techRequired__` values to the new `AxePartPlacement.cfg` mapping.
 
 ### ⚠️ Why in `design/` + sync-seed caveat
 Authored here (not `seed/`) because the tech gates sit inside `@PART`/`UPGRADE` blocks a design overlay
