@@ -180,16 +180,46 @@ no interaction with anything else in this doc. No RP-1 config presets it to true
   — intentional flavor/charter parts matching the established charter-redesign pattern, not a scalable
   escape hatch from the mechanics in this doc. No action needed.
 
-## KNOWN LIVE BUG — separate from this redesign, found while reviewing the tier system (2026-07-08)
+## KNOWN LIVE BUG — full scope confirmed (2026-07-08), recommend fixing NOW, independent of this redesign
 
-`AxeAvionicsCore.cfg`'s 14-tier ladder gates each tier on RP-1's original bare tech names (`postWarAvionics`,
-`avionicsPrototypes`, etc.), but AXE's own from-scratch tree uses discipline-prefixed IDs — confirmed
-`postWarAvionics` doesn't exist as a node ID anywhere in `AxeTechTree.cfg`, only `gnc_postWarAvionics` does.
-`ModuleAxeAvionics.cs`'s `Researched()` calls stock `ResearchAndDevelopment.GetTechnologyState()` on the raw
-bare string with zero prefix handling. If this pattern holds across all 13 tier names (being scoped now),
-every avionics core in the game is likely permanently stuck at the tier-0 `start` floor regardless of
-research — the whole tier progression this doc builds on may never actually engage in a real campaign. Full
-scope (which tiers are affected, whether it's a clean prefix fix or needs real remapping, whether
-`guidanceTech` has the same problem) is being checked separately — **this should probably be fixed before or
-alongside this redesign, not after**, since it affects the ladder every other piece of this spec sits on top
-of.
+Root cause confirmed via decompiled `Assembly-CSharp.dll`: `ResearchAndDevelopment.GetTechnologyState()` on
+an unrecognized tech ID silently returns `RDTech.State.Unavailable` — no crash, no log, just a false. Every
+bare RP-1-style tech name in `AxeAvionicsCore.cfg` fails this lookup against AXE's own prefixed/renamed tree.
+
+**Bug #1 — tier ladder frozen at floor.** Confirmed for all 13 non-`start` tiers: `ApplyTier()`'s loop never
+finds a `Researched()==true` tier past index 0, so mass/power/cost/kOS/science-container gating are all
+permanently stuck at `start`'s numbers regardless of research. The fix is NOT uniform:
+
+| Tier | Correct target (found via a leftover `Science-Core-<name>` PARTUPGRADE breadcrumb, itself dead code) | Fix |
+|---|---|---|
+| `postWarAvionics` | `gnc_postWarAvionics` | clean: add `gnc_` prefix |
+| `avionicsPrototypes` | `gnc_avionicsPrototypes` | clean: add `gnc_` prefix |
+| `earlyAvionics` | `gnc_earlyAvionics` | clean: add `gnc_` prefix |
+| `basicAvionics` | `gnc_basicAvionics` | clean: add `gnc_` prefix |
+| `interplanetaryProbes` | `gnc_interplanetaryAvionics` | remap (renamed) |
+| `improvedAvionics` | `comp_digitalGuidanceComputer` | remap (fully renamed) |
+| `matureAvionics` | `comp_realTimeFlightComputer` | remap (fully renamed) |
+| `largeScaleAvionics` | `comp_networkedAvionics` | remap (fully renamed) |
+| `advancedAvionics` | `comp_multiplyRedundantFlightComputer` | remap (fully renamed) |
+| `nextGenAvionics` | `comp_distributedAvionicsBus` | remap (fully renamed) |
+| `longTermAvionics` | `comp_softwareDefinedFlightControl` | remap (fully renamed) |
+| `internationalAvionics` | `comp_interoperableAvionicsStandard` | remap (fully renamed) |
+| `modernAvionics` | `comp_commercialOffTheShelfAvionics` | remap (fully renamed) |
+
+Only tiers 1-4 (through Basic Avionics) are a clean prefix add. Tiers 5-13 (everything past that) landed on
+tree nodes with no lexical relation to their RP-1 name at all during the tree rebuild — the only reason
+they're recoverable now is a dead `Science-Core-*` PARTUPGRADE comment left behind as a naming fossil.
+
+**Bug #2 — `guidanceTech = postWarAvionics`, same bug, worse consequence.** This is a SEPARATE field (not
+part of the tier loop) gating whether guidance can ever activate at all: `GuidanceUnlocked =>
+Researched(guidanceTech)`. Since it has the identical bare-string bug, `GuidanceUnlocked` is **permanently
+false** — `GuidanceActive` can never become true, so the entire "Guided" model can never achieve real 3-axis
+control **no matter how much tech is researched**, in any non-sandbox campaign. Every player flying "Guided"
+today sees `guidanceStatus` permanently stuck at "guidance not yet researched (dumb)." This is a full
+capability lockout, not a frozen-economy-numbers bug — arguably the most severe thing found this whole
+session, and it's in currently-shipped code, not something this redesign introduced.
+
+**Recommendation: fix both bugs now as a standalone, surgical patch** (correct the 14 `tech =` values +
+`guidanceTech` in `AxeAvionicsCore.cfg` to the confirmed correct IDs above), independent of the rest of this
+V2 redesign. It's a small, well-scoped, low-risk fix (reference-string corrections only, no logic changes)
+that restores current functionality — no reason to make it wait for the larger redesign to land.
