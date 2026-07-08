@@ -633,7 +633,7 @@ namespace RPAxe
             BaseEvent mt = Events[nameof(ToggleGuidance)];
             mt.guiActive = false;
             mt.guiActiveEditor = true;
-            mt.guiName = guidanceEnabled ? "Switch to Science-Core (unguided)" : "Switch to Near-Earth (guided)";
+            mt.guiName = guidanceEnabled ? "Switch to Unguided" : "Switch to Guided";
 
             // Hibernation: flight-only deep sleep.
             BaseEvent hb = Events[nameof(ToggleHibernation)];
@@ -642,16 +642,16 @@ namespace RPAxe
             hb.guiName = hibernating ? "Wake from Hibernation" : "Hibernate";
 
             guidanceStatus = hibernating ? "hibernating — low power, control suspended"
-                           : ScienceCoreMode ? (_scAllowAxial ? "Science-Core — axial thrust only (spin-stabilized)"
-                                                              : "Science-Core — unguided (no steering)")
-                           : !GuidanceUnlocked ? "Near-Earth — guidance not yet researched (dumb)"
-                           : !IsPowered ? "Near-Earth — dumb (no power)"
-                           : "Near-Earth — guidance active";
+                           : ScienceCoreMode ? (_scAllowAxial ? "Unguided — axial thrust only (spin-stabilized)"
+                                                              : "Unguided — no steering")
+                           : !GuidanceUnlocked ? "Guided — guidance not yet researched (dumb)"
+                           : !IsPowered ? "Guided — dumb (no power)"
+                           : "Guided — guidance active";
         }
 
         // VAB-only: pick the as-built model. Firing onEditorShipModified re-runs the full editor recompute
         // (mass, volume reservation, draw); mass is then frozen at launch.
-        [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Switch to Science-Core (unguided)", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Switch to Unguided", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public void ToggleGuidance()
         {
             guidanceEnabled = !guidanceEnabled;
@@ -687,10 +687,10 @@ namespace RPAxe
         {
             return "Unified avionics core: command, guidance, electric power, science storage and flight computer.\n\n"
                  + "<b>Model</b> (chosen in the VAB, fixed at launch):\n"
-                 + "• <b>Near-Earth (guided)</b> — full 3-axis control; hardware mass scales with the vehicle and "
-                 + "drops as you research better avionics (matching RP-1). Needs power and the guidance tech; until "
+                 + "• <b>Guided</b> — full 3-axis control; hardware mass scales with the vehicle and "
+                 + "drops as you research better avionics. Needs power and the guidance tech; until "
                  + "then, or if the battery runs flat, the craft flies dumb (throttle + staging only).\n"
-                 + "• <b>Science-Core (unguided)</b> — no steering, but a fraction of the mass and almost no power; "
+                 + "• <b>Unguided</b> — no steering, but a fraction of the mass and almost no power; "
                  + "from improved avionics it permits axial-thrust spin-stabilization. For sounding rockets and kick "
                  + "stages.\n\n"
                  + "A crewed pod or a separate probe core always restores full control regardless of model.\n\n"
