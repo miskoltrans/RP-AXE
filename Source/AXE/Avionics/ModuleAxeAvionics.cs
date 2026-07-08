@@ -21,9 +21,11 @@ namespace RPAxe
     /// The EC DRAW runs LIVE off the vehicle's DRY mass (steady as fuel burns, steps down as stages drop) and gets
     /// cheaper per researched tier. There is NO controllable-mass and NO distance gate — a bigger/farther rocket
     /// just draws more power and weighs a bit more (range belongs to comms). Control is gated by guidance/axial
-    /// being active (see <see cref="AxeAvionicsController"/> / <see cref="AxeControlLockerUtils"/>), which needs
-    /// power: run the battery flat, or HIBERNATE the core (deep sleep, in flight), and the craft goes dumb
-    /// (throttle + staging only) until power returns / it is woken.
+    /// being active (see <see cref="AxeAvionicsController"/> / <see cref="AxeControlLockerUtils"/>) and by
+    /// HIBERNATE (Guided only — deep sleep, in flight; Unguided can never hibernate, matching RP-1: Science-Core
+    /// never gets a toggle at all). Running the battery flat is NOT tracked by this module at all — the computed
+    /// draw is fed live into stock ModuleCommand's own EC input resource, so an empty battery loses control the
+    /// same way any vanilla probe core does (RP-1 does the same; neither has a custom brownout/hysteresis check).
     ///
     /// Science storage (ModuleScienceContainer) is tier-gated like RP-1 (on from basicAvionics, both models) —
     /// the seed part carries the module statically; this checks it off at flight start if the as-built tier
@@ -63,10 +65,6 @@ namespace RPAxe
 
         // ---- volume emulation: hardware reserves part volume (mass/density), the rest is EC battery ----
         [KSPField] public float avionicsDensity = 0.5f;   // t/m^3
-
-        // ---- "is powered" runtime gate (flight only): go dumb when the EC reserve runs out, with hysteresis ----
-        [KSPField] public float poweredCutoffSeconds = 2f;    // brown-out below this many seconds of reserve
-        [KSPField] public float poweredRecoverSeconds = 10f;  // re-power above this many seconds of reserve
 
         // ---- persistent player state ----
         // The as-built avionics MODEL, chosen in the VAB and frozen at launch:
@@ -119,10 +117,10 @@ namespace RPAxe
         float _kosSpaceCostFactor = 0.1f;
         float _kosSpaceMassFactor = 0.0001f;
         float _kosEcPerInstruction = 0.000001f;
-        bool _powered = true;
         KeyValuePair<string, double> _ecConsumption = new KeyValuePair<string, double>(EcName, 0);
         ModuleResource _commandEC;
         float _nextFlightRecalc;
+        static bool? _kerbalismPresent;
 
         // RealFuels / ProceduralPart bridge (reflected — AXE.dll doesn't reference RealFuels, same as the
         // MechJeb/Kerbalism reflection elsewhere). Used to reserve the hardware footprint from the EC tank.
@@ -194,24 +192,34 @@ namespace RPAxe
         { 0.000001f, 0.000001f, 0.000004f, 0.000002f, 0.000001f, 0.0000004f, 0.0000002f, 0.0000001f, 0.00000008f, 0.00000004f, 0.00000001f, 0.00000001f, 0.00000001f, 0.00000001f };
 
         public bool GuidanceUnlocked => Researched(guidanceTech);
-        // Near-Earth full 3-axis guidance: needs the model (guidanceEnabled), the tech, POWER, and not hibernating.
-        // Out of EC in flight or asleep => dumb until repowered/woken.
-        public bool GuidanceActive => GuidanceUnlocked && guidanceEnabled && IsPowered && !hibernating;
+        // Near-Earth full 3-axis guidance: needs the model (guidanceEnabled), the tech, and not hibernating.
+        // Power is NOT checked here — the draw is fed live into stock ModuleCommand's own EC input resource
+        // (see UpdateRate), so an empty battery loses control via KSP's own control-source logic, same as RP-1.
+        public bool GuidanceActive => GuidanceUnlocked && guidanceEnabled && !hibernating;
         // Science-Core model (the "unguided" half of the VAB toggle).
         public bool ScienceCoreMode => !guidanceEnabled;
-        // Science-Core axial-thrust control (spin-stabilized stages) at improvedAvionics+; still needs power + awake.
-        public bool AxialActive => ScienceCoreMode && _scAllowAxial && IsPowered && !hibernating;
+        // Science-Core axial-thrust control (spin-stabilized stages) at improvedAvionics+; still needs to be awake
+        // (hibernating is always false here in practice — Unguided can never hibernate, see ToggleHibernation).
+        public bool AxialActive => ScienceCoreMode && _scAllowAxial && !hibernating;
         // Hardware footprint density for the current model (NE fixed 0.5; SC varies by tier).
         float EffectiveDensity => guidanceEnabled ? avionicsDensity : (_scDensity > 0f ? _scDensity : avionicsDensity);
         public string GuidanceTech => guidanceTech;
 
-        bool IsPowered
+        // Kerbalism, if installed, runs its own resource simulation and discovers this module's PlannerUpdate/
+        // ResourceUpdate/BackgroundUpdate by reflection (see the #region below) — so stock ModuleCommand's own
+        // EC rate must be zeroed to avoid double-counting the draw. Detected once, matches RP-1's
+        // useKerbalismInFlight check (minus RP-0's difficulty-setting override, which AXE has no equivalent of).
+        static bool KerbalismPresent
         {
             get
             {
-                if (!HighLogic.LoadedSceneIsFlight) return true;     // never gate in the editor
-                if (CheatOptions.InfiniteElectricity) return true;
-                return _powered;
+                if (_kerbalismPresent == null)
+                {
+                    _kerbalismPresent = false;
+                    foreach (var a in AssemblyLoader.loadedAssemblies)
+                        if (a.name == "Kerbalism") { _kerbalismPresent = true; break; }
+                }
+                return _kerbalismPresent.Value;
             }
         }
 
@@ -292,8 +300,7 @@ namespace RPAxe
 
         public override void OnStartFinished(StartState state)
         {
-            _commandEC = FindCommandEC();
-            if (_commandEC != null) _commandEC.rate = 0; // hand EC draw to this module / Kerbalism (no double count)
+            _commandEC = FindCommandEC(); // UpdateRate() below feeds this its live rate every call (or Kerbalism's)
 
             ResolveTankBridge();
             ApplyTier();
@@ -346,14 +353,14 @@ namespace RPAxe
 
         void OnStage(int _) => UpdateRate();
 
-        // Flight: recompute the powered state + EC DRAW ~1 Hz so they track recharge / fuel burn / staging.
-        // The hardware mass is frozen and never changes in flight.
+        // Flight: recompute EC DRAW ~1 Hz so it tracks fuel burn / staging. The hardware mass is frozen and
+        // never changes in flight. No powered-state polling here — stock's own control-source logic handles
+        // what happens when the vessel actually runs out of EC (see UpdateRate).
         void Update()
         {
             if (!HighLogic.LoadedSceneIsFlight) return;
             if (Time.time < _nextFlightRecalc) return;
             _nextFlightRecalc = Time.time + 1f;
-            UpdatePowered();
             UpdateRate();
         }
 
@@ -536,21 +543,6 @@ namespace RPAxe
             part.SendEvent("OnPartVolumeChanged", data, 0);
         }
 
-        // Flight only: latch _powered from the measured EC reserve, with hysteresis so it doesn't flap at the
-        // threshold (and so a solar trickle can re-power a dumb craft, whose idle draw is low).
-        void UpdatePowered()
-        {
-            if (!HighLogic.LoadedSceneIsFlight || vessel == null) { _powered = true; return; }
-            bool was = _powered;
-            vessel.GetConnectedResourceTotals(PartResourceLibrary.ElectricityHashcode, out double ec, out double _);
-            double perSec = currentWatts / 1000.0;
-            double low = Math.Max(0.5, perSec * poweredCutoffSeconds);
-            double high = Math.Max(2.0, perSec * poweredRecoverSeconds);
-            if (_powered && ec <= low) _powered = false;
-            else if (!_powered && ec >= high) _powered = true;
-            if (_powered != was) GameEvents.onVesselWasModified.Fire(vessel); // re-run the control-lock check now
-        }
-
         float VesselMassTons()
         {
             if (HighLogic.LoadedSceneIsEditor)
@@ -601,9 +593,14 @@ namespace RPAxe
         void UpdateRate()
         {
             // VAB readout shows the operating draw (what it draws awake & working) so the player can size the
-            // battery; flight uses the actual gated/hibernating draw that feeds the powered check + Kerbalism.
+            // battery; flight uses the actual gated/hibernating draw.
             currentWatts = HighLogic.LoadedSceneIsEditor ? ComputeBaseWatts() : ComputeWatts();
             _ecConsumption = new KeyValuePair<string, double>(EcName, -currentWatts / 1000.0);
+            // Feed the live draw into stock ModuleCommand's own EC input resource (RP-1 does the same) so an
+            // empty battery loses control via KSP's own control-source logic — no custom brownout check needed.
+            // Kerbalism, if present, handles EC itself via the duck-typed hooks below; zero the stock rate then
+            // so it isn't double-counted.
+            if (_commandEC != null) _commandEC.rate = KerbalismPresent ? 0f : currentWatts / 1000f;
             UpdateEndurance();
             SetGui();
         }
@@ -635,17 +632,18 @@ namespace RPAxe
             mt.guiActiveEditor = true;
             mt.guiName = guidanceEnabled ? "Switch to Unguided" : "Switch to Guided";
 
-            // Hibernation: flight-only deep sleep.
+            // Hibernation: flight-only deep sleep, Guided only. RP-1 never gives Science-Core a toggle at all
+            // (see ToggleHibernation), so Unguided never gets this event or action group entry.
             BaseEvent hb = Events[nameof(ToggleHibernation)];
-            hb.guiActive = true;
+            hb.guiActive = guidanceEnabled;
             hb.guiActiveEditor = false;
             hb.guiName = hibernating ? "Wake from Hibernation" : "Hibernate";
+            Actions[nameof(HibernateAction)].active = guidanceEnabled;
 
             guidanceStatus = hibernating ? "hibernating — low power, control suspended"
                            : ScienceCoreMode ? (_scAllowAxial ? "Unguided — axial thrust only (spin-stabilized)"
                                                               : "Unguided — no steering")
                            : !GuidanceUnlocked ? "Guided — guidance not yet researched (dumb)"
-                           : !IsPowered ? "Guided — dumb (no power)"
                            : "Guided — guidance active";
         }
 
@@ -662,10 +660,13 @@ namespace RPAxe
             SetGui();
         }
 
-        // Flight: toggle deep sleep. Cuts draw to hibernationFactor and suspends control (re-run the lock check).
+        // Flight: toggle deep sleep. Guided only — cuts draw to hibernationFactor and suspends control (re-run
+        // the lock check). Unguided never hibernates (matches RP-1: Science-Core has no toggle at any tier);
+        // guarded here too, not just in the PAW/action-group visibility, in case this is ever called directly.
         [KSPEvent(guiActive = true, guiActiveEditor = false, guiName = "Hibernate", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public void ToggleHibernation()
         {
+            if (!guidanceEnabled) return;
             hibernating = !hibernating;
             UpdateRate();
             if (vessel != null) GameEvents.onVesselWasModified.Fire(vessel);
@@ -688,16 +689,17 @@ namespace RPAxe
             return "Unified avionics core: command, guidance, electric power, science storage and flight computer.\n\n"
                  + "<b>Model</b> (chosen in the VAB, fixed at launch):\n"
                  + "• <b>Guided</b> — full 3-axis control; hardware mass scales with the vehicle and "
-                 + "drops as you research better avionics. Needs power and the guidance tech; until "
-                 + "then, or if the battery runs flat, the craft flies dumb (throttle + staging only).\n"
+                 + "drops as you research better avionics. Needs the guidance tech to steer; until then the craft "
+                 + "flies dumb (throttle + staging only, no attitude control).\n"
                  + "• <b>Unguided</b> — no steering, but a fraction of the mass and almost no power; "
                  + "from improved avionics it permits axial-thrust spin-stabilization. For sounding rockets and kick "
                  + "stages.\n\n"
                  + "A crewed pod or a separate probe core always restores full control regardless of model.\n\n"
                  + "<b>Power draw</b> runs live off the vehicle's <i>dry</i> mass — steady as you burn fuel, stepping "
-                 + "down as you stage. <b>Hibernate</b> (in flight) puts the core into deep sleep, cutting draw to a "
-                 + "trickle and suspending control until woken. No mass gate — a bigger rocket just costs more, never "
-                 + "lost control.\n\n"
+                 + "down as you stage, and is drawn through the vessel's normal electric charge system — an empty "
+                 + "battery loses control the same way it would for any uncrewed probe. <b>Hibernate</b> (Guided "
+                 + "only, in flight) puts the core into deep sleep, cutting draw to a trickle and suspending control "
+                 + "until woken. No mass gate — a bigger rocket just costs more, never lost control from size alone.\n\n"
                  + "<b>Battery</b>: the hardware reserves part of the procedural volume; size the rest for your "
                  + "mission's endurance and choose the battery chemistry in the tank menu as you unlock better cells.\n\n"
                  + "<b>Cost</b> follows the vehicle load like mass, but peaks mid-tree before falling — early "

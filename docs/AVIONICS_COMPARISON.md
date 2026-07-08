@@ -18,6 +18,17 @@ RP-1 kOS patch would leave it once `ModuleProceduralAvionics` is stripped). See 
 now has RP-1's real `start` floor rung (48 kg/100 W/density 3.35), one step below `postWarAvionics`. See
 the note under §G.
 
+**2026-07-08 update (2), user direction — hibernation restricted, custom power-brownout removed.**
+Hibernate is now **Guided (Near-Earth) only** — Unguided (Science-Core) can never hibernate, matching RP-1's
+own behavior more closely (RP-1 never gives Science-Core a toggle at any tier; AXE just doesn't additionally
+tier-gate Near-Earth's the way RP-1 does from `advancedAvionics` on). And AXE's custom `_powered`/reserve-
+seconds hysteresis check (`UpdatePowered`, `poweredCutoffSeconds`/`poweredRecoverSeconds`) is **gone
+entirely** — the live draw is now fed straight into stock `ModuleCommand`'s own EC input resource every
+update, so an empty battery loses control via KSP's own control-source logic, exactly like RP-1 (confirmed
+by reading `RP-1/Source/RP0/Avionics/ModuleAvionics.cs`: it has no dedicated brownout check either, it just
+writes its wattage into `ModuleCommand`'s resource rate and lets stock handle the rest). See the updated
+"what still differs" list, items 4 and 8.
+
 ## Headline — two RP-1 models on one toggle, draw keyed off live dry mass
 
 RP-AXE's `ModuleAxeAvionics` evaluates RP-1's polynomials with the per-tier factors taken straight from RP-1's
@@ -31,7 +42,8 @@ curve + the battery you size.
 | Hardware mass (NE) | `(M^0.46172 + 0.96)·massFactor/1000` | **same formula** |
 | Draw input | rated `controllableMass`, **static** | **live DRY mass** — steady on burn, steps down on staging |
 | Control cliff | hard — vessel > massLimit ⇒ **no control** | **none** — bigger just costs more |
-| Low-power | Deep-Space hibernation only | **Hibernate toggle on every core** (draw → 5%) |
+| Out of power | no custom check — feeds `ModuleCommand`'s EC rate, stock handles it | **same** — no custom check either (see below) |
+| Low-power | Deep-Space always; Near-Earth from `advancedAvionics`; Science-Core never | **Guided always** (no tier gate); **Unguided never** |
 | Battery | leftover part volume after hardware | **same** — hardware reserves vol, rest is EC |
 | Cost | `(M^0.46172+3.034)·costFactor`, hump-shaped | **same formula**, frozen at launch like mass (§H) |
 | Science container | on from `basicAvionics` (both models) | **same** — checked off at flight start if tier lacks it |
@@ -63,10 +75,14 @@ RP-AXE — from `ModuleAxeAvionics.cs` (the guided/unguided toggle picks the mod
 - **Science-Core (unguided)**: mass (t) = `scMassFactor / 1000`, cost (funds) = `scCostFactor` flat — **size-
   independent**; no steering (axial-thrust only from `improvedAvionics` up)
 - **EC draw** (W) = `(dryMass^0.57853 + 1.035)·powerFactor` for NE (live), or flat `scPowerFactor` for SC;
-  ×0.1 when a NE core is dumb, ×0.05 when **hibernating** (either model)
+  ×0.1 when a NE core is dumb, ×0.05 when **hibernating** (**Guided/Near-Earth only** — Unguided can never
+  hibernate; `ToggleHibernation` no-ops and the PAW event/action are hidden when `!guidanceEnabled`)
 - hardware **volume** = mass / density (NE 0.5; SC per-tier); the part auto-grows to fit, leftover → **RealFuels
   EC battery** you size
-- guidance gated at `postWarAvionics`; runs **dumb** if the battery goes flat in flight or the core is hibernated
+- guidance gated at `postWarAvionics`; runs **dumb** if the tech isn't researched or the core is hibernated.
+  Running the battery flat is **not tracked by AXE at all** — the live draw is fed straight into stock
+  `ModuleCommand`'s own EC input resource every update (zeroed instead if Kerbalism is present, to avoid
+  double-counting), so an empty battery loses control via KSP's own control-source logic, same as RP-1
 - `ModuleScienceContainer` (seed-added, static) is stripped at flight start if the as-built tier's
   `hasScienceContainer` is false — same node/gate as RP-1, checked once like RP-1's own `Start()` logic
 - a `kOSProcessor` module, if present, is kept in sync with the tier's `kos*` ladder via reflection (duck-typed,
@@ -244,18 +260,20 @@ is stripped.
    AXE uses the real load ⇒ a touch lighter.
 3. **Draw is live off DRY mass.** Steady as fuel burns, steps down as stages drop; RP-1's is static at the rated
    value. (Mass itself still freezes at launch — RP-1-like.)
-4. **Hibernation on every core** (flight Hibernate toggle, draw → 5%, control suspended) — RP-1 gates hibernation
-   to Deep-Space only.
+4. **Hibernation is Guided-only, not tier-gated.** RP-1 gives Near-Earth a toggle only from `advancedAvionics`
+   on and never gives Science-Core one at all, at any tier. AXE matches the model split (Guided can hibernate,
+   Unguided never can) but doesn't additionally gate Near-Earth by tier — available from `postWarAvionics`.
 5. **Guidance gate** at `postWarAvionics` vs RP-1's `start` — so the very start flies Science-Core only.
 6. **SAS** is a flat level 3 (config), suppressed while dumb/axial by `AxeAvionicsController`.
 7. **Funds, science storage, kOS — closed 2026-07-07.** Cost now has a real hardware-efficiency curve
    (§H, `GetModuleCost`), science storage is tier-gated like RP-1 (§I), and a kOS reflection bridge exists
    (§I, inert until kOS is an AXE dependency). See `docs/UPGRADES.md` §C1.
-8. **No manual "disable for power" toggle.** RP-1 lets the player switch Near-Earth avionics fully off from
-   `advancedAvionics` on (`disabledPowerFactor`, a deliberate power/control trade). AXE's idle multiplier
-   (`idleFactor`, 0.1×) is automatic — it applies whenever guidance isn't active (unresearched/unpowered), at
-   every tier, not a player-chosen toggle. Different mechanic, not a gap: AXE's Hibernate (§ above) already
-   covers the "trade control for power" use case, uniformly, from the start.
+8. **No manual "disable for power" toggle distinct from Hibernate.** RP-1's `advancedAvionics`+ toggle
+   (`disabledPowerFactor`) and its Hibernate mechanic are actually the *same* underlying `systemEnabled` flag —
+   RP-1 doesn't have two separate concepts here, "hibernation" is just what that toggle is called for
+   Deep-Space. AXE keeps its own idle multiplier (`idleFactor`, 0.1×, automatic whenever guidance isn't active)
+   *and* a separate player-chosen Hibernate toggle (Guided only, from `postWarAvionics` — see item 4) — two
+   mechanics where RP-1 has one, but the player-facing outcome (trade control for a power cut) is the same.
 
 ## Planned — not yet built
 
@@ -272,6 +290,8 @@ started.
 - RP-1 coeffs: `RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg` (`AVIONICSCONFIGS`: Near-Earth …)
 - RP-1 formulas: `RP-1/Source/RP0/Avionics/ModuleProceduralAvionics.cs` (`GetPolynomial`, `GetAvionicsMass`,
   `GetAvionicsCost`, `SetScienceContainer`)
+- RP-1 base class (power draw → stock `ModuleCommand`, no custom brownout, the toggle/hibernate mechanic):
+  `RP-1/Source/RP0/Avionics/ModuleAvionics.cs` (`UpdateRate`, `GetToggleable`, `ToggleEvent`)
 - RP-AXE model: `Source/AXE/Avionics/ModuleAxeAvionics.cs`
 - RP-AXE ladder (source of truth): `GameData/RP-AXE/design/Tree/AxeAvionicsCore.cfg` (`TIER` nodes)
 - Battery tanks: `Instance/GameData/RealismOverhaul/RO_RealFuels.cfg` (`Battery-I..IV`)
