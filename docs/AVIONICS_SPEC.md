@@ -100,11 +100,18 @@ draw, so a player can see at a glance how much of their current draw is "penalty
 
 ---
 
-## Also in scope — verify before building
+## Also in scope — verified, small, self-contained
 
-**"Set to Debris: Never / On Stage."** User wants this ported if it's real RP-1 functionality — **not yet
-verified what this actually is or where it lives** (stock KSP vessel-type override? RP-1-specific? some
-other mod?). Needs a ground-truth check before scoping, same as everything else in this doc.
+**"Set to Debris: Never / On Stage" — confirmed real RP-1 feature, port it.** Lives in RP-1's
+`ModuleAvionics.cs` (not stock KSP — confirmed via decompiled `Assembly-CSharp.dll`, zero hits there). A
+per-part, editor-only `UI_Toggle` (disabled="Never"/enabled="On Stage", default Never), grouped under the
+Avionics PAW fold-out. Mechanism: subscribes to `GameEvents.onStageActivate`; on staging, waits 1s, checks if
+this vessel is no longer the active one (i.e. it's the piece just left behind); if so, scans it for any
+command-capable part with avionics explicitly set to "Never" (any one vetoes the whole vessel) — otherwise
+force-sets `vesselType = VesselType.Debris`. Pure tracking-station hygiene (no funds/recovery/science effect)
+— lets a spent stage that happened to carry avionics (needed for its own burn) not clutter the tracking
+station as a permanent "Ship" after separating. Self-contained: toggle + event hook + one `vesselType` write,
+no interaction with anything else in this doc. No RP-1 config presets it to true anywhere — pure opt-in.
 
 ---
 
@@ -129,5 +136,4 @@ other mod?). Needs a ground-truth check before scoping, same as everything else 
   minimum-size-for-any-capacity floor (~169 L at `postWarAvionics`) that's *bigger* than AXE's current
   default part dimensions (~98 L) — a fresh, unresized part would sit at zero capacity today. Needs either
   the default size bumped or confirmation this is intentional.
-- "Set to Debris" feature — needs verification (see above).
 - Auto-hibernate-on-warp — separately parked, doesn't block any of this.
