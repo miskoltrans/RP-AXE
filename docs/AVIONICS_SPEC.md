@@ -54,17 +54,27 @@ probe-hibernation fallback (`%hasHibernation = False`), so today draw just freez
 keeps applying for the whole warp unless the player manually hits Hibernate first. Port RP-1's hook pattern
 directly: same events, same "auto-drop during warp regardless of manual state, auto-restore on load" behavior.
 
-**Radiation reliability — the actual differentiator we're trying to make Unshielded genuinely worse at,
-still being worked out.** Confirmed real and buildable via Kerbalism (not cosmetic — RP-1's own
-`shieldingMassFactor` was checked and confirmed to connect to nothing; this is a different, verified-real
-mechanism instead): author a new `Reliability` module on the avionics part (none exists there today), set
-`rated_radiation`/`radiation_decay_rate` via runtime reflection (same duck-typed pattern as the existing
-RealFuels/kOS bridges), keyed to the shielded/unshielded toggle. Starting numbers to tune from: unshielded
-`rated_radiation≈1.0` rad/h (fails inside Kerbin's own belts — both inner 10.4 and outer 2.2 rad/h exceed
-it), shielded `≈15` rad/h (shrugs off Kerbin entirely, only Jool-class fields at 300/50 rad/h bite),
-`radiation_decay_rate` unshielded=1.0 (default), shielded=0.1. Caveat: Kerbalism's global MTBF floor (~108
-days) applies regardless, so this is a long-run reliability difference, not a fast/dramatic failure. Still
-exploratory — "we will try to work out how to make radiation affect the unshielded one," not locked.
+**Radiation reliability — NUMBERS LOCKED (2026-07-08), verified against real mission profiles, not just
+eyeballed.** Confirmed real and buildable via Kerbalism (not cosmetic — RP-1's own `shieldingMassFactor` was
+checked and confirmed to connect to nothing; this is a different, verified-real mechanism instead): author a
+new `Reliability` module on the avionics part (none exists there today), set `rated_radiation`/
+`radiation_decay_rate` via runtime reflection (same duck-typed pattern as the existing RealFuels/kOS
+bridges), keyed to the shielded/unshielded toggle. **Final numbers: unshielded `rated_radiation=1.0` rad/h,
+`radiation_decay_rate=1.0`; shielded `rated_radiation=15` rad/h, `radiation_decay_rate=0.1`.** The mechanic is
+a hard threshold (zero effect below `rated_radiation`, not gradual) — checked against 4 real mission shapes:
+LEO and quick Mars/Venus transits show negligible effect either way (correct — real interplanetary cruises
+don't linger in the belts); a belt-dwelling elliptical Earth orbit burns ~553 days off an unshielded core's
+failure clock over a 5-year mission (immune if shielded); a Jupiter/Jool orbiter pushes unshielded to
+near-guaranteed early failure vs. shielded surviving-if-lucky (~255 days, ~14× better). Real, meaningful
+differentiation exactly where it should show up, near-zero noise where it shouldn't. Kerbalism's global MTBF
+floor (~108 days) only clamps the base `mtbf` at config-load and doesn't fight this mechanic afterward —
+confirmed no conflict.
+
+**Open sub-decision this surfaced**: Kerbalism has a standard "quality" PAW toggle
+(`Settings.QualityScale=4.0` in this profile) that, if exposed on the new `Reliability` module, would scale
+`rated_radiation` up 4× for unshielded (clears Earth's outer belt entirely) and shielded up to 60× (clears
+Jool too) — silently undercutting the calibration above. Decide: expose that toggle on the avionics part, or
+hardcode it off?
 
 ---
 
@@ -160,8 +170,26 @@ no interaction with anything else in this doc. No RP-1 config presets it to true
 
 ## Open / not yet decided
 
-- Radiation reliability's exact numbers (`rated_radiation`/`radiation_decay_rate` per shielded/unshielded) —
-  starting values proposed above were a rough estimate; deeper investigation dispatched 2026-07-08 to
-  properly calibrate against the fuller range of body radiation data and realistic mission durations.
-- Whether stock/third-party bare probe-core parts (non-procedural, e.g. `ROT-ProbeCore`) need any changes —
-  under investigation, see project memory once resolved.
+- Whether to expose Kerbalism's "quality" PAW toggle on the new `Reliability` module (see radiation section
+  above — would quietly widen both radiation thresholds if left on).
+- Bare stock/third-party probe cores — **checked (2026-07-08), not a real concern.** Most (OKTO, OKTO2,
+  RC-001S, RC-L01) are either deleted outright by an inherited RP-1 `Deprecation.cfg` patch or fall into
+  AXE's disconnected `parking` tech node (no `parentID`, unreachable in a real campaign) — orphaned leftovers,
+  not curated content. Only 2-3 bare cores got deliberate placement (Sputnik PS-1, `ROT-ProbeCore`, both
+  gated to a charter/flavor node `th_hermeticBus`, at or after the Avionics Core's own `start` availability)
+  — intentional flavor/charter parts matching the established charter-redesign pattern, not a scalable
+  escape hatch from the mechanics in this doc. No action needed.
+
+## KNOWN LIVE BUG — separate from this redesign, found while reviewing the tier system (2026-07-08)
+
+`AxeAvionicsCore.cfg`'s 14-tier ladder gates each tier on RP-1's original bare tech names (`postWarAvionics`,
+`avionicsPrototypes`, etc.), but AXE's own from-scratch tree uses discipline-prefixed IDs — confirmed
+`postWarAvionics` doesn't exist as a node ID anywhere in `AxeTechTree.cfg`, only `gnc_postWarAvionics` does.
+`ModuleAxeAvionics.cs`'s `Researched()` calls stock `ResearchAndDevelopment.GetTechnologyState()` on the raw
+bare string with zero prefix handling. If this pattern holds across all 13 tier names (being scoped now),
+every avionics core in the game is likely permanently stuck at the tier-0 `start` floor regardless of
+research — the whole tier progression this doc builds on may never actually engage in a real campaign. Full
+scope (which tiers are affected, whether it's a clean prefix fix or needs real remapping, whether
+`guidanceTech` has the same problem) is being checked separately — **this should probably be fixed before or
+alongside this redesign, not after**, since it affects the ladder every other piece of this spec sits on top
+of.
