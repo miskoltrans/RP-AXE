@@ -129,16 +129,16 @@ def main():
     masses = [1, 3, 10, 30, 100, 300, 1000]
     print(); print(bar); print("B) HARDWARE MASS (kg) vs per-craft load — AXE == RP-1 at equal load"); print(bar)
     print(f"{'tier':22} | " + " ".join(f"{m:>7}t" for m in masses))
-    for name, mf, pf in [AXE_BY_NAME["postWarAvionics"], AXE_BY_NAME["basicAvionics"],
-                         AXE_BY_NAME["advancedAvionics"], AXE_BY_NAME["modernAvionics"]]:
+    for name, mf, pf in [AXE_BY_NAME["gnc_postWarAvionics"], AXE_BY_NAME["gnc_basicAvionics"],
+                         AXE_BY_NAME["comp_multiplyRedundantFlightComputer"], AXE_BY_NAME["comp_commercialOffTheShelfAvionics"]]:
         print(f"{name:22} | " + " ".join(f"{hw_mass_t(m, mf)*1000:8.0f}" for m in masses))
     print("  (AXE is fed ACTUAL vessel load and freezes it; RP-1 uses rated controllableMass>=load, with")
     print("   margin, and AXE's load drops as stages separate -> AXE <= RP-1 in play)")
 
     print(); print(bar); print("C) EC DRAW (W) vs DRY mass — AXE == RP-1 per tier, live (steady on burn, steps on staging)"); print(bar)
     print(f"{'tier':22} | " + " ".join(f"{m:>7}t" for m in masses))
-    for name, mf, pf in [AXE_BY_NAME["postWarAvionics"], AXE_BY_NAME["basicAvionics"],
-                         AXE_BY_NAME["advancedAvionics"], AXE_BY_NAME["modernAvionics"]]:
+    for name, mf, pf in [AXE_BY_NAME["gnc_postWarAvionics"], AXE_BY_NAME["gnc_basicAvionics"],
+                         AXE_BY_NAME["comp_multiplyRedundantFlightComputer"], AXE_BY_NAME["comp_commercialOffTheShelfAvionics"]]:
         print(f"{name:22} | " + " ".join(f"{draw_W(m, pf):8.0f}" for m in masses))
 
     print(); print(bar); print("D) GROUNDED: V-2 — RP-1 (Near-Earth, controllableMass 15 t) vs AXE (live load ~12.5 t)"); print(bar)
@@ -155,8 +155,8 @@ def main():
 
     print(); print(bar); print("E) VOLUME — hardware reserves (mass / 0.5) m^3 of the part; the rest is EC battery (L)"); print(bar)
     print(f"{'tier':22} | " + " ".join(f"{m:>7}t" for m in masses))
-    for name, mf, pf in [AXE_BY_NAME["postWarAvionics"], AXE_BY_NAME["basicAvionics"],
-                         AXE_BY_NAME["advancedAvionics"], AXE_BY_NAME["modernAvionics"]]:
+    for name, mf, pf in [AXE_BY_NAME["gnc_postWarAvionics"], AXE_BY_NAME["gnc_basicAvionics"],
+                         AXE_BY_NAME["comp_multiplyRedundantFlightComputer"], AXE_BY_NAME["comp_commercialOffTheShelfAvionics"]]:
         print(f"{name:22} | " + " ".join(f"{hw_vol_L(m, mf):8.0f}" for m in masses))
 
     print(); print(bar); print("F) BATTERY chemistries (RO electronics line); EC per kg: I 222 II 346 III 556 IV 694"); print(bar)

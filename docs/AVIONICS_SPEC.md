@@ -70,11 +70,10 @@ differentiation exactly where it should show up, near-zero noise where it should
 floor (~108 days) only clamps the base `mtbf` at config-load and doesn't fight this mechanic afterward —
 confirmed no conflict.
 
-**Open sub-decision this surfaced**: Kerbalism has a standard "quality" PAW toggle
-(`Settings.QualityScale=4.0` in this profile) that, if exposed on the new `Reliability` module, would scale
-`rated_radiation` up 4× for unshielded (clears Earth's outer belt entirely) and shielded up to 60× (clears
-Jool too) — silently undercutting the calibration above. Decide: expose that toggle on the avionics part, or
-hardcode it off?
+**Quality toggle — DECIDED (2026-07-08): do not expose it.** Kerbalism has a standard "quality" PAW toggle
+(`Settings.QualityScale=4.0` in this profile) that would scale `rated_radiation` up 4× for unshielded (clears
+Earth's outer belt entirely) and shielded up to 60× (clears Jool too) if exposed on the new `Reliability`
+module — silently undercutting the calibration above. Not shown on this part; hardcode it off.
 
 ---
 
@@ -180,7 +179,7 @@ no interaction with anything else in this doc. No RP-1 config presets it to true
   — intentional flavor/charter parts matching the established charter-redesign pattern, not a scalable
   escape hatch from the mechanics in this doc. No action needed.
 
-## KNOWN LIVE BUG — full scope confirmed (2026-07-08), recommend fixing NOW, independent of this redesign
+## FIXED LIVE BUG (2026-07-08) — was blocking all avionics tier progression AND guidance activation
 
 Root cause confirmed via decompiled `Assembly-CSharp.dll`: `ResearchAndDevelopment.GetTechnologyState()` on
 an unrecognized tech ID silently returns `RDTech.State.Unavailable` — no crash, no log, just a false. Every
@@ -219,7 +218,10 @@ today sees `guidanceStatus` permanently stuck at "guidance not yet researched (d
 capability lockout, not a frozen-economy-numbers bug — arguably the most severe thing found this whole
 session, and it's in currently-shipped code, not something this redesign introduced.
 
-**Recommendation: fix both bugs now as a standalone, surgical patch** (correct the 14 `tech =` values +
-`guidanceTech` in `AxeAvionicsCore.cfg` to the confirmed correct IDs above), independent of the rest of this
-V2 redesign. It's a small, well-scoped, low-risk fix (reference-string corrections only, no logic changes)
-that restores current functionality — no reason to make it wait for the larger redesign to land.
+**FIXED (2026-07-08).** Applied as a standalone, surgical patch, independent of the rest of this V2 redesign:
+corrected all 14 `tech =` values + `guidanceTech` in `AxeAvionicsCore.cfg` to the confirmed correct IDs above
+(traceability comments added, `// RP-1: <original name>`, so the mapping isn't lost again). Also found and
+fixed the identical bug in `ModuleAxeAvionics.cs`'s hardcoded fallback ladder (`_ladTech` array + the
+`guidanceTech` KSPField default) — the cfg-driven ladder was the only thing checked initially, but the
+in-code fallback used the same bare RP-1 names and would have reintroduced the exact same lockout if the cfg
+ever failed to parse. Reference-string corrections only, no logic changes. Build verified clean (0 errors).

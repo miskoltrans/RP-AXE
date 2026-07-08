@@ -47,7 +47,7 @@ namespace RPAxe
         const string EcName = "ElectricCharge";
 
         // ---- tech that unlocks attitude guidance ----
-        [KSPField] public string guidanceTech = "postWarAvionics";
+        [KSPField] public string guidanceTech = "gnc_postWarAvionics"; // FIX 2026-07-08: was bare "postWarAvionics" (RP-1 tier name), doesn't exist in AXE's own tree
 
         // ---- EC draw curve (RP-1 Near-Earth): watts = (vesselMass^exp + const) * powerFactor(tier) ----
         [KSPField] public float powerExponent = 0.57853f;
@@ -152,11 +152,16 @@ namespace RPAxe
         // NE numbers equal postWarAvionics' (RP-1 Near-Earth has no rung below start); its SC numbers are RP-1
         // Science-Core's own heavier start techLevel (48 kg/100 W/density 3.35), one rung below RP-1 SC's
         // postWarAvionics — without it, AXE's earliest Science-Core was lighter than RP-1's actual starting one.
+        // FIX 2026-07-08: these were bare RP-1 tech names, which don't exist as node IDs in AXE's own
+        // from-scratch tree (only the config-driven ladder below was originally fixed; this hardcoded
+        // fallback had the identical bug and was silently returning Unavailable for every lookup past
+        // "start"). Corrected to AXE's actual tree IDs — see docs/AVIONICS_SPEC.md "KNOWN LIVE BUG" and the
+        // matching fix in AxeAvionicsCore.cfg for the full investigation. RP-1 tier name kept in comments.
         static string[] _ladTech =
         {
-            "start", "postWarAvionics", "avionicsPrototypes", "earlyAvionics", "basicAvionics",
-            "interplanetaryProbes", "improvedAvionics", "matureAvionics", "largeScaleAvionics",
-            "advancedAvionics", "nextGenAvionics", "longTermAvionics", "internationalAvionics", "modernAvionics"
+            "start", "gnc_postWarAvionics", "gnc_avionicsPrototypes", "gnc_earlyAvionics", "gnc_basicAvionics", // postWarAvionics, avionicsPrototypes, earlyAvionics, basicAvionics
+            "gnc_interplanetaryAvionics", "comp_digitalGuidanceComputer", "comp_realTimeFlightComputer", "comp_networkedAvionics", // interplanetaryProbes, improvedAvionics, matureAvionics, largeScaleAvionics
+            "comp_multiplyRedundantFlightComputer", "comp_distributedAvionicsBus", "comp_softwareDefinedFlightControl", "comp_interoperableAvionicsStandard", "comp_commercialOffTheShelfAvionics" // advancedAvionics, nextGenAvionics, longTermAvionics, internationalAvionics, modernAvionics
         };
         static float[] _ladMass =
         { 87.99f, 87.99f, 69.712f, 59.13f, 50.153f, 42.54f, 36.082f, 30.605f, 25.959f, 22.018f, 18.675f, 15.84f, 13.436f, 11.396f };
