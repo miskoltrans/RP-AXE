@@ -277,6 +277,59 @@ is stripped.
 
 ## Planned — not yet built
 
+**Steerable-mass redesign (2026-07-08 design session, NOT STARTED — this is a real rework, not a tweak).**
+AXE currently has no "controllable mass" concept at all — every core auto-sizes off whatever the vessel
+weighs when the ship is last modified in the editor, frozen at launch (`UpdateHardwareMass()`, `load =
+VesselMassTons() - avionicsMass`). This section records a full design pass toward reintroducing RP-1's real
+tradeoff (cheap payload core + separate disposable ascent core, which is RP-1's own documented recommended
+strategy — see `Procedural-Avionics-Basics` wiki) without RP-1's `controllableMass` slider or its hard
+control-lock cliff (confirmed via research to be RP-1's #1 player complaint — silent failure misdiagnosed as
+unrelated bugs for hours, even RP-1's own FAQ misfiles the symptom).
+
+*Rejected direction*: auto-derive each core's "responsible mass" from vehicle topology (walk `Part.parent`/
+`children`, treat `ModuleDecouplerBase`/`ModuleDockingNode`/`LaunchClamp` as graph cuts, sum the reachable
+segment). Confirmed technically buildable (stock API sufficient, ~100-150 LOC, no MechJeb dependency needed —
+see the `rp-axe-steerable-mass-design` memory for the full feasibility trace) but **semantically broken**:
+(1) a bottom-stage core needs the mass of *every* stage above it, not just its own segment between the two
+nearest decouplers — the algorithm undersizes exactly the core that needs to be biggest; (2) topology alone
+cannot distinguish "10 independent payload satellites" from "10 serial stages" from "5 two-stage satellites" —
+the intent isn't encoded in the graph, so no algorithm on `Part.parent`/`children` can resolve it. Killed,
+not patched.
+
+*Current direction ("flip it")*: box size determines capacity, not the other way around. Player resizes the
+avionics part like any other procedural part (no typed number); volume × density → hardware mass → run
+through the *inverse* of the existing mass polynomial → a "controllable mass" capacity number. Compare that
+capacity against **live current total vessel mass** (same live number AXE already computes, same thing RP-1's
+real control check — `ControlLockerUtils.ShouldLock` — actually does every frame). This needs zero topology:
+a bottom-stage core just needs to be built big enough, a fact the player can see and fix directly in the
+part's own PAW, not something the game has to infer from vehicle structure. Confirmed this also incidentally
+kills the resize-jank risk from the topology direction — capacity is purely *derived from* size, nothing ever
+forces the box to resize itself.
+
+Sub-decisions made so far:
+- **Multiple cores: MAX, not SUM.** Matches RP-1's own (deliberately changed-to-in 2021) behavior — summing
+  lets you cheese capacity by stacking cheap small units, which RP-1 explicitly moved away from. Tradeoff:
+  goes against naive player intuition (RP-1's own playerbase got blindsided by this exact change), needs
+  clear in-game communication.
+- **Under capacity → power penalty, not a lock.** Live draw already scales off current mass regardless of
+  the core's own rating; the "penalty" is that formula doing what it already does once capacity stops being
+  forced to always cover current mass. Visible on the existing Power/Endurance PAW readouts, no new UI
+  needed. Deliberately not RP-1's hard binary lock (Locked/Axial/Unlocked, throttle included) — see the
+  research citation above for why that's the wrong call to copy.
+
+Open risk flagged but not resolved: a secondary "utilization" knob (trade capacity vs. battery within a
+fixed box size, mirroring RP-1's own utilization concept) risks recreating a specific, real RP-1 pain point
+— maxing utilization can silently starve battery volume to zero, unrecoverable without rebuilding the part
+(`RP-1#1295`). If utilization gets built, it needs guardrails RP-1's own version didn't have.
+
+Also flagged, not yet checked: whether the mass↔capacity curve produces sane numbers at realistic box sizes
+(the formula has a hard minimum-size-for-any-positive-capacity threshold, same as RP-1's own
+`GetControllableMass` clamp-to-zero) — needs real numbers run once this is implemented, not just formula
+inspection.
+
+See `rp-axe-steerable-mass-design` memory for the full session trace (this was a long back-and-forth; the
+memory has more blow-by-blow than this doc needs).
+
 **Near-Earth + Deep-Space → Guided is not a clean/complete merge — open balance question.** Guided uses pure
 Near-Earth numbers (`massConstant=0.96`, `costConstant=3.034`, no shielding term). Deep-Space's entire premium
 — heavier `massConstant=1.043`, much pricier `costConstant=9.1`, plus `shieldingMassFactor=0.1` (extra mass =
