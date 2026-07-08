@@ -286,6 +286,19 @@ unconditional-leftover behavior. Shape sketched 2026-07-08: a second AXE-owned f
 actually gets sent onward to RealFuels; the rest stays dead volume in the box) — needs design first, not
 started.
 
+**Auto-hibernate on timewarp (on-rails).** RP-1's base `ModuleAvionics.cs` hooks `GameEvents.
+onVesselGoOnRails`/`onVesselGoOffRails` and calls `UpdateRate(onRails: true)` on rails — which, for any
+config/tier that's toggleable (`disabledPowerFactor > 0`: Deep-Space always, Near-Earth from
+`advancedAvionics` on), automatically drops to the reduced draw rate for the whole warp, independent of the
+player's manual `systemEnabled` state, and restores automatically on load. AXE has no equivalent: no
+onRails/offRails hooks anywhere in `ModuleAxeAvionics.cs`, `Update()` (which drives the live draw calc)
+simply doesn't run for unloaded vessels at all, so draw freezes at its last computed value and keeps applying
+for the entire warp unless the player manually hits Hibernate first. AXE also explicitly disables stock
+KSP's own built-in probe-hibernation fallback (`%hasHibernation = False` in `AxeAvionicsCore.cfg`), so
+there's no automatic protection from either direction today. Noted 2026-07-08 (user), not started — would
+need onRails/offRails hooks calling into the existing Hibernate-equivalent draw reduction, Guided-only per
+the 07-08 hibernation-restriction change, and a decision on how it interacts with the manual toggle.
+
 ## Where the numbers live
 - RP-1 coeffs: `RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg` (`AVIONICSCONFIGS`: Near-Earth …)
 - RP-1 formulas: `RP-1/Source/RP0/Avionics/ModuleProceduralAvionics.cs` (`GetPolynomial`, `GetAvionicsMass`,
