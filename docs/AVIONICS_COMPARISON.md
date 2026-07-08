@@ -330,18 +330,38 @@ inspection.
 See `rp-axe-steerable-mass-design` memory for the full session trace (this was a long back-and-forth; the
 memory has more blow-by-blow than this doc needs).
 
-**Near-Earth + Deep-Space → Guided is not a clean/complete merge — open balance question.** Guided uses pure
-Near-Earth numbers (`massConstant=0.96`, `costConstant=3.034`, no shielding term). Deep-Space's entire premium
-— heavier `massConstant=1.043`, much pricier `costConstant=9.1`, plus `shieldingMassFactor=0.1` (extra mass =
-`avionicsMass^(2/3) × 0.1`, radiation/thermal survival) — doesn't exist anywhere in AXE; it wasn't relocated,
-it was dropped. Range enforcement legitimately moved to comms (RealAntennas), but the *hardware cost of
-surviving far from Earth* didn't move anywhere with it. Open question (user, 2026-07-08): does RealAntennas'
-own distance-cost curve already substitute for this, or does something need to carry the radiation/shielding
-half specifically? There's a standing, separately-parked idea that's aimed at exactly this same physical
-concept — see `rp-axe-gate-ideas` memory, "RADIATION HARDENING (Microelectronics)": gate deep-space
-electronics behind a rad-hardening tech node (LEO avionics survive; past the belts they fry until
-researched) — flagged there as needing investigation into how KSP/RO/Kerbalism actually models radiation
-dose before building it. Not decided whether that tech-gate is meant to be *the* answer to this gap.
+**Near-Earth + Deep-Space → Guided merge gap — INVESTIGATED AND CLOSED (2026-07-08).** Original concern:
+Guided uses pure Near-Earth numbers, and Deep-Space's premium (heavier `massConstant`, pricier `costConstant`,
+`shieldingMassFactor=0.1` extra mass) doesn't exist anywhere in AXE — range enforcement legitimately moved to
+comms (RealAntennas), but it looked like the *hardware cost of surviving far from Earth* got dropped along
+with it. Traced all the way through and it didn't: `shieldingMassFactor` in RP-1 is read in exactly one place
+(`GetShieldingMass()`), feeds only the mass/cost display, and connects to no failure/reliability/radiation
+check anywhere — confirmed cosmetic. Kerbalism does ship a real radiation-accelerated hardware-failure
+mechanic (`Reliability` module, `rated_radiation`/`radiation_decay_rate`, applies to probes) but it's fully
+dormant — those fields are unset by every mod in this instance, not an avionics-specific gap. The bigger
+finding: RP-1's actual "deep space is dangerous" enforcement was never a survival simulation — it was the
+`interplanetary=True/False` field, a hard range-eligibility gate (Near-Earth literally can't operate past
+some distance; Deep-Space could operate anywhere). Shielding mass was flavor bolted onto the same config
+that flipped that flag. Since AXE already relocated range enforcement to comms as the *first* decision of
+the whole Guided-merge redesign, there was nothing functionally real left behind to port — RP-1 never had a
+working survival mechanic, just a range gate wearing a radiation costume. The `rp-axe-gate-ideas` memory's
+"RADIATION HARDENING (Microelectronics)" idea is updated to reflect this and redirect toward the one real
+difference found instead (see next entry). See `rp-axe-steerable-mass-design` memory for the full trace.
+
+**What replaces it: gate Deep-Space's real remaining premium — hibernation depth/availability — behind a
+paid tech+toggle (proposed 2026-07-08, not yet built).** RP-1 ground truth: Near-Earth avionics can't
+hibernate/toggle to reduced power AT ALL until `advancedAvionics` tech (its first 8 tiers have no
+`disabledPowerFactor` field), and even then only reaches `disabledPowerFactor=0.1`. Deep-Space gets a deeper
+`0.05` reduction, available from tier 0, no tech gate. AXE's current Hibernate already (unintentionally)
+gives every Guided core the DS-depth `hibernationFactor=0.05` for free, from any tier — the code comment
+literally says "RP-1 deep-space depth," it just was never gated behind anything. Proposed fix: without a
+paid deep-space tech+toggle, hibernation is either unavailable or only reaches the shallow `0.1` floor (and
+only once `advancedAvionics` is researched, matching NE's real gating); with it, unlock the deep `0.05`
+version from tier 0. Price TBD — leaning toward a smaller premium than RP-1's full DS `massConstant`/
+`costConstant`/cost-×1.5 numbers, since "better hibernation" alone is a narrower benefit than "fully hardened
+for deep space" was in RP-1. Open loose end: does hibernation depth stay uniform across all Guided cores
+regardless of hardening once this exists, or does an unhardened core get bumped down to the shallow `0.1`
+it should have had all along?
 
 **Decouple battery volume from box volume.** Today `ApplyVolumeReservation` sends *all* leftover volume
 (box volume − hardware volume) to RealFuels as tank capacity, unconditionally — a bigger box always means
