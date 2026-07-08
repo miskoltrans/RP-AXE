@@ -48,6 +48,12 @@ Each phase gates the next; avionics + contracts ride alongside, off the critical
 - **P3 — Economy rework.** Science = primary gate; part entryCost = R&D; launch cost = ops; no time
   pressure; **drop RP-1 reliability/run-data grind.** **Prove:** play session / solvency audit shows
   the gates bite as intended.
+  - **RP0\* science WIRING shipped early (2026-07-08):** RP-1's experiment configs are now live —
+    instrument suite vendored verbatim to `seed/Science/` (part-gated, no remap; `PartExperimentAdder`
+    clean-slate strips the dead DMagic modules), CrewScience authored to `design/Science/CrewScience/`
+    with all 17 RP-1 tech nodes remapped to AXE nodes, telemetry free from mission 1. 96/98 RP0\*
+    experiments (2 absent are RP-1-nonexistent phantoms); budget unchanged. **Remaining P3 science =**
+    the **KerbalismLab** lab framework (still blocked — SCIENCE.md §1/§4) + cost/gate calibration.
 - **P4 — Avionics** *(parallel)*. Rename to RP-1 terms; rebalance. **Prove:** flyable early control.
 - **P5 — Special parts** *(post-MVP)*. Probe subtree (hire-JPL / hire-OKB) + capsule capability-split
   + cross-branch prerequisite-tech checklist plugin. **Prove:** a probe gated by multi-branch prereqs.

@@ -67,6 +67,14 @@ Investigated via reference caches (`ro_expanded` = native/no-Kerbalism; `rp1_exp
   beyond RP-1's set carry **no** science until we author RP0* assignments (→ gap-fill list). (4) **SCANsat
   absent** → stock orbital/surface scanners are inert (no experiment); revisit if SCANsat is added.
 
+> **✅ STATUS 2026-07-08 — RP0\* science WIRING now SHIPPED.** The RP0\* backbone is no longer just a
+> budget model — RP-1's experiment configs are live: instrument suite vendored to `seed/Science/`
+> (part-gated via `AxePartPlacement.cfg`, so no tech remap; `PartExperimentAdder` clean-slate removes the
+> 5 dead DMagic-native modules), CrewScience authored to `design/Science/CrewScience/` with tech nodes
+> remapped to AXE, telemetry free from mission 1. 96/98 RP0\* experiments shipped (2 absent are
+> RP-1-nonexistent). Full detail in [`SCIENCE.md`](SCIENCE.md) status banner. **KerbalismLab (below) is
+> still the one deferred science piece.**
+
 ### KerbalismLabExperimentsExpandedContinued — KEPT (science value-add) ⚠️ needs base-dep fix
 **Status 2026-06-30:** AXE **builds with this** (66 crewed-station experiments = the science value-add). But
 as installed it's **missing its base framework** — nothing defines `KERBALISM_GROUP_SETTINGS`/`LAB_EXPERIMENTS`

@@ -17,6 +17,25 @@ Reproduce: `python tools/science_budget.py` (RP0\* crewed/uncrewed split) and `p
 (crew classification, via `tools/experiment_crew.py`),
 [`../manifest/lab-experiments.tsv`](../manifest/lab-experiments.tsv).
 
+> **⚠️ STATUS 2026-07-08 — the RP0\* science WIRING is now SHIPPED (was P3-deferred).** RP-1's actual
+> experiment configs are live in the mod, so this doc's budget is no longer only theoretical calibration —
+> the experiments now exist and produce science:
+> - **Instrument suite** — 16 experiment files + `GlobalExperimentPatches` + `CleanupParts/PartExperimentAdder`
+>   + `Results/` vendored verbatim into `GameData/RP-AXE/seed/Science/`. Instruments are **part-gated** (parts
+>   already placed via `design/Tree/AxePartPlacement.cfg`) so **no tech remap was needed** (0 `techRequired` in
+>   those files, verified). `PartExperimentAdder`'s clean-slate strips the 5 dead DMagic-native modules (DMagic
+>   is out of deps → those `experimentID`s never worked).
+> - **CrewScience** (capsule/cockpit/station/lunar-surface, 8 files) authored into
+>   `GameData/RP-AXE/design/Science/CrewScience/` with all 17 RP-1 tech-node references remapped to real AXE
+>   nodes (remap table + rationale in that folder's `_README.md`; every target verified in `AxeTechTree.cfg`).
+> - **Telemetry** (`RP0telemetry1`) is free from mission 1 — stapled onto every `ModuleCommand` part.
+> - Shipped **96 of the 98** budgeted RP0\* experiments; the 2 absent (`RP0ALFMED`, `RP0BistaticRadar`) have
+>   **no definition in RP-1 itself** (phantom budget rows). **0 unbudgeted extras** → the locked ~298k tree-cost
+>   calibration is unchanged.
+>
+> **Still deferred:** the **KerbalismLab** lab framework (§1, §4) — the crewed-lab value-add — remains
+> blocked/unintegrated. This status covers the RP0\* backbone only.
+
 ---
 
 ## 1. The KerbalismLab load blocker — diagnosed
