@@ -84,19 +84,27 @@ volume is currently split. Not required to use the full box — empty space is a
   fixed liters number (a fixed-liters floor is RP-1's actual mistake, `reservedRFTankVolume`, hardcoded to a
   negligible 1.5-3 L, the real mechanism behind RP-1#1295's zero-battery trap).
 
-## Under-capacity penalty
+## Under-capacity penalty — FORMULA LOCKED (2026-07-08)
 
-**Additive, not multiplicative**: `ec_draw = ec_draw_normal + ec_draw_penalty`. `ec_draw_penalty = 0` at or
-under capacity — **must be continuous at the boundary, no sudden jump right at the capacity threshold** —
-but ramp up **very steeply** once over: a plausible mission profile (e.g. a 10-minute burn) should become
-essentially impossible fairly quickly as overage increases, not a gentle slope. Exact formula still TBD/to
-iterate — the requirement is shape (continuous, steep), not a specific exponent yet. (Earlier session work
-had explored a multiplicative `×(liveMass/capacity)^p` form with `p≈0.5` — superseded by this additive
-framing; keep the earlier economic-dominance analysis in mind when picking the real formula, since `p=0` was
-proven to make capacity meaningless entirely.)
+`r = liveMass / effectiveCapacity` (effectiveCapacity = MAX across active cores, per the multi-core rule).
+`r ≤ 1` → zero penalty.
 
-**UI**: show the penalty portion distinctly, not just a combined total — likely as a percentage over normal
-draw, so a player can see at a glance how much of their current draw is "penalty" versus baseline.
+`ec_draw_penalty = ec_draw_normal × (e^(k×(r−1)) − 1)`, `k = 8`.
+
+`ec_draw = ec_draw_normal + ec_draw_penalty` (= `ec_draw_normal × e^(8×(r−1))` — additive framing preserved
+for the UI split below, mathematically the same curve). `ec_draw_normal` is the existing, unchanged
+`ComputeBaseWatts()` formula (live dry mass, tier `powerFactor`).
+
+Continuous at `r=1` (no jump), gentle at small overages, genuinely prohibitive past ~25-50% over — verified
+against a 20-ton/600-second reference burn: 10% over ≈ 3% of vessel mass in battery (tolerable), 25% over ≈
+12% (a real tax, discouraged but not physically absurd), 50% over ≈ 89% of the *original vessel's entire
+mass* just in battery (a hard practical wall — you will not reach orbit built this way), 100% over is beyond
+absurd. `k` is the one tuning dial if this needs adjusting after real play-testing — pushing it up hardens
+both thresholds simultaneously since it's one curve, not two independently-set breakpoints.
+
+**UI**: show the penalty portion distinctly, not just a combined total — as a percentage over normal draw
+(`(e^(8(r−1))−1) × 100%`), so a player can see at a glance how much of their current draw is "penalty" versus
+baseline.
 
 ---
 
@@ -130,10 +138,21 @@ no interaction with anything else in this doc. No RP-1 config presets it to true
 
 ## Open / not yet decided
 
+- **Shielded tier-ladder scope — the biggest remaining open item.** RP-1's real Deep-Space ladder isn't a
+  single toggle, it's a full parallel progression: 10 separate `techLevel`s (`0..9`), each mapped to one of
+  NE's own tier names (`basicAvionics` through `modernAvionics`), each with its own baked-in `massFactor`/
+  `costFactor` values. "Own upgrade ladder, not just a multiplier" (per spec above) means this needs the same
+  shape here — which raises a real scope question: does AXE need ~10 *separate* tech-node placements for
+  Shielded (mirroring each Guided-tier unlock one-for-one), or does Shielded unlock ONCE (a single tech gate)
+  and then ride whatever Guided tier is already active, just modified by the baked-in per-tier premium data?
+  The former matches RP-1 exactly but is substantially more tree-authoring work; the latter is simpler but
+  isn't really "its own ladder" anymore. Not decided.
 - Standard default battery/hardware proportion when the player hasn't set explicit values.
-- Exact under-capacity penalty formula (shape requirements set above, specific function TBD).
 - Whether the mass↔capacity curve gives sane numbers at realistic box sizes — formula has a hard
   minimum-size-for-any-capacity floor (~169 L at `postWarAvionics`) that's *bigger* than AXE's current
   default part dimensions (~98 L) — a fresh, unresized part would sit at zero capacity today. Needs either
   the default size bumped or confirmation this is intentional.
+- Player-facing naming for the second axis — used "Unshielded"/"Radiation-Shielded" throughout this doc since
+  that's the language used when it was proposed, but not explicitly confirmed as the final in-game term (vs.
+  e.g. "Shielded"/plain toggle label).
 - Auto-hibernate-on-warp — separately parked, doesn't block any of this.
