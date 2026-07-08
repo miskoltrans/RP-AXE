@@ -18,21 +18,25 @@ Already shipped, unaffected by this redesign. Guided = Near-Earth shape (vessel-
 Unguided = Science-Core shape (flat per-tier, axial-only from `improvedAvionics`). Range is not gated here —
 handled entirely by comms (RealAntennas).
 
-## Axis 2 — Unshielded / Radiation-Shielded (stands in for RP-1's Deep-Space), Guided-only
+## Axis 2 — Unshielded / Radiation-Shielded (naming CONFIRMED), stands in for RP-1's Deep-Space, Guided-only
 
 Tech-gated second choice, only available once appropriate tech is researched (mirrors RP-1: Deep-Space wasn't
 available from `start`, it unlocked around Near-Earth's `basicAvionics`-equivalent point). Unguided/
 Science-Core never had a Deep-Space equivalent in RP-1 either — this axis doesn't apply to it.
 
-**Mass/cost: own per-tier ladder, authored as real data — not a live multiplier.** RP-1's actual Deep-Space
-ladder (ground-truthed this session) is `massFactor` = Near-Earth's × 1.10, `costFactor` = × 1.50,
-`powerFactor` identical to NE, `powerConstant` 1.096 (vs NE's 1.035), at every one of DS's 10 tiers
-(`techLevel0..9`, mapping to NE's tier names `basicAvionics` through `modernAvionics` — DS skips NE's first
-three tiers, `start`/`avionicsPrototypes`/`earlyAvionics`, entirely). Plus the constants: `massConstant`
-0.96→1.043, `costConstant` 3.034→9.1. **TODO: compute these once and bake them into `AxeAvionicsCore.cfg` as
-literal `shMassFactor`/`shCostFactor`/etc. per-tier fields**, same pattern as the existing `scMassFactor`
-columns — not a runtime `×1.1`/`×1.5` multiplier applied to NE's live values. This is real authoring work,
-not a formula shortcut — flagged explicitly so it doesn't get skipped.
+**Mass/cost: own per-tier ladder, authored as real data — not a live multiplier. SCOPE CONFIRMED (2026-07-08):
+its own ladder, full stop** — matching RP-1's real shape means ~10 *separate* tech-node placements in AXE's
+tree (mirroring each Guided-tier unlock one-for-one, not a single gate riding whatever Guided tier happens to
+be active). RP-1's actual Deep-Space ladder (ground-truthed this session) is `massFactor` = Near-Earth's ×
+1.10, `costFactor` = × 1.50, `powerFactor` identical to NE, `powerConstant` 1.096 (vs NE's 1.035), at every
+one of DS's 10 tiers (`techLevel0..9`, mapping to NE's tier names `basicAvionics` through `modernAvionics` —
+DS skips NE's first three tiers, `start`/`avionicsPrototypes`/`earlyAvionics`, entirely). Plus the constants:
+`massConstant` 0.96→1.043, `costConstant` 3.034→9.1. **TODO: compute these once and bake them into
+`AxeAvionicsCore.cfg` as literal `shMassFactor`/`shCostFactor`/etc. per-tier fields**, same pattern as the
+existing `scMassFactor` columns — not a runtime `×1.1`/`×1.5` multiplier applied to NE's live values. **TODO:
+place ~10 tech-node gates in AXE's own tree**, one per Shielded tier, tracking wherever the corresponding
+Guided-equivalent tiers unlock. This is real, substantial authoring work — flagged explicitly so it doesn't
+get skipped or accidentally shortcut back into a multiplier during implementation.
 
 **Hibernation/idle: matches RP-1 exactly, replaces AXE's current ungated behavior.** Unshielded: no hibernate
 at all until `advancedAvionics` tech (RP-1's NE has no `disabledPowerFactor` field on its first 8 tiers),
@@ -78,11 +82,19 @@ volume is currently split. Not required to use the full box — empty space is a
 - On a shape resize (box gets bigger or smaller), re-fit using the remembered values: **battery gets
   priority — fit it first**, then hardware gets whatever room is left. (This resolves the earlier open
   "proportional shrink vs. priority order" question — priority order, battery first.)
-- If the player **hasn't** explicitly set anything, use a standard default proportion on resize (exact ratio
-  TBD).
+- If the player **hasn't** explicitly set anything, use a standard default proportion on resize —
+  **CONFIRMED (2026-07-08): 25% battery / 75% hardware / 0% empty space.** Most of a default, untouched box
+  goes to hardware; battery is the smaller share until the player deliberately asks for more.
 - Floors still needed on both ends, especially endurance — sized to guarantee a minimum *runtime*, not a
   fixed liters number (a fixed-liters floor is RP-1's actual mistake, `reservedRFTankVolume`, hardcoded to a
   negligible 1.5-3 L, the real mechanism behind RP-1#1295's zero-battery trap).
+
+**Default part dimensions — CONFIRMED (2026-07-08): match RP-1's own default, not AXE's current override.**
+RP-1's real default procedural-avionics shape is a 1.25 m diameter × 0.2 m length cylinder ≈ 245 L — safely
+above the ~169 L minimum-for-any-positive-capacity floor at `postWarAvionics`, so a freshly-placed, unresized
+core is functional out of the box (resolves the earlier concern about AXE's current 0.5×0.5m default, ~98 L,
+sitting below that floor). AXE's `AxeAvionicsCore.cfg` currently overrides `ProceduralShapeCylinder` to
+0.5m/0.5m — **needs reverting to RP-1's 1.25m/0.2m default** as part of this build.
 
 ## Under-capacity penalty — FORMULA LOCKED (2026-07-08)
 
@@ -138,21 +150,8 @@ no interaction with anything else in this doc. No RP-1 config presets it to true
 
 ## Open / not yet decided
 
-- **Shielded tier-ladder scope — the biggest remaining open item.** RP-1's real Deep-Space ladder isn't a
-  single toggle, it's a full parallel progression: 10 separate `techLevel`s (`0..9`), each mapped to one of
-  NE's own tier names (`basicAvionics` through `modernAvionics`), each with its own baked-in `massFactor`/
-  `costFactor` values. "Own upgrade ladder, not just a multiplier" (per spec above) means this needs the same
-  shape here — which raises a real scope question: does AXE need ~10 *separate* tech-node placements for
-  Shielded (mirroring each Guided-tier unlock one-for-one), or does Shielded unlock ONCE (a single tech gate)
-  and then ride whatever Guided tier is already active, just modified by the baked-in per-tier premium data?
-  The former matches RP-1 exactly but is substantially more tree-authoring work; the latter is simpler but
-  isn't really "its own ladder" anymore. Not decided.
-- Standard default battery/hardware proportion when the player hasn't set explicit values.
-- Whether the mass↔capacity curve gives sane numbers at realistic box sizes — formula has a hard
-  minimum-size-for-any-capacity floor (~169 L at `postWarAvionics`) that's *bigger* than AXE's current
-  default part dimensions (~98 L) — a fresh, unresized part would sit at zero capacity today. Needs either
-  the default size bumped or confirmation this is intentional.
-- Player-facing naming for the second axis — used "Unshielded"/"Radiation-Shielded" throughout this doc since
-  that's the language used when it was proposed, but not explicitly confirmed as the final in-game term (vs.
-  e.g. "Shielded"/plain toggle label).
+- Radiation reliability's exact numbers (`rated_radiation`/`radiation_decay_rate` per shielded/unshielded) —
+  starting values proposed above, explicitly "still being worked out," not locked like the penalty formula.
 - Auto-hibernate-on-warp — separately parked, doesn't block any of this.
+- Whether stock/third-party bare probe-core parts (non-procedural, e.g. `ROT-ProbeCore`) need any changes —
+  under investigation, see project memory once resolved.
