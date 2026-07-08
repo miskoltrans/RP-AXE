@@ -44,6 +44,16 @@ then only reaches `0.1`. Shielded: deep `0.05`, available from tier 0, no gate. 
 gives every Guided core the deep `0.05` unconditionally regardless of shielding — that was an accidental
 side effect of porting the number without the gate, and gets axed in favor of the real RP-1 split.
 
+**Auto-hibernate on warp — CONFIRMED, port RP-1's mechanism directly, not a separate open question.** RP-1's
+base `ModuleAvionics.cs` hooks `GameEvents.onVesselGoOnRails`/`onVesselGoOffRails`, calling
+`UpdateRate(onRails: true)`: while a vessel is on rails (unloaded/timewarping), draw automatically drops to
+the reduced/idle rate — independent of the player's manual Hibernate toggle state — and reverts to whatever
+the vessel's actual current state is the moment it goes back off rails (loads/becomes active). AXE currently
+has zero `onRails`/`offRails` hooks anywhere in `ModuleAxeAvionics.cs`, and also disables stock KSP's own
+probe-hibernation fallback (`%hasHibernation = False`), so today draw just freezes at its last live value and
+keeps applying for the whole warp unless the player manually hits Hibernate first. Port RP-1's hook pattern
+directly: same events, same "auto-drop during warp regardless of manual state, auto-restore on load" behavior.
+
 **Radiation reliability — the actual differentiator we're trying to make Unshielded genuinely worse at,
 still being worked out.** Confirmed real and buildable via Kerbalism (not cosmetic — RP-1's own
 `shieldingMassFactor` was checked and confirmed to connect to nothing; this is a different, verified-real
@@ -151,7 +161,7 @@ no interaction with anything else in this doc. No RP-1 config presets it to true
 ## Open / not yet decided
 
 - Radiation reliability's exact numbers (`rated_radiation`/`radiation_decay_rate` per shielded/unshielded) —
-  starting values proposed above, explicitly "still being worked out," not locked like the penalty formula.
-- Auto-hibernate-on-warp — separately parked, doesn't block any of this.
+  starting values proposed above were a rough estimate; deeper investigation dispatched 2026-07-08 to
+  properly calibrate against the fuller range of body radiation data and realistic mission durations.
 - Whether stock/third-party bare probe-core parts (non-procedural, e.g. `ROT-ProbeCore`) need any changes —
   under investigation, see project memory once resolved.
