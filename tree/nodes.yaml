@@ -83,21 +83,20 @@ nodes:
     # whole. Deliberately NOT in curated-parts.tsv (on trial); if kept, formalize via build_manifest ADD and
     # split into real nodes. Detached root like experimental/parking/hire_JPL: unlockable, gates nothing.
   - id: coatl_scienceSandbox
-    title: "Coatl Science Instruments (Sandbox)"
+    title: "Gamma-Ray Spectrometer (Sandbox)"
     discipline: SystemsIntegration
     tier: 1
     parents: []
-    flavor: "Dropped Coatl instruments that carry science the main tree doesn't — an infrared spectrometer and a gamma-ray spectrometer where none exist, plus dust, solar-wind, ionization and surface-exposure experiments. A detached sandbox: unlock it and fly them to confirm each returns data before any earns a real home."
-    parts: [ca_KLIR, ca_GRS, ca_DUSTX, ca_SWIS, ca_ELIX, ca_landv_soilScoop]
-    # SANDBOX (2026-07): 6 dropped CoatlAerospace instruments, one clean single-purpose part per DISTINCT
-    # experiment absent from the tree. Clear gaps: ca_KLIR (ca_IRspec "Infrared Spectrometry" - the node
-    # opt_thermalMappingSpectrometry holds only a radiometer), ca_GRS (ca_gammaRay "Gamma Ray Spectrometry"
-    # - kept ca_radsci is dosimetry, not spectroscopy). Borderline (distinct ID, shadows a kept experiment):
-    # ca_DUSTX (ca_kdex vs kept ca_micrometeoroid), ca_SWIS (ca_solarWind vs ProbePlasma), ca_ELIX (ca_ionElec
-    # vs ProbePlasma), ca_landv_soilScoop (ca_soilScoop vs surfaceSample). Confirmed-redundant Coatl science
-    # (rpws/orbitalScope/filmCamera) and multi-experiment platforms deliberately EXCLUDED. Off-start, NOT in
-    # curated-parts.tsv (on trial); if kept, home ca_KLIR at opt_thermalMappingSpectrometry + pick homes for
-    # the rest, then formalize via build_manifest ADD. Residual risk = does Kerbalism return their data in flight.
+    flavor: "A gamma-ray spectrometer reads a body's surface elemental makeup from orbit — the one planetary measurement the tree carries no instrument for. A detached sandbox: unlock and fly it to confirm it returns science, and to weigh whether surface-composition mapping should join the tree as a new experiment category."
+    parts: [ca_GRS]
+    # SANDBOX (2026-07, TRIMMED from 6): the other 5 Coatl instruments proved redundant, not novel — RP-1
+    # already covers IR spectrometry (RO-VIMS at opt_thermalMappingSpectrometry), plasma/solar-wind/ionization
+    # (ProbePlasma on every probe bus), dust (ca_micrometeoroid) and surface sampling (surfaceSample) with its
+    # preferred RO-configured instruments, so it cut Coatl's duplicates. ca_GRS (ca_gammaRay "Gamma Ray
+    # Spectrometry") is the sole exception: no kept gamma-ray/elemental instrument exists (the one X-ray part is
+    # deprecated). This is NOT a gap RP-1 missed — RP-1 has no surface-composition science CATEGORY at all. Kept
+    # on trial to decide whether to ADD that category (a deferred science-budget/balance-pass call). Off-start,
+    # not in curated-parts.tsv.
   - id: hire_JPL
     title: "Charter a Deep-Space Probe Lab (JPL)"
     discipline: SystemsIntegration
