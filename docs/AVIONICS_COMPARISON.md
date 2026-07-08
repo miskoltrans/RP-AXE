@@ -277,6 +277,19 @@ is stripped.
 
 ## Planned — not yet built
 
+**Near-Earth + Deep-Space → Guided is not a clean/complete merge — open balance question.** Guided uses pure
+Near-Earth numbers (`massConstant=0.96`, `costConstant=3.034`, no shielding term). Deep-Space's entire premium
+— heavier `massConstant=1.043`, much pricier `costConstant=9.1`, plus `shieldingMassFactor=0.1` (extra mass =
+`avionicsMass^(2/3) × 0.1`, radiation/thermal survival) — doesn't exist anywhere in AXE; it wasn't relocated,
+it was dropped. Range enforcement legitimately moved to comms (RealAntennas), but the *hardware cost of
+surviving far from Earth* didn't move anywhere with it. Open question (user, 2026-07-08): does RealAntennas'
+own distance-cost curve already substitute for this, or does something need to carry the radiation/shielding
+half specifically? There's a standing, separately-parked idea that's aimed at exactly this same physical
+concept — see `rp-axe-gate-ideas` memory, "RADIATION HARDENING (Microelectronics)": gate deep-space
+electronics behind a rad-hardening tech node (LEO avionics survive; past the belts they fry until
+researched) — flagged there as needing investigation into how KSP/RO/Kerbalism actually models radiation
+dose before building it. Not decided whether that tech-gate is meant to be *the* answer to this gap.
+
 **Decouple battery volume from box volume.** Today `ApplyVolumeReservation` sends *all* leftover volume
 (box volume − hardware volume) to RealFuels as tank capacity, unconditionally — a bigger box always means
 proportionally more EC, with no way to build a bigger box without also getting more battery than you want
