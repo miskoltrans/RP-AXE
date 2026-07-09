@@ -41,9 +41,10 @@ overridden, so it must match — that is the reason these values are kept in syn
 If the tree's HDD-Upgrade placement changes (re-run `build_tree.py`), re-sync these `techRequired`/
 `techRequired__` values to the new `AxePartPlacement.cfg` mapping.
 
-### ⚠️ Why in `design/` + sync-seed caveat
+### Why in `design/` (and how sync-seed stays safe)
 Authored here (not `seed/`) because the tech gates sit inside `@PART`/`UPGRADE` blocks a design overlay
-can't rewrite. Both `HardDriveConfigs.cfg` (Science/) and `HardDriveUpgrades.cfg` (Tree/) are vendored by
-`sync-seed.ps1`'s folder list, so a blind re-run would re-introduce RP-1's versions and **double-add a
-`HardDrive` to every command part**. See `CrewScience/_README.md` and the `rp-axe-science-wiring-port`
-memory — drop `Science` (and don't re-vendor `Tree/HardDriveUpgrades.cfg`) before running sync-seed.
+can't rewrite — so these are AXE-node copies, and RP-1's originals must not also ship in `seed/` (they'd
+**double-add a `HardDrive` to every command part**). `sync-seed.ps1` handles this: after the wholesale
+`Science/`+`Tree/` vendor it **strips** `HardDriveConfigs.cfg`(+`.disabled`) and `Tree/HardDriveUpgrades.cfg`
+(plus `Experiments/CrewScience`) via its `$designOwned` list. Add any new design-owned science file to that
+list too. See `CrewScience/_README.md` and the `rp-axe-science-wiring-port` memory.

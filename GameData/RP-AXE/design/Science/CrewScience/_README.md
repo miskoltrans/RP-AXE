@@ -39,11 +39,11 @@ and several RP-1 nodes are `//Placeholder`). Every target was verified to exist 
 `design/Tree/AxeTechTree.cfg` before use. `CockpitExperiments.cfg`'s four supersonic experiments
 carry no tech gate in RP-1 and were left as-is.
 
-## ⚠️ sync-seed caveat
+## sync-seed handling (resolved)
 
-`tools/sync-seed.ps1` vendors RP-1's whole `Science/` folder into `seed/Science/`. Because RP-AXE
-now ships a **curated** science subset (see the Phase-2 commit) and this **remapped** CrewScience
-copy, a blind `sync-seed.ps1` run would (a) clobber the curated `seed/Science` and (b) re-introduce
-RP-1's CrewScience under `seed/Science/Experiments/CrewScience/` with RP-1 node names — producing
-**duplicate `EXPERIMENT_DEFINITION` ids** against this folder. Before re-running sync-seed, drop
-`Science` from its `$folders` list (or re-apply the curation + delete the re-vendored CrewScience).
+`seed/Science` is a wholesale verbatim vendor of RP-1's `Science/` folder EXCEPT this remapped
+CrewScience (and the HardDrive files). `tools/sync-seed.ps1` now handles that automatically: after
+copying `Science/`+`Tree/`, it **strips** the design-owned paths (`Experiments/CrewScience`,
+`HardDriveConfigs.cfg`, `Tree/HardDriveUpgrades.cfg`) so a re-run can't re-introduce RP-1's originals
+and duplicate these `EXPERIMENT_DEFINITION` ids. If you add another design-owned science file, add its
+path to sync-seed's `$designOwned` strip-list too.
