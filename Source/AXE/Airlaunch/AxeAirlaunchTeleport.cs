@@ -35,10 +35,14 @@ namespace RPAxe.Airlaunch
             // Counter the momentary fall while the vessel is on rails (from the original).
             teleportVelocity += up * (body.gravParameter / teleportPosition.sqrMagnitude / 2);
 
+            // Orbit state goes in Zup (orbital) space = the .xzy swizzle of Unity space.
             Vector3d posZup = teleportPosition.xzy;
             Vector3d velZup = teleportVelocity.xzy;
 
-            Vector3d to = teleportPosition.xzy.normalized;
+            // Rotation is applied in Unity space, so LookRotation takes the original (unswizzled) up.
+            // (RP-1's original double-swizzles here because it reassigns teleportPosition to .xzy first;
+            //  we keep teleportPosition unswizzled, so a single .normalized is the equivalent.)
+            Vector3d to = teleportPosition.normalized;
             Quaternion rotation = Quaternion.LookRotation(-to);
             rotation *= Quaternion.AngleAxis((float)headingDeg, Vector3.back);
 
