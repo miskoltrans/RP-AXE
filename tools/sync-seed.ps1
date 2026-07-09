@@ -7,7 +7,8 @@
     (overwriting), then stamps the RP-1 version + timestamp into seed/_README.md.
 
     Vendored set:
-      - Folders (recursive, verbatim incl. binary part assets): Tree, Contracts, Science, Parts
+      - Folders (recursive, verbatim incl. binary part assets): Contracts, Science, Parts
+        (NOT Tree -- RP-AXE builds its own tech tree from tree/nodes.yaml -> design/Tree/)
       - Loose root .cfg read by KEPT mods/stock: Deprecation, ResourceCosts, ProcCosts, PartHacks,
         RealFuelsSettings
 
@@ -38,7 +39,8 @@ if (-not (Test-Path $rp1Data)) { throw "RP-1 GameData not found: $rp1Data" }
 # --- what we vendor -------------------------------------------------------------
 
 # (a) whole folders, recursive (verbatim, incl. binary part assets under Parts/**)
-$folders = @('Tree', 'Contracts', 'Science', 'Parts')
+#     NOT 'Tree': RP-AXE builds its own tech tree from scratch (tree/nodes.yaml -> design/Tree/).
+$folders = @('Contracts', 'Science', 'Parts')
 
 # (b) loose root-level .cfg files, copied individually into seed/ root (MM applies regardless of path).
 #     Only files read by KEPT mods / stock that shape parts/tree/economy.
@@ -55,6 +57,7 @@ $rootFiles = @(
 # (c) explicit, REASONED exclusions. Anything in RP-1/GameData/RP-1 that is NOT in (a)/(b)/(c) trips
 #     the leftovers audit below -- that is the anti-silent-drop guard for future RP-1 bumps.
 $excludeReason = [ordered]@{
+    'Tree'                       = 'RP-AXE builds its own tech tree from tree/nodes.yaml -> design/Tree/ (build_tree.py); RP-1 RP0TechTree.cfg would conflict, HardDriveUpgrades.cfg lives in design/Science/'
     'Plugins'                    = 'axed RP0.dll / CC_RP0.dll'
     'PluginData'                 = 'RP0.dll data'
     'Resources'                  = 'RP0.dll UI images'
@@ -112,7 +115,8 @@ $designOwned = @(
     'Science\Experiments\CrewScience'    # -> design\Science\CrewScience\ (nodes remapped)
     'Science\HardDriveConfigs.cfg'       # -> design\Science\HardDriveConfigs.cfg (nodes remapped)
     'Science\HardDriveConfigs.disabled'  #    (inert; design\ owns the HardDrive system)
-    'Tree\HardDriveUpgrades.cfg'         # -> design\Science\HardDriveUpgrades.cfg (nodes remapped)
+    # (Tree\HardDriveUpgrades.cfg needs no strip -- Tree\ is no longer vendored; its
+    #  remapped version lives in design\Science\HardDriveUpgrades.cfg)
 )
 foreach ($rel in $designOwned) {
     $p = Join-Path $seedRoot $rel
