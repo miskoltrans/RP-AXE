@@ -99,6 +99,26 @@ foreach ($f in $folders) {
     Write-Host "Vendored $f\ -> seed\$f\"
 }
 
+# --- strip design-owned science from the wholesale vendor ------------------------
+# We vendor RP-1's whole Science\ folder as-is, EXCEPT the tech-remapped subset that
+# GameData\RP-AXE\design\Science\ owns. Those gate on AXE tree nodes via patch
+# directives ModuleManager can't overlay (@PART[*]:HAS[#TechRequired[...]],
+# MODULE UPGRADE{techRequired__}), so their AXE-node versions had to be authored
+# copies in design\. If RP-1's originals also shipped in seed\ they'd DUPLICATE:
+# duplicate EXPERIMENT_DEFINITION ids (CrewScience) and a second HardDrive module on
+# every command part (HardDriveConfigs). Strip them after the copy. See
+# GameData\RP-AXE\design\Science\_README.md + CrewScience\_README.md.
+$designOwned = @(
+    'Science\Experiments\CrewScience'    # -> design\Science\CrewScience\ (nodes remapped)
+    'Science\HardDriveConfigs.cfg'       # -> design\Science\HardDriveConfigs.cfg (nodes remapped)
+    'Science\HardDriveConfigs.disabled'  #    (inert; design\ owns the HardDrive system)
+    'Tree\HardDriveUpgrades.cfg'         # -> design\Science\HardDriveUpgrades.cfg (nodes remapped)
+)
+foreach ($rel in $designOwned) {
+    $p = Join-Path $seedRoot $rel
+    if (Test-Path $p) { Remove-Item $p -Recurse -Force; Write-Host "  Stripped design-owned $rel (lives in design\Science\)" -ForegroundColor Yellow }
+}
+
 # --- vendor loose root .cfg files (self-cleaning: drop stale seed root *.cfg first) ---
 Get-ChildItem -Path $seedRoot -Filter '*.cfg' -File -ErrorAction SilentlyContinue | Remove-Item -Force
 foreach ($f in $rootFiles) {
