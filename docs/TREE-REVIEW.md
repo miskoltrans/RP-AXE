@@ -1,15 +1,32 @@
 # RP-AXE Tech-Tree Review Rubric
 
-Spec for reviewing `tree/nodes.yaml` (the SSOT). Hand this + `docs/HANDOVER.md` (the 11
-design rules + lane map) + the data files to each review agent. Distilled from the band-1
-build/review pass (2026-07-03, 88 nodes).
+Spec for reviewing `tree/nodes.yaml` (the SSOT). Hand this (it now carries the 11 design rules
+inline, below) + the live tree (`tree/nodes.yaml` / the HTML render as the current lane map) +
+the data files to each review agent. Distilled from the band-1/2/3 build + review passes.
 
 ## Inputs every reviewer needs
 - `tree/nodes.yaml` — SSOT. Node = `{id, title, discipline, tier, parents, flavor, parts|upgrades|grants, anyToUnlock?}`.
 - `manifest/curated-parts.tsv` — the REAL part titles (`mod⇥name⇥title`). **Read this. Never infer a part's function from its id.**
 - `tools/build_tree.py` — the constraints it enforces (below). Run it; it must print `design checks: clean`.
-- `docs/HANDOVER.md` — the 11 design rules + the current lane map.
+- **The 11 design rules** (inlined below) — the hard-won placement doctrine.
+- `tree/nodes.yaml` + the HTML render (`tree/render/`) — the current lane map.
 - The **INTENTIONAL list** below — do NOT flag these as bugs.
+
+## The 11 design rules (FOLLOW THESE — hard-won)
+_The tree's placement doctrine (folded in from the retired band-1 handover, 2026-07-03). These
+are what a reviewer checks placements against._
+0. **GROUND-TRUTH FIRST — the id lies, the title tells the truth.** Read the real part title/config in `manifest/curated-parts.tsv` before you place or judge a part; never infer function from the id. (Caught `science_module` = "PH01 Early Film Camera" mis-homed in atmo-sounding.)
+1. **TIER = tech generation** (not thrust or RP-1 calendar). `start` → T1 only; multi-tier jumps flagged.
+2. **One start-child per discipline** (PropChem excepted). **T1 = the first improvement *beyond* the `start` baseline**, never the baseline itself (start already embodies basic engines/propellant/injector/nozzle — so a "nitration chemistry" foundation node would be backwards).
+3. **Scatter-by-difficulty:** a part homes at its *bottleneck* breakthrough, not its fuel/role.
+4. **Upgrades home on a SEPARATE enabler node** (thrust→alloy, Isp→injector), never the base part's node; the enabler can be a different discipline and a lower tier; gated `(enabler AND base)`.
+5. **Naming = the breakthrough a landmark PAPER would be titled** — mechanism/effect, never artifact ("cockpit") or capability ("orbital-class thrust"). No "X & Y" compound names (unless the field is really named that: GN&C).
+6. **Lineage** (every parent→child edge) must read as real **"X led to Y" OR "same family."** TEST: say the edge aloud as that sentence — if it's false, fix or re-home (caught piston→rocketplane, peroxide-Stentor→LOX-XLR25, monocoque→1950s-cockpit). **But distinguish lineage from GATING:** a semantically-weak edge can be an intentional economic tax (bury stock/catalog parts deep) — label which lever you pull.
+7. **Procedural is the DEFAULT;** fixed-catalog variants → opt-in DEAD-END nodes (nothing depends on them).
+8. **≤6 parts/node, one clear king;** utility catch-alls (structural/MLP/ground-support) exempt; **science ≠ utility** (finest curation).
+9. **`anyToUnlock` for fun** (a milestone reachable via multiple routes). **Crossovers** (a breakthrough needing two lanes — turbopump = feed×combustion, Nimonic = rockets+jets) are now the EXCEPTION, used sparingly: a plain physical prerequisite is just a dependency, not a celebrated crossover. (This reverses the band-1 "want MORE crossovers" stance — over-use made the tree cluttered.)
+10. **No do-nothing convergence gates** — the vehicle is what you BUILD. Exception: deliberate *commitment* gates that cost program time (cryo_hydrogen).
+11. **Propose before big placements; names always veto-able; commit granularly.** The user writes C# too — small purposeful `AXE.dll` modules are fine.
 
 ## Method (how to review, not just what)
 1. **Open the real part data.** For every part in a node, read its title. A part whose title names a function the node isn't about is misplaced. *(caught: `science_module` = "PH01 Early Film Camera" sitting in atmo-sounding.)*

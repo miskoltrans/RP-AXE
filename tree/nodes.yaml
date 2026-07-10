@@ -51,7 +51,7 @@ nodes:
     flavor: "Everything unplaced or purely cosmetic — a dev holding pen, off the main tree."
     # Emptied 2026-07: the 3 YF-21/CZ-2 boattail shells -> fd_longMarchBoattail (dead-end off their
     # clustered-first-stage king), ROE-Agena_EquipmentRack -> gnc_rcs (RCS mechanism), RP0HumanRatedFlag ->
-    # int_mercuryCapsule (its intended home per docs/HUMAN-ORBITAL-TREE.md). Kept as an empty holding pen.
+    # int_mercuryCapsule (its intended home per human-orbital design). Kept as an empty holding pen.
     parts: []
   - id: experimental
     title: "Experimental Hardware"
@@ -348,7 +348,7 @@ nodes:
     tier: 3
     parents: [pc_doubleBaseBooster]
     flavor: "Ammonium-perchlorate oxidiser bound in a rubbery polysulfide matrix, cast to shape around an integral nozzle — higher energy than double-base and castable to any size. The Baby Sergeant cluster that spun Explorer 1 to orbit."
-    # HUB ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #5): 6 real dependents after band 3
+    # HUB ACCEPTED (2026-07, band-3 review #5): 6 real dependents after band 3
     # (pc_scoutSolids, pc_strapOnSolids, pc_retroKick, pc_pioneerVernierTrim, pc_allSolidStaging,
     # pc_segmentedCasting) — over the >3 flag threshold, but the same foundational-chemistry-root shape
     # as the already-accepted elec_transistor/aero_subsonicWing hubs. Each dependent is a genuinely
@@ -465,7 +465,7 @@ nodes:
     tier: 3
     parents: [met_isogrid]
     flavor: "Seal the electronics in a pressurised sphere with a circulating gas and a polished radiating skin, holding them at room temperature through the swing from sunlight to shadow. Sputnik was mostly this: a bus that keeps its instruments alive."
-    # HUB ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #6): 4 dependents (tel_appSatellites,
+    # HUB ACCEPTED (2026-07, band-3 review #6): 4 dependents (tel_appSatellites,
     # cmp_ablativeTPS, opt_twoChannelIR, th_activeLouvers) — matches the already-accepted
     # str_structuralHardware precedent exactly (4). Each is a clearly distinct downstream need. Accepted.
     parts: [SXTSputnik, probeCoreSphere_v2, ROT-ProbeCore]
@@ -664,7 +664,7 @@ nodes:
     tier: 4
     parents: [av_axialJet, aero_supersonicWing]
     flavor: "Pivot the compressor's stator vanes to keep the airflow attached across a huge speed range — the engine that holds Mach 2 without stalling its own compressor. The Starfighter's powerplant."
-    # HUB ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #6): 4 dependents after band 3
+    # HUB ACCEPTED (2026-07, band-3 review #6): 4 dependents after band 3
     # (av_afterburner-family successors + av_mach2Turbojet, av_highBypassTurbofan). The real
     # tech-transfer story holds — variable-stator compressor control genuinely underlies both Mach-2
     # fighter engines and large turbofans' stall margin. Accepted.
@@ -972,7 +972,7 @@ nodes:
     tier: 5
     parents: [opt_vidicon]
     flavor: "Scan the planet in wavelengths the eye cannot see: an infrared radiometer maps cloud-top temperature, an ultraviolet spectrometer reads the high atmosphere. The first weather and earth-resource sensing from orbit."
-    # HUB ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #6): grew to 6 real dependents across
+    # HUB ACCEPTED (2026-07, band-3 review #6): grew to 6 real dependents across
     # bands 2-3 (opt_irRadiometry, opt_twoChannelIR, opt_uvSpectrometry, opt_orbitalMapping,
     # opt_infraredInterferometry, opt_multiSpectralImaging) with no accept ever recorded — the one hub in
     # this review that most deserved a documented decision rather than silent growth. Each dependent is a
@@ -1097,7 +1097,7 @@ nodes:
 
   # ================================================================================================
   # ===================== BAND 2 * ENGINE SPINE (T4 -> T6) =========================================
-  # The 1958-61 propulsion cohort (see docs/BAND2-TREE.md). Two transitions drive it: storable
+  # The 1958-61 propulsion cohort (see band-2 design). Two transitions drive it: storable
   # hypergolics (UDMH + NTO) scaled to booster size, and kerolox uprating toward Saturn-I. ENABLER
   # nodes hold the ~50 uprate configs (upgrades ARE parts - home them, never defer); HARDWARE nodes
   # hold the base chambers, gated by lineage + their enabler. Homed by PROPELLANT, not the disc tag.
@@ -1108,9 +1108,9 @@ nodes:
     tier: 4
     parents: [pc_hypergolics]
     flavor: "Swap the fuming-nitric oxidiser for dinitrogen tetroxide — denser, hotter-burning, storable in the same tank — paired with unsymmetrical dimethylhydrazine that ignites the instant the two meet. The combination that scales the storable rocket from a spacecraft thruster up to a full orbital booster; every hypergolic launcher for decades runs on it."
-    # HUB RE-ACCEPTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #4): grown to 7 real dependents
+    # HUB RE-ACCEPTED (2026-07, band-3 review #4): grown to 7 real dependents
     # (pc_fluorine, fd_longMarchStorable, fd_sovietStorable, fd_titanStorableConversion,
-    # fd_pressureFedRestart, pc_storableVernierFamily, pc_storableRcsPropellants) — docs/BAND3-TREE.md's
+    # fd_pressureFedRestart, pc_storableVernierFamily, pc_storableRcsPropellants) — band-3 design's
     # last recorded count was 5, "recommend accepting as flavor... your call to override." Every
     # dependent is still a genuinely distinct vehicle/chemistry lineage drawing on the same foundational
     # breakthrough; re-confirmed and accepted at the current count rather than left stale.
@@ -1380,7 +1380,7 @@ nodes:
     parents: [life_openLoopECLSS, bio_cultures]
     flavor: "A modular science bay built into the cabin wall, serviced by hand instead of run by a timer — the same slot-in experiment rig whichever crewed vehicle happens to carry it, so long as someone is aboard to work it."
     parts: [USMatBayWedge]
-    # NEW (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #1): pulled USMatBayWedge out of int_geminiCapsule,
+    # NEW (2026-07, band-3 review #1): pulled USMatBayWedge out of int_geminiCapsule,
     # where it was bundled by MISSION (Gemini) instead of by mechanism — a generic crewed science locker,
     # not OAMS propulsion. Every other UniversalStorage2 wedge already homes at its own science-mechanism
     # node (USThermoBaroWedge->mic_atmoSounding, USGooBayWedge->bio_cultures, USAccelGravWedge->
@@ -1421,7 +1421,7 @@ nodes:
     flavor: "A blunt cone that rides its own shockwave down, the heatshield taking the fire while the crewman lies on his back against the deceleration. Mercury: one seat, a retrofire to leave orbit, a splashdown under a single canopy. The first American in orbit."
     parts: [ROC-MercuryCMBDB, ROC-MercuryAirbrakeBDB, RP0HumanRatedFlag]
     # RP0HumanRatedFlag added (2026-07, parking cleanup): the cosmetic human-rating flag decal, listed as a
-    # ride-along of this exact capsule king (ROC-MercuryCMBDB) in the original design (docs/HUMAN-ORBITAL-TREE.md)
+    # ride-along of this exact capsule king (ROC-MercuryCMBDB) in the original design (human-orbital design)
     # and just missed during authoring. Belongs with the first crewed capsule — it only means anything once
     # you are flying people.
   - id: int_vostokCapsule
@@ -1488,7 +1488,7 @@ nodes:
 
   # ================================================================================================
   # ===================== BAND 3 * ENGINE SPINE CONTINUATION (T7 -> T8) ===========================
-  # interplanetary-lunar-probes-partlist.tsv only. Proposal in docs/BAND3-TREE.md — full ground-truth,
+  # interplanetary-lunar-probes-partlist.tsv only. Proposal in band-3 design — full ground-truth,
   # naming/balance/story-pass notes and open loose ends live there. This is the authored result for review.
   # ================================================================================================
   - id: fd_clusteredThrustGrowth
@@ -1592,7 +1592,7 @@ nodes:
     # 2-seat), just a non-historical generic skin rather than the BDB-branded parts. Rides along here rather
     # than getting its own node; 7 parts, one over the usual cap, justified as the same king twice
     # (historical + generic), not a second breakthrough.
-    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #1): title had drifted back to the real
+    # REVIEW FIX (2026-07, band-3 review #1): title had drifted back to the real
     # part's own name (Gemini's actual OAMS = "Orbit Attitude and Maneuvering System") — an artifact name,
     # not the mechanism, and it reversed this node's own already-recorded rename decision. Restored.
     # `USMatBayWedge` ("Crewed Experiment Bay") also pulled back out — a science locker has no relation to
@@ -1731,7 +1731,7 @@ nodes:
     # normal-tree parts. hire_JPL dropped as parent too: per standing rule, the charter subtree (hire_JPL/
     # hire_OKB) never cross-depends on the normal tree, and nothing charter-routed remains in this node to
     # justify the edge.
-    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #high): SXTAlouetteI and sp_mariner_b were
+    # REVIEW FIX (2026-07, band-3 review #high): SXTAlouetteI and sp_mariner_b were
     # both added here as ride-alongs but ground-truth (era-bucket x-position) puts them one to two tech
     # generations LATER than this node's real T7 anchor parts — the exact "check era before merging"
     # lesson this same node's own comment trail already applied once to rn_mariner1_2/hire_JPL above,
@@ -1781,7 +1781,7 @@ nodes:
     upgrades: [RFTech-solids-tltech1]
     # RFTech-solids-tltech1 added (2026-07): RealFuels per-engine-TYPE tech-level for solids, confirmed
     # KEEP-engine-typelevel — matches this era's solids generation (bucket=solids1962).
-    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): title/flavor claimed a universal
+    # REVIEW FIX (2026-07, band-3 review #medium): title/flavor claimed a universal
     # binder-chemistry breakthrough, but engine-stats.tsv shows Algol I->II stays PUPE and Antares I->II
     # stays PBAA (same chemistry both times, only thrust/Isp improve) — only Altair II->III actually
     # changes binder (PBAA->PBAN). Renamed to the mechanism true for all three (a grain-casting
@@ -1808,7 +1808,7 @@ nodes:
     parents: [pc_compositeSolid]
     flavor: "Stack three solid stages instead of one liquid and one solid — nothing to fuel, nothing to chill, ready to fly from a cold silo the instant the order comes. The missile that trades some performance for never needing a countdown at all."
     parts: [ROE-M55, ROE-SR19, ROE-SR73]
-    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): title named the outcome
+    # REVIEW FIX (2026-07, band-3 review #medium): title named the outcome
     # ("instant-readiness") rather than the mechanism (replacing a liquid stage with a solid one) — the
     # exact drift this same authoring pass already caught and fixed once for fd_pressureFedRestart
     # ("reliability is the outcome, not the mechanism"). Renamed; flavor kept, still tells the same story.
@@ -1833,7 +1833,7 @@ nodes:
     parents: [pc_apogeeKickStage]
     flavor: "A later run of the same family, sized wherever a mission needs a bigger or smaller kick than the first generation offers — Star-17, Star-17A and Black Arrow's own spin-stabilized Waxwing among them. The procedural motor stays the default; research this only for the specific named performance."
     parts: [ROE-Star17, ROE-Star17A, SXTWaxWing]
-    # NEW (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): split out of pc_apogeeKickStage, which had
+    # NEW (2026-07, band-3 review #medium): split out of pc_apogeeKickStage, which had
     # grown to 8 parts (over the hard 6-part cap) once these three were added — they're also a genuinely
     # later era (solids1967-71 per engine-stats.tsv) than the T7 node's other five (solids1962-66). Framed
     # as an opt-in size/era-extension catalog off the main king, the same pattern as the RCS small/fixed
@@ -1867,7 +1867,7 @@ nodes:
     parents: [gnc_threeAxisStabilizedBus]
     flavor: "The same lander program's core and antenna, built instead to stay in orbit and look down rather than land — a sibling vehicle from the same soft-landing effort, aimed at the whole map instead of one spot. It never touches down, so it holds its aim on the same three-axis point-and-hold system it flies on, not a descent engine it never carries."
     parts: [ca_landv_orbiter_core, ca_landv_orbiter_HGA, ca_landv_sp]
-    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): was parented on
+    # REVIEW FIX (2026-07, band-3 review #medium): was parented on
     # fd_continuousThrottleDescent, but this bus carries none of that node's engine parts and never lands —
     # the sentence test failed. Re-parented on gnc_threeAxisStabilizedBus (same tier band, the real
     # mechanism a mapping orbiter needs: "a camera can finally be pointed and kept there").
@@ -1944,7 +1944,7 @@ nodes:
     parents: [cryo_hydrogen]
     flavor: "Combine hydrogen and oxygen across a membrane and draw off the current instead of burning them — power on demand with no sun angle to worry about, for as long as the reactant tanks last."
     parts: [FuelCell, FuelCellArray, USFuelCellMedium, USFuelCellSmal, kerbalism-fuelcell]
-    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): dropped elec_deployableArrays as
+    # REVIEW FIX (2026-07, band-3 review #medium): dropped elec_deployableArrays as
     # an unlabeled second parent — the sentence test fails ("deployable photovoltaic arrays led to
     # chemical fuel-cell power" shares no mechanism), and nothing in the flavor ever mentioned solar
     # cells. cryo_hydrogen alone is the real, load-bearing prerequisite (handling the reactant).
@@ -1958,7 +1958,7 @@ nodes:
     upgrades: [solarTL3, solarTL4]
     # solarTL3/4 added (2026-07): same fix as solarTL2 — ROSolar's own upgrades, re-pointed here since the
     # next two rungs of that same efficiency ladder land on this node's own generation.
-    # sp_mariner_b moved IN (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #high): a later-revision Mariner
+    # sp_mariner_b moved IN (2026-07, band-3 review #high): a later-revision Mariner
     # panel (x=-2612, one generation past sp_mariner_a which stays in gnc_threeAxisStabilizedBus) —
     # era-correct here, and still a real deployable-array part like this node's own hardware.
 
@@ -2063,7 +2063,7 @@ nodes:
     parents: [rob_rotorActuation]
     flavor: "Put the same motor in a wheel hub and drive instead of just standing there — a lander that can cross the ground it touched down on, not just sit and look at it."
     parts: [KF-WheelSmall, KF-WheelTiny, roverWheel1, roverWheel2, roverBody_v2]
-    # RENAMED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): "Mobility" named the outcome, not
+    # RENAMED (2026-07, band-3 review #medium): "Mobility" named the outcome, not
     # the mechanism (the motor moving into the wheel hub itself) — matches its own flavor text already.
     # COVERAGE GAP CLOSED (2026-07): the bigger wheels, the KF-Track* family and KF-ScrewDrive/KF-Skid
     # are placed below (rob_heavyWheelDrive, rob_trackDrive, rob_heavyTrackDrive, rob_screwDrive) — there
@@ -2123,7 +2123,7 @@ nodes:
     # to be waved off as a generic utility part. Real mechanism (`CModuleFuelLine`) is cross-tank propellant
     # feed while stages are still attached — genuinely distinct from str_staging's separation mechanism
     # (severing a spent stage), which is why it's a sibling here, not folded into that node.
-    # TIER RATIONALE (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #low): the T2->T7 jump had no stated
+    # TIER RATIONALE (2026-07, band-3 review #low): the T2->T7 jump had no stated
     # reason, unlike str_fixedLanderLegs' similarly large jump next to it. Deliberate: asparagus staging is
     # powerful enough (every strap-on drains before dropping, instead of dropping half-full) to be worth a
     # late gameplay gate on its own, not just a T2 utility part — a gating tax, not a lineage claim.
@@ -2195,7 +2195,7 @@ nodes:
     parents: [nuc_geiger]
     flavor: "Stack thermocouples across a radioactive pellet and draw current straight from the heat of its own decay — power with no sun angle and no moving part, fuelled with whatever isotope happens to be on hand. Polonium-210 proves the generator works; it does not prove it lasts — the source itself is mostly spent within a season."
     parts: [RO-SNAP-3-RTGPo210]
-    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): dropped elec_deployableArrays as
+    # REVIEW FIX (2026-07, band-3 review #medium): dropped elec_deployableArrays as
     # an unlabeled second parent — same issue as elec_fuelCellPower below: photovoltaic tech shares no
     # mechanism with RTG thermoelectrics, and nothing in the flavor mentioned solar cells. nuc_geiger
     # alone (radioactive-material handling preceding deliberate isotope-heat use) is the real lineage.
@@ -2221,7 +2221,7 @@ nodes:
     # nfa-turbofan-25-2 is the SAME Olympus 593 engine as RO-Olympus593, just the NearFutureAeronautics
     # mod's own wrapper — same part-count-pass pattern as ROE-AJ10Mid/Early (two curated sources, one
     # real engine), placed together rather than treated as a second breakthrough.
-    # RENAMED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #high): "Mach-2-Class Turbojet" named a
+    # RENAMED (2026-07, band-3 review #high): "Mach-2-Class Turbojet" named a
     # performance capability, not the mechanism (a unique outlier pattern across all 217 node titles in
     # the tree) — renamed to what the flavor already describes: combining afterburning with variable-
     # stator control for sustained cruise, not a burst.
@@ -2236,7 +2236,7 @@ nodes:
     # met_cooledTurbine; the base engines themselves were the part-count-pass gap. Kept separate from
     # av_mach2Turbojet: a lift jet is a genuinely different role (vertical thrust only), not a faster cruise
     # engine.
-    # RE-PARENTED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): was parented on av_afterburner,
+    # RE-PARENTED (2026-07, band-3 review #medium): was parented on av_afterburner,
     # but the RB.162 is a stripped, non-afterburning lift engine with no reheat at all — the sentence test
     # ("afterburning led to a dedicated lift jet") fails. av_axialJet (a plain axial-flow turbojet, no
     # afterburner) is the true same-family parent; the RB.162's own later uprate still lives at
@@ -2251,7 +2251,7 @@ nodes:
     # Generic CoatlAerospace hardware (not Mariner-branded like ca_argo-mk2-*), so it's the catalog/general
     # implementation of 3-axis stabilization rather than a ride-along on Mariner's own bus — successor node,
     # not a direct-add, to keep the generic hardware separate from the vehicle-specific parts.
-    # SXTAlouetteI moved IN (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #high): Alouette 1 (Canada's first
+    # SXTAlouetteI moved IN (2026-07, band-3 review #high): Alouette 1 (Canada's first
     # satellite, mod=SXT so never charter-routed) is era-correct here (x=-2867, matches T8, one generation
     # past gnc_threeAxisStabilizedBus's Mariner-era anchor parts) and a better conceptual fit besides — a
     # complete, non-mission-branded 3-axis-capable probe bus is exactly the "generic/catalog successor"
@@ -2288,7 +2288,7 @@ nodes:
     # variant of the same ascent cabin, ROC-LEMAscentBDB, already here) and Shelter (extended-stay habitat
     # can) - both minimal-cabin variants, not a separate vehicle bundle, matching the "no vehicle bundle"
     # precedent the parallel session established for the rest of the LM family (ca37314).
-    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): this node's own comment already
+    # REVIEW FIX (2026-07, band-3 review #medium): this node's own comment already
     # flagged the landerCabinSmall+ShieldCapLarge pairing as unconfirmed; ground-truthing confirms it was
     # actually wrong — landerCabinSmall is a Mk1-family pod (Squad) and ShieldCapLarge is a Mk2-family
     # cover (VenStockRevamp), two incompatible catalog lines, and no real Mk1-compatible cover exists
@@ -2338,7 +2338,7 @@ nodes:
     upgrades: [RFUpgrade_LMDE-J, RFUpgrade_TR-201, RFUpgrade_RS-18]  # TR-201/RS-18 moved down from fd_deepThrottleLanding (own base parts LMDE/LMAE there), doctrine-4 fix 2026-07
     # Thin now (LFV + the doctrine-4-displaced LMDE-J uprate); grows into the extended-surface-ops home
     # (LRV rover / MESA) when non-engine parts are curated.
-    # RENAMED (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #medium): "Mobility" named the outcome; the
+    # RENAMED (2026-07, band-3 review #medium): "Mobility" named the outcome; the
     # real mechanism (per its own flavor) is thrust-vectored hopping, not driving — a hand-flown hover
     # rocket, not a rover.
 
@@ -2475,7 +2475,7 @@ nodes:
   # -> interplanetaryProbes(1961) -> improvedAvionics(1962-63) -> matureAvionics(1964-66) ->
   # largeScaleAvionics(1967-71) — confirms the tier order below IS the real generation order.
   #
-  # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #3): the three rungs were named after their
+  # REVIEW FIX (2026-07, band-3 review #3): the three rungs were named after their
   # raw RP-1 tier label ("...Avionics Tier"), breaking with every earlier rung's mechanism-named
   # precedent (Gyroscopic Autopilot, Analog Inertial Guidance, Stable-Platform Guidance...). Renamed
   # AND re-categorized, not just relabeled: 1961-63 is exactly the real transition from analog guidance
@@ -2748,7 +2748,7 @@ nodes:
     parents: [pc_storableRcsPropellants]
     flavor: "A storable blend studied but never flown — a paper concept, the one entry in this family that never left the bench. Worse thrust and worse Isp than every operational choice beside it; nobody flew it because it never won the argument, but a completionist can still burn it."
     upgrades: [RFUpgrade_Cavea-B]
-    # REVIEW FIX (2026-07, docs/BAND3-TREE-REVIEW-FINDINGS.md #high): flavor claimed "a small edge over
+    # REVIEW FIX (2026-07, band-3 review #high): flavor claimed "a small edge over
     # the operational choices" — ground truth (RCS_Config.cfg/engine-stats.tsv) says the opposite:
     # thrusterPower=0.425 and IspV=0.939 are BELOW all five operational alternatives in this same node
     # (weakest of those, UDMH+NTO, is still IspV=0.943). Corrected to the true story: a bench-only loser,

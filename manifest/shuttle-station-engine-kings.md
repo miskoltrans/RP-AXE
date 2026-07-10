@@ -25,7 +25,7 @@ non-engine parts (capsules, stations, comms, science) in a later pass.
 
 Method: real thrust/Isp/propellant/cycle pulled from `manifest/engine-stats.tsv`
 (`tools/extract_engine_stats.py`), sorted by **mechanism/lineage, not RP-1's calendar bucket** (rule 1
-in `docs/HANDOVER.md`). For every upgrade-only entry, its host base part was traced to its *current*
+in `docs/TREE-REVIEW.md`). For every upgrade-only entry, its host base part was traced to its *current*
 `tree/nodes.yaml` home so doctrine-4 (an upgrade never shares a node with its own base part) is respected.
 **Tiers below are PROPOSALS** — current tree frontier is T9-T10 (e.g. `fd_lunarSurfaceMobility` T10,
 `comp_networkedAvionics` T10); this batch should land T9-T11. Nothing here is authored yet.

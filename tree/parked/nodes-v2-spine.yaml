@@ -532,7 +532,7 @@ nodes:
     flavor: "Hang a throttleable rocket engine in a clean airframe, drop it from altitude and ride a ballistic arc to the edge of the atmosphere. The X-1 broke the sound barrier; the X-15 touched space and came home on a runway. Where the aircraft and rocket lines first meet."
     parts: [ROE-XLR11, ROE-XLR10, ROE-XLR25, ROE-XLR41, Mark1Cockpit, Mark2Cockpit, MK1Cargobay, SXTSmallFuselage, vernierEngine]
 
-  # ================= HUMAN ORBITAL SPACEFLIGHT — 13 new nodes (docs/HUMAN-ORBITAL-TREE.md) =================
+  # ================= HUMAN ORBITAL SPACEFLIGHT — 13 new nodes (human-orbital design) =================
   # "Can it fly someone, and get them back alive." A small, sharp layer on top of int_orbitalInsertion:
   # a sealed cabin (LifeSupport, first use), a heatshield (CompositeMaterials, first use), and the
   # attitude control + recovery the early tree already built. Plus scatter-ahas the orbitalRocketry1958-61
