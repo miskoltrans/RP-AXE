@@ -40,6 +40,10 @@ namespace RPAxe.AutoTest
         public static float EnterAttemptSeconds = 10f;
         public static bool QuitWhenDone = true;
         public static float QuitDelaySeconds = 3f;
+        // Opt-in: after the screen walk, load the Tracking Station and verify free KSCSwitcher
+        // switching (site change + comms network + LastKSC persistence). Off by default so the
+        // standard R&D/MC smoke test is unchanged. See AxeKscSwitchSelfTest.
+        public static bool KscSwitchTest = false;
 
         // Per-session state (statics persist until the assembly reloads, i.e. KSP restart).
         public static bool CareerStarted;
@@ -103,6 +107,7 @@ namespace RPAxe.AutoTest
             EnterAttemptSeconds = ParseFloat(n.GetValue("enterAttemptSeconds"), EnterAttemptSeconds);
             QuitWhenDone = ParseBool(n.GetValue("quitWhenDone"), QuitWhenDone);
             QuitDelaySeconds = ParseFloat(n.GetValue("quitDelaySeconds"), QuitDelaySeconds);
+            KscSwitchTest = ParseBool(n.GetValue("kscSwitchTest"), KscSwitchTest);
 
             if (n.HasValue("screens"))
             {
@@ -173,6 +178,10 @@ AXE_AUTOTEST
     // Close KSP automatically when the run finishes (success or failure)?
     quitWhenDone = true
     quitDelaySeconds = 3
+
+    // Opt-in extra: after the screens, load the Tracking Station and verify free KSCSwitcher
+    // switching (site change + comms ground-station network + LastKSC persistence to the .sfs).
+    kscSwitchTest = false
 }
 ";
     }
@@ -338,6 +347,16 @@ AXE_AUTOTEST
         {
             yield return RunSteps();
 
+            // If the screen walk asked for the KSC-switch test, load the Tracking Station and let its
+            // driver finish + quit (do NOT quit here).
+            if (AxeKscSwitchSelfTest.TrackingStationPhaseRequested)
+            {
+                Debug.Log("[AXE][AutoTest] Loading Tracking Station for the free-KSC-switch persistence test...");
+                yield return AutoTestUtil.Dwell(1f);
+                HighLogic.LoadScene(GameScenes.TRACKSTATION);
+                yield break;
+            }
+
             if (AutoTestConfig.QuitWhenDone)
             {
                 Debug.Log("[AXE][AutoTest] Test finished; quitting KSP in " + AutoTestConfig.QuitDelaySeconds + "s...");
@@ -387,6 +406,11 @@ AXE_AUTOTEST
 
             Debug.Log("[AXE][AutoTest] SUCCESS: visited " + defs.Count + " screen(s) [" +
                       string.Join(", ", defs.Select(d => d.Key).ToArray()) + "]. Test sequence complete.");
+
+            // Opt-in: hand off to the Tracking Station for the free-KSC-switch downstream check (that
+            // scene is where KSCSwitcher's UI + its LastKSC persistence module live). RunSequence loads it.
+            if (AutoTestConfig.KscSwitchTest)
+                AxeKscSwitchSelfTest.RequestTrackingStationPhase();
         }
 
         /// <summary>Enter a facility, dwell, then exit it. Sets <see cref="_ok"/>.</summary>

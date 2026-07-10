@@ -31,8 +31,21 @@ AXE_AUTOTEST
 
     quitWhenDone     = true      // close KSP when finished?
     quitDelaySeconds = 3
+
+    kscSwitchTest    = false     // opt-in: also verify free KSCSwitcher switching (see below)
 }
 ```
+
+**Free-KSC-switch check (`kscSwitchTest = true`).** After the screen walk, the harness loads the
+**Tracking Station** (the only scene where KSCSwitcher's UI and its `LastKSC` persistence module
+live) and drives a real site switch — default **Cape Canaveral → Kourou**. It logs, under the
+`[AXE][AutoTest][KSC]` prefix, three downstream checks: the live site changed
+(`regexKSP.KSCSiteManager.lastSite`), a CommNet ground station is co-located at the new site (RA's
+~56-station real-world network is fixed and needs no "home follow"), and `LastKSC.OnSave` serializes
+`LastLaunchSite` — then a real `SaveGame`, so `saves/AXE_AutoTest/persistent.sfs` should contain
+`LastLaunchSite = fr_kourou`. A clean run ends `RESULT … => PASS`. Switching from any *other* scene
+sets the live site but does **not** persist (OnSave only fires where `LastKSC` is active), which is
+why the check runs in the Tracking Station — the same place the player switches.
 
 **Screen tokens** (for `screens`, comma-separated, any order, repeats allowed):
 `RND`, `MISSIONCONTROL`, `ADMINISTRATION`, `ASTRONAUTCOMPLEX`. Unknown tokens are skipped with a
