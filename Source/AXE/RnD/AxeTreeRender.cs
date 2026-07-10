@@ -95,6 +95,7 @@ namespace RPAxe.RnD
         {
             ready = false;
             Routes.Clear();
+            _over = null; _lastMousePos = new Vector3(float.NaN, float.NaN, 0f);   // force a fresh raycast next frame (no stale node ref across a reopen)
             try
             {
                 AxeTreeMeta.EnsureLoaded();
@@ -251,6 +252,7 @@ namespace RPAxe.RnD
                 StartCoroutine(FitContentToNodes());   // grow the scroll content to bound a tall/wide tree (else it clips)
                 OverrideBackground(ctrl);               // replace the stock grid with a solid backdrop (matches the prototype)
                 if (DEBUG_DUMP) StartCoroutine(DebugDump());
+                if (AxeRenderPerf.Enabled) StartCoroutine(AxeRenderPerf.HoverBench());   // -axe-perf: time the lineage recolour at the live node count
             }
             catch (Exception e) { Debug.LogError("[AXE] render-port OnTreeSpawn failed: " + e); ready = false; }
         }
@@ -703,6 +705,40 @@ namespace RPAxe.RnD
             rd.graphics.SetIconColor(new Color(1f, 1f, 1f, tile.a));
         }
 
+        // Colour-only restore of a node to its RESTING appearance — the SAME final colours UpdateGraphics_Postfix
+        // computes (state ring + discipline tile + edge colours), but WITHOUT stock UpdateGraphics or any
+        // transform write. This is Clear()'s fast path: repainting all nodes this way costs ~one Apply() sweep
+        // instead of N canvas-dirtying UpdateGraphics() calls (measured 66ms -> ~1.5ms at 455 nodes). The stock
+        // UpdateGraphics work Clear used to do was immediately overridden by the postfix anyway, so this drops
+        // redundant work rather than behaviour. Metadata-less nodes (e.g. start) have no postfix styling, so they
+        // fall back to a single stock UpdateGraphics to recover their stock look.
+        internal static void RepaintResting(RDNode rd)
+        {
+            if (rd == null || rd.graphics == null) return;
+            string id = rd.tech?.techID;
+            if (id == null || !AxeTreeMeta.Nodes.TryGetValue(id, out AxeTreeMeta.NodeMeta m))
+            {
+                rd.UpdateGraphics();   // rare (no metadata) -> stock restore; the postfix no-ops for these
+                return;
+            }
+            StateRing(rd);
+            if (AxeTreeMeta.Render.DiscColor && AxeTreeMeta.Disciplines.TryGetValue(m.Discipline, out AxeTreeMeta.DiscMeta d))
+                TintTile(rd, rd.state == RDNode.State.RESEARCHED ? DoneTile : StateTint(d.Color, rd.state == RDNode.State.FADED));
+            if (rd.parents == null) return;
+            foreach (RDNode.Parent par in rd.parents)   // edge coloured by its SOURCE discipline (lit once researched)
+            {
+                RDNode src = par?.parent?.node;
+                string from = src?.tech?.techID;
+                if (from != null && AxeTreeMeta.Nodes.TryGetValue(from, out AxeTreeMeta.NodeMeta pm)
+                    && AxeTreeMeta.Disciplines.TryGetValue(pm.Discipline, out AxeTreeMeta.DiscMeta pd))
+                {
+                    Color ec = StateTint(pd.Color, src.state != RDNode.State.RESEARCHED);
+                    if (par.line != null) par.line.color = ec;
+                    if (par.arrowHead != null) par.arrowHead.color = ec;
+                }
+            }
+        }
+
         private static readonly Color RingAvailable = new Color(0.32f, 0.78f, 0.97f, 1f);   // researchable = cyan frontier
         internal static readonly Color DoneTile = new Color(0.184f, 0.635f, 0.373f, 1f);    // #2fa25f — researched tile (prototype doneStyle='tile')
 
@@ -746,13 +782,33 @@ namespace RPAxe.RnD
         private bool _dragged;
         private RDNode _lastHilite;      // last node the lineage highlight was applied for (change detection)
         private RDNode _lastSelected;    // last pinned node (so we re-toggle the blue ring on selection change)
+        private RDNode _over;            // cached node-under-pointer (only recomputed when the pointer moves / a button acts)
+        private Vector3 _lastMousePos = new Vector3(float.NaN, float.NaN, 0f);
         private static readonly List<RaycastResult> _rayHits = new List<RaycastResult>();
 
         private void Update()
         {
             RDController ctrl = RDController.Instance;
             if (ctrl == null) return;
-            RDNode over = NodeUnderPointer();
+            if (AxeRenderPerf.Enabled) AxeRenderPerf.Frame();
+
+            // Node under the pointer, for the hover-trace + empty-click-deselect below. A full
+            // EventSystem.RaycastAll (on top of the one Unity's input module already runs) costs ~1-2ms over
+            // the dense tree (measured), so only recompute it when the pointer actually moves — a stationary
+            // cursor can't change which node it's over — or when a mouse button is in play (the deselect path
+            // reads `over` on button-up). Otherwise reuse the cached result: zero raycasts while reading.
+            Vector3 mp = Input.mousePosition;
+            // Recompute on pointer move, any mouse-button activity, OR a scroll (zoom scales the tree, so a
+            // different node can slide under an otherwise-stationary cursor).
+            bool act = mp != _lastMousePos || Input.GetMouseButton(0) || Input.GetMouseButtonUp(0)
+                       || Input.GetMouseButtonDown(0) || Mathf.Abs(Input.mouseScrollDelta.y) > 0.001f;
+            if (act)
+            {
+                _lastMousePos = mp;
+                if (AxeRenderPerf.Enabled) { long _t = AxeRenderPerf.Ts(); _over = NodeUnderPointer(); AxeRenderPerf.AddRay(AxeRenderPerf.Ms(_t)); }
+                else _over = NodeUnderPointer();
+            }
+            RDNode over = _over;
 
             // Selection change: the blue ring hides on the selected node (green halo shows there) and returns on
             // deselect. StateRing doesn't re-run on its own for a pin change, so refresh both affected nodes.
@@ -815,6 +871,7 @@ namespace RPAxe.RnD
             RDController ctrl = RDController.Instance;
             RectTransform content = ctrl != null && ctrl.gridArea != null && ctrl.gridArea.scrollRect != null ? ctrl.gridArea.scrollRect.content : null;
             if (content == null) { _zoomHaveRef = false; _zoomHaveStable = false; return; }
+            long _lt = AxeRenderPerf.Enabled ? AxeRenderPerf.Ts() : 0;
             try
             {
                 Canvas canvas = content.GetComponentInParent<Canvas>();
@@ -833,6 +890,7 @@ namespace RPAxe.RnD
                 _zoomHaveRef = haveCursor;
                 _zoomStablePos = content.position;   // authoritative position after correction
                 _zoomHaveStable = true;
+                if (AxeRenderPerf.Enabled) AxeRenderPerf.AddLate(AxeRenderPerf.Ms(_lt));
             }
             catch (Exception e) { Debug.LogException(e); _zoomHaveRef = false; _zoomHaveStable = false; }
         }
@@ -854,11 +912,16 @@ namespace RPAxe.RnD
 
         // Discipline colour legend, shown while R&D is open (RDController.Instance != null).
         private static GUIStyle _legendTitle, _legendRow;
+        private static List<KeyValuePair<string, AxeTreeMeta.DiscMeta>> _legendList;   // built once (disciplines are static) — no per-frame alloc/sort
         private void OnGUI()
         {
             if (!ready || RDController.Instance == null) return;
             // No hover name label — stock R&D already shows the node title on hover.
-            if (AxeTreeMeta.Render.Legend && AxeTreeMeta.Disciplines.Count > 0) DrawLegend();
+            if (AxeTreeMeta.Render.Legend && AxeTreeMeta.Disciplines.Count > 0)
+            {
+                if (AxeRenderPerf.Enabled) { long _t = AxeRenderPerf.Ts(); DrawLegend(); AxeRenderPerf.AddGui(AxeRenderPerf.Ms(_t)); }
+                else DrawLegend();
+            }
         }
 
         private static void DrawLegend()
@@ -868,8 +931,12 @@ namespace RPAxe.RnD
                 _legendRow = new GUIStyle(GUI.skin.label) { fontSize = 15, alignment = TextAnchor.MiddleLeft };
                 _legendTitle = new GUIStyle(GUI.skin.label) { fontSize = 18, fontStyle = FontStyle.Bold };
             }
-            var list = new List<KeyValuePair<string, AxeTreeMeta.DiscMeta>>(AxeTreeMeta.Disciplines);
-            list.Sort((a, b) => a.Value.Order.CompareTo(b.Value.Order));
+            if (_legendList == null)
+            {
+                _legendList = new List<KeyValuePair<string, AxeTreeMeta.DiscMeta>>(AxeTreeMeta.Disciplines);
+                _legendList.Sort((a, b) => a.Value.Order.CompareTo(b.Value.Order));
+            }
+            List<KeyValuePair<string, AxeTreeMeta.DiscMeta>> list = _legendList;
             const float w = 280f, rowH = 24f, sw = 18f, pad = 10f;
             float h = list.Count * rowH + pad * 2f + 30f;
             var box = new Rect(10f, 48f, w, h);

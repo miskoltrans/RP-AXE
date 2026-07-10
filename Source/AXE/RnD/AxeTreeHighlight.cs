@@ -109,9 +109,13 @@ namespace RPAxe.RnD
             if (!active || ctrl == null || ctrl.nodes == null) return;
             active = false;
             List<RDNode> nodes = ctrl.nodes;
+            // Colour-only restore (mirrors Apply), NOT stock UpdateGraphics per node: hover-off fires this on
+            // every node-to-empty move + on deselect, and UpdateGraphics' postfix does a transform write per
+            // node -> a full canvas rebuild (measured 66ms at 455 nodes = a visible stutter). RepaintResting
+            // recomputes the same resting colours without touching transforms (~1.5ms).
             for (int i = 0; i < nodes.Count; i++)
-                if (nodes[i] != null) nodes[i].UpdateGraphics();   // recompute stock tile/edge + the state ring (via the postfix)
-            AxeTreeRenderHost.RestoreDots();   // dots aren't RDNodes -> UpdateGraphics won't restore them
+                if (nodes[i] != null) AxeTreeRenderHost.RepaintResting(nodes[i]);
+            AxeTreeRenderHost.RestoreDots();   // dots aren't RDNodes -> RepaintResting won't restore them
         }
 
         // Selection + all ancestors (via parents) + all descendants (via children).
