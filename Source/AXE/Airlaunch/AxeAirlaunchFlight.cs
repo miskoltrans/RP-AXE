@@ -43,7 +43,7 @@ namespace RPAxe.Airlaunch
 
             try
             {
-                AxeAirlaunchTeleport.DoAirlaunch(v, p.Altitude, p.Velocity, p.Heading);
+                AxeAirlaunchTeleport.DoAirlaunch(v, p.Altitude, p.Velocity, p.Heading, p.Distance, p.Bearing);
             }
             catch (Exception e)
             {

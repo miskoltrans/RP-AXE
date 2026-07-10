@@ -8,27 +8,38 @@ namespace RPAxe.Airlaunch
     /// The airlaunch teleport, ported self-contained from ROUtils/KCT <c>HyperEdit_Utilities.DoAirlaunch</c>
     /// (originally the HyperEdit lander by khyperia &amp; Ezriilc). Stock API only — no ROUtils reference.
     ///
-    /// The one change from the original: instead of deriving a launch point at a configured distance/azimuth
-    /// from the KSC (which needs KCT's RSS-aware FindKSC), we release the vessel straight above wherever it
-    /// currently sits — the runway it just launched onto. Simpler and RSS/KSCSwitcher-proof; the KSC-offset
-    /// feature can come back later if wanted.
+    /// The one change from the original: the reference point is the vessel's own current position — the
+    /// runway it just launched from — instead of a canonical KSC found via KCT's RSS-aware FindKSC. The
+    /// launch site IS the reference, which is both simpler and the right semantics for a relocatable launch
+    /// site. <paramref name="distance"/> then offsets the drop point downrange along a great circle on the
+    /// <paramref name="bearingDeg"/> bearing; distance 0 releases straight above the site.
     /// </summary>
     internal static class AxeAirlaunchTeleport
     {
-        public static void DoAirlaunch(Vessel vessel, double altitude, double velocity, double headingDeg)
+        public static void DoAirlaunch(Vessel vessel, double altitude, double velocity, double headingDeg,
+                                       double distance, double bearingDeg)
         {
             CelestialBody body = vessel.mainBody;
 
-            // Current ground position relative to the body centre (Unity XYZ). Release straight up from here.
-            Vector3d currentRel = vessel.GetWorldPos3D() - body.position;
-            Vector3d up = currentRel.normalized;
-            Vector3d teleportPosition = up * (body.Radius + altitude);
+            // Reference = the launch site the vessel is sitting on (its current position, Unity XYZ rel body).
+            Vector3d sitePos = vessel.GetWorldPos3D() - body.position;
+            Vector3d siteUp = sitePos.normalized;
+            Vector3d siteEast = Vector3d.Cross(body.angularVelocity, sitePos).normalized;
+            Vector3d siteNorth = Vector3d.Cross(siteEast, siteUp);
+            double siteAltitude = sitePos.magnitude - body.Radius;
 
+            // Great-circle offset: travel `distance` m along the surface from the site on the `bearingDeg`
+            // compass bearing (0=N, 90=E), then lift to the release altitude. distance 0 => straight above.
+            double delta = distance / body.Radius;
+            double bear = bearingDeg * Mathf.Deg2Rad;
+            Vector3d dir = siteNorth * Math.Cos(bear) + siteEast * Math.Sin(bear);
+            Vector3d teleportPosition = sitePos * Math.Cos(delta) + body.Radius * dir * Math.Sin(delta);
+            teleportPosition += teleportPosition.normalized * (altitude - siteAltitude);
+
+            // Release velocity at the drop point: planet co-rotation + surface launch velocity along heading.
+            Vector3d up = teleportPosition.normalized;
             Vector3d east = Vector3d.Cross(body.angularVelocity, teleportPosition).normalized;
             Vector3d north = Vector3d.Cross(east, up);
-
-            // Start from the atmosphere's co-rotation velocity at the release point, then add the surface-
-            // relative launch velocity along the heading.
             Vector3d teleportVelocity = Vector3d.Cross(body.angularVelocity, teleportPosition);
             double head = headingDeg * Mathf.Deg2Rad;
             teleportVelocity += (Math.Sin(head) * east + Math.Cos(head) * north) * velocity;
@@ -40,8 +51,6 @@ namespace RPAxe.Airlaunch
             Vector3d velZup = teleportVelocity.xzy;
 
             // Rotation is applied in Unity space, so LookRotation takes the original (unswizzled) up.
-            // (RP-1's original double-swizzles here because it reassigns teleportPosition to .xzy first;
-            //  we keep teleportPosition unswizzled, so a single .normalized is the equivalent.)
             Vector3d to = teleportPosition.normalized;
             Quaternion rotation = Quaternion.LookRotation(-to);
             rotation *= Quaternion.AngleAxis((float)headingDeg, Vector3.back);

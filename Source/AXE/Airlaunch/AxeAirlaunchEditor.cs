@@ -25,7 +25,7 @@ namespace RPAxe.Airlaunch
         private Rect _win = new Rect(Screen.width / 2 - 175, Screen.height / 2 - 170, 350, 10);
         private AxeAirlaunchTechLevel _lvl;
         private AxeAirlaunchParams _p;
-        private string _sAlt, _sVel, _sHead, _err;
+        private string _sAlt, _sVel, _sHead, _sDist, _sBear, _err;
         private double _shipMassT;
         private Vector3 _shipSize;
         private bool _fits;
@@ -87,10 +87,12 @@ namespace RPAxe.Airlaunch
             _shipSize = ShipConstruction.CalculateCraftSize(ship);
             _fits = _lvl.CanLaunch(_shipMassT, _shipSize, out _fitReason);
 
-            _p = new AxeAirlaunchParams { Altitude = _lvl.MaxAltitude, Velocity = _lvl.MaxVelocity, Heading = 270 };
+            _p = new AxeAirlaunchParams { Altitude = _lvl.MaxAltitude, Velocity = _lvl.MaxVelocity, Heading = 270, Distance = 0, Bearing = 90 };
             _sAlt = _p.Altitude.ToString("0");
             _sVel = _p.Velocity.ToString("0");
             _sHead = _p.Heading.ToString("0");
+            _sDist = "0";
+            _sBear = _p.Bearing.ToString("0");
             _err = null;
             _open = true;
             return true;
@@ -115,6 +117,8 @@ namespace RPAxe.Airlaunch
             Row("Altitude (m)", ref _sAlt);
             Row("Velocity (m/s)", ref _sVel);
             Row("Heading (°)", ref _sHead);
+            Row("Downrange (km)", ref _sDist);
+            Row("Bearing from site (°)", ref _sBear);
             ParseValidate();
 
             double fee = _lvl.LaunchCost;
@@ -182,6 +186,8 @@ namespace RPAxe.Airlaunch
                 _p.Altitude = double.Parse(_sAlt);
                 _p.Velocity = double.Parse(_sVel);
                 _p.Heading = double.Parse(_sHead);
+                _p.Distance = double.Parse(_sDist) * 1000.0;   // km -> m
+                _p.Bearing = double.Parse(_sBear);
                 _p.Validate(_lvl, out _err);
             }
             catch

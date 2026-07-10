@@ -28,7 +28,9 @@ namespace RPAxe.Airlaunch
     {
         public double Altitude;      // m above sea level
         public double Velocity;      // m/s surface-relative
-        public double Heading = 270; // degrees; 270 = due west, matching RP-1's default launch azimuth
+        public double Heading = 270; // degrees; release heading (direction of travel). 270 = due west.
+        public double Distance;      // m downrange from the launch site; 0 = straight above it
+        public double Bearing = 90;  // degrees; compass bearing from the launch site to the drop point (90 = E)
 
         public bool Validate(AxeAirlaunchTechLevel lvl, out string err)
         {
@@ -38,8 +40,12 @@ namespace RPAxe.Airlaunch
                 err = $"Altitude must be {lvl.MinAltitude:0}–{lvl.MaxAltitude:0} m";
             else if (Velocity > lvl.MaxVelocity || Velocity < lvl.MinVelocity)
                 err = $"Velocity must be {lvl.MinVelocity:0}–{lvl.MaxVelocity:0} m/s";
+            else if (Distance < 0 || Distance > lvl.MaxKscDistance)
+                err = $"Downrange must be 0–{lvl.MaxKscDistance / 1000:0} km";
             else if (Heading < 0 || Heading >= 360)
                 err = "Heading must be 0–360°";
+            else if (Bearing < 0 || Bearing >= 360)
+                err = "Bearing must be 0–360°";
             else
                 err = null;
 
