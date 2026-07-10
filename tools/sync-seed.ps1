@@ -113,6 +113,7 @@ foreach ($f in $folders) {
 # GameData\RP-AXE\design\Science\_README.md + CrewScience\_README.md.
 $designOwned = @(
     'Science\Experiments\CrewScience'    # -> design\Science\CrewScience\ (nodes remapped)
+    'Science\Configure.cfg'              # -> design\Science\Configure.cfg (Kerbalism SETUP tech= remapped)
     'Science\HardDriveConfigs.cfg'       # -> design\Science\HardDriveConfigs.cfg (nodes remapped)
     'Science\HardDriveConfigs.disabled'  #    (inert; design\ owns the HardDrive system)
     # (Tree\HardDriveUpgrades.cfg needs no strip -- Tree\ is no longer vendored; its
