@@ -68,6 +68,10 @@
       <HintPath>$(KSPRoot)\GameData\ModularFlightIntegrator\ModularFlightIntegrator.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="Kerbalism">
+      <HintPath>$(KSPRoot)\GameData\Kerbalism\Kerbalism112.kbin</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>$(ReferencePath)\UnityEngine.UI.dll</HintPath>
       <Private>false</Private>
