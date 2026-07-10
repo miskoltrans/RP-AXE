@@ -6,60 +6,62 @@
 
 RP-AXE is a **config-first** Kerbal Space Program 1.12 mod built on the same realism stack as
 [RP-1](https://github.com/KSP-RO/RP-1) (Realism Overhaul, Real Solar System, Real Fuels,
-Kerbalism, …) but it **does not ship RP-1's career plugin**. Instead it provides a thin,
-purpose-built layer:
+Kerbalism, …) but it **does not ship RP-1's career plugin** and **conflicts with RP-1** (don't
+install both). Instead it provides a thin, purpose-built layer:
 
-- **Lightweight progression** — a custom tech tree (yoinked from RP-1) unlocked by science.
-  No build times, no facility maintenance, no part tooling, no crew training, no confidence
-  economy. You design, you fly, you learn.
-- **Meaningful exploration** — contracts guide you early, then get out of the way so you can
-  set your own goals. "What-if" / ahistorical: there's no fixed timeline to match.
+- **Lightweight progression** — a bespoke tech tree, rebuilt from scratch and unlocked by science.
+  No build times, no facility maintenance, no part tooling, no crew training, no reliability
+  run-data grind. You design, you fly, you learn.
+- **Engineering-first tree** — nodes are real industrial *breakthroughs* (not eras, not generic
+  "Advanced Engines"), organised by discipline; parts scatter to the breakthrough that made them
+  hard. Research-paper node names, flavour text, an education pillar.
+- **Meaningful exploration** — contracts guide you early, then get out of the way so you can set
+  your own goals. "What-if" / ahistorical: there's no fixed timeline to match.
 - **Near- and far-future parts are first-class** — expected, not merely suggested.
-- **Educational engineering challenges** — the realism is the teacher.
 
 ## Status
 
-✅ **MVP — config-complete & AutoTest-validated** (v0.1.0). The full loop works pluginlessly:
-custom science tech tree, ported RP-1 contracts running on our own lightweight ContractConfigurator
-types, a config-only "program" switcher, future-part placement (Tantares + NearFuture + Cryo/Atomics),
-a flyable start node, and the economy below. The only thing not yet proven by automated test is a real
-play session (build + fly) — see *Playing the MVP*. Backlog: [`docs/TASKS.md`](docs/TASKS.md).
+🚧 **Under active rebuild — the "restart".** The project's first cut (a config-complete MVP,
+preserved at tag `pre-restart-mvp`) was deliberately torn down to rebuild the tech tree, part
+baseline, and economy from scratch. Built so far: the discipline tech tree (~217 nodes, compiled
+from `tree/nodes.yaml`) with an in-game R&D render, the RP-1 science wiring, the avionics ladder,
+ported contracts running on our own ContractConfigurator types, a config-only program switcher,
+and a tech-gated airlaunch system. In progress: full part-placement realization and economy
+calibration. **The live roadmap (phases P0–P6) and every settled decision are in
+[`docs/RESTART.md`](docs/RESTART.md) — the single source of truth.**
 
 **The RP-AXE economy** (exploration + engineering, not management):
-- **Parts unlock free with science** — science is the only gate on *what* you can build.
-- **RealFuels engine-config development still costs funds** — the one buy-to-unlock with real
-  engineering meaning.
-- **Launch cost is the only ongoing money sink** (90% part / 95% propellant recovery rewards
-  recoverable, efficient designs). Generous: ~100k starting funds, milestone contracts pay well.
-- **Earth is not a science farm** — sub-40 km home-planet science is removed; science comes from real
-  spaceflight and exploration. The solar system holds ~57× the tree's science (see
-  [`docs/SCIENCE_AUDIT.md`](docs/SCIENCE_AUDIT.md)).
+- **Science is the primary gate** on progression — the tree unlocks with science, and science
+  comes from real spaceflight and exploration, not a home-planet farm (sub-40 km Earth science is
+  removed).
+- **Parts carry an entry cost** (abstracting R&D) — `base[tier] × weight[category]`, a
+  funds-as-texture layer, *not* free. RealFuels engine-config development also costs funds.
+- **Launch cost is the main ongoing money sink** (high part/propellant recovery rewards
+  recoverable, efficient designs). No time pressure: timewarp is free, so money is never a
+  time-farmed resource — **the launch is the gate**.
+- **The solar system dwarfs the tree's cost** — see the budget writeup in
+  [`docs/SCIENCE.md`](docs/SCIENCE.md) (~3.9M reachable science vs. a ~300k tree).
 
 ## Install
 
-CKAN (recommended): the metadata is `RP-AXE.netkan` — it pulls RP-1's realism + part stack, **minus
-the RP-1 plugin**, and **conflicts with `RP-1`** (don't install both). Until it's on the CKAN registry,
-add it locally via *CKAN → Settings → … → Add netkan* (or the netkan inflator). Manual: drop
-`GameData/RP-AXE/` into a KSP 1.12 install that already has the dependencies (`docs/DEPENDENCIES.md`),
-and make sure **`GameData/RP-1/` is not present**.
-
-## Playing the MVP
-
-Start a **Career**. You begin with ~100,000 funds and the full basic parts set on the `start` node
-(sounding-rocket engines, early guidance, tanks, antennas, instruments) — all free to use. Build a
-small sounding rocket, fly it up past 40 km for your first science, take the early contracts, and
-activate a *program* (in Mission Control) to open its contract line. Tech unlocks with science; money
-is for building and flying, not for unlocking parts.
+CKAN: the metadata is `RP-AXE.netkan` — it pulls RP-1's realism + part stack, **minus the RP-1
+plugin**, and **conflicts with `RP-1`** (don't install both). The complete dependency set is the
+metapackage `RP-AXE-deps.ckan` (see [`docs/WORKFLOW.md`](docs/WORKFLOW.md)). Until it's on the CKAN
+registry, add it locally via *CKAN → Settings → … → Add netkan*. Manual: drop `GameData/RP-AXE/`
+into a KSP 1.12 install that already has the dependencies, and make sure **`GameData/RP-1/` is not
+present**.
 
 ## Repo layout
 
 | Path | What it is |
 |------|------------|
-| `GameData/RP-AXE/seed/` | **Pristine, vendored** RP-1 config (Tree / Contracts / Science). Never edited — refreshed from upstream. |
-| `GameData/RP-AXE/design/` | All RP-AXE transformations & new content — MM patches applied *after* the seed. |
-| `Source/AXE/` | **`AXE.dll` — the (load-bearing) plugin.** Implements the ContractConfigurator types the contracts need, Career-enable, the program switcher, the free-parts economy, and the 100k generous start. *Not* RP-1's plugin; never ships `RP0.dll`. |
-| `docs/` | Architecture, workflow, dependencies, decisions, task list. |
-| `tools/` | `deploy.ps1` (link into the test instance), `sync-seed.ps1` (refresh vendored RP-1 config). |
+| `GameData/RP-AXE/seed/` | **Pristine, vendored** RP-1 config (Tree / Contracts / Science). Never edited — refreshed from upstream via `tools/sync-seed.ps1`. |
+| `GameData/RP-AXE/design/` | All RP-AXE transformations & new content — ModuleManager patches applied *after* the seed. |
+| `Source/AXE/` | **`AXE.dll` — the load-bearing plugin.** Implements the ContractConfigurator types the contracts need, Career-enable, the program switcher, the avionics modules, the tracking-station / facility gates, the airlaunch system, and the in-game R&D tree render. *Not* RP-1's plugin; never ships `RP0.dll`. |
+| `tree/` | The tech-tree source — `nodes.yaml` + `disciplines.yaml`, compiled by `tools/build_tree.py` into the game cfgs + renders. |
+| `manifest/` | The curated part list (`curated-parts.tsv`, 1820) + upgrade curation + capability data. |
+| `docs/` | Architecture, workflow, and decisions. Start with [`RESTART.md`](docs/RESTART.md). |
+| `tools/` | `build_tree.py` (compile the tree), `deploy.ps1` (link into the test instance), `rebuild-instance.ps1` (nuke & restore a test install), `sync-seed.ps1` (refresh vendored RP-1 config). |
 
 ## Working directories (this machine)
 
@@ -72,6 +74,6 @@ This repo lives in `C:\git\ksp\` alongside its reference material and a test ins
 
 ## Quickstart for a new contributor (human or agent)
 
-1. Read [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — the *why* and the keep/axe/reimplement map.
-2. Read [`docs/WORKFLOW.md`](docs/WORKFLOW.md) — how to build, deploy to `Instance/`, and test.
-3. Pick a task from [`docs/TASKS.md`](docs/TASKS.md).
+1. Read [`docs/RESTART.md`](docs/RESTART.md) — the roadmap, the keep/rebuild map, and every settled decision.
+2. Read [`docs/WORKFLOW.md`](docs/WORKFLOW.md) — how to build `AXE.dll`, deploy to `Instance/`, and test.
+3. For the tree specifically: [`docs/TREE.md`](docs/TREE.md) (architecture) + [`docs/SCIENCE.md`](docs/SCIENCE.md) (budget).
