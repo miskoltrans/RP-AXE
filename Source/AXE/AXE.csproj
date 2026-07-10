@@ -56,6 +56,14 @@
       <HintPath>$(KSPRoot)\GameData\ContractConfigurator\ContractConfigurator.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="RealFuels">
+      <HintPath>$(KSPRoot)\GameData\RealFuels\Plugins\RealFuels.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ModularFlightIntegrator">
+      <HintPath>$(KSPRoot)\GameData\ModularFlightIntegrator\ModularFlightIntegrator.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>$(ReferencePath)\UnityEngine.UI.dll</HintPath>
       <Private>false</Private>
