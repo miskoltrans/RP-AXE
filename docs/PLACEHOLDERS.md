@@ -35,9 +35,14 @@ Capability nodes carry no `parts:`; they carry **`grants:`** — a list of capab
   grants: [avionicsTierN]    # what researching this node unlocks
 ```
 
-> **STUB:** `build_tree` currently emits each grant as a `partUpgrade` (flagged provisional). The
-> real emission — an avionics-plugin tier gate / a tracking-station facility unlock — is still to be
-> wired. The `grants:` **data is stable**; only its emission will evolve. Do not hand-edit the cfg.
+> **Emission (DONE for display):** each grant is emitted as a real, visible R&D **display token** in
+> `design/Tree/AxeGrantUpgrades.cfg` — a `PARTUPGRADE` bound to the granting node (`techRequired`, set
+> in `AxePartPlacement.cfg`), `entryCost 0`, retitled/redescribed in AXE language with real per-tier
+> stat deltas. `AXE.dll`'s `AxeGrantUpgradeUnlock` auto-marks them unlocked on research (no buy step),
+> so a node reads like RP-1's own avionics nodes. The tokens carry **no stat MODULE** — the actual
+> effect is applied elsewhere (avionics tier: `ModuleAxeAvionics` reads the researched node; DSN level:
+> CustomBarnKit `@TRACKING` + `AxeTrackingStationGate`). The `grants:` **data is stable**; do not
+> hand-edit the generated cfg.
 
 ## The implementation backlog — [IMPL-TODO.md](IMPL-TODO.md) (generated)
 REFERENCE / provisional content lives in the tree **on purpose** — it's there to build against when
