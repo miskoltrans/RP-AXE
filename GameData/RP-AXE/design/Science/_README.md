@@ -4,6 +4,14 @@
 - `CrewScience/` — RP-1 crewed-science, tech-remapped (see that folder's `_README.md`).
 - `HardDriveConfigs.cfg` + `HardDriveUpgrades.cfg` — **Kerbalism data-storage system**, localized from
   RP-1 with the avionics tech ladder remapped to AXE nodes (below).
+- `Configure.cfg` + `US2.cfg` — **Kerbalism `Configure` SETUP tech-gates** (the in-VAB instrument/
+  experiment selector on probe cores, capsules, lunar bases, and US2 wedges), localized from RP-1
+  (`Science/Configure.cfg` + `Parts/Science/US2.cfg`). Each SETUP is gated **where its content unlocks**:
+  probe instruments at their standalone part's node (`AxePartPlacement.cfg`), crew/lunar experiments at
+  their `EXPERIMENT_DEFINITION techRequired` (`CrewScience/`), supersonic at `av_afterburner`/`av_ramjet`.
+  Authored here because the `tech =` gates live inside `@PART` patch bodies (not overlayable); both are in
+  sync-seed's `$designOwned` strip-list. `AxeSurfaceSampleGate.cfg` is a 1-gate late-pass overlay for the
+  lone EVA `Deep Surface Sample` gate in seed's `SurfaceSample.cfg`.
 
 ## HardDrive (science data storage) — ported 2026-07-08
 
