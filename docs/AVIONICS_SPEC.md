@@ -1,4 +1,4 @@
-# RP-AXE Avionics V2 Spec (design doc, iterating — nothing here is implemented yet)
+# RP-AXE Avionics V2 Spec (SHIPPED 2026-07-10 — this is the as-built record; design reasoning below is historical)
 
 **Goal**: feature parity with RP-1's avionics, with better UX. Not a simplification pass — everything RP-1's
 system actually *does* mechanically should still be possible to do here, just without RP-1's specific failure
@@ -24,19 +24,31 @@ Tech-gated second choice, only available once appropriate tech is researched (mi
 available from `start`, it unlocked around Near-Earth's `basicAvionics`-equivalent point). Unguided/
 Science-Core never had a Deep-Space equivalent in RP-1 either — this axis doesn't apply to it.
 
-**Mass/cost: own per-tier ladder, authored as real data — not a live multiplier. SCOPE CONFIRMED (2026-07-08):
-its own ladder, full stop** — matching RP-1's real shape means ~10 *separate* tech-node placements in AXE's
-tree (mirroring each Guided-tier unlock one-for-one, not a single gate riding whatever Guided tier happens to
-be active). RP-1's actual Deep-Space ladder (ground-truthed this session) is `massFactor` = Near-Earth's ×
-1.10, `costFactor` = × 1.50, `powerFactor` identical to NE, `powerConstant` 1.096 (vs NE's 1.035), at every
-one of DS's 10 tiers (`techLevel0..9`, mapping to NE's tier names `basicAvionics` through `modernAvionics` —
-DS skips NE's first three tiers, `start`/`avionicsPrototypes`/`earlyAvionics`, entirely). Plus the constants:
-`massConstant` 0.96→1.043, `costConstant` 3.034→9.1. **TODO: compute these once and bake them into
-`AxeAvionicsCore.cfg` as literal `shMassFactor`/`shCostFactor`/etc. per-tier fields**, same pattern as the
-existing `scMassFactor` columns — not a runtime `×1.1`/`×1.5` multiplier applied to NE's live values. **TODO:
-place ~10 tech-node gates in AXE's own tree**, one per Shielded tier, tracking wherever the corresponding
-Guided-equivalent tiers unlock. This is real, substantial authoring work — flagged explicitly so it doesn't
-get skipped or accidentally shortcut back into a multiplier during implementation.
+**Mass/cost: own per-tier ladder, authored as real data — not a live multiplier. SHIPPED.** Matching RP-1's
+real shape meant ~10 *separate* tech-node placements in AXE's tree (mirroring each Guided-tier unlock
+one-for-one, not a single gate riding whatever Guided tier happens to be active). RP-1's actual Deep-Space
+ladder (ground-truthed against `RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg`) is its own literal per-tier
+`massFactor`/`costFactor` table (NOT a clean ×1.10/×1.50 multiplier on Near-Earth's values — that was an
+early approximation, corrected once the real numbers were pulled), `powerFactor` identical to NE at every
+corresponding tier, `powerConstant` 1.096 (vs NE's 1.035), across DS's 10 real tiers (`techLevel0..9`, mapping
+to NE's tier names `basicAvionics` through `modernAvionics` — DS skips NE's first three tiers, `start`/
+`avionicsPrototypes`/`earlyAvionics`, entirely, RP-1 has no Deep-Space data there). Constants: `massConstant`
+0.96→1.043, `costConstant` 3.034→9.1. Baked into `AxeAvionicsCore.cfg` as literal `shMassFactor`/`shCostFactor`
+per-tier fields (mirrors the existing `scMassFactor` columns), `ModuleAxeAvionics.cs`'s hardcoded fallback
+ladder kept in sync. 10 `shd_*` tech nodes placed in `tree/nodes.yaml` (serial chain, each requiring both the
+previous Shielded rung and its paired Guided/Computing tier) for the 10 real tiers.
+
+RP-1 also applies a surface-area-scaled shielding-mass ADD-ON on top of the per-tier curve
+(`avionicsMass^(2/3) * shieldingMassFactor`, `shieldingMassFactor=0.1` tier-invariant) — missed in the first
+implementation pass (the per-tier table alone was verified byte-exact against RP-1 and mistakenly taken as
+the whole story), found and fixed 2026-07-10 (see POST-SHIP FIXES below).
+
+**1:1 ladder fill-in (2026-07-10):** the 4 early tiers RP-1 has no Deep-Space data for (`start`/
+`gnc_postWarAvionics`/`gnc_avionicsPrototypes`/`gnc_earlyAvionics`) now carry `shMassFactor`/`shCostFactor`
+too, reused verbatim from their own Unshielded values — no new tech nodes needed (they key off the SAME
+tech field as the paired Guided tier already does), and the Shielded **toggle** stays gated behind
+`ShieldedUnlocked` (hardcoded to `gnc_basicAvionics`) regardless, unchanged from before the fill-in. Decided
+this way because the toggle being locked makes the early-tier numbers moot either way.
 
 **Hibernation/idle: matches RP-1 exactly, replaces AXE's current ungated behavior.** Unshielded: no hibernate
 at all until `advancedAvionics` tech (RP-1's NE has no `disabledPowerFactor` field on its first 8 tiers),
@@ -54,10 +66,18 @@ probe-hibernation fallback (`%hasHibernation = False`), so today draw just freez
 keeps applying for the whole warp unless the player manually hits Hibernate first. Port RP-1's hook pattern
 directly: same events, same "auto-drop during warp regardless of manual state, auto-restore on load" behavior.
 
-**Radiation reliability — NUMBERS RELOCKED (2026-07-08, second pass), NOT ported from RP-1.** Important
-correction to how this is described: RP-1 has zero real radiation mechanic for avionics (`shieldingMassFactor`
-confirmed cosmetic — reads into the mass display only, no failure/reliability connection anywhere), so this
-whole mechanic is new AXE design, not a port. First-pass numbers (unshielded `1.0/1.0`, shielded `15/0.1`)
+**Radiation reliability — DEFERRED, NOT SHIPPED IN THIS PASS (2026-07-08 decision, still holds).** Everything
+below was designed and numbers-locked before implementation started, then explicitly scoped OUT at the start
+of the build: Kerbalism's `Reliability` feature is off instance-wide, and wiring this up is a separate,
+later, game-wide balance task, not something to bundle into the avionics V2 build. No `MODULE{name=Reliability}`
+block, `rated_radiation`/`radiation_decay_rate` field, or reflection bridge exists anywhere in
+`ModuleAxeAvionics.cs` today. The design below remains valid for whenever that later task happens — it was
+not abandoned, just not part of this build. Important
+correction to how this is described: RP-1 has zero real radiation-*reliability* mechanic for avionics — no
+failure/decay connection anywhere — so this whole mechanic is new AXE design, not a port. (Correction to an
+earlier claim in this doc: `shieldingMassFactor` is NOT purely cosmetic — it's a real mass add-on,
+`avionicsMass^(2/3) * shieldingMassFactor`, that genuinely increases Deep-Space's total mass; it just has no
+connection to *reliability/radiation-damage*, which is the only thing meant by "connects to nothing" below.) First-pass numbers (unshielded `1.0/1.0`, shielded `15/0.1`)
 were invented from reasoning about Kerbalism's body radiation data with no anchor — checked properly and
 found to have **no precedent anywhere in the ecosystem**: not in this instance, not in RP-1/RO's actual
 Kerbalism fork (`ROKerbalism`, confirmed to predate this feature entirely, zero references), not even
@@ -117,9 +137,21 @@ volume is currently split. Not required to use the full box — empty space is a
 - If the player **hasn't** explicitly set anything, use a standard default proportion on resize —
   **CONFIRMED (2026-07-08): 25% battery / 75% hardware / 0% empty space.** Most of a default, untouched box
   goes to hardware; battery is the smaller share until the player deliberately asks for more.
-- Floors still needed on both ends, especially endurance — sized to guarantee a minimum *runtime*, not a
-  fixed liters number (a fixed-liters floor is RP-1's actual mistake, `reservedRFTankVolume`, hardcoded to a
-  negligible 1.5-3 L, the real mechanism behind RP-1#1295's zero-battery trap).
+- **Floor — REVERSED from this doc's original call, SHIPPED as RP-1's real mechanism (2026-07-09).** This
+  section originally called RP-1's `reservedRFTankVolume` approach "RP-1's actual mistake" and specified a
+  runtime-guaranteed-minimum-endurance floor instead (computed from live draw ÷ battery chemistry). That
+  runtime floor was built first, then explicitly rejected in live testing ("there is no floor when using
+  this sliders... look at what rp1 is doing") — it was also the direct cause of a real runaway-feedback bug
+  (an undersized core's penalty multiplier going to +Infinity inflated the floor to consume the whole box).
+  Ground-truthed RP-1's actual mechanism (`ModuleProceduralAvionics.cs`/`ProceduralAvionics.cfg`) at the
+  user's request: it's a tiny FIXED constant, identical at every tier — 3 L for Guided (Near-Earth/Deep-Space
+  both use 0.003), 1.5 L for Unguided (Science-Core, 0.0015) — added as a minimum on the battery side only.
+  **Hardware has NO floor at all in RP-1** — hardware volume is purely `GetAvionicsMass()/avionicsDensity`,
+  forward-derived from whatever the player rates it at, with nothing enforced as a minimum. AXE now matches
+  both facts exactly: `EnduranceFloorVolume()` returns a flat 3 L/1.5 L constant (no runtime/draw math at
+  all), and `hwVolume` has no floor anywhere in `RecomputeSplit()`/`LiveUpdateSplit()`. The "doc was wrong"
+  call was explicit: this design decision predated enough live testing to know better, and simple/
+  ground-truthed won over the original (reasonable-sounding, but ultimately unvalidated) invented mechanic.
 
 **Default part dimensions — CONFIRMED (2026-07-08): match RP-1's own default, not AXE's current override.**
 RP-1's real default procedural-avionics shape is a 1.25 m diameter × 0.2 m length cylinder ≈ 245 L — safely
@@ -177,13 +209,17 @@ no interaction with anything else in this doc. No RP-1 config presets it to true
 - **Splitting core + battery into separate parts.** Floated mid-session, dropped in favor of one integrated
   part with a real allocation floor instead.
 - **A manual typed `controllableMass` slider.** The entire point of this redesign was removing it.
-- **Shielding mass as a survival mechanic**, RP-1-style (`shieldingMassFactor`). Confirmed cosmetic in RP-1
-  — connects to nothing. Replaced by the real Kerbalism reliability wiring above.
+- **Shielding mass as a survival/reliability mechanic**, RP-1-style (`shieldingMassFactor`). Confirmed it
+  connects to no failure/reliability system in RP-1 — replaced by the real Kerbalism reliability wiring above
+  (itself deferred, not shipped). Note this is narrower than "the field does nothing": `shieldingMassFactor`
+  IS a real mass add-on in RP-1 (see the Axis 2 section above) and AXE now applies it too — what's rejected
+  here is specifically using it as a stand-in for a radiation-survival mechanic, not the mass effect itself.
 
 ## Open / not yet decided
 
-- Whether to expose Kerbalism's "quality" PAW toggle on the new `Reliability` module (see radiation section
-  above — would quietly widen both radiation thresholds if left on).
+- Whether to expose Kerbalism's "quality" PAW toggle on a future `Reliability` module (see radiation section
+  above — would quietly widen both radiation thresholds if left on). Moot until the radiation-reliability
+  work actually ships, since no `Reliability` module exists yet.
 - Bare stock/third-party probe cores — **checked (2026-07-08), not a real concern.** Most (OKTO, OKTO2,
   RC-001S, RC-L01) are either deleted outright by an inherited RP-1 `Deprecation.cfg` patch or fall into
   AXE's disconnected `parking` tech node (no `parentID`, unreachable in a real campaign) — orphaned leftovers,
@@ -238,3 +274,47 @@ fixed the identical bug in `ModuleAxeAvionics.cs`'s hardcoded fallback ladder (`
 `guidanceTech` KSPField default) — the cfg-driven ladder was the only thing checked initially, but the
 in-code fallback used the same bare RP-1 names and would have reintroduced the exact same lockout if the cfg
 ever failed to parse. Reference-string corrections only, no logic changes. Build verified clean (0 errors).
+
+## POST-SHIP FIXES (2026-07-10) — found and fixed during live in-game testing after the V2 build landed
+
+- **Overload penalty overflowing to literal `Infinity`.** `PenaltyMultiplier()`'s `Mathf.Exp(8*(r-1))` was
+  uncapped; an undersized core (capacity near/at 0 while vessel mass > 0) pushed the exponent argument past
+  ~89, overflowing float's ~3.4e38 ceiling to the literal string "Infinity" in the PAW. This wasn't a rare
+  edge case — the stock default part + default 25/75 split produces only ~5 kg of capacity at tier `start`,
+  so essentially every fresh Guided core hit it before any deliberate resizing. Fixed by clamping the
+  exponent argument (not the multiplier) to 80 — still enormous (~5.5e34×) and still prohibitive, just no
+  longer a literal overflow. The "severe penalty for an undersized core" behavior itself is unchanged.
+- **`EffectiveCapacityTons()` required `GuidanceUnlocked` for a core to count at all — the real cause of
+  "penalty is severe no matter how I size it."** Ground-truthed against RP-1's real
+  `ControlLockerUtils.ShouldLock()`: it aggregates every avionics core's rated mass unconditionally (gated
+  only on having EC connected, or being in the editor) — there is no "is guidance tech researched" gate
+  anywhere in the real mechanism. A core's tier data is always valid (`ApplyTier()`'s tier-0 floor guarantees
+  it), so "dumb" avionics still needs to not overload for its own rated mass; `GuidanceUnlocked` should only
+  gate whether the vessel can actively *steer*, a separate concern. As shipped, every Guided core showed
+  maximum overload penalty from the moment it was placed until `guidanceTech` was researched, regardless of
+  sizing — not RP-1 parity, a genuine bug. Removed the `!axe.GuidanceUnlocked` condition.
+- **Resizing the box bigger didn't grow hardware, only "empty."** `RecomputeSplit()` capped `hwVolume` at
+  `desiredHwVolume` (the last explicitly-dragged absolute liters value) with no upper adjustment for a
+  bigger box — any growth past the last committed split just inflated unclaimed empty space, so the player
+  had to re-drag the handle after every resize for it to do anything. Added `desiredTotalVolume` (the box
+  size at the moment the split was last committed): volume gained since then flows to the player-adjustable
+  segment (hardware for Guided, battery for Unguided) by default, while a deliberately-left empty gap (a
+  handle dragged short of the box's far edge) is preserved — only *new* room past the remembered total counts
+  as growth.
+- **Fresh part instantiation could compute a near-zero capacity that "fixed itself" on the first resize.**
+  `OnStartFinished`'s editor branch read `ProceduralPart`'s volume synchronously on the same frame the part
+  started — `ProceduralPart`'s own shape/volume isn't necessarily settled that same frame (its shape
+  application can run across a frame boundary), so the read could catch it before that, producing a
+  near-zero cached volume that then stuck (near-zero capacity → tripped overload penalty) until the next
+  `onEditorShipModified` event, i.e. the player's first resize. Delayed the initial read one frame via a
+  coroutine (`EditorFirstFrameSetup()`) — same idiom `AxeAllocationBarHook` already uses waiting for the
+  PAW's field list to finish building.
+- **Missing RP-1's real Deep-Space shielding-mass add-on** and the **Shielded ladder's 4-tier gap** — see the
+  Axis 2 section above, both fixed the same session.
+- **"Endurance" PAW readout removed (sacked, not fixed).** It only ever estimated this one part's own local
+  battery against this one module's own draw — redundant with Kerbalism's own vessel-wide EC-balance
+  estimate, which accounts for every producer/consumer on the ship and answers the actual question players
+  care about. `guidanceEndurance`, `UpdateEndurance()`, and the now-unused `FormatDuration()` helper were
+  deleted outright rather than reconciled with Kerbalism's number.
+
+All of the above verified live in-game (KSP 1.12.5, this instance) after each fix, not just build-clean.

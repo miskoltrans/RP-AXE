@@ -120,6 +120,14 @@ namespace RPAxe
         // matching the reverse order for shrinking (empty gives way first, then hardware, battery last).
         [KSPField(isPersistant = true)] public float desiredBattVolume = 0f;
         [KSPField(isPersistant = true)] public float desiredHwVolume = 0f;
+        // The box's total volume at the moment the split above was last explicitly committed. Any
+        // volume the box GAINS since then (a resize bigger, not a drag) flows to the player-adjustable
+        // segment (hardware for Guided, battery for Unguided) by default -- otherwise growing the box
+        // without re-dragging would silently balloon "empty" instead of giving usable capacity/charge,
+        // and the player would have to re-drag every single time after a resize for it to do anything.
+        // A deliberately-left empty gap (dragging a handle short of the box's far edge) is unaffected --
+        // only volume PAST this remembered total counts as new growth.
+        [KSPField(isPersistant = true)] public float desiredTotalVolume = 0f;
         // False until the player applies a manual split via the allocation window; while false, every
         // resize uses the default 25% battery / 75% hardware / 0% empty proportion.
         [KSPField(isPersistant = true)] public bool hasExplicitSplit = false;
@@ -150,12 +158,6 @@ namespace RPAxe
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Overload Penalty",
                   guiFormat = "F0", guiUnits = "%", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public float penaltyPercent = 0f;
-
-        // VAB sizing readout: full-battery endurance at operating draw (editor-only — in flight it would
-        // read as total, not remaining, which misleads).
-        [KSPField(guiActiveEditor = true, guiName = "Endurance",
-                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
-        public string guidanceEndurance = "";
 
         [KSPField(guiActiveEditor = true, guiName = "Split",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
@@ -381,11 +383,15 @@ namespace RPAxe
 
             if (HighLogic.LoadedSceneIsEditor)
             {
-                _cachedVolume = ReadProceduralVolume();
-                RecomputeSplit(_cachedVolume);
-                UpdateHardwareMass();
-                PushBatteryToTank();
                 GameEvents.onEditorShipModified.Add(OnShipModified);
+                // ProceduralPart's own shape/volume isn't necessarily settled the same frame this part
+                // starts (its shape application can run across a frame boundary) -- reading volume
+                // synchronously here can catch it before that settles, producing a near-zero cached
+                // volume that then sticks (near-zero capacity -> tripped overload penalty) until the
+                // next onEditorShipModified event, e.g. the player's first resize -- matches "broken
+                // right after placing the part, fine after the first resize." One frame's delay mirrors
+                // the same idiom AxeAllocationBarHook already uses for onPartActionUICreate/CreatePartList.
+                StartCoroutine(EditorFirstFrameSetup());
             }
             else
             {
@@ -406,6 +412,19 @@ namespace RPAxe
                 }
             }
 
+            UpdateRate();
+            SetGui();
+        }
+
+        // See the comment at its call site in OnStartFinished: gives ProceduralPart's own shape/volume
+        // a frame to settle before this module's first read of it.
+        IEnumerator EditorFirstFrameSetup()
+        {
+            yield return null;
+            _cachedVolume = ReadProceduralVolume();
+            RecomputeSplit(_cachedVolume);
+            UpdateHardwareMass();
+            PushBatteryToTank();
             UpdateRate();
             SetGui();
         }
@@ -609,15 +628,19 @@ namespace RPAxe
         // explicitly set a split, use the default 25% battery / 75% hardware (Unguided: hardware is pinned,
         // battery gets the rest). If they have, re-fit toward the REMEMBERED desired values (not whatever
         // battVolume/hwVolume happened to be clamped to on the last resize) -- battery gets priority (fit
-        // it first), then hardware gets whatever room is left. This is what lets growing the box back up
-        // after a shrink restore as much of the original split as the new size allows, rather than only
-        // ever growing "empty" from wherever a previous clamp left off.
+        // it first), then hardware gets whatever room is left. Any volume the box has GAINED since the
+        // split was last explicitly committed (desiredTotalVolume) flows to the player-adjustable segment
+        // (hardware for Guided, battery for Unguided) -- growing the box is how you get more capacity/
+        // charge; without this, a resize bigger would only ever balloon "empty," and the player would have
+        // to re-drag the handle every single time after a resize for it to do anything. Volume the box has
+        // LOST (a shrink) still re-fits toward the remembered values exactly as before.
         void RecomputeSplit(float v)
         {
+            float growth = hasExplicitSplit ? Mathf.Max(0f, v - desiredTotalVolume) : 0f;
             if (!guidanceEnabled)
             {
                 hwVolume = FixedUnguidedHwVolume();
-                battVolume = hasExplicitSplit ? Mathf.Min(desiredBattVolume, Mathf.Max(0f, v - hwVolume))
+                battVolume = hasExplicitSplit ? Mathf.Min(desiredBattVolume + growth, Mathf.Max(0f, v - hwVolume))
                                                : Mathf.Max(0f, v - hwVolume);
             }
             else if (!hasExplicitSplit)
@@ -628,7 +651,7 @@ namespace RPAxe
             else
             {
                 battVolume = Mathf.Min(desiredBattVolume, v);
-                hwVolume = Mathf.Min(desiredHwVolume, Mathf.Max(0f, v - battVolume));
+                hwVolume = Mathf.Min(desiredHwVolume + growth, Mathf.Max(0f, v - battVolume));
             }
             battVolume = Mathf.Max(battVolume, EnduranceFloorVolume());
             battVolume = Mathf.Min(battVolume, v);
@@ -729,12 +752,14 @@ namespace RPAxe
         public void CommitAllocationDrag()
         {
             hasExplicitSplit = true;
+            desiredTotalVolume = _cachedVolume;
             foreach (Part p in part.symmetryCounterparts)
             {
                 ModuleAxeAvionics axe = p.FindModuleImplementing<ModuleAxeAvionics>();
                 if (axe == null) continue;
                 axe.battVolume = battVolume; axe.hwVolume = hwVolume;
                 axe.desiredBattVolume = desiredBattVolume; axe.desiredHwVolume = desiredHwVolume;
+                axe.desiredTotalVolume = axe._cachedVolume;
                 axe.hasExplicitSplit = true;
             }
             if (HighLogic.LoadedSceneIsEditor && EditorLogic.fetch?.ship != null)
@@ -795,8 +820,18 @@ namespace RPAxe
         }
 
         // MAX across the vessel's active Guided cores (RP-1's own 2021 anti-cheese rule — SUM lets a
-        // stack of cheap small cores cheese capacity). A core only contributes if its guidance tech is
-        // researched and it isn't hibernating (mirrors RP-1's currentlyEnabled/TechAvailable gate).
+        // stack of cheap small cores cheese capacity). Ground-truthed against RP-1's real
+        // ControlLockerUtils.ShouldLock(): it aggregates every ModuleAvionics' CurrentMassLimit
+        // unconditionally (gated only on having EC connected, or being in the editor) -- there is NO
+        // "is guidance tech researched" gate on whether a core's mass counts. A core's tier (and
+        // therefore capacityTons) is ALWAYS valid -- ApplyTier()'s tier-0 floor guarantees that -- so
+        // "dumb" avionics (guidance not yet researched) still needs to not overload for its own rated
+        // mass; GuidanceUnlocked only gates whether the vessel can actively STEER (GuidanceActive),
+        // a separate concern handled elsewhere. Previously this method also excluded un-researched
+        // cores here, which meant EVERY Guided core showed max overload penalty from the moment it was
+        // placed until guidanceTech was researched, regardless of how it was sized -- a real bug, not
+        // RP-1 parity. Hibernating cores still don't contribute (asleep, not actively protecting the
+        // vessel's overload budget).
         float EffectiveCapacityTons()
         {
             List<Part> parts = HighLogic.LoadedSceneIsEditor ? EditorLogic.fetch?.ship?.parts : vessel?.parts;
@@ -805,7 +840,7 @@ namespace RPAxe
             for (int i = 0; i < parts.Count; i++)
             {
                 ModuleAxeAvionics axe = parts[i]?.FindModuleImplementing<ModuleAxeAvionics>();
-                if (axe == null || !axe.guidanceEnabled || !axe.GuidanceUnlocked || axe.hibernating) continue;
+                if (axe == null || !axe.guidanceEnabled || axe.hibernating) continue;
                 if (axe.capacityTons > max) max = axe.capacityTons;
             }
             return max;
@@ -865,33 +900,14 @@ namespace RPAxe
             penaltyPercent = (PenaltyMultiplier() - 1f) * 100f;
             _ecConsumption = new KeyValuePair<string, double>(EcName, -currentWatts / 1000.0);
             if (_commandEC != null) _commandEC.rate = KerbalismPresent ? 0f : currentWatts / 1000f;
-            UpdateEndurance();
             UpdateAllocationSummary();
             SetGui();
-        }
-
-        // How long the operating draw can run on a full battery — the key VAB sizing readout.
-        void UpdateEndurance()
-        {
-            float w = ComputeBaseWatts();
-            double ecMax = 0.0;
-            PartResource r = part.Resources?.Get(PartResourceLibrary.ElectricityHashcode);
-            if (r != null) ecMax = r.maxAmount;
-            if (w <= 0f || ecMax <= 0.0) { guidanceEndurance = "—"; return; }
-            guidanceEndurance = FormatDuration(ecMax / (w / 1000.0));
         }
 
         void UpdateAllocationSummary()
         {
             float empty = Mathf.Max(0f, _cachedVolume - battVolume - hwVolume);
             allocationSummary = $"{battVolume * 1000f:F0} L batt / {hwVolume * 1000f:F0} L hw / {empty * 1000f:F0} L empty";
-        }
-
-        static string FormatDuration(double s)
-        {
-            if (s >= 3600.0) return $"{(int)(s / 3600)}h {(int)(s % 3600 / 60)}m";
-            if (s >= 60.0) return $"{(int)(s / 60)}m {(int)(s % 60)}s";
-            return $"{(int)s}s";
         }
 
         void SetGui()
