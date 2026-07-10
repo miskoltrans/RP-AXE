@@ -6,9 +6,10 @@ namespace RPAxe.Airlaunch
 {
     /// <summary>
     /// Flight-scene half of the airlaunch. If the editor hook left a pending choice, wait for the vessel to
-    /// finish spawning on the runway, teleport it into the released state, then clobber the situation back to
-    /// PRELAUNCH -&gt; FLYING (the Principia / persistent-rotation safety dance ported from RP-1's
-    /// AirlaunchUtils).
+    /// finish spawning on the runway, teleport it to the release point, then run a 10-second countdown that
+    /// holds the vessel on a straight, constant-velocity line (counteracting Keplerian drift while it sits
+    /// on rails) before releasing control. Ported from RP-1's AirlaunchUtils.DoAirlaunchRoutine; the
+    /// teleport + situation clobber are AXE's, everything else is the original hold logic.
     /// </summary>
     [KSPAddon(KSPAddon.Startup.Flight, false)]
     public class AxeAirlaunchFlight : MonoBehaviour
@@ -50,13 +51,92 @@ namespace RPAxe.Airlaunch
             }
 
             StartCoroutine(ClobberToPrelaunch(id));
+
+            // --- Countdown + straight-line physics hold (ported from RP-1 AirlaunchUtils) ---
+
+            // Keep the vessel on rails via HoldVesselUnpack (the FixedUpdate-based GoOffRails gate),
+            // refreshed every fixed update below. RP-1 also uses SetPhysicsHoldExpiryOverride to block
+            // render-frame direct GoOffRails calls, but that method isn't in this KSP build's Assembly-CSharp,
+            // so we rely on HoldVesselUnpack alone (RP-1's documented primary mechanism).
+            HoldPhysics();
+
+            // One fixed update for the teleport to settle before we snapshot the state to hold.
+            yield return new WaitForFixedUpdate();
+
+            // The artificial hold keeps the physics-hold control lock set; drop it so controls work on release.
+            InputLockManager.RemoveControlLock("physicsHold");
+
+            v = FlightGlobals.ActiveVessel;
+            if (v == null || v.id != id) yield break;
+
+            // Snapshot the trajectory we want to hold constant: a straight line at constant surface velocity.
+            // Without re-patching each frame, patched-conic propagation would curve the velocity down and
+            // change speed over the 10-second hold.
+            double holdStartUT = Planetarium.GetUniversalTime();
+            Vector3d holdStartRelPos = v.GetWorldPos3D() - v.mainBody.position;   // Unity XYZ, rel body centre
+            Vector3d up = holdStartRelPos.normalized;
+            Vector3d omega = v.mainBody.angularVelocity;
+            Vector3d planetRotVelocity = Vector3d.Cross(omega, holdStartRelPos);  // atmosphere co-rotation
+            Vector3d east = planetRotVelocity.normalized;
+            Vector3d north = Vector3d.Cross(east, up);
+            double headRad = p.Heading * Mathf.Deg2Rad;
+            Vector3d holdStartSurfVel = (Math.Sin(headRad) * east + Math.Cos(headRad) * north) * p.Velocity;
+
+            for (int i = 10; i > 0; i--)
+            {
+                ScreenMessages.PostScreenMessage($"Airlaunching in {i}...", 1f, ScreenMessageStyle.UPPER_CENTER, XKCDColors.Red);
+
+                float elapsed = 0f;
+                while (elapsed < 1f)
+                {
+                    v = FlightGlobals.ActiveVessel;
+                    if (v == null || v.id != id)
+                    {
+                        Debug.LogWarning("[AXE] airlaunch: active vessel changed mid-countdown; aborting hold.");
+                        yield break;
+                    }
+
+                    // Advance the position along the launch heading at the release velocity, co-rotated with
+                    // the planet — the distance a carrier aircraft would cover during the count.
+                    double deltaT = Planetarium.GetUniversalTime() - holdStartUT;
+                    float rotAngleDeg = (float)(omega.magnitude * deltaT * Mathf.Rad2Deg);
+                    Quaternion rot = Quaternion.AngleAxis(rotAngleDeg, (Vector3)omega.normalized);
+                    Vector3d velocityOffset = holdStartSurfVel - planetRotVelocity;
+                    Vector3d newRelPos = (Vector3d)(rot * (Vector3)(holdStartRelPos + velocityOffset * deltaT));
+
+                    // Inertial velocity = frame velocity at the new position + rotated surface launch velocity.
+                    Vector3d newObtVel = Vector3d.Cross(omega, newRelPos) + (Vector3d)(rot * (Vector3)holdStartSurfVel);
+
+                    // UpdateFromStateVectors expects Zup (orbital) space = the .xzy swizzle of Unity space.
+                    v.orbit.UpdateFromStateVectors(newRelPos.xzy, newObtVel.xzy, v.mainBody, Planetarium.GetUniversalTime());
+
+                    // Move the transform to match now, mirroring OrbitDriver.updateFromParameters — otherwise
+                    // the transform stays at last frame's Keplerian position until the next frame.
+                    Vector3d localCom = (QuaternionD)v.orbitDriver.driverTransform.rotation * (Vector3d)v.localCoM;
+                    v.SetPosition(v.mainBody.position + newRelPos - localCom);
+
+                    HoldPhysics();
+                    yield return new WaitForFixedUpdate();
+                    elapsed += Time.fixedDeltaTime;
+                }
+            }
+
+            // Release the hold; the vessel comes off rails and ClobberToPrelaunch fires the FLYING event.
+            OrbitPhysicsManager.HoldVesselUnpack(1);
+
             ScreenMessages.PostScreenMessage(
                 $"Airlaunch — released at {p.Altitude:0} m, {p.Velocity:0} m/s",
-                6f, ScreenMessageStyle.UPPER_CENTER);
+                5f, ScreenMessageStyle.UPPER_CENTER);
         }
 
-        // Hold the vessel in PRELAUNCH while it is still packed, then fire the transition to FLYING so trip
-        // loggers etc. notice we are airborne. Ported from RP-1 AirlaunchUtils.ClobberToPrelaunch.
+        // Refresh the unpack hold for a couple of fixed updates (call every FixedUpdate to sustain it).
+        private static void HoldPhysics()
+        {
+            OrbitPhysicsManager.HoldVesselUnpack(2);
+        }
+
+        // Hold the vessel in PRELAUNCH while still packed, then fire the transition to FLYING so trip loggers
+        // etc. notice we are airborne. Ported from RP-1 AirlaunchUtils.ClobberToPrelaunch.
         private IEnumerator ClobberToPrelaunch(Guid id)
         {
             Vessel v = FlightGlobals.ActiveVessel;
