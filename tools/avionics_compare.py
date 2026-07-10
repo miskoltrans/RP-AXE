@@ -19,6 +19,12 @@ toggle deep-sleeps either model. Range is NOT gated (that's comms). Other differ
 keys hardware off the ACTUAL load (RP-1 rates controllableMass >= mass, with margin); AXE's draw is live vs
 RP-1's static; guidance is gated at postWarAvionics vs RP-1's start; SAS is a flat level 3.
 
+V2 redesign note: in-game, mass now runs INVERTED from what's modeled here (box volume -> mass -> capacity
+via the inverse polynomial) and a second Guided-only axis, Shielded/Unshielded, adds its own full ladder
+(shMassFactor/shCostFactor per TIER, own shMassConstant/shCostConstant/shPowerConstant — section J), mirroring
+RP-1's real Deep-Space AVIONICSCONFIG. This script still runs the forward polynomial for grounded comparison
+(RP-1's own numbers are forward), it doesn't model the box-size UI or the overload-penalty formula.
+
 Sources:
   RP-1 coeffs   : RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg  (AVIONICSCONFIGS, Near-Earth)
   RP-1 formulas : RP-1/Source/RP0/Avionics/ModuleProceduralAvionics.cs (GetPolynomial / GetAvionicsMass)
@@ -36,12 +42,29 @@ MASS_EXP, MASS_CONST = 0.46172, 0.96
 PWR_EXP,  PWR_CONST  = 0.57853, 1.035
 DENSITY = 0.5  # avionicsDensity, t/m^3
 
+# Shielded axis (V2 redesign): own constants, ground-truthed against RP-1's real Deep-Space AVIONICSCONFIG
+# (RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg). Same exponents as Unshielded; shPowerFactor reuses the
+# Unshielded powerFactor column (verified byte-identical per tier in RP-1's real data).
+SH_MASS_CONST, SH_COST_CONST, SH_PWR_CONST = 1.043, 9.1, 1.096
+
 def poly(value, exponent, constant, factor):
     return (math.pow(value, exponent) + constant) * factor
+
+def inverse_poly(value, exponent, constant, factor):
+    if factor <= 0:
+        return 0.0
+    try:
+        base = value / factor - constant
+        if base < 0:
+            return 0.0
+        return math.pow(base, 1.0 / exponent)
+    except (ValueError, ZeroDivisionError):
+        return 0.0
 
 def hw_mass_t(M, mf):  return poly(M, MASS_EXP, MASS_CONST, mf) / 1000.0   # tons
 def draw_W(M, pf):     return poly(M, PWR_EXP,  PWR_CONST,  pf)            # watts
 def hw_vol_L(M, mf):   return (hw_mass_t(M, mf) / DENSITY) * 1000.0        # liters (m^3 * 1000)
+def sh_hw_mass_t(M, shmf): return poly(M, MASS_EXP, SH_MASS_CONST, shmf) / 1000.0  # tons, Shielded ladder
 
 # ---- RP-1 Near-Earth ladder: (techLevel, name, era, massFactor, powerFactor) — full 13 tiers ----
 NE = [
@@ -74,13 +97,15 @@ def _field(body, key):
 def load_axe_ladder():
     """(NE list of (name, massFactor, powerFactor), SC dict name -> (scMass kg, scPower W, scDensity, axial),
     COST dict name -> (costFactor, scCostFactor), SCI dict name -> hasScienceContainer,
-    KOS dict name -> (diskSpace, costFactor, massFactor, ecPerInstruction))."""
+    KOS dict name -> (diskSpace, costFactor, massFactor, ecPerInstruction),
+    SH dict name -> (shMassFactor, shCostFactor) for tiers that carry a Shielded rung,
+    HIB dict name -> unshHibernateFactor (<=0 = can't hibernate yet))."""
     try:
         with open(CFG, encoding="utf-8") as f:
             text = f.read()
     except OSError:
-        return [], {}, {}, {}, {}
-    ne, sc, cost, sci, kos = [], {}, {}, {}, {}
+        return [], {}, {}, {}, {}, {}, {}
+    ne, sc, cost, sci, kos, sh, hib = [], {}, {}, {}, {}, {}, {}
     for blk in TIER_RE.finditer(text):
         body = blk.group(1)
         tech, mf, pf = _field(body, "tech"), _field(body, "massFactor"), _field(body, "powerFactor")
@@ -98,9 +123,15 @@ def load_axe_ladder():
                              _field(body, "kosSpaceMassFactor"), _field(body, "kosECPerInstruction"))
         if kd and kcf and kmf and kec:
             kos[tech] = (float(kd), float(kcf), float(kmf), float(kec))
-    return ne, sc, cost, sci, kos
+        shmf, shcf = _field(body, "shMassFactor"), _field(body, "shCostFactor")
+        if shmf and shcf and float(shmf) > 0:
+            sh[tech] = (float(shmf), float(shcf))
+        uh = _field(body, "unshHibernateFactor")
+        if uh:
+            hib[tech] = float(uh)
+    return ne, sc, cost, sci, kos, sh, hib
 
-AXE, AXE_SC, AXE_COST, AXE_SCI, AXE_KOS = load_axe_ladder()
+AXE, AXE_SC, AXE_COST, AXE_SCI, AXE_KOS, AXE_SH, AXE_HIB = load_axe_ladder()
 AXE_BY_NAME = {name: (name, mf, pf) for name, mf, pf in AXE}  # name-anchored, not positional (tier count/order can change)
 
 # ---- RealFuels battery chemistries: name -> (kg/1000EC, funds/1000EC, maxUtil, unlock) ----
@@ -196,6 +227,37 @@ def main():
         print("  (sciContainer: ModuleScienceContainer checked off at flight start if the as-built tier lacks it,")
         print("   matching RP-1's own Start()-only gating. kosDiskSpace: reflected onto a kOSProcessor module if")
         print("   present — kOS isn't an AXE dependency today, so this is currently inert.)")
+
+    if AXE_SH:
+        print(); print(bar); print("J) SHIELDED axis (V2 redesign) — own ladder vs Unshielded, at equal capacity"); print(bar)
+        caps = [1, 5, 15, 50]
+        print(f"{'AXE tech (TIER node)':22} | " + " ".join(f"{'unsh '+str(c)+'t':>10}" for c in caps) + " | " +
+              " ".join(f"{'shield '+str(c)+'t':>11}" for c in caps))
+        for name, mf, pf in AXE:
+            if name not in AXE_SH:
+                continue
+            shmf, shcf = AXE_SH[name]
+            unsh_kg = [f"{hw_mass_t(c, mf)*1000:8.0f}" for c in caps]
+            sh_kg = [f"{sh_hw_mass_t(c, shmf)*1000:9.0f}" for c in caps]
+            print(f"{name:22} | " + " ".join(unsh_kg) + " | " + " ".join(sh_kg))
+        print("  (mass (kg) at a given CAPACITY (t, i.e. controllable/steerable vessel mass) — the V2 redesign runs")
+        print("   the polynomial forward here for comparison purposes; in-game it's inverted (box volume -> mass ->")
+        print("   capacity). Shielded should run ~10% heavier at equal capacity — verify the ratio holds.)")
+        print()
+        print(f"{'AXE tech (TIER node)':22} {'unsh cost':>10} {'shield cost':>12}   unshHibernate")
+        for name, mf, pf in AXE:
+            if name not in AXE_SH:
+                continue
+            shmf, shcf = AXE_SH[name]
+            cf = AXE_COST.get(name, (0, 0))[0]
+            unsh_cost = poly(10, MASS_EXP, 3.034, cf) if cf else 0.0
+            sh_cost = poly(10, MASS_EXP, SH_COST_CONST, shcf)
+            hib = AXE_HIB.get(name, -1.0)
+            hib_s = f"{hib:.2f}" if hib > 0 else "no"
+            print(f"{name:22} {unsh_cost:10.0f} {sh_cost:12.0f}   {hib_s}")
+        print("  (cost (funds) at 10t capacity, same load basis as mass, no /1000. unshHibernate: the tier where")
+        print("   Unshielded's own hibernate toggle unlocks (shallow 0.1x) — Shielded gets a deep 0.05x from its")
+        print("   own tier 0, no gate, same as hibernationFactor throughout this script's Unshielded numbers above.)")
 
 if __name__ == "__main__":
     main()
