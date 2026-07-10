@@ -95,6 +95,32 @@ def scan(roots, src, valid):
     return findings
 
 
+def scan_cache(cache_path, valid):
+    """Scan a ModuleManager.ConfigCache -- the POST-patch runtime truth. This is the
+    accurate mode: it sees only what actually loaded, so design/ overlays that override
+    a stale seed value (e.g. AxeAvionicsCore.cfg rewriting the avionics TIER techRequired)
+    do NOT produce false positives. Cache-only fields: techRequired / tech / techRequired__
+    (MM :HAS[#TechRequired[X]] filters are consumed at patch time and never reach the cache)."""
+    findings = defaultdict(list)
+    if not os.path.isfile(cache_path):
+        sys.exit(f"ConfigCache not found: {cache_path} (launch KSP once to generate it)")
+    parent = "?"
+    with open(cache_path, encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            m = re.match(r"\s*parentUrl\s*=\s*(\S+)", line)
+            if m:
+                parent = m.group(1)
+                continue
+            for label, pat in GATE_PATTERNS:
+                if label == "#TechRequired":
+                    continue
+                mm = pat.match(line)
+                if mm and mm.group(1) not in valid:
+                    is_axe = "RP-AXE" in parent
+                    findings[mm.group(1)].append((label, parent, is_axe, False))
+    return findings
+
+
 def rel(p):
     return p.replace(REPO + os.sep, "").replace(os.sep, "/")
 
@@ -105,17 +131,22 @@ def main():
     ap.add_argument("--root", action="append", default=[])
     ap.add_argument("--instance", help="an instance GameData to also scan (full-instance audit)")
     ap.add_argument("--src", default=DEFAULT_SRC)
+    ap.add_argument("--cache", help="scan a ModuleManager.ConfigCache (POST-patch truth -- no overlay false positives). Recommended for the real audit.")
     args = ap.parse_args()
-
-    roots = list(DEFAULT_ROOTS) + args.root
-    if args.instance:
-        roots.append(args.instance)
 
     valid = load_valid_nodes(args.tree)
     print(f"tree: {rel(args.tree)}  ({len(valid)} nodes)")
-    print(f"roots: {', '.join(rel(r) for r in roots)}\n")
 
-    findings = scan(roots, args.src, valid)
+    if args.cache:
+        print(f"mode: ConfigCache (runtime truth)  {args.cache}\n")
+        findings = scan_cache(args.cache, valid)
+    else:
+        roots = list(DEFAULT_ROOTS) + args.root
+        if args.instance:
+            roots.append(args.instance)
+        print(f"mode: SOURCE scan (fast; may false-positive on overlay-overridden seed refs)")
+        print(f"roots: {', '.join(rel(r) for r in roots)}\n")
+        findings = scan(roots, args.src, valid)
     if not findings:
         print("OK - every tech-gate reference resolves to a real tree node.")
         return 0
