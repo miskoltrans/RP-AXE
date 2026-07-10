@@ -8,11 +8,11 @@ see [PLACEHOLDERS.md](PLACEHOLDERS.md)) plus any node carrying an explicit `impl
 REFERENCE items live in the tree on purpose; **this is the list to work through when building
 them**, not a reason to drop them.
 
-**23 provisional grants across 23 nodes; 0 nodes with an explicit impl note.**
+**33 provisional grants across 33 nodes; 0 nodes with an explicit impl note.**
 
 ## Deep Space Network / tracking-station levels (10)
 
-_Needs a ground-station capability that applies each level's DSN gain in-game — RP-1's tracking-station facility-upgrade mechanic is one AXE axes, so the effect must be re-provided._
+_SHIPPED — the 11-level ladder + DSN gain are re-provided by design/Settings/AxeTrackingStation.cfg (CustomBarnKit @TRACKING, consumed by RealAntennas) and the per-level tech gate by design/Tree/AxeFacilityGates.cfg (AXEBUILDINGTECHS), enforced in AXE.dll (AxeTrackingStationGate). The grant stubs below remain as the tree-node presentation tokens._
 
 | grant | node | tier | title |
 |---|---|---|---|
@@ -27,7 +27,7 @@ _Needs a ground-station capability that applies each level's DSN gain in-game �
 | `RP0Level10TrackingStation` | `tel_bandwidthEfficientModulation` | T13 | Bandwidth-Efficient Modulation |
 | `RP0Level11TrackingStation` | `tel_opticalDownlink` | T14 | Optical Deep-Space Downlink |
 
-## Avionics capability tiers (13)
+## Avionics capability tiers (22)
 
 _Needs the avionics-plugin tier gate to consume these (real emission instead of the provisional partUpgrade stub)._
 
@@ -37,12 +37,29 @@ _Needs the avionics-plugin tier gate to consume these (real emission instead of 
 | `Science-Core-avionicsPrototypes` | `gnc_avionicsPrototypes` | T2 | Analog Inertial Guidance |
 | `Science-Core-earlyAvionics` | `gnc_earlyAvionics` | T4 | Stable-Platform Guidance |
 | `Science-Core-basicAvionics` | `gnc_basicAvionics` | T5 | Miniaturised Inertial Guidance |
+| `Deep-Space-basicAvionics` | `shd_basicAvionics` | T6 | Radiation-Shielded Avionics — Basic |
 | `Science-Core-interplanetaryProbes` | `gnc_interplanetaryAvionics` | T7 | Long-Duration Cruise Guidance |
 | `Science-Core-improvedAvionics` | `comp_digitalGuidanceComputer` | T8 | Digital Guidance Computer |
+| `Deep-Space-improvedAvionics` | `shd_digitalGuidanceComputer` | T9 | Radiation-Shielded Avionics — Digital |
 | `Science-Core-matureAvionics` | `comp_realTimeFlightComputer` | T9 | Priority-Interrupt Flight Computer |
+| `Deep-Space-matureAvionics` | `shd_realTimeFlightComputer` | T10 | Radiation-Shielded Avionics — Real-Time |
 | `Science-Core-largeScaleAvionics` | `comp_networkedAvionics` | T10 | Multi-Vehicle Avionics Integration |
+| `Deep-Space-largeScaleAvionics` | `shd_networkedAvionics` | T11 | Radiation-Shielded Avionics — Networked |
 | `Science-Core-advancedAvionics` | `comp_multiplyRedundantFlightComputer` | T11 | Multiply-Redundant General-Purpose Computer |
+| `Deep-Space-advancedAvionics` | `shd_multiplyRedundantFlightComputer` | T12 | Radiation-Shielded Avionics — Redundant |
 | `Science-Core-nextGenAvionics` | `comp_distributedAvionicsBus` | T12 | Distributed Avionics Data Bus |
+| `Deep-Space-nextGenAvionics` | `shd_distributedAvionicsBus` | T13 | Radiation-Shielded Avionics — Distributed Bus |
 | `Science-Core-longTermAvionics` | `comp_softwareDefinedFlightControl` | T13 | Software-Defined Flight Control |
+| `Deep-Space-longTermAvionics` | `shd_softwareDefinedFlightControl` | T14 | Radiation-Shielded Avionics — Software-Defined |
 | `Science-Core-internationalAvionics` | `comp_interoperableAvionicsStandard` | T14 | Interoperable Avionics Standard |
+| `Deep-Space-internationalAvionics` | `shd_interoperableAvionicsStandard` | T15 | Radiation-Shielded Avionics — Interoperable |
 | `Science-Core-modernAvionics` | `comp_commercialOffTheShelfAvionics` | T15 | Commercial Off-The-Shelf Flight Computer |
+| `Deep-Space-modernAvionics` | `shd_commercialOffTheShelfAvionics` | T16 | Radiation-Shielded Avionics — Commercial |
+
+## Other capability grants (1)
+
+_Provisional grant stub — emission / in-game effect still to be wired._
+
+| grant | node | tier | title |
+|---|---|---|---|
+| `Deep-Space-interplanetaryProbes` | `shd_interplanetaryAvionics` | T8 | Radiation-Shielded Avionics — Interplanetary |

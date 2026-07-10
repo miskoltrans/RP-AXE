@@ -691,6 +691,16 @@ nodes:
     parents: [fd_throttleableRocketplane]
     flavor: "A rocket a pilot can throttle deeply and relight in flight, burning ammonia and oxygen with control enough to fly the edge of space and come back. The X-15's XLR99: the first man-rated throttleable engine, and the doorway to hypersonics."
     parts: [ROE-XLR99]
+  - id: aero_hotStructure
+    title: "Hot-Structure Airframe"
+    discipline: Aerodynamics
+    tier: 6
+    parents: [fd_throttlingRocket]
+    flavor: "Build the airframe itself to run hot — an Inconel-X skin that carries flight loads while glowing, shrugging off the friction heat that would soften aluminium, so drop tanks and an ablative overspray can push the same aircraft past Mach 6. The X-15A-2: the fastest a piloted aeroplane has ever flown."
+    # Capability node, no new part: the Mk1 hypersonic fuselage/cockpit parts RP-1 hung on its
+    # hypersonicFlightRP0 already live in life_pressurisedCabin. This node homes the airlaunch Level-4
+    # envelope (25 t) — the airlaunchTL4 PARTUPGRADE attaches here via techRequired in
+    # design/Tree/AxeAirlaunch.cfg, the same way RP-1 gated its airlaunch tech levels on real tree nodes.
 
   # ===================== BAND 1 * UTILITY CATCH-ALL (exempt from the <=6 rule) =====================
   # The passive structure everyone needs and no one researches for. Station-scale modular truss + MLP +
@@ -1049,6 +1059,16 @@ nodes:
     # +5 upgrades (2026-07): confirmed KEEP-capability, not REFERENCE — same avionics-capability ladder
     # this node already carries (HDD-Upgrade-Basic), just the next rungs. Were wrongly bucketed with the
     # genuinely-blocked REFERENCE-avionics items just because they share the same RP-1 techRequired bucket.
+  - id: shd_basicAvionics
+    title: "Radiation-Shielded Avionics — Basic"
+    discipline: GuidanceControl
+    tier: 6
+    parents: [gnc_basicAvionics]
+    flavor: "Wrap the same guidance stack in radiation shielding and a hardened chassis so it can outlast a passage through the Van Allen belts and beyond — heavier and pricier than the bare avionics it protects, but no longer confined to Earth's magnetosphere."
+    grants: [Deep-Space-basicAvionics]
+    # V2 avionics redesign (2026-07-08): AXE's own Shielded axis (docs/AVIONICS_SPEC.md), mirroring RP-1's
+    # Deep-Space ladder one-for-one. Serial chain (each rung needs the previous Shielded rung + the paired
+    # Guided/Computing tier). Placeholder flavor/title — dedicated content-authoring pass still pending.
   - id: tel_dopplerRanging
     title: "Coherent Doppler Ranging"
     discipline: Telecommunications
@@ -2477,6 +2497,14 @@ nodes:
     parents: [gnc_basicAvionics]
     flavor: "Stretch the same miniaturised inertial stack to survive a cruise measured in months instead of an orbit measured in hours — redundant circuitry and a sun-and-star reference that never loses its lock on the long coast out to another planet."
     grants: [Science-Core-interplanetaryProbes]
+  - id: shd_interplanetaryAvionics
+    title: "Radiation-Shielded Avionics — Interplanetary"
+    discipline: GuidanceControl
+    tier: 8
+    parents: [shd_basicAvionics, gnc_interplanetaryAvionics]
+    flavor: "Harden the long-duration cruise stack itself, not just its chassis — shielded electronics for a coast that spends months, not hours, deep in interplanetary radiation."
+    grants: [Deep-Space-interplanetaryProbes]
+    # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note.
   - id: elec_integratedCircuit
     title: "Monolithic Integrated Circuits"
     discipline: Microelectronics
@@ -2494,6 +2522,14 @@ nodes:
     # RO-SaturnI-IU (2026-07, backlog sweep): the Saturn I's own instrument-unit ring, contemporaneous with
     # this generation of digital guidance hardware (early-mid 1960s) - tagged for AXE's own avionics module
     # at the P4 config-patch pass, per docs/PARTLIST.md.
+  - id: shd_digitalGuidanceComputer
+    title: "Radiation-Shielded Avionics — Digital"
+    discipline: Computing
+    tier: 9
+    parents: [shd_interplanetaryAvionics, comp_digitalGuidanceComputer]
+    flavor: "The first digital guidance computer, rebuilt around radiation-hardened logic — a machine that keeps computing fresh corrections after a dose that would upset an unshielded chip."
+    grants: [Deep-Space-improvedAvionics]
+    # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note.
   - id: comp_realTimeFlightComputer
     title: "Priority-Interrupt Flight Computer"
     discipline: Computing
@@ -2505,6 +2541,14 @@ nodes:
     # restock-drone-core-375-1 (2026-07, backlog sweep): the Saturn IB/V instrument unit - the real ring
     # that carried the actual Apollo Guidance Computer's ground-side LVDC counterpart. Tagged for AXE's
     # own avionics module at the P4 config-patch pass, per docs/PARTLIST.md.
+  - id: shd_realTimeFlightComputer
+    title: "Radiation-Shielded Avionics — Real-Time"
+    discipline: Computing
+    tier: 10
+    parents: [shd_digitalGuidanceComputer, comp_realTimeFlightComputer]
+    flavor: "The priority-interrupt flight computer, shielded to keep juggling guidance, navigation and engine control after a dose that would otherwise upset its scheduler."
+    grants: [Deep-Space-matureAvionics]
+    # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note.
   - id: comp_networkedAvionics
     title: "Multi-Vehicle Avionics Integration"
     discipline: Computing
@@ -2513,6 +2557,14 @@ nodes:
     flavor: "Coordinate guidance, power and data across several docked modules as one system instead of one hull — the avionics architecture a space station, not just a single spacecraft, needs to hold together."
     grants: [Science-Core-largeScaleAvionics]
     upgrades: [HDD-Upgrade-1969, RFTech-ComSat-III, RFTech-NavSat-III]  # 2026-07 tech-level fill: HDD/comsat/navsat rungs of the largeScaleAvionics era (siblings on the earlier avionics nodes)
+  - id: shd_networkedAvionics
+    title: "Radiation-Shielded Avionics — Networked"
+    discipline: Computing
+    tier: 11
+    parents: [shd_realTimeFlightComputer, comp_networkedAvionics]
+    flavor: "Multi-vehicle avionics integration, hardened for a station or relay constellation that spends its whole service life outside Earth's protective magnetosphere."
+    grants: [Deep-Space-largeScaleAvionics]
+    # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note.
   - id: comp_multiplyRedundantFlightComputer
     title: "Multiply-Redundant General-Purpose Computer"
     discipline: Computing
@@ -2526,6 +2578,14 @@ nodes:
     # tagged rungs (docs/UPGRADES.md T3 audit) were never granted anywhere. Continued linearly, same
     # pattern as comp_digitalGuidanceComputer/comp_realTimeFlightComputer/comp_networkedAvionics
     # (pure grants nodes, no parts - these mark an avionics-generation milestone, not new hardware).
+  - id: shd_multiplyRedundantFlightComputer
+    title: "Radiation-Shielded Avionics — Redundant"
+    discipline: Computing
+    tier: 12
+    parents: [shd_networkedAvionics, comp_multiplyRedundantFlightComputer]
+    flavor: "Quadruple-redundant fly-by-wire, shielded to keep out-voting a radiation-flipped bit the same way it out-votes any other single failure — trusted with a crew on a mission that never comes home to Earth's shelter."
+    grants: [Deep-Space-advancedAvionics]
+    # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note.
   - id: comp_distributedAvionicsBus
     title: "Distributed Avionics Data Bus"
     discipline: Computing
@@ -2533,6 +2593,14 @@ nodes:
     parents: [comp_multiplyRedundantFlightComputer]
     flavor: "Stop wiring every sensor and actuator straight to the computer and put them all on one shared data bus instead — a single twisted pair carrying every subsystem's traffic, addressed and time-sliced instead of home-run cabled. The wiring-harness weight a modular station can no longer afford to carry."
     grants: [Science-Core-nextGenAvionics]
+  - id: shd_distributedAvionicsBus
+    title: "Radiation-Shielded Avionics — Distributed Bus"
+    discipline: Computing
+    tier: 13
+    parents: [shd_multiplyRedundantFlightComputer, comp_distributedAvionicsBus]
+    flavor: "The shared data bus, radiation-hardened end to end — every sensor and actuator on the line survives the same dose the flight computer does, for an outer-system mission with no wiring-harness weight to spare."
+    grants: [Deep-Space-nextGenAvionics]
+    # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note.
   - id: comp_softwareDefinedFlightControl
     title: "Software-Defined Flight Control"
     discipline: Computing
@@ -2541,6 +2609,14 @@ nodes:
     flavor: "Move the control laws out of hardwired logic and into software that can be patched after launch — a flight computer whose behaviour is a file to update, not a board to re-etch, for a vehicle meant to keep flying for years."
     grants: [Science-Core-longTermAvionics]
     upgrades: [HDD-Upgrade-1990]  # 2026-07 tech-level fill: HDD rung of the longTermAvionics era
+  - id: shd_softwareDefinedFlightControl
+    title: "Radiation-Shielded Avionics — Software-Defined"
+    discipline: Computing
+    tier: 14
+    parents: [shd_distributedAvionicsBus, comp_softwareDefinedFlightControl]
+    flavor: "Software-patchable flight control, shielded for a vehicle meant to keep flying for years deep in the outer system, where a board re-etch is never an option."
+    grants: [Deep-Space-longTermAvionics]
+    # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note.
   - id: comp_interoperableAvionicsStandard
     title: "Interoperable Avionics Standard"
     discipline: Computing
@@ -2549,6 +2625,14 @@ nodes:
     flavor: "Agree on a common data-bus protocol and command format across national space programmes, so a module built on one continent can dock, hand off power and share telemetry with one built on another without a custom adapter for every pairing."
     grants: [Science-Core-internationalAvionics]
     upgrades: [HDD-Upgrade-1998]  # 2026-07 tech-level fill: HDD rung of the internationalAvionics era
+  - id: shd_interoperableAvionicsStandard
+    title: "Radiation-Shielded Avionics — Interoperable"
+    discipline: Computing
+    tier: 15
+    parents: [shd_softwareDefinedFlightControl, comp_interoperableAvionicsStandard]
+    flavor: "The common data-bus standard, hardened alike across every national programme's hardware — an international deep-space handoff that survives the same radiation on either end."
+    grants: [Deep-Space-internationalAvionics]
+    # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note.
   - id: comp_commercialOffTheShelfAvionics
     title: "Commercial Off-The-Shelf Flight Computer"
     discipline: Computing
@@ -2557,6 +2641,15 @@ nodes:
     flavor: "Skip the custom-built, radiation-hardened rack and fly triple-redundant commercial processors instead — orders of magnitude more computing power for a fraction of the cost and years off the schedule, the same bet the whole modern commercial launch industry made."
     grants: [Science-Core-modernAvionics]
     upgrades: [HDD-Upgrade-2010, HDD-Upgrade-2020]  # 2026-07 tech-level fill: HDD rungs of the modern/advModern era (avionics ladder tops out here, no separate advModern node)
+  - id: shd_commercialOffTheShelfAvionics
+    title: "Radiation-Shielded Avionics — Commercial"
+    discipline: Computing
+    tier: 16
+    parents: [shd_interoperableAvionicsStandard, comp_commercialOffTheShelfAvionics]
+    flavor: "Take the same commercial processors and wrap them in the hardening they skipped — cheap compute, radiation-rated, for a deep-space mission that can't afford a custom rack but also can't afford a bit-flipped autopilot."
+    grants: [Deep-Space-modernAvionics]
+    # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note. Tops out the
+    # Shielded ladder here, same as the paired Guided/Computing ladder.
 
   # ================================================================================================
   # ============ BAND 3 * AVIATION (turbofans) + SOLIDS CONTINUATION (engines, 2026-07) =============
