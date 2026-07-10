@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Reflection;
 using UnityEngine;
 
 namespace RPAxe.Airlaunch
@@ -54,11 +55,11 @@ namespace RPAxe.Airlaunch
 
             // --- Countdown + straight-line physics hold (ported from RP-1 AirlaunchUtils) ---
 
-            // Keep the vessel on rails via HoldVesselUnpack (the FixedUpdate-based GoOffRails gate),
-            // refreshed every fixed update below. RP-1 also uses SetPhysicsHoldExpiryOverride to block
-            // render-frame direct GoOffRails calls, but that method isn't in this KSP build's Assembly-CSharp,
-            // so we rely on HoldVesselUnpack alone (RP-1's documented primary mechanism).
-            HoldPhysics();
+            // Keep the vessel on rails with both of RP-1's holds, refreshed every fixed update below:
+            // OrbitPhysicsManager.HoldVesselUnpack (the FixedUpdate-based GoOffRails gate) and
+            // Vessel.SetPhysicsHoldExpiryOverride (the render-frame direct-GoOffRails guard). The latter is an
+            // INTERNAL stock method, so we reach it through a cached reflection delegate — see _setPhysHold.
+            HoldPhysics(v);
 
             // One fixed update for the teleport to settle before we snapshot the state to hold.
             yield return new WaitForFixedUpdate();
@@ -115,24 +116,45 @@ namespace RPAxe.Airlaunch
                     Vector3d localCom = (QuaternionD)v.orbitDriver.driverTransform.rotation * (Vector3d)v.localCoM;
                     v.SetPosition(v.mainBody.position + newRelPos - localCom);
 
-                    HoldPhysics();
+                    HoldPhysics(v);
                     yield return new WaitForFixedUpdate();
                     elapsed += Time.fixedDeltaTime;
                 }
             }
 
-            // Release the hold; the vessel comes off rails and ClobberToPrelaunch fires the FLYING event.
+            // Release the holds; the vessel comes off rails and ClobberToPrelaunch fires the FLYING event.
             OrbitPhysicsManager.HoldVesselUnpack(1);
+            v = FlightGlobals.ActiveVessel;
+            if (v != null) _setPhysHold?.Invoke(v, 1);
 
             ScreenMessages.PostScreenMessage(
                 $"Airlaunch — released at {p.Altitude:0} m, {p.Velocity:0} m/s",
                 5f, ScreenMessageStyle.UPPER_CENTER);
         }
 
-        // Refresh the unpack hold for a couple of fixed updates (call every FixedUpdate to sustain it).
-        private static void HoldPhysics()
+        // Refresh both unpack holds for a couple of fixed updates (call every FixedUpdate to sustain them).
+        private static void HoldPhysics(Vessel v)
         {
             OrbitPhysicsManager.HoldVesselUnpack(2);
+            _setPhysHold?.Invoke(v, 60);
+        }
+
+        // Vessel.SetPhysicsHoldExpiryOverride(int) is INTERNAL in stock Assembly-CSharp, so AXE (a separate
+        // assembly) can't call it directly — RP-1 builds against a publicized assembly. Bind it once via
+        // reflection; null if a future KSP renames/removes it, in which case we degrade to HoldVesselUnpack.
+        private static readonly Action<Vessel, int> _setPhysHold = ResolveSetPhysHold();
+
+        private static Action<Vessel, int> ResolveSetPhysHold()
+        {
+            MethodInfo mi = typeof(Vessel).GetMethod("SetPhysicsHoldExpiryOverride",
+                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public,
+                null, new[] { typeof(int) }, null);
+            if (mi == null)
+            {
+                Debug.LogWarning("[AXE] airlaunch: Vessel.SetPhysicsHoldExpiryOverride(int) not found; using HoldVesselUnpack only.");
+                return null;
+            }
+            return (Action<Vessel, int>)Delegate.CreateDelegate(typeof(Action<Vessel, int>), mi);
         }
 
         // Hold the vessel in PRELAUNCH while still packed, then fire the transition to FLYING so trip loggers
