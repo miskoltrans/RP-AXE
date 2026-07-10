@@ -220,7 +220,18 @@ namespace RPAxe
     {
         private void Start()
         {
-            GameEvents.OnPartLoaderLoaded.Add(AxeEngineUpgradeTooltip.ResetCache);
+            GameEvents.OnPartLoaderLoaded.Add(OnPartLoaderLoaded);
         }
+
+        private void OnDestroy()
+        {
+            GameEvents.OnPartLoaderLoaded.Remove(OnPartLoaderLoaded);
+        }
+
+        // Deliberately an *instance* method, not the AxeEngineUpgradeTooltip.ResetCache static
+        // method group. KSP's EventVoid.EvtDelegate ctor runs `evt.Target.GetType().Name` with no
+        // null guard, and a delegate over a static method has a null Target -> guaranteed NRE at
+        // boot when Add() is called. An instance method binds Target to this MonoBehaviour.
+        private void OnPartLoaderLoaded() => AxeEngineUpgradeTooltip.ResetCache();
     }
 }
