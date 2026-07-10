@@ -67,6 +67,25 @@ namespace RPAxe
             return string.IsNullOrEmpty(t) ? node : t;
         }
 
+        /// <summary>Smoke-test hook (AutoTest). Confirms the 11-level ladder applied (Piece A), the
+        /// AXEBUILDINGTECHS gate table loaded (Piece B), and BlockingTech resolves at the live facility
+        /// (Piece C). Expect on a fresh career: tsSteps=10, maxLevel=10, next gate blocked.</summary>
+        internal static string SelfTestReport()
+        {
+            EnsureLoaded();
+            int tables = _gates.Count;
+            int tsSteps = _gates.TryGetValue("SpaceCenter/TrackingStation", out var m) ? m.Count : 0;
+            UpgradeableFacility ts = null;
+            foreach (var f in UnityEngine.Object.FindObjectsOfType<UpgradeableFacility>())
+                if (f != null && f.id == "SpaceCenter/TrackingStation") { ts = f; break; }
+            if (ts == null)
+                return "gateTables=" + tables + " tsSteps=" + tsSteps + " — TrackingStation facility NOT FOUND";
+            string gate = BlockingTech(ts);
+            string gateStr = gate == null ? "none(allowed)" : gate + " [" + TitleOf(gate) + "]";
+            return "gateTables=" + tables + " tsSteps=" + tsSteps + " maxLevel=" + ts.MaxLevel +
+                   " curLevel=" + ts.FacilityLevel + " nextGate=" + gateStr;
+        }
+
         // --- Grey out + relabel the Upgrade button, on every menu (re)draw. ---
         [HarmonyPostfix]
         [HarmonyPatch("CreateWindowContent")]

@@ -375,6 +375,10 @@ AXE_AUTOTEST
 
             yield return AutoTestUtil.Dwell(AutoTestConfig.SettleSeconds); // settle
 
+            // DSN tracking-station gate smoke check (11-level ladder + tech gate).
+            try { Debug.Log("[AXE][AutoTest][DSN] " + AxeTrackingStationGate.SelfTestReport()); }
+            catch (Exception e) { Debug.LogError("[AXE][AutoTest][DSN] self-test threw: " + e); }
+
             foreach (ScreenDef s in defs)
             {
                 yield return VisitScreen(s);
