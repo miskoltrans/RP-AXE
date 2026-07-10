@@ -114,6 +114,7 @@ foreach ($f in $folders) {
 $designOwned = @(
     'Science\Experiments\CrewScience'    # -> design\Science\CrewScience\ (nodes remapped)
     'Science\Configure.cfg'              # -> design\Science\Configure.cfg (Kerbalism SETUP tech= remapped)
+    'Parts\Science\US2.cfg'              # -> design\Science\US2.cfg (US2 wedge inline Configure tech= remapped)
     'Science\HardDriveConfigs.cfg'       # -> design\Science\HardDriveConfigs.cfg (nodes remapped)
     'Science\HardDriveConfigs.disabled'  #    (inert; design\ owns the HardDrive system)
     # (Tree\HardDriveUpgrades.cfg needs no strip -- Tree\ is no longer vendored; its
