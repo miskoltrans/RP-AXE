@@ -6,38 +6,19 @@ namespace RPAxe.Contracts
     // ContractConfigurator discovers factories by class name minus the "Factory" suffix, so each
     // class below registers the matching contract `type = ...`. These produce an always-complete
     // no-op (see AxeAlwaysComplete) for RP-1 checks we don't implement for the MVP:
-    //   - tied to systems we removed (avionics, KCT build/launch-site tracking)
-    //   - or low value / few uses for now (no-dock, rendezvous, Kerbalism sample/experiment, impact)
-    // Extra config fields on these (descentAngle, builtAt, experiment, distance, ...) are simply
-    // ignored. Promote any of these to a real check by giving it its own factory/parameter.
-
-    // HorizontalLanding is now a REAL check (see HorizontalLanding.cs), no longer a no-op.
-
-    public class AvionicsCheckFactory : ParameterFactory       // avionics removed -> always passes
-    { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }
+    //   - tied to systems we removed (KCT build/launch-site tracking)
+    //   - or low value / few uses for now (no-dock, Kerbalism sample/experiment)
+    // Extra config fields on these (builtAt, experiment, ...) are simply ignored. Promote any of
+    // these to a real check by giving it its own factory/parameter.
+    //
+    // Promoted to REAL checks in their own files (no longer no-ops): HorizontalLanding.cs,
+    // AvionicsCheck.cs, ImpactCB.cs, Rendezvous.cs (RP1Rendezvous).
 
     public class VesselBuiltAtFactory : ParameterFactory       // KCT removed -> always passes
     { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }
 
     public class RP1NoDockingFactory : ParameterFactory        // 1 use; revisit
     { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }
-
-    public class RP1RendezvousFactory : ParameterFactory       // 3 uses; revisit (real proximity later)
-    { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }
-
-    // No-op, but parse its fields so a contract title expression like
-    // "Impact @targetBody at a speed of at least @minSrfVel m/s" resolves (base parses targetBody).
-    public class ImpactCBFactory : ParameterFactory            // iconic but few uses; revisit (make real)
-    {
-        public override bool Load(ConfigNode node)
-        {
-            bool valid = base.Load(node);
-            double minSrfVel = 0;
-            ConfigNodeUtil.ParseValue<double>(node, "minSrfVel", x => minSrfVel = x, this, 0.0);
-            return valid;
-        }
-        public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title);
-    }
 
     public class RP1HasSamplesFactory : ParameterFactory       // Kerbalism sample check; revisit
     { public override ContractParameter Generate(Contract c) => new AxeAlwaysComplete(title); }
