@@ -26,6 +26,12 @@ import argparse, os, re, sys
 from collections import defaultdict
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Node IDs that are intentionally absent from the tree (a mod's deliberate catch-all
+# / fallback, not a break). Kept minimal + documented.
+INTENTIONAL = {
+    "ORPHANS",   # ProceduralParts orphan-catcher: deprecated part variants gate here on purpose
+}
 DEFAULT_TREE = os.path.join(REPO, "GameData", "RP-AXE", "design", "Tree", "AxeTechTree.cfg")
 DEFAULT_ROOTS = [os.path.join(REPO, "GameData", "RP-AXE")]
 DEFAULT_SRC = os.path.join(REPO, "Source")
@@ -105,8 +111,22 @@ def scan_cache(cache_path, valid):
     if not os.path.isfile(cache_path):
         sys.exit(f"ConfigCache not found: {cache_path} (launch KSP once to generate it)")
     parent = "?"
+    # skip inert `disabled<X>` nodes (e.g. RO's disabledPARTUPGRADE templates) -- their
+    # techRequired isn't a live gate. Track brace depth from the disabled header.
+    skip_depth = None
+    depth = 0
     with open(cache_path, encoding="utf-8", errors="replace") as fh:
         for line in fh:
+            if skip_depth is not None:
+                depth += line.count("{") - line.count("}")
+                if depth <= skip_depth:
+                    skip_depth = None
+                continue
+            if re.match(r"\s*disabled\w+\s*$", line):
+                skip_depth = depth
+                depth += 0  # the opening { is on the next line(s); tracked above
+                continue
+            depth += line.count("{") - line.count("}")
             m = re.match(r"\s*parentUrl\s*=\s*(\S+)", line)
             if m:
                 parent = m.group(1)
@@ -134,8 +154,8 @@ def main():
     ap.add_argument("--cache", help="scan a ModuleManager.ConfigCache (POST-patch truth -- no overlay false positives). Recommended for the real audit.")
     args = ap.parse_args()
 
-    valid = load_valid_nodes(args.tree)
-    print(f"tree: {rel(args.tree)}  ({len(valid)} nodes)")
+    valid = load_valid_nodes(args.tree) | INTENTIONAL
+    print(f"tree: {rel(args.tree)}  ({len(valid) - len(INTENTIONAL)} nodes)")
 
     if args.cache:
         print(f"mode: ConfigCache (runtime truth)  {args.cache}\n")
