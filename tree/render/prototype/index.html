@@ -34,6 +34,8 @@
   .pt{font-size:14px}.pn{font-size:12px;color:var(--mut);font-family:Consolas,monospace}.mod{color:#7aa2c4}
   .empty{color:#777;font-style:italic;padding:6px 0}
   #foot{position:absolute;bottom:8px;left:8px;color:var(--mut);font-size:11px;background:#000a;padding:3px 8px;border-radius:5px}
+  #stamp{position:absolute;top:8px;right:8px;background:#000b;padding:4px 9px;border-radius:6px;font-size:11px;color:var(--mut);line-height:1.35;text-align:right;pointer-events:none;white-space:nowrap}
+  #stamp b{color:#8fa;font-weight:600}
   #hud{position:absolute;right:8px;bottom:8px;background:#000b;padding:5px 11px;border-radius:6px;font-size:12px;color:#cdd}
   #hud b{color:#fff;font-size:13px}
   .acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0 14px}
@@ -70,6 +72,7 @@
     <input type="text" id="q" placeholder="find node / part…" autocomplete="off">
   </div>
   <div id="hud"></div>
+  <div id="stamp"></div>
   <div id="foot">drag pan · wheel zoom · hover trace lineage · click pin · double-click research (locked = complete path) · r/u keys · d done-style</div>
 </div>
 <div id="panel"></div>

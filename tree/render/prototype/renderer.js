@@ -665,11 +665,17 @@ function drawNode(n, focusing){
       const maxw=w*0.9, lines=wrap(n.title,13,3).map(ln=>clip(ln,maxw));
       const lh=fs*1.13, top=y+h/2-(lines.length-1)*lh/2-4*cam.s;
       lines.forEach((ln,i)=> ctx.fillText(ln, x+w/2, top+i*lh));
-      const np=(n.parts||[]).length, nu=(n.upgrades||[]).length;
+      const np=(n.parts||[]).length, nu=(n.upgrades||[]).length, ng=(n.grants||[]).length;
       ctx.font=`${Math.max(6,8*cam.s)}px Segoe UI,Helvetica,Arial`;
       ctx.globalAlpha=alpha*0.75;
-      ctx.fillText(`T${n.tier} · ${np?np+'p':'—'}${nu?'+'+nu+'u':''}`, x+w/2, y+h-8*cam.s);
+      ctx.fillText(`T${n.tier} · ${np?np+'p':'—'}${nu?'+'+nu+'u':''}${ng?'+'+ng+'g':''}`, x+w/2, y+h-8*cam.s);
     }
+  }
+  if((n.grants||[]).length && cam.s>0.15 && !(opt.progress && !dimFocus && st===RESEARCHED)){   // grant marker: gold diamond (top-right) = avionics / DSN capability tier
+    const gr=Math.max(3,4*cam.s), gx=x+w-gr-2*cam.s, gy=y+gr+2*cam.s;
+    ctx.globalAlpha=alpha; ctx.fillStyle=GOLD;
+    ctx.beginPath(); ctx.moveTo(gx,gy-gr); ctx.lineTo(gx+gr,gy); ctx.lineTo(gx,gy+gr); ctx.lineTo(gx-gr,gy); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle='rgba(20,14,0,.85)'; ctx.lineWidth=Math.max(.6,cam.s); ctx.stroke();
   }
   if(opt.progress && !dimFocus && st===RESEARCHED && cam.s>0.15){    // ✓ researched badge: bold green disc + tick
     const r=Math.max(6,8.5*cam.s), cx=x+w-r-1, cy=y+r+1;
@@ -744,6 +750,12 @@ function resize(){
 
 // ============================ panel ============================
 const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function grantLabel(g){                            // friendly name for a capability-grant token (avionics tiers, DSN levels)
+  const m=g.match(/^RP0Level(\d+)TrackingStation$/i); if(m) return 'Deep Space Network — Level '+m[1];
+  if(/^Deep-Space-/.test(g)) return 'Shielded (deep-space) avionics tier';
+  if(/^Science-Core-/.test(g)) return 'Avionics Core tier';
+  return 'Capability grant';
+}
 function showPanel(id){
   const p=document.getElementById('panel'), d=byId[id];
   if(!d){ p.innerHTML='<div class="hint">Hover to trace a lineage · click to pin.</div>'+legendHTML(); return; }
@@ -765,6 +777,7 @@ function showPanel(id){
   if(np.length){ h+='<ul class="parts">'; for(const q of np) h+=`<li><div class="pt">${esc(q.title||q.name)}</div><div class="pn">${esc(q.name)}${q.mod?' · <span class="mod">'+esc(q.mod)+'</span>':''}</div></li>`; h+='</ul>'; }
   else h+='<div class="empty">— no parts assigned —</div>';
   if((d.upgrades||[]).length){ h+=`<div class="sec">Upgrades (${d.upgrades.length})</div><ul class="parts">`; for(const u of d.upgrades) h+=`<li><div class="pn">${esc(u)}</div></li>`; h+='</ul>'; }
+  if((d.grants||[]).length){ h+=`<div class="sec">Grants — capability tiers (${d.grants.length})</div><ul class="parts">`; for(const g of d.grants) h+=`<li><div class="pt">◆ ${esc(grantLabel(g))}</div><div class="pn">${esc(g)}</div></li>`; h+='</ul>'; }
   p.innerHTML=h;
 }
 function legendHTML(){
@@ -776,6 +789,9 @@ function legendHTML(){
        `<li><span class="ring" style="border-color:${C_AVAIL}"></span>Researchable — research next</li>`+
        `<li><span class="ring locked"></span>Locked (prereqs unmet)</li></ul>`;
   }
+  h+=`<div class="sec">Markers</div><ul class="legend"><li>`+
+     `<span class="dot" style="background:${GOLD};border-radius:2px;transform:rotate(45deg)"></span>`+
+     `Avionics / DSN capability tier (grant)</li></ul>`;
   h+=`<div class="sec">Disciplines</div><ul class="legend">`+
      ds.map(d=>`<li><span class="dot" style="background:${d.color}"></span>${esc(d.title)}</li>`).join('')+`</ul>`;
   return h;
@@ -791,6 +807,13 @@ function updateHud(){ const el=document.getElementById('hud'); if(!el)return;
                ` · <span style="color:${C_DONE}">done:${opt.doneStyle}</span> <span style="color:#6b7280">(d)</span>`;
 }
 function afterStateChange(){ draw(); updateHud(); if(selId) showPanel(selId); }
+function showStamp(){                               // freshness chip: when + which commit the data was generated from
+  const el=document.getElementById('stamp'); if(!el||!D) return;
+  const m=D.meta||{};
+  if(!m.generated){ el.style.display='none'; return; }
+  el.innerHTML=`generated <b>${esc(m.generated)}</b>`+(m.commit?` · ${esc(m.commit)}`:'')+
+               `<br>${m.nodes||D.nodes.length} nodes · ${m.parts||0} parts · ${m.grants||0} grants`;
+}
 function init(){
   cv=document.getElementById('cv'); ctx=cv.getContext('2d');
   if(/baseline/.test(location.search)){ opt.baseline=true; opt.fan=false; opt.discEdges=false; opt.highlight=false; }
@@ -810,7 +833,7 @@ function init(){
   const rq=new URLSearchParams(location.search).get('research');   // ?research=id,id — shareable snapshot / demo
   if(rq) rq.split(',').forEach(x=>{ if(byId[x]) researched.add(x); });
   if(opt.layout!=='compiler') computeLayout(); applyLayout();
-  buildGeometry(); loadIcons();
+  buildGeometry(); loadIcons(); showStamp();
   new ResizeObserver(resize).observe(cv);
   cv.width=cv.clientWidth*DPR; cv.height=cv.clientHeight*DPR;
   fit(); fitScale=cam.s; updateZoomLabel();
@@ -871,7 +894,7 @@ function init(){
   document.getElementById('zo').addEventListener('click',()=>{ cam.s=Math.max(.05,cam.s/1.2); updateZoomLabel(); draw(); });
   document.getElementById('q').addEventListener('keydown',e=>{ if(e.key!=='Enter')return;
     const s=e.target.value.trim().toLowerCase(); if(!s)return;
-    for(const n of D.nodes){ if(n.id.toLowerCase().includes(s)||n.title.toLowerCase().includes(s)||(n.parts||[]).some(p=>p.name.toLowerCase().includes(s)||(p.title||'').toLowerCase().includes(s))){
+    for(const n of D.nodes){ if(n.id.toLowerCase().includes(s)||n.title.toLowerCase().includes(s)||(n.parts||[]).some(p=>p.name.toLowerCase().includes(s)||(p.title||'').toLowerCase().includes(s))||(n.grants||[]).some(g=>g.toLowerCase().includes(s)||grantLabel(g).toLowerCase().includes(s))){
       selId=n.id; centerOn(n.id); setFocus(n.id); showPanel(n.id); draw(); break; } }
   });
 
