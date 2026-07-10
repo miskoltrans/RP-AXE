@@ -1,7 +1,7 @@
 # RP-AXE Workflow
 
 How to build the plugin, deploy the mod into the test instance, test, and keep yoinked configs
-fresh. Read [`ARCHITECTURE.md`](ARCHITECTURE.md) first.
+fresh. Read [`RESTART.md`](RESTART.md) first for the project roadmap + settled decisions.
 
 ## Machine layout
 
@@ -42,8 +42,8 @@ pwsh tools/deploy.ps1 -Revert  # unlink AXE, re-enable RP-1
 > `@TechTree` and the same contract groups — KSP will load a broken merge.
 
 > ⚠️ CKAN: removing the `RP-1` module via CKAN would also remove its dependencies. We do **not**
-> do that. We only rename the `GameData/RP-1` folder. Dependency set of record is in
-> [`DEPENDENCIES.md`](DEPENDENCIES.md) so the instance can be rebuilt if needed.
+> do that. We only rename the `GameData/RP-1` folder. Dependency set of record is the metapackage
+> `RP-AXE-deps.ckan` (see "Rebuilding a clean instance" below) so the instance can be rebuilt if needed.
 
 ## Rebuilding a clean instance (nuke & restore)
 
@@ -119,12 +119,12 @@ $meta | ConvertTo-Json -Depth 6 | Set-Content RP-AXE-deps.ckan -Encoding utf8
 
 ## Building the plugin (`AXE.dll`)
 
-> `AXE.dll` is **load-bearing** (it started as a researched fallback — D2 — but D5/D6/D8 made it
-> required). It implements: the 14 ContractConfigurator types (`Contracts/`, every ported contract
-> needs them), Career-enable (`EnableCareer.cs`, reflects RO's `_overrideCareer`), the program
-> switcher (`AxeProgramHandler`), the free-parts economy (`FreePartUnlock.cs`), and the 100 k
-> generous start (`GenerousStart.cs`). **If it fails to build/load, no career loads** — keep it green.
-> (The AutoTest harness also lives here but ships disabled; the `-axe-autotest` flag force-enables it.)
+> `AXE.dll` is **load-bearing**. It implements: the ContractConfigurator types (`Contracts/`, every
+> ported contract needs them), Career-enable (`EnableCareer.cs`, reflects RO's `_overrideCareer`), the
+> program switcher (`AxeProgramHandler`), the avionics modules (`Avionics/`), the tracking-station /
+> facility gates, the airlaunch system (`Airlaunch/`), and the in-game R&D tree render (`RnD/`). **If it
+> fails to build/load, no career loads** — keep it green. (The AutoTest harness also lives here but ships
+> disabled; the `-axe-autotest` flag force-enables it.)
 
 `Source/AXE/` is a .NET Framework 4.8 class library. It references KSP's managed assemblies and
 `ContractConfigurator.dll` **from the instance**, via the `KSPRoot` MSBuild property.
@@ -178,9 +178,9 @@ After editing config (anything under `GameData/RP-AXE/`), force a full re-patch 
 
 ## Conventions for agents picking up work
 
-- One task from [`TASKS.md`](TASKS.md) at a time; keep its checkbox + notes updated as you go.
-- **Never edit `seed/`** — all changes are `design/` patches (see ARCHITECTURE §8). Default to
-  config; reach for `AXE.dll` only when the M2 CC-type triage says stock config can't do it.
+- Work from the roadmap/backlog in [`RESTART.md`](RESTART.md); keep its status notes updated as you go.
+- **Never edit `seed/`** — all changes are `design/` patches (see "Vendoring & keeping it fresh" above).
+  Default to config; reach for `AXE.dll` only when stock config genuinely can't do it.
 - All plugin log lines start with `[AXE]`. All MM patches use `:FOR[RP-AXE]` /
   `:AFTER[...]` / `:NEEDS[...]` / `:FINAL` so ordering and conditionality are explicit.
 - After any change that touches load, re-run the smoke test and paste the relevant `KSP.log`

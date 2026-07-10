@@ -1,9 +1,9 @@
-# Programs & economy backbone (M3 + M4 reference)
+# Programs & economy backbone (RP-1 program reference for the P3 economy)
 
-This is the data both M3 (Pass C reward distribution) and M4 (program switcher) consume. It is
-*derived analysis*, not shipped config: program funding comes from RP-1's `Programs.cfg` (reference
-only — we do **not** run RP-1's program system), and the "gated contracts" counts come from
-`program = X` references in our vendored `seed/Contracts/`.
+This is reference data for the P3 economy rework (reward distribution) and the shipped program
+switcher. It is *derived analysis*, not shipped config: program funding comes from RP-1's
+`Programs.cfg` (reference only — we do **not** run RP-1's program system), and the "gated contracts"
+counts come from `program = X` references in our vendored `seed/Contracts/`.
 
 Regenerate with the two extraction commands in this file's git history (awk over `Programs.cfg` +
 `grep -roE "program = …"` over the seed).
@@ -51,7 +51,7 @@ Sorted by `baseFunding` (≈ progression order, early/cheap → late/expensive).
 | PlutoLandings | 25,200,000 | – | 7 | 3,600,000 |
 | CrewedMarsExp | 40,000,000 | Mid | 10 | 4,000,000 |
 
-### Referenced by contracts but NOT funded in Programs.cfg (assign funding in M3)
+### Referenced by contracts but NOT funded in Programs.cfg (assign funding during P3)
 These appear as `program = X` gates but have no `RP0_PROGRAM` baseFunding — pick values from
 sibling tiers:
 - `CrewedSpaceplaneDev` (7) — **deprecated** in RP-1 (`isDisabled`); we leave it un-chartered (M4),
@@ -63,7 +63,7 @@ sibling tiers:
 (35 programs funded in `Programs.cfg`; 40 distinct programs referenced by contracts. RP-1 also has 4
 `RP0_PROGRAM_MODIFIER` variant-funding blocks we ignore.)
 
-## Economy model — the ground rules M3 sits inside
+## Economy model — the ground rules the P3 economy sits inside
 
 **Time is not gated (by design):** no KCT / build time, no program deadlines, no upkeep. Timewarp is
 free and unlimited. Consequence: **money can never be a time-driven scarcity engine** — any per-time
@@ -104,7 +104,7 @@ income and launch costs. Hook already present: `GameData/Squad/Strategies/Strate
 (disabled template; enable/patch via `:FOR[RP-AXE]`). Do this **after** M3 sets per-era income, so the
 conversion rates can be sanity-checked against actual numbers.
 
-## M3 — Pass C reward distribution (plan)
+## Reward distribution (plan — P3 economy)
 
 For each program, spread `baseFunding` across its gated contracts as per-contract `rewardFunds`:
 - Start flat at `~funds/contract`.
@@ -116,7 +116,7 @@ For each program, spread `baseFunding` across its gated contracts as per-contrac
 - Sanity rule (invariant): each era's total income must comfortably cover that era's **per-launch
   vehicle costs** (the dominant RSS drain), not just part entry costs.
 
-## M4 — program switcher ✅ DONE (config + code)
+## Program switcher ✅ DONE (config + code)
 
 **Status:** implemented and (charters-side) complete. `AxeProgramHandler` ScenarioModule + the
 `ActivateProgram` behaviour + a real `ProgramActive` requirement all live in `AXE.dll`

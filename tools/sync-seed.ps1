@@ -18,7 +18,7 @@
     anti-silent-drop guard): the old whitelist silently dropped Parts/ and that hid real tree changes.
 
     Files under seed/ are an upstream import and must never be hand-edited -- all RP-AXE changes belong
-    in GameData/RP-AXE/design/ (see docs/ARCHITECTURE.md section 8).
+    in GameData/RP-AXE/design/ (see docs/WORKFLOW.md, "Vendoring & keeping it fresh").
 
 .EXAMPLE
     pwsh tools/sync-seed.ps1
@@ -77,8 +77,8 @@ $excludeReason = [ordered]@{
     'ModuleStationParts.cfg'     = 'husk-only; revisit if station contracts need ModuleStationPart'
     'zFinal.cfg'                 = 'ModuleShowInfo flood; clamp-command bit -> design/ if wanted'
     'ToolingDefinitions.cfg'     = 'tooling system axed (inert)'
-    'TestFlightRnD.cfg'          = 'TestFlight configs out-of-scope (DEPENDENCIES.md)'
-    'CustomBarnKit.cfg'          = 'RP-AXE uses CBK defaults (DEPENDENCIES.md)'
+    'TestFlightRnD.cfg'          = 'TestFlight configs out-of-scope (see docs/WORKFLOW.md)'
+    'CustomBarnKit.cfg'          = 'RP-AXE uses CBK defaults (see docs/WORKFLOW.md)'
     'GameParameters.cfg'         = 'difficulty/funds presets double-count with design/Rewards'
     'SpaceCenterSettings.cfg'    = 'RP0.dll budget/maintenance/training economy'
     'ProgramHandlerSettings.cfg' = 'RP0.dll ProgramHandler economy'

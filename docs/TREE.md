@@ -1,20 +1,25 @@
-# RP-AXE Tech Tree — Architecture & Handoff (P1 done, P2 pivoting)
+# RP-AXE Tech Tree — Architecture & Handoff (tree built; P2/P3 realization ongoing)
 
 SSOT for the tree work. Read with [`RESTART.md`](RESTART.md) (roadmap) + [`SCIENCE.md`](SCIENCE.md) (budget).
 **TL;DR:** the tree architecture (nodes + flavour + disciplines) is DONE and good — **do not rebuild it.**
-The *part-placement methodology* is being reset. Three open problems below.
+It was built out band-by-band to ~217 nodes with all 8 milestone partlists placed (see RESTART.md);
+what remains is part-placement realization + economy calibration (P2/P3). §2/§7 (architecture + settled
+decisions) are the durable reference; §3 is the record of how the placement approach was resolved.
 
 ---
 
 ## 1. STATUS
 
-- **P1 — tree architecture: DONE.** `tree/nodes.yaml` (~238 nodes) + `tree/disciplines.yaml` (19 lanes),
-  research-paper node names, scatter-by-difficulty homing, convergence web, front-loaded cost ~310–335k
+- **P1 — tree architecture: DONE.** `tree/nodes.yaml` (~217 nodes) + `tree/disciplines.yaml` (19 lanes),
+  research-paper node names, scatter-by-difficulty homing, convergence web, front-loaded cost ~300k
   (≈ SCIENCE.md target at scalar 1.0). Compiles clean via `tools/build_tree.py`. **This is the keeper.**
-- **P2 — part placement: FIRST PASS DONE but METHODOLOGY REJECTED.** Auto-placement homed all 1820 parts
-  + 553 upgrades (0 orphans) but the result is lumpy + 181 empty nodes. **Auto-placing all 1820 does not
-  work for this part set** (see §3A). Pivot required.
-- **Open design gaps:** (B) two tree entries (rocketry + x-plane) not built; (C) line clutter too high.
+- **P2 — part placement: RESOLVED (auto-place-everything abandoned, §3A).** The tree was built out
+  band-by-band — band 1 (to orbit) → band 2 (appsats / humans / lunar probes) → band 3 (crewed lunar) —
+  hand-homing the iconic parts per milestone while procedural + config-upgrades carry the bulk. **All 8
+  milestone partlists are placed** (only RP-1's post-2051 colonization scaffold is deliberately deferred;
+  RESTART.md P6). Remaining: realization config + economy calibration (P3).
+- **Settled since:** (B) single-root rocketry-default (§3B); (C) convergence relaxed to irreducible
+  physics only (§8).
 
 ---
 
@@ -74,7 +79,7 @@ plugin ports this exact layout into KSP — see [`RENDER-PORT.md`](RENDER-PORT.m
 
 ---
 
-## 3. THE THREE OPEN PROBLEMS (what the fresh session tackles)
+## 3. HOW THE OPEN PROBLEMS WERE RESOLVED (record)
 
 ### A. PLACEMENT PIVOT — auto-placing all 1820 parts does not work
 **Why it fails:** RP-1 dumps ~460 parts at `start` (no era signal to tier on); the set is variant-heavy (241
@@ -92,7 +97,11 @@ earn their place"):**
 3. **Off-tree / cut the non-tech mass** — launchpads (233 MLP), ground support, uncurated → `experimental`
    node (already done) or cut.
 4. **Likely implies re-curating the manifest** (is 1820 too many? cut variants) — a T1 revisit, OR keep the
-   manifest but only PLACE the iconic subset on-tree. **Decide this with the user first.**
+   manifest but only PLACE the iconic subset on-tree.
+
+**RESOLVED — this is the path taken.** The manifest was kept at 1820, but only the representative/iconic
+subset is PLACED on-tree; procedural + config-upgrades carry the bulk and the rest fall to the
+`experimental` catch-all. §3A stands as the record of why auto-place-everything was abandoned.
 - Keep the *useful* placement tooling (`cluster_parts.py` review families; `extract_capability.py` thrust/Isp;
   the capability-ladder idea for engines — that part worked). Discard the "auto-route everything" ambition.
 
@@ -164,7 +173,7 @@ strong, issues few + concentrated. **Applied to `tree/nodes.yaml`:**
   a critical-path role instead of being an orphan side-grade.
 - **`th_regenCooling` → `fd_turbopumpFeed`** (plausibility): the V-2's real breakthrough vs a sounding motor was
   the turbopump breaking the tank-pressure ceiling, not regen cooling (V-2 was film-cooled; ORM-65 in `start` is
-  already regen-cooled). Re-homed Thermodynamics→FluidDynamics, matching EARLY-TREE.md + library `fd_turbopumps`;
+  already regen-cooled). Re-homed Thermodynamics→FluidDynamics, matching the early-tree review + library `fd_turbopumps`;
   also resolves the spine/library `th_regenCooling` id collision.
 - **Polish:** `met_isogrid` "Chemical Milling"→"Machined Isogrid Stiffening" (isogrid is machined, not etched);
   `aero_afterburner` reparented off `aero_areaRule` @T4 (reheat predates Mach-2 shock inlets); `opt_vidicon`

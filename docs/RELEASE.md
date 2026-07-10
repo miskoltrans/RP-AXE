@@ -1,4 +1,4 @@
-# RP-AXE — Packaging & Release (M7)
+# RP-AXE — Packaging & Release
 
 Artifacts: `RP-AXE.netkan` (CKAN metadata), `GameData/RP-AXE/RP-AXE.version` (KSP-AVC), `LICENSE.md`
 (CC-BY-NC-SA-4.0). Target: **KSP 1.12.0–1.12.5**.
@@ -6,7 +6,7 @@ Artifacts: `RP-AXE.netkan` (CKAN metadata), `GameData/RP-AXE/RP-AXE.version` (KS
 ## Before first release — remaining
 - **Owner/author/URLs: DONE** — set to `miskoltrans` / repo `miskoltrans/RP-AXE` in `RP-AXE.netkan`
   and `GameData/RP-AXE/RP-AXE.version`.
-- The `.version` raw URL assumes the default branch is **`main`** — if the repo uses `master`, fix it.
+- The `.version` raw URL assumes the default branch is **`main`** (it is — the mainline was renamed from `restart` to `main`).
 - No git remote yet (`git remote add origin git@github.com:miskoltrans/RP-AXE.git`) and the GitHub repo
   isn't created — both are prerequisites for tagging/release and the `$kref` to resolve.
 - AutoTest harness ships **disabled** (`Plugins/PluginData/AutoTest.cfg` `enabled = false`); the
@@ -27,7 +27,7 @@ Artifacts: `RP-AXE.netkan` (CKAN metadata), `GameData/RP-AXE/RP-AXE.version` (KS
   resolves all `depends` identifiers (the installed test instance proves they exist — see below).
 - Submit `RP-AXE.netkan` to the CKAN-meta repo (PR). Until then, users add it locally.
 
-## Clean-room install test (the M7 "prove")
+## Clean-room install test (the release "prove")
 Goal: a stranger installs from metadata with **zero manual steps** and gets a working, plugin-free,
 RP-1-conflicting install.
 
@@ -39,14 +39,15 @@ RP-1-conflicting install.
 5. Launch; start a Career; confirm: tree renders, ~100k funds, `start` node has the basic parts,
    Mission Control offers contracts. (Mirrors what `-axe-autotest` checks, but from a clean CKAN install.)
 
-> The current `Instance/` is the *reference* working set: its 104 CKAN modules (minus `RP-1`, `Skopos`,
-> `TestFlight`, and pure tooling) are exactly the netkan `depends`. So the depends list is already
-> proven to resolve and run together — the clean-room test confirms it installs from scratch unattended.
+> The current `Instance/` is the *reference* working set: its installed modules are captured verbatim in
+> the `RP-AXE-deps.ckan` metapackage and mirrored into the netkan `depends` (see `docs/WORKFLOW.md` for how
+> the list is regenerated from the live registry). So the depends list is already proven to resolve and run
+> together — the clean-room test confirms it installs from scratch unattended.
 
-## Dependency notes (see docs/DEPENDENCIES.md)
+## Dependency notes
 - Transitive deps (Kopernicus, RealHeat, FAR, AJE, B9PartSwitch, CommunityResourcePack, ROLib's deps…)
   are **not** listed — CKAN resolves them from RealismOverhaul / the part packs.
 - Tantares CKAN identifiers are `NewTantares` / `NewTantaresLV` (+ `TantaresSP`).
 - `RP-1` → `conflicts`. `Skopos` (advanced comms contracts) and `TestFlight` (part failures) → `suggests`
-  (off by default for the lightweight MVP). DLCs: `MakingHistory-DLC` is a hard dep (parts are placed);
+  (off by default). DLCs: `MakingHistory-DLC` is a hard dep (parts are placed);
   `BreakingGround-DLC` is `recommends`.
