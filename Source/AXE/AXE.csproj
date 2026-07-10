@@ -36,6 +36,10 @@
       <HintPath>$(ReferencePath)\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(ReferencePath)\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine.ScreenCaptureModule">
       <HintPath>$(ReferencePath)\UnityEngine.ScreenCaptureModule.dll</HintPath>
       <Private>false</Private>
