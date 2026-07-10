@@ -141,6 +141,29 @@ def scan_cache(cache_path, valid):
     return findings
 
 
+def split_findings(findings):
+    """Partition scan() output into (axe_bad, ext_bad). Each is a sorted list of
+    (node, real_refs); real_refs drops the overlay-fixed (allowlisted) refs."""
+    axe_bad, ext_bad = [], []
+    for node, refs in sorted(findings.items()):
+        real = [r for r in refs if not r[3]]      # drop overlay-fixed
+        if not real:
+            continue
+        (axe_bad if any(r[2] for r in real) else ext_bad).append((node, real))
+    return axe_bad, ext_bad
+
+
+def check_design(valid, design_root, src=None):
+    """Build-time gate (no ConfigCache needed): scan RP-AXE's *authored* design/ cfgs
+    (+ Source/ plugins) for raw tech-gate references that don't resolve against `valid`.
+    seed/ (verbatim vendor) is excluded, and @-prefixed overlay assignments/selectors are
+    never matched by the patterns (they legitimately name the OLD node) -> no false
+    positives. Returns a sorted [(node, refs)] list of dangling authored references."""
+    findings = scan([design_root], src, valid)
+    axe_bad, ext_bad = split_findings(findings)
+    return axe_bad + ext_bad
+
+
 def rel(p):
     return p.replace(REPO + os.sep, "").replace(os.sep, "/")
 
@@ -171,12 +194,7 @@ def main():
         print("OK - every tech-gate reference resolves to a real tree node.")
         return 0
 
-    axe_bad, ext_bad = [], []
-    for node, refs in sorted(findings.items()):
-        real = [r for r in refs if not r[3]]      # drop overlay-fixed
-        if not real:
-            continue
-        (axe_bad if any(r[2] for r in real) else ext_bad).append((node, real))
+    axe_bad, ext_bad = split_findings(findings)
 
     def dump(title, items):
         if not items:

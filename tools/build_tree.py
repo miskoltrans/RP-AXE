@@ -1200,6 +1200,35 @@ def emit_grant_upgrades(nodes):
     print(f"grant tokens: {len(av)} avionics + {len(dsn)} DSN -> AxeGrantUpgrades.cfg")
     return marker
 
+def check_tech_gates(nodes):
+    """Build gate: every RP-AXE-*authored* raw tech gate (design/*.cfg + Source/*.cs) must
+    resolve to a real tree node. Otherwise it fails CLOSED and SILENT in-game — renaming or
+    removing a node leaves dangling techRequired / Kerbalism `tech=` / GetTechnologyState
+    references (see tools/check_tech_refs.py). Non-fatal by default (matches validate_design);
+    set AXE_TREE_STRICT=1 to make a dangling ref fail the build (CI / pre-commit gate)."""
+    if ROOT not in sys.path:
+        sys.path.insert(0, ROOT)
+    try:
+        import check_tech_refs as ctr
+    except Exception as e:
+        print(f"tech-ref gate: skipped ({e})"); return []
+    valid = {n["id"] for n in nodes} | ctr.INTENTIONAL
+    design = os.path.join(REPO, "GameData", "RP-AXE", "design")
+    src = os.path.join(REPO, "Source")
+    dangling = ctr.check_design(valid, design, src if os.path.isdir(src) else None)
+    if not dangling:
+        print("tech-ref gate: clean -- every authored tech gate resolves to a real node"); return []
+    total = sum(len(r) for _, r in dangling)
+    print(f"tech-ref gate: {total} DANGLING authored ref(s) across {len(dangling)} node(s) "
+          f"-- these fail closed + silent in-game; fix design/ overlays:")
+    for node, refs in dangling:
+        fields = sorted({r[0] for r in refs})
+        files = sorted({ctr.rel(r[1]) for r in refs})[:4]
+        print(f"   ! {node}  [{', '.join(fields)}]  {', '.join(files)}")
+    if os.environ.get("AXE_TREE_STRICT"):
+        die(f"AXE_TREE_STRICT set: {total} dangling tech-gate reference(s) — see above")
+    return dangling
+
 def main():
     disc, meta, nodes = load()
     by = {n["id"]: n for n in nodes}
@@ -1235,5 +1264,6 @@ def main():
     print("-> GameData/RP-AXE/design/Tree/AxeTechTree.cfg (+ AxeTreeMeta.cfg), tree/render/axe-tree.svg|png|html")
     check_probe_requirements(nodes)
     emit_impl_backlog(nodes)             # docs/IMPL-TODO.md: provisional grants + impl_todo -> checklist
+    check_tech_gates(nodes)              # gate: authored tech-refs (design/*.cfg + Source) must resolve (fail closed+silent otherwise)
 
 if __name__ == "__main__": main()
