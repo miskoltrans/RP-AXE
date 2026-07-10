@@ -152,11 +152,12 @@ Reference for AXE's comms/ground-station axis when P2 places the comms branch.
 - **`rp0EngineerUpgrade*` (12) + `rp0ResearcherUpgrade*` (10)** (`Tree/KCTUpgrades.cfg`) — KCT
   personnel build-rate / research-rate efficiency multipliers. No AXE KCT; `description = unset`,
   no part payload → genuinely dead, no reference value.
-- **`airlaunchTL1…4` (4)** (`Tree/AirlaunchTechlevels.cfg`) — tree-icon mirrors of RP-1's airlaunch
-  capability gates, consumed by the axed RP0.dll/KCT airlaunch subsystem. The icons do nothing
-  without the plugin. (Airlaunch itself is an interesting sacked feature — parked in
-  RESTART.md "Parked ideas"; the reusable reference is `SCMData/AirlaunchLevels.cfg` +
-  `Source/RP0/SpaceCenter/AirlaunchTechLevel.cs` / `UI/KCT/GUI_Airlaunch.cs`, not these upgrades.)
+- **`airlaunchTL1…4` (4)** (`Tree/AirlaunchTechlevels.cfg`) — RP-1's tree-icon mirrors of the airlaunch
+  capability gates, consumed by the axed RP0.dll/KCT airlaunch subsystem. RP-1's copies stay DROP — but
+  **airlaunch is now implemented in AXE (2026-07-10)**, re-authored as a config-first plugin
+  (`Source/AXE/Airlaunch/`) with its own `airlaunchTL1-4` tokens + `KCTAIRLAUNCHTECHS` envelopes in
+  `design/Tree/AxeAirlaunch.cfg`, gated on the rocketplane lane. So these are *superseded*, not sacked.
+  See RESTART.md "Parked ideas" → Airlaunch for the full description.
 
 `DROP-no-curated-host` (2):
 - **`RFUpgrade_30x_NK-33`, `RFUpgrade_8x_NK-43`** — N1 Block A/B cluster configs whose only host is

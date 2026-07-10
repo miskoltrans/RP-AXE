@@ -149,7 +149,8 @@ RealAntennas, ROSolar…), present via their mods.
   - **10 REFERENCE-comms-dsn** (`Tree/TechFacilityUpgrades.cfg`) — DSN tracking-station tech gated by comms nodes; ref for
     AXE comms/ground-station axis, pairs with live RealAntennas `commsTL1-10`.
   - **26 DROP-axed-career** — `rp0Engineer/ResearcherUpgrade*` (22, KCT personnel efficiency, `description=unset`, dead) +
-    `airlaunchTL*` (4, RP-0/KCT airlaunch plugin).
+    `airlaunchTL*` (4, RP-0/KCT airlaunch plugin — RP-1's copies stay dropped, but airlaunch is
+    **re-implemented in AXE 2026-07-10** with its own tokens; see Parked ideas → Airlaunch).
 - **Sandbox unaffected** (auto-unlocks all upgrades); the gap is **career progression only**.
 - **The work (P2):** vendor TREE-Engines.cfg whole + UpgradeCleanup.cfg + RFTechLevels.cfg + capability companions + the
   HDD subsystem, then **remap each kept `techRequired` → AXE node** — **115 distinct RP-1 nodes** (+3 orphan-only). Tree-coupled →
@@ -255,16 +256,23 @@ RealAntennas, ROSolar…), present via their mods.
     misleading) comparisons; the two remaining loose ends (crew-tube density bug, crew-tube cost premium,
     TankOre divergence) were reviewed and deliberately left as-is. Kept here as reference in case any of
     it becomes relevant again, not as queued P2/P3 work.
-- **Airlaunch** — RP-1's airlaunch is an interesting feature we **sacked** with the KCT/RP0.dll
-  career layer (T3, 2026-07-01). It is not a part: you build a vessel, KCT "mounts" it on a notional
-  carrier aircraft (time + funds), and it **spawns already airborne** inside an unlocked envelope.
-  Envelopes (`SCMData/AirlaunchLevels.cfg`, `KCTAIRLAUNCHTECHS`) are tech-gated and modeled on real
-  carriers — B-29→X-1 (7.6 km, 7.5 t), B-50→X-2 (9.1 km, 11.3 t), B-52→X-15/X-15A-2 (13.75 km,
-  15→25 t). The mass/size check is `AirlaunchTechLevel.CanLaunchVessel`. Reimplementing it for AXE
-  would be a **plugin** (spawn a vessel airborne within an envelope, gated by tech node), reusing
-  `AirlaunchLevels.cfg` + `Source/RP0/SpaceCenter/AirlaunchTechLevel.cs` / `UI/KCT/GUI_Airlaunch.cs`
-  as the reference — not a config port. (The dropped `airlaunchTL1-4` PARTUPGRADEs were only tree
-  icons; see [`UPGRADES.md`](UPGRADES.md) §D.)
+- **Airlaunch — ✅ IMPLEMENTED (2026-07-10), no longer parked.** Sacked with the KCT/RP0.dll career
+  layer (T3, 2026-07-01), now re-authored as a config-first AXE plugin. You build a rocketplane, pick
+  **Airlaunch** at the editor Launch button, set the release point, and it **spawns already airborne**
+  inside a tech-gated envelope after a 10-second countdown, for a per-launch funds fee. Envelopes carry
+  RP-1's real carrier/launch pairs — B-29→X-1 (7.6 km, 7.5 t), B-50→X-2 (9.1 km, 11.3 t),
+  B-52→X-15/X-15A-2 (13.75 km, 15→25 t) — gated on the AXE rocketplane lane (`fd_rocketplaneRocket` /
+  `fd_throttleableRocketplane` / `fd_throttlingRocket`, plus the new `aero_hotStructure` node for the
+  X-15A-2 tier). **Config:** `design/Tree/AxeAirlaunch.cfg` (`KCTAIRLAUNCHTECHS` envelopes +
+  re-authored `airlaunchTL1-4` tokens, node-placement re-asserted `:AFTER[RP-AXE]` to beat the
+  parking catch-all). **Plugin:** `Source/AXE/Airlaunch/` — envelope loader, teleport ported
+  self-contained from ROUtils `HyperEdit_Utilities`, 10 s countdown/straight-line hold ported from
+  RP-1 `AirlaunchUtils` (`Vessel.SetPhysicsHoldExpiryOverride` reached by reflection — it's `internal`
+  in stock Assembly-CSharp), editor `goForLaunch` Harmony hook + IMGUI window. Downrange/bearing are
+  referenced to the **launch site the vessel spawns on** (no FindKSC — dovetails with **Relocatable /
+  selectable KSC** below). Load-verified in a smoke run (tree renders, configs parse, tokens land on
+  the right nodes); **in-game playtest still pending**. (The RP-1 `airlaunchTL1-4` PARTUPGRADEs stay
+  dropped, superseded by AXE's re-authored copies; see [`UPGRADES.md`](UPGRADES.md) §D.)
 - **Relocatable / selectable KSC** — let the player choose or move the launch site ("united
   Kerbalkind → launch from anywhere"), where it's valid gameplay. Mechanically grounded:
   `KerbalKonstructs` + RSS launch sites (already in the RO_clean loadout); RP-1 has a launch-site
