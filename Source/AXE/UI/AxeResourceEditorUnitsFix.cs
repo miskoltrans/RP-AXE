@@ -29,7 +29,7 @@ namespace RPAxe
         private static bool _init;
         private static bool _active;                       // false => degrade to stock (ROUtils/labels not resolvable)
         private static MethodInfo _printAmount;            // ROUtils.ResourceUnits.PrintAmount(double,int,int,string,bool,bool)
-        private static FieldInfo _fResource, _fAmnt, _fMax;   // declared on base UIPartActionResource
+        private static FieldInfo _fResource, _fAmnt, _fMax;
         private static PropertyInfo _tmpText;              // TMP_Text.text setter (resolved from a live label)
 
         private static void Init()
@@ -37,10 +37,16 @@ namespace RPAxe
             _init = true;
 
             const BindingFlags inst = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-            Type baseType = typeof(UIPartActionResource);
-            _fResource = baseType.GetField("resource", inst);
-            _fAmnt = baseType.GetField("resourceAmnt", inst);
-            _fMax = baseType.GetField("resourceMax", inst);
+            // resourceAmnt/resourceMax are declared SEPARATELY on UIPartActionResourceEditor — it is a
+            // SIBLING of the flight UIPartActionResource (both derive from UIPartActionResourceItem), not a
+            // subclass. Resolving amnt/max off UIPartActionResource yields fields whose declaring type is
+            // outside the editor's ancestry, so GetValue(editorInstance) throws ArgumentException every
+            // frame the editor PAW is open. Resolve against the patched type instead; `resource` is the
+            // inherited protected field on the shared UIPartActionResourceItem base.
+            Type editorType = typeof(UIPartActionResourceEditor);
+            _fResource = editorType.GetField("resource", inst);
+            _fAmnt = editorType.GetField("resourceAmnt", inst);
+            _fMax = editorType.GetField("resourceMax", inst);
 
             Type ru = AccessTools.TypeByName("ROUtils.ResourceUnits");
             if (ru != null)
