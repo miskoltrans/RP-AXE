@@ -22,6 +22,13 @@ namespace RPAxe
         const string LockID = "AxeAvionicsLock";
         const float UpdateFrequency = 1f;
 
+        /// <summary>The controller following the active vessel in the current Flight scene (null otherwise).</summary>
+        public static AxeAvionicsController Instance { get; private set; }
+        /// <summary>Current avionics lock level for the active vessel. Read by the RCS control-lock patch
+        /// (<see cref="AxeRcsControlLock"/>), which the per-vessel <see cref="FlightInputModifier"/> can't reach
+        /// because ModuleRCS reads ctrlState on its own Update, before the post-autopilot hook re-zeros it.</summary>
+        public AxeControlLockerUtils.LockLevel Level => _level;
+
         Vessel _vessel;
         AxeControlLockerUtils.LockLevel _level = AxeControlLockerUtils.LockLevel.Unlocked;
         bool _requested;
@@ -36,6 +43,7 @@ namespace RPAxe
 
         void Awake()
         {
+            Instance = this;   // set before the (static, one-shot) MechJeb-reflection guard below
             if (_mjResolved) return;
             _mjResolved = true;
             for (int i = 0; i < AssemblyLoader.loadedAssemblies.Count; i++)
@@ -151,6 +159,7 @@ namespace RPAxe
 
         void OnDestroy()
         {
+            if (Instance == this) Instance = null;
             InputLockManager.RemoveControlLock(LockID);
             GameEvents.onVesselWasModified.Remove(OnVesselModified);
             GameEvents.onVesselCrewWasModified.Remove(OnVesselModified);
