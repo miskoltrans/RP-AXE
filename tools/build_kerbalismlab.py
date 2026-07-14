@@ -53,6 +53,7 @@ REMAP = {
 MARQUEE = {
     # Kvant-1 Astrophysics Module
     "HaloSat": "int_kvant1Module", "NICER": "int_kvant1Module", "CALET": "int_kvant1Module",
+    "ASTERIA": "int_kvant1Module", "AMS-02": "int_kvant1Module",  # space telescope / particle astrophysics
     # Kristall Materials-Processing Module
     "SODI-Colloid": "int_kristallModule", "Platan": "int_kristallModule", "TPSMMO": "int_kristallModule",
     # Priroda Earth-Observation Module
@@ -62,6 +63,14 @@ MARQUEE = {
 }
 
 TECH_FIELD = re.compile(r'(\b(?:UnlockTech|UpgradeTech|ReconfigureTech)\s*=\s*)([A-Za-z0-9_]+)')
+
+# Source-mod bug: a few fork EXPERIMENT_DEFINITIONs set baseValue/scienceCap to the experiment NAME
+# instead of a number (e.g. ALSEP-2.cfg: `baseValue = ALSEP-2`). Harmless in the fork's own framework,
+# but AXE's GlobalExperimentPatches.cfg does `@dataScale /= #$baseValue$` at :FIRST (before the fork
+# overrides baseValue) -> "1 / ALSEP-2" math error -> blocks the whole ConfigCache from being written.
+# Sanitize the top-def value to the fork's standard 180 (a generous scienceCap; real baseValue is set
+# later at :FOR[zzzKerbalismDefault]). Only touches bare `baseValue =`/`scienceCap =`, not `@`-patch lines.
+BAD_BASEVALUE = re.compile(r'(?m)^(\s*(?:baseValue|scienceCap)\s*=\s*)([A-Za-z][\w-]*)\s*$')
 
 def remap_text(text, marquee_node=None):
     unknown = set()
@@ -91,12 +100,14 @@ def main():
         "// VENDORED verbatim from KerbalismScienceOnly Groups/LabExperiments.cfg (reads techs from Framework-2).\n" + proc)
 
     # 3) the 65 fork experiments (remap UnlockTech; marquee override where applicable)
-    n = 0
+    n = 0; nsan = 0
     for fn in sorted(os.listdir(FORK)):
         if not fn.endswith(".cfg") or fn == "InstrumentTagging.cfg":
             continue
         stem = fn[:-4]
         text = open(os.path.join(FORK, fn), encoding="utf-8").read()
+        text, nfix = BAD_BASEVALUE.subn(r'\g<1>180', text)   # fix source-mod non-numeric baseValue/scienceCap
+        nsan += nfix
         mn = MARQUEE.get(stem)
         out, unk = remap_text(text, marquee_node=mn)
         allunknown |= unk
@@ -104,7 +115,7 @@ def main():
         open(os.path.join(OUT, "Experiments", fn), "w", encoding="utf-8").write(out)
         n += 1
 
-    print(f"experiments vendored: {n}  (marquee Mir/Kvant gates: {nmarquee})")
+    print(f"experiments vendored: {n}  (marquee Mir/Kvant gates: {nmarquee}, baseValue/scienceCap fixes: {nsan})")
     if allunknown:
         print("!! UNMAPPED tech tokens (add to REMAP):", sorted(allunknown)); sys.exit(2)
     print("all tech references mapped OK ->", OUT)
