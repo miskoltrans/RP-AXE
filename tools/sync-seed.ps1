@@ -11,8 +11,9 @@
         (NOT the whole Tree -- RP-AXE builds its own tech tree from tree/nodes.yaml -> design/Tree/)
       - Loose root .cfg read by KEPT mods/stock: Deprecation, ResourceCosts, ProcCosts, PartHacks,
         RealFuelsSettings
-      - A NARROW slice of Tree/ (engine-upgrade CONTENT, not tree STRUCTURE): TREE-Engines.cfg,
-        UpgradeCleanup.cfg, RFTechLevels.cfg -> seed/Tree/. These define the RealFuels engine CONFIG
+      - A NARROW slice of Tree/ (upgrade CONTENT, not tree STRUCTURE): TREE-Engines.cfg,
+        UpgradeCleanup.cfg, RFTechLevels.cfg (engines) + PFTechLevels.cfg, PayloadLevels.cfg (capability
+        keepers) -> seed/Tree/. These define the RealFuels engine CONFIG
         upgrade ladder (517 RFUpgrade_* PARTUPGRADEs + the deleteme/orphan-cleanup machinery); AXE
         overlays their techRequired onto AXE nodes in design/Tree/ (AxePartPlacement.cfg +
         AxeEngineConfigGates.cfg). RP0TechTree.cfg (the tree structure) stays EXCLUDED.
@@ -66,13 +67,15 @@ $rootFiles = @(
 $treeFiles = @(
     'TREE-Engines.cfg',       # 517 RFUpgrade_* PARTUPGRADEs + per-CONFIG walker + deleteme decrement
     'UpgradeCleanup.cfg',     # !PARTUPGRADE:HAS[#deleteme[>0]] -- inert-deletes host-absent configs
-    'RFTechLevels.cfg'        # engine-TYPE tech levels + solids/RCS typelevel upgrades + MLI tank ins.
+    'RFTechLevels.cfg',       # engine-TYPE tech levels + solids/RCS typelevel upgrades + MLI tank ins.
+    'PFTechLevels.cfg',       # PFTech-Fairing-I..VI: procedural minDensity (mass) tech tokens + UPGRADES effect
+    'PayloadLevels.cfg'       # ComSat/NavSat bus avionics tokens (RFTech-Com/NavSat-II/III + RP-1-PayloadTech-*)
 )
 
 # (c) explicit, REASONED exclusions. Anything in RP-1/GameData/RP-1 that is NOT in (a)/(b)/(c) trips
 #     the leftovers audit below -- that is the anti-silent-drop guard for future RP-1 bumps.
 $excludeReason = [ordered]@{
-    'Tree'                       = 'tree STRUCTURE stays AXE-authored (tree/nodes.yaml -> design/Tree/ via build_tree.py); RP0TechTree.cfg would conflict, HardDriveUpgrades.cfg lives in design/Science/. NARROW exception: 3 engine-upgrade CONTENT files are selectively vendored into seed/Tree/ via $treeFiles above.'
+    'Tree'                       = 'tree STRUCTURE stays AXE-authored (tree/nodes.yaml -> design/Tree/ via build_tree.py); RP0TechTree.cfg would conflict, HardDriveUpgrades.cfg lives in design/Science/. NARROW exception: 5 upgrade CONTENT files (3 engine + PFTech/Payload capability keepers) are selectively vendored into seed/Tree/ via $treeFiles above.'
     'Plugins'                    = 'axed RP0.dll / CC_RP0.dll'
     'PluginData'                 = 'RP0.dll data'
     'Resources'                  = 'RP0.dll UI images'
