@@ -5,11 +5,14 @@ Turnkey plan for landing **KerbalismLab** (crewed-station lab science) in AXE. R
 [`RESTART.md`](RESTART.md) P3. This supersedes SCIENCE.md §4's "re-author as plain Experiments"
 default — **the decision is now Path A: vendor the mod as-authored, make it load, remap, re-point.**
 
-> **STATUS 2026-07-15 — BUILT (static-validated; in-game load test pending).** Configs authored under
-> `GameData/RP-AXE/design/Science/KerbalismLab/` via `tools/build_kerbalismlab.py` (65 experiments vendored,
-> 10 marquee Mir/Kvant gates, all techs remapped, all target nodes verified in `AxeTechTree.cfg`, every
-> instrument package has a curated host). The §4 remap is **locked** — committed table lives in that folder's
-> `_README.md`. Remaining: deploy + `-axe-autotest` load test, then the deferred balance pass.
+> **STATUS 2026-07-15 — SHIPPED + IN-GAME VERIFIED** (commits `02b840a` vendor + `bc7e6cb` fix). Configs under
+> `GameData/RP-AXE/design/Science/KerbalismLab/` via `tools/build_kerbalismlab.py` (65 experiments, 12 marquee
+> Mir/Kvant gates, techs remapped). **`-axe-autotest` PASS:** 200303 MM patches, **0 errors**, ConfigCache builds
+> clean (36.6 MB), career loads; in-cache proof = 10 lab hosts × 71 experiments (710 ids), 58 instrument tags,
+> 50 Kvant-1 gates. The autotest caught a cache-blocking bug the static checks missed — the fork's `ALSEP-2.cfg`
+> had `baseValue = ALSEP-2` (source typo); AXE's `GlobalExperimentPatches.cfg` `@dataScale /= #$baseValue$` at
+> `:FIRST` choked on it → no cache. Generator now sanitizes non-numeric baseValue/scienceCap→180. §4 remap
+> **locked** (`_README.md`). **Remaining: the deferred balance pass** + 3 review items (below).
 
 ## Decisions locked (2026-07-14)
 
