@@ -8,9 +8,14 @@
 
     Vendored set:
       - Folders (recursive, verbatim incl. binary part assets): Contracts, Science, Parts
-        (NOT Tree -- RP-AXE builds its own tech tree from tree/nodes.yaml -> design/Tree/)
+        (NOT the whole Tree -- RP-AXE builds its own tech tree from tree/nodes.yaml -> design/Tree/)
       - Loose root .cfg read by KEPT mods/stock: Deprecation, ResourceCosts, ProcCosts, PartHacks,
         RealFuelsSettings
+      - A NARROW slice of Tree/ (engine-upgrade CONTENT, not tree STRUCTURE): TREE-Engines.cfg,
+        UpgradeCleanup.cfg, RFTechLevels.cfg -> seed/Tree/. These define the RealFuels engine CONFIG
+        upgrade ladder (517 RFUpgrade_* PARTUPGRADEs + the deleteme/orphan-cleanup machinery); AXE
+        overlays their techRequired onto AXE nodes in design/Tree/ (AxePartPlacement.cfg +
+        AxeEngineConfigGates.cfg). RP0TechTree.cfg (the tree structure) stays EXCLUDED.
 
     Everything else in RP-1/GameData/RP-1 is EXCLUDED on purpose (see $excludeReason) -- mostly the
     axed RP0.dll career/economy and configs RP-AXE already replaces in design/. Anything upstream that
@@ -54,10 +59,20 @@ $rootFiles = @(
     # ,'KSPCommunityFixes.cfg' # optional: KSPCF toggles (safe; move here to include)
 )
 
+# (b2) a NARROW slice of Tree/ -- engine-upgrade CONTENT only (NOT the tree structure). Vendored into
+#      seed/Tree/ verbatim; AXE remaps their techRequired -> AXE nodes via design/Tree/ overlays
+#      (AxePartPlacement.cfg for the PARTUPGRADEs, AxeEngineConfigGates.cfg for the CONFIG gates).
+#      RP0TechTree.cfg and everything else under Tree/ stay EXCLUDED (see $excludeReason['Tree']).
+$treeFiles = @(
+    'TREE-Engines.cfg',       # 517 RFUpgrade_* PARTUPGRADEs + per-CONFIG walker + deleteme decrement
+    'UpgradeCleanup.cfg',     # !PARTUPGRADE:HAS[#deleteme[>0]] -- inert-deletes host-absent configs
+    'RFTechLevels.cfg'        # engine-TYPE tech levels + solids/RCS typelevel upgrades + MLI tank ins.
+)
+
 # (c) explicit, REASONED exclusions. Anything in RP-1/GameData/RP-1 that is NOT in (a)/(b)/(c) trips
 #     the leftovers audit below -- that is the anti-silent-drop guard for future RP-1 bumps.
 $excludeReason = [ordered]@{
-    'Tree'                       = 'RP-AXE builds its own tech tree from tree/nodes.yaml -> design/Tree/ (build_tree.py); RP-1 RP0TechTree.cfg would conflict, HardDriveUpgrades.cfg lives in design/Science/'
+    'Tree'                       = 'tree STRUCTURE stays AXE-authored (tree/nodes.yaml -> design/Tree/ via build_tree.py); RP0TechTree.cfg would conflict, HardDriveUpgrades.cfg lives in design/Science/. NARROW exception: 3 engine-upgrade CONTENT files are selectively vendored into seed/Tree/ via $treeFiles above.'
     'Plugins'                    = 'axed RP0.dll / CC_RP0.dll'
     'PluginData'                 = 'RP0.dll data'
     'Resources'                  = 'RP0.dll UI images'
@@ -133,6 +148,18 @@ foreach ($f in $rootFiles) {
     if (-not (Test-Path $from)) { Write-Warning "skip (missing): $from"; continue }
     Copy-Item $from $to -Force
     Write-Host "Vendored $f -> seed\$f"
+}
+
+# --- vendor the narrow Tree/ engine-upgrade slice into seed/Tree/ (self-cleaning) ---
+$seedTree = Join-Path $seedRoot 'Tree'
+if (Test-Path $seedTree) { Get-ChildItem -Path $seedTree -Filter '*.cfg' -File -ErrorAction SilentlyContinue | Remove-Item -Force }
+else { New-Item -ItemType Directory -Path $seedTree | Out-Null }
+foreach ($f in $treeFiles) {
+    $from = Join-Path $rp1Data (Join-Path 'Tree' $f)
+    $to   = Join-Path $seedTree $f
+    if (-not (Test-Path $from)) { Write-Warning "skip (missing): $from"; continue }
+    Copy-Item $from $to -Force
+    Write-Host "Vendored Tree\$f -> seed\Tree\$f"
 }
 
 # --- leftovers audit: turn future silent drops into loud warnings ---------------
