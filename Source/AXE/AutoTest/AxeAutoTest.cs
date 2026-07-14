@@ -398,6 +398,10 @@ AXE_AUTOTEST
             try { Debug.Log("[AXE][AutoTest][DSN] " + AxeTrackingStationGate.SelfTestReport()); }
             catch (Exception e) { Debug.LogError("[AXE][AutoTest][DSN] self-test threw: " + e); }
 
+            // Launchpad mass/size cap + Mission Control contract limit (CustomBarnKit @LAUNCHPAD / @MISSION).
+            try { Debug.Log("[AXE][AutoTest][FAC] " + AxeFacilitiesSelfTest.SelfTestReport()); }
+            catch (Exception e) { Debug.LogError("[AXE][AutoTest][FAC] self-test threw: " + e); }
+
             foreach (ScreenDef s in defs)
             {
                 yield return VisitScreen(s);
