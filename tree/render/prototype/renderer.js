@@ -756,6 +756,42 @@ function grantLabel(g){                            // friendly name for a capabi
   if(/^Science-Core-/.test(g)) return 'Avionics Core tier';
   return 'Capability grant';
 }
+// ---- part stats (engine/config data from manifest/engine-stats.tsv, wired in by build_tree.py's
+// emit_prototype_data). Only engine parts carry `.engine` today; other part types have none yet --
+// same field would extend to them (tank capacity, chute drag, etc.) without changing this shape. ----
+function fmtNum(v,d){ return (v==null) ? '—' : (+v).toFixed(d||0).replace(/\.0+$/,''); }
+function fmtRange(r,unit,d){ if(!r) return ''; const [lo,hi]=r; if(lo==null||hi==null) return '';
+  return (lo===hi ? fmtNum(lo,d) : `${fmtNum(lo,d)}–${fmtNum(hi,d)}`)+unit; }
+function engineSummaryHTML(e){
+  const bits=[`${e.configs.length} config${e.configs.length!==1?'s':''}`];
+  const thr=fmtRange(e.thrustRange,' kN',1); if(thr) bits.push(thr);
+  const isp=e.ispIsFraction ? fmtRange(e.ispRange,'× TL-frac',2) : fmtRange(e.ispRange,'s',0);
+  if(isp) bits.push('Isp '+isp);
+  if(e.propellants.length) bits.push(esc(e.propellants[0])+(e.propellants.length>1?' +alt':''));
+  return bits.join(' · ');
+}
+function engineTableHTML(e){
+  let h='<div class="eng-wrap"><table class="engt"><thead><tr><th>Config</th><th>Gate (ref)</th>'+
+        '<th>Thrust kN</th><th>Isp</th><th>Propellants</th></tr></thead><tbody>';
+  for(const c of e.configs){
+    const spec = c.specLevel && !/^(base|operational|prototype)$/i.test(c.specLevel) ? ` <i>(${esc(c.specLevel)})</i>` : '';
+    const isp = c.ispVac!=null ? (c.ispMode==='TL-frac' ? fmtNum(c.ispVac,2)+'×†' : fmtNum(c.ispVac)) : '—';
+    h+=`<tr class="${c.isBase?'base':''}"><td>${esc(c.config)}${c.isBase?' <span class="b">base</span>':''}${spec}</td>`+
+       `<td>${esc(c.techTitle||'—')}</td><td>${fmtNum(c.thrustKN,1)}</td><td>${isp}</td>`+
+       `<td>${esc(c.propellants||'—')}</td></tr>`;
+  }
+  h+='</tbody></table>';
+  if(e.configs.some(c=>c.ispMode==='TL-frac')) h+='<div class="eng-note">† Isp is a fraction of this engine type\'s tech-level ceiling, not seconds</div>';
+  return h+'</div>';
+}
+function partLiHTML(q){
+  let h=`<li><div class="pt">${esc(q.title||q.name)}</div><div class="pn">${esc(q.name)}${q.mod?' · <span class="mod">'+esc(q.mod)+'</span>':''}</div>`;
+  if(q.engine){
+    h+=`<div class="eng-sum">⚙ ${engineSummaryHTML(q.engine)}</div>`;
+    if(q.engine.configs.length>1) h+=`<details class="eng-det"><summary>upgrade path</summary>${engineTableHTML(q.engine)}</details>`;
+  }
+  return h+'</li>';
+}
 function showPanel(id){
   const p=document.getElementById('panel'), d=byId[id];
   if(!d){ p.innerHTML='<div class="hint">Hover to trace a lineage · click to pin.</div>'+legendHTML(); return; }
@@ -774,7 +810,7 @@ function showPanel(id){
   }
   if(d.flavor) h+=`<div class="flav">${esc(d.flavor)}</div>`;
   h+=`<div class="sec">Parts (${np.length})</div>`;
-  if(np.length){ h+='<ul class="parts">'; for(const q of np) h+=`<li><div class="pt">${esc(q.title||q.name)}</div><div class="pn">${esc(q.name)}${q.mod?' · <span class="mod">'+esc(q.mod)+'</span>':''}</div></li>`; h+='</ul>'; }
+  if(np.length){ h+='<ul class="parts">'; for(const q of np) h+=partLiHTML(q); h+='</ul>'; }
   else h+='<div class="empty">— no parts assigned —</div>';
   if((d.upgrades||[]).length){ h+=`<div class="sec">Upgrades (${d.upgrades.length})</div><ul class="parts">`; for(const u of d.upgrades) h+=`<li><div class="pn">${esc(u)}</div></li>`; h+='</ul>'; }
   if((d.grants||[]).length){ h+=`<div class="sec">Grants — capability tiers (${d.grants.length})</div><ul class="parts">`; for(const g of d.grants) h+=`<li><div class="pt">◆ ${esc(grantLabel(g))}</div><div class="pn">${esc(g)}</div></li>`; h+='</ul>'; }

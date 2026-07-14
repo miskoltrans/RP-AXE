@@ -470,6 +470,43 @@ def load_part_titles():
         pass
     return out
 
+def _fnum(s):
+    try:
+        return float(s)
+    except (TypeError, ValueError):
+        return None
+
+def load_engine_stats():
+    """part -> era-ordered list of CONFIG-stat rows, from manifest/engine-stats.tsv
+    (tools/extract_engine_stats.py). Each RealFuels CONFIG is a selectable variant of the
+    part -- the ordered set of a part's CONFIGs *is* its upgrade path (see ENGINE-STATS.md).
+    Keyed by part name only (unambiguous -- same lookup emit_engine_config_gates uses),
+    so no config-name disambiguation is needed for display."""
+    path = os.path.join(REPO, "manifest", "engine-stats.tsv")
+    by_part = collections.defaultdict(list)
+    if not os.path.exists(path):
+        return by_part
+    with open(path, encoding="utf-8", errors="replace") as f:
+        hdr = f.readline().rstrip("\n").split("\t")
+        ix = {h: i for i, h in enumerate(hdr)}
+        g = lambda c, k: (c[ix[k]].strip() if k in ix and ix[k] < len(c) else "")
+        for ln in f:
+            c = ln.rstrip("\n").split("\t")
+            part, config = g(c, "part"), g(c, "config")
+            if not part or config == "(no RealFuels config path)":
+                continue
+            by_part[part].append({
+                "config": config, "isBase": g(c, "is_base") in ("base", "single"),
+                "specLevel": g(c, "specLevel"), "techTitle": g(c, "node_title"),
+                "era": _fnum(g(c, "era_x")),
+                "thrustKN": _fnum(g(c, "maxThrust_kN")), "minThrustKN": _fnum(g(c, "minThrust_kN")),
+                "ispVac": _fnum(g(c, "ispVac")), "ispSL": _fnum(g(c, "ispSL")),
+                "ispMode": g(c, "ispMode"), "propellants": g(c, "propellants"),
+            })
+    for rows in by_part.values():   # base config first (its own techRequired, not a CONFIG gate), then by era
+        rows.sort(key=lambda r: (0 if r["isBase"] else 1, r["era"] if r["era"] is not None else 1e9))
+    return by_part
+
 def costcat(cat, disc, mods, mod):
     """Classify a part into a COST-category (drives part_cost_weight). Signal = its PartModules (mods,
     ';'-joined) + stock category + AXE discipline + source mod. Order matters: most specific first. The
@@ -833,12 +870,34 @@ def emit_prototype_data(disc, nodes, by, routes):
     protod = os.path.join(REND, "prototype")
     os.makedirs(protod, exist_ok=True)
     titles = load_part_titles()
+    engine_stats = load_engine_stats()
     disciplines = {k: {"title": v["title"], "order": v["order"], "color": v["color"], "icon": v["icon"]}
                    for k, v in disc.items()}
     jnodes = []
     for n in nodes:
-        parts = [{"name": p, "mod": titles.get(p, ("", ""))[0], "title": titles.get(p, ("", ""))[1]}
-                 for p in (n.get("parts") or [])]
+        parts = []
+        for p in (n.get("parts") or []):
+            pd = {"name": p, "mod": titles.get(p, ("", ""))[0], "title": titles.get(p, ("", ""))[1]}
+            cfgs = engine_stats.get(p)
+            if cfgs:
+                thr = [c["thrustKN"] for c in cfgs if c["thrustKN"] is not None]
+                # Isp is seconds in 'curve' mode but a 0-1 FRACTION of a tech-level ceiling in 'TL-frac'
+                # mode (small RCS/cold-gas thrusters) -- never average the two across a part's configs.
+                curve_isp = [c["ispVac"] for c in cfgs if c["ispVac"] is not None and c["ispMode"] == "curve"]
+                tl_isp = [c["ispVac"] for c in cfgs if c["ispVac"] is not None and c["ispMode"] == "TL-frac"]
+                isp_range = [min(curve_isp), max(curve_isp)] if curve_isp else \
+                            ([min(tl_isp), max(tl_isp)] if tl_isp else None)
+                props = []
+                for c in cfgs:
+                    if c["propellants"] and c["propellants"] not in props:
+                        props.append(c["propellants"])
+                pd["engine"] = {
+                    "configs": cfgs,
+                    "thrustRange": [min(thr), max(thr)] if thr else None,
+                    "ispRange": isp_range, "ispIsFraction": bool(tl_isp and not curve_isp),
+                    "propellants": props,
+                }
+            parts.append(pd)
         jnodes.append({
             "id": n["id"], "title": n["title"], "discipline": n["discipline"],
             "tier": n["tier"], "cost": n["cost"], "anyToUnlock": bool(n.get("anyToUnlock")),
