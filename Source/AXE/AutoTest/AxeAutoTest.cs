@@ -402,6 +402,10 @@ AXE_AUTOTEST
             try { Debug.Log("[AXE][AutoTest][FAC] " + AxeFacilitiesSelfTest.SelfTestReport()); }
             catch (Exception e) { Debug.LogError("[AXE][AutoTest][FAC] self-test threw: " + e); }
 
+            // Avionics Shielded axis: confirm each Shielded rung gates on its shd_* node (not the guided tier).
+            try { Debug.Log("[AXE][AutoTest][AVI] " + ModuleAxeAvionics.ShieldedLadderReport()); }
+            catch (Exception e) { Debug.LogError("[AXE][AutoTest][AVI] self-test threw: " + e); }
+
             foreach (ScreenDef s in defs)
             {
                 yield return VisitScreen(s);

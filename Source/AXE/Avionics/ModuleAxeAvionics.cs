@@ -255,6 +255,17 @@ namespace RPAxe
         { 87.99f, 87.99f, 69.712f, 59.13f, 55.168f, 46.794f, 39.69f, 33.665f, 28.554f, 24.22f, 20.543f, 17.424f, 14.779f, 12.536f };
         static float[] _ladShCost =
         { 48.12f, 48.12f, 51.56f, 54.13f, 85.26f, 89.52f, 94.0f, 98.7f, 88.28f, 70.62f, 56.5f, 45.2f, 36.16f, 28.93f };
+        // The tree node that gates each Shielded rung (2026-07-14): the Shielded axis is its OWN research
+        // investment on the shd_* lane, NOT free with the guided gnc_/comp_ tier at the same index. Indices
+        // 0-3 have no shd_ node ("" = no real Shielded rung here; their _ladShMass is reused-for-symmetry only
+        // and is never selectable without an shTech). Parsed from TIER{shTech=...} in AxeAvionicsCore.cfg;
+        // this is the in-code fallback. Must stay index-aligned with _ladShMass/_ladShCost.
+        static string[] _ladShTech =
+        {
+            "", "", "", "", "shd_basicAvionics",
+            "shd_interplanetaryAvionics", "shd_digitalGuidanceComputer", "shd_realTimeFlightComputer", "shd_networkedAvionics",
+            "shd_multiplyRedundantFlightComputer", "shd_distributedAvionicsBus", "shd_softwareDefinedFlightControl", "shd_interoperableAvionicsStandard", "shd_commercialOffTheShelfAvionics"
+        };
         // Unshielded hibernate depth: <=0 sentinel = can't hibernate. First 9 tiers can't; the last 5
         // (advancedAvionics-equivalent on) reach a shallow 0.1 — ground-truthed against RP-1's real
         // disabledPowerFactor boundary.
@@ -319,6 +330,7 @@ namespace RPAxe
             var kosEcPerInstr = new List<float>();
             var shMass = new List<float>();
             var shCost = new List<float>();
+            var shTechs = new List<string>();
             var unshHib = new List<float>();
             foreach (ConfigNode t in tiers)
             {
@@ -350,9 +362,10 @@ namespace RPAxe
                 t.TryGetValue("shMassFactor", ref shm);
                 t.TryGetValue("shCostFactor", ref shc);
                 t.TryGetValue("unshHibernateFactor", ref uh);
+                string sht = t.GetValue("shTech") ?? "";   // shd_* node gating this Shielded rung ("" = none)
                 cost.Add(cf); scCost.Add(scc); hasSci.Add(hsc);
                 kosDisk.Add(kd); kosCostFactor.Add(kcf); kosMassFactor.Add(kmf); kosEcPerInstr.Add(kec);
-                shMass.Add(shm); shCost.Add(shc); unshHib.Add(uh);
+                shMass.Add(shm); shCost.Add(shc); shTechs.Add(sht); unshHib.Add(uh);
             }
             if (tech.Count == 0) return; // no complete tiers => keep the hardcoded fallback ladders
             _ladTech = tech.ToArray();
@@ -371,6 +384,7 @@ namespace RPAxe
             _ladKosEcPerInstr = kosEcPerInstr.ToArray();
             _ladShMass = shMass.ToArray();
             _ladShCost = shCost.ToArray();
+            _ladShTech = shTechs.ToArray();
             _ladUnshHibernate = unshHib.ToArray();
         }
 
@@ -589,15 +603,19 @@ namespace RPAxe
             ApplyKosTier();
         }
 
-        // Shielded axis: pick the best-researched tier among only those that carry a Shielded rung
-        // (shMassFactor > 0). No floor/fallback — -1 means "not available yet."
+        // Shielded axis: pick the best-researched tier among only those carrying a Shielded rung
+        // (shMassFactor > 0 AND an shTech shd_* node). Gated on shTech (the shd_* lane), NOT on the guided
+        // gnc_/comp_ tech at the same index — the Shielded axis is its own research investment (2026-07-14),
+        // matching the tree's shd_* serial chain + Deep-Space-* grants. No floor — -1 means "not available yet."
         void ApplyShieldedTier()
         {
             int best = -1;
             for (int i = 0; i < _ladTech.Length; i++)
             {
                 if (_ladShMass[i] <= 0f) continue;
-                if (!Researched(_ladTech[i])) continue;
+                string shTech = (_ladShTech != null && i < _ladShTech.Length) ? _ladShTech[i] : null;
+                if (string.IsNullOrEmpty(shTech)) continue;   // no shd_ node gates this rung -> not a real Shielded tier
+                if (!Researched(shTech)) continue;
                 if (best == -1 || _ladShMass[i] <= _ladShMass[best]) best = i;
             }
             _bestShieldedIdx = best;
@@ -608,12 +626,24 @@ namespace RPAxe
             }
         }
 
+        // Smoke-test accessor (AutoTest): reports which shd_* node gates each Shielded rung, straight from the
+        // parsed static ladder (populated by the prefab's OnLoad). Confirms the config's TIER{shTech=...} wired
+        // through to the plugin. Expect 10 gates, shd_basicAvionics .. shd_commercialOffTheShelfAvionics.
+        internal static string ShieldedLadderReport()
+        {
+            var gates = new List<string>();
+            for (int i = 0; i < _ladShTech.Length && i < _ladShMass.Length; i++)
+                if (_ladShMass[i] > 0f && !string.IsNullOrEmpty(_ladShTech[i]))
+                    gates.Add(i + ":" + _ladShTech[i]);
+            return "shieldedTiers=" + gates.Count + " gates=[" + string.Join(", ", gates.ToArray()) + "]";
+        }
+
         bool ShieldedActive => shieldedEnabled && _bestShieldedIdx >= 0;
-        // Whether the Shielded TOGGLE itself is unlocked -- independent of _bestShieldedIdx, which can
-        // now be valid from tier 0 since the ladder was filled in for tree symmetry (see _ladShMass).
-        // Deliberately still keyed to gnc_basicAvionics specifically (the first tier RP-1 itself ever
-        // offered Deep-Space at) so the toggle doesn't appear before that, matching pre-fill-in behavior.
-        public bool ShieldedUnlocked => Researched("gnc_basicAvionics");
+        // Whether the Shielded TOGGLE itself is unlocked. Now that each Shielded rung gates on its own shd_*
+        // node (see ApplyShieldedTier + _ladShTech), _bestShieldedIdx becomes >= 0 exactly when the player has
+        // researched a real Shielded tier -- so the toggle tracks that directly (first appears once
+        // shd_basicAvionics is researched). No separate hardcoded tech gate needed.
+        public bool ShieldedUnlocked => _bestShieldedIdx >= 0;
         float EffectiveMassFactor() => ShieldedActive ? _shMassFactor : _massFactor;
         float EffectiveCostFactor() => ShieldedActive ? _shCostFactor : _costFactor;
         float EffectiveMassConstant() => ShieldedActive ? shMassConstant : massConstant;
