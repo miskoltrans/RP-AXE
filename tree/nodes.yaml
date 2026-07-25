@@ -39,7 +39,7 @@ nodes:
     tier: 0
     parents: []
     flavor: "1950. You begin with the de Laval nozzle, a procedural airframe, avionics, the first instruments and a handful of sounding motors — enough to fly above the Karman line turn one. Rocketry is the default; whether to fly aeroplanes at all is yours to choose."
-    parts: [proceduralNoseCone, proceduralStructural, RO-B9ProcWing-Early, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, groundAnchor, conformaldecals-flag, conformaldecals-generic, conformaldecals-munar, conformaldecals-semiotic, conformaldecals-text]
+    parts: [proceduralNoseCone, proceduralStructural, RO-B9ProcWing-Early, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, conformaldecals-flag, conformaldecals-generic, conformaldecals-munar, conformaldecals-semiotic, conformaldecals-text]
     # +5 conformal decals (2026-07, backlog sweep): purely cosmetic labeling, no tech story of their own -
     # every vehicle can carry one from day one, same as RP-1's own "Starting Parts" placement.
   - id: parking
@@ -3861,10 +3861,16 @@ nodes:
     tier: 9
     parents: [rob_surfaceMobility]
     flavor: "Bore into loose surface material with a motorised bit and bring up what you find — the first step of living off a world instead of just visiting it. Needs nothing more than the same motor already turning a rover's wheels, aimed down instead of forward."
-    parts: [kerbalism-drill]
+    parts: [kerbalism-drill, groundAnchor]
     # Opens ResourceEngineering as a working discipline (previously defined but unused). Crosses into
     # surface mobility (rob_surfaceMobility) rather than any propulsion lane - drilling needs a lander
     # already down and a motor, not thrust.
+    # groundAnchor moved off `start` (2026-07, user call: "should not be like a starting part"). Ground-
+    # truthed the part itself: a screw stake driven into dirt (deploy FX kicks up dust and rocks, tags
+    # "attach ground dirt drill dig base"), placed by hand on EVA to give a surface hard point you can
+    # bolt a base or a docking port onto. Same mechanism as this node's king - a motorised bit into loose
+    # regolith - and the era where it is actually useful (surface bases), not turn one. RP-1 had it in
+    # "Starting Parts" because it was cheap to ignore, not because it belongs there.
   - id: res_oreStorageTankage
     title: "Ore Storage Tankage"
     discipline: ResourceEngineering

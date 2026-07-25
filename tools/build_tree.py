@@ -513,7 +513,7 @@ def costcat(cat, disc, mods, mod):
     stock-category clauses (Science/Coupling/Electrical) are FALLBACKS for parts whose modules dodged the
     module check. Mirrors docs/SCIENCE.md 5; uncovered parts fall through to 'misc' (weight 1.0)."""
     has = lambda *xs: any(x in mods for x in xs)
-    if mod == "ModularLaunchPads" or has("LaunchClamp") or cat == "Ground": return "ground"  # launch infra, cheap
+    if mod == "ModularLaunchPads" or has("LaunchClamp", "ModuleGroundPart") or cat == "Ground": return "ground"  # launch infra + hand-placed ground kit, cheap
     if has("ModuleEnginesRF", "ModuleEngineConfigs", "ModuleEngines") and "RCS" not in cat: return "engine"
     if has("ModuleRCSFX", "ModuleRCS"):                                    return "rcs"
     if has("ModuleCommand") and (has("Habitat") or cat == "Pods"):        return "crewpod"
