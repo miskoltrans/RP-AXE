@@ -200,6 +200,10 @@ namespace RPAxe
         MethodInfo _rfCalcMass;
         PartModule _procPM;
         PropertyInfo _procVolumeProp;    // ProceduralPart.Volume (m^3)
+        FieldInfo _procMinVolumeField;   // ProceduralPart.volumeMin — pinned to enforce a minimum box size
+        PropertyInfo _procCurShapeProp;  // ProceduralPart.CurrentShape — for refreshing the slider bounds
+        MethodInfo _procSeekVolumeMethod;// ProceduralPart.SeekVolume(target[, dir]) — nudge box to a volume
+        bool _enforcingFloor;            // re-entrancy guard: SeekVolume can re-fire onEditorShipModified
         float _cachedVolume = -1f;       // m^3 — the procedural part's total volume
 
         // kOS bridge (reflected — AXE.dll doesn't reference kOS, same duck-typed pattern as RealFuels above).
@@ -436,6 +440,7 @@ namespace RPAxe
         {
             yield return null;
             _cachedVolume = ReadProceduralVolume();
+            EnforceBoxFloor();
             RecomputeSplit(_cachedVolume);
             UpdateHardwareMass();
             PushBatteryToTank();
@@ -458,6 +463,7 @@ namespace RPAxe
             ApplyTier();
             ApplyShieldedTier();
             _cachedVolume = ReadProceduralVolume();
+            EnforceBoxFloor();
             RecomputeSplit(_cachedVolume);
             UpdateHardwareMass();
             PushBatteryToTank();
@@ -540,6 +546,10 @@ namespace RPAxe
                 {
                     _procPM = m;
                     _procVolumeProp = m.GetType().GetProperty("Volume", F);
+                    _procMinVolumeField = m.GetType().GetField("volumeMin", F);
+                    _procCurShapeProp = m.GetType().GetProperty("CurrentShape", F);
+                    _procSeekVolumeMethod = m.GetType().GetMethod("SeekVolume",
+                        BindingFlags.Public | BindingFlags.Instance);
                 }
                 else if (_kosPM == null && n == "kOSProcessor")
                 {
@@ -576,6 +586,60 @@ namespace RPAxe
             if (_procPM == null || _procVolumeProp == null) return _cachedVolume;
             try { return Convert.ToSingle(_procVolumeProp.GetValue(_procPM, null)); }
             catch { return _cachedVolume; }
+        }
+
+        // Editor only: pin ProceduralPart's minimum volume so the box can't be sized below what the current
+        // model actually needs — the flat Unguided hardware volume plus the reserved battery (Guided: just
+        // the reserved battery, since its hardware can legitimately size all the way to zero capacity). Both
+        // mass AND cost stay flat for Unguided regardless of box size; this floor only stops the box from
+        // reading as physically too small to hold the hardware it's already paying full freight for.
+        // Mirrors RP-1's ModuleProceduralAvionics.SetProcPartVolumeLimit: set volumeMin, refresh the shape's
+        // own dimension-slider bounds (AdjustDimensionBounds, so the player can't drag back under it), and if
+        // the box is ALREADY under the new floor — after a model switch, a tier change, or on an old craft —
+        // SeekVolume it back up. No-op if ProceduralParts isn't the shape driver. The _enforcingFloor guard
+        // is because SeekVolume can synchronously re-fire onEditorShipModified (re-entering this).
+        void EnforceBoxFloor()
+        {
+            if (!HighLogic.LoadedSceneIsEditor || _enforcingFloor) return;
+            if (_procPM == null || _procMinVolumeField == null) return;
+            float floor = (guidanceEnabled ? 0f : FixedUnguidedHwVolume()) + EnduranceFloorVolume();
+            _enforcingFloor = true;
+            try
+            {
+                _procMinVolumeField.SetValue(_procPM, floor);
+                // AdjustDimensionBounds lives on the CURRENT shape instance (its type varies by shape), so
+                // resolve it per-call the same way RP-1 does rather than caching a single MethodInfo.
+                object shape = _procCurShapeProp?.GetValue(_procPM, null);
+                if (shape != null)
+                {
+                    MethodInfo adjust = shape.GetType().GetMethod("AdjustDimensionBounds",
+                        BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+                    adjust?.Invoke(shape, Array.Empty<object>());
+                }
+                // Only nudge the box up when it's genuinely under the floor (spare a resize otherwise).
+                if (_procSeekVolumeMethod != null && floor - _cachedVolume > 0.0001f)
+                {
+                    SeekVolume(floor);
+                    _cachedVolume = ReadProceduralVolume();
+                }
+            }
+            catch { }
+            finally { _enforcingFloor = false; }
+        }
+
+        // Invoke ProceduralPart.SeekVolume, handling both the 1-arg and the newer 2-arg (target, direction)
+        // signatures — direction 1 = Ceil, so a box that can't fit the floor exactly lands just above it,
+        // never a hair below. Reflected; AXE.dll doesn't reference ProceduralParts.
+        void SeekVolume(float targetVolume)
+        {
+            try
+            {
+                object[] args = _procSeekVolumeMethod.GetParameters().Length == 1
+                    ? new object[] { targetVolume }
+                    : new object[] { targetVolume, 1 };
+                _procSeekVolumeMethod.Invoke(_procPM, args);
+            }
+            catch { }
         }
 
         // Pick the best researched Guided/Unguided tier (lowest-or-tied NE mass factor; tier 0 "start" if
