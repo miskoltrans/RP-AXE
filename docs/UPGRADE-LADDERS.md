@@ -118,8 +118,16 @@ Two families that the collapse metric was misreading:
   > benefit — padding stops consuming tree events — at zero risk and with no content lost.
 - **R5 — respect doctrine #4.** A config upgrade never lands on the node that holds its own base part.
   When walking a spine, skip that node.
-- **R6 — merge before inventing.** If a family has more rungs than its spine has steps, merge the
-  smallest-delta adjacent pairs until it fits. Do not invent spine nodes to absorb rungs.
+- **R6 — a new node beats a near-enough home.** If a family has more distinct classes than its spine has
+  honest steps, **add the node**. Materials, metallurgy, chemistry and cycle nodes are all fair game when a
+  rung has a real mechanism and nowhere truthful to sit. Merging is for classes that genuinely *are* one
+  decision; a `catalog: true` node is for a family that is genuinely unordered. Neither is an excuse to
+  park a config on a node whose subject it has nothing to do with.
+
+  > **Revised 2026-07-27 (user call).** R6 originally said "merge before inventing — do not invent spine
+  > nodes to absorb rungs." That was too tight and it was already producing bad homes: `RL10A-3-3A`, a
+  > burn-life and nozzle step, had been parked on `cryo_deepThrottleHydrolox` purely because the expander
+  > lane had no T8 step. It now has one (`cryo_extendedBurnExpander`), and the placement is honest.
 
 ### Why dominance is not a separate problem
 

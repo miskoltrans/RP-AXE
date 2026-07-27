@@ -1229,7 +1229,7 @@ nodes:
     tier: 6
     parents: [fd_matureOrbital]
     flavor: "Extend the nozzle bell far past what any sea-level engine could survive, tuned so the exhaust expands to near-vacuum pressure and wrings out the last dozen seconds of specific impulse. The refinement that lets an upper stage do more on the same propellant — the RD-119 alone gains nearly thirty seconds over its predecessor."
-    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_X-405H-3, RFUpgrade_RD-0108, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_LR89-NA-6, RFUpgrade_S-3FH, RFUpgrade_LR79-NA-13, RFUpgrade_XLR11-RM-13-10K, RFUpgrade_LR105-NA-7.1, RFUpgrade_LR105-NA-7.2, RFUpgrade_LR89-NA-7.1, RFUpgrade_LR89-NA-7.2, RFUpgrade_X-405H-4]
+    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_X-405H-3, RFUpgrade_RD-0108, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_LR89-NA-6, RFUpgrade_S-3FH, RFUpgrade_LR79-NA-13, RFUpgrade_XLR11-RM-13-10K, RFUpgrade_LR105-NA-7.1, RFUpgrade_LR105-NA-7.2, RFUpgrade_LR89-NA-7.1, RFUpgrade_LR89-NA-7.2, RFUpgrade_X-405H-4, RFUpgrade_RL10A-3-3B]
     # NA-7.x + X-405H-4 marks added 2026-07 (tail): next Atlas LR105/LR89 + Vanguard marks, continuing NA-6.
     parts: [ROE-LR87_LH2]
     # Part-count-pass finds (2026-07): 6 more upgrades in this same "combustion/injector refinement, no
@@ -2426,6 +2426,16 @@ nodes:
     # Split out from fd_gasGeneratorApex (2026-07) once upgrades started counting 0.8-parts toward the cap.
 
   # ---- Lane 3: hydrolox uppers ----
+  - id: cryo_extendedBurnExpander
+    title: "Extended-Burn Expander Cycle"
+    discipline: Cryogenics
+    tier: 8
+    parents: [cryo_refinedExpander]
+    flavor: "Qualify the expander for the long haul: a chamber and turbine that survive nine minutes of firing instead of five, and a nozzle re-cut for the vacuum it will actually spend that time in. The upper stage stops being a kick motor and becomes something you can coast on, restart, and trust with the whole mission."
+    upgrades: [RFUpgrade_RL10A-3-3A]
+    # LADDER PASS (2026-07-27): RL10A-3-3A is a burn-life + nozzle step off A-3-3 (470 -> 550 s rated,
+    # ispSL 186 -> 217), not a throttling one — it had been parked on cryo_deepThrottleHydrolox, whose
+    # subject it has nothing to do with. New node rather than a near-enough home.
   - id: cryo_gasGeneratorHydrolox
     title: "Gas-Generator Hydrolox Combustion"
     discipline: Cryogenics
@@ -2453,7 +2463,7 @@ nodes:
     tier: 7
     parents: [cryo_expanderCycle]
     flavor: "Wring more specific impulse out of the closed expander cycle — hotter, tighter plumbing on the efficient small upper stage."
-    upgrades: [RFUpgrade_RL10A-3-3, RFUpgrade_RL10A-3-7, RFUpgrade_RL10A-3-3A, RFUpgrade_RL10A-3-9, RFUpgrade_RL10A-4, RFUpgrade_RL10A-4-1N, RFUpgrade_RL10A-4N, RFUpgrade_RL10A-5, RFUpgrade_RL10A-4-1-2, RFUpgrade_RL10A-4-2N, RFUpgrade_RL10B-2, RFUpgrade_LE-5A, RFUpgrade_LE-5B, RFUpgrade_RL10A-3-3B]  # RL10A-3-3B added 2026-07 (engine-upgrade gap-fill; sibling RL10A-3-3 here)
+    upgrades: [RFUpgrade_RL10A-3-3, RFUpgrade_RL10A-4-1N, RFUpgrade_RL10A-4N, RFUpgrade_RL10B-2, RFUpgrade_LE-5A]  # RL10A-3-3B added 2026-07 (engine-upgrade gap-fill; sibling RL10A-3-3 here)
     # 2026-07 (shuttle/station batch): the long RL-10 chain arrives, as anticipated below - widened rather
     # than a new node, exactly the "fills out" case this stub was left for.
     # Thin stub (RL-10 base sits in cryo_expanderCycle; its refinements can't live with it). Fills out as
@@ -3050,7 +3060,7 @@ nodes:
     parents: [cryo_deepThrottleHydrolox]
     flavor: "Scale the restartable hydrolox engine toward booster thrust while keeping the reusable engine's whole point — deep throttle, many restarts, margin instead of a one-shot redline. Rocketdyne's own HG-3 studies fed straight into the engine still to come."
     parts: [ROE-HG3]
-    upgrades: [RFUpgrade_KVD-1, RFUpgrade_LR129-P-1, RFUpgrade_CE-7.5]
+    upgrades: [RFUpgrade_KVD-1, RFUpgrade_LR129-P-1, RFUpgrade_CE-7.5, RFUpgrade_RL10A-3-7]
     # King HG-3 (real SSME-precursor study). Doctrine-4 catches: KVD-1/LR129-P-1 are later configs
     # of this node's own parent (cryo_deepThrottleHydrolox); CE-7.5 moved down here 2026-07 for the same
     # reason (KVD-1's own next mark). HG-3-SL (this node's OWN base part's later mark) moved further down
@@ -3623,9 +3633,14 @@ nodes:
     discipline: Cryogenics
     tier: 11
     parents: [cryo_refinedExpander]
+    catalog: true
+    # LADDER PASS (2026-07-27): flagged `catalog: true` (R1 exemption). The RL10C/E marks are a modern
+    # CATALOG of nozzle options for one engine, not a progression — C-1/C-1A/C-1-1/C-3/E-1/E-3EL/E-3ELL
+    # sit at 101-108 kN and differ almost entirely by expansion (ispSL 148/116/122/45/24/24/132), which is
+    # this node's entire subject. Seven marks, one decision: how long a nozzle do you want.
     flavor: "The expander cycle's payoff arrives: a radiatively-cooled nozzle that unfolds after staging trades stowed length for the highest vacuum Isp of any engine that flies. The RL-10B-2's carbon-carbon skirt reaches 465 seconds; the RD-0146 is the Russian closed-expander answer. The long RL-10 chain, idle since its last refinement, leaps a full fleet-generation here."
     parts: [ROE-RL10B2, ROE-RL10A4N, ROE-RD0146]
-    upgrades: [RFUpgrade_CECE-Base, RFUpgrade_CECE-Methane, RFUpgrade_RL10C-1, RFUpgrade_RL10C-1-1, RFUpgrade_RL10C-1A, RFUpgrade_RL10C-3, RFUpgrade_RL10E-1, RFUpgrade_RL10E-3EL, RFUpgrade_RL10E-3ELL]  # RL10C-3 + RL10E family added 2026-07 (gap-fill; RL10C-1/2 siblings here). RD-0146D/CECE-High/RL10C-2/RL10C-2-1 (own base parts ROE-RD0146/ROE-RL10B2 here) moved down to cryo_highThrustExpander, doctrine-4 fix 2026-07
+    upgrades: [RFUpgrade_CECE-Base, RFUpgrade_RL10C-1, RFUpgrade_RL10C-1-1, RFUpgrade_RL10C-1A, RFUpgrade_RL10C-3, RFUpgrade_RL10E-1, RFUpgrade_RL10E-3EL, RFUpgrade_RL10E-3ELL]  # RL10C-3 + RL10E family added 2026-07 (gap-fill; RL10C-1/2 siblings here). RD-0146D/CECE-High/RL10C-2/RL10C-2-1 (own base parts ROE-RD0146/ROE-RL10B2 here) moved down to cryo_highThrustExpander, doctrine-4 fix 2026-07
     # 2026-07 (band-5 sweep): the RL-10C/CECE marks route here (downstream continuation of the RL10Fixed
     # lineage, same "idle-then-leap" precedent already used for this node's own T7->T11 jump).
   - id: cryo_operationalHydroloxUpper
@@ -3635,6 +3650,7 @@ nodes:
     parents: [cryo_gasGeneratorHydrolox]
     flavor: "The gas-generator hydrolox upper grows up. Where the J-2 fired once, the LE-5 coasts and reignites ten times across a mission — the workhorse restartable upper of an operational launcher. Its own expander-bleed descendants split off to the expander lane."
     parts: [ROE-LE5]
+    upgrades: [RFUpgrade_RL10A-4]
     # doctrine-4 fix (2026-07): LE-5B-2/LE-5B-3 are this node's own base part's (ROE-LE5) later marks -
     # moved down to cryo_operationalHydroloxUpperII (new node, no existing child here).
   - id: cryo_operationalHydroloxUpperII
@@ -3643,7 +3659,7 @@ nodes:
     tier: 12
     parents: [cryo_operationalHydroloxUpper]
     flavor: "The LE-5 keeps maturing mark by mark — more restarts, a little more thrust, the same workhorse upper stage refined rather than replaced."
-    upgrades: [RFUpgrade_LE-5B-2, RFUpgrade_LE-5B-3]
+    upgrades: [RFUpgrade_LE-5B-2, RFUpgrade_LE-5B-3, RFUpgrade_RL10A-4-1-2, RFUpgrade_LE-5B]
     # doctrine-4 catch: LE-5B-2/LE-5B-3's own base part (ROE-LE5) lives in cryo_operationalHydroloxUpper.
   - id: cryo_boosterGasGenHydrolox
     title: "Booster-Class Gas-Generator Hydrolox"
@@ -3670,7 +3686,7 @@ nodes:
     parents: [cryo_operationalFRSC]
     flavor: "Every reusable and staged-combustion hydrolox engine now in service settles into its production marks — the SSME Block-I and Block-II, the RD-0120M, the LE-7A, the maturing HG-3 and deep-throttle chains — the unglamorous decade of squeezing margin out of engines already flying."
     parts: [rmm_arsia]
-    upgrades: [RFUpgrade_RS-25A, RFUpgrade_RS-25C, RFUpgrade_RS-25D-50X, RFUpgrade_RS-25D-E, RFUpgrade_RD-0120M, RFUpgrade_RD-0122, RFUpgrade_LE-7A, RFUpgrade_LE-7A-2, RFUpgrade_HG-3B, RFUpgrade_HG-3B-2, RFUpgrade_HG-3B-SL, RFUpgrade_HG-3B-SL-2, RFUpgrade_LR129-P-3, RFUpgrade_RD-57M, RFUpgrade_RD-57A-1, RFUpgrade_LRBE-BlockII, RFUpgrade_SSBE-BlockII]
+    upgrades: [RFUpgrade_RS-25A, RFUpgrade_RS-25C, RFUpgrade_RS-25D-50X, RFUpgrade_RS-25D-E, RFUpgrade_RD-0120M, RFUpgrade_RD-0122, RFUpgrade_LE-7A, RFUpgrade_LE-7A-2, RFUpgrade_HG-3B, RFUpgrade_HG-3B-2, RFUpgrade_HG-3B-SL, RFUpgrade_HG-3B-SL-2, RFUpgrade_LR129-P-3, RFUpgrade_RD-57M, RFUpgrade_RD-57A-1, RFUpgrade_LRBE-BlockII, RFUpgrade_SSBE-BlockII, RFUpgrade_RL10A-4-2N]
     # rmm_arsia/RS-25-650 (2026-07, band-5 gap sweep): a real uprated-SSME production-study mark - fits
     # this node's own "production marks maturing in service" theme exactly, breaks its former upgrades-only
     # shape but that was incidental, not a design rule.
@@ -4615,7 +4631,7 @@ nodes:
     parents: [cryo_deployableNozzleExpander]
     flavor: "Scale the closed expander cycle past the RL-10's own ceiling — two parallel American and European programs converge on the same bigger turbopump, the same clean cycle, roughly triple the thrust."
     parts: [cryoengine-pavonis-1, cryoengine-tharsis-1, ROE-MB35, ROE-MB60]
-    upgrades: [RFUpgrade_RD-0146D, RFUpgrade_CECE-High, RFUpgrade_RL10C-2, RFUpgrade_RL10C-2-1]
+    upgrades: [RFUpgrade_RD-0146D, RFUpgrade_CECE-High, RFUpgrade_RL10C-2, RFUpgrade_RL10C-2-1, RFUpgrade_RL10A-3-9]
     # doctrine-4 fix (2026-07): Vinci-180 (this node's OWN base parts' - cryoengine-pavonis-1/tharsis-1 -
     # same-era parallel-program sibling config, per this node's own flavor text) moved down to
     # cryo_expanderBoosterScale, its nearest later-tier sibling.
@@ -4632,7 +4648,7 @@ nodes:
     parents: [pc_zenitKerolox]
     flavor: "A simpler, plainer methalox debut at small scale — no staged-combustion preburner, just a clean upper-stage engine sized for a commercial small-satellite launcher. The unglamorous sibling to the booster-scale methalox story unfolding one node over."
     parts: [cryoengine-buzzard-1]
-    upgrades: [RFUpgrade_CH4+O2]
+    upgrades: [RFUpgrade_CH4+O2, RFUpgrade_CECE-Methane]
     # LADDER PASS (2026-07-27): methalox RCS rides the node that makes small methalox engines a thing.
     # King M10 (Rocket Lab Neutron's upper stage). Sibling to cryo_methaloxStagedCombustion, not a child -
     # a different, plainer cycle on the same new fuel.
@@ -4643,7 +4659,7 @@ nodes:
     parents: [cryo_deployableNozzleExpander]
     flavor: "Vent a little of the cooling-jacket gas overboard instead of routing every drop through the turbopump, and the expander cycle's thrust ceiling — always capped by a small upper-stage engine's own heat-exchange area — breaks wide open. The expander cycle finally reaches core-stage scale."
     parts: [cryoengine-fuji-1]
-    upgrades: [RFUpgrade_Vinci-180]  # moved down from cryo_highThrustExpander (own base parts cryoengine-pavonis-1/tharsis-1 there), doctrine-4 fix 2026-07
+    upgrades: [RFUpgrade_Vinci-180, RFUpgrade_RL10A-5]  # moved down from cryo_highThrustExpander (own base parts cryoengine-pavonis-1/tharsis-1 there), doctrine-4 fix 2026-07
     # King LE-9 (real H3 core engine, 1471 kN - triple the thrust of any prior expander in this tree).
   - id: cryo_fullFlowMethalox
     title: "Full-Flow Staged-Combustion Methalox"
