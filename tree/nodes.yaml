@@ -455,7 +455,7 @@ nodes:
     tier: 3
     parents: [met_stainlessSteel]
     flavor: "Nickel-chromium superalloy that keeps its strength at red heat — a turbopump turbine that spins hotter and harder feeds a higher chamber pressure, and the very same alloy is what lets a jet turbine run at all. The metallurgy where rockets and jets cross over."
-    upgrades: [RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13, RFUpgrade_J35-A-17, RFUpgrade_J47-GE-25A, RFUpgrade_J47-GE-27, RFUpgrade_J48-P-8, RFUpgrade_J57-P-21, RFUpgrade_J57-P-43WA, RFUpgrade_J57-P-7A, RFUpgrade_JT3C-6, RFUpgrade_Avon114R, RFUpgrade_Sapphire203, RFUpgrade_RD-107-8D74PS, RFUpgrade_RD-108-8D75PS, RFUpgrade_WP-6, RFUpgrade_CJ805-3B, RFUpgrade_RD-108-8D75-1958, RFUpgrade_RD-108-8D75-1959, RFUpgrade_RD-108-8D75K, RFUpgrade_RD-107-8D76, RFUpgrade_RD-107-8D74-1958, RFUpgrade_RD-107-8D74-1959, RFUpgrade_RD-107-8D74K, RFUpgrade_RD-107-8D728, RFUpgrade_RD-107-11D512]
+    upgrades: [RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_J35-A-17, RFUpgrade_J47-GE-25A, RFUpgrade_J48-P-8, RFUpgrade_J57-P-21, RFUpgrade_J57-P-43WA, RFUpgrade_J57-P-7A, RFUpgrade_JT3C-6, RFUpgrade_Avon114R, RFUpgrade_Sapphire203, RFUpgrade_RD-107-8D74PS, RFUpgrade_RD-108-8D75PS, RFUpgrade_WP-6, RFUpgrade_CJ805-3B, RFUpgrade_RD-108-8D75-1958, RFUpgrade_RD-108-8D75-1959, RFUpgrade_RD-108-8D75K, RFUpgrade_RD-107-8D76, RFUpgrade_RD-107-8D74-1958, RFUpgrade_RD-107-8D74-1959, RFUpgrade_RD-107-8D74K, RFUpgrade_RD-107-8D728, RFUpgrade_RD-107-11D512]
 
   # ===================== BAND 1 * STRUCTURES & TANK MATERIALS =====================
   # Mass-fraction line: welded steel (T1) -> stainless (T2) -> isogrid ‖ balloon light tanks. The Metallurgy
@@ -718,6 +718,7 @@ nodes:
     parents: [av_axialJet, aero_supersonicWing]
     flavor: "Dump raw fuel into the hot exhaust behind the turbine and light it — a burst of thrust that shoves a fighter through the transonic drag rise, at a ruinous fuel cost. Reheat: the supersonic dash."
     parts: [aje_j57, aje_avon, RO-Sapphire203, RO-RD9B, RO-J48, RO-AL7F]
+    upgrades: [RFUpgrade_J47-GE-27]
   - id: av_variableStator
     title: "Variable-Stator Turbojet"
     discipline: AirBreathing
@@ -1176,7 +1177,7 @@ nodes:
     tier: 4
     parents: [pc_storables, pc_hypergolics]
     flavor: "Red fuming nitric acid dissolves the tank it is stored in; add a fraction of a percent of hydrofluoric acid and it lays down a fluoride film that stops the attack instead. The oxidiser that was only ever a laboratory problem becomes something a missile can sit fuelled with for years."
-    upgrades: [RFUpgrade_XLR81-BA-7, RFUpgrade_RD-217-8D515, RFUpgrade_YF-1A, RFUpgrade_AJ10-118D]
+    upgrades: [RFUpgrade_XLR81-BA-7, RFUpgrade_RD-217-8D515, RFUpgrade_YF-1A, RFUpgrade_AJ10-118D, RFUpgrade_RD-213-8D13]
     # LADDER PASS (2026-07-27): pulled out of pc_ntoHypergolics, whose subject is dinitrogen tetroxide.
     # None of these burn NTO -- they are IRFNA-III and AK27, i.e. inhibited nitric acid, a different
     # oxidiser with a different problem. The NTO configs (RD-250 family, YF-1B) stayed behind.
@@ -1192,7 +1193,7 @@ nodes:
     # last recorded count was 5, "recommend accepting as flavor... your call to override." Every
     # dependent is still a genuinely distinct vehicle/chemistry lineage drawing on the same foundational
     # breakthrough; re-confirmed and accepted at the current count rather than left stale.
-    upgrades: [RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_S5.2, RFUpgrade_RD-250-8D518, RFUpgrade_RD-252-8D724, RFUpgrade_RD-855, RFUpgrade_RD-856, RFUpgrade_RD-250PM]
+    upgrades: [RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_S5.2, RFUpgrade_RD-250-8D518, RFUpgrade_RD-252-8D724, RFUpgrade_RD-855, RFUpgrade_RD-856, RFUpgrade_RD-250PM, RFUpgrade_R-40A-NTO]
   - id: pc_htpSustainer
     title: "Multi-Chamber Peroxide Combustion"
     discipline: PropellantChemistry
@@ -1628,7 +1629,7 @@ nodes:
     tier: 10
     parents: [pc_mmh]
     flavor: "Dissolve nitric oxide back into the dinitrogen tetroxide until the mixture stops freezing at temperatures a spacecraft will actually see. A few percent of a gas nobody wants, and the oxidiser survives the shadow side of the orbit without a heater on every line."
-    upgrades: [RFUpgrade_Model8096B]
+    upgrades: [RFUpgrade_Model8096B, RFUpgrade_LEROS-2b]
   - id: fd_longLifeStorableUpper
     title: "Long-Life Storable Upper Stage"
     discipline: FluidDynamics
@@ -2326,7 +2327,7 @@ nodes:
     parents: [av_afterburner, av_variableStator]
     flavor: "Push the afterburning and variable-stator tricks together into one engine built for sustained Mach 2 cruise, not just a burst through the transonic wall — Concorde's Olympus, the MiG-21's R-13, the MiG-25's R-15."
     parts: [RO-Olympus593, nfa-turbofan-25-2, RO-R13, RO-R15BD, nfa-turbojet-25-1, RO-R25F]
-    upgrades: [RFUpgrade_AL-7F-2, RFUpgrade_WP-7A, RFUpgrade_Avon302, RFUpgrade_J79-GE-8]
+    upgrades: [RFUpgrade_AL-7F-2, RFUpgrade_WP-7A, RFUpgrade_Avon302, RFUpgrade_J79-GE-8, RFUpgrade_R-11F2S-300, RFUpgrade_WP-7B, RFUpgrade_WP-7BM]
     # nfa-turbojet-25-1 (GE4 SST) + RO-R25F (R-25) added 2026-07 (band-3 lunar batch): more Mach-2+ turbojets.
     # nfa-turbofan-25-2 is the SAME Olympus 593 engine as RO-Olympus593, just the NearFutureAeronautics
     # mod's own wrapper — same part-count-pass pattern as ROE-AJ10Mid/Early (two curated sources, one
@@ -2783,6 +2784,16 @@ nodes:
     flavor: "The shared data bus, radiation-hardened end to end — every sensor and actuator on the line survives the same dose the flight computer does, for an outer-system mission with no wiring-harness weight to spare."
     grants: [Deep-Space-nextGenAvionics]
     # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note.
+  - id: comp_digitalEngineControl
+    title: "Full-Authority Digital Engine Control"
+    discipline: Computing
+    tier: 13
+    parents: [comp_multiplyRedundantFlightComputer]
+    flavor: "Put a computer between the throttle and the engine and let it, not a hydromechanical governor, decide what the valves do. It trims mixture ratio in closed loop against measured chamber pressure, holds the engine at a margin a mechanical linkage could never be trusted near, and shuts it down cleanly on a sensor trend instead of a failure. The same step that turned a carburettor into an engine management unit, applied to something with a turbopump."
+    upgrades: [RFUpgrade_RS-68B]
+    # LADDER PASS (2026-07-27, user's ECU idea): RS-68B is +2.2 s ispVac at IDENTICAL thrust to RS-68A --
+    # nothing was made stronger, it was made better-governed. That is a controls gain, so it homes in
+    # Computing rather than on the cycle node. Expect more of the tail to land here.
   - id: comp_softwareDefinedFlightControl
     title: "Software-Defined Flight Control"
     discipline: Computing
@@ -2875,7 +2886,7 @@ nodes:
     tier: 8
     parents: [av_variableStator]
     flavor: "The mature marks of the variable-stator fighter turbojets — J79, J85 and their Chinese WP derivatives, refined engine by engine for a few more percent of thrust."
-    upgrades: [RFUpgrade_J85-GE-21, RFUpgrade_WP-6Z, RFUpgrade_WP-7B, RFUpgrade_WP-7BM, RFUpgrade_R-11F2-300, RFUpgrade_R-11F2S-300]
+    upgrades: [RFUpgrade_J85-GE-21, RFUpgrade_WP-6Z, RFUpgrade_R-11F2-300]
     # Split out of av_advancedJetEngines (2026-07). Bases (aje_j79/RO-J85GE5) live in av_variableStator (T4).
   - id: av_advancedHighSpeedTurbojets
     title: "High-Speed Turbojet Uprating"
@@ -3403,7 +3414,7 @@ nodes:
     parents: [pc_storableRcsPropellants]
     flavor: "Trade the reaction-control block's simple storable monopropellant for a genuine two-propellant combustion chamber — a real flame instead of a catalytic fizz, and a meaningful jump in specific impulse for every correction burn and apogee kick a spacecraft makes on its own."
     parts: [ROE-HiPAT, ca_trident, ROE-R40B, ca_lahar, ROC-OrionRCS, ROC-OrionESM]
-    upgrades: [RFUpgrade_LEROS-1c, RFUpgrade_LEROS-2b]  # R-4D-15/DM (own base part ROE-HiPAT here) moved down to gnc_deepSpaceApogeeEngine, doctrine-4 fix 2026-07
+    upgrades: [RFUpgrade_LEROS-1c]  # R-4D-15/DM (own base part ROE-HiPAT here) moved down to gnc_deepSpaceApogeeEngine, doctrine-4 fix 2026-07
     # ROC-OrionESM (2026-07, band-5 sweep): 8x R-4D-11 cluster - same real R-4D family as king ROE-HiPAT,
     # just a service-module application. Reaches the 6-part cap.
     # King R-4D (HiPAT) - the real, still-flying OMS/RCS workhorse (Apollo and many modern spacecraft).
@@ -3508,6 +3519,15 @@ nodes:
     flavor: "Go back to steel — but a cryo-tough stainless that keeps its strength through re-entry heat and down to liquid-oxygen cold, cheap enough to build a reusable tank-and-hull as one piece. The counter-intuitive material choice behind a fully-reusable heavy launcher."
     upgrades: [RFTech-Tank-Sep-Starship, RFTech-Tank-Iso-Magic]
     # Near-future stainless / exotic tankage (materialsScienceNF era; Starship-class).
+  - id: cmp_compositeNozzleExtension
+    title: "Carbon-Carbon Nozzle Extension"
+    discipline: CompositeMaterials
+    tier: 14
+    parents: [cmp_advancedCompositeFairings]
+    flavor: "Weave carbon fibre in a carbon matrix and it gets stronger as it gets hotter, right up past the point where any alloy has gone soft. Bolt a skirt of it below the metal chamber and the nozzle grows without the mass a cooled metal extension would have cost — expansion ratio for free, paid for in a two-year layup and cure."
+    upgrades: [RFUpgrade_RS-68K]
+    # LADDER PASS (2026-07-27): RS-68K is +6 s ispVac and +11 s ispSL over RS-68B at near-identical
+    # thrust -- an expansion-ratio gain, i.e. a NOZZLE MATERIALS story, not a combustion one.
   - id: cmp_advancedCompositeFairings
     title: "High-Temperature Composite Fairings"
     discipline: CompositeMaterials
@@ -3829,7 +3849,7 @@ nodes:
     tier: 13
     parents: [cryo_boosterGasGenHydrolox, cryo_seaLevelHydroloxNozzle]
     flavor: "Eight meganewtons from a single hydrogen chamber firing at sea level — the largest liquid engine anyone ever drew, sized for a vehicle that would have made Saturn V look modest. The turbopump alone outpowers most launch vehicles; every part of it is at a limit somebody had to argue was reachable."
-    upgrades: [RFUpgrade_M-1U-SL]
+    upgrades: [RFUpgrade_M-1U-SL, RFUpgrade_RS-800]
   - id: cryo_reusableEngineUprating
     title: "Reusable-Engine Production Uprating"
     discipline: Cryogenics
@@ -4794,7 +4814,7 @@ nodes:
     parents: [cryo_boosterGasGenHydrolox]
     flavor: "Skip the separate gas-generator combustor entirely — bleed hot gas straight off the main chamber wall to spin the turbopump, then dump it overboard. Simpler than a gas generator, cheaper than staged combustion: the operational middle path Blue Origin bet New Shepard and New Glenn's upper stage on."
     parts: [ROE-BE3]
-    upgrades: [RFUpgrade_RS-68A, RFUpgrade_RS-68B, RFUpgrade_RS-68K, RFUpgrade_RS-800]  # moved down from cryo_boosterGasGenHydrolox (own base part ROE-RS68 there), doctrine-4 fix 2026-07
+    upgrades: [RFUpgrade_RS-68A]  # moved down from cryo_boosterGasGenHydrolox (own base part ROE-RS68 there), doctrine-4 fix 2026-07
     # King BE-3PM. A genuinely third hydrolox cycle (neither gas-generator nor expander nor staged
     # combustion) - sibling of RS-68/Vulcain 2's "anti-SSME" simplicity-over-Isp story, one tier later.
   - id: cryo_highThrustExpander
