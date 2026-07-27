@@ -1563,10 +1563,16 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
             hit = next((k for k in order if p and perf.get(k) and _ladder_near(p, perf[k])), None)
             klass[r["config"]] = hit or r["config"]
             if not hit: order.append(r["config"])
-        # R1 -- one node granting two genuinely distinct configs for the same part
+        # R1 -- one node granting two genuinely distinct configs for the same part.
+        # EXEMPT: nodes flagged `catalog: true`. Some real engine families are a fixed CATALOG, not a
+        # progression -- the PT6 turboprop has eleven marks whose thrust wanders 8.4-13.0 kN with no
+        # ordering at all. Forcing one-class-per-node would demand six tree events for a family that
+        # contains no six decisions. This matches the tree's existing idiom of opt-in dead-end catalog
+        # nodes hanging off a procedural king. Use it only for a genuinely unordered family.
         pernode = collections.defaultdict(list)
         for r in placed: pernode[r["node"]].append(r["config"])
         for node, cfgs in pernode.items():
+            if by[node].get("catalog"): continue
             if len({klass[c] for c in cfgs}) > 1:
                 r1.append((part, node, by[node]["tier"], sorted(cfgs)))
         # R4 -- one padding class spread over several nodes: spurious tree events for a single decision

@@ -427,7 +427,7 @@ nodes:
     tier: 3
     parents: [met_stainlessSteel]
     flavor: "Nickel-chromium superalloy that keeps its strength at red heat — a turbopump turbine that spins hotter and harder feeds a higher chamber pressure, and the very same alloy is what lets a jet turbine run at all. The metallurgy where rockets and jets cross over."
-    upgrades: [RFUpgrade_LR43-NA-3, RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13, RFUpgrade_J35-A-17, RFUpgrade_J47-GE-25A, RFUpgrade_J47-GE-27, RFUpgrade_J48-P-8, RFUpgrade_J57-P-21, RFUpgrade_J57-P-43WA, RFUpgrade_J57-P-7A, RFUpgrade_JT3C-6, RFUpgrade_Avon114R, RFUpgrade_RD-9BF-811, RFUpgrade_Sapphire203, RFUpgrade_RD-107-8D74PS, RFUpgrade_RD-108-8D75PS]
+    upgrades: [RFUpgrade_LR43-NA-3, RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13, RFUpgrade_J35-A-17, RFUpgrade_J47-GE-25A, RFUpgrade_J47-GE-27, RFUpgrade_J48-P-8, RFUpgrade_J57-P-21, RFUpgrade_J57-P-43WA, RFUpgrade_J57-P-7A, RFUpgrade_JT3C-6, RFUpgrade_Avon114R, RFUpgrade_Sapphire203, RFUpgrade_RD-107-8D74PS, RFUpgrade_RD-108-8D75PS, RFUpgrade_WP-6, RFUpgrade_CJ805-3B]
 
   # ===================== BAND 1 * STRUCTURES & TANK MATERIALS =====================
   # Mass-fraction line: welded steel (T1) -> stainless (T2) -> isogrid ‖ balloon light tanks. The Metallurgy
@@ -1327,7 +1327,7 @@ nodes:
     tier: 4
     parents: [met_nimonic]
     flavor: "Drill fine passages through each turbine blade and bleed compressor air through them, filming the metal in cool gas so the turbine can face a far hotter gas stream than it could survive bare. The step past a better alloy — run the fire hotter and every jet behind it gains thrust."
-    upgrades: [RFUpgrade_AL-7F-1, RFUpgrade_AL-7F-2, RFUpgrade_Atar101E-3, RFUpgrade_Avon200R, RFUpgrade_CJ805-3B, RFUpgrade_J57-P-20A, RFUpgrade_J75-P-19, RFUpgrade_J75-P-5A, RFUpgrade_J79-GE-2A, RFUpgrade_J79-GE-5C, RFUpgrade_J79-GE-8, RFUpgrade_J85-GE-5, RFUpgrade_R-11F2-300, RFUpgrade_RD-9AF2-300, RFUpgrade_WP-6, RFUpgrade_Avon302, RFUpgrade_J79-GE-10, RFUpgrade_J79-GE-11, RFUpgrade_J79-GE-17, RFUpgrade_R-11F2S-300, RFUpgrade_WP-7, RFUpgrade_WP-7A, RFUpgrade_WP-6A, RFUpgrade_PT6A-27, RFUpgrade_PT6A-28, RFUpgrade_R-15BD-300, RFUpgrade_Atar09K-50, RFUpgrade_J57-P-420, RFUpgrade_RB162-4D]
+    upgrades: [RFUpgrade_AL-7F-1, RFUpgrade_Atar101E-3, RFUpgrade_Avon200R, RFUpgrade_J57-P-20A, RFUpgrade_J75-P-19, RFUpgrade_J79-GE-5C, RFUpgrade_J85-GE-5, RFUpgrade_RD-9AF2-300, RFUpgrade_WP-7, RFUpgrade_WP-6A, RFUpgrade_PT6A-27, RFUpgrade_PT6A-28, RFUpgrade_R-15BD-300, RFUpgrade_Atar09K-50, RFUpgrade_RB162-4D, RFUpgrade_RD-9BF-811, RFUpgrade_WP-6A-III]
     # 3 more upgrades added (2026-07, part-count-pass find): in the original engine census, dropped
     # somewhere between that census and the summary table used to author this node — never actually placed.
   - id: av_turboprop
@@ -1351,6 +1351,7 @@ nodes:
     parents: [av_variableStator, met_cooledTurbine]
     flavor: "With a cooled turbine able to take the heat, run the combustor hotter and lighter for the thrust-to-weight a supersonic fighter lives on — a compact afterburning turbojet that holds Mach 2 on internal fuel. The R-11 of the MiG-21, the Atar 09 of the Mirage."
     parts: [aje_atar, RO-R11F, miniJetEngine]
+    upgrades: [RFUpgrade_J79-GE-2A, RFUpgrade_J79-GE-11, RFUpgrade_J79-MTU-J1K]
   - id: av_ramjetAdvanced
     title: "Refined Ramjet Compression"
     discipline: AirBreathing
@@ -2256,6 +2257,7 @@ nodes:
     parents: [av_afterburner, av_variableStator]
     flavor: "Push the afterburning and variable-stator tricks together into one engine built for sustained Mach 2 cruise, not just a burst through the transonic wall — Concorde's Olympus, the MiG-21's R-13, the MiG-25's R-15."
     parts: [RO-Olympus593, nfa-turbofan-25-2, RO-R13, RO-R15BD, nfa-turbojet-25-1, RO-R25F]
+    upgrades: [RFUpgrade_AL-7F-2, RFUpgrade_WP-7A, RFUpgrade_Avon302, RFUpgrade_J79-GE-8]
     # nfa-turbojet-25-1 (GE4 SST) + RO-R25F (R-25) added 2026-07 (band-3 lunar batch): more Mach-2+ turbojets.
     # nfa-turbofan-25-2 is the SAME Olympus 593 engine as RO-Olympus593, just the NearFutureAeronautics
     # mod's own wrapper — same part-count-pass pattern as ROE-AJ10Mid/Early (two curated sources, one
@@ -2718,7 +2720,7 @@ nodes:
     tier: 8
     parents: [av_highBypassTurbofan, av_lowBypassTurbofan, av_mach2Turbojet]
     flavor: "The mature marks of the bypass turbofans in the hangar — hotter turbines, tighter tolerances, a few percent more thrust and a few percent less fuel, engine by engine."
-    upgrades: [RFUpgrade_CF6-50A, RFUpgrade_F100-PW-220, RFUpgrade_TF34-GE-400A]
+    upgrades: [RFUpgrade_CF6-50A, RFUpgrade_F100-PW-220, RFUpgrade_TF34-GE-400A, RFUpgrade_J57-P-420]
     # Doctrine-4 collector for late-mark bypass-turbofan refinements (bases in av_highBypassTurbofan/
     # av_lowBypassTurbofan).
     # REVISED (2026-07, shuttle/station batch): this node hit 13 upgrades (10.4 weighted, already over
@@ -2732,7 +2734,7 @@ nodes:
     tier: 8
     parents: [av_variableStator]
     flavor: "The mature marks of the variable-stator fighter turbojets — J79, J85 and their Chinese WP derivatives, refined engine by engine for a few more percent of thrust."
-    upgrades: [RFUpgrade_J79-GE-119, RFUpgrade_J79-MTU-J1K, RFUpgrade_J85-GE-21, RFUpgrade_WP-6Z, RFUpgrade_WP-7B, RFUpgrade_WP-7BM]
+    upgrades: [RFUpgrade_J85-GE-21, RFUpgrade_WP-6Z, RFUpgrade_WP-7B, RFUpgrade_WP-7BM, RFUpgrade_R-11F2-300, RFUpgrade_R-11F2S-300]
     # Split out of av_advancedJetEngines (2026-07). Bases (aje_j79/RO-J85GE5) live in av_variableStator (T4).
   - id: av_advancedHighSpeedTurbojets
     title: "High-Speed Turbojet Uprating"
@@ -2740,7 +2742,7 @@ nodes:
     tier: 8
     parents: [av_mach2Turbojet, av_dedicatedLiftJet]
     flavor: "The mature marks of the sustained-Mach-2 cruise engines (the MiG-21's R-13, the MiG-25's R-15) and the dedicated hover lift-jets — two unrelated missions, both refined mark by mark past their first cut."
-    upgrades: [RFUpgrade_R-13F-300, RFUpgrade_R-13F2-300, RFUpgrade_R-15BF2-300, RFUpgrade_RB162-81]
+    upgrades: [RFUpgrade_R-13F-300, RFUpgrade_R-13F2-300, RFUpgrade_R-15BF2-300, RFUpgrade_RB162-81, RFUpgrade_J75-P-5A, RFUpgrade_J79-GE-10, RFUpgrade_J79-GE-17]
     # Split out of av_advancedJetEngines (2026-07). Bases live in av_mach2Turbojet (T7, R-13/R-15 kings)
     # and av_dedicatedLiftJet (T7, RB162 king).
   - id: av_refinedTurboprop
@@ -2748,8 +2750,13 @@ nodes:
     discipline: AirBreathing
     tier: 5
     parents: [av_turboprop]
+    catalog: true
     flavor: "Squeeze more shaft power out of the free-turbine turboprop — the small, efficient propjet, refined mark by mark."
-    upgrades: [RFUpgrade_PT6A-11AG, RFUpgrade_PT6A-15AG, RFUpgrade_PT6A-20A, RFUpgrade_PT6A-34, RFUpgrade_PT6A-42, RFUpgrade_PT6A-135, RFUpgrade_PT6A-21, RFUpgrade_PT6A-34AG]
+    upgrades: [RFUpgrade_PT6A-11AG, RFUpgrade_PT6A-15AG, RFUpgrade_PT6A-20A, RFUpgrade_PT6A-34, RFUpgrade_PT6A-42, RFUpgrade_PT6A-135, RFUpgrade_PT6A-21, RFUpgrade_PT6A-34AG, RFUpgrade_PT6A-27, RFUpgrade_PT6A-28]
+    # LADDER PASS (2026-07-27): flagged `catalog: true` (R1 exemption, docs/UPGRADE-LADDERS.md). The PT6
+    # is a genuine fixed CATALOG, not a ladder — eleven marks whose thrust wanders 8.4-13.0 kN with no
+    # ordering, six distinct performance classes and not six decisions anywhere among them. PT6A-27/-28
+    # joined from met_cooledTurbine, where they were the last two jets left on the alloy bucket.
     # PT6A refinements; base SXTPWPT6 lives in av_turboprop, so doctrine-4 keeps them here.
     # RFUpgrade_PT6A-21 added (2026-07, shuttle/station batch): same PT6 lineage, just a mark RP-1 slotted
     # at a later calendar year - no real generation gap from the other five marks here.
@@ -3288,7 +3295,7 @@ nodes:
     parents: [av_advancedJetEngines]
     flavor: "The afterburning low-bypass/variable-stator turbojet families, matured a generation past their first marks — hotter cores, a real production fighter engine instead of a prototype on a test stand."
     parts: [aje_al31]
-    upgrades: [RFUpgrade_GE4-J6H, RFUpgrade_J79-IAI-J1E, RFUpgrade_WP-13]
+    upgrades: [RFUpgrade_GE4-J6H, RFUpgrade_J79-IAI-J1E, RFUpgrade_WP-13, RFUpgrade_J79-GE-119]
     # King AL-31F (aje_al31) - genuine next-generation base-part king past the F100/variable-stator family
     # homed at T4-T8. Doctrine-4 catches: GE4-J6H/J79-IAI-J1E/WP-13 (bases in av_variableStator/av_afterburner T4).
 
