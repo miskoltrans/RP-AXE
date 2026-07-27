@@ -987,55 +987,96 @@ def emit_placement_patch(p2n, u2n, grant2n=None, parking="parking"):
     with open(os.path.join(OUTD, "AxePartPlacement.cfg"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
 
-def emit_engine_config_gates(p2n):
-    """AxeEngineConfigGates.cfg: remap each RealFuels engine CONFIG's techRequired onto its part's AXE
-    node. The vendored seed/Tree/TREE-Engines.cfg walker sets every CONFIG's techRequired to an RP-1 tree
-    node (absent here); RealFuels' CanConfig() (EngineConfigTechLevels.cs) gates config availability on
-    exactly that field, so without this remap every engine config is permanently locked in career.
+CFG_NAME_SAFE = re.compile(r"^[A-Za-z0-9_.+/-]+$")   # MM-safe inside @CONFIG[...]: no space/comma/pipe/wildcard
 
-    Matched BY RP-1 NODE VALUE, not config name (the AxeExternalTechRemap idiom): dodges config-name
-    escaping (RF config names carry slashes/asterisks/spaces), skips configs with no RP-1 gate, and never
-    touches AXE-authored configs (they don't carry the RP-1 node). :FINAL runs after the walker
-    (:BEFORE[RealismOverhaulEnginesPost]) AND after AxeExternalTechRemap's :LAST spot-fixes -- which it
-    therefore leaves intact (their configs no longer carry the RP-1 node this matcher looks for).
+def emit_engine_config_gates(p2n, u2n, by):
+    """AxeEngineConfigGates.cfg: remap each RealFuels engine CONFIG's techRequired onto an AXE node. The
+    vendored seed/Tree/TREE-Engines.cfg walker sets every CONFIG's techRequired to an RP-1 tree node
+    (absent here); RealFuels' CanConfig() (EngineConfigTechLevels.cs) gates config availability on exactly
+    that field, so without this remap every engine config is permanently locked in career.
 
-    TWO layers, emitted (and thus applied) in this order:
-      1. Per-part specifics from manifest/engine-stats.tsv: @PART[p]{ CONFIG:HAS[#techRequired[R]] -> p2n[p] }
-         -- precise homing for curated engines, consistent with where AxePartPlacement puts their
-         RFUpgrade_* tokens (place_parts routes engine upgrades to their part's node).
+    THE CONFIG'S OWN GATE IS THE SCATTER. A part's CONFIGs are its upgrade path (ENGINE-STATS.md), and
+    tree/nodes.yaml homes each one's `RFUpgrade_<config>` token on the breakthrough node that earns it --
+    RL10A-1 at cryo_expanderCycle, the A-3/A-4 family at cryo_refinedExpander, the CECE/RL10C/E family at
+    cryo_deployableNozzleExpander. That token is only an R&D *icon*; techRequired on the CONFIG is the real
+    lever, so it has to follow the token or unlocking the part hands the player every variant at once
+    (the pre-2026-07-27 behaviour: layer 1 pointed every CONFIG at p2n[part], collapsing the whole ladder).
+
+    Matched BY RP-1 NODE VALUE (the AxeExternalTechRemap idiom): skips configs with no RP-1 gate and never
+    touches AXE-authored configs (they don't carry the RP-1 node). Layer 0 adds a config-name filter on top
+    of that same match. :FINAL runs after the walker (:BEFORE[RealismOverhaulEnginesPost]) AND after
+    AxeExternalTechRemap's :LAST spot-fixes -- which it therefore leaves intact (their configs no longer
+    carry the RP-1 node this matcher looks for).
+
+    THREE layers, emitted (and thus applied) in this order -- each one consumes the RP-1 value it matches,
+    so a later layer can never re-home what an earlier one already moved:
+      0. Per-CONFIG homing: @PART[p]{ CONFIG[c]:HAS[#techRequired[R]] -> u2n[RFUpgrade_c] }. The upgrade
+         ladder proper. Two guards keep every engine flyable the moment its part unlocks:
+           - a `base` CONFIG never moves off the part's node (it is the part's default -- moving it would
+             unlock an engine with no available config), and
+           - if a part's every CONFIG would otherwise leave, its first one is pinned to the part's node.
+         Config names that aren't MM-safe inside `@CONFIG[...]` (spaces, `*`, commas) fall through to layer 1.
+      1. Per-part fallback from manifest/engine-stats.tsv: @PART[p]{ CONFIG:HAS[#techRequired[R]] -> p2n[p] }
+         -- catches what layer 0 left: base configs, the guards above, and configs with no placed token.
       2. Global catch-all per RP-1 node: @PART[*]{ CONFIG:HAS[#techRequired[R]] -> modal AXE node }.
          engine-stats is INCOMPLETE (misses curated engines like ROE-LR105 and all uncurated ones), but it
          covers ~123/126 of the RP-1 nodes the walker uses, so a per-node catch-all sweeps up every config
          the per-part pass left behind (they'd otherwise stay on a dead RP-1 node = permanently locked). The
-         catch-all runs AFTER the specifics, so curated configs already moved to their part node are no
-         longer on R and the catch-all can't touch them; only the residual (non-engine-stats parts) lands on
-         the era-representative modal node. Modal is approximate (88/132 nodes span >1 AXE node) but
+         catch-all runs AFTER the specifics, so curated configs already moved are no longer on R and the
+         catch-all can't touch them; only the residual (non-engine-stats parts) lands on the
+         era-representative modal node. Modal is approximate (88/132 nodes span >1 AXE node) but
          era-appropriate -- refine per-part later by completing engine-stats."""
     stats = os.path.join(REPO, "manifest", "engine-stats.tsv")
-    pairs = set()                                                      # (part, rp1node)
-    r2a = collections.defaultdict(collections.Counter)                 # rp1node -> Counter(AXE node) for catch-all
+    rows = collections.defaultdict(list)                               # part -> [(config, rp1node, is_base)]
     with open(stats, encoding="utf-8") as f:
-        hdr = f.readline().rstrip("\n").split("\t"); pi = hdr.index("part"); ti = hdr.index("techRequired")
+        hdr = f.readline().rstrip("\n").split("\t")
+        pi, ci, ti, bi = (hdr.index(k) for k in ("part", "config", "techRequired", "is_base"))
         for ln in f:
             c = ln.rstrip("\n").split("\t")
-            if len(c) <= max(pi, ti): continue
-            part, tr = c[pi].strip(), c[ti].strip()
-            if not (part and tr): continue
-            pairs.add((part, tr))
-            if part in p2n: r2a[tr][p2n[part]] += 1
+            if len(c) <= max(pi, ci, ti, bi): continue
+            part, cfg, tr, isb = c[pi].strip(), c[ci].strip(), c[ti].strip(), c[bi].strip()
+            if not (part and cfg): continue
+            rows[part].append((cfg, tr, isb))
+
+    scattered = []                                                     # (part, config, rp1node, axenode)
+    pairs = set()                                                      # (part, rp1node) left to layer 1
+    r2a = collections.defaultdict(collections.Counter)                 # rp1node -> Counter(AXE node) for catch-all
+    missing, pinned = set(), []
+    for part in sorted(rows):
+        pnode = p2n.get(part)
+        if pnode is None: pnode = "parking"; missing.add(part)
+        moves = {}                                                     # config -> AXE node (layer 0 candidates)
+        for cfg, tr, isb in rows[part]:
+            unode = u2n.get("RFUpgrade_" + cfg)
+            if (tr and isb != "base" and unode and unode != pnode and unode in by
+                    and CFG_NAME_SAFE.match(cfg)):
+                moves[cfg] = unode
+        if moves and len(moves) == len(rows[part]):                    # guard: leave one config on the part
+            keep = rows[part][0][0]
+            if keep in moves: pinned.append((part, keep)); del moves[keep]
+        for cfg, tr, isb in rows[part]:
+            if cfg in moves: scattered.append((part, cfg, tr, moves[cfg]))
+            elif tr:
+                pairs.add((part, tr))
+                if part in p2n: r2a[tr][pnode] += 1
+
     L = ["// GENERATED by tools/build_tree.py — DO NOT EDIT BY HAND",
          "// Remap every RealFuels engine CONFIG's techRequired -> an AXE node. The vendored",
          "// seed/Tree/TREE-Engines.cfg walker points each CONFIG at an RP-1 node; RealFuels' CanConfig()",
          "// (EngineConfigTechLevels.cs) gates config availability on CONFIG/techRequired, so THIS is what",
-         "// unlocks engine configs in career. Matched by RP-1 NODE VALUE (AxeExternalTechRemap idiom):",
+         "// unlocks engine configs in career -- the CONFIG gate, not the RFUpgrade_* R&D icon, is what makes",
+         "// an engine's variant ladder a ladder. Matched by RP-1 NODE VALUE (AxeExternalTechRemap idiom):",
          "// dodges config-name escaping, skips ungated configs, never clobbers AXE-authored config gates.",
          "// :FINAL runs after the walker (:BEFORE[RealismOverhaulEnginesPost]) and after",
          "// AxeExternalTechRemap's :LAST spot-fixes (preserved -- their configs no longer carry the RP-1 node).",
-         "// LAYER 1 -- per-part precise homing (curated engines, from manifest/engine-stats.tsv):"]
-    missing = set()
+         "// LAYER 0 -- per-CONFIG homing: each variant follows its own RFUpgrade_* token's node (the ladder):"]
+    for part, cfg, rp1, node in scattered:
+        L.append(f"@PART[{part}]:HAS[@MODULE[Module*EngineConfigs]]:FINAL "
+                 f"{{ @MODULE[Module*EngineConfigs],* {{ @CONFIG[{cfg}]:HAS[#techRequired[{rp1}]],* "
+                 f"{{ @techRequired = {node} }} }} }}")
+    L.append("// LAYER 1 -- per-part fallback: base configs + variants with no placed token stay on the part's node:")
     for part, rp1 in sorted(pairs):
-        node = p2n.get(part)
-        if node is None: node = "parking"; missing.add(part)
+        node = p2n.get(part, "parking")
         L.append(f"@PART[{part}]:HAS[@MODULE[Module*EngineConfigs]]:FINAL "
                  f"{{ @MODULE[Module*EngineConfigs],* {{ @CONFIG:HAS[#techRequired[{rp1}]],* {{ @techRequired = {node} }} }} }}")
     L.append("// LAYER 2 -- global per-node catch-all for configs the per-part pass missed (engine-stats-absent")
@@ -1048,9 +1089,11 @@ def emit_engine_config_gates(p2n):
         catchall += 1
     with open(os.path.join(OUTD, "AxeEngineConfigGates.cfg"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
-    parts = sorted(set(p for p, _ in pairs))
-    print(f"engine config gates: {len(pairs)} per-part remaps ({len(parts)} engine parts) + {catchall} "
-          f"per-node catch-alls -> AxeEngineConfigGates.cfg" + (f"  (WARN {len(missing)} unplaced parts -> parking)" if missing else ""))
+    nparts = len(set(p for p, _, _, _ in scattered) | set(p for p, _ in pairs))
+    print(f"engine config gates: {len(scattered)} per-config ladder gates + {len(pairs)} per-part fallbacks "
+          f"({nparts} engine parts) + {catchall} per-node catch-alls -> AxeEngineConfigGates.cfg"
+          + (f"  (pinned {len(pinned)}: {', '.join(p for p, _ in pinned)})" if pinned else "")
+          + (f"  (WARN {len(missing)} unplaced parts -> parking)" if missing else ""))
 
 PROBE_SUBTREE = {"RN_US_Probes": "hire_JPL", "RN_Soviet_Probes": "hire_OKB"}
 
@@ -1372,7 +1415,7 @@ def main():
     emit_placement_patch(p2n, u2n, grant2n)
     print(f"placement: {len(p2n)} parts + {len(u2n)} upgrades + {len(grant2n)} grant tokens homed onto "
           f"{len(set(p2n.values())|set(u2n.values())|set(grant2n.values()))} nodes -> AxePartPlacement.cfg")
-    emit_engine_config_gates(p2n)        # AxeEngineConfigGates.cfg: RealFuels CONFIG techRequired -> AXE node
+    emit_engine_config_gates(p2n, u2n, by)  # AxeEngineConfigGates.cfg: RealFuels CONFIG techRequired -> AXE node
     emit_part_cost(p2n, u2n, by, meta)   # AxePartCost.cfg: funds unlock cost = base[tier] * weight[costcat]
     emit_grant_upgrades(nodes)           # AxeGrantUpgrades.cfg: visible R&D tokens for avionics tiers + DSN levels
     emit_facility_gates(nodes)           # AxeFacilityGates.cfg: tracking-station DSN tech gate (AXEBUILDINGTECHS)
