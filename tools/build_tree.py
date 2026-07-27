@@ -1492,7 +1492,12 @@ def emit_grant_upgrades(nodes):
     print(f"grant tokens: {len(av)} avionics + {len(dsn)} DSN -> AxeGrantUpgrades.cfg")
     return marker
 
-LADDER_TOL = 0.03      # +/- band on every perf axis within which two configs are the "same" rung (R4 padding)
+LADDER_TOL = 0.03      # +/- band on the axes a player designs around (thrust, Isp, ignition count)
+# Rated burn time gets a much wider band. It is a reliability/qualification detail, not something a
+# player optimises a vehicle around, and RO uses it to distinguish marks that are otherwise the same
+# engine: Titan's LR87-AJ-5/-7/-9 are identical at 1053.9 kN / 285.2 s and differ ONLY by 150/156/150 s
+# of rated burn. At a 3% band those read as three separate decisions and demand three tree events.
+LADDER_TOL_BURN = 0.25
 
 def _ladder_perf():
     """config -> perf/propellant row from engine-stats.tsv, for the ladder-collapse classifier."""
@@ -1525,9 +1530,10 @@ def _propfam(s):
 def _ladder_near(a, b, tol=LADDER_TOL):
     """True when two configs are the same performance point on every axis a player can feel."""
     for k in ("maxThrust_kN", "ispVac", "ispSL", "ignitions", "ratedBurnTime"):
+        t = LADDER_TOL_BURN if k == "ratedBurnTime" else tol
         try: x, y = float(a.get(k) or 0), float(b.get(k) or 0)
         except ValueError: return False
-        if abs(x - y) > tol * max(abs(x), abs(y), 1e-9): return False
+        if abs(x - y) > t * max(abs(x), abs(y), 1e-9): return False
     return True
 
 def check_ladder_collapse(ladders, by, p2n, u2n):
