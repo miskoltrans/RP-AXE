@@ -3185,7 +3185,7 @@ nodes:
     tier: 10
     parents: [cryo_largeHydrolox]
     flavor: "The 1972-76 gas-generator hydrolox engines maturing mark by mark in the shadow of the new reusable-engine programme — more thrust, tighter margins, no change to the single-start cycle underneath."
-    upgrades: [RFUpgrade_HM-7B, RFUpgrade_J-2S, RFUpgrade_YF-75D, RFUpgrade_M-1, RFUpgrade_M-1SL, RFUpgrade_HM-7B++, RFUpgrade_M-1U, RFUpgrade_M-1U-SL, RFUpgrade_Vulcain-2, RFUpgrade_YF-75E, RFUpgrade_HM-7B+]  # HM-7B+ added 2026-07 (gap-fill; sits between HM-7B and HM-7B++ siblings here)
+    upgrades: [RFUpgrade_HM-7B, RFUpgrade_J-2S, RFUpgrade_YF-75D, RFUpgrade_M-1, RFUpgrade_Vulcain-2, RFUpgrade_HM-7B+]  # HM-7B+ added 2026-07 (gap-fill; sits between HM-7B and HM-7B++ siblings here)
     # Bases (J-2/HM-7/YF-75/M-1) already king cryo_gasGeneratorHydrolox/cryo_largeHydrolox. Split out from
     # cryo_uprateRestartableHydrolox (2026-07) once upgrades started counting 0.8-parts toward the cap.
   - id: cryo_ssme
@@ -3426,7 +3426,7 @@ nodes:
     parents: [av_advancedJetEngines]
     flavor: "The afterburning low-bypass/variable-stator turbojet families, matured a generation past their first marks — hotter cores, a real production fighter engine instead of a prototype on a test stand."
     parts: [aje_al31]
-    upgrades: [RFUpgrade_GE4-J6H, RFUpgrade_J79-IAI-J1E, RFUpgrade_WP-13, RFUpgrade_J79-GE-119]
+    upgrades: [RFUpgrade_GE4-J6H, RFUpgrade_J79-IAI-J1E, RFUpgrade_WP-13, RFUpgrade_J79-GE-119, RFUpgrade_R-79V-300]
     # King AL-31F (aje_al31) - genuine next-generation base-part king past the F100/variable-stator family
     # homed at T4-T8. Doctrine-4 catches: GE4-J6H/J79-IAI-J1E/WP-13 (bases in av_variableStator/av_afterburner T4).
 
@@ -3760,7 +3760,7 @@ nodes:
     parents: [cryo_gasGeneratorHydrolox]
     flavor: "The gas-generator hydrolox upper grows up. Where the J-2 fired once, the LE-5 coasts and reignites ten times across a mission — the workhorse restartable upper of an operational launcher. Its own expander-bleed descendants split off to the expander lane."
     parts: [ROE-LE5]
-    upgrades: [RFUpgrade_RL10A-4]
+    upgrades: [RFUpgrade_RL10A-4, RFUpgrade_HM-7B++]
     # doctrine-4 fix (2026-07): LE-5B-2/LE-5B-3 are this node's own base part's (ROE-LE5) later marks -
     # moved down to cryo_operationalHydroloxUpperII (new node, no existing child here).
   - id: cryo_operationalHydroloxUpperII
@@ -3769,7 +3769,7 @@ nodes:
     tier: 12
     parents: [cryo_operationalHydroloxUpper]
     flavor: "The LE-5 keeps maturing mark by mark — more restarts, a little more thrust, the same workhorse upper stage refined rather than replaced."
-    upgrades: [RFUpgrade_LE-5B-2, RFUpgrade_LE-5B-3, RFUpgrade_RL10A-4-1-2, RFUpgrade_LE-5B, RFUpgrade_AJ10-154]
+    upgrades: [RFUpgrade_LE-5B-2, RFUpgrade_LE-5B-3, RFUpgrade_RL10A-4-1-2, RFUpgrade_LE-5B, RFUpgrade_AJ10-154, RFUpgrade_YF-75E]
     # doctrine-4 catch: LE-5B-2/LE-5B-3's own base part (ROE-LE5) lives in cryo_operationalHydroloxUpper.
   - id: cryo_boosterGasGenHydrolox
     title: "Booster-Class Gas-Generator Hydrolox"
@@ -3778,6 +3778,7 @@ nodes:
     parents: [cryo_largeHydrolox]
     flavor: "Having proven the reusable staged-combustion engine is buildable, the world's launch fleet turns around and walks away from it. The RS-68 — the most powerful hydrogen engine ever flown — is deliberately a gas-generator with an ablative nozzle, trading Isp for a price tag; Vulcain and the YF-77 make the same bargain for Ariane and Long March. The anti-SSME: simplicity at booster scale."
     parts: [ROE-RS68, cryoengine-vesuvius-1, YF77_Engine, YF77_Engine-double-withShell, rmm_rainier]
+    upgrades: [RFUpgrade_M-1U]
     # doctrine-4 fix (2026-07): RS-68A/RS-68B/RS-68K/RS-800 are this node's own base part's (ROE-RS68)
     # later marks - moved down to cryo_combustionTapOff.
 
@@ -3795,7 +3796,7 @@ nodes:
     tier: 12
     parents: [cryo_ssme]
     flavor: "Re-cut a vacuum-optimised hydrolox bell short enough to run at sea level without the exhaust tearing itself off the wall. You give up vacuum specific impulse to get an engine that can light on the pad — the price of a hydrogen first stage rather than a hydrogen upper."
-    upgrades: [RFUpgrade_HG-3B-SL, RFUpgrade_HG-3B-SL-2]
+    upgrades: [RFUpgrade_HG-3B-SL, RFUpgrade_HG-3B-SL-2, RFUpgrade_M-1SL]
     # LADDER PASS (2026-07-27): the -SL marks are a NOZZLE fork (ispSL 285 -> 352 against the vacuum
     # bells), not a further uprating step. One class, so both ride here under R4.
   - id: cryo_reusableTurbopumpUprating
@@ -3812,6 +3813,13 @@ nodes:
     parents: [cryo_reusableTurbopumpUprating]
     flavor: "The last few percent, bought by running the chamber at a pressure the first version of this engine would not have survived. Everything downstream — throat, cooling channels, turbine inlet — is already at its limit, so each further kilonewton costs more than the one before it."
     upgrades: [RFUpgrade_RS-25D-E]
+  - id: cryo_boosterHydroloxCeiling
+    title: "Booster Hydrolox Thrust Ceiling"
+    discipline: Cryogenics
+    tier: 13
+    parents: [cryo_boosterGasGenHydrolox, cryo_seaLevelHydroloxNozzle]
+    flavor: "Eight meganewtons from a single hydrogen chamber firing at sea level — the largest liquid engine anyone ever drew, sized for a vehicle that would have made Saturn V look modest. The turbopump alone outpowers most launch vehicles; every part of it is at a limit somebody had to argue was reachable."
+    upgrades: [RFUpgrade_M-1U-SL]
   - id: cryo_reusableEngineUprating
     title: "Reusable-Engine Production Uprating"
     discipline: Cryogenics
@@ -4027,8 +4035,15 @@ nodes:
     parents: [av_secondGenTurbofan]
     flavor: "The fourth-generation fighter engine: high bypass for a combat turbofan, high pressure ratio, high turbine temperature. The F135 that powers the F-35 is the most powerful fighter engine ever built; the WS-10 is its Chinese contemporary. The long tail of teen-series and Flanker engine marks matures here."
     parts: [SXTVTOLturboFan, RO-WS10]
-    upgrades: [RFUpgrade_CF34-3B, RFUpgrade_F100-PW-229, RFUpgrade_F100-PW-229PYBBN, RFUpgrade_F404-GE-402, RFUpgrade_J58-P-4A, RFUpgrade_J58-P-4B, RFUpgrade_RM12, RFUpgrade_WP-13A-II, RFUpgrade_WP-13F, RFUpgrade_WP-13FI, RFUpgrade_AL-31FM, RFUpgrade_AL-41F-1S, RFUpgrade_R-79M-300, RFUpgrade_R-79V-300, RFUpgrade_F100-PW-229EEP]  # F100-PW-229EEP added 2026-07 (gap-fill; F100-PW-229 sibling here). WS-10B-III (own base part RO-WS10 here) moved down to av_combinedCycleSSTO, doctrine-4 fix 2026-07
+    upgrades: [RFUpgrade_CF34-3B, RFUpgrade_F100-PW-229, RFUpgrade_F100-PW-229PYBBN, RFUpgrade_F404-GE-402, RFUpgrade_J58-P-4A, RFUpgrade_J58-P-4B, RFUpgrade_RM12, RFUpgrade_WP-13A-II, RFUpgrade_WP-13F, RFUpgrade_WP-13FI, RFUpgrade_AL-31FM, RFUpgrade_R-79M-300]  # F100-PW-229EEP added 2026-07 (gap-fill; F100-PW-229 sibling here). WS-10B-III (own base part RO-WS10 here) moved down to av_combinedCycleSSTO, doctrine-4 fix 2026-07
 
+  - id: av_fifthGenFighterTurbofan
+    title: "Fifth-Generation Fighter Turbofan"
+    discipline: AirBreathing
+    tier: 12
+    parents: [av_fourthGenFighterTurbofan]
+    flavor: "Single-crystal blades, a full-authority digital controller and a core hot enough that the metal is running above its own melting point behind a film of cooling air. Supercruise without afterburner, and a service life measured against the airframe's rather than the season's."
+    upgrades: [RFUpgrade_AL-41F-1S, RFUpgrade_F100-PW-229EEP]
   - id: av_combinedCycleSSTO
     title: "Combined-Cycle Air-Breathing Rocket"
     discipline: AirBreathing
