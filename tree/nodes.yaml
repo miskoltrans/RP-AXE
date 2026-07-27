@@ -1278,7 +1278,7 @@ nodes:
     parents: [fd_restartableUpper]
     flavor: "Shrink the restartable engine to a spacecraft's own propulsion: a small, deeply-throttleable, many-times-restartable motor for the midcourse nudge and the retro burn a probe or capsule steers itself home with. Agena's secondary fires twenty times; a lunar probe lives or dies on one clean correction."
     parts: [ROE-AgenaSPS, RO-KDU414, ROE-RangerRetro, ROE-C1, ROC-VostokService]
-    upgrades: [RFUpgrade_XLR81-BA-1, RFUpgrade_XLR81-BA-3, RFUpgrade_Model8096-HDA]
+    upgrades: [RFUpgrade_XLR81-BA-1, RFUpgrade_XLR81-BA-3]
     # 2026-07 (tail): C-1 (small Aerozine50 maneuvering thruster) joins the small-spacecraft-engine family;
     # Model8096-HDA = an uprated Agena secondary-propulsion (SPS) mark.
   # ---- FluidDynamics: hardware chambers (gated by lineage [+ enabler]) ----
@@ -1597,6 +1597,34 @@ nodes:
     # AJ-9/AJ-11 marks added 2026-07 (tail): next Titan LR87/LR91 production marks, continuing AJ-5/AJ-7.
   # 2026-07-07 story review: re-homed fd_restartableUpper -> pc_fluorine. ClF3 is an aggressive
   # fluorine-bearing OXIDISER; its precursor is the fluorine-oxidiser gamble, not a restart cycle.
+  - id: pc_hdaOxidiser
+    title: "High-Density Acid Oxidiser"
+    discipline: PropellantChemistry
+    tier: 7
+    parents: [pc_ntoHypergolics]
+    flavor: "Push more nitrogen dioxide into the nitric acid than it comfortably holds. The oxidiser gets denser, so the same tank carries more of it, and the inhibitor that stops it dissolving the tank has to work harder for it. A better propellant bought entirely in materials-compatibility problems."
+    upgrades: [RFUpgrade_Model8096-HDA]
+  - id: pc_mmh
+    title: "Monomethylhydrazine Fuel"
+    discipline: PropellantChemistry
+    tier: 9
+    parents: [pc_hydrazineMonoprop, pc_hdaOxidiser]
+    flavor: "One methyl group away from the hydrazine that came before it, and worth the detour: it stays liquid over a far wider band, resists shock decomposition, and does not freeze in a spacecraft's plumbing on the cold side of a long coast. The fuel that made storable engines something you could still trust after two years in orbit."
+    upgrades: [RFUpgrade_Model8096L]
+  - id: pc_mon
+    title: "Nitric-Oxide-Doped Oxidiser"
+    discipline: PropellantChemistry
+    tier: 10
+    parents: [pc_mmh]
+    flavor: "Dissolve nitric oxide back into the dinitrogen tetroxide until the mixture stops freezing at temperatures a spacecraft will actually see. A few percent of a gas nobody wants, and the oxidiser survives the shadow side of the orbit without a heater on every line."
+    upgrades: [RFUpgrade_Model8096B]
+  - id: fd_longLifeStorableUpper
+    title: "Long-Life Storable Upper Stage"
+    discipline: FluidDynamics
+    tier: 12
+    parents: [fd_multiRestartStorableUpperII, pc_mon]
+    flavor: "The last iteration of a stage that has flown for forty years: the same pressure-fed storable engine, qualified now for coast times measured in days and restart counts nobody would have promised in the first decade. Nothing about it is new; everything about it is proven."
+    upgrades: [RFUpgrade_Agena-2000]
   - id: pc_juno_ClF3
     title: "Chlorine-Trifluoride Oxidiser"
     discipline: PropellantChemistry
@@ -2462,7 +2490,7 @@ nodes:
     parents: [cryo_expanderCycle, fd_saturnKerolox]
     flavor: "Drive a hydrogen turbopump with a gas generator instead of the expander's own bleed — trade the closed cycle's elegance for the raw thrust to push a Moon rocket's upper stages. The high-thrust hydrolox engine the expander could never be."
     parts: [ROE-J2, ROE-HM7, YF75_Engine, YF75D_Engine, ROC-D2AJ10-133]
-    upgrades: [RFUpgrade_LR87-LH2-Vacuum, RFUpgrade_LR87-LH2-SustainerUpgrade, RFUpgrade_LR87-LH2-VacuumUpgrade, RFUpgrade_RZ20-Mk2]
+    upgrades: [RFUpgrade_LR87-LH2-Vacuum, RFUpgrade_LR87-LH2-SustainerUpgrade, RFUpgrade_LR87-LH2-VacuumUpgrade, RFUpgrade_RZ20-Mk2, RFUpgrade_AJ10-133-LH]
     # King J-2 (Saturn upper). Crossover: hydrogen handling + gas-generator turbopumps. LR87-LH2 & RZ.20
     # upgrades ride here legally (bases live in fd_vacuumExpansion / cryo_hydroloxPrototype).
   - id: cryo_largeHydrolox
@@ -3122,7 +3150,7 @@ nodes:
     parents: [cryo_gasGeneratorHydrolox]
     flavor: "Redesign the hydrolox engine to restart on command and throttle across a wide range instead of firing once at full bore — the deliberate first step toward an engine built to fly again, not just fly. LR129 was drawn for exactly that job; RD-57 and KVD-1 are the Soviet answer, chasing the same restartable, reusable goal from the other side of the Iron Curtain."
     parts: [ROE-LR129, ROE-RD57, RO_KVD1]
-    upgrades: [RFUpgrade_H2+O2]
+    upgrades: [RFUpgrade_H2+O2, RFUpgrade_AJ10-133-Hylas]
     # LADDER PASS (2026-07-27): hydrolox RCS (Isp 1.33, the strongest in the whole RCS menu) gates on
     # small restartable deep-throttling hydrolox combustion - the same trick at thruster scale.
     # doctrine-4 fix (2026-07): CE-7.5 is this node's own base part's (RO_KVD1) later mark - moved down to
@@ -3285,7 +3313,7 @@ nodes:
     tier: 9
     parents: [fd_advancedSpacecraftPropulsion]
     flavor: "Refine the whole family of restartable storable engines mark by mark — more thrust, longer restart life, no change to the chemistry or the mission they were built for."
-    upgrades: [RFUpgrade_AJ10-118F, RFUpgrade_Model8096-39, RFUpgrade_Model8096A, RFUpgrade_Model8096L, RFUpgrade_Model8096B, RFUpgrade_AJ10-138A, RFUpgrade_AJ10-118K, RFUpgrade_AJ10-153, RFUpgrade_AJ10-154, RFUpgrade_AJ10-156, RFUpgrade_Agena-2000, RFUpgrade_AJ10-133-Hylas, RFUpgrade_AJ10-133-LH, RFUpgrade_KTDU-425A]  # AJ10-133 Hylas/LH added 2026-07 (gap-fill; AJ10Adv config siblings here); KTDU-425A moved down from fd_advancedSpacecraftPropulsion (doctrine-4 fix, 2026-07)
+    upgrades: [RFUpgrade_Model8096-39, RFUpgrade_AJ10-138A, RFUpgrade_AJ10-118K, RFUpgrade_AJ10-153, RFUpgrade_KTDU-425A]  # AJ10-133 Hylas/LH added 2026-07 (gap-fill; AJ10Adv config siblings here); KTDU-425A moved down from fd_advancedSpacecraftPropulsion (doctrine-4 fix, 2026-07)
     # Pure doctrine-4 collector: bases (ROE-Agena/ROE-AJ10Adv) live in fd_restartableUpper (T4). Parented
     # one tier above fd_advancedSpacecraftPropulsion (T8, KTDU-425 - this lineage's most recent batch)
     # rather than fd_restartableUpper directly, for consistency with every other lane in this pass.
@@ -3740,7 +3768,7 @@ nodes:
     tier: 12
     parents: [cryo_operationalHydroloxUpper]
     flavor: "The LE-5 keeps maturing mark by mark — more restarts, a little more thrust, the same workhorse upper stage refined rather than replaced."
-    upgrades: [RFUpgrade_LE-5B-2, RFUpgrade_LE-5B-3, RFUpgrade_RL10A-4-1-2, RFUpgrade_LE-5B]
+    upgrades: [RFUpgrade_LE-5B-2, RFUpgrade_LE-5B-3, RFUpgrade_RL10A-4-1-2, RFUpgrade_LE-5B, RFUpgrade_AJ10-154]
     # doctrine-4 catch: LE-5B-2/LE-5B-3's own base part (ROE-LE5) lives in cryo_operationalHydroloxUpper.
   - id: cryo_boosterGasGenHydrolox
     title: "Booster-Class Gas-Generator Hydrolox"
@@ -3859,6 +3887,7 @@ nodes:
     parents: [fd_restartableUpperMaturation]
     flavor: "Coast, reignite, coast again — dozens of times, across days. The Fregat and Briz upper stages and their kin are storable propulsion modules built for the choreography of an interplanetary or multi-orbit mission, restarting on demand where the single-shot Agena and early AJ10 could not. The Transtar rates five hundred ignitions."
     parts: [ROE-S592, restock-engine-125-pug, ROE-AJ10-transtar, ROE-S598M, ROE-AJ10AdvLong]
+    upgrades: [RFUpgrade_AJ10-118F]
     # doctrine-4 fix (2026-07): Aestus-II/AestusMod are this node's own base part's (restock-engine-125-pug)
     # later marks - moved down to fd_multiRestartStorableUpperII (new node, no existing child here).
   - id: fd_multiRestartStorableUpperII
@@ -3867,7 +3896,7 @@ nodes:
     tier: 12
     parents: [fd_multiRestartStorableUpper]
     flavor: "Aestus keeps pace with the rest of the multi-restart storable family — a modified chamber, then a second-generation successor, the same choreography refined one mark further."
-    upgrades: [RFUpgrade_AestusMod, RFUpgrade_Aestus-II]
+    upgrades: [RFUpgrade_AestusMod, RFUpgrade_Aestus-II, RFUpgrade_Model8096A, RFUpgrade_AJ10-156]
     # doctrine-4 catch: AestusMod/Aestus-II's own base part (restock-engine-125-pug) lives in fd_multiRestartStorableUpper.
   - id: fd_terminalGasGenKerolox
     title: "Terminal Gas-Generator Kerolox Uprating"
