@@ -6,12 +6,12 @@
     "author": [
         "miskoltrans"
     ],
-    "version": "0.5.0",
+    "version": "0.6.0",
     "kind": "metapackage",
     "license": "CC-BY-NC-SA-4.0",
     "ksp_version_min": "1.12.0",
     "ksp_version_max": "1.12.5",
-    "comment": "The complete RP-AXE environment = (everything RP-1-Express installs MINUS RP-1) + the curated expansion modpack. Base = 81 modules (RP-express-minus-RP-1, incl. MakingHistory-DLC + BreakingGround-DLC); the 21 part-mods after Waterfall are the curated expansion (CKAN resolves their transitive deps). DMagic / NF-Spacecraft / TantaresLV are deliberately excluded (curation drops). SCANsat is deliberately NOT listed here -- we ship our own fork (miskoltrans/SCANsat-GPU, not on CKAN); tools/rebuild-instance.ps1 builds and installs it from C:\\git\\ksp\\SCANsat as a separate step. No version pins. Conflicts with RP-1. Regenerate from the live registry after a rebuild for the exact transitive set.",
+    "comment": "The complete RP-AXE environment = (everything RP-1-Express installs MINUS RP-1) + the curated expansion modpack. Base = 81 modules (RP-express-minus-RP-1, incl. MakingHistory-DLC + BreakingGround-DLC); the 21 part-mods after Waterfall are the curated expansion (CKAN resolves their transitive deps). GRAPHICS = the HIGH preset, ported verbatim from RP-1-ExpressInstall-Graphics-High (Parallax + Parallax-StockTextures, Scatterer + config + sunflare, RSSTextures16K, RSSVE-HR, DistantObject, PlanetShine, CanaveralPads); it pulls ~8 GB more than the old Low preset (RSSTextures16K REPLACES RSSTextures4096 -- both provide 'RSSTextures' and conflict, so it is a swap, and CanaveralPads drags in KerbalKonstructs + Cape statics). DMagic / NF-Spacecraft / TantaresLV are deliberately excluded (curation drops). SCANsat is deliberately NOT listed here -- we ship our own fork (miskoltrans/SCANsat-GPU, not on CKAN); tools/rebuild-instance.ps1 builds and installs it from C:\\git\\ksp\\SCANsat as a separate step. No version pins. Conflicts with RP-1. Regenerate from the live registry after a rebuild for the exact transitive set.",
     "depends": [
         {
             "name": "AdvancedJetEngine"
@@ -30,6 +30,9 @@
         },
         {
             "name": "BreakingGround-DLC"
+        },
+        {
+            "name": "CanaveralPads"
         },
         {
             "name": "ClickThroughBlocker"
@@ -51,6 +54,9 @@
         },
         {
             "name": "DepthMask"
+        },
+        {
+            "name": "DistantObject"
         },
         {
             "name": "EditorExtensionsRedux"
@@ -131,7 +137,16 @@
             "name": "ModuleManager"
         },
         {
+            "name": "Parallax"
+        },
+        {
+            "name": "Parallax-StockTextures"
+        },
+        {
             "name": "PatchManager"
+        },
+        {
+            "name": "PlanetShine"
         },
         {
             "name": "ProceduralFairings"
@@ -206,7 +221,19 @@
             "name": "RSSDateTimeFormatter"
         },
         {
-            "name": "RSSTextures4096"
+            "name": "RSSTextures16K"
+        },
+        {
+            "name": "RSSVE-HR"
+        },
+        {
+            "name": "Scatterer"
+        },
+        {
+            "name": "Scatterer-config"
+        },
+        {
+            "name": "Scatterer-sunflare-default"
         },
         {
             "name": "Shabby"
