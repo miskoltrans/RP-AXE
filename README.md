@@ -26,8 +26,9 @@ preserved at tag `pre-restart-mvp`) was deliberately torn down to rebuild the te
 baseline, and economy from scratch. Built so far: the discipline tech tree (~217 nodes, compiled
 from `tree/nodes.yaml`) with an in-game R&D render, the RP-1 science wiring, the avionics ladder,
 ported contracts running on our own ContractConfigurator types, a config-only program switcher,
-and a tech-gated airlaunch system. In progress: full part-placement realization and economy
-calibration. **The live roadmap (phases P0–P6) and every settled decision are in
+a tech-gated airlaunch system, and an in-editor flight simulator (test a craft in an unreached
+orbit before committing the mission — unlocked by computers). In progress: full part-placement
+realization and economy calibration. **The live roadmap (phases P0–P6) and every settled decision are in
 [`docs/RESTART.md`](docs/RESTART.md) — the single source of truth.**
 
 **The RP-AXE economy** (exploration + engineering, not management):

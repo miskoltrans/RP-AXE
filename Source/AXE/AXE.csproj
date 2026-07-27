@@ -76,6 +76,10 @@
       <HintPath>$(ReferencePath)\UnityEngine.UI.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>$(ReferencePath)\UnityEngine.AnimationModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine.UIModule">
       <HintPath>$(ReferencePath)\UnityEngine.UIModule.dll</HintPath>
       <Private>false</Private>

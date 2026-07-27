@@ -406,6 +406,10 @@ AXE_AUTOTEST
             try { Debug.Log("[AXE][AutoTest][AVI] " + ModuleAxeAvionics.ShieldedLadderReport()); }
             catch (Exception e) { Debug.LogError("[AXE][AutoTest][AVI] self-test threw: " + e); }
 
+            // Editor simulation: confirm the feature flag + 2-rung body gate resolve (home open, others gated).
+            try { Debug.Log("[AXE][AutoTest][SIM] " + RPAxe.Simulation.AxeSimulation.SelfTestReport()); }
+            catch (Exception e) { Debug.LogError("[AXE][AutoTest][SIM] self-test threw: " + e); }
+
             foreach (ScreenDef s in defs)
             {
                 yield return VisitScreen(s);
