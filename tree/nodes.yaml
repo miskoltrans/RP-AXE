@@ -375,7 +375,7 @@ nodes:
     parents: [pc_storables]
     flavor: "An amine fuel and a nitric-acid oxidiser that ignite on contact — no igniter, storable for years, restartable after a cold coast. The propellant of upper stages and spacecraft engines that must light every time."
     parts: [ROE-AJ10Early, ROE-RD200, ROE-S2253]
-    upgrades: [RFUpgrade_NitrousOxide, RFUpgrade_XASR-1, RFUpgrade_XASR-2]
+    upgrades: [RFUpgrade_NitrousOxide, RFUpgrade_XASR-1, RFUpgrade_XASR-2, RFUpgrade_XLR81-BA-5]
   - id: pc_ethanol90
     title: "High-Concentration Alcohol Fuel"
     discipline: PropellantChemistry
@@ -1170,6 +1170,16 @@ nodes:
   # nodes hold the ~50 uprate configs (upgrades ARE parts - home them, never defer); HARDWARE nodes
   # hold the base chambers, gated by lineage + their enabler. Homed by PROPELLANT, not the disc tag.
   # ---- PropellantChemistry: chemistry enablers + solids ----
+  - id: pc_akOxidiser
+    title: "Inhibited Nitric-Acid Oxidiser"
+    discipline: PropellantChemistry
+    tier: 4
+    parents: [pc_storables, pc_hypergolics]
+    flavor: "Red fuming nitric acid dissolves the tank it is stored in; add a fraction of a percent of hydrofluoric acid and it lays down a fluoride film that stops the attack instead. The oxidiser that was only ever a laboratory problem becomes something a missile can sit fuelled with for years."
+    upgrades: [RFUpgrade_XLR81-BA-7, RFUpgrade_RD-217-8D515, RFUpgrade_YF-1A, RFUpgrade_AJ10-118D]
+    # LADDER PASS (2026-07-27): pulled out of pc_ntoHypergolics, whose subject is dinitrogen tetroxide.
+    # None of these burn NTO -- they are IRFNA-III and AK27, i.e. inhibited nitric acid, a different
+    # oxidiser with a different problem. The NTO configs (RD-250 family, YF-1B) stayed behind.
   - id: pc_ntoHypergolics
     title: "Dinitrogen-Tetroxide Oxidiser"
     discipline: PropellantChemistry
@@ -1182,7 +1192,7 @@ nodes:
     # last recorded count was 5, "recommend accepting as flavor... your call to override." Every
     # dependent is still a genuinely distinct vehicle/chemistry lineage drawing on the same foundational
     # breakthrough; re-confirmed and accepted at the current count rather than left stale.
-    upgrades: [RFUpgrade_YF-1A, RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_RD-217-8D515, RFUpgrade_S5.2, RFUpgrade_XLR81-BA-5, RFUpgrade_XLR81-BA-7, RFUpgrade_RD-250-8D518, RFUpgrade_RD-252-8D724, RFUpgrade_RD-855, RFUpgrade_RD-856, RFUpgrade_RD-250PM]
+    upgrades: [RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_S5.2, RFUpgrade_RD-250-8D518, RFUpgrade_RD-252-8D724, RFUpgrade_RD-855, RFUpgrade_RD-856, RFUpgrade_RD-250PM]
   - id: pc_htpSustainer
     title: "Multi-Chamber Peroxide Combustion"
     discipline: PropellantChemistry
@@ -1264,7 +1274,7 @@ nodes:
     parents: [pc_hypergolics]
     flavor: "A storable-hypergolic upper that coasts dark through a long parking orbit and relights on command — the engine that stops being a single burn and becomes a manoeuvring stage. Agena's XLR81 shuts down and restarts in space: the key to circularising, changing plane, and the rendezvous still to come."
     parts: [ROE-Agena, ROE-AJ10Mid, ROE-Juno45K, ROE-Juno6K, ROE-AJ10Adv, RO-KTDU5A, ROE-KTDU35, ROE-S523, LargeOMS]
-    upgrades: [RFUpgrade_AJ10-42, RFUpgrade_AJ10-101A, RFUpgrade_AJ10-142, RFUpgrade_AJ10-118, RFUpgrade_AJ10-118D]
+    upgrades: [RFUpgrade_AJ10-42, RFUpgrade_AJ10-101A, RFUpgrade_AJ10-118]
     # 4 more base parts added (2026-07, part-count-pass find), all the same restartable-storable-vernier
     # mechanism this node already covers: ROE-AJ10Adv (another AJ10-family vernier), RO-KTDU5A/ROE-KTDU35
     # (the Soviet KTDU family — "correction-braking propulsion," the direct Eastern-bloc counterpart to
@@ -1278,7 +1288,7 @@ nodes:
     parents: [fd_restartableUpper]
     flavor: "Shrink the restartable engine to a spacecraft's own propulsion: a small, deeply-throttleable, many-times-restartable motor for the midcourse nudge and the retro burn a probe or capsule steers itself home with. Agena's secondary fires twenty times; a lunar probe lives or dies on one clean correction."
     parts: [ROE-AgenaSPS, RO-KDU414, ROE-RangerRetro, ROE-C1, ROC-VostokService]
-    upgrades: [RFUpgrade_XLR81-BA-1, RFUpgrade_XLR81-BA-3]
+    upgrades: [RFUpgrade_XLR81-BA-1, RFUpgrade_XLR81-BA-3, RFUpgrade_AJ10-142]
     # 2026-07 (tail): C-1 (small Aerozine50 maneuvering thruster) joins the small-spacecraft-engine family;
     # Model8096-HDA = an uprated Agena secondary-propulsion (SPS) mark.
   # ---- FluidDynamics: hardware chambers (gated by lineage [+ enabler]) ----
@@ -1653,7 +1663,7 @@ nodes:
     parents: [fd_saturnKerolox]
     flavor: "Push the simple gas-generator cycle as far as it goes — bigger turbopumps, higher flow, more thrust from the same open-cycle plumbing. The last uprate before the cycle itself runs out of room to grow."
     parts: [ROE-F1]
-    upgrades: [RFUpgrade_H-1-188K, RFUpgrade_H-1-200K, RFUpgrade_E-1-468k, RFUpgrade_E-1-500k, RFUpgrade_E-1-Upgrade, RFUpgrade_RD-111-8D716A, RFUpgrade_H-2-250K, RFUpgrade_LR87-AJ-11, RFUpgrade_LR91-AJ-11, RFUpgrade_LR79-NA-13, RFUpgrade_LR105-NA-7.1, RFUpgrade_LR105-NA-7.2, RFUpgrade_X-405H-4]
+    upgrades: [RFUpgrade_H-1-188K, RFUpgrade_E-1-468k, RFUpgrade_E-1-Upgrade, RFUpgrade_RD-111-8D716A, RFUpgrade_LR87-AJ-11, RFUpgrade_LR91-AJ-11, RFUpgrade_LR79-NA-13, RFUpgrade_LR105-NA-7.1, RFUpgrade_LR105-NA-7.2, RFUpgrade_X-405H-4]
     # H-2-250K added 2026-07 (tail): the next H-1 gas-generator uprate mark.
     # F-1 (2026-07, band-3 lunar batch): the king this node was named for - the largest gas-generator
     # engine ever built. Its own uprate (F-1-1.52M) is barred from here by doctrine-4 -> fd_gasGeneratorApex.
@@ -2450,7 +2460,7 @@ nodes:
     parents: [fd_gasGeneratorCeiling]
     flavor: "One more percent of thrust from a cycle with nothing left to give. The mightiest engine ever built is also the end of its line — spend a whole tier here and you have bought a rounding error while staged combustion and hydrolox walk past you."
     parts: [ROE-F1B]
-    upgrades: [RFUpgrade_F-1-1.52M, RFUpgrade_F-1A, RFUpgrade_LR87-AJ-11-Kero, RFUpgrade_LR91-AJ-11-Kero]
+    upgrades: [RFUpgrade_F-1-1.52M, RFUpgrade_F-1A, RFUpgrade_LR87-AJ-11-Kero, RFUpgrade_LR91-AJ-11-Kero, RFUpgrade_RS-27, RFUpgrade_E-1-500k]
     # ROE-F1B (2026-07, band-5 gap sweep): the modern simplified F-1 remake (SLS advanced-booster study) -
     # same trap, one generation later: still lost to solids on cost despite the simpler injector.
     # RFUpgrade_F-1A added (2026-07, shuttle/station batch): F-1's own next uprate mark after F-1-1.52M -
@@ -2469,7 +2479,7 @@ nodes:
     tier: 9
     parents: [fd_saturnKerolox]
     flavor: "Refine the whole family of clustered gas-generator kerolox boosters mark by mark — more thrust, longer service life, no change to the chemistry. The same diminishing-return story as F-1's own trap, one tier over, for its smaller siblings."
-    upgrades: [RFUpgrade_H-1-205K, RFUpgrade_RS-27, RFUpgrade_E-1-575k, RFUpgrade_E-1-Upgrade2, RFUpgrade_E-1A_KS, RFUpgrade_H-1-250K, RFUpgrade_H-2-300K]
+    upgrades: [RFUpgrade_H-1-205K, RFUpgrade_H-1-200K]
     # Bases (ROE-E1/ROE-H1C/ROE-H1D/ROE-RS27) live in fd_saturnKerolox (T6), so doctrine-4 is clean.
     # Split out from fd_gasGeneratorApex (2026-07) once upgrades started counting 0.8-parts toward the cap.
 
@@ -3907,13 +3917,27 @@ nodes:
     flavor: "Aestus keeps pace with the rest of the multi-restart storable family — a modified chamber, then a second-generation successor, the same choreography refined one mark further."
     upgrades: [RFUpgrade_AestusMod, RFUpgrade_Aestus-II, RFUpgrade_Model8096A, RFUpgrade_AJ10-156]
     # doctrine-4 catch: AestusMod/Aestus-II's own base part (restock-engine-125-pug) lives in fd_multiRestartStorableUpper.
+  - id: fd_keroloxClusterCeiling
+    title: "Kerolox Cluster Thrust Ceiling"
+    discipline: FluidDynamics
+    tier: 10
+    parents: [fd_matureKeroloxClusterUprating]
+    flavor: "Keep pushing the same gas-generator chamber past where its designers stopped. Injector face, throat erosion and the gas generator's own turbine all start arguing at once, and each further ten percent costs a qualification programme of its own."
+    upgrades: [RFUpgrade_H-2-250K, RFUpgrade_H-1-250K, RFUpgrade_E-1-575k]
+  - id: fd_keroloxClusterApex
+    title: "Kerolox Cluster Apex"
+    discipline: FluidDynamics
+    tier: 11
+    parents: [fd_keroloxClusterCeiling]
+    flavor: "The last version anyone built of an engine that had been uprated for twenty years. Nothing here is elegant — it is a mature design run as hard as its metallurgy allows, kept in production because the vehicle around it was already qualified."
+    upgrades: [RFUpgrade_H-2-300K, RFUpgrade_E-1-Upgrade2]
   - id: fd_terminalGasGenKerolox
     title: "Terminal Gas-Generator Kerolox Uprating"
     discipline: FluidDynamics
     tier: 11
     parents: [fd_gasGeneratorApex]
     flavor: "The gas-generator kerolox engines that built the space age take their final bow. The last production marks of Delta's RS-27, Atlas's RS-56 and Titan's LR87/LR91 — a lineage of open-cycle workhorses being uprated one last time as staged combustion walks past them."
-    upgrades: [RFUpgrade_RS-27A, RFUpgrade_RS-56-OBA, RFUpgrade_RS-56-OSA, RFUpgrade_LR87-AJ-11A, RFUpgrade_LR91-AJ-11A, RFUpgrade_LR101-NA-15, RFUpgrade_Model8096C]
+    upgrades: [RFUpgrade_RS-27A, RFUpgrade_RS-56-OBA, RFUpgrade_RS-56-OSA, RFUpgrade_LR87-AJ-11A, RFUpgrade_LR91-AJ-11A, RFUpgrade_LR101-NA-15, RFUpgrade_Model8096C, RFUpgrade_E-1A_KS]
   - id: fd_advancedGasGenKerolox
     title: "Advanced Gas-Generator Kerolox Booster"
     discipline: FluidDynamics
