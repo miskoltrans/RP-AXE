@@ -2757,11 +2757,47 @@ nodes:
     tier: 8
     parents: [pc_ntoHypergolics, gnc_smallRcsCatalog]
     flavor: "The same reaction-control block, filled with whatever storable hypergolic blend the mission calls for — five real combinations flown across five different programs, none of them meaningfully better than the others. A menu, not a ladder."
-    upgrades: [RFUpgrade_MMH+NTO, RFUpgrade_MMH+MON3, RFUpgrade_MMH+MON10, RFUpgrade_UDMH+NTO, RFUpgrade_Aerozine50+NTO, RFUpgrade_Hydrazine, RFUpgrade_ISPS, RFUpgrade_ISPS-HDA, RFTech-rcs-tltech2, RFTech-rcs-tltech3, RFUpgrade_Ethanol+O2, RFUpgrade_RP-1+O2, RFUpgrade_Syntin+O2, RFTech-rcs-tltech6, RFTech-AddOxygenGas, RFUpgrade_ASCENT, RFUpgrade_CH4+O2, RFUpgrade_H2+O2]  # cryo/advanced RCS propellants added 2026-07 (gap-fill; menu already holds +O2 LOX combos)
-    # 2026-07 (tail): Hydrazine/ISPS/ISPS-HDA extend the storable-RCS propellant menu; rcs-tltech3 continues
+    upgrades: [RFUpgrade_MMH+NTO, RFUpgrade_MMH+MON3, RFUpgrade_MMH+MON10, RFUpgrade_UDMH+NTO, RFUpgrade_Aerozine50+NTO, RFUpgrade_ISPS, RFUpgrade_ISPS-HDA, RFTech-rcs-tltech2, RFTech-rcs-tltech3]
+    # 2026-07 (tail): ISPS/ISPS-HDA extend the storable-RCS propellant menu; rcs-tltech3 continues
     # the RCS tech-level ladder (bases in gnc_rcs, doctrine-4 clean).
     # Confirmed via the live RealismOverhaul config (thrusterPower 0.442-0.455, ALL specLevel=operational):
     # a genuine simultaneous menu, not a sequence — matches why no era-ordering was ever findable.
+    # LADDER PASS (2026-07-27, docs/UPGRADE-LADDERS.md step 3): this node kept EXACTLY the class its title
+    # and flavor name. The five storables above are one measured performance point (1.78 kN / Isp 0.95 —
+    # MMH+NTO, MMH+MON3, MMH+MON10, UDMH+NTO, Aerozine50+NTO), so they are one decision presented as five
+    # flavors, which is what "a menu, not a ladder" always meant. What left were seven OTHER chemistries
+    # added later as gap-fill, each a genuinely different performance point that was never storable at all:
+    #   Hydrazine -> pc_hydrazineMonoprop | ASCENT -> pc_ascent | Ethanol+O2 -> pc_cryogenicRcsFeed
+    #   RP-1+O2, Syntin+O2 -> fd_reusableGasGenKerolox | H2+O2 -> cryo_deepThrottleHydrolox
+    #   CH4+O2 -> cryo_smallScaleMethalox
+    # (HTP was already correctly homed at pc_htp and NitrousOxide never carried a token — it comes free
+    # with the thruster via the layer-1 fallback, like the Nitrogen/Helium cold gas.)
+    # The +O2 combos are a CRYOGENIC-FEED capability, not fuel forks — gating each at its fuel's own tier
+    # would have put Isp-0.95 RCS at T2 and left this T8 node worth only +29% thrust over it.
+  # ---- RCS chemistry forks pulled out of the storable menu (2026-07-27, docs/UPGRADE-LADDERS.md) ----
+  - id: pc_hydrazineMonoprop
+    title: "Catalytic Hydrazine Decomposition"
+    discipline: PropellantChemistry
+    tier: 5
+    parents: [pc_hypergolics, pc_htp]
+    flavor: "Run hydrazine over an iridium catalyst bed and it tears itself apart into hot gas with no oxidiser and no ignition — one tank, one valve, a thruster that fires ten thousand times and never needs a spark. The attitude control of nearly every satellite ever flown, and the reason a spacecraft can still point itself after a decade in the dark."
+    upgrades: [RFUpgrade_Hydrazine]
+    # The catalyst bed is the mechanism, so this gates on peroxide's silver catalyst as much as on the
+    # amine lane that supplies the fuel — both parents are real prerequisites, not a decorative crossover.
+  - id: pc_cryogenicRcsFeed
+    title: "Cryogenic Reaction-Control Feed"
+    discipline: PropellantChemistry
+    tier: 10
+    parents: [pc_storableRcsPropellants, cryo_deepThrottleHydrolox]
+    flavor: "Stop carrying a second propellant just to turn: tap the main tanks and feed the attitude thrusters the same cryogens the engine burns, through lines that must not boil, freeze or gulp vapour when the vehicle is coasting and cold. Dead mass disappears, and every drop left in the tank is usable either way."
+    upgrades: [RFUpgrade_Ethanol+O2, RFTech-AddOxygenGas, RFTech-rcs-tltech6]
+  - id: pc_ascent
+    title: "Ionic-Liquid Monopropellant"
+    discipline: PropellantChemistry
+    tier: 13
+    parents: [pc_hydrazineMonoprop, gnc_longLifeRCS]
+    flavor: "A hydroxylammonium-nitrate salt that is denser and hotter than hydrazine and barely toxic enough to need a respirator — fuel the spacecraft in shirtsleeves instead of a hazmat suit. It needs a preheated catalyst bed to light, which is the whole reason it took forty years to replace the thing it beats."
+    upgrades: [RFUpgrade_ASCENT]
   - id: pc_caveaB
     title: "Cavea-B Oxidiser"
     discipline: PropellantChemistry
@@ -2959,6 +2995,9 @@ nodes:
     parents: [cryo_gasGeneratorHydrolox]
     flavor: "Redesign the hydrolox engine to restart on command and throttle across a wide range instead of firing once at full bore — the deliberate first step toward an engine built to fly again, not just fly. LR129 was drawn for exactly that job; RD-57 and KVD-1 are the Soviet answer, chasing the same restartable, reusable goal from the other side of the Iron Curtain."
     parts: [ROE-LR129, ROE-RD57, RO_KVD1]
+    upgrades: [RFUpgrade_H2+O2]
+    # LADDER PASS (2026-07-27): hydrolox RCS (Isp 1.33, the strongest in the whole RCS menu) gates on
+    # small restartable deep-throttling hydrolox combustion - the same trick at thruster scale.
     # doctrine-4 fix (2026-07): CE-7.5 is this node's own base part's (RO_KVD1) later mark - moved down to
     # cryo_uprateRestartableHydrolox.
     # Scales cryo_gasGeneratorHydrolox's thrust (J-2/HM-7 lineage) with restart know-how the same node
@@ -4557,6 +4596,8 @@ nodes:
     parents: [pc_zenitKerolox]
     flavor: "A simpler, plainer methalox debut at small scale — no staged-combustion preburner, just a clean upper-stage engine sized for a commercial small-satellite launcher. The unglamorous sibling to the booster-scale methalox story unfolding one node over."
     parts: [cryoengine-buzzard-1]
+    upgrades: [RFUpgrade_CH4+O2]
+    # LADDER PASS (2026-07-27): methalox RCS rides the node that makes small methalox engines a thing.
     # King M10 (Rocket Lab Neutron's upper stage). Sibling to cryo_methaloxStagedCombustion, not a child -
     # a different, plainer cycle on the same new fuel.
   - id: cryo_expanderBoosterScale
@@ -4592,8 +4633,12 @@ nodes:
     parents: [fd_terminalGasGenKerolox]
     flavor: "After a whole tree of gas-generator kerolox engines chasing diminishing returns while staged combustion walked past, one company bets the other way: keep the simple open cycle, keep it deliberately unglamorous, and win on cost and reusability instead of chasing one more second of Isp."
     parts: [ROE-Merlin1A, ROE-Merlin1C, ROE-Merlin1CV]
-    upgrades: [RFUpgrade_Merlin1C, RFUpgrade_Merlin1CVac]
+    upgrades: [RFUpgrade_Merlin1C, RFUpgrade_Merlin1CVac, RFUpgrade_RP-1+O2, RFUpgrade_Syntin+O2]
     # King Merlin 1A/1C. Merlin 1C Vacuum rides along as a nozzle variant, not a new generation.
+    # LADDER PASS (2026-07-27): the LOX/hydrocarbon RCS configs land here rather than on a fuel node -
+    # feeding attitude thrusters from kerolox mains is a property of a reusable kerolox VEHICLE, not of
+    # the kerosene itself. RP-1+O2 and Syntin+O2 are one measured performance point (1.45 kN / Isp 1.00),
+    # so they share this node as one decision under R4.
   - id: fd_densifiedPropellantKerolox
     title: "Densified-Propellant Kerolox Uprating"
     discipline: FluidDynamics
