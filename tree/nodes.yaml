@@ -537,10 +537,17 @@ nodes:
     tier: 1
     parents: [start]
     flavor: "Expose photographic film to the scene and bring the physical emulsion home — the highest resolution there is, at the price of recovering the capsule. Reconnaissance before anyone could downlink a picture."
-    parts: [science_module, RO-BasicFilmCamera, RP0-SampleReturnCapsule, RP0-SampleReturnCommand]
+    parts: [science_module, RP0-SampleReturnCapsule, RP0-SampleReturnCommand]
     # RP0-SampleReturnCapsule/Command (2026-07, band-5 gap sweep): the actual recoverable capsule that
     # brings the exposed film home (Corona/Discoverer) - deprecated-but-unique per T1 curation (no
     # non-deprecated sample-return craft exists anywhere in the manifest), closing this node's own loop.
+  - id: opt_fineGrainEmulsion
+    title: "Fine-Grain Emulsion"
+    discipline: OpticsPhotonics
+    tier: 2
+    parents: [opt_filmReturn]
+    flavor: "Smaller silver-halide crystals record finer detail on the same frame, through the same lens — resolution bought in the darkroom rather than the optical shop. The penalty is speed: a slower emulsion needs a longer exposure, and a satellite does not hold still."
+    parts: [RO-BasicFilmCamera]
   - id: opt_vidicon
     title: "Vidicon Imaging"
     discipline: OpticsPhotonics
@@ -963,9 +970,16 @@ nodes:
     title: "Film Reconnaissance"
     discipline: OpticsPhotonics
     tier: 3
-    parents: [opt_filmReturn]
-    flavor: "Long-focal-length optics and fine-grain emulsion resolve a vehicle from orbit and drop the exposed film home in a capsule — the high-resolution reconnaissance that was the real reason the first satellites flew. No electronics, just better glass and finer grain: it gets there before the television does."
-    parts: [RO-ImprovedFilmCamera, RO-HighResFilmCamera]
+    parents: [opt_fineGrainEmulsion]
+    flavor: "A rotating lens sweeps the ground across a curved film gate, laying a horizon-to-horizon strip onto one frame — the whole swath at reconnaissance scale, in a camera small enough to orbit. The high-resolution photography that was the real reason the first satellites flew, and it gets there before the television does."
+    parts: [RO-ImprovedFilmCamera]
+  - id: opt_largeApertureOptics
+    title: "Large-Aperture Optics"
+    discipline: OpticsPhotonics
+    tier: 4
+    parents: [opt_recon]
+    flavor: "Resolution is set by the diameter of the glass, so the camera stops being a payload and becomes the spacecraft — a mirror the length of the bus, folded to fit a fairing and held in focus while the structure warms and cools. Grain and lens motion are no longer the limit; diffraction is."
+    parts: [RO-HighResFilmCamera]
   - id: opt_tvRecon
     title: "Television Reconnaissance"
     discipline: OpticsPhotonics
