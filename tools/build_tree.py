@@ -1041,7 +1041,12 @@ def engine_config_ladders(p2n, u2n, by):
         if pnode is None: pnode = "parking"; missing.add(part)
         for r in rows[part]:
             unode = u2n.get("RFUpgrade_" + r["config"])
-            r["moved"] = bool(r["rp1"] and not r["base"] and unode and unode != pnode and unode in by
+            # A config with NO RP-1 techRequired can still be re-homed -- it just needs a different
+            # patch form, because the usual matcher keys off the RP-1 value it does not have. Without
+            # this, every AXE- or mod-authored config (Raptor, the NTR working fluids, the NK-12 marks:
+            # 18 of them) is permanently stuck on its part's node no matter where its token is placed.
+            r["ungated"] = not r["rp1"]
+            r["moved"] = bool(not r["base"] and unode and unode != pnode and unode in by
                               and CFG_NAME_SAFE.match(r["config"]))
             r["node"] = unode if r["moved"] else pnode
         if rows[part] and all(r["moved"] for r in rows[part]):     # guard: leave one config on the part
@@ -1180,7 +1185,7 @@ def emit_engine_config_gates(ladders, pinned, missing, p2n, by):
     r2a = collections.defaultdict(collections.Counter)                 # rp1node -> Counter(AXE node) for catch-all
     for part in sorted(ladders):
         for r in ladders[part]:
-            if r["moved"]: scattered.append((part, r["config"], r["rp1"], r["node"]))
+            if r["moved"]: scattered.append((part, r["config"], r["rp1"], r["node"], r.get("ungated")))
             elif r["rp1"]:
                 pairs.add((part, r["rp1"]))
                 if part in p2n: r2a[r["rp1"]][p2n[part]] += 1
@@ -1195,10 +1200,15 @@ def emit_engine_config_gates(ladders, pinned, missing, p2n, by):
          "// :FINAL runs after the walker (:BEFORE[RealismOverhaulEnginesPost]) and after",
          "// AxeExternalTechRemap's :LAST spot-fixes (preserved -- their configs no longer carry the RP-1 node).",
          "// LAYER 0 -- per-CONFIG homing: each variant follows its own RFUpgrade_* token's node (the ladder):"]
-    for part, cfg, rp1, node in scattered:
+    for part, cfg, rp1, node, ungated in scattered:
+        # gated: match on the RP-1 value so the patch consumes it and later layers cannot re-home it.
+        # ungated: no RP-1 value to match, so address the CONFIG by name and %-set the field (create it
+        # if absent). RealFuels treats a CONFIG with no techRequired as always available, so this is
+        # what actually puts an AXE-authored variant behind a node at all.
+        sel = f"@CONFIG[{cfg}]:HAS[#techRequired[{rp1}]],*" if not ungated else f"@CONFIG[{cfg}],*"
+        setter = f"@techRequired = {node}" if not ungated else f"%techRequired = {node}"
         L.append(f"@PART[{part}]:HAS[@MODULE[Module*EngineConfigs]]:FINAL "
-                 f"{{ @MODULE[Module*EngineConfigs],* {{ @CONFIG[{cfg}]:HAS[#techRequired[{rp1}]],* "
-                 f"{{ @techRequired = {node} }} }} }}")
+                 f"{{ @MODULE[Module*EngineConfigs],* {{ {sel} {{ {setter} }} }} }}")
     L.append("// LAYER 1 -- per-part fallback: base configs + variants with no placed token stay on the part's node:")
     for part, rp1 in sorted(pairs):
         node = p2n.get(part, "parking")
@@ -1214,7 +1224,7 @@ def emit_engine_config_gates(ladders, pinned, missing, p2n, by):
         catchall += 1
     with open(os.path.join(OUTD, "AxeEngineConfigGates.cfg"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
-    nparts = len(set(p for p, _, _, _ in scattered) | set(p for p, _ in pairs))
+    nparts = len(set(x[0] for x in scattered) | set(p for p, _ in pairs))
     print(f"engine config gates: {len(scattered)} per-config ladder gates + {len(pairs)} per-part fallbacks "
           f"({nparts} engine parts) + {catchall} per-node catch-alls -> AxeEngineConfigGates.cfg"
           + (f"  (pinned {len(pinned)}: {', '.join(p for p, _ in pinned)})" if pinned else "")
