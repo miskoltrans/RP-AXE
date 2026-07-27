@@ -1,18 +1,18 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPAxe.Airlaunch
 {
     /// <summary>
-    /// The airlaunch teleport, ported self-contained from ROUtils/KCT <c>HyperEdit_Utilities.DoAirlaunch</c>
-    /// (originally the HyperEdit lander by khyperia &amp; Ezriilc). Stock API only — no ROUtils reference.
+    /// The airlaunch teleport. Computes an atmospheric release point from the vessel's own launch site
+    /// (its current position) plus a downrange offset, then hands the resulting orbit state to the shared
+    /// <see cref="AxeVesselTeleport"/> primitive (ported from ROUtils/KCT HyperEdit_Utilities).
     ///
-    /// The one change from the original: the reference point is the vessel's own current position — the
-    /// runway it just launched from — instead of a canonical KSC found via KCT's RSS-aware FindKSC. The
-    /// launch site IS the reference, which is both simpler and the right semantics for a relocatable launch
-    /// site. <paramref name="distance"/> then offsets the drop point downrange along a great circle on the
-    /// <paramref name="bearingDeg"/> bearing; distance 0 releases straight above the site.
+    /// The reference point is the vessel's own current position — the runway it just launched from —
+    /// instead of a canonical KSC. The launch site IS the reference, which is both simpler and the right
+    /// semantics for a relocatable launch site. <paramref name="distance"/> then offsets the drop point
+    /// downrange along a great circle on the <paramref name="bearingDeg"/> bearing; distance 0 releases
+    /// straight above the site.
     /// </summary>
     internal static class AxeAirlaunchTeleport
     {
@@ -55,81 +55,11 @@ namespace RPAxe.Airlaunch
             Quaternion rotation = Quaternion.LookRotation(-to);
             rotation *= Quaternion.AngleAxis((float)headingDeg, Vector3.back);
 
-            Orbit orbit = Clone(vessel.orbitDriver.orbit);
+            Orbit orbit = AxeVesselTeleport.Clone(vessel.orbitDriver.orbit);
             orbit.UpdateFromStateVectors(posZup, velZup, body, Planetarium.GetUniversalTime());
-            SetOrbit(vessel, orbit);
+            AxeVesselTeleport.SetOrbit(vessel, orbit);
             vessel.SetRotation(rotation);
-            ResetGroundContact(vessel);
-        }
-
-        // ---- ported HyperEdit helpers (stock API only) ----
-
-        private static Orbit Clone(Orbit o) =>
-            new Orbit(o.inclination, o.eccentricity, o.semiMajorAxis, o.LAN,
-                      o.argumentOfPeriapsis, o.meanAnomalyAtEpoch, o.epoch, o.referenceBody);
-
-        private static void SetOrbit(Vessel vessel, Orbit newOrbit)
-        {
-            PrepVesselTeleport(vessel);
-
-            try { OrbitPhysicsManager.HoldVesselUnpack(60); }
-            catch (NullReferenceException) { Debug.LogError("[AXE] airlaunch HoldVesselUnpack NRE"); }
-
-            IEnumerable<Vessel> allVessels = FlightGlobals.fetch?.vessels ?? (IEnumerable<Vessel>)new[] { vessel };
-            foreach (Vessel v in allVessels) v.GoOnRails();
-
-            CelestialBody oldBody = vessel.orbitDriver.orbit.referenceBody;
-            HardsetOrbit(vessel.orbitDriver, newOrbit);
-            vessel.orbitDriver.pos = vessel.orbit.pos.xzy;
-            vessel.orbitDriver.vel = vessel.orbit.vel;
-
-            CelestialBody newBody = vessel.orbitDriver.orbit.referenceBody;
-            if (newBody != oldBody)
-                GameEvents.onVesselSOIChanged.Fire(
-                    new GameEvents.HostedFromToAction<Vessel, CelestialBody>(vessel, oldBody, newBody));
-        }
-
-        private static void HardsetOrbit(OrbitDriver orbitDriver, Orbit newOrbit)
-        {
-            Orbit orbit = orbitDriver.orbit;
-            bool changedBody = orbit.referenceBody != newOrbit.referenceBody;
-            orbit.inclination = newOrbit.inclination;
-            orbit.eccentricity = newOrbit.eccentricity;
-            orbit.semiMajorAxis = newOrbit.semiMajorAxis;
-            orbit.LAN = newOrbit.LAN;
-            orbit.argumentOfPeriapsis = newOrbit.argumentOfPeriapsis;
-            orbit.meanAnomalyAtEpoch = newOrbit.meanAnomalyAtEpoch;
-            orbit.epoch = newOrbit.epoch;
-            orbit.referenceBody = newOrbit.referenceBody;
-            orbit.Init();
-            orbit.UpdateFromUT(Planetarium.GetUniversalTime());
-            if (changedBody)
-                orbitDriver.OnReferenceBodyChange?.Invoke(newOrbit.referenceBody);
-        }
-
-        private static void PrepVesselTeleport(Vessel vessel)
-        {
-            if (vessel.Landed) vessel.Landed = false;
-            if (vessel.Splashed) vessel.Splashed = false;
-            if (vessel.landedAt != string.Empty) vessel.landedAt = string.Empty;
-
-            List<Part> parts = vessel.parts;
-            if (parts == null) return;
-            foreach (Part part in parts)
-                if (part.Modules.Contains<LaunchClamp>())
-                    part.Die();
-        }
-
-        private static void ResetGroundContact(Vessel vessel)
-        {
-            if (vessel.parts == null) return;
-            for (int i = vessel.parts.Count - 1; i >= 0; --i)
-            {
-                Part part = vessel.parts[i];
-                part.GroundContact = false;
-                if (part.Modules.Contains("KSPWheelBase"))
-                    part.Modules["KSPWheelBase"].Fields.SetValue("grounded", false);
-            }
+            AxeVesselTeleport.ResetGroundContact(vessel);
         }
     }
 }
