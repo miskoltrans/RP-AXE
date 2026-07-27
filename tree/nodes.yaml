@@ -1248,7 +1248,7 @@ nodes:
     tier: 6
     parents: [fd_matureOrbital]
     flavor: "Extend the nozzle bell far past what any sea-level engine could survive, tuned so the exhaust expands to near-vacuum pressure and wrings out the last dozen seconds of specific impulse. The refinement that lets an upper stage do more on the same propellant — the RD-119 alone gains nearly thirty seconds over its predecessor."
-    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_X-405H-3, RFUpgrade_RD-0108, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_XLR11-RM-13-10K, RFUpgrade_LR105-NA-7.1, RFUpgrade_LR105-NA-7.2, RFUpgrade_LR89-NA-7.1, RFUpgrade_LR89-NA-7.2, RFUpgrade_X-405H-4, RFUpgrade_RL10A-3-3B, RFUpgrade_LR105-NA-5]
+    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_XLR11-RM-13-10K, RFUpgrade_LR89-NA-7.1, RFUpgrade_LR89-NA-7.2, RFUpgrade_RL10A-3-3B, RFUpgrade_LR105-NA-5]
     # NA-7.x + X-405H-4 marks added 2026-07 (tail): next Atlas LR105/LR89 + Vanguard marks, continuing NA-6.
     parts: [ROE-LR87_LH2]
     # Part-count-pass finds (2026-07): 6 more upgrades in this same "combustion/injector refinement, no
@@ -1567,7 +1567,7 @@ nodes:
     tier: 7
     parents: [fd_longMarchStorable]
     flavor: "Squeeze more thrust from the same four-chamber cluster without touching the chemistry — the storable engines already flying, simply pushed harder."
-    upgrades: [RFUpgrade_YF-20B, RFUpgrade_YF-25K, RFUpgrade_YF-20C, RFUpgrade_YF-22E]
+    upgrades: [RFUpgrade_YF-20B, RFUpgrade_YF-25K, RFUpgrade_YF-20C, RFUpgrade_YF-22E, RFUpgrade_X-405H-3]
     # YF-20C/22E added 2026-07 (tail): next Long March YF-20/22 marks, continuing YF-20B.
   - id: fd_blendedStorableFuel
     title: "Blended Storable Fuel"
@@ -1624,7 +1624,7 @@ nodes:
     parents: [fd_saturnKerolox]
     flavor: "Push the simple gas-generator cycle as far as it goes — bigger turbopumps, higher flow, more thrust from the same open-cycle plumbing. The last uprate before the cycle itself runs out of room to grow."
     parts: [ROE-F1]
-    upgrades: [RFUpgrade_H-1-188K, RFUpgrade_H-1-200K, RFUpgrade_E-1-468k, RFUpgrade_E-1-500k, RFUpgrade_E-1-Upgrade, RFUpgrade_RD-111-8D716A, RFUpgrade_H-2-250K, RFUpgrade_LR87-AJ-11, RFUpgrade_LR91-AJ-11, RFUpgrade_LR79-NA-13]
+    upgrades: [RFUpgrade_H-1-188K, RFUpgrade_H-1-200K, RFUpgrade_E-1-468k, RFUpgrade_E-1-500k, RFUpgrade_E-1-Upgrade, RFUpgrade_RD-111-8D716A, RFUpgrade_H-2-250K, RFUpgrade_LR87-AJ-11, RFUpgrade_LR91-AJ-11, RFUpgrade_LR79-NA-13, RFUpgrade_LR105-NA-7.1, RFUpgrade_LR105-NA-7.2, RFUpgrade_X-405H-4]
     # H-2-250K added 2026-07 (tail): the next H-1 gas-generator uprate mark.
     # F-1 (2026-07, band-3 lunar batch): the king this node was named for - the largest gas-generator
     # engine ever built. Its own uprate (F-1-1.52M) is barred from here by doctrine-4 -> fd_gasGeneratorApex.
@@ -3760,6 +3760,29 @@ nodes:
     parents: [cryo_ssme]
     flavor: "The hardest cycle in rocketry stops being one nation's secret. Fuel-rich staged-combustion hydrolox — the SSME's cycle — is rebuilt by two more programs: the RD-0120 lifts Energia, the LE-7 lifts the H-II. What took a superpower to master becomes something three space programs can pour."
     parts: [ROE-RD0120, ROE-LE7, rmm_ishtar]
+  - id: cryo_seaLevelHydroloxNozzle
+    title: "Sea-Level Hydrolox Nozzle"
+    discipline: Cryogenics
+    tier: 12
+    parents: [cryo_ssme]
+    flavor: "Re-cut a vacuum-optimised hydrolox bell short enough to run at sea level without the exhaust tearing itself off the wall. You give up vacuum specific impulse to get an engine that can light on the pad — the price of a hydrogen first stage rather than a hydrogen upper."
+    upgrades: [RFUpgrade_HG-3B-SL, RFUpgrade_HG-3B-SL-2]
+    # LADDER PASS (2026-07-27): the -SL marks are a NOZZLE fork (ispSL 285 -> 352 against the vacuum
+    # bells), not a further uprating step. One class, so both ride here under R4.
+  - id: cryo_reusableTurbopumpUprating
+    title: "Reusable Turbopump Uprating"
+    discipline: Cryogenics
+    tier: 14
+    parents: [cryo_reusableEngineUprating]
+    flavor: "The second pass over an engine already qualified to fly again: new turbopump rotors, a wider surge margin, and inspection intervals long enough that the overhaul between flights stops being a rebuild. Thrust follows, but the real gain is how many times you can do it."
+    upgrades: [RFUpgrade_HG-3B-2, RFUpgrade_LE-7A-2, RFUpgrade_RD-0122, RFUpgrade_RD-57A-1, RFUpgrade_RS-25C]
+  - id: cryo_reusableChamberPressureCeiling
+    title: "Reusable Chamber-Pressure Ceiling"
+    discipline: Cryogenics
+    tier: 15
+    parents: [cryo_reusableTurbopumpUprating]
+    flavor: "The last few percent, bought by running the chamber at a pressure the first version of this engine would not have survived. Everything downstream — throat, cooling channels, turbine inlet — is already at its limit, so each further kilonewton costs more than the one before it."
+    upgrades: [RFUpgrade_RS-25D-E]
   - id: cryo_reusableEngineUprating
     title: "Reusable-Engine Production Uprating"
     discipline: Cryogenics
@@ -3767,7 +3790,7 @@ nodes:
     parents: [cryo_operationalFRSC]
     flavor: "Every reusable and staged-combustion hydrolox engine now in service settles into its production marks — the SSME Block-I and Block-II, the RD-0120M, the LE-7A, the maturing HG-3 and deep-throttle chains — the unglamorous decade of squeezing margin out of engines already flying."
     parts: [rmm_arsia]
-    upgrades: [RFUpgrade_RS-25A, RFUpgrade_RS-25C, RFUpgrade_RS-25D-50X, RFUpgrade_RS-25D-E, RFUpgrade_RD-0120M, RFUpgrade_RD-0122, RFUpgrade_LE-7A, RFUpgrade_LE-7A-2, RFUpgrade_HG-3B, RFUpgrade_HG-3B-2, RFUpgrade_HG-3B-SL, RFUpgrade_HG-3B-SL-2, RFUpgrade_LR129-P-3, RFUpgrade_RD-57M, RFUpgrade_RD-57A-1, RFUpgrade_LRBE-BlockII, RFUpgrade_SSBE-BlockII, RFUpgrade_RL10A-4-2N]
+    upgrades: [RFUpgrade_RS-25A, RFUpgrade_RS-25D-50X, RFUpgrade_RD-0120M, RFUpgrade_LE-7A, RFUpgrade_HG-3B, RFUpgrade_LR129-P-3, RFUpgrade_RD-57M, RFUpgrade_LRBE-BlockII, RFUpgrade_SSBE-BlockII, RFUpgrade_RL10A-4-2N]
     # rmm_arsia/RS-25-650 (2026-07, band-5 gap sweep): a real uprated-SSME production-study mark - fits
     # this node's own "production marks maturing in service" theme exactly, breaks its former upgrades-only
     # shape but that was incidental, not a design rule.
