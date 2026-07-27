@@ -1,0 +1,179 @@
+program	programTitle	baseFunding	curve	nominalYears	axeStatus	nCapstones	capstone	capstoneTitle	advanceFunds	rewardFunds	rewardScience	rewardReputation	prestige	maxCompletions	file
+EarlyXPlanes	X-Plane Research	800000	BimodalBackloaded	9	chartered	6	BreakSoundBarrier	Break the Sound Barrier (Crewed)	0	0	0	10	Significant	1	X-Plane Research/BreakSoundBarrier.cfg
+EarlyXPlanes	X-Plane Research	800000	BimodalBackloaded	9	chartered	6	XPlanesSupersonicMach2	X-Planes (Mach 2 Supersonic)	0	0	0	25	Significant	1	X-Plane Research/XPlanesSupersonicMach2.cfg
+EarlyXPlanes	X-Plane Research	800000	BimodalBackloaded	9	chartered	6	XPlanesStratosphericResearch	X-Planes (Stratospheric Research)	0	0	0	20	Significant	1	X-Plane Research/XPlanesStratosphericResearch.cfg
+EarlyXPlanes	X-Plane Research	800000	BimodalBackloaded	9	chartered	6	XPlanesHighAltitude	X-Planes (High Altitude)	0	0	0	25	Significant	1	X-Plane Research/XPlanesHighAltitude.cfg
+EarlyXPlanes	X-Plane Research	800000	BimodalBackloaded	9	chartered	6	XPlanesHypersonic	X-Planes (Hypersonic)	0	0	0	25	Significant	1	X-Plane Research/XPlanesHypersonic.cfg
+EarlyXPlanes	X-Plane Research	800000	BimodalBackloaded	9	chartered	6	XPlanesKarman	X-Planes (Karman Line)	0	0	0	35	Exceptional	1	X-Plane Research/XPlanesKarman.cfg
+SuborbRocketDev	Early Rocket Development	210000	SlowRampup	6	chartered	4	KarmanLine	Karman Line	0	0	0	10	Significant	1	Sounding Rockets/KarmanLine.cfg
+SuborbRocketDev	Early Rocket Development	210000	SlowRampup	6	chartered	4	SuborbitalReturn	Reach a Suborbital Trajectory & Return (uncrewed)	0	0	0	10	Significant	1	Sounding Rockets/SuborbitalReturn.cfg
+SuborbRocketDev	Early Rocket Development	210000	SlowRampup	6	chartered	4	DownrangeEarly	Downrange Milestone (3000 km)	0	0	0	25	Significant	1	Sounding Rockets/DownrangeEarly.cfg
+SuborbRocketDev	Early Rocket Development	210000	SlowRampup	6	chartered	4	Downrange	Downrange Milestone (5000 km)	0	0	0	40	Exceptional	1	Sounding Rockets/Downrange.cfg
+SuborbRocketResearch	Suborbital Research	210000	SlowRampup	6	chartered	4	KarmanLine	Karman Line	0	0	0	10	Significant	1	Sounding Rockets/KarmanLine.cfg
+SuborbRocketResearch	Suborbital Research	210000	SlowRampup	6	chartered	4	SoundingRocketFilm	First Low Space Film Return	0	0	0	35	Significant	1	Sounding Rockets/SoundingRocketFilm.cfg
+SuborbRocketResearch	Suborbital Research	210000	SlowRampup	6	chartered	4	SoundingRocketBio	First Low Space Biological Experimentation	0	0	0	15	Significant	1	Sounding Rockets/SoundingRocketBio.cfg
+SuborbRocketResearch	Suborbital Research	210000	SlowRampup	6	chartered	4	SoundingRocketAdvancedBio	First Advanced Biological Suborbital Experiment	0	0	0	45	Exceptional	1	Sounding Rockets/SoundingRocketAdvancedBio.cfg
+EarlySatellites	Early Satellites (Light)	532000	MildBackloaded	4	chartered	5	FirstSatellite	First Artificial Satellite	0	0	0	75	Significant	1	Early Satellites (Light)/FirstSatellite.cfg
+EarlySatellites	Early Satellites (Light)	532000	MildBackloaded	4	chartered	5	FirstScienceSat	First Scientific Satellite	0	0	0	60	Significant	1	Early Satellites (Light)/FirstScienceSat.cfg
+EarlySatellites	Early Satellites (Light)	532000	MildBackloaded	4	chartered	5	AtmoSat	Atmospheric Analysis Satellite	0	0	0	50	Significant	1	Early Satellites (Light)/AtmosphereAnalysis.cfg
+EarlySatellites	Early Satellites (Light)	532000	MildBackloaded	4	chartered	5	FirstPolarSat	First Polar Orbit Satellite	0	0	0	50	Significant	1	Early Satellites (Light)/FirstPolarSat.cfg
+EarlySatellites	Early Satellites (Light)	532000	MildBackloaded	4	chartered	5	FirstSolarSat	First Solar-Powered Satellite	0	0	0	50	Significant	1	Early Satellites (Light)/FirstSolarSat.cfg
+EarlySatellites-Heavy	Early Satellites (Heavy)	875000	-	5	chartered	4	FirstSatellite-Heavy	First Artificial Satellite (30 kg)	0	0	0	75	Significant	1	Early Satellites (Heavy)/FirstSatellite-Heavy.cfg
+EarlySatellites-Heavy	Early Satellites (Heavy)	875000	-	5	chartered	4	FirstBioSat-Heavy	First Biological Satellite (400 kg)	0	0	0	80	Significant	1	Early Satellites (Heavy)/FirstBioSat-Heavy.cfg
+EarlySatellites-Heavy	Early Satellites (Heavy)	875000	-	5	chartered	4	FirstPolarSat-Heavy	First Polar Orbit Satellite (400 kg)	0	0	0	80	Significant	1	Early Satellites (Heavy)/FirstPolarSat-Heavy.cfg
+EarlySatellites-Heavy	Early Satellites (Heavy)	875000	-	5	chartered	4	FirstScienceSat-Heavy	First Scientific Satellite (1000 kg)	0	0	0	100	Significant	1	Early Satellites (Heavy)/FirstScienceSat-Heavy.cfg
+EarthObservationScience1	Early Earth Observation Satellites	560000	MildRampup	4	chartered	6	EOSCosmicRay1	Cosmic Ray Satellite Beyond LEO	0	0	0	40	Significant	1	Earth Observation 1/EOSCosmicRay1.cfg
+EarthObservationScience1	Early Earth Observation Satellites	560000	MildRampup	4	chartered	6	EOSCherenkov	Cherenkov Detection Beyond LEO	0	0	0	40	Significant	1	Earth Observation 1/EOSCherenkov.cfg
+EarthObservationScience1	Early Earth Observation Satellites	560000	MildRampup	4	chartered	6	EOSMagScan1	Magnetometry Satellite	0	0	0	40	Significant	1	Earth Observation 1/EOSMagScan1.cfg
+EarthObservationScience1	Early Earth Observation Satellites	560000	MildRampup	4	chartered	6	EOSIRRad1	Infrared Radiometry Satellite	0	0	0	40	Significant	1	Earth Observation 1/EOSIRRad1.cfg
+EarthObservationScience1	Early Earth Observation Satellites	560000	MildRampup	4	chartered	6	first_OrbitRecover	Reach Orbital Speed & Return Safely to Earth	0	0	0	150	Significant	1	Earth Crewed/FirstOrbitRecovery.cfg
+EarthObservationScience1	Early Earth Observation Satellites	560000	MildRampup	4	chartered	6	EOSCorona	Dedicated Earth Imaging Satellite	0	0	0	80	Significant	1	Earth Observation 1/EOSCorona.cfg
+SkoposCommercialApplications0	Early Commercial Applications	610000	MildRampup	4	chartered	7	FirstNavSat-SCA	First Navigational Satellite  // Based on Transit 1 through 4	0	0	0	40	Significant	1	Skopos Commercial Applications 0/FirstNavSat-SCA.cfg
+SkoposCommercialApplications0	Early Commercial Applications	610000	MildRampup	4	chartered	7	intermittent_transatlantic_tv	Experimental Transatlantic Television				45	Trivial		Skopos Commercial Applications 0/intermittent_transatlantic_tv.cfg
+SkoposCommercialApplications0	Early Commercial Applications	610000	MildRampup	4	chartered	7	intermittent_transpacific_tv	Experimental Transpacific Television				45	Trivial		Skopos Commercial Applications 0/intermittent_transpacific_tv.cfg
+SkoposCommercialApplications0	Early Commercial Applications	610000	MildRampup	4	chartered	7	intermittent_soviet_tv	Experimental Soviet Television				60	Trivial		Skopos Commercial Applications 0/intermittent_soviet_tv.cfg
+SkoposCommercialApplications0	Early Commercial Applications	610000	MildRampup	4	chartered	7	intermittent_paris_moscow_tv	Experimental Paris-Moscow Television				45	Trivial		Skopos Commercial Applications 0/intermittent_paris_moscow_tv.cfg
+SkoposCommercialApplications0	Early Commercial Applications	610000	MildRampup	4	chartered	7	EarlyNavNetwork3-SCA	Early Navigation Network (3 Satellites)	0	0	0	150	Significant	1	Skopos Commercial Applications 0/EarlyNavNetwork3-SCA.cfg
+SkoposCommercialApplications0	Early Commercial Applications	610000	MildRampup	4	chartered	7	EarlyNavNetwork4-SCA	Early Navigation Network (4 Satellites)	0	0	0	200	Significant	1	Skopos Commercial Applications 0/EarlyNavNetwork4-SCA.cfg
+SkoposCommercialApplications1	First Generation Commercial Applications	800000	MildBackloaded	3.5	chartered	5	l1_north_atlantic_tv	North Atlantic Telecommunications - Level 1				150	Trivial		Skopos Commercial Applications 1/l1_north_atlantic_tv.cfg
+SkoposCommercialApplications1	First Generation Commercial Applications	800000	MildBackloaded	3.5	chartered	5	l1_north_pacific_tv	North Pacific Telecommunications - Level 1				150	Trivial		Skopos Commercial Applications 1/l1_north_pacific_tv.cfg
+SkoposCommercialApplications1	First Generation Commercial Applications	800000	MildBackloaded	3.5	chartered	5	l1_orbita	Soviet Television - Level 1				200	Trivial		Skopos Commercial Applications 1/l1_orbita.cfg
+SkoposCommercialApplications1	First Generation Commercial Applications	800000	MildBackloaded	3.5	chartered	5	l1_paris_moscow_tv	Paris–Moscow Telecommunications - Level 1				150	Trivial		Skopos Commercial Applications 1/l1_paris_moscow_tv.cfg
+SkoposCommercialApplications1	First Generation Commercial Applications	800000	MildBackloaded	3.5	chartered	5	our_world_tv	<i>Our World</i>				500	Trivial		Skopos Commercial Applications 1/our_world_tv.cfg
+SkoposCommercialApplications2	Second Generation Commercial Applications	900000	MildBackloaded	3	chartered	6	l2_atlantic_tv	North Atlantic Telecommunications - Level 2				300	Trivial		Skopos Commercial Applications 2/l2_atlantic_tv.cfg
+SkoposCommercialApplications2	Second Generation Commercial Applications	900000	MildBackloaded	3	chartered	6	l2_pacific_tv	Pacific Telecommunications - Level 2				300	Trivial		Skopos Commercial Applications 2/l2_pacific_tv.cfg
+SkoposCommercialApplications2	Second Generation Commercial Applications	900000	MildBackloaded	3	chartered	6	l2_indian_ocean_tv	Indian Ocean Telecommunications - Level 2				300	Trivial		Skopos Commercial Applications 2/l2_indian_ocean_tv.cfg
+SkoposCommercialApplications2	Second Generation Commercial Applications	900000	MildBackloaded	3	chartered	6	l2_orbita	Soviet Telecommunications - Level 2				350	Trivial		Skopos Commercial Applications 2/l2_orbita.cfg
+SkoposCommercialApplications2	Second Generation Commercial Applications	900000	MildBackloaded	3	chartered	6	l2_intersputnik_europe	Intersputnik - Eastern Europe - Level 1				300	Trivial		Skopos Commercial Applications 2/l2_intersputnik_europe.cfg
+SkoposCommercialApplications2	Second Generation Commercial Applications	900000	MildBackloaded	3	chartered	6	l2_havana_tv	Moscow-Havana Telecommunications - Level 2				350	Trivial		Skopos Commercial Applications 2/l2_havana_tv.cfg
+SkoposCommercialApplications3	Third Generation Commercial Applications	1500000	MildBackloaded	5	chartered	6	l3_atlantic_tv	North Atlantic Telecommunications - Level 3				300	Trivial		Skopos Commercial Applications 3/l3_atlantic_tv.cfg
+SkoposCommercialApplications3	Third Generation Commercial Applications	1500000	MildBackloaded	5	chartered	6	l3_pacific_tv	Pacific Telecommunications - Level 3				300	Trivial		Skopos Commercial Applications 3/l3_pacific_tv.cfg
+SkoposCommercialApplications3	Third Generation Commercial Applications	1500000	MildBackloaded	5	chartered	6	l3_indian_ocean_tv	Indian Ocean Telecommunications - Level 3				300	Trivial		Skopos Commercial Applications 3/l3_indian_ocean_tv.cfg
+SkoposCommercialApplications3	Third Generation Commercial Applications	1500000	MildBackloaded	5	chartered	6	l3_moskva	Soviet Telecommunications - Level 3				400	Trivial		Skopos Commercial Applications 3/l3_moskva.cfg
+SkoposCommercialApplications3	Third Generation Commercial Applications	1500000	MildBackloaded	5	chartered	6	l3_intersputnik_asia	Intersputnik - Asia - Level 1				200	Trivial		Skopos Commercial Applications 3/l3_intersputnik_asia.cfg
+SkoposCommercialApplications3	Third Generation Commercial Applications	1500000	MildBackloaded	5	chartered	6	l3_intersputnik_caribbean	Intersputnik - Caribbean - Level 2				350	Trivial		Skopos Commercial Applications 3/l3_intersputnik_caribbean.cfg
+EarlyLunarProbes	Early Lunar Probes	800000	-	4	chartered	3	LunarFlyby	Lunar Flyby (Uncrewed)	0	0	0	75	Significant	1	Early Lunar Probes/LunarFlyby.cfg
+EarlyLunarProbes	Early Lunar Probes	800000	-	4	chartered	3	LunarImpactor	First Lunar Impactor	0	0	15	100	Significant	1	Early Lunar Probes/LunarImpactor.cfg
+EarlyLunarProbes	Early Lunar Probes	800000	-	4	chartered	3	LunarOrbiter	First Lunar Orbiter (Uncrewed)	0	0	0	125	Exceptional	1	Early Lunar Probes/LunarOrbiter.cfg
+UncrewedLunarSurface	Uncrewed Lunar Surface Exploration	1375000	MildBackloaded	5	chartered	3	MoonLanding	First Lunar Landing (Uncrewed)	0	0	0	200	Significant	1	Lunar Surface Probes/MoonLanding.cfg
+UncrewedLunarSurface	Uncrewed Lunar Surface Exploration	1375000	MildBackloaded	5	chartered	3	MoonOrbiter	First Lunar Orbiter & Mapper (Uncrewed)	0	0	0	150	Significant	1	Lunar Surface Probes/MoonOrbiter.cfg
+UncrewedLunarSurface	Uncrewed Lunar Surface Exploration	1375000	MildBackloaded	5	chartered	3	MoonLandingFarSide	First Far Side Lunar Landing (Uncrewed)	0	0	0	250	Exceptional	1	Lunar Surface Probes/MoonLandingFarSide.cfg
+CrewedOrbitEarly	Crewed Orbit	1200000	MildBackloaded	4	chartered	4	first_OrbitRecover	Reach Orbital Speed & Return Safely to Earth	0	0	0	150	Significant	1	Earth Crewed/FirstOrbitRecovery.cfg
+CrewedOrbitEarly	Crewed Orbit	1200000	MildBackloaded	4	chartered	4	OrbitalTestFlight	Orbital Test Flight (Uncrewed)	0	0	0	60	Significant	1	Earth Crewed/OrbitalTestFlight.cfg
+CrewedOrbitEarly	Crewed Orbit	1200000	MildBackloaded	4	chartered	4	first_OrbitCrewed	First Orbital Flight (Crewed)	0	0	0	200	Significant	1	Earth Crewed/FirstOrbitCrewed.cfg
+CrewedOrbitEarly	Crewed Orbit	1200000	MildBackloaded	4	chartered	4	CollectCrewedScienceBasic	Collect Basic Crew Science	0	0	0	150	Exceptional	1	Earth Crewed/CrewedScienceBasic.cfg
+CrewedOrbitAdv	Advanced Crewed Orbit	2200000	MildBackloaded	4	chartered	3	first_EVA	First EVA	0	0	0	150	Significant	1	Earth Crewed Adv/FirstEVA.cfg
+CrewedOrbitAdv	Advanced Crewed Orbit	2200000	MildBackloaded	4	chartered	3	Rendezvous	First Rendezvous	0	0	0	150	Significant	1	Earth Crewed Adv/Rendezvous.cfg
+CrewedOrbitAdv	Advanced Crewed Orbit	2200000	MildBackloaded	4	chartered	3	first_Docking	First Docking	0	0	0	150	Exceptional	1	Earth Crewed Adv/Docking.cfg
+EarlyInnerPlanetProbes	Early Inner Planet Probes	2100000	Frontloaded	7	chartered	4	flybyMars	Mars Flyby	0	0	0	200	Significant	1	Mars/MarsFlyby.cfg
+EarlyInnerPlanetProbes	Early Inner Planet Probes	2100000	Frontloaded	7	chartered	4	flybyVenus	Venus Flyby	0	0	0	200	Significant	1	Venus/VenusFlyby.cfg
+EarlyInnerPlanetProbes	Early Inner Planet Probes	2100000	Frontloaded	7	chartered	4	orbitMars	Mars Orbit	0	0	0	250	Significant	1	Mars/MarsOrbit.cfg
+EarlyInnerPlanetProbes	Early Inner Planet Probes	2100000	Frontloaded	7	chartered	4	orbitVenus	Venus Orbit	0	0	0	250	Significant	1	Venus/VenusOrbit.cfg
+CrewedLunar	Crewed Lunar Exploration	15720000	StrongFrontloaded	12	chartered	4	first_MoonFlybyCrewed	Crewed Lunar Flyby	0	0	0	300	Significant	1	Lunar Crewed/CrewedLunarFlyby.cfg
+CrewedLunar	Crewed Lunar Exploration	15720000	StrongFrontloaded	12	chartered	4	FirstCrewedLunarOrbit	First Crewed Lunar Orbit	0	0	0	800	Significant	1	Lunar Crewed/FirstCrewedLunarOrbit.cfg
+CrewedLunar	Crewed Lunar Exploration	15720000	StrongFrontloaded	12	chartered	4	first_MoonLandingCrewed	First Human Moon Landing	0	0	0	1500	Significant	1	Lunar Crewed/FirstMoonLandingCrewed.cfg
+CrewedLunar	Crewed Lunar Exploration	15720000	StrongFrontloaded	12	chartered	4	first_MoonLandingCrewedDirect	First Human Moon Landing (Direct)	0	0	0	1000	Significant	1	Lunar Crewed/FirstMoonLandingCrewedDirect.cfg
+EarlyEarthSpaceStation	Early Earth Space Stations	14300000	Mid	13	chartered	4	first_spaceStation	First Space Station	0	0	0	500	Significant	1	Early Space Stations/First Space Station.cfg
+EarlyEarthSpaceStation	Early Earth Space Stations	14300000	Mid	13	chartered	4	CollectProtoStationScience	Collect Prototype Crewed Station Science	0	0	0	500	Significant	1	Early Space Stations/Proto Station Science.cfg
+EarlyEarthSpaceStation	Early Earth Space Stations	14300000	Mid	13	chartered	4	secondGen_spaceStation	Second Generation Space Station	0	0	0	750	Exceptional	1	Early Space Stations/Second Generation Space Station.cfg
+EarlyEarthSpaceStation	Early Earth Space Stations	14300000	Mid	13	chartered	4	CollectSecondGenerationStationScience	Collect Second Generation Station Science	0	0	0	1000	Exceptional	1	Early Space Stations/Early Station Science.cfg
+MarsSurfaceExp	Mars Surface Exploration	4800000	-	8	chartered	2	landingMars	Mars Landing	0	0	0	500	Significant	1	Mars/Mars Landing.cfg
+MarsSurfaceExp	Mars Surface Exploration	4800000	-	8	chartered	2	roverMars	Mars Rover	0	0	0	600	Exceptional	1	Mars/Mars Rover.cfg
+VenusSurfaceExp	Venus Surface Exploration	4800000	-	8	chartered	1	landingVenus	Venus Landing	0	0	0	500	Exceptional	1	Venus/Venus Landing.cfg
+SmallBodiesFlyby	Small Bodies Flyby	4000000	-	10	chartered	3	flybyMercury	Mercury Flyby	0	0	0	350	Significant	1	Small Bodies Flyby/Mercury Flyby.cfg
+SmallBodiesFlyby	Small Bodies Flyby	4000000	-	10	chartered	3	flybyCeres	Ceres Flyby	0	0	0	250	Significant	1	Small Bodies Flyby/Ceres Flyby.cfg
+SmallBodiesFlyby	Small Bodies Flyby	4000000	-	10	chartered	3	flybyVesta	Vesta Flyby	0	0	0	250	Significant	1	Small Bodies Flyby/Vesta Flyby.cfg
+MercuryExploration	Mercury Exploration	4800000	-	8	chartered	2	orbitMercury	Mercury Orbit	0	0	0	400	Significant	1	Mercury Exploration/Mercury Orbit.cfg
+MercuryExploration	Mercury Exploration	4800000	-	8	chartered	2	landingMercury	Mercury Landing	0	0	0	700	Exceptional	1	Mercury Exploration/Mercury Landing.cfg
+JupiterObservation	Jupiter Observation	4000000	-	8	chartered	5	orbitJupiter	Jupiter Orbit	0	0	0	350	Significant	1	Jupiter Observation/Jupiter Orbit.cfg
+JupiterObservation	Jupiter Observation	4000000	-	8	chartered	5	flybyIo	Io Flyby	0	0	0	350	Significant	1	Jupiter Observation/Io Flyby.cfg
+JupiterObservation	Jupiter Observation	4000000	-	8	chartered	5	flybyEuropa	Europa Flyby	0	0	0	350	Significant	1	Jupiter Observation/Europa Flyby.cfg
+JupiterObservation	Jupiter Observation	4000000	-	8	chartered	5	flybyCallisto	Callisto Flyby	0	0	0	350	Significant	1	Jupiter Observation/Callisto Flyby.cfg
+JupiterObservation	Jupiter Observation	4000000	-	8	chartered	5	flybyGanymede	Ganymede Flyby	0	0	0	350	Significant	1	Jupiter Observation/Ganymede Flyby.cfg
+SaturnObservation	Saturn Observation	5500000	-	10	chartered	10	orbitSaturn	Saturn Orbit	0	0	0	425	Significant	1	Saturn Observation/Saturn Orbit.cfg
+SaturnObservation	Saturn Observation	5500000	-	10	chartered	10	flybyTitan	Titan Flyby	0	0	0	500	Significant	1	Saturn Observation/Titan Flyby.cfg
+SaturnObservation	Saturn Observation	5500000	-	10	chartered	10	flybyDione	Dione Flyby	0	0	0	400	Significant	1	Saturn Observation/Dione Flyby.cfg
+SaturnObservation	Saturn Observation	5500000	-	10	chartered	10	flybyEnceladus	Enceladus Flyby	0	0	0	400	Significant	1	Saturn Observation/Enceladus Flyby.cfg
+SaturnObservation	Saturn Observation	5500000	-	10	chartered	10	flybyIapetus	Iapetus Flyby	0	0	0	400	Significant	1	Saturn Observation/Iapetus Flyby.cfg
+SaturnObservation	Saturn Observation	5500000	-	10	chartered	10	flybyMimas	Mimas Flyby	0	0	0	400	Significant	1	Saturn Observation/Mimas Flyby.cfg
+SaturnObservation	Saturn Observation	5500000	-	10	chartered	10	flybyRhea	Rhea Flyby	0	0	0	400	Significant	1	Saturn Observation/Rhea Flyby.cfg
+SaturnObservation	Saturn Observation	5500000	-	10	chartered	10	flybyTethys	Tethys Flyby	0	0	0	400	Significant	1	Saturn Observation/Tethys Flyby.cfg
+SaturnObservation	Saturn Observation	5500000	-	10	chartered	10	probeTitan	Titan Atmospheric Probe	0	0	0	600	Significant	1	Saturn Observation/Titan Probe.cfg
+SaturnObservation	Saturn Observation	5500000	-	10	chartered	10	probeSaturn	Saturn Atmospheric Probe	0	0	0	600	Significant	1	Saturn Observation/Saturn Probe.cfg
+JupiterMoonLandings	Jovian Moon Landings (WIP)	14400000	-	12	chartered	4	landingIo	Io Landing (Uncrewed)	0	0	0	1200	Significant	1	Jovian Moon Landings/Io Landing.cfg
+JupiterMoonLandings	Jovian Moon Landings (WIP)	14400000	-	12	chartered	4	landingEuropa	Europa Landing (Uncrewed)	0	0	0	1000	Significant	1	Jovian Moon Landings/Europa Landing.cfg
+JupiterMoonLandings	Jovian Moon Landings (WIP)	14400000	-	12	chartered	4	landingCallisto	Callisto Landing (Uncrewed)	0	0	0	750	Significant	1	Jovian Moon Landings/Callisto Landing.cfg
+JupiterMoonLandings	Jovian Moon Landings (WIP)	14400000	-	12	chartered	4	landingGanymede	Ganymede Landing (Uncrewed)	0	0	0	850	Significant	1	Jovian Moon Landings/Ganymede Landing.cfg
+SaturnMoonLandings	Saturnine Moon Landings (WIP)	21600000	-	18	chartered	7	landingTitan	Titan Landing (Uncrewed)	0	0	0	650	Significant	1	Saturnine Moon Landings/Titan Landing.cfg
+SaturnMoonLandings	Saturnine Moon Landings (WIP)	21600000	-	18	chartered	7	landingEnceladus	Enceladus Landing (Uncrewed)	0	0	0	750	Significant	1	Saturnine Moon Landings/Enceladus Landing.cfg
+SaturnMoonLandings	Saturnine Moon Landings (WIP)	21600000	-	18	chartered	7	landingMimas	Mimas Landing (Uncrewed)	0	0	0	700	Significant	1	Saturnine Moon Landings/Mimas Landing.cfg
+SaturnMoonLandings	Saturnine Moon Landings (WIP)	21600000	-	18	chartered	7	landingTethys	Tethys Landing (Uncrewed)	0	0	0	750	Significant	1	Saturnine Moon Landings/Tethys Landing.cfg
+SaturnMoonLandings	Saturnine Moon Landings (WIP)	21600000	-	18	chartered	7	landingIapetus	Iapetus Landing (Uncrewed)	0	0	0	650	Significant	1	Saturnine Moon Landings/Iapetus Landing.cfg
+SaturnMoonLandings	Saturnine Moon Landings (WIP)	21600000	-	18	chartered	7	landingDione	Dione Landing (Uncrewed)	0	0	0	600	Significant	1	Saturnine Moon Landings/Dione Landing.cfg
+SaturnMoonLandings	Saturnine Moon Landings (WIP)	21600000	-	18	chartered	7	landingRhea	Rhea Landing (Uncrewed)	0	0	0	650	Significant	1	Saturnine Moon Landings/Rhea Landing.cfg
+OuterPlanetFlyby	Outer Planet Flyby	5400000	-	18	chartered	5	flybyJupiter	Jupiter Flyby	0	0	0	350	Significant	1	Outer Planet Flyby/Jupiter Flyby.cfg
+OuterPlanetFlyby	Outer Planet Flyby	5400000	-	18	chartered	5	flybySaturn	Saturn Flyby	0	0	0	400	Significant	1	Outer Planet Flyby/Saturn Flyby.cfg
+OuterPlanetFlyby	Outer Planet Flyby	5400000	-	18	chartered	5	flybyUranus	Uranus Flyby	0	0	0	450	Significant	1	Outer Planet Flyby/Uranus Flyby.cfg
+OuterPlanetFlyby	Outer Planet Flyby	5400000	-	18	chartered	5	flybyNeptune	Neptune Flyby	0	0	0	500	Significant	1	Outer Planet Flyby/Neptune Flyby.cfg
+OuterPlanetFlyby	Outer Planet Flyby	5400000	-	18	chartered	5	flybyPluto	Pluto Flyby	0	0	0	500	Significant	1	Outer Planet Flyby/Pluto Flyby.cfg
+OuterGasGiantSurvey	Outer Gas Giant Survey	10800000	-	18	chartered	10	orbitUranus	Uranus Orbit	0	0	0	600	Significant	1	Outer Gas Giant Survey/Uranus Orbit.cfg
+OuterGasGiantSurvey	Outer Gas Giant Survey	10800000	-	18	chartered	10	flybyAriel	Ariel Flyby	0	0	0	450	Significant	1	Outer Gas Giant Survey/Ariel Flyby.cfg
+OuterGasGiantSurvey	Outer Gas Giant Survey	10800000	-	18	chartered	10	flybyMiranda	Miranda Flyby	0	0	0	450	Significant	1	Outer Gas Giant Survey/Miranda Flyby.cfg
+OuterGasGiantSurvey	Outer Gas Giant Survey	10800000	-	18	chartered	10	flybyOberon	Oberon Flyby	0	0	0	450	Significant	1	Outer Gas Giant Survey/Oberon Flyby.cfg
+OuterGasGiantSurvey	Outer Gas Giant Survey	10800000	-	18	chartered	10	flybyTitania	Titania Flyby	0	0	0	450	Significant	1	Outer Gas Giant Survey/Titania Flyby.cfg
+OuterGasGiantSurvey	Outer Gas Giant Survey	10800000	-	18	chartered	10	flybyUmbriel	Umbriel Flyby	0	0	0	450	Significant	1	Outer Gas Giant Survey/Umbriel Flyby.cfg
+OuterGasGiantSurvey	Outer Gas Giant Survey	10800000	-	18	chartered	10	orbitNeptune	Neptune Orbit	0	0	0	700	Significant	1	Outer Gas Giant Survey/Neptune Orbit.cfg
+OuterGasGiantSurvey	Outer Gas Giant Survey	10800000	-	18	chartered	10	flybyTriton	Triton Flyby	0	0	0	500	Significant	1	Outer Gas Giant Survey/Triton Flyby.cfg
+OuterGasGiantSurvey	Outer Gas Giant Survey	10800000	-	18	chartered	10	probeUranus	Uranus Atmospheric Probe	0	0	0	600	Significant	1	Outer Gas Giant Survey/Uranus Probe.cfg
+OuterGasGiantSurvey	Outer Gas Giant Survey	10800000	-	18	chartered	10	probeNeptune	Neptune Atmospheric Probe	0	0	0	600	Significant	1	Outer Gas Giant Survey/Neptune Probe.cfg
+UranusMoonLandings	Uranian Moon Landings (WIP)	14400000	-	12	chartered	5	landingAriel	Ariel Landing (Uncrewed)	0	0	0	600	Significant	1	Uranian Moon Landings/Ariel Landing.cfg
+UranusMoonLandings	Uranian Moon Landings (WIP)	14400000	-	12	chartered	5	landingMiranda	Miranda Landing (Uncrewed)	0	0	0	600	Significant	1	Uranian Moon Landings/Miranda Landing.cfg
+UranusMoonLandings	Uranian Moon Landings (WIP)	14400000	-	12	chartered	5	landingTitania	Titania Landing (Uncrewed)	0	0	0	600	Significant	1	Uranian Moon Landings/Titania Landing.cfg
+UranusMoonLandings	Uranian Moon Landings (WIP)	14400000	-	12	chartered	5	landingUmbriel	Umbriel Landing (Uncrewed)	0	0	0	600	Significant	1	Uranian Moon Landings/Umbriel Landing.cfg
+UranusMoonLandings	Uranian Moon Landings (WIP)	14400000	-	12	chartered	5	landingOberon	Oberon Landing (Uncrewed)	0	0	0	600	Significant	1	Uranian Moon Landings/Oberon Landing.cfg
+NeptuneMoonLandings	Neptunian Moon Landings (WIP)	14400000	-	12	chartered	1	landingTriton	Triton Landing	0	0	0	750	Trivial	2	Outer Gas Giant Survey/Triton Landing.cfg
+PlutoLandings	Plutonian Landings	25200000	-	21	chartered	3	orbitPluto	Pluto Orbit	0	0	0	800	Significant	1	Plutonian Landings/Pluto Orbit.cfg
+PlutoLandings	Plutonian Landings	25200000	-	21	chartered	3	landingPluto	Pluto Landing	0	0	0	900	Significant	1	Plutonian Landings/Pluto Landing.cfg
+PlutoLandings	Plutonian Landings	25200000	-	21	chartered	3	landingCharon	Charon Landing	0	0	0	900	Significant	1	Plutonian Landings/Charon Landing.cfg
+EarlyLunarHabitation	Early Lunar Habitation	9600000	Flat	8	chartered	4	MoonLandingCrew2Week	Two-week Crewed Lunar Stay	0	0	0	600	Significant       // 1.0x	1	Early Lunar Habitation/MoonLandingCrew2Week.cfg
+EarlyLunarHabitation	Early Lunar Habitation	9600000	Flat	8	chartered	4	MoonLandingCrew1Month	Month-long Crewed Lunar Stay	0	0	0	650	Significant       // 1.0x	1	Early Lunar Habitation/MoonLandingCrew1Month.cfg
+EarlyLunarHabitation	Early Lunar Habitation	9600000	Flat	8	chartered	4	MoonLandingCrew3Month	Three-month Crewed Lunar Stay	0	0	0	700	Significant       // 1.0x	1	Early Lunar Habitation/MoonLandingCrew3Month.cfg
+EarlyLunarHabitation	Early Lunar Habitation	9600000	Flat	8	chartered	4	MoonLandingCrew6Month	Six-month Crewed Lunar Stay	0	0	0	1000	Exceptional       // 1.0x	1	Early Lunar Habitation/MoonLandingCrew6Month.cfg
+CrewedSpaceplaneDev	Crewed Spaceplane Development	4000000	Backloaded	10	un-chartered	3	first_SpaceplaneOrbit	First Orbital Spaceplane Flight	0	0	0	240	Significant	1	Spaceplanes/FirstPlaneOrbit.cfg
+CrewedSpaceplaneDev	Crewed Spaceplane Development	4000000	Backloaded	10	un-chartered	3	SpaceplaneRendezvous	First Rendezvous by Spaceplane	0	0	0	180	Significant	1	Spaceplanes/RendezvousPlane.cfg
+CrewedSpaceplaneDev	Crewed Spaceplane Development	4000000	Backloaded	10	un-chartered	3	first_SpaceplaneDocking	First Docking by Spaceplane	0	0	0	180	Exceptional	1	Spaceplanes/DockingPlane.cfg
+CrewedMarsExp	Crewed Mars Exploration	40000000	Mid	12	chartered	5	FirstCrewedMarsOrbit	First Crewed Mars Orbit	0	0	0	1000	Significant       // 1.0x	1	Mars Crewed/FirstCrewedMarsOrbit.cfg
+CrewedMarsExp	Crewed Mars Exploration	40000000	Mid	12	chartered	5	FirstCrewedMarsLanding	First Crewed Mars Landing	0	0	0	4000	Significant       // 1.0x	1	Mars Crewed/FirstCrewedMarsLanding.cfg
+CrewedMarsExp	Crewed Mars Exploration	40000000	Mid	12	chartered	5	CollectCrewedMarsSurfaceScience	Collect Crewed Mars Surface Science	0	0	0	1500	Significant       // 1.0x	1	Mars Crewed/Mars Crewed Surface Science.cfg
+CrewedMarsExp	Crewed Mars Exploration	40000000	Mid	12	chartered	5	CrewedPhobosLandingSurfaceScience	Crewed Phobos Landing and Surface Science	0	0	0	1500	Significant       // 1.0x	1	Mars Crewed/Phobos Crewed Landing Surface Science.cfg
+CrewedMarsExp	Crewed Mars Exploration	40000000	Mid	12	chartered	5	MarsRoboticSampleReturn	Mars Robotic Sample Return	0	0	0	1200	Trivial       // 1.0x	1	Mars Crewed/Mars Robotic Sample Return.cfg
+TargetedSats	Targeted Satellites (Deprecated)	420000	-	3	chartered	6	FirstWeatherSat	First Weather Satellite  // Basically it is TIROS 1	0	0	0	40	Significant	1	Earth Satellites/FirstWeatherSat.cfg
+TargetedSats	Targeted Satellites (Deprecated)	420000	-	3	chartered	6	FirstNavSat	First Navigational Satellite  // Based on Transit 1 through 4	0	0	0	40	Significant	1	Earth Satellites/FirstNavSat.cfg
+TargetedSats	Targeted Satellites (Deprecated)	420000	-	3	chartered	6	FirstComSat	First Communications Satellite	0	0	0	45	Significant	1	Earth Satellites/FirstComSat.cfg
+TargetedSats	Targeted Satellites (Deprecated)	420000	-	3	chartered	6	FirstGEOSat	Geostationary Test Satellite	0	0	0	60	Significant	1	Commercial Applications 2/FirstGEOSat.cfg
+TargetedSats	Targeted Satellites (Deprecated)	420000	-	3	chartered	6	FirstMolniyaSat	First Molniya Orbit Satellite	0	0	0	60	Significant	1	Earth Satellites/FirstMolniyaSat.cfg
+TargetedSats	Targeted Satellites (Deprecated)	420000	-	3	chartered	6	FirstTundraSat	First Tundra Orbit Satellite	0	0	0	55	Exceptional	1	Earth Satellites/FirstTundraSat.cfg
+CommercialApplications1	Early Commercial Applications (Deprecated)	560000	MildRampup	4	un-chartered	7	FirstNavSat-CA	First Navigational Satellite  // Based on Transit 1 through 4	0	0	0	40	Significant	1	Commercial Applications 1/FirstNavSat-CA.cfg
+CommercialApplications1	Early Commercial Applications (Deprecated)	560000	MildRampup	4	un-chartered	7	FirstComSat-CA	First Communications Satellite	0	0	0	45	Significant	1	Commercial Applications 1/FirstComSat-CA.cfg
+CommercialApplications1	Early Commercial Applications (Deprecated)	560000	MildRampup	4	un-chartered	7	FirstMolniyaSat-CA	First Molniya Orbit Satellite	0	0	0	60	Significant	1	Commercial Applications 1/FirstMolniyaSat-CA.cfg
+CommercialApplications1	Early Commercial Applications (Deprecated)	560000	MildRampup	4	un-chartered	7	EarlyNavNetwork3	Early Navigation Network (3 Satellites)	0	0	0	150	Significant	1	Commercial Applications 1/EarlyNavNetwork3.cfg
+CommercialApplications1	Early Commercial Applications (Deprecated)	560000	MildRampup	4	un-chartered	7	EarlyNavNetwork4	Early Navigation Network (4 Satellites)	0	0	0	200	Significant	1	Commercial Applications 1/EarlyNavNetwork4.cfg
+CommercialApplications1	Early Commercial Applications (Deprecated)	560000	MildRampup	4	un-chartered	7	EarlyComNetwork3-CA	Early Communications Network (3 Satellites)	0	0	0	150	Significant	1	Commercial Applications 1/EarlyComNetwork3-CA.cfg
+CommercialApplications1	Early Commercial Applications (Deprecated)	560000	MildRampup	4	un-chartered	7	EarlyComNetwork4-CA	Early Communications Network (4 Satellites)	0	0	0	200	Significant	1	Commercial Applications 1/EarlyComNetwork4-CA.cfg
+CommNetwork	Communication Network (Deprecated)	280000	-	2	chartered	3	FirstComSat	First Communications Satellite	0	0	0	45	Significant	1	Earth Satellites/FirstComSat.cfg
+CommNetwork	Communication Network (Deprecated)	280000	-	2	chartered	3	EarlyComNetwork3	Early Communications Network (3 Satellites)	0	0	0	150	Significant	1	Earth Satellites/EarlyComNetwork3.cfg
+CommNetwork	Communication Network (Deprecated)	280000	-	2	chartered	3	EarlyComNetwork4	Early Communications Network (4 Satellites)	0	0	0	200	Significant	1	Earth Satellites/EarlyComNetwork4.cfg
+GEOCommNetwork	Geostationary Communication Network (Deprecated)	700000	MildBackloaded	2	un-chartered	2	GeoComSatNetwork3	Geostationary Communications Network (3 Satellites)	0	0	0	200	Significant	1	Commercial Applications 2/GeoComSatNetwork3.cfg
+GEOCommNetwork	Geostationary Communication Network (Deprecated)	700000	MildBackloaded	2	un-chartered	2	GeoComSatNetwork4	Geostationary Communications Network (4 Satellites)	0	0	0	260	Significant	1	Commercial Applications 2/GeoComSatNetwork4.cfg
+CommercialApplications2	Advanced Commercial Applications (Deprecated)	800000	MildBackloaded	3	un-chartered	6	FirstGEOSat	Geostationary Test Satellite	0	0	0	60	Significant	1	Commercial Applications 2/FirstGEOSat.cfg
+CommercialApplications2	Advanced Commercial Applications (Deprecated)	800000	MildBackloaded	3	un-chartered	6	FirstTargetedGeo	Targeted Geostationary Satellite	0	0	0	60	Significant	1	Commercial Applications 2/FirstTargetedGeo.cfg
+CommercialApplications2	Advanced Commercial Applications (Deprecated)	800000	MildBackloaded	3	un-chartered	6	FirstTargetedTundra	Targeted Tundra Orbit Satellite	0	0	0	60	Significant	1	Commercial Applications 2/FirstTargetedTundra.cfg
+CommercialApplications2	Advanced Commercial Applications (Deprecated)	800000	MildBackloaded	3	un-chartered	6	GeoComSatNetwork3	Geostationary Communications Network (3 Satellites)	0	0	0	200	Significant	1	Commercial Applications 2/GeoComSatNetwork3.cfg
+CommercialApplications2	Advanced Commercial Applications (Deprecated)	800000	MildBackloaded	3	un-chartered	6	GeoComSatNetwork4	Geostationary Communications Network (4 Satellites)	0	0	0	260	Significant	1	Commercial Applications 2/GeoComSatNetwork4.cfg
+CommercialApplications2	Advanced Commercial Applications (Deprecated)	800000	MildBackloaded	3	un-chartered	6	MolniyaNetwork3	Molniya Communications Network (3 Satellites)	0	0	0	160	Significant	1	Commercial Applications 2/MolniyaNetwork3.cfg
+CrewedOrbit	Crewed Orbit (Deprecated)	5200000	Backloaded	8	un-chartered	6	first_OrbitRecover	Reach Orbital Speed & Return Safely to Earth	0	0	0	150	Significant	1	Earth Crewed/FirstOrbitRecovery.cfg
+CrewedOrbit	Crewed Orbit (Deprecated)	5200000	Backloaded	8	un-chartered	6	OrbitalTestFlight	Orbital Test Flight (Uncrewed)	0	0	0	60	Significant	1	Earth Crewed/OrbitalTestFlight.cfg
+CrewedOrbit	Crewed Orbit (Deprecated)	5200000	Backloaded	8	un-chartered	6	first_OrbitCrewed	First Orbital Flight (Crewed)	0	0	0	200	Significant	1	Earth Crewed/FirstOrbitCrewed.cfg
+CrewedOrbit	Crewed Orbit (Deprecated)	5200000	Backloaded	8	un-chartered	6	first_EVA	First EVA	0	0	0	150	Significant	1	Earth Crewed Adv/FirstEVA.cfg
+CrewedOrbit	Crewed Orbit (Deprecated)	5200000	Backloaded	8	un-chartered	6	Rendezvous	First Rendezvous	0	0	0	150	Significant	1	Earth Crewed Adv/Rendezvous.cfg
+CrewedOrbit	Crewed Orbit (Deprecated)	5200000	Backloaded	8	un-chartered	6	first_Docking	First Docking	0	0	0	150	Exceptional	1	Earth Crewed Adv/Docking.cfg
