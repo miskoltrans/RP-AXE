@@ -25,3 +25,6 @@ __pycache__/
 # Repo-root scratch / analysis working files (no tool consumes them)
 /scratch_*
 /scratchpad_*
+
+# KSP-generated part icon thumbnails (written into the vendored seed at runtime)
+@thumbs/
