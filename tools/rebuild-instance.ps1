@@ -141,7 +141,7 @@ Write-Host "  cleared $craftCleared stray example craft."
 # --- step 3: install RP-AXE CKAN dependencies ------------------------------------------------
 Step 3 "Install CKAN dependencies (RP-AXE-deps.ckan)"
 # --gamedir targets the instance directly (no Manage-instances registration needed).
-# --no-recommends keeps the set to the curated 81 modules (no extra recommends pulled in).
+# --no-recommends keeps the set to the curated deps list (no extra recommends pulled in).
 & $CkanExe install -c $DepsCkan --gamedir $instFull --no-recommends --headless
 if ($LASTEXITCODE -ne 0) { throw "ckan install failed (exit $LASTEXITCODE)" }
 Write-Host "  dependencies installed."

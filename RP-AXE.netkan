@@ -17,7 +17,7 @@
         "career-scaling",
         "physics"
     ],
-    "comment": "RP-AXE = the exact mod set of the curated 'perfect environment' test instance. depends lists EVERY installed module (81: 57 user-requested + 24 CKAN-resolved transitive, incl. MakingHistory-DLC + BreakingGround-DLC), so installing RP-AXE reproduces that stack verbatim. Graphics = the HIGH preset (ported from RP-1-ExpressInstall-Graphics-High): Parallax + Parallax-StockTextures, Scatterer + config + sunflare, RSSTextures16K (NOT 4096 -- they conflict), RSSVE-HR, DistantObject, PlanetShine, CanaveralPads. Regenerated from Instance/CKAN/registry.json; no version pins (latest mutually-compatible). Conflicts with RP-1 (RP-AXE replaces the RP-1 career plugin). NOTE: this list is the 81-module base only -- the 21 curated expansion part-mods live in RP-AXE-deps.ckan and have not been folded in here yet.",
+    "comment": "RP-AXE = the exact mod set of the curated 'perfect environment' test instance. depends lists EVERY installed module of that base (91, incl. MakingHistory-DLC + BreakingGround-DLC), so installing RP-AXE reproduces that stack verbatim. Graphics = the HIGH preset (ported from RP-1-ExpressInstall-Graphics-High): Parallax + Parallax-StockTextures, Scatterer + config + sunflare, RSSTextures16K (NOT 4096 -- they conflict), RSSVE-HR, DistantObject, PlanetShine, CanaveralPads -- plus PoodsMilkyWaySkybox (AXE addition, not in the Express preset; its deps ModuleManager + TextureReplacer were already present). Regenerated from Instance/CKAN/registry.json; no version pins (latest mutually-compatible). Conflicts with RP-1 (RP-AXE replaces the RP-1 career plugin). NOTE: this list is the 91-module base only -- the 21 curated expansion part-mods live in RP-AXE-deps.ckan and have not been folded in here yet.",
     "depends": [
         {
             "name": "AdvancedJetEngine"
@@ -153,6 +153,9 @@
         },
         {
             "name": "PlanetShine"
+        },
+        {
+            "name": "PoodsMilkyWaySkybox"
         },
         {
             "name": "ProceduralFairings"
