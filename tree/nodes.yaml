@@ -387,6 +387,16 @@ nodes:
     # uprate in that ladder is Ethanol90+LqdOxygen against the base RD-100's Ethanol75 — the alcohol, not
     # the steel, is what the whole progression turns on. RD-101 is the fork that opens it (+32% thrust with
     # ispVac dead flat at 237, exactly what a hotter fuel at the same expansion buys you).
+  - id: pc_rp1
+    title: "Narrow-Cut Refined Kerosene"
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [pc_ethanol90]
+    flavor: "Stop burning alcohol and burn kerosene — but not the kerosene an aeroplane gets. Distil a narrow cut, strip the sulphur, cap the aromatics, and specify it so tightly that it stops laying down carbon in the cooling passages on a long burn. The fuel becomes a component with a part number."
+    upgrades: [RFUpgrade_LR43-NA-3, RFUpgrade_LR89-NA-3]
+    # LADDER PASS (2026-07-27): ROE-LR89_2's base XLR43-NA-3 burns Ethanol90; every mark from LR43-NA-3
+    # on burns RP-1+LqdOxygen. The Atlas booster's jump is a FUEL change, and it had been filed at
+    # met_nimonic (turbine alloys) where nothing about it is a turbine.
   - id: pc_hydyne
     title: "Amine-Blend Booster Fuel"
     discipline: PropellantChemistry
@@ -396,6 +406,15 @@ nodes:
     upgrades: [RFUpgrade_A-6H]
     # LADDER PASS (2026-07-27): A-6H is Hydyne+LqdOxygen against the Redstone A-7's Ethanol75 - a pure
     # propellant fork (+17 s ispVac for +7% thrust), and the Juno I booster that launched Explorer 1.
+  - id: pc_udmhBoosterFuel
+    title: "Neat Hydrazine-Derivative Fuel"
+    discipline: PropellantChemistry
+    tier: 6
+    parents: [pc_hydyne, pc_rp1]
+    flavor: "Drop the diluent and feed the booster unsymmetrical dimethylhydrazine straight. It buys nearly twenty seconds over kerosene in the same chamber and costs you a fuel that burns on contact with almost anything, eats seals, and will kill a pad crew that gets careless with a coupling."
+    upgrades: [RFUpgrade_S-3FH]
+    # LADDER PASS (2026-07-27): S-3FH is UDMH+LqdOxygen on an otherwise RP-1 Thor - a fuel fork worth
+    # +17 s ispVac and +18 s ispSL, not the vacuum-nozzle step its old node (fd_vacuumExpansion) implied.
   - id: pc_htp
     title: "High-Test Peroxide Combustion"
     discipline: PropellantChemistry
@@ -436,7 +455,7 @@ nodes:
     tier: 3
     parents: [met_stainlessSteel]
     flavor: "Nickel-chromium superalloy that keeps its strength at red heat — a turbopump turbine that spins hotter and harder feeds a higher chamber pressure, and the very same alloy is what lets a jet turbine run at all. The metallurgy where rockets and jets cross over."
-    upgrades: [RFUpgrade_LR43-NA-3, RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13, RFUpgrade_J35-A-17, RFUpgrade_J47-GE-25A, RFUpgrade_J47-GE-27, RFUpgrade_J48-P-8, RFUpgrade_J57-P-21, RFUpgrade_J57-P-43WA, RFUpgrade_J57-P-7A, RFUpgrade_JT3C-6, RFUpgrade_Avon114R, RFUpgrade_Sapphire203, RFUpgrade_RD-107-8D74PS, RFUpgrade_RD-108-8D75PS, RFUpgrade_WP-6, RFUpgrade_CJ805-3B]
+    upgrades: [RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13, RFUpgrade_J35-A-17, RFUpgrade_J47-GE-25A, RFUpgrade_J47-GE-27, RFUpgrade_J48-P-8, RFUpgrade_J57-P-21, RFUpgrade_J57-P-43WA, RFUpgrade_J57-P-7A, RFUpgrade_JT3C-6, RFUpgrade_Avon114R, RFUpgrade_Sapphire203, RFUpgrade_RD-107-8D74PS, RFUpgrade_RD-108-8D75PS, RFUpgrade_WP-6, RFUpgrade_CJ805-3B, RFUpgrade_RD-108-8D75-1958, RFUpgrade_RD-108-8D75-1959, RFUpgrade_RD-108-8D75K, RFUpgrade_RD-107-8D76, RFUpgrade_RD-107-8D74-1958, RFUpgrade_RD-107-8D74-1959, RFUpgrade_RD-107-8D74K]
 
   # ===================== BAND 1 * STRUCTURES & TANK MATERIALS =====================
   # Mass-fraction line: welded steel (T1) -> stainless (T2) -> isogrid ‖ balloon light tanks. The Metallurgy
@@ -1222,14 +1241,14 @@ nodes:
     tier: 4
     parents: [met_nimonic]
     flavor: "Route the fuel through milled channels in the chamber wall before it burns, carrying the heat back into the cycle instead of letting it melt the throat — so the same engine holds a higher chamber pressure without burning through. The quiet enabler behind every thrust uprate of the era: Atlas, Thor and Blue Streak all grow harder on the same hardware."
-    upgrades: [RFUpgrade_LR105-NA-3, RFUpgrade_LR105-NA-5, RFUpgrade_LR89-NA-3, RFUpgrade_LR89-NA-5, RFUpgrade_LR79-NA-9, RFUpgrade_LR79-NA-11, RFUpgrade_S-3D, RFUpgrade_RZ.2-Mk3, RFUpgrade_RZ.2-Mk4, RFUpgrade_RD-107-8D74-1958, RFUpgrade_RD-107-8D74-1959, RFUpgrade_RD-107-8D74K, RFUpgrade_RD-107-8D76, RFUpgrade_RD-108-8D75-1958, RFUpgrade_RD-108-8D75-1959, RFUpgrade_RD-108-8D75K, RFUpgrade_RD-108-8D77, RFUpgrade_Viking-4, RFUpgrade_Viking-5, RFUpgrade_LR87-AJ-3, RFUpgrade_LR91-AJ-3, RFUpgrade_XLR11-RM-13-8K]
+    upgrades: [RFUpgrade_LR105-NA-3, RFUpgrade_LR89-NA-5, RFUpgrade_LR79-NA-9, RFUpgrade_S-3D, RFUpgrade_RZ.2-Mk3, RFUpgrade_RD-108-8D77, RFUpgrade_Viking-4, RFUpgrade_Viking-5, RFUpgrade_LR87-AJ-3, RFUpgrade_LR91-AJ-3, RFUpgrade_XLR11-RM-13-8K, RFUpgrade_LR89-NA-6]
   - id: fd_vacuumExpansion
     title: "Extended Vacuum Expansion"
     discipline: FluidDynamics
     tier: 6
     parents: [fd_matureOrbital]
     flavor: "Extend the nozzle bell far past what any sea-level engine could survive, tuned so the exhaust expands to near-vacuum pressure and wrings out the last dozen seconds of specific impulse. The refinement that lets an upper stage do more on the same propellant — the RD-119 alone gains nearly thirty seconds over its predecessor."
-    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_X-405H-3, RFUpgrade_RD-0108, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_LR89-NA-6, RFUpgrade_S-3FH, RFUpgrade_LR79-NA-13, RFUpgrade_XLR11-RM-13-10K, RFUpgrade_LR105-NA-7.1, RFUpgrade_LR105-NA-7.2, RFUpgrade_LR89-NA-7.1, RFUpgrade_LR89-NA-7.2, RFUpgrade_X-405H-4, RFUpgrade_RL10A-3-3B]
+    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_X-405H-3, RFUpgrade_RD-0108, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_XLR11-RM-13-10K, RFUpgrade_LR105-NA-7.1, RFUpgrade_LR105-NA-7.2, RFUpgrade_LR89-NA-7.1, RFUpgrade_LR89-NA-7.2, RFUpgrade_X-405H-4, RFUpgrade_RL10A-3-3B, RFUpgrade_LR105-NA-5]
     # NA-7.x + X-405H-4 marks added 2026-07 (tail): next Atlas LR105/LR89 + Vanguard marks, continuing NA-6.
     parts: [ROE-LR87_LH2]
     # Part-count-pass finds (2026-07): 6 more upgrades in this same "combustion/injector refinement, no
@@ -1605,7 +1624,7 @@ nodes:
     parents: [fd_saturnKerolox]
     flavor: "Push the simple gas-generator cycle as far as it goes — bigger turbopumps, higher flow, more thrust from the same open-cycle plumbing. The last uprate before the cycle itself runs out of room to grow."
     parts: [ROE-F1]
-    upgrades: [RFUpgrade_H-1-188K, RFUpgrade_H-1-200K, RFUpgrade_E-1-468k, RFUpgrade_E-1-500k, RFUpgrade_E-1-Upgrade, RFUpgrade_RD-111-8D716A, RFUpgrade_H-2-250K, RFUpgrade_LR87-AJ-11, RFUpgrade_LR91-AJ-11]
+    upgrades: [RFUpgrade_H-1-188K, RFUpgrade_H-1-200K, RFUpgrade_E-1-468k, RFUpgrade_E-1-500k, RFUpgrade_E-1-Upgrade, RFUpgrade_RD-111-8D716A, RFUpgrade_H-2-250K, RFUpgrade_LR87-AJ-11, RFUpgrade_LR91-AJ-11, RFUpgrade_LR79-NA-13]
     # H-2-250K added 2026-07 (tail): the next H-1 gas-generator uprate mark.
     # F-1 (2026-07, band-3 lunar batch): the king this node was named for - the largest gas-generator
     # engine ever built. Its own uprate (F-1-1.52M) is barred from here by doctrine-4 -> fd_gasGeneratorApex.
@@ -2528,7 +2547,7 @@ nodes:
     tier: 12
     parents: [pc_rg1Uprating]
     flavor: "Synthesise the fuel instead of refining it: pack the energy into strained hydrocarbon rings that give it back when they break. Denser and hotter than any kerosene cut, absurdly expensive, and flown anyway when a few seconds of specific impulse were worth more than the money."
-    upgrades: [RFUpgrade_17D12, RFUpgrade_RD-58S]
+    upgrades: [RFUpgrade_17D12, RFUpgrade_RD-58S, RFUpgrade_RD-108-11D511P]
     # LADDER PASS (2026-07-27): 17D12 and RD-58S are one performance point (86.2/86.3 kN, ispV 362/361)
     # on Syntin+LqdOxygen -- the same decision, so they share this node under R4. RD-58S came back from
     # fd_terminalGasGenKerolox, which is a gas-generator node and the wrong cycle entirely.
@@ -2951,7 +2970,7 @@ nodes:
     tier: 6
     parents: [fd_orbitalSoviet, fd_sovietStorable]
     flavor: "Take an engine already proven in flight and refine it in place — more thrust, higher reliability, crew-rating — without changing what it burns. The unglamorous production engineering that turns a working booster into a dependable one."
-    upgrades: [RFUpgrade_RD-103M, RFUpgrade_RD-107-8D728, RFUpgrade_RD-108-8D727, RFUpgrade_RD-0110, RFUpgrade_RD-215M-8D613, RFUpgrade_RD-250PM, RFUpgrade_RD-262-11D26, RFUpgrade_Isayev-R17, RFUpgrade_AJ10-118E, RFUpgrade_G-1A, RFUpgrade_RD-107-11D512, RFUpgrade_RD-108-11D511, RFUpgrade_RD-107-11D512P, RFUpgrade_RD-108-11D511P, RFUpgrade_RD-107A-14D22, RFUpgrade_RD-108A-14D21, RFUpgrade_LR87-AJ-5-Kero, RFUpgrade_LR87-AJ-7-Kero, RFUpgrade_LR87-AJ-9-Kero, RFUpgrade_LR91-AJ-5-Kero, RFUpgrade_LR91-AJ-7-Kero, RFUpgrade_LR91-AJ-9-Kero]
+    upgrades: [RFUpgrade_RD-103M, RFUpgrade_RD-107-8D728, RFUpgrade_RD-108-8D727, RFUpgrade_RD-0110, RFUpgrade_RD-215M-8D613, RFUpgrade_RD-250PM, RFUpgrade_RD-262-11D26, RFUpgrade_Isayev-R17, RFUpgrade_AJ10-118E, RFUpgrade_G-1A, RFUpgrade_RD-107-11D512, RFUpgrade_RD-108-11D511, RFUpgrade_RD-107-11D512P, RFUpgrade_RD-107A-14D22, RFUpgrade_RD-108A-14D21, RFUpgrade_LR87-AJ-5-Kero, RFUpgrade_LR87-AJ-7-Kero, RFUpgrade_LR87-AJ-9-Kero, RFUpgrade_LR91-AJ-5-Kero, RFUpgrade_LR91-AJ-7-Kero, RFUpgrade_LR91-AJ-9-Kero, RFUpgrade_LR79-NA-11, RFUpgrade_RZ.2-Mk4]
     # RD-107/108 11D512/11D511 marks (+ their later "P" syntin-fuelled marks) added (2026-07, shuttle/
     # station batch): later rungs of the exact same R-7-family production-refinement chain this node
     # already hosts (8D728/8D727) - append, no new node.
