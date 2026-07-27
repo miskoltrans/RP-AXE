@@ -1,6 +1,8 @@
 # Upgrade Ladders — engine config placement doctrine
 
-Status: design settled 2026-07-27. **Step 1 (the build gate) shipped; steps 2-7 outstanding.**
+Status: design settled 2026-07-27. **Gate shipped + 7 of the worst buckets cleared; ~54 nodes remain.**
+Cleared so far: `pc_storableRcsPropellants`, `met_stainlessSteel`, `met_cooledTurbine`,
+`fd_titanStorableConversion`, `pc_n1ClosedCycle`, `cryo_refinedExpander`, `cryo_deployableNozzleExpander`.
 Live baseline: run `python tools/build_tree.py` and read the `ladder gate:` line.
 Worklist data: `manifest/upgrade-ladders.tsv` (448 classified rows, regenerate with the classifier in `tools/`)
 
@@ -294,26 +296,26 @@ scatter-by-default direction above this is a narrow exception, and only two node
 The RL10C/E case is the honest one to revisit first if you want the scatter pushed further: seven nozzle
 lengths could be seven nodes, or two or three grouped by generation.
 
-### Remaining worklist (measured 2026-07-27, after step 4)
+### Remaining worklist (re-measured 2026-07-27, after the scatter pass)
 
-`ladder gate: 137 collapsed · 0 base-node · 6 non-ascending · 34 split padding`
+`ladder gate: 100 collapsed · 0 base-node · 10 non-ascending · 31 split padding`
 
-That is **62 distinct nodes** across 111 parts and 320 configs — the 137 counts (part, node) pairs, and
-many parts share a config set. The work is concentrated: the top 20 nodes carry 210 of the 320 configs.
+**54 nodes / 87 parts / 223 configs** left, down from 62 / 111 / 320. Every node the design doc named by
+name is now clean. What remains is the long tail of maturation and uprating nodes:
 
 | node | T | parts | configs | | node | T | parts | configs |
 |---|--:|--:|--:|---|---|--:|--:|--:|
-| `met_cooledTurbine` | 4 | 8 | 24 | | `cryo_refinedExpander` | 7 | 2 | 11 |
-| `fd_regenCooling` | 4 | 6 | 17 | | `fd_engineMaturation` | 6 | 4 | 10 |
-| `fd_titanStorableConversion` | 7 | 5 | 15 | | `cryo_matureGasGeneratorHydrolox` | 10 | 4 | 9 |
-| `pc_n1ClosedCycle` | 9 | 4 | 14 | | `cryo_deployableNozzleExpander` | 11 | 1 | 9 |
-| `met_stainlessSteel` | 2 | 5 | 13 | | `av_refinedTurboprop` | 5 | 1 | 8 |
-| `cryo_reusableEngineUprating` | 13 | 5 | 13 | | `av_fourthGenFighterTurbofan` | 10 | 3 | 7 |
+| `cryo_reusableEngineUprating` | 13 | 5 | 13 | | `pc_zenitKerolox` | 10 | 2 | 8 |
+| `fd_regenCooling` | 4 | 5 | 13 | | `av_fourthGenFighterTurbofan` | 10 | 3 | 7 |
 | `fd_vacuumExpansion` | 6 | 5 | 13 | | `fd_matureKeroloxClusterUprating` | 9 | 4 | 7 |
 | `fd_restartableUpperMaturation` | 9 | 4 | 12 | | `pc_ntoHypergolics` | 4 | 5 | 6 |
+| `fd_engineMaturation` | 6 | 4 | 10 | | `fd_gasGeneratorCeiling` | 8 | 4 | 6 |
+| `cryo_matureGasGeneratorHydrolox` | 10 | 4 | 9 | | *(+44 more, mostly 2-4 configs each)* | | | |
 
-`met_stainlessSteel` still appears: its RD-100 family is resolved, but the five *other* families parked on
-it (Aerobee, A-7, XLR11, ORM-65, Meteo) are step-5/6 work.
+Nodes added by the scatter pass so far (13): `pc_ethanol90` T2, `pc_hydyne` T3, `pc_hydrazineMonoprop` T5,
+`cryo_extendedBurnExpander` T8, `pc_closedCycleUpper` T9, `pc_cryogenicRcsFeed` T10, `pc_rg1` T10,
+`pc_throttledClosedCycle` T10, `pc_rg1Uprating` T11, `pc_refinedMixtureClosedCycle` T11,
+`pc_extendedNozzleUpper` T12, `pc_syntin` T12, `pc_restartableClosedCycle` T12, `pc_ascent` T13.
 
 ## 10. Decisions taken
 
