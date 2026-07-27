@@ -1585,11 +1585,17 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
             if by[node].get("catalog"): continue
             if len({klass[c] for c in cfgs}) > 1:
                 r1.append((part, node, by[node]["tier"], sorted(cfgs)))
-        # R4 -- one padding class spread over several nodes: spurious tree events for a single decision
-        perclass = collections.defaultdict(set)
-        for r in placed: perclass[klass[r["config"]]].add(r["node"])
+        # R4 -- one padding class spread over several nodes: spurious tree events for a single decision.
+        # A class whose members burn DIFFERENT propellants is exempt: two configs can land on the same
+        # performance point by different chemistry (RD-107-11D512P is CooledSyntin, its twin 14D22 is
+        # plain Kerosene), and each still belongs at the node that unlocks its own propellant. Matching
+        # numbers do not make them one decision when the thing that produced them differs.
+        perclass, perfam = collections.defaultdict(set), collections.defaultdict(set)
+        for r in placed:
+            perclass[klass[r["config"]]].add(r["node"])
+            perfam[klass[r["config"]]].add(_propfam(perf.get(r["config"], {}).get("propellants"))[0])
         for k, ns in perclass.items():
-            if len(ns) > 1:
+            if len(ns) > 1 and len(perfam[k]) == 1:
                 r4.append((part, k, sorted(ns)))
         # R5 -- token homed on the part's own node (the pin guard in engine_config_ladders is exempt:
         # it deliberately keeps one config there so a freshly-bought engine is always flyable)

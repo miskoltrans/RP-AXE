@@ -455,7 +455,7 @@ nodes:
     tier: 3
     parents: [met_stainlessSteel]
     flavor: "Nickel-chromium superalloy that keeps its strength at red heat — a turbopump turbine that spins hotter and harder feeds a higher chamber pressure, and the very same alloy is what lets a jet turbine run at all. The metallurgy where rockets and jets cross over."
-    upgrades: [RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13, RFUpgrade_J35-A-17, RFUpgrade_J47-GE-25A, RFUpgrade_J47-GE-27, RFUpgrade_J48-P-8, RFUpgrade_J57-P-21, RFUpgrade_J57-P-43WA, RFUpgrade_J57-P-7A, RFUpgrade_JT3C-6, RFUpgrade_Avon114R, RFUpgrade_Sapphire203, RFUpgrade_RD-107-8D74PS, RFUpgrade_RD-108-8D75PS, RFUpgrade_WP-6, RFUpgrade_CJ805-3B, RFUpgrade_RD-108-8D75-1958, RFUpgrade_RD-108-8D75-1959, RFUpgrade_RD-108-8D75K, RFUpgrade_RD-107-8D76, RFUpgrade_RD-107-8D74-1958, RFUpgrade_RD-107-8D74-1959, RFUpgrade_RD-107-8D74K]
+    upgrades: [RFUpgrade_S3.42T, RFUpgrade_RD-212-8D41, RFUpgrade_RD-213-8D13, RFUpgrade_J35-A-17, RFUpgrade_J47-GE-25A, RFUpgrade_J47-GE-27, RFUpgrade_J48-P-8, RFUpgrade_J57-P-21, RFUpgrade_J57-P-43WA, RFUpgrade_J57-P-7A, RFUpgrade_JT3C-6, RFUpgrade_Avon114R, RFUpgrade_Sapphire203, RFUpgrade_RD-107-8D74PS, RFUpgrade_RD-108-8D75PS, RFUpgrade_WP-6, RFUpgrade_CJ805-3B, RFUpgrade_RD-108-8D75-1958, RFUpgrade_RD-108-8D75-1959, RFUpgrade_RD-108-8D75K, RFUpgrade_RD-107-8D76, RFUpgrade_RD-107-8D74-1958, RFUpgrade_RD-107-8D74-1959, RFUpgrade_RD-107-8D74K, RFUpgrade_RD-107-8D728, RFUpgrade_RD-107-11D512]
 
   # ===================== BAND 1 * STRUCTURES & TANK MATERIALS =====================
   # Mass-fraction line: welded steel (T1) -> stainless (T2) -> isogrid ‖ balloon light tanks. The Metallurgy
@@ -1182,7 +1182,7 @@ nodes:
     # last recorded count was 5, "recommend accepting as flavor... your call to override." Every
     # dependent is still a genuinely distinct vehicle/chemistry lineage drawing on the same foundational
     # breakthrough; re-confirmed and accepted at the current count rather than left stale.
-    upgrades: [RFUpgrade_YF-1A, RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_RD-217-8D515, RFUpgrade_S5.2, RFUpgrade_XLR81-BA-5, RFUpgrade_XLR81-BA-7, RFUpgrade_RD-250-8D518, RFUpgrade_RD-252-8D724, RFUpgrade_RD-855, RFUpgrade_RD-856]
+    upgrades: [RFUpgrade_YF-1A, RFUpgrade_YF-1B, RFUpgrade_YF-3A, RFUpgrade_RD-214-8D59, RFUpgrade_RD-214U-8D59U, RFUpgrade_RD-217-8D515, RFUpgrade_S5.2, RFUpgrade_XLR81-BA-5, RFUpgrade_XLR81-BA-7, RFUpgrade_RD-250-8D518, RFUpgrade_RD-252-8D724, RFUpgrade_RD-855, RFUpgrade_RD-856, RFUpgrade_RD-250PM]
   - id: pc_htpSustainer
     title: "Multi-Chamber Peroxide Combustion"
     discipline: PropellantChemistry
@@ -1334,6 +1334,7 @@ nodes:
     parents: [fd_orbitalMultiChamber, pc_ntoHypergolics]
     flavor: "The storable answer as a tandem missile stack: a paired-chamber first stage and a vacuum second stage, all on dimethylhydrazine and nitric-acid oxidiser, sat fuelled in a silo for years. The R-14 and R-16 engines — propulsion built to wait, then go."
     parts: [ROE-RD215, ROE-RD215_Single, ROE-RD219, ROE-RD855, ROE-RD856]
+    # upgrades: [] — emptied by retarget_upgrades
   - id: fd_saturnKerolox
     title: "High-Pressure Kerolox Combustion"
     discipline: FluidDynamics
@@ -2575,7 +2576,7 @@ nodes:
     tier: 12
     parents: [pc_rg1Uprating]
     flavor: "Synthesise the fuel instead of refining it: pack the energy into strained hydrocarbon rings that give it back when they break. Denser and hotter than any kerosene cut, absurdly expensive, and flown anyway when a few seconds of specific impulse were worth more than the money."
-    upgrades: [RFUpgrade_17D12, RFUpgrade_RD-58S, RFUpgrade_RD-108-11D511P]
+    upgrades: [RFUpgrade_17D12, RFUpgrade_RD-58S, RFUpgrade_RD-108-11D511P, RFUpgrade_RD-107-11D512P]
     # LADDER PASS (2026-07-27): 17D12 and RD-58S are one performance point (86.2/86.3 kN, ispV 362/361)
     # on Syntin+LqdOxygen -- the same decision, so they share this node under R4. RD-58S came back from
     # fd_terminalGasGenKerolox, which is a gas-generator node and the wrong cycle entirely.
@@ -2998,7 +2999,7 @@ nodes:
     tier: 6
     parents: [fd_orbitalSoviet, fd_sovietStorable]
     flavor: "Take an engine already proven in flight and refine it in place — more thrust, higher reliability, crew-rating — without changing what it burns. The unglamorous production engineering that turns a working booster into a dependable one."
-    upgrades: [RFUpgrade_RD-103M, RFUpgrade_RD-107-8D728, RFUpgrade_RD-108-8D727, RFUpgrade_RD-0110, RFUpgrade_RD-215M-8D613, RFUpgrade_RD-250PM, RFUpgrade_RD-262-11D26, RFUpgrade_Isayev-R17, RFUpgrade_AJ10-118E, RFUpgrade_G-1A, RFUpgrade_RD-107-11D512, RFUpgrade_RD-108-11D511, RFUpgrade_RD-107-11D512P, RFUpgrade_RD-107A-14D22, RFUpgrade_RD-108A-14D21, RFUpgrade_LR87-AJ-5-Kero, RFUpgrade_LR87-AJ-7-Kero, RFUpgrade_LR87-AJ-9-Kero, RFUpgrade_LR91-AJ-5-Kero, RFUpgrade_LR91-AJ-7-Kero, RFUpgrade_LR91-AJ-9-Kero, RFUpgrade_LR79-NA-11, RFUpgrade_RZ.2-Mk4]
+    upgrades: [RFUpgrade_RD-103M, RFUpgrade_RD-108-8D727, RFUpgrade_RD-0110, RFUpgrade_RD-262-11D26, RFUpgrade_Isayev-R17, RFUpgrade_AJ10-118E, RFUpgrade_G-1A, RFUpgrade_RD-108-11D511, RFUpgrade_RD-107A-14D22, RFUpgrade_RD-108A-14D21, RFUpgrade_LR87-AJ-5-Kero, RFUpgrade_LR87-AJ-7-Kero, RFUpgrade_LR87-AJ-9-Kero, RFUpgrade_LR91-AJ-5-Kero, RFUpgrade_LR91-AJ-7-Kero, RFUpgrade_LR91-AJ-9-Kero, RFUpgrade_LR79-NA-11, RFUpgrade_RZ.2-Mk4, RFUpgrade_RD-215M-8D613]
     # RD-107/108 11D512/11D511 marks (+ their later "P" syntin-fuelled marks) added (2026-07, shuttle/
     # station batch): later rungs of the exact same R-7-family production-refinement chain this node
     # already hosts (8D728/8D727) - append, no new node.
@@ -3230,7 +3231,7 @@ nodes:
     parents: [pc_n1ClosedCycle]
     flavor: "Where the N1's oxidiser-rich engines never got to prove themselves in flight, the same staged-combustion chemistry finally does — a kerolox engine that reaches orbit for real, with steering verniers built in rather than bolted on."
     parts: [ROE-RD120, ROE-RD8, ROE-RD0124, ROE-RD0110R]
-    upgrades: [RFUpgrade_NK-33, RFUpgrade_NK-43, RFUpgrade_4x_NK-39, RFUpgrade_AJ26-58, RFUpgrade_AJ26-59, RFUpgrade_AJ26-62, RFUpgrade_AJ26-60, RFUpgrade_NK-33-Original-NoGimbal, RFUpgrade_NK-43-Original-NoGimbal]
+    upgrades: [RFUpgrade_NK-33, RFUpgrade_NK-43, RFUpgrade_4x_NK-39, RFUpgrade_NK-33-Original-NoGimbal, RFUpgrade_NK-43-Original-NoGimbal]
     # King RD-120 (the real Zenit second-stage engine). RD-8 = its steering-vernier sibling, same engine
     # family, ride-along. Nice narrative contrast one tier above pc_n1ClosedCycle's NK-33/NK-43 (which never flew).
     # RD-0124/RD-0110R (2026-07, band-5 gap sweep): the Kosberg side of the same operational-kerolox-ORSC
@@ -3869,7 +3870,7 @@ nodes:
     tier: 13
     parents: [pc_modularORSC]
     flavor: "Cut the same modular RD-170 hardware into two more shapes — a lighter single-chamber mark for a smaller booster, and an export version re-plumbed for someone else's pad."
-    upgrades: [RFUpgrade_RD-181, RFUpgrade_RD-193]
+    upgrades: [RFUpgrade_RD-181, RFUpgrade_RD-193, RFUpgrade_AJ26-59]
     # doctrine-4 catch: RD-181/RD-193's own base part (ROE-RD191) lives in pc_modularORSC.
   - id: pc_operationalStorableORSC
     title: "Operational Storable Staged Combustion"
@@ -4852,6 +4853,7 @@ nodes:
     parents: [pc_multiChamberORSC]
     flavor: "Two separately-funded American answers to the imported RD-180 — oxidiser-rich staged combustion on kerosene, drawn to compete on the same contract the Russians won on price. Real hardware, real test stands, and no flight between them."
     parts: [nflv-engine-ar1-1, nflv-engine-ar1c-1, nflv-engine-rs84-1]
+    upgrades: [RFUpgrade_AJ26-58, RFUpgrade_AJ26-62, RFUpgrade_AJ26-60]
     # King AR-1 (+ the larger AR1C mark). RS-84 rides along - a separate, parallel Rocketdyne ORSC kerolox
     # study from the same era and the same "lost on price, not physics" story as RD-270/AJ-260/STBE.
   - id: pc_fiveSegmentSolidScaleUp
