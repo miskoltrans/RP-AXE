@@ -258,7 +258,8 @@ RealAntennas, ROSolar…), present via their mods.
     it becomes relevant again, not as queued P2/P3 work.
 - **Airlaunch — ✅ IMPLEMENTED (2026-07-10), no longer parked.** Sacked with the KCT/RP0.dll career
   layer (T3, 2026-07-01), now re-authored as a config-first AXE plugin. You build a rocketplane, pick
-  **Airlaunch** at the editor Launch button, set the release point, and it **spawns already airborne**
+  **Airlaunch** at the SPH Launch button (SPH only — the VAB button is untouched), set the release
+  point, and it **spawns already airborne**
   inside a tech-gated envelope after a 10-second countdown, for a per-launch funds fee. Envelopes carry
   RP-1's real carrier/launch pairs — B-29→X-1 (7.6 km, 7.5 t), B-50→X-2 (9.1 km, 11.3 t),
   B-52→X-15/X-15A-2 (13.75 km, 15→25 t) — gated on the AXE rocketplane lane (`fd_rocketplaneRocket` /

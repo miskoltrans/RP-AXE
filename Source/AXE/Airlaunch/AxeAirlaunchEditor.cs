@@ -9,7 +9,8 @@ namespace RPAxe.Airlaunch
     /// Editor half of the airlaunch. Intercepts the stock Launch button (via a Harmony prefix on
     /// EditorLogic.goForLaunch — the same commit point RP-1 patches) and, when an airlaunch envelope is
     /// unlocked, offers the player a choice: launch normally to the runway, or configure an airlaunch and
-    /// spawn already airborne. The choice + release params are stashed in <see cref="AxeAirlaunchState"/>;
+    /// spawn already airborne. SPH only — a carrier drops spaceplanes, so the VAB launch button is left
+    /// alone. The choice + release params are stashed in <see cref="AxeAirlaunchState"/>;
     /// <see cref="AxeAirlaunchFlight"/> carries out the teleport once the vessel spawns.
     /// </summary>
     [KSPAddon(KSPAddon.Startup.EditorAny, false)]
@@ -51,6 +52,7 @@ namespace RPAxe.Airlaunch
 
         private void OnDestroy()
         {
+            if (_open) ReleaseStockLaunchLock();   // never leave the editor locked behind a live window
             if (Instance == this) Instance = null;
         }
 
@@ -68,8 +70,22 @@ namespace RPAxe.Airlaunch
             if (_resume) { _resume = false; return true; }          // our own re-invoke -> let it launch
             if (Instance == null) return true;
             if (Instance._open) return false;                        // window already up, keep suppressing
+            if (EditorDriver.editorFacility != EditorFacility.SPH) return true;   // airlaunch is an SPH feature
             if (!AxeAirlaunchTechLevel.AnyUnlocked()) return true;   // no capability -> normal launch
             return !Instance.OpenWindow();                           // opened -> suppress; couldn't -> proceed
+        }
+
+        /// <summary>
+        /// Release the editor-wide lock stock takes on the way into a launch. EditorLogic.launchVessel()
+        /// calls Lock(load, exit, save, "EditorLogic_launchSequence") before running the pre-flight tests,
+        /// and only goForLaunch() / abortLaunch() take it back off. We suppress goForLaunch to put our
+        /// window up, so anything that closes that window without letting the launch through has to drop
+        /// the lock itself — otherwise the editor is left frozen: no launch, save, load, exit or staging,
+        /// with no in-game way out short of the F7 panic key.
+        /// </summary>
+        private static void ReleaseStockLaunchLock()
+        {
+            InputLockManager.RemoveControlLock("EditorLogic_launchSequence");
         }
 
         /// <summary>Prime and show the window. Returns true if it opened (=> the launch should be suppressed).</summary>
@@ -135,8 +151,8 @@ namespace RPAxe.Airlaunch
                 _sAlt = _lvl.MaxAltitude.ToString("0");
                 _sVel = _lvl.MaxVelocity.ToString("0");
             }
-            if (GUILayout.Button("Runway")) { _open = false; _launchQueued = true; }
-            if (GUILayout.Button("Cancel")) _open = false;
+            if (GUILayout.Button("Runway")) { _open = false; _launchQueued = true; }   // real goForLaunch unlocks
+            if (GUILayout.Button("Cancel")) { _open = false; ReleaseStockLaunchLock(); }
             GUILayout.EndHorizontal();
 
             GUILayout.EndVertical();

@@ -47,9 +47,9 @@ namespace RPAxe
     }
 
     /// <summary>
-    /// One-time discovery nudge for AXE's airlaunch. The feature only surfaces when you press Launch after
-    /// unlocking a tech-gated envelope, so a player can miss that it exists — this fires once, the first
-    /// time an editor is opened with any airlaunch envelope unlocked, and never again for that career.
+    /// One-time discovery nudge for AXE's airlaunch. The feature only surfaces when you press Launch in
+    /// the SPH after unlocking a tech-gated envelope, so a player can miss that it exists — this fires
+    /// once, the first time the SPH is opened with any envelope unlocked, and never again for that career.
     /// (The AXE-appropriate replacement for RP-1's airlaunch tip, whose text/trigger were about RP-1's
     /// Space-Center-Management simulation flow, which AXE doesn't have.) Reads only the public
     /// <see cref="Airlaunch.AxeAirlaunchTechLevel.AnyUnlocked"/>; touches nothing else in the airlaunch system.
@@ -69,6 +69,10 @@ namespace RPAxe
 
             _evaluated = true;
 
+            // Airlaunch only offers itself in the SPH, so only nudge there (the facility can't change
+            // without a scene reload, which respawns this addon).
+            if (EditorDriver.editorFacility != EditorFacility.SPH) return;
+
             if (state.WasShown(TipKey)) return;
 
             bool unlocked;
@@ -84,7 +88,7 @@ namespace RPAxe
         {
             PopupDialog.SpawnPopupDialog(new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
                 "AxeAirlaunchUnlockedTip", "Airlaunch unlocked",
-                "You've unlocked airlaunch capability. Press Launch in the editor to release from a " +
+                "You've unlocked airlaunch capability. Press Launch in the SPH to release from a " +
                 "carrier at altitude and speed, instead of taking off from the runway — useful for " +
                 "high-and-fast first stages you'd otherwise have to fly up yourself.",
                 "OK", false, HighLogic.UISkin);
