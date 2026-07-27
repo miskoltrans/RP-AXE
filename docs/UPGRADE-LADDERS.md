@@ -96,6 +96,16 @@ Two families that the collapse metric was misreading:
 
 ## 4. Rules
 
+> **Standing direction (user, 2026-07-27): SCATTER is the default.** When a config has a real mechanism
+> behind it, give it its own node — Materials, Metallurgy, chemistry, cycle, nozzle, whatever the mechanism
+> actually is. New nodes are cheap; a fat node that hides four decisions is not. Merging and `catalog: true`
+> are narrow exceptions for configs that genuinely are *one* decision, never a way to keep the node count
+> down. When in doubt, add the node.
+>
+> This has already been applied twice against my own earlier instinct: a sea-level-Isp tolerance was tried
+> and reverted because it merged classes, and R6 was rewritten from "merge before inventing" to the
+> opposite. The Blok-D family went from one bucket to five nodes on that basis.
+
 - **R1 — one decision per part per node.** A node may grant at most one *performance point* for a given
   engine part. Counted in equivalence classes (see R4), so cosmetic twins riding together are fine and two
   genuinely different configs are not. Machine-checkable; the invariant that would have caught this at
@@ -270,6 +280,19 @@ and it will report the true remaining count as the migration proceeds.
 5. Remaining propellant + nozzle forks — mechanical once the fork targets exist. *(outstanding)*
 6. Rung redistribution along spines, discipline by discipline. *(outstanding)*
 7. Flip the checker to error and re-run the full tree build. *(outstanding)*
+
+### `catalog: true` — the two current uses, both reviewable
+
+A node flagged `catalog: true` is exempt from R1 and may grant many classes for one part. Under the
+scatter-by-default direction above this is a narrow exception, and only two nodes carry it today:
+
+| node | family | why | verdict |
+|---|---|---|---|
+| `av_refinedTurboprop` | PT6, 11 marks | thrust wanders 8.4–13.0 kN in **no order at all**; there is no progression to scatter | sound |
+| `cryo_deployableNozzleExpander` | RL10C/E, 7 marks | they *do* differ by a mechanism (nozzle expansion, ispSL 148→24) | **scatterable — flag for review** |
+
+The RL10C/E case is the honest one to revisit first if you want the scatter pushed further: seven nozzle
+lengths could be seven nodes, or two or three grouped by generation.
 
 ### Remaining worklist (measured 2026-07-27, after step 4)
 
