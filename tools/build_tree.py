@@ -1557,6 +1557,7 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
     AXE_TREE_STRICT=1 makes R1 fail the build (CI / pre-commit gate)."""
     perf = _ladder_perf()
     r1, r2, r4, r5 = [], [], [], []
+    r2same = [0]
     for part, rungs in sorted(ladders.items()):
         # only configs the gate emitter can address individually are policeable; engine-stats.tsv
         # sentinels like "(single config)" / "(no RealFuels config path)" are not real CONFIG names
@@ -1619,15 +1620,21 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
             # R2 -- rungs (not forks) must ascend; forks legitimately branch off sideways.
             # Same-node pairs are already an R1, so only report a genuine tier regression here.
             t = by[r["node"]]["tier"]
-            if not isfork and lasttier is not None and t <= lasttier and r["node"] != lastnode:
-                r2.append((part, r["config"], r["node"], t, lasttier))
+            # A rung landing at the SAME tier on a different node is benign -- two lanes can legitimately
+            # reach the same depth. Only a genuine DESCENT (a later rung gated earlier than the one it
+            # supersedes) is a real ordering fault, so keep the two apart rather than burying one in the
+            # other: 19 same-tier notes would otherwise hide the single descent that actually matters.
+            if not isfork and lasttier is not None and r["node"] != lastnode:
+                if t < lasttier: r2.append((part, r["config"], r["node"], t, lasttier))
+                elif t == lasttier: r2same[0] += 1
             if not isfork: lasttier, lastnode = t, r["node"]
             seen.append(r)
 
-    if not (r1 or r2 or r4 or r5):
+    if not (r1 or r2 or r4 or r5 or r2same[0]):
         print("ladder gate: clean -- no collapsed engine-config ladders"); return []
     print(f"ladder gate: {len(r1)} collapsed node(s), {len(r5)} base-node token(s), "
-          f"{len(r2)} non-ascending rung(s), {len(r4)} split padding class(es)  [docs/UPGRADE-LADDERS.md]")
+          f"{len(r2)} DESCENDING rung(s) (+{r2same[0]} benign same-tier), {len(r4)} split padding class(es)"
+          f"  [docs/UPGRADE-LADDERS.md]")
     for part, node, tier, cfgs in sorted(r1, key=lambda x: -len(x[3]))[:12]:
         print(f"   R1 ! {part} -> {node} T{tier} grants {len(cfgs)}: {', '.join(cfgs[:6])}"
               f"{' ...' if len(cfgs) > 6 else ''}")
@@ -1636,7 +1643,7 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
         print(f"   R5 ~ {part}: {cfg} sits on its own base part's node {node}")
     if len(r5) > 5: print(f"   R5 ... and {len(r5) - 5} more")
     for part, cfg, node, t, lt in r2[:5]:
-        print(f"   R2 ~ {part}: {cfg} @ {node} T{t} does not ascend (previous rung T{lt})")
+        print(f"   R2 ! {part}: {cfg} @ {node} T{t} is gated EARLIER than the rung it supersedes (T{lt})")
     if len(r2) > 5: print(f"   R2 ... and {len(r2) - 5} more")
     for part, cfg, ns in r4[:5]:
         print(f"   R4 ~ {part}: '{cfg}' performance point split across {len(ns)} nodes: {', '.join(ns)}")
