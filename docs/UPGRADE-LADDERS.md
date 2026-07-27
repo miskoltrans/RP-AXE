@@ -255,23 +255,34 @@ Full per-config worklist for all 107 families: **`manifest/upgrade-ladders.tsv`*
 `check_ladder_collapse(ladders, by, p2n, u2n)` in `tools/build_tree.py`, running after `check_tech_gates`.
 It consumes the already-resolved `engine_config_ladders()` output, so it polices what the game sees rather
 than what the YAML says. Configs the gate emitter cannot address individually (`CFG_NAME_SAFE` sentinels
-like `(single config)`) are excluded. Warnings-only today; `AXE_TREE_STRICT=1` makes R1 fatal.
+like `(single config)`) are excluded.
+
+**R1 / R5 / R2 now FAIL THE BUILD** (reached 2026-07-27 — the pass that got there is §9). `AXE_LADDER_SOFT=1`
+downgrades them to warnings while mid-edit. R4 stays advisory: a split performance class is usually a real
+placement choice, and some are forced by the base-config pin guard.
 
 Baseline at time of writing: **160 collapsed nodes · 0 base-node tokens · 6 non-ascending rungs ·
-127 padding duplicates**. Drive these to zero, then flip R1 to error.
+127 padding duplicates**. **Current: 0 · 0 · 0 (+35 benign same-tier) · 14** — the migration is complete
+and the gate is the standing invariant.
 
 Checks:
 
 - **error** — two config upgrades for the same part on the same node (R1)
 - **error** — a config upgrade on the node holding its own base part (R5)
-- **warn** — rungs of a family not at strictly increasing tiers (R2)
+- **error** — a rung gated EARLIER than the rung it supersedes (R2 descent). A rung landing at the *same*
+  tier on a different node is counted separately and reported as benign — two lanes can legitimately reach
+  the same depth, and burying the one real descent under 31 same-tier notes would hide it.
 - **warn** — a placed config classified PADDING against an already-placed sibling (R4)
 
 It needs `manifest/engine-stats.tsv` for the config→part and propellant mapping, which the build already has
 available. Ship the checker **first** — it converts this from a one-off cleanup into a standing invariant,
 and it will report the true remaining count as the migration proceeds.
 
-## 9. Order of work
+## 9. Order of work — ✅ ALL DONE (2026-07-27)
+
+> Every step below is complete. The gate reads **0 collapsed · 0 base-node · 0 descending · 14 split
+> padding**, and R1/R5/R2 are hard errors. The tree grew 457 → 493 nodes over the pass (499 today, the
+> difference being later unrelated work), ~40 of them added to give an uprate an honest home.
 
 1. ~~`check_ladder_collapse` in `build_tree.py`, warnings-only~~ — **DONE** (`b722907`, `d253a6d`).
 3. ~~**`microEngine` scatter**~~ — **DONE** (`c948953`). `pc_storableRcsPropellants` was *kept*, not deleted:
@@ -279,11 +290,16 @@ and it will report the true remaining count as the migration proceeds.
    moved out. Added `pc_hydrazineMonoprop` T5, `pc_cryogenicRcsFeed` T10, `pc_ascent` T13.
 4. ~~**RD-100 / `met_stainlessSteel`**~~ — **DONE** (`b7a9bd3`). Added `pc_ethanol90` T2. Five configs to
    five nodes across four tiers; none merged, because all five are distinct classes.
-2. **R4 co-locations** — 34 padding classes split across nodes. Reordered after 3–4: those steps moved
-   configs wholesale, so doing this first would have churned. *(outstanding)*
-5. Remaining propellant + nozzle forks — mechanical once the fork targets exist. *(outstanding)*
-6. Rung redistribution along spines, discipline by discipline. *(outstanding)*
-7. Flip the checker to error and re-run the full tree build. *(outstanding)*
+2. ~~**R4 co-locations**~~ — **DONE.** 34 padding classes split across nodes, now down to 14. Reordered after
+   3–4: those steps moved configs wholesale, so doing this first would have churned.
+5. ~~Remaining propellant + nozzle forks~~ — **DONE** (`5874909`, `908c3da`, `9e19cd6`, `3c4138e`, `af5a0bc`):
+   NTR working fluids, Raptor generations, ion PPU power classes, the Agena chemistry chain, the late
+   cryogenic chain, the RL10 hydrolox spine, jets/krypton/storable singles.
+6. ~~Rung redistribution along spines, discipline by discipline~~ — **DONE** (`8b8ebbb` homes uprates in the
+   discipline that enabled them; `98d88ea`, `21dc980`, `e12b548`, `b8d67c2` fan the Blok-D/N1, jet, turbofan
+   and stainless-steel families onto real mechanisms).
+7. ~~Flip the checker to error and re-run the full tree build~~ — **DONE** (`ba16422`, refined by `ce5352f`
+   which made class assignment placement-independent and exempted pinned R4).
 
 ### `catalog: true` — the remaining uses
 

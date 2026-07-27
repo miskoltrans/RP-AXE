@@ -2,7 +2,7 @@
 
 SSOT for the tree work. Read with [`RESTART.md`](RESTART.md) (roadmap) + [`SCIENCE.md`](SCIENCE.md) (budget).
 **TL;DR:** the tree architecture (nodes + flavour + disciplines) is DONE and good — **do not rebuild it.**
-It was built out band-by-band to ~217 nodes with all 8 milestone partlists placed (see RESTART.md);
+It was built out band-by-band to ~500 nodes with all 8 milestone partlists placed (see RESTART.md);
 what remains is part-placement realization + economy calibration (P2/P3). §2/§7 (architecture + settled
 decisions) are the durable reference; §3 is the record of how the placement approach was resolved.
 
@@ -10,9 +10,14 @@ decisions) are the durable reference; §3 is the record of how the placement app
 
 ## 1. STATUS
 
-- **P1 — tree architecture: DONE.** `tree/nodes.yaml` (~217 nodes) + `tree/disciplines.yaml` (19 lanes),
-  research-paper node names, scatter-by-difficulty homing, convergence web, front-loaded cost ~300k
-  (≈ SCIENCE.md target at scalar 1.0). Compiles clean via `tools/build_tree.py`. **This is the keeper.**
+- **P1 — tree architecture: DONE.** `tree/nodes.yaml` (**499 nodes**) + `tree/disciplines.yaml` (**21 lanes**),
+  research-paper node names, scatter-by-difficulty homing, convergence web. Compiles clean via
+  `tools/build_tree.py`. **This is the keeper.**
+  - **⚠ Cost total has drifted with the node count and needs re-blessing.** The per-tier table is the locked
+    input (SCIENCE.md §4) and the total is an *emergent* output of how many nodes sit at each tier — so the
+    tree growing from ~217 to 499 nodes moved the emitted total from ~300k to **422,666**. That is still
+    inside SCIENCE.md's stated bracket (~150k comfortable … ~500k grand-tour), so this is an accept-or-rescale
+    decision, not a defect. Unresolved at P3.
 - **P2 — part placement: RESOLVED (auto-place-everything abandoned, §3A).** The tree was built out
   band-by-band — band 1 (to orbit) → band 2 (appsats / humans / lunar probes) → band 3 (crewed lunar) —
   hand-homing the iconic parts per milestone while procedural + config-upgrades carry the bulk. **All 8
@@ -29,12 +34,14 @@ decisions) are the durable reference; §3 is the record of how the placement app
 within it; **parts/upgrades are scattered outcomes**, homed at the breakthrough that enabled them. NOT
 vehicle-function/era lanes (that's RP-1/ETT).
 
-- **19 lanes** = 18 science disciplines + a **Systems Integration** convergence lane (vehicles-as-convergence
+- **21 lanes** = 20 science disciplines + a **Systems Integration** convergence lane (vehicles-as-convergence
   nodes: capsule, probe bus, lunar lander, station, reusable booster, observatory, nuclear cruiser…; also the
   home for integrated composite parts). Disciplines: Metallurgy · Composite Materials · Propellant Chemistry ·
-  Resource Engineering · Cryogenics · Thermodynamics · Fluid Dynamics · Electrical Power · Nuclear Engineering ·
-  Aerodynamics · Structures & Mechanisms · Robotics · Microelectronics · Computing · Guidance & Control ·
-  Telecommunications · Optics & Photonics · Life Support.
+  Resource Engineering · Cryogenics · Thermodynamics · Fluid Dynamics · **Air-Breathing Propulsion** ·
+  Electrical Power · Nuclear Engineering · Aerodynamics · Structures & Mechanisms · **Ground Support** ·
+  Robotics · Microelectronics · Computing · Guidance & Control · Telecommunications · Optics & Photonics ·
+  Life Support. (Air-Breathing was split out for the aviation lane; Ground Support for the ModularLaunchPads
+  subtree — both added after the original 18.)
 - **Homing rule = SCATTER BY DIFFICULTY:** a part lives at its *signature breakthrough* (the bottleneck), NOT
   its fuel/function. F-1→Fluid Dynamics (combustion instability), RD-170→Metallurgy (ox-rich superalloys),
   J-2→Cryogenics, hypergolic→Prop Chem. Convergence PARENTS carry the other enabling breakthroughs.
@@ -150,16 +157,16 @@ length) — a layout lever that helped.
 - `manifest/curated-parts.tsv` (1820), `upgrades-curated.tsv` (553 KEEP), `part-capabilities.tsv`,
   `part-capability.tsv`, `part-placement.tsv`, `upgrade-placement.tsv`, `part-overrides.tsv`, `clusters/`.
 
-## 6. COMMIT TRAIL (branch `restart`)
+## 6. COMMIT TRAIL (mainline — the branch was renamed `restart` → `main`)
 Tree stages: `920984f`→`f97646b`→`1154f78`→`9768884` (full 219-node tree) → `3324965` (convergence + Systems
 Integration lane) → naming passes (`72cbd2a`, `e0a73d4`, `67eee0f`) → `62a4071` (declutter) → wiring
 (`c6551b4` delta+validator, `3906041` placement→viewer). P2: `58fbfc8` (complete first-pass placement),
 `e462e17` (engine capability spread), `ad13be5` (solar spread). **All committed — nothing lost on a context reset.**
 
 ## 7. SETTLED DECISIONS (do not re-litigate)
-18 disciplines (+Integration) · scatter-by-difficulty · research-paper names (breakthrough not artifact) ·
-convergence parents = limiting only · compile-from-YAML pipeline · delta/bands layout · HTML-render editor + in-game render port · ~300k cost /
-scalar-tuned at P3 · experimental off-tree catch-all · fuel-as-usability-gate parked · engines spread by
+20 disciplines (+Integration) · scatter-by-difficulty · research-paper names (breakthrough not artifact) ·
+convergence parents = limiting only · compile-from-YAML pipeline · delta/bands layout · HTML-render editor + in-game render port · cost = a locked
+per-tier table, total emergent from node count, scalar-tuned at P3 · experimental off-tree catch-all · fuel-as-usability-gate parked · engines spread by
 capability (thrust/Isp) where data exists · **rocketry-default single-root** (aviation opt-in, rewarded by
 x-plane contracts not science; §3B) · **relaxed convergence** (milestone/integration `int_*` nodes gate ONLY
 on irreducible physics — this is a what-if sim, so don't hard-gate on route-around-able enablers; §8).

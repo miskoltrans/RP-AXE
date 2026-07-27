@@ -52,8 +52,16 @@ Each phase gates the next; avionics + contracts ride alongside, off the critical
     instrument suite vendored verbatim to `seed/Science/` (part-gated, no remap; `PartExperimentAdder`
     clean-slate strips the dead DMagic modules), CrewScience authored to `design/Science/CrewScience/`
     with all 17 RP-1 tech nodes remapped to AXE nodes, telemetry free from mission 1. 96/98 RP0\*
-    experiments (2 absent are RP-1-nonexistent phantoms); budget unchanged. **Remaining P3 science =**
-    the **KerbalismLab** lab framework (still blocked — SCIENCE.md §1/§4) + cost/gate calibration.
+    experiments (2 absent are RP-1-nonexistent phantoms); budget unchanged.
+  - **KerbalismLab SHIPPED + in-game verified (2026-07-15)** — the crewed-station lab layer landed via
+    **Path A (vendor the framework)**, not the re-author route T2 below had defaulted to. 65 experiments,
+    techs remapped, `-axe-autotest` clean. See [`KERBALISMLAB.md`](KERBALISMLAB.md).
+  - **Funds economy SHIPPED (2026-07-28)** — see [`ECONOMY.md`](ECONOMY.md).
+  - **Remaining P3 = calibration, not construction:** the KerbalismLab balance pass, science cost/gate
+    calibration (the emitted tree total is now **422,666** vs the ~300k the table was sized against — an
+    accept-or-rescale call, TREE.md §1), part `entryCost` (deferred until the tree was complete — it now
+    is), and the solvency play-session that proves all of it. **End-to-end contract payout is still
+    unobserved** (ECONOMY.md §5).
 - **P4 — Avionics** *(parallel)*. Rename to RP-1 terms; rebalance. **Prove:** flyable early control.
 - **P5 — Special parts** *(post-MVP)*. Probe subtree (hire-JPL / hire-OKB) + capsule capability-split
   + cross-branch prerequisite-tech checklist plugin. **Prove:** a probe gated by multi-branch prereqs.
@@ -107,12 +115,17 @@ Budget measured before setting node costs. Tools: `tools/science_budget.py` (pro
   it bites harder than RP-1; finishable by broad exploration, not a rush. **Shape = front-load the bite**
   (cheap bootstrap → peak in tiers 3–6 orbit→inner-planets → taper late where other axes gate). It's a global
   scalar dial, final tune from the P3 solvency play-session. (Bracket: ~150k comfortable … ~500k grand-tour.)
-- **⚠️ Blocker DIAGNOSED (fix deferred to P3):** the "Continued" fork is an *add-on*; it omits the
+- **⚠️ Blocker DIAGNOSED → ✅ FIXED 2026-07-15.** *(This bullet and the next are the historical record. The
+  fix shipped as **Path A — vendor the minimal lab framework**, which SUPERSEDES the "re-author" decision
+  below; see [`KERBALISMLAB.md`](KERBALISMLAB.md).)* The "Continued" fork is an *add-on*; it omits the
   **Kerbalism ScienceRework lab framework** (`KERBALISM_GROUP_SETTINGS`/`LAB_EXPERIMENTS` root node +
   `LabDataRateMultiplier` + the "Laboratory Experiments" `Configure` host) that lives in
   **`KerbalismScienceOnly`** (NOT in stock Kerbalism, NOT in RP-1's config). 132 errors ≈ 2 lookups × 65 exp.
   Fix recipe (vendor the minimal lab subset) + exact missing files in SCIENCE.md §1.
-- **DECIDED (P3 integration): re-author** the 65 as plain Kerbalism `Experiment`/`EXPERIMENT_DEFINITION`
+- **~~DECIDED (P3 integration): re-author~~ — SUPERSEDED 2026-07-14 by Path A (vendor + keep).** Re-authoring
+  was dropped because vendoring preserves the fork's slots/values/durations/crew/big-data exactly as its
+  creator built them. Recorded as-written for the reasoning trail — *the plan was:* re-author the 65 as plain
+  Kerbalism `Experiment`/`EXPERIMENT_DEFINITION`
   configs wired directly to AXE parts + nodes (like RP0\*), dropping the ScienceRework Configure/slot layer.
   Body-multiplier uncertainty is then **resolved by construction** (we set values/situations against the
   RP0\* model; no cache-read needed; ~51k is the floor, calibration is a dial). Turnkey re-author plan in
@@ -163,7 +176,12 @@ RealAntennas, ROSolar…), present via their mods.
   actual installed mods (`ls GameData` / `CKAN/registry.json`) before trusting any non-`*_clean` folder.**
 
 ## Parked ideas (later threads)
-- **X-plane program contracts** (decided direction, 2026-07-01, early-tree review) — the aviation track is
+- **X-plane program contracts — ❌ SUPERSEDED 2026-07-28 by the shipped economy** ([`ECONOMY.md`](ECONOMY.md)
+  §4): *"Aviation is not special-cased."* X-planes pay reputation like everything else, and the two
+  sounding-rocket program payouts (22,000 each) cover the pre-orbit gap — so a player who ignores aviation is
+  not stranded, which was the problem this idea existed to solve. The premise below still holds (the aviation
+  lane is roleplay and is NOT expected to recoup science); only the money-contract remedy is dropped. Kept for
+  the reasoning trail: (decided direction, 2026-07-01, early-tree review) — the aviation track is
   deliberately roleplay/side-content and is NOT expected to recoup science (it flies the SCIENCE.md-zeroed
   sub-40 km regime). Its reward loop is a set of **special x-plane-program contracts** paying MONEY (the
   VISION "money abstracts non-simulated tradeoffs" lever) — sound-barrier / altitude / speed-record milestones,

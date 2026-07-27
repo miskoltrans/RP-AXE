@@ -95,18 +95,41 @@ perpetual `maintenance_*` contracts (auto-accept, monthly reputation) were the o
 currency source = a warp-for-money exploit. Deleted in
 `design/Contracts/DisableSkoposMaintenance.cfg`; the one-shot "establish the network" masters stay.
 
-### ⚠ TODO (balance) — rescale stock strategies to RP-AXE magnitudes
+### ✅ DONE — rescale stock strategies to RP-AXE magnitudes
+*(Was a balance TODO; shipped with the funds-economy pass, 2026-07-28. Full reasoning in
+[`ECONOMY.md`](ECONOMY.md) §3 "Channel 2".)*
+
 The stock strategies are tuned for **stock-KSP** currency magnitudes (thousands of funds, single-digit
-science). At RP-AXE / RSS scale (millions of funds, RP-1 science values) the default conversion rates
-and per-Admin-level commitment caps will be near-useless or absurd. Rebalance them — conversion
-percentages, min/max commitment, and the per-Admin-level active-strategy limits — against real per-era
-income and launch costs. Hook already present: `GameData/Squad/Strategies/StrategiesCustom._cfg`
-(disabled template; enable/patch via `:FOR[RP-AXE]`). Do this **after** M3 sets per-era income, so the
-conversion rates can be sanity-checked against actual numbers.
+science); at RP-AXE / RSS scale the defaults were going to be absurd. Rebalanced in
+`design/Settings/AxeStrategies.cfg` — **not** the `StrategiesCustom._cfg` template originally
+earmarked here:
+- `FundraisingCampaign` rescaled from stock's 1,002–1,253 funds/rep to **125–157**, sized so a career's
+  ~114k reputation converts to roughly **16M funds** — Administration is where AXE's otherwise-unspendable
+  reputation cashes out.
+- `strategyCommitRange` (0.25 / 0.6 / 1.0 by Administration level) is the pacing knob — early careers can
+  convert at most a quarter of incoming reputation.
+- `requiredReputation` windows widened from stock's [-500, 750], which at AXE magnitudes would put the
+  whole channel out of reach within the first era.
+- **Deleted:** `PatentsLicensing` (science→funds) and `OpenSourceTechProgram` (science→rep→funds). Science
+  is the primary gate and is deliberately ~10× more abundant than the tree costs, so either path is
+  unbounded income.
 
-## Reward distribution (plan — P3 economy)
+## Reward distribution — ✅ SHIPPED (superseded this plan)
 
-For each program, spread `baseFunding` across its gated contracts as per-contract `rewardFunds`:
+> **What shipped is not what this section planned.** Kept for the record; the built design is
+> [`ECONOMY.md`](ECONOMY.md) §3. The plan below was to spread each program's `baseFunding` across *all*
+> its gated contracts. The build instead pays only **two** things, because 20 of 34 programs have no
+> capstone at all (including `CrewedLunar` and `CrewedMarsExp`) and a spread-across-all scheme would
+> have left whole eras earning nothing:
+> - **Capstones (50%)** — `design/Contracts/AxeCapstoneFunds.cfg`. Capstones turned out to be *player-facing
+>   markup* (`Type: <color=red>CAPSTONE</color>`) in the description text, **not a config field**, so they
+>   are scraped from `seed/Contracts` rather than read from `OBJECTIVES`.
+> - **Program completion (50%, or 100% where there is no capstone)** — `design/Programs/AxeProgramCompletion.cfg`.
+>
+> Per-program budget = `RP-1 baseFunding × 0.10476`, targeting ~40M lifetime. `OPTIONAL` contracts and plain
+> `REQUIRED` objectives pay reputation only, which cashes out through Administration (Channel 2 above).
+
+*Original plan, for each program spread `baseFunding` across its gated contracts as per-contract `rewardFunds`:*
 - Start flat at `~funds/contract`.
 - **Weight the capstone heavier** than stepping-stones — the capstone(s) are the program's
   `OBJECTIVES { complete_contract = … }` in `Programs.cfg`. Suggested split: capstone ×2–3, the
@@ -114,7 +137,8 @@ For each program, spread `baseFunding` across its gated contracts as per-contrac
 - `rewardScience` = a modest supplement only (Kerbalism experiments remain the main science source).
 - Global Funds/Science multipliers (difficulty settings) are the final trim knob.
 - Sanity rule (invariant): each era's total income must comfortably cover that era's **per-launch
-  vehicle costs** (the dominant RSS drain), not just part entry costs.
+  vehicle costs** (the dominant RSS drain), not just part entry costs. *(Still unverified — vehicle cost
+  above 3.75 t is a deliberate guesstimate; ECONOMY.md §5.)*
 
 ## Program switcher ✅ DONE (config + code)
 
