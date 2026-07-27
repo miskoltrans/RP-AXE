@@ -1,10 +1,12 @@
 # Upgrade Ladders — engine config placement doctrine
 
-Status: design settled 2026-07-27. **Gate shipped + 7 of the worst buckets cleared; ~54 nodes remain.**
-Cleared so far: `pc_storableRcsPropellants`, `met_stainlessSteel`, `met_cooledTurbine`,
-`fd_titanStorableConversion`, `pc_n1ClosedCycle`, `cryo_refinedExpander`, `cryo_deployableNozzleExpander`.
-Live baseline: run `python tools/build_tree.py` and read the `ladder gate:` line.
-Worklist data: `manifest/upgrade-ladders.tsv` (448 classified rows, regenerate with the classifier in `tools/`)
+Status: **COMPLETE 2026-07-27.** `ladder gate: 0 collapsed · 0 base-node · 0 descending` — and R1/R2/R5
+now **fail the build** if they regress (`AXE_LADDER_SOFT=1` to downgrade mid-edit).
+Live check: `python tools/build_tree.py`, read the `ladder gate:` line.
+Worklist data: `manifest/upgrade-ladders.tsv`. Retargeting tool: `tools/retarget_upgrades.py`.
+
+Started at **160 collapsed (part, node) pairs across 130 of 258 engine families**; the tree went
+457 → 493 nodes, ~40 of them added to give an uprate an honest home.
 
 ---
 

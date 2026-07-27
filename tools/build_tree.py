@@ -1658,8 +1658,14 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
     for part, cfg, ns in r4[:5]:
         print(f"   R4 ~ {part}: '{cfg}' performance point split across {len(ns)} nodes: {', '.join(ns)}")
     if len(r4) > 5: print(f"   R4 ... and {len(r4) - 5} more")
-    if os.environ.get("AXE_TREE_STRICT") and r1:
-        die(f"AXE_TREE_STRICT set: {len(r1)} collapsed engine-config ladder(s) — see above")
+    # R1 and R5 are now at zero and FAIL THE BUILD if they regress (reached 2026-07-27; the pass that got
+    # there is docs/UPGRADE-LADDERS.md). R2 descents likewise. R4 stays advisory: a split performance class
+    # is usually a real placement choice, and some are forced by the base-config pin guard.
+    hard = len(r1) + len(r5) + len(r2)
+    if hard:
+        die(f"{len(r1)} collapsed ladder(s), {len(r5)} base-node token(s), {len(r2)} descending rung(s) "
+            f"— see above. These are invariants, not warnings; set AXE_LADDER_SOFT=1 to downgrade while "
+            f"mid-edit.") if not os.environ.get("AXE_LADDER_SOFT") else None
     return r1
 
 def check_tech_gates(nodes):
