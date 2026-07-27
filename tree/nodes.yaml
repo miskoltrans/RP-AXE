@@ -30,6 +30,13 @@ meta:
   part_cost_base: { 1: 100, 2: 200, 3: 350, 4: 600, 5: 900, 6: 1300, 7: 1800, 8: 2400, 9: 3200, 10: 4200, 11: 5500, 12: 7000, 13: 9000, 14: 11500, 15: 14500, 16: 18000 }
   part_cost_weight: { engine: 1.8, tank: 1.0, crewpod: 2.0, avionics: 1.0, science: 2.5, power: 1.5, antenna: 0.8, rcs: 0.8, gear: 2.0, aero: 0.5, separator: 0.5, structural: 0.4, chute: 0.3, ground: 0.2, misc: 1.0 }
   upgrade_cost_scalar: 0.3
+  # Engine CONFIG unlock (funds) cost = part_cost_base[tier of the config's node] * engine_config_cost_scalar,
+  # emitted as ENTRYCOSTMODS (AxeEntryCostMods.cfg) because that -- not the RFUpgrade_* tree icon -- is where
+  # RealFuels charges for a variant, in the VAB engine-configs GUI. Each variant chains to the previous rung of
+  # its own part's ladder, so the first one bought in a family carries the lineage and siblings after it cost
+  # only their own step (RP-1's self-discounting shape, AXE's numbers). Base configs are unpriced => free with
+  # the part. Starts equal to upgrade_cost_scalar; dial separately in the P3 solvency play-session.
+  engine_config_cost_scalar: 0.3
 
 nodes:
   # ================================= ROOTS =================================
