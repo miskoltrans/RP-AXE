@@ -55,30 +55,52 @@ For anything that needs implementation but isn't a `grants:` capability (e.g. a 
 special behaviour needs a plugin), add an **`impl_todo: "<what's missing>"`** field to its node: it
 lands in the same backlog and stamps a `// NEEDS-IMPL:` comment into the emitted cfg.
 
-## Track 1 — Avionics (ONE track, mapped to RP-1 "Science-Core")
-Decision (user, 2026-07-02): a **single** avionics track. RP-1's Near-Earth and Deep-Space avionics
-lines are `DROP`ped; the 8 **Science-Core** tiers are the tree-visible avionics progression. Each
-node `grants:` the corresponding avionics-plugin tier.
+## Track 1 — Avionics ✅ SHIPPED (mapped to RP-1 "Science-Core" + "Deep-Space")
+Original decision (user, 2026-07-02) was a **single** track: RP-1's Near-Earth and Deep-Space lines
+`DROP`ped, the Science-Core tiers as the only tree-visible progression. **Near-Earth stays dropped;
+Deep-Space came back** as the Unshielded/Radiation-Shielded second axis (AVIONICS_SPEC "Axis 2",
+built 2026-07-14) — its own serial `shd_*` chain mirroring the Guided rungs one-for-one, because
+RP-1's real Deep-Space ladder is a per-tier data table, not a multiplier on Near-Earth.
 
-| RP-1 Science-Core tier | → RP-AXE node (draft) | plugin tier | milestone |
-|---|---|---|---|
-| basicAvionics | gnc_… | ? | band 1 |
-| avionicsPrototypes | gnc_… | ? | band 1 |
-| earlyAvionics | gnc_… | ? | band 1 |
-| postWarAvionics | gnc_… | ? | band 1 |
-| improvedAvionics | gnc_… | ? | band 2 |
-| matureAvionics | gnc_… | ? | band 2 |
-| largeScaleAvionics | gnc_… | ? | band 2/3 |
-| interplanetaryProbes | gnc_… | ? | band 3 |
+**The 8-tiers-↔-13-tier question is answered by what shipped:** all 13 non-`start` plugin rungs are
+tree-visible (the extra 5 came from AVIONICS_SPEC's late Computing-era rungs), so the mapping is 1:1
+in both directions. Discipline: **GuidanceControl** for the early rungs and for the whole `shd_*`
+chain, **Computing** from the digital-computer rung onward. Ground truth = the `TIER` blocks in
+`design/Tree/AxeAvionicsCore.cfg`; this table mirrors them.
 
-**OPEN — user's call:** these 8 RP-1 tiers ↔ the avionics plugin's **13-tier** ladder is *not* 1:1.
-Fill the `plugin tier` column (and confirm discipline: GuidanceControl vs Computing) before authoring.
+| RP-1 tier | Guided node (`tech =`) | T | Shielded node (`shTech =`) | T |
+|---|---|--:|---|--:|
+| *(floor)* | `start` | 0 | — | |
+| postWarAvionics | `gnc_postWarAvionics` | 1 | — | |
+| avionicsPrototypes | `gnc_avionicsPrototypes` | 2 | — | |
+| earlyAvionics | `gnc_earlyAvionics` | 4 | — | |
+| basicAvionics | `gnc_basicAvionics` | 5 | `shd_basicAvionics` | 6 |
+| interplanetaryProbes | `gnc_interplanetaryAvionics` | 7 | `shd_interplanetaryAvionics` | 8 |
+| improvedAvionics | `comp_digitalGuidanceComputer` | 8 | `shd_digitalGuidanceComputer` | 9 |
+| matureAvionics | `comp_realTimeFlightComputer` | 9 | `shd_realTimeFlightComputer` | 10 |
+| largeScaleAvionics | `comp_networkedAvionics` | 10 | `shd_networkedAvionics` | 11 |
+| advancedAvionics | `comp_multiplyRedundantFlightComputer` | 11 | `shd_multiplyRedundantFlightComputer` | 12 |
+| nextGenAvionics | `comp_distributedAvionicsBus` | 12 | `shd_distributedAvionicsBus` | 13 |
+| longTermAvionics | `comp_softwareDefinedFlightControl` | 13 | `shd_softwareDefinedFlightControl` | 14 |
+| internationalAvionics | `comp_interoperableAvionicsStandard` | 14 | `shd_interoperableAvionicsStandard` | 15 |
+| modernAvionics | `comp_commercialOffTheShelfAvionics` | 15 | `shd_commercialOffTheShelfAvionics` | 16 |
 
-## Track 2 — Deep Space Network / tracking-station levels (KEEP, definitely in-game)
+**How the gate actually works — not through the grants.** `ModuleAxeAvionics` reads these node ids
+directly (`ApplyTier()` walks `tech =`, `ApplyShieldedTier()` walks `shTech =`) and `guidanceTech`
+gates whether guidance can activate at all. The 23 `Science-Core-*` / `Deep-Space-*` grant tokens are
+**presentation only** — see the Emission note above. Two consequences worth remembering: the tokens
+can never be the thing that breaks the ladder, and a **renamed node silently freezes a tier**
+(`GetTechnologyState` returns `Unavailable` for an unknown id, no error) — which is exactly the
+2026-07-08 bug in AVIONICS_SPEC. `check_tech_refs.py` is the guard; keep those ids in it.
+
+## Track 2 — Deep Space Network / tracking-station levels ✅ SHIPPED
 10 levels (`RP0Level2…11TrackingStation`), each a **Telecommunications** node that `grants:` the
-tracking-station facility level (extends comms range / downlink). NOT plugin-covered — real gating.
-**All placed** along the comms ladder (`tel_dopplerRanging` → `tel_opticalDownlink`); the in-game
-gain-per-level effect is the implementation TODO, auto-tracked in [IMPL-TODO.md](IMPL-TODO.md).
+tracking-station facility level (extends comms range / downlink). **All placed** along the comms
+ladder (`tel_dopplerRanging` → `tel_opticalDownlink`), and the effect is real in-game, in three
+pieces: the 11-level ladder + DSN gain from `design/Settings/AxeTrackingStation.cfg` (CustomBarnKit
+`@TRACKING`, consumed by RealAntennas); the per-level tech gate generated into
+`design/Tree/AxeFacilityGates.cfg` (`AXEBUILDINGTECHS`, derived from these very grants); and
+enforcement by `AXE.dll`'s `AxeTrackingStationGate`. Smoke-tested in-game.
 
 | grant | → RP-AXE node | tier |
 |---|---|---|
