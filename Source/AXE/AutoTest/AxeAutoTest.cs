@@ -44,6 +44,11 @@ namespace RPAxe.AutoTest
         // switching (site change + comms network + LastKSC persistence). Off by default so the
         // standard R&D/MC smoke test is unchanged. See AxeKscSwitchSelfTest.
         public static bool KscSwitchTest = false;
+        // Opt-in dev sweep: after the screen walk, open the VAB and price every .craft in the install
+        // (per-part cost breakdown -> PluginData/craft-prices.csv). Feeds the economy pass; the editor
+        // scene is required because procedural part costs only resolve on a loaded ShipConstruct.
+        // See AxeCraftPricer.
+        public static bool PriceCraftTest = false;
 
         // Per-session state (statics persist until the assembly reloads, i.e. KSP restart).
         public static bool CareerStarted;
@@ -108,6 +113,7 @@ namespace RPAxe.AutoTest
             QuitWhenDone = ParseBool(n.GetValue("quitWhenDone"), QuitWhenDone);
             QuitDelaySeconds = ParseFloat(n.GetValue("quitDelaySeconds"), QuitDelaySeconds);
             KscSwitchTest = ParseBool(n.GetValue("kscSwitchTest"), KscSwitchTest);
+            PriceCraftTest = ParseBool(n.GetValue("priceCraftTest"), PriceCraftTest);
 
             if (n.HasValue("screens"))
             {
@@ -182,6 +188,11 @@ AXE_AUTOTEST
     // Opt-in extra: after the screens, load the Tracking Station and verify free KSCSwitcher
     // switching (site change + comms ground-station network + LastKSC persistence to the .sfs).
     kscSwitchTest = false
+
+    // Opt-in dev sweep: after the screens, open the VAB and price every .craft in the install,
+    // writing a per-part cost breakdown to PluginData/craft-prices.csv. Procedural part costs only
+    // resolve on a loaded ShipConstruct, so this has to run in the editor scene.
+    priceCraftTest = false
 }
 ";
     }
@@ -357,6 +368,16 @@ AXE_AUTOTEST
                 yield break;
             }
 
+            // If the screen walk asked for the craft-pricing sweep, open the VAB and let the editor-scene
+            // driver run it + quit (procedural costs need a real ShipConstruct, editor-only).
+            if (AxeCraftPricer.EditorPhaseRequested)
+            {
+                Debug.Log("[AXE][AutoTest] Loading the VAB for the craft-pricing sweep...");
+                yield return AutoTestUtil.Dwell(1f);
+                EditorDriver.StartEditor(EditorFacility.VAB);
+                yield break;
+            }
+
             if (AutoTestConfig.QuitWhenDone)
             {
                 Debug.Log("[AXE][AutoTest] Test finished; quitting KSP in " + AutoTestConfig.QuitDelaySeconds + "s...");
@@ -423,6 +444,10 @@ AXE_AUTOTEST
             // scene is where KSCSwitcher's UI + its LastKSC persistence module live). RunSequence loads it.
             if (AutoTestConfig.KscSwitchTest)
                 AxeKscSwitchSelfTest.RequestTrackingStationPhase();
+
+            // Opt-in: hand off to the VAB for the craft-pricing sweep (economy-pass ground truth).
+            if (AutoTestConfig.PriceCraftTest)
+                AxeCraftPricer.RequestEditorPhase();
         }
 
         /// <summary>Enter a facility, dwell, then exit it. Sets <see cref="_ok"/>.</summary>
