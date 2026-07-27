@@ -2623,7 +2623,7 @@ nodes:
     tier: 9
     parents: [pc_protonStagedCombustion, pc_storableVernierFamily]
     flavor: "Squeeze the storable staged-combustion boosters a little further — Mk-II chambers, higher flow, the same dependable poison."
-    upgrades: [RFUpgrade_RD-253-Mk2, RFUpgrade_RD-254-11D44-Mk2, RFUpgrade_RD-0210, RFUpgrade_RD-0203U, RFUpgrade_RD-0212, RFUpgrade_RD-0213, RFUpgrade_RD-0214, RFUpgrade_RD-277M-14D16M, RFUpgrade_RD-275M]  # RD-277M/RD-275M moved down from pc_protonStagedCombustion (doctrine-4 fix, 2026-07) - direct continuation of their own Mk2 siblings already here
+    upgrades: [RFUpgrade_RD-253-Mk2, RFUpgrade_RD-254-11D44-Mk2, RFUpgrade_RD-0210, RFUpgrade_RD-0203U, RFUpgrade_RD-0212, RFUpgrade_RD-0213, RFUpgrade_RD-0214]  # RD-277M/RD-275M moved down from pc_protonStagedCombustion (doctrine-4 fix, 2026-07) - direct continuation of their own Mk2 siblings already here
     # Pure doctrine-4 catch node: every upgrade's base lives in pc_protonStagedCombustion or
     # pc_storableVernierFamily, so none can sit with its base.
 
@@ -3231,6 +3231,7 @@ nodes:
     parents: [pc_refinedStorableORSC]
     flavor: "Push oxidiser-rich staged combustion on storable hypergolics as far as raw chemistry allows — the largest hypergolic engine ever built, drawn for a booster that never flew. A record nobody has beaten since, and nobody needed to."
     parts: [ROE-RD270]
+    upgrades: [RFUpgrade_RD-277M-14D16M, RFUpgrade_RD-275M]
     # King RD-270 (6713 kN vacuum - the real UR-700 engine, still the largest hypergolic ever tested).
     # Sibling of fd_gasGeneratorApex/cryo_largeHydrolox: every propellant family gets its own "pushed past
     # sane thrust for one more chemistry-ceiling record" dead-end. Same "drawn but never poured" flavor as AJ-260.
@@ -3525,7 +3526,7 @@ nodes:
     tier: 14
     parents: [cmp_advancedCompositeFairings]
     flavor: "Weave carbon fibre in a carbon matrix and it gets stronger as it gets hotter, right up past the point where any alloy has gone soft. Bolt a skirt of it below the metal chamber and the nozzle grows without the mass a cooled metal extension would have cost — expansion ratio for free, paid for in a two-year layup and cure."
-    upgrades: [RFUpgrade_RS-68K]
+    upgrades: [RFUpgrade_RS-68K, RFUpgrade_RD-120F]
     # LADDER PASS (2026-07-27): RS-68K is +6 s ispVac and +11 s ispSL over RS-68B at near-identical
     # thrust -- an expansion-ratio gain, i.e. a NOZZLE MATERIALS story, not a combustion one.
   - id: cmp_advancedCompositeFairings
@@ -3886,6 +3887,7 @@ nodes:
     parents: [pc_zenitKerolox]
     flavor: "Oxidiser-rich staged combustion hits its ceiling. The RD-170 — four chambers off one turbopump, 7900 kilonewtons — is the most powerful liquid-propellant engine ever built, the monster that lifts Energia and Zenit. Where the N1's engines never flew and Zenit's was only an upper, this is the chemistry's operational record."
     parts: [ROE-RD170, YF100_Engine_S, YF100_Engine-double-withShell2]
+    # upgrades: [] — emptied by retarget_upgrades
     # doctrine-4 fix (2026-07): RD-171M (own base part ROE-RD170) and YF-100K (own base parts YF100_Engine_S
     # / YF100_Engine-double-withShell2, both live here) moved down to pc_modularORSC.
   - id: pc_modularORSC
@@ -3895,7 +3897,7 @@ nodes:
     parents: [pc_multiChamberORSC]
     flavor: "The record engine gets cut into pieces you can sell. Halve the RD-170's four chambers and you have the RD-180 for Atlas; quarter it and you have the single-chamber Angara engine. Same core hardware, packaged into a modular family for the export and commercial market."
     parts: [ROE-RD180, ROE-RD191]
-    upgrades: [RFUpgrade_RD-171, RFUpgrade_RD-172-173, RFUpgrade_RD-120F, RFUpgrade_RD-120K, RFUpgrade_RD-191, RFUpgrade_RD-171M, RFUpgrade_YF-100K]
+    upgrades: [RFUpgrade_RD-171, RFUpgrade_RD-120K, RFUpgrade_RD-191, RFUpgrade_YF-100K, RFUpgrade_RD-171M]
     # doctrine-4 fix (2026-07): RD-171M/YF-100K moved down from pc_multiChamberORSC (own base parts there).
     # RD-181/RD-193 (this node's OWN base part ROE-RD191's later marks) moved further down to
     # pc_modularORSCII, since this node has no other child.
@@ -3908,7 +3910,7 @@ nodes:
     tier: 13
     parents: [pc_modularORSC]
     flavor: "Cut the same modular RD-170 hardware into two more shapes — a lighter single-chamber mark for a smaller booster, and an export version re-plumbed for someone else's pad."
-    upgrades: [RFUpgrade_RD-181, RFUpgrade_RD-193, RFUpgrade_AJ26-59]
+    upgrades: [RFUpgrade_RD-181, RFUpgrade_RD-193, RFUpgrade_AJ26-59, RFUpgrade_RD-172-173]
     # doctrine-4 catch: RD-181/RD-193's own base part (ROE-RD191) lives in pc_modularORSC.
   - id: pc_operationalStorableORSC
     title: "Operational Storable Staged Combustion"
@@ -4037,6 +4039,22 @@ nodes:
     # doctrine-4 catch: these configs' own base parts (pit-125/RO-nupit) live in ep_pulsedInductive.
 
   # ---- NuclearEngineering: NTR matures past NERVA ----
+  - id: nuc_ammoniaWorkingFluid
+    title: "Ammonia Reactor Working Fluid"
+    discipline: NuclearEngineering
+    tier: 11
+    parents: [nuc_flightRatedNTR]
+    flavor: "Feed the reactor ammonia instead of hydrogen. Specific impulse halves — the exhaust is heavy now — but thrust doubles and the propellant stops needing a cryogenic tank that boils off on the way to anywhere. A nuclear engine you can leave parked for a year."
+    upgrades: [RFUpgrade_PEWEE100-Ammonia, RFUpgrade_NERVA-I-Ammonia, RFUpgrade_RD-0410MID-Ammonia]
+    # LADDER PASS (2026-07-27): NTR "upgrades" that halve Isp are not uprates at all -- they are
+    # WORKING-FLUID forks, trading exhaust velocity for thrust and storability. They belong at the fluid.
+  - id: nuc_methaneWorkingFluid
+    title: "Methane Reactor Working Fluid"
+    discipline: NuclearEngineering
+    tier: 12
+    parents: [nuc_ammoniaWorkingFluid]
+    flavor: "Methane splits in the core and leaves carbon behind on everything it touches, which is why nobody flew it — but it is denser than hydrogen, milder than ammonia, and sits in a tank the same equipment already handles. Forty seconds better than ammonia for a reactor you will have to inspect afterwards."
+    upgrades: [RFUpgrade_PEWEE100-Methane, RFUpgrade_NERVA-I-Methane, RFUpgrade_RD-0410MID-Methane, RFUpgrade_RD-0410MID-MethaneSpec]
   - id: nuc_flightDesignNTR
     title: "Flight-Design Solid-Core NTR"
     discipline: NuclearEngineering
@@ -4845,6 +4863,13 @@ nodes:
     # LADDER PASS (2026-07-27): methalox RCS rides the node that makes small methalox engines a thing.
     # King M10 (Rocket Lab Neutron's upper stage). Sibling to cryo_methaloxStagedCombustion, not a child -
     # a different, plainer cycle on the same new fuel.
+  - id: cryo_fullFlowMethaloxII
+    title: "Matured Full-Flow Staged Combustion"
+    discipline: Cryogenics
+    tier: 14
+    parents: [cryo_fullFlowMethalox]
+    flavor: "The third pass at a cycle where both propellants run through their own preburners and nothing is thrown away. Parts count falls, the plumbing that made the first version a nightmare is machined out of the casting, and thrust climbs twenty percent because the engine finally stops being the reason to hold the schedule."
+    upgrades: [RFUpgrade_Raptor-3, RFUpgrade_Raptor-3V]
   - id: cryo_expanderBoosterScale
     title: "Expander-Bleed Cycle at Booster Scale"
     discipline: Cryogenics
@@ -4969,8 +4994,10 @@ nodes:
     discipline: ElectricalPower
     tier: 14
     parents: [ep_nextGenGriddedIon]
+    catalog: true
+    # see ep_kilowattClassPPU: these are grid-voltage operating points, not successive engines.
     flavor: "DS4G's dual-stage grid pushed across its own family of ratings — the same second-acceleration-stage trick, retuned for every thrust/Isp trade the design study explored."
-    upgrades: [RFUpgrade_DS4G-25-hi, RFUpgrade_DS4G-25-mid, RFUpgrade_DS4G-50-hi, RFUpgrade_DS4G-50-low]
+    upgrades: [RFUpgrade_DS4G-25-hi, RFUpgrade_DS4G-25-mid]
     # doctrine-4 catch: these configs' own base part (ionXenon-0625-3) lives in ep_nextGenGriddedIon.
   - id: ep_nasaHighPowerHall
     title: "NASA High-Power Hall Thruster"
@@ -5013,6 +5040,18 @@ nodes:
     # doctrine-4 fix (2026-07): VF-200-Kr/VX-200SS-Kr are this node's own base parts' (vasimr-125/vasimr-0625)
     # same-era propellant-swap variants - moved down to ep_variableSpecificImpulsePlasmaII (new node, no
     # existing child here).
+  - id: ep_kilowattClassPPU
+    title: "Kilowatt-Class Power Processing"
+    discipline: ElectricalPower
+    tier: 15
+    parents: [ep_nextGenGriddedIonII]
+    catalog: true
+    flavor: "The thruster barely changes; the box feeding it doubles. A power processing unit that can hold fifty kilowatts at grid voltage — and shed the waste heat of its own switching losses — is what decides whether the four-grid concept is a laboratory result or a spacecraft."
+    upgrades: [RFUpgrade_DS4G-50-low, RFUpgrade_DS4G-50-hi]
+    # LADDER PASS (2026-07-27): the DS4G "marks" are OPERATING POINTS of one experimental thruster -
+    # grid voltage (low/mid/hi) crossed with PPU power class (25/50 kW). Split on the real hardware axis
+    # (the power supply, per the user's electronics steer); the voltage settings within each class are a
+    # menu, not a progression, so both nodes are catalogs.
   - id: ep_variableSpecificImpulsePlasmaII
     title: "Krypton-Fuelled Variable-Isp Plasma Rocket"
     discipline: ElectricalPower
