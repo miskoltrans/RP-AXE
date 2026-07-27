@@ -251,15 +251,38 @@ and it will report the true remaining count as the migration proceeds.
 
 ## 9. Order of work
 
-1. `check_ladder_collapse` in `build_tree.py`, warnings-only at first so the build stays green.
-2. **R4 co-locations** — 34 padding classes currently split across nodes. Pull each class onto one node.
-   No placement judgement needed beyond "which twin is right", and it shrinks every later step.
-3. **`microEngine` scatter** + delete `pc_storableRcsPropellants`. Highest value, self-contained, needs
-   4 of the 8 new chemistry nodes.
-4. **RD-100 / `met_stainlessSteel`** — the worked example above. Reopens band 1 at T2/T3 deliberately.
-5. Remaining propellant + nozzle forks (≈60 configs) — mechanical once the fork targets exist.
-6. Rung redistribution along spines, discipline by discipline.
-7. Flip the checker to error and re-run the full tree build.
+1. ~~`check_ladder_collapse` in `build_tree.py`, warnings-only~~ — **DONE** (`b722907`, `d253a6d`).
+3. ~~**`microEngine` scatter**~~ — **DONE** (`c948953`). `pc_storableRcsPropellants` was *kept*, not deleted:
+   its five storables are one performance class, exactly what its title names. Seven other chemistries
+   moved out. Added `pc_hydrazineMonoprop` T5, `pc_cryogenicRcsFeed` T10, `pc_ascent` T13.
+4. ~~**RD-100 / `met_stainlessSteel`**~~ — **DONE** (`b7a9bd3`). Added `pc_ethanol90` T2. Five configs to
+   five nodes across four tiers; none merged, because all five are distinct classes.
+2. **R4 co-locations** — 34 padding classes split across nodes. Reordered after 3–4: those steps moved
+   configs wholesale, so doing this first would have churned. *(outstanding)*
+5. Remaining propellant + nozzle forks — mechanical once the fork targets exist. *(outstanding)*
+6. Rung redistribution along spines, discipline by discipline. *(outstanding)*
+7. Flip the checker to error and re-run the full tree build. *(outstanding)*
+
+### Remaining worklist (measured 2026-07-27, after step 4)
+
+`ladder gate: 137 collapsed · 0 base-node · 6 non-ascending · 34 split padding`
+
+That is **62 distinct nodes** across 111 parts and 320 configs — the 137 counts (part, node) pairs, and
+many parts share a config set. The work is concentrated: the top 20 nodes carry 210 of the 320 configs.
+
+| node | T | parts | configs | | node | T | parts | configs |
+|---|--:|--:|--:|---|---|--:|--:|--:|
+| `met_cooledTurbine` | 4 | 8 | 24 | | `cryo_refinedExpander` | 7 | 2 | 11 |
+| `fd_regenCooling` | 4 | 6 | 17 | | `fd_engineMaturation` | 6 | 4 | 10 |
+| `fd_titanStorableConversion` | 7 | 5 | 15 | | `cryo_matureGasGeneratorHydrolox` | 10 | 4 | 9 |
+| `pc_n1ClosedCycle` | 9 | 4 | 14 | | `cryo_deployableNozzleExpander` | 11 | 1 | 9 |
+| `met_stainlessSteel` | 2 | 5 | 13 | | `av_refinedTurboprop` | 5 | 1 | 8 |
+| `cryo_reusableEngineUprating` | 13 | 5 | 13 | | `av_fourthGenFighterTurbofan` | 10 | 3 | 7 |
+| `fd_vacuumExpansion` | 6 | 5 | 13 | | `fd_matureKeroloxClusterUprating` | 9 | 4 | 7 |
+| `fd_restartableUpperMaturation` | 9 | 4 | 12 | | `pc_ntoHypergolics` | 4 | 5 | 6 |
+
+`met_stainlessSteel` still appears: its RD-100 family is resolved, but the five *other* families parked on
+it (Aerobee, A-7, XLR11, ORM-65, Meteo) are step-5/6 work.
 
 ## 10. Decisions taken
 
