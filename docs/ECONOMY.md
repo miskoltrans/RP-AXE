@@ -125,8 +125,13 @@ which at AXE magnitudes would make the whole channel unavailable within the firs
 
 ## 5. Open
 
-- **Vehicle cost is unmeasured above 3.75 t.** The whole ~20M allowance rests on an assumption.
-  Save an orbital-class craft and re-run the pricer (`priceCraftTest` in `AutoTest.cfg`).
+- **Vehicle cost above 3.75 t is a deliberate guesstimate** (user call, 2026-07-28) — *not* an
+  outstanding task. The ~20M allowance is a round "about the same as everything else" figure, and
+  measuring it precisely was judged not worth a build-and-price exercise. Two things to know if it
+  ever needs revisiting: the cost formulas hint it may be far too generous (RealFuels tanks price at
+  0.002–0.015 funds/litre, so a 100 t propellant load is ~390 funds; avionics grows only as
+  `capacity^0.46`), and the retune is one constant — `TARGET_LIFETIME` in `tools/build_economy.py`
+  — plus a regenerate. Playtest feel is the intended signal, not a measurement.
 - **End-to-end payout is unproven.** The contracts *load* (372/372) and correctly do **not** fire in
   a fresh career, but no run has yet driven a program to completion, so the `autoAccept` +
   `CompleteContract` chain has not been observed actually paying out. Needs a save with a finished
