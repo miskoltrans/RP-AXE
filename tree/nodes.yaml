@@ -108,14 +108,14 @@ nodes:
     title: "Charter a Deep-Space Probe Lab (JPL)"
     discipline: SystemsIntegration
     tier: 1
-    cost: 300
+    cost: 1
     parents: []
     flavor: "Stand up a jet-propulsion lab — the home of integrated US robotic spacecraft. Charter the programme; the spacecraft arrive by era."
   - id: hire_OKB
     title: "Charter a Design Bureau (OKB)"
     discipline: SystemsIntegration
     tier: 1
-    cost: 300
+    cost: 1
     parents: []
     flavor: "Establish an experimental design bureau — the home of integrated Soviet deep-space craft. Charter the programme; the spacecraft arrive by era."
 

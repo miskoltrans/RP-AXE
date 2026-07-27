@@ -7,8 +7,8 @@ digraph AXE {
   "experimental" [label="Experimental Hardware\nSystemsIntegration T1 · 1",fillcolor="#ededed",fontcolor="#111111"];
   "us2_serviceSandbox" [label="Universal Storage Service Modules (Sandbox)\nSystemsIntegration T1 · 1",fillcolor="#ededed",fontcolor="#111111"];
   "coatl_scienceSandbox" [label="Gamma-Ray Spectrometer (Sandbox)\nSystemsIntegration T1 · 1",fillcolor="#ededed",fontcolor="#111111"];
-  "hire_JPL" [label="Charter a Deep-Space Probe Lab (JPL)\nSystemsIntegration T1 · 300",fillcolor="#ededed",fontcolor="#111111"];
-  "hire_OKB" [label="Charter a Design Bureau (OKB)\nSystemsIntegration T1 · 300",fillcolor="#ededed",fontcolor="#111111"];
+  "hire_JPL" [label="Charter a Deep-Space Probe Lab (JPL)\nSystemsIntegration T1 · 1",fillcolor="#ededed",fontcolor="#111111"];
+  "hire_OKB" [label="Charter a Design Bureau (OKB)\nSystemsIntegration T1 · 1",fillcolor="#ededed",fontcolor="#111111"];
   "jpl_firstSats" [label="First American Satellites\nSystemsIntegration T4 · 40",fillcolor="#ededed",fontcolor="#111111"];
   "jpl_appSats" [label="American Application Satellites\nSystemsIntegration T5 · 80",fillcolor="#ededed",fontcolor="#111111"];
   "jpl_firstMariner" [label="First Interplanetary Probes\nSystemsIntegration T6 · 160",fillcolor="#ededed",fontcolor="#111111"];
@@ -57,6 +57,7 @@ digraph AXE {
   "gnc_rcs" [label="Cold-Gas Reaction Control\nGuidanceControl T2 · 4",fillcolor="#8a5cd6",fontcolor="#111111"];
   "aero_recovery" [label="Drogue-Stabilized Deceleration\nAerodynamics T2 · 4",fillcolor="#5aa0e2",fontcolor="#111111"];
   "opt_filmReturn" [label="Film-Return Imaging\nOpticsPhotonics T1 · 1",fillcolor="#7c8cff",fontcolor="#111111"];
+  "opt_fineGrainEmulsion" [label="Fine-Grain Emulsion\nOpticsPhotonics T2 · 4",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_vidicon" [label="Vidicon Imaging\nOpticsPhotonics T4 · 40",fillcolor="#7c8cff",fontcolor="#111111"];
   "nuc_geiger" [label="Geiger-Müller Ionization Counting\nNuclearEngineering T1 · 1",fillcolor="#83c341",fontcolor="#111111"];
   "mic_massSpec" [label="Magnetic-Sector Mass Spectrometry\nMicroelectronics T4 · 40",fillcolor="#c2a0e0",fontcolor="#111111"];
@@ -110,6 +111,7 @@ digraph AXE {
   "aero_prefabNoseCones" [label="Prefabricated Nose Cones\nAerodynamics T4 · 40",fillcolor="#5aa0e2",fontcolor="#111111"];
   "nuc_cosmicRay" [label="Cosmic-Ray Telescopy\nNuclearEngineering T3 · 15",fillcolor="#83c341",fontcolor="#111111"];
   "opt_recon" [label="Film Reconnaissance\nOpticsPhotonics T3 · 15",fillcolor="#7c8cff",fontcolor="#111111"];
+  "opt_largeApertureOptics" [label="Large-Aperture Optics\nOpticsPhotonics T4 · 40",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_tvRecon" [label="Television Reconnaissance\nOpticsPhotonics T5 · 80",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_remoteSensing" [label="Infrared Remote Sensing\nOpticsPhotonics T5 · 80",fillcolor="#7c8cff",fontcolor="#111111"];
   "opt_irRadiometry" [label="High-Resolution Radiometry\nOpticsPhotonics T6 · 160",fillcolor="#7c8cff",fontcolor="#111111"];
@@ -459,9 +461,9 @@ digraph AXE {
   "nuc_nuclearSaltWaterRocket" [label="Nuclear Salt Water Rocket\nNuclearEngineering T16 · 5650",fillcolor="#83c341",fontcolor="#111111"];
   { rank=same; "start" "parking" }
   { rank=same; "experimental" "us2_serviceSandbox" "coatl_scienceSandbox" "hire_JPL" "hire_OKB" "pc_storables" "cryo_hydrogen" "pc_doubleBaseSolid" "fd_injectors" "met_weldedTank" "tel_telemetry" "opt_filmReturn" "nuc_geiger" "bio_cultures" "mic_atmoSounding" "aero_subsonicWing" "str_structuralHardware" "gnc_postWarAvionics" "prop_recipEngine" "gs_soundingStands" }
-  { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "str_rigidBracing" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
+  { rank=same; "fd_turbopumpFeed" "cryo_hydroloxPrototype" "pc_doubleBaseBooster" "pc_hypergolics" "pc_htp" "met_stainlessSteel" "met_isogrid" "str_staging" "elec_semiconductorDiode" "gnc_rcs" "aero_recovery" "opt_fineGrainEmulsion" "str_landingGear" "av_centrifugalJet" "fd_rocketplaneRocket" "str_rigidBracing" "gnc_avionicsPrototypes" "aero_boattail" "str_diameterAdapters" "life_pilotedCockpits" "gs_launchClamps" "gs_launchBases" }
   { rank=same; "fd_singleChamber" "fd_verniers" "pc_compositeSolid" "pc_stentor" "met_nimonic" "str_balloonTank" "aero_fairings" "th_hermeticBus" "elec_transistor" "elec_siliconPV" "str_adjustableGear" "av_axialJet" "aero_supersonicWing" "fd_throttleableRocketplane" "gnc_standardRCS" "aero_stampedWings" "str_prefabAdapters" "life_highAltCompartment" "str_radialDecouplers" "gs_radialClamps" "gs_serviceTowers" "nuc_cosmicRay" "opt_recon" }
-  { rank=same; "jpl_firstSats" "okb_firstSputniks" "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "met_stiffenedFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" "pc_ntoHypergolics" "pc_htpSustainer" "pc_scoutSolids" "pc_strapOnSolids" "pc_retroKick" "fd_regenCooling" "fd_restartableUpper" "fd_storableSustainer" "met_cooledTurbine" "av_turboprop" "av_hydrogenJet" "aero_variableIntake" "str_heavyGear" "pc_pioneerVernierTrim" }
+  { rank=same; "jpl_firstSats" "okb_firstSputniks" "fd_largeChamber" "fd_orbitalSoviet" "fd_orbitalMultiChamber" "cryo_expanderCycle" "rob_rotorActuation" "opt_vidicon" "mic_massSpec" "mic_magnetometer" "av_afterburner" "av_variableStator" "gnc_earlyAvionics" "str_serviceModuleTank" "met_stiffenedFairings" "elec_arCoatings" "str_standardDecouplers" "tel_appSatellites" "gs_holdDownArms" "gs_dedicatedComplexes" "aero_prefabNoseCones" "opt_largeApertureOptics" "pc_ntoHypergolics" "pc_htpSustainer" "pc_scoutSolids" "pc_strapOnSolids" "pc_retroKick" "fd_regenCooling" "fd_restartableUpper" "fd_storableSustainer" "met_cooledTurbine" "av_turboprop" "av_hydrogenJet" "aero_variableIntake" "str_heavyGear" "pc_pioneerVernierTrim" }
   { rank=same; "jpl_appSats" "okb_firstLuna" "fd_matureOrbital" "av_ramjet" "fd_throttlingRocket" "opt_tvRecon" "opt_remoteSensing" "mic_boomMagnetometry" "opt_precisionOptics" "elec_deployableArrays" "gnc_basicAvionics" "tel_dopplerRanging" "str_equipmentBays" "fd_spacecraftPropulsion" "fd_titanTandem" "fd_longMarchStorable" "fd_sovietStorable" "av_highTempTurbojet" "cmp_ablativeTPS" "life_openLoopECLSS" "gnc_spacecraftRCS" "life_pressurisedCabin" "int_launchEscape" "av_refinedTurboprop" }
   { rank=same; "jpl_firstMariner" "okb_earlyPlanetaryComsats" "aero_hotStructure" "gs_crewGantries" "opt_irRadiometry" "opt_twoChannelIR" "opt_uvSpectrometry" "opt_refinedTV" "shd_basicAvionics" "tel_pcmTelemetry" "pc_larchPeroxide" "pc_fluorine" "fd_vacuumExpansion" "fd_longMarchBoattail" "int_dongFangHong1" "fd_saturnKerolox" "av_ramjetAdvanced" "cmp_ablativeRefinement" "int_mercuryCapsule" "int_vostokCapsule" "int_zenitRecon" "edl_crewedRecovery" "int_crewedRetroPack" "opt_orbitalMapping" "fd_engineMaturation" "aero_spaceplaneWing" "life_spaceplaneCockpit" "str_aircraftAirframe" "elec_secondaryBatteries" }
   { rank=same; "jpl_lunarPlanetaryRecon" "okb_lunaLanders" "str_fixedLanderLegs" "life_crewedExperimentBay" "fd_clusteredThrustGrowth" "fd_blendedStorableFuel" "fd_ammoniaCombustionRefinement" "fd_titanStorableConversion" "pc_juno_ClF3" "int_geminiCapsule" "int_voskhodCabin" "gnc_smallRcsCatalog" "fd_continuousThrottleDescent" "cmp_airbagTouchdown" "gnc_threeAxisStabilizedBus" "fd_propellantUllage" "pc_scoutMarkII" "pc_strapOnMarkII" "pc_allSolidStaging" "pc_segmentedCasting" "pc_apogeeKickStage" "pc_storableVernierFamily" "tel_deployableHighGainDish" "tel_antennaCatalog" "elec_deployablePanelII" "elec_fuelCellPower" "opt_radarAltimetry" "opt_infraredInterferometry" "mic_ionMassSpec" "opt_multiSpectralImaging" "rob_heavyRotorActuation" "rob_hingeActuation" "rob_linearActuation" "rob_precisionRotationServo" "rob_sequencedControl" "rob_surfaceMobility" "rob_trackDrive" "rob_screwDrive" "str_fuelCrossfeed" "tel_realAntennaTelemetry" "nuc_isotopePower" "av_mach2Turbojet" "av_dedicatedLiftJet" "th_activeLouvers" "int_compactCrewPod" "cryo_refinedExpander" "gnc_interplanetaryAvionics" "elec_integratedCircuit" "av_highBypassTurbofan" "av_lowBypassTurbofan" "int_heavyLaunchEscape" "aero_liftingReentry" }
@@ -523,6 +525,7 @@ digraph AXE {
   "gnc_postWarAvionics" -> "gnc_rcs" [style=solid];
   "aero_subsonicWing" -> "aero_recovery" [style=solid];
   "start" -> "opt_filmReturn" [style=solid];
+  "opt_filmReturn" -> "opt_fineGrainEmulsion" [style=solid];
   "opt_recon" -> "opt_vidicon" [style=solid];
   "elec_transistor" -> "opt_vidicon" [style=solid];
   "start" -> "nuc_geiger" [style=solid];
@@ -580,7 +583,8 @@ digraph AXE {
   "gs_shuttlePad" -> "gs_modernComplexes" [style=solid];
   "aero_fairings" -> "aero_prefabNoseCones" [style=solid];
   "nuc_geiger" -> "nuc_cosmicRay" [style=solid];
-  "opt_filmReturn" -> "opt_recon" [style=solid];
+  "opt_fineGrainEmulsion" -> "opt_recon" [style=solid];
+  "opt_recon" -> "opt_largeApertureOptics" [style=solid];
   "opt_vidicon" -> "opt_tvRecon" [style=solid];
   "opt_vidicon" -> "opt_remoteSensing" [style=solid];
   "opt_remoteSensing" -> "opt_irRadiometry" [style=solid];
