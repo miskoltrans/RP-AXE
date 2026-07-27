@@ -8,8 +8,9 @@
       1. NUKE     - delete C:\git\ksp\Instance (after first unlinking the RP-AXE junction so the
                     recursive delete can't follow it into the repo and wipe GameData\RP-AXE).
       2. COPY     - mirror the pristine snapshot (..\ksp_instance_clean) into a fresh Instance.
-                    The snapshot is a clean KSP 1.12.5 with the DLCs present, kept OUTSIDE this
-                    working tree so nukes/Steam updates can't touch it.
+                    The snapshot is a clean KSP 1.12.5 with the DLCs present. It sits BESIDE
+                    Instance (both under C:\git\ksp), never inside it -- the nuke targets only
+                    $InstancePath, and preflight refuses to run if the snapshot is under it.
       3. DEPS     - ckan install the RP-AXE perfect-environment mod set from RP-AXE-deps.ckan,
                     targeting the instance directly via --gamedir (no CKAN registration needed).
       4. SCANSAT  - build our SCANsat fork (C:\git\ksp\SCANsat, not on CKAN) and copy its
@@ -20,9 +21,12 @@
     The pristine snapshot does NOT contain RP-1, so nothing has to be disabled.
 
 .PARAMETER CleanSnapshot
-    Pristine KSP install to copy from. Default C:\git\ksp_instance_clean (sibling of the ksp
-    working tree, so a nuke of Instance never reaches it). Create it once by copying a verified
-    stock KSP 1.12.5 (with Making History / Breaking Ground) here.
+    Pristine KSP install to copy from. Default C:\git\ksp\ksp_instance_clean (sibling of Instance,
+    so a nuke of Instance never reaches it). Create it once by copying a verified stock KSP 1.12.5
+    (with Making History / Breaking Ground) here.
+
+    NOTE: this carries settings.cfg too, so a rebuild resets per-instance graphics/UI tweaks
+    (AERO_FX_QUALITY, UI_SCALE, LOG_*_TO_SCREEN, ...) to whatever the snapshot has.
 
 .PARAMETER ScanSatForkPath
     Our SCANsat fork checkout (miskoltrans/SCANsat-GPU). Default C:\git\ksp\SCANsat. Built with
@@ -39,11 +43,19 @@
 #>
 [CmdletBinding()]
 param(
-    [string]$InstancePath    = (Join-Path (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)) 'Instance'),
-    [string]$CleanSnapshot   = (Join-Path (Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PSScriptRoot))) 'ksp_instance_clean'),
-    [string]$CkanExe         = (Join-Path (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)) 'ckan.exe'),
-    [string]$DepsCkan        = (Join-Path (Split-Path -Parent $PSScriptRoot) 'RP-AXE-deps.ckan'),
-    [string]$ScanSatForkPath = (Join-Path (Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PSScriptRoot))) 'SCANsat'),
+    # Everything below hangs off these two roots. Derive, never re-count Split-Paths by hand:
+    # getting the nesting wrong silently produced defaults one directory too high (C:\git\ksp_instance_clean
+    # and C:\git\SCANsat), which nothing on disk matched, so preflight threw on every bare run.
+    #   $PSScriptRoot = C:\git\ksp\RP-AXE\tools
+    #   $AxeRepo      = C:\git\ksp\RP-AXE
+    #   $KspRoot      = C:\git\ksp
+    [string]$AxeRepo         = (Split-Path -Parent $PSScriptRoot),
+    [string]$KspRoot         = (Split-Path -Parent $AxeRepo),
+    [string]$InstancePath    = (Join-Path $KspRoot 'Instance'),
+    [string]$CleanSnapshot   = (Join-Path $KspRoot 'ksp_instance_clean'),
+    [string]$CkanExe         = (Join-Path $KspRoot 'ckan.exe'),
+    [string]$DepsCkan        = (Join-Path $AxeRepo 'RP-AXE-deps.ckan'),
+    [string]$ScanSatForkPath = (Join-Path $KspRoot 'SCANsat'),
     [switch]$Force
 )
 
