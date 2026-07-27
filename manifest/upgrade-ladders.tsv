@@ -1,0 +1,449 @@
+part	config	kind	propellant	thrust_kN	ispVac	ispSL	delta_note	current_node	current_tier	disposition_hint
+microEngine	HTP	FORK-propellant	HTP	1.02	0.465	0.177	HTP	pc_htp	2	MOVE -> node that unlocks HTP
+microEngine	NitrousOxide	FORK-propellant	NitrousOxide	1.06	0.525	0.2	NitrousOxide	pc_hypergolics	2	MOVE -> node that unlocks NitrousOxide
+microEngine	MMH+NTO	FORK-propellant	MMH+NTO	1.78	0.952	0.362	MMH+NTO	pc_storableRcsPropellants	8	MOVE -> node that unlocks MMH+NTO
+microEngine	MMH+MON3	FORK-propellant	MMH+MON3	1.78	0.952	0.362	MMH+MON3	pc_storableRcsPropellants	8	MOVE -> node that unlocks MMH+MON3
+microEngine	MMH+MON10	FORK-propellant	MMH+MON10	1.78	0.949	0.361	MMH+MON10	pc_storableRcsPropellants	8	MOVE -> node that unlocks MMH+MON10
+microEngine	UDMH+NTO	FORK-propellant	UDMH+NTO	1.768	0.943	0.361	UDMH+NTO	pc_storableRcsPropellants	8	MOVE -> node that unlocks UDMH+NTO
+microEngine	Aerozine50+NTO	FORK-propellant	Aerozine50+NTO	1.82	0.955	0.366	Aerozine50+NTO	pc_storableRcsPropellants	8	MOVE -> node that unlocks Aerozine50+NTO
+microEngine	Cavea-B	FORK-propellant	CaveaB	1.7	0.939	0.274	CaveaB	pc_caveaB	9	MOVE -> node that unlocks CaveaB
+microEngine	Hydrazine	FORK-propellant	Hydrazine	1.1	0.72	0.274	Hydrazine	pc_storableRcsPropellants	8	MOVE -> node that unlocks Hydrazine
+microEngine	Ethanol+O2	FORK-propellant	Ethanol75+O2	1.376	0.951	0.361	Ethanol75+O2	pc_storableRcsPropellants	8	MOVE -> node that unlocks Ethanol75+O2
+microEngine	RP-1+O2	FORK-propellant	RP-1+O2	1.448	1.002	0.384	RP-1+O2	pc_storableRcsPropellants	8	MOVE -> node that unlocks RP-1+O2
+microEngine	Syntin+O2	FORK-propellant	Syntin+O2	1.468	1.016	0.389	Syntin+O2	pc_storableRcsPropellants	8	MOVE -> node that unlocks Syntin+O2
+microEngine	ASCENT	FORK-propellant	ASCENT	1.1	0.7553	0.301	ASCENT	pc_storableRcsPropellants	8	MOVE -> node that unlocks ASCENT
+microEngine	CH4+O2	FORK-propellant	CH4+O2	1.376	1.047	0.401	CH4+O2	pc_storableRcsPropellants	8	MOVE -> node that unlocks CH4+O2
+microEngine	H2+O2	FORK-propellant	H2+O2	1.1	1.329	0.388	H2+O2	pc_storableRcsPropellants	8	MOVE -> node that unlocks H2+O2
+ROE-A4	Model39c	FORK-propellant	Visol+Salbei	400	227.0	201.0	Visol+Salbei	met_stainlessSteel	2	MOVE -> node that unlocks Visol+Salbei
+ROE-A4	A-9	FORK-propellant	Hydyne+O2	288.68	255.0	220.0	Hydyne+O2	fd_injectors	1	MOVE -> node that unlocks Hydyne+O2
+ROE-A4	Model39cI	RUNG	Visol+Salbei	245	242.0	195.0	thr-39% isp+15	fd_injectors	1	SPINE step (own node, increasing tier)
+ROE-RD100	RD-101	FORK-propellant	Ethanol90+O2	404.0	237.0	210.0	Ethanol90+O2	met_stainlessSteel	2	MOVE -> node that unlocks Ethanol90+O2
+ROE-RD100	5D60	RUNG	Ethanol90+O2	465.82	248.0	220.0	thr+15% isp+11	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-RD100	RD-102	RUNG	Ethanol90+O2	428.0	235.0	214.0	thr-8% isp-13	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-RD100	RD-103	RUNG	Ethanol90+O2	490.33	248.0	220.0	thr+15% isp+13	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-RD100	RD-103M	RUNG	Ethanol90+O2	500.14	248.0	220.0	thr+2% isp+0	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-VeroniqueAK	VeroniqueAGI	FORK-propellant	Turpentine+IWFNA	49.3	261.0	208.0	Turpentine+IWFNA	fd_injectors	1	MOVE -> node that unlocks Turpentine+IWFNA
+ROE-VeroniqueAK	Veronique61	RUNG	Turpentine+IWFNA	73.8	261.0	208.0	thr+50% isp+0	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-A7	A-6	RUNG	Ethanol75+O2	383	248.0	216.0	thr+0% isp+0	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-A7	A-6H	FORK-propellant	Hydyne+O2	409.36	265.0	239.0	Hydyne+O2	met_stainlessSteel	2	MOVE -> node that unlocks Hydyne+O2
+ROE-A7	A-7	RUNG	Ethanol75+O2	395.5	249.0	218.0	thr+3% isp+1	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-Aerobee	XASR-1	FORK-propellant	ANFA37+IRFNA-III	13.7628	235.44	200.0	ANFA37+IRFNA-III	met_stainlessSteel	2	MOVE -> node that unlocks ANFA37+IRFNA-III
+ROE-Aerobee	XASR-2	PADDING	ANFA37+IRFNA-III	13.7628	235.44	200.0	~XASR-1	met_stainlessSteel	2	DROP
+ROE-Aerobee	AJ10-27	RUNG	ANFA37+IRFNA-III	21.28	231.0	198.0	thr+55% isp-4	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-ORM65	RDA-1-150	RUNG	Kerosene+AK20	1.588	233.0	210.0	thr-18% isp+0	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-ORM65	RDA-1-300	RUNG	Kerosene+AK20	3.176	233.0	210.0	thr+100% isp+0	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROMeteoSustainer	U-1700	RUNG	Kerosene+AK20	19.411	236.4	206.5	thr+35% isp+4	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROMeteoSustainer	U-2000	RUNG	Kerosene+AK20	23	241.3	205.6	thr+18% isp+5	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-XLR11	XLR11-RM-5	PADDING	Ethanol75+O2	26.68	228.0	209.0	~XLR11-RM-3	met_stainlessSteel	2	DROP
+ROE-XLR11	XLR35-RM-1	RUNG	Ethanol75+O2	37.56	234.4	211.0	thr+41% isp+8	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-XLR11	XLR11-RM-13-8K	RUNG	Ethanol75+O2	38.45	230.0	209.0	thr+2% isp-4	met_stainlessSteel	2	SPINE step (own node, increasing tier)
+ROE-XLR11	XLR11-RM-13-10K	RUNG	Ethanol75+O2	47.08	230.0	211.0	thr+22% isp+0	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-LR89_2	LR43-NA-3	FORK-propellant	RP-1+O2	756.8	278.0	245.0	RP-1+O2	met_nimonic	3	MOVE -> node that unlocks RP-1+O2
+ROE-LR89_2	LR89-NA-3	PADDING	RP-1+O2	758.7	282.0	248.0	~LR43-NA-3	fd_regenCooling	4	DROP
+ROE-LR89_2	LR89-NA-5	RUNG	RP-1+O2	831.4	290.0	251.0	thr+10% isp+12	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-LR89_2	LR89-NA-6	RUNG	RP-1+O2	846.6	290.0	256.0	thr+2% isp+0	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-LR89_2	LR89-NA-7.1	RUNG	RP-1+O2	931.7	292.2	258.0	thr+10% isp+2	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-LR89_2	LR89-NA-7.2	PADDING	RP-1+O2	950.8	293.4	259.1	~LR89-NA-7.1	fd_vacuumExpansion	6	DROP
+ROE-LR89_2	RS-56-OBA	RUNG	RP-1+O2	1032.5	293.4	262.1	thr+11% isp+1	fd_terminalGasGenKerolox	11	SPINE step (own node, increasing tier)
+ROE-S2253	S3.42T	FORK-propellant	Kerosene+AK27	127.5	258.0	233.0	Kerosene+AK27	met_nimonic	3	MOVE -> node that unlocks Kerosene+AK27
+ROE-S2253	S5.2	RUNG	Kerosene+AK27	146.3	258.0	233.0	thr+15% isp+0	pc_ntoHypergolics	4	SPINE step (own node, increasing tier)
+ROE-S2253	Isayev-R17	FORK-propellant	UDMH+AK27	165.5	265.0	240.0	UDMH+AK27	fd_engineMaturation	6	MOVE -> node that unlocks UDMH+AK27
+RO-J35	J35-A-17	RUNG	Kerosene	21.80			thr+31% isp+0	met_nimonic	3	SPINE step (own node, increasing tier)
+RO-J47	J47-GE-25A	RUNG	Kerosene	25.22			thr+9% isp+0	met_nimonic	3	SPINE step (own node, increasing tier)
+RO-J47	J47-GE-27	RUNG	Kerosene	26.47			thr+5% isp+0	met_nimonic	3	SPINE step (own node, increasing tier)
+RO-J48	J48-P-8	PADDING	Kerosene	37.8			~J48-P-5	met_nimonic	3	DROP
+aje_j57	J57-P-21	RUNG	Kerosene	75.4			thr+17% isp+0	met_nimonic	3	SPINE step (own node, increasing tier)
+aje_j57	J57-P-20A	RUNG	Kerosene	83.2			thr+10% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+aje_j57	J57-P-420	RUNG	Kerosene	87.2			thr+5% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+RO-JT3C	J57-P-43WA	RUNG	Kerosene	49.82			thr+24% isp+0	met_nimonic	3	SPINE step (own node, increasing tier)
+RO-JT3C	J57-P-7A	PADDING	Kerosene	49.82			~J57-P-43WA	met_nimonic	3	DROP
+RO-JT3C	JT3C-6	PADDING	Kerosene	49.82			~J57-P-43WA	met_nimonic	3	DROP
+aje_avon	Avon114R	RUNG	Kerosene	42.3			thr+27% isp+0	met_nimonic	3	SPINE step (own node, increasing tier)
+aje_avon	Avon200R	RUNG	Kerosene	63.92			thr+51% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+aje_avon	Avon302	RUNG	Kerosene	72.77			thr+14% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+RO-RD9B	RD-9BF-811	RUNG	Kerosene	36.9			thr+16% isp+0	met_nimonic	3	SPINE step (own node, increasing tier)
+RO-RD9B	RD-9AF2-300	PADDING	Kerosene	37.2			~RD-9BF-811	met_cooledTurbine	4	DROP
+RO-RD9B	WP-6	PADDING	Kerosene	31.87			~RD-9B	met_cooledTurbine	4	DROP
+RO-RD9B	WP-6A	PADDING	Kerosene	36.8			~RD-9BF-811	met_cooledTurbine	4	DROP
+RO-RD9B	WP-6Z	RUNG	Kerosene	39.7			thr+8% isp+0	av_advancedFighterTurbojets	8	SPINE step (own node, increasing tier)
+RO-Sapphire203	Sapphire203	RUNG	Kerosene	48.9			thr+33% isp+0	met_nimonic	3	SPINE step (own node, increasing tier)
+ROE-RD107	RD-107-8D74PS	PADDING	Kerosene+O2	972.3	306.0	250.0	~RD-107-8D74	met_nimonic	3	DROP
+ROE-RD107	RD-107-8D74-1958	PADDING	Kerosene+O2	996.4	312.0	254.0	~RD-107-8D74	fd_regenCooling	4	DROP
+ROE-RD107	RD-107-8D76	RUNG	Kerosene+O2	972.8	310.0	253.0	thr-3% isp-3	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-RD107	RD-107-8D74-1959	PADDING	Kerosene+O2	996.4	313.0	256.0	~RD-107-8D74	fd_regenCooling	4	DROP
+ROE-RD107	RD-107-8D74K	PADDING	Kerosene+O2	995.37	313.15	256.05	~RD-107-8D74	fd_regenCooling	4	DROP
+ROE-RD107	RD-107-8D728	PADDING	Kerosene+O2	995.37	314.07	256.87	~RD-107-8D74	fd_engineMaturation	6	DROP
+ROE-RD107	RD-107-11D512	RUNG	Kerosene+O2	999.3	314.58	256.87	thr+3% isp+5	fd_engineMaturation	6	SPINE step (own node, increasing tier)
+ROE-RD107	RD-107-11D512P	FORK-densified	Syntin+O2	1033.3	317.6	261.0	Syntin+O2	fd_engineMaturation	6	MOVE -> node that unlocks Syntin+O2
+ROE-RD107	RD-107A-14D22	PADDING	Kerosene+O2	1019.89	319.99	263.09	~RD-107-8D74	fd_engineMaturation	6	DROP
+ROE-RD108	RD-108-8D75PS	PADDING	Kerosene+O2	918.3	308.0	241.0	~RD-108-8D75	met_nimonic	3	DROP
+ROE-RD108	RD-108-8D75-1958	PADDING	Kerosene+O2	945.4	315.0	246.0	~RD-108-8D75	fd_regenCooling	4	DROP
+ROE-RD108	RD-108-8D77	RUNG	Kerosene+O2	803.2	315.0	246.0	thr-15% isp+0	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-RD108	RD-108-8D75-1959	RUNG	Kerosene+O2	941	315.0	248.0	thr+17% isp+0	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-RD108	RD-108-8D75K	PADDING	Kerosene+O2	941.47	315.0	248.1	~RD-108-8D75-1959	fd_regenCooling	4	DROP
+ROE-RD108	RD-108-8D727	RUNG	Kerosene+O2	973.8	315.81	252.79	thr+3% isp+1	fd_engineMaturation	6	SPINE step (own node, increasing tier)
+ROE-RD108	RD-108-11D511	RUNG	Kerosene+O2	977.72	315.91	252.89	thr+0% isp+0	fd_engineMaturation	6	SPINE step (own node, increasing tier)
+ROE-RD108	RD-108-11D511P	FORK-densified	Syntin+O2	1011	319.0	257.0	Syntin+O2	fd_engineMaturation	6	MOVE -> node that unlocks Syntin+O2
+ROE-RD108	RD-108A-14D21	PADDING	Kerosene+O2	990.47	320.39	257.48	~RD-108-11D511	fd_engineMaturation	6	DROP
+YF2_with_shell	YF-1A	RUNG	UDMH+AK27	1131.72	265.6	239.0	thr+8% isp+6	pc_ntoHypergolics	4	SPINE step (own node, increasing tier)
+YF2_with_shell	YF-1B	FORK-propellant	UDMH+NTO	1214.4	267.2	242.0	UDMH+NTO	pc_ntoHypergolics	4	MOVE -> node that unlocks UDMH+NTO
+YF3_with_shell	YF-3A	FORK-propellant	UDMH+NTO	320.2	286.9	221.0	UDMH+NTO	pc_ntoHypergolics	4	MOVE -> node that unlocks UDMH+NTO
+ROE-Agena	XLR81-BA-5	FORK-propellant	UDMH+IRFNA-III	66.72	277.0	178.0	UDMH+IRFNA-III	pc_ntoHypergolics	4	MOVE -> node that unlocks UDMH+IRFNA-III
+ROE-Agena	XLR81-BA-1	RUNG	Kerosene+IRFNA-III	66.72	265.5	203.6	thr+0% isp+0	fd_spacecraftPropulsion	5	SPINE step (own node, increasing tier)
+ROE-Agena	XLR81-BA-3	RUNG	Kerosene+IRFNA-III	66.72	265.5	203.6	thr+0% isp+0	fd_spacecraftPropulsion	5	SPINE step (own node, increasing tier)
+ROE-Agena	XLR81-BA-7	RUNG	UDMH+IRFNA-III	71.52	280.5	152.0	thr+7% isp+4	pc_ntoHypergolics	4	SPINE step (own node, increasing tier)
+ROE-Agena	XLR81-BA-11	FORK-nozzle	UDMH+IRFNA-III	71.53	289.8	68.0	ispSL152->68	fd_vacuumExpansion	6	MOVE -> nozzle/expansion node
+ROE-Agena	XLR81-LF2-SPS	FORK-propellant	LqdFluorine+H2	53.7	446.2		LqdFluorine+H2	pc_fluorine	6	MOVE -> node that unlocks LqdFluorine+H2
+ROE-Agena	Model8096-HDA	FORK-propellant	UDMH+IRFNA-IV	74.25	294.9	67.0	UDMH+IRFNA-IV	fd_spacecraftPropulsion	5	MOVE -> node that unlocks UDMH+IRFNA-IV
+ROE-Agena	Model8096-39	RUNG	UDMH+IRFNA-IV	75.62	300.0	72.0	thr+2% isp+5	fd_restartableUpperMaturation	9	SPINE step (own node, increasing tier)
+ROE-Agena	Model8096A	RUNG	UDMH+IRFNA-IV	75.62	306.0		thr+0% isp+6	fd_restartableUpperMaturation	9	SPINE step (own node, increasing tier)
+ROE-Agena	Model8096L	FORK-propellant	MMH+IRFNA-IV	71.17	324.0		MMH+IRFNA-IV	fd_restartableUpperMaturation	9	MOVE -> node that unlocks MMH+IRFNA-IV
+ROE-Agena	Model8096B	FORK-propellant	MMH+MON3	71.17	330.0		MMH+MON3	fd_restartableUpperMaturation	9	MOVE -> node that unlocks MMH+MON3
+ROE-Agena	Model8096C	RUNG	MMH+MON3	53.42	336.0		thr-25% isp+6	fd_terminalGasGenKerolox	11	SPINE step (own node, increasing tier)
+ROE-Agena	Agena-2000	RUNG	MMH+MON3	67.58	336.0		thr+27% isp+0	fd_restartableUpperMaturation	9	SPINE step (own node, increasing tier)
+ROE-RD219	RD-252-8D724	FORK-propellant	UDMH+NTO	940.8	317.6	231.0	UDMH+NTO	pc_ntoHypergolics	4	MOVE -> node that unlocks UDMH+NTO
+ROE-RD219	RD-262-11D26	PADDING	UDMH+NTO	941.4	318.0	231.0	~RD-252-8D724	fd_engineMaturation	6	DROP
+ROE-RD855	RD-855	FORK-propellant	UDMH+NTO	82	292.0	254.0	UDMH+NTO	pc_ntoHypergolics	4	MOVE -> node that unlocks UDMH+NTO
+ROE-RD856	RD-856	FORK-propellant	UDMH+NTO	13.48	280.5	263.0	UDMH+NTO	pc_ntoHypergolics	4	MOVE -> node that unlocks UDMH+NTO
+ROE-Gamma301	Gamma-301	RUNG	RP-1+HTP	96.97	251.0	214.8	thr+15% isp+24	pc_larchPeroxide	6	SPINE step (own node, increasing tier)
+ROE-Gamma301	Larch-4	RUNG	RP-1+HTP	133.447	269.0	226.0	thr+38% isp+18	pc_larchPeroxide	6	SPINE step (own node, increasing tier)
+ROE-Gamma2	Larch-2	RUNG	RP-1+HTP	75.1	279.4	204.0	thr+10% isp+12	pc_larchPeroxide	6	SPINE step (own node, increasing tier)
+ROE-Gamma8	Larch-8	RUNG	RP-1+HTP	266.893	269.0	226.0	thr+4% isp+18	pc_larchPeroxide	6	SPINE step (own node, increasing tier)
+ROE-Castor1	Castor-1-SL	RUNG	PSPC	324.6	247.0	220.0	thr+7% isp+32	pc_scoutSolids	4	SPINE step (own node, increasing tier)
+ROE-Castor1	Castor-1-Vac	RUNG	PSPC	349.3	273.21	200.0	thr+8% isp+26	pc_scoutSolids	4	SPINE step (own node, increasing tier)
+ROE-LR105_2	LR105-NA-3	RUNG	RP-1+O2	352.2	309.0	215.0	thr+47% isp+8	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-LR105_2	LR105-NA-5	RUNG	RP-1+O2	366.1	313.0	217.0	thr+4% isp+4	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-LR105_2	LR105-NA-6	PADDING	RP-1+O2	373.2	313.0	217.0	~LR105-NA-5	fd_vacuumExpansion	6	DROP
+ROE-LR105_2	LR105-NA-7.1	RUNG	RP-1+O2	385.2	316.0	220.0	thr+5% isp+3	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-LR105_2	LR105-NA-7.2	PADDING	RP-1+O2	386.4	316.0	220.0	~LR105-NA-7.1	fd_vacuumExpansion	6	DROP
+ROE-LR105_2	RS-56-OSA	RUNG	RP-1+O2	380.6	311.0	216.1	thr-1% isp-5	fd_terminalGasGenKerolox	11	SPINE step (own node, increasing tier)
+ROE-LR79	S-3D	RUNG	RP-1+O2	766.34	288.0	248.0	thr+10% isp+0	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-LR79	LR79-NA-9	RUNG	RP-1+O2	783	284.0	245.0	thr+2% isp-4	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-LR79	LR79-NA-11	RUNG	RP-1+O2	850	286.2	248.3	thr+9% isp+2	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-LR79	S-3FH	FORK-propellant	UDMH+O2	850	305.5	266.1	UDMH+O2	fd_vacuumExpansion	6	MOVE -> node that unlocks UDMH+O2
+ROE-LR79	LR79-NA-13	RUNG	RP-1+O2	873	290.93	252.4	thr+3% isp+5	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-RZ	RZ.2-Mk3	RUNG	RP-1+O2	763	282.0	249.5	thr+10% isp-6	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-RZ	RZ.2-Mk4	RUNG	RP-1+O2	791.2	284.0	249.0	thr+4% isp+2	fd_regenCooling	4	SPINE step (own node, increasing tier)
+ROE-Viking4	Viking-4	BASE	UDMH+NTO	721.4	289.9	200.0		fd_regenCooling	4	
+ROE-Viking4	Viking-4B	FORK-propellant	UH25+NTO	784.8	290.7	206.0	UH25+NTO	fd_blendedStorableFuel	7	MOVE -> node that unlocks UH25+NTO
+ROE-Viking4	Viking-4C	PADDING	UH25+NTO	808	292.7	208.0	~Viking-4B	fd_blendedStorableFuel	7	DROP
+ROE-Viking5	Viking-5	BASE	UDMH+NTO	692.8	280.6	247.5		fd_regenCooling	4	
+ROE-Viking5	Viking-5B	FORK-propellant	UH25+NTO	748.2	278.5	242.3	UH25+NTO	fd_blendedStorableFuel	7	MOVE -> node that unlocks UH25+NTO
+ROE-Viking5	Viking-5C	PADDING	UH25+NTO	760	278.5	242.3	~Viking-5B	fd_blendedStorableFuel	7	DROP
+ROE-Viking5	Viking-6	RUNG	UH25+NTO	760	278.3	242.3	thr+2% isp-0	fd_blendedStorableFuel	7	SPINE step (own node, increasing tier)
+ROE-LR87_Single	LR87-AJ-3	PADDING	RP-1+O2	765.95	289.1	251.9	~LR87-AJ-1	fd_regenCooling	4	DROP
+ROE-LR87_Single	LR87-AJ-5	FORK-propellant	Aerozine50+NTO	1053.9	285.2	258.8	Aerozine50+NTO	fd_titanStorableConversion	7	MOVE -> node that unlocks Aerozine50+NTO
+ROE-LR87_Single	LR87-AJ-5-Kero	RUNG	RP-1+O2	913.5	290.1	262.9	thr+19% isp+1	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR87_Single	LR87-AJ-7	RUNG	Aerozine50+NTO	1053.9	285.2	258.8	thr+0% isp+0	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR87_Single	LR87-AJ-7-Kero	RUNG	RP-1+O2	913.5	290.1	262.9	thr+0% isp+0	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR87_Single	LR87-AJ-9	PADDING	Aerozine50+NTO	1053.9	285.2	258.8	~LR87-AJ-5	fd_titanStorableConversion	7	DROP
+ROE-LR87_Single	LR87-AJ-9-Kero	PADDING	RP-1+O2	913.5	290.1	262.9	~LR87-AJ-5-Kero	fd_titanStorableConversion	7	DROP
+ROE-LR87_Single	LR87-AJ-11	RUNG	Aerozine50+NTO	1155.6	302.0	254.0	thr+10% isp+17	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR87_Single	LR87-AJ-11-Kero	RUNG	RP-1+O2	1001.7	306.9	257.3	thr+10% isp+17	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR87_Single	LR87-AJ-11A	RUNG	Aerozine50+NTO	1210.8	303.5	254.3	thr+5% isp+2	fd_terminalGasGenKerolox	11	SPINE step (own node, increasing tier)
+ROE-LR87_Single	LR87-AJ-11A-Kero	RUNG	RP-1+O2	1049.5	308.4	257.7	thr+5% isp+2	fd_terminalGasGenKerolox	11	SPINE step (own node, increasing tier)
+ROE-LR91-4V	LR91-AJ-3	PADDING	RP-1+O2	358.54	312.5	210.0	~LR91-AJ-1	fd_regenCooling	4	DROP
+ROE-LR91-4V	LR91-AJ-5	FORK-propellant	Aerozine50+NTO	448.7	309.2	195.0	Aerozine50+NTO	fd_titanStorableConversion	7	MOVE -> node that unlocks Aerozine50+NTO
+ROE-LR91-4V	LR91-AJ-5-Kero	RUNG	RP-1+O2	391.8	313.3	195.0	thr+9% isp+1	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR91-4V	LR91-AJ-7	RUNG	Aerozine50+NTO	448.7	309.2	195.0	thr+0% isp+0	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR91-4V	LR91-AJ-7-Kero	RUNG	RP-1+O2	391.8	313.3	195.0	thr+0% isp+0	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR91-4V	LR91-AJ-9	RUNG	Aerozine50+NTO	448.7	309.2	195.0	thr+0% isp+0	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR91-4V	LR91-AJ-9-Kero	RUNG	RP-1+O2	391.8	313.3	195.0	thr+0% isp+0	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR91-4V	LR91-AJ-11	RUNG	Aerozine50+NTO	448.7	318.0	205.0	thr+0% isp+9	fd_titanStorableConversion	7	SPINE step (own node, increasing tier)
+ROE-LR91-4V	LR91-AJ-11A	RUNG	Aerozine50+NTO	472.5	317.7	210.0	thr+5% isp-0	fd_terminalGasGenKerolox	11	SPINE step (own node, increasing tier)
+ROE-LR91-4V	LR91-AJ-11A-Kero	RUNG	RP-1+O2	412.6	319.3	210.0	thr+5% isp-1	fd_terminalGasGenKerolox	11	SPINE step (own node, increasing tier)
+ROE-RD0105	RD-0109	RUNG	Kerosene+O2	54.5	323.5	163.0	thr+10% isp+8	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-RD0110	RD-0106	RUNG	Kerosene+O2	297.9	326.0	194.0	thr+0% isp+0	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-RD0110	RD-0108	RUNG	Kerosene+O2	297.9	326.0	194.0	thr+0% isp+0	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-RD0110	RD-0110	FORK-nozzle	Kerosene+O2	318.78	330.4	245.0	ispSL194->245	fd_engineMaturation	6	MOVE -> nozzle/expansion node
+ROE-X405H	X-405H	BASE	RP-1+O2	150.5	318.68	213.03		fd_vacuumExpansion	6	
+ROE-X405H	X-405H-2	RUNG	RP-1+O2	150.5	318.68	213.03	thr+0% isp+0	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-X405H	X-405H-3	RUNG	RP-1+O2	161.86	330.02	186.35	thr+8% isp+11	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-X405H	X-405H-4	RUNG	RP-1+O2	186.42	330.53	197.35	thr+15% isp+1	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10A-3-1	RUNG	H2+O2	66.7	427.0	187.0	thr+2% isp+5	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10A-3-3	RUNG	H2+O2	70.05	442.2	186.0	thr+5% isp+15	cryo_refinedExpander	7	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10A-3-7	RUNG	H2+O2	66.7	442.4	186.0	thr-5% isp+0	cryo_refinedExpander	7	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10A-3-3A	RUNG	H2+O2	73.4	444.4	217.0	thr+10% isp+2	cryo_refinedExpander	7	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10A-3-9	RUNG	H2+O2	101	424.0	240.0	thr+38% isp-20	cryo_refinedExpander	7	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10A-3-3B	PADDING	H2+O2	66.7	440.0	191.0	~RL10A-3-7	cryo_refinedExpander	7	DROP
+ROE-RL10Fixed	RL10A-4	RUNG	H2+O2	91.2	446.4	243.0	thr-10% isp+22	cryo_refinedExpander	7	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10A-5	RUNG	H2+O2	64.75	368.0	341.0	thr-29% isp-78	cryo_refinedExpander	7	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10A-4-1-2	RUNG	H2+O2	97.9	446.4	249.0	thr+51% isp+78	cryo_refinedExpander	7	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10A-4-2N	RUNG	H2+O2	99.2	451.0	217.0	thr+1% isp+5	cryo_refinedExpander	7	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	CECE-Base	RUNG	H2+O2	67	460.0	249.0	thr-32% isp+9	cryo_deployableNozzleExpander	11	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	CECE-Methane	FORK-propellant	CH4+O2	67	360.0	88.0	CH4+O2	cryo_deployableNozzleExpander	11	MOVE -> node that unlocks CH4+O2
+ROE-RL10Fixed	RL10C-1	FORK-nozzle	H2+O2	101.85	449.7	148.0	ispSL249->148	cryo_deployableNozzleExpander	11	MOVE -> nozzle/expansion node
+ROE-RL10Fixed	RL10C-1A	RUNG	H2+O2	102.78	453.8	116.0	thr+1% isp+4	cryo_deployableNozzleExpander	11	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10C-1-1	RUNG	H2+O2	106.0	453.8	122.0	thr+3% isp+0	cryo_deployableNozzleExpander	11	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10C-3	FORK-nozzle	H2+O2	108.3	460.1	45.0	ispSL122->45	cryo_deployableNozzleExpander	11	MOVE -> nozzle/expansion node
+ROE-RL10Fixed	RL10E-1	FORK-nozzle	H2+O2	107.3	460.9	24.0	ispSL45->24	cryo_deployableNozzleExpander	11	MOVE -> nozzle/expansion node
+ROE-RL10Fixed	RL10E-3EL	RUNG	H2+O2	108.1	470.5	24.0	thr+1% isp+10	cryo_deployableNozzleExpander	11	SPINE step (own node, increasing tier)
+ROE-RL10Fixed	RL10E-3ELL	FORK-nozzle	H2+O2	108.1	464.8	132.0	ispSL24->132	cryo_deployableNozzleExpander	11	MOVE -> nozzle/expansion node
+YF22_Engine	YF-22B	RUNG	UDMH+NTO	742.2	298.0	237.0	thr+3% isp+9	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+YF22_Engine	YF-22E	RUNG	UDMH+NTO	784.5	298.0	213.0	thr+6% isp+0	fd_clusteredThrustGrowth	7	SPINE step (own node, increasing tier)
+YF23_Engine	YF-23B	RUNG	UDMH+NTO	11.8	296.8	198.0	thr+2% isp+17	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-LR101_2	LR101-NA-11	RUNG	RP-1+O2	5.304	246.0	209.8	thr+4% isp+8	fd_vacuumExpansion	6	SPINE step (own node, increasing tier)
+ROE-LR101_2	LR101-NA-15	RUNG	RP-1+O2	2.976	247.0	190.5	thr-44% isp+1	fd_terminalGasGenKerolox	11	SPINE step (own node, increasing tier)
+ROE-AJ10Early	AJ10-42	RUNG	UDMH+IWFNA	33.0	267.0	122.0	thr-2% isp-4	fd_restartableUpper	4	SPINE step (own node, increasing tier)
+ROE-AJ10Early	AJ10-101A	PADDING	UDMH+IWFNA	33.4	270.0	122.0	~AJ10-42	fd_restartableUpper	4	DROP
+ROE-AJ10Early	AJ10-142	RUNG	UDMH+IWFNA	34.25	270.0	122.0	thr+4% isp+3	fd_restartableUpper	4	SPINE step (own node, increasing tier)
+ROE-AJ10Early	AJ10-118	PADDING	UDMH+IWFNA	33.1	265.0	122.0	~AJ10-42	fd_restartableUpper	4	DROP
+ROE-AJ10Early	AJ10-118D	FORK-propellant	UDMH+IRFNA-III	33.7	272.5	122.0	UDMH+IRFNA-III	fd_restartableUpper	4	MOVE -> node that unlocks UDMH+IRFNA-III
+RO-AL7F	AL-7F-1	RUNG	Kerosene	94.1			thr+6% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+RO-AL7F	AL-7F-2	RUNG	Kerosene	99.0			thr+5% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+RO-Nord1500	Atar101E-3	BASE	Kerosene	34.3				met_cooledTurbine	4	
+aje_j79	CJ805-3B	RUNG	Kerosene	51.82			thr-22% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+aje_j79	J79-GE-2A	RUNG	Kerosene	71.84			thr+39% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+aje_j79	J79-GE-5C	RUNG	Kerosene	69.39			thr-3% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+aje_j79	J79-GE-8	RUNG	Kerosene	75.62			thr+9% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+aje_j79	J79-GE-10	RUNG	Kerosene	79.45			thr+5% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+aje_j79	J79-GE-11	PADDING	Kerosene	70.28			~J79-GE-2A	met_cooledTurbine	4	DROP
+aje_j79	J79-GE-17	PADDING	Kerosene	79.62			~J79-GE-10	met_cooledTurbine	4	DROP
+aje_j79	J79-GE-119	RUNG	Kerosene	83.29			thr+5% isp+0	av_advancedFighterTurbojets	8	SPINE step (own node, increasing tier)
+aje_j79	J79-MTU-J1K	PADDING	Kerosene	71.17			~J79-GE-2A	av_advancedFighterTurbojets	8	DROP
+aje_j79	J79-IAI-J1E	PADDING	Kerosene	83.4			~J79-GE-119	av_secondGenAfterburner	9	DROP
+aje_j75	J75-P-19	PADDING	Kerosene	111.2			~J75-P-17	met_cooledTurbine	4	DROP
+aje_j75	J75-P-5A	RUNG	Kerosene	131.2			thr+20% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+RO-J85GE5	J85-GE-5	BASE	Kerosene	17.1				met_cooledTurbine	4	
+RO-J85GE5	J85-GE-21	RUNG	Kerosene	22.2			thr+30% isp+0	av_advancedFighterTurbojets	8	SPINE step (own node, increasing tier)
+RO-R11F	R-11F2-300	RUNG	Kerosene	60.82			thr+8% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+RO-R11F	R-11F2S-300	PADDING	Kerosene	60.56			~R-11F2-300	met_cooledTurbine	4	DROP
+RO-R11F	WP-7	PADDING	Kerosene	56.39			~R-11F-300	met_cooledTurbine	4	DROP
+RO-R11F	WP-7A	RUNG	Kerosene	58.84			thr-3% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+RO-R11F	WP-7B	PADDING	Kerosene	59.82			~R-11F2-300	av_advancedFighterTurbojets	8	DROP
+RO-R11F	WP-7BM	PADDING	Kerosene	60.60			~R-11F2-300	av_advancedFighterTurbojets	8	DROP
+SXTPWPT6	PT6A-27	RUNG	Kerosene	11.3			thr+19% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+SXTPWPT6	PT6A-28	RUNG	Kerosene	10.3			thr-9% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+SXTPWPT6	PT6A-11AG	RUNG	Kerosene	8.4			thr-18% isp+0	av_refinedTurboprop	5	SPINE step (own node, increasing tier)
+SXTPWPT6	PT6A-15AG	PADDING	Kerosene	11.1			~PT6A-27	av_refinedTurboprop	5	DROP
+SXTPWPT6	PT6A-20A	PADDING	Kerosene	9.6			~PT6A-6A	av_refinedTurboprop	5	DROP
+SXTPWPT6	PT6A-34	PADDING	Kerosene	10.2			~PT6A-28	av_refinedTurboprop	5	DROP
+SXTPWPT6	PT6A-42	RUNG	Kerosene	13.0			thr+55% isp+0	av_refinedTurboprop	5	SPINE step (own node, increasing tier)
+SXTPWPT6	PT6A-135	PADDING	Kerosene	11.2			~PT6A-27	av_refinedTurboprop	5	DROP
+SXTPWPT6	PT6A-21	PADDING	Kerosene	9.6			~PT6A-6A	av_refinedTurboprop	5	DROP
+SXTPWPT6	PT6A-34AG	RUNG	Kerosene	12.3			thr-5% isp+0	av_refinedTurboprop	5	SPINE step (own node, increasing tier)
+RO-R15BD	R-15BD-300	PADDING	Kerosene	109.8			~R-15B-300	met_cooledTurbine	4	DROP
+RO-R15BD	R-15BF2-300	RUNG	Kerosene	142.2			thr+30% isp+0	av_advancedHighSpeedTurbojets	8	SPINE step (own node, increasing tier)
+aje_atar	Atar09K-50	RUNG	Kerosene	70.6			thr+20% isp+0	met_cooledTurbine	4	SPINE step (own node, increasing tier)
+nfa-vtol-125-1	RB162-4D	BASE	Kerosene	39.14				met_cooledTurbine	4	
+nfa-vtol-125-1	RB162-81	RUNG	Kerosene	53.46			thr+37% isp+0	av_advancedHighSpeedTurbojets	8	SPINE step (own node, increasing tier)
+RO-RJ43	RJ43-MA-11	RUNG	Kerosene	53			thr+4% isp+0	av_ramjetAdvanced	6	SPINE step (own node, increasing tier)
+RO-RJ43	RJ43-MA-5	PADDING	Kerosene	53			~RJ43-MA-11	av_ramjetAdvanced	6	DROP
+RO-RJ43	MA20S-4	PADDING	Kerosene	54			~RJ43-MA-11	av_ramjetAdvanced	6	DROP
+YF25K_Engine	YF-20B	RUNG	UDMH+NTO	822.2	289.5	260.7	thr+6% isp+0	fd_clusteredThrustGrowth	7	SPINE step (own node, increasing tier)
+YF25K_Engine	YF-25K	RUNG	UDMH+NTO	839.6	289.5	260.7	thr+2% isp+0	fd_clusteredThrustGrowth	7	SPINE step (own node, increasing tier)
+YF25K_Engine	YF-20C	RUNG	UDMH+NTO	839.6	289.5	260.7	thr+0% isp+0	fd_clusteredThrustGrowth	7	SPINE step (own node, increasing tier)
+ROE-XLR99	XLR99-RM-3	RUNG	LqdAmmonia+O2	281.9	298.0	198.0	thr+10% isp+22	fd_ammoniaCombustionRefinement	7	SPINE step (own node, increasing tier)
+ROE-XLR99	XLR99-RM-5	RUNG	LqdAmmonia+O2	369.2	298.0	222.0	thr+31% isp+0	fd_ammoniaCombustionRefinement	7	SPINE step (own node, increasing tier)
+ROE-Juno45K	Juno45k-BII	FORK-propellant	Hydrazine+ClF3	253.3688	305.0	127.0	Hydrazine+ClF3	pc_juno_ClF3	7	MOVE -> node that unlocks Hydrazine+ClF3
+ROE-Juno6K	Juno6k-BII	FORK-propellant	Hydrazine+ClF3	34.176	302.0	110.0	Hydrazine+ClF3	pc_juno_ClF3	7	MOVE -> node that unlocks Hydrazine+ClF3
+ROE-BabySergeantX3	JPL-532A	RUNG	PSPC	24	235.0	214.0	thr+0% isp+15	pc_pioneerVernierTrim	4	SPINE step (own node, increasing tier)
+ROE-RS27	H-1-188K	RUNG	RP-1+O2	950.19	295.0	259.63	thr+12% isp+0	fd_gasGeneratorCeiling	8	SPINE step (own node, increasing tier)
+ROE-RS27	H-1-200K	RUNG	RP-1+O2	997.93	295.0	262.07	thr+5% isp+0	fd_gasGeneratorCeiling	8	SPINE step (own node, increasing tier)
+ROE-RS27	H-2-250K	RUNG	RP-1+O2	1260.7	297.0	262.0	thr+26% isp+2	fd_gasGeneratorCeiling	8	SPINE step (own node, increasing tier)
+ROE-RS27	H-1-205K	PADDING	RP-1+O2	1021.01	295.0	262.57	~H-1-200K	fd_matureKeroloxClusterUprating	9	DROP
+ROE-RS27	RS-27	RUNG	RP-1+O2	1023	295.0	264.0	thr-19% isp-2	fd_matureKeroloxClusterUprating	9	SPINE step (own node, increasing tier)
+ROE-RS27	H-1-250K	PADDING	RP-1+O2	1224.46	295.0	267.93	~H-2-250K	fd_matureKeroloxClusterUprating	9	DROP
+ROE-RS27	H-2-300K	RUNG	RP-1+O2	1480.6	297.0	267.7	thr+45% isp+2	fd_matureKeroloxClusterUprating	9	SPINE step (own node, increasing tier)
+ROE-RS27	RS-27A	RUNG	RP-1+O2	1054.23	302.0	255.0	thr-29% isp+5	fd_terminalGasGenKerolox	11	SPINE step (own node, increasing tier)
+ROE-E1	E-1-468k	RUNG	RP-1+O2	2366.3	291.0	256.0	thr+22% isp+1	fd_gasGeneratorCeiling	8	SPINE step (own node, increasing tier)
+ROE-E1	E-1-500k	RUNG	RP-1+O2	2505.97	291.0	258.27	thr+6% isp+0	fd_gasGeneratorCeiling	8	SPINE step (own node, increasing tier)
+ROE-E1	E-1-Upgrade	RUNG	RP-1+O2	2358.25	290.0	256.0	thr-6% isp-1	fd_gasGeneratorCeiling	8	SPINE step (own node, increasing tier)
+ROE-E1	E-1-575k	RUNG	RP-1+O2	2828.57	292.0	264.04	thr+20% isp+2	fd_matureKeroloxClusterUprating	9	SPINE step (own node, increasing tier)
+ROE-E1	E-1-Upgrade2	RUNG	RP-1+O2	2662.6	301.0	264.0	thr-6% isp+9	fd_matureKeroloxClusterUprating	9	SPINE step (own node, increasing tier)
+ROE-E1	E-1A_KS	RUNG	RP-1+O2	2250	310.0	269.0	thr-15% isp+9	fd_matureKeroloxClusterUprating	9	SPINE step (own node, increasing tier)
+ROE-RD111	RD-111-8D716A	PADDING	Kerosene+O2	1628	318.0	276.0	~RD-111-8D716	fd_gasGeneratorCeiling	8	DROP
+ROE-LMDE	LMDE-J	PADDING	Aerozine50+MON1	46.92	306.4		~LMDE-H	fd_lunarSurfaceMobility	10	DROP
+ROE-LMDE	TR-201	RUNG	Aerozine50+MON1	43.5	303.0		thr-7% isp-2	fd_lunarSurfaceMobility	10	SPINE step (own node, increasing tier)
+ROE-LMAE	RS-18	FORK-propellant	CH4+O2	24.5	356.0	72.0	CH4+O2	fd_lunarSurfaceMobility	10	MOVE -> node that unlocks CH4+O2
+ROE-F1	F-1-1.52M	PADDING	RP-1+O2	7895.01	305.0	265.0	~F-1-1.5M	fd_gasGeneratorApex	9	DROP
+ROE-F1	F-1A	RUNG	RP-1+O2	9189.6	306.2	268.8	thr+18% isp+5	fd_gasGeneratorApex	9	SPINE step (own node, increasing tier)
+ROE-LR87_LH2	LR87-LH2-Vacuum	RUNG	H2+O2	778	421.0	315.0	thr+17% isp+18	cryo_gasGeneratorHydrolox	8	SPINE step (own node, increasing tier)
+ROE-LR87_LH2	LR87-LH2-SustainerUpgrade	RUNG	H2+O2	801	409.0	358.0	thr+3% isp-12	cryo_gasGeneratorHydrolox	8	SPINE step (own node, increasing tier)
+ROE-LR87_LH2	LR87-LH2-VacuumUpgrade	RUNG	H2+O2	889	434.0	289.0	thr+11% isp+25	cryo_gasGeneratorHydrolox	8	SPINE step (own node, increasing tier)
+ROE-RZ20	RZ20-Mk2	RUNG	H2+O2	72.56	425.0	185.0	thr+4% isp+15	cryo_gasGeneratorHydrolox	8	SPINE step (own node, increasing tier)
+ROE-J2	J-2-225K	RUNG	H2+O2	1000.850	424.0	302.0	thr+13% isp+6	cryo_largeHydrolox	9	SPINE step (own node, increasing tier)
+ROE-J2	J-2-230K	PADDING	H2+O2	1023.091	424.5	304.0	~J-2-225K	cryo_largeHydrolox	9	DROP
+ROE-J2	J-2S	RUNG	H2+O2	1178.778	436.0	323.0	thr+18% isp+12	cryo_matureGasGeneratorHydrolox	10	SPINE step (own node, increasing tier)
+ROE-RL10A4N	RL10A-4-1N	RUNG	H2+O2	99.2	450.5	216.0	thr+7% isp+2	cryo_refinedExpander	7	SPINE step (own node, increasing tier)
+ROE-RL10A4N	RL10A-4N	BASE	H2+O2	92.5	448.9	207.0		cryo_refinedExpander	7	
+ROE-RL10B2	RL10B-2	BASE	H2+O2	110.1	465.5			cryo_refinedExpander	7	
+ROE-RL10B2	CECE-High	RUNG	H2+O2	110	465.0		thr-0% isp-0	cryo_highThrustExpander	12	SPINE step (own node, increasing tier)
+ROE-RL10B2	RL10C-2	RUNG	H2+O2	110.1	465.6		thr+0% isp+1	cryo_highThrustExpander	12	SPINE step (own node, increasing tier)
+ROE-RL10B2	RL10C-2-1	PADDING	H2+O2	110.1	465.5		~RL10B-2	cryo_highThrustExpander	12	DROP
+ROE-LE5	LE-5A	FORK-nozzle	H2+O2	121.5	452.0	138.0	ispSL100->138	cryo_refinedExpander	7	MOVE -> nozzle/expansion node
+ROE-LE5	LE-5B	RUNG	H2+O2	137.2	446.8	145.0	thr+13% isp-5	cryo_refinedExpander	7	SPINE step (own node, increasing tier)
+ROE-LE5	LE-5B-2	PADDING	H2+O2	137.2	446.8	143.0	~LE-5B	cryo_operationalHydroloxUpperII	12	DROP
+ROE-LE5	LE-5B-3	RUNG	H2+O2	137.2	448.0	146.0	thr+0% isp+1	cryo_operationalHydroloxUpperII	12	SPINE step (own node, increasing tier)
+ROE-NK9V	NK-19	RUNG	RG-1+O2	451.1	345.0	230.0	thr+0% isp+0	pc_n1ClosedCycle	9	SPINE step (own node, increasing tier)
+ROE-NK9V	NK-21	RUNG	RG-1+O2	402.1	340.0	225.0	thr-11% isp-5	pc_n1ClosedCycle	9	SPINE step (own node, increasing tier)
+ROE-NK9V	NK-31	RUNG	RG-1+O2	402.1	353.0	214.0	thr+0% isp+13	pc_n1ClosedCycle	9	SPINE step (own node, increasing tier)
+ROE-NK9V	NK-39	RUNG	RG-1+O2	407	352.0	213.0	thr+1% isp-1	pc_n1ClosedCycle	9	SPINE step (own node, increasing tier)
+ROE-RD58	11D33	RUNG	Kerosene+O2	66.7	340.0	165.0	thr+5% isp+1	pc_n1ClosedCycle	9	SPINE step (own node, increasing tier)
+ROE-RD58	11D33M	RUNG	Kerosene+O2	67.3	342.2	168.0	thr+1% isp+2	pc_n1ClosedCycle	9	SPINE step (own node, increasing tier)
+ROE-RD58	RD-58	FORK-propellant	RG-1+O2	83.36	349.0	135.0	RG-1+O2	pc_n1ClosedCycle	9	MOVE -> node that unlocks RG-1+O2
+ROE-RD58	RD-58M	RUNG	RG-1+O2	83.36	356.0	155.0	thr+0% isp+7	pc_n1ClosedCycle	9	SPINE step (own node, increasing tier)
+ROE-RD58	17D12	FORK-propellant	Syntin+O2	86.24	362.0	158.0	Syntin+O2	pc_n1ClosedCycle	9	MOVE -> node that unlocks Syntin+O2
+ROE-RD58	RD-58S	RUNG	Syntin+O2	86.3	361.0	157.0	thr+0% isp-1	fd_terminalGasGenKerolox	11	SPINE step (own node, increasing tier)
+ROE-RD58	RD-58M-CCN	FORK-nozzle	RG-1+O2	85	361.0	90.0	ispSL155->90	pc_n1ClosedCycle	9	MOVE -> nozzle/expansion node
+ROE-RD275	RD-253-Mk2	RUNG	UDMH+NTO	1635	316.0	285.0	thr+6% isp+0	pc_refinedStorableORSC	9	SPINE step (own node, increasing tier)
+ROE-RD275	RD-253-Mk3	RUNG	UDMH+NTO	1698	316.0	285.0	thr+4% isp+0	pc_refinedStorableORSCII	10	SPINE step (own node, increasing tier)
+ROE-RD275	RD-253-Mk4	PADDING	UDMH+NTO	1748	316.0	285.0	~RD-253-Mk3	pc_operationalStorableORSC	11	DROP
+ROE-RD275	RD-275	RUNG	UDMH+NTO	1746	316.0	287.0	thr+3% isp+0	pc_operationalStorableORSC	11	SPINE step (own node, increasing tier)
+ROE-RD275	RD-275M	RUNG	UDMH+NTO	1830	315.8	288.0	thr+5% isp-0	pc_refinedStorableORSC	9	SPINE step (own node, increasing tier)
+ROE-RD254	RD-254-11D44-Mk2	RUNG	UDMH+NTO	1716	327.8	240.0	thr+6% isp+0	pc_refinedStorableORSC	9	SPINE step (own node, increasing tier)
+ROE-RD254	RD-254-11D44-Mk3	RUNG	UDMH+NTO	1782	327.8	240.0	thr+4% isp+0	pc_operationalStorableORSC	11	SPINE step (own node, increasing tier)
+ROE-RD254	RD-254-11D44-Mk4	PADDING	UDMH+NTO	1834	327.8	240.0	~RD-254-11D44-Mk3	pc_operationalStorableORSC	11	DROP
+ROE-RD254	RD-277-14D16	PADDING	UDMH+NTO	1834	327.8	243.0	~RD-254-11D44-Mk3	pc_operationalStorableORSC	11	DROP
+ROE-RD254	RD-277M-14D16M	RUNG	UDMH+NTO	1922	327.8	245.0	thr+8% isp+0	pc_refinedStorableORSC	9	SPINE step (own node, increasing tier)
+ROE-RD0210	RD-0210	RUNG	UDMH+NTO	584.77	327.0	242.0	thr+2% isp+1	pc_refinedStorableORSC	9	SPINE step (own node, increasing tier)
+ROE-RD0210	RD-0210-Mk2	PADDING	UDMH+NTO	600	327.3	242.0	~RD-0210	pc_refinedStorableORSCII	10	DROP
+ROE-RD0210	RD-0210-Mk3	RUNG	UDMH+NTO	626	341.5	256.0	thr+7% isp+14	pc_operationalStorableORSC	11	SPINE step (own node, increasing tier)
+ROE-RD0203	RD-0203U	PADDING	UDMH+NTO	569.2	311.0	278.0	~RD-0203	pc_refinedStorableORSC	9	DROP
+ROE-RD0212	RD-0212	RUNG	UDMH+NTO	612.78	325.3	240.0	thr+1% isp+1	pc_refinedStorableORSC	9	SPINE step (own node, increasing tier)
+ROE-RD0212	RD-0212-Mk2	PADDING	UDMH+NTO	624.98	325.3	240.0	~RD-0212	pc_refinedStorableORSCII	10	DROP
+ROE-RD0212	RD-0212-Mk3	RUNG	UDMH+NTO	638.18	325.3	240.0	thr+4% isp+0	pc_operationalStorableORSC	11	SPINE step (own node, increasing tier)
+ROE-RD0213	RD-0213	RUNG	UDMH+NTO	581.8	327.0	242.0	thr+1% isp+1	pc_refinedStorableORSC	9	SPINE step (own node, increasing tier)
+ROE-RD0213	RD-0213-Mk2	PADDING	UDMH+NTO	594.0	327.0	242.0	~RD-0213	pc_refinedStorableORSCII	10	DROP
+ROE-RD0213	RD-0213-Mk3	RUNG	UDMH+NTO	607.2	327.0	242.0	thr+4% isp+0	pc_operationalStorableORSC	11	SPINE step (own node, increasing tier)
+ROE-RD0214	RD-0214	RUNG	UDMH+NTO	7.745	293.0	189.0	thr+0% isp-4	pc_refinedStorableORSC	9	SPINE step (own node, increasing tier)
+turboFanSize2	CF6-50A	RUNG	Kerosene	218.0			thr+18% isp+0	av_advancedJetEngines	8	SPINE step (own node, increasing tier)
+turboFanSize2	CF6-50E2	RUNG	Kerosene	233.5			thr+26% isp+0	av_secondGenTurbofan	9	SPINE step (own node, increasing tier)
+turboFanSize2	CF6-80A	PADDING	Kerosene	213.5			~CF6-50A	av_secondGenTurbofan	9	DROP
+turboJet	F100-PW-220	PADDING	Kerosene	106.0			~F100-PW-100	av_advancedJetEngines	8	DROP
+turboJet	F100-PW-229	RUNG	Kerosene	129.4			thr+22% isp+0	av_fourthGenFighterTurbofan	10	SPINE step (own node, increasing tier)
+turboJet	F100-PW-229PYBBN	PADDING	Kerosene	129.4			~F100-PW-229	av_fourthGenFighterTurbofan	10	DROP
+turboJet	F100-PW-229EEP	RUNG	Kerosene	144.6			thr+12% isp+0	av_fourthGenFighterTurbofan	10	SPINE step (own node, increasing tier)
+JetEngine	TF34-GE-400A	PADDING	Kerosene	41.25			~CF34-1A	av_advancedJetEngines	8	DROP
+JetEngine	CF34-1A	BASE	Kerosene	40.66				av_secondGenTurbofan	9	
+JetEngine	CF34-3B	PADDING	Kerosene	41.01			~CF34-1A	av_fourthGenFighterTurbofan	10	DROP
+RO-R13	R-13F-300	PADDING	Kerosene	64.75			~R-13-300	av_advancedHighSpeedTurbojets	8	DROP
+RO-R13	R-13F2-300	RUNG	Kerosene	68.95			thr+8% isp+0	av_advancedHighSpeedTurbojets	8	SPINE step (own node, increasing tier)
+RO-R13	WP-13	PADDING	Kerosene	62.77			~R-13-300	av_secondGenAfterburner	9	DROP
+RO-R13	WP-13A-II	PADDING	Kerosene	63.45			~R-13-300	av_fourthGenFighterTurbofan	10	DROP
+RO-R13	WP-13F	PADDING	Kerosene	63.26			~R-13-300	av_fourthGenFighterTurbofan	10	DROP
+RO-R13	WP-13FI	RUNG	Kerosene	66.69			thr-3% isp+0	av_fourthGenFighterTurbofan	10	SPINE step (own node, increasing tier)
+ROE-AJ260SLF	AJ260-SL3	RUNG	PBAN	26708	263.0	238.0	thr+51% isp+0	pc_largeSegmentedBooster	8	SPINE step (own node, increasing tier)
+ROE-AgenaSPS	ISPS	FORK-propellant	UDMH+IRFNA-III+ElectricCharge	0.4	273.0		UDMH+IRFNA-III+ElectricCharge	pc_storableRcsPropellants	8	MOVE -> node that unlocks UDMH+IRFNA-III+ElectricCharge
+ROE-AgenaSPS	ISPS-HDA	FORK-propellant	UDMH+IRFNA-IV+ElectricCharge	0.4	278.0		UDMH+IRFNA-IV+ElectricCharge	pc_storableRcsPropellants	8	MOVE -> node that unlocks UDMH+IRFNA-IV+ElectricCharge
+ROE-AJ10Mid	AJ10-118E	RUNG	UDMH+IRFNA-III	35.2	278.0	65.0	thr+0% isp+0	fd_engineMaturation	6	SPINE step (own node, increasing tier)
+ROE-G1	G-1A	FORK-nozzle	Hydrazine+LqdFluorine	55.02	368.0	28.0	ispSL127->28	fd_engineMaturation	6	MOVE -> nozzle/expansion node
+RO_KVD1	KVD-1	RUNG	H2+O2	73.6	461.5	146.0	thr+6% isp+14	cryo_uprateRestartableHydrolox	10	SPINE step (own node, increasing tier)
+RO_KVD1	CE-7.5	RUNG	H2+O2	69.55	452.0	130.0	thr-6% isp-10	cryo_uprateRestartableHydrolox	10	SPINE step (own node, increasing tier)
+ROE-HM7	HM-7B	RUNG	H2+O2	64.2	443.2	201.0	thr+3% isp+2	cryo_matureGasGeneratorHydrolox	10	SPINE step (own node, increasing tier)
+ROE-HM7	HM-7B+	RUNG	H2+O2	64.6	446.0	196.0	thr+1% isp+3	cryo_matureGasGeneratorHydrolox	10	SPINE step (own node, increasing tier)
+ROE-HM7	HM-7B++	RUNG	H2+O2	64.8	445.6	193.0	thr+0% isp-0	cryo_matureGasGeneratorHydrolox	10	SPINE step (own node, increasing tier)
+YF75_Engine	YF-75D	RUNG	H2+O2	176.72	442.6	211.0	thr+13% isp+3	cryo_matureGasGeneratorHydrolox	10	SPINE step (own node, increasing tier)
+YF75_Engine	YF-75E	FORK-nozzle	H2+O2	184.22	451.1	80.0	ispSL211->80	cryo_matureGasGeneratorHydrolox	10	MOVE -> nozzle/expansion node
+ROE-M1	M-1	RUNG	H2+O2	6672.332	430.0	308.0	thr+25% isp+2	cryo_matureGasGeneratorHydrolox	10	SPINE step (own node, increasing tier)
+ROE-M1	M-1SL	RUNG	H2+O2	6928	414.0	344.5	thr+4% isp-16	cryo_matureGasGeneratorHydrolox	10	SPINE step (own node, increasing tier)
+ROE-M1	M-1U	RUNG	H2+O2	8006.799	430.0	320.0	thr+16% isp+16	cryo_matureGasGeneratorHydrolox	10	SPINE step (own node, increasing tier)
+ROE-M1	M-1U-SL	RUNG	H2+O2	7708.87	414.0	344.5	thr-4% isp-16	cryo_matureGasGeneratorHydrolox	10	SPINE step (own node, increasing tier)
+cryoengine-vesuvius-1	Vulcain-2	BASE	H2+O2	1350	433.0	320.0		cryo_matureGasGeneratorHydrolox	10	
+ROE-HG3	HG-3-SL	FORK-nozzle	H2+O2	1382.07	445.0	340.0	ispSL270->340	cryo_ssme	11	MOVE -> nozzle/expansion node
+ROE-HG3	HG-3A	RUNG	H2+O2	1400.70	451.0	270.0	thr+1% isp+6	cryo_ssme	11	SPINE step (own node, increasing tier)
+ROE-HG3	HG-3A-SL	FORK-nozzle	H2+O2	1382.07	445.0	340.0	ispSL270->340	cryo_ssme	11	MOVE -> nozzle/expansion node
+ROE-HG3	HG-3B	RUNG	H2+O2	1400.70	458.0	340.0	thr+1% isp+13	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+ROE-HG3	HG-3B-2	RUNG	H2+O2	1422.44	458.0	285.0	thr+2% isp+0	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+ROE-HG3	HG-3B-SL	RUNG	H2+O2	1382.35	452.0	352.0	thr-3% isp-6	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+ROE-HG3	HG-3B-SL-2	PADDING	H2+O2	1403.81	452.0	352.0	~HG-3B-SL	cryo_reusableEngineUprating	13	DROP
+ROE-RD270	RD-270M-8D420M	FORK-propellant	PB-1+HTP	7159	365.0	340.0	PB-1+HTP	pc_rd270Variants	11	MOVE -> node that unlocks PB-1+HTP
+ROE-RD270	RD-116-8D420K	FORK-propellant	RG-1+O2	6325.3	333.0	310.0	RG-1+O2	pc_rd270Variants	11	MOVE -> node that unlocks RG-1+O2
+ROE-NK33	NK-33	RUNG	RG-1+O2	1765.7	331.0	297.23	thr+14% isp+13	pc_zenitKerolox	10	SPINE step (own node, increasing tier)
+ROE-NK33	AJ26-58	FORK-densified	RP-1+O2	1753.3	331.0	297.23	RP-1+O2	pc_zenitKerolox	10	MOVE -> node that unlocks RP-1+O2
+ROE-NK33	AJ26-59	RUNG	RP-1+O2	1753.3	331.0	297.23	thr+0% isp+0	pc_zenitKerolox	10	SPINE step (own node, increasing tier)
+ROE-NK33	AJ26-62	RUNG	RP-1+O2	1815	331.9	301.6	thr+4% isp+1	pc_zenitKerolox	10	SPINE step (own node, increasing tier)
+ROE-NK43	NK-43	RUNG	RG-1+O2	1757.4	346.0	251.0	thr+7% isp+21	pc_zenitKerolox	10	SPINE step (own node, increasing tier)
+ROE-NK43	AJ26-60	RUNG	RG-1+O2	1823.9	346.0	251.0	thr+4% isp+0	pc_zenitKerolox	10	SPINE step (own node, increasing tier)
+SXTNK21BlockV	4x_NK-39	RUNG	RG-1+O2	1628	353.0	246.0	thr+1% isp+0	pc_zenitKerolox	10	SPINE step (own node, increasing tier)
+ROE-Star37FM	STAR-37FMV	PADDING	HTPB	55.6	293.7	145.0	~STAR-37FM	pc_apogeeKickCatalogIII	10	DROP
+ROE-AJ10Adv	AJ10-133-Hylas	FORK-propellant	H2+O2	26.67	433.0		H2+O2	fd_restartableUpperMaturation	9	MOVE -> node that unlocks H2+O2
+ROE-AJ10Adv	AJ10-133-LH	RUNG	H2+O2	26.67	430.0		thr+0% isp-3	fd_restartableUpperMaturation	9	SPINE step (own node, increasing tier)
+ROE-AJ10Adv	AJ10-118F	RUNG	Aerozine50+NTO	42.1	306.0		thr+18% isp+4	fd_restartableUpperMaturation	9	SPINE step (own node, increasing tier)
+ROE-AJ10Adv	AJ10-138A	PADDING	Aerozine50+NTO	35.585	310.6		~AJ10-138	fd_restartableUpperMaturation	9	DROP
+ROE-AJ10AdvLong	AJ10-118K	BASE	Aerozine50+MON1	43.6	319.2			fd_restartableUpperMaturation	9	
+ROE-AJ10-transtar	AJ10-153	RUNG	MMH+MON3	16.7	328.0		thr-37% isp-6	fd_restartableUpperMaturation	9	SPINE step (own node, increasing tier)
+ROE-AJ10-transtar	AJ10-154	FORK-propellant	H2+O2	13.3	483.0		H2+O2	fd_restartableUpperMaturation	9	MOVE -> node that unlocks H2+O2
+ROE-AJ10-transtar	AJ10-156	RUNG	MMH+MON3	16.7	343.0	80.0	thr+0% isp+15	fd_restartableUpperMaturation	9	SPINE step (own node, increasing tier)
+ROE-KTDU425A	KTDU-425A	RUNG	UDMH+NTO	18.89	315.0	263.0	thr+0% isp+3	fd_restartableUpperMaturation	9	SPINE step (own node, increasing tier)
+ROE-LEROS1B	LEROS-1c	RUNG	Hydrazine+MON1	0.470	324.0		thr-34% isp+7	gnc_bipropAttitudeThrust	9	SPINE step (own node, increasing tier)
+ROE-LEROS1B	LEROS-2b	FORK-propellant	MMH+MON3	0.456	319.5		MMH+MON3	gnc_bipropAttitudeThrust	9	MOVE -> node that unlocks MMH+MON3
+RO-WS10	WS-10B	RUNG	Kerosene	144			thr+9% isp+0	av_secondGenTurbofan	9	SPINE step (own node, increasing tier)
+RO-WS10	WS-10B-III	PADDING	Kerosene	144			~WS-10B	av_combinedCycleSSTO	13	DROP
+nfa-turbojet-25-1	GE4-J6H	RUNG	Kerosene	297			thr+6% isp+0	av_secondGenAfterburner	9	SPINE step (own node, increasing tier)
+ROE-RS25	RS-25A	RUNG	H2+O2	2173.6	453.5	361.5	thr+4% isp-2	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+ROE-RS25	RS-25C	RUNG	H2+O2	2278.1	452.3	366.3	thr+5% isp-1	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+ROE-RS25	RS-25D-E	RUNG	H2+O2	2364.5	452.3	366.3	thr+4% isp+0	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+rmm_ishtar	RS-25D-50X	RUNG	H2+O2	2293.2	447.1	394.3	thr+11% isp-3	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+ROE-RD0120	RD-0120M	PADDING	H2+O2	1961.7	455.6	359.1	~RD-0120	cryo_reusableEngineUprating	13	DROP
+ROE-RD0120	RD-0122	RUNG	H2+O2	2313	460.7	392.0	thr+18% isp+6	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+ROE-LE7	LE-7A	RUNG	H2+O2	996.4	438.0	326.0	thr-9% isp-8	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+ROE-LE7	LE-7A-2	RUNG	H2+O2	1098	440.0	338.0	thr+10% isp+2	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+ROE-RD57	RD-57M	RUNG	H2+O2	432	461.0	276.0	thr+10% isp+4	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+ROE-RD57	RD-57A-1	RUNG	H2+O2	395	460.0	292.0	thr-9% isp-1	cryo_reusableEngineUprating	13	SPINE step (own node, increasing tier)
+rmm_arenysaurus	LRBE-BlockII	PADDING	CH4+O2	2473.5	352.7	327.7	~LRBE	cryo_reusableEngineUprating	13	DROP
+rmm_dugong	SSBE-BlockII	PADDING	RP-1+O2+H2	2306	358.7	333.8	~SSBE	cryo_reusableEngineUprating	13	DROP
+ROE-RD170	RD-171	BASE	RG-1+O2	7904	337.2	309.3		pc_modularORSC	12	
+ROE-RD170	RD-172-173	RUNG	RG-1+O2	8316	337.4	310.9	thr+5% isp+0	pc_modularORSC	12	SPINE step (own node, increasing tier)
+ROE-RD170	RD-171M	PADDING	RG-1+O2	7904	337.2	309.5	~RD-171	pc_modularORSC	12	DROP
+ROE-RD120	RD-120K	FORK-nozzle	RG-1+O2	853.18	330.0	304.4	ispSL175->304	pc_modularORSC	12	MOVE -> nozzle/expansion node
+ROE-RD120	RD-120F	FORK-nozzle	RG-1+O2	912.02	350.0	175.0	ispSL304->175	pc_modularORSC	12	MOVE -> nozzle/expansion node
+ROE-RD191	RD-193	PADDING	RG-1+O2	2085	337.5	311.2	~RD-191	pc_modularORSCII	13	DROP
+ROE-RD191	RD-191	BASE	RG-1+O2	2085	337.5	311.2		pc_modularORSC	12	
+ROE-RD191	RD-181	PADDING	RP-1+O2	2085	339.2	311.9	~RD-191	pc_modularORSCII	13	DROP
+YF100_Engine_S	YF-100K	RUNG	RP-1+O2	1397.0	337.0	301.5	thr+4% isp+2	pc_modularORSC	12	SPINE step (own node, increasing tier)
+restock-engine-125-pug	AestusMod	RUNG	MMH+MON3	35	306.0	113.0	thr+26% isp+0	fd_multiRestartStorableUpperII	12	SPINE step (own node, increasing tier)
+restock-engine-125-pug	Aestus-II	RUNG	MMH+MON3	55.4	340.0	150.0	thr+58% isp+34	fd_multiRestartStorableUpperII	12	SPINE step (own node, increasing tier)
+restock-srb-anvil-1	RSRM-1986	PADDING	PBAN	14819	268.0	243.0	~RSRM-1981	pc_filamentWoundSolid	10	DROP
+restock-srb-anvil-1	FWC-SRM	PADDING	PBAN	14819	268.0	243.0	~RSRM-1981	pc_filamentWoundSolid	10	DROP
+RO-SPT50	SPT-50M	RUNG	XenonGas+ElectricCharge	0.000018	1200.0	1.0	thr+29% isp+340	ep_operationalHall	11	SPINE step (own node, increasing tier)
+RO-457M	457M-V1-K	FORK-propellant	KryptonGas+ElectricCharge	0.002473	3817.0	1.0	KryptonGas+ElectricCharge	ep_operationalHall	11	MOVE -> node that unlocks KryptonGas+ElectricCharge
+RO-457M	457M-V2	RUNG	XenonGas+ElectricCharge	0.0019864	2740.0	1.0	thr-33% isp-189	ep_nasaHighPowerHall	13	SPINE step (own node, increasing tier)
+RO-SPT70	SPT-70M	RUNG	XenonGas+ElectricCharge	0.0000413	1580.0	1.0	thr+6% isp+110	ep_operationalHall	11	SPINE step (own node, increasing tier)
+RO-SPT70	SPT-70MK	FORK-propellant	KryptonGas+ElectricCharge	0.0000313	1460.0	1.0	KryptonGas+ElectricCharge	ep_operationalHall	11	MOVE -> node that unlocks KryptonGas+ElectricCharge
+RO-SPT100	SPT-100B	RUNG	XenonGas+ElectricCharge	0.000083	1600.0	1.0	thr+4% isp+0	ep_highPowerHall	12	SPINE step (own node, increasing tier)
+RO-SPT100	SPT-100D	RUNG	XenonGas+ElectricCharge	0.0000883	1740.0	1.0	thr+6% isp+140	ep_highPowerHall	12	SPINE step (own node, increasing tier)
+RO-SPT100	SPT-100M	RUNG	XenonGas+ElectricCharge	0.0000902	1734.0	1.0	thr+2% isp-6	ep_highPowerHall	12	SPINE step (own node, increasing tier)
+pit-125	PITV-Hydrazine-40	FORK-propellant	Hydrazine+ElectricCharge	0.00076	4100.0	1.0	Hydrazine+ElectricCharge	ep_highPowerHall	12	MOVE -> node that unlocks Hydrazine+ElectricCharge
+pit-125	PITV-Ammonia-1200	RUNG	Ammonia+ElectricCharge	0.02162	7000.0	1.0	thr+2903% isp+0	ep_pulsedInductiveII	13	SPINE step (own node, increasing tier)
+pit-125	PITV-Hydrazine-1200	RUNG	Hydrazine+ElectricCharge	0.02292	4100.0	1.0	thr+2916% isp+0	ep_pulsedInductiveII	13	SPINE step (own node, increasing tier)
+RO-SPT140	SPT-140D	RUNG	XenonGas+ElectricCharge	0.000290	1770.0	1.0	thr+50% isp+90	ep_highPowerHall	12	SPINE step (own node, increasing tier)
+RO-nupit	NuPIT-7000	RUNG	LqdAmmonia+ElectricCharge	0.0043	7000.0	1.0	thr-12% isp+1000	ep_pulsedInductiveII	13	SPINE step (own node, increasing tier)
+RO-KA-PrincetonLNTR	PrincetonLNTR-WCH	RUNG	H2+EnrichedUranium+CoreModerator	40.88	1414.0	570.0	thr+5% isp+64	nuc_advancedCoreNTR	13	SPINE step (own node, increasing tier)
+ROE-SNTPPFE100	SNTPPFE100-Hydrogen	RUNG	H2+EnrichedUranium	245.2	954.0	578.0	thr+19% isp+14	nuc_advancedCoreNTR	13	SPINE step (own node, increasing tier)
+aje_f404	F404-GE-402	RUNG	Kerosene	78.75			thr+11% isp+0	av_fourthGenFighterTurbofan	10	SPINE step (own node, increasing tier)
+aje_f404	RM12	PADDING	Kerosene	80.51			~F404-GE-402	av_fourthGenFighterTurbofan	10	DROP
+turboFanEngine	J58-P-4A	RUNG	Kerosene	158.8			thr+5% isp+0	av_fourthGenFighterTurbofan	10	SPINE step (own node, increasing tier)
+turboFanEngine	J58-P-4B	PADDING	Kerosene	158.8			~J58-P-4A	av_fourthGenFighterTurbofan	10	DROP
+aje_al31	AL-31FM	RUNG	Kerosene	130.4			thr+7% isp+0	av_fourthGenFighterTurbofan	10	SPINE step (own node, increasing tier)
+aje_al31	AL-41F-1S	RUNG	Kerosene	142.2			thr+9% isp+0	av_fourthGenFighterTurbofan	10	SPINE step (own node, increasing tier)
+RO-SXT-R79	R-79M-300	RUNG	Kerosene	176.15			thr+20% isp+0	av_fourthGenFighterTurbofan	10	SPINE step (own node, increasing tier)
+RO-SXT-R79	R-79V-300	RUNG	Kerosene	153.77			thr-13% isp+0	av_fourthGenFighterTurbofan	10	SPINE step (own node, increasing tier)
+ROE-HiPAT	R-4D-15	RUNG	MMH+MON3	0.511	322.2		thr+0% isp+11	gnc_deepSpaceApogeeEngine	11	SPINE step (own node, increasing tier)
+ROE-HiPAT	R-4D-15DM	FORK-propellant	Hydrazine+MON3	0.556	329.0		Hydrazine+MON3	gnc_deepSpaceApogeeEngine	11	MOVE -> node that unlocks Hydrazine+MON3
+ROE-J2T	J-2T-250K	RUNG	H2+O2	1111.6	440.0	373.0	thr+25% isp-2	cryo_toroidalAerospikeNozzleII	10	SPINE step (own node, increasing tier)
+ROE-RS68	RS-68A	RUNG	H2+O2	3641.4	412.0	362.0	thr+8% isp+2	cryo_combustionTapOff	12	SPINE step (own node, increasing tier)
+ROE-RS68	RS-68B	RUNG	H2+O2	3641.4	414.2	364.0	thr+0% isp+2	cryo_combustionTapOff	12	SPINE step (own node, increasing tier)
+ROE-RS68	RS-68K	RUNG	H2+O2	3719.9	418.0	372.9	thr+2% isp+4	cryo_combustionTapOff	12	SPINE step (own node, increasing tier)
+ROE-RS68	RS-800	RUNG	H2+O2	4192.2	435.0	364.0	thr+13% isp+17	cryo_combustionTapOff	12	SPINE step (own node, increasing tier)
+ROE-RD0146	RD-0146D	FORK-nozzle	H2+O2	73.5	470.0	140.0	ispSL195->140	cryo_highThrustExpander	12	MOVE -> nozzle/expansion node
+cryoengine-tharsis-1	Vinci-180	RUNG	H2+O2	360	465.0	150.0	thr-38% isp+0	cryo_expanderBoosterScale	13	SPINE step (own node, increasing tier)
+ROE-Merlin1C	Merlin1C	BASE	RP-1+O2	482.63	304.8	267.0		fd_reusableGasGenKerolox	12	
+ROE-Merlin1CV	Merlin1CVac	BASE	Kerosene+O2	524.9	336.0	166.0		fd_reusableGasGenKerolox	12	
+ROE-Merlin1D	Merlin1D	BASE	RP-1+O2	742.4	311.0	282.0		fd_densifiedPropellantKerolox	13	
+ROE-Merlin1D	Merlin1D+	RUNG	RP-1+O2	825	311.0	282.0	thr+11% isp+0	fd_densifiedPropellantKeroloxII	14	SPINE step (own node, increasing tier)
+ROE-Merlin1D	Merlin1D++	RUNG	RP-1+O2	914.12	311.0	288.5	thr+11% isp+0	fd_densifiedPropellantKeroloxII	14	SPINE step (own node, increasing tier)
+ROE-Merlin1DV	Merlin1DVac	BASE	RP-1+O2	805	345.0	216.0		fd_densifiedPropellantKerolox	13	
+ROE-Merlin1DV	Merlin1DVac+	RUNG	RP-1+O2	934.12	348.0	227.0	thr+16% isp+3	fd_densifiedPropellantKeroloxII	14	SPINE step (own node, increasing tier)
+ROE-R42	R-42DM	FORK-propellant	Hydrazine+MON3	0.89	327.0		Hydrazine+MON3	gnc_deepThrottlingAbortLandingEngine	12	MOVE -> node that unlocks Hydrazine+MON3
+ROE-R42	R-42DM-NTO	FORK-propellant	Hydrazine+NTO	0.89	327.0		Hydrazine+NTO	gnc_deepThrottlingAbortLandingEngine	12	MOVE -> node that unlocks Hydrazine+NTO
+ionXenon-0625-3	DS4G-25-hi	RUNG	XenonGas+ElectricCharge	0.00031	15000.0	1.0	thr-62% isp+10000	ep_nextGenGriddedIonII	14	SPINE step (own node, increasing tier)
+ionXenon-0625-3	DS4G-25-mid	RUNG	XenonGas+ElectricCharge	0.00045	10000.0	1.0	thr-45% isp+5000	ep_nextGenGriddedIonII	14	SPINE step (own node, increasing tier)
+ionXenon-0625-3	DS4G-50-hi	RUNG	XenonGas+ElectricCharge	0.00061	15000.0	1.0	thr+36% isp+5000	ep_nextGenGriddedIonII	14	SPINE step (own node, increasing tier)
+ionXenon-0625-3	DS4G-50-low	RUNG	XenonGas+ElectricCharge	0.00109	8000.0	1.0	thr+79% isp-7000	ep_nextGenGriddedIonII	14	SPINE step (own node, increasing tier)
+ionArgon-0625	AEPS	RUNG	XenonGas+ElectricCharge	0.000589	2900.0	1.0	thr+0% isp+80	ep_nasaHighPowerHallII	14	SPINE step (own node, increasing tier)
+ionArgon-0625-3	X3-HV	RUNG	XenonGas+ElectricCharge	0.008	3490.0	1.0	thr+48% isp+1150	ep_nasaHighPowerHallII	14	SPINE step (own node, increasing tier)
+ionArgon-0625-3	X3-HV-K	FORK-propellant	KryptonGas+ElectricCharge	0.0064	4370.0	1.0	KryptonGas+ElectricCharge	ep_nasaHighPowerHallII	14	MOVE -> node that unlocks KryptonGas+ElectricCharge
+vasimr-125	VF-200-Kr	FORK-propellant	KryptonGas+ElectricCharge	0.0084	3210.0	1.0	KryptonGas+ElectricCharge	ep_variableSpecificImpulsePlasmaII	15	MOVE -> node that unlocks KryptonGas+ElectricCharge
+vasimr-0625	VX-200SS-Kr	FORK-propellant	KryptonGas+ElectricCharge	0.007	3850.0	1.0	KryptonGas+ElectricCharge	ep_variableSpecificImpulsePlasmaII	15	MOVE -> node that unlocks KryptonGas+ElectricCharge
+ntr-gc-25-1	LPNTR-3600HP	RUNG	H2	47.596	1183.0		thr+0% isp+146	nuc_bimodalNTR	14	SPINE step (own node, increasing tier)
