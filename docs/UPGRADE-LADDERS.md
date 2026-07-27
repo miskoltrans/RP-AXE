@@ -285,18 +285,35 @@ and it will report the true remaining count as the migration proceeds.
 6. Rung redistribution along spines, discipline by discipline. *(outstanding)*
 7. Flip the checker to error and re-run the full tree build. *(outstanding)*
 
-### `catalog: true` — the two current uses, both reviewable
+### `catalog: true` — the remaining uses
 
-A node flagged `catalog: true` is exempt from R1 and may grant many classes for one part. Under the
-scatter-by-default direction above this is a narrow exception, and only two nodes carry it today:
+A node flagged `catalog: true` is exempt from R1 and may grant many classes for one part. Under
+scatter-by-default this is a narrow exception. Three nodes carry it:
 
-| node | family | why | verdict |
-|---|---|---|---|
-| `av_refinedTurboprop` | PT6, 11 marks | thrust wanders 8.4–13.0 kN in **no order at all**; there is no progression to scatter | sound |
-| `cryo_deployableNozzleExpander` | RL10C/E, 7 marks | they *do* differ by a mechanism (nozzle expansion, ispSL 148→24) | **scatterable — flag for review** |
+| node | family | why it holds |
+|---|---|---|
+| `av_refinedTurboprop` | PT6, 11 marks | thrust wanders 8.4–13.0 kN in **no order at all** — no progression exists to scatter |
+| `ep_nextGenGriddedIonII` | DS4G 25 kW | grid-voltage **operating points** of one experimental thruster, split from the 50 kW class on the real hardware axis |
+| `ep_kilowattClassPPU` | DS4G 50 kW | as above |
 
-The RL10C/E case is the honest one to revisit first if you want the scatter pushed further: seven nozzle
-lengths could be seven nodes, or two or three grouped by generation.
+**`cryo_deployableNozzleExpander` was flagged and then CUT (2026-07-27).** Calling the eight RL10C/E marks
+"one decision, eight names" was wrong, and reading only thrust is what hid it — they sit at 101–108 kN, so
+on that axis they really do look identical. Two other axes run straight through them:
+
+```
+nozzle expansion   ispSL  148 -> 116 -> 45 -> 24
+restart life       ign     20 ->  25 -> 50 -> 260 -> 500
+```
+
+Those are different mechanisms bought at different times, so they became two lanes off the node rather
+than one bucket sitting on it — six new nodes, T11→T16:
+
+`cryo_deployableNozzleExpander` T11 → `cryo_extendedBellExpander` T12 → `cryo_highExpansionNozzle` T13 →
+`cryo_extendibleNozzleDeployment` T14 → `cryo_longLifeRestartExpander` T15 → `cryo_extremeRestartExpander` T16,
+with `cryo_deepThrottleExpander` T12 branching off for CECE's 10:1 throttle and 50 starts.
+
+The lesson generalises: **`catalog: true` is only honest when NO axis orders the family.** Before reaching
+for it, check every axis — thrust, both Isp figures, ignitions, burn time — not just the obvious one.
 
 ### Remaining worklist (re-measured 2026-07-27, after the scatter pass)
 

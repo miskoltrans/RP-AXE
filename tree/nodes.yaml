@@ -3776,16 +3776,58 @@ nodes:
     discipline: Cryogenics
     tier: 11
     parents: [cryo_refinedExpander]
-    catalog: true
-    # LADDER PASS (2026-07-27): flagged `catalog: true` (R1 exemption). The RL10C/E marks are a modern
-    # CATALOG of nozzle options for one engine, not a progression — C-1/C-1A/C-1-1/C-3/E-1/E-3EL/E-3ELL
-    # sit at 101-108 kN and differ almost entirely by expansion (ispSL 148/116/122/45/24/24/132), which is
-    # this node's entire subject. Seven marks, one decision: how long a nozzle do you want.
+    # LADDER PASS (2026-07-27): the `catalog: true` flag tried here was CUT. Calling the RL10C/E marks
+    # "one decision, eight names" was wrong — there are two real axes running through them, and reading
+    # only thrust hid both. NOZZLE EXPANSION (ispSL 148 -> 116 -> 45 -> 24) and RESTART LIFE (ignitions
+    # 20 -> 25 -> 50 -> 260 -> 500) are different mechanisms bought at different times, so they are two
+    # lanes off this node rather than one bucket sitting on it.
     flavor: "The expander cycle's payoff arrives: a radiatively-cooled nozzle that unfolds after staging trades stowed length for the highest vacuum Isp of any engine that flies. The RL-10B-2's carbon-carbon skirt reaches 465 seconds; the RD-0146 is the Russian closed-expander answer. The long RL-10 chain, idle since its last refinement, leaps a full fleet-generation here."
     parts: [ROE-RL10B2, ROE-RL10A4N, ROE-RD0146]
-    upgrades: [RFUpgrade_CECE-Base, RFUpgrade_RL10C-1, RFUpgrade_RL10C-1-1, RFUpgrade_RL10C-1A, RFUpgrade_RL10C-3, RFUpgrade_RL10E-1, RFUpgrade_RL10E-3EL, RFUpgrade_RL10E-3ELL]  # RL10C-3 + RL10E family added 2026-07 (gap-fill; RL10C-1/2 siblings here). RD-0146D/CECE-High/RL10C-2/RL10C-2-1 (own base parts ROE-RD0146/ROE-RL10B2 here) moved down to cryo_highThrustExpander, doctrine-4 fix 2026-07
+    upgrades: [RFUpgrade_RL10C-1]  # RL10C-3 + RL10E family added 2026-07 (gap-fill; RL10C-1/2 siblings here). RD-0146D/CECE-High/RL10C-2/RL10C-2-1 (own base parts ROE-RD0146/ROE-RL10B2 here) moved down to cryo_highThrustExpander, doctrine-4 fix 2026-07
     # 2026-07 (band-5 sweep): the RL-10C/CECE marks route here (downstream continuation of the RL10Fixed
     # lineage, same "idle-then-leap" precedent already used for this node's own T7->T11 jump).
+  - id: cryo_deepThrottleExpander
+    title: "Deep-Throttling Expander Cycle"
+    discipline: Cryogenics
+    tier: 12
+    parents: [cryo_deployableNozzleExpander]
+    flavor: "Throttle a hydrogen expander to a tenth of its rated thrust and keep the turbine spinning on heat the chamber is barely making any more. Fifty starts instead of twenty, and a descent stage that can hover and pick its landing site rather than committing to one burn."
+    upgrades: [RFUpgrade_CECE-Base]
+  - id: cryo_extendedBellExpander
+    title: "Extended-Bell Expander Nozzle"
+    discipline: Cryogenics
+    tier: 12
+    parents: [cryo_deployableNozzleExpander]
+    flavor: "Grow the fixed bell as far as the fairing will take it. Sea-level performance falls away — irrelevant for a stage that never lights in air — and four more seconds of vacuum impulse come back for nothing but stowed length."
+    upgrades: [RFUpgrade_RL10C-1A]
+  - id: cryo_highExpansionNozzle
+    title: "High-Expansion Vacuum Nozzle"
+    discipline: Cryogenics
+    tier: 13
+    parents: [cryo_extendedBellExpander]
+    flavor: "Past a certain area ratio the exhaust is colder than the metal and the nozzle stops being a pressure vessel at all. Sea-level Isp collapses to a number nobody quotes; in vacuum it is the best chemical engine anyone has built."
+    upgrades: [RFUpgrade_RL10C-3]
+  - id: cryo_extendibleNozzleDeployment
+    title: "Extendible Nozzle Deployment"
+    discipline: Cryogenics
+    tier: 14
+    parents: [cryo_highExpansionNozzle]
+    flavor: "Stow the skirt around the chamber and slide it down on jackscrews once the stage is clear. The engine finally stops trading expansion ratio against the length of the vehicle — and gains a mechanism that must not jam, in vacuum, after a cold coast, exactly once."
+    upgrades: [RFUpgrade_RL10E-1]
+  - id: cryo_longLifeRestartExpander
+    title: "Long-Life Restart Expander"
+    discipline: Cryogenics
+    tier: 15
+    parents: [cryo_extendibleNozzleDeployment, cryo_deepThrottleExpander]
+    flavor: "Two hundred and sixty starts. The igniter, the valves and the turbine bearings stop being qualified for a mission and start being qualified for a career — a stage that can loiter for months, phase, deorbit its own debris, and light again because nothing about lighting is scarce any more."
+    upgrades: [RFUpgrade_RL10E-3EL]
+  - id: cryo_extremeRestartExpander
+    title: "Unlimited-Restart Expander"
+    discipline: Cryogenics
+    tier: 16
+    parents: [cryo_longLifeRestartExpander]
+    flavor: "Five hundred ignitions is not a bigger number than two hundred and sixty; it is the point where you stop counting them and start treating the engine as something you simply use. Orbital tugs, distributed launch, a stage whose limit is propellant and nothing else."
+    upgrades: [RFUpgrade_RL10E-3ELL]
   - id: cryo_operationalHydroloxUpper
     title: "Operational Restartable Hydrolox Upper"
     discipline: Cryogenics
@@ -3838,7 +3880,7 @@ nodes:
     tier: 14
     parents: [cryo_reusableEngineUprating]
     flavor: "The second pass over an engine already qualified to fly again: new turbopump rotors, a wider surge margin, and inspection intervals long enough that the overhaul between flights stops being a rebuild. Thrust follows, but the real gain is how many times you can do it."
-    upgrades: [RFUpgrade_HG-3B-2, RFUpgrade_LE-7A-2, RFUpgrade_RD-0122, RFUpgrade_RD-57A-1, RFUpgrade_RS-25C]
+    upgrades: [RFUpgrade_HG-3B-2, RFUpgrade_LE-7A-2, RFUpgrade_RD-0122, RFUpgrade_RD-57A-1, RFUpgrade_RS-25C, RFUpgrade_RL10C-1-1]
   - id: cryo_reusableChamberPressureCeiling
     title: "Reusable Chamber-Pressure Ceiling"
     discipline: Cryogenics
