@@ -2,7 +2,16 @@
 
 SSOT for the funds side of the economy pass. Read with [`SCIENCE.md`](SCIENCE.md) (science is the
 *primary* gate; funds are the secondary axis) and [`PROGRAMS.md`](PROGRAMS.md) (the invariants this
-sits inside). **Status: designed + generated, in-game validation pending.**
+sits inside). **Status: SHIPPED — loads clean in-game (372/372 contract types, AutoTest pass).**
+
+> **Gotcha — validating new contract configs takes TWO runs.** The first KSP launch after adding
+> `CONTRACT_TYPE` configs loaded **338 of 372**, silently missing exactly the 34 new ones, and
+> Contract Configurator never even logged their `CONTRACT_GROUP` — no error, and its own summary
+> line still read "338 out of 338", so it looks like a clean pass. The second run, with no changes
+> at all, loaded 372/372. Contract Configurator's pass evidently reads the pre-patch database on the
+> run that regenerates the ModuleManager cache. **Always re-run before concluding a contract config
+> is broken**, and cross-check `Loaded N out of M` against the cache's own node count
+> (`grep -c '^\tCONTRACT_TYPE$' ModuleManager.ConfigCache`) rather than trusting the summary.
 
 ---
 
@@ -118,8 +127,11 @@ which at AXE magnitudes would make the whole channel unavailable within the firs
 
 - **Vehicle cost is unmeasured above 3.75 t.** The whole ~20M allowance rests on an assumption.
   Save an orbital-class craft and re-run the pricer (`priceCraftTest` in `AutoTest.cfg`).
-- **In-game validation.** The generated contracts have not been loaded yet — `autoAccept` +
-  `CompleteContract` requirement chains need a run to confirm they offer and settle correctly.
+- **End-to-end payout is unproven.** The contracts *load* (372/372) and correctly do **not** fire in
+  a fresh career, but no run has yet driven a program to completion, so the `autoAccept` +
+  `CompleteContract` chain has not been observed actually paying out. Needs a save with a finished
+  program — the playtest save has 3 of `SuborbRocketDev`'s 4 objectives done, so completing
+  `Downrange` would exercise both halves at once (capstone 11,000 + completion 11,000).
 - **`requiredReputationMax` semantics** assumed to gate activation; confirm in-game.
 - **Failure reputation** — 78 contracts still lose 10–750 reputation for *failing* an accepted
   contract (distinct from declining). Left as-is; zero them if reputation should only ever rise.
