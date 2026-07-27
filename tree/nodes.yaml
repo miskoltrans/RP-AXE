@@ -261,7 +261,7 @@ nodes:
     parents: [fd_turbopumpFeed]
     flavor: "A single small chamber held stable by careful injector design — the first purpose-built kerosene-oxygen boosters a satellite could ride: Vanguard's X-405, and the Atlas sustainer that runs on to orbit after the boosters drop away."
     parts: [ROE-X405, ROE-X405H, ROE-LR105_2]
-    upgrades: [RFUpgrade_5D60]
+    upgrades: [RFUpgrade_5D60, RFUpgrade_A-7]
     # LADDER PASS (2026-07-27): 5D60 is the RD-100 family's Isp step (+13 s ispVac, 235 -> 248) and by the
     # tree's own doctrine an Isp gain homes at the combustion, not the alloy. Replacing the V-2's eighteen
     # injector pots with one properly mixed chamber is this node's whole subject.
@@ -375,7 +375,7 @@ nodes:
     parents: [pc_storables]
     flavor: "An amine fuel and a nitric-acid oxidiser that ignite on contact — no igniter, storable for years, restartable after a cold coast. The propellant of upper stages and spacecraft engines that must light every time."
     parts: [ROE-AJ10Early, ROE-RD200, ROE-S2253]
-    upgrades: [RFUpgrade_NitrousOxide]
+    upgrades: [RFUpgrade_NitrousOxide, RFUpgrade_XASR-1, RFUpgrade_XASR-2]
   - id: pc_ethanol90
     title: "High-Concentration Alcohol Fuel"
     discipline: PropellantChemistry
@@ -387,6 +387,15 @@ nodes:
     # uprate in that ladder is Ethanol90+LqdOxygen against the base RD-100's Ethanol75 — the alcohol, not
     # the steel, is what the whole progression turns on. RD-101 is the fork that opens it (+32% thrust with
     # ispVac dead flat at 237, exactly what a hotter fuel at the same expansion buys you).
+  - id: pc_hydyne
+    title: "Amine-Blend Booster Fuel"
+    discipline: PropellantChemistry
+    tier: 3
+    parents: [pc_hypergolics]
+    flavor: "Blend an unsymmetrical hydrazine into diethylenetriamine and you get a fuel that outruns alcohol in the same tanks and the same engine — worth sixteen seconds of specific impulse for nothing but a change of what you pour in. It corrodes, it poisons, and the crews hated it; the first American satellite went up on it anyway."
+    upgrades: [RFUpgrade_A-6H]
+    # LADDER PASS (2026-07-27): A-6H is Hydyne+LqdOxygen against the Redstone A-7's Ethanol75 - a pure
+    # propellant fork (+17 s ispVac for +7% thrust), and the Juno I booster that launched Explorer 1.
   - id: pc_htp
     title: "High-Test Peroxide Combustion"
     discipline: PropellantChemistry
@@ -413,7 +422,7 @@ nodes:
     tier: 2
     parents: [met_weldedTank]
     flavor: "Chromium-nickel steel that keeps its strength while hot and holds a higher chamber pressure without a thicker, heavier wall — the metallurgy that turned the V-2's chamber into the Redstone's. Push the pressure, take the thrust."
-    upgrades: [RFUpgrade_Model39c, RFUpgrade_RD-102, RFUpgrade_Veronique61, RFUpgrade_A-6, RFUpgrade_A-6H, RFUpgrade_XASR-1, RFUpgrade_XASR-2, RFUpgrade_RDA-1-150, RFUpgrade_RDA-1-300, RFUpgrade_U-1700, RFUpgrade_U-2000, RFUpgrade_A-7, RFUpgrade_AJ10-27, RFUpgrade_XLR11-RM-5, RFUpgrade_XLR11-RM-13-8K, RFUpgrade_XLR35-RM-1]
+    upgrades: [RFUpgrade_Model39c, RFUpgrade_RD-102, RFUpgrade_Veronique61, RFUpgrade_A-6, RFUpgrade_RDA-1-150, RFUpgrade_U-1700, RFUpgrade_AJ10-27, RFUpgrade_XLR11-RM-5]
   - id: fd_injectors
     title: "Impinging-Jet Injectors"
     discipline: FluidDynamics
@@ -716,6 +725,7 @@ nodes:
     parents: [fd_rocketplaneRocket]
     flavor: "A throttle valve on an aircraft rocket at last — the Curtiss-Wright XLR25 could be modulated continuously in flight instead of stepped chamber by chamber, the first US rocket a pilot flew on the stick. The X-2's engine: the bridge from the X-1's fixed chambers to the X-15's man-rated throttle."
     parts: [ROE-XLR25]
+    upgrades: [RFUpgrade_RDA-1-300, RFUpgrade_XLR35-RM-1]
   - id: fd_throttlingRocket
     title: "Throttleable Restartable Rocket"
     discipline: FluidDynamics
@@ -1212,7 +1222,7 @@ nodes:
     tier: 4
     parents: [met_nimonic]
     flavor: "Route the fuel through milled channels in the chamber wall before it burns, carrying the heat back into the cycle instead of letting it melt the throat — so the same engine holds a higher chamber pressure without burning through. The quiet enabler behind every thrust uprate of the era: Atlas, Thor and Blue Streak all grow harder on the same hardware."
-    upgrades: [RFUpgrade_LR105-NA-3, RFUpgrade_LR105-NA-5, RFUpgrade_LR89-NA-3, RFUpgrade_LR89-NA-5, RFUpgrade_LR79-NA-9, RFUpgrade_LR79-NA-11, RFUpgrade_S-3D, RFUpgrade_RZ.2-Mk3, RFUpgrade_RZ.2-Mk4, RFUpgrade_RD-107-8D74-1958, RFUpgrade_RD-107-8D74-1959, RFUpgrade_RD-107-8D74K, RFUpgrade_RD-107-8D76, RFUpgrade_RD-108-8D75-1958, RFUpgrade_RD-108-8D75-1959, RFUpgrade_RD-108-8D75K, RFUpgrade_RD-108-8D77, RFUpgrade_Viking-4, RFUpgrade_Viking-5, RFUpgrade_LR87-AJ-3, RFUpgrade_LR91-AJ-3]
+    upgrades: [RFUpgrade_LR105-NA-3, RFUpgrade_LR105-NA-5, RFUpgrade_LR89-NA-3, RFUpgrade_LR89-NA-5, RFUpgrade_LR79-NA-9, RFUpgrade_LR79-NA-11, RFUpgrade_S-3D, RFUpgrade_RZ.2-Mk3, RFUpgrade_RZ.2-Mk4, RFUpgrade_RD-107-8D74-1958, RFUpgrade_RD-107-8D74-1959, RFUpgrade_RD-107-8D74K, RFUpgrade_RD-107-8D76, RFUpgrade_RD-108-8D75-1958, RFUpgrade_RD-108-8D75-1959, RFUpgrade_RD-108-8D75K, RFUpgrade_RD-108-8D77, RFUpgrade_Viking-4, RFUpgrade_Viking-5, RFUpgrade_LR87-AJ-3, RFUpgrade_LR91-AJ-3, RFUpgrade_XLR11-RM-13-8K]
   - id: fd_vacuumExpansion
     title: "Extended Vacuum Expansion"
     discipline: FluidDynamics
@@ -1260,6 +1270,7 @@ nodes:
     parents: [fd_singleChamber]
     flavor: "A single-chamber sustainer on the new storable hypergolics — all the convenience of a propellant that waits in the tank, now at the thrust a first stage needs. Vanguard's Viking and China's YF-3 lift off on oxidiser that never has to be loaded at the last minute."
     parts: [ROE-Viking2, ROE-Viking4, ROE-Viking5, YF3_Engine, YF3_with_shell]
+    upgrades: [RFUpgrade_U-2000]
   - id: fd_titanTandem
     title: "Altitude-Start Tandem Staging"
     discipline: FluidDynamics
