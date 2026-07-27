@@ -25,8 +25,33 @@ namespace RPAxe
         private const string EarlyEraTechId = "elec_transistor";
         private const double ExcessECThreshold = 10000;
 
+        private bool _ecChecked;
+
+        // The EC check MUST NOT run from Start(): a Flight KSPAddon is instantiated while the scene is
+        // still loading — seconds before the vessel is assembled — so the parts it would sample still
+        // carry their PREFAB resources. RO's proceduralAvionics prefab is a 1060 L battery tank
+        // (~1,060,000 EC at 1000 units/l) against a real craft's ~750, so sampling early fires the tip
+        // on essentially every early flight. RP-1 sidestepped this by testing the finished ShipConstruct
+        // in the editor (VesselBuildValidator.ProcessExcessEC); AXE's equivalent is onFlightReady, which
+        // fires once the vessel is fully loaded and every part module has started.
         private void Start()
         {
+            GameEvents.onFlightReady.Add(OnFlightReady);   // instance handler: a static target NREs in EvtDelegate
+
+            // Independent of the EC tip, and of whether a vessel exists yet — it polls ActiveVessel itself.
+            StartCoroutine(CheckLandedWhileActuallyFlying());
+        }
+
+        private void OnDestroy()
+        {
+            GameEvents.onFlightReady.Remove(OnFlightReady);
+        }
+
+        private void OnFlightReady()
+        {
+            if (_ecChecked) return;
+            _ecChecked = true;
+
             Vessel v = FlightGlobals.ActiveVessel;
             if (v == null) return;
 
@@ -34,8 +59,6 @@ namespace RPAxe
                 ShowTip("ShowExcessECTip", "Oversized battery",
                     "This vessel carries a very large electric-charge reserve. Early missions rarely " +
                     "need more than a modest battery — the extra mass is usually better spent elsewhere.");
-
-            StartCoroutine(CheckLandedWhileActuallyFlying());
         }
 
         private static bool VesselHasExcessEC(Vessel v)
@@ -45,7 +68,16 @@ namespace RPAxe
                 return false;
 
             double ecTotal = v.Parts.Sum(p => p.Resources.Get("ElectricCharge")?.maxAmount ?? 0);
-            return ecTotal > ExcessECThreshold;
+            if (ecTotal <= ExcessECThreshold) return false;
+
+            // Name the biggest contributor: if this ever fires wrongly again, the log says which part
+            // (and how much) the tip was reacting to.
+            Part worst = v.Parts.OrderByDescending(p => p.Resources.Get("ElectricCharge")?.maxAmount ?? 0)
+                                .FirstOrDefault();
+            Debug.Log($"[AXE] Excess-EC tip: {ecTotal:N0} units of EC capacity > {ExcessECThreshold:N0}" +
+                      $" (largest store: {worst?.partInfo?.name ?? "?"} @" +
+                      $" {worst?.Resources.Get("ElectricCharge")?.maxAmount ?? 0:N0}).");
+            return true;
         }
 
         private static IEnumerator CheckLandedWhileActuallyFlying()
