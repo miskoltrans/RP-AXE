@@ -1498,6 +1498,10 @@ LADDER_TOL = 0.03      # +/- band on the axes a player designs around (thrust, I
 # engine: Titan's LR87-AJ-5/-7/-9 are identical at 1053.9 kN / 285.2 s and differ ONLY by 150/156/150 s
 # of rated burn. At a 3% band those read as three separate decisions and demand three tree events.
 LADDER_TOL_BURN = 0.25
+# Sea-level Isp deliberately stays STRICT. It tracks nozzle area ratio, and a nozzle change is a real
+# mechanism with a real home to scatter to -- so a difference there should split into its own node
+# rather than be tolerated away. (Tried at 0.15 on 2026-07-27 and reverted: merging those classes
+# pushed the tree toward fewer, fatter nodes, which is exactly backwards.)
 
 def _ladder_perf():
     """config -> perf/propellant row from engine-stats.tsv, for the ladder-collapse classifier."""

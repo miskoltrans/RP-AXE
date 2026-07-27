@@ -2470,6 +2470,68 @@ nodes:
     # the long RL-10 chain arrives in later batches.
 
   # ---- Lane 4: kerolox ORSC (N1) ----
+  - id: pc_throttledClosedCycle
+    title: "Derated Closed-Cycle Sustainer"
+    discipline: PropellantChemistry
+    tier: 10
+    parents: [pc_n1ClosedCycle]
+    flavor: "Take the booster's closed-cycle engine and deliberately run it below what it can do. Chamber pressure comes down, the turbine stops living on the edge, and the engine that was a reliability problem at full throttle becomes one you can stack thirty of and still expect to reach orbit."
+    upgrades: [RFUpgrade_NK-21]
+  - id: pc_refinedMixtureClosedCycle
+    title: "Trimmed Closed-Cycle Mixture Ratio"
+    discipline: PropellantChemistry
+    tier: 11
+    parents: [pc_throttledClosedCycle]
+    flavor: "Re-trim the oxidiser-to-fuel ratio and the preburner split until the cycle gives up another twelve seconds without touching the hardware — the cheapest specific impulse in rocketry, and the hardest to find, because everything upstream of the injector has to be measured before it can be moved."
+    upgrades: [RFUpgrade_NK-39]
+  - id: pc_restartableClosedCycle
+    title: "Restartable Oxidiser-Rich Closed Cycle"
+    discipline: PropellantChemistry
+    tier: 12
+    parents: [pc_refinedMixtureClosedCycle]
+    flavor: "Relight a staged-combustion engine in vacuum, which means restarting an oxidiser-rich preburner that will happily burn its own turbine if the start sequence slips. Two ignitions instead of one, and the upper stage can finally choose when to fall."
+    upgrades: [RFUpgrade_NK-31]
+  - id: pc_closedCycleUpper
+    title: "Closed-Cycle Upper-Stage Combustion"
+    discipline: PropellantChemistry
+    tier: 9
+    parents: [pc_orscDebut]
+    flavor: "Shrink the oxidiser-rich preburner until it fits an upper stage, where the gain is not thrust but the specific impulse you carry all the way to escape. A small closed-cycle engine is harder per kilonewton than a big one — the turbine still has to survive its own exhaust, and now there is no mass budget to armour it with."
+    upgrades: [RFUpgrade_11D33, RFUpgrade_11D33M]
+    # LADDER PASS (2026-07-27): the Blok-D engine's kerosene marks. They were on pc_n1ClosedCycle, whose
+    # subject is SUBCOOLED propellant — but these burn plain Kerosene+LqdOxygen and the N1 engines beside
+    # them are all Cooled*. Wrong node by its own title.
+  - id: pc_rg1
+    title: "High-Density Kerosene Cut"
+    discipline: PropellantChemistry
+    tier: 10
+    parents: [pc_closedCycleUpper]
+    flavor: "Distil the kerosene to a narrower, denser, more thermally stable cut than anything an aircraft would burn — more mass of fuel in the same tank, and it stops coking the regenerative passages when the chamber runs hot. The fuel stops being a commodity and becomes part of the engine's design."
+    upgrades: [RFUpgrade_RD-58]
+  - id: pc_rg1Uprating
+    title: "Oxidiser-Rich Preburner Uprating"
+    discipline: PropellantChemistry
+    tier: 11
+    parents: [pc_rg1]
+    flavor: "Drive the preburner harder and re-trim the mixture until the closed cycle gives up another seven seconds — the last easy specific impulse in a design that is already recycling everything it burns."
+    upgrades: [RFUpgrade_RD-58M]
+  - id: pc_extendedNozzleUpper
+    title: "Extended-Nozzle Upper Stage"
+    discipline: PropellantChemistry
+    tier: 12
+    parents: [pc_rg1Uprating]
+    flavor: "Hang a far larger bell on an upper-stage engine that will never see air: sea-level performance collapses and nobody cares, because every second of it is spent in vacuum. The nozzle stops being a compromise between two regimes and is cut for the only one that matters."
+    upgrades: [RFUpgrade_RD-58M-CCN]
+  - id: pc_syntin
+    title: "Strained-Ring Synthetic Fuel"
+    discipline: PropellantChemistry
+    tier: 12
+    parents: [pc_rg1Uprating]
+    flavor: "Synthesise the fuel instead of refining it: pack the energy into strained hydrocarbon rings that give it back when they break. Denser and hotter than any kerosene cut, absurdly expensive, and flown anyway when a few seconds of specific impulse were worth more than the money."
+    upgrades: [RFUpgrade_17D12, RFUpgrade_RD-58S]
+    # LADDER PASS (2026-07-27): 17D12 and RD-58S are one performance point (86.2/86.3 kN, ispV 362/361)
+    # on Syntin+LqdOxygen -- the same decision, so they share this node under R4. RD-58S came back from
+    # fd_terminalGasGenKerolox, which is a gas-generator node and the wrong cycle entirely.
   - id: pc_n1ClosedCycle
     title: "Subcooled-Propellant Staged Combustion"
     discipline: PropellantChemistry
@@ -2477,7 +2539,7 @@ nodes:
     parents: [pc_orscDebut]
     flavor: "Chill the propellants until they are dense enough, then run oxidiser-rich staged combustion at booster scale — the most efficient kerosene engine anyone ever fired. The rocket it flew on failed; the engine never did."
     parts: [ROE-NK33, ROE-NK43, SXTNK21BlockV]
-    upgrades: [RFUpgrade_NK-19, RFUpgrade_NK-21, RFUpgrade_11D33, RFUpgrade_11D33M, RFUpgrade_RD-58, RFUpgrade_RD-58M-CCN, RFUpgrade_NK-31, RFUpgrade_NK-39, RFUpgrade_RD-58M, RFUpgrade_17D12]
+    upgrades: [RFUpgrade_NK-19]
     # King NK-33. Fillers cascade UP by doctrine-4: NK-9/NK-9V's upgrades (NK-19/21) + the whole RD-58
     # chain (11D33/11D33M/RD-58) - all their base parts live one tier down in pc_orscDebut. FIXED 2026-07:
     # the previous gap-fill pass wrongly co-located NK-33/NK-43's OWN later marks (NK-33/43 configs + the
@@ -3121,7 +3183,7 @@ nodes:
     parents: [pc_n1ClosedCycle]
     flavor: "Where the N1's oxidiser-rich engines never got to prove themselves in flight, the same staged-combustion chemistry finally does — a kerolox engine that reaches orbit for real, with steering verniers built in rather than bolted on."
     parts: [ROE-RD120, ROE-RD8, ROE-RD0124, ROE-RD0110R]
-    upgrades: [RFUpgrade_NK-33, RFUpgrade_NK-43, RFUpgrade_4x_NK-39, RFUpgrade_AJ26-58, RFUpgrade_AJ26-59, RFUpgrade_AJ26-62, RFUpgrade_AJ26-60]
+    upgrades: [RFUpgrade_NK-33, RFUpgrade_NK-43, RFUpgrade_4x_NK-39, RFUpgrade_AJ26-58, RFUpgrade_AJ26-59, RFUpgrade_AJ26-62, RFUpgrade_AJ26-60, RFUpgrade_NK-33-Original-NoGimbal, RFUpgrade_NK-43-Original-NoGimbal]
     # King RD-120 (the real Zenit second-stage engine). RD-8 = its steering-vernier sibling, same engine
     # family, ride-along. Nice narrative contrast one tier above pc_n1ClosedCycle's NK-33/NK-43 (which never flew).
     # RD-0124/RD-0110R (2026-07, band-5 gap sweep): the Kosberg side of the same operational-kerolox-ORSC
@@ -3771,7 +3833,7 @@ nodes:
     tier: 11
     parents: [fd_gasGeneratorApex]
     flavor: "The gas-generator kerolox engines that built the space age take their final bow. The last production marks of Delta's RS-27, Atlas's RS-56 and Titan's LR87/LR91 — a lineage of open-cycle workhorses being uprated one last time as staged combustion walks past them."
-    upgrades: [RFUpgrade_RS-27A, RFUpgrade_RS-56-OBA, RFUpgrade_RS-56-OSA, RFUpgrade_LR87-AJ-11A, RFUpgrade_LR91-AJ-11A, RFUpgrade_LR101-NA-15, RFUpgrade_Model8096C, RFUpgrade_RD-58S]
+    upgrades: [RFUpgrade_RS-27A, RFUpgrade_RS-56-OBA, RFUpgrade_RS-56-OSA, RFUpgrade_LR87-AJ-11A, RFUpgrade_LR91-AJ-11A, RFUpgrade_LR101-NA-15, RFUpgrade_Model8096C]
   - id: fd_advancedGasGenKerolox
     title: "Advanced Gas-Generator Kerolox Booster"
     discipline: FluidDynamics
