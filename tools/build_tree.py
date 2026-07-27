@@ -1578,12 +1578,20 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
         # Padding-equivalence classes: configs at the same performance point are ONE decision, however
         # many names RealFuels gives it. They may share a node (cosmetic variants of one tree event);
         # what they must not do is occupy separate events. So R1 counts CLASSES, not configs.
+        # Assign classes from the part's FULL config list in a STABLE order (ascending thrust, then name)
+        # rather than in placement order. `placed` is sorted by node tier, so classifying from it made
+        # class membership depend on where configs currently sit -- move one and the classification
+        # changes under you. Ascending thrust also makes each representative the weakest of its class,
+        # so members are bounded above rather than straddling it.
+        fam = sorted((r["config"] for r in rungs if r["config"] in perf),
+                     key=lambda c: (float(perf[c].get("maxThrust_kN") or 0), c))
         klass, order = {}, []
-        for r in placed:
-            p = perf.get(r["config"])
-            hit = next((k for k in order if p and perf.get(k) and _ladder_near(p, perf[k])), None)
-            klass[r["config"]] = hit or r["config"]
-            if not hit: order.append(r["config"])
+        for c in fam:
+            p = perf[c]
+            hit = next((k for k in order if _ladder_near(p, perf[k])), None)
+            klass[c] = hit or c
+            if not hit: order.append(c)
+        for r in placed: klass.setdefault(r["config"], r["config"])
         # R1 -- one node granting two genuinely distinct configs for the same part.
         # EXEMPT: nodes flagged `catalog: true`. Some real engine families are a fixed CATALOG, not a
         # progression -- the PT6 turboprop has eleven marks whose thrust wanders 8.4-13.0 kN with no
@@ -1606,7 +1614,11 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
             perclass[klass[r["config"]]].add(r["node"])
             perfam[klass[r["config"]]].add(_propfam(perf.get(r["config"], {}).get("propellants"))[0])
         for k, ns in perclass.items():
-            if len(ns) > 1 and len(perfam[k]) == 1:
+            # EXEMPT when one of the nodes is the part's own: engine_config_ladders PINS a config there
+            # so a freshly-bought engine is always flyable, and doctrine #4 forbids its class-mates from
+            # joining it. That split is structural, not a placement mistake -- nothing can fix it, so
+            # reporting it forever only trains you to ignore the rule.
+            if len(ns) > 1 and len(perfam[k]) == 1 and pnode not in ns:
                 r4.append((part, k, sorted(ns)))
         # R5 -- token homed on the part's own node (the pin guard in engine_config_ladders is exempt:
         # it deliberately keeps one config there so a freshly-bought engine is always flyable)

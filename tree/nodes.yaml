@@ -1260,7 +1260,7 @@ nodes:
     tier: 6
     parents: [fd_matureOrbital]
     flavor: "Extend the nozzle bell far past what any sea-level engine could survive, tuned so the exhaust expands to near-vacuum pressure and wrings out the last dozen seconds of specific impulse. The refinement that lets an upper stage do more on the same propellant — the RD-119 alone gains nearly thirty seconds over its predecessor."
-    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_XLR11-RM-13-10K, RFUpgrade_LR89-NA-7.1, RFUpgrade_LR89-NA-7.2, RFUpgrade_RL10A-3-3B, RFUpgrade_LR105-NA-5]
+    upgrades: [RFUpgrade_RD-0109, RFUpgrade_RD-0106, RFUpgrade_RD-119-8D710, RFUpgrade_X-405H, RFUpgrade_X-405H-2, RFUpgrade_RL10A-3-1, RFUpgrade_XLR81-BA-11, RFUpgrade_YF-22B, RFUpgrade_YF-23B, RFUpgrade_RD-225-8D721, RFUpgrade_LR101-NA-11, RFUpgrade_LR105-NA-6, RFUpgrade_XLR11-RM-13-10K, RFUpgrade_LR89-NA-7.1, RFUpgrade_LR89-NA-7.2, RFUpgrade_LR105-NA-5]
     # NA-7.x + X-405H-4 marks added 2026-07 (tail): next Atlas LR105/LR89 + Vanguard marks, continuing NA-6.
     parts: [ROE-LR87_LH2]
     # Part-count-pass finds (2026-07): 6 more upgrades in this same "combustion/injector refinement, no
@@ -2513,7 +2513,7 @@ nodes:
     parents: [cryo_gasGeneratorHydrolox]
     flavor: "Scale the gas-generator hydrolox engine until it rivals a kerolox booster — a hydrogen engine of five thousand kilonewtons. The hydrolox twin of the F-1 ceiling: colossal, thirsty, never flown, and the end of its own line."
     parts: [ROE-M1, ROE-J2X]
-    upgrades: [RFUpgrade_J-2-225K, RFUpgrade_J-2-230K, RFUpgrade_LR87-LH2-Vacuum]
+    upgrades: [RFUpgrade_J-2-225K, RFUpgrade_J-2-230K, RFUpgrade_LR87-LH2-Vacuum, RFUpgrade_RL10A-3-3B]
     # ROE-J2X (2026-07, band-5 gap sweep): the Constellation-era uprated J-2 (Ares I upper stage) - same
     # "colossal, never flew" story as M-1, one generation later.
     # J-2 uprates land here (doctrine-4: J-2 base is one tier down in cryo_gasGeneratorHydrolox).
@@ -2888,7 +2888,7 @@ nodes:
     tier: 8
     parents: [av_variableStator]
     flavor: "The mature marks of the variable-stator fighter turbojets — J79, J85 and their Chinese WP derivatives, refined engine by engine for a few more percent of thrust."
-    upgrades: [RFUpgrade_J85-GE-21, RFUpgrade_WP-6Z, RFUpgrade_R-11F2-300, RFUpgrade_J79-MTU-J1K, RFUpgrade_WP-13]
+    upgrades: [RFUpgrade_J85-GE-21, RFUpgrade_WP-6Z, RFUpgrade_J79-MTU-J1K, RFUpgrade_WP-13, RFUpgrade_R-11F2-300]
     # Split out of av_advancedJetEngines (2026-07). Bases (aje_j79/RO-J85GE5) live in av_variableStator (T4).
   - id: av_advancedHighSpeedTurbojets
     title: "High-Speed Turbojet Uprating"
@@ -3208,7 +3208,7 @@ nodes:
     tier: 10
     parents: [cryo_largeHydrolox]
     flavor: "The 1972-76 gas-generator hydrolox engines maturing mark by mark in the shadow of the new reusable-engine programme — more thrust, tighter margins, no change to the single-start cycle underneath."
-    upgrades: [RFUpgrade_HM-7B, RFUpgrade_J-2S, RFUpgrade_YF-75D, RFUpgrade_M-1, RFUpgrade_Vulcain-2, RFUpgrade_HM-7B+]  # HM-7B+ added 2026-07 (gap-fill; sits between HM-7B and HM-7B++ siblings here)
+    upgrades: [RFUpgrade_HM-7B, RFUpgrade_J-2S, RFUpgrade_YF-75D, RFUpgrade_M-1, RFUpgrade_Vulcain-2]  # HM-7B+ added 2026-07 (gap-fill; sits between HM-7B and HM-7B++ siblings here)
     # Bases (J-2/HM-7/YF-75/M-1) already king cryo_gasGeneratorHydrolox/cryo_largeHydrolox. Split out from
     # cryo_uprateRestartableHydrolox (2026-07) once upgrades started counting 0.8-parts toward the cap.
   - id: cryo_ssme
@@ -3272,7 +3272,7 @@ nodes:
     tier: 10
     parents: [pc_refinedStorableORSC]
     flavor: "One more pass at the same storable staged-combustion hardware — tighter tolerances, higher chamber pressure, the same dependable poison burning a little more completely each mark."
-    upgrades: [RFUpgrade_RD-0210-Mk2, RFUpgrade_RD-0212-Mk2, RFUpgrade_RD-0213-Mk2, RFUpgrade_RD-253-Mk3]
+    upgrades: [RFUpgrade_RD-0210-Mk2, RFUpgrade_RD-0212-Mk2, RFUpgrade_RD-0213-Mk2]
     # Pure doctrine-4 collector, same shape as pc_refinedStorableORSC itself one tier down - the Mk2->Mk3
     # next rung of the same refinement ladder.
 
@@ -3793,7 +3793,7 @@ nodes:
     parents: [cryo_gasGeneratorHydrolox]
     flavor: "The gas-generator hydrolox upper grows up. Where the J-2 fired once, the LE-5 coasts and reignites ten times across a mission — the workhorse restartable upper of an operational launcher. Its own expander-bleed descendants split off to the expander lane."
     parts: [ROE-LE5]
-    upgrades: [RFUpgrade_RL10A-4, RFUpgrade_HM-7B++, RFUpgrade_LR87-LH2-VacuumUpgrade, RFUpgrade_KVD-1]
+    upgrades: [RFUpgrade_RL10A-4, RFUpgrade_LR87-LH2-VacuumUpgrade, RFUpgrade_KVD-1, RFUpgrade_HM-7B+]
     # doctrine-4 fix (2026-07): LE-5B-2/LE-5B-3 are this node's own base part's (ROE-LE5) later marks -
     # moved down to cryo_operationalHydroloxUpperII (new node, no existing child here).
   - id: cryo_operationalHydroloxUpperII
@@ -3802,7 +3802,7 @@ nodes:
     tier: 12
     parents: [cryo_operationalHydroloxUpper]
     flavor: "The LE-5 keeps maturing mark by mark — more restarts, a little more thrust, the same workhorse upper stage refined rather than replaced."
-    upgrades: [RFUpgrade_LE-5B-2, RFUpgrade_RL10A-4-1-2, RFUpgrade_LE-5B, RFUpgrade_AJ10-154, RFUpgrade_YF-75E, RFUpgrade_RL10C-2]
+    upgrades: [RFUpgrade_LE-5B-2, RFUpgrade_RL10A-4-1-2, RFUpgrade_LE-5B, RFUpgrade_AJ10-154, RFUpgrade_YF-75E, RFUpgrade_RL10C-2, RFUpgrade_HM-7B++]
     # doctrine-4 catch: LE-5B-2/LE-5B-3's own base part (ROE-LE5) lives in cryo_operationalHydroloxUpper.
   - id: cryo_boosterGasGenHydrolox
     title: "Booster-Class Gas-Generator Hydrolox"
@@ -3900,7 +3900,7 @@ nodes:
     parents: [pc_multiChamberORSC]
     flavor: "The record engine gets cut into pieces you can sell. Halve the RD-170's four chambers and you have the RD-180 for Atlas; quarter it and you have the single-chamber Angara engine. Same core hardware, packaged into a modular family for the export and commercial market."
     parts: [ROE-RD180, ROE-RD191]
-    upgrades: [RFUpgrade_RD-171, RFUpgrade_RD-120K, RFUpgrade_RD-191, RFUpgrade_YF-100K, RFUpgrade_RD-171M, RFUpgrade_RD-116-8D420K]
+    upgrades: [RFUpgrade_RD-171, RFUpgrade_RD-120K, RFUpgrade_RD-191, RFUpgrade_YF-100K, RFUpgrade_RD-171M, RFUpgrade_RD-116-8D420K, RFUpgrade_AJ26-62]
     # doctrine-4 fix (2026-07): RD-171M/YF-100K moved down from pc_multiChamberORSC (own base parts there).
     # RD-181/RD-193 (this node's OWN base part ROE-RD191's later marks) moved further down to
     # pc_modularORSCII, since this node has no other child.
@@ -3921,7 +3921,7 @@ nodes:
     tier: 11
     parents: [pc_refinedStorableORSCII]
     flavor: "The storable staged-combustion engines of Proton and its kin reach their final operational marks — the RD-275 first stage, the Kosberg upper stages — the last refinements of a hypergolic booster line that has been flying since the sixties."
-    upgrades: [RFUpgrade_RD-275, RFUpgrade_RD-253-Mk4, RFUpgrade_RD-254-11D44-Mk4, RFUpgrade_RD-277-14D16, RFUpgrade_RD-0210-Mk3, RFUpgrade_RD-0212-Mk3, RFUpgrade_RD-0213-Mk3, RFUpgrade_RD-254-11D44-Mk3]  # RD-254-11D44-Mk3 added 2026-07 (gap-fill; Mk4 sibling here)
+    upgrades: [RFUpgrade_RD-275, RFUpgrade_RD-253-Mk4, RFUpgrade_RD-254-11D44-Mk4, RFUpgrade_RD-277-14D16, RFUpgrade_RD-0210-Mk3, RFUpgrade_RD-0212-Mk3, RFUpgrade_RD-0213-Mk3, RFUpgrade_RD-254-11D44-Mk3, RFUpgrade_RD-253-Mk3]  # RD-254-11D44-Mk3 added 2026-07 (gap-fill; Mk4 sibling here)
 
   # ---- FluidDynamics: storable uppers + terminal gas-generator kerolox ----
   - id: fd_multiRestartStorableUpper
@@ -4118,7 +4118,7 @@ nodes:
     parents: [av_secondGenTurbofan]
     flavor: "The fourth-generation fighter engine: high bypass for a combat turbofan, high pressure ratio, high turbine temperature. The F135 that powers the F-35 is the most powerful fighter engine ever built; the WS-10 is its Chinese contemporary. The long tail of teen-series and Flanker engine marks matures here."
     parts: [SXTVTOLturboFan, RO-WS10]
-    upgrades: [RFUpgrade_CF34-3B, RFUpgrade_F100-PW-229, RFUpgrade_F100-PW-229PYBBN, RFUpgrade_F404-GE-402, RFUpgrade_J58-P-4A, RFUpgrade_J58-P-4B, RFUpgrade_RM12, RFUpgrade_WP-13A-II, RFUpgrade_WP-13F, RFUpgrade_WP-13FI, RFUpgrade_AL-31FM, RFUpgrade_R-79M-300]  # F100-PW-229EEP added 2026-07 (gap-fill; F100-PW-229 sibling here). WS-10B-III (own base part RO-WS10 here) moved down to av_combinedCycleSSTO, doctrine-4 fix 2026-07
+    upgrades: [RFUpgrade_CF34-3B, RFUpgrade_F100-PW-229, RFUpgrade_F100-PW-229PYBBN, RFUpgrade_F404-GE-402, RFUpgrade_J58-P-4A, RFUpgrade_J58-P-4B, RFUpgrade_RM12, RFUpgrade_AL-31FM, RFUpgrade_R-79M-300, RFUpgrade_WP-13A-II, RFUpgrade_WP-13F]  # F100-PW-229EEP added 2026-07 (gap-fill; F100-PW-229 sibling here). WS-10B-III (own base part RO-WS10 here) moved down to av_combinedCycleSSTO, doctrine-4 fix 2026-07
 
   - id: av_fifthGenFighterTurbofan
     title: "Fifth-Generation Fighter Turbofan"
@@ -4126,7 +4126,7 @@ nodes:
     tier: 12
     parents: [av_fourthGenFighterTurbofan]
     flavor: "Single-crystal blades, a full-authority digital controller and a core hot enough that the metal is running above its own melting point behind a film of cooling air. Supercruise without afterburner, and a service life measured against the airframe's rather than the season's."
-    upgrades: [RFUpgrade_AL-41F-1S, RFUpgrade_F100-PW-229EEP]
+    upgrades: [RFUpgrade_AL-41F-1S, RFUpgrade_F100-PW-229EEP, RFUpgrade_WP-13FI]
   - id: av_combinedCycleSSTO
     title: "Combined-Cycle Air-Breathing Rocket"
     discipline: AirBreathing
@@ -4958,7 +4958,7 @@ nodes:
     parents: [pc_multiChamberORSC]
     flavor: "Two separately-funded American answers to the imported RD-180 — oxidiser-rich staged combustion on kerosene, drawn to compete on the same contract the Russians won on price. Real hardware, real test stands, and no flight between them."
     parts: [nflv-engine-ar1-1, nflv-engine-ar1c-1, nflv-engine-rs84-1]
-    upgrades: [RFUpgrade_AJ26-58, RFUpgrade_AJ26-62, RFUpgrade_AJ26-60, RFUpgrade_NK-9-2009]
+    upgrades: [RFUpgrade_AJ26-58, RFUpgrade_AJ26-60, RFUpgrade_NK-9-2009]
     # King AR-1 (+ the larger AR1C mark). RS-84 rides along - a separate, parallel Rocketdyne ORSC kerolox
     # study from the same era and the same "lost on price, not physics" story as RD-270/AJ-260/STBE.
   - id: pc_fiveSegmentSolidScaleUp

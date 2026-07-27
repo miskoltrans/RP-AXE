@@ -187,7 +187,10 @@ default keeps it (RelayAntenna100 is present).
 
 - **Body scope + values** — creator's `BodyAllowed` shipped as-is; trim the deep-space tail only if the
   solvency play-session shows it (SCIENCE.md §3b/§4).
-- **Slot-upgrade techs** — `UpgradeTech=advScienceTech`, `ReconfigureTech=fieldScience` (in group B) are part
-  of the §4 remap; the reconfigure-in-field upgrade is a nice-to-have, not load-bearing.
+- ~~**Slot-upgrade techs**~~ — ✅ **DONE.** `UpgradeTech` / `ReconfigureTech` (group B) are remapped in
+  `Framework-2-LabGroup.cfg` to `life_convertedStageStation` / `life_stationHabitation`; confirmed against
+  the live `ModuleManager.ConfigCache` (both `Lab-Upgrade1`/`Lab-Upgrade2` resolve to those real nodes).
+  Framework-3 reaches them through an MM variable reference rather than a literal, which the tech-ref gate
+  used to misread as two dangling refs — fixed in `check_tech_refs.py` (it now follows `#$…$` references).
 - **Crew-star gating** — experiments require `Scientist:N`; confirm AXE's kerbal-leveling reaches those tiers,
   else the top-star ones are dead content (flatten to `Scientist`/`True` if not). *(Verify AXE crew leveling.)*

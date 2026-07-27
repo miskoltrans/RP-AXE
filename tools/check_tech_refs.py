@@ -15,6 +15,11 @@ consistent, but a large amount of config and plugin code references node IDs by
   - C# `ResearchAndDevelopment.GetTechnologyState("X")` in plugins
 None of these warn or throw. This tool turns that silent failure into a report.
 
+A gate's value may also be a ModuleManager *variable reference* (`#$../@ROOT/SUB/FIELD$`)
+rather than a literal node id -- MM resolves it at patch time. Those are followed to the
+field they name and the resolved value is what gets checked; an unresolvable one is
+reported separately (we cannot prove it lands on a real node).
+
 Usage:
   python tools/check_tech_refs.py                 # scan the repo (RP-AXE-owned)
   python tools/check_tech_refs.py --root <dir>    # add another config root (e.g. an instance GameData)
@@ -54,6 +59,106 @@ CS_PATTERN = re.compile(r'GetTechnologyState\(\s*"(\w+)"')
 SKIP_DIR = re.compile(r"[\\/](Localization|Flags|Textures?|Sounds?|PluginData)[\\/]", re.I)
 SKIP_EXT = (".disabled", ".disable")
 
+# a ModuleManager variable reference: `#$../../@KERBALISM_GROUP_SETTINGS/LAB_EXPERIMENTS/UpgradeTech$`
+MM_REF = re.compile(r"^#\$(.+)\$$")
+MM_OPS = "@%!+&|*-$"
+
+
+def _norm_name(tok):
+    """Strip MM operator prefixes and `:NEEDS[]` / `[filter]` suffixes off a node or field name."""
+    return re.split(r"[:\[,]", tok.strip().lstrip(MM_OPS), 1)[0].strip()
+
+
+def _parse_cfg(txt):
+    """Minimal .cfg -> nested {fields, children} tree. Deliberately shallow: it exists only
+    to resolve MM variable references, not to emulate ModuleManager. Any line containing `=`
+    is a field (so brace characters inside values never break the structure); every other
+    non-empty line is a node header or a brace."""
+    root = {"fields": {}, "children": defaultdict(list)}
+    stack = [root]
+    pending = None
+    for raw in txt.splitlines():
+        line = raw.split("//", 1)[0].strip()
+        if not line:
+            continue
+        if "=" in line and line[0] not in "{}":
+            key, val = line.split("=", 1)
+            key = _norm_name(key.rstrip("+-*/^!"))
+            if key:
+                stack[-1]["fields"].setdefault(key, val.strip())
+            continue
+        while line:
+            if line[0] == "{":
+                node = {"fields": {}, "children": defaultdict(list)}
+                stack[-1]["children"][_norm_name(pending or "")].append(node)
+                stack.append(node)
+                pending = None
+                line = line[1:].strip()
+            elif line[0] == "}":
+                if len(stack) > 1:
+                    stack.pop()
+                line = line[1:].strip()
+            else:
+                cut = min([i for i in (line.find("{"), line.find("}")) if i >= 0] or [len(line)])
+                pending, line = line[:cut].strip(), line[cut:].strip()
+    return root
+
+
+_INDEX_CACHE = {}
+
+
+def build_index(roots):
+    """Index every config node by name across `roots`, so an MM reference naming a root node
+    (`@KERBALISM_GROUP_SETTINGS`) can be located wherever it is authored."""
+    key = tuple(sorted(roots))
+    if key in _INDEX_CACHE:
+        return _INDEX_CACHE[key]
+    index = defaultdict(list)
+
+    def walk(node):
+        for name, kids in node["children"].items():
+            for kid in kids:
+                index[name].append(kid)
+                walk(kid)
+
+    for root in roots:
+        if not os.path.isdir(root):
+            continue
+        for path in iter_cfgs(root):
+            try:
+                walk(_parse_cfg(open(path, encoding="utf-8", errors="replace").read()))
+            except (OSError, RecursionError):
+                continue
+    _INDEX_CACHE[key] = index
+    return index
+
+
+def resolve_mm_ref(expr, index, depth=0):
+    """Follow `ROOT/SUB/FIELD` (the inside of a `#$...$`) to its literal value. `../` hops are
+    dropped: the path is matched by node NAME anywhere in the index, which is what makes the
+    lookup robust to the relative depth MM actually patches at. None if unresolvable."""
+    if depth > 4:
+        return None
+    segs = [s for s in (_norm_name(s) for s in expr.split("/")) if s and s not in (".", "..")]
+    if len(segs) < 2:
+        return None
+    *path, field = segs
+    for cand in index.get(path[0], []):
+        cur = cand
+        for seg in path[1:]:
+            kids = cur["children"].get(seg)
+            cur = kids[0] if kids else None
+            if cur is None:
+                break
+        if cur is None:
+            continue
+        val = cur["fields"].get(field)
+        if val is None:
+            continue
+        chained = MM_REF.match(val)
+        return resolve_mm_ref(chained.group(1), index, depth + 1) if chained else val
+    return None
+
 
 def load_valid_nodes(tree_path):
     if not os.path.isfile(tree_path):
@@ -76,6 +181,9 @@ def iter_cfgs(root):
 def scan(roots, src, valid):
     # findings[node] = list of (gate, path, is_axe, is_overlay_fixed)
     findings = defaultdict(list)
+    # index the whole RP-AXE tree, not just `roots`: a design/ reference may name a node
+    # authored in seed/, and the build gate only passes design/ as a scan root.
+    index = build_index(list(dict.fromkeys(DEFAULT_ROOTS + list(roots))))
     for root in roots:
         axe = "RP-AXE" in root or root.endswith("RP-AXE")
         for path in iter_cfgs(root):
@@ -86,6 +194,15 @@ def scan(roots, src, valid):
                 continue
             for label, pat in GATE_PATTERNS:
                 for node in pat.findall(txt):
+                    ref = MM_REF.match(node)
+                    if ref:
+                        # not a node id -- MM resolves it at patch time; check what it lands on
+                        resolved = resolve_mm_ref(ref.group(1), index)
+                        if resolved is None:
+                            findings[node].append((label + "/unresolved-ref", path, is_axe, False))
+                        elif resolved not in valid:
+                            findings[resolved].append((label + "/via-ref", path, is_axe, False))
+                        continue
                     if node in valid:
                         continue
                     ov = any(k[0] == node and k[1] == label and k[2] in path for k in OVERLAY_FIXED)
