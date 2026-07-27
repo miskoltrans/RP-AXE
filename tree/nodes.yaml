@@ -261,6 +261,10 @@ nodes:
     parents: [fd_turbopumpFeed]
     flavor: "A single small chamber held stable by careful injector design — the first purpose-built kerosene-oxygen boosters a satellite could ride: Vanguard's X-405, and the Atlas sustainer that runs on to orbit after the boosters drop away."
     parts: [ROE-X405, ROE-X405H, ROE-LR105_2]
+    upgrades: [RFUpgrade_5D60]
+    # LADDER PASS (2026-07-27): 5D60 is the RD-100 family's Isp step (+13 s ispVac, 235 -> 248) and by the
+    # tree's own doctrine an Isp gain homes at the combustion, not the alloy. Replacing the V-2's eighteen
+    # injector pots with one properly mixed chamber is this node's whole subject.
   # (Multi-chamber has NO small tier: S-155 turned out single-chamber + an aircraft engine, moved to the
   #  aviation rocketplane cluster. The multi-chamber breakthrough debuts at ORBITAL scale —
   #  fd_orbitalSoviet (R-7 kerolox) and fd_orbitalMultiChamber (storable). S-155 parked for aviation.)
@@ -272,6 +276,9 @@ nodes:
     parents: [fd_singleChamber]
     flavor: "Scale a single combustion chamber to a meganewton and its own acoustics threaten to tear it apart — injector design and damping hold the burn stable at a size the small chambers never faced. The hard way the West reached orbit: one big stable chamber, where the Soviets clustered many small ones. Atlas, Thor, Blue Streak."
     parts: [ROE-LR89_2, ROE-LR79, ROE-RZ]
+    upgrades: [RFUpgrade_RD-103]
+    # LADDER PASS (2026-07-27): RD-103 takes the same chamber up another 5% in thrust at flat Isp — pure
+    # scale-up, which is exactly the instability problem this node exists to solve.
   - id: fd_orbitalSoviet
     title: "Parallel Engine Clustering"
     discipline: FluidDynamics
@@ -369,6 +376,17 @@ nodes:
     flavor: "An amine fuel and a nitric-acid oxidiser that ignite on contact — no igniter, storable for years, restartable after a cold coast. The propellant of upper stages and spacecraft engines that must light every time."
     parts: [ROE-AJ10Early, ROE-RD200, ROE-S2253]
     upgrades: [RFUpgrade_NitrousOxide]
+  - id: pc_ethanol90
+    title: "High-Concentration Alcohol Fuel"
+    discipline: PropellantChemistry
+    tier: 2
+    parents: [pc_storables]
+    flavor: "The V-2 burned alcohol cut with a quarter water, because the water was what kept the chamber from burning through. Take the water out and the flame runs hotter and harder — but only once the chamber can survive it. Ninety percent is where the Soviets stopped, and it is worth a third more thrust than the engine they copied."
+    upgrades: [RFUpgrade_RD-101]
+    # LADDER PASS (2026-07-27, docs/UPGRADE-LADDERS.md step 4): the RD-100 family's real enabler. Every
+    # uprate in that ladder is Ethanol90+LqdOxygen against the base RD-100's Ethanol75 — the alcohol, not
+    # the steel, is what the whole progression turns on. RD-101 is the fork that opens it (+32% thrust with
+    # ispVac dead flat at 237, exactly what a hotter fuel at the same expansion buys you).
   - id: pc_htp
     title: "High-Test Peroxide Combustion"
     discipline: PropellantChemistry
@@ -395,7 +413,7 @@ nodes:
     tier: 2
     parents: [met_weldedTank]
     flavor: "Chromium-nickel steel that keeps its strength while hot and holds a higher chamber pressure without a thicker, heavier wall — the metallurgy that turned the V-2's chamber into the Redstone's. Push the pressure, take the thrust."
-    upgrades: [RFUpgrade_Model39c, RFUpgrade_5D60, RFUpgrade_RD-101, RFUpgrade_RD-102, RFUpgrade_RD-103, RFUpgrade_RD-103M, RFUpgrade_Veronique61, RFUpgrade_A-6, RFUpgrade_A-6H, RFUpgrade_XASR-1, RFUpgrade_XASR-2, RFUpgrade_RDA-1-150, RFUpgrade_RDA-1-300, RFUpgrade_U-1700, RFUpgrade_U-2000, RFUpgrade_A-7, RFUpgrade_AJ10-27, RFUpgrade_XLR11-RM-5, RFUpgrade_XLR11-RM-13-8K, RFUpgrade_XLR35-RM-1]
+    upgrades: [RFUpgrade_Model39c, RFUpgrade_RD-102, RFUpgrade_Veronique61, RFUpgrade_A-6, RFUpgrade_A-6H, RFUpgrade_XASR-1, RFUpgrade_XASR-2, RFUpgrade_RDA-1-150, RFUpgrade_RDA-1-300, RFUpgrade_U-1700, RFUpgrade_U-2000, RFUpgrade_A-7, RFUpgrade_AJ10-27, RFUpgrade_XLR11-RM-5, RFUpgrade_XLR11-RM-13-8K, RFUpgrade_XLR35-RM-1]
   - id: fd_injectors
     title: "Impinging-Jet Injectors"
     discipline: FluidDynamics
@@ -2843,7 +2861,7 @@ nodes:
     tier: 6
     parents: [fd_orbitalSoviet, fd_sovietStorable]
     flavor: "Take an engine already proven in flight and refine it in place — more thrust, higher reliability, crew-rating — without changing what it burns. The unglamorous production engineering that turns a working booster into a dependable one."
-    upgrades: [RFUpgrade_RD-107-8D728, RFUpgrade_RD-108-8D727, RFUpgrade_RD-0110, RFUpgrade_RD-215M-8D613, RFUpgrade_RD-250PM, RFUpgrade_RD-262-11D26, RFUpgrade_Isayev-R17, RFUpgrade_AJ10-118E, RFUpgrade_G-1A, RFUpgrade_RD-107-11D512, RFUpgrade_RD-108-11D511, RFUpgrade_RD-107-11D512P, RFUpgrade_RD-108-11D511P, RFUpgrade_RD-107A-14D22, RFUpgrade_RD-108A-14D21]
+    upgrades: [RFUpgrade_RD-103M, RFUpgrade_RD-107-8D728, RFUpgrade_RD-108-8D727, RFUpgrade_RD-0110, RFUpgrade_RD-215M-8D613, RFUpgrade_RD-250PM, RFUpgrade_RD-262-11D26, RFUpgrade_Isayev-R17, RFUpgrade_AJ10-118E, RFUpgrade_G-1A, RFUpgrade_RD-107-11D512, RFUpgrade_RD-108-11D511, RFUpgrade_RD-107-11D512P, RFUpgrade_RD-108-11D511P, RFUpgrade_RD-107A-14D22, RFUpgrade_RD-108A-14D21]
     # RD-107/108 11D512/11D511 marks (+ their later "P" syntin-fuelled marks) added (2026-07, shuttle/
     # station batch): later rungs of the exact same R-7-family production-refinement chain this node
     # already hosts (8D728/8D727) - append, no new node.
