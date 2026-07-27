@@ -52,7 +52,10 @@ namespace RPAxe
                     ConfigNode n = paramsNode.GetNode(kvp.Key.ToString());
                     if (n == null)
                     {
-                        Debug.LogWarning("[AXE] GAMEPARAMETERS has no section for preset " + kvp.Key + "; it keeps stock values.");
+                        // Preset.Custom is expected: it is the stock "custom difficulty" slot, which
+                        // neither AXE nor RP-1 authors. Any OTHER missing preset is an authoring bug.
+                        if (kvp.Key != GameParameters.Preset.Custom)
+                            Debug.LogWarning("[AXE] GAMEPARAMETERS has no section for preset " + kvp.Key + "; it keeps stock values.");
                         continue;
                     }
 
