@@ -1,6 +1,7 @@
 # Upgrade Ladders — engine config placement doctrine
 
-Status: **design settled, not yet implemented** (2026-07-27)
+Status: design settled 2026-07-27. **Step 1 (the build gate) shipped; steps 2-7 outstanding.**
+Live baseline: run `python tools/build_tree.py` and read the `ladder gate:` line.
 Worklist data: `manifest/upgrade-ladders.tsv` (448 classified rows, regenerate with the classifier in `tools/`)
 
 ---
@@ -72,7 +73,7 @@ The word "upgrade" was doing four jobs. Classified across all 448 placed engine 
 | kind | count | share | what it is | where it belongs |
 |---|---:|---:|---|---|
 | **RUNG** | 264 | 59 % | next generation of the same engine on the same propellant | one per node, along its discipline's **spine**, increasing tiers |
-| **PADDING** | 87 | 19 % | functionally identical to a sibling (±3 % on thrust/Isp/ignitions/burn) | **DROP** |
+| **PADDING** | 87 | 19 % | functionally identical to a sibling (±3 % on thrust/Isp/ignitions/burn) | **co-locate** with its twin — never its own tree event |
 | **FORK-propellant** | 62 | 14 % | first config on a *new* chemistry | the node that unlocks **that chemistry** (cross-lane) |
 | **BASE** | 17 | 4 % | base config listed as an upgrade | audit separately (doctrine #4 risk) |
 | **FORK-nozzle** | 15 | 3 % | same generation, different expansion ratio / duty | the **nozzle or duty** node |
@@ -95,14 +96,26 @@ Two families that the collapse metric was misreading:
 
 ## 4. Rules
 
-- **R1 — one rung per part per node.** A node may grant at most one config upgrade for a given engine part.
-  Machine-checkable; this is the invariant that would have caught the bug at authoring time.
+- **R1 — one decision per part per node.** A node may grant at most one *performance point* for a given
+  engine part. Counted in equivalence classes (see R4), so cosmetic twins riding together are fine and two
+  genuinely different configs are not. Machine-checkable; the invariant that would have caught this at
+  authoring time.
 - **R2 — rungs ascend.** Successive rungs of a family sit at strictly increasing tiers.
 - **R3 — forks home at their own enabler.** A propellant fork homes at the chemistry node; a nozzle fork at
   the expansion/duty node; a densification fork at the densification node. Forks are cross-lane gates and
   are the most legible teaching moments in the whole system — they say *why* the engine got better.
-- **R4 — padding is dropped, not placed.** A config within ±3 % of a sibling on every performance axis is
-  right-click-menu noise. Use the existing `DROP` disposition in `manifest/upgrades-curated.tsv`.
+- **R4 — padding co-locates, it never earns an event.** Configs at the same performance point (±3 % on
+  every axis) are *one decision* however many names RealFuels gives it. They may share a node as cosmetic
+  variants; what they must not do is occupy separate tree events. So R1 counts **equivalence classes**,
+  not configs.
+
+  > **Corrected 2026-07-27 during implementation.** The design first said "drop padding outright". That was
+  > wrong on mechanism and on scope. `manifest/upgrades-curated.tsv` is read only by the partlist
+  > extractors — `build_tree.py` never consumes its `disposition`, so a `DROP` there is a no-op. No
+  > config-removal mechanism exists at all, and building one is undesirable: `emit_entry_cost_mods` chains
+  > each config to the previous rung of its own ladder, so deleting configs breaks the ENTRYCOSTMODS graph,
+  > and AXE's standing rule is to port RO content as-is rather than reinvent it. Co-location gets the whole
+  > benefit — padding stops consuming tree events — at zero risk and with no content lost.
 - **R5 — respect doctrine #4.** A config upgrade never lands on the node that holds its own base part.
   When walking a spine, skip that node.
 - **R6 — merge before inventing.** If a family has more rungs than its spine has steps, merge the
@@ -112,7 +125,7 @@ Two families that the collapse metric was misreading:
 
 Of the 63 strictly-dominated stacked rungs, **30 become live choices again purely from spreading** — RD-101
 is only dead because RD-103 arrives in the same instant. Only **33 are genuinely redundant** (dominated by a
-same-or-earlier-era config) and those are exactly the R4 drops. Dominance is a *symptom*; fix placement and
+same-or-earlier-era config) and those are exactly the R4 co-locations. Dominance is a *symptom*; fix placement and
 most of it evaporates.
 
 ## 5. The spines already exist
@@ -166,7 +179,7 @@ the late-tree electric/RCS region wants it.
 | config | kind | disposition |
 |---|---|---|
 | RD-101 | FORK-propellant `Ethanol90+O2` | **→ `pc_ethanol90` T2 (new).** +32 % thrust, Isp flat — a pure chamber-pressure gain off the hotter alcohol |
-| RD-102 | RUNG (thr −8 %, isp −13) | **DROP.** Regressive, dominated, no mechanism |
+| RD-102 | RUNG (thr −8 %, isp −13) | **co-locate with RD-101** at `pc_ethanol90`. Regressive and dominated — it is not a second decision |
 | 5D60 | RUNG (thr +15 %, isp +11) | **→ `met_stainlessSteel` T2.** The Isp+thrust step the alloy actually bought |
 | RD-103 | RUNG (thr +15 %, isp +13) | **merge into 5D60** (R6) — same performance point |
 | RD-103M | RUNG (thr +2 %) | **→ `fd_engineMaturation` T6.** A burn-life/qualification uprate, which is what that node is for |
@@ -192,18 +205,20 @@ Split the generation ladder from the propellant fork:
 - Storable variants (`Aerozine50+NTO`) → stay at `fd_titanStorableConversion` (correct home), one rung each
   along `fd_gasGeneratorCeiling` T8 → `fd_gasGeneratorApex` T9.
 - `AJ-7` / `AJ-7-Kero` (`Cooled*`) → **densification** node.
-- `AJ-5`/`AJ-9` are identical (1053.9 kN, 285.2 s) → **merge**; `AJ-3` is identical to base → **DROP**.
+- `AJ-5`/`AJ-9` are identical (1053.9 kN, 285.2 s) → **one class, one node**; `AJ-3` is identical to base →
+  rides the base part's node.
 
 ### `ROE-RL10Fixed` — 9 at T7 + 9 at T11
 
 Genuine 13-rung ladder; distribute along the hydrolox spine. Pull out the non-rungs first:
 `RL10A-5` (ispSL 341 vs 182 — the sea-level DC-X nozzle) and `RL10A-3-9` are **nozzle forks**;
-`CECE-Methane` is a **propellant fork** → `cryo_smallScaleMethalox`. `RL10A-3-7` is padding → DROP.
+`CECE-Methane` is a **propellant fork** → `cryo_smallScaleMethalox`. `RL10A-3-7` is padding → rides with `RL10A-3-3`.
 
 ### `SXTPWPT6` (PT6 turboprop) — 8 on `av_refinedTurboprop` T5
 
 Eleven Kerosene configs whose thrust wanders 8.4 → 13.0 kN with no progression. This is a fixed catalog, not
-a ladder: keep base + `PT6A-42` as a single uprate, **drop the other nine**.
+a ladder: it is **one class plus `PT6A-42`** — all eleven collapse to a single uprate event, the other nine
+riding along on the same node as cosmetic variants.
 
 ### Air-breathing families (`aje_j79`, `RO-R11F`, `RO-RD9B`, `aje_j75`, `SXTPWPT6`) on `met_cooledTurbine` T4
 
@@ -237,8 +252,8 @@ and it will report the true remaining count as the migration proceeds.
 ## 9. Order of work
 
 1. `check_ladder_collapse` in `build_tree.py`, warnings-only at first so the build stays green.
-2. **R4 drops** — 87 padding configs to `DROP` in `upgrades-curated.tsv`. Pure subtraction, no placement
-   judgement, removes a fifth of the problem and shrinks every later step.
+2. **R4 co-locations** — 34 padding classes currently split across nodes. Pull each class onto one node.
+   No placement judgement needed beyond "which twin is right", and it shrinks every later step.
 3. **`microEngine` scatter** + delete `pc_storableRcsPropellants`. Highest value, self-contained, needs
    4 of the 8 new chemistry nodes.
 4. **RD-100 / `met_stainlessSteel`** — the worked example above. Reopens band 1 at T2/T3 deliberately.
@@ -251,7 +266,8 @@ and it will report the true remaining count as the migration proceeds.
 - Rungs distribute along **existing** spines; no new spine nodes (R6 absorbs overflow).
 - Eight new chemistry-lane nodes, each justified by ≥2 fork families (`pc_ascent` deferred at 1).
 - `pc_storableRcsPropellants` is **deleted**, not slimmed — it has no residue once its contents are homed.
-- Padding is dropped outright rather than kept as silent duplicates: AXE is explicitly ahistorical, so
-  RP-1's calendar-filler configs (`LR87-AJ-5`/`-7`/`-9`) have no claim on tree events.
+- Padding **co-locates** rather than being deleted (revised during implementation — see R4). AXE is
+  explicitly ahistorical, so RP-1's calendar-filler configs (`LR87-AJ-5`/`-7`/`-9`) have no claim on tree
+  *events* — but they keep their place in the config list, which costs nothing and loses no RO content.
 - Band 1 is **reopened** at T2–T3 for the stainless/alcohol fix. The tier fence from band-2 kickoff was
   about not disturbing settled work incidentally; this is a deliberate correction to it.

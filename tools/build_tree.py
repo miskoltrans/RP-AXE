@@ -1554,12 +1554,27 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
                   if not r["base"] and r["node"] in by and CFG_NAME_SAFE.match(r["config"])]
         if not placed: continue
         pnode = p2n.get(part)
-        # R1 -- more than one config upgrade for this part landing on the same node
+        # Padding-equivalence classes: configs at the same performance point are ONE decision, however
+        # many names RealFuels gives it. They may share a node (cosmetic variants of one tree event);
+        # what they must not do is occupy separate events. So R1 counts CLASSES, not configs.
+        klass, order = {}, []
+        for r in placed:
+            p = perf.get(r["config"])
+            hit = next((k for k in order if p and perf.get(k) and _ladder_near(p, perf[k])), None)
+            klass[r["config"]] = hit or r["config"]
+            if not hit: order.append(r["config"])
+        # R1 -- one node granting two genuinely distinct configs for the same part
         pernode = collections.defaultdict(list)
         for r in placed: pernode[r["node"]].append(r["config"])
         for node, cfgs in pernode.items():
-            if len(cfgs) > 1:
+            if len({klass[c] for c in cfgs}) > 1:
                 r1.append((part, node, by[node]["tier"], sorted(cfgs)))
+        # R4 -- one padding class spread over several nodes: spurious tree events for a single decision
+        perclass = collections.defaultdict(set)
+        for r in placed: perclass[klass[r["config"]]].add(r["node"])
+        for k, ns in perclass.items():
+            if len(ns) > 1:
+                r4.append((part, k, sorted(ns)))
         # R5 -- token homed on the part's own node (the pin guard in engine_config_ladders is exempt:
         # it deliberately keeps one config there so a freshly-bought engine is always flyable)
         for r in placed:
@@ -1579,10 +1594,6 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
             isfork = cooled or (bfam is not None and fam != bfam
                                 and not any(_propfam(perf[s["config"]].get("propellants"))[0] == fam
                                             for s in seen if s["config"] in perf))
-            # R4 -- padding against anything already reachable
-            dup = next((s for s in seen if s["config"] in perf and _ladder_near(p, perf[s["config"]])), None)
-            if dup and not isfork:
-                r4.append((part, r["config"], dup["config"], r["node"]))
             # R2 -- rungs (not forks) must ascend; forks legitimately branch off sideways.
             # Same-node pairs are already an R1, so only report a genuine tier regression here.
             t = by[r["node"]]["tier"]
@@ -1594,7 +1605,7 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
     if not (r1 or r2 or r4 or r5):
         print("ladder gate: clean -- no collapsed engine-config ladders"); return []
     print(f"ladder gate: {len(r1)} collapsed node(s), {len(r5)} base-node token(s), "
-          f"{len(r2)} non-ascending rung(s), {len(r4)} padding duplicate(s)  [docs/UPGRADE-LADDERS.md]")
+          f"{len(r2)} non-ascending rung(s), {len(r4)} split padding class(es)  [docs/UPGRADE-LADDERS.md]")
     for part, node, tier, cfgs in sorted(r1, key=lambda x: -len(x[3]))[:12]:
         print(f"   R1 ! {part} -> {node} T{tier} grants {len(cfgs)}: {', '.join(cfgs[:6])}"
               f"{' ...' if len(cfgs) > 6 else ''}")
@@ -1605,8 +1616,8 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
     for part, cfg, node, t, lt in r2[:5]:
         print(f"   R2 ~ {part}: {cfg} @ {node} T{t} does not ascend (previous rung T{lt})")
     if len(r2) > 5: print(f"   R2 ... and {len(r2) - 5} more")
-    for part, cfg, dup, node in r4[:5]:
-        print(f"   R4 ~ {part}: {cfg} @ {node} is a padding duplicate of {dup}")
+    for part, cfg, ns in r4[:5]:
+        print(f"   R4 ~ {part}: '{cfg}' performance point split across {len(ns)} nodes: {', '.join(ns)}")
     if len(r4) > 5: print(f"   R4 ... and {len(r4) - 5} more")
     if os.environ.get("AXE_TREE_STRICT") and r1:
         die(f"AXE_TREE_STRICT set: {len(r1)} collapsed engine-config ladder(s) — see above")
