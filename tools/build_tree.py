@@ -1492,6 +1492,126 @@ def emit_grant_upgrades(nodes):
     print(f"grant tokens: {len(av)} avionics + {len(dsn)} DSN -> AxeGrantUpgrades.cfg")
     return marker
 
+LADDER_TOL = 0.03      # +/- band on every perf axis within which two configs are the "same" rung (R4 padding)
+
+def _ladder_perf():
+    """config -> perf/propellant row from engine-stats.tsv, for the ladder-collapse classifier."""
+    out = {}
+    path = os.path.join(REPO, "manifest", "engine-stats.tsv")
+    if not os.path.exists(path): return out
+    with open(path, encoding="utf-8") as f:
+        hdr = f.readline().rstrip("\n").split("\t")
+        idx = {k: hdr.index(k) for k in ("config", "propellants", "maxThrust_kN", "ispVac", "ispSL",
+                                         "ignitions", "ratedBurnTime") if k in hdr}
+        if "config" not in idx: return out
+        for ln in f:
+            c = ln.rstrip("\n").split("\t")
+            if len(c) <= max(idx.values()): continue
+            out[c[idx["config"]].strip()] = {k: c[i].strip() for k, i in idx.items()}
+    return out
+
+def _propfam(s):
+    """Normalise a propellant string to a chemistry family; densification tracked separately.
+    RealFuels spells the same chemistry several ways (LqdOxygen/Oxygen, LqdHydrogen/Hydrogen) and
+    prefixes Cooled* for subcooled/densified loads -- both would otherwise read as a new fork."""
+    s = s or ""
+    cooled = "Cooled" in s
+    s = s.replace("Cooled", "")
+    for a, b in (("LqdOxygen", "O2"), ("Oxygen", "O2"), ("LqdHydrogen", "H2"), ("Hydrogen", "H2"),
+                 ("LqdMethane", "CH4"), ("Methane", "CH4")):
+        s = s.replace(a, b)
+    return s.strip(), cooled
+
+def _ladder_near(a, b, tol=LADDER_TOL):
+    """True when two configs are the same performance point on every axis a player can feel."""
+    for k in ("maxThrust_kN", "ispVac", "ispSL", "ignitions", "ratedBurnTime"):
+        try: x, y = float(a.get(k) or 0), float(b.get(k) or 0)
+        except ValueError: return False
+        if abs(x - y) > tol * max(abs(x), abs(y), 1e-9): return False
+    return True
+
+def check_ladder_collapse(ladders, by, p2n, u2n):
+    """Build gate: engine config upgrades must not collapse a family's whole progression onto one node.
+
+    See docs/UPGRADE-LADDERS.md. A part's CONFIGs are four different relationships, not one -- a RUNG
+    (next generation, same propellant), a FORK (first config on a new chemistry / nozzle / densified
+    load), or PADDING (functionally identical to a sibling). Homing them per-FAMILY instead of
+    per-CONFIG turns an enabler node into a bucket: met_stainlessSteel handed over the entire RD-100
+    ladder (+63% thrust) in one T2 purchase, and 53 of 107 families were fully collapsed onto one node.
+
+    Reports, non-fatal by default (matches check_tech_gates):
+      R1 ERROR  two config upgrades for the same part on the same node
+      R5 WARN   an RFUpgrade_* token on the node that holds its own base part (doctrine #4)
+      R2 WARN   rungs of a family not at strictly increasing tiers
+      R4 WARN   a placed config that is a padding duplicate of an already-placed sibling
+    AXE_TREE_STRICT=1 makes R1 fail the build (CI / pre-commit gate)."""
+    perf = _ladder_perf()
+    r1, r2, r4, r5 = [], [], [], []
+    for part, rungs in sorted(ladders.items()):
+        # only configs the gate emitter can address individually are policeable; engine-stats.tsv
+        # sentinels like "(single config)" / "(no RealFuels config path)" are not real CONFIG names
+        placed = [r for r in rungs
+                  if not r["base"] and r["node"] in by and CFG_NAME_SAFE.match(r["config"])]
+        if not placed: continue
+        pnode = p2n.get(part)
+        # R1 -- more than one config upgrade for this part landing on the same node
+        pernode = collections.defaultdict(list)
+        for r in placed: pernode[r["node"]].append(r["config"])
+        for node, cfgs in pernode.items():
+            if len(cfgs) > 1:
+                r1.append((part, node, by[node]["tier"], sorted(cfgs)))
+        # R5 -- token homed on the part's own node (the pin guard in engine_config_ladders is exempt:
+        # it deliberately keeps one config there so a freshly-bought engine is always flyable)
+        for r in placed:
+            if pnode and u2n.get("RFUpgrade_" + r["config"]) == pnode:
+                r5.append((part, r["config"], pnode))
+        # walk the family in tree order, classifying against what is already reachable
+        seen, bfam = [], None
+        basecfg = next((r for r in rungs if r["base"]), None)
+        if basecfg and basecfg["config"] in perf:
+            bfam = _propfam(perf[basecfg["config"]].get("propellants"))[0]
+            seen.append(basecfg)
+        lasttier, lastnode = None, None
+        for r in sorted(placed, key=lambda x: (by[x["node"]]["tier"], x["era"])):
+            p = perf.get(r["config"])
+            if not p: continue
+            fam, cooled = _propfam(p.get("propellants"))
+            isfork = cooled or (bfam is not None and fam != bfam
+                                and not any(_propfam(perf[s["config"]].get("propellants"))[0] == fam
+                                            for s in seen if s["config"] in perf))
+            # R4 -- padding against anything already reachable
+            dup = next((s for s in seen if s["config"] in perf and _ladder_near(p, perf[s["config"]])), None)
+            if dup and not isfork:
+                r4.append((part, r["config"], dup["config"], r["node"]))
+            # R2 -- rungs (not forks) must ascend; forks legitimately branch off sideways.
+            # Same-node pairs are already an R1, so only report a genuine tier regression here.
+            t = by[r["node"]]["tier"]
+            if not isfork and lasttier is not None and t <= lasttier and r["node"] != lastnode:
+                r2.append((part, r["config"], r["node"], t, lasttier))
+            if not isfork: lasttier, lastnode = t, r["node"]
+            seen.append(r)
+
+    if not (r1 or r2 or r4 or r5):
+        print("ladder gate: clean -- no collapsed engine-config ladders"); return []
+    print(f"ladder gate: {len(r1)} collapsed node(s), {len(r5)} base-node token(s), "
+          f"{len(r2)} non-ascending rung(s), {len(r4)} padding duplicate(s)  [docs/UPGRADE-LADDERS.md]")
+    for part, node, tier, cfgs in sorted(r1, key=lambda x: -len(x[3]))[:12]:
+        print(f"   R1 ! {part} -> {node} T{tier} grants {len(cfgs)}: {', '.join(cfgs[:6])}"
+              f"{' ...' if len(cfgs) > 6 else ''}")
+    if len(r1) > 12: print(f"   R1 ... and {len(r1) - 12} more collapsed node(s)")
+    for part, cfg, node in r5[:5]:
+        print(f"   R5 ~ {part}: {cfg} sits on its own base part's node {node}")
+    if len(r5) > 5: print(f"   R5 ... and {len(r5) - 5} more")
+    for part, cfg, node, t, lt in r2[:5]:
+        print(f"   R2 ~ {part}: {cfg} @ {node} T{t} does not ascend (previous rung T{lt})")
+    if len(r2) > 5: print(f"   R2 ... and {len(r2) - 5} more")
+    for part, cfg, dup, node in r4[:5]:
+        print(f"   R4 ~ {part}: {cfg} @ {node} is a padding duplicate of {dup}")
+    if len(r4) > 5: print(f"   R4 ... and {len(r4) - 5} more")
+    if os.environ.get("AXE_TREE_STRICT") and r1:
+        die(f"AXE_TREE_STRICT set: {len(r1)} collapsed engine-config ladder(s) — see above")
+    return r1
+
 def check_tech_gates(nodes):
     """Build gate: every RP-AXE-*authored* raw tech gate (design/*.cfg + Source/*.cs) must
     resolve to a real tree node. Otherwise it fails CLOSED and SILENT in-game — renaming or
@@ -1560,5 +1680,6 @@ def main():
     check_probe_requirements(nodes)
     emit_impl_backlog(nodes)             # docs/IMPL-TODO.md: provisional grants + impl_todo -> checklist
     check_tech_gates(nodes)              # gate: authored tech-refs (design/*.cfg + Source) must resolve (fail closed+silent otherwise)
+    check_ladder_collapse(ladders, by, p2n, u2n)   # gate: engine-config ladders must not collapse onto one node
 
 if __name__ == "__main__": main()

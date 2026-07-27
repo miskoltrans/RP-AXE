@@ -12,7 +12,9 @@ the entire RD-100 ladder — RD-101, RD-102, 5D60, RD-103, RD-103M. One purchase
 from 307 kN to 500 kN (**+63 % thrust, +11 s Isp**) and hands over four decisions at once. RP-1 gated those
 same configs behind four separate nodes.
 
-It is not a one-off. Across the tree:
+It is not a one-off. Two views of the scale, both true, measuring different things:
+
+**Authoring view** — hand-written `upgrades:` lists in `tree/nodes.yaml`, i.e. what a designer edits:
 
 | | count | share |
 |---|---:|---:|
@@ -20,6 +22,21 @@ It is not a one-off. Across the tree:
 | upgrade refs that are stacked rungs | 339 / 549 | 62 % |
 | engine families fully collapsed onto one node | 53 / 107 | 50 % |
 | stacked rungs strictly dominated at unlock | 63 | |
+
+**Resolved view** — after `merge_placement` + auto-placement, i.e. what the game actually sees. This is
+the authoritative number and it is roughly 2.5× larger, because many parts share a config set (all six RCS
+thrusters carry `microEngine`'s propellant menu; `ROE-LR87`, `ROE-LR87_11` and `ROE-LR87_Single` share the
+LR87 configs):
+
+| | count |
+|---|---:|
+| engine families with placed config upgrades | 258 |
+| families with ≥1 collapsed node | **130** |
+| (part, node) pairs granting >1 config | **160** |
+| unique config tokens placed — *the actual edit surface* | 522 |
+
+The edit surface is smaller than the damage: 93 config names are shared by more than one part, so fixing
+one placement fixes it everywhere that name is used.
 
 ## 2. Root cause
 
@@ -196,9 +213,17 @@ along the air-breathing spine, which has 8 steps and plenty of room.
 
 Full per-config worklist for all 107 families: **`manifest/upgrade-ladders.tsv`**.
 
-## 8. The invariant
+## 8. The invariant — **SHIPPED**
 
-Add `check_ladder_collapse(nodes)` to `tools/build_tree.py`, alongside `check_tech_gates`:
+`check_ladder_collapse(ladders, by, p2n, u2n)` in `tools/build_tree.py`, running after `check_tech_gates`.
+It consumes the already-resolved `engine_config_ladders()` output, so it polices what the game sees rather
+than what the YAML says. Configs the gate emitter cannot address individually (`CFG_NAME_SAFE` sentinels
+like `(single config)`) are excluded. Warnings-only today; `AXE_TREE_STRICT=1` makes R1 fatal.
+
+Baseline at time of writing: **160 collapsed nodes · 0 base-node tokens · 6 non-ascending rungs ·
+127 padding duplicates**. Drive these to zero, then flip R1 to error.
+
+Checks:
 
 - **error** — two config upgrades for the same part on the same node (R1)
 - **error** — a config upgrade on the node holding its own base part (R5)
