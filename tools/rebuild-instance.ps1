@@ -148,13 +148,18 @@ Write-Host "  dependencies installed."
 
 # --- step 4: build + install our SCANsat fork (not a CKAN dependency) -------------------------
 Step 4 "Build and install SCANsat fork"
+# Version source of truth = SCANsat.version.props, same as the fork's build-release.ps1. The csproj
+# does NOT import that props file, so $(Version) has to be passed explicitly or the DLL is stamped
+# 1.0.0; $(RepoRootPath) has to be passed or KSPBuildTools can't find GameData\SCANsat\SCANsat.version
+# and silently leaves it as the unstamped template (no VERSION field -> KSP-AVC sees no version).
+[xml]$scanSatVerProps = Get-Content (Join-Path $ScanSatForkPath 'SCANsat.version.props')
+$scanSatVersion = ([string]($scanSatVerProps.Project.PropertyGroup.Version | Select-Object -First 1)).Trim()
 Push-Location $ScanSatForkPath
 try {
     # Build just SCANsat.csproj (pulls in SCANsat.Unity via ProjectReference). Not the .sln --
     # SCANmechjeb in the same solution targets a MechJeb API that's since changed and won't build,
-    # and we don't ship it. KSPBuildTools' post-build target syncs the DLLs + .version into the
-    # fork's own GameData\SCANsat automatically.
-    & dotnet build 'SCANsat\SCANsat.csproj' -c Release
+    # and we don't ship it.
+    & dotnet build 'SCANsat\SCANsat.csproj' -c Release -p:Version=$scanSatVersion -p:RepoRootPath="$($ScanSatForkPath -replace '\\','/')/"
     if ($LASTEXITCODE -ne 0) { throw "dotnet build failed (exit $LASTEXITCODE)" }
 } finally {
     Pop-Location
@@ -162,6 +167,21 @@ try {
 $scanSatSrc = Join-Path $ScanSatForkPath 'GameData\SCANsat'
 $scanSatDst = Join-Path $instFull 'GameData\SCANsat'
 if (-not (Test-Path $scanSatSrc)) { throw "SCANsat build did not produce $scanSatSrc" }
+# Overlay the freshly built DLLs into the fork's GameData before copying it out. NOTHING does this
+# for us: the DLLs under GameData\SCANsat\Plugins are gitignored build output that no post-build
+# target writes, so without this they are whatever a past manual copy left behind. That is exactly
+# how the instance ended up running SCANsat 21.1.1 while the fork was 11 commits ahead at 21.2.1 --
+# and stale binaries here are invisible, because the robocopy below reports a perfectly happy sync.
+$scanSatBin = Join-Path $ScanSatForkPath 'SCANsat\bin\Release\net4.8'
+$scanSatPlugins = Join-Path $scanSatSrc 'Plugins'
+New-Item -ItemType Directory -Path $scanSatPlugins -Force | Out-Null
+foreach ($f in 'SCANsat.dll','SCANsat.pdb','SCANsat.Unity.dll','SCANsat.Unity.pdb') {
+    $built = Join-Path $scanSatBin $f
+    if (-not (Test-Path $built)) { throw "SCANsat build did not produce $built" }
+    Copy-Item $built $scanSatPlugins -Force
+}
+$builtVer = (Get-Item (Join-Path $scanSatPlugins 'SCANsat.dll')).VersionInfo.ProductVersion
+Write-Host "  built SCANsat $builtVer"
 robocopy $scanSatSrc $scanSatDst /E /COPY:DAT /DCOPY:DAT /R:1 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null
 if ($LASTEXITCODE -ge 8) { throw "robocopy (SCANsat) failed (exit $LASTEXITCODE)" }
 $global:LASTEXITCODE = 0
