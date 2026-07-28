@@ -933,9 +933,17 @@ namespace RPAxe
             float max = 0f;
             for (int i = 0; i < parts.Count; i++)
             {
-                ModuleAxeAvionics axe = parts[i]?.FindModuleImplementing<ModuleAxeAvionics>();
-                if (axe == null || !axe.guidanceEnabled || axe.hibernating) continue;
-                if (axe.capacityTons > max) max = axe.capacityTons;
+                Part p = parts[i];
+                if (p == null) continue;
+                ModuleAxeAvionics axe = p.FindModuleImplementing<ModuleAxeAvionics>();
+                if (axe != null && axe.guidanceEnabled && !axe.hibernating && axe.capacityTons > max)
+                    max = axe.capacityTons;
+                // Fixed-capacity units (ModuleAxeFixedAvionics) count toward the same MAX. A vessel already
+                // covered by, say, a 16 t Agena bus is not overloaded just because a small procedural core
+                // rides along, and shouldn't pay this module's penalty for it -- RP-1 took one vessel-wide
+                // MAX across every avionics unit, whichever module supplied it.
+                ModuleAxeFixedAvionics fix = p.FindModuleImplementing<ModuleAxeFixedAvionics>();
+                if (fix != null && fix.CapacityTons > max) max = fix.CapacityTons;
             }
             return max;
         }
