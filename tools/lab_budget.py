@@ -1,13 +1,28 @@
 #!/usr/bin/env python3
 """Crewed-lab (KerbalismLab) science budget — same basis as tools/science_budget.py (theoretical max
-across every body an experiment can run on). Reads the 65 fork cfgs (value, Situation, BodyAllowed,
-BodyNotAllowed) + 6 base lab experiments. Body multipliers/biome weights identical to science_budget.py.
+across every body an experiment can run on).
 
-Body-type gates -> RSS bodies (Kerbalism conditions): HomeBody=Earth, HomeBodyAndMoons=Earth+Moon,
-Moon=Moon, Moons=all moons, Planets=sun-orbiting bodies, Gaseous=gas giants, Atmospheric=has-atmosphere,
-Oceanic=Earth, Suns=Sun. Situation maps Kerbalism virtual -> stock: Space->spLow, BodyGlobal->x1."""
-import re, os, glob
-FORK = os.environ.get("KLE_FORK", r"C:\git\ksp\KerbalismLabExperimentsExpandedContinued\GameData\KerbalismLabExperimentsExpandedContinued")
+Reads the SHIPPED AXE configs (GameData/RP-AXE/design/Science/KerbalismLab), not the upstream fork:
+what AXE ships is what the budget must describe. Set KLE_SRC to point elsewhere.
+
+⚠ The payout field is `scienceCap`, NOT `baseValue`. Kerbalism 3.x:
+    ExperimentInfo:  DataSize        = baseValue * dataScale        (applyScienceScale=true)
+                     ScienceCap      = scienceCap * ScienceGainMultiplier
+    SubjectData:     ScienceMaxValue = ScienceCap * Situation.SituationMultiplier
+                     SciencePerMB    = ScienceMaxValue / DataSize
+A completed run collects DataSize MB and therefore banks exactly `scienceCap * situationMultiplier`.
+`baseValue` only sizes the data stream. The fork authors its balance in the group `value` field, which
+Framework-3 writes to `baseValue` — so `value` only becomes the payout once scienceCap tracks baseValue
+(the framework does this globally in Patches-Global.cfg; AXE does it in Framework-6-ScienceCap.cfg).
+
+Run with --model current|fixed|both (default both):
+  current = whatever scienceCap literally is in the shipped cfgs
+  fixed   = scienceCap == the authored group `value`
+"""
+import re, os, glob, sys, argparse
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+SRC = os.environ.get("KLE_SRC", os.path.join(HERE, "..", "GameData", "RP-AXE", "design", "Science", "KerbalismLab"))
 
 # body -> ([landed,splashed,flyLow,flyHigh,spLow,spHigh], biomesum, era reach)  (same as science_budget.py)
 B={
@@ -48,73 +63,152 @@ def bodies_for(ba,bn):
     elif bn=="HomeBodyAndMoons": s-={"Earth","Moon"}
     elif bn=="Gaseous": s-=GASEOUS
     elif bn=="Atmospheric": s-=ATMO
+    elif bn=="Suns": s-={"Sun"}
     elif bn in B: s-={bn}
     return s
 
 SMAP={"srflanded":0,"srfsplashed":1,"flyinglow":2,"flying":2,"flyinghigh":3,
       "inspacelow":4,"space":4,"inspacehigh":5,"bodyglobal":None,"surface":0}  # index into mult; None=x1
 
-def parse_fork():
+def block(s,i):
+    """return the text of the {...} block starting at/after index i"""
+    i=s.find('{',i); d=0; j=i
+    while j<len(s):
+        if s[j]=='{': d+=1
+        elif s[j]=='}':
+            d-=1
+            if d==0: return s[i+1:j],j
+        j+=1
+    return "",len(s)
+
+def parse_experiments():
+    """-> list of dicts from the shipped per-experiment cfgs (65) + the 6 base exps in Framework-2."""
     out=[]
-    def bb(s,i):
-        i=s.find('{',i);d=0;j=i
-        while j<len(s):
-            if s[j]=='{':d+=1
-            elif s[j]=='}':
-                d-=1
-                if d==0:return s[i+1:j],j
-            j+=1
-        return "",len(s)
-    for p in sorted(glob.glob(os.path.join(FORK,"*.cfg"))):
-        if os.path.basename(p)=="InstrumentTagging.cfg": continue
+    for p in sorted(glob.glob(os.path.join(SRC,"Experiments","*.cfg"))):
         t=open(p,encoding="utf-8",errors="ignore").read()
-        me=re.search(r'KERBALISM_EXPERIMENT',t); sit=ba=bn=""
+        stem=os.path.basename(p)[:-4]
+        d={"name":stem,"src":"fork","sit":[],"ba":"","bn":"","cap":0.0,"value":0.0,
+           "crew":"","tech":"","req":"","duration":0.0,"size":0.0}
+        # EXPERIMENT_DEFINITION (the literal cap/base as shipped)
+        me=re.search(r'(?m)^\s*EXPERIMENT_DEFINITION',t)
         if me:
-            kb,_=bb(t,me.end())
-            for k,var in [("Situation","sit"),("BodyAllowed","ba"),("BodyNotAllowed","bn")]:
-                m=re.search(r'(?m)^\s*'+k+r'\s*=\s*(\S+)',kb)
-                if m:
-                    if k=="Situation": sit=m.group(1)
-                    elif k=="BodyAllowed": ba=m.group(1)
-                    else: bn=m.group(1)
-        ml=re.search(r'@LAB_EXPERIMENTS',t); val=0.0
+            eb,_=block(t,me.end())
+            for k,fld in [("baseValue","base"),("scienceCap","cap")]:
+                m=re.search(r'(?m)^\s*'+k+r'\s*=\s*([0-9.]+)\s*$',eb)
+                if m: d[fld]=float(m.group(1))
+            mk=re.search(r'KERBALISM_EXPERIMENT',eb)
+            if mk:
+                kb,_=block(eb,mk.end())
+                d["sit"]=re.findall(r'(?m)^\s*Situation\s*=\s*(\S+)',kb)
+                for k,fld in [("BodyAllowed","ba"),("BodyNotAllowed","bn")]:
+                    m=re.search(r'(?m)^\s*'+k+r'\s*=\s*(\S+)',kb)
+                    if m: d[fld]=m.group(1)
+        # LAB_EXPERIMENTS group entry (the authored balance)
+        ml=re.search(r'@?LAB_EXPERIMENTS',t)
         if ml:
-            lb,_=bb(t,ml.end()); mv=re.search(r'(?m)^\s*value\s*=\s*([0-9.]+)',lb)
-            if mv: val=float(mv.group(1))
-        out.append((os.path.basename(p)[:-4],val,sit,ba,bn))
+            lb,_=block(t,ml.end())
+            for k,fld in [("value","value"),("duration","duration"),("size","size")]:
+                m=re.search(r'(?m)^\s*'+k+r'\s*=\s*([0-9.]+)',lb)
+                if m: d[fld]=float(m.group(1))
+            for k,fld in [("CrewRequirement","crew"),("UnlockTech","tech"),("requirements","req")]:
+                m=re.search(r'(?m)^\s*'+k+r'\s*=\s*(\S.*?)\s*(?://.*)?$',lb)
+                if m: d[fld]=m.group(1).strip()
+        out.append(d)
+    out += parse_base()
     return out
 
-# 6 base lab experiments (universal, situations from StockGroups-Lab.cfg comments)
-BASE=[("CHILLED",24,"Space","",""),("RELAX",28,"SrfLanded@Biomes","",""),("JAMMED",30,"InSpaceLow","",""),
-      ("TRAPPED",38,"SrfLanded","",""),("SALINE",27,"SrfSplashed@Biomes","",""),("BIRDIE",14,"Flying@Biomes","","")]
+# The 6 base lab experiments: group entry lives in Framework-2, the EXPERIMENT_DEFINITION in
+# Framework-5 (vendored from KerbalismScienceOnly ScienceDefs-Kerbalism.cfg).
+def parse_base():
+    out=[]
+    f2=os.path.join(SRC,"Framework-2-LabGroup.cfg")
+    f5=os.path.join(SRC,"Framework-5-BaseExperimentDefs.cfg")
+    if not os.path.exists(f2): return out
+    t=open(f2,encoding="utf-8",errors="ignore").read()
+    ml=re.search(r'LAB_EXPERIMENTS',t)
+    if not ml: return out
+    lb,_=block(t,ml.end())
+    defs={}
+    if os.path.exists(f5):
+        dt=open(f5,encoding="utf-8",errors="ignore").read()
+        for m in re.finditer(r'(?m)^\s*EXPERIMENT_DEFINITION',dt):
+            eb,_=block(dt,m.end())
+            mid=re.search(r'(?m)^\s*id\s*=\s*(\S+)',eb)
+            if not mid: continue
+            e={"sit":[],"ba":"","bn":"","cap":0.0}
+            mc=re.search(r'(?m)^\s*scienceCap\s*=\s*([0-9.]+)',eb)
+            if mc: e["cap"]=float(mc.group(1))
+            mk=re.search(r'KERBALISM_EXPERIMENT',eb)
+            if mk:
+                kb,_=block(eb,mk.end())
+                e["sit"]=re.findall(r'(?m)^\s*Situation\s*=\s*(\S+)',kb)
+                for k,fld in [("BodyAllowed","ba"),("BodyNotAllowed","bn")]:
+                    mm=re.search(r'(?m)^\s*'+k+r'\s*=\s*(\S+)',kb)
+                    if mm: e[fld]=mm.group(1)
+            defs[mid.group(1).replace("kerbalism_","")]=e
+    # each base exp is a named sub-node of LAB_EXPERIMENTS
+    for name in ("CHILLED","RELAX","JAMMED","TRAPPED","SALINE","BIRDIE"):
+        m=re.search(r'(?m)^\s*'+name+r'\s*(?://.*)?$',lb)
+        if not m: continue
+        gb,_=block(lb,m.end())
+        d={"name":name,"src":"base","sit":[],"ba":"","bn":"","cap":0.0,"value":0.0,
+           "crew":"","tech":"","req":"","duration":0.0,"size":0.0}
+        for k,fld in [("value","value"),("duration","duration"),("size","size")]:
+            mm=re.search(r'(?m)^\s*'+k+r'\s*=\s*([0-9.]+)',gb)
+            if mm: d[fld]=float(mm.group(1))
+        for k,fld in [("CrewRequirement","crew"),("UnlockTech","tech"),("requirements","req")]:
+            mm=re.search(r'(?m)^\s*'+k+r'\s*=\s*(\S.*?)\s*(?://.*)?$',gb)
+            if mm: d[fld]=mm.group(1).strip()
+        d.update({k:defs.get(name,{}).get(k,d[k]) for k in ("sit","ba","bn","cap")})
+        d["missing_def"]= name not in defs
+        out.append(d)
+    return out
 
-rows=parse_fork()+BASE
-
-def sci(val,sit,body):
+def sci(payout,sit,body):
+    """science banked for one completed run of `sit` at `body` (Kerbalism: cap * situationMultiplier)."""
     mult,bsum,_=B[body]; sk=sit.split("@")[0].lower()
     idx=SMAP.get(sk,4)
-    base = val if idx is None else val*mult[idx]
+    base = payout if idx is None else payout*mult[idx]
     if "@biomes" in sit.lower() or "@virtualbiomes" in sit.lower(): base*=max(bsum,1)
     return base
 
-avail={b:0.0 for b in B}
-per_exp=[]
-for name,val,sit,ba,bn in rows:
-    bs=bodies_for(ba,bn); tot=0.0
-    for b in bs:
-        s=sci(val,sit,b); avail[b]+=s; tot+=s
-    gate = (f"+{ba}" if ba else "") + (f" -{bn}" if bn else "") or "(any)"
-    per_exp.append((name,val,sit,gate.strip(),len(bs),tot))
+def run(rows,model,verbose=True):
+    avail={b:0.0 for b in B}; per_exp=[]
+    for d in rows:
+        payout = d["value"] if model=="fixed" else d["cap"]
+        bs=bodies_for(d["ba"],d["bn"]); tot=0.0
+        sits=d["sit"] or ["InSpaceLow"]
+        for b in bs:
+            for s in sits:
+                v=sci(payout,s,b); avail[b]+=v; tot+=v
+        gate=((f"+{d['ba']}" if d['ba'] else "")+(f" -{d['bn']}" if d['bn'] else "")).strip() or "(any)"
+        per_exp.append((d["name"],payout,"/".join(sits),gate,len(bs),tot,d))
+    total=sum(avail.values())
+    if verbose:
+        print(f"TOTAL crewed-lab science (theoretical max, all allowed bodies) = {total:,.0f}")
+        print(f"  Earth = {avail['Earth']:,.0f}   Earth+Moon = {avail['Earth']+avail['Moon']:,.0f}")
+        print("\n  === top 12 experiments by total ===")
+        for name,pay,sit,gate,nb,tot,_ in sorted(per_exp,key=lambda x:-x[5])[:12]:
+            print(f"    {name:16s} pay={pay:>5.0f} {sit:26s} gate={gate:18s} bodies={nb:2d}  total={tot:>10,.0f}")
+        print("\n  === cumulative reachable by era (body reach) ===")
+        for mx,lab in [(-3292,"orbit ~1958"),(-2952,"inner planets ~1961"),(-2612,"crewed+landing ~1964"),
+                       (-2272,"adv probes ~1967"),(-2102,"Jupiter ~1970"),(-1847,"Saturn ~1972"),
+                       (-1200,"Uranus ~1986"),(-657,"Pluto ~2015")]:
+            print(f"    x<= {mx:6d} {lab:22s} {sum(v for b,v in avail.items() if B[b][2]<=mx):12,.0f}")
+    return total,avail,per_exp
 
-total=sum(avail.values())
-print(f"crewed-lab experiments: {len(rows)} (65 fork + 6 base)")
-print(f"TOTAL crewed-lab science (theoretical max, all allowed bodies) = {total:,.0f}")
-print(f"  Earth = {avail['Earth']:,.0f}   Earth+Moon = {avail['Earth']+avail['Moon']:,.0f}")
-print("\n=== top 12 experiments by total (across allowed bodies) ===")
-for name,val,sit,gate,nb,tot in sorted(per_exp,key=lambda x:-x[5])[:12]:
-    print(f"  {name:16s} val={val:>4.0f} {sit:22s} gate={gate:18s} bodies={nb:2d}  total={tot:>9,.0f}")
-print("\n=== cumulative crewed-lab reachable by era (body reach) ===")
-mil=[(-3292,"orbit ~1958"),(-2952,"inner planets ~1961"),(-2612,"crewed+landing ~1964"),(-2272,"adv probes ~1967"),
- (-2102,"Jupiter ~1970"),(-1847,"Saturn ~1972"),(-1200,"Uranus ~1986"),(-657,"Pluto ~2015")]
-for mx,lab in mil:
-    print(f"  x<= {mx:6d} {lab:22s} {sum(v for b,v in avail.items() if B[b][2]<=mx):12,.0f}")
+if __name__=="__main__":
+    ap=argparse.ArgumentParser()
+    ap.add_argument("--model",choices=["current","fixed","both"],default="both")
+    a=ap.parse_args()
+    rows=parse_experiments()
+    nfork=sum(1 for d in rows if d["src"]=="fork"); nbase=len(rows)-nfork
+    print(f"source: {os.path.normpath(SRC)}")
+    print(f"crewed-lab experiments: {len(rows)} ({nfork} fork + {nbase} base)")
+    miss=[d["name"] for d in rows if d.get("missing_def")]
+    if miss: print(f"!! base experiments with NO EXPERIMENT_DEFINITION (dead menu entries): {', '.join(miss)}")
+    ncapmismatch=sum(1 for d in rows if d["src"]=="fork" and abs(d["cap"]-d["value"])>1e-9)
+    print(f"!! fork experiments where scienceCap != authored value (payout is inert): {ncapmismatch}/{nfork}")
+    for model in (["current","fixed"] if a.model=="both" else [a.model]):
+        print(f"\n{'='*78}\n== MODEL: {model}  (payout field = {'authored value' if model=='fixed' else 'scienceCap as shipped'})\n{'='*78}")
+        run(rows,model)
