@@ -313,6 +313,16 @@ def main():
 
     axe_bad, ext_bad = split_findings(findings)
 
+    # Provenance ("whose file is this?") is the wrong ownership test for a total conversion.
+    # A dangling id that survives into the MERGED CACHE is AXE's bug wherever it is written:
+    # AXE is what deleted the RP-1 node the id needs, and AXE ships the overlay that was
+    # supposed to re-home it. Filing those under "external mods -- triage only" is how 702
+    # RCS engine CONFIGs stayed gated on `earlyDocking` / `reusableControl` for months:
+    # reported on every run, exit 0, nobody's problem. In cache mode nothing is external.
+    if args.cache and ext_bad:
+        axe_bad = sorted(axe_bad + ext_bad)
+        ext_bad = []
+
     def dump(title, items):
         if not items:
             return

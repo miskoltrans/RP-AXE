@@ -1,0 +1,184 @@
+# RP-AXE — Bug Classes
+
+What keeps breaking, why it keeps breaking, and the detector for each. Written 2026-07-29 from a
+sweep of the 608-commit history plus a fresh hunt against the live instance.
+
+The point of this document is not the list of past bugs — it is that **almost every bug this
+project has shipped belongs to one of three families**, and each family has a mechanical detector.
+Anything found by eye that a detector could have found is a gap in the detectors, not bad luck.
+
+---
+
+## The three families
+
+### A. Silent binding failure — a string that resolves to nothing
+
+The dominant family. RP-AXE is a total conversion assembled out of ModuleManager patches, and
+essentially every cross-reference in that system is an **unvalidated string**: a tech-node id, a
+part name, a PartModule type name, a top-level config-node name. When the string names something
+that does not exist, ModuleManager merges the patch anyway, KSP loads it anyway, and **nothing
+logs**. The failure is an *absence* — a node that grants no part, an experiment that never runs,
+a setting that reverts to stock — and absences are invisible until someone plays far enough to
+look for the thing that is missing.
+
+This family is worse in AXE than in a normal mod for a structural reason: **AXE deleted RP-1's
+tech tree.** Every one of the ~400 RP-1 node ids is now a dangling reference somewhere, and they
+are scattered across vendored `seed/` configs *and* third-party mod files that RP-1 used to
+satisfy. The re-homing overlays in `design/` are what keep them alive, so any gap in an overlay
+is a silent break.
+
+| Sub-class | How it bites | Past instances | Detector |
+|---|---|---|---|
+| **A1** Config node with no reader | A top-level `NODE {}` does nothing unless some DLL calls `GetConfigNodes("NODE")`. RP-1's readers live in `RP0.dll`, which AXE does not ship. | `GAMEPARAMETERS` (dead until `9cb4afe`/`dc5b7a7`); `IGNORED_EXPERIMENTS`; `AVIONICSCONFIGS` | `check_liveness.py` check C |
+| **A2** Part module with no class | `MODULE { name = X }` where no assembly defines `X`. KSP drops the module and logs one line among thousands. Anything keyed on it — a Kerbalism `requirements = Module:X`, a contract `PartValidation` — can then never match. | the 16 `*LabExperimentPackage` markers (**open**, see below) | `check_liveness.py` check B |
+| **A3** Dangling tech-node id | Fails **closed**: `GetTechnologyState(unknown)` → `Unavailable`, so the gated thing is locked forever. | `autoStrutTechRequired = generalConstruction` (`4708e6c`); 4 orphaned stock/CTT ids (`c3e6620`); HDD-Upgrade gates (`1d0f3db`); US2 wedge `Configure` gates (`1d5472c`); 702 RCS engine CONFIGs (**open**) | `check_tech_refs.py --cache` |
+| **A4** Placed part that isn't there | The tree places a part that another AXE config deletes, that a missing mod owns, or that fails to compile. The node still costs science and grants nothing. | `ca_GRS`, the 5 `dmUS2*` wedges (**open**) | `check_liveness.py` check A |
+| **A5** Global setting that reverts to stock | RP-1 was the *only* source of a CustomBarnKit section or difficulty key; dropping RP-1 resurrected the stock value nobody chose. | the 7-item punch-list (`5c12181`, `4708e6c`, `25e2b80`, `7e3b58f`) | none — needs a periodic RP-1↔AXE section diff |
+
+### B. Semantic misread — the API does not mean what the field name says
+
+Second family, much smaller in count but expensive per instance, because the wrong belief gets
+built on: a balance pass, a shipped price curve, a plugin predicate.
+
+| Instance | The misread | Corrected by |
+|---|---|---|
+| CustomBarnKit `upgrades[0]` | Read as the first price. KSP charges `upgradeLevels[level+1]`, so slot 0 is **never charged**; every step was one slot off (~4× on R&D). | `0263d36` |
+| `STRATEGY requiredReputationMin/Max` | Read as an availability window. It is a **lerp over the commitment slider** — widening it to ±1e6 made full commitment cost a million rep and halved Channel 2. | `883508d`, then `fc0d025` (delete the override) |
+| `PartModelPurchased` / `PartTechAvailable` | Read as "consults `protoTechNodes`". Both fall through to `experimentalPartsStock`, so marking a part experimental makes stock call it *purchased* — a self-destructing predicate. | `41122cd` |
+| Kerbalism `baseValue` | Read as the payout. Kerbalism pays `scienceCap × situationMultiplier`; `baseValue` only sizes the data stream. Invalidated a whole lab balance pass. | `babd387`, `fffa2d0` |
+| `CONTRACT_TYPE rewardFunds` | Read as what the player receives. Stock multiplies by prestige (1/1.25/1.5) × the difficulty gain multiplier — ×1.529 on funds. | `cef220c`, `ecc8e41` |
+| `GameEvents.*.Add(staticMethod)` | Assumed legal. `EvtDelegate..ctor` derefs `evt.Target` with no null guard → deterministic boot NRE. | `9010107` |
+| `DifficultyPresetChanger` at MainMenu | Assumed sufficient. `MainMenu.Start` caches `GetDefaultParameters` in the same scene load and wins the race. | `dc5b7a7` |
+
+**The rule that would have prevented all seven: decompile, don't infer.** `ilspycmd` is installed
+globally; a stock-semantics question is one command and about a minute:
+
+```
+ilspycmd -t <Namespace.Type> Instance/KSP_x64_Data/Managed/Assembly-CSharp.dll
+```
+
+There is no detector for this family. There is a **trigger**: any time a claim about the economy,
+the science budget, or an unlock rule rests on what a config field *appears* to say, read the
+consumer's code before building on it.
+
+### C. Verification failure — the check that could not have caught it
+
+The reason a bug in family A or B survives long enough to reach playtesting.
+
+| Instance | Why the check was worthless |
+|---|---|
+| `check_tech_refs.py` "EXTERNAL MODS" bucket | Classified by **file provenance**. The 702 dangling RCS configs are written in Coatl/ROEngines files, so they were filed as somebody else's problem — printed on every run, exit 0. But AXE is what deleted the node; the ids are AXE's to re-home. *Fixed 2026-07-29: in `--cache` mode nothing is external.* |
+| Engine-config gate layer 2 | Its own docstring says it covers "~123/126 of the RP-1 nodes the walker uses" and it never logs the other 3. A bounded pass that does not report what it dropped reads as complete coverage. |
+| The `-axe-autotest` difficulty check | Seeded its career from `GetDefaultParameters(Normal)`, which was the *exact* thing that was broken. Written off as a harness limitation; it was the bug. |
+| The `RSSRP1` save that "proved" `GAMEPARAMETERS` worked | Made in `ksp_rp1_clean`, where RP-1's own plugin was doing the work. **A save from an RP-1 instance can never prove an AXE mechanism.** |
+| Contract Configurator's `Loaded N out of N` | CC reads the pre-patch database on the run that regenerates the MM cache: 338/338 is printed while 34 new types are silently missing. Always validate on a **second** run. |
+| Hand-authored test fixtures (FTO) | Inputs built from the mental model under test can only confirm it. Sprang three times. |
+
+**Rules, in order of how often they would have helped:**
+1. Prove it against the **merged `ModuleManager.ConfigCache`** and the **save the game actually
+   wrote**, never against the repo, the log line, or another instance's save.
+2. Any bounded pass must `log()` what it dropped. Silent truncation reads as coverage.
+3. A gate that reports and exits 0 is documentation, not a gate.
+4. New `CONTRACT_TYPE` configs need two runs before a verdict.
+
+---
+
+## Detectors
+
+| Tool | Covers | Needs |
+|---|---|---|
+| `tools/check_tech_refs.py --cache <ConfigCache>` | A3 | a booted instance |
+| `tools/check_liveness.py` | A1, A2, A4 | a booted instance (`ConfigCache` + `KSP.log`) |
+| `tools/check_forks.py`, `check_ladder_collapse` (in `build_tree.py`) | tree-design invariants | repo only |
+| `tools/check_nonreentry.py` | reentry-rating coverage | repo only |
+
+Run the two cache-based tools after any `rebuild-instance.ps1` and before any playtest. They are
+the only ones that see what the game actually loaded.
+
+---
+
+## Open findings (2026-07-29 hunt)
+
+Severity is "what a playtester hits", not "how wrong the config looks".
+
+### 1. Every hypergolic RCS propellant is permanently locked — A3 · **high**
+
+702 RealFuels engine `CONFIG` blocks across **82 parts (66 of them placed in the tree)** still
+carry RP-1 tech ids that AXE deleted:
+
+- `techRequired = earlyDocking` ×468 — MMH+NTO, MMH+MON3, MMH+MON10, UDMH+NTO, Aerozine50+NTO, Cavea-B
+- `techRequired = reusableControl` ×234 — CH4+O2, H2+O2, ASCENT
+- `techRequired = orbitalRocketry1962` ×4 / `orbitalRocketry1965` ×2 — LR101, LR105, LR89 uprates
+
+`EngineConfigTechLevels.CanConfig()` returns true only for `GetTechnologyState(tech) == Available`,
+and an unknown id returns `Unavailable`, so these can never be selected — and AXE's own
+`AxeEngineConfigPurchaseGate` correctly refuses the switch, with a null tech title. Net effect:
+**the standard spacecraft-RCS propellants of the entire Apollo/Soyuz era do not exist in AXE.**
+Only HTP, hydrazine monoprop, N2O, cold gas, and the kerolox/ethanol families are reachable.
+
+Root cause is in `build_tree.py::emit_engine_config_gates`: the layer-2 catch-all key set `r2a`
+is built only from the *residual* `pairs`, so an RP-1 node whose only carriers are curated parts
+(all of which layer 0 already re-homed) never gets a catch-all row — and the 66 uncurated RCS
+parts keep the dead value. The intent is unambiguous and already written down for the curated
+parts: `earlyDocking → pc_storableRcsPropellants` / `pc_caveaB`.
+
+Fix: derive the catch-all key set from **every** RP-1 node the walker touches, not just the
+residual, and hard-fail the build when an RP-1 node has no catch-all target.
+
+### 2. The whole KerbalismLab science suite is uncollectable — A2 · **high**
+
+`design/Science/KerbalismLab/InstrumentTagging.cfg` tags parts with 16 `*LabExperimentPackage`
+marker modules. Those classes live in the upstream fork's own assembly
+(`KerbalismLabExperimentsExpandedContinued/src/LabExperimentPackage.cs`), which **AXE does not
+ship**. KSP logs one `Cannot find a PartModule of typename` error per tagged part — 57 of the
+current log's 154 — and drops every tag.
+
+`ExperimentRequirements` evaluates `Require.Module` as
+`Lib.FindModules(v.protoVessel, name).Count > 0`, so **60 of the 65 lab experiments can never
+run** — 58 via `Module:<pkg>`, plus two that name a *module* in a *part-name* requirement
+(`SLAC-LCLS.cfg:30` and `SOLAR-WISPR.cfg:30` say `Part:RadioLabExperimentPackage` /
+`Part:VisualLabExperimentPackage`, both upstream defects inherited verbatim and unsatisfiable
+either way). That includes every experiment the 2026-07-28 balance pass tuned.
+
+Fix options: (a) define the 16 markers as empty `PartModule`s in AXE.dll — cheapest, mirrors
+`ModuleAxeMarker`, and `InstrumentTagging.cfg`'s re-pointing work then starts mattering;
+(b) rewrite the requirements onto something AXE already has.
+
+### 3. Four tree nodes grant nothing — A4 · **medium**
+
+| Node | Title | Missing part | Why |
+|---|---|---|---|
+| `mic_boomMagnetometry` | Boom-Deployed Magnetometry | `dmUS2MagBoom` | AXE never authored RP-1's 5 US2 wedges (`RP-1/Parts/Science/US2.cfg`) |
+| `opt_precisionOptics` | Precision Orbital Optics | `dmUS2Scope` | ” |
+| `opt_multiSpectralImaging` | Multi-Spectral Imaging | `dmUS2ImagingPlatform` | ” |
+| `coatl_scienceSandbox` | Gamma-Ray Spectrometer (Sandbox) | `ca_GRS` | **AXE deletes it itself** — `seed/Science/CleanupParts/RemoveScienceParts.cfg:23` |
+
+Three more nodes are thinned rather than emptied: `opt_irRadiometry` (`dmUS2GoreSat`),
+`mic_plasmaWave` (`dmUS2RPWS`), `elec_deployablePanelII` (`aje_solarPanels`, which fails to
+compile because Restock replaced the stock `radialFlatSolarPanel` model it clones).
+
+`coatl_scienceSandbox` is the interesting one: a self-contradiction entirely inside AXE, place
+and delete in the same shipped mod.
+
+### 4. Three parts fail to compile — A4 · **low**
+
+`B10_APASv2` (clones a Bluedog_DB model that is not installed), `aje_solarPanels` (see above),
+`RO-Castor30B` (`ConfigNode.ParseVector3` — a malformed vector in the RO config). Only
+`aje_solarPanels` is placed. `ca_hera` also fails to clone its model but still compiles.
+
+### 5. Two inert vendored config nodes — A1 · **low**
+
+`IGNORED_EXPERIMENTS` (known; RP-1 reads it in `RP0/Singletons/Database.cs` to pre-complete
+body/experiment/situation combos — in AXE they stay collectible, mostly overlapped by
+`EarthScienceRemoval.cfg`) and `AVIONICSCONFIGS` in `seed/Parts/_RP-AXE-extra/ProceduralAvionics.cfg`,
+which is dead weight now that `proceduralAvionics` carries `ModuleAxeAvionics`.
+
+### 6. Known-and-accepted, re-confirmed
+
+- 14 `PARTUPGRADE`s still strand on the `parking` catch-all, including `RFUpgrade_30x_NK-33`,
+  `RFUpgrade_8x_NK-43`, `RFUpgrade_RD-0108`.
+- `RP0LiquidsMicrogravity` has `baseValue = 16` / `scienceCap = 8`, so it pays 8. Inherited
+  verbatim from RP-1 — flagged only because any budget line that reads 16 is wrong.
+- The tracking-station ladder is copied verbatim from RP-1 and does **not** carry the
+  `upgrades[0]`-is-dead note that `AxeFacilities.cfg` carries. `docs/ECONOMY.md` already accounts
+  for it correctly ("11 levels, 10 purchases", 2.53M); the comment is what is missing.
