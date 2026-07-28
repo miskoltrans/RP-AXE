@@ -4458,7 +4458,18 @@ nodes:
     title: "Back-Surface-Field Silicon Cells"
     discipline: ElectricalPower
     tier: 9
-    parents: [elec_dopedCoverglass]
+    parents: [elec_dopedCoverglass, elec_integratedCircuit]
+    # CROSSOVER (2026-07-28) — elec_integratedCircuit (Microelectronics T7). Same-family, not "X led to Y":
+    # this is the rung where cell-making stops being metallurgy and becomes semiconductor PROCESSING. A
+    # back-surface field IS a heavy p+ diffusion laid across the back of the wafer, and the textured front
+    # face is masked etching — the planar process, precise diffusion profiles and photolithographic masking,
+    # is what makes both a monolithic IC and this cell. The two lanes are the same physics filed under
+    # different disciplines and had not touched since elec_semiconductorDiode (T2); this reconnects them at
+    # the one point where the shared process is genuinely load-bearing. Also rescues elec_integratedCircuit
+    # from being a near-dead-end (fan-out 1 -> 2). Used sparingly per rule 9 — this is the ONLY crossover
+    # added to the cell lane; the nuc_geiger -> elec_nOnPCell edge (Van Allen belts caused the n-on-p
+    # switch) was considered and REJECTED: T1 -> T6 gates nothing, and that story is already told in the
+    # node's own flavor. Lineage without gating belongs in the prose, not the edge.
     flavor: "Diffuse a heavily doped layer across the back of the cell so carriers that reach it are turned around instead of lost, and texture the front face so light that would have glanced off is trapped inside instead. The same silicon, worked properly, gives half again what it did — and a thinner wafer will now do the work of a thick one."
     upgrades: [solarTL6]
   - id: elec_thinSiliconCell

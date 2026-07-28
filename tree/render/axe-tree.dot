@@ -1004,6 +1004,7 @@ digraph AXE {
   "elec_arCoatings" -> "elec_nOnPCell" [style=solid];
   "elec_nOnPCell" -> "elec_dopedCoverglass" [style=solid];
   "elec_dopedCoverglass" -> "elec_backSurfaceField" [style=solid];
+  "elec_integratedCircuit" -> "elec_backSurfaceField" [style=solid];
   "elec_backSurfaceField" -> "elec_thinSiliconCell" [style=solid];
   "elec_thinSiliconCell" -> "elec_galliumArsenideCell" [style=solid];
   "elec_galliumArsenideCell" -> "elec_tripleJunctionCell" [style=solid];
