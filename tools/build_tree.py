@@ -510,19 +510,40 @@ def load_engine_stats():
 def costcat(cat, disc, mods, mod):
     """Classify a part into a COST-category (drives part_cost_weight). Signal = its PartModules (mods,
     ';'-joined) + stock category + AXE discipline + source mod. Order matters: most specific first. The
-    stock-category clauses (Science/Coupling/Electrical) are FALLBACKS for parts whose modules dodged the
-    module check. Mirrors docs/SCIENCE.md 5; uncovered parts fall through to 'misc' (weight 1.0)."""
+    stock-category clauses (Science/Coupling/Electrical/Ground) are FALLBACKS for parts whose modules
+    dodged the module check, and each one belongs to the LAST rule that could want it — a category
+    clause placed early silently outranks every module rule below it (see 'ground' vs 'gear').
+    Mirrors docs/SCIENCE.md 5; uncovered parts fall through to 'misc' (weight 1.0).
+
+    A part with no row in manifest/part-capabilities.tsv arrives here as four empty strings and
+    classifies as 'misc' with nothing to flag it — run tools/backfill_capabilities.py after placing
+    parts RP-1 never had."""
     has = lambda *xs: any(x in mods for x in xs)
-    if mod == "ModularLaunchPads" or has("LaunchClamp", "ModuleGroundPart") or cat == "Ground": return "ground"  # launch infra + hand-placed ground kit, cheap
+    # 'ground' is LAUNCH INFRASTRUCTURE ONLY (weight 0.2). It must NOT claim `cat == "Ground"`: that
+    # is KSP's part category for landing legs, gear, wheels and tracks, so the old clause swallowed
+    # all 54 of them at the launch-clamp weight and left `gear` (2.0) matching nothing at all.
+    if mod == "ModularLaunchPads" or has("LaunchClamp", "ModuleGroundPart"): return "ground"
     if has("ModuleEnginesRF", "ModuleEngineConfigs", "ModuleEngines") and "RCS" not in cat: return "engine"
     if has("ModuleRCSFX", "ModuleRCS"):                                    return "rcs"
     if has("ModuleCommand") and (has("Habitat") or cat == "Pods"):        return "crewpod"
     if has("ModuleCommand"):                                              return "avionics"
-    if has("ModuleScienceExperiment", "ModuleOrbitalScience") or disc == "OpticsPhotonics" or cat == "Science": return "science"
+    if has("ModuleScienceExperiment", "ModuleOrbitalScience") or disc == "OpticsPhotonics" or cat == "Science":
+        # ...but crew VOLUME is not an instrument. Cabins, hab modules, greenhouses and centrifuges all
+        # ship ModuleScienceExperiment as a station-module convention, which used to price 41 of them at
+        # the instrument weight (2.5) — mk2CrewCabin included. A real lab keeps it: ModuleScienceLab is
+        # the thing being paid for there. Scoped INSIDE this clause on purpose: `Habitat` is added to any
+        # pressurisable volume, crew capacity 0 included, so as a standalone rule it also swallows the
+        # SSPX adapters and hubs, which are connectors and priced as such.
+        if has("Habitat", "Comfort", "ModuleExperienceManagement") and not has("ModuleScienceLab"): return "crewpod"
+        return "science"
     if has("ModuleFuelTanks", "TankContentSwitcher") or (has("ProceduralPart") and cat == "FuelTank"): return "tank"
-    if has("ModuleDeployableSolarPanel", "ModuleGenerator", "ModuleResourceConverter", "ModuleRTG") or cat == "Electrical": return "power"
+    if has("ModuleDeployableSolarPanel", "ModuleGenerator", "ModuleResourceConverter", "ModuleRTG",
+           "ModuleSystemHeatFissionReactor", "FissionReactor") or cat == "Electrical": return "power"
     if has("ModuleRealAntenna", "ModuleDataTransmitter"):                 return "antenna"
-    if has("ModuleWheelBase", "ModuleWheelMotor", "KFModuleWheel"):       return "gear"
+    # KSPWheelBase is the RO-wide wheel/leg module (RO replaces the stock wheel modules); cat ==
+    # "Ground" is the fallback for legs whose only other signal is an animation (vela_landing_leg_*).
+    if has("KSPWheelBase", "ModuleWheelBase", "ModuleWheelMotor", "KFModuleWheel",
+           "ModuleAdjustableLeg") or cat == "Ground":                     return "gear"
     if has("ModuleParachute", "RealChuteModule", "ProceduralChute"):      return "chute"
     if has("WingProcedural", "WingManipulator", "ModuleLiftingSurface") or cat in ("Aero", "Wings"): return "aero"
     if has("ModuleDecouple", "ModuleAnchoredDecoupler", "ProceduralFairing", "ModuleDockingNode") or cat == "Coupling": return "separator"
