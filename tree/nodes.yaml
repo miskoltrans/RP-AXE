@@ -4418,6 +4418,43 @@ nodes:
     # 2026-07 backlog sweep: a third, separate stowage mechanism (curved/wrapped vs. rigid-fold vs.
     # roll-out blanket) - own node, not folded into either sibling.
 
+  # ---- Lane 5c: the CELL, not the paddle -- silicon runs out and the III-V ladder takes over ----
+  # Added 2026-07-28 to home solarTL8/9/10, which had fallen through to `parking`. Dividing ROSolar's
+  # per-rung W/m² by the solar constant (1361) turns the ladder into panel efficiency, and it reads as one
+  # story: TL0 4.6% -> TL7 15.1%, which is exactly where a space-grade SILICON cell stops. TL8 17.1%,
+  # TL9 19.5% and TL10 22.1% are past that ceiling, and no amount of silicon gets there -- they are a
+  # MATERIALS change. That also explains why their other two columns move in lockstep: III-V cells are
+  # grown thin and lifted off the wafer (3.5 -> 0.8 kg/m²) and degrade far slower under radiation than
+  # silicon (2 y -> 10 y). Three numbers, one mechanism.
+  # This resumes the tree's own cell-physics lane (elec_semiconductorDiode T2 -> elec_siliconPV T3 ->
+  # elec_arCoatings T4), which stopped at T4 -- every solar node after it is STRUCTURE, several saying so
+  # in their own flavor ("nothing new about how it works"). An efficiency uprate homed on a paddle-SIZE
+  # node is rule-3 backwards; its bottleneck is the cell.
+  # A strict CHAIN, not siblings, and that is load-bearing: ROSolar's rungs set `maxTechLevel = N`, so the
+  # highest unlocked rung wins OUTRIGHT. Spread across the four parallel T11 structure siblings above,
+  # TL10 would short-circuit TL8/TL9 the moment a player took the wrong branch first.
+  - id: elec_galliumArsenideCell
+    title: "Gallium-Arsenide Heterojunction Cells"
+    discipline: ElectricalPower
+    tier: 11
+    parents: [elec_matureSolarArrays]
+    flavor: "Silicon has run out of room — fifteen percent of the sunlight landing on it is all a crystal of it will ever give back. Grow the junction from gallium arsenide instead and the cell absorbs harder, keeps its output in the heat that wilts a silicon panel, and shrugs off the radiation that ages an array into uselessness."
+    upgrades: [solarTL8]
+  - id: elec_tripleJunctionCell
+    title: "Triple-Junction III-V Cells"
+    discipline: ElectricalPower
+    tier: 12
+    parents: [elec_galliumArsenideCell]
+    flavor: "Stack three junctions of different bandgaps in one cell, each harvesting the part of the spectrum the one above it let through — indium gallium phosphide takes the blue, gallium arsenide the visible, germanium the infrared that silicon only ever wasted as heat."
+    upgrades: [solarTL9]
+  - id: elec_metamorphicMultijunction
+    title: "Inverted Metamorphic Multijunction Cells"
+    discipline: ElectricalPower
+    tier: 13
+    parents: [elec_tripleJunctionCell]
+    flavor: "Grow the junctions upside down on a wafer, then peel the finished cell away and discard the wafer it was built on. What is left is a few microns of semiconductor with no substrate to carry — the most efficient cell ever flown, and light enough that the array's mass stops being the reason it is small."
+    upgrades: [solarTL10]
+
   # ---- Lane 6: RTG generations (multi-hundred-watt -> GPHS) ----
   - id: elec_multiHundredWattRTG
     title: "Multi-Hundred-Watt RTG"
