@@ -4102,10 +4102,13 @@ nodes:
     parents: [ep_higherPowerHallThruster]
     flavor: "The Hall thruster leaves the laboratory. The SPT-100 and its bigger siblings become flight-qualified hardware, first for stationkeeping and then as primary propulsion — a few grams-force of thrust at sixteen hundred seconds of Isp, the electric workhorse of the coming decades."
     parts: [RO-SPT100, RO-SPT140, RO-PPS1350]
-    upgrades: [RFUpgrade_SPT-50M, RFUpgrade_457M-V1-K, RFUpgrade_SPT-70M]
+    upgrades: [RFUpgrade_SPT-50M, RFUpgrade_SPT-70M]
     # doctrine-4 fix (2026-07): SPT-70M/SPT-70MK moved down from ep_higherPowerHallThruster (own base part's
     # later marks there); SPT-100D/SPT-100M/SPT-140D moved further down to ep_highPowerHall for the same
     # reason (this node's own base parts RO-SPT100/RO-SPT140).
+    # POWER-CLASS PASS (2026-07-28): 457M-V1-K (74 kW) moved OUT to ep_kryptonHighPower. It sat here beside
+    # SPT-50M at 0.2 kW — a 437x power spread on one purchase. The two that remain are both sub-kilowatt
+    # station-keeping marks, which is this node's own class.
   - id: ep_highPowerHall
     title: "High-Power Nested Hall Thruster"
     discipline: ElectricalPower
@@ -4113,10 +4116,12 @@ nodes:
     parents: [ep_operationalHall]
     flavor: "Scale the Hall thruster into the tens of kilowatts. The 457M's nested channels swallow seventy-two kilowatts and push the Isp past two thousand seconds — the class of electric engine that could one day move cargo rather than just trim an orbit."
     parts: [RO-457M]
-    upgrades: [RFUpgrade_SPT-100B, RFUpgrade_PITV-Hydrazine-40, RFUpgrade_SPT-140D]
     # doctrine-4 fix (2026-07): SPT-100D/SPT-100M/SPT-140D moved down from ep_operationalHall (own base
     # parts' later marks there); 457M-V2 moved further down to ep_nasaHighPowerHall for the same reason
     # (this node's own base part RO-457M).
+    # POWER-CLASS PASS (2026-07-28): all three configs moved OUT to the PPU lane — SPT-100B/SPT-140D
+    # (1-4 kW) to ep_kilowattPPU, PITV-Hydrazine-40 (24 kW) to ep_fiftyKilowattPPU. This node keeps its
+    # part (RO-457M) and its mechanism; what it no longer does is hand you three power classes at once.
   - id: ep_griddedIon
     title: "Gridded Ion Electrostatic Thruster"
     discipline: ElectricalPower
@@ -4141,22 +4146,78 @@ nodes:
     tier: 13
     parents: [ep_highPowerHall]
     flavor: "Xenon is the better propellant and always will be — heavier, easier to ionise, kinder to the grids. It is also scarce enough that a large constellation would corner the world supply. Krypton is a tenth the price, costs you thrust and erodes the channel faster, and it is what you fly when you need to build a thousand of them."
-    upgrades: [RFUpgrade_SPT-70MK, RFUpgrade_X3-HV-K]
+    upgrades: [RFUpgrade_SPT-70MK]
     # LADDER PASS (2026-07-27): the -K marks are a PROPELLANT fork (KryptonGas against XenonGas), not an
     # uprating step -- SPT-70MK is 120 s of Isp WORSE than the xenon mark it sat next to.
-  - id: ep_pulsedInductiveII
-    title: "Higher-Energy Pulsed Inductive Thruster"
+    # POWER-CLASS PASS (2026-07-28): X3-HV-K (219 kW) moved OUT to ep_kryptonHighPower — it sat here beside
+    # SPT-70MK at 0.4 kW, a 612x spread and the worst in the tree. Krypton is a real fork and keeps its own
+    # node; what it cannot also be is a power class. This node is now krypton at station-keeping scale, and
+    # ep_kryptonHighPower carries the conjunction (krypton AND the 100 kW power chain) in its PARENTS.
+  # ---- POWER-PROCESSING LADDER (the PPU lane) — added 2026-07-28 ----
+  # For electric propulsion the enabling breakthrough is not the thruster, it is the POWER CHAIN: array ->
+  # PPU -> radiator. A 0.2 kW SPT-50 and a 74 kW 457M are the same physics and completely different
+  # engineering, and the whole difference is in what feeds them. So an EP config homes at the power class
+  # it needs; the thruster is the PART, the power chain is the TECH.
+  # This is the same two-axis split the solar lanes got: mechanism (how the thruster works, carries the
+  # parts) crossed with power (what you can feed it, carries the configs). It replaces four nodes that
+  # carried no parts at all and existed only as generation pegs to hang configs on -- ep_pulsedInductiveII,
+  # ep_nasaHighPowerHallII, ep_nextGenGriddedIonII and ep_kilowattClassPPU. That last one was this idea
+  # already, invented ad hoc: it was called "Kilowatt-Class Power Processing" and held 68-72 kW configs.
+  # Bands are the natural clusters in the data (manifest/engine-stats.tsv thrust x Isp -> input power), each
+  # roughly 3-5x wide, which is why the EP power gate's threshold is 5x.
+  # WORKING FLUID stays a separate axis and is expressed in PARENTS, not by folding it in here (user call):
+  # ep_kryptonFeed and ep_kryptonHighPower carry the krypton configs and gate on the matching PPU rung.
+  - id: ep_kilowattPPU
+    title: "Kilowatt-Class Power Processing"
+    discipline: ElectricalPower
+    tier: 11
+    parents: [ep_higherPowerHallThruster]
+    flavor: "A thruster is only as good as the box behind it. Take the discharge supply past a kilowatt — regulated, radiation-tolerant, and able to shed its own switching losses — and the electric drive stops being a stationkeeping trim and starts being propulsion a satellite is designed around."
+    upgrades: [RFUpgrade_SPT-100B, RFUpgrade_SPT-100D, RFUpgrade_SPT-100M, RFUpgrade_SPT-140D]
+  - id: ep_multiKilowattPPU
+    title: "Multi-Kilowatt Discharge Supply"
+    discipline: ElectricalPower
+    tier: 12
+    parents: [ep_kilowattPPU]
+    flavor: "Ten kilowatts through a single discharge supply, and the waste heat of running it becomes the design problem rather than the electronics. This is the class that moves a real spacecraft under its own electric power instead of merely holding it in station."
+    upgrades: [RFUpgrade_AEPS]
+  - id: ep_fiftyKilowattPPU
+    title: "Fifty-Kilowatt Power Conditioning"
     discipline: ElectricalPower
     tier: 13
-    parents: [ep_pulsedInductive]
-    flavor: "The same electrodeless pulse scaled up — more energy per pulse, a heavier propellant puff, chasing higher thrust from the same repetitively-pulsed magnetic field."
-    upgrades: [RFUpgrade_PITV-Ammonia-1200, RFUpgrade_PITV-Hydrazine-1200, RFUpgrade_NuPIT-7000]
-    # doctrine-4 catch: these configs' own base parts (pit-125/RO-nupit) live in ep_pulsedInductive.
-    # PITV-Hydrazine-1200 moved IN 2026-07-28 from pc_hydrazineMonoprop T5 (see the note there — it was
-    # gated seven tiers below its own host part). Both 1200-class configs sit here on purpose: they are the
-    # same power uprate on two working fluids, ammonia at Isp 7000 and hydrazine at 4100 — a CHOICE of
-    # propellant, not two generations. R1 permits it because electric propulsion is exempt: Isp is an
-    # operating point for a thruster, not a generation marker (build_tree.py `_is_electric`).
+    parents: [ep_multiKilowattPPU]
+    flavor: "Past twenty kilowatts the power chain stops resembling spacecraft electronics and starts resembling a substation: high-voltage switching, deliberate thermal paths, and an array whose area is now the vehicle's defining feature. Every experimental thruster of the era waits on this box."
+    upgrades: [RFUpgrade_PITV-Hydrazine-40, RFUpgrade_DS4G-25-mid, RFUpgrade_DS4G-25-hi, RFUpgrade_457M-V2, RFUpgrade_DS4G-50-low, RFUpgrade_DS4G-50-hi]
+  - id: ep_hundredKilowattPPU
+    title: "Hundred-Kilowatt Power Conditioning"
+    discipline: ElectricalPower
+    tier: 14
+    parents: [ep_fiftyKilowattPPU, elec_galliumArsenideCell]
+    flavor: "A hundred kilowatts is where solar-electric propulsion stops being a probe technology. The array is measured in hundreds of square metres, the radiators rival it in area, and the conditioning stage is a larger engineering problem than the thruster it feeds."
+    upgrades: [RFUpgrade_X3-HV, RFUpgrade_NuPIT-7000]
+  - id: ep_megawattPPU
+    title: "Megawatt Power Conditioning"
+    discipline: ElectricalPower
+    tier: 15
+    parents: [ep_hundredKilowattPPU, elec_metamorphicMultijunction]
+    flavor: "At a megawatt the sun is no longer a plausible source and the question becomes what else you are willing to carry. The conditioning stage that survives this much power is the gate on every high-thrust electric concept ever drawn — the pulsed inductive machines that would push tonnes rather than kilogrammes."
+    upgrades: [RFUpgrade_PITV-Ammonia-1200, RFUpgrade_PITV-Hydrazine-1200]
+    # Both 1200-class configs sit here: one power uprate on two working fluids, ammonia at Isp 7000 and
+    # hydrazine at 4100 — a CHOICE of propellant, not two generations. R1 permits it because electric
+    # propulsion is exempt (build_tree.py `_is_electric`). PITV-Hydrazine-1200 reached the EP lane at all
+    # only on 2026-07-28: it had been stranded on pc_hydrazineMonoprop T5, homed by its propellant, seven
+    # tiers below its own host part.
+    # Inherits the elec_metamorphicMultijunction edge from ep_kilowattClassPPU, which this node replaces.
+  - id: ep_kryptonHighPower
+    title: "High-Voltage Krypton Discharge"
+    discipline: ElectricalPower
+    tier: 15
+    parents: [ep_kryptonFeed, ep_hundredKilowattPPU]
+    flavor: "Krypton ionises harder than xenon and wants more volts to do it, which is tolerable on a stationkeeping thruster and punishing on anything drawing a fifth of a megawatt. Run the cheap propellant at that scale — through a nested Hall channel or a magnetic nozzle alike — and the constellation that was unaffordable in xenon becomes buildable."
+    upgrades: [RFUpgrade_457M-V1-K, RFUpgrade_X3-HV-K, RFUpgrade_VF-200-Kr, RFUpgrade_VX-200SS-Kr]
+    # The conjunction the user asked for, expressed in PARENTS: krypton (ep_kryptonFeed) AND the power chain
+    # that can drive it (ep_hundredKilowattPPU). A config carries only one techRequired, so the AND has to
+    # live on the node. 74 kW and 219 kW is a 3x spread — inside the gate's 5x band.
 
   # ---- NuclearEngineering: NTR matures past NERVA ----
   - id: nuc_ammoniaWorkingFluid
@@ -5216,17 +5277,10 @@ nodes:
     # along as sibling refinements of the same electrostatic-grid family; DS4G's dual-stage configs are
     # its own further marks.
     # doctrine-4 fix (2026-07): DS4G-25-hi/DS4G-25-mid/DS4G-50-hi/DS4G-50-low are this node's own base
-    # part's (ionXenon-0625-3) marks - moved down to ep_nextGenGriddedIonII (new node, no existing child here).
-  - id: ep_nextGenGriddedIonII
-    title: "Tuned Dual-Stage Gridded Ion Thruster"
-    discipline: ElectricalPower
-    tier: 14
-    parents: [ep_nextGenGriddedIon]
-    catalog: true
-    # see ep_kilowattClassPPU: these are grid-voltage operating points, not successive engines.
-    flavor: "DS4G's dual-stage grid pushed across its own family of ratings — the same second-acceleration-stage trick, retuned for every thrust/Isp trade the design study explored."
-    upgrades: [RFUpgrade_DS4G-25-hi, RFUpgrade_DS4G-25-mid]
-    # doctrine-4 catch: these configs' own base part (ionXenon-0625-3) lives in ep_nextGenGriddedIon.
+    # part's (ionXenon-0625-3) marks - moved off this node.
+    # POWER-CLASS PASS (2026-07-28): all four DS4G marks now sit on ep_fiftyKilowattPPU — they are 32-72 kW,
+    # one band, and what gates them is the conditioning stage, not another grid. The two pegs they used to
+    # hang on (ep_nextGenGriddedIonII, ep_kilowattClassPPU) carried no parts and were deleted.
   - id: ep_nasaHighPowerHall
     title: "NASA High-Power Hall Thruster"
     discipline: ElectricalPower
@@ -5234,20 +5288,12 @@ nodes:
     parents: [ep_highPowerHall]
     flavor: "Purpose-built for deep-space station-keeping on a crewed outpost, not just trimming a satellite's orbit — the next mark past the 457M, and in its nested-channel sibling, the highest-power Hall thruster ever built."
     parts: [ionArgon-0625, ionArgon-0625-3, ionArgon-0625-2]
-    upgrades: [RFUpgrade_457M-V2, RFUpgrade_SPT-100M]
     # King HERMeS (built for NASA's Gateway/PPE). X3 (nested-channel, highest power ever built) and P5
     # (mid-power NASA test article) ride along.
-    # doctrine-4 fix (2026-07): 457M-V2 moved down from ep_highPowerHall (own base part's later mark
-    # there). AEPS/X3-HV/X3-HV-K (this node's OWN base parts' later marks) moved further down to
-    # ep_nasaHighPowerHallII, since this node has no other child.
-  - id: ep_nasaHighPowerHallII
-    title: "Matured NASA High-Power Hall Thruster"
-    discipline: ElectricalPower
-    tier: 14
-    parents: [ep_nasaHighPowerHall]
-    flavor: "HERMeS and X3 mature mark by mark — the Gateway-bound AEPS thruster's flight configuration, and the nested-channel X3 tuned across its own voltage range."
-    upgrades: [RFUpgrade_AEPS, RFUpgrade_X3-HV, RFUpgrade_SPT-100D]
-    # doctrine-4 catch: these configs' own base parts (ionArgon-0625/ionArgon-0625-3) live in ep_nasaHighPowerHall.
+    # POWER-CLASS PASS (2026-07-28): this node's configs went to the PPU lane by power — SPT-100M (1.2 kW)
+    # to ep_kilowattPPU, 457M-V2 (43 kW) to ep_fiftyKilowattPPU. It had spanned 35x. Its successor peg
+    # ep_nasaHighPowerHallII was deleted in the same pass (it carried no parts and spanned 182x: SPT-100D
+    # 1.2 kW, AEPS 13 kW and X3-HV 219 kW on one purchase). The parts stay; the mechanism is the point.
   - id: ep_magnetoplasmadynamic
     title: "Magnetoplasmadynamic Thruster"
     discipline: ElectricalPower
@@ -5266,40 +5312,10 @@ nodes:
     # King VF-200/VX-200SS VASIMR - a third distinct electric-propulsion mechanism, the most exotic and
     # least-flown of this batch's concepts.
     # doctrine-4 fix (2026-07): VF-200-Kr/VX-200SS-Kr are this node's own base parts' (vasimr-125/vasimr-0625)
-    # same-era propellant-swap variants - moved down to ep_variableSpecificImpulsePlasmaII (new node, no
-    # existing child here).
-  - id: ep_kilowattClassPPU
-    title: "Kilowatt-Class Power Processing"
-    discipline: ElectricalPower
-    tier: 15
-    parents: [ep_nextGenGriddedIonII, elec_metamorphicMultijunction]
-    catalog: true
-    # POWER DEPENDENCY (2026-07-28) — elec_metamorphicMultijunction (T13, the modern III-V cell). The whole
-    # electric-propulsion lane took its only solar input from elec_siliconPV at T3, six tiers below where it
-    # starts: ion and Hall thrusters were gated on 1954-vintage 4.6%-efficient cells and nothing else solar.
-    # This node is the one whose own name is about power, and the DS4G 50-class configs it grants draw
-    # ~68-72 kW (jet power from manifest/engine-stats.tsv thrust x Isp, x1.6 for input) — which is 240 m2 of
-    # array even at TL10's 301 W/m², and roughly 350 m2 on TL7 silicon. The dependency is real physics: a
-    # solar-electric thruster is defined by the array feeding it.
-    # NOTE this is one edge on a lane whose nodes still mix power classes by 100-500x (ep_kryptonFeed T13
-    # grants both a 0.4 kW SPT-70MK and a 219 kW X3-HV-K). Homing EP configs by POWER CLASS is a real pass,
-    # not an edge — see docs/UPGRADE-LADDERS.md for the shape it should take.
-    flavor: "The thruster barely changes; the box feeding it doubles. A power processing unit that can hold fifty kilowatts at grid voltage — and shed the waste heat of its own switching losses — is what decides whether the four-grid concept is a laboratory result or a spacecraft."
-    upgrades: [RFUpgrade_DS4G-50-low, RFUpgrade_DS4G-50-hi]
-    # LADDER PASS (2026-07-27): the DS4G "marks" are OPERATING POINTS of one experimental thruster -
-    # grid voltage (low/mid/hi) crossed with PPU power class (25/50 kW). Split on the real hardware axis
-    # (the power supply, per the user's electronics steer); the voltage settings within each class are a
-    # menu, not a progression, so both nodes are catalogs.
-  - id: ep_variableSpecificImpulsePlasmaII
-    title: "Krypton-Fuelled Variable-Isp Plasma Rocket"
-    discipline: ElectricalPower
-    tier: 15
-    parents: [ep_variableSpecificImpulsePlasma]
-    flavor: "Swap the VASIMR's working gas from argon to krypton — denser propellant, a further tuned exhaust velocity, the same RF-heated plasma and magnetic nozzle."
-    upgrades: [RFUpgrade_VF-200-Kr, RFUpgrade_VX-200SS-Kr]
-    # doctrine-4 catch: these configs' own base parts (vasimr-125/vasimr-0625) live in ep_variableSpecificImpulsePlasma.
-
-  # ---- NuclearEngineering: past NTR into fusion pulse and continuous-criticality concepts ----
+    # same-era propellant-swap variants - moved off this node.
+    # POWER-CLASS PASS (2026-07-28): they now sit on ep_kryptonHighPower with the other krypton marks at
+    # this power class. Their peg ep_variableSpecificImpulsePlasmaII carried no parts and was deleted — it
+    # said "krypton VASIMR", which is a FLUID statement, and fluid is now its own axis expressed in parents.
   - id: nuc_bimodalNTR
     title: "Bimodal Nuclear Thermal + Power"
     discipline: NuclearEngineering

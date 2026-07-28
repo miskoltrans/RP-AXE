@@ -278,6 +278,46 @@ It needs `manifest/engine-stats.tsv` for the config→part and propellant mappin
 available. Ship the checker **first** — it converts this from a one-off cleanup into a standing invariant,
 and it will report the true remaining count as the migration proceeds.
 
+### 8b. Electric propulsion — a different class (2026-07-28)
+
+**R1 exempts electric configs** (`_is_electric`). The classifier's premise is chemical: a big Isp jump is a
+generational step. For an electric thruster Isp is a **dial**, not a generation — at fixed input power
+`P = ½·T·v_e`, so thrust and Isp trade continuously and one machine spans a wide Isp range purely on how it
+is run (VASIMR is named for it). Two electric configs of one part on one node is a **choice** of working
+fluid or operating point, not a collapsed ladder. The tree had already reached this conclusion by hand once,
+via `catalog: true` on a DS4G node whose comment called its marks "operating points". Detected off the
+propellant list — draws `ElectricCharge` **and** an electric working fluid, which excludes electric-*pump*-fed
+chemical engines like Rutherford and the Agena ISPS.
+
+### 8c. The EP power gate — **SHIPPED**, and why it is a separate rule
+
+`check_ep_power_spread(u2n, by, hard=True)`. **R1 asks whether two configs of one PART are distinct
+decisions; this asks whether one NODE spans power classes, across parts.** For electric propulsion the
+enabling breakthrough is not the thruster, it is the power chain — array → PPU → radiator. A 0.2 kW SPT-50
+and a 74 kW 457M are the same physics and completely different engineering.
+
+**Doctrine: an EP config homes at the power class it needs. The thruster is the part, the power chain is the
+tech.** Input power comes from the config's own numbers (`P_jet = ½·T·g₀·Isp`, input = jet ÷ 0.63), which
+reproduces published figures well across the range — NEXT 7.8 kW computed vs 6.9 real, AEPS 13.4 vs 12.5.
+
+**Invariant: no node may grant electric configs spanning more than 5× in input power.** Bands are the
+natural clusters in the data, each ~3–5× wide. Baseline **6 violations → 0**; fails the build, `AXE_LADDER_SOFT=1`
+downgrades. Scope: **upgrade-granted configs only** (base configs arrive with their parts, and parts are
+placed by mechanism on purpose), and **charter nodes are exempt** — integrated probe craft (Dawn, DS1) are
+homed chronologically by design.
+
+The pass that got there built the **PPU lane** — `ep_kilowattPPU` T11 → `ep_multiKilowattPPU` T12 →
+`ep_fiftyKilowattPPU` T13 → `ep_hundredKilowattPPU` T14 → `ep_megawattPPU` T15 — replacing five nodes that
+carried **no parts at all** and existed only as generation pegs. Working fluid stays a separate axis
+expressed in **parents**: `ep_kryptonFeed` (station-keeping scale) and `ep_kryptonHighPower` (parents =
+krypton **and** the 100 kW power chain), because a config carries only one `techRequired`, so the AND has to
+live on the node.
+
+**Known gap, not closed:** R2 exempts propellant **forks** from rung ordering and never checks a fork's own
+internal ordering. That is how `PITV-Hydrazine-1200` (737 kW) sat on a T5 propellant node — seven tiers below
+its own host part — undetected. Ordering rungs *within* each propellant branch would catch that class
+directly.
+
 ## 9. Order of work — ✅ ALL DONE (2026-07-27)
 
 > Every step below is complete. The gate reads **0 collapsed · 0 base-node · 0 descending · 14 split

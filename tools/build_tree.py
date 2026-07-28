@@ -1938,6 +1938,6 @@ def main():
     emit_impl_backlog(nodes)             # docs/IMPL-TODO.md: provisional grants + impl_todo -> checklist
     check_tech_gates(nodes)              # gate: authored tech-refs (design/*.cfg + Source) must resolve (fail closed+silent otherwise)
     check_ladder_collapse(ladders, by, p2n, u2n)   # gate: engine-config ladders must not collapse onto one node
-    check_ep_power_spread(u2n, by)       # gate: one node must not span electric power classes (WARN until the lane is re-homed)
+    check_ep_power_spread(u2n, by, hard=True)   # gate: one node must not span electric power classes (0 since 2026-07-28)
 
 if __name__ == "__main__": main()
