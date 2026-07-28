@@ -207,7 +207,12 @@ Step-1 "are we happy with current engine placements" done. **Applied:**
 - **Corrected framing:** the "9 solids / 6 multi-chamber on one node" is NOT a lump — it's correct king+ride-along
   (one breakthrough, many variant outcomes; cost abstracts the rest) per the node philosophy. Engines don't feel
   weak from too-few-nodes; they feel weak from a **flat choice**.
-- **DEFERRED (user: "skip now fix later") — engine DIVERGENCE.** The three paths (multi-chamber ‖ single-chamber ‖
+- **~~DEFERRED — engine DIVERGENCE~~ → ✅ CLOSED 2026-07-28, see §10.** *The bullet below was written
+  **2026-07-01** (`0900bc7`) against the **v2 spine**, which was parked the next day (`ae4c514`, "park v2 spine,
+  restart v3 from band-1 engine spine"). All three nodes it names — `fd_orbitalThrust`, `int_orbitalInsertion`,
+  `fd_baffledInjector` — exist today only in `tree/parked/nodes-v2-spine.yaml`. v3 rebuilt the region band-by-band
+  and arrived at roughly option (a) without ever taking the decision; the one live residue (kerolox had no fork at
+  all) is resolved in §10. Kept verbatim for the reasoning trail:* The three paths (multi-chamber ‖ single-chamber ‖
   hydrolox) are all T2, same cost, converge identically at `fd_orbitalThrust` → no opportunity cost, pick is
   arbitrary. Decision options worked out (pick later): (a) **cost-differentiated now + divergent successor lines
   later** [recommended] — price paths apart this phase; each roots a distinct mid-game line already in `library.yaml`
@@ -215,4 +220,74 @@ Step-1 "are we happy with current engine placements" done. **Applied:**
   only; (c) inherent-physics only; (d) full divergence now (breaks phase order). This also decides `fd_orbitalThrust`'s
   payload (thin marker if successors carry the uprated configs; else it carries them). Other review leftovers folded
   here: reward-desert part-less `fd_orbitalThrust`/`int_orbitalInsertion`; `mic_massSpec` discipline home.
-- **NEXT when resumed:** settle divergence (a–d) → then library-sort the rest of this phase's parts → re-review → whole-tree pass.
+  - **Leftovers, dispositioned 2026-07-28:** the part-less reward-desert concern is **moot** (both nodes gone; the
+    deliberate part-less commitment node is now `cryo_hydrogen` T1). `mic_massSpec` **stays in Microelectronics** —
+    it has since grown siblings at T7 (`mic_ionMassSpec`) and T9 (`mic_gasChromatographMassSpec`) in the same lane,
+    so the discipline choice is settled by consistency.
+- **What v3 actually shipped** (the divergence, as built): hydrolox is the explicit gamble — `cryo_hydrogen` T1
+  (parent `start`, **zero parts**, pure commitment) → `cryo_hydroloxPrototype` T2 (RZ-20, deliberately worse) →
+  `cryo_expanderCycle` T4 (RL-10, overtakes kerolox). Western and Soviet fork one tier later off `fd_turbopumpFeed`
+  (T2): `fd_singleChamber` T3 → `fd_largeChamber` T4 ‖ `fd_verniers` T3 → `fd_orbitalSoviet` T4 → `fd_matureOrbital`
+  T5. Divergent successor dynasties exist and two are deliberate traps — `fd_gasGeneratorCeiling` T8 (F-1) →
+  `fd_gasGeneratorApex` T9 (F-1B, *"a rounding error while staged combustion and hydrolox walk past you"*);
+  `cryo_gasGeneratorHydrolox` T8 (J-2) → `cryo_largeHydrolox` T9; Soviet ORSC → `pc_multiChamberORSC` T11 (RD-170,
+  homed in **PropellantChemistry**, not Metallurgy as the 2026-07-01 plan guessed).
+
+---
+
+## 10. FALSE-FORK AUDIT (2026-07-28) — convergence nodes that forced both branches of a choice
+
+Follow-on from §9. The v3 kerolox region narrated Western and Soviet as *alternatives* in its own flavour text
+and then made `fd_saturnKerolox` require **both**. That is a **false fork**: a node the tree presents as a
+school-of-thought choice, but whose successor is an `anyToUnlock=False` convergence over the schools, so the
+player buys every branch and the "choice" collapses to a purchase order.
+
+### The schema constraint (read this before fixing one)
+
+`anyToUnlock` is a **per-node** flag, not per-parent (`build_tree.py` emits one `anyToUnlock = True/False` per
+`RDNode`; KSP has no per-edge form). So **`A AND (B OR C)` is not expressible.** Every fix is therefore one of:
+(i) drop the AND-parent and take the fork, (ii) insert a part-less OR-junction node (costs a reward-desert node),
+or (iii) re-parent the AND-term *upstream* of both schools so it is implied transitively — (iii) is the cleanest
+but needs a spare tier below the fork, which the kerolox case did not have (`fd_regenCooling` T4 hangs off
+`met_nimonic` T3, so it cannot drop to T3).
+
+### Detection
+
+`anyToUnlock=False` + ≥2 parents that share **the same discipline and the same tier** (the signature of parallel
+schools). 15 hits; 11 dismissed on reading, 3 fixed, 1 flagged.
+
+### Fixed
+
+| node | was | now | why |
+|---|---|---|---|
+| `fd_saturnKerolox` T6 | `[fd_largeChamber, fd_orbitalSoviet, fd_regenCooling]`, all required | `anyToUnlock: true` over `[fd_largeChamber, fd_orbitalSoviet]` | The parents' own flavour calls them alternatives — *"the hard way the West reached orbit … where the Soviets clustered many small ones"* vs *"brute multiplicity where the West built single chambers."* |
+| `av_advancedJetEngines` T8 | `[av_highBypassTurbofan, av_lowBypassTurbofan, av_mach2Turbojet]` | `anyToUnlock: true` over `[av_highBypassTurbofan, av_lowBypassTurbofan]` | High-bypass (airliner) ‖ low-bypass (fighter) are parallel schools. `av_mach2Turbojet` was a **leftover parent**: the 2026-07 lineage split moved the Mach-2 marks out to `av_advancedHighSpeedTurbojets` but, per the node's own comment, *"Parent list left as-is (pre-existing, not touched)."* |
+| `av_advancedHighSpeedTurbojets` T8 | `[av_mach2Turbojet, av_dedicatedLiftJet]`, both required | `anyToUnlock: true` | Self-declared in its flavour: *"two unrelated missions."* A doctrine-4 upgrade collector holding two lineages' marks; either base lineage should open it. |
+
+**`fd_regenCooling` is the one real loss** and was taken deliberately (option (i)). H-1/RD-111 *are*
+regeneratively cooled, so it is a true physical prerequisite — but by T6 it is settled ~1955 technology every
+path has met, which is exactly the *lineage ≠ gating* rule (§7). It is not orphaned: it keeps 12 uprate configs
+spanning **both** schools (LR-89/LR-79/RZ/LR-105 Western, RD-108-8D77 Soviet) plus two T8 staged-combustion
+children, so every player still has a strong pull to buy it — it is now *wanted* rather than *tolled*.
+
+**The fork has teeth** (checked, not assumed): skipping Western forfeits `fd_titanTandem` T5; skipping Soviet
+forfeits `fd_matureOrbital` T5 (vacuum nozzles) and `fd_engineMaturation` T6. Both schools still reconverge into
+the same mature-booster line (`fd_gasGeneratorCeiling`, `cryo_gasGeneratorHydrolox`), which is the intended shape.
+
+### Flagged, NOT changed — needs a call
+
+- **`pc_udmhBoosterFuel` T6** ← `[pc_hydyne, pc_rp1]`. Not a schools fork; a suspected **spurious edge**. The
+  flavour uses kerosene as the *comparison*, not an ingredient (*"buys nearly twenty seconds over kerosene"*), and
+  the real lineage is hydyne → drop the diluent → neat UDMH. Dropping `pc_rp1` would leave that node a **childless
+  leaf** (0 parts, 2 upgrades), which is why it was left alone rather than quietly cut.
+
+### Dismissed on reading (verified legitimate — do not re-flag)
+
+- **`pc_hydrazineMonoprop`** ← hypergolics + HTP: the node comment already defends both — *"the catalyst bed is the
+  mechanism, so this gates on peroxide's silver catalyst as much as on the amine lane that supplies the fuel."*
+- **`pc_solidUpperStage`** ← apogee-kick + large-segment casting: a documented deliberate crossover (kick-motor
+  precision × segmented-casting scale).
+- **`av_mach2Turbojet`** ← afterburner + variable stator: real physics; the Olympus 593 and R-13 have both.
+- **`rob_grappleEndEffector`** ← linear + hinge actuation: a grapple genuinely needs both.
+- **7× `shd_*` radiation-shielded avionics**: heuristic false positives. These are ladder rungs, not schools —
+  shielded rung *N* = previous shielded rung **+** the unshielded rung it shields. Correct convergence.
