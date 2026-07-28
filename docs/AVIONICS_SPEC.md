@@ -358,3 +358,27 @@ ever failed to parse. Reference-string corrections only, no logic changes. Build
   deleted outright rather than reconciled with Kerbalism's number.
 
 All of the above verified live in-game (KSP 1.12.5, this instance) after each fix, not just build-clean.
+
+---
+
+## PAW mass readouts (2026-07-29)
+
+The PAW's `Avionics Mass` only ever reported the **hardware segment** (`hwVolume × density`, i.e. this
+module's own `IPartMassModifier` contribution) — reading it as "what the box weighs" understates a
+battery-heavy core by more than the hardware itself weighs. Renamed to **Hardware Mass** and joined by two
+more fields in the same group:
+
+- **Battery Mass** — RealFuels' own `ModuleFuelTanks.mass`, read by reflection off the existing RF bridge.
+  For the `Battery-I` tank type that's `0.00007 t/L` tankage base + `0.0045 t/L` of cells, over the battery
+  volume this module pushes into RF. Pure readout: RF reports this mass to KSP itself, **non-additively**
+  (`GetModuleMass` returns `mass - defaultMass`, replacing the part's 1 t prefab mass rather than adding to
+  it), so folding it into this module's `IPartMassModifier` would double-count it.
+- **Total Mass** — measured through KSP's own path (`part.mass + part.GetModuleMass(part.mass) +
+  part.GetResourceMass()`), *not* summed from the two above. Hardware + battery don't quite reach it:
+  Kerbalism's `HardDrive` (data/sample capacity mass) and any `ProceduralPart` hollow-volume mass ride
+  along too. Measuring is what keeps the readout equal to the mass KSP actually flies.
+
+All three refresh from `UpdateRate()`, which every editor path already reaches *after*
+`PushBatteryToTank()` has re-run RF's `CalculateMass()` — so the battery figure tracks the drag live rather
+than lagging a frame. The allocation bar's own label gained a second line carrying the same three numbers
+plus the reconciling "other", so the split is visible while dragging without reading the fields above it.

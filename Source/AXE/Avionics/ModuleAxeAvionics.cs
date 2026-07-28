@@ -138,10 +138,29 @@ namespace RPAxe
         public float currentWatts = 0f;
 
         // Frozen hardware mass: recomputed in the editor from hwVolume, persisted with the craft, held
-        // fixed in flight. IPartMassModifier returns this; the battery mass is RealFuels'.
-        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "Avionics Mass",
+        // fixed in flight. IPartMassModifier returns this; the battery mass is RealFuels' (below).
+        // Renamed in the PAW from "Avionics Mass" to "Hardware Mass" because it never was the part's
+        // mass -- it is only the hardware SEGMENT, and reading it as the whole box understates a
+        // battery-heavy core by more than the hardware itself weighs.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Hardware Mass",
                   guiFormat = "F3", guiUnits = " t", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public float avionicsMass = 0f;
+
+        // The battery segment's mass, read live off RealFuels' own ModuleFuelTanks.mass: the tankage base
+        // mass for the volume this module pushed into it plus the cells themselves (Battery-I: 0.00007 t/L
+        // + 0.0045 t/L). Pure READOUT -- RF reports this mass to KSP itself (as `mass - prefabMass`, i.e.
+        // non-additive: it REPLACES the part's prefab mass), so it must never be folded into this module's
+        // IPartMassModifier or it would be counted twice.
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Battery Mass",
+                  guiFormat = "F3", guiUnits = " t", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public float batteryMass = 0f;
+
+        // What the whole box actually weighs, by KSP's own accounting -- see UpdateMassReadouts(). Hardware
+        // + battery don't quite sum to this: a little structural/module mass (Kerbalism's HardDrive, any
+        // hollow-volume mass from ProceduralPart) rides along, which is why this is measured, not added up.
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Total Mass",
+                  guiFormat = "F3", guiUnits = " t", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public float totalPartMass = 0f;
 
         // Frozen hardware cost (funds): same hwVolume basis + freeze-at-launch as avionicsMass.
         [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "Avionics Cost",
@@ -198,6 +217,7 @@ namespace RPAxe
         // reflection elsewhere). Used to read the box's total volume and push the battery segment into RF.
         PartModule _rfPM;
         MethodInfo _rfCalcMass;
+        FieldInfo _rfMassField;          // ModuleFuelTanks.mass (t) — the battery segment's own mass
         PartModule _procPM;
         PropertyInfo _procVolumeProp;    // ProceduralPart.Volume (m^3)
         FieldInfo _procMinVolumeField;   // ProceduralPart.volumeMin — pinned to enforce a minimum box size
@@ -541,6 +561,7 @@ namespace RPAxe
                 {
                     _rfPM = m;
                     _rfCalcMass = m.GetType().GetMethod("CalculateMass", BindingFlags.Public | BindingFlags.Instance);
+                    _rfMassField = m.GetType().GetField("mass", F);
                 }
                 else if (_procPM == null && n == "ProceduralPart")
                 {
@@ -1003,6 +1024,7 @@ namespace RPAxe
             _ecConsumption = new KeyValuePair<string, double>(EcName, -currentWatts / 1000.0);
             if (_commandEC != null) _commandEC.rate = KerbalismPresent ? 0f : currentWatts / 1000f;
             UpdateAllocationSummary();
+            UpdateMassReadouts();
             SetGui();
         }
 
@@ -1010,6 +1032,32 @@ namespace RPAxe
         {
             float empty = Mathf.Max(0f, _cachedVolume - battVolume - hwVolume);
             allocationSummary = $"{battVolume * 1000f:F0} L batt / {hwVolume * 1000f:F0} L hw / {empty * 1000f:F0} L empty";
+        }
+
+        // Battery mass + the part's true total. Called from UpdateRate(), which every editor path already
+        // reaches AFTER PushBatteryToTank() has re-run RealFuels' CalculateMass() — so RF's `mass` is fresh
+        // for the split the player just dragged, not one frame stale. In flight both are static: RF's mass
+        // is persisted and this module's hardware mass is frozen at launch.
+        //
+        // The total is deliberately MEASURED through KSP's own dry-mass path rather than summed from
+        // hardware + battery: both of those land in it as IPartMassModifier contributions, but so does
+        // anything else on the part (Kerbalism's HardDrive data/sample capacity, ProceduralPart's
+        // hollow-volume mass), and RealFuels reports itself NON-ADDITIVELY (`mass - prefabMass`, replacing
+        // the part's 1 t prefab mass rather than adding to it). Adding our own two numbers would quietly
+        // disagree with the mass KSP actually flies.
+        void UpdateMassReadouts()
+        {
+            batteryMass = ReadTankMass();
+            totalPartMass = part.mass + part.GetModuleMass(part.mass) + part.GetResourceMass();
+        }
+
+        // RealFuels' own computed tank mass for the battery segment (tankage base + cells). 0 if RealFuels
+        // isn't driving this part — same graceful degradation as the rest of the RF bridge.
+        float ReadTankMass()
+        {
+            if (_rfPM == null || _rfMassField == null) return 0f;
+            try { return Convert.ToSingle(_rfMassField.GetValue(_rfPM)); }
+            catch { return 0f; }
         }
 
         void SetGui()

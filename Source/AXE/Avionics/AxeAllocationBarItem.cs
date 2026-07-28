@@ -41,11 +41,11 @@ namespace RPAxe
             rt.anchorMin = new Vector2(0f, 1f);
             rt.anchorMax = new Vector2(1f, 1f);
             rt.pivot = new Vector2(0.5f, 1f);
-            rt.sizeDelta = new Vector2(0f, 44f);
+            rt.sizeDelta = new Vector2(0f, 58f);
 
             var le = root.AddComponent<LayoutElement>();
-            le.minHeight = 44f;
-            le.preferredHeight = 44f;
+            le.minHeight = 58f;
+            le.preferredHeight = 58f;
             le.flexibleWidth = 1f;
 
             var item = root.AddComponent<AxeAllocationBarItem>();
@@ -62,11 +62,15 @@ namespace RPAxe
             labelRT.anchorMin = new Vector2(0f, 1f);
             labelRT.anchorMax = new Vector2(1f, 1f);
             labelRT.pivot = new Vector2(0.5f, 1f);
-            labelRT.sizeDelta = new Vector2(0f, 18f);
+            // Two lines now (volumes, then masses), so the rect is tall enough for both and vertical
+            // overflow is allowed rather than truncated -- a clipped mass readout would be worse than a
+            // slightly crowded one.
+            labelRT.sizeDelta = new Vector2(0f, 32f);
             _label = labelGO.AddComponent<Text>();
             _label.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
-            _label.fontSize = 12;
-            _label.alignment = TextAnchor.MiddleCenter;
+            _label.fontSize = 11;
+            _label.alignment = TextAnchor.UpperCenter;
+            _label.verticalOverflow = VerticalWrapMode.Overflow;
             _label.color = Color.white;
 
             // Inset the track by half the handle width on each side (pixels, not a % anchor) so a handle
@@ -79,7 +83,7 @@ namespace RPAxe
             _track.anchorMin = new Vector2(0f, 0f);
             _track.anchorMax = new Vector2(1f, 1f);
             _track.offsetMin = new Vector2(HandleHalfWidth, 4f);
-            _track.offsetMax = new Vector2(-HandleHalfWidth, -20f); // leave room for the label above
+            _track.offsetMax = new Vector2(-HandleHalfWidth, -34f); // leave room for the 2-line label above
 
             _battRect = MakeSegment(_track, "Batt", new Color(0.25f, 0.75f, 0.35f));
             _hwRect = MakeSegment(_track, "Hw", new Color(0.45f, 0.55f, 0.95f));
@@ -152,8 +156,14 @@ namespace RPAxe
             float hwFrac = Mathf.Clamp01(Module.hwVolume * 1000f / v);
             SetFractions(battFrac, hwFrac);
             float emptyL = Mathf.Max(0f, v - Module.battVolume * 1000f - Module.hwVolume * 1000f);
+            // "other" is whatever the part weighs beyond the two segments this bar controls (Kerbalism's
+            // HardDrive, ProceduralPart hollow mass): shown so the line reconciles to the total instead of
+            // looking like an arithmetic error. Clamped at 0 -- it can go very slightly negative on rounding.
+            float otherT = Mathf.Max(0f, Module.totalPartMass - Module.batteryMass - Module.avionicsMass);
             _label.text = $"{Module.battVolume * 1000f:0} L batt | {Module.hwVolume * 1000f:0} L hw | {emptyL:0} L empty" +
-                          $"   cap {Module.capacityTons:0.##} t   pen {Module.penaltyPercent:0}%";
+                          $"   cap {Module.capacityTons:0.##} t   pen {Module.penaltyPercent:0}%\n" +
+                          $"{Module.batteryMass:0.000} t batt | {Module.avionicsMass:0.000} t hw | {otherT:0.000} t other" +
+                          $"   total {Module.totalPartMass:0.000} t";
         }
 
         void SetFractions(float battFrac, float hwFrac)
