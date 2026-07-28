@@ -95,12 +95,13 @@ Per-launch vehicle cost is measured at **171–8,314 funds** for 0.2–3.75 t cr
 figure is an assumption, not a measurement. Propellant is genuinely negligible at any scale
 (0–3 funds/tonne), so vehicle cost is hardware, not fuel.
 
-## 3. The model — two channels, 40M target / ~32M measured
+## 3. The model — two channels, 40M target
 
 **Target: ~40,000,000 lifetime funds** for a player who does everything — the lumps (~19.5M after
 §2's corrections and §6's pad re-shape) plus a vehicle allowance of roughly equal size. Split 60/40.
-**Channel 2 does not currently reach its 40% share** — measured reputation puts it at ~8.4M, so real
-lifetime income is **~32.4M**; see the box under Channel 2 and §6 item 3.
+**Both channels reach their share** — Channel 2 was re-derived on 2026-07-28 (`tools/rep_budget.py`)
+and tops out at **22.9M against its 16M target** on the Normal preset; the earlier "~8.4M measured"
+came from an undercount, see the box under Channel 2.
 
 ### Channel 1 — contract funds (24M), `tools/build_economy.py`
 
@@ -137,7 +138,7 @@ launch pays anything, ever — that is the invariant that killed the Skopos main
 pad at all, which is precisely the block this whole section exists to remove. R&D L2 (451,000) then
 needs the next several programs.
 
-### Channel 2 — Administration (target 16M, **measures ~8.4M**), `design/Settings/AxeStrategies.cfg`
+### Channel 2 — Administration (target 16M, **reaches 22.9M**), `design/Settings/AxeStrategies.cfg`
 
 Reputation is the currency AXE's contracts actually pay and it has no other sink, so the
 Administration building is where it becomes spendable. `FundraisingCampaign` is rescaled from
@@ -145,13 +146,42 @@ stock's 1,002–1,253 funds/rep to **125–157**. The `strategyCommitRange` (0.2
 Administration level) is the pacing knob: early careers can convert at most a quarter of incoming
 reputation.
 
-> ⚠ **The 16M target rests on ~114k career reputation, and that figure does not reconcile.**
-> Summing `rewardReputation` across every paying contract in `seed/Contracts` — all 187 of them, one
-> completion each — gives **65,595**, which at ~140/rep and full commitment is **9.2M**, or ~8.4M
-> once the commit-range cap is applied to the early game. So **lifetime income is ~32.4M, not 40M**.
-> Repeatable contracts could close part of the gap, but not by 75%. Measured 2026-07-28; the
-> reconciliation (re-derive the 114k, or accept ~8.4M and re-target) is open, §6. Note this channel
-> is also *more* back-loaded than Channel 1 — `CrewedMarsExp` alone carries 15,700 of the 65,595.
+> ✅ **Reconciled 2026-07-28 — the channel is not short; the "measurement" that said so was wrong.**
+> Re-derived from the merged cache by **`tools/rep_budget.py`**. The 65,595 hand sum is not
+> reproducible by any filter: the raw config sum across all 284 paying contract types is **105,542**,
+> which is what the original ~114k assumption had roughly right all along.
+>
+> **And the config value is not what the player receives.** Contract Configurator hands
+> `rewardReputation` to stock's `Contract.SetReputation`, which multiplies it by the contract's
+> **prestige factor** (1.0 / 1.25 / 1.5 — every paying AXE contract declares one: 135 Trivial, 133
+> Significant, 16 Exceptional) and by the difficulty preset's **`RepGainMultiplier`** (1.2 on Normal).
+> That is a **×1.385** uplift, so a career actually banks **146,163 reputation** on Normal.
+>
+> | preset | RepGainMultiplier | career reputation | Channel 2 ceiling |
+> |---|--:|--:|--:|
+> | Easy | 1.6 | 194,883 | 30.6M |
+> | **Normal** | **1.2** | **146,163** | **22.9M** |
+> | Moderate | 1.0 | 121,800 | 19.1M |
+> | Hard | 0.8 | 97,442 | 15.3M |
+>
+> Ceiling = every contract completed once, Administration L3, full commitment. **Against the 16M
+> target the channel is at 1.43× on Normal and still 0.96× on Hard** — so 40M lifetime stands and no
+> re-target is needed. What the ceiling does *not* say is that the money arrives on time: the
+> commit-range cap means Administration L1 converts the same career at **4.9M** and L2 at 12.6M, and
+> the channel is *more* back-loaded than Channel 1 (`CrewedMarsExp` alone carries 18,700 raw). The
+> early-game shortfall is §6 item 1's problem, not this channel's size.
+>
+> Two mechanics found while grounding this, both load-bearing:
+> - **`useTargetBodyForReward = false`** (`seed/Contracts/Groups.cfg`, root RP0 group, no child
+>   override) suppresses stock's destination weight. Flipping it would multiply every deep-space
+>   contract's reputation by that body's `RecoveryValue` — inherited from RP-1, leave it alone.
+> - **Crew-recovery reputation never becomes funds.** Stock pays `reputationKerbalRecovery` (25 ×
+>   `RepGainMultiplier`) **per kerbal** on every crewed recovery, but under
+>   `TransactionReasons.VesselRecovery`, which is absent from the strategy's
+>   `AffectReasons = ContractReward, ScienceTransmission, Progression`. So it accrues as a reputation
+>   *balance* only. That is what keeps the 750-reputation gate at Administration L3 reachable even at
+>   100% commitment (where every converted point is deducted from the gain), and it means crewed
+>   flight spam cannot be farmed for money.
 
 Two stock strategies are **deleted**: `PatentsLicensing` (science → funds) and
 `OpenSourceTechProgram` (science → reputation, which Fundraising then turns into funds). Science is
@@ -305,6 +335,13 @@ below is for.
 2. **The R&D ladder is stock's, not AXE's.** 451,000 and 1,690,000 are CustomBarnKit defaults AXE
    never touched, yet the science cap is the primary gate the whole tree is built on. Pricing it
    deliberately (250,000 / 900,000 was the modelled candidate) is an open decision.
-3. **Channel 2's 114k reputation figure does not reconcile** with the 65,595 measured across the
-   seed contracts (§3). Either re-derive it or re-target the channel at ~8.4M and accept a ~32.4M
-   lifetime.
+3. ~~**Channel 2's 114k reputation figure does not reconcile**~~ — ✅ **CLOSED 2026-07-28: re-derived,
+   and the channel was never short.** The 65,595 was an undercount that no filter reproduces; the raw
+   config sum is **105,542**, and after the prestige factor and `RepGainMultiplier` the career banks
+   **146,163** reputation on Normal — **22.9M against a 16M target**. Lifetime stays ~40M and nothing
+   is re-targeted. Now measured by **`tools/rep_budget.py`** rather than asserted, so it can be
+   re-run when contracts change. Full detail and the two mechanics it surfaced (`useTargetBodyForReward`,
+   crew-recovery reputation being unconvertible) are in the §3 Channel 2 box.
+   *Residual, deliberately not chased:* the ceiling assumes every contract completed once — no real
+   career does that — and the 26 unlimited-repeat types add an unbounded 18,168/round on top. Both
+   make the true figure a range, not a point, and playtest feel is the intended signal.

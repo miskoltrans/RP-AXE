@@ -104,8 +104,10 @@ science); at RP-AXE / RSS scale the defaults were going to be absurd. Rebalanced
 `design/Settings/AxeStrategies.cfg` — **not** the `StrategiesCustom._cfg` template originally
 earmarked here:
 - `FundraisingCampaign` rescaled from stock's 1,002–1,253 funds/rep to **125–157**, sized so a career's
-  ~114k reputation converts to roughly **16M funds** — Administration is where AXE's otherwise-unspendable
-  reputation cashes out.
+  reputation converts to roughly **16M funds** — Administration is where AXE's otherwise-unspendable
+  reputation cashes out. *(The ~114k reputation this was sized against was re-derived 2026-07-28 by
+  `tools/rep_budget.py`: **146,163** as actually paid on the Normal preset, so the channel tops out at
+  22.9M — comfortably above its target rather than short. ECONOMY.md §3.)*
 - `strategyCommitRange` (0.25 / 0.6 / 1.0 by Administration level) is the pacing knob — early careers can
   convert at most a quarter of incoming reputation.
 - `requiredReputation` windows widened from stock's [-500, 750], which at AXE magnitudes would put the

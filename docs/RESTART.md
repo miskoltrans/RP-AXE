@@ -67,8 +67,11 @@ Each phase gates the next; avionics + contracts ride alongside, off the critical
     mismatch, which the **solvency pass** then chased down (ECONOMY.md §6, 2026-07-28): every facility
     `upgrades` array was being read one slot off (the first entry is never charged, so R&D really costs
     451k/1.69M and the first pad step 75k), prices are corrected and the **launchpad re-shaped
-    10.33M → 7.29M**. Still open there, as user calls: flattening the programme payout curve, pricing the
-    R&D ladder AXE gates its tree on, and reconciling channel 2 (~8.4M measured vs 16M targeted).
+    10.33M → 7.29M**. **Channel 2 reconciled 2026-07-28** (`tools/rep_budget.py`): the "~8.4M measured"
+    was an undercount — a career banks **146,163 reputation** on Normal (105,542 in config, ×1.385 for the
+    prestige factor and `RepGainMultiplier` that stock applies on top), so the channel tops out at **22.9M
+    against its 16M target** and lifetime stays ~40M. Still open there, as user calls: flattening the
+    programme payout curve, and pricing the R&D ladder AXE gates its tree on.
     **End-to-end contract payout is still unobserved** (ECONOMY.md §5).
 - **P4 — Avionics** *(parallel)*. Rename to RP-1 terms; rebalance. **Prove:** flyable early control.
 - **P5 — Special parts** *(post-MVP)*. Probe subtree (hire-JPL / hire-OKB) + capsule capability-split
