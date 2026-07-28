@@ -7,7 +7,7 @@ AXE has no funds income at all. RP-1 had two taps and AXE removed both on purpos
 funding drip (a calendar Hermite curve in RP0.dll's ProgramHandler -- unportable, because free
 unlimited timewarp turns any per-time payment into infinite money) and the Skopos maintenance
 contracts (deleted by design/Contracts/DisableSkoposMaintenance.cfg for the same reason). What
-remained pays reputation only, so the player hits the 19,000-fund launchpad upgrade before first
+remained pays reputation only, so the player hits the launchpad's first paid upgrade before first
 orbit with no way to earn it.
 
 This tool re-provides the income LAUNCH-GATED instead of time-gated, which is the invariant
@@ -237,7 +237,15 @@ CONTRACT_GROUP
     for p in early:
         cap = f", capstone {p['capstone_pot']:,.0f}" if p["caps"] else ""
         print(f"  {p['name']:<24} budget {p['budget']:>8,.0f}  (completion {p['completion']:,.0f}{cap})")
-    print(f"  combined {sum(p['budget'] for p in early):,.0f} vs 15,000 start + 19,000 pad L2")
+    # The pad's first purchase is upgrades[1], NOT upgrades[0]: KSP charges
+    # upgradeLevels[level+1].levelCost, so the leading array entry is the starting level's own cost
+    # and is never paid. This check used to read 19,000 off that dead slot; the 25 t -> 75 t step
+    # really costs 40,000 (it was 75,000 before the 2026-07-28 re-shape). Keep it in sync with
+    # design/Settings/AxeFacilities.cfg by hand — CBK config is not importable from here.
+    PAD_FIRST_STEP = 40_000
+    combined = sum(p["budget"] for p in early)
+    print(f"  combined {combined:,.0f} vs 15,000 start + {PAD_FIRST_STEP:,} pad 25t->75t"
+          f"   -> {'OK' if 15_000 + combined >= PAD_FIRST_STEP else 'SHORT'}")
 
 
 if __name__ == "__main__":
