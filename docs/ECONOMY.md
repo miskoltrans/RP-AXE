@@ -103,7 +103,20 @@ figure is an assumption, not a measurement. Propellant is genuinely negligible a
 and tops out at **22.9M against its 16M target** on the Normal preset; the earlier "~8.4M measured"
 came from an undercount, see the box under Channel 2.
 
-### Channel 1 — contract funds (24M), `tools/build_economy.py`
+### Channel 1 — contract funds (24M budgeted, **36.7M paid**), `tools/build_economy.py`
+
+> ⚠ **The same multiplier chain that was missed on Channel 2 applies here, and it is bigger.**
+> `Contract.SetFunds` scales `rewardFunds` by `GetContractPrestigeFactor(prestige) ×
+> contractFundsCompletionFactor × Career.FundsGainMultiplier` exactly as `SetReputation` does
+> (Assembly-CSharp, `FundsCompletion = Round(completion * GetContractFundsCompletionFactor(prestige)
+> * destinationWeight)`). AXE's generated program-completion contracts declare `prestige =
+> Significant` (×1.25) and the capstones are mostly `Exceptional` (×1.5), against
+> `FundsGainMultiplier = 1.2` on Normal — so the **×1.529** the channel actually pays is
+> **36,702,661**, not the 23,999,999 `build_economy.py` balances to. Measured 2026-07-28 from the
+> merged cache. `build_economy.py` divides a target across programmes and never models the
+> multipliers, so its printed totals are pre-multiplier throughout — including the early-game check
+> below, where the two sounding-rocket programmes really pay ~33,000 each, not 22,000.
+> **Not adjusted — that is §6 item 1's call**, and it moves the same dial.
 
 Money is **launch-gated**: you earn it by flying missions, never by waiting. Each program gets a
 budget of `RP-1 baseFunding × 0.10476`, which keeps RP-1's judgement about which programs are big
@@ -326,8 +339,15 @@ below is for.
 
 ### What is still open — deliberately, these are design calls, not bugs
 
-1. **Income shape.** The pad re-shape alone does not close the gap: the early-to-mid game stays
-   ~300k short and the Moon ~2.3M short. The tested fix is flattening the programme payout curve —
+1. **Income shape.** ⚠ **Re-model before acting: the deficits below are computed against
+   pre-multiplier income and are therefore overstated.** Every figure in this section came from
+   `build_economy.py`, which never models the prestige × `FundsGainMultiplier` chain the game applies
+   on top (§3, Channel 1) — real payouts are **×1.529**. Whether the early-to-mid gap survives that is
+   an open question, not a known shortfall. The measured statement of the problem is now: **income
+   totals ~36.7M (Channel 1) + up to 22.9M (Channel 2) against a 40M target of sinks**, so the
+   economy is more likely over-funded in aggregate and mis-*shaped* in time.
+   As modelled pre-multiplier, the pad re-shape alone did not close the gap: the early-to-mid game
+   stayed ~300k short and the Moon ~2.3M short. The tested fix is flattening the programme payout curve —
    `budget ∝ baseFunding^0.65` instead of `^1`, same 24M total — which keeps RP-1's judgement about
    which programmes are big (Mars still pays 30× a sounding rocket, down from 190×) while moving the
    first 15 programmes from 6.4% to **14.4%** of Channel 1. With both levers the model is positive
