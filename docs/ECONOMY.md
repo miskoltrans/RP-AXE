@@ -90,6 +90,11 @@ also paying salaries and maintenance; AXE has neither).
 
 That budget splits two ways:
 
+> **The "50%" is per-program, not per-channel.** Only 14 of 34 chartered programs have a capstone,
+> and they turn out to be the small ones, so the realized split across Channel 1 is **capstones
+> 2,426,013 (10%) / completions 21,573,986 (90%)** — measured from the merged cache, total
+> 23,999,999 against the 24,000,000 target. Do not read the two headings below as half the channel each.
+
 - **Capstones (50%).** RP-1 hand-marks 17 contracts `Type: <color=red>CAPSTONE</color>` in their
   *description text* — the crowning mission of a program. It is player-facing markup rendered in
   Mission Control, **not a config field**, so it is scraped from `seed/Contracts`. 15 belong to a
