@@ -1785,6 +1785,63 @@ def check_unplaced_upgrades(u2n, grant2n):
     if len(keep) > 10: print(f"   KEEP ... and {len(keep) - 10} more")
     return live + keep
 
+EP_SPREAD_MAX = 5.0          # a node may grant electric configs spanning at most this ratio in input power
+EP_CHARTER_PREFIXES = ("jpl_", "okb_", "hire_")   # integrated probe craft: chronological by design, exempt
+
+def _ep_input_kw(cfg, perf):
+    """Input electrical power (kW) of an electric config, from its own thrust and Isp.
+
+    Jet power is exact: P_jet = 1/2 * T * v_e = 1/2 * T * g0 * Isp. Input power is that over the
+    thruster's total efficiency; 1/1.6 (~63%) reproduces published figures closely across the range --
+    NEXT computes 7.8 kW against a real 6.9, HERMeS/AEPS 13.4 against a real 12.5, SPT-100 1.0 against
+    a real 1.35. Good to well inside the band widths this gate cares about."""
+    p = perf.get(cfg)
+    if not p or not _is_electric(p): return None
+    try:
+        T, isp = float(p.get("maxThrust_kN") or 0) * 1000.0, float(p.get("ispVac") or 0)
+    except ValueError: return None
+    if T <= 0 or isp <= 0: return None
+    return 0.5 * T * 9.80665 * isp * 1.6 / 1000.0
+
+def check_ep_power_spread(u2n, by, hard=False):
+    """Gate: one node must not grant electric configs from wildly different power classes.
+
+    For electric propulsion the enabling breakthrough is not the thruster, it is the power chain --
+    array -> PPU -> radiator. A 0.2 kW SPT-50 and a 74 kW 457M are the same physics and completely
+    different engineering, and the whole difference is in what feeds them. So a node granting both is
+    the EP equivalent of a collapsed ladder: one purchase spanning several generations of power
+    handling. (This is a different failure from R1, which asks whether two configs of ONE PART are
+    distinct decisions; this asks whether one NODE spans power classes, across parts.)
+
+    Measures UPGRADE-granted configs only. A node's base configs arrive with its parts, and parts are
+    placed by mechanism on purpose -- policing those would be a parts-placement pass, not this one.
+    Charter nodes are exempt: integrated probe craft (Dawn, DS1) are homed chronologically by design.
+
+    WARN by default; `hard` makes it fail the build once the lane is clean."""
+    perf = _ladder_perf()
+    pernode = collections.defaultdict(list)
+    for up, node in u2n.items():
+        if not up.startswith("RFUpgrade_"): continue
+        if node.startswith(EP_CHARTER_PREFIXES): continue
+        kw = _ep_input_kw(up[len("RFUpgrade_"):], perf)
+        if kw: pernode[node].append((kw, up[len("RFUpgrade_"):]))
+    bad = []
+    for node, v in pernode.items():
+        if len(v) < 2: continue
+        lo, hi = min(v), max(v)
+        if hi[0] / lo[0] > EP_SPREAD_MAX:
+            bad.append((hi[0] / lo[0], node, by.get(node, {}).get("tier"), lo, hi, len(v)))
+    bad.sort(reverse=True)
+    if not bad:
+        print(f"EP power gate: clean -- no node grants electric configs spanning >{EP_SPREAD_MAX:g}x in input power")
+        return []
+    print(f"EP power gate: {len(bad)} node(s) span >{EP_SPREAD_MAX:g}x in electric input power  [docs/UPGRADE-LADDERS.md]")
+    for ratio, node, tier, lo, hi, n in bad:
+        print(f"   EP ~ {node} T{tier} spans {ratio:>5.0f}x: {lo[1]} {lo[0]:.1f} kW .. {hi[1]} {hi[0]:.1f} kW ({n} configs)")
+    if hard and not os.environ.get("AXE_LADDER_SOFT"):
+        die(f"{len(bad)} node(s) span >{EP_SPREAD_MAX:g}x in electric input power — see above.")
+    return bad
+
 def check_tech_gates(nodes):
     """Build gate: every RP-AXE-*authored* raw tech gate (design/*.cfg + Source/*.cs) must
     resolve to a real tree node. Otherwise it fails CLOSED and SILENT in-game — renaming or
@@ -1881,5 +1938,6 @@ def main():
     emit_impl_backlog(nodes)             # docs/IMPL-TODO.md: provisional grants + impl_todo -> checklist
     check_tech_gates(nodes)              # gate: authored tech-refs (design/*.cfg + Source) must resolve (fail closed+silent otherwise)
     check_ladder_collapse(ladders, by, p2n, u2n)   # gate: engine-config ladders must not collapse onto one node
+    check_ep_power_spread(u2n, by)       # gate: one node must not span electric power classes (WARN until the lane is re-homed)
 
 if __name__ == "__main__": main()
