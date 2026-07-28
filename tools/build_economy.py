@@ -72,9 +72,15 @@ TYPE_RE = re.compile(r'Type:\s*<color=[^>]*>\s*([^<]+?)\s*</color>', re.I)
 
 
 def scan_seed():
-    """name -> (declared type, title). The CAPSTONE/REQUIRED/OPTIONAL label lives in the
-    description markup RP-1 renders in Mission Control -- there is no config field for it."""
-    out = {}
+    """(labels, by_program).
+
+    labels: name -> (declared type, title). The CAPSTONE/REQUIRED/OPTIONAL label lives in the
+    description markup RP-1 renders in Mission Control -- there is no config field for it.
+
+    by_program: program -> [contract name, ...], read from the `program = X` lines of each
+    contract's ProgramActive requirement. This is the fallback source of objectives for a
+    programme whose RP0_PROGRAM block has an empty OBJECTIVES (see derive_objectives)."""
+    labels, by_program = {}, {}
     for root, _, files in os.walk(SEED):
         for fn in sorted(files):
             if not fn.endswith(".cfg"):
@@ -85,8 +91,30 @@ def scan_seed():
                 if not name:
                     continue
                 m = TYPE_RE.search(val(b, "description"))
-                out[name] = ((m.group(1).strip().upper() if m else ""), val(b, "title"))
-    return out
+                labels[name] = ((m.group(1).strip().upper() if m else ""), val(b, "title"))
+                for prog in set(re.findall(r'^\s*program\s*=\s*(\S+)', b, re.M)):
+                    by_program.setdefault(prog, []).append(name)
+    return labels, by_program
+
+
+def derive_objectives(prog, labels, by_program):
+    """Objectives for a programme RP-1 funds but gives no OBJECTIVES.
+
+    RP-1's Programs.cfg is upstream data we don't control, and a funded programme with an empty
+    OBJECTIVES block silently earns NOTHING: load_programs used to drop it, so it got no completion
+    contract, no capstone, and its whole baseFunding share was redistributed to everyone else.
+    AsteroidExploration (baseFunding 8,400,000, the 4th richest of 35) sat in exactly that state.
+
+    Fall back to the same source the capstone scrape already trusts -- the label in the description
+    markup -- and gate on the programme's CAPSTONE contracts, else its REQUIRED ones. OPTIONAL is
+    never used: those are side content, and the repeatable ones (maxCompletions = 0) would make the
+    completion contract unreachable-by-design. Always announced on stdout, never silent."""
+    members = by_program.get(prog, [])
+    for want in ("CAPSTONE", "REQUIRED"):
+        picked = [c for c in members if labels.get(c, ("", ""))[0] == want]
+        if picked:
+            return sorted(picked), want
+    return [], ""
 
 
 def load_programs(src):
@@ -101,7 +129,9 @@ def load_programs(src):
             funding = float(val(b, "baseFunding") or 0)
         except ValueError:
             funding = 0.0
-        if not caps or funding <= 0:
+        # An empty OBJECTIVES is NOT a reason to drop a funded programme -- main() recovers it via
+        # derive_objectives(). Only unfunded programmes have nothing to pay out.
+        if funding <= 0:
             continue
         progs.append(dict(name=val(b, "name"), title=val(b, "title"),
                           funding=funding, objectives=list(dict.fromkeys(caps))))
@@ -113,14 +143,40 @@ def esc(s):
     return re.sub(r'\s+', ' ', (s or "")).strip()
 
 
+def ptitle(s):
+    """A programme's title for PLAYER-FACING text.
+
+    RP-1 marks five of its own programmes "(WIP)" in the title (Asteroid Exploration, the four
+    outer-moon landing programmes). That is an upstream dev note, and the hand-authored
+    "Begin Program: X" charters already drop it — so without this the two halves of the same
+    programme disagree in the contract list."""
+    return re.sub(r'\s*\((?:WIP|TODO)\)\s*$', '', esc(s), flags=re.I)
+
+
 def main():
     src = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_SRC
     if not os.path.exists(src):
         sys.exit(f"Programs.cfg not found at {src}")
-    seed = scan_seed()
+    seed, by_program = scan_seed()
     progs = load_programs(src)
     if not progs:
         sys.exit("no chartered programmes parsed")
+
+    # Recover funded programmes whose OBJECTIVES block is empty upstream (see derive_objectives).
+    derived, dropped = [], []
+    for p in list(progs):
+        if p["objectives"]:
+            continue
+        objs, kind = derive_objectives(p["name"], seed, by_program)
+        if objs:
+            p["objectives"] = objs
+            derived.append((p["name"], kind, objs))
+        else:
+            # No members at all = an RP-1 programme with nothing vendored into seed/ and no charter,
+            # so it does not exist in AXE and skipping it is correct. Members but none usable is a
+            # real gap worth shouting about.
+            dropped.append((p["name"], len(by_program.get(p["name"], []))))
+            progs.remove(p)
 
     total = sum(p["funding"] for p in progs)
     channel1 = TARGET_LIFETIME * CHANNEL1_SHARE
@@ -179,6 +235,12 @@ def main():
 // objectives plus the programme being active. It auto-accepts and completes instantly (AXEInstant),
 // so it reads as a payout for finishing the programme rather than a mission to fly.
 //
+// It is a BONUS, not an ending. AxeProgramHandler has no deactivate path, so a programme stays
+// active for the rest of the career and its member contracts keep being offered — including the
+// repeatable ones (docs/PROGRAMS.md "Repeatable is fine; idle income is not"). The player-facing
+// wording says so out loud: an earlier "Programme Complete: X / the programme is discharged" read
+// as a state change that does not exist.
+//
 // This is the half of the budget that reaches every programme. {sum(1 for p in progs if not p["caps"])} of {len(progs)} chartered
 // programmes have no capstone at all — including CrewedLunar and CrewedMarsExp — so without this
 // whole eras would earn nothing. Programmes WITH a capstone split their budget with it
@@ -204,18 +266,22 @@ CONTRACT_GROUP
             f.write("CONTRACT_TYPE\n{\n")
             f.write(f"\tname = AXE_Complete_{p['name']}\n")
             f.write("\tgroup = AXEProgramCompletion\n")
-            f.write(f"\ttitle = Programme Complete: {esc(p['title'])}\n")
-            f.write(f"\tdescription = Every objective of the {esc(p['title'])} programme has been met. "
-                    "The programme is discharged and its remaining budget is released to the agency.\n")
-            f.write(f"\tsynopsis = Complete the {esc(p['title'])} programme.\n")
-            f.write(f"\tcompletedMessage = {esc(p['title'])} is complete.\n")
+            # "Program", not "Programme": matches the 35 hand-authored "Begin Program: X" charters
+            # in design/Programs/ActivatePrograms.cfg, so the pair reads as one series in the
+            # contract list. Docs and comments keep the British spelling.
+            f.write(f"\ttitle = Program Bonus: {ptitle(p['title'])}\n")
+            f.write(f"\tdescription = Every objective of the {ptitle(p['title'])} program has been met, "
+                    "and the agency releases the program's remaining budget as a bonus. "
+                    "The program stays active — its contracts remain available to fly.\n")
+            f.write(f"\tsynopsis = Meet every objective of the {ptitle(p['title'])} program.\n")
+            f.write(f"\tcompletedMessage = Bonus awarded for {ptitle(p['title'])}.\n")
             f.write("\tprestige = Significant\n\tmaxCompletions = 1\n\tmaxSimultaneous = 1\n")
             f.write("\tminExpiry = 0\n\tmaxExpiry = 0\n\tdeadline = 0\n")
             f.write("\tautoAccept = true\n\tdeclinable = false\n\tcancellable = false\n")
             f.write(f"\trewardFunds = {round(p['completion']):d}\n")
             f.write("\trewardScience = 0\n\trewardReputation = 0\n\tadvanceFunds = 0\n\tfailureFunds = 0\n")
             f.write("\n\tPARAMETER\n\t{\n\t\tname = done\n\t\ttype = AXEInstant\n"
-                    "\t\ttitle = Discharge the programme\n\t}\n")
+                    "\t\ttitle = Collect the bonus\n\t}\n")
             f.write("\n\tREQUIREMENT\n\t{\n\t\tname = ProgramActive\n\t\ttype = ProgramActive\n"
                     f"\t\tprogram = {p['name']}\n\t}}\n")
             for o in p["objectives"]:
@@ -225,6 +291,16 @@ CONTRACT_GROUP
 
     paid_caps = sum(a for a, _ in cap_pay.values())
     paid_done = sum(p["completion"] for p in progs)
+    for name, kind, objs in derived:
+        print(f"note: {name} has no OBJECTIVES upstream — derived {len(objs)} objective(s) "
+              f"from {kind} labels: {', '.join(objs)}")
+    for name, n_members in dropped:
+        if n_members == 0:
+            print(f"note: {name} is funded upstream but has no contracts in seed/ — not an AXE "
+                  f"programme, skipped")
+        else:
+            print(f"WARNING: {name} is funded and has {n_members} member contract(s) but no "
+                  f"OBJECTIVES and none labelled CAPSTONE/REQUIRED — it pays NOTHING.")
     print(f"scalar = {channel1:,.0f} / {total:,.0f} = {k:.5f}")
     print(f"  {len(cap_pay)} capstone rewards   {paid_caps:>12,.0f}")
     print(f"  {len(progs)} completion bonuses {paid_done:>12,.0f}")

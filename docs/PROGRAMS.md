@@ -128,7 +128,7 @@ earmarked here:
 >   are scraped from `seed/Contracts` rather than read from `OBJECTIVES`.
 > - **Program completion (50%, or 100% where there is no capstone)** — `design/Programs/AxeProgramCompletion.cfg`.
 >
-> Per-program budget = `RP-1 baseFunding × 0.10476`, targeting ~40M lifetime. `OPTIONAL` contracts and plain
+> Per-program budget = `RP-1 baseFunding × 0.10106`, targeting ~40M lifetime. `OPTIONAL` contracts and plain
 > `REQUIRED` objectives pay reputation only, which cashes out through Administration (Channel 2 above).
 
 *Original plan, for each program spread `baseFunding` across its gated contracts as per-contract `rewardFunds`:*

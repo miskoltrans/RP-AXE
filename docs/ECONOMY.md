@@ -103,7 +103,7 @@ figure is an assumption, not a measurement. Propellant is genuinely negligible a
 and tops out at **22.9M against its 16M target** on the Normal preset; the earlier "~8.4M measured"
 came from an undercount, see the box under Channel 2.
 
-### Channel 1 — contract funds (24M budgeted, **36.7M paid**), `tools/build_economy.py`
+### Channel 1 — contract funds (24M budgeted, **36.4M paid**), `tools/build_economy.py`
 
 > ⚠ **The same multiplier chain that was missed on Channel 2 applies here, and it is bigger.**
 > `Contract.SetFunds` scales `rewardFunds` by `GetContractPrestigeFactor(prestige) ×
@@ -111,24 +111,25 @@ came from an undercount, see the box under Channel 2.
 > (Assembly-CSharp, `FundsCompletion = Round(completion * GetContractFundsCompletionFactor(prestige)
 > * destinationWeight)`). AXE's generated program-completion contracts declare `prestige =
 > Significant` (×1.25) and the capstones are mostly `Exceptional` (×1.5), against
-> `FundsGainMultiplier = 1.2` on Normal — so the **×1.529** the channel actually pays is
-> **36,702,661**, not the 23,999,999 `build_economy.py` balances to. Measured 2026-07-28 from the
-> merged cache. `build_economy.py` divides a target across programmes and never models the
-> multipliers, so its printed totals are pre-multiplier throughout — including the early-game check
-> below, where the two sounding-rocket programmes really pay ~33,000 each, not 22,000.
+> `FundsGainMultiplier = 1.2` on Normal — so the **×1.516** the channel actually pays is
+> **36,386,760**, not the 23,999,996 `build_economy.py` balances to. Measured 2026-07-28 from the
+> merged cache; recomputed from the generated configs after the AsteroidExploration recovery
+> (§7) re-spread the scalar. `build_economy.py` divides a target across programmes and never models
+> the multipliers, so its printed totals are pre-multiplier throughout — including the early-game
+> check below, where the two sounding-rocket programmes really pay ~31,800 each, not 21,222.
 > **Not adjusted — that is §6 item 1's call**, and it moves the same dial.
 
 Money is **launch-gated**: you earn it by flying missions, never by waiting. Each program gets a
-budget of `RP-1 baseFunding × 0.10476`, which keeps RP-1's judgement about which programs are big
+budget of `RP-1 baseFunding × 0.10106`, which keeps RP-1's judgement about which programs are big
 while re-deriving the magnitudes for AXE's far smaller sinks (RP-1 budgeted ~229M because it was
 also paying salaries and maintenance; AXE has neither).
 
 That budget splits two ways:
 
-> **The "50%" is per-program, not per-channel.** Only 14 of 34 chartered programs have a capstone,
+> **The "50%" is per-program, not per-channel.** Only 14 of 35 chartered programs have a capstone,
 > and they turn out to be the small ones, so the realized split across Channel 1 is **capstones
-> 2,426,013 (10%) / completions 21,573,986 (90%)** — measured from the merged cache, total
-> 23,999,999 against the 24,000,000 target. Do not read the two headings below as half the channel each.
+> 2,340,203 (10%) / completions 21,659,793 (90%)** — total 23,999,996 against the 24,000,000 target.
+> Do not read the two headings below as half the channel each.
 
 - **Capstones (50%).** RP-1 hand-marks 17 contracts `Type: <color=red>CAPSTONE</color>` in their
   *description text* — the crowning mission of a program. It is player-facing markup rendered in
@@ -137,7 +138,7 @@ That budget splits two ways:
   `CrewedSpaceplaneDev`. → `design/Contracts/AxeCapstoneFunds.cfg`
 - **Program completion (50%, or 100% where there is no capstone).** A generated contract per
   program, gated on every one of its `complete_contract` objectives plus `ProgramActive`,
-  auto-accepting and completing instantly. This is the half that reaches *every* program — 20 of 34
+  auto-accepting and completing instantly. This is the half that reaches *every* program — 21 of 35
   have no capstone at all, including `CrewedLunar` and `CrewedMarsExp`, so without it whole eras
   would earn nothing. → `design/Programs/AxeProgramCompletion.cfg`
 
@@ -342,9 +343,9 @@ below is for.
 1. **Income shape.** ⚠ **Re-model before acting: the deficits below are computed against
    pre-multiplier income and are therefore overstated.** Every figure in this section came from
    `build_economy.py`, which never models the prestige × `FundsGainMultiplier` chain the game applies
-   on top (§3, Channel 1) — real payouts are **×1.529**. Whether the early-to-mid gap survives that is
+   on top (§3, Channel 1) — real payouts are **×1.516**. Whether the early-to-mid gap survives that is
    an open question, not a known shortfall. The measured statement of the problem is now: **income
-   totals ~36.7M (Channel 1) + up to 22.9M (Channel 2) against a 40M target of sinks**, so the
+   totals ~36.4M (Channel 1) + up to 22.9M (Channel 2) against a 40M target of sinks**, so the
    economy is more likely over-funded in aggregate and mis-*shaped* in time.
    As modelled pre-multiplier, the pad re-shape alone did not close the gap: the early-to-mid game
    stayed ~300k short and the Moon ~2.3M short. The tested fix is flattening the programme payout curve —
@@ -365,3 +366,49 @@ below is for.
    *Residual, deliberately not chased:* the ceiling assumes every contract completed once — no real
    career does that — and the 26 unlimited-repeat types add an unbounded 18,168/round on top. Both
    make the true figure a range, not a point, and playtest feel is the intended signal.
+
+## 7. Program bonuses — 2026-07-28: reframed as a payout, and AsteroidExploration recovered
+
+**First live payout observed**, closing §5's last genuinely open item: a career drove
+`SuborbRocketDev` to completion and banked **16,500** (`11,000 × 1.25 Significant × 1.2 Normal`).
+The `autoAccept` + `CompleteContract` + `AXEInstant` chain works end to end.
+
+It also surfaced the wording problem. The contract was titled *"Programme Complete: X"* and said the
+programme *"is discharged"* — which reads as a state change that **does not exist**.
+`AxeProgramHandler` has no deactivate path (`AllActive` only ever reads a set that is inserted
+into), so a program stays active for the rest of the career and its member contracts keep being
+offered. That is deliberate — §"Repeatable is fine; idle income is not" in
+[`PROGRAMS.md`](PROGRAMS.md) — but nothing said so, and a playtester reasonably read the payout as an
+ending. Retitled **"Program Bonus: X"** (matching the hand-authored `Begin Program: X` charters, so
+the pair reads as one series) and the description now states outright that the program stays active.
+The `AXEInstant` parameter reads *"Collect the bonus"*, not *"Discharge the programme"*.
+
+**Defect fixed in the same pass — `AsteroidExploration` was paying nothing.** RP-1 funds it at
+`baseFunding = 8,400,000` (4th richest of 35) but ships it with an **empty `OBJECTIVES` block**.
+`load_programs` dropped any programme with no objectives, so it got no completion contract, no
+capstone, and its whole share was silently redistributed to the other programmes — while remaining
+chartered and fully playable with 6 gated contracts. `derive_objectives` now falls back to the same
+source the capstone scrape already trusts (the `CAPSTONE`/`REQUIRED` label in the description
+markup), gating it on `orbitCeres` + `orbitVesta`. Never silent: every derivation and every drop
+prints a note, and a funded programme that *has* members but no usable ones now prints a WARNING.
+
+Consequences, all intended:
+- **Scalar 0.10476 → 0.10106.** The denominator grew by AsteroidExploration's 8.4M, so every other
+  programme's payout falls ~3.5%. `SuborbRocketDev` completion 11,000 → 10,611. Channel 1 still
+  balances to 24M config / **36,386,760 paid**.
+- **35 completion contracts, up from 34.** AsteroidExploration pays 848,871 config (1,273,307 paid).
+- **`(WIP)` stripped from 5 player-facing titles** (Asteroid Exploration + the four outer-moon
+  landing programmes). It is an upstream RP-1 dev note; the charters already dropped it, so the two
+  halves of the same programme disagreed in the contract list.
+- **`CrewedVenusExp` / `CrewedExploration` remain skipped, correctly** — RP-1 funds them but AXE
+  vendors no contracts for them and charters neither, so they are not AXE programmes. Now reported
+  as notes rather than vanishing.
+
+**Open, found here, not chased:** the anti-grind on repeatable contracts is a **clock**
+(`rewardFactor = Log(Max(elapsedDays / expectedDays * 3 - 0.05, 1), 2) / 1.5607`, 0% immediately
+after a completion → 100% after `expectedDays`, e.g. 135 for the sounding rockets). AXE does not
+gate time, so free timewarp does not break the launch-gate invariant — each repeat still costs a
+launch — but it does erase the pacing intent, reducing it to "warp 135 days between flights". The
+payout does not scale with era either, so 1950s sounding rockets still pay ~40 reputation (~7,500
+funds through Fundraising) in 1975. Era-scaling of old contract rewards is the lever, not programme
+finality.
