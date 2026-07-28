@@ -897,7 +897,11 @@ nodes:
     tier: 4
     parents: [elec_siliconPV]
     flavor: "Etch and coat the cell face so less sunlight reflects away and more drives current — a few points of efficiency per generation, compounding across the tech tree. The first rung of the solar-cell efficiency ladder."
-    upgrades: [solarTL0]
+    upgrades: [solarTL0, solarTL1]
+    # solarTL1 moved here 2026-07-28 (cell-lane pass, see "Lane 5c" below): TL1 is a pure MASS step
+    # (11.2 from 12 kg/m², identical 63 W/m² and identical 11-day degradation) — a thinner wafer, which is
+    # a fact about the cell, not about the paddle it was mounted on. It had been sitting on
+    # elec_deployableArrays, whose breakthrough is the fold-out mechanism.
 
   - id: prop_recipEngine
     title: "Reciprocating Piston Propulsion"
@@ -1139,7 +1143,8 @@ nodes:
     parents: [elec_arCoatings]
     flavor: "Fold banks of silicon cells onto paddles that swing out once the satellite is clear of its shroud — far more collecting area than the body could ever carry, and the power to run a real payload through the sunlit half of every orbit. The array that outgrows the trickle-charge patch."
     parts: [RO_EarlyMediumSolarPanel]
-    upgrades: [solarTL1]
+    # solarTL1 moved OUT 2026-07-28 to elec_arCoatings (cell-lane pass): this node's breakthrough is the
+    # fold-out paddle, and TL1 is a thinner cell. Structure keeps the hardware, the cell lane keeps the cell.
   - id: gnc_basicAvionics
     title: "Miniaturised Inertial Guidance"
     discipline: GuidanceControl
@@ -2080,9 +2085,10 @@ nodes:
     parents: [elec_deployableArrays]
     flavor: "More cells on a bigger paddle — the same fold-out array scaled up for a hungrier payload, nothing new about how it works."
     parts: [RO-rangerSolarPanel, solarPanels4, solarPanels5, 1x3SPanels, 1x3WPanels, aje_solarPanels, LgRadialSolarPanel, ROC-D2Solar, solarPanels2, solarPanels5HiTech]
-    upgrades: [solarTL2]
-    # solarTL2 added (2026-07): ROSolar's own PARTUPGRADE, techRequired patch is `:NEEDS[RP-0]` (never
-    # fires under AXE) — re-pointed here, same fix as the RFUpgrade_*/RFTech_* configs all session.
+    # solarTL2 moved OUT 2026-07-28 to elec_nOnPCell (cell-lane pass): TL2 is the ladder's biggest
+    # radiation step (30 days from 11) alongside +43% efficiency, at unchanged mass — the n-on-p junction
+    # inversion. This node is "the same fold-out array scaled up, nothing new about how it works", by its
+    # own flavor; a cell breakthrough was never its to grant.
   - id: elec_fuelCellPower
     title: "Chemical Fuel-Cell Power"
     discipline: ElectricalPower
@@ -2101,16 +2107,9 @@ nodes:
     parents: [elec_deployablePanelII]
     flavor: "Model the cell string, the sun angle and the shadowing properly instead of a flat output curve — the same panel, understood well enough to size it exactly instead of overbuilding it."
     parts: [ROS-HingedSolarPanel, ROS-FoldingSolarPanel, sp_mariner_b, ROS-BlanketSolarPanel]
-    upgrades: [solarTL3, solarTL4, solarTL5]
-    # solarTL3/4 added (2026-07): same fix as solarTL2 — ROSolar's own upgrades, re-pointed here since the
-    # next two rungs of that same efficiency ladder land on this node's own generation.
-    # solarTL5 added (2026-07-28): 1967, 9 kg/m² @ 126 W/m² = 9.3% panel efficiency — still plainly a
-    # SILICON cell, one continuous refinement generation with TL3 (1963) and TL4 (1964), so it joins them
-    # rather than earning its own event. Deliberately NOT a new node between here and elec_stationClassSolar-
-    # Arrays: a mid-spine insert cascades every downstream tier, and a new T9 node would be a SIBLING of the
-    # T9 that carries TL6 — and since ROSolar rungs are `maxTechLevel = N` (highest unlocked wins outright),
-    # a player taking TL6 first would leave TL5 dead on arrival. The silicon ceiling is at TL7; see the
-    # III-V cell chain off elec_matureSolarArrays for where this ladder stops being a silicon story.
+    # solarTL3/4/5 moved OUT 2026-07-28 to elec_dopedCoverglass (cell-lane pass). This node models the
+    # array better; it does not make a better cell. TL4 in particular quadruples radiation life (30 days to
+    # 120) — that is the cover glass, not the simulation.
     # sp_mariner_b moved IN (2026-07, band-3 review #high): a later-revision Mariner
     # panel (x=-2612, one generation past sp_mariner_a which stays in gnc_threeAxisStabilizedBus) —
     # era-correct here, and still a real deployable-array part like this node's own hardware.
@@ -4359,9 +4358,10 @@ nodes:
     parents: [elec_refinedSolarSimulation]
     flavor: "The same fold-out array, sized for a station's appetite instead of a probe's — more cells on a bigger paddle, nothing new about how it works."
     parts: [largeSolarPanelEarly, solarPanels1, solarPanels3]
-    upgrades: [solarTL6]
-    # Generic XT-series size-catalog continuation (not vehicle-specific) - solarTL6 lands here as the
-    # general tech-level rung.
+    # Generic XT-series size-catalog continuation (not vehicle-specific).
+    # solarTL6 moved OUT 2026-07-28 to elec_backSurfaceField (cell-lane pass): TL6 moves ALL THREE columns
+    # hard at once (-33% mass, +43% efficiency, x3 radiation life) — the early-70s cell revolution. A
+    # station-sized paddle is a bigger version of the same thing, by this node's own flavor.
   - id: elec_probeBusSolarWings
     title: "Probe-Bus Solar Wings"
     discipline: ElectricalPower
@@ -4378,7 +4378,9 @@ nodes:
     parents: [elec_stationClassSolarArrays]
     flavor: "The generic array's last uprate in this era — more efficient cells, the same fold-out paddle, still the default choice for anything that doesn't need a dedicated mission-sized wing."
     parts: [largeSolarPanel, ROC-ApolloSolarBlockV, ROC-OrionSolar]
-    upgrades: [solarTL7]
+    # solarTL7 moved OUT 2026-07-28 to elec_thinSiliconCell (cell-lane pass): TL7 nearly halves cell mass
+    # (6 -> 3.5 kg/m²) and lands at 15.1% panel efficiency, the practical ceiling of space-grade silicon.
+    # That ceiling is a property of the material, not of how large a paddle this node builds.
 
   # ---- Lane 5b: the fold-out paddle's generation ends -- four parallel, unrelated next mechanisms ----
   - id: elec_deployableBlanketArray
@@ -4418,7 +4420,56 @@ nodes:
     # 2026-07 backlog sweep: a third, separate stowage mechanism (curved/wrapped vs. rigid-fold vs.
     # roll-out blanket) - own node, not folded into either sibling.
 
-  # ---- Lane 5c: the CELL, not the paddle -- silicon runs out and the III-V ladder takes over ----
+  # ---- Lane 5c: the CELL, not the paddle -- the silicon-cell ladder ----
+  # Added 2026-07-28. Lane 5 above builds PADDLES (area, stowage, and all the real solar hardware); this
+  # lane builds the CELL that goes on them. The two are independent axes and both are load-bearing -- a
+  # better cell is worthless with no array to mount it on, and vice versa.
+  # WHY IT EXISTS: divide ROSolar's per-rung W/m² by the solar constant (1361) and the tech levels become
+  # panel efficiency, at which point each rung says plainly what it is. Four of the eleven move a column by
+  # a MULTIPLE -- TL2 (x2.7 radiation life at unchanged mass), TL4 (x4 radiation), TL6 (all three at once),
+  # TL7 (-42% mass) -- and each maps onto a real, nameable silicon-cell mechanism whose signature is exactly
+  # the column that jumps. Radiation life leaping alone in 1961 and again in 1964 is not a coincidence: it
+  # is the junction inversion, then the cover glass. The other three rungs (TL1, TL3, TL5) are refinements
+  # and ride along with the breakthrough they follow.
+  # WHAT MOVED: these rungs previously sat on Lane 5's SIZE nodes -- three of which say "nothing new about
+  # how it works" in their own flavor. An efficiency uprate homed on a paddle-size node is rule 3 backwards;
+  # its bottleneck is the cell. Lane 5 keeps every part and loses only its upgrades.
+  # NOTE the pairing leaves the lower rung of each pair dominated (maxTechLevel is max-wins, so a node
+  # granting TL0+TL1 effectively grants TL1). That is accepted: the alternative is one node per rung, which
+  # needs eight nodes and forces invented breakthrough names onto three refinements that are not
+  # breakthroughs. Zero their entryCost if the dead shelf-item ever reads badly in R&D.
+  # TIERS are a parallel lane branching off elec_arCoatings (T4), NOT an insertion into the Lane 5 spine --
+  # so nothing downstream cascades a tier.
+  - id: elec_nOnPCell
+    title: "N-on-P Radiation-Tolerant Cells"
+    discipline: ElectricalPower
+    tier: 6
+    parents: [elec_arCoatings]
+    flavor: "Build the junction the other way up — diffuse phosphorus into a boron-doped wafer instead of the reverse — and the cell stops dying in the belts. The first satellites came home with their output halved after a few months in the trapped radiation; the same silicon, inverted, holds its power for a season and gives back more of the blue end of the spectrum besides."
+    upgrades: [solarTL2, solarTL3]
+  - id: elec_dopedCoverglass
+    title: "Cerium-Doped Cover Glass"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_nOnPCell]
+    flavor: "The cell was never the fragile part — the glass over it was. Ultraviolet darkens an ordinary cover slip until the array is looking at the sun through smoked quartz. Dope the glass with cerium and it stops browning, and a panel that used to fade inside a month holds its output for a third of a year."
+    upgrades: [solarTL4, solarTL5]
+  - id: elec_backSurfaceField
+    title: "Back-Surface-Field Silicon Cells"
+    discipline: ElectricalPower
+    tier: 9
+    parents: [elec_dopedCoverglass]
+    flavor: "Diffuse a heavily doped layer across the back of the cell so carriers that reach it are turned around instead of lost, and texture the front face so light that would have glanced off is trapped inside instead. The same silicon, worked properly, gives half again what it did — and a thinner wafer will now do the work of a thick one."
+    upgrades: [solarTL6]
+  - id: elec_thinSiliconCell
+    title: "Thin-Substrate Silicon Cells"
+    discipline: ElectricalPower
+    tier: 10
+    parents: [elec_backSurfaceField]
+    flavor: "Grind the wafer down to a fraction of its old thickness and put a mirror behind it, so the light that would have passed straight through gets a second pass on the way out. Silicon is very nearly finished as a space cell here — but an array that once weighed six kilogrammes to the square metre now weighs three and a half."
+    upgrades: [solarTL7]
+
+  # ---- Lane 5d: silicon runs out and the III-V ladder takes over ----
   # Added 2026-07-28 to home solarTL8/9/10, which had fallen through to `parking`. Dividing ROSolar's
   # per-rung W/m² by the solar constant (1361) turns the ladder into panel efficiency, and it reads as one
   # story: TL0 4.6% -> TL7 15.1%, which is exactly where a space-grade SILICON cell stops. TL8 17.1%,
@@ -4426,10 +4477,6 @@ nodes:
   # MATERIALS change. That also explains why their other two columns move in lockstep: III-V cells are
   # grown thin and lifted off the wafer (3.5 -> 0.8 kg/m²) and degrade far slower under radiation than
   # silicon (2 y -> 10 y). Three numbers, one mechanism.
-  # This resumes the tree's own cell-physics lane (elec_semiconductorDiode T2 -> elec_siliconPV T3 ->
-  # elec_arCoatings T4), which stopped at T4 -- every solar node after it is STRUCTURE, several saying so
-  # in their own flavor ("nothing new about how it works"). An efficiency uprate homed on a paddle-SIZE
-  # node is rule-3 backwards; its bottleneck is the cell.
   # A strict CHAIN, not siblings, and that is load-bearing: ROSolar's rungs set `maxTechLevel = N`, so the
   # highest unlocked rung wins OUTRIGHT. Spread across the four parallel T11 structure siblings above,
   # TL10 would short-circuit TL8/TL9 the moment a player took the wrong branch first.
@@ -4437,7 +4484,10 @@ nodes:
     title: "Gallium-Arsenide Heterojunction Cells"
     discipline: ElectricalPower
     tier: 11
-    parents: [elec_matureSolarArrays]
+    parents: [elec_thinSiliconCell]
+    # Reparented off elec_matureSolarArrays 2026-07-28 when Lane 5c was built: this is where the silicon
+    # ladder ENDS and the compound-semiconductor one starts, so its parent is the last silicon cell, not the
+    # largest paddle. Lane 5 (structure) and Lane 5c/5d (cells) are now cleanly separate axes.
     flavor: "Silicon has run out of room — fifteen percent of the sunlight landing on it is all a crystal of it will ever give back. Grow the junction from gallium arsenide instead and the cell absorbs harder, keeps its output in the heat that wilts a silicon panel, and shrugs off the radiation that ages an array into uselessness."
     upgrades: [solarTL8]
   - id: elec_tripleJunctionCell
