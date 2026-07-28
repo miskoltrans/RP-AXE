@@ -423,6 +423,17 @@ nodes:
     discipline: PropellantChemistry
     tier: 6
     parents: [pc_hydyne, pc_rp1]
+    anyToUnlock: true
+    # FALSE-FORK FIX (2026-07-28, docs/TREE.md §10): pc_hydyne (blend an amine to beat alcohol — Juno I) and
+    # pc_rp1 (refine the kerosene properly — Atlas) are the two competing mid-1950s answers to "what do we pour
+    # in the booster", and requiring BOTH to reach neat UDMH made the choice a purchase order. Now multi-entry:
+    # either booster-fuel school leads you to try the neat hydrazine derivative.
+    # Both parents KEPT (the first read of this edge, that pc_rp1 was spurious, was WRONG — checked against
+    # manifest/engine-stats.tsv): RFUpgrade_S-3FH's host part is ROE-LR79, and its predecessor config S-3D burns
+    # RP-1+LqdOxygen (766 kN, ispVac 288) against S-3FH's UDMH+LqdOxygen (850 kN, ispVac 305.5). The flavour's
+    # "twenty seconds over kerosene IN THE SAME CHAMBER" is literal — this really is the kerosene booster getting
+    # a fuel swap, so the kerosene lane is a real road in, not a decorative one. Forking rather than cutting also
+    # keeps pc_rp1 from becoming a childless leaf (it is pc_rp1's only dependent).
     flavor: "Drop the diluent and feed the booster unsymmetrical dimethylhydrazine straight. It buys nearly twenty seconds over kerosene in the same chamber and costs you a fuel that burns on contact with almost anything, eats seals, and will kill a pad crew that gets careless with a coupling."
     upgrades: [RFUpgrade_S-3FH]
     # LADDER PASS (2026-07-27): S-3FH is UDMH+LqdOxygen on an otherwise RP-1 Thor - a fuel fork worth
@@ -2090,9 +2101,16 @@ nodes:
     parents: [elec_deployablePanelII]
     flavor: "Model the cell string, the sun angle and the shadowing properly instead of a flat output curve — the same panel, understood well enough to size it exactly instead of overbuilding it."
     parts: [ROS-HingedSolarPanel, ROS-FoldingSolarPanel, sp_mariner_b, ROS-BlanketSolarPanel]
-    upgrades: [solarTL3, solarTL4]
+    upgrades: [solarTL3, solarTL4, solarTL5]
     # solarTL3/4 added (2026-07): same fix as solarTL2 — ROSolar's own upgrades, re-pointed here since the
     # next two rungs of that same efficiency ladder land on this node's own generation.
+    # solarTL5 added (2026-07-28): 1967, 9 kg/m² @ 126 W/m² = 9.3% panel efficiency — still plainly a
+    # SILICON cell, one continuous refinement generation with TL3 (1963) and TL4 (1964), so it joins them
+    # rather than earning its own event. Deliberately NOT a new node between here and elec_stationClassSolar-
+    # Arrays: a mid-spine insert cascades every downstream tier, and a new T9 node would be a SIBLING of the
+    # T9 that carries TL6 — and since ROSolar rungs are `maxTechLevel = N` (highest unlocked wins outright),
+    # a player taking TL6 first would leave TL5 dead on arrival. The silicon ceiling is at TL7; see the
+    # III-V cell chain off elec_matureSolarArrays for where this ladder stops being a silicon story.
     # sp_mariner_b moved IN (2026-07, band-3 review #high): a later-revision Mariner
     # panel (x=-2612, one generation past sp_mariner_a which stays in gnc_threeAxisStabilizedBus) —
     # era-correct here, and still a real deployable-array part like this node's own hardware.

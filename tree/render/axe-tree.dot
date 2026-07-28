@@ -551,8 +551,8 @@ digraph AXE {
   "pc_storables" -> "pc_ethanol90" [style=solid];
   "pc_ethanol90" -> "pc_rp1" [style=solid];
   "pc_hypergolics" -> "pc_hydyne" [style=solid];
-  "pc_hydyne" -> "pc_udmhBoosterFuel" [style=solid];
-  "pc_rp1" -> "pc_udmhBoosterFuel" [style=solid];
+  "pc_hydyne" -> "pc_udmhBoosterFuel" [style=dashed,color="#f4d35e"];
+  "pc_rp1" -> "pc_udmhBoosterFuel" [style=dashed,color="#f4d35e"];
   "pc_storables" -> "pc_htp" [style=solid];
   "pc_htp" -> "pc_stentor" [style=solid];
   "met_weldedTank" -> "met_stainlessSteel" [style=solid];

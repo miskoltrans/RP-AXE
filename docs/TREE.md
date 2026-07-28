@@ -251,10 +251,14 @@ or (iii) re-parent the AND-term *upstream* of both schools so it is implied tran
 but needs a spare tier below the fork, which the kerolox case did not have (`fd_regenCooling` T4 hangs off
 `met_nimonic` T3, so it cannot drop to T3).
 
-### Detection
+### Detection — `tools/check_forks.py`
 
 `anyToUnlock=False` + ≥2 parents that share **the same discipline and the same tier** (the signature of parallel
-schools). 15 hits; 11 dismissed on reading, 3 fixed, 1 flagged.
+schools). **15 hits → 4 fixed, 11 dismissed on reading.** The 11 are baked into the tool's `REVIEWED_OK` set, so
+the default run prints only *new* candidates (`--all` shows everything); it is a **review aid, never a build gate**
+— a same-discipline same-tier pair is often a legitimate convergence, so every hit needs reading, not obeying.
+Run it after any node batch that adds parents. Extend `REVIEWED_OK` when you review-and-keep a new hit — never to
+silence one you have not actually read.
 
 ### Fixed
 
@@ -263,6 +267,7 @@ schools). 15 hits; 11 dismissed on reading, 3 fixed, 1 flagged.
 | `fd_saturnKerolox` T6 | `[fd_largeChamber, fd_orbitalSoviet, fd_regenCooling]`, all required | `anyToUnlock: true` over `[fd_largeChamber, fd_orbitalSoviet]` | The parents' own flavour calls them alternatives — *"the hard way the West reached orbit … where the Soviets clustered many small ones"* vs *"brute multiplicity where the West built single chambers."* |
 | `av_advancedJetEngines` T8 | `[av_highBypassTurbofan, av_lowBypassTurbofan, av_mach2Turbojet]` | `anyToUnlock: true` over `[av_highBypassTurbofan, av_lowBypassTurbofan]` | High-bypass (airliner) ‖ low-bypass (fighter) are parallel schools. `av_mach2Turbojet` was a **leftover parent**: the 2026-07 lineage split moved the Mach-2 marks out to `av_advancedHighSpeedTurbojets` but, per the node's own comment, *"Parent list left as-is (pre-existing, not touched)."* |
 | `av_advancedHighSpeedTurbojets` T8 | `[av_mach2Turbojet, av_dedicatedLiftJet]`, both required | `anyToUnlock: true` | Self-declared in its flavour: *"two unrelated missions."* A doctrine-4 upgrade collector holding two lineages' marks; either base lineage should open it. |
+| `pc_udmhBoosterFuel` T6 | `[pc_hydyne, pc_rp1]`, both required | `anyToUnlock: true`, **both parents kept** | `pc_hydyne` (blend an amine to beat alcohol — Juno I) and `pc_rp1` (refine the kerosene properly — Atlas) are the two competing mid-1950s answers to *"what do we pour in the booster."* See the correction below — this one was initially flagged as a spurious edge and that read was wrong. |
 
 **`fd_regenCooling` is the one real loss** and was taken deliberately (option (i)). H-1/RD-111 *are*
 regeneratively cooled, so it is a true physical prerequisite — but by T6 it is settled ~1955 technology every
@@ -274,12 +279,23 @@ children, so every player still has a strong pull to buy it — it is now *wante
 forfeits `fd_matureOrbital` T5 (vacuum nozzles) and `fd_engineMaturation` T6. Both schools still reconverge into
 the same mature-booster line (`fd_gasGeneratorCeiling`, `cryo_gasGeneratorHydrolox`), which is the intended shape.
 
-### Flagged, NOT changed — needs a call
+### Correction — `pc_udmhBoosterFuel`, and why "spurious edge" was the wrong read
 
-- **`pc_udmhBoosterFuel` T6** ← `[pc_hydyne, pc_rp1]`. Not a schools fork; a suspected **spurious edge**. The
-  flavour uses kerosene as the *comparison*, not an ingredient (*"buys nearly twenty seconds over kerosene"*), and
-  the real lineage is hydyne → drop the diluent → neat UDMH. Dropping `pc_rp1` would leave that node a **childless
-  leaf** (0 parts, 2 upgrades), which is why it was left alone rather than quietly cut.
+Initially flagged as a suspected **spurious edge** rather than a fork, on the argument that the flavour uses
+kerosene as a *comparison* (*"twenty seconds over kerosene"*) and the real chemistry lineage is hydyne → drop the
+diluent → neat UDMH. **That was wrong, and `manifest/engine-stats.tsv` settles it:** `RFUpgrade_S-3FH`'s host part
+is `ROE-LR79`, and its predecessor config **`S-3D` burns RP-1+LqdOxygen** (766 kN, ispVac 288) against S-3FH's
+UDMH+LqdOxygen (850 kN, ispVac 305.5). *"In the same chamber"* is literal — this genuinely is the kerosene booster
+getting a fuel swap, so the kerosene lane is a real road in.
+
+The node was still wrong, just for the other reason: two parallel booster-fuel schools, both mandatory. Forking it
+(rather than cutting an edge) fixes that **and** dissolves the objection that had stalled it — `pc_udmhBoosterFuel`
+is `pc_rp1`'s only dependent, so cutting the edge would have left `pc_rp1` a childless leaf; keeping both parents
+under `anyToUnlock` does not. Teeth are modest but real: skip a school and you forfeit its uprates (`A-6H` on the
+hydyne side, `LR43-NA-3`/`LR89-NA-3` on the kerosene side).
+
+**Method note:** the first read came from the node's prose alone. Reading prose is what *found* all four of these —
+but it is also what mis-diagnosed this one, and only the part data corrected it ([[rp-axe-tree-lessons]] #2).
 
 ### Dismissed on reading (verified legitimate — do not re-flag)
 
