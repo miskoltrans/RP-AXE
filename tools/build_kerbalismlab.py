@@ -62,6 +62,52 @@ MARQUEE = {
     "Tanpopo": "int_kvant2Module",
 }
 
+# ---- near-Earth floor: single-body-locked experiments x10 (docs/KERBALISMLAB.md "Balance pass") ----
+# An experiment gated to ONE body earns no body multiplier, ever. The rest of the catalogue does:
+# AXE's body table runs from Earth x1 up to Pluto x30, and biome-scattered situations multiply again
+# by a biome sum of up to 20. The creator priced this mod on stock Kerbin scales, where home orbit IS
+# the game; under RSS home orbit is the starting line, so every home-locked experiment is structurally
+# underpriced by about an order of magnitude relative to everything beside it.
+#
+# Scaling exactly those experiments restores parity without touching the deep-space tail -- they run
+# at one body, so nothing else in the budget moves. A LEO station program goes from ~4.0k to ~28k
+# against a ~300k tree; grand theoretical max moves only +1.7% (tools/lab_budget.py).
+#
+# Uniform x10 on purpose: it preserves the creator's RELATIVE pricing (the marquee astrophysics
+# payloads are already priced 25-50x the Earth-observation cubesats precisely because they are
+# single-subject) and changes only the global scale that RSS broke. Path A stays intact in spirit --
+# no situations, bodies, crew, durations, slots or data sizes are re-authored, only this one scalar.
+SINGLE_BODY_GATES = {"HomeBody", "Oceanic", "Suns"}   # Oceanic == Earth, Suns == the Sun
+HOME_LOCKED_SCALE = 10
+
+# design/Science/EarthScienceRemoval.cfg takes Earth's sub-40km science out of the economy on purpose
+# (landed/splashed 0.00001, flyingLow 0.001) so you cannot grind the home planet. An Earth-locked
+# experiment that ONLY runs in one of those situations is therefore worth ~0 no matter what we price
+# it at -- scaling it would be a false signal in the config, so it is skipped and reported instead.
+EARTH_ZEROED_SITUATIONS = {"srflanded", "srfsplashed", "flyinglow"}
+
+def scale_home_locked(text, stem):
+    """x10 the group `value` of an experiment whose BodyAllowed pins it to a single body.
+    Returns (text, 'scaled' | 'dead' | None)."""
+    mk = re.search(r'KERBALISM_EXPERIMENT', text)
+    if not mk:
+        return text, None
+    seg = text[mk.end():mk.end() + 400]
+    mba = re.search(r'(?m)^\s*BodyAllowed\s*=\s*(\S+)', seg)
+    if not mba or mba.group(1) not in SINGLE_BODY_GATES:
+        return text, None
+    if re.search(r'(?m)^\s*BodyNotAllowed\s*=', seg):        # a second gate means it is not a clean lock
+        return text, None
+    sits = [s.split("@")[0].lower() for s in re.findall(r'(?m)^\s*Situation\s*=\s*(\S+)', seg)]
+    if mba.group(1) in ("HomeBody", "Oceanic") and sits and all(s in EARTH_ZEROED_SITUATIONS for s in sits):
+        return text, "dead"
+    n = [0]
+    def bump(m):
+        n[0] += 1
+        return f"{m.group(1)}{float(m.group(2)) * HOME_LOCKED_SCALE:g}"
+    text = re.sub(r'(?m)^(\s*value\s*=\s*)([0-9.]+)', bump, text, count=1)
+    return text, ("scaled" if n[0] else None)
+
 TECH_FIELD = re.compile(r'(\b(?:UnlockTech|UpgradeTech|ReconfigureTech)\s*=\s*)([A-Za-z0-9_]+)')
 
 # Source-mod bug: a few fork EXPERIMENT_DEFINITIONs set baseValue/scienceCap to the experiment NAME
@@ -134,7 +180,7 @@ def main():
     print(f"base experiment definitions vendored: {len(blocks)}")
 
     # 3) the 65 fork experiments (remap UnlockTech; marquee override where applicable)
-    n = 0; nsan = 0
+    n = 0; nsan = 0; nscaled = 0; scaled_names = []; dead_names = []
     for fn in sorted(os.listdir(FORK)):
         if not fn.endswith(".cfg") or fn == "InstrumentTagging.cfg":
             continue
@@ -142,6 +188,9 @@ def main():
         text = open(os.path.join(FORK, fn), encoding="utf-8").read()
         text, nfix = BAD_BASEVALUE.subn(r'\g<1>180', text)   # fix source-mod non-numeric baseValue/scienceCap
         nsan += nfix
+        text, how = scale_home_locked(text, stem)
+        if how == "scaled": nscaled += 1; scaled_names.append(stem)
+        elif how == "dead": dead_names.append(stem)
         mn = MARQUEE.get(stem)
         out, unk = remap_text(text, marquee_node=mn)
         allunknown |= unk
@@ -150,6 +199,8 @@ def main():
         n += 1
 
     print(f"experiments vendored: {n}  (marquee Mir/Kvant gates: {nmarquee}, baseValue/scienceCap fixes: {nsan})")
+    print(f"single-body-locked value x{HOME_LOCKED_SCALE}: {nscaled} -> {chr(44).join(sorted(scaled_names))}")
+    if dead_names: print(f"Earth-locked but zeroed by EarthScienceRemoval (left alone, dead content): {chr(44).join(sorted(dead_names))}")
     if allunknown:
         print("!! UNMAPPED tech tokens (add to REMAP):", sorted(allunknown)); sys.exit(2)
     print("all tech references mapped OK ->", OUT)
