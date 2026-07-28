@@ -1725,6 +1725,31 @@ def check_tech_gates(nodes):
         die(f"AXE_TREE_STRICT set: {total} dangling tech-gate reference(s) — see above")
     return dangling
 
+SCIENCE_CAPS = [(100, 5, 6), (500, 8, 9)]   # CustomBarnKit RESEARCH scienceCostLimit = 100, 500, -1
+
+def check_science_caps(meta):
+    """The R&D building gates research by NODE COST, not by tier: a level whose scienceCostLimit is
+    100 simply refuses any node costing more. So the tier at which each cap bites is economy design
+    (docs/ECONOMY.md 2) that lives, invisibly, in the cost table -- nudge `scalar` a few percent and a
+    whole tier silently changes which R&D level it needs. Assert the intended boundaries instead."""
+    tc, scalar = meta.get("tier_cost", {}), meta.get("scalar", 1.0)
+    if not tc: return
+    rate = {int(t): round(v * scalar) for t, v in tc.items()}
+    bad = []
+    for cap, under, over in SCIENCE_CAPS:
+        if rate.get(under, 0) > cap:
+            bad.append(f"T{under} = {rate[under]} exceeds the {cap} cap (should be researchable under it)")
+        if rate.get(over, 0) <= cap:
+            bad.append(f"T{over} = {rate[over]} fits under the {cap} cap (should require the next R&D level)")
+    # every cap contributes a floor (scalar must keep T{over} ABOVE it); the binding one is the largest
+    edge = max((cap / tc[over] for cap, _, over in SCIENCE_CAPS if tc.get(over)), default=0)
+    if bad:
+        print(f"science cap gate: {len(bad)} BROKEN boundary(ies) -- scalar {scalar} [docs/ECONOMY.md 2]")
+        for b in bad: print("   !", b)
+    else:
+        print(f"science cap gate: clean -- T{SCIENCE_CAPS[0][1]}/T{SCIENCE_CAPS[0][2]} straddle 100, "
+              f"T{SCIENCE_CAPS[1][1]}/T{SCIENCE_CAPS[1][2]} straddle 500 (scalar {scalar}, floor {edge:.3f})")
+
 def main():
     disc, meta, nodes = load()
     by = {n["id"]: n for n in nodes}
@@ -1760,6 +1785,7 @@ def main():
     for n in nodes: cbt[n["tier"]] += n["cost"]
     for t in sorted(cbt): print(f"   T{t}: {cbt[t]:>6}")
     print(f"   total: {sum(n['cost'] for n in nodes)}")
+    check_science_caps(meta)             # gate: node costs must straddle the R&D scienceCostLimit boundaries
     print("-> GameData/RP-AXE/design/Tree/AxeTechTree.cfg (+ AxeTreeMeta.cfg), tree/render/axe-tree.svg|png|html")
     check_probe_requirements(nodes)
     emit_impl_backlog(nodes)             # docs/IMPL-TODO.md: provisional grants + impl_todo -> checklist

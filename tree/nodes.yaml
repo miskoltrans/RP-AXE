@@ -13,15 +13,27 @@
 # structures/avionics/science lanes come in the next increments.
 
 meta:
-  scalar: 1.0
+  scalar: 0.72
   auto_placement: false
-  # Science node cost = tier_cost[tier] * scalar (per-node `cost:` overrides win). MONOTONIC non-decreasing,
-  # T1=1 (bootstrap ~free; can't gate reaching orbit behind orbital science). The front-loaded-difficulty
-  # SHAPE emerges from node COUNT (which humps mid/late) x this rising rate -- see docs/SCIENCE.md 4. Total
-  # ~= 297k (~2.6x RP-1's real 115k, ~8% of the 3.93M collectable pool); bite spreads across the reachable
-  # T9-T13 outer-planet grind (peak cum% at T11) rather than RP-1's aspirational endgame wall. Total is a
-  # dial (scalar, or rescale the table); tune in the P3 solvency play-session.
-  tier_cost: { 0: 0, 1: 1, 2: 4, 3: 15, 4: 40, 5: 80, 6: 160, 7: 300, 8: 450, 9: 700, 10: 1000, 11: 1450, 12: 2000, 13: 2650, 14: 3500, 15: 4500, 16: 5650 }
+  # Science node cost = round(tier_cost[tier] * scalar) (per-node `cost:` overrides win). MONOTONIC
+  # non-decreasing, T1=1 (bootstrap ~free; can't gate reaching orbit behind orbital science). The SHAPE
+  # emerges from node COUNT (which humps mid/late) x this rising rate -- see docs/SCIENCE.md 4. Total
+  # ~= 300k (~2.6x RP-1's real 115k, ~8% of the 3.93M collectable pool); bite spreads across the reachable
+  # T9-T13 outer-planet grind rather than RP-1's aspirational endgame wall.
+  # RE-BLESSED 2026-07-28 (both levers moved). Since the 2026-07-06 lock the tree grew 423 -> 499 nodes and
+  # the growth landed almost entirely at the top -- T13-16 went 19 -> 46 nodes -- so the emitted total drifted
+  # 298k -> 443k (+49% off +18% nodes) and the late tail went 21% -> 36% of the tree. The lock's premise
+  # ("node count craters at the top, so back-load via per-node RATE") was simply no longer true. Fix:
+  #   SHAPE     -- flatten the top, T14/15/16 3500/4500/5650 -> 2900/3200/3500 (tail 36% -> 32%).
+  #   MAGNITUDE -- scalar 0.72 restores ~300k without touching the mid-game's relative pacing.
+  # The tail stays at 32%: with 46 nodes at T13-16 and T12 = 2000, monotonicity floors it near 25%, and
+  # buying below that means re-tuning the whole curve, not the top. Revisit when the endgame region is
+  # actually designed (RESTART.md P6 colonization scaffold) -- 46 undesigned nodes are what inflate it.
+  # SCALAR WINDOW -- keep scalar > 0.715. The R&D building gates tiers by node cost (CustomBarnKit
+  # scienceCostLimit = 100, 500, -1), so the boundaries T5<=100<T6 and T8<=500<T9 are load-bearing economy
+  # design (docs/ECONOMY.md 2), NOT arithmetic accidents. At 0.72, T9 = 504 -- only 4 above the cap; drop to
+  # 0.71 and 57 nodes silently fall out from behind the 451k-funds R&D L3 gate. build_tree.py checks it.
+  tier_cost: { 0: 0, 1: 1, 2: 4, 3: 15, 4: 40, 5: 80, 6: 160, 7: 300, 8: 450, 9: 700, 10: 1000, 11: 1450, 12: 2000, 13: 2650, 14: 2900, 15: 3200, 16: 3500 }
   # Part unlock (funds) cost = part_cost_base[tier] * part_cost_weight[costcat]  (docs/SCIENCE.md 5, AxePartCost.cfg).
   # FUNDS ARE TEXTURE, NOT A WALL. Tier-driven + category weight; calibrated to REPRODUCE RP-1's real entryCosts
   # for the categories it priced (science/crewpod/power/antenna/gear) and to PRICE the procedural categories RP-1
