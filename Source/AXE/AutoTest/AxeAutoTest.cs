@@ -431,6 +431,11 @@ AXE_AUTOTEST
             try { Debug.Log("[AXE][AutoTest][SIM] " + RPAxe.Simulation.AxeSimulation.SelfTestReport()); }
             catch (Exception e) { Debug.LogError("[AXE][AutoTest][SIM] self-test threw: " + e); }
 
+            // Funds economy: capstone patches landed, completion contracts well-formed with no
+            // dangling CompleteContract deps, strategy reputation gate un-re-broken.
+            try { Debug.Log("[AXE][AutoTest][ECON] " + AxeEconomySelfTest.SelfTestReport()); }
+            catch (Exception e) { Debug.LogError("[AXE][AutoTest][ECON] self-test threw: " + e); }
+
             foreach (ScreenDef s in defs)
             {
                 yield return VisitScreen(s);
