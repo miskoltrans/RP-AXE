@@ -13,11 +13,12 @@ decisions) are the durable reference; §3 is the record of how the placement app
 - **P1 — tree architecture: DONE.** `tree/nodes.yaml` (**499 nodes**) + `tree/disciplines.yaml` (**21 lanes**),
   research-paper node names, scatter-by-difficulty homing, convergence web. Compiles clean via
   `tools/build_tree.py`. **This is the keeper.**
-  - **⚠ Cost total has drifted with the node count and needs re-blessing.** The per-tier table is the locked
-    input (SCIENCE.md §4) and the total is an *emergent* output of how many nodes sit at each tier — so the
-    tree growing from ~217 to 499 nodes moved the emitted total from ~300k to **422,666**. That is still
-    inside SCIENCE.md's stated bracket (~150k comfortable … ~500k grand-tour), so this is an accept-or-rescale
-    decision, not a defect. Unresolved at P3.
+  - **✅ Cost total re-blessed 2026-07-28 (`a8a3f49`).** The per-tier table is the locked input
+    (SCIENCE.md §4) and the total is an *emergent* output of how many nodes sit at each tier — so the tree
+    growing to 499 nodes had moved the emitted total from ~298k to **442,966**, with the T13–16 tail at 36%
+    of the tree. Fixed on both levers: **T14–16 rates flattened** to 2900/3200/3500 (shape) and
+    **`meta.scalar` = 0.72** (magnitude) → **300,376**, tail 31.8%. Adding nodes at T13+ moves this again —
+    `build_tree.py` prints the total and now gates the R&D cost-cap boundaries (`science cap gate`).
 - **P2 — part placement: RESOLVED (auto-place-everything abandoned, §3A).** The tree was built out
   band-by-band — band 1 (to orbit) → band 2 (appsats / humans / lunar probes) → band 3 (crewed lunar) —
   hand-homing the iconic parts per milestone while procedural + config-upgrades carry the bulk. **All 8

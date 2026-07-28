@@ -210,11 +210,35 @@ no tail) vs. keep a deliberate handful as high-value deep-space targets (JUNO/so
 
 ---
 
-## 4. Tree-cost decision — LOCKED (2026-07-06): ~298k via a per-tier rate table
+## 4. Tree-cost decision — LOCKED (2026-07-06) · RE-BLESSED (2026-07-28): ~300k via a per-tier rate table
 
-> **⚠️ DRIFT (measured 2026-07-28) — the table is still the locked input, but the tree it was written
-> against has doubled, so both headline outputs below have moved. This is an accept-or-rescale call, not a
-> defect; nothing here has been changed unilaterally.**
+> **RE-BLESSING, 2026-07-28 (commit `a8a3f49`) — read this first; the lock rationale below is intact but
+> its central premise expired.** The tree grew **423 → 499 nodes** and the growth landed almost entirely at
+> the expensive end (T12–16 = **84%** of the increase; T13–16 alone **19 → 46 nodes**), so **+18% nodes bought
+> +49% cost**: the emitted total drifted **298,214 → 442,966** and the late tail went **21% → 36%** of the
+> tree — the RP-1 endgame wall this section set out to avoid. The lock justified rates rising to 5,650/node
+> on the premise that *node count craters at the top*; with 46 nodes up there it does not. **Both levers moved:**
+>
+> | | before | after | effect |
+> |---|---|---|---|
+> | **Shape** — `tier_cost` T14/15/16 | 3500 / 4500 / 5650 | **2900 / 3200 / 3500** | tail 36% → **32%** |
+> | **Magnitude** — `meta.scalar` | 1.0 | **0.72** | total → **300,376** |
+>
+> **Why the tail stops at 32%, not 21%:** with 46 nodes at T13–16 and T12 = 2000, monotonicity floors the tail
+> near **25%** — going lower means re-tuning the whole curve, not the top. The right moment for that is when
+> the endgame region is actually *designed*: those 46 nodes are the undesigned colonization scaffold
+> (RESTART.md P6). **Node costs are now `round(tier_cost[tier] × 0.72)`** — 115 at T6, 504 at T9, 1440 at T12.
+>
+> ⚠ **Scalar window — keep `scalar > 0.715`, enforced by `build_tree.py`'s `science cap gate`.** The R&D
+> building gates research by node **cost**, not tier (CustomBarnKit `scienceCostLimit = 100, 500, -1`), so
+> *which tier needs which R&D level* is economy design (ECONOMY.md §2) hiding inside this table. The obvious
+> scalar for an exact 298k restore — **0.673** — puts T9 at 471, **silently dropping 57 nodes out from behind
+> the 451,000-funds R&D L3 gate**. 0.72 keeps T9 at 504, four above the cap. The gate asserts the T5/T6 and
+> T8/T9 boundaries on every build and prints the binding floor.
+
+> **⚠️ DRIFT — measured 2026-07-28, RESOLVED the same day by the re-blessing above.** The measurement is
+> kept because it is the evidence the re-blessing acted on; the "now (live build)" column is the *pre-fix*
+> state, not current. Current = **300,376** total, T13–16 = 31.8%.
 >
 > The decision deliberately makes total cost *emergent* (`node count × a rising per-tier rate`). The tree
 > then grew **~217 → 499 nodes**, so:
@@ -231,9 +255,11 @@ no tail) vs. keep a deliberate handful as high-value deep-space targets (JUNO/so
 > **T12–16 now carry 50.8% of the entire tree's cost**, because the late tail grew from 19 nodes to 46 as the
 > outer-planet / station / reusable milestones were placed. Half the science gate now sits above T11.
 >
-> Current per-tier node counts (T0–T16): 2 · 20 · 23 · 25 · 37 · 25 · 30 · 53 · 41 · 57 · 53 · 49 · 38 · 22 ·
-> 12 · 8 · 4. Re-measure with `python tools/build_tree.py` (per-tier cost table + `total:` are printed).
-> Decide at the P3 solvency play-session, which §4 already names as the final tune.
+> Per-tier node counts at the time of measuring (T0–T16): 2 · 20 · 23 · 25 · 37 · 25 · 30 · 53 · 41 · 57 ·
+> 53 · 49 · 38 · 22 · 12 · 8 · 4. Re-measure with `python tools/build_tree.py` (per-tier cost table,
+> `total:`, and the `science cap gate` line are printed). **Both levers were moved rather than waiting for
+> the play-session** — the shape claim was broken, not merely off-target, and leaving a broken premise in
+> place would have let every later node compound it. Magnitude remains the play-session's dial.
 
 Total budget (§3b): **~3.93M theoretical (39% crewed / 61% uncrewed)**; realistic collection is lower and
 uncrewed-weighted. Anchors considered: RP-1 = **115k** (≈3% of pool, completable); VISION-literal "tree cost ≈
@@ -246,25 +272,36 @@ NOT a global scalar. `cost(node) = tier_cost[tier]`, per-node `cost:` overrides 
   exploration** playthrough (banks ~300–500k realistically) but not a focused rush → matches VISION's
   "not expected to finish in one playthrough." Bracket: ~150k RP-1-comfortable … ~500k grand-tour-only.
   Total is a dial (rescale the table); final tune comes from the **P3 solvency play-session**.
-- **The rate table (per node, by tier):**
+- **The rate table (per node, by tier)** — `tier_cost` in `tree/nodes.yaml` meta; **T14–16 flattened
+  2026-07-28** (was 3500 / 4500 / 5650), and every entry is multiplied by `scalar` **0.72** on emit:
 
   | T | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
   |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-  | rate | 1 | 4 | 15 | 40 | 80 | 160 | 300 | 450 | 700 | 1000 | 1450 | 2000 | 2650 | 3500 | 4500 | 5650 |
+  | rate | 1 | 4 | 15 | 40 | 80 | 160 | 300 | 450 | 700 | 1000 | 1450 | 2000 | 2650 | **2900** | **3200** | **3500** |
+  | emitted (×0.72) | 1 | 3 | 11 | 29 | 58 | 115 | 216 | 324 | 504 | 720 | 1044 | 1440 | 1908 | 2088 | 2304 | 2520 |
 
   **Monotonic non-decreasing, T1 = 1** (bootstrap ~free — can't gate *reaching* orbit behind orbital science).
 - **Shape EMERGES from node count × a rising rate — NOT hand-forced (supersedes the earlier "front-load
-  tiers 3–6" plan).** Node count already humps mid/late (T7 = 52, T9 = 54, T10 = 45, T11 = 41; then craters
+  tiers 3–6" plan).** *(The mechanism stands; the node counts below are the 2026-07-06 snapshot and the
+  "craters at the top" reading of them expired — see the re-blessing at the top of this section.)* Node count
+  already humps mid/late (T7 = 52, T9 = 54, T10 = 45, T11 = 41; then craters
   T13–16 = 11/4/2/2). A monotonic per-node rate over that count puts the cumulative bite in the **reachable
   T9–T13 outer-planet grind** (cumulative-cost peaks ~62% at T11), tapering at the top where node count dies
   and VISION hands the gate to *other* axes (power/heat/materials/money). Early (T1–6) is only ~3% of total —
   **capability-gated, not science-gated**, exactly as VISION wants.
+- **Where the cost actually sits (499 nodes, scalar 0.72):** T1–5 **2,887** (1.0%) · T6–8 **28,182** (9.4%) ·
+  T9–12 **172,764** (57.5%) · T13–16 **95,544** (31.8%). Those bands are also the R&D-building bands: the
+  100-cap covers T1–5, the 500-cap covers T6–8, and **90% of the tree's science sits behind R&D L3**
+  (243 nodes at T9+, 451,000 funds) — see ECONOMY.md §2.
 - **RP-1 reference (ground-truth from `RP0TechTree.cfg`, ORPHANS 99999 sink excluded):** RP-1's real 115k is
   *far more back-loaded* — its **final era column alone is 60%** of the tree — but it gets there via **node
   count** (78 cheap nodes dumped in that column; per-node median **233**, max **1000**), an aspirational
-  endgame wall most players never reach. AXE's node count **tapers** at the top instead, so AXE back-loads via
-  **per-node rate** (up to 5650) and spreads the bite across the *reachable* mid-late game. Same philosophy
-  (monotonic, back-loaded), different lever — and the smoother curve is the healthier pacing.
+  endgame wall most players never reach. AXE back-loads via **per-node rate** instead and spreads the bite
+  across the *reachable* mid-late game. Same philosophy (monotonic, back-loaded), different lever — and the
+  smoother curve is the healthier pacing. **Caveat as of 2026-07-28:** AXE's node count no longer *tapers* at
+  the top (T13–16 is 46 nodes, not 19), so AXE is now leaning on **both** levers up there — which is exactly
+  what the flattened T14–16 rates pull back against, and why the tail is worth re-checking whenever the
+  endgame region gains or loses nodes.
 
 **For P3 (KerbalismLab integration) — DECIDED: re-author as plain `Experiment` modules.**
 Reimplement the 65 experiments as plain Kerbalism `Experiment` + `EXPERIMENT_DEFINITION` configs wired

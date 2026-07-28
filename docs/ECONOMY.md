@@ -53,9 +53,16 @@ Everything below is measured from this install, not estimated.
 
 **The R&D ladder is the load-bearing gate.** Its 100-science cap covers tiers 0–5 *exactly*; every
 tier-6 node costs 101+. So R&D L2 (**113,000 funds**) is required to research anything past tier 5,
-and L3 (**451,000**) for tier 9+ (206 nodes). This is deliberate — it is what makes funds a real
-tradeoff rather than texture — and the income schedule is sized to make those two purchases bite
-without blocking.
+and L3 (**451,000**) for tier 9+ (**243 nodes = ~90% of the tree's science**). This is deliberate — it is
+what makes funds a real tradeoff rather than texture — and the income schedule is sized to make those two
+purchases bite without blocking.
+
+> ⚠ **This gate lives in the tree's cost table, not in a settings file.** CustomBarnKit's
+> `scienceCostLimit = 100, 500, -1` gates by node **cost**, so the tier at which each cap bites is an
+> emergent property of `tier_cost × scalar` in `tree/nodes.yaml` — a few percent on the scalar moves a whole
+> tier across a cap and silently rewrites this paragraph. `build_tree.py`'s **`science cap gate`** asserts the
+> T5/T6 and T8/T9 boundaries on every build (binding floor: `scalar > 0.715`; it is **0.72** as of
+> 2026-07-28). See SCIENCE.md §4.
 
 Per-launch vehicle cost is measured at **171–8,314 funds** for 0.2–3.75 t craft
 (`tools/analyze_craft_costs.py`), but no orbital-class vehicle has been priced yet, so the ~20M

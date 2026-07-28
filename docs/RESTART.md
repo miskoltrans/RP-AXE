@@ -57,11 +57,11 @@ Each phase gates the next; avionics + contracts ride alongside, off the critical
     **Path A (vendor the framework)**, not the re-author route T2 below had defaulted to. 65 experiments,
     techs remapped, `-axe-autotest` clean. See [`KERBALISMLAB.md`](KERBALISMLAB.md).
   - **Funds economy SHIPPED (2026-07-28)** — see [`ECONOMY.md`](ECONOMY.md).
-  - **Remaining P3 = calibration, not construction:** the KerbalismLab balance pass, science cost/gate
-    calibration (the emitted tree total is now **422,666** vs the ~300k the table was sized against — an
-    accept-or-rescale call, TREE.md §1), part `entryCost` (deferred until the tree was complete — it now
-    is), and the solvency play-session that proves all of it. **End-to-end contract payout is still
-    unobserved** (ECONOMY.md §5).
+  - **Remaining P3 = calibration, not construction:** the KerbalismLab balance pass, part `entryCost`
+    (deferred until the tree was complete — it now is), and the solvency play-session that proves all of it.
+    Science cost is **re-blessed 2026-07-28** (`a8a3f49`): the emitted total had drifted to 442,966 with a
+    36% late tail, fixed to **300,376** / 31.8% by flattening the T14–16 rates and setting `scalar` 0.72
+    (SCIENCE.md §4). **End-to-end contract payout is still unobserved** (ECONOMY.md §5).
 - **P4 — Avionics** *(parallel)*. Rename to RP-1 terms; rebalance. **Prove:** flyable early control.
 - **P5 — Special parts** *(post-MVP)*. Probe subtree (hire-JPL / hire-OKB) + capsule capability-split
   + cross-branch prerequisite-tech checklist plugin. **Prove:** a probe gated by multi-branch prereqs.
