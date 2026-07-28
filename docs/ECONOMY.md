@@ -142,9 +142,9 @@ Administration upgrades are affordable. `strategyCommitRange` remains the real p
 - **The R&D science-cap ladder stays** as a deliberate funds tradeoff (user call, 2026-07-28).
 - **Everything pays on completion, never in advance** — `AllowNegativeCurrency` removes the
   cash-flow problem an advance would solve (§5).
-- **Administration's commit range is the only cap on the slider.** The strategy reputation
-  requirement is switched off rather than tuned, because it is a commitment-scaled lerp and not the
-  availability window it looks like (§5).
+- **The strategy reputation requirement is left at stock.** It is a commitment-scaled lerp, not the
+  availability window it looks like, and stock's `-500 → 750` already lands correctly at AXE
+  magnitudes — so AXE patches the *rate* and nothing else (§5).
 
 ## 5. Open & closed
 
@@ -179,9 +179,17 @@ Administration upgrades are affordable. `strategyCommitRange` remains the real p
   L3 (750,000 funds) bought nothing. Because `CurrencyConverter.OnEffectQuery` lerps **both** the
   share diverted and the rate off that same factor
   (`input × Lerp(minShare,maxShare) × Lerp(minRate,maxRate)`), Channel 2 was paying ~70 funds/rep
-  against the budgeted 157 — **roughly half its 16M**. Set to `-1000/-1000` (stock's own no-gate
-  idiom, as `RecoveryTransponders` uses); `strategyCommitRange` is now the sole cap, as §3 assumed.
-  *Still worth an in-game look:* confirm the slider actually reaches 100% at Administration L3.
+  against the budgeted 157 — **roughly half its 16M**.
+  **Resolution (user call): stop patching it — stock's `-500 → 750` is already correctly scaled.**
+  Against `strategyCommitRange`, the requirement at each Administration level's slider cap is −188
+  (L1, never binds) · 250 (L2) · 750 (L3). A band-1 playtest already reached 117 reputation and a
+  career pays ~114k, so the gate bites only in the first era and is irrelevant long before 750,000
+  funds of Administration upgrades are affordable — the stock mechanic ("commit as hard as your fame
+  allows") working as designed, with no patch to maintain. The three strategies that carried *only*
+  a reputation override are no longer patched at all. If a stronger fame axis is ever wanted,
+  **rescale** the pair against early-career reputation (hundreds, not the 114k lifetime total) and
+  re-derive §3's 16M — never widen it.
+  *Still worth an in-game look:* confirm the slider reaches 100% at Administration L3.
 - ~~**Failure reputation**~~ — ✅ **CLOSED 2026-07-28: a false alarm, no work needed.** The "78
   contracts lose 10–750 reputation on failure" claim does not survive ground-truthing. Every one of
   the 296 `failureReputation` fields in the merged `ModuleManager.ConfigCache` is **0**, as are all
