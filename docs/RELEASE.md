@@ -11,6 +11,16 @@ Artifacts: `RP-AXE.netkan` (CKAN metadata), `GameData/RP-AXE/RP-AXE.version` (KS
   isn't created — both are prerequisites for tagging/release and the `$kref` to resolve.
 - AutoTest harness ships **disabled** (`Plugins/PluginData/AutoTest.cfg` `enabled = false`); the
   `-axe-autotest` launch flag force-enables it for development.
+- **REVERT `Source/AXE/UI/AxeDbsToolbarNreFix.cs` before release.** It Harmony-patches around a bug in
+  DynamicBatteryStorage, not in AXE: DBS sets `Settings.Enabled = false` when it detects Kerbalism,
+  but `SystemsMonitorUI.OnGUIAppLauncherReady` calls `CreateToolbarPanel()` outside that guard, so a
+  null `stockToolbarButton` reaches `ToolbarIconTag.Position` — one `[ERR]`+`[EXC]` pair per
+  editor/flight scene load. Cosmetic (EventVoid catches per-listener); it exists only to keep
+  smoke-test logs readable, and the same NRE is present in stock RP-1 installs
+  (`ksp_rp1_expanded/KSP.log`, 2026-07-08), so it is not ours to ship a fix for. Delete the file and
+  rebuild; if the noise still matters at that point, choose deliberately between an upstream report
+  and keeping the patch. Note that *uninstalling* DBS is not an option — it is a transitive CKAN
+  dependency of the Nertea mods in `RP-AXE-deps.ckan`, so `tools/rebuild-instance.ps1` reinstalls it.
 
 ## Build the release payload
 1. Build the plugin into the shipped folder:
