@@ -88,16 +88,22 @@ namespace RPAxe.DevParts
         }
 
         /// <summary>
-        /// Researched but entry cost never paid. RP-1 reads ResearchAndDevelopment.protoTechNodes
-        /// directly — it builds against a publicized Assembly-CSharp and AXE does not — but the two
-        /// public helpers say the same thing.
+        /// Researched but entry cost never paid.
+        ///
+        /// Reads the proto tech node directly, as RP-1 does. The obvious-looking spelling —
+        /// <c>PartTechAvailable(ap) &amp;&amp; !PartModelPurchased(ap)</c> — is a TRAP: both of those stock
+        /// helpers fall through to <c>experimentalPartsStock</c>, so the instant we flag a part
+        /// experimental stock starts reporting it as purchased and this predicate flips to false. That
+        /// makes the question unanswerable exactly when we need to ask it — turning the toggle off
+        /// could then never find the parts it had marked, and the launch gate saw an empty bill.
         /// </summary>
         public static bool IsUnlockedButNotPurchased(AvailablePart ap)
         {
             if (ap == null || ResearchAndDevelopment.Instance == null || string.IsNullOrEmpty(ap.TechRequired))
                 return false;
 
-            return ResearchAndDevelopment.PartTechAvailable(ap) && !ResearchAndDevelopment.PartModelPurchased(ap);
+            ProtoTechNode node = ResearchAndDevelopment.Instance.GetTechState(ap.TechRequired);
+            return node != null && node.state == RDTech.State.Available && !node.partsPurchased.Contains(ap);
         }
 
         public static void MarkAllUnpaidExperimental()
@@ -202,21 +208,25 @@ namespace RPAxe.DevParts
                         AddPurchased(node, twin);
                 }
             }
-
-            ResearchAndDevelopment.RemoveExperimentalPart(ap);
         }
 
         private static void AddPurchased(ProtoTechNode node, AvailablePart ap)
         {
-            if (node.partsPurchased.Contains(ap)) return;
+            if (!node.partsPurchased.Contains(ap))
+            {
+                node.partsPurchased.Add(ap);
 
-            node.partsPurchased.Add(ap);
+                // costsFunds off across the event: we have already paid, and stock listeners would
+                // otherwise charge the entry cost a second time.
+                ap.costsFunds = false;
+                GameEvents.OnPartPurchased.Fire(ap);
+                ap.costsFunds = true;
+            }
 
-            // costsFunds off across the event: we have already paid, and stock listeners would
-            // otherwise charge the entry cost a second time.
-            ap.costsFunds = false;
-            GameEvents.OnPartPurchased.Fire(ap);
-            ap.costsFunds = true;
+            // Unconditional, and here rather than in MarkPurchased, so identicalParts twins are cleared
+            // too: a genuinely-purchased part left flagged experimental can never be un-flagged again
+            // (IsUnlockedButNotPurchased is false for it, so the sweeps skip it).
+            ResearchAndDevelopment.RemoveExperimentalPart(ap);
         }
     }
 }
