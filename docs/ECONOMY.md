@@ -32,24 +32,40 @@ funds on any of them). RP-1 had two funds taps and AXE removed **both**, each fo
 RP-1's third leg, a reputation-scaled yearly **subsidy**, also went out with `RP0.dll`. What
 survived pays reputation — and reputation had no use, because the subsidy it fed no longer exists.
 
-**Consequence found by playtest:** the launchpad starts at a 25 t limit and upgrades to 75 t for
-19,000 funds. A career starts with 15,000. Orbital flight was therefore unreachable — a hard block,
-not a balance problem.
+**Consequence found by playtest:** the launchpad starts at a 25 t limit and the first upgrade, to
+75 t, has to be bought. A career starts with 15,000. Orbital flight was therefore unreachable — a
+hard block, not a balance problem. *(This paragraph read "for 19,000 funds" until 2026-07-28; that
+figure came from the never-charged array slot — see the indexing box in §2. The step really cost
+**75,000**, so the block was four times worse than diagnosed. It is 40,000 after the §6 re-shape.)*
 
 ## 2. Measured sinks — the denominator
 
 Everything below is measured from this install, not estimated.
 
-| Sink | Total | Source |
+> ⚠ **The first entry of every `upgrades` array is never charged.** KSP charges
+> `upgradeLevels[currentLevel + 1].levelCost` (decompiled `UpgradeableFacility`) and CustomBarnKit
+> assigns `levelCost = upgrades[k]`, so `upgrades[0]` is the *starting* level's own cost and no
+> player ever pays it — CBK only demands the slot exist, because it validates `len(upgrades) ==
+> levels`. **Every per-step price in this document was one slot to the left of the truth** until
+> 2026-07-28. Totals were near enough to survive; the pacing claims built on them were not.
+>
+> | | as documented | actually charged |
+> |---|--:|--:|
+> | Pad, first step (25→75 t) | 19,000 | **75,000** → 40,000 after §6 |
+> | R&D upgrade 1 (unlocks T6–T8) | 113,000 | **451,000** |
+> | R&D upgrade 2 (unlocks T9+) | 451,000 | **1,690,000** |
+> | Mission Control, first step | 25,000 | **60,000** |
+
+| Sink | Purchasable total | Source |
 |---|--:|---|
-| Launchpad (7 levels) | 10.34M | `AxeFacilities.cfg` |
-| Tracking station (11 levels) | 2.58M | `AxeTrackingStation.cfg` |
-| R&D (3 levels) | 2.25M | CustomBarnKit default |
-| Administration | 0.75M | CustomBarnKit default |
-| Mission Control (5 levels) | 0.71M | `AxeFacilities.cfg` |
+| Launchpad (7 levels, 6 purchases) | 7.29M | `AxeFacilities.cfg` — **re-shaped 2026-07-28, §6** (was 10.33M) |
+| Tracking station (11 levels, 10 purchases) | 2.53M | `AxeTrackingStation.cfg` |
+| R&D (3 levels, 2 purchases) | 2.14M | CustomBarnKit default |
+| Administration (3 levels, 2 purchases) | 0.71M | CustomBarnKit default |
+| Mission Control (5 levels, 4 purchases) | 0.68M | `AxeFacilities.cfg` |
 | Part unlocks (1,830 parts + 87 upgrades) | 5.56M | `AxePartCost.cfg` |
 | Engine-config unlocks (466) | 0.55M | `AxeEntryCostMods.cfg` |
-| **Lump total** | **~22.62M** | |
+| **Lump total** | **~19.46M** | |
 | Vehicles | ~20M (assumed) | see §5 — **not yet measured** |
 
 > **Part unlocks are a buy-everything figure — realized spend is ~3.2M, not 6.11M.** A playthrough that
@@ -59,10 +75,13 @@ Everything below is measured from this install, not estimated.
 > the part-cost calibration pass also corrected three silent misclassifications (+2.2%).
 
 **The R&D ladder is the load-bearing gate.** Its 100-science cap covers tiers 0–5 *exactly*; every
-tier-6 node costs 101+. So R&D L2 (**113,000 funds**) is required to research anything past tier 5,
-and L3 (**451,000**) for tier 9+ (**243 nodes = ~90% of the tree's science**). This is deliberate — it is
-what makes funds a real tradeoff rather than texture — and the income schedule is sized to make those two
-purchases bite without blocking.
+tier-6 node costs 101+. So R&D L2 (**451,000 funds**) is required to research anything past tier 5,
+and L3 (**1,690,000**) for tier 9+ (**243 nodes = ~90% of the tree's science**). This is deliberate — it is
+what makes funds a real tradeoff rather than texture. **But it is not priced by AXE:** those are
+CustomBarnKit's stock defaults, inherited, and they are ~4× what this section claimed while the
+off-by-one stood — so "the income schedule is sized to make those two purchases bite without
+blocking" was never actually true of the numbers being charged. AXE gates its entire tree on this
+ladder and has never set its price; see §6.
 
 > ⚠ **This gate lives in the tree's cost table, not in a settings file.** CustomBarnKit's
 > `scienceCostLimit = 100, 500, -1` gates by node **cost**, so the tier at which each cap bites is an
@@ -76,10 +95,12 @@ Per-launch vehicle cost is measured at **171–8,314 funds** for 0.2–3.75 t cr
 figure is an assumption, not a measurement. Propellant is genuinely negligible at any scale
 (0–3 funds/tonne), so vehicle cost is hardware, not fuel.
 
-## 3. The model — two channels, 40M lifetime
+## 3. The model — two channels, 40M target / ~32M measured
 
-**Target: ~40,000,000 lifetime funds** for a player who does everything — ~22M of lumps plus a
-vehicle allowance of roughly equal size. Split 60/40:
+**Target: ~40,000,000 lifetime funds** for a player who does everything — the lumps (~19.5M after
+§2's corrections and §6's pad re-shape) plus a vehicle allowance of roughly equal size. Split 60/40.
+**Channel 2 does not currently reach its 40% share** — measured reputation puts it at ~8.4M, so real
+lifetime income is **~32.4M**; see the box under Channel 2 and §6 item 3.
 
 ### Channel 1 — contract funds (24M), `tools/build_economy.py`
 
@@ -110,17 +131,27 @@ That budget splits two ways:
 which then converts through Channel 2. Records pay reputation only. Nothing repeatable-without-a-
 launch pays anything, ever — that is the invariant that killed the Skopos maintenance layer.
 
-*Early-game check:* the two sounding-rocket programs pay 22,000 each = **44,000**, against a 15,000
-start and a 19,000 pad. The pad clears with room; R&D L2 then needs the next few programs, landing
-it around first orbit.
+*Early-game check* (printed by `build_economy.py`): the two sounding-rocket programs pay 22,000 each
+= **44,000**, against a 15,000 start and the 40,000 first pad step — clears, but only after the
+§6 re-shape. At the old 75,000 it did **not**: a rocket-only career had 59,000 and could not buy the
+pad at all, which is precisely the block this whole section exists to remove. R&D L2 (451,000) then
+needs the next several programs.
 
-### Channel 2 — Administration (16M), `design/Settings/AxeStrategies.cfg`
+### Channel 2 — Administration (target 16M, **measures ~8.4M**), `design/Settings/AxeStrategies.cfg`
 
-Reputation is the currency AXE's contracts actually pay (~114k over a career) and it has no other
-sink, so the Administration building is where it becomes spendable. `FundraisingCampaign` is
-rescaled from stock's 1,002–1,253 funds/rep to **125–157** — ~140 at full commitment × ~114k
-reputation ≈ 16M. The `strategyCommitRange` (0.25 / 0.6 / 1.0 by Administration level) is the
-pacing knob: early careers can convert at most a quarter of incoming reputation.
+Reputation is the currency AXE's contracts actually pay and it has no other sink, so the
+Administration building is where it becomes spendable. `FundraisingCampaign` is rescaled from
+stock's 1,002–1,253 funds/rep to **125–157**. The `strategyCommitRange` (0.25 / 0.6 / 1.0 by
+Administration level) is the pacing knob: early careers can convert at most a quarter of incoming
+reputation.
+
+> ⚠ **The 16M target rests on ~114k career reputation, and that figure does not reconcile.**
+> Summing `rewardReputation` across every paying contract in `seed/Contracts` — all 187 of them, one
+> completion each — gives **65,595**, which at ~140/rep and full commitment is **9.2M**, or ~8.4M
+> once the commit-range cap is applied to the early game. So **lifetime income is ~32.4M, not 40M**.
+> Repeatable contracts could close part of the gap, but not by 75%. Measured 2026-07-28; the
+> reconciliation (re-derive the 114k, or accept ~8.4M and re-target) is open, §6. Note this channel
+> is also *more* back-loaded than Channel 1 — `CrewedMarsExp` alone carries 15,700 of the 65,595.
 
 Two stock strategies are **deleted**: `PatentsLicensing` (science → funds) and
 `OpenSourceTechProgram` (science → reputation, which Fundraising then turns into funds). Science is
@@ -218,3 +249,62 @@ Administration upgrades are affordable. `strategyCommitRange` remains the real p
   turned off.
 - **Commercial contracts as a paying family** was considered and dropped in favour of the simpler
   capstone/completion split. The Skopos programs still earn through their completion bonuses.
+
+---
+
+## 6. Solvency pass — 2026-07-28: the ladders were read one slot off, and the pad is re-shaped
+
+Triggered by the part-cost calibration (SCIENCE.md §5c), which flagged that income looked far more
+back-loaded than the sinks it pays for. Modelling it properly turned up a bigger and simpler
+problem first.
+
+### What was wrong
+
+**The off-by-one (§2).** `upgrades[0]` is never charged. Every per-step facility price in this doc
+named the wrong array entry, so the two purchases the income schedule was explicitly sized around —
+the first pad step and R&D L2 — really cost **75,000 and 451,000**, not 19,000 and 113,000. The
+`build_economy.py` early-game check was comparing 44,000 of sounding-rocket income against a 19,000
+pad that does not exist; at the true 75,000 a rocket-only career was still hard-blocked, which is
+the exact failure §1 says this whole layer was built to remove.
+
+**The shape.** A minimum-path solvency model — pad level from each era's real vehicle mass, R&D from
+the tier its hardware sits on, DSN from the target's distance, parts at 1–2 per node researched —
+put the margin **negative at six of nine milestones**, worst at a crewed lunar landing (**−4.3M**).
+Two independent causes: the first 15 programmes pay only **6.4%** of Channel 1, and **2.7M of pad
+upgrades** (the 1,200 t and 3,000 t steps) land in the single era that also has to fund Apollo.
+
+*(Model caveats: which pad level each era needs is a judgement, and per-launch vehicle cost is not
+in it at all. Both make the real picture tighter than modelled, not looser.)*
+
+### What was done
+
+- **Prices corrected** throughout this doc, `AxeFacilities.cfg` and `build_economy.py`. Facility
+  configs now carry the indexing rule inline so the next author cannot repeat it. The lump total
+  moves 22.62M → **19.46M** — the totals barely moved, because summing the whole array happened to
+  approximate summing the purchasable part; only the per-step numbers were badly wrong.
+- **Launchpad re-shaped**: `0, 40000, 150000, 400000, 900000, 1800000, 4000000` — 7.29M
+  purchasable, down from 10.33M, with the Saturn-class step at 1.8M rather than 3M. It was 56% of
+  every lump sink in the game. The curve keeps its shape (each step roughly doubles, mass stays the
+  gate) and the unlimited top stays deliberately expensive, since nothing in a normal playthrough
+  needs it. This is AXE's own ladder — RP-1 had none, KCT replaced it — so nothing upstream is
+  being overridden.
+
+Modelled effect at the milestones, parts at 1/node: first orbit −57k → **−22k**, applications
+satellites −453k → **−318k**, crewed lunar −4,289k → **−2,254k**, space station −2,710k → **−675k**.
+Better everywhere, and the Moon-landing cliff is halved — but still short, which is what item 1
+below is for.
+
+### What is still open — deliberately, these are design calls, not bugs
+
+1. **Income shape.** The pad re-shape alone does not close the gap: the early-to-mid game stays
+   ~300k short and the Moon ~2.3M short. The tested fix is flattening the programme payout curve —
+   `budget ∝ baseFunding^0.65` instead of `^1`, same 24M total — which keeps RP-1's judgement about
+   which programmes are big (Mars still pays 30× a sounding rocket, down from 190×) while moving the
+   first 15 programmes from 6.4% to **14.4%** of Channel 1. With both levers the model is positive
+   at every milestone. It is one constant in `build_economy.py`. **Not applied — user call.**
+2. **The R&D ladder is stock's, not AXE's.** 451,000 and 1,690,000 are CustomBarnKit defaults AXE
+   never touched, yet the science cap is the primary gate the whole tree is built on. Pricing it
+   deliberately (250,000 / 900,000 was the modelled candidate) is an open decision.
+3. **Channel 2's 114k reputation figure does not reconcile** with the 65,595 measured across the
+   seed contracts (§3). Either re-derive it or re-target the channel at ~8.4M and accept a ~32.4M
+   lifetime.

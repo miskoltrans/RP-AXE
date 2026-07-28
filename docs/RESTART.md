@@ -63,9 +63,13 @@ Each phase gates the next; avionics + contracts ride alongside, off the critical
     36% late tail, fixed to **300,376** / 31.8% by flattening the T14–16 rates and setting `scalar` 0.72
     (SCIENCE.md §4). Part `entryCost` **calibrated 2026-07-28** (SCIENCE.md §5c) now the tree is complete:
     magnitude held (realized spend ~3.2M = 8% of lifetime funds, RP-1's own share) and **no dial moved** —
-    the defects were classification, three silent ones worth 129 parts. **End-to-end contract payout is
-    still unobserved** (ECONOMY.md §5), and contract income is far more back-loaded than the sinks it pays
-    for (SCIENCE.md §5c, flagged for the play-session).
+    the defects were classification, three silent ones worth 129 parts. That pass flagged the income/sink
+    mismatch, which the **solvency pass** then chased down (ECONOMY.md §6, 2026-07-28): every facility
+    `upgrades` array was being read one slot off (the first entry is never charged, so R&D really costs
+    451k/1.69M and the first pad step 75k), prices are corrected and the **launchpad re-shaped
+    10.33M → 7.29M**. Still open there, as user calls: flattening the programme payout curve, pricing the
+    R&D ladder AXE gates its tree on, and reconciling channel 2 (~8.4M measured vs 16M targeted).
+    **End-to-end contract payout is still unobserved** (ECONOMY.md §5).
 - **P4 — Avionics** *(parallel)*. Rename to RP-1 terms; rebalance. **Prove:** flyable early control.
 - **P5 — Special parts** *(post-MVP)*. Probe subtree (hire-JPL / hire-OKB) + capsule capability-split
   + cross-branch prerequisite-tech checklist plugin. **Prove:** a probe gated by multi-branch prereqs.

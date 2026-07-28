@@ -483,7 +483,9 @@ magnitude remains what it always was: the play-session's call, not a spreadsheet
 
 **Open — not part pricing, but the thing part pricing is calibrated against.** Contract income is far more
 back-loaded than the sinks it pays for: the first 15 programmes pay **6.4%** of channel 1 (1.54M of 24M),
-while a Saturn-class pad alone costs 5.34M and CrewedLunar is the 16th programme. Part unlocks are a minor
-term in that (~1.3M by the Moon landing) and are not what would break it. Flagged for the solvency
-play-session; the lever is `TARGET_LIFETIME` / the per-programme split in `tools/build_economy.py`, or the
-pad ladder in `AxeFacilities.cfg` — not `part_cost_base`.
+while the pad upgrades a Moon landing needs cost more than that on their own and `CrewedLunar` is the 16th
+programme. Part unlocks are a minor term in it (~1.3M by the Moon landing) and are not what would break it.
+**→ Chased down and partly fixed the same day: [`ECONOMY.md`](ECONOMY.md) §6.** The root cause turned out to
+be an off-by-one in how every facility `upgrades` array was read (the first entry is never charged), the
+launchpad has been re-shaped 10.33M → 7.29M, and the remaining income-shape fix is an open user call. Nothing
+there moves `part_cost_base`.
