@@ -1717,6 +1717,48 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
             f"mid-edit.") if not os.environ.get("AXE_LADDER_SOFT") else None
     return r1
 
+def check_unplaced_upgrades(u2n, grant2n):
+    """Inventory of the PARTUPGRADEs that fell through to `parking` — the upgrade-side twin of the
+    "N unplaced parts -> parking" line emitted next to the placement patch.
+
+    emit_placement_patch parks EVERY part and upgrade on `parking`, then overrides the placed ones. For
+    parts that lands you a count; for upgrades nothing counted them at all, so an unplaced upgrade was
+    indistinguishable from a placed one without reading the ConfigCache. That is how solarTL5/8/9/10 sat
+    parked unnoticed while docs/UPGRADES.md recorded them as gated on dangling RP-1 node IDs (they never
+    were — this patch overwrites ROSolar's techRequired long before the game sees it).
+
+    Parking is a legitimate holding pen for undecided placements, so this REPORTS, never fails. Three
+    buckets, because they mean different things:
+      LIVE      mod-authored, present in-game right now (manifest/upgrades-live.tsv) -- the real gap
+      KEEP      AXE-vendored RP-1 upgrade whose host part is curated -- a hole in an engine ladder
+      dormant   KEEP-engine-dormant: the config's engine is absent from our RO, so the upgrade is inert
+                until a mod adds it (RESTART.md T3). Expected; counted, not listed."""
+    placed = set(u2n) | set(grant2n or {})
+    def read(fn):
+        path = os.path.join(REPO, "manifest", fn)
+        if not os.path.exists(path): return []
+        with open(path, encoding="utf-8") as f:
+            hdr = f.readline().rstrip("\n").split("\t")
+            return [dict(zip(hdr, l.rstrip("\n").split("\t"))) for l in f if l.strip()]
+    live = [r for r in read("upgrades-live.tsv") if r.get("name") and r["name"] not in placed]
+    cur = [r for r in read("upgrades-curated.tsv")
+           if r.get("name") and r["name"] not in placed and r.get("disposition", "").startswith("KEEP")]
+    dormant = [r for r in cur if r["disposition"] == "KEEP-engine-dormant"]
+    keep = [r for r in cur if r["disposition"] != "KEEP-engine-dormant"]
+    if not (live or keep):
+        print(f"unplaced upgrades: clean -- every live + curated-KEEP upgrade is homed"
+              f"{f' ({len(dormant)} dormant, engine absent from our RO)' if dormant else ''}")
+        return []
+    print(f"unplaced upgrades: {len(live)} LIVE + {len(keep)} curated-KEEP fell through to `parking`"
+          f"{f' (+{len(dormant)} dormant, expected)' if dormant else ''}  [docs/UPGRADES.md]")
+    for r in sorted(live, key=lambda r: (r.get("mod", ""), r["name"]))[:20]:
+        print(f"   LIVE ~ {r['name']:<26} {r.get('mod', '?'):<18} {r.get('title', '')[:46]}")
+    if len(live) > 20: print(f"   LIVE ... and {len(live) - 20} more")
+    for r in sorted(keep, key=lambda r: r["name"])[:10]:
+        print(f"   KEEP ~ {r['name']:<26} {r.get('disposition', ''):<18} {r.get('title', '')[:46]}")
+    if len(keep) > 10: print(f"   KEEP ... and {len(keep) - 10} more")
+    return live + keep
+
 def check_tech_gates(nodes):
     """Build gate: every RP-AXE-*authored* raw tech gate (design/*.cfg + Source/*.cs) must
     resolve to a real tree node. Otherwise it fails CLOSED and SILENT in-game — renaming or
@@ -1790,6 +1832,7 @@ def main():
     emit_placement_patch(p2n, u2n, grant2n)
     print(f"placement: {len(p2n)} parts + {len(u2n)} upgrades + {len(grant2n)} grant tokens homed onto "
           f"{len(set(p2n.values())|set(u2n.values())|set(grant2n.values()))} nodes -> AxePartPlacement.cfg")
+    check_unplaced_upgrades(u2n, grant2n)   # inventory: which upgrades fell through to `parking`
     ladders, pinned, missing = engine_config_ladders(p2n, u2n, by)   # where each RealFuels CONFIG lands
     emit_engine_config_gates(ladders, pinned, missing, p2n, by)  # AxeEngineConfigGates.cfg: CONFIG techRequired -> AXE node
     emit_entry_cost_mods(ladders, by, meta)  # AxeEntryCostMods.cfg: ENTRYCOSTMODS funds price per engine config

@@ -218,20 +218,30 @@ RP-1 patch targets (`RFTech-Tank-Iso-Al`, `RFTech-Tank-Balloon-SteelAl`, and RP-
 afterwards, so the `KEEP-techlevel-TODO` placeholder in the `extract_*_partlist.py` scripts no longer
 describes the tree:
 - **`commsTL1-10` — ✅ fully placed** (10 of 10, hand-homed on the `tel_*` ladder). Not a gap.
-- **`solarTL*` — ⚠️ 7 of 11 placed. `solarTL5`, `solarTL8`, `solarTL9`, `solarTL10` are UNREACHABLE.**
-  ROSolar's own `techRequired` patch for these is `:NEEDS[RP-0]`, so under AXE it never applies and they keep
-  bare RP-1 node IDs — `lunarRatedPower`, `largeScaleSolarArrays`, `advancedPower`, `modernPower` — **none of
-  which exist in the AXE tree.** `GetTechnologyState()` on an unrecognized ID returns `Unavailable` silently
-  (the same fails-closed mode that froze the avionics ladder, AVIONICS_SPEC.md), so those four solar tech
-  levels can never be researched in a career. `nodes.yaml` already applied exactly this fix to
-  `solarTL2/3/4`; these four were missed. Verify with
+- **`solarTL*` — ⚠️ 7 of 11 placed. `solarTL5`, `solarTL8`, `solarTL9`, `solarTL10` sit on `parking`.**
+  *(Corrected 2026-07-28 — the first write-up of this said they keep bare RP-1 node IDs (`lunarRatedPower`,
+  `largeScaleSolarArrays`, `advancedPower`, `modernPower`) and can never be researched. Ground-truthed
+  against `ModuleManager.ConfigCache`: they compile to **`techRequired = parking`**. `AxePartPlacement.cfg`
+  lines 4-5 park EVERY `PART`/`PARTUPGRADE` on `parking` at `:FOR[RP-AXE]`, which runs after ROSolar's own
+  `:FOR[ROSolar]` block — the RP-1 IDs never survive to runtime, so this is not the dangling-ref /
+  fails-closed class at all.)*
+  They are **undecided, not broken** — `parking` is the holding pen for exactly this, and a parked upgrade
+  is reachable (parentless T0 root, `cost = 999`), not frozen. Verify with
   `grep -o 'solarTL[0-9]*' GameData/RP-AXE/design/Tree/AxePartPlacement.cfg | sort -u`.
-  **Not fixed here — homing them is a tree-design call** (candidate hosts exist: `elec_stationClassSolarArrays`,
-  `elec_matureSolarArrays`, `elec_deployableBlanketArray`, `elec_advancedRigidArray`).
-  Note `tools/check_tech_refs.py` cannot catch this class: it validates that *authored* gates resolve, and
-  the failure here is an upgrade AXE never gates at all. `Upgrade-Colony` (Kerbalism
-Sickbay, `techRequired=improvedHabitats`) is a single different-mod one-off far past current milestone
-scope.
+  **Homing them is a tree-design call.** `solarTL5` (1967) is a plain insert between `solarTL4`
+  (`elec_refinedSolarSimulation` T8) and `solarTL6` (`elec_stationClassSolarArrays` T9). `solarTL8/9/10`
+  (1990s / ISS / modern) are the real question: ROSolar's rungs set `maxTechLevel = N` and the **highest
+  unlocked rung wins outright**, so they need a chain — and the solar spine ends at `elec_matureSolarArrays`
+  (T10, `solarTL7`), fanning into four *parallel* mechanism siblings at T11 (rigid / concentrating / curved /
+  roll-out blanket) that a linear ladder cannot be spread across. Homing them means extending the spine.
+  Note `tools/check_tech_refs.py` cannot catch this class — but not for the reason first given: the gate
+  *does* resolve, it resolves to `parking`. The gap was that nothing **counted** parked upgrades, unlike the
+  `WARN N unplaced parts -> parking` line parts have always had. `build_tree.py`'s **`unplaced upgrades`**
+  report (added 2026-07-28) now inventories them every build — LIVE (mod-authored, in-game now) vs
+  curated-KEEP vs dormant — and reports rather than fails, because parking is a legitimate holding pen.
+  It currently lists **22 LIVE + 1 curated-KEEP**: these 4 solarTLs, 7 ProceduralFairings size caps, 10
+  Coatl Aerospace upgrades, `Upgrade-Colony` (Kerbalism Sickbay, `improvedHabitats` — a different-mod
+  one-off far past current milestone scope), and `RFUpgrade_RD-0108` (a real hole in an engine ladder).
 
 **Result: 626 → 658 rows** (553 → 576 KEEP). Reproduce: `python tools/curate_upgrades_addendum.py`
 (run after `curate_upgrades.py`; merges + re-sorts `upgrades-curated.tsv` in place).
