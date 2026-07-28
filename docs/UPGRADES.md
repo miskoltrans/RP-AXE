@@ -214,9 +214,22 @@ Ground-truthed against the compiled reference cache (not source-text guessing): 
 RP-1 patch targets (`RFTech-Tank-Iso-Al`, `RFTech-Tank-Balloon-SteelAl`, and RP-1's own
 `-Tank-`-missing typo `RFTech-Balloon-SteelAlCu/Li`) compile to nothing and were correctly excluded.
 
-**Deliberately still out of scope** (has its own mechanism / different milestone): `commsTL1-10` /
-`solarTL*` already carry a `KEEP-techlevel-TODO` placeholder in the `extract_*_partlist.py` scripts
-(prior user note) — folding them in here would fork that decision. `Upgrade-Colony` (Kerbalism
+**~~Deliberately still out of scope~~ — STALE, re-measured 2026-07-28.** Both families were placed by hand
+afterwards, so the `KEEP-techlevel-TODO` placeholder in the `extract_*_partlist.py` scripts no longer
+describes the tree:
+- **`commsTL1-10` — ✅ fully placed** (10 of 10, hand-homed on the `tel_*` ladder). Not a gap.
+- **`solarTL*` — ⚠️ 7 of 11 placed. `solarTL5`, `solarTL8`, `solarTL9`, `solarTL10` are UNREACHABLE.**
+  ROSolar's own `techRequired` patch for these is `:NEEDS[RP-0]`, so under AXE it never applies and they keep
+  bare RP-1 node IDs — `lunarRatedPower`, `largeScaleSolarArrays`, `advancedPower`, `modernPower` — **none of
+  which exist in the AXE tree.** `GetTechnologyState()` on an unrecognized ID returns `Unavailable` silently
+  (the same fails-closed mode that froze the avionics ladder, AVIONICS_SPEC.md), so those four solar tech
+  levels can never be researched in a career. `nodes.yaml` already applied exactly this fix to
+  `solarTL2/3/4`; these four were missed. Verify with
+  `grep -o 'solarTL[0-9]*' GameData/RP-AXE/design/Tree/AxePartPlacement.cfg | sort -u`.
+  **Not fixed here — homing them is a tree-design call** (candidate hosts exist: `elec_stationClassSolarArrays`,
+  `elec_matureSolarArrays`, `elec_deployableBlanketArray`, `elec_advancedRigidArray`).
+  Note `tools/check_tech_refs.py` cannot catch this class: it validates that *authored* gates resolve, and
+  the failure here is an upgrade AXE never gates at all. `Upgrade-Colony` (Kerbalism
 Sickbay, `techRequired=improvedHabitats`) is a single different-mod one-off far past current milestone
 scope.
 
