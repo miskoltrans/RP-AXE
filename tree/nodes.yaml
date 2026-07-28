@@ -4199,7 +4199,7 @@ nodes:
     title: "Megawatt Power Conditioning"
     discipline: ElectricalPower
     tier: 15
-    parents: [ep_hundredKilowattPPU, elec_metamorphicMultijunction]
+    parents: [ep_hundredKilowattPPU, nuc_modernFissionReactor]
     flavor: "At a megawatt the sun is no longer a plausible source and the question becomes what else you are willing to carry. The conditioning stage that survives this much power is the gate on every high-thrust electric concept ever drawn — the pulsed inductive machines that would push tonnes rather than kilogrammes."
     upgrades: [RFUpgrade_PITV-Ammonia-1200, RFUpgrade_PITV-Hydrazine-1200]
     # Both 1200-class configs sit here: one power uprate on two working fluids, ammonia at Isp 7000 and
@@ -4207,7 +4207,13 @@ nodes:
     # propulsion is exempt (build_tree.py `_is_electric`). PITV-Hydrazine-1200 reached the EP lane at all
     # only on 2026-07-28: it had been stranded on pc_hydrazineMonoprop T5, homed by its propellant, seven
     # tiers below its own host part.
-    # Inherits the elec_metamorphicMultijunction edge from ep_kilowattClassPPU, which this node replaces.
+    # CROSSOVER — nuc_modernFissionReactor (NuclearEngineering T11). This node inherited a SOLAR parent
+    # (elec_metamorphicMultijunction) from ep_kilowattClassPPU, which it replaces, and that contradicted its
+    # own flavor: a megawatt off the best modern cell at 301 W/m² is ~3,300 m² of array, which is why real
+    # megawatt-class electric propulsion is nuclear-electric and nothing else. Swapped, not added — the
+    # solar dependency stays where it is still true, on ep_hundredKilowattPPU (elec_galliumArsenideCell).
+    # The lane now says the thing it means: solar carries you to a hundred kilowatts, fission takes you to
+    # a megawatt.
   - id: ep_kryptonHighPower
     title: "High-Voltage Krypton Discharge"
     discipline: ElectricalPower

@@ -980,7 +980,7 @@ digraph AXE {
   "ep_fiftyKilowattPPU" -> "ep_hundredKilowattPPU" [style=solid];
   "elec_galliumArsenideCell" -> "ep_hundredKilowattPPU" [style=solid];
   "ep_hundredKilowattPPU" -> "ep_megawattPPU" [style=solid];
-  "elec_metamorphicMultijunction" -> "ep_megawattPPU" [style=solid];
+  "nuc_modernFissionReactor" -> "ep_megawattPPU" [style=solid];
   "ep_kryptonFeed" -> "ep_kryptonHighPower" [style=solid];
   "ep_hundredKilowattPPU" -> "ep_kryptonHighPower" [style=solid];
   "nuc_flightRatedNTR" -> "nuc_ammoniaWorkingFluid" [style=solid];
