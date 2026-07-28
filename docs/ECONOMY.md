@@ -115,8 +115,11 @@ Two stock strategies are **deleted**: `PatentsLicensing` (science → funds) and
 the primary gate and is deliberately ~10× more abundant than the tree costs, so either path is
 unbounded income. Full reasoning in the file header.
 
-All kept strategies also have their `requiredReputation` window widened from stock's [-500, 750],
-which at AXE magnitudes would make the whole channel unavailable within the first era.
+All kept strategies also have their `requiredReputationMin`/`Max` set to `-1000`/`-1000`, stock's
+no-gate idiom. **This is not a "window"** — see §5; the field pair lerps over the commitment slider
+and sets how much reputation you must *possess* to commit that hard. Administration's
+`strategyCommitRange` is therefore the only thing capping the slider, which is what the 16M above
+assumes.
 
 ## 4. Settled decisions
 
@@ -129,8 +132,18 @@ which at AXE magnitudes would make the whole channel unavailable within the firs
 - **Declining a contract never costs reputation.** `RepLossDeclined = 0` across all four difficulty
   presets, verified live in a playtest save. Already true; no change needed.
 - **The R&D science-cap ladder stays** as a deliberate funds tradeoff (user call, 2026-07-28).
+- **Everything pays on completion, never in advance** — `AllowNegativeCurrency` removes the
+  cash-flow problem an advance would solve (§5).
+- **Administration's commit range is the only cap on the slider.** The strategy reputation
+  requirement is switched off rather than tuned, because it is a commitment-scaled lerp and not the
+  availability window it looks like (§5).
 
-## 5. Open
+## 5. Open & closed
+
+> **One thing is actually open here: the end-to-end payout run.** The three questions this section
+> carried since the economy shipped were resolved on 2026-07-28 and are struck below, kept for the
+> reasoning trail. Two were false alarms; the third was a live bug in `AxeStrategies.cfg` that was
+> halving Channel 2.
 
 - **Vehicle cost above 3.75 t is a deliberate guesstimate** (user call, 2026-07-28) — *not* an
   outstanding task. The ~20M allowance is a round "about the same as everything else" figure, and
@@ -144,10 +157,43 @@ which at AXE magnitudes would make the whole channel unavailable within the firs
   `CompleteContract` chain has not been observed actually paying out. Needs a save with a finished
   program — the playtest save has 3 of `SuborbRocketDev`'s 4 objectives done, so completing
   `Downrange` would exercise both halves at once (capstone 11,000 + completion 11,000).
-- **`requiredReputationMax` semantics** assumed to gate activation; confirm in-game.
-- **Failure reputation** — 78 contracts still lose 10–750 reputation for *failing* an accepted
-  contract (distinct from declining). Left as-is; zero them if reputation should only ever rise.
-- **Advance vs reward.** Everything pays on completion. Paying part as `advanceFunds` would fund
-  the build rather than reimburse it; worth revisiting once vehicle costs are real.
+- ~~**`requiredReputationMax` semantics**~~ — ✅ **CLOSED 2026-07-28, and the assumption was wrong.**
+  It is **not** a window. Decompiled `Strategies.Strategy`: `RequiredReputation =>
+  FactorLerp(RequiredReputationMin, RequiredReputationMax)`, then `CanBeActivated` refuses if
+  `Ceil(CurrentRep) < Floor(RequiredReputation)`. The pair are the **endpoints of a lerp over the
+  commitment slider** — how much reputation you must *hold* to commit that hard. Stock's
+  `-500 → 750` means "commit 0% for free, commit 100% once you are famous"; more reputation makes a
+  strategy **more** available, never less, so the ceiling §3 was written to escape never existed.
+  Activation-time only — it never deactivates a running strategy.
+  **Consequence: the old widening was a live bug, now fixed.** `-1000000 → 1000000` demanded
+  `Lerp(-1e6, 1e6, factor)` reputation: 200,000 at 60% commitment, 1,000,000 at 100%, against a
+  ~114k lifetime total. The slider was pinned near **50%** for the entire career and Administration
+  L3 (750,000 funds) bought nothing. Because `CurrencyConverter.OnEffectQuery` lerps **both** the
+  share diverted and the rate off that same factor
+  (`input × Lerp(minShare,maxShare) × Lerp(minRate,maxRate)`), Channel 2 was paying ~70 funds/rep
+  against the budgeted 157 — **roughly half its 16M**. Set to `-1000/-1000` (stock's own no-gate
+  idiom, as `RecoveryTransponders` uses); `strategyCommitRange` is now the sole cap, as §3 assumed.
+  *Still worth an in-game look:* confirm the slider actually reaches 100% at Administration L3.
+- ~~**Failure reputation**~~ — ✅ **CLOSED 2026-07-28: a false alarm, no work needed.** The "78
+  contracts lose 10–750 reputation on failure" claim does not survive ground-truthing. Every one of
+  the 296 `failureReputation` fields in the merged `ModuleManager.ConfigCache` is **0**, as are all
+  249 in the vendored `seed/Contracts` (RP-1 upstream is the same — its only non-zero is the Skopos
+  maintenance set, which AXE already deletes). The remaining 76 of the 372 contract types simply
+  omit the field, and Contract Configurator defaults it to 0; that 76 is almost certainly where the
+  "78" came from. Confirmed against the games' own saves rather than configs: decoding the stock
+  `Contract` `values` CSV (index 7 = reputation-on-failure) across all three career saves, **every
+  `ConfiguredContract` reads 0**. The only contracts carrying a failure penalty were 3
+  `TourismContract` + 2 `CrossBelt` — the leaked stock/Kerbalism types, already killed for new
+  careers by `AxeDisableStockContracts.cfg` (`7e3b58f`). Nothing to zero.
+- ~~**Advance vs reward**~~ — ✅ **CLOSED 2026-07-28: everything stays on completion.** The case for
+  `advanceFunds` was that it funds the build instead of reimbursing it — but that is a cash-flow
+  *timing* problem, and AXE structurally cannot have one. `AllowNegativeCurrency = True` in all four
+  presets (verified live in the cache and in the playtest save), so no player is ever blocked from
+  building or launching for want of cash up front; they go negative and the next completion clears
+  it. There is also no carrying period to fund — AXE has no KCT, so build and launch are one action.
+  And neither paying family could use an advance anyway: program-completion contracts `autoAccept`
+  and complete in the same frame, so advance and reward are indistinguishable, and a capstone is the
+  crowning mission of a program already under way. Revisit only if `AllowNegativeCurrency` is ever
+  turned off.
 - **Commercial contracts as a paying family** was considered and dropped in favour of the simpler
   capstone/completion split. The Skopos programs still earn through their completion bonuses.
