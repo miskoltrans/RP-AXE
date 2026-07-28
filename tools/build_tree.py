@@ -1871,12 +1871,16 @@ def check_tech_gates(nodes):
         die(f"AXE_TREE_STRICT set: {total} dangling tech-gate reference(s) — see above")
     return dangling
 
-SCIENCE_CAPS = [(100, 5, 6), (500, 8, 9)]   # CustomBarnKit RESEARCH scienceCostLimit = 100, 500, -1
+# AXE's own 8-level R&D ladder -- design/Settings/AxeFacilities.cfg @RESEARCH scienceCostLimit.
+# (cap, highest tier it must ALLOW, lowest tier it must REFUSE). Keep in step with that file: the
+# .cfg is what the game reads, this is only the assertion that the cost table still lines up with it.
+SCIENCE_CAPS = [(82, 5, 6), (265, 7, 8), (404, 8, 9), (600, 9, 10),
+                (865, 10, 11), (1225, 11, 12), (1655, 12, 13)]
 
 def check_science_caps(meta):
     """The R&D building gates research by NODE COST, not by tier: a level whose scienceCostLimit is
-    100 simply refuses any node costing more. So the tier at which each cap bites is economy design
-    (docs/ECONOMY.md 2) that lives, invisibly, in the cost table -- nudge `scalar` a few percent and a
+    82 simply refuses any node costing more. So the tier at which each cap bites is economy design
+    (docs/ECONOMY.md 8) that lives, invisibly, in the cost table -- nudge `scalar` a few percent and a
     whole tier silently changes which R&D level it needs. Assert the intended boundaries instead."""
     tc, scalar = meta.get("tier_cost", {}), meta.get("scalar", 1.0)
     if not tc: return
@@ -1887,14 +1891,19 @@ def check_science_caps(meta):
             bad.append(f"T{under} = {rate[under]} exceeds the {cap} cap (should be researchable under it)")
         if rate.get(over, 0) <= cap:
             bad.append(f"T{over} = {rate[over]} fits under the {cap} cap (should require the next R&D level)")
-    # every cap contributes a floor (scalar must keep T{over} ABOVE it); the binding one is the largest
-    edge = max((cap / tc[over] for cap, _, over in SCIENCE_CAPS if tc.get(over)), default=0)
+    # Each cap brackets `scalar`: it must stay high enough to keep T{over} ABOVE the cap and low
+    # enough to keep T{under} at or below it. Report the binding pair and which boundary sets each,
+    # so a retune knows how much room it has and which cap to move first.
+    lo = max(((cap / tc[over], cap) for cap, _, over in SCIENCE_CAPS if tc.get(over)), default=(0, 0))
+    hi = min(((cap / tc[under], cap) for cap, under, _ in SCIENCE_CAPS if tc.get(under)),
+             default=(float("inf"), 0))
     if bad:
-        print(f"science cap gate: {len(bad)} BROKEN boundary(ies) -- scalar {scalar} [docs/ECONOMY.md 2]")
+        print(f"science cap gate: {len(bad)} BROKEN boundary(ies) -- scalar {scalar} [docs/ECONOMY.md 8]")
         for b in bad: print("   !", b)
     else:
-        print(f"science cap gate: clean -- T{SCIENCE_CAPS[0][1]}/T{SCIENCE_CAPS[0][2]} straddle 100, "
-              f"T{SCIENCE_CAPS[1][1]}/T{SCIENCE_CAPS[1][2]} straddle 500 (scalar {scalar}, floor {edge:.3f})")
+        print(f"science cap gate: clean -- {len(SCIENCE_CAPS)} boundaries hold "
+              f"({'/'.join(f'T{u}|T{o}' for _, u, o in SCIENCE_CAPS)}); scalar {scalar} may range "
+              f"{lo[0]:.3f} (cap {lo[1]}) .. {hi[0]:.3f} (cap {hi[1]})")
 
 def main():
     disc, meta, nodes = load()

@@ -242,12 +242,15 @@ no tail) vs. keep a deliberate handful as high-value deep-space targets (JUNO/so
 > the endgame region is actually *designed*: those 46 nodes are the undesigned colonization scaffold
 > (RESTART.md P6). **Node costs are now `round(tier_cost[tier] × 0.72)`** — 115 at T6, 504 at T9, 1440 at T12.
 >
-> ⚠ **Scalar window — keep `scalar > 0.715`, enforced by `build_tree.py`'s `science cap gate`.** The R&D
-> building gates research by node **cost**, not tier (CustomBarnKit `scienceCostLimit = 100, 500, -1`), so
-> *which tier needs which R&D level* is economy design (ECONOMY.md §2) hiding inside this table. The obvious
-> scalar for an exact 298k restore — **0.673** — puts T9 at 471, **silently dropping 57 nodes out from behind
-> the 451,000-funds R&D L3 gate**. 0.72 keeps T9 at 504, four above the cap. The gate asserts the T5/T6 and
-> T8/T9 boundaries on every build and prints the binding floor.
+> ⚠ **Scalar window — keep `scalar` in `0.625 … 0.828`, enforced by `build_tree.py`'s `science cap gate`.**
+> The R&D building gates research by node **cost**, not tier, so *which tier needs which R&D level* is
+> economy design (ECONOMY.md §8) hiding inside this table. **Widened 2026-07-29** when AXE replaced the
+> inherited 3-level CustomBarnKit ladder with its own 8-level one: the caps now sit at the geometric
+> midpoint of each tier gap, so all seven boundaries tolerate 15–40% of drift and both bounds are set by
+> the T12|T13 cap of 1655. Under the old `100, 500, -1` the floor was 0.715 against a scalar of 0.72 —
+> 0.7% of headroom, and the obvious scalar for an exact 298k restore (**0.673**) would have put T9 at 471,
+> silently dropping 57 nodes out from behind the top gate. The gate asserts every boundary on each build
+> and prints the range.
 
 > **⚠️ DRIFT — measured 2026-07-28, RESOLVED the same day by the re-blessing above.** The measurement is
 > kept because it is the evidence the re-blessing acted on; the "now (live build)" column is the *pre-fix*
@@ -303,9 +306,10 @@ NOT a global scalar. `cost(node) = tier_cost[tier]`, per-node `cost:` overrides 
   and VISION hands the gate to *other* axes (power/heat/materials/money). Early (T1–6) is only ~3% of total —
   **capability-gated, not science-gated**, exactly as VISION wants.
 - **Where the cost actually sits (499 nodes, scalar 0.72):** T1–5 **2,887** (1.0%) · T6–8 **28,182** (9.4%) ·
-  T9–12 **172,764** (57.5%) · T13–16 **95,544** (31.8%). Those bands are also the R&D-building bands: the
-  100-cap covers T1–5, the 500-cap covers T6–8, and **90% of the tree's science sits behind R&D L3**
-  (243 nodes at T9+, 451,000 funds) — see ECONOMY.md §2.
+  T9–12 **172,764** (57.5%) · T13–16 **95,544** (31.8%). These bands used to be the R&D-building bands too,
+  with **90% of the tree's science behind a single 1,690,000 purchase**. AXE authored its own 8-level ladder
+  on 2026-07-29 to break that up — no step now opens more than 18.8% of the tree bar the far-future top,
+  and each band above splits across two or three R&D levels. See ECONOMY.md §8.
 - **RP-1 reference (ground-truth from `RP0TechTree.cfg`, ORPHANS 99999 sink excluded):** RP-1's real 115k is
   *far more back-loaded* — its **final era column alone is 60%** of the tree — but it gets there via **node
   count** (78 cheap nodes dumped in that column; per-node median **233**, max **1000**), an aspirational

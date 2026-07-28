@@ -54,18 +54,21 @@ Everything below is measured from this install, not estimated.
 > | Pad, first step (25→75 t) | 19,000 | **75,000** → 40,000 after §6 |
 > | R&D upgrade 1 (unlocks T6–T8) | 113,000 | **451,000** |
 > | R&D upgrade 2 (unlocks T9+) | 451,000 | **1,690,000** |
+>
+> The two R&D rows are history twice over: that 3-level ladder was replaced by an authored 8-level
+> one on 2026-07-29 (§8). The indexing rule itself still governs the new array.
 > | Mission Control, first step | 25,000 | **60,000** |
 
 | Sink | Purchasable total | Source |
 |---|--:|---|
 | Launchpad (7 levels, 6 purchases) | 7.29M | `AxeFacilities.cfg` — **re-shaped 2026-07-28, §6** (was 10.33M) |
 | Tracking station (11 levels, 10 purchases) | 2.53M | `AxeTrackingStation.cfg` |
-| R&D (3 levels, 2 purchases) | 2.14M | CustomBarnKit default |
+| R&D (8 levels, 7 purchases) | 2.68M | `AxeFacilities.cfg` — **authored 2026-07-29, §8** (was 2.14M CBK default) |
 | Administration (3 levels, 2 purchases) | 0.71M | CustomBarnKit default |
 | Mission Control (5 levels, 4 purchases) | 0.68M | `AxeFacilities.cfg` |
 | Part unlocks (1,830 parts + 87 upgrades) | 5.56M | `AxePartCost.cfg` |
 | Engine-config unlocks (466) | 0.55M | `AxeEntryCostMods.cfg` |
-| **Lump total** | **~19.46M** | |
+| **Lump total** | **~20.00M** | |
 | Vehicles | ~20M (assumed) | see §5 — **not yet measured** |
 
 > **Part unlocks are a buy-everything figure — realized spend is ~3.2M, not 6.11M.** A playthrough that
@@ -74,21 +77,20 @@ Everything below is measured from this install, not estimated.
 > this table as the ceiling; it is not what the income schedule has to cover. Re-measured 2026-07-28, when
 > the part-cost calibration pass also corrected three silent misclassifications (+2.2%).
 
-**The R&D ladder is the load-bearing gate.** Its 100-science cap covers tiers 0–5 *exactly*; every
-tier-6 node costs 101+. So R&D L2 (**451,000 funds**) is required to research anything past tier 5,
-and L3 (**1,690,000**) for tier 9+ (**243 nodes = ~90% of the tree's science**). This is deliberate — it is
-what makes funds a real tradeoff rather than texture. **But it is not priced by AXE:** those are
-CustomBarnKit's stock defaults, inherited, and they are ~4× what this section claimed while the
-off-by-one stood — so "the income schedule is sized to make those two purchases bite without
-blocking" was never actually true of the numbers being charged. AXE gates its entire tree on this
-ladder and has never set its price; see §6.
+**The R&D ladder is the load-bearing gate** — it is the primary *funds* gate laid across science, AXE's
+primary *progression* gate, and that makes funds a real tradeoff rather than texture. **It is now priced
+by AXE** (§8, 2026-07-29). It was not until then: the inherited CustomBarnKit default put **89.7% of the
+tree's science behind a single 1,690,000 purchase**, with the first wall (451,000) standing at the
+applications-satellite era — the tightest point on the income curve. The authored ladder is 8 levels /
+7 purchases, no step opening more than 18.8% of the tree bar the deliberately-expensive far-future top.
 
-> ⚠ **This gate lives in the tree's cost table, not in a settings file.** CustomBarnKit's
-> `scienceCostLimit = 100, 500, -1` gates by node **cost**, so the tier at which each cap bites is an
-> emergent property of `tier_cost × scalar` in `tree/nodes.yaml` — a few percent on the scalar moves a whole
-> tier across a cap and silently rewrites this paragraph. `build_tree.py`'s **`science cap gate`** asserts the
-> T5/T6 and T8/T9 boundaries on every build (binding floor: `scalar > 0.715`; it is **0.72** as of
-> 2026-07-28). See SCIENCE.md §4.
+> ⚠ **This gate lives in the tree's cost table as much as in the settings file.** `scienceCostLimit`
+> gates by node **cost**, so the tier at which each cap bites is an emergent property of
+> `tier_cost × scalar` in `tree/nodes.yaml` — a few percent on the scalar moves a whole tier across a cap
+> and silently rewrites this paragraph. `build_tree.py`'s **`science cap gate`** asserts all seven
+> boundaries on every build. The caps sit at the geometric midpoint of each tier gap, which brackets
+> `scalar` at **0.625 … 0.828** (it is **0.72**); the old 500 cap sat 0.8% under T9 = 504, i.e. one
+> nudge from silently un-gating a third of the tree. See SCIENCE.md §4 and §8 below.
 
 Per-launch vehicle cost is measured at **171–8,314 funds** for 0.2–3.75 t craft
 (`tools/analyze_craft_costs.py`), but no orbital-class vehicle has been priced yet, so the ~20M
@@ -97,8 +99,9 @@ figure is an assumption, not a measurement. Propellant is genuinely negligible a
 
 ## 3. The model — two channels, 40M target
 
-**Target: ~40,000,000 lifetime funds** for a player who does everything — the lumps (~19.5M after
-§2's corrections and §6's pad re-shape) plus a vehicle allowance of roughly equal size. Split 60/40.
+**Target: ~40,000,000 lifetime funds** for a player who does everything — the lumps (~20.0M after
+§2's corrections, §6's pad re-shape and §8's R&D ladder) plus a vehicle allowance of roughly equal
+size. Split 60/40.
 **Both channels reach their share** — Channel 2 was re-derived on 2026-07-28 (`tools/rep_budget.py`)
 and tops out at **22.9M against its 16M target** on the Normal preset; the earlier "~8.4M measured"
 came from an undercount, see the box under Channel 2.
@@ -353,9 +356,9 @@ below is for.
    which programmes are big (Mars still pays 30× a sounding rocket, down from 190×) while moving the
    first 15 programmes from 6.4% to **14.4%** of Channel 1. With both levers the model is positive
    at every milestone. It is one constant in `build_economy.py`. **Not applied — user call.**
-2. **The R&D ladder is stock's, not AXE's.** 451,000 and 1,690,000 are CustomBarnKit defaults AXE
-   never touched, yet the science cap is the primary gate the whole tree is built on. Pricing it
-   deliberately (250,000 / 900,000 was the modelled candidate) is an open decision.
+2. ~~**The R&D ladder is stock's, not AXE's.**~~ — ✅ **CLOSED 2026-07-29: authored, and re-levelled
+   rather than just re-priced.** The modelled candidate here (250,000 / 900,000 on stock's 3 levels)
+   was not taken: the defect was the ladder's *shape*, not only its magnitude. See §8.
 3. ~~**Channel 2's 114k reputation figure does not reconcile**~~ — ✅ **CLOSED 2026-07-28: re-derived,
    and the channel was never short.** The 65,595 was an undercount that no filter reproduces; the raw
    config sum is **105,542**, and after the prestige factor and `RepGainMultiplier` the career banks
@@ -412,3 +415,96 @@ launch — but it does erase the pacing intent, reducing it to "warp 135 days be
 payout does not scale with era either, so 1950s sounding rockets still pay ~40 reputation (~7,500
 funds through Fundraising) in 1975. Era-scaling of old contract rewards is the lever, not programme
 finality.
+
+## 8. The R&D ladder — 2026-07-29: authored, and re-levelled rather than re-priced
+
+Closes §6 item 2. The ladder AXE gates its entire tree on was CustomBarnKit's stock default, never
+set by anyone. `design/Settings/AxeFacilities.cfg` `@RESEARCH` now owns it.
+
+### What the mechanic actually is
+
+Decompiled rather than assumed. `RDNode` picks `RESEARCHABLE` vs `FADED` on
+`effectiveCost < RDController.ScienceCap`, where `ScienceCap` is
+`GameVariables.GetScienceCostLimit(<R&D facility level>)` — a **hard refusal on node cost**, not a
+hint or a discount. CustomBarnKit overrides that method with `NormLevelToArrayValue`, which indexes
+`scienceCostLimit` by `RoundToInt(normLevel × (len-1))` — exact at any level count, so the array
+generalises past stock's 3 entries the same way `@TRACKING` already does at 11. Two things worth
+recording because they are not obvious from the config:
+
+- **`-1` means unlimited, not literal −1.** CBK's `LoadValue(ref float[])` maps any negative to
+  `float.MaxValue`. Without it, `cost < -1` would fade *every* node at max level.
+- **Every per-level array must be exactly `levels` long.** CBK logs `scienceCostLimit wrong size` /
+  `dataToScienceRatio wrong size` / `Wrong numbers of upgrade price for …` and silently falls back to
+  **stock** for that one field — which would restore the 100/500 wall with no error visible in game.
+
+### What was wrong
+
+| | nodes | science | share |
+|---|--:|--:|--:|
+| L1 — free, cap 100 | 132 | 2,887 | **0.9%** |
+| L2 — 451,000, cap 500 | 126 | 28,513 | 9.3% |
+| L3 — 1,690,000, uncapped | 249 | 274,320 | **89.7%** |
+
+One purchase opened 90% of the tree. The level you start with covered under 1%. And the *first*
+wall — 451,000 to research anything past tier 5 — landed at the applications-satellite milestone,
+which the §6 solvency pass put at −318k. That is the one that could stall a career: `scienceCostLimit`
+refuses by cost, and a player at L1 has already researched every cheap node, so banked science has
+nowhere to go. Progress stops until the funds appear.
+
+### RP-1 is not the precedent — it deleted this mechanic
+
+`RP-1/GameData/RP-1/CustomBarnKit.cfg` sets `scienceCostLimit = -1, -1, -1`, `upgrades = 1, 1, 1`,
+`dataToScienceRatio = 1, 1, 1`; there is no `RESEARCH` entry in `KCTBUILDINGTECHS`, and RP0.dll's only
+CBK patch just triggers a maintenance recalc. `scienceCostLimit` appears nowhere else in the repo.
+It is deliberate — changelog **v3.0.0.0**: *"Remove RnD upgrades and researcher caps. Instead,
+researchers cost a bit more per year in salary, and base research rate is a bit slower."* RP-1 had
+this mechanic, judged it bad, and cut it; still cut at v4.4.0.0.
+
+**AXE does not follow it, for a reason.** RP-1 could zero the cap because KCT still paced research by
+*time* — salaried researchers producing research points per day, nodes taking real days. AXE cut KCT,
+so it has no time gate at all. Zeroing this too would leave science pure bank-and-spend. AXE keeps the
+mechanic (§4) and owns the numbers instead of inheriting them.
+
+### The ladder
+
+Eight levels, seven purchases. Caps sit at the **geometric midpoint** of the gap between adjacent tier
+rates, so each boundary tolerates 15–40% of scalar drift either way.
+
+| lvl | cap | opens | nodes | science | share | price |
+|---|--:|---|--:|--:|--:|--:|
+| L1 | 82 | T0–5 · sounding rockets → appsats | 131 | 2,887 | 0.9% | start |
+| L2 | 265 | T6–7 · first crewed capsules | 85 | 15,229 | 5.0% | 25,000 |
+| L3 | 404 | T8 · Apollo/Surveyor, lunar | 41 | 13,284 | 4.3% | 50,000 |
+| L4 | 600 | T9 · stations, shuttle, Grand Tour | 58 | 29,232 | 9.5% | 100,000 |
+| L5 | 865 | T10 · shuttle-era flagships | 54 | 38,880 | 12.7% | 200,000 |
+| L6 | 1225 | T11 · Mir-class, Cassini | 52 | 54,243 | 17.7% | 400,000 |
+| L7 | 1655 | T12 · modern robotic | 40 | 57,600 | 18.8% | 700,000 |
+| L8 | −1 | T13+ · far future | 46 | 95,364 | 31.1% | 1,200,000 |
+
+**Purchasable total 2,675,000, of which a career stopping at T12 — every node with real hardware short
+of the deferred far-future band — pays 1,475,000 across six purchases**, against 2,141,000 across two
+before. So the nominal total rises 25% while *realized* mid-game spend falls 31% and spreads out. All
+of the increase sits in the top step, which is the endgame catch-all and deliberately expensive for the
+same reason the launchpad's unlimited tier is: nothing in a normal playthrough needs it.
+
+`dataToScienceRatio` is flattened to 1 at every level, matching RP-1. It is stock's transmission ratio
+and Kerbalism owns transmission here, so it is very likely inert — RP-1 flattened it rather than rely
+on that, and so do we. `unlockedFuelTransfer = 1` (turn-1 on-orbit refuelling) is unaffected by the
+level count: CBK tests `normLevel > (unlockedFuelTransfer - 1.1)/(levels-1)`, true at level 0 for any
+`levels`.
+
+### The gate
+
+`build_tree.py`'s `SCIENCE_CAPS` now asserts all seven boundaries and reports the range `scalar` may
+take before one breaks: **0.625 … 0.828**, currently 0.72, both bounds set by the T12|T13 cap of 1655.
+The old ladder's binding floor was 0.715 against a scalar of 0.72 — **0.7% of headroom**, on a
+boundary that silently un-gates a third of the tree if it slips. That is what the midpoint placement
+buys.
+
+Two non-obvious nodes checked against the new caps: `parking` (the unsorted-parts catch-all) carries an
+explicit cost of 999 rather than a tier rate, so it needs L6 — it is a detached root that gates nothing
+and it needed the *top* level before, so this is a loosening. `start` is free and `experimental` /
+`hire_JPL` / `hire_OKB` cost 1, all reachable at L1 as intended.
+
+**Not yet verified in game.** Cold-load confirmation that CBK accepts an 8-entry `@RESEARCH` (the
+`wrong size` fallback is silent) belongs with the next instance rebuild.
