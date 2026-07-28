@@ -57,8 +57,9 @@ Each phase gates the next; avionics + contracts ride alongside, off the critical
     **Path A (vendor the framework)**, not the re-author route T2 below had defaulted to. 65 experiments,
     techs remapped, `-axe-autotest` clean. See [`KERBALISMLAB.md`](KERBALISMLAB.md).
   - **Funds economy SHIPPED (2026-07-28)** — see [`ECONOMY.md`](ECONOMY.md).
-  - **Remaining P3 = calibration, not construction:** the KerbalismLab balance pass and the solvency
-    play-session that proves all of it.
+  - **Remaining P3 = calibration, not construction:** the solvency play-session that proves all of it —
+    **IN PROGRESS 2026-07-29, reading OK so far.** (The KerbalismLab balance pass, long listed here as
+    the other remaining item, shipped 2026-07-28 — `75d0cfe`, see [`KERBALISMLAB.md`](KERBALISMLAB.md) §7.)
     Science cost is **re-blessed 2026-07-28** (`a8a3f49`): the emitted total had drifted to 442,966 with a
     36% late tail, fixed to **300,376** / 31.8% by flattening the T14–16 rates and setting `scalar` 0.72
     (SCIENCE.md §4). Part `entryCost` **calibrated 2026-07-28** (SCIENCE.md §5c) now the tree is complete:
@@ -72,7 +73,10 @@ Each phase gates the next; avionics + contracts ride alongside, off the critical
     prestige factor and `RepGainMultiplier` that stock applies on top), so the channel tops out at **22.9M
     against its 16M target** and lifetime stays ~40M. Still open there, as user calls: flattening the
     programme payout curve, and pricing the R&D ladder AXE gates its tree on.
-    **End-to-end contract payout is still unobserved** (ECONOMY.md §5).
+    **End-to-end contract payout is OBSERVED** (ECONOMY.md §7, 2026-07-28): a career drove
+    `SuborbRocketDev` to completion and banked **16,500** (`11,000 × 1.25 Significant × 1.2 Normal`), so the
+    `autoAccept` → `CompleteContract` → `AXEInstant` chain works end to end. What remains is *balance*, not
+    plumbing.
 - **P4 — Avionics** *(parallel)*. Rename to RP-1 terms; rebalance. **Prove:** flyable early control.
 - **P5 — Special parts** *(post-MVP)*. Probe subtree (hire-JPL / hire-OKB) + capsule capability-split
   + cross-branch prerequisite-tech checklist plugin. **Prove:** a probe gated by multi-branch prereqs.
