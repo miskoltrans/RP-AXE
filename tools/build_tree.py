@@ -1193,20 +1193,38 @@ def emit_engine_config_gates(ladders, pinned, missing, p2n, by):
          upgrade ladder proper; see engine_config_ladders() for the homing rules and their guards.
       1. Per-part fallback from manifest/engine-stats.tsv: @PART[p]{ CONFIG:HAS[#techRequired[R]] -> p2n[p] }
          -- catches what layer 0 left: base configs, the guards above, and configs with no placed token.
-      2. Global catch-all per RP-1 node: @PART[*]{ CONFIG:HAS[#techRequired[R]] -> modal AXE node }.
-         engine-stats is INCOMPLETE (misses curated engines like ROE-LR105 and all uncurated ones), but it
-         covers ~123/126 of the RP-1 nodes the walker uses, so a per-node catch-all sweeps up every config
-         the per-part pass left behind (they'd otherwise stay on a dead RP-1 node = permanently locked). The
-         catch-all runs AFTER the specifics, so curated configs already moved are no longer on R and the
-         catch-all can't touch them; only the residual (non-engine-stats parts) lands on the
-         era-representative modal node. Modal is approximate (88/132 nodes span >1 AXE node) but
-         era-appropriate -- refine per-part later by completing engine-stats."""
+      2a. Global catch-all per (RP-1 node, CONFIG name), for RP-1 nodes layer 2b cannot see. Config names
+         are global identities in RealFuels, so the curated homing of `MMH+NTO` is the right answer for
+         `MMH+NTO` on any part -- this reproduces the ladder on parts engine-stats never heard of.
+      2b. Global catch-all per RP-1 node: @PART[*]{ CONFIG:HAS[#techRequired[R]] -> modal AXE node }.
+         engine-stats is INCOMPLETE (misses curated engines like ROE-LR105 and all uncurated ones), so a
+         per-node catch-all sweeps up every config the per-part pass left behind (they'd otherwise stay on
+         a dead RP-1 node = permanently locked). The catch-all runs AFTER the specifics, so curated configs
+         already moved are no longer on R and the catch-all can't touch them; only the residual
+         (non-engine-stats parts) lands on the era-representative modal node. Modal is approximate
+         (88/132 nodes span >1 AXE node) but era-appropriate -- refine per-part later by completing
+         engine-stats.
+
+    COVERAGE IS ASSERTED, NOT ASSUMED. This pass used to derive the layer-2 key set from the *residual*
+    rungs only, so an RP-1 node carried exclusively by curated parts -- all of which layer 0 had already
+    re-homed -- got no catch-all row at all, and every uncurated part keeping that value stayed locked
+    forever. That silently cost 702 RCS engine configs (`earlyDocking`, `reusableControl`): every
+    hypergolic RCS propellant in the game, unreachable, on 66 placed parts. The key set is now every RP-1
+    node the walker touches, and an uncovered one raises."""
     scattered = []                                                     # (part, config, rp1node, axenode)
     pairs = set()                                                      # (part, rp1node) left to layer 1
-    r2a = collections.defaultdict(collections.Counter)                 # rp1node -> Counter(AXE node) for catch-all
+    r2a = collections.defaultdict(collections.Counter)                 # rp1node -> Counter(AXE node), residual rungs
+    r2a_moved = collections.defaultdict(collections.Counter)           # ...same, from rungs layer 0 already homed
+    c2a = collections.defaultdict(collections.Counter)                 # (rp1node, config) -> Counter(AXE node)
+    all_rp1 = set()                                                    # every RP-1 node the walker uses
     for part in sorted(ladders):
         for r in ladders[part]:
-            if r["moved"]: scattered.append((part, r["config"], r["rp1"], r["node"], r.get("ungated")))
+            if r["rp1"]: all_rp1.add(r["rp1"])
+            if r["moved"]:
+                scattered.append((part, r["config"], r["rp1"], r["node"], r.get("ungated")))
+                if r["rp1"]:
+                    c2a[(r["rp1"], r["config"])][r["node"]] += 1
+                    r2a_moved[r["rp1"]][r["node"]] += 1
             elif r["rp1"]:
                 pairs.add((part, r["rp1"]))
                 if part in p2n: r2a[r["rp1"]][p2n[part]] += 1
@@ -1235,19 +1253,40 @@ def emit_engine_config_gates(ladders, pinned, missing, p2n, by):
         node = p2n.get(part, "parking")
         L.append(f"@PART[{part}]:HAS[@MODULE[Module*EngineConfigs]]:FINAL "
                  f"{{ @MODULE[Module*EngineConfigs],* {{ @CONFIG:HAS[#techRequired[{rp1}]],* {{ @techRequired = {node} }} }} }}")
-    L.append("// LAYER 2 -- global per-node catch-all for configs the per-part pass missed (engine-stats-absent")
-    L.append("//            curated engines + uncurated parts); modal AXE node per RP-1 tech generation:")
-    catchall = 0
-    for rp1 in sorted(r2a):
-        node = r2a[rp1].most_common(1)[0][0]
+    # 2a runs before 2b so a config name we curated keeps its own node instead of the era modal.
+    uncovered = sorted(all_rp1 - set(r2a))
+    L.append("// LAYER 2a -- global per-CONFIG catch-all for RP-1 nodes carried ONLY by curated parts (no")
+    L.append("//             residual rung to build a modal from). Config names are global in RealFuels, so")
+    L.append("//             the curated homing is the right answer for that name on any part:")
+    bycfg = 0
+    for rp1 in uncovered:
+        for (r, cfg), tally in sorted(c2a.items()):
+            if r != rp1: continue
+            node = tally.most_common(1)[0][0]
+            L.append(f"@PART[*]:HAS[@MODULE[Module*EngineConfigs]]:FINAL "
+                     f"{{ @MODULE[Module*EngineConfigs],* {{ @CONFIG[{cfg}]:HAS[#techRequired[{rp1}]],* {{ @techRequired = {node} }} }} }}")
+            bycfg += 1
+    L.append("// LAYER 2b -- global per-node catch-all for configs the per-part pass missed (engine-stats-absent")
+    L.append("//             curated engines + uncurated parts); modal AXE node per RP-1 tech generation:")
+    catchall, orphans = 0, []
+    for rp1 in sorted(all_rp1):
+        tally = r2a.get(rp1) or r2a_moved.get(rp1)
+        if not tally:
+            orphans.append(rp1); continue
+        node = tally.most_common(1)[0][0]
         L.append(f"@PART[*]:HAS[@MODULE[Module*EngineConfigs]]:FINAL "
                  f"{{ @MODULE[Module*EngineConfigs],* {{ @CONFIG:HAS[#techRequired[{rp1}]],* {{ @techRequired = {node} }} }} }}")
         catchall += 1
+    if orphans:
+        raise SystemExit("engine config gates: no AXE node to catch-all these RP-1 nodes onto -- every "
+                         "config still carrying one would be permanently locked: " + ", ".join(orphans))
     with open(os.path.join(OUTD, "AxeEngineConfigGates.cfg"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
     nparts = len(set(x[0] for x in scattered) | set(p for p, _ in pairs))
     print(f"engine config gates: {len(scattered)} per-config ladder gates + {len(pairs)} per-part fallbacks "
-          f"({nparts} engine parts) + {catchall} per-node catch-alls -> AxeEngineConfigGates.cfg"
+          f"({nparts} engine parts) + {bycfg} per-config catch-alls for {len(uncovered)} curated-only RP-1 "
+          f"node(s) ({', '.join(uncovered) or 'none'}) + {catchall} per-node catch-alls "
+          f"-> AxeEngineConfigGates.cfg"
           + (f"  (pinned {len(pinned)}: {', '.join(p for p, _ in pinned)})" if pinned else "")
           + (f"  (WARN {len(missing)} unplaced parts -> parking)" if missing else ""))
 
