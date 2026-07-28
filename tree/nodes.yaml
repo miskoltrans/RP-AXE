@@ -3014,6 +3014,24 @@ nodes:
     parents: [pc_hypergolics, pc_htp]
     flavor: "Run hydrazine over an iridium catalyst bed and it tears itself apart into hot gas with no oxidiser and no ignition — one tank, one valve, a thruster that fires ten thousand times and never needs a spark. The attitude control of nearly every satellite ever flown, and the reason a spacecraft can still point itself after a decade in the dark."
     upgrades: [RFUpgrade_Hydrazine, RFUpgrade_PITV-Hydrazine-1200]
+    # ⚠ KNOWN DEFECT (found 2026-07-28, NOT yet fixed — the fix is a placement decision, see below).
+    # RFUpgrade_PITV-Hydrazine-1200 does not belong on a T5 catalytic-monoprop node. It is a 737 kW pulsed
+    # inductive thruster config (jet power from manifest/engine-stats.tsv: 22.9 N at Isp 4100), and its own
+    # host part (pit-125) lives SEVEN TIERS ABOVE at ep_pulsedInductive T12 — so buying the thruster hands
+    # you the top of its hydrazine branch for free, while the identical-power ammonia twin
+    # (PITV-Ammonia-1200) costs a T13 node.
+    # It was homed here by PROPELLANT, but the propellant fork already happened: PITV-Hydrazine-40 ("this
+    # thruster can burn hydrazine") sits on ep_highPowerHall T12. This config is a POWER uprate within an
+    # already-unlocked fork, 24 kW -> 737 kW.
+    # WHY IT IS STILL HERE: the obvious home, ep_pulsedInductiveII T13 beside its ammonia twin, trips the R1
+    # ladder invariant — the gate classes configs by performance, and Isp 7000 vs 4100 reads as two distinct
+    # decisions rather than one rung on two propellants. R1 is a build-failing invariant that was driven to
+    # zero on purpose; silencing it for this is the wrong trade. Candidate fixes: (a) an opt-in DEAD-END
+    # sidegrade node off ep_pulsedInductiveII ("trade Isp for a storable, denser propellant" — the tree's
+    # established catalog-dead-end pattern), or (b) give R1 the same different-propellant exemption R4
+    # already has. Both are design calls, not mechanical edits.
+    # ALSO NOTE the ladder gate never caught this: R2 exempts propellant FORKS from rung ordering, and a
+    # fork's own internal ordering is never checked (docs/UPGRADE-LADDERS.md).
     # The catalyst bed is the mechanism, so this gates on peroxide's silver catalyst as much as on the
     # amine lane that supplies the fuel — both parents are real prerequisites, not a decorative crossover.
   - id: pc_cryogenicRcsFeed
@@ -4144,6 +4162,9 @@ nodes:
     flavor: "The same electrodeless pulse scaled up — more energy per pulse, a heavier propellant puff, chasing higher thrust from the same repetitively-pulsed magnetic field."
     upgrades: [RFUpgrade_PITV-Ammonia-1200, RFUpgrade_NuPIT-7000]
     # doctrine-4 catch: these configs' own base parts (pit-125/RO-nupit) live in ep_pulsedInductive.
+    # NOT a home for PITV-Hydrazine-1200 (its 1200-class twin, stranded at pc_hydrazineMonoprop T5 — see
+    # the note there): moving it here trips the R1 ladder invariant, because the gate classes the two by
+    # performance and Isp 7000 vs 4100 makes them distinct decisions, not one rung on two propellants.
 
   # ---- NuclearEngineering: NTR matures past NERVA ----
   - id: nuc_ammoniaWorkingFluid
@@ -5259,8 +5280,18 @@ nodes:
     title: "Kilowatt-Class Power Processing"
     discipline: ElectricalPower
     tier: 15
-    parents: [ep_nextGenGriddedIonII]
+    parents: [ep_nextGenGriddedIonII, elec_metamorphicMultijunction]
     catalog: true
+    # POWER DEPENDENCY (2026-07-28) — elec_metamorphicMultijunction (T13, the modern III-V cell). The whole
+    # electric-propulsion lane took its only solar input from elec_siliconPV at T3, six tiers below where it
+    # starts: ion and Hall thrusters were gated on 1954-vintage 4.6%-efficient cells and nothing else solar.
+    # This node is the one whose own name is about power, and the DS4G 50-class configs it grants draw
+    # ~68-72 kW (jet power from manifest/engine-stats.tsv thrust x Isp, x1.6 for input) — which is 240 m2 of
+    # array even at TL10's 301 W/m², and roughly 350 m2 on TL7 silicon. The dependency is real physics: a
+    # solar-electric thruster is defined by the array feeding it.
+    # NOTE this is one edge on a lane whose nodes still mix power classes by 100-500x (ep_kryptonFeed T13
+    # grants both a 0.4 kW SPT-70MK and a 219 kW X3-HV-K). Homing EP configs by POWER CLASS is a real pass,
+    # not an edge — see docs/UPGRADE-LADDERS.md for the shape it should take.
     flavor: "The thruster barely changes; the box feeding it doubles. A power processing unit that can hold fifty kilowatts at grid voltage — and shed the waste heat of its own switching losses — is what decides whether the four-grid concept is a laboratory result or a spacecraft."
     upgrades: [RFUpgrade_DS4G-50-low, RFUpgrade_DS4G-50-hi]
     # LADDER PASS (2026-07-27): the DS4G "marks" are OPERATING POINTS of one experimental thruster -

@@ -1088,6 +1088,7 @@ digraph AXE {
   "ep_hallEffectThruster" -> "ep_magnetoplasmadynamic" [style=solid];
   "ep_magnetoplasmadynamic" -> "ep_variableSpecificImpulsePlasma" [style=solid];
   "ep_nextGenGriddedIonII" -> "ep_kilowattClassPPU" [style=solid];
+  "elec_metamorphicMultijunction" -> "ep_kilowattClassPPU" [style=solid];
   "ep_variableSpecificImpulsePlasma" -> "ep_variableSpecificImpulsePlasmaII" [style=solid];
   "nuc_advancedCoreNTR" -> "nuc_bimodalNTR" [style=solid];
   "nuc_bimodalNTR" -> "nuc_fissionFragmentRocket" [style=solid];
