@@ -38,7 +38,14 @@ Reproduce: `python tools/science_budget.py` (RP0\* crewed/uncrewed split) and `p
 
 ---
 
-## 1. The KerbalismLab load blocker — diagnosed
+## 1. The KerbalismLab load blocker — diagnosed → ✅ FIXED 2026-07-15
+
+> **RESOLVED.** Fixed by **Path A — vendor the minimal Kerbalism ScienceRework lab framework**, so the fork
+> loads exactly as its creator authored it. Shipped + in-game verified (`02b840a`, `bc7e6cb`): 65 experiments
+> under `design/Science/KerbalismLab/` via `tools/build_kerbalismlab.py`, techs remapped to AXE nodes,
+> `-axe-autotest` clean with a 36.6 MB ConfigCache. Full plan: [`KERBALISMLAB.md`](KERBALISMLAB.md).
+> **This also supersedes the "re-author the 65 as plain Experiments" default** that §4 of this doc and
+> RESTART.md T2 had settled on. The diagnosis below is kept as the reasoning trail.
 
 **Symptom (from the rp1_expanded instance):** installing `KerbalismLabExperimentsExpandedContinued`
 throws ~132 ModuleManager errors (`Can't find nodeType:KERBALISM_GROUP_SETTINGS`), value lookups
@@ -204,6 +211,29 @@ no tail) vs. keep a deliberate handful as high-value deep-space targets (JUNO/so
 ---
 
 ## 4. Tree-cost decision — LOCKED (2026-07-06): ~298k via a per-tier rate table
+
+> **⚠️ DRIFT (measured 2026-07-28) — the table is still the locked input, but the tree it was written
+> against has doubled, so both headline outputs below have moved. This is an accept-or-rescale call, not a
+> defect; nothing here has been changed unilaterally.**
+>
+> The decision deliberately makes total cost *emergent* (`node count × a rising per-tier rate`). The tree
+> then grew **~217 → 499 nodes**, so:
+>
+> | | as decided | now (live build) |
+> |---|--:|--:|
+> | total tree cost | ~298k | **422,666** |
+> | cumulative cost by end of T11 | ~62% | **49.2%** |
+> | T13–16 node count | 11 / 4 / 2 / 2 (19) | **22 / 12 / 8 / 4 (46)** |
+>
+> Total is still inside the stated bracket (~150k … ~500k), so *magnitude* is defensible as-is. **The shape
+> claim is the part that no longer holds:** the bullet below argues the bite lands in T9–T13 and then tapers
+> "at the top where node count dies and VISION hands the gate to *other* axes." The top no longer dies —
+> **T12–16 now carry 50.8% of the entire tree's cost**, because the late tail grew from 19 nodes to 46 as the
+> outer-planet / station / reusable milestones were placed. Half the science gate now sits above T11.
+>
+> Current per-tier node counts (T0–T16): 2 · 20 · 23 · 25 · 37 · 25 · 30 · 53 · 41 · 57 · 53 · 49 · 38 · 22 ·
+> 12 · 8 · 4. Re-measure with `python tools/build_tree.py` (per-tier cost table + `total:` are printed).
+> Decide at the P3 solvency play-session, which §4 already names as the final tune.
 
 Total budget (§3b): **~3.93M theoretical (39% crewed / 61% uncrewed)**; realistic collection is lower and
 uncrewed-weighted. Anchors considered: RP-1 = **115k** (≈3% of pool, completable); VISION-literal "tree cost ≈

@@ -1,5 +1,12 @@
 # In-game render: bake layout offline (BK), render only edges in KSP
 
+> **✅ STATUS: SHIPPED — this plan is built, not pending.** Both halves are live: `build_tree.py` bakes the
+> layout offline (`COORDS_BK = True` in `sugiyama_layout`, positions emitted into `AxeTechTree.cfg`), and
+> `RenderSettings.cfg` ships `layout = stock`, which per its own header comment means *"use the emitter's
+> positions (build_tree.py Brandes-Köpf), route edges only"* — i.e. the runtime re-layout is off exactly as
+> this document proposed. The legacy in-C# `sugiyama`/`bands` layouts remain as fallbacks. The notes below
+> are the original design rationale, kept for reference.
+
 > **Supersedes the earlier "port BK into C#" plan.** Decision (2026-07-02): node placement is **static
 > data** → compute it **offline in the compiler** and delete the runtime re-layout. KSP does only what it
 > genuinely must at runtime: draw the **ortho-late** edges (there's no cfg field for a custom edge polyline).

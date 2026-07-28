@@ -58,7 +58,8 @@ Plugin reads it on R&D scene load (`GameDatabase.GetConfigNodes("RPAXE_RENDER")`
 ## Risk note
 Repositioning ALL nodes + rerouting is more invasive than the highlight patch (which only recolours). It overrides stock/RP-0 tree positions. Test carefully; keep `layout = stock` as a safe fallback.
 
-## Status at handoff
-- Prototype: complete, branch `restart`, commits through `460f807`. Full toggle set + prototype-owned layout (bands/sugiyama) + tight lane routing.
+## Status at handoff *(historical — superseded by the STATUS banner at the top of this file)*
+- Prototype: complete, mainline (then branch `restart`, since renamed `main`), commits through `460f807`. Full toggle set + prototype-owned layout (bands/sugiyama) + tight lane routing.
 - Plugin: `AxeTreeHighlight.cs` (lineage highlight) compiles; not yet in-game tested.
-- This render port is the next piece.
+- ~~This render port is the next piece.~~ **Done** — the port shipped, and the follow-on
+  [RENDER-PORT-ORTHO-BK.md](RENDER-PORT-ORTHO-BK.md) (bake layout offline, render only edges) shipped too.

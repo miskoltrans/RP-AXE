@@ -193,7 +193,11 @@ strong, issues few + concentrated. **Applied to `tree/nodes.yaml`:**
   nudges, not tree edges). **General rule for the SystemsIntegration lane:** convergence/milestone nodes gate on
   irreducible physics only; keep their inputs relaxed.
 - **Settled (no edit):** aviation-as-roleplay + x-plane contracts (§3B); rocketry-default (§3B).
-### 9. ENGINE PASS (in progress — user workflow: get current placements happy → library-sort → re-review → other parts → whole tree)
+### 9. ENGINE PASS — ✅ COMPLETE (2026-07-27)
+*(Original workflow: get current placements happy → library-sort → re-review → other parts → whole tree.
+All of it ran, and the engine-config placement doctrine it fed into is finished — see
+[`UPGRADE-LADDERS.md`](UPGRADE-LADDERS.md): 160 collapsed ladders → 0, now a build-failing invariant.
+The record below is what the pass applied.)*
 Step-1 "are we happy with current engine placements" done. **Applied:**
 - `fd_verniers` → FluidDynamics @T2 off `fd_turbopumpFeed` (was GuidanceControl @T1 — homed by function, id/tag
   mismatch, tier below the engines it trims), retitled "Vernier Trim Chambers" (commit 2aaa73d).
