@@ -670,9 +670,8 @@ digraph AXE {
   "fd_longMarchStorable" -> "int_dongFangHong1" [style=solid];
   "fd_orbitalMultiChamber" -> "fd_sovietStorable" [style=solid];
   "pc_ntoHypergolics" -> "fd_sovietStorable" [style=solid];
-  "fd_largeChamber" -> "fd_saturnKerolox" [style=solid];
-  "fd_orbitalSoviet" -> "fd_saturnKerolox" [style=solid];
-  "fd_regenCooling" -> "fd_saturnKerolox" [style=solid];
+  "fd_largeChamber" -> "fd_saturnKerolox" [style=dashed,color="#f4d35e"];
+  "fd_orbitalSoviet" -> "fd_saturnKerolox" [style=dashed,color="#f4d35e"];
   "met_nimonic" -> "met_cooledTurbine" [style=solid];
   "av_axialJet" -> "av_turboprop" [style=solid];
   "av_axialJet" -> "av_hydrogenJet" [style=solid];
@@ -836,12 +835,11 @@ digraph AXE {
   "comp_commercialOffTheShelfAvionics" -> "shd_commercialOffTheShelfAvionics" [style=solid];
   "av_variableStator" -> "av_highBypassTurbofan" [style=solid];
   "av_afterburner" -> "av_lowBypassTurbofan" [style=solid];
-  "av_highBypassTurbofan" -> "av_advancedJetEngines" [style=solid];
-  "av_lowBypassTurbofan" -> "av_advancedJetEngines" [style=solid];
-  "av_mach2Turbojet" -> "av_advancedJetEngines" [style=solid];
+  "av_highBypassTurbofan" -> "av_advancedJetEngines" [style=dashed,color="#f4d35e"];
+  "av_lowBypassTurbofan" -> "av_advancedJetEngines" [style=dashed,color="#f4d35e"];
   "av_variableStator" -> "av_advancedFighterTurbojets" [style=solid];
-  "av_mach2Turbojet" -> "av_advancedHighSpeedTurbojets" [style=solid];
-  "av_dedicatedLiftJet" -> "av_advancedHighSpeedTurbojets" [style=solid];
+  "av_mach2Turbojet" -> "av_advancedHighSpeedTurbojets" [style=dashed,color="#f4d35e"];
+  "av_dedicatedLiftJet" -> "av_advancedHighSpeedTurbojets" [style=dashed,color="#f4d35e"];
   "av_turboprop" -> "av_refinedTurboprop" [style=solid];
   "pc_segmentedCasting" -> "pc_largeSegmentedBooster" [style=solid];
   "pc_ntoHypergolics" -> "pc_storableRcsPropellants" [style=solid];

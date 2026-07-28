@@ -1363,7 +1363,19 @@ nodes:
     title: "High-Pressure Kerolox Combustion"
     discipline: FluidDynamics
     tier: 6
-    parents: [fd_largeChamber, fd_orbitalSoviet, fd_regenCooling]
+    parents: [fd_largeChamber, fd_orbitalSoviet]
+    anyToUnlock: true
+    # FALSE-FORK FIX (2026-07-28, docs/TREE.md §10): was an ALL-parents convergence over
+    # [fd_largeChamber, fd_orbitalSoviet, fd_regenCooling], which forced the player to buy BOTH combustion
+    # schools the tree's own flavour narrates as alternatives ("the hard way the West reached orbit ... where
+    # the Soviets clustered many small ones" vs "brute multiplicity where the West built single chambers").
+    # Now multi-entry: either school reaches the mature booster. Opportunity cost is real — skipping Western
+    # forfeits fd_titanTandem (T5), skipping Soviet forfeits fd_matureOrbital (T5) + fd_engineMaturation (T6).
+    # fd_regenCooling DROPPED as a parent, deliberately: anyToUnlock is per-NODE, not per-parent, so
+    # "regen AND (West OR Soviet)" is inexpressible, and re-parenting regen upstream of both is blocked (it is
+    # T4 off met_nimonic T3, no spare tier). By T6 regen cooling is settled ~1955 tech every path has met —
+    # lineage != gating (§7). It keeps 12 uprate configs spanning BOTH schools (LR-89/LR-79/RZ/LR-105 Western,
+    # RD-108-8D77 Soviet) + two T8 staged-combustion children, so it stays wanted rather than tolled.
     flavor: "Uprate the kerosene-oxygen booster and build it to be mass-produced — a rugged, high-thrust engine you cluster eight at a time under a heavy first stage. The H-1 that becomes the Saturn I's power, and the RD-111 pushing kerolox to its pre-staged-combustion ceiling: the last and largest of the simple gas-generator boosters."
     parts: [ROE-RS27, ROE-H1C, ROE-H1D, ROE-RD111, ROE-E1]
     # ROE-E1 added (2026-07, part-count-pass find): a large gas-generator kerolox test engine, same
@@ -2884,7 +2896,13 @@ nodes:
     title: "Turbine-Temperature Uprating"
     discipline: AirBreathing
     tier: 8
-    parents: [av_highBypassTurbofan, av_lowBypassTurbofan, av_mach2Turbojet]
+    parents: [av_highBypassTurbofan, av_lowBypassTurbofan]
+    anyToUnlock: true
+    # FALSE-FORK FIX (2026-07-28, docs/TREE.md §10): high-bypass (airliner) and low-bypass (fighter) are
+    # parallel schools, and requiring both made the choice a purchase order. Now multi-entry — either bypass
+    # lineage opens its own late marks. av_mach2Turbojet DROPPED as a parent: it was a leftover from the
+    # 2026-07 lineage split that moved the Mach-2 marks out to av_advancedHighSpeedTurbojets ("Parent list
+    # left as-is (pre-existing, not touched)" below) — this node no longer holds any Mach-2 content.
     flavor: "The mature marks of the bypass turbofans in the hangar — hotter turbines, tighter tolerances, a few percent more thrust and a few percent less fuel, engine by engine."
     upgrades: [RFUpgrade_CF6-50A, RFUpgrade_F100-PW-220, RFUpgrade_TF34-GE-400A, RFUpgrade_J57-P-420, RFUpgrade_J79-GE-11, RFUpgrade_CF6-80A]
     # Doctrine-4 collector for late-mark bypass-turbofan refinements (bases in av_highBypassTurbofan/
@@ -2907,6 +2925,12 @@ nodes:
     discipline: AirBreathing
     tier: 8
     parents: [av_mach2Turbojet, av_dedicatedLiftJet]
+    anyToUnlock: true
+    # FALSE-FORK FIX (2026-07-28, docs/TREE.md §10): the flavour below declares these two parents "two
+    # unrelated missions" and the node then required both. It is a doctrine-4 upgrade collector holding two
+    # separate lineages' marks, so either base lineage should open it. Now multi-entry.
+    # (Deeper decomposition — splitting the lift-jet marks back out to their own node — is the cleaner
+    # doctrinal answer but needs a legal doctrine-4 home for RFUpgrade_RB162-81; left as a follow-up.)
     flavor: "The mature marks of the sustained-Mach-2 cruise engines (the MiG-21's R-13, the MiG-25's R-15) and the dedicated hover lift-jets — two unrelated missions, both refined mark by mark past their first cut."
     upgrades: [RFUpgrade_R-13F-300, RFUpgrade_R-15BF2-300, RFUpgrade_RB162-81, RFUpgrade_J75-P-5A, RFUpgrade_J79-GE-10, RFUpgrade_J79-GE-17]
     # Split out of av_advancedJetEngines (2026-07). Bases live in av_mach2Turbojet (T7, R-13/R-15 kings)
