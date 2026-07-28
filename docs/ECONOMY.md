@@ -47,9 +47,16 @@ Everything below is measured from this install, not estimated.
 | R&D (3 levels) | 2.25M | CustomBarnKit default |
 | Administration | 0.75M | CustomBarnKit default |
 | Mission Control (5 levels) | 0.71M | `AxeFacilities.cfg` |
-| Part unlocks (1,918 entries) | 5.33M | `AxePartCost.cfg` |
-| **Lump total** | **~21.96M** | |
+| Part unlocks (1,830 parts + 87 upgrades) | 5.56M | `AxePartCost.cfg` |
+| Engine-config unlocks (466) | 0.55M | `AxeEntryCostMods.cfg` |
+| **Lump total** | **~22.62M** | |
 | Vehicles | ~20M (assumed) | see §5 — **not yet measured** |
+
+> **Part unlocks are a buy-everything figure — realized spend is ~3.2M, not 6.11M.** A playthrough that
+> buys the two cheapest parts on every node it researches spends 2.71M on parts plus configs (SCIENCE.md
+> §5c), i.e. **~8% of lifetime funds — the same share RP-1 spends on part unlocks**. The 6.11M belongs in
+> this table as the ceiling; it is not what the income schedule has to cover. Re-measured 2026-07-28, when
+> the part-cost calibration pass also corrected three silent misclassifications (+2.2%).
 
 **The R&D ladder is the load-bearing gate.** Its 100-science cap covers tiers 0–5 *exactly*; every
 tier-6 node costs 101+. So R&D L2 (**113,000 funds**) is required to research anything past tier 5,
@@ -115,11 +122,12 @@ Two stock strategies are **deleted**: `PatentsLicensing` (science → funds) and
 the primary gate and is deliberately ~10× more abundant than the tree costs, so either path is
 unbounded income. Full reasoning in the file header.
 
-All kept strategies also have their `requiredReputationMin`/`Max` set to `-1000`/`-1000`, stock's
-no-gate idiom. **This is not a "window"** — see §5; the field pair lerps over the commitment slider
-and sets how much reputation you must *possess* to commit that hard. Administration's
-`strategyCommitRange` is therefore the only thing capping the slider, which is what the 16M above
-assumes.
+The **rate is the only thing AXE changes** on the kept strategies. `requiredReputationMin`/`Max` are
+now left at stock's `-500` → `750` — they are **not a "window"** (§5) but a lerp over the commitment
+slider, setting how much reputation you must *possess* to commit that hard. At AXE scale stock's own
+numbers already land correctly: the gate never binds at Administration L1, wants 250 reputation at
+L2 and 750 at L3, so it bites only in the first era and is irrelevant long before 750,000 funds of
+Administration upgrades are affordable. `strategyCommitRange` remains the real pacing knob.
 
 ## 4. Settled decisions
 

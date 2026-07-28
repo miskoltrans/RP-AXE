@@ -343,8 +343,9 @@ prioritise, you don't go bankrupt. Generated to `GameData/RP-AXE/design/Tree/Axe
 - `entryCost(upgrade) = part_cost_base[tier] × upgrade_cost_scalar` (= 0.3; light, no category — RP-1 left
   upgrades ~free). **`RFUpgrade_*` are the exception, forced to 0** — see §5b, they are tree icons and
   RealFuels charges for an engine variant somewhere else entirely.
-- `tier` = the AXE node the part/upgrade is placed on (T0 start-parts → 0, i.e. free). Result: 1774/1790
-  parts priced, span **20–32,400 funds, median 1,440**.
+- `tier` = the AXE node the part/upgrade is placed on (T0 start-parts → 0, i.e. free). Result (2026-07-28,
+  full tree): **1,830 parts priced, span 20–32,400 funds**, total **5,455,475**; plus 87 upgrades (102,150)
+  and 466 engine configs (551,685, §5b) = **6,109,310 to buy literally everything**.
 
 **`part_cost_base`** (weight-1.0 part, monotonic): T1 100 · T4 600 · T7 1800 · T10 4200 · T13 9000 · T16 18000.
 **`part_cost_weight`:** science 2.5 · crewpod 2.0 · gear 2.0 · engine 1.8 · power 1.5 · tank/avionics/misc 1.0 ·
@@ -353,9 +354,11 @@ antenna/rcs 0.8 · aero/separator 0.5 · structural 0.4 · chute 0.3 · ground 0
 **Why these numbers — calibrated to RP-1 (the reference you asked for).** Ground-truthed RP-1's real
 `entryCost`s from the `ksp_rp1_expanded` ConfigCache, joined to `part-capabilities.tsv` (category/modules) +
 AXE tier. Two findings drove the design:
-- **RP-1 prices sharply BY CATEGORY.** The categories it hand-priced come out on RP-1's own medians:
-  science ≈ 10.5k (RP-1 10k), crewpod ≈ 3.6k (RP-1 3.4k), gear ≈ 11k (10k), power ≈ 3.6k (5k),
-  antenna ≈ 1.4k (1k). So the model **reproduces RP-1's economy** where RP-1 had one.
+- **RP-1 prices sharply BY CATEGORY**, and the model reproduces those categories' medians. *(Re-measured
+  on the finished tree 2026-07-28 — see §5c; the original figures here were taken on a partial tree and two
+  of them were wrong. Current: science 4,500 vs RP-1's 4,500 — exact; antenna 1,440 vs 1,000; crewpod 4,800
+  vs 5,600; gear 3,600 vs 1,600. The claim holds where it matters — science and antenna are the categories
+  RP-1 genuinely hand-priced — but it only holds **after** the §5c classifier fixes.)*
 - **RP-1 left engines/tanks/structural/aero/rcs at ~0 at the part level** — because it gated their funds through
   the **tooling system** (per-size), which AXE **deleted with RP0.dll**, and engine-variant unlock through
   **RealFuels' dynamic config cost** (static `entryCost`s are ~0: 572/609 upgrades = 0). Those categories are
@@ -411,7 +414,63 @@ free — the same coverage gap as the gate emitter's layer-2 catch-all.
 adding an RP-1-era-delta premium would reintroduce RP-1's tree as a second axis and fight the clean tier model.
 
 **`costcat` classifier** (in `build_tree.py`): signal = PartModules + stock category + AXE discipline + source
-mod, most-specific-first; stock-category clauses (Science/Coupling/Electrical/Thermal) + `ground`
-(ModularLaunchPads / LaunchClamp) are fallbacks for parts whose modules dodge the module check; uncovered →
-`misc` (weight 1.0, ~107 parts). **Magnitude is a P3 dial** — absolute funds calibrate against *income*
-(contracts), which the P3 solvency play-session tunes; the category *ratios* are the RP-1-grounded part.
+mod, most-specific-first; stock-category clauses (Science / Coupling / Electrical / Thermal / Ground) are
+fallbacks for parts whose modules dodge the module check, and **each one belongs to the last rule that could
+want it** — a category clause placed early silently outranks every module rule below it (§5c). Uncovered →
+`misc` (weight 1.0, ~109 parts), and so is any part with **no row in `part-capabilities.tsv`**: it arrives as
+four empty strings and classifies as `misc` with nothing to flag it. Run `tools/backfill_capabilities.py`
+after placing parts RP-1 never had.
+
+---
+
+### 5c. Calibration pass — 2026-07-28: the defects were classification, not magnitude
+
+Run once the tree was complete (the pass RESTART.md deferred). Four measurements, then the verdict.
+
+**1. Magnitude is right — against income, and against RP-1 itself.** Buy-everything is 6.11M against a
+40M lifetime (ECONOMY.md §3), but nobody buys everything: at the *k cheapest parts on every node you
+research*, a full playthrough spends **1.55M (1/node) — 2.71M (2/node)**, and with engine configs ≈ **3.2M**.
+That is **8% of lifetime funds — the same share RP-1 spends on part unlocks** (its own `entryCost`s over the
+shared part set total 17.9M against 229M of programme funding = 7.8%). Buy-everything runs at 2× RP-1's
+share, which is the intended difference: AXE prices the categories RP-1 gated through tooling.
+
+**2. The early window is the tight one, and it is tight by design.** Through T5 — everything before R&D L2
+is needed — realized part spend is **72k (1/node) / 128k (2/node)** against ~334k of income earned by then,
+competing with R&D L2 (113k) and pad L2–L3 (94k). Selective buying clears it with room; buying two of
+everything does not. That is "you prioritise, you don't go bankrupt" working, but it is the window a play
+session should watch first.
+
+**3. Three classification defects, all silent, all now fixed.** These moved 129 parts and +122,590 funds
+(+2.2%); none of them was a dial:
+- **`ground` was stealing every landing leg, wheel, track and aircraft gear** — 54 parts. `cat == "Ground"`
+  is KSP's part category for legs and wheels, not for launch infrastructure, and it sat in the *first*
+  clause, so they all priced at the launch-clamp weight **0.2** instead of `gear` **2.0** — a 10× underprice
+  (17,900 → 179,000) that also left `gear` matching **zero parts**, which is why the original bullet above
+  could claim a gear median that no part had. `ground` is now launch infrastructure only (ModularLaunchPads
+  / LaunchClamp / ModuleGroundPart); `cat == "Ground"` fell through to `gear`, where it belongs.
+- **41 crew cabins and habitats priced as scientific instruments** — `mk2CrewCabin`, `MK1CrewCabin`, the
+  SSPX hab / greenhouse / centrifuge line, the Tantares crew modules. Station modules ship
+  `ModuleScienceExperiment` by convention, so they hit the science clause and took the **2.5** instrument
+  weight. Now `crewpod` (2.0), scoped *inside* the science clause on purpose: `Habitat` is added to any
+  pressurisable volume including crew-capacity-0 adapters, so as a standalone rule it also swallows the SSPX
+  connectors. Parts with a real `ModuleScienceLab` stay science — the lab is the thing being paid for.
+- **52 placed parts had no `part-capabilities.tsv` row at all**, so they classified from empty strings into
+  `misc`. Nine SCANsat instruments, `RO-MagellanRadar` and `SCANsat_Tracker` were being priced as generic
+  hardware instead of instruments. `tools/backfill_capabilities.py` mines the missing rows from the live
+  ModuleManager cache (discipline taken from the AXE node the part sits on — not a guess, the part is in the
+  tree); 46 were added. The remaining 6 are **placed but not installed**: `ca_GRS` (RO deletes it) and the
+  five `dmUS2*` wedges (DMagic is not in the mod set — these are the US2 wedges P6 still owes).
+- Minor, same pass: fission reactors (`ModuleSystemHeatFissionReactor`) → `power`, and the backfilled US2
+  shrouds/cores → `structural` / `separator`.
+
+**4. What did NOT change: `part_cost_base`, `part_cost_weight`, and both scalars.** After the fixes the
+category medians land on RP-1's for the categories RP-1 actually priced (science exactly, antenna 1.4×) and
+realized spend lands on RP-1's own share of lifetime funds. There was no evidence for moving a dial, and
+magnitude remains what it always was: the play-session's call, not a spreadsheet's.
+
+**Open — not part pricing, but the thing part pricing is calibrated against.** Contract income is far more
+back-loaded than the sinks it pays for: the first 15 programmes pay **6.4%** of channel 1 (1.54M of 24M),
+while a Saturn-class pad alone costs 5.34M and CrewedLunar is the 16th programme. Part unlocks are a minor
+term in that (~1.3M by the Moon landing) and are not what would break it. Flagged for the solvency
+play-session; the lever is `TARGET_LIFETIME` / the per-programme split in `tools/build_economy.py`, or the
+pad ladder in `AxeFacilities.cfg` — not `part_cost_base`.
