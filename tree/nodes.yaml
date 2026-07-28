@@ -523,7 +523,11 @@ nodes:
     tier: 3
     parents: [aero_boattail]
     flavor: "Shroud the payload through the dense lower atmosphere, then split and jettison it cleanly once the air thins — aerodynamic protection that must vanish on command."
-    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzProcFairingSide1, KzInterstageAdapter2, KzProcFairingSide1_TU]
+    parts: [KzResizableFairingBase, KzResizableFairingBaseRing, KzInterstageAdapter2]
+    # KzProcFairingSide1(_TU) moved DOWN to aero_boattail (2026-07-28): the side panels are the shroud
+    # WALL that every ProceduralFairings base needs, including the boattail bases one tier earlier —
+    # this node keeps the bases that make that wall JETTISON (payload base, base ring, decoupling
+    # interstage adapter), which is the actual breakthrough its title names.
 
   # ===================== BAND 1 * SPACECRAFT SYSTEMS & SCIENCE =====================
   # First-satellite systems + science payloads (science is NOT utility — finest curation). Most are early
@@ -859,7 +863,11 @@ nodes:
     tier: 2
     parents: [aero_subsonicWing]
     flavor: "A blunt tail drags a low-pressure wake behind it; taper the aft body into a boattail and the flow closes cleanly, shaving base drag off a rocket or airframe stern for the price of a little length. The contoured aft-fairings and adapters that earn their keep in the transonic climb."
-    parts: [KzFlatBoattail, RSBRibbedBase_Boattail, RSBTrussBase_Boattail, SSTUBase_Boattail, SSTUHollowRing_Boattail]
+    parts: [KzProcFairingSide1, KzProcFairingSide1_TU, KzFlatBoattail, RSBRibbedBase_Boattail, RSBTrussBase_Boattail, SSTUBase_Boattail, SSTUHollowRing_Boattail]
+    # KzProcFairingSide1(_TU) homed here (2026-07-28), moved down from aero_fairings: a ProceduralFairings
+    # base of ANY mode (Payload/Adapter) is only a ring — the side panels are the shroud skin itself, so
+    # without them the five boattail bases below are inert. The panels are this node's king part; the
+    # jettisoning payload-fairing bases stay at the child aero_fairings.
 
   - id: str_diameterAdapters
     title: "Modular Diameter Adapters"
