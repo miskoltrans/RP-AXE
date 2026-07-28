@@ -12,7 +12,13 @@ default — **the decision is now Path A: vendor the mod as-authored, make it lo
 > 50 Kvant-1 gates. The autotest caught a cache-blocking bug the static checks missed — the fork's `ALSEP-2.cfg`
 > had `baseValue = ALSEP-2` (source typo); AXE's `GlobalExperimentPatches.cfg` `@dataScale /= #$baseValue$` at
 > `:FIRST` choked on it → no cache. Generator now sanitizes non-numeric baseValue/scienceCap→180. §4 remap
-> **locked** (`_README.md`). **Remaining: the deferred balance pass** + 3 review items (below).
+> **locked** (`_README.md`).
+>
+> **BALANCE PASS DONE 2026-07-28 — and it was mostly two bugs, not taste.** See §7. The shipped build
+> paid a flat 180 × multiplier for every experiment (Kerbalism pays on `scienceCap`, which no patch was
+> setting) and was missing the 6 base experiments' definitions entirely. Fixing both, then raising the
+> near-Earth floor, moves the theoretical max **13.07M → 1.49M** and a LEO station **4.0k → 28.2k**.
+> The "overpowered deep-space tail" this doc deferred never existed at the size it was feared.
 
 ## Decisions locked (2026-07-14)
 
@@ -183,10 +189,57 @@ default keeps it (RelayAntenna100 is present).
 - [ ] `check_tech_refs.py --cache` = 0 dangling UnlockTech.
 - [ ] In-game: slot menu works; an experiment completes and banks science.
 
+## 7. Balance pass — DONE 2026-07-28
+
+Two defects and one design change. The first two are why the deferred "trim the overpowered tail"
+plan was aimed at the wrong thing.
+
+**(1) The authored values were inert.** Kerbalism pays out on `scienceCap`, not `baseValue`:
+`ScienceMaxValue = ScienceCap × Situation.SituationMultiplier`, and a completed run collects the whole
+`DataSize`, so it banks exactly `scienceCap × multiplier`. `baseValue` only sizes the data stream.
+Framework-3 writes the group `value` to `baseValue` alone, so all 65 fork definitions kept their
+template literal `scienceCap = 180` — **every experiment paid a flat 180 × multiplier**, and the
+creator's 10–500 curve did nothing. Verified in the live merged cache: 65/65 at `scienceCap 180`,
+`baseValue 10–500`, while every other experiment in the game has the two equal.
+Fix: `Framework-6-ScienceCap.cfg` (`@scienceCap = #$baseValue$`, scoped to `kerbalism_*`).
+Upstream does this globally in `Patches-Global.cfg`, which AXE does not vendor. **13.07M → 1.23M.**
+
+**(2) The 6 base experiments had no definitions.** CHILLED/RELAX/JAMMED/TRAPPED/SALINE/BIRDIE are wired
+into every lab's Configure menu by Framework-2 and Framework-3, but their `EXPERIMENT_DEFINITION`s live
+in `ScienceDefs-Kerbalism.cfg` — not vendored, because it also carries the conflicting alt-science
+groups. Six dead menu entries. Fix: `Framework-5-BaseExperimentDefs.cfg`, just those 6, verbatim.
+Their real situations and body gates differ from the hand-typed table `lab_budget.py` used to carry.
+**1.23M → 1.47M.**
+
+**(3) The near-Earth floor, raised.** With the bugs fixed the tail was fine (1.47M ≈ 3.5× the tree) but
+a LEO station banked only ~4.0k against a ~300k tree — decorative. Cause is structural: an experiment
+gated to one body never earns a body multiplier, while the rest of the catalogue scales Earth ×1 →
+Pluto ×30 times a biome sum up to 20. The mod was priced on stock Kerbin scales where home orbit *is*
+the game. So `build_kerbalismlab.py` scales `value` ×10 for the 17 single-body-locked experiments
+(`+HomeBody` / `+Oceanic` / `+Suns`). They run nowhere else, so the tail does not move.
+
+| | shipped (buggy) | bugs fixed | + floor raise |
+|---|---|---|---|
+| LEO station | — | 4,023 | **28,224** |
+| Earth + Moon base | — | 10,026 | 34,227 |
+| theoretical max | 13,071,960 | 1,468,583 | **1,494,179** |
+
+Uniform ×10 preserves the creator's relative pricing and changes only the global scale RSS broke;
+no situation, body, crew, duration, slot or data size is re-authored, so Path A holds.
+
+**Left deliberately alone:**
+- **Crew gates.** 36 of 71 experiments need `Scientist:3+`; after the raise, 62% of a LEO station's take
+  sits behind `Scientist:4+`. Kept as-is: XP banks on recovery and crew rotation is normal station
+  gameplay, so this is a progression curve, not dead content. `EnableKerbalExperience = True`,
+  `ImmediateLevelUp = False`, nothing in the install patches the experience system.
+- **The ocean experiments.** `EGOMDOAF`, `MEGCO`, `SWE-NEMO` and base `SALINE` run only `SrfSplashed`,
+  which `design/Science/EarthScienceRemoval.cfg` zeroes on purpose. Dead by policy, not by accident —
+  pricing them would be a false signal. The generator reports them each run.
+
 ## Open / deferred
 
-- **Body scope + values** — creator's `BodyAllowed` shipped as-is; trim the deep-space tail only if the
-  solvency play-session shows it (SCIENCE.md §3b/§4).
+- ~~**Body scope + values**~~ — ✅ **DONE**, §7 above. No tail trim was needed; the tail was an artifact
+  of the flat-180 bug.
 - ~~**Slot-upgrade techs**~~ — ✅ **DONE.** `UpgradeTech` / `ReconfigureTech` (group B) are remapped in
   `Framework-2-LabGroup.cfg` to `life_convertedStageStation` / `life_stationHabitation`; confirmed against
   the live `ModuleManager.ConfigCache` (both `Lab-Upgrade1`/`Lab-Upgrade2` resolve to those real nodes).

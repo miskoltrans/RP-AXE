@@ -165,6 +165,15 @@ And unlike the Earth/Moon-locked *crewed RP0\** experiments, the fork **gates ~3
 (`BodyNotAllowed=HomeBody`, or `Gaseous`/`Suns`/`Moons`-only, e.g. `JUNO-*` gas giants) — so KerbalismLab
 DOES scale to deep space. So the budget MUST count all allowed bodies:
 
+> **⚠ RE-MEASURED 2026-07-28 (balance pass, `docs/KERBALISMLAB.md` §7).** The figures below were computed
+> from the upstream fork under the assumption that the authored `value` is the science payout. **It is
+> not** — Kerbalism pays on `scienceCap` (`ScienceMaxValue = ScienceCap × SituationMultiplier`), and
+> nothing was setting it, so the shipped build paid a flat **180 × multiplier** for every experiment:
+> a real theoretical max of **13.07M**, not 1.37M. The 6 base experiments were also missing their
+> definitions entirely. Both fixed. `tools/lab_budget.py` now reads the **shipped** configs and models
+> the real payout field. **Current total = 1,494,179** (1.47M after the fixes, +1.7% from raising the
+> near-Earth floor). The per-body/era shape below still holds; the totals are superseded by §3b.
+
 **KerbalismLab theoretical max (all allowed bodies, same basis as §2) = 1,365,760.**
 Dominated by `SrfLanded@Biomes` experiments deliberately gated off Earth → run on all 31 other bodies
 with full body+biome multipliers (RELAX alone 164k; ChemCam/GV-SSPB/PPME-1 ~70k each).
@@ -183,19 +192,23 @@ KerbalismLab (§3).
 
 | era (cumulative) | **crewed** (RP0\*+lab) | **uncrewed** (RP0\* robotic) | combined | crew% |
 |---|---|---|---|---|
-| orbit ~1958 | 35,604 | 22,248 | **57,852** | 62% |
-| inner planets ~1961 | 79,610 | 102,044 | **181,654** | 44% |
-| crewed + landing ~1964 | 153,134 | 217,835 | **370,969** | 41% |
-| adv probes ~1967 | 252,599 | 370,520 | **623,119** | 41% |
-| Jupiter ~1970 | 483,634 | 737,098 | **1,220,732** | 40% |
-| Saturn ~1972 | 884,581 | 1,360,946 | **2,245,527** | 39% |
-| Uranus ~1986 | 1,182,856 | 1,822,009 | **3,004,865** | 39% |
-| **Pluto / total** | **1,542,884** | **2,391,827** | **3,934,711** | **39%** |
+| orbit ~1958 | 60,554 | 22,248 | **82,802** | 73% |
+| inner planets ~1961 | 108,417 | 102,044 | **210,461** | 52% |
+| crewed + landing ~1964 | 185,073 | 217,835 | **402,908** | 46% |
+| adv probes ~1967 | 288,094 | 370,520 | **658,614** | 44% |
+| Jupiter ~1970 | 532,659 | 737,098 | **1,269,757** | 42% |
+| Saturn ~1972 | 958,750 | 1,360,946 | **2,319,696** | 41% |
+| Uranus ~1986 | 1,281,199 | 1,822,009 | **3,103,208** | 41% |
+| **Pluto / total** | **1,671,303** | **2,391,827** | **4,063,130** | **41%** |
 
-**Total collectable science ≈ 3.93M; split ≈ 39% crewed / 61% uncrewed** (theoretical max). Crewed
-**dominates early** (62% at first orbit — life-sciences + lunar + early lab) then settles to a steady
-~39% as the universal uncrewed instruments reach the outer planets. **Realistic** collection is far
-more uncrewed-weighted: the crewed 39% leans on the KerbalismLab deep-space tail (least realizable) plus
+> **Re-measured 2026-07-28** after the KerbalismLab balance pass ([`KERBALISMLAB.md`](KERBALISMLAB.md) §7).
+> Was 3.93M / 39% crewed, on a lab figure of 1.37M that no build ever ran — the shipped build actually paid
+> a flat 180 × multiplier per experiment. Lab is now 1,494,179.
+
+**Total collectable science ≈ 4.06M; split ≈ 41% crewed / 59% uncrewed** (theoretical max). Crewed
+**dominates early** (73% at first orbit — life-sciences + lunar + early lab) then settles to a steady
+~41% as the universal uncrewed instruments reach the outer planets. **Realistic** collection is far
+more uncrewed-weighted: the crewed 41% leans on the KerbalismLab deep-space tail (least realizable) plus
 Earth/Moon-locked crewed RP0\*, whereas uncrewed probe science you approach with flybys. This is the
 per-tier budget the tree is costed against (§4). Regenerate: `science_budget.py` (RP0\* crewed/uncrewed) +
 `lab_budget.py` (KerbalismLab).

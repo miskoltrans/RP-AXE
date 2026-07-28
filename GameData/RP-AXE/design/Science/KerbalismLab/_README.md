@@ -12,12 +12,61 @@ from-scratch tree + RO part set force. **Do not re-author the experiments.**
 | `Framework-2-LabGroup.cfg` | KerbalismScienceOnly `StockGroups-Lab.cfg` | **generated** — the lab group + 6 base exps; techs remapped. |
 | `Framework-3-LabProcessing.cfg` | KerbalismScienceOnly `Groups/LabExperiments.cfg` | verbatim; reads all techs from Framework-2. |
 | `Framework-4-Host.cfg` | authored | adds the `Configure` "Laboratory Experiments" host to AXE crewed labs at `:FIRST`. |
+| `Framework-5-BaseExperimentDefs.cfg` | KerbalismScienceOnly `ScienceDefs-Kerbalism.cfg` | **generated** — the 6 base lab `EXPERIMENT_DEFINITION`s, verbatim. Only those 6: the rest of that file is the Crew/Orbital/Unmanned alt-science system. |
+| `Framework-6-ScienceCap.cfg` | authored | makes the authored `value` the actual payout (`@scienceCap = #$baseValue$`). See "Payout" below. |
 | `InstrumentTagging.cfg` | fork, re-pointed | `*LabExperimentPackage` tags moved onto AXE/RO parts; ScienceBox clone deleted. |
-| `Experiments/*.cfg` (65) | fork, **generated** | verbatim except `UnlockTech` remapped (+ marquee Mir/Kvant gates). |
+| `Experiments/*.cfg` (65) | fork, **generated** | verbatim except `UnlockTech` remapped (+ marquee Mir/Kvant gates, + the single-body value scale). |
 
 **Generated files come from `tools/build_kerbalismlab.py`** — do not hand-edit `Framework-2` or `Experiments/*`;
 edit the script's `REMAP` / `MARQUEE` tables and re-run. This folder is design-owned (tech-remapped), so
 `sync-seed` never touches it.
+
+## Payout — why `scienceCap` matters more than `value` looks like it should
+
+Kerbalism pays out on **`scienceCap`**, not `baseValue`:
+
+```
+ExperimentInfo:  DataSize        = baseValue  * dataScale        (applyScienceScale = true)
+                 ScienceCap      = scienceCap * ScienceGainMultiplier
+SubjectData:     ScienceMaxValue = ScienceCap * Situation.SituationMultiplier
+                 SciencePerMB    = ScienceMaxValue / DataSize
+```
+
+A completed run collects `DataSize` MB, so it banks exactly `scienceCap × situationMultiplier`.
+`baseValue` only sizes the data stream — and since Framework-3 sets `dataScale = size / baseValue`,
+it cancels out of the data size too.
+
+Framework-3 writes the group `value` to **`baseValue` only**, so every fork definition kept its
+template literal `scienceCap = 180` and the whole catalogue paid a flat 180 × multiplier regardless of
+what its creator priced it at. **`Framework-6-ScienceCap.cfg` is what makes `value` real.** Upstream
+does this globally in `Patches-Global.cfg`, which AXE does not vendor; ours is scoped to `kerbalism_*`.
+
+Without it the theoretical max is 13.07M instead of 1.49M. `tools/lab_budget.py --model both` contrasts
+the two; it also fails loudly if any experiment's `scienceCap` drifts away from its `value` again.
+
+## Balance — the near-Earth floor (2026-07-28)
+
+An experiment gated to **one body** never earns a body multiplier, while everything beside it scales
+from Earth ×1 up to Pluto ×30, times a biome sum of up to 20. The mod was priced on stock Kerbin scales
+where home orbit *is* the game; under RSS home orbit is the starting line. A LEO station therefore
+banked ~4.0k against a ~300k tree.
+
+So `build_kerbalismlab.py` scales `value` ×10 for exactly the single-body-locked set (`+HomeBody`,
+`+Oceanic`, `+Suns` — 17 experiments). Because they run nowhere else, the deep-space tail does not move:
+
+| | before | after |
+|---|---|---|
+| LEO station | 4,023 | **28,224** |
+| Earth + Moon base | 10,026 | 34,227 |
+| theoretical max (all 32 bodies) | 1,468,583 | 1,494,179 (+1.7%) |
+
+Uniform ×10 preserves the creator's *relative* pricing (the marquee astrophysics payloads are already
+priced 25–50× the Earth-observation cubesats precisely because they are single-subject) and changes only
+the global scale RSS broke. No situation, body, crew, duration, slot or data size is re-authored.
+
+**Known dead content, left alone deliberately:** `EGOMDOAF`, `MEGCO`, `SWE-NEMO` (and the base `SALINE`)
+run only `SrfSplashed`, which `design/Science/EarthScienceRemoval.cfg` zeroes on purpose so the home
+planet cannot be grinded. Pricing them would be a false signal; the generator reports them instead.
 
 ## §4 tech remap — stock/CTT `UnlockTech` → AXE node
 
