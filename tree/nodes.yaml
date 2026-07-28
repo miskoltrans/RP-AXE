@@ -3013,25 +3013,15 @@ nodes:
     tier: 5
     parents: [pc_hypergolics, pc_htp]
     flavor: "Run hydrazine over an iridium catalyst bed and it tears itself apart into hot gas with no oxidiser and no ignition — one tank, one valve, a thruster that fires ten thousand times and never needs a spark. The attitude control of nearly every satellite ever flown, and the reason a spacecraft can still point itself after a decade in the dark."
-    upgrades: [RFUpgrade_Hydrazine, RFUpgrade_PITV-Hydrazine-1200]
-    # ⚠ KNOWN DEFECT (found 2026-07-28, NOT yet fixed — the fix is a placement decision, see below).
-    # RFUpgrade_PITV-Hydrazine-1200 does not belong on a T5 catalytic-monoprop node. It is a 737 kW pulsed
-    # inductive thruster config (jet power from manifest/engine-stats.tsv: 22.9 N at Isp 4100), and its own
-    # host part (pit-125) lives SEVEN TIERS ABOVE at ep_pulsedInductive T12 — so buying the thruster hands
-    # you the top of its hydrazine branch for free, while the identical-power ammonia twin
-    # (PITV-Ammonia-1200) costs a T13 node.
-    # It was homed here by PROPELLANT, but the propellant fork already happened: PITV-Hydrazine-40 ("this
-    # thruster can burn hydrazine") sits on ep_highPowerHall T12. This config is a POWER uprate within an
-    # already-unlocked fork, 24 kW -> 737 kW.
-    # WHY IT IS STILL HERE: the obvious home, ep_pulsedInductiveII T13 beside its ammonia twin, trips the R1
-    # ladder invariant — the gate classes configs by performance, and Isp 7000 vs 4100 reads as two distinct
-    # decisions rather than one rung on two propellants. R1 is a build-failing invariant that was driven to
-    # zero on purpose; silencing it for this is the wrong trade. Candidate fixes: (a) an opt-in DEAD-END
-    # sidegrade node off ep_pulsedInductiveII ("trade Isp for a storable, denser propellant" — the tree's
-    # established catalog-dead-end pattern), or (b) give R1 the same different-propellant exemption R4
-    # already has. Both are design calls, not mechanical edits.
-    # ALSO NOTE the ladder gate never caught this: R2 exempts propellant FORKS from rung ordering, and a
-    # fork's own internal ordering is never checked (docs/UPGRADE-LADDERS.md).
+    upgrades: [RFUpgrade_Hydrazine]
+    # RFUpgrade_PITV-Hydrazine-1200 moved OUT 2026-07-28 -> ep_pulsedInductiveII (T13). It was homed here by
+    # PROPELLANT, but the propellant fork had already happened: PITV-Hydrazine-40 ("this thruster can burn
+    # hydrazine") sits on ep_highPowerHall T12, so the -1200 is a POWER uprate inside an already-unlocked
+    # fork, 24 kW -> 737 kW. Homing it on a T5 catalytic-monoprop node put a 737 kW pulsed inductive
+    # thruster SEVEN TIERS BELOW its own host part (pit-125, on ep_pulsedInductive T12) — buying the
+    # thruster handed you the top of its hydrazine branch free, while the ammonia twin cost a T13 node.
+    # The ladder gate never caught it: R2 exempts propellant FORKS from rung ordering, and a fork's own
+    # internal ordering is never checked (docs/UPGRADE-LADDERS.md).
     # The catalyst bed is the mechanism, so this gates on peroxide's silver catalyst as much as on the
     # amine lane that supplies the fuel — both parents are real prerequisites, not a decorative crossover.
   - id: pc_cryogenicRcsFeed
@@ -4160,11 +4150,13 @@ nodes:
     tier: 13
     parents: [ep_pulsedInductive]
     flavor: "The same electrodeless pulse scaled up — more energy per pulse, a heavier propellant puff, chasing higher thrust from the same repetitively-pulsed magnetic field."
-    upgrades: [RFUpgrade_PITV-Ammonia-1200, RFUpgrade_NuPIT-7000]
+    upgrades: [RFUpgrade_PITV-Ammonia-1200, RFUpgrade_PITV-Hydrazine-1200, RFUpgrade_NuPIT-7000]
     # doctrine-4 catch: these configs' own base parts (pit-125/RO-nupit) live in ep_pulsedInductive.
-    # NOT a home for PITV-Hydrazine-1200 (its 1200-class twin, stranded at pc_hydrazineMonoprop T5 — see
-    # the note there): moving it here trips the R1 ladder invariant, because the gate classes the two by
-    # performance and Isp 7000 vs 4100 makes them distinct decisions, not one rung on two propellants.
+    # PITV-Hydrazine-1200 moved IN 2026-07-28 from pc_hydrazineMonoprop T5 (see the note there — it was
+    # gated seven tiers below its own host part). Both 1200-class configs sit here on purpose: they are the
+    # same power uprate on two working fluids, ammonia at Isp 7000 and hydrazine at 4100 — a CHOICE of
+    # propellant, not two generations. R1 permits it because electric propulsion is exempt: Isp is an
+    # operating point for a thruster, not a generation marker (build_tree.py `_is_electric`).
 
   # ---- NuclearEngineering: NTR matures past NERVA ----
   - id: nuc_ammoniaWorkingFluid

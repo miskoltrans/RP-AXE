@@ -1566,6 +1566,28 @@ def _ladder_perf():
             out[c[idx["config"]].strip()] = {k: c[i].strip() for k, i in idx.items()}
     return out
 
+def _is_electric(p):
+    """True for an ELECTRIC-propulsion config (ion, Hall, MPD, pulsed-inductive, VASIMR).
+
+    These are a different CLASS of propulsion and the ladder classifier's chemical-engine semantics do
+    not describe them. For a chemical engine, a big Isp jump is a generational step -- the whole premise
+    of _ladder_near. For an electric thruster Isp is a DIAL, not a generation: at fixed input power
+    P = 1/2 T v_e, so thrust and Isp trade against each other continuously, and one piece of hardware
+    spans a wide Isp range depending purely on how it is run. VASIMR is literally named for it, and the
+    tree already recognised this once by hand -- ep_kilowattClassPPU carries `catalog: true` because
+    "the DS4G marks are OPERATING POINTS of one experimental thruster".
+
+    So two electric configs of one part sitting on one node is a CHOICE (working fluid, operating
+    point), not a collapsed generational ladder, and R1 must not read it as one. Detected off the
+    propellant list rather than a name pattern: every electric config draws ElectricCharge, and no
+    chemical one does (electric-pump-fed engines like Rutherford draw it too, but their EC is pump power
+    on a chemical engine -- they are excluded by requiring an electric-propulsion working fluid as the
+    other propellant)."""
+    prop = (p or {}).get("propellants") or ""
+    if "ElectricCharge" not in prop: return False
+    return any(w in prop for w in ("XenonGas", "KryptonGas", "ArgonGas", "Ammonia", "Hydrazine",
+                                   "LqdAmmonia", "Lithium", "Iodine", "Bismuth"))
+
 def _propfam(s):
     """Normalise a propellant string to a chemistry family; densification tracked separately.
     RealFuels spells the same chemistry several ways (LqdOxygen/Oxygen, LqdHydrogen/Hydrogen) and
@@ -1639,6 +1661,10 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
         for r in placed: pernode[r["node"]].append(r["config"])
         for node, cfgs in pernode.items():
             if by[node].get("catalog"): continue
+            # EXEMPT: electric propulsion is a different CLASS -- Isp is an operating point there, not a
+            # generation, so two of its configs on one node is a choice, not a collapsed ladder
+            # (see _is_electric). User call, 2026-07-28.
+            if all(_is_electric(perf.get(c)) for c in cfgs): continue
             if len({klass[c] for c in cfgs}) > 1:
                 r1.append((part, node, by[node]["tier"], sorted(cfgs)))
         # R4 -- one padding class spread over several nodes: spurious tree events for a single decision.
