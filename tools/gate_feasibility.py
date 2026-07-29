@@ -271,7 +271,7 @@ def main():
     print("=" * 122)
     print("GATE FEASIBILITY -- funds banked BEFORE a milestone vs the gates that milestone demands")
     print(f"Normal preset: start {START_FUNDS:,} - Channel 1 x{FUNDS_MULT} - Channel 2 excluded "
-          "(measured separately below; it is ~2% of lifetime through first orbit)")
+          "(measured separately below; pre-orbit reputation is 0.4% of the career's)")
     print("=" * 122)
     hdr = (f"{'milestone':36} {'T':>2} {'treeSci':>8} {'banked':>11} | "
            f"{'reference vehicle':>28} {'t':>5} {'pad':>4} {'padCum':>9} {'RD':>3} {'other':>9} "
