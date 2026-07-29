@@ -380,5 +380,9 @@ more fields in the same group:
 
 All three refresh from `UpdateRate()`, which every editor path already reaches *after*
 `PushBatteryToTank()` has re-run RF's `CalculateMass()` — so the battery figure tracks the drag live rather
-than lagging a frame. The allocation bar's own label gained a second line carrying the same three numbers
-plus the reconciling "other", so the split is visible while dragging without reading the fields above it.
+than lagging a frame.
+
+The allocation bar's label was **trimmed** at the same time, to the volume split alone
+(`X L batt | Y L hw | Z L empty`). It had been carrying capacity and the overload penalty, and briefly the
+mass split too — all of which are their own PAW fields a few rows above the bar. The label is one line in a
+narrow window; anything already displayed as a field costs more in wrapping than it buys in convenience.
