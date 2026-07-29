@@ -54,6 +54,21 @@ MC_PRICE = [0, 60000, 120000, 200000, 300000]
 AC_PRICE = [0, 75000, 282000]          # Astronaut Complex, CustomBarnKit stock
 START_FUNDS = 15000                    # Normal preset
 FUNDS_MULT  = 1.5                      # prestige (1.25 Significant) x FundsGainMultiplier (1.2)
+
+# Channel 2 yield at Administration L1, in funds per point of incoming reputation.
+# CurrencyConverter.OnEffectQuery lerps BOTH terms off the same commitment factor f, so the yield is
+# QUADRATIC in f:  Lerp(minShare, maxShare, f) x Lerp(minRate, maxRate, f).
+# AXE sets minShare 0.55 (AxeStrategies.cfg) and caps f at 0.5 for Administration L1
+# (AxeFacilities.cfg @ADMINISTRATION) -- docs/ECONOMY.md §11.
+#   Lerp(0.55, 1, 0.5) x Lerp(125, 157, 0.5) = 0.775 x 141 = 109.3
+# It was 0.25 x 133 = 33.2 on CustomBarnKit's default cap with stock's minShare of 0.
+CH2_MIN_SHARE, CH2_MAX_SHARE = 0.55, 1.0
+CH2_MIN_RATE,  CH2_MAX_RATE  = 125, 157
+CH2_COMMIT_L1 = 0.5
+def _ch2(f):
+    return ((CH2_MIN_SHARE + (CH2_MAX_SHARE - CH2_MIN_SHARE) * f)
+            * (CH2_MIN_RATE + (CH2_MAX_RATE - CH2_MIN_RATE) * f))
+CH2_YIELD_L1 = _ch2(CH2_COMMIT_L1)
 REP_MULT    = 1.2                      # RepGainMultiplier, Normal
 AU = 1.496e11
 
@@ -365,15 +380,16 @@ def main():
     if rep is None:
         print("   ModuleManager.ConfigCache not found -- skipped")
     else:
-        ch2 = rep * 0.25 * 133      # Administration L1 commit cap 0.25, FundraisingCampaign ~133 f/rep
         print(f"   pre-orbit reputation paid : {rep:>10,.0f}   (vs 146,163 lifetime = "
               f"{rep/146163*100:.1f}% of the career)")
-        print(f"   -> convertible funds      : {ch2:>10,.0f}   at Administration L1")
+        print(f"   -> convertible funds      : {rep * CH2_YIELD_L1:>10,.0f}   at Administration L1 "
+              f"({CH2_YIELD_L1:.1f} funds/rep; was {rep * 0.25 * 133:,.0f} at CustomBarnKit's "
+              f"0.25 cap and stock minShare)")
         print(f"   banked at the first-orbit gate, both channels: "
-              f"{START_FUNDS + era_funds['A'] + ch2:>10,.0f}")
+              f"{START_FUNDS + era_funds['A'] + rep * CH2_YIELD_L1:>10,.0f}")
 
     # ---- 5. every route to first orbit ------------------------------------------------
-    have = START_FUNDS + era_funds["A"] + (rep * 0.25 * 133 if rep else 0)
+    have = START_FUNDS + era_funds["A"] + (rep * CH2_YIELD_L1 if rep else 0)
     have_no_aviation = START_FUNDS + (budgets.get("SuborbRocketDev", 0) +
                                       budgets.get("SuborbRocketResearch", 0)) * FUNDS_MULT
     print()
