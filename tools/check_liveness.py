@@ -15,16 +15,26 @@ merge and the load", so this needs a real instance that has booted at least once
   python tools/check_liveness.py --instance <ksp-root>
 
 Checks
+  0  staleness             -- is the boot we are judging older than the configs we are judging?
   A  empty / thinned tree nodes  -- a placed part that no longer exists in the loaded game
   B  phantom part modules       -- MODULE{name=X} we add where no assembly defines X
   C  inert config nodes         -- a top-level NODE we ship that no assembly ever reads
+  T  dangling tech gates        -- check_tech_refs.py in --cache mode, folded in so one command
+                                   covers the whole family
   D  dead patch targets         -- @PART[x] we patch where x matched nothing (report only)
 
-Exit code is non-zero if A, B or C found anything. D is advisory: RP-AXE deliberately carries
-RP-1's patches for optional mods (FASA, SSTU, ALCOR...) that this install does not have.
+Exit code is non-zero if 0, A, B, C or T found anything. D is advisory: RP-AXE deliberately
+carries RP-1's patches for optional mods (FASA, SSTU, ALCOR...) that this install does not have.
+
+Check 0 exists because every other verdict here is a lie without it. The cache and the log are
+snapshots of one boot; edit a config afterwards and this tool cheerfully re-reports the old
+world. That is the same shape as the family-C failures in docs/BUG-CLASSES.md -- a check that
+could not have caught the thing it was pointed at.
 """
-import argparse, glob, os, re, sys
+import argparse, glob, os, re, sys, time
 from collections import defaultdict
+
+import check_tech_refs
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AXE = os.path.join(REPO, "GameData", "RP-AXE")
@@ -215,10 +225,35 @@ def main():
             print(f"FATAL: {f} not found -- boot the instance once first.")
             return 2
     print(f"instance: {args.instance}")
+    fail = 0
+
+    # ---- 0: is this boot new enough to judge the current configs? ---------------------------
+    # Judge on the CACHE, never on KSP.log: a running KSP writes to the log continuously, so the
+    # log's mtime is "now" and would call any stale state fresh. ModuleManager rewrites the cache
+    # exactly when the config SHA changes, so `cache mtime >= newest cfg mtime` is precisely
+    # "the merge we are reading saw the configs we are checking".
+    booted = os.path.getmtime(cache)
+    newest, newest_f = 0, None
+    for dirpath, _, files in os.walk(AXE):
+        for fn in files:
+            if not fn.endswith((".cfg", ".dll")):
+                continue
+            p = os.path.join(dirpath, fn)
+            m = os.path.getmtime(p)
+            if m > newest:
+                newest, newest_f = m, p
+    when = time.strftime("%Y-%m-%d %H:%M", time.localtime(booted))
+    if newest > booted:
+        print(f"\n*** STALE: the merged cache is from {when}, but {rel(newest_f)} changed after it. ***")
+        print("    Every verdict below describes the PREVIOUS boot. Delete")
+        print(f"    {os.path.join(args.instance, 'GameData', 'ModuleManager.ConfigCache')}")
+        print("    and relaunch KSP (`-axe-autotest` for a hands-free run), then re-run this.\n")
+        fail = 1
+    else:
+        print(f"          merge of {when} saw every shipped cfg/dll -- verdict is current")
 
     live, usable, dead_compile, missing_modules = usable_parts(cache, log)
     print(f"          {len(live)} parts merged, {len(dead_compile)} failed to compile\n")
-    fail = 0
 
     # ---- A: tree nodes that grant nothing --------------------------------------------------
     empty, thin = [], []
@@ -267,6 +302,23 @@ def main():
         fail = 1
     print()
 
+    # ---- T: tech gates that point at no node (delegated to check_tech_refs, cache mode) -------
+    valid = check_tech_refs.load_valid_nodes(check_tech_refs.DEFAULT_TREE) | check_tech_refs.INTENTIONAL
+    findings = check_tech_refs.scan_cache(cache, valid)
+    axe_bad, ext_bad = check_tech_refs.split_findings(findings)
+    dangling = sorted(axe_bad + ext_bad)          # in cache mode nothing is external -- see that tool
+    print(f"=== T. tech-gate references that resolve to no tree node ({len(dangling)}) ===")
+    if dangling:
+        print("  (GetTechnologyState(unknown) -> Unavailable: whatever they gate is locked forever.)")
+    for node, refs in dangling:
+        fields = sorted({r[0] for r in refs})
+        print(f"  {node}  [{', '.join(fields)}]  x{len(refs)}")
+        for f in sorted({r[1] for r in refs})[:3]:
+            print(f"      {f}")
+    if dangling:
+        fail = 1
+    print()
+
     # ---- D: patch targets that matched nothing (advisory) -------------------------------------
     targets = patch_targets()
     dead_t = {t: locs for t, locs in targets.items() if t not in live}
@@ -282,7 +334,8 @@ def main():
             print(f"      {f}:{i}")
     print(f"  ... plus {len(dead_t) - len(ours)} more in vendored seed/ support patches")
 
-    print("\n" + ("FAIL -- see A/B/C above." if fail else "OK -- everything RP-AXE ships binds to something."))
+    print("\n" + ("FAIL -- see 0/A/B/C/T above." if fail
+                  else "OK -- everything RP-AXE ships binds to something."))
     return fail
 
 

@@ -148,12 +148,20 @@ If `dotnet` resolves the wrong toolchain, mirror RP-1's approach: it pins Roslyn
 2. If code changed: rebuild (`dotnet build …`).
 3. Launch KSP (`Instance/KSP_x64.exe`) — or ask the user to, since it's a GUI app:
    suggest they type `! Instance/KSP_x64.exe` in the prompt.
-4. **Read `Instance/KSP.log`** — this is the primary feedback channel for an agent. Grep it for:
+4. **Run the post-boot gates** — they read the merged cache + the log, which is the only place
+   most breakage is visible (see [`BUG-CLASSES.md`](BUG-CLASSES.md)):
+   ```
+   python tools/check_liveness.py          # empty nodes, phantom modules, inert cfgs, dead tech gates
+   python tools/check_settings_parity.py   # settings RP-1 owned that we never re-authored
+   ```
+   `check_liveness.py` refuses to answer if the cache predates your edits, so a green run means
+   the verdict is about the build you just made. `rebuild-instance.ps1` runs both automatically.
+5. **Read `Instance/KSP.log`** for anything the gates don't model. Grep it for:
    - `[ModuleManager]` patch counts / exceptions
    - `ContractConfigurator` parse errors (these tell you which custom `type =` failed to resolve)
    - `[AXE]` — our plugin should log under this prefix
    - `NullReferenceException` / `[ERR]`
-5. For gameplay verification (does the contract offer? does the node unlock?) prefer a quick
+6. For gameplay verification (does the contract offer? does the node unlock?) prefer a quick
    in-game check; capture findings in the relevant task.
 
 > Tip: a load-to-main-menu + new-science-game smoke test surfaces ~90% of config/plugin breakage

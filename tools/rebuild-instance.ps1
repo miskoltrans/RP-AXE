@@ -4,7 +4,7 @@
     RP-AXE CKAN deps -> install our SCANsat fork -> deploy RP-AXE. No RP-1 anywhere.
 
 .DESCRIPTION
-    Five steps:
+    Six steps:
       1. NUKE     - delete C:\git\ksp\Instance (after first unlinking the RP-AXE junction so the
                     recursive delete can't follow it into the repo and wipe GameData\RP-AXE).
       2. COPY     - mirror the pristine snapshot (..\ksp_instance_clean) into a fresh Instance.
@@ -17,8 +17,19 @@
                     GameData\SCANsat into the instance. NOT a CKAN dependency on purpose.
       5. DEPLOY   - junction GameData\RP-AXE in via deploy.ps1 (AXE.dll ships in the repo, so no
                     build step is required).
+      6. VERIFY   - boot the instance once with -axe-autotest (hands-free: new career, walk R&D +
+                    Mission Control, quit), then run tools\check_liveness.py and
+                    tools\check_settings_parity.py against the cache that boot produced.
+                    Skip with -NoVerify.
 
     The pristine snapshot does NOT contain RP-1, so nothing has to be disabled.
+
+    WHY STEP 6 IS PART OF THE REBUILD. Every liveness question -- does this node grant a part, does
+    this MODULE exist, does this tech gate resolve -- can only be answered from the MERGED cache,
+    which does not exist until KSP has booted. A rebuild that stops at step 5 leaves an instance
+    nobody has checked, and the checks then run when someone remembers, which is how 702 RCS engine
+    configs stayed locked (docs\BUG-CLASSES.md). Booting here is the cheapest moment: the cache has
+    to be built on first launch anyway.
 
 .PARAMETER CleanSnapshot
     Pristine KSP install to copy from. Default C:\git\ksp\ksp_instance_clean (sibling of Instance,
@@ -36,9 +47,18 @@
 .PARAMETER Force
     Skip the "are you sure" confirmation before the destructive nuke.
 
+.PARAMETER NoVerify
+    Skip step 6 (boot + liveness gate). The instance is then unverified -- run
+    `python tools\check_liveness.py` yourself after the first launch.
+
+.PARAMETER VerifyTimeoutMinutes
+    Give up on the -axe-autotest boot after this long and kill it (default 15). A cold first launch
+    compiles every part, so it is slow; the harness itself quits when done.
+
 .EXAMPLE
     pwsh tools/rebuild-instance.ps1
     pwsh tools/rebuild-instance.ps1 -Force
+    pwsh tools/rebuild-instance.ps1 -Force -NoVerify
     pwsh tools/rebuild-instance.ps1 -CleanSnapshot D:\ksp_clean -Force
 #>
 [CmdletBinding()]
@@ -56,13 +76,15 @@ param(
     [string]$CkanExe         = (Join-Path $KspRoot 'ckan.exe'),
     [string]$DepsCkan        = (Join-Path $AxeRepo 'RP-AXE-deps.ckan'),
     [string]$ScanSatForkPath = (Join-Path $KspRoot 'SCANsat'),
-    [switch]$Force
+    [switch]$Force,
+    [switch]$NoVerify,
+    [int]$VerifyTimeoutMinutes = 15
 )
 
 $ErrorActionPreference = 'Stop'
 $deployScript = Join-Path $PSScriptRoot 'deploy.ps1'
 
-function Step($n, $msg) { Write-Host "`n[$n/5] $msg" -ForegroundColor Cyan }
+function Step($n, $msg) { Write-Host "`n[$n/6] $msg" -ForegroundColor Cyan }
 
 # Unlink a directory junction / reparse point WITHOUT deleting its target contents.
 function Remove-JunctionLink([string]$path) {
@@ -190,5 +212,53 @@ Write-Host "  SCANsat fork built and installed -> $scanSatDst"
 # --- step 5: deploy RP-AXE -------------------------------------------------------------------
 Step 5 "Deploy RP-AXE (junction in)"
 & $deployScript -InstancePath $instFull
+
+# --- step 6: boot once, then judge what the boot produced -------------------------------------
+Step 6 "Verify (boot with -axe-autotest, then run the liveness gate)"
+if ($NoVerify) {
+    Write-Host "  skipped (-NoVerify). The instance is UNVERIFIED -- after the first launch run:" -ForegroundColor Yellow
+    Write-Host "    python tools\check_liveness.py" -ForegroundColor Yellow
+} else {
+    $kspExe = Join-Path $instFull 'KSP_x64.exe'
+    if (-not (Test-Path $kspExe)) { throw "no KSP_x64.exe at $kspExe" }
+    Write-Host "  launching $kspExe -axe-autotest (cold load compiles every part; this is slow)"
+    # -Wait would block forever on a hung harness, so wait explicitly with a timeout and kill.
+    # NB the autotest quits itself when done (quitWhenDone), which is what ends this normally.
+    $proc = Start-Process -FilePath $kspExe -ArgumentList '-axe-autotest' `
+                          -WorkingDirectory $instFull -PassThru
+    $null = $proc.Handle   # cache the handle NOW -- once the process exits, .NET can no longer
+                           # open it, and WaitForExit/ExitCode on an uncached handle throws.
+    if (-not $proc.WaitForExit($VerifyTimeoutMinutes * 60 * 1000)) {
+        Write-Host "  autotest did not finish in $VerifyTimeoutMinutes min -- killing it" -ForegroundColor Yellow
+        try { $proc.Kill() } catch {}
+        $proc.WaitForExit(30000) | Out-Null
+    }
+
+    $log = Join-Path $instFull 'KSP.log'
+    if (Test-Path $log) {
+        $result = Select-String -Path $log -Pattern '\[AXE\]\[AutoTest\].*(RESULT|FAILED)' |
+                  Select-Object -Last 5
+        if ($result) { $result | ForEach-Object { Write-Host "  $($_.Line.Trim())" } }
+        else { Write-Host "  (no [AXE][AutoTest] result line in KSP.log)" -ForegroundColor Yellow }
+    }
+
+    $gate = 0
+    Push-Location $AxeRepo
+    try {
+        Write-Host "`n  running tools\check_liveness.py"
+        & python (Join-Path $PSScriptRoot 'check_liveness.py') --instance $instFull
+        if ($LASTEXITCODE -ne 0) { $gate = 1 }
+
+        Write-Host "`n  running tools\check_settings_parity.py"
+        & python (Join-Path $PSScriptRoot 'check_settings_parity.py') `
+            --cache (Join-Path $instFull 'GameData\ModuleManager.ConfigCache')
+        if ($LASTEXITCODE -ne 0) { $gate = 1 }
+    } finally { Pop-Location }
+    $global:LASTEXITCODE = 0
+    if ($gate -ne 0) {
+        Write-Host "`nInstance rebuilt, but the liveness gate FAILED -- see above." -ForegroundColor Red
+        exit 1
+    }
+}
 
 Write-Host "`nInstance rebuilt. RP-AXE deployed, our SCANsat fork installed, no RP-1." -ForegroundColor Green

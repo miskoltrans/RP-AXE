@@ -33,7 +33,7 @@ is a silent break.
 | **A2** Part module with no class | `MODULE { name = X }` where no assembly defines `X`. KSP drops the module and logs one line among thousands. Anything keyed on it — a Kerbalism `requirements = Module:X`, a contract `PartValidation` — can then never match. | the 16 `*LabExperimentPackage` markers (**open**, see below) | `check_liveness.py` check B |
 | **A3** Dangling tech-node id | Fails **closed**: `GetTechnologyState(unknown)` → `Unavailable`, so the gated thing is locked forever. | `autoStrutTechRequired = generalConstruction` (`4708e6c`); 4 orphaned stock/CTT ids (`c3e6620`); HDD-Upgrade gates (`1d0f3db`); US2 wedge `Configure` gates (`1d5472c`); 702 RCS engine CONFIGs (**open**) | `check_tech_refs.py --cache` |
 | **A4** Placed part that isn't there | The tree places a part that another AXE config deletes, that a missing mod owns, or that fails to compile. The node still costs science and grants nothing. | `ca_GRS`, the 5 `dmUS2*` wedges (**open**) | `check_liveness.py` check A |
-| **A5** Global setting that reverts to stock | RP-1 was the *only* source of a CustomBarnKit section or difficulty key; dropping RP-1 resurrected the stock value nobody chose. | the 7-item punch-list (`5c12181`, `4708e6c`, `25e2b80`, `7e3b58f`) | none — needs a periodic RP-1↔AXE section diff |
+| **A5** Global setting that reverts to stock | RP-1 was the *only* source of a CustomBarnKit section or difficulty key; dropping RP-1 resurrected the stock value nobody chose. | the 7-item punch-list (`5c12181`, `4708e6c`, `25e2b80`, `7e3b58f`); 17 more found 2026-07-29 | `check_settings_parity.py` |
 
 ### B. Semantic misread — the API does not mean what the field name says
 
@@ -87,13 +87,27 @@ The reason a bug in family A or B survives long enough to reach playtesting.
 
 | Tool | Covers | Needs |
 |---|---|---|
-| `tools/check_tech_refs.py --cache <ConfigCache>` | A3 | a booted instance |
-| `tools/check_liveness.py` | A1, A2, A4 | a booted instance (`ConfigCache` + `KSP.log`) |
+| `tools/check_liveness.py` | A1, A2, A4 + A3 (folds in `check_tech_refs --cache`) | a booted instance (`ConfigCache` + `KSP.log`) |
+| `tools/check_tech_refs.py --cache <ConfigCache>` | A3 alone, with fuller output | a booted instance |
+| `tools/check_settings_parity.py` | A5 | RP-1 checked out; a cache sharpens it |
 | `tools/check_forks.py`, `check_ladder_collapse` (in `build_tree.py`) | tree-design invariants | repo only |
 | `tools/check_nonreentry.py` | reentry-rating coverage | repo only |
 
-Run the two cache-based tools after any `rebuild-instance.ps1` and before any playtest. They are
-the only ones that see what the game actually loaded.
+`rebuild-instance.ps1` step 6 boots the instance with `-axe-autotest` and runs `check_liveness.py`
++ `check_settings_parity.py` against the cache that boot produced, so a rebuild that reaches the
+end is a rebuild somebody checked. `-NoVerify` opts out and says so loudly.
+
+`check_liveness.py` opens with a **staleness check**: if the merged cache predates any shipped
+`.cfg`/`.dll`, it refuses to answer rather than describing the previous boot. That check is
+deliberately judged on the cache's mtime and never the log's — a running KSP writes to the log
+continuously, so a log-based check calls every stale verdict fresh. It is check 0 because without
+it every other verdict in the file is a family-C failure.
+
+`check_settings_parity.py` carries a checked-in **disposition table**: every RP-1 settings key AXE
+does not match must be recorded as CUT / STOCK-deliberate / DEFERRED / OPEN, with a reason. A
+settled decision stays quiet; an undispositioned one fails the gate. That is what makes it survive
+an RP-1 update — new keys arrive undispositioned instead of silently joining the noise. It also
+compares **values against the live cache**, so a key RO supplies anyway is not reported at all.
 
 ---
 
@@ -173,7 +187,41 @@ body/experiment/situation combos — in AXE they stay collectible, mostly overla
 `EarthScienceRemoval.cfg`) and `AVIONICSCONFIGS` in `seed/Parts/_RP-AXE-extra/ProceduralAvionics.cfg`,
 which is dead weight now that `proceduralAvionics` carries `ModuleAxeAvionics`.
 
-### 6. Known-and-accepted, re-confirmed
+### 6. Seventeen settings AXE never re-authored — A5 · **medium**
+
+`check_settings_parity.py` diffs RP-1's 1,954 settings keys against AXE's 478 and reports only
+where the **live merged value** actually differs. 1,564 are settled decisions (RP-1's
+SpaceCenterManagement economy, crew progression, KCT, Programs — all cut on purpose). 17 are not:
+
+**EVA rides on the Astronaut Complex, not on the crew system.** Cutting crew progression handed
+these to stock without anyone choosing them:
+
+| key | live | RP-1 | consequence |
+|---|---|---|---|
+| `ASTRONAUTS/unlockedEVA` | 2 | 4 | EVA needs Astronaut Complex L2 — a **75,000-fund** upgrade AXE never designed |
+| `ASTRONAUTS/homebodyAtmoEVA` | false | true | no EVA inside Earth's atmosphere at all |
+| `ASTRONAUTS/unlockedEVAChute` | 3 | 1 | EVA chutes only at a maxed Astronaut Complex |
+| `ASTRONAUTS/unlockedEVAClamber`, `unlockedEVAFlags` | 3, 2 | 5, 5 | ride along |
+
+AXE ships EVA science, an EVA flight log and crewed contracts, so this is the same shape as the
+autostrut and on-orbit-fuel-transfer items from the original punch-list.
+
+**Two reputation faucets nobody modelled:** `MISSION/reputationKerbalRecovery` is live at **25 per
+kerbal** × `RepGainMultiplier` on every recovered crewed vessel, against RP-1's 1 — and
+`tools/rep_budget.py` does not model it. It does not convert to funds directly, but reputation is
+what the strategy commitment slider is measured against, so it still moves Channel 2.
+`reputationKerbalDeath` is live at 10 against RP-1's 200: killing a crew is nearly free.
+
+**Five kerbal G-tolerance keys** (`PHYSICSGLOBALS/kerbalGThresholdLOC` 60000 vs RP-1's 90000, plus
+Warn/Offset/BadMult/BraveMult) are at stock. The earlier audit cleared "G/pressure **part** limits"
+as intact — these are the **kerbal** limits, a different set, never checked.
+
+**Five KSPCommunityFixes patches** RP-1 turns on and AXE leaves at the mod's default `false`. Two
+are more relevant here than in RP-1: `PartTooltipUpgradesApplyToSubstituteParts` (AXE ships 603
+PARTUPGRADEs) and `StrategyDuration` (AXE uses stock strategies as a funds channel). The other
+three — `OnSymmetryFieldChanged`, `FewerSaves`, `DisableNewGameIntro` — are QoL.
+
+### 7. Known-and-accepted, re-confirmed
 
 - 14 `PARTUPGRADE`s still strand on the `parking` catch-all, including `RFUpgrade_30x_NK-33`,
   `RFUpgrade_8x_NK-43`, `RFUpgrade_RD-0108`.
