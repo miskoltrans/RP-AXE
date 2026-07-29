@@ -81,6 +81,11 @@ US2_WEDGES={  # RP-1-authored, not present in ro_expanded
   "USFluidSpectroWedge":"Mass Spectrometer Unit","USThermoBaroWedge":"Atmospheric Science Unit",
   "USAccelGravWedge":"Orbital Science Unit"}
 
+AXE_PARTS={  # authored BY AXE, so they exist in no upstream dump -- resolve them here or nowhere
+  "AXE-GammaRaySpectrometer":"GR01 - Gamma-Ray Spectrometer",
+  "AXE-XRayFluorescence":"XR01 - X-Ray Fluorescence Spectrometer",
+  "AXE-NeutronSpectrometer":"NS01 - Neutron Spectrometer"}
+
 ADD={  # our divergences (names; mod/title resolved from ro_expanded)
   # Tantares flagship (48)
   "aquarius_crew_s1p5_1","vela_landing_leg_srf_1","vela_landing_leg_srf_2","aquarius_heatshield_s1p5_1",
@@ -118,6 +123,7 @@ for m,n,t in base:
 for m,n,t in ro_list:                                  # RP-1's expansion keeps
     if m in EXPANSION_MODS and n not in cuts: manifest[n]=(m,t)
 for n,t in US2_WEDGES.items(): manifest[n]=("UniversalStorage2",t)
+for n,t in AXE_PARTS.items(): manifest[n]=("RP-AXE",t)
 missing=[]
 for n in sorted(ADD):
     if n in ro: manifest[n]=ro[n]

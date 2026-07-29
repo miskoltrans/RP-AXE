@@ -563,31 +563,50 @@ space. Branching them off `nuc_cosmicRay` makes the lineage a true sentence.
 
 | node | tier | instrument | first flight | base/cap |
 |---|---|---|---|---|
-| `nuc_gammaRaySpectrometry` | ~5 | GR01 — Gamma-Ray Spectrometer | Luna 10, **1966** | 12 |
-| `nuc_xrayFluorescence` | ~7 | XR01 — X-Ray Fluorescence Spectrometer | Apollo 15 SIM bay, 1971 | 20 |
-| `nuc_neutronSpectrometry` | ~10 | NS01 — Neutron Spectrometer | Lunar Prospector, 1998 | 35 |
+| `nuc_gammaRaySpectrometry` | 6 | GR01 — Gamma-Ray Spectrometer | Luna 10, **1966** | 6 |
+| `nuc_xrayFluorescence` | 8 | XR01 — X-Ray Fluorescence Spectrometer | Apollo 15 SIM bay, 1971 | 10 |
+| `nuc_neutronSpectrometry` | 10 | NS01 — Neutron Spectrometer | Lunar Prospector, 1998 | 16 |
 
-Values sit inside the established band and climb like the other families (`magScan` 6/12/40,
-`massSpec` 8/12/20/30, `RPWS` 7/20/30). Naming follows the kit's own convention (CR01, MS01, VI05…).
+**SHIPPED 2026-07-29.** Tiers set against era neighbours (`okb_lunaLanders` T7 = Luna 9/10 1966;
+`int_apolloBlockIII` T9 = the J-mission SIM bay; T10 = the modern instruments at
+`opt_hyperspectralImaging`), one tier below each so the instrument is in hand when the vehicle that
+carried it is. Straight chain off `nuc_cosmicRay`, no crossovers.
 
-**The masks are the whole point.** `situationMask = 48` (in-space low + high) is the standard orbital
-instrument mask, but these get **`biomeMask = 48` as well** — biome-resolved from orbit, precedented
-by `RP0infraredRad1–4`, which are the only other instruments that do it. That makes surface
-composition **repeatable per biome**: you map a body region by region rather than banking one reading
-and moving on. That is a genuinely new *shape* of science in AXE, not just three more experiments —
-and it is what the real instruments actually did.
+Naming follows the kit's own convention (CR01, MS01, VI05…).
+
+**The masks are the whole point.** `situationMask = 48` (in-space low + high), and
+**`biomeMask = 16` — biome-resolved in LOW space only.** That is both the physics and the mechanic:
+Lunar Prospector mapped from 100 km and Mars Odyssey from 400 km because resolution demands it, and
+from high orbit you get one global average. A lazy high orbit banks a single reading; a proper low
+mapping orbit pays per region. Only `RP0infraredRad1–4` are biome-resolved from orbit at all, and
+they split both situations — this family is the first where **altitude** is the thing that decides.
+
+**Values are set against the biome multiplier, not the headline number.** `biomeValue` sums a body's
+biome weights (Moon 8.5, Earth ~12, Mars 19, Pluto 20 — §1b), so a biome-split experiment is worth
+roughly an order of magnitude more than its `baseValue` reads. The correct benchmark is therefore the
+other biome-from-orbit family, `RP0infraredRad1–4` at 2/3/4/6 — **not** `magScan` (6/12/40) or
+`massSpec` (8/12/20/30), which are biome-blind or landed-only. 6/10/16 sits just above the
+radiometers. Benchmarked against the biome-blind families these would read absurdly cheap, and that
+reading is the trap. **Still to do: measure the real career total with `tools/science_budget.py` once
+the instance has booted with these in it — the arithmetic is an estimate, not a measurement.**
 
 **Neutron spectrometry earns its late tier by reading hydrogen** — i.e. water ice. It is the one
 instrument here with a reason to exist beyond science points: it tells you which polar site is worth
 landing at.
 
-**Open decisions before authoring:** the three tiers above are approximate and want checking against
-their era neighbours; the model assignment per instrument; and whether XRF branches off the gamma-ray
-node or off `nuc_cosmicRay` directly. `ca_GRS` itself stays deleted — the cleanup list is right that
-an unconfigured Coatl part should not ship; we take its model, not its config.
+**Decisions taken at authoring:** XRF branches off the gamma-ray node (a straight three-rung chain,
+no crossovers); models are borrowed from CoatlAerospace's deleted science parts (`ca_GRS`, `ca_ELIX`,
+`ca_SWIS`) under `:NEEDS[CoatlAerospace]`, which is a declared dependency — cosmetic and swappable.
+`ca_GRS` itself stays deleted: the cleanup list is right that an unconfigured Coatl part should not
+ship, so we take its model, not its config. Experiment ids are `AXE`-prefixed rather than `RP0*` so a
+future re-vendor of `seed/` can never collide with them.
 
-**Then:** author the three parts + three `EXPERIMENT_DEFINITION`s, home the nodes, and add the parts
-to `manifest/curated-parts.tsv` so the membership gate in `build_tree.py` accepts them.
+**Files:** `design/Parts/Science/AxeGeochemistry.cfg` (three parts, Kerbalism-native so no
+DMagic-conversion pass is needed), `design/Science/AxeGeochemistryExperiments.cfg` (definitions +
+runtime tuning), three nodes in `tree/nodes.yaml`, and three rows in `manifest/curated-parts.tsv`
+plus the `AXE_PARTS` block in `build_manifest.py` that regenerates them. NB `build_manifest.py`
+cannot currently be re-run — it reads scratch inputs from a dead session — so the manifest rows are
+hand-maintained until those are restored.
 
 ### 6b. SETTLED 2026-07-29 — `mic_atmoSounding` stays as it is
 

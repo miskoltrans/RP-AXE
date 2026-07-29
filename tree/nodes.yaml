@@ -1045,6 +1045,33 @@ nodes:
     parents: [nuc_geiger]
     flavor: "Stack scintillators and photomultipliers in coincidence so only a particle passing clean through every layer is counted: a telescope not for light but for cosmic rays, reading their energy and direction. The photomultiplier and its fast coincidence circuit run on the vacuum-tube electronics of the day — no transistor required."
     parts: [RO-ScintillationCounter, RP0Cherenkov]
+
+  # ---- Orbital Geochemistry: the same detectors, turned to face a surface (docs/SCIENCE.md §6a) ----
+  # AXE's own science category, and the first in the tree that is biome-resolved from orbit: these
+  # experiments are repeatable per region, so a body gets MAPPED rather than sampled once. Lineage is
+  # detector physics, not remote sensing -- a gamma-ray spectrometer is a scintillator with somewhere
+  # else to point -- so the lane grows out of nuc_cosmicRay rather than crossing over from optics.
+  - id: nuc_gammaRaySpectrometry
+    title: "Gamma-Ray Spectrometry"
+    discipline: NuclearEngineering
+    tier: 6
+    parents: [nuc_cosmicRay]
+    flavor: "Cosmic rays knock the nuclei of a planet's surface into excited states, and they fall back emitting gamma rays at energies unique to each element. Count those photons from orbit and sort them by energy and the ground below resolves into potassium, thorium, uranium, iron and titanium — the first instrument that says what another world is made of, not what it looks like. Luna 10 did it in 1966, before anything had landed."
+    parts: [AXE-GammaRaySpectrometer]
+  - id: nuc_xrayFluorescence
+    title: "X-Ray Fluorescence Spectrometry"
+    discipline: NuclearEngineering
+    tier: 8
+    parents: [nuc_gammaRaySpectrometry]
+    flavor: "The Sun's X-rays strike the surface and it fluoresces back, and in that returning light sit the elements gamma rays read poorly — magnesium, aluminium, silicon, the rock-forming majority. The catch is that you are reading an echo, so the instrument must also look at the Sun to know what was shouted. Apollo's service module carried both, staring down and up at once."
+    parts: [AXE-XRayFluorescence]
+  - id: nuc_neutronSpectrometry
+    title: "Neutron Spectrometry"
+    discipline: NuclearEngineering
+    tier: 10
+    parents: [nuc_xrayFluorescence]
+    flavor: "Cosmic rays spall neutrons out of the ground, and hydrogen — alone among nuclei in weighing exactly what a neutron does — robs them of their energy on the way out. So you count what does NOT come back. Suppressed neutrons mean buried hydrogen, buried hydrogen means water ice, and the map that falls out tells you which permanently shadowed crater is worth landing in."
+    parts: [AXE-NeutronSpectrometer]
   - id: opt_recon
     title: "Film Reconnaissance"
     discipline: OpticsPhotonics
