@@ -1606,7 +1606,8 @@ def _avionics_shd_desc(rp1, node_title):
     lead = ("Enables the Shielded avionics toggle" if rp1 == "basicAvionics"
             else "Advances the shielded avionics ladder")
     return (f"<b>{node_title}</b> {lead} — a dedicated deep-space tier "
-            f"(its own mass and cost curve, plus deep hibernation) for operating through radiation belts "
+            f"(its own mass and cost curve, plus a deeper avionics shutdown available from its first tier) "
+            f"for operating through radiation belts "
             f"and on interplanetary cruise. <color=#7fd3ff>Applied automatically when this node is researched.</color>")
 
 def _dsn_desc(level):

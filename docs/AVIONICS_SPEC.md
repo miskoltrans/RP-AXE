@@ -218,9 +218,60 @@ mass* just in battery (a hard practical wall — you will not reach orbit built 
 absurd. `k` is the one tuning dial if this needs adjusting after real play-testing — pushing it up hardens
 both thresholds simultaneously since it's one curve, not two independently-set breakpoints.
 
+**Multiplier ceiling — ADDED 2026-07-29.** The multiplier is now clamped to `54.6` (`penaltyMultiplierCap`, a
+`KSPField`), which is `e^(8×0.5)` — *exactly* the 50%-over reference point above. Every case the curve was
+calibrated against is therefore bit-identical; only the uncalibrated tail past 50% over is clipped. That tail
+was the problem: unclamped it reaches `e^80 ≈ 5.5e34 W`, which flattens every battery on the vessel inside a
+physics tick, drops `ModuleCommand`, and takes staging and throttle with it — strictly *harsher* than the
+attitude lock this penalty was chosen over, and unrecoverable, since the battery is dead long before the
+overloading stage separates and `r` falls back under 1. (The pre-existing clamp was on the *exponent*, at 80,
+which only fixed a literal `Infinity` readout and left the behaviour untouched.) Note `r` is whole-vessel
+**wet** mass while `ec_draw_normal` is built from **dry** mass — deliberate, but worth remembering when
+reading the two numbers side by side.
+
 **UI**: show the penalty portion distinctly, not just a combined total — as a percentage over normal draw
 (`(e^(8(r−1))−1) × 100%`), so a player can see at a glance how much of their current draw is "penalty" versus
 baseline.
+
+## Shutdown parity with RP-1 — ADDED 2026-07-29
+
+The toggle AXE shipped as **Hibernate** is RP-1's **Shutdown Avionics** (`ModuleAvionics.systemEnabled`), not
+stock probe hibernation — RP-1 blanket-disables that on every `ModuleCommand` (`Avionics.cfg:1`) and so does
+AXE. The tier gate was ported faithfully (`GetToggleable() => disabledPowerFactor > 0`: Unshielded from index
+9 only at `0.1`, Shielded every tier at `0.05`, Science-Core never), but three things did not come across, and
+together they made the feature unusable for the case it exists to serve.
+
+**The disabled draw carried the overload penalty.** RP-1's `GetDisabledkW()` is `GetEnabledkW() ×
+disabledPowerFactor`, and RP-1's enabled kW has no overload term at all — RP-1 locks attitude instead of
+taxing power. AXE built the sleeping rate from `ComputeBaseWatts()`, which folds the penalty in. Combined with
+the (correct, RP-1-matching) rule that a shut-down core leaves `EffectiveCapacityTons`, a vessel whose *only*
+guided core went to sleep saw capacity fall to 0 → `r → +∞` → the advertised "5% depth" was 5% of `e^80`. So
+shutting an overloaded core down never saved it, and shutdown could not function as an escape from overload —
+which is precisely what a staged vehicle needs it for. Sleeping draw is now built from `TierWatts()`, and
+`PenaltyMultiplier()` returns 1 outright while asleep.
+
+**It was flight-only.** RP-1 sets `guiActive` and `guiActiveEditor` alike from `GetToggleable()`. An upper
+stage's avionics can now be *built* shut down rather than only switched off after launch.
+
+**Only one action existed.** RP-1 pairs the toggle with one-way Shutdown and Activate actions so a state
+change can be dropped into a staging sequence without depending on the current state. All three now exist.
+
+**Also ported: `OnSave` writes the on-rails draw** ("too many ways to exit a scene" — RP-1
+`ModuleAvionics.cs:260`). Kerbalism's `BackgroundUpdate` reads `currentWatts` straight out of the module
+snapshot for an unloaded vessel, so persisting the live active figure billed a parked craft the penalised rate
+for the entire time it sat unloaded.
+
+**Deliberately not ported:** the crew veto ("Cannot shut down avionics while crewed") — this part is never
+crewed; and `dead` / "Disable Avionics permanently", a separate one-way action with its own antenna-kill
+cascade (`KillAntennasIfLastAvionicsDead`) that AXE has no current need for.
+
+**Player-facing naming follows RP-1** — the PAW reads *Shutdown Avionics* / *Activate Avionics*, because the
+unit leaving the steerable-mass budget is the point and "hibernate" does not convey it. Internal names
+(`hibernating`, `CanHibernate`, `ToggleHibernation`) are unchanged for save compatibility.
+
+**What this does not fix.** Shutdown is gated at index 9, so it is not available to an early-career craft —
+matching RP-1, which does not need it there because RP-1 locks rather than penalises. An overloaded early-tier
+core still pays the (now capped) penalty with no way to switch itself off.
 
 ---
 
