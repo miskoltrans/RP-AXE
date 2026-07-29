@@ -423,10 +423,15 @@ make sense from gameplay"*.)
   1.2-2.0x the mass of a static one built from identical cells and buys continuous sun-pointing; a
   folded one pays 1.05-1.75x and buys stowed volume. Comparing a folded TL4 with a static TL5 compares
   two products, not a dead part.
-- **Known consequence, not yet acted on:** `RO_EarlyMediumSolarPanel` (TL1) now sits on
-  `elec_deployableArrays` beside the TL2 panels moved in, so it is the weakest part on its own node.
-  Its own parity tier is T4, and its natural home is `elec_siliconPV` (T3) alongside
-  `RO_EarlyTinySolarPanel`, which is the other TL1 static panel.
+- **Follow-up, DONE:** `RO_EarlyMediumSolarPanel` (TL1) briefly became the weakest part on
+  `elec_deployableArrays` beside the TL2 panels moved in, so it went to **`elec_siliconPV` (T3)**
+  alongside `RO_EarlyTinySolarPanel` -- the other TL1 static panel. The two early-era panels now share
+  a node and differ only in size, and `elec_deployableArrays` is a clean all-TL2 node.
+
+**Solar lane closed.** The only same-deployment-class generation gaps left on any single node are
+`elec_busArrayCatalog` (the rule-7 dead-end, where era-frozen hardware is the point) and
+`elec_deployablePanelII` folded TL4+TL5 -- where the TL4 is at parity with procedural and the TL5 is
+the 1.27x reward, so neither is dead.
 
 **Left standing, deliberately:**
 - `ca_landv_hga` (TL3/tracking, implies T6) stays on `int_surveyorLanderBus` (T8) -- it is a combined

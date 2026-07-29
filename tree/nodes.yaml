@@ -592,7 +592,11 @@ nodes:
     tier: 3
     parents: [elec_semiconductorDiode]
     flavor: "Diffuse a shallow junction into a silicon wafer so sunlight knocks a current across it — grams of cells that trickle-charge a battery indefinitely, outliving every chemical primary. Vanguard 1 is still up there, still lit."
-    parts: [ROS-StaticSolarPanel, RO_EarlyTinySolarPanel]
+    parts: [ROS-StaticSolarPanel, RO_EarlyTinySolarPanel, RO_EarlyMediumSolarPanel]
+    # +RO_EarlyMediumSolarPanel 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md F2). It is TL1
+    # static, the same rung and deployment class as RO_EarlyTinySolarPanel already here -- they are the
+    # two early-era panels, differing only in size. At its old home (elec_deployableArrays, T5) it read
+    # 0.70x the procedural default and was the weakest part on its own node.
   - id: rob_rotorActuation
     title: "Electric Rotor Actuation"
     discipline: Robotics
@@ -1245,7 +1249,7 @@ nodes:
     tier: 5
     parents: [elec_arCoatings]
     flavor: "Fold banks of silicon cells onto paddles that swing out once the satellite is clear of its shroud — far more collecting area than the body could ever carry, and the power to run a real payload through the sunlit half of every orbit. The array that outgrows the trickle-charge patch."
-    parts: [RO_EarlyMediumSolarPanel, solarPanels2, solarPanels4, solarPanels5, 1x3SPanels]
+    parts: [solarPanels2, solarPanels4, solarPanels5, 1x3SPanels]
     # +4 TL2 panels 2026-07-29, moved down from elec_deployablePanelII (T7) where they were 0.73-0.77x
     # the procedural default. TL2 is this tier's procedural rung, so here they are at parity.
     # NOTE RO_EarlyMediumSolarPanel is TL1 (5.6 W/kg) and is now the weakest part on its own node --
