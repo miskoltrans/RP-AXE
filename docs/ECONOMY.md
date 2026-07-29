@@ -703,16 +703,169 @@ difference is mix — the re-shape moved raw funds toward the capstones, 14 of w
   Titan III, which are correctly priced there. Left as a design call.
 - **§5's `AllowNegativeCurrency` reasoning has a hole, and it is exactly the load-bearing case.**
   "Advance vs reward" was closed on the grounds that `AllowNegativeCurrency = True` means no player is
-  ever blocked for want of cash up front. That is true for building and launching a vessel and **false
-  for facility upgrades**. Decompiled: `SpaceCenterBuilding.UpgradeFacility` refuses unless
+  ever blocked for want of cash up front. That is **false for facility upgrades** — and, corrected in
+  §11c, false for **launching** too, which is the half this bullet originally got wrong.
+  Decompiled: `SpaceCenterBuilding.UpgradeFacility` refuses unless
   `CurrencyModifierQuery.RunQuery(StructureConstruction, −cost, 0, 0).CanAfford()`, and
   `CurrencyModifierQuery.CanAfford(Currency.Funds)` is `cost <= Funding.Instance.Funds` — a hard
-  on-hand check that never consults `AllowNegativeCurrency`. You can go negative flying; you cannot go
-  negative buying a pad. The escape hatch does not cover the one gate that blocks progression, which
-  is why this whole section exists.
+  on-hand check that never consults `AllowNegativeCurrency`. `PreFlightTests.CanAffordLaunchTest` is
+  the same story with no override button (§11c), so once negative you can neither launch nor upgrade —
+  the flag lets a purchase *put* you there and then strands you. The escape hatch covers neither gate
+  that blocks progression, which is why this whole section exists.
 - **Era boundaries are a judgement.** `gate_feasibility.py`'s `MILESTONES` table hard-codes which
   programme pays in which era and which real vehicle defines each milestone. The direction of every
   finding above is robust to re-bucketing; the exact margins are not.
 - **The launcher model is optimistic by construction** — perfect staging, no fairing/interstage/avionics
   margin, procedural-tank structure fractions. Real first orbital rockets come out 1.5–2.5× heavier
   than its floor, so it is a lower bound on the pad level an era needs, never a build target.
+
+## 11. Channel 2's shape, and the payout cadence — 2026-07-29
+
+§10 fixed how *much* the early game earns. This fixes *when* it arrives — twice, on two independent
+mechanisms. Triggered by a playtest save (`saves/default3`) sitting at **−348 funds with 596
+reputation banked and no strategy active**, unable to launch anything: 38 contracts completed, of
+which exactly **four** had paid a single fund (two capstones, two program bonuses — 72,600 together
+against 87,949 spent).
+
+### 11a. Channel 2 was gated twice, and the second gate was quadratic
+
+`Strategies.Effects.CurrencyConverter.OnEffectQuery`, decompiled, lerps **both** terms off the same
+commitment factor `f`:
+
+```
+taken = qry.GetInput(Reputation) * ParentLerp(minShare, maxShare)
+qry.AddDelta(Funds, ParentLerp(minRate, maxRate) * taken)
+```
+
+so the yield is `Lerp(minShare,maxShare,f) × Lerp(minRate,maxRate,f)` — **quadratic in `f`** — and
+`strategyCommitRange` caps `f` by Administration level. At CustomBarnKit's default `0.25 / 0.6 / 1`
+with stock's `minShare = 0`, Administration L1 paid **33.2 funds/reputation against L3's 157: 21% of
+the rate.** That multiplied an input which §10 had already measured as back-loaded to **0.4% of
+career reputation before first orbit**, so the pre-orbit game saw **0.09%** of the channel.
+
+The doc called `strategyCommitRange` "the pacing knob". It was a *second* pacing knob, stacked on a
+channel whose input is already paced by mission difficulty — reputation scales with how hard the
+mission was, which is precisely why it is back-loaded. Nothing chose that; it was inherited.
+
+**Two dials, both ceiling-neutral:**
+
+1. **`@ADMINISTRATION strategyCommitRange = 0.5, 0.75, 1`** (`AxeFacilities.cfg`). AXE now owns this
+   block — it was the last CustomBarnKit default doing load-bearing economy work, exactly as
+   `@RESEARCH` was before §8. `upgrades` and `activeStrategyLimit` are deliberately left at CBK's
+   values; the prices are sane at AXE scale and the slot ladder was not what was wrong.
+2. **`minShare = 0.55`** (`AxeStrategies.cfg`). Lifts the floor of the share lerp so Administration
+   level decides how *much* converts, not also how *well*.
+
+| Administration | before | after | share of L3 |
+|---|--:|--:|--:|
+| L1 (start) | 33.2 | **109.3** | 21% → 70% |
+| L2 (150,000) | 86.5 | **132.2** | 55% → 84% |
+| L3 (563,000) | 157.0 | 157.0 | 100% |
+
+> **The lifetime ceiling does not move.** It is measured at full commitment — L3, `f = 1` — where
+> `Lerp(0.55, 1, 1) = 1.0`, identical to stock. Every figure in §3's Channel 2 table (22.9M on
+> Normal, 15.3M on Hard) stands unchanged. This is a redistribution in **time**, the same kind of
+> change `FUNDING_EXPONENT` made to Channel 1 and for the same reason.
+
+Measured effect at the gate §10 could not clear: pre-orbit Channel 2 goes **17,157 → 56,386**, and
+the first-orbit milestone banks **629,237 against a 590,000 gate — it now clears by 39,237**, where
+Channel 1 alone was 17,148 short.
+
+> ⚠ **`minShare` must never go to 1.0.** At full share the player banks no *contract* reputation at
+> all, and the reputation **balance** is what stock's `requiredReputation` lerp checks at activation.
+> Only crew-recovery reputation would accrue (`TransactionReasons.VesselRecovery`, absent from
+> `AffectReasons`), which cannot reach 750 — so a 100% share would lock the player out of the very
+> commitment level it was meant to serve.
+
+**The reputation requirement now binds in the first era, and that is intended.** Against the new caps
+the lerp asks 125 reputation at L1 (was −188, never bound), 438 at L2, 750 at L3. A fresh career at 0
+reputation commits at whatever it can afford — `f = 0.2` needs −250, i.e. free — and raises the
+slider as it earns fame. That is stock's "commit as hard as your fame allows" working as designed;
+reaching 125 is one or two contracts. Do not patch it back.
+
+### 11b. The payout cadence cliff — 21 of 35 programmes paid nothing until the very end
+
+The completion bonus is all-or-nothing: not offered until **every** objective is met. For the 14
+programmes with a capstone that is fine, because the capstone pays mid-programme. For the other 21 it
+meant zero income for the whole programme — and three of them are **consecutive**, right where
+vehicle costs step up:
+
+| programme | budget | objectives | mid-programme payment (before) |
+|---|--:|--:|---|
+| SuborbRocketDev | 84,804 | 4 | ✓ capstone |
+| SuborbRocketResearch | 84,804 | 4 | ✓ capstone |
+| EarlyXPlanes | 101,147 | 6 | ✓ capstone |
+| **EarlySatellites** | 155,173 | 5 | ✗ **none** |
+| **EarthObservationScience1** | 160,434 | 6 | ✗ **none** |
+| **CommNetwork** | 102,241 | 3 | ✗ **none** |
+
+A player paid at the midpoint of two programmes in a row then hit **fourteen launches with no
+income**. That is a shape defect, not a magnitude one.
+
+**Fix: `build_economy.py` stages the completion half across the programme's own objectives.** The pot
+splits into `non-capstone objectives + 1` equal slices — one paid on each objective as it is flown,
+one retained as the Program Bonus so the collectable payout §9 made visible still exists. New
+generated file `design/Programs/AxeProgramObjectiveFunds.cfg`, using the same `%rewardFunds` overlay
+`AxeCapstoneFunds.cfg` already uses. `EarlySatellites` now pays 38,793 six times instead of 232,758
+once.
+
+Channel 1 still totals **exactly 24,000,000**, now split 15 capstones (3,065,619) / 138 staged
+objectives (15,976,779) / 35 bonuses (4,957,603). Three invariants are asserted by the generator and
+would previously have failed silently:
+
+- **The two patch files must key disjoint contract sets.** `%rewardFunds` is set-or-create and
+  therefore *overwrites*; two patches on one contract would silently keep the last, not the sum.
+  Capstone-labelled objectives are excluded from the spread, which makes the sets disjoint by
+  construction (15 + 138, zero overlap) — and it is asserted, not assumed.
+- **No funds are created or lost by shared objectives.** Three contracts are objectives of two
+  programmes each (`KarmanLine`, `first_OrbitRecover`, `FirstComSat`). Each is paid once from the
+  richer claim, and the loser **keeps that slice on its own bonus** rather than leaking it — which is
+  why `EarthObservationScience1` carries a double-size bonus. Channel 1 is asserted to reconcile.
+- **Nothing repeatable carries funds.** Every funds-paying type in the merged cache is
+  `maxCompletions = 1`; there are **0** repeatable funds-paying contract types. That is §3's
+  launch-gate invariant, and staging is the change most likely to break it.
+
+`AxeEconomySelfTest` gains a fourth check, because a count cannot see the failure that matters: if
+one of the two patch files stopped applying, the combined count would still look healthy and the
+budget would still sit inside tolerance. It now asserts the **design property** — every
+`AXE_Complete_*` must have at least one `CompleteContract` objective that itself pays — and reads
+`strategyCommitRange` live from `GameVariables.GetStrategyCommitRange`, which also catches
+CustomBarnKit's silent per-field "wrong size" fallback reverting `@ADMINISTRATION` to stock.
+
+### 11c. Correction to §10 — a negative balance blocks launching too
+
+§10's open-questions list states that `AllowNegativeCurrency = True` is *"true for building and
+launching a vessel and false for facility upgrades"*. **The first half is wrong**, and it is what the
+playtest save actually hit. Decompiled:
+
+```
+PreFlightTests.CanAffordLaunchTest.Test()              =>  (double)launchCost <= fundsAvailable
+PreFlightTests.CanAffordLaunchTest.GetProceedOption()  =>  null
+```
+
+There is no `AllowNegativeCurrency` term, and `PreFlightCheck.runNextTest` builds an **Abort-only**
+dialog when `GetProceedOption()` returns null (`OnDismiss = Abort` as well), so a failed
+affordability check has no override. `EditorLogic` adds the test unconditionally in career.
+`AllowNegativeCurrency` only suppresses the clamp inside `Funding.AddFunds`/`SetFunds` — it lets a
+part purchase or a rollout push the balance negative, and then **strands the player there**, unable
+to launch or to upgrade.
+
+So the escape hatch §5 leaned on to close "advance vs reward" covers *neither* gate that blocks
+progression. Both halves of that premise are now falsified. **Not reopened here** — 11a and 11b move
+income earlier, which is the same relief an advance would buy, and reopening it is a design call.
+But the reasoning that closed it no longer stands, and the failure mode is a hard stop with no
+in-game explanation rather than a slow squeeze.
+
+### What is still open
+
+- **Nothing tells the player Fundraising exists.** Reputation is the currency AXE's contracts pay, it
+  converts only on the way *in* (`OnCurrencyModifierQuery` intercepts transactions, never the
+  balance), and a player who banks reputation before activating the strategy loses that conversion
+  **permanently**. The playtest save reached 596 reputation across 38 completed contracts having
+  never opened Administration. Silent and irreversible, and no amount of rate tuning addresses it —
+  this is a discoverability problem, and the natural fix is the one §9a used for programme value: say
+  it where the player is already looking.
+- **Not verified in game.** The `@ADMINISTRATION` block needs the same cold-load confirmation §8's
+  8-entry `@RESEARCH` does, and for the same reason: CustomBarnKit's size check is silent.
+- **Era-scaling of old contract rewards** (§7) is untouched, and still the lever for repeatable
+  contracts paying 1950s reputation in 1975.
