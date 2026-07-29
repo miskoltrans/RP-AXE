@@ -602,6 +602,10 @@ nodes:
     parents: [gnc_postWarAvionics]
     flavor: "Bleed compressed nitrogen through opposed nozzles to nudge a craft's attitude — no combustion, nothing to go wrong, just enough impulse to point. The simplest way to hold an orientation in vacuum."
     parts: [ROE-ModularRCS, RO-2kN-Thruster, ROE-Agena_EquipmentRack]
+    upgrades: [RFTech-rcs-tltech1]
+    # RealFuels RCS tech level 1. See the RFTech-rcs-tltech ladder note on gnc_longLifeRCS: these tokens
+    # are ALSO the source build_tree.py emits RF_TECHLEVELS TLTECH<n> from, so where they sit is what
+    # actually raises RCS thruster quality in game — they are not decoration.
     # RO-2kN-Thruster added (2026-07): Nitrogen cold-gas thruster, exact same mechanism as this node's own
     # part. RP-1 itself gates it at "Starting Parts" (even earlier than this node's own T2) — close enough
     # and the mechanism match is what matters; not worth re-opening the T0/T1 band-1 fence for one thruster.

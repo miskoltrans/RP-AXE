@@ -51,6 +51,19 @@ TARGET_LIFETIME = 40_000_000   # sinks: ~22M lumps (facilities + part unlocks) +
 CHANNEL1_SHARE = 0.60          # direct contract funds; the rest is Administration rep->funds
 CAPSTONE_SHARE = 0.50          # of a programme's budget, when it has a capstone
 
+# Programme budget is proportional to RP-1's `baseFunding` RAISED TO THIS POWER, then normalised so
+# the channel still totals CHANNEL1_SHARE x TARGET_LIFETIME. At 1.0 the split is RP-1's own spread
+# verbatim, which is savagely back-loaded: CrewedMarsExp outpaid a sounding-rocket programme 190:1
+# and the first 15 programmes carried 6.4% of the channel between them. That is not a difficulty
+# curve, it is a cash-flow inversion -- the launchpad step an era needs has to be bought BEFORE the
+# missions that pay for it can be flown, so a career arrived at first orbit with 185k against a
+# 590k pad and at the Moon 1.7M short (tools/gate_feasibility.py).
+#
+# 0.65 compresses the spread without inverting it: Mars still pays ~30x a sounding rocket, RP-1's
+# judgement about which programmes are big survives, and the first 15 move to ~14% of the channel.
+# The lifetime total does not move -- this is purely a redistribution in TIME.
+FUNDING_EXPONENT = 0.65
+
 
 def blocks(txt, node):
     """Yield the body of each `node { ... }`, brace-matched."""
@@ -199,12 +212,14 @@ def main():
             dropped.append((p["name"], len(by_program.get(p["name"], []))))
             progs.remove(p)
 
-    total = sum(p["funding"] for p in progs)
+    for p in progs:
+        p["weight"] = p["funding"] ** FUNDING_EXPONENT
+    total = sum(p["weight"] for p in progs)
     channel1 = TARGET_LIFETIME * CHANNEL1_SHARE
     k = channel1 / total
 
     for p in progs:
-        p["budget"] = p["funding"] * k
+        p["budget"] = p["weight"] * k
         p["caps"] = [c for c in p["objectives"] if seed.get(c, ("", ""))[0] == "CAPSTONE"]
         if p["caps"]:
             p["capstone_pot"] = p["budget"] * CAPSTONE_SHARE
@@ -234,8 +249,11 @@ def main():
 // {CAPSTONE_SHARE:.0%} of its programme's funds budget; the rest lands on the programme-completion
 // contract (design/Programs/AxeProgramCompletion.cfg).
 //
-// Budget: programme funds = RP-1 baseFunding × {k:.5f}, sized so a player who does everything earns
-// ~{TARGET_LIFETIME:,.0f} lifetime against ~22M of facility + part-unlock sinks. See docs/ECONOMY.md.
+// Budget: programme funds = RP-1 baseFunding^{FUNDING_EXPONENT} × {k:.5f}, sized so a player who does everything
+// earns ~{TARGET_LIFETIME:,.0f} lifetime against ~22M of facility + part-unlock sinks. The exponent compresses
+// RP-1's spread — which was back-loaded hard enough that an era could not afford the launchpad its
+// own missions needed — without inverting RP-1's judgement about which programmes are big.
+// See docs/ECONOMY.md §6.
 //
 // Design overlay, not an edit to seed/ — that folder is re-vendored verbatim by tools/sync-seed.ps1
 // and any in-place change would be clobbered. `%` = set-or-create.
@@ -403,7 +421,8 @@ CONTRACT_GROUP
         else:
             print(f"WARNING: {name} is funded and has {n_members} member contract(s) but no "
                   f"OBJECTIVES and none labelled CAPSTONE/REQUIRED — it pays NOTHING.")
-    print(f"scalar = {channel1:,.0f} / {total:,.0f} = {k:.5f}")
+    print(f"scalar = {channel1:,.0f} / {total:,.0f} = {k:.5f}"
+          f"   (budget ∝ baseFunding^{FUNDING_EXPONENT}; denominator is the sum of those weights)")
     print(f"  {len(cap_pay)} capstone rewards   {paid_caps:>12,.0f}")
     print(f"  {len(progs)} completion bonuses {paid_done:>12,.0f}")
     print(f"  Channel 1 total               {paid_caps + paid_done:>12,.0f}"

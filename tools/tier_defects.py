@@ -297,6 +297,84 @@ def science_defects(sci):
     return out
 
 
+
+# --------------------------------------------------------------- ladder source C2
+def instrument_reachability(cache, nodes, part_node):
+    """EARLIEST tier at which each experiment can actually be run, by ANY route.
+
+    There are two gates, and checking only one is how a leak hides:
+      1. a Kerbalism `Configure` SETUP with `tech = <node>`  -- the multi-slot instrument hosts;
+      2. a BARE `Experiment` module on a dedicated instrument part, with no Configure wrapping it
+         -- then the PART's own node is the gate, and the tech ladder has no say at all.
+    `USFluidSpectroWedge` sits at T4 carrying all four mass-spectrometer experiments and is
+    perfectly correct, because route 1 gates each slot; `RO-AdvancedImager` carries one bare
+    experiment and so leaks its generation onto whatever node the part happens to live on.
+    """
+    out = collections.defaultdict(list)
+    for p in cache["PART"]:
+        nm = p.get("name")
+        node = part_node.get(nm)
+        tier = nodes[node]["tier"] if node in nodes else None
+        configured = set()
+        for m in p.find("MODULE"):
+            if m.get("name") != "Configure":
+                continue
+            for st in m.find("SETUP"):
+                e = next((k.get("id_value") for k in st.kids if k.get("type") == "Experiment"), None)
+                tech = st.get("tech")
+                if e:
+                    configured.add(e)
+                    if tech:
+                        t2 = nodes[tech]["tier"] if tech in nodes else None
+                        if t2 is not None:
+                            out[e].append((t2, tech, "slot:" + (st.get("name") or ""), nm))
+        for m in p.find("MODULE"):
+            if m.get("name") == "Experiment":
+                e = m.get("experiment_id")
+                if e and e not in configured and tier is not None:
+                    out[e].append((tier, node, "part", nm))
+    return {e: sorted(v) for e, v in out.items()}
+
+
+def instrument_defects(cache, nodes, part_node):
+    sci = {}
+    for e in cache["EXPERIMENT_DEFINITION"]:
+        eid = e.get("id")
+        if eid:
+            sci[eid] = e.get("scienceCap", 0.0, float) or 0.0
+    reach = instrument_reachability(cache, nodes, part_node)
+    fams = collections.defaultdict(list)
+    for e, routes in reach.items():
+        m = re.match(r"^(.*?)(\d+)$", e)
+        if not m or not routes:
+            continue
+        fams[m.group(1)].append((int(m.group(2)), e, routes[0], sci.get(e, 0.0)))
+    out = []
+    for fam, gens in sorted(fams.items()):
+        gens.sort()
+        if len(gens) < 2:
+            continue
+        # ALL pairs, not just consecutive ones: gen1 (cap 3) vs gen3 (cap 4) is exactly the kind of
+        # inversion a consecutive-only walk misses when gen1 and gen2 happen to share a cap.
+        for i, (g1, e1, r1, c1) in enumerate(gens):
+            for (g2, e2, r2, c2) in gens[i + 1:]:
+                if c2 <= c1:
+                    continue                   # not actually an upgrade
+                if r2[0] < r1[0]:
+                    out.append(F("SUPERSEDED", fam,
+                                 f"gen{g1} (cap {c1:.0f}) first reachable at T{r1[0]} via {r1[2]} `{r1[1]}`, but "
+                                 f"gen{g2} (cap {c2:.0f}) is ALREADY reachable at T{r2[0]} via {r2[2]} `{r2[1]}` "
+                                 f"[{r2[3]}] -- gen{g1} can never be worth building",
+                                 "instrument-reach", 1))
+                elif r2[0] == r1[0]:
+                    where = "the same node" if r1[1] == r2[1] else f"tier T{r1[0]}"
+                    out.append(F("COLLAPSE", fam,
+                                 f"gen{g1} (cap {c1:.0f}, `{r1[1]}`) and gen{g2} (cap {c2:.0f}, `{r2[1]}`) both "
+                                 f"arrive on {where} -- via {r1[2]} [{r1[3]}] and {r2[2]} [{r2[3]}]",
+                                 "instrument-reach", 2))
+    return out
+
+
 # --------------------------------------------------------------- ladder source D
 SCALE_TOL = 2.0     # only compare parts within this factor on the extensive axis
 
@@ -403,6 +481,7 @@ def main():
 
     findings = []
     findings += science_defects(sci)
+    findings += instrument_defects(cache, nodes, part_node)
     findings += level_defects(level_ladders(cache, nodes, upg_node))
     findings += engine_defects(eng, part_node, nodes)
     findings += part_defects(rows)
