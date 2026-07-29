@@ -46,6 +46,7 @@ OUT_DONE = os.path.join(REPO, "GameData", "RP-AXE", "design", "Programs", "AxePr
 OUT_VALUE = os.path.join(REPO, "GameData", "RP-AXE", "design", "Programs", "AxeProgramValue.cfg")
 OUT_OBJ = os.path.join(REPO, "GameData", "RP-AXE", "design", "Programs", "AxeProgramObjectiveFunds.cfg")
 CHARTERS = os.path.join(REPO, "GameData", "RP-AXE", "design", "Programs", "ActivatePrograms.cfg")
+DEDUPE = os.path.join(REPO, "GameData", "RP-AXE", "design", "Contracts", "DedupeContracts.cfg")
 
 # --- The dials (docs/ECONOMY.md §3). Lifetime funds a player who does everything can earn. -------
 TARGET_LIFETIME = 40_000_000   # sinks: ~22M lumps (facilities + part unlocks) + ~20M vehicles
@@ -105,16 +106,36 @@ def val(block, key):
 TYPE_RE = re.compile(r'Type:\s*<color=[^>]*>\s*([^<]+?)\s*</color>', re.I)
 
 
-def scan_seed():
-    """(labels, by_program).
+def load_dedupe_deletions():
+    """(name, group) pairs that design/Contracts/DedupeContracts.cfg deletes before CC ever sees them.
+
+    Two contract names exist twice in seed/ (`FirstTundraSat`, `landingTriton`) because RP-1 relied on
+    its own ContractClobberer to dedupe at runtime. AXE deletes the redundant copy with MM instead, so
+    scanning seed/ naively sees BOTH and whichever the walk happens to hit last wins -- which silently
+    decided this tool's answers about a contract's title, CAPSTONE label, and gating programme from a
+    file that does not survive to runtime. `landingTriton`'s two copies are gated by two DIFFERENT
+    programmes (NeptuneMoonLandings keeps it, the OuterGasGiantSurvey copy is deleted), so reading the
+    wrong one invents a cross-programme dependency that does not exist."""
+    if not os.path.exists(DEDUPE):
+        return set()
+    txt = open(DEDUPE, encoding="utf-8", errors="replace").read()
+    return set(re.findall(r'^\s*!CONTRACT_TYPE\[([^\]]+)\]:HAS\[#group\[([^\]]+)\]\]', txt, re.M))
+
+
+def scan_seed(deleted):
+    """(labels, by_program, gates).
 
     labels: name -> (declared type, title). The CAPSTONE/REQUIRED/OPTIONAL label lives in the
     description markup RP-1 renders in Mission Control -- there is no config field for it.
 
     by_program: program -> [contract name, ...], read from the `program = X` lines of each
     contract's ProgramActive requirement. This is the fallback source of objectives for a
-    programme whose RP0_PROGRAM block has an empty OBJECTIVES (see derive_objectives)."""
-    labels, by_program = {}, {}
+    programme whose RP0_PROGRAM block has an empty OBJECTIVES (see derive_objectives).
+
+    gates: name -> set of programmes whose ProgramActive requirement gates the contract. Used to
+    prove every objective can actually be offered (see prune_unreachable). Multiple programmes on one
+    contract are RP-1's `Any` shape -- any one of them being active is enough."""
+    labels, by_program, gates = {}, {}, {}
     for root, _, files in os.walk(SEED):
         for fn in sorted(files):
             if not fn.endswith(".cfg"):
@@ -122,13 +143,47 @@ def scan_seed():
             txt = open(os.path.join(root, fn), encoding="utf-8", errors="replace").read()
             for b in blocks(txt, "CONTRACT_TYPE"):
                 name = val(b, "name")
-                if not name:
+                if not name or (name, val(b, "group")) in deleted:
                     continue
                 m = TYPE_RE.search(val(b, "description"))
                 labels[name] = ((m.group(1).strip().upper() if m else ""), val(b, "title"))
-                for prog in set(re.findall(r'^\s*program\s*=\s*(\S+)', b, re.M)):
+                progs = set(re.findall(r'^\s*program\s*=\s*(\S+)', b, re.M))
+                gates[name] = progs
+                for prog in progs:
                     by_program.setdefault(prog, []).append(name)
-    return labels, by_program
+    return labels, by_program, gates
+
+
+def prune_unreachable(progs, gates, chartered):
+    """Drop objectives that can never be offered, so that every programme can be concluded.
+
+    A programme ends exactly one way: its generated "Conclude Program" contract, gated on every one of
+    its objectives. So an objective that can never be COMPLETED is an objective that strands the whole
+    programme active for the rest of the career -- and it strands it silently, because
+    CC's CompleteContractRequirement resolves its target by name against a dictionary of finished
+    contracts (verified by decompile): an unreachable or misspelled name simply never matches and logs
+    nothing. That is the bug class docs/BUG-CLASSES.md calls silent string binding, so it is a build
+    gate rather than a comment.
+
+    Unreachable = the contract is absent from seed/, or every programme in its own ProgramActive gate
+    is un-chartered. The live instance of the latter is `FirstGEOSat`, an objective of TargetedSats
+    gated `Any{CommercialApplications2, GEOCommNetwork}` -- both of which are deliberately left
+    un-chartered because RP-1 ships them `isDisabled` (design/Programs/ActivatePrograms.cfg). Pruned
+    rather than hand-corrected: which programmes AXE charters is a live design decision, so charter
+    GEOCommNetwork later and this recovers by itself."""
+    pruned = []
+    for p in progs:
+        keep = []
+        for o in p["objectives"]:
+            g = gates.get(o)
+            if g is None:
+                pruned.append((p["name"], o, None))
+            elif g and p["name"] not in g and not (g & chartered):
+                pruned.append((p["name"], o, sorted(g)))
+            else:
+                keep.append(o)
+        p["objectives"] = keep
+    return pruned
 
 
 def derive_objectives(prog, labels, by_program):
@@ -210,10 +265,14 @@ def main():
     src = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_SRC
     if not os.path.exists(src):
         sys.exit(f"Programs.cfg not found at {src}")
-    seed, by_program = scan_seed()
+    seed, by_program, gates = scan_seed(load_dedupe_deletions())
     progs = load_programs(src)
     if not progs:
         sys.exit("no chartered programmes parsed")
+    # Read the charters up front: which programmes are chartered decides which objectives can ever be
+    # offered, and therefore which programmes can be concluded (see prune_unreachable).
+    charters = scan_charters()
+    chartered = set(charters.values())
 
     # Recover funded programmes whose OBJECTIVES block is empty upstream (see derive_objectives).
     derived, dropped = [], []
@@ -230,6 +289,14 @@ def main():
             # real gap worth shouting about.
             dropped.append((p["name"], len(by_program.get(p["name"], []))))
             progs.remove(p)
+
+    # A programme whose objectives cannot all be completed can never be concluded. Prune first, then
+    # fail the build if pruning left one with nothing to gate on at all.
+    pruned = prune_unreachable(progs, gates, chartered)
+    stranded = [p["name"] for p in progs if not p["objectives"]]
+    if stranded:
+        sys.exit("cannot be concluded — every objective is unreachable, so the programme would stay "
+                 "active for the whole career: " + ", ".join(stranded))
 
     for p in progs:
         p["weight"] = p["funding"] ** FUNDING_EXPONENT
@@ -329,11 +396,19 @@ def main():
 // finished but not yet collected advertises what it is worth. AxeInstantComplete self-completes only
 // once the contract is Active, so an un-accepted offer just waits — which is the point.
 //
-// It is a BONUS, not an ending. AxeProgramHandler has no deactivate path, so a programme stays
-// active for the rest of the career and its member contracts keep being offered — including the
-// repeatable ones (docs/PROGRAMS.md "Repeatable is fine; idle income is not"). The player-facing
-// wording says so out loud: an earlier "Programme Complete: X / the programme is discharged" read
-// as a state change that does not exist.
+// It IS the ending, and the only one. The ConcludeProgram behaviour calls
+// AxeProgramHandler.Conclude(), which drops the programme out of the active set, so it stops
+// satisfying `ProgramActive` and its member contracts stop being offered — including the repeatable
+// ones. Closure is earned, never chosen: this contract is not offered until every objective is
+// complete, and there is no path to abandon a programme mid-flight. Of the 35 chartered programmes
+// 34 can be finished by flying their objectives, so an abandon path would have existed to serve one
+// upstream config artefact, which the reachability gate in the generator now prunes instead.
+//
+// Contracts of the programme the player has ALREADY ACCEPTED survive and stay flyable; only the
+// offering stops. That is ProgramActiveRequirement's `checkOnActiveContract = false` (AXE diverges
+// from RP-1 here, deliberately) — without it, CC responds to a mid-flight requirement going unmet by
+// calling Contract.Fail(), and stock's Fail() charges failure penalties. Collecting your reward for
+// finishing a programme must not fine you for the repeatable mission still in the air.
 //
 // This is the half of the budget that reaches every programme. {sum(1 for p in progs if not p["caps"])} of {len(progs)} chartered
 // programmes have no capstone at all — including CrewedLunar and CrewedMarsExp — so without this
@@ -370,12 +445,18 @@ CONTRACT_GROUP
             # "Program", not "Programme": matches the 35 hand-authored "Begin Program: X" charters
             # in design/Programs/ActivatePrograms.cfg, so the pair reads as one series in the
             # contract list. Docs and comments keep the British spelling.
-            f.write(f"\ttitle = Program Bonus: {ptitle(p['title'])}\n")
-            f.write(f"\tdescription = Every objective of the {ptitle(p['title'])} program has been met, "
-                    "and the agency releases the program's remaining budget as a bonus. "
-                    "The program stays active — its contracts remain available to fly.\n")
-            f.write(f"\tsynopsis = Collect the remaining budget for the {ptitle(p['title'])} program.\n")
-            f.write(f"\tcompletedMessage = Bonus awarded for {ptitle(p['title'])}.\n")
+            f.write(f"\ttitle = Conclude Program: {ptitle(p['title'])}\n")
+            # Three things this text has to do or the feature reads as a bug: name the consequence
+            # BEFORE the click (missions vanishing from Available with no warning reads as the mod
+            # breaking), promise there is no deadline (AXE gates nothing by time, so nothing can
+            # expire — unsaid, players feel rushed into concluding before they have farmed the
+            # repeatables), and stay on one line (KSP config is line-based).
+            f.write(f"\tdescription = Every objective of the {ptitle(p['title'])} program has been met. "
+                    "Collect the program's remaining budget and close the books. Its missions — "
+                    "including the repeatable ones — will no longer be offered. There is no deadline: "
+                    "fly them as long as you like and conclude whenever you are ready.\n")
+            f.write(f"\tsynopsis = Close out the {ptitle(p['title'])} program and collect its remaining budget.\n")
+            f.write(f"\tcompletedMessage = {ptitle(p['title'])} is closed. Its missions are no longer offered.\n")
             f.write("\tprestige = Significant\n\tmaxCompletions = 1\n\tmaxSimultaneous = 1\n")
             f.write("\tminExpiry = 0\n\tmaxExpiry = 0\n\tdeadline = 0\n")
             # No autoAccept: this has to be visible in Mission Control (see the file header).
@@ -385,7 +466,10 @@ CONTRACT_GROUP
             f.write(f"\trewardFunds = {round(p['retained']):d}\n")
             f.write("\trewardScience = 0\n\trewardReputation = 0\n\tadvanceFunds = 0\n\tfailureFunds = 0\n")
             f.write("\n\tPARAMETER\n\t{\n\t\tname = done\n\t\ttype = AXEInstant\n"
-                    "\t\ttitle = Collect the bonus\n\t}\n")
+                    "\t\ttitle = Close out the program\n\t}\n")
+            # Fires on completed, not accepted — see Source/AXE/Contracts/ConcludeProgram.cs.
+            f.write("\n\tBEHAVIOUR\n\t{\n\t\tname = conclude\n\t\ttype = ConcludeProgram\n"
+                    f"\t\tprogram = {p['name']}\n\t}}\n")
             f.write("\n\tREQUIREMENT\n\t{\n\t\tname = ProgramActive\n\t\ttype = ProgramActive\n"
                     f"\t\tprogram = {p['name']}\n\t}}\n")
             for o in p["objectives"]:
@@ -436,7 +520,6 @@ CONTRACT_GROUP
     # the bonus is not offered until every objective is met, and a capstone looks like any other
     # mission. So the one moment a player chooses between programmes -- accepting a "Begin Program"
     # charter -- was also the one moment nothing said what the choice was worth.
-    charters = scan_charters()
     by_name = {p["name"]: p for p in progs}
     cap_of = {}
     for c, (amount, owner) in cap_pay.items():
@@ -494,9 +577,16 @@ CONTRACT_GROUP
                      + ".")
             f.write(f"// {program} — budget {p['budget']:,.0f}; {len(p['objectives'])} objective(s)\n")
             f.write(f"@CONTRACT_TYPE[{cname}]:NEEDS[ContractConfigurator]:FOR[RP-AXE]\n{{\n")
+            # The tail states how the programme ENDS. It has to be here rather than left unsaid,
+            # because chartering is the one moment the player chooses, and the previous wording
+            # ("Chartering is permanent: the program stays active for the rest of the career") became
+            # false the moment conclusion shipped. Both halves of the promise matter: nothing forces
+            # you to conclude and nothing expires, but concluding is one-way.
             f.write(f"\t%notes = {worth} Your difficulty settings scale rewards on top of that, so "
-                    f"the funds that land run higher. Chartering is permanent: the program stays "
-                    f"active for the rest of the career and its contracts remain available to fly."
+                    f"the funds that land run higher. Once every objective is met you can conclude "
+                    f"the program to collect that bonus, which closes it out — its missions stop "
+                    f"being offered, including the repeatable ones. Nothing expires, so the program "
+                    f"stays active for as long as you want to keep flying it."
                     f"\n}}\n\n")
 
     paid_caps = sum(a for a, _ in cap_pay.values())
@@ -509,6 +599,11 @@ CONTRACT_GROUP
               f"its value note is empty.")
     for n in uncharted:
         print(f"WARNING: programme {n} is funded but no charter activates it — unreachable.")
+    for prog, obj, gate in pruned:
+        why = ("is not in seed/ at all" if gate is None else
+               f"is gated by {' or '.join(gate)}, none of which is chartered")
+        print(f"WARNING: dropped objective {obj} from {prog} — it {why}, so it can never be "
+              f"completed and would leave {prog} impossible to conclude.")
     for name, kind, objs in derived:
         print(f"note: {name} has no OBJECTIVES upstream — derived {len(objs)} objective(s) "
               f"from {kind} labels: {', '.join(objs)}")
