@@ -858,14 +858,91 @@ in-game explanation rather than a slow squeeze.
 
 ### What is still open
 
-- **Nothing tells the player Fundraising exists.** Reputation is the currency AXE's contracts pay, it
-  converts only on the way *in* (`OnCurrencyModifierQuery` intercepts transactions, never the
-  balance), and a player who banks reputation before activating the strategy loses that conversion
-  **permanently**. The playtest save reached 596 reputation across 38 completed contracts having
-  never opened Administration. Silent and irreversible, and no amount of rate tuning addresses it —
-  this is a discoverability problem, and the natural fix is the one §9a used for programme value: say
-  it where the player is already looking.
+- ~~**Nothing tells the player Fundraising exists.**~~ **CLOSED 2026-07-29 — see §12.**
 - **Not verified in game.** The `@ADMINISTRATION` block needs the same cold-load confirmation §8's
   8-entry `@RESEARCH` does, and for the same reason: CustomBarnKit's size check is silent.
 - **Era-scaling of old contract rewards** (§7) is untouched, and still the lever for repeatable
   contracts paying 1950s reputation in 1975.
+
+## 12. Fundraising was invisible — 2026-07-29, and it is load-bearing, not flavour
+
+§11 left this as the last open item on the list and called it a discoverability problem. It is, but
+the sizing was understated: **Channel 2 is not a bonus the player can decline. The early tree is
+balanced on it.**
+
+`tools/gate_feasibility.py`, at the first-orbit gate:
+
+| | funds |
+|---|--:|
+| Channel 1 alone, banked before the gate | 572,852 |
+| gates demanded there (pad L4 + R&D L1) | 590,000 |
+| **margin on Channel 1 alone** | **−17,148 — BLOCKED** |
+| Channel 2 at Administration L1 | +56,386 |
+| **both channels** | **629,237 — clears by 39,237** |
+
+So the entire first-orbit margin *is* Channel 2, and Channel 2 pays nothing until the player walks
+into a building the game never mentions. A player who does not is hard-blocked at first orbit, and —
+per §11c — a negative balance blocks launching and upgrading alike, so there is no way to trade out
+of it and nothing in game names the cause. That is precisely the state the playtest save reached:
+**596 reputation across 38 completed contracts, Administration never opened, −348 funds.**
+
+### The conversion is flow-only, and that is correct
+
+Decompiled `Strategies.Effects.CurrencyConverter`: `OnEffectQuery` reads `qry.GetInput(input)` — the
+amount moving in *this* transaction — and is registered only between `OnRegister`/`OnUnregister`, so
+it sees nothing while the strategy is inactive. Reputation banked beforehand is unreachable for the
+rest of the career.
+
+**Back-paying that balance on activation would be the wrong fix.** The rate rises with Administration
+level *and* with the commitment slider, so converting a hoard at activation time would reward
+*delaying* activation — a worse incentive than the one being fixed, and a direct inversion of §11a,
+which exists to stop Administration level gating the rate twice. Flow-only is right. Only the silence
+is the bug.
+
+### "Start small, raise it later" is real — via a stock bug AXE deliberately keeps
+
+The nudge tells the player to activate at whatever commitment they can afford and raise it later.
+That advice is only honest if the commitment can actually be changed, so it was decompiled rather
+than assumed. `Strategies.Strategy`:
+
+```csharp
+public double LeastDuration   => FactorLerp(minLeastDuration, maxLeastDuration);
+public double LongestDuration => FactorLerp(minLeastDuration, maxLeastDuration);   // <-- least, not longest
+```
+
+Both properties lerp the **least**-duration *fields*, and those fields are never assigned for a
+config-defined strategy — `StrategySystem.LoadStrategies` calls
+`GetStrategyType("FundraisingCampaignCfg")`, no class of that name exists, so it falls back to the
+base `Strategy` and nothing but a subclass could set them. Both therefore evaluate to **0**, which
+means:
+
+- the expiry branch (`if (LongestDuration != 0.0) … Deactivate()`) never runs — the campaign runs for
+  the whole career rather than the 1200–1600 days its config asks for;
+- `CanBeDeactivated`'s `dateActivated + LeastDuration < now` is satisfied immediately — the player can
+  stop and restart at a higher commitment whenever they like, for the `initialCostReputation` of 4–70
+  (lerped, ~7 at the stock 0.05 slider default), which is nothing at AXE's 146k career scale.
+
+This is the exact stock bug **KSPCommunityFixes' `StrategyDuration` repairs**, and
+`AxeCommunityFixes.cfg` deliberately does not take it (the one KSPCF patch of five that AXE refuses).
+That refusal was already recorded as "it would put an expiry clock on Channel 2" — it also, less
+obviously, is what makes re-committing free of a waiting period. **If `StrategyDuration` is ever
+taken, this section's advice and §3's ceiling both stop being true.**
+
+### The fix
+
+`Source/AXE/AxeFundraisingTip.cs` — a one-time Space-Center popup, reusing the `AxeTipState`
+per-career store `AxeAirlaunchTip` introduced for exactly this. It fires once, when reputation first
+reaches **10** (the point where activation is affordable, so the advice is actionable rather than
+premature; the reputation forgone below that threshold is worth about a thousand funds), and only if
+no reputation→funds conversion is already running.
+
+That last check is **structural, not by name** — it walks the active strategies for a
+`CurrencyConverter` whose `input`/`output` are Reputation/Funds, read via `Traverse` as
+`AxeEconomySelfTest` already does on the same class. Matching `"FundraisingCampaignCfg"` by string
+would be BUG-CLASSES family 1: a renamed or replaced strategy would leave the check passing while the
+player earned nothing. On any exception it reports "conversion is live" and stays quiet — an
+unreadable strategy system must not produce a false alarm telling a player to switch on something
+they already run.
+
+**Not yet confirmed in game** — it needs a career cold-load to see the popup actually spawn, the same
+outstanding verification as the `@ADMINISTRATION` and `@RESEARCH` blocks above.
