@@ -896,10 +896,10 @@ ca_rw_medium	reaction_wheel	gnc_reactionWheelAttitude	8	GuidanceControl	0.006	RW
 ca_rw_small	reaction_wheel	gnc_reactionWheelAttitude	8	GuidanceControl	0.0025	RW4 Radial Reaction Wheel	CoatlAerospace									0				4.00028e-05	0.000100007			873.15			0
 ca_rw_xsmall	reaction_wheel	gnc_reactionWheelAttitude	8	GuidanceControl	0.0016	RW1 Radial Reaction Wheel	CoatlAerospace									0				6.25044e-05	0.000100007			873.15			0
 sasModule	reaction_wheel	gnc_reactionWheelAttitude	8	GuidanceControl	0.05	Small Inline Reaction Wheel	Squad									0				2.00014e-06	0.000100007			448			0
-advSasModule	reaction_wheel	gnc_largeReactionWheels	9	GuidanceControl	0.1	Advanced Inline Stabilizer	Squad									0				0.0185969	1.85969			448			0
-asasmodule1-2	reaction_wheel	gnc_largeReactionWheels	9	GuidanceControl	0.2	Advanced Reaction Wheel Module, Large	Squad									0				0.0530737	10.6147			448			0
 ca_rw_large	reaction_wheel	gnc_largeReactionWheels	9	GuidanceControl	0.012	RW-4A Radial Reaction Wheel Assembly	CoatlAerospace									0				1.12803e-05	0.000135363			873.15			0
 restock-reactionwheel-radial-1	reaction_wheel	gnc_largeReactionWheels	9	GuidanceControl	0.0081	Radial Reaction Wheel (Large)	ReStockPlus									0				0.0176183	0.142708			448			0
+advSasModule	reaction_wheel	gnc_kilowattCMG	11	GuidanceControl	0.1	Advanced Inline Stabilizer	Squad									0				0.0185969	1.85969			448			0
+asasmodule1-2	reaction_wheel	gnc_kilowattCMG	11	GuidanceControl	0.2	Advanced Reaction Wheel Module, Large	Squad									0				0.0530737	10.6147			448			0
 RO-SNAP-19-RTG	rtg	nuc_isotopePowerII	8	ElectricalPower	0.01495384336	SNAP-19 Series RTG	VenStockRevamp						0.0026749	0.04		0								1144			0
 RO-SNAP-9-RTG	rtg	nuc_isotopePowerII	8	ElectricalPower	0.012000708	SNAP-9 Series RTG	VenStockRevamp						0.00208321	0.025		0								1144			0
 ROC-LEMFoldingSNAP27BDB	rtg	nuc_isotopePowerII	8	ElectricalPower	0.01999991968	SNAP-27 Series RTG	ROCapsules						0.00375002	0.075		0								1144			0
@@ -1025,26 +1025,26 @@ solarPanels4	solar	elec_deployablePanelII	7	ElectricalPower	0.016128	XT1 Solar P
 solarPanels5	solar	elec_deployablePanelII	7	ElectricalPower	0.0028	ST1 Solar Panel	Squad				0.00803571	0.0225				0								448			0
 solarPanels5HiTech	solar	elec_deployablePanelII	7	ElectricalPower	0.00225	ST2 Solar Panel	Squad				0.014	0.0315				0								448			0
 sp_mariner_a	solar	gnc_threeAxisStabilizedBus	7	GuidanceControl	0.012	CA-E100 1x2 Solar Panel	CoatlAerospace				0.0166667	0.2				0								873.15			0
+ca_explorer_solar	solar	elec_busArrayCatalog	8	ElectricalPower	0.0091	IUE Solar Array Wing (SAW)	CoatlAerospace				0.00778571	0.07085				0								873.15			0
+ca_fom_sp	solar	elec_busArrayCatalog	8	ElectricalPower	0.001	Venera Lander Bus Solar Array	CoatlAerospace				0.016	0.016				0								873.15			0
 ca_landv_hga	solar	int_surveyorLanderBus	8	SystemsIntegration	0.02	Surveyor Planar Antenna and Solar Array	CoatlAerospace				0.0045	0.09				0			6400					873.15			0
 ca_landv_sp	solar	int_surveyorOrbiter	8	SystemsIntegration	0.006	Surveyor Orbiter Solar Array Wing	CoatlAerospace				0.0191667	0.115				0								873.15			0
+ca_vor_sp	solar	elec_busArrayCatalog	8	ElectricalPower	0.12	4MV Spacecraft Bus SAW & TCS (Standard)	CoatlAerospace				0.00458333	0.55				0						0.833333	100	873.15			0
+ca_vor_sp2	solar	elec_busArrayCatalog	8	ElectricalPower	0.1	4MV Spacecraft Bus SAW & TCS (Small)	CoatlAerospace				0.00275	0.275				0						1	100	873.15			0
 sp_mariner_b	solar	elec_refinedSolarSimulation	8	ElectricalPower	0.014	CA-E100-SPV 1x2 Solar Panel	CoatlAerospace				0.0142857	0.2				0								873.15			0
 SXTsolarPanelLarge	solar	elec_probeBusSolarWings	9	ElectricalPower	0.0624	OX-VL Photovoltaic Array	SXT				0.0230769	1.44				0								448			0
 SXTsolarPanelhex	solar	elec_probeBusSolarWings	9	ElectricalPower	0.0051	OX-HEX Photovoltaic Panels	SXT				0.03	0.153				0								448			0
-ca_explorer_solar	solar	elec_probeBusSolarWings	9	ElectricalPower	0.0091	IUE Solar Array Wing (SAW)	CoatlAerospace				0.00778571	0.07085				0								873.15			0
-ca_fom_sp	solar	elec_probeBusSolarWings	9	ElectricalPower	0.001	Venera Lander Bus Solar Array	CoatlAerospace				0.016	0.016				0								873.15			0
-ca_vor_sp	solar	elec_probeBusSolarWings	9	ElectricalPower	0.12	4MV Spacecraft Bus SAW & TCS (Standard)	CoatlAerospace				0.00458333	0.55				0						0.833333	100	873.15			0
-ca_vor_sp2	solar	elec_probeBusSolarWings	9	ElectricalPower	0.1	4MV Spacecraft Bus SAW & TCS (Small)	CoatlAerospace				0.00275	0.275				0						1	100	873.15			0
 largeSolarPanelEarly	solar	elec_stationClassSolarArrays	9	ElectricalPower	0.0576	XT3 Solar Panel Array Mk1	Squad				0.01875	1.08				0								448			0
 solarPanels1	solar	elec_stationClassSolarArrays	9	ElectricalPower	0.01584	XT2 Solar Panel Array Mk2	Squad				0.0170455	0.27				0								448			0
 solarPanels3	solar	elec_stationClassSolarArrays	9	ElectricalPower	0.009216	XT1 Solar Panel Array Mk2	Squad				0.01875	0.1728				0								448			0
 ROC-ApolloSolarBlockV	solar	elec_matureSolarArrays	10	ElectricalPower	0.07728	Apollo Block V Solar Array	ROCapsules				0.01875	1.449				0								448			0
 ROC-OrionSolar	solar	elec_matureSolarArrays	10	ElectricalPower	0.1	Orion Solar Panels	ROCapsules				0.0275	2.75				0								448			0
 largeSolarPanel	solar	elec_matureSolarArrays	10	ElectricalPower	0.06825	XT4 Solar Panel Array Mk1	Squad				0.0390476	2.665				0								448			0
-nfs-panel-deploying-advanced-2x20-hub-1	solar	elec_advancedRigidArray	11	ElectricalPower	0.0247008	K55-A 'Megalador' Advanced Solar Array	NearFutureSolar				0.37625	9.29368				0								1073.15			0
-nfs-panel-deploying-blanket-arm-1	solar	elec_deployableBlanketArray	11	ElectricalPower	0.10476	OKEB-150R 'Halo' Circular Blanket Photovoltaic Array	NearFutureSolar				0.418056	43.7955				0								1073.15			0
-nfs-panel-deploying-blanket-dsg-1	solar	elec_deployableBlanketArray	11	ElectricalPower	0.075168	OKEB-100 'Gateway' Blanket Photovoltaic Array	NearFutureSolar				0.418056	31.4244				0								1073.15			0
-nfs-panel-deploying-blanket-starship-1	solar	elec_deployableBlanketArray	11	ElectricalPower	0.0028152	OKEB-25R 'Starship' Blanket Photovoltaic Array	NearFutureSolar				0.418056	1.17691				0								1073.15			0
-nfs-panel-deploying-concentrator-1x4-juno-1	solar	elec_concentratingPhotovoltaic	11	ElectricalPower	0.001744	K12-K 1x4 Concentrating Photovoltaic Panels	NearFutureSolar				0.37625	0.65618				0								1073.15			0
+nfs-panel-deploying-advanced-2x20-hub-1	solar	elec_advancedRigidArray	13	ElectricalPower	0.0247008	K55-A 'Megalador' Advanced Solar Array	NearFutureSolar				0.37625	9.29368				0								1073.15			0
+nfs-panel-deploying-blanket-arm-1	solar	elec_deployableBlanketArray	13	ElectricalPower	0.10476	OKEB-150R 'Halo' Circular Blanket Photovoltaic Array	NearFutureSolar				0.418056	43.7955				0								1073.15			0
+nfs-panel-deploying-blanket-dsg-1	solar	elec_deployableBlanketArray	13	ElectricalPower	0.075168	OKEB-100 'Gateway' Blanket Photovoltaic Array	NearFutureSolar				0.418056	31.4244				0								1073.15			0
+nfs-panel-deploying-blanket-starship-1	solar	elec_deployableBlanketArray	13	ElectricalPower	0.0028152	OKEB-25R 'Starship' Blanket Photovoltaic Array	NearFutureSolar				0.418056	1.17691				0								1073.15			0
+nfs-panel-deploying-concentrator-1x4-juno-1	solar	elec_concentratingPhotovoltaic	13	ElectricalPower	0.001744	K12-K 1x4 Concentrating Photovoltaic Panels	NearFutureSolar				0.37625	0.65618				0								1073.15			0
 conformaldecals-flag	structural	start	0	SystemsIntegration	0.0001	CDL-F Flag Decal	ConformalDecals									0								3000			0
 conformaldecals-generic	structural	start	0	SystemsIntegration	0.0001	CDL-1 Generic Decal	ConformalDecals									0								3000			0
 conformaldecals-munar	structural	start	0	SystemsIntegration	0.0001	CDL-3 Surface Base Decal	ConformalDecals									0								3000			0
@@ -1068,7 +1068,6 @@ RP0-SampleReturnCapsule	structural	opt_filmReturn	1	OpticsPhotonics	0.08	Science
 ReleaseValve	structural	met_weldedTank	1	Metallurgy	0.01	FTE-1 Drain Valve	Squad									0								448			0
 SXTProbeGooo	structural	bio_cultures	1	LifeSupport	0.015	Biological Sample Capsule	SXT									0								448			0
 aquila_sensor_synthetic_aperture_radar_srf_1	structural	experimental	1	SystemsIntegration	0.3	Travers Synthetic Aperture Radar	Tantares									0								1073.15			0
-aquila_sensor_visible_light_telescope_s0_1	structural	experimental	1	SystemsIntegration	0.028	Priroda 5 Earth Resources Camera	Tantares									0								1073.15			0
 microIbeam	structural	str_structuralHardware	1	StructuresMechanisms	0.035	M-Beam 100 I-Beam	VenStockRevamp									0								448			0
 science_module	structural	opt_filmReturn	1	OpticsPhotonics	0.1	PH01 - Early Film Camera	Squad									0								448			0
 stackPoint1	structural	str_structuralHardware	1	StructuresMechanisms	0.025	BZ-52 Radial Attachment Point	Squad									0								448			0
@@ -1334,7 +1333,6 @@ RO-AdvancedImager	structural	opt_refinedTV	6	OpticsPhotonics	0.028	VI04 - Advanc
 RO-HRIRRadiometer	structural	opt_irRadiometry	6	OpticsPhotonics	0.0051	IR02 - High-Resolution Infrared Radiometer	RP-1									0								1073.15			0
 RO-ImprovedTVCamera	structural	opt_refinedTV	6	OpticsPhotonics	0.04	VI03 - Improved TV Camera	RP-1									0								1073.15			0
 RO-MK1Cargobay	structural	str_aircraftAirframe	6	StructuresMechanisms	0.207	Mk1 Cargo Bay	VenStockRevamp									0								800			0
-RO-NIMS	structural	opt_uvSpectrometry	6	OpticsPhotonics	0.0233	IS03 - Near Infrared Mapping Spectrometer (NIMS) and Ultraviolet Spectrometer (UVS)	RP-1									0								1073.15			0
 RO-RD012	structural	av_ramjetAdvanced	6	AirBreathing	2.7	RD-012 Ramjet	Squad	4000	5.66509	150						0								673.15			0
 RO-TwoChannelIR	structural	opt_twoChannelIR	6	OpticsPhotonics	0.00375	IR03 - Two-Channel Infrared Radiometer	RP-1									0								1073.15			0
 RO-UVSpectrometer	structural	opt_uvSpectrometry	6	OpticsPhotonics	0.0055	IS02 - Ultraviolet Spectrometer	RP-1									0								1073.15			0
@@ -1359,6 +1357,7 @@ KF-WheelSmall	structural	rob_surfaceMobility	7	Robotics	0.02	KF Small Rover Whee
 KF-WheelTiny	structural	rob_surfaceMobility	7	Robotics	0.03	KF  Tiny Rover Wheel	KerbalFoundries									0								448			0
 RO-IRIS	structural	opt_infraredInterferometry	7	OpticsPhotonics	0.013	IS01 - Infrared Interferometer Spectrometer (IRIS)	RP-1									0								1073.15			0
 RO-MIMS	structural	mic_ionMassSpec	7	Microelectronics	0.0075	MS02 - Magnetic Ion-Mass Spectrometer (MIMS)	RP-1									0								1073.15			0
+RO-NIMS	structural	opt_multiSpectralImaging	7	OpticsPhotonics	0.0233	IS03 - Near Infrared Mapping Spectrometer (NIMS) and Ultraviolet Spectrometer (UVS)	RP-1									0								1073.15			0
 RO-QuadropoleMassSpectrometer	structural	mic_ionMassSpec	7	Microelectronics	0.0098	MS03 - Quadropole Mass Spectrometer	RP-1									0								1073.15			0
 RO-SNAP-3-RTGPo210	structural	nuc_isotopePower	7	ElectricalPower	0.00220033211616	SNAP-3A Series RTG (Po210)	VenStockRevamp									0								1144			0
 ROC-D2Antenna	structural	tel_antennaCatalog	7	Telecommunications	0.005	D-2 High Gain Antenna	ROCapsules									0								448			0
@@ -1462,8 +1461,6 @@ MedLadder	structural	str_evaAccessLadder	8	StructuresMechanisms	0.006	Pegasus II
 MedLadderUtility	structural	str_evaAccessLadder	8	StructuresMechanisms	0.007	MK II Mobility Enhancer	VenStockRevamp									0								448			0
 RO-FluxgateMagnet	structural	mic_boomMagnetometryII	8	Microelectronics	0.0056	MG03 - Fluxgate Magnetometer Boom	RP-1									0								1073.15			0
 RO-PlasmaWave	structural	mic_plasmaWave	8	Microelectronics	0.005	RPWS01 - Plasma Wave Detector	RP-1									0								1073.15			0
-RO-RPWS	structural	mic_plasmaWave	8	Microelectronics	0.0068	RPWS03 - Radio and Plasma Wave Science (RPWS)	RP-1									0								1073.15			0
-RO-SWPlasmaAnalyzer	structural	mic_plasmaWave	8	Microelectronics	0.005	RPWS02 - Solar Wind Plasma Analyzer	RP-1									0								1073.15			0
 RO-SurfaceSampleScoop	structural	int_surveyorLanderBus	8	SystemsIntegration	0.005	Soil Mechanics Surface Sampler	RP-1									0								1073.15			0
 ROS-BlanketSolarPanel	structural	elec_refinedSolarSimulation	8	ElectricalPower	0.0	Blanket Solar Panel	ROSolar									0								448			0
 ROS-FoldingSolarPanel	structural	elec_refinedSolarSimulation	8	ElectricalPower	0.0	Folding Solar Panel	ROSolar									0								448			0
@@ -1504,6 +1501,7 @@ sspx-tube-1875-3	structural	str_stationStructures	8	StructuresMechanisms	0.9	3.3
 telescopicLadder	structural	str_deployableAccessLadder	8	StructuresMechanisms	0.02	Kelus Mobility Enhancer	Squad									0								448			0
 wheelMed	structural	rob_heavyWheelDrive	8	Robotics	0.085	TR-2L Ruggedized Vehicular Wheel	Squad									0								448			0
 RO-DigitalCamera	structural	opt_digitalImaging	9	OpticsPhotonics	6.0	PH05 - Ultra Resolution Digital Imaging Camera	RP-1									0								1073.15			0
+RO-SWPlasmaAnalyzer	structural	mic_solarWindSpectrometry	9	Microelectronics	0.005	RPWS02 - Solar Wind Plasma Analyzer	RP-1									0								1073.15			0
 ROC-ApolloASTPAdapterBDB	structural	gnc_stationBerthing	9	GuidanceControl	1.832	Apollo-Soyuz Test Project Docking Module	ROCapsules									0								448			0
 ROC-ApolloASTPUVXBDB	structural	gnc_stationBerthing	9	GuidanceControl	0.1	Apollo-Soyuz Test Project UV Absorbtion Experiment	ROCapsules									0								448			0
 ROC-ApolloHGABlockIII	structural	int_apolloBlockIII	9	SystemsIntegration	0.01	Apollo Block III High Gain Antenna	ROCapsules									0								448			0
@@ -1564,6 +1562,7 @@ OrbitalScanner	structural	opt_orbitalResourceScanning	10	OpticsPhotonics	0.0329	
 RO-HIRES	structural	opt_highResolutionImager	10	OpticsPhotonics	0.065	VI05 - High Resolution Imaging Device	RP-1									0								1073.15			0
 RO-MagellanRadar	structural	opt_syntheticApertureRadar	10	OpticsPhotonics	0.196	RDRS Radar Antenna	SCANsat									0								1073.15			0
 RO-PMIRR	structural	opt_thermalMappingSpectrometry	10	OpticsPhotonics	0.0402	IR04 - Pressure Modulated Infrared Radiometer (PMIRR)	RP-1									0								1073.15			0
+RO-RPWS	structural	mic_dipoleWaveSpectrometry	10	Microelectronics	0.0068	RPWS03 - Radio and Plasma Wave Science (RPWS)	RP-1									0								1073.15			0
 RO-VIMS	structural	opt_thermalMappingSpectrometry	10	OpticsPhotonics	0.0557	IS04 - Advanced Infrared Mapping Spectrometer (AIMS)	RP-1									0								1073.15			0
 ROC-ApolloHGABlockV	structural	tel_deepSpaceParabolic	10	Telecommunications	0.025	Apollo Block V High Gain Antenna	ROCapsules									0								448			0
 SurfaceScanner	structural	opt_orbitalResourceScanning	10	OpticsPhotonics	0.005	Surface Scanning Module	Squad									0								1073.15			0
