@@ -44,13 +44,20 @@ namespace RPAxe.RnD
     internal static class AxeHighlighter
     {
         private static readonly Color32 DimLine = new Color32(96, 101, 110, 28);        // ghost off-lineage edges
+        private const float GHOST_A = 0.12f;        // off-lineage alpha (discipline / neutral tiles)
+        private const float GHOST_DONE_A = 0.45f;   // off-lineage RESEARCHED: receded, but green enough to still read as done
         private static bool active;
 
         // Ghost a node's tile: a faint hint of its discipline colour (or neutral) at low alpha.
+        // EXCEPT researched nodes: green means "done" everywhere in this tree, on the highlighted lineage or
+        // off it, so a ghosted researched node keeps the DONE green (just receded) instead of reverting to a
+        // discipline ghost — otherwise focusing a lineage erases the one state the player scans the tree for.
         private static Color GhostTile(RDNode n)
         {
-            if (AxeTreeMeta.TryDisciplineColor(n?.tech?.techID, out Color dc)) return new Color(dc.r, dc.g, dc.b, 0.12f);
-            return new Color(0.40f, 0.42f, 0.45f, 0.12f);
+            if (n != null && n.state == RDNode.State.RESEARCHED)
+                return new Color(AxeTreeRenderHost.DoneTile.r, AxeTreeRenderHost.DoneTile.g, AxeTreeRenderHost.DoneTile.b, GHOST_DONE_A);
+            if (AxeTreeMeta.TryDisciplineColor(n?.tech?.techID, out Color dc)) return new Color(dc.r, dc.g, dc.b, GHOST_A);
+            return new Color(0.40f, 0.42f, 0.45f, GHOST_A);
         }
 
         public static void Apply(RDController ctrl, RDNode sel)
