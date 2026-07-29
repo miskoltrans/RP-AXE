@@ -239,13 +239,37 @@ are more relevant here than in RP-1: `PartTooltipUpgradesApplyToSubstituteParts`
 PARTUPGRADEs) and `StrategyDuration` (AXE uses stock strategies as a funds channel). The other
 three — `OnSymmetryFieldChanged`, `FewerSaves`, `DisableNewGameIntro` — are QoL.
 
-### 7. Proposed detector — a node that grants no NEW capability
+### 7. NOT A BUG CLASS — "a node that grants no NEW capability", investigated and dropped
 
-Not yet built. The class it covers is real and confirmed: `mic_atmoSounding` granted a part whose
-only two experiments were already available at `start`, and it was found by eye, not by a gate.
-The generalisation is that **"this node grants a part" does not imply "this node grants anything"** —
-every experiment on all five US2 science wedges is also on 2–28 other parts, and `proceduralAvionics`
-carries the entire instrument menu by itself.
+Proposed 2026-07-29 and **abandoned the same day, on evidence.** Recorded so nobody re-proposes it.
+
+The premise came from one instance: `mic_atmoSounding` granted a part whose two experiments were
+already available at `start`. Generalising to "find all nodes like this" felt obvious. The
+enumeration below was built to test the generalisation, and it came back essentially negative — so
+the enumeration *is* the deliverable, and the detector was never worth building.
+
+**What the population actually turned out to be:**
+
+- **Declared form-factor variants: 2 install-wide.** `identicalParts` is an RP-1 convention used
+  almost only in `US2.cfg`; both surviving declarations sit on the *same node* as their twin, so
+  they read as deliberate. And a wedge that mounts in a US2 service module is real value even when
+  the experiment is not new — that is a design choice, not a defect (user call).
+- **De-facto duplicates: dominated by VEHICLES, not instruments.** After filtering the 44
+  near-universal experiments, what remains is 9 lab modules sharing an identical 72-experiment set,
+  11 cockpits sharing 4 supersonic experiments, probe buses, station habitats. Those are not
+  variants of an instrument; they are complete craft whose science comes with the craft.
+- **Genuinely hollow nodes: one, already fixed.**
+
+**Why the correctness half needs no new gate:** the dangerous version of "a node grants nothing" is
+*its parts do not exist*, and `check_liveness.py` check A already gates exactly that — it found four
+and now finds zero. What was left over is "the parts exist but add nothing new", which is a
+**design** question (is a form factor worth a node?), not a correctness one. A detector cannot answer
+it, and the audit had been treating it as a bug class only because it sat next to real ones.
+
+A "sole-source experiment" variant was floated as a salvage — find where science is thin rather than
+duplicated — and does not survive either: 17 experiments have one placed source, but one instrument
+per measurement is normal design, and the one odd row (`_WasteProcessor` only on `USWaterPurifier`
+in the sandbox) is reachable and functionally covered by `_WaterRecycler`, which is on 14 parts.
 
 Two passes, cheapest first.
 
