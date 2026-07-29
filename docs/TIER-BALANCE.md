@@ -585,6 +585,49 @@ disagreement about what an inflatable weighs. Against the real reference, Bigelo
 8x too low: priced like an inflatable, sized like a rigid module. The sspx parts are light on mass but
 sane on volume. **Open call, not yet acted on.**
 
+### J. RCS -- audited, clean (2026-07-29)
+Last of the punted families (parachutes skipped, user call). RCS has **two** gates and both are sound.
+
+**1. The RealFuels tech-level ladder** `RFTech-rcs-tltech1-7` -- one rung per tier, ascending:
+T2 `gnc_rcs` -> T3 `gnc_standardRCS` -> T5 `gnc_spacecraftRCS` -> T8 `pc_storableRcsPropellants` ->
+T9 `gnc_bipropAttitudeThrust` -> T10 `pc_cryogenicRcsFeed` -> T11 `gnc_longLifeRCS`. (This ladder had
+two descending rungs when the audit began; the author fixed them in `bb57599`/`ae26672`, and the
+build's own tech-level gate now reports clean.)
+
+**2. Per-propellant `CONFIG`s**, each gated by its own chemistry node, ascending in Isp multiplier:
+```
+Helium  (start) 0.453     MMH/UDMH+NTO etc  T8  0.943-0.955
+HTP     T2      0.465     Cavea-B           T9  0.939
+N2O     T4      0.525     H2+O2             T9  1.329
+Nitrogen T5     0.195     RP-1/Syntin+O2    T11 0.951-1.016
+Hydrazine T5    0.720     CH4+O2            T12 1.047
+```
+
+**`Nitrogen` (0.195) looks like dead content at T5 -- it is not.** It is a density/Isp trade:
+
+| | Isp mult | density | impulse per tank VOLUME | tank mass |
+|---|---|---|---|---|
+| Helium | 0.453 | 1.786e-7 | 8.1e-8 | 0.000115 |
+| Nitrogen | 0.195 | 1.251e-6 (7x denser) | **2.4e-7 (3x better)** | 0.000095 (lighter) |
+
+Helium wins impulse per propellant MASS; nitrogen wins 3x on impulse per VOLUME and carries a lighter
+tank. The same trade the tree deliberately celebrates for kerolox vs hydrolox.
+
+**3. Zero dominated parts** among the 123 dedicated thrusters -- but only after two exclusions, both of
+which are lessons this audit has now hit three times each:
+- **fixed-catalog nodes.** Including `gnc_standardRCS` ("Interchangeable-Part Manufacture", 42
+  interchangeable blocks) produced *42 KB* of mutual-dominance pairs. Mutual dominance is what a
+  catalogue IS.
+- **integrated parts.** `thrusterPower / part mass` only means anything for a part whose JOB is RCS.
+  Comparing whole spacecraft on it -- Cassini 2,025 kg against Mars Observer 892 kg, Juno against
+  LCROSS, Galileo against Magellan -- measures the spacecraft, not the thruster. Identical to the
+  integrated-bus error corrected for solar in F.
+
+**Noted, not acted on:** `RO-2kN-Thruster` sits on `gnc_rcs` (T2) with default
+`configuration = Nitrogen`, but the Nitrogen config is gated at T5 -- so for three tiers the part
+cannot use the propellant it is named for and falls back to Helium. Harmless (Helium is free from
+start) but the node comment does describe it as "Nitrogen cold-gas thruster".
+
 ## 3. Tier shape -- three claims made, three retracted
 
 Every tier-shape finding in the first draft turned out to be an artefact of measuring the wrong
