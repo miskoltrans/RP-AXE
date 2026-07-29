@@ -78,6 +78,7 @@ The reason a bug in family A or B survives long enough to reach playtesting.
 | The `RSSRP1` save that "proved" `GAMEPARAMETERS` worked | Made in `ksp_rp1_clean`, where RP-1's own plugin was doing the work. **A save from an RP-1 instance can never prove an AXE mechanism.** |
 | Contract Configurator's `Loaded N out of N` | CC reads the pre-patch database on the run that regenerates the MM cache: 338/338 is printed while 34 new types are silently missing. Always validate on a **second** run. |
 | Hand-authored test fixtures (FTO) | Inputs built from the mental model under test can only confirm it. Sprang three times. |
+| `AxeFundraisingTip`'s "is anything converting?" test | Guarded `Strategies == null` but not `Strategies.Count == 0`. `StrategySystem.OnLoad` defers to a coroutine that opens `yield return null`, so for a frame the list is **non-null and empty** — and empty answers every "is X active?" question with "no". It then latched the verdict, making the wrong answer final. **Empty is not absent; it is the state a lazily-populated collection is in before its coroutine runs.** *Caught by playtest the day it shipped, ECONOMY.md §12.* |
 
 **Rules, in order of how often they would have helped:**
 1. Prove it against the **merged `ModuleManager.ConfigCache`** and the **save the game actually
@@ -85,6 +86,10 @@ The reason a bug in family A or B survives long enough to reach playtesting.
 2. Any bounded pass must `log()` what it dropped. Silent truncation reads as coverage.
 3. A gate that reports and exits 0 is documentation, not a gate.
 4. New `CONTRACT_TYPE` configs need two runs before a verdict.
+5. **Separate "not yet" from "no", and never cache a "not yet".** Before reading any KSP system in an
+   addon, ask what it looks like mid-load — a `ScenarioModule` that loads in a coroutine presents as
+   live-but-empty, so a null check passes and the answer is wrong. Test readiness explicitly, and latch
+   only on facts that cannot change (the game mode), never on ones that merely have not arrived.
 
 ---
 

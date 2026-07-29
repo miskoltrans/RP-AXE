@@ -58,16 +58,20 @@ namespace RPAxe
         {
             if (_evaluated) return;
 
+            // Career is the only mode with a Channel 2, and the mode is known immediately and never
+            // changes — so this is the one condition it is safe to latch on.
+            if (HighLogic.CurrentGame == null) return;
+            if (HighLogic.CurrentGame.Mode != Game.Modes.CAREER) { _evaluated = true; return; }
+
             AxeTipState state = AxeTipState.Instance;
             if (state == null) return;   // scenario module not spun up yet; retry next frame
 
-            // Reputation.Instance is null outside career, which is the only mode with a Channel 2.
-            if (Reputation.Instance == null) { _evaluated = true; return; }
-
-            // Not evaluated-and-done until the player has actually banked something: this addon is
-            // respawned on every return to the Space Center, so leaving it un-latched below the
-            // threshold is what lets the nudge fire on a later visit.
+            // Everything below is LOAD-ORDER SENSITIVE, so nothing here latches: this addon is
+            // respawned on every return to the Space Center, and a not-yet condition must stay
+            // retryable rather than being mistaken for a settled answer.
+            if (Reputation.Instance == null) return;
             if (Reputation.CurrentRep < RepThreshold) return;
+            if (!StrategiesLoaded()) return;
 
             _evaluated = true;
 
@@ -79,7 +83,32 @@ namespace RPAxe
         }
 
         /// <summary>
-        /// True if some ACTIVE strategy already converts reputation into funds.
+        /// Whether the strategy system has finished populating, as distinct from having no active
+        /// strategies.
+        ///
+        /// THIS DISTINCTION IS THE WHOLE POINT. `StrategySystem.OnLoad` does
+        /// `StartCoroutine(OnLoadRoutine(node))`, and that routine opens with `yield return null` —
+        /// so for at least one frame `StrategySystem.Instance` exists, `Strategies` is a non-null
+        /// **empty** list, and every "is anything converting?" question answers "no". The first
+        /// version of this file guarded only against null and latched its verdict immediately, so it
+        /// fired the nudge at a career that had been running Fundraising for years (caught in the
+        /// `default3` playtest, 2026-07-30). Empty means NOT LOADED YET.
+        ///
+        /// `LoadStrategies` fills the list in one synchronous pass over every *defined* strategy —
+        /// active or not — so the count is either 0 (has not run) or complete. `> 0` is therefore a
+        /// sound readiness signal, and if an install genuinely defines no strategies at all there is
+        /// no Channel 2 to advertise and staying silent forever is the right outcome.
+        /// </summary>
+        private static bool StrategiesLoaded()
+        {
+            StrategySystem sys = StrategySystem.Instance;
+            return sys != null && sys.Strategies != null && sys.Strategies.Count > 0;
+        }
+
+        /// <summary>
+        /// True if some ACTIVE strategy already converts reputation into funds. Assumes the caller has
+        /// established readiness via <see cref="StrategiesLoaded"/> — this method cannot tell an empty
+        /// strategy list from an unloaded one, and must never be asked to.
         ///
         /// Detected STRUCTURALLY — by the effect's own input/output currencies — not by matching
         /// "FundraisingCampaignCfg" by name, which would be the silent-string-binding failure

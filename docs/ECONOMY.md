@@ -963,8 +963,34 @@ player earned nothing. On any exception it reports "conversion is live" and stay
 unreadable strategy system must not produce a false alarm telling a player to switch on something
 they already run.
 
-**Not yet confirmed in game** — it needs a career cold-load to see the popup actually spawn, the same
-outstanding verification as the `@ADMINISTRATION` and `@RESEARCH` blocks above.
+### It shipped broken, and the playtest caught it the same day
+
+Confirmed in game 2026-07-30 — by firing at `saves/default3`, **a career that had been running
+Fundraising at 0.49 commitment for years.** A false positive, and the cause is worth keeping:
+
+`StrategySystem.OnLoad` does `StartCoroutine(OnLoadRoutine(node))`, and that routine opens with
+`yield return null`. So for at least one frame the scene has a live `StrategySystem.Instance` whose
+`Strategies` is a **non-null empty list**. The check guarded against `null` only, so it read empty as
+"nothing is converting", and — worse — it had already latched `_evaluated`, so the wrong answer was
+final for that scene visit.
+
+**Empty is not absent.** It is the state a lazily-populated collection is in before its coroutine
+runs, and a null guard does not distinguish them — BUG-CLASSES.md family 3, a check that looks
+thorough and answers a question its data cannot yet support.
+
+Fixed two ways, because either alone still misbehaves:
+- an explicit readiness test (`Strategies.Count > 0`) before the verdict is formed. Sound because
+  `LoadStrategies` creates every *defined* strategy and applies the saved nodes — `Strategy.Load` ends
+  `isActive = true; Register();` — in **one synchronous pass**, so the count is either 0 or complete,
+  and activation state is final the moment it is non-zero;
+- **nothing load-order sensitive latches any more.** Only `Game.Modes != CAREER` does, since the mode
+  is known immediately and never changes. Reputation not yet loaded, rep below threshold, strategies
+  not yet populated are all *not-yet* conditions, and the addon respawns on every return to the Space
+  Center, so leaving them retryable is what lets the nudge arrive on a later visit instead of being
+  silently spent on a frame where nothing was readable.
+
+The negative case is now the one that is verified; the positive case (a career that genuinely has not
+activated Fundraising) has not been seen fire yet.
 
 ## 13. Programs end — 2026-07-30: conclusion is earned, not chosen
 
