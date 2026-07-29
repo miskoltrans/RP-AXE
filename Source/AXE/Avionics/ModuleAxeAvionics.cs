@@ -309,6 +309,22 @@ namespace RPAxe
         public bool CanHibernate => guidanceEnabled && (shieldedEnabled ? _bestShieldedIdx >= 0 : _unshHibernateFactor > 0f);
         public float CurrentHibernateFactor => (shieldedEnabled && _bestShieldedIdx >= 0) ? hibernationFactor : _unshHibernateFactor;
 
+        // This is RP-1's "Shutdown Avionics" (ModuleAvionics.systemEnabled), NOT stock probe hibernation --
+        // RP-1 disables that outright on every ModuleCommand (Avionics.cfg:1) and AXE's config does the same.
+        // A shut-down core in RP-1 returns 0 from CurrentMassLimit, i.e. it leaves the vessel's steerable-mass
+        // MAX entirely (EffectiveCapacityTons reproduces that below), and draws GetEnabledkW() *
+        // disabledPowerFactor. The availability gate is RP-1's GetToggleable() => disabledPowerFactor > 0,
+        // which its configs author per family: Near-Earth only from advancedAvionics (index 9 here) at 0.1,
+        // Deep-Space at EVERY tier from its first at 0.05, Science-Core never (nothing to shut down -- it is
+        // already a flat sub-watt draw with no capacity). CanHibernate/CurrentHibernateFactor are that gate.
+        //
+        // _onRails is included because RP-1 drops a toggleable core to the disabled rate on rails regardless
+        // of the manual switch (ModuleAvionics.UpdateRate: currentlyEnabled = systemEnabled && !(toggleable
+        // && onRails)). It deliberately does NOT feed EffectiveCapacityTons, unlike `hibernating`: capacity
+        // is a build-time property the player reads in the VAB, and having it blink to zero on entering
+        // timewarp would be noise. Nothing steers while unloaded anyway, so the distinction is inert.
+        bool Asleep => guidanceEnabled && CanHibernate && (hibernating || _onRails);
+
         static bool KerbalismPresent
         {
             get
@@ -410,6 +426,19 @@ namespace RPAxe
             _ladShCost = shCost.ToArray();
             _ladShTech = shTechs.ToArray();
             _ladUnshHibernate = unshHib.ToArray();
+        }
+
+        // RP-1 parity (ModuleAvionics.OnSave: "Too many ways to exit a scene, so always write the Disabled
+        // power draw"). BackgroundUpdate below reads currentWatts straight out of the module snapshot for an
+        // UNLOADED vessel, so whatever is persisted here is the rate Kerbalism bills that vessel for the
+        // entire time it sits unloaded. Persisting the live active-guidance figure -- which for an overloaded
+        // core carries the penalty multiplier -- would charge that rate across the whole gap, draining a
+        // parked craft that was merely over capacity while attached to a booster it has long since dropped.
+        // KSP writes the persistent KSPFields before calling OnSave, so this overwrites rather than adds.
+        public override void OnSave(ConfigNode node)
+        {
+            base.OnSave(node);
+            node.SetValue(nameof(currentWatts), ComputeWatts(true), true);
         }
 
         public override void OnStartFinished(StartState state)
@@ -723,6 +752,28 @@ namespace RPAxe
             return "shieldedTiers=" + gates.Count + " gates=[" + string.Join(", ", gates.ToArray()) + "]";
         }
 
+        // Smoke-test accessor (AutoTest): where the avionics-shutdown capability (RP-1's Shutdown Avionics,
+        // gated by its disabledPowerFactor > 0) actually starts on each axis, read from the parsed static
+        // ladder rather than assumed. Confirms the config's TIER{unshHibernateFactor=...} wired through.
+        // Expect Unshielded to start at index 9 (comp_multiplyRedundantFlightComputer = RP-1's
+        // advancedAvionics, the first NE tier carrying disabledPowerFactor) at depth 0.1, and Shielded at
+        // index 4 (shd_basicAvionics), matching RP-1's Deep-Space having the field on every rung.
+        internal static string HibernateLadderReport()
+        {
+            int firstUnsh = -1;
+            float unshDepth = 0f;
+            for (int i = 0; i < _ladUnshHibernate.Length; i++)
+                if (_ladUnshHibernate[i] > 0f) { firstUnsh = i; unshDepth = _ladUnshHibernate[i]; break; }
+            int firstSh = -1;
+            for (int i = 0; i < _ladShTech.Length && i < _ladShMass.Length; i++)
+                if (_ladShMass[i] > 0f && !string.IsNullOrEmpty(_ladShTech[i])) { firstSh = i; break; }
+            string unshTech = (firstUnsh >= 0 && firstUnsh < _ladTech.Length) ? _ladTech[firstUnsh] : "none";
+            string shTech = (firstSh >= 0 && firstSh < _ladShTech.Length) ? _ladShTech[firstSh] : "none";
+            return "shutdownStarts unshielded=" + firstUnsh + " (expect 9, " + unshTech + ") depth=" + unshDepth.ToString("0.###")
+                 + " | shielded=" + firstSh + " (expect 4, " + shTech + ")"
+                 + " | scienceCore=never";
+        }
+
         bool ShieldedActive => shieldedEnabled && _bestShieldedIdx >= 0;
         // Whether the Shielded TOGGLE itself is unlocked. Now that each Shielded rung gates on its own shd_*
         // node (see ApplyShieldedTier + _ladShTech), _bestShieldedIdx becomes >= 0 exactly when the player has
@@ -970,24 +1021,34 @@ namespace RPAxe
         }
 
         // r = live vessel mass / effective capacity. r<=1 -> no penalty. Past that, a smooth exponential
-        // penalty (spec-locked k=8) — gentle at small overages, prohibitive past ~25-50% over. Deliberately
-        // NOT guarded when capacity floors at 0 while mass>0 (r -> +Infinity, multiplier -> +Infinity) —
-        // that hard-wall consequence is the spec's explicitly accepted outcome of an undersized core.
-        // Exponent argument is clamped (not the multiplier itself) so a badly undersized core (capacity
-        // near/at 0 while mass>0, r -> +Infinity) still reads as an enormous but FINITE watts figure
-        // instead of the literal string "Infinity" -- Mathf.Exp(80) alone is ~5.5e34, comfortably under
-        // float's ~3.4e38 ceiling. The severe-penalty intent for an undersized core is unchanged; this
-        // only fixes the display/precision overflow, not the underlying "hard floor" behavior.
-        const float PenaltyExponentCap = 80f;
+        // penalty (spec-locked k=8) — gentle at small overages, prohibitive past ~25-50% over.
+        //
+        // CEILING on the multiplier. The curve is spec-locked and was calibrated over the 0-50%-over band;
+        // e^(8*0.5) = 54.6 is exactly the "50% over = a hard practical wall" reference point in
+        // docs/AVIONICS_SPEC.md. Capping AT that value leaves every calibrated case bit-identical and clips
+        // only the uncalibrated tail beyond it, where the raw curve runs to e^80 (~5.5e34 W) -- enough to
+        // flatten every battery on the vessel inside a physics tick, which drops ModuleCommand and takes
+        // staging and throttle with it. That is strictly harsher than the attitude lock this penalty
+        // replaced, and it is unrecoverable: the battery is long dead before the overloading stage separates
+        // and r falls back under 1. Previously only the EXPONENT was clamped (at 80), which fixed the
+        // literal "Infinity" readout but left the behaviour untouched. A KSPField so it can be retuned
+        // without a rebuild.
+        [KSPField] public float penaltyMultiplierCap = 54.6f;
 
         float PenaltyMultiplier()
         {
-            if (!guidanceEnabled) return 1f;
+            // A shut-down (or on-rails) core has already left EffectiveCapacityTons and is not running a
+            // guidance loop, so there is nothing to penalise -- RP-1's disabled rate is likewise a plain
+            // fraction of the enabled rate with no overload term. Without this guard a lone sleeping core
+            // excluded ITSELF from the vessel MAX, capacity fell to 0, r went to +Infinity, and the
+            // advertised "5% depth" was 5% of e^80 -- which is why shutting an overloaded core down never
+            // saved it, and why hibernation could not be used as an escape from overload at all.
+            if (!guidanceEnabled || Asleep) return 1f;
             float mass = VesselMassTons();
             if (mass <= 0f) return 1f;
             float capacity = EffectiveCapacityTons();
-            float r = mass / capacity;
-            return r <= 1f ? 1f : Mathf.Exp(Mathf.Min(8f * (r - 1f), PenaltyExponentCap));
+            float r = mass / capacity;   // capacity 0 => +Infinity => pinned at the cap below, never NaN
+            return r <= 1f ? 1f : Mathf.Min(Mathf.Exp(8f * (r - 1f)), penaltyMultiplierCap);
         }
 
         // Operating EC draw (watts) for the current model, before idle/hibernation reduction, WITH the
@@ -1006,13 +1067,20 @@ namespace RPAxe
             return Poly(m, powerExponent, EffectivePowerConstant(), _powerFactor);
         }
 
-        // Actual live draw: forced to the current hibernate depth while hibernating OR on rails (matches
+        // Actual live draw: forced to the current hibernate depth while shut down OR on rails (matches
         // RP-1's auto-drop-on-warp, independent of the manual toggle); otherwise Science-Core stays flat,
         // Guided draws full when guiding and idleFactor when dumb.
-        float ComputeWatts()
+        float ComputeWatts() => ComputeWatts(_onRails);
+
+        // RP-1 parity (ModuleAvionics.GetPowerDraw / ModuleProceduralAvionics.GetDisabledkW): the disabled
+        // rate is GetEnabledkW() * disabledPowerFactor, and RP-1's enabled kW carries no overload term at
+        // all -- RP-1 locks attitude instead of taxing power. So the sleeping rate here is built from
+        // TierWatts(), the raw tier/mass draw, NOT from ComputeBaseWatts(), which folds the penalty in.
+        float ComputeWatts(bool onRails)
         {
+            if (guidanceEnabled && CanHibernate && (hibernating || onRails))
+                return TierWatts() * CurrentHibernateFactor;
             float b = ComputeBaseWatts();
-            if (guidanceEnabled && CanHibernate && (hibernating || _onRails)) return b * CurrentHibernateFactor;
             if (!guidanceEnabled) return b;
             return GuidanceActive ? b : b * idleFactor;
         }
@@ -1074,15 +1142,23 @@ namespace RPAxe
             sh.guiActiveEditor = guidanceEnabled && ShieldedUnlocked;
             sh.guiName = shieldedEnabled ? "Switch to Unshielded" : "Switch to Shielded";
 
-            // Hibernation: flight-only deep sleep, Guided only, gated by CanHibernate (Unshielded needs a
-            // late tier; Shielded is available from its own tier 0).
+            // Shutdown/Activate: RP-1's own avionics toggle. Available in the EDITOR as well as in flight --
+            // RP-1 sets guiActive and guiActiveEditor alike from GetToggleable() -- so a stage's avionics can
+            // be BUILT already shut down instead of only being switched off after launch. Guided only, gated
+            // by CanHibernate (Unshielded needs index 9; Shielded from its own first tier).
             BaseEvent hb = Events[nameof(ToggleHibernation)];
             hb.guiActive = CanHibernate;
-            hb.guiActiveEditor = false;
-            hb.guiName = hibernating ? "Wake from Hibernation" : "Hibernate";
+            hb.guiActiveEditor = CanHibernate;
+            hb.active = CanHibernate;
+            hb.guiName = hibernating ? "Activate Avionics" : "Shutdown Avionics";
+            // RP-1 exposes all three (Toggle / Shutdown / Activate) and hides whichever is a no-op in the
+            // current state -- except in the editor, where both directions stay listed so either can be
+            // bound to an action group regardless of the state the craft is saved in.
             Actions[nameof(HibernateAction)].active = CanHibernate;
+            Actions[nameof(ShutdownAction)].active = CanHibernate && (!hibernating || HighLogic.LoadedSceneIsEditor);
+            Actions[nameof(ActivateAction)].active = CanHibernate && (hibernating || HighLogic.LoadedSceneIsEditor);
 
-            guidanceStatus = hibernating ? "hibernating — low power, control suspended"
+            guidanceStatus = hibernating ? "shut down — no guidance, out of the steerable-mass budget"
                            : ScienceCoreMode ? (_scAllowAxial ? "Unguided — axial thrust only (spin-stabilized)"
                                                               : "Unguided — no steering")
                            : !GuidanceUnlocked ? "Guided — guidance not yet researched (dumb)"
@@ -1116,20 +1192,35 @@ namespace RPAxe
             SetGui();
         }
 
-        // Flight: toggle deep sleep. Guarded on CanHibernate (Guided only; Unshielded needs its late tier,
-        // Shielded is available from its own tier 0).
-        [KSPEvent(guiActive = true, guiActiveEditor = false, guiName = "Hibernate", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        // Editor and flight: shut the avionics down / bring it back up. Guarded on CanHibernate (Guided only;
+        // Unshielded needs index 9, Shielded is available from its own first tier).
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Shutdown Avionics", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public void ToggleHibernation()
         {
             if (!CanHibernate) return;
             hibernating = !hibernating;
-            UpdateRate();
+            // Shutting down removes this core from EffectiveCapacityTons, which moves the vessel-wide
+            // steerable-mass MAX -- so EVERY other core's penalty has to be recomputed, not just this one's.
+            // In the editor onEditorShipModified re-runs the whole ship; in flight the 1 Hz Update() tick
+            // and the controller's onVesselWasModified handler both pick it up.
+            if (HighLogic.LoadedSceneIsEditor && EditorLogic.fetch?.ship != null)
+                GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+            else
+                UpdateRate();
             if (vessel != null) GameEvents.onVesselWasModified.Fire(vessel);
             SetGui();
         }
 
-        [KSPAction("Toggle Hibernation")]
+        [KSPAction("Toggle Avionics")]
         public void HibernateAction(KSPActionParam _) => ToggleHibernation();
+
+        // RP-1 pairs the toggle with two one-way actions, so an avionics state change can be dropped into a
+        // staging sequence without depending on what the state happens to be when the stage fires.
+        [KSPAction("Shutdown Avionics")]
+        public void ShutdownAction(KSPActionParam _) { if (!hibernating) ToggleHibernation(); }
+
+        [KSPAction("Activate Avionics")]
+        public void ActivateAction(KSPActionParam _) { if (hibernating) ToggleHibernation(); }
 
         // ---- IPartMassModifier: the frozen hardware mass (battery mass is RealFuels') ----
         public float GetModuleMass(float defaultMass, ModifierStagingSituation sit) => avionicsMass;
@@ -1150,13 +1241,17 @@ namespace RPAxe
                  + "• <b>Unguided</b> — no steering, but a fraction of the mass and almost no power; "
                  + "from improved avionics it permits axial-thrust spin-stabilization.\n\n"
                  + "<b>Shielded</b> (Guided only, unlocked later): its own heavier/pricier hardware ladder, "
-                 + "in exchange for a deeper hibernation depth available from its own first tier — "
-                 + "Unshielded only reaches a shallow hibernate late, Shielded reaches deep from the start.\n\n"
+                 + "in exchange for being able to shut down from its own first tier, and more deeply — "
+                 + "Unshielded only earns a shallower shutdown late in the ladder.\n\n"
                  + "A crewed pod or a separate probe core always restores full control regardless of model.\n\n"
                  + "<b>Power draw</b> runs live off the vehicle's <i>dry</i> mass, drawn through the vessel's "
                  + "normal electric charge system — an empty battery loses control the same way it would for "
-                 + "any uncrewed probe. Draw auto-drops during timewarp for any hibernate-capable core, and "
-                 + "<b>Hibernate</b> (flight-only) does the same on demand.\n\n"
+                 + "any uncrewed probe. Draw auto-drops during timewarp for any core that can shut down.\n\n"
+                 + "<b>Shutdown Avionics</b> (in the VAB or in flight, once the ladder unlocks it): powers the "
+                 + "unit down to a fraction of its draw and takes it out of the vessel's steerable-mass "
+                 + "budget entirely — it stops steering, stops counting, and stops being charged for "
+                 + "overload. Command, staging and throttle keep working. Build an upper stage's avionics "
+                 + "shut down and switch it on after separation, or bind it to a staging action group.\n\n"
                  + "<b>Battery/hardware/empty split</b>: drag the bar in the Avionics Core PAW section to "
                  + "divide the box's volume between battery and hardware; the rest is legitimately unused.\n\n"
                  + "<b>Set to Debris</b>: mark a stage's avionics so, once it separates, an otherwise-idle "
