@@ -814,14 +814,16 @@ generated file `design/Programs/AxeProgramObjectiveFunds.cfg`, using the same `%
 `AxeCapstoneFunds.cfg` already uses. `EarlySatellites` now pays 38,793 six times instead of 232,758
 once.
 
-Channel 1 still totals **exactly 24,000,000**, now split 15 capstones (3,065,619) / 138 staged
-objectives (15,976,779) / 35 bonuses (4,957,603). Three invariants are asserted by the generator and
-would previously have failed silently:
+Channel 1 still totals **exactly 24,000,000**, now split 15 capstones (3,065,619) / **137** staged
+objectives (15,972,343) / 35 bonuses (4,962,038). *(Read 138 / 15,976,779 / 4,957,603 as first
+written; the dedupe pass below dropped one staged objective, since a name that exists twice in `seed/`
+is one contract at runtime. The 24,000,000 is unaffected — it is normalised, not summed.)* Three
+invariants are asserted by the generator and would previously have failed silently:
 
 - **The two patch files must key disjoint contract sets.** `%rewardFunds` is set-or-create and
   therefore *overwrites*; two patches on one contract would silently keep the last, not the sum.
   Capstone-labelled objectives are excluded from the spread, which makes the sets disjoint by
-  construction (15 + 138, zero overlap) — and it is asserted, not assumed.
+  construction (15 + 137, zero overlap) — and it is asserted, not assumed.
 - **No funds are created or lost by shared objectives.** Three contracts are objectives of two
   programmes each (`KarmanLine`, `first_OrbitRecover`, `FirstComSat`). Each is paid once from the
   richer claim, and the loser **keeps that slice on its own bonus** rather than leaking it — which is
@@ -869,8 +871,11 @@ in-game explanation rather than a slow squeeze.
   warning**, and Contract Configurator loaded **373 of 373** against the cache's own 373 node count
   (so the two-run under-load did not bite). The staged patches are on the contracts —
   `AtmoSat` / `FirstPolarSat` / `FirstSolarSat` all read `rewardFunds = 25862`, `maxCompletions = 1`
-  — and the merged cache carries **188 paying types totalling 23,999,994 raw**, i.e. Channel 1
-  reconciling to target *after* ModuleManager, not just in the generator's own arithmetic.
+  — and the merged cache carried **188 paying types totalling 23,999,994 raw**, i.e. Channel 1
+  reconciling to target *after* ModuleManager, not just in the generator's own arithmetic. (Measured
+  on the 2026-07-29 cold load, hence 188 = 15 + 138 + 35; the dedupe pass has since made it 187. The
+  figure to re-measure against is whatever `build_economy.py` last printed, never a number pasted
+  here.)
   **The runtime proof is stronger than a screenshot:** `saves/default3` holds an active
   `FundraisingCampaignCfg` at **`factor = 0.49`** with `SpaceCenter/Administration` at **`lvl = 0`**.
   A 0.49 commitment at building level 1 is unreachable under CustomBarnKit's 0.25 cap, so the block
