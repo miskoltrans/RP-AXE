@@ -546,13 +546,48 @@ GRNS/XRS, Chandrayaan C1XS, Dawn GRaND. Three distinct measurements, each a real
 Neutron spectrometry is the one with a gameplay hook beyond "more science": it is how you find water
 ice, which is what makes a polar landing site interesting.
 
-**Order of work when this is picked up:** (1) decide the part source — un-delete `ca_GRS` and
-RO-configure it, or author AXE instrument configs on existing models, per RESTART.md's
-"RO-config floor + author our own configs"; (2) author the Kerbalism `EXPERIMENT_DEFINITION`s with
-body/situation masks and values budgeted against §3b; (3) home a small lane — the measurements are
-distinct enough to be three nodes, and early enough that gamma-ray spectrometry belongs in the lunar
-probe era, not the late tree; (4) add the parts to `manifest/curated-parts.tsv` so the new
-membership gate in `build_tree.py` accepts them.
+### 6a-i. PROPOSAL (2026-07-29) — the Orbital Geochemistry branch
+
+**This is cheaper than it looked, because AXE already ships the kit.** `seed/Parts/Science/` carries
+RP-1's 33 instrument configs *and* `Assets/` with their models. Authoring an instrument here is a
+solved, repeated pattern — a `PART` pointing at a model (`CR01-GeigerMuller.cfg` is the reference),
+plus an `EXPERIMENT_DEFINITION` and two MM patches (`Experiments/CosmicRay.cfg` is the reference).
+Three free unused models sit in `Assets/` (`ca_ELIX`, `ca_RPWS`, `ca_barometer`), and Coatl's own
+`ca_GRS.mu` can be referenced under `:NEEDS[CoatlAerospace]` since Coatl is an installed dependency.
+
+**Lane: extend NuclearEngineering, do not add a discipline.** The radiation-detector lane already
+exists and is exactly the right physics — `nuc_geiger` (T1, Geiger-Müller Ionization Counting) →
+`nuc_cosmicRay` (T3, Cosmic-Ray Telescopy). Gamma-ray, X-ray and neutron spectrometry are the same
+detector family grown up: scintillators and proportional counters pointed at a surface instead of at
+space. Branching them off `nuc_cosmicRay` makes the lineage a true sentence.
+
+| node | tier | instrument | first flight | base/cap |
+|---|---|---|---|---|
+| `nuc_gammaRaySpectrometry` | ~5 | GR01 — Gamma-Ray Spectrometer | Luna 10, **1966** | 12 |
+| `nuc_xrayFluorescence` | ~7 | XR01 — X-Ray Fluorescence Spectrometer | Apollo 15 SIM bay, 1971 | 20 |
+| `nuc_neutronSpectrometry` | ~10 | NS01 — Neutron Spectrometer | Lunar Prospector, 1998 | 35 |
+
+Values sit inside the established band and climb like the other families (`magScan` 6/12/40,
+`massSpec` 8/12/20/30, `RPWS` 7/20/30). Naming follows the kit's own convention (CR01, MS01, VI05…).
+
+**The masks are the whole point.** `situationMask = 48` (in-space low + high) is the standard orbital
+instrument mask, but these get **`biomeMask = 48` as well** — biome-resolved from orbit, precedented
+by `RP0infraredRad1–4`, which are the only other instruments that do it. That makes surface
+composition **repeatable per biome**: you map a body region by region rather than banking one reading
+and moving on. That is a genuinely new *shape* of science in AXE, not just three more experiments —
+and it is what the real instruments actually did.
+
+**Neutron spectrometry earns its late tier by reading hydrogen** — i.e. water ice. It is the one
+instrument here with a reason to exist beyond science points: it tells you which polar site is worth
+landing at.
+
+**Open decisions before authoring:** the three tiers above are approximate and want checking against
+their era neighbours; the model assignment per instrument; and whether XRF branches off the gamma-ray
+node or off `nuc_cosmicRay` directly. `ca_GRS` itself stays deleted — the cleanup list is right that
+an unconfigured Coatl part should not ship; we take its model, not its config.
+
+**Then:** author the three parts + three `EXPERIMENT_DEFINITION`s, home the nodes, and add the parts
+to `manifest/curated-parts.tsv` so the membership gate in `build_tree.py` accepts them.
 
 ### 6b. SETTLED 2026-07-29 — `mic_atmoSounding` stays as it is
 
