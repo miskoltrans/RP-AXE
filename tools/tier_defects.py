@@ -62,7 +62,8 @@ def engine_config_ladders(nodes, upg_node):
                 "part": part, "config": cfg, "title": c[ix["title"]],
                 "is_base": c[ix["is_base"]] == "base",
                 "thrust": num("maxThrust_kN"), "isp": num("ispVac"), "ispSL": num("ispSL"),
-                "prop": c[ix["propellants"]], "ignitions": c[ix["ignitions"]],
+                "minThrust": num("minThrust_kN"), "massMult": num("massMult"),
+                "prop": c[ix["propellants"]], "ignitions": num("ignitions"),
                 "burn": num("ratedBurnTime"),
             })
     # join to placement
@@ -101,13 +102,34 @@ def engine_defects(ladders, part_node, nodes):
             for b in pool:
                 if a is b or a["prop"] != b["prop"]:
                     continue
-                # sea-level and vacuum nozzle variants of one engine trade ispVac against ispSL
-                # (RL10A-5 is a SL engine: 368 s vac but far better at 1 atm). Requiring BOTH keeps
-                # those side-grades out of the report.
+                # An engine config is only DEAD if it loses on every axis a builder actually picks
+                # between. Thrust and vacuum Isp alone flag 26 pairs; 21 of those are side-grades
+                # trading performance for burn time, restarts, throttle depth or engine mass.
+                # Requiring all of them drops it to 5.
+                #   ispSL   -- RL10A-5 is a sea-level engine: 368 s vac but far better at 1 atm.
+                #   burn    -- a shorter-burning uprate is not a free upgrade for an upper stage.
+                #   massMult-- a heavier config at equal thrust is worse, not better.
+                #   ignitions/throttle -- restart count and how deep it throttles are capabilities.
+                # `ignitions` is only compared when BOTH are positive: RealFuels writes 0 on
+                # ground-start boosters and the meaning is ambiguous, so 0 is treated as unknown.
                 asl, bsl = a["ispSL"] or 0.0, b["ispSL"] or 0.0
-                better = (b["thrust"] >= a["thrust"] * 0.999 and b["isp"] >= a["isp"] * 0.999
-                          and bsl >= asl * 0.999
-                          and (b["thrust"] >= a["thrust"] * 1.03 or b["isp"] >= a["isp"] * 1.03))
+                if not (b["thrust"] >= a["thrust"] * 0.999 and b["isp"] >= a["isp"] * 0.999
+                        and bsl >= asl * 0.999):
+                    continue
+                if a["burn"] and b["burn"] and b["burn"] < a["burn"] * 0.999:
+                    continue
+                # A BLANK massMult means 1.0, not "unknown" -- skipping the test when one side is
+                # blank let SPT-100M (28% heavier than SPT-100B) and DS4G-50-hi (2.25x heavier than
+                # DS4G-25-mid) read as free upgrades.
+                if (b["massMult"] or 1.0) > (a["massMult"] or 1.0) * 1.001:
+                    continue
+                ai, bi = a["ignitions"], b["ignitions"]
+                if ai and bi and ai > 0 and bi > 0 and bi < ai:
+                    continue
+                if a["minThrust"] and b["minThrust"] and a["thrust"] and b["thrust"]:
+                    if (b["minThrust"] / b["thrust"]) > (a["minThrust"] / a["thrust"]) * 1.001:
+                        continue
+                better = (b["thrust"] >= a["thrust"] * 1.03 or b["isp"] >= a["isp"] * 1.03)
                 if not better:
                     continue
                 if b["tier"] < a["tier"]:

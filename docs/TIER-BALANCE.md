@@ -262,23 +262,41 @@ model, not the headline field ([[kerbalism-pays-on-sciencecap]] says exactly thi
 | `RFTech-SM` | II→T5 · III→T7 · IV→T9 | clean |
 | `airlaunchTL` | 1→T2 · 2→T3 · 3→T5 · 4→T6 | clean |
 
-### E. Engine configs that unlock out of order (28 findings; representative)
-| engine | dead config | beaten by |
-|---|---|---|
-| `ROE-RD108` | `RD-108-8D77` T4 `fd_regenCooling` 803 kN | `RD-108-8D75-1958/59/K` T3 `met_nimonic` 941–945 kN |
-| `ROE-RL10Fixed` | `RL10A-3-3B` T9 `cryo_largeHydrolox` 67 kN/440 s | `RL10A-3-3A` T8 73 kN/444 s |
-| `ROE-RL10Fixed` | `RL10A-3-7` T10 67 kN/442 s | `RL10A-3-3A` T8 73 kN/444 s |
-| `ROE-M1` | `M-1SL` T12, `M-1U-SL` T13 | `M-1U` T11 8007 kN/430 s |
-| `ROE-RD275` | `RD-253-Mk3/Mk4`, `RD-275` T11 | `RD-275M` T10 1830 kN |
-| `ROE-RD254` | `RD-254-11D44-Mk3/Mk4`, `RD-277-14D16` T11 | `RD-277M-14D16M` T10 1922 kN |
-| `ROE-LE5` | `LE-5` T11 103 kN/450 s | `LE-5A` T7 122 kN/452 s |
-| `ROE-Merlin1D` | `Merlin1D+` T14 825 kN | `Merlin1D++` T11 914 kN |
-| `ROE-NK33` | `AJ26-59` T13 | `AJ26-62` T12 |
-| `RO-SPT100` | `SPT-100B` 1600 s | `SPT-100D` 1740 s — **same node** `ep_kilowattPPU` T11 |
+### E. Engine configs that unlock out of order -- 28 claimed, 4 real
+The first pass compared configs on thrust and vacuum Isp alone and reported 28. That is the wrong
+test: a config with less thrust or Isp is still the right pick if it burns longer, restarts more,
+throttles deeper or weighs less. Requiring dominance on **every axis a builder actually chooses
+between** -- thrust, vac Isp, SL Isp, rated burn time, ignition count, throttle depth and massMult --
+drops it to **4**. Two further false positives died on a subtler point: a **blank `massMult` means
+1.0, not "unknown"**, and skipping the test when one side was blank let `SPT-100M` (28% heavier than
+`SPT-100B`) and `DS4G-50-hi` (2.25x heavier than `DS4G-25-mid`) read as free upgrades.
 
-The `ROE-RD275`/`ROE-RD254` pattern is one mistake repeated: `pc_stagedCombustionCeiling` (T10)
-hands out the best config in the family, and `pc_operationalStorableORSC` (T11) then hands out three
-weaker ones.
+So 24 of the 28 were side-grades. `tools/tier_defects.py` now carries the strict comparator.
+
+**RESOLVED 2026-07-29 -- the two genuine inversions, wrong against performance AND RP-1's own era
+ordering (`engine-stats.tsv` `node_title`).**
+
+- **Merlin 1D.** The part `ROE-Merlin1D` is at T13, but `Merlin1D++` (914 kN) sat at **T11, two tiers
+  below its own part**, while the weaker `Merlin1D+` (825 kN) was gated at T14. In play: at T13 you
+  received base *and* `++` together, and `+` was dead on arrival. Both cost 56 and share RP-1's
+  2014-2018 era node; history puts `+` (full-thrust, 2015) before `++` (Block 5, 2018).
+  **Swapped** between `fd_keroloxClusterApex` (T11) and `fd_densifiedPropellantKeroloxII` (T14). The
+  vacuum line (`Merlin1DVac` T13 -> `Merlin1DVac+` T14) was already ascending and is untouched.
+- **RD-275.** `RD-275M` (1830 kN, RP-1 era 2004-2008) was gated at T10 while the earlier, weaker
+  `RD-275` (1746 kN, era 1992-1997) sat at T11. **Swapped** between `pc_stagedCombustionCeiling`
+  (T10) and `pc_operationalStorableORSC` (T11).
+  *Flagged, not acted on:* the neighbouring `RD-277M-14D16M` (T10) / `RD-277-14D16` (T11) pair has the
+  same shape. It survives the strict test on another axis, so it was left pending a look -- the two
+  nodes may have been populated back-to-front as a pair.
+
+**Left standing, by decision -- 2 dead configs.** Not power creep, just clutter nobody picks; both are
+inherited from RP-1, which ships them the same way:
+- `RL10A-3-3B` (T9) vs `RL10A-3-3A` (T8) -- 66.7 kN/440 s against 73.4/444.4 at identical burn and
+  mass. Here RP-1's history *agrees* with the tree's order (3A 1972-75, 3B 1981-85): the later variant
+  really was lower-thrust. History and performance genuinely disagree, so there is no ordering that
+  satisfies both.
+- `RL10A-4N` vs `RL10A-4-1N`, both on `cryo_refinedExpander` (T7), same RP-1 era: 92.5 kN/448.9 s/burn
+  402 against 99.2/450.5/burn 740, and the better one is also *lighter*. RP-1 co-locates them too.
 
 ### F. Solar: the catalog is frozen, the procedural panel is not
 The structural fact that makes this whole family legible, and it validates design rule 7

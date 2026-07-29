@@ -3417,7 +3417,13 @@ nodes:
     parents: [pc_refinedStorableORSC]
     flavor: "Push oxidiser-rich staged combustion on storable hypergolics as far as raw chemistry allows — the largest hypergolic engine ever built, drawn for a booster that never flew. A record nobody has beaten since, and nobody needed to."
     parts: [ROE-RD270]
-    upgrades: [RFUpgrade_RD-277M-14D16M, RFUpgrade_RD-275M]
+    upgrades: [RFUpgrade_RD-277M-14D16M, RFUpgrade_RD-275]
+    # RFUpgrade_RD-275 SWAPPED IN from pc_operationalStorableORSC (T11) 2026-07-29 (tier-balance audit,
+    # docs/TIER-BALANCE.md E). RD-275M (1830 kN, RP-1 era 2004-2008) was gated HERE at T10 while the
+    # earlier, weaker RD-275 (1746 kN, RP-1 era 1992-1997) sat at T11 - inverted against both performance
+    # and history, so RD-275 could never be worth buying.
+    # NOTE the neighbouring RD-277M-14D16M (here, T10) / RD-277-14D16 (T11) pair has the same shape; it
+    # survives the strict dominance test on another axis, so it is left alone pending a look.
     # King RD-270 (6713 kN vacuum - the real UR-700 engine, still the largest hypergolic ever tested).
     # Sibling of fd_gasGeneratorApex/cryo_largeHydrolox: every propellant family gets its own "pushed past
     # sane thrust for one more chemistry-ceiling record" dead-end. Same "drawn but never poured" flavor as AJ-260.
@@ -4212,7 +4218,7 @@ nodes:
     tier: 11
     parents: [pc_refinedStorableORSCII]
     flavor: "The storable staged-combustion engines of Proton and its kin reach their final operational marks — the RD-275 first stage, the Kosberg upper stages — the last refinements of a hypergolic booster line that has been flying since the sixties."
-    upgrades: [RFUpgrade_RD-275, RFUpgrade_RD-253-Mk4, RFUpgrade_RD-254-11D44-Mk4, RFUpgrade_RD-277-14D16, RFUpgrade_RD-0210-Mk3, RFUpgrade_RD-0212-Mk3, RFUpgrade_RD-0213-Mk3, RFUpgrade_RD-254-11D44-Mk3, RFUpgrade_RD-253-Mk3]  # RD-254-11D44-Mk3 added 2026-07 (gap-fill; Mk4 sibling here)
+    upgrades: [RFUpgrade_RD-275M, RFUpgrade_RD-253-Mk4, RFUpgrade_RD-254-11D44-Mk4, RFUpgrade_RD-277-14D16, RFUpgrade_RD-0210-Mk3, RFUpgrade_RD-0212-Mk3, RFUpgrade_RD-0213-Mk3, RFUpgrade_RD-254-11D44-Mk3, RFUpgrade_RD-253-Mk3]  # RD-254-11D44-Mk3 added 2026-07 (gap-fill; Mk4 sibling here)
 
   # ---- FluidDynamics: storable uppers + terminal gas-generator kerolox ----
   - id: fd_multiRestartStorableUpper
@@ -4246,7 +4252,12 @@ nodes:
     tier: 11
     parents: [fd_keroloxClusterCeiling]
     flavor: "The last version anyone built of an engine that had been uprated for twenty years. Nothing here is elegant — it is a mature design run as hard as its metallurgy allows, kept in production because the vehicle around it was already qualified."
-    upgrades: [RFUpgrade_H-2-300K, RFUpgrade_E-1-Upgrade2, RFUpgrade_Merlin1D++]
+    upgrades: [RFUpgrade_H-2-300K, RFUpgrade_E-1-Upgrade2, RFUpgrade_Merlin1D+]
+    # SWAPPED with fd_densifiedPropellantKeroloxII 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md E).
+    # Merlin1D++ (914 kN) sat here at T11 - two tiers BELOW its own part (ROE-Merlin1D, T13) - while the
+    # weaker Merlin1D+ (825 kN) was gated at T14. Effect in play: at T13 you got base AND ++ at once and
+    # + was dead on arrival. Same cost (56) and same RP-1 era node (2014-2018) for both; history has +
+    # (full-thrust, 2015) before ++ (Block 5, 2018), so this ordering matches performance and history.
   - id: fd_terminalGasGenKerolox
     title: "Terminal Gas-Generator Kerolox Uprating"
     discipline: FluidDynamics
@@ -5453,7 +5464,9 @@ nodes:
     tier: 14
     parents: [fd_densifiedPropellantKerolox]
     flavor: "Push the densified Merlin further still — the Full Thrust and Block 5 marks that let the same basic engine carry a reusable booster home and fly it again."
-    upgrades: [RFUpgrade_Merlin1D+, RFUpgrade_Merlin1DVac+]
+    upgrades: [RFUpgrade_Merlin1D++, RFUpgrade_Merlin1DVac+]
+    # RFUpgrade_Merlin1D++ SWAPPED IN from fd_keroloxClusterApex (T11) 2026-07-29 - see the note there.
+    # The vacuum line (Merlin1DVac T13 -> Merlin1DVac+ T14) was already ascending and is untouched.
     # doctrine-4 catch: these configs' own base parts (ROE-Merlin1D/ROE-Merlin1DV) live in fd_densifiedPropellantKerolox.
 
   # ---- PropellantChemistry: American ORSC studies + solid boosters ----
