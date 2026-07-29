@@ -903,7 +903,21 @@ nodes:
     tier: 4
     parents: [aero_fairings]
     flavor: "Stiffen a spun-aluminium payload shroud with riveted stringers instead of casting it thick — the first step off dead-weight spun metal, shaving shroud mass on every launch. The opening rung of a fairing-materials ladder that runs on through magnesium and fibreglass to composite shells in the bands ahead."
-    upgrades: [PFTech-Fairing-I, PFTech-Fairing-II]  # Fairing-II (improved aluminium fairing) rides with Fairing-I 2026-07 Group-B
+    upgrades: [PFTech-Fairing-I]
+    # 2026-07-29: Fairing-II split off. The old note here called it "improved aluminium" — it is not.
+    # ProceduralFairings' own description reads "1960s MAGNESIUM stringer-stiffened", a different metal
+    # with its own metallurgy, and this node's flavor above already promises the ladder "runs on through
+    # magnesium" in a LATER band. Handing magnesium over here contradicted both. It now sits on
+    # met_magnesiumAlloy, and this node grants exactly the aluminium rung its title names.
+  - id: met_magnesiumAlloy
+    title: "Magnesium Alloy Stringers"
+    discipline: Metallurgy
+    tier: 6
+    parents: [met_stiffenedFairings]
+    flavor: "Roll the stringers from magnesium instead of aluminium wherever the load is stiffness rather than strength — the lightest structural metal anyone will fly, bought at the price of an alloy that corrodes if you look at it wrong and burns if you machine it dry."
+    upgrades: [PFTech-Fairing-II]
+    # PFTech-Fairing-II: min density 0.135 -> 0.124. Fills the Metallurgy gap that ran T4 -> T9 with
+    # nothing in between.
   - id: elec_arCoatings
     title: "Anti-Reflective Cell Coatings"
     discipline: ElectricalPower
@@ -1771,10 +1785,13 @@ nodes:
     parents: [int_mercuryCapsule]
     flavor: "Give the capsule its own thrusters and it stops merely falling around the Earth — it can change its orbit, chase a target, hold a heading. Gemini: not a bigger Mercury, a spacecraft that flies itself."
     parts: [ROC-GeminiCMBDB, ROC-GeminiOAMSBDB, ROC-GeminiOAMSRCSBDB, ROAdvCapsule]
-    upgrades: [RFTech-Battery-III, RFTech-SM-III, RFTech-Tank-Sep-AlCu]
-    # +3 upgrades (2026-07): RealFuels per-tank-type tech tier (battery/service-module/separate-tank alloy),
+    upgrades: [RFTech-SM-III, RFTech-Tank-Sep-AlCu]
+    # +2 upgrades (2026-07): RealFuels per-tank-type tech tier (service-module/separate-tank alloy),
     # confirmed KEEP-tank-typelevel, bucket=materialsScienceAdvCapsules — this IS the advanced-capsule
     # generation these describe.
+    # RFTech-Battery-III moved OUT (2026-07-29): a battery chemistry level homed on a capsule is the same
+    # mission-not-mechanism bundling the antenna note below records fixing. It now sits on
+    # elec_silverZincCells with the rest of its ladder.
     # Gemini's antenna moved OUT (2026-07 fix): it uses ModuleRealAntenna, the same comms mechanism as
     # DynaSoar's antenna — bundling it here by MISSION instead of by mechanism was the same mistake this
     # whole session has been catching elsewhere. Now grouped with its real siblings in
@@ -3670,9 +3687,38 @@ nodes:
     tier: 6
     parents: [elec_deployableArrays]
     flavor: "Seal a rechargeable cell so it cycles through orbital night after orbital night without venting or dying — nickel-cadmium, then nickel-hydrogen — and a spacecraft can finally store the power its arrays make in daylight. The other half of every solar power system."
-    upgrades: [RFTech-Battery-II, RFTech-Battery-IV]
-    # Secondary-battery energy-density tech-levels (electronicsHuman/Lunar). Battery-III sits on
-    # int_geminiCapsule from an earlier opportunistic placement; left in place.
+    upgrades: [RFTech-Battery-II]
+    # Battery-II ONLY. Its delta is 23% lighter at UNCHANGED 50% packing (basemass 0.00007 -> 0.000054
+    # per volume), i.e. the saving is the vent hardware and free electrolyte this node's own flavor
+    # describes shedding -- not a chemistry change. The chemistry rungs live downstream.
+    #
+    # 2026-07-29 REDESIGN. This node used to hold II AND IV while III sat on int_geminiCapsule (T7), so
+    # Battery-IV unlocked a full tier BEFORE the rung it supersedes. RealFuels tank levels are
+    # IsAdditiveUpgrade__ (RO_RealFuels_PartConfigs.cfg:231) -- IV does not require III and is strictly
+    # better (basemass 0.000024 vs 0.00004, packing 75% vs 60%) -- so III was 540 funds for nothing.
+    # III on a CAPSULE node was also mission-homing, the same mistake int_geminiCapsule's own comment
+    # records fixing for Gemini's antenna. The ladder is now one rung per node, ascending, and parallel
+    # to its sibling RFTech-SM ladder: SM-III/Battery-III at T7, SM-IV/Battery-IV at T9.
+  - id: elec_silverZincCells
+    title: "Silver-Zinc High-Energy Cells"
+    discipline: ElectricalPower
+    tier: 7
+    parents: [elec_secondaryBatteries]
+    flavor: "Trade the nickel electrode for silver and the same mass of cell gives up nearly twice the energy — ruinously expensive, good for a few dozen cycles, and worth every gram on a vehicle that only has to come home once. The chemistry that carried Mercury, Vostok and Gemini."
+    upgrades: [RFTech-Battery-III]
+    # Battery-III: 26% lighter AND packing 50% -> 60%, i.e. a genuine energy-density jump rather than a
+    # packaging one, which is what a chemistry change buys. RO's own description dates it to
+    # "Gemini and Voskhod" -- silver-zinc, and the third rung of the ladder.
+  - id: elec_thinSeparatorCells
+    title: "Thin-Separator Cell Stacks"
+    discipline: ElectricalPower
+    tier: 9
+    parents: [elec_silverZincCells]
+    flavor: "Thin the separators and press the plates closer until the case is mostly active material and hardly any structure — the same chemistry, a third less mass again, and a discharge rate that will run a lander's pumps flat out. Where the battery stops being a passenger."
+    upgrades: [RFTech-Battery-IV]
+    # Battery-IV: 40% lighter, packing 60% -> 75% -- construction, not chemistry, so it is named for the
+    # construction. T9 matches its sibling RFTech-SM-IV on met_aluminiumCopperBalloonTank; RO dates both
+    # to Apollo.
   - id: cmp_compositeFairingShells
     title: "Composite Fairing Shells"
     discipline: CompositeMaterials
@@ -3680,12 +3726,27 @@ nodes:
     parents: [met_stiffenedFairings, cmp_ablativeRefinement]
     flavor: "Carry the resin-and-fibre layup learned for a reentry heatshield over to a payload shroud instead — a fairing that sheds the last of the aluminium stringer's dead weight, built from the same composite technique that already keeps a capsule cool on the way down."
     parts: [ROC-CSTNoseCone]
-    upgrades: [PFTech-Fairing-III, PFTech-Fairing-IV]  # Fairing-III (early composite) rides with Fairing-IV 2026-07 Group-B
+    upgrades: [PFTech-Fairing-III]
+    # 2026-07-29: Fairing-IV split off. Its description is "1980s ALUMINIUM ISOGRID" — a milled metal
+    # shell, not a layup, so a CompositeMaterials node was the wrong discipline for it as well as the
+    # wrong generation (fibreglass is late-1960s, isogrid is 1980s). Moved to met_isogridShells.
+    # Fairing-III (fibreglass) is the composite rung and stays.
     # Real crossover, flagged by a prior author: met_stiffenedFairings' own flavor text promised the
     # fairing-materials ladder "runs on through magnesium and fibreglass to composite shells" - this is
     # that promised rung, crossing into CompositeMaterials by reusing cmp_ablativeRefinement's fibre-resin
-    # composite technique (established for heatshields) on a fairing instead. PFTech-Fairing-II/III are a
-    # known gap in the middle of this ladder (never curated), skipped over, not silently absorbed.
+    # composite technique (established for heatshields) on a fairing instead. (The old "PFTech-Fairing-II/III
+    # are a known gap" note is retired 2026-07-29: II now has a home on met_magnesiumAlloy and III is here.)
+  - id: met_isogridShells
+    title: "Isogrid-Milled Fairing Shells"
+    discipline: Metallurgy
+    tier: 10
+    parents: [cmp_compositeFairingShells]
+    flavor: "Run the triangular-rib milling already cut into tankage over a payload shroud instead — pocket the plate away until only the load paths are left, and a metal fairing undercuts an early fibreglass one on mass while still coming off a machine tool rather than a layup bench."
+    upgrades: [PFTech-Fairing-IV]
+    # PFTech-Fairing-IV: min density 0.074 -> 0.068. Metallurgy, not CompositeMaterials — it inherits the
+    # mechanism from met_isogrid (T2), but that node is unlocked long before this point, so making it a
+    # second parent would be lineage dressed as a gate. cmp_compositeFairingShells is the real parent: it
+    # is the rung this one supersedes.
 
   # ================================================================================================
   # ================= BAND 4 * SHUTTLE & STATION ERA -- STATIONS (2026-07) ========================
