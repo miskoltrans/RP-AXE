@@ -508,6 +508,44 @@ against 14.5 -- which looks like an inversion. It is not: Starship is **35% chea
 97% utilisation, a real cost/mass trade and the actual design philosophy of the vehicle it is named
 for. Same sidegrade class as the engine configs dismissed in E.
 
+### H. Heatshields -- audited, ladder sound (2026-07-29)
+The second of the five punted families. The first draft's proxy was PART `maxTemp`, which is the
+STRUCTURE's limit rather than the ablator's capability -- it classified `ROC-D2Parachute` as a
+heatshield (that part does carry 12 units of Ablator, so the misread was earned).
+
+There is no single scalar for NAMED shields, and this time the reason is properly established rather
+than assumed: ablator **amount** is extensive (it scales with capsule diameter -- `ROC-GeminiHSLunarBDB`
+45 kg/169 units against `ROC-OrionHS` 300 kg/720 units, both lunar-rated), and ablator **per kg** comes
+out noisy at 2.2-3.8 because material and geometry vary independently of rating.
+
+But the capability axis does exist, stated in prose by RO and gated properly:
+`ROHeatshields/Heatshield-Presets.cfg` defines `ROHS_PRESET`s by **rated reentry regime**, and each is
+unlocked by its own PARTUPGRADE named after the preset -- consumed by the ROHeatshields plugin, not by
+a module `UPGRADES` block. All six are placed in `nodes.yaml`, and they ascend:
+
+| preset | rated for | gate | tier |
+|---|---|---|---|
+| `Heatsink` | LEO with a deeply negative perigee | `cmp_ablativeTPS` | T5 |
+| `MercuryHS` | non-lifting LEO | `cmp_ablativeRefinement` | T6 |
+| `GeminiHS` | lifting LEO | `cmp_ablativeRefinement` | T6 |
+| `EarlyLunarHS` | lunar | `cmp_lunarReturnAblator` | T8 |
+| `LunarHS` | lunar and interplanetary | `cmp_lunarLandingAblator` | T9 |
+| `Inflatable` | Mars or very gentle Earth (sidegrade) | `cmp_inflatableDecelerator` | T11 |
+
+**No defect.** A false alarm en route is worth recording: `ROH-AdjustableHS` sits at T5 and advertises
+`presets = Heatsink, MercuryHS, GeminiHS, EarlyLunarHS, LunarHS` with `UPGRADES: NONE`, which reads as
+"interplanetary reentry available at T5". It is not -- that field lists the presets the part SUPPORTS,
+and each one is gated separately. Fourth time in this audit a frightening-looking field turned out to
+be fine once the gating mechanism was found rather than inferred.
+
+**Worth considering, not acted on:** `MercuryHS` and `GeminiHS` share `cmp_ablativeRefinement` (T6).
+Non-lifting and lifting LEO reentry are two distinct capability rungs arriving on one node -- the same
+COLLAPSE class as the `solarTL` pairing fixed in D. Smaller stakes, since both are LEO-class.
+
+**Also dismissed:** `ROC-BigGeminiHS` (152 kg / 380 ablator) beside `ROC-BigGeminiHSLunar`
+(190 kg / 456) on `cmp_lunarLandingAblator` (T9) looks like a dead LEO variant next to its lunar
+sibling. It is a mass trade -- the LEO shield is 20% lighter -- so both have a role.
+
 ## 3. Tier shape -- three claims made, three retracted
 
 Every tier-shape finding in the first draft turned out to be an artefact of measuring the wrong
