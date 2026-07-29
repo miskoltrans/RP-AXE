@@ -280,25 +280,53 @@ The `ROE-RD275`/`ROE-RD254` pattern is one mistake repeated: `pc_stagedCombustio
 hands out the best config in the family, and `pc_operationalStorableORSC` (T11) then hands out three
 weaker ones.
 
-### F. Same-node capability gaps (38 DOMINATED)
-Nodes holding a clear upgrade next to its own predecessor:
+### F. Solar: the catalog is frozen, the procedural panel is not
+The structural fact that makes this whole family legible, and it validates design rule 7
+("procedural is the DEFAULT; fixed-catalog variants -> opt-in dead-ends") with numbers:
 
-| node | tier | family | spread | worst → best |
-|---|---|---|---|---|
-| `gnc_largeReactionWheels` | T9 | reaction wheel | see **A** | |
-| `gnc_reactionWheelAttitude` | T8 | reaction wheel | 31× | `sasModule` → `ca_rw_xsmall` |
-| `elec_deployablePanelII` | T7 | solar | 2.6× over **10 panels** | `1x3SPanels` 0.0054 → `solarPanels5HiTech` 0.014 |
-| `elec_probeBusSolarWings` | T9 | solar | 10.9× | `ca_vor_sp2` → `SXTsolarPanelhex` |
-| `elec_matureSolarArrays` | T10 | solar | 2.1× | Apollo Block V → `largeSolarPanel` |
-| `nuc_isotopePowerII` | T8 | RTG | 3.4× over 7 RTGs | `rtgMini` → SNAP-27 |
-| `elec_gphsRTGGeneration` | T10 | RTG | 2.1× over 8 RTGs | MMRTG → GPHS-RTG |
-| `okb_lunaLanders` | T7 | battery | 2.8× | `luna_radio` → `l11_astro` |
-| `th_activeLouvers` | T7 | radiator | 1.25× | `ca_louver_s2` → `ca_louver_m` |
+- **`ROS-StaticSolarPanel`** (ROSolar's procedural panel) carries `ModuleROSolar` *and* the
+  `solarTL1-10` UPGRADES. It tracks the ladder: **5.0 W/kg at TL0 (1956) -> 376 W/kg at TL10
+  (Modern)**, a 75x climb across T4-T13.
+- **Every fixed catalog panel** has **no UPGRADES at all** -- `ModuleDeployableSolarPanel` plus
+  `ModuleROSolarPanel`, and the latter is *only a VAB planning UI* (decompiled: it reads `chargeRate`
+  to predict output at a chosen body's Pe/Ap and modifies nothing). They are frozen forever at their
+  authored W/kg.
 
-`solarPanels5` ("ST1 Solar Panel") and `solarPanels5HiTech` ("ST2 Solar Panel") on one node is the
-purest instance — a named upgrade pair sharing a home.
+So each catalog panel is implicitly authored to ONE **(solarTL rung x deployment type)** grid point,
+and `TechLimits.cfg` gives the grid: TL0 5.0 · TL1 5.6 · TL2 8.0 · TL3 9.4 · TL4 11.0 · TL5 14.0 ·
+TL6 30.0 · TL7 58.6 · TL8 122.6 · TL9 265 · TL10 376 W/kg, with mass multipliers 1.05-1.75 for
+folded and 1.2-2.0 for tracking. Fitting all 34 placed panels to that grid lands them at **0-5%
+error** -- this is not a heuristic, the parts really were built to these numbers.
 
----
+That turns the question from "which parts dominate which" into one mechanical check: **is each frozen
+panel homed where its own era unlocks?** Mostly yes, within +/-1 tier. The spread inside
+`elec_deployablePanelII` that the first draft called a 2.6x same-node gap is mostly *static vs folded
+vs tracking on the same TL5 rung* -- legitimate geometry variety, not a generation gap.
+
+**RESOLVED 2026-07-29.**
+
+- **Power creep -- 5 NearFutureSolar arrays, 2 tiers early.** They measure 376-418 W/kg = TL10
+  (Modern), which unlocks at `elec_metamorphicMultijunction` (T13); at T11 the ladder only reaches
+  TL8 (122.6), so they were **3.4x better than anything else at their tier** -- the same defect class
+  as the `experimental` T1 camera in finding B. `elec_deployableBlanketArray`,
+  `elec_concentratingPhotovoltaic` and `elec_advancedRigidArray` **re-tiered T11 -> T13**, with
+  `elec_tripleJunctionCell` (T12) added as a second parent: the plain physical prerequisite (the cells
+  the arrays are built from), which also keeps the edge to a single tier.
+- **Dead content -- 4 Coatl bus arrays 2-5 tiers late on a main-lane node.** `ca_vor_sp2` at
+  **2.8 W/kg is below the TL0 1956 floor of 5.0** -- worse than the panel you start with, offered at
+  T9. Moved off `elec_probeBusSolarWings` into a new dead-end, **`elec_busArrayCatalog` (T8),
+  "Prefabricated Spacecraft-Bus Arrays"** (nothing depends on it), per rule 7. The two parts left on
+  the main-lane node measure TL6 static/folded = exactly its tier.
+
+**Left standing, deliberately:**
+- `ca_landv_hga` (TL3/tracking, implies T6) stays on `int_surveyorLanderBus` (T8) -- it is a combined
+  antenna-and-array integral to the Surveyor bus, and pulling it out would break that mission set.
+- `sp_mariner_a` on `gnc_threeAxisStabilizedBus` (T7) measures TL6/tracking = 16.7 W/kg, implying T9
+  -- **2 tiers early**, about 2.1x the procedural tracking array at its tier. Smaller than the NFS
+  case but the same shape; not acted on.
+- `nfs-panel-deploying-curved-375-1` on `elec_curvedExpandingArray` (T11) exposes **no solar output at
+  all** in the cache, so it could not be fitted to the grid. Worth a look on its own -- a solar node
+  whose only part may not generate power.
 
 ## 3. Tier shape
 

@@ -4640,7 +4640,22 @@ nodes:
     tier: 9
     parents: [elec_refinedSolarSimulation]
     flavor: "A deployable wing cut to the exact power budget of one bus family — the IUE, Venera and 4MV arrays, each sized for its own mission rather than pulled off a generic shelf."
-    parts: [ca_explorer_solar, ca_fom_sp, ca_vor_sp, ca_vor_sp2, SXTsolarPanelLarge, SXTsolarPanelhex]
+    parts: [SXTsolarPanelLarge, SXTsolarPanelhex]
+    # TRIMMED 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md F). The two kept parts measure TL6
+    # static/folded = exactly this tier. The four Coatl bus arrays measured TL1-TL5 (T4-T7 efficiency)
+    # and ca_vor_sp2 at 2.8 W/kg is BELOW the TL0 1956 floor of 5.0 - dead content on a main-lane node.
+    # Moved to elec_busArrayCatalog per doctrine rule 7 (fixed-catalog variants -> opt-in dead-ends).
+  - id: elec_busArrayCatalog
+    title: "Prefabricated Spacecraft-Bus Arrays"
+    discipline: ElectricalPower
+    tier: 8
+    parents: [elec_deployablePanelII]
+    flavor: "Wings cut for one spacecraft and never re-cut — the IUE, Venera and 4MV arrays as their own programmes built them. Off the shelf and off the pace: none of them will ever match a panel you size yourself."
+    parts: [ca_explorer_solar, ca_fom_sp, ca_vor_sp, ca_vor_sp2]
+    # DEAD END on purpose - nothing depends on this node. Each part is frozen at the (solarTL, deployment)
+    # grid point its own programme was built to: ca_fom_sp TL5, ca_explorer_solar TL5/tracking,
+    # ca_vor_sp TL3/tracking, ca_vor_sp2 TL1/tracking. Kept for flavour on those historic buses; a
+    # procedural panel at this tier beats all four.
     # Vehicle-specific solar wings, split from the generic size-catalog above (same "scatter by mechanism,
     # not vehicle, but keep the vehicle-specific shelf separate" pattern as the RTG/antenna splits below).
   - id: elec_matureSolarArrays
@@ -4658,28 +4673,49 @@ nodes:
   - id: elec_deployableBlanketArray
     title: "Roll-Out Blanket Solar Array"
     discipline: ElectricalPower
-    tier: 11
-    parents: [elec_matureSolarArrays]
+    tier: 13
+    parents: [elec_matureSolarArrays, elec_tripleJunctionCell]
     flavor: "Replace the rigid folding paddle with a flexible photovoltaic blanket that unrolls off a spool like a tape measure — a fraction of the stowed volume and mass of a hinged panel of the same area, at three mission scales."
     parts: [nfs-panel-deploying-blanket-starship-1, nfs-panel-deploying-blanket-dsg-1, nfs-panel-deploying-blanket-arm-1]
+    # RE-TIERED T11 -> T13 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md F). Every FIXED solar
+    # panel is frozen at one (solarTL rung x deployment type) grid point - only ROSolar's procedural
+    # panel carries the solarTL1-10 upgrades and tracks the ladder. These arrays measure 376-418 W/kg
+    # = TL10 (Modern), which unlocks at elec_metamorphicMultijunction (T13); at T11 the ladder only
+    # reaches TL8 (122.6 W/kg), so they were 3.4x better than anything else at their tier.
+    # Second parent elec_tripleJunctionCell is the plain physical prerequisite (the cells these arrays
+    # are built from) and keeps the edge to a single tier.
     # 2026-07 backlog sweep: real ROSA/Gateway-heritage roll-out blanket mechanism, one lineage, three
     # sizes (small vehicle / station / large circular) - a single breakthrough, kept as one node.
   - id: elec_concentratingPhotovoltaic
     title: "Concentrating Photovoltaic Array"
     discipline: ElectricalPower
-    tier: 11
-    parents: [elec_matureSolarArrays]
+    tier: 13
+    parents: [elec_matureSolarArrays, elec_tripleJunctionCell]
     flavor: "Focus sunlight onto a small strip of the most efficient (and most expensive) cells with lenses instead of covering the whole panel in them — the same power from far less exotic photovoltaic material."
     parts: [nfs-panel-deploying-concentrator-1x4-juno-1]
+    # RE-TIERED T11 -> T13 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md F). Every FIXED solar
+    # panel is frozen at one (solarTL rung x deployment type) grid point - only ROSolar's procedural
+    # panel carries the solarTL1-10 upgrades and tracks the ladder. These arrays measure 376-418 W/kg
+    # = TL10 (Modern), which unlocks at elec_metamorphicMultijunction (T13); at T11 the ladder only
+    # reaches TL8 (122.6 W/kg), so they were 3.4x better than anything else at their tier.
+    # Second parent elec_tripleJunctionCell is the plain physical prerequisite (the cells these arrays
+    # are built from) and keeps the edge to a single tier.
     # 2026-07 backlog sweep: a genuinely different mechanism (optical concentration vs. flat-cell coverage)
     # from the blanket/rigid/curved siblings - split into its own node rather than a shared catalog.
   - id: elec_advancedRigidArray
     title: "Large Rigid Photovoltaic Array"
     discipline: ElectricalPower
-    tier: 11
-    parents: [elec_matureSolarArrays]
+    tier: 13
+    parents: [elec_matureSolarArrays, elec_tripleJunctionCell]
     flavor: "No new mechanism, just scale: the same hinged rigid panel the whole tree has used since the first fold-out paddle, built one size class larger than anything before it."
     parts: [nfs-panel-deploying-advanced-2x20-hub-1]
+    # RE-TIERED T11 -> T13 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md F). Every FIXED solar
+    # panel is frozen at one (solarTL rung x deployment type) grid point - only ROSolar's procedural
+    # panel carries the solarTL1-10 upgrades and tracks the ladder. These arrays measure 376-418 W/kg
+    # = TL10 (Modern), which unlocks at elec_metamorphicMultijunction (T13); at T11 the ladder only
+    # reaches TL8 (122.6 W/kg), so they were 3.4x better than anything else at their tier.
+    # Second parent elec_tripleJunctionCell is the plain physical prerequisite (the cells these arrays
+    # are built from) and keeps the edge to a single tier.
     # 2026-07 backlog sweep: brute-force scaling of the familiar rigid-panel mechanism - kept separate from
     # the blanket/concentrating/curved siblings since it's a different design lineage (rigid vs flexible).
   - id: elec_curvedExpandingArray
