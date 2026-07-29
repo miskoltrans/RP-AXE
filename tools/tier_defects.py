@@ -541,6 +541,12 @@ def part_defects(rows):
                             ok = False
                     if not ok:
                         continue
+                # Deployment class is an orthogonal CHOICE, not a rung. A tracking panel pays
+                # 1.2-2.0x the mass of a static one built from the same cells, and buys continuous
+                # sun-pointing; a folded one pays 1.05-1.75x and buys stowed volume. Comparing a
+                # folded TL4 against a static TL5 compares two different products, not a dead part.
+                if a["derived"].get("solar_deploy") != b["derived"].get("solar_deploy"):
+                    continue
                 if not all(b["derived"][x] >= a["derived"][x] * 0.999 for x in intens):
                     continue
                 if not any(b["derived"][x] >= a["derived"][x] * 1.15 for x in intens):

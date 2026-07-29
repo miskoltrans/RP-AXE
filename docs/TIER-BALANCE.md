@@ -399,6 +399,35 @@ vs tracking on the same TL5 rung* -- legitimate geometry variety, not a generati
   "Prefabricated Spacecraft-Bus Arrays"** (nothing depends on it), per rule 7. The two parts left on
   the main-lane node measure TL6 static/folded = exactly its tier.
 
+### F2. Panels judged against the PROCEDURAL default (2026-07-29)
+Re-measuring on the axis that actually matters in play -- **is a fixed panel better or worse than the
+procedural panel you already own at that tier, for the same deployment class?** -- reversed one of F's
+conclusions and sharpened the rest. (User steer: *"it's ok to be earlier than historical, it has to
+make sense from gameplay"*.)
+
+- **The TL5 panels on `elec_deployablePanelII` (T7) read 1.27x procedural -- a modest reward for
+  buying the node. LEFT IN PLACE.** An earlier draft proposed moving them to T8 "to match their era";
+  that would have turned a reward into parity and made the node pointless. Being ahead of history is
+  doing real work here.
+- **Six panels sat BELOW the procedural default -- dead content -- and were moved to where they reach
+  parity:** `solarPanels2`, `solarPanels4`, `solarPanels5`, `1x3SPanels` (all TL2, 0.73-0.77x) from
+  `elec_deployablePanelII` (T7) to **`elec_deployableArrays` (T5)**, whose procedural rung IS TL2; and
+  `ROC-ApolloSolarBlockV` + `ROC-OrionSolar` (TL6, 0.47-0.48x) from `elec_matureSolarArrays` (T10) to
+  **`elec_stationClassSolarArrays` (T9)**, which is now entirely TL6 -- a clean single-generation node.
+- **Left by decision:** `sp_mariner_a` (2.65x at T7) and `ca_landv_sp` (2.40x at T8) are the largest
+  remaining rewards, well above the 1.27x band -- but both are integrated into a specific spacecraft
+  on a mission node, so they are only usable by building that vehicle. Same argument that settled the
+  welded instruments in C2. `rn_surveyor_solar` and `ca_landv_hga` are weak for the same reason and
+  stay too.
+- **Detector:** solar comparisons now require the **same deployment class**. A tracking panel pays
+  1.2-2.0x the mass of a static one built from identical cells and buys continuous sun-pointing; a
+  folded one pays 1.05-1.75x and buys stowed volume. Comparing a folded TL4 with a static TL5 compares
+  two products, not a dead part.
+- **Known consequence, not yet acted on:** `RO_EarlyMediumSolarPanel` (TL1) now sits on
+  `elec_deployableArrays` beside the TL2 panels moved in, so it is the weakest part on its own node.
+  Its own parity tier is T4, and its natural home is `elec_siliconPV` (T3) alongside
+  `RO_EarlyTinySolarPanel`, which is the other TL1 static panel.
+
 **Left standing, deliberately:**
 - `ca_landv_hga` (TL3/tracking, implies T6) stays on `int_surveyorLanderBus` (T8) -- it is a combined
   antenna-and-array integral to the Surveyor bus, and pulling it out would break that mission set.

@@ -1245,7 +1245,11 @@ nodes:
     tier: 5
     parents: [elec_arCoatings]
     flavor: "Fold banks of silicon cells onto paddles that swing out once the satellite is clear of its shroud — far more collecting area than the body could ever carry, and the power to run a real payload through the sunlit half of every orbit. The array that outgrows the trickle-charge patch."
-    parts: [RO_EarlyMediumSolarPanel]
+    parts: [RO_EarlyMediumSolarPanel, solarPanels2, solarPanels4, solarPanels5, 1x3SPanels]
+    # +4 TL2 panels 2026-07-29, moved down from elec_deployablePanelII (T7) where they were 0.73-0.77x
+    # the procedural default. TL2 is this tier's procedural rung, so here they are at parity.
+    # NOTE RO_EarlyMediumSolarPanel is TL1 (5.6 W/kg) and is now the weakest part on its own node --
+    # its own parity tier is T4. Flagged, not moved.
     # solarTL1 moved OUT 2026-07-28 to elec_arCoatings (cell-lane pass): this node's breakthrough is the
     # fold-out paddle, and TL1 is a thinner cell. Structure keeps the hardware, the cell lane keeps the cell.
   - id: gnc_basicAvionics
@@ -2193,7 +2197,13 @@ nodes:
     tier: 7
     parents: [elec_deployableArrays]
     flavor: "More cells on a bigger paddle — the same fold-out array scaled up for a hungrier payload, nothing new about how it works."
-    parts: [RO-rangerSolarPanel, solarPanels4, solarPanels5, 1x3SPanels, 1x3WPanels, aje_solarPanels, LgRadialSolarPanel, ROC-D2Solar, solarPanels2, solarPanels5HiTech]
+    parts: [RO-rangerSolarPanel, 1x3WPanels, aje_solarPanels, LgRadialSolarPanel, ROC-D2Solar, solarPanels5HiTech]
+    # TRIMMED 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md F2). Measured against the PROCEDURAL
+    # panel a player already owns at this tier (TL4 = 11.0 W/kg static), the four TL2 panels here read
+    # 0.73-0.77x -- strictly worse than the default, so nobody would ever pick them. Moved down to
+    # elec_deployableArrays (T5) where TL2 IS the procedural rung and they sit at parity.
+    # What REMAINS is deliberately ahead of its era: the TL5 panels read 1.27x procedural, a modest
+    # reward for buying this node. Earlier-than-historical is fine when it earns its keep (user, 2026-07-29).
     # solarTL2 moved OUT 2026-07-28 to elec_nOnPCell (cell-lane pass): TL2 is the ladder's biggest
     # radiation step (30 days from 11) alongside +43% efficiency, at unchanged mass — the n-on-p junction
     # inversion. This node is "the same fold-out array scaled up, nothing new about how it works", by its
@@ -4663,7 +4673,9 @@ nodes:
     tier: 9
     parents: [elec_refinedSolarSimulation]
     flavor: "The same fold-out array, sized for a station's appetite instead of a probe's — more cells on a bigger paddle, nothing new about how it works."
-    parts: [largeSolarPanelEarly, solarPanels1, solarPanels3]
+    parts: [largeSolarPanelEarly, solarPanels1, solarPanels3, ROC-ApolloSolarBlockV, ROC-OrionSolar]
+    # +2 TL6 arrays 2026-07-29 from elec_matureSolarArrays (T10). Every part on this node is now TL6,
+    # which is this tier's procedural rung -- a clean single-generation node.
     # Generic XT-series size-catalog continuation (not vehicle-specific).
     # solarTL6 moved OUT 2026-07-28 to elec_backSurfaceField (cell-lane pass): TL6 moves ALL THREE columns
     # hard at once (-33% mass, +43% efficiency, x3 radiation life) — the early-70s cell revolution. A
@@ -4698,7 +4710,10 @@ nodes:
     tier: 10
     parents: [elec_stationClassSolarArrays]
     flavor: "The generic array's last uprate in this era — more efficient cells, the same fold-out paddle, still the default choice for anything that doesn't need a dedicated mission-sized wing."
-    parts: [largeSolarPanel, ROC-ApolloSolarBlockV, ROC-OrionSolar]
+    parts: [largeSolarPanel]
+    # TRIMMED 2026-07-29: ROC-ApolloSolarBlockV and ROC-OrionSolar are TL6 arrays reading 0.47-0.48x the
+    # procedural TL7 default at this tier. Moved to elec_stationClassSolarArrays (T9), which is already
+    # entirely TL6. largeSolarPanel is TL7 tracking = exactly par here, so this node still marks the rung.
     # solarTL7 moved OUT 2026-07-28 to elec_thinSiliconCell (cell-lane pass): TL7 nearly halves cell mass
     # (6 -> 3.5 kg/m²) and lands at 15.1% panel efficiency, the practical ceiling of space-grade silicon.
     # That ceiling is a property of the material, not of how large a paddle this node builds.

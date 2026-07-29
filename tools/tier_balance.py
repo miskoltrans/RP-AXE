@@ -387,6 +387,7 @@ def derive(m):
             rung, dep, err = solar_rung(m["solarRate"] * 1000.0 / kg)
             d["solar_tl"] = rung
             d["solar_fit"] = err
+            d["solar_deploy"] = dep
         if m.get("genRate"):
             d["gen_per_kg"] = m["genRate"] / kg
         if m.get("ec"):
