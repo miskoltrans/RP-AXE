@@ -209,18 +209,43 @@ Also noted, not fixed: `pioneer_6_7_8_9` (T7) carries RPWS02 and MG03 as bare mo
 generations are reachable a tier early *if you fly that specific historic bus* -- arguably a feature,
 since the instrument comes welded to the spacecraft rather than available for your own designs.
 
-### C. `gnc_orbitalGravimetry` (T8) is worth more than the entire rest of the probe ladder
-Orbital Perturbation carries `scienceCap = 200`. Every other probe instrument is 1.5–30, and they
-sum to ~177. It is RP-1's own number, vendored verbatim (the file carries RP-1's "strongly
-recommended not to change anything in this section" comment), and its `situationMask = 48` (two
-situations) partly offsets the headline — payout is `scienceCap × situationMultiplier`, so this is
-not a 133× advantage in realised science. It is still the single largest probe payout in the tree,
-and it sits on a GNC node rather than anywhere in the OpticsPhotonics or Microelectronics lanes
-that the rest of the instrument ladder runs through.
+### C. ~~`gnc_orbitalGravimetry` is worth more than the rest of the ladder~~ -- RETRACTED
+**Withdrawn 2026-07-29 (user challenge).** The claim rested on comparing raw `scienceCap` across
+instruments, and on summing those caps. Both are invalid: `scienceCap` is only half the payout, which
+is `scienceCap x situationMultiplier` summed over the situations and biomes the experiment's masks
+actually allow, so caps with different masks are not commensurable and their sum means nothing.
 
-Related: the **OpticsPhotonics lane is nearly worthless in science terms** — 8 instrument-bearing
-nodes yielding caps of 2, 2, 3, 2, 3, 4, 3, 4 (~24 total) against 3 NuclearEngineering nodes
-yielding 7+10+20+30 = 67.
+Run through the project's own ground-truthed model (`tools/science_budget.py`: real biome weights,
+per-experiment `BodyAllowed`, RP-1's situation masks), `RP0orbitalPurturbation1` is **rank 4 of 98 at
+148,950 realised** -- below `magScan3` (262,230), `massSpec4` (210,881) and `visibleImaging5`
+(862,148). Its cap of 200 is buying back a `situationMask` of 48: SpaceLow + SpaceHigh only, two
+situations against imaging's six, and no biome multiplier. **In band, not an outlier.**
+
+And T8 is the right tier. Realised value against the tier that unlocks it climbs cleanly, with
+orbital perturbation slotting exactly between its neighbours:
+
+```
+T4   56,235  massSpec1          T7  140,587  massSpec3
+T5   78,669  magScan2           T8  148,950  orbitalPerturbation
+T6  103,458  visibleImaging4    T9  210,881  massSpec4    T10  862,148  visibleImaging5
+```
+
+**No action.** Standing lesson, and the second time this audit has been caught by it: read the payout
+model, not the headline field ([[kerbalism-pays-on-sciencecap]] says exactly this).
+
+### C2. What the retraction did surface
+- **`magScan3` (262,230 realised -- the largest payout in the game before T10) is reachable at T7 via
+  `pioneer_6_7_8_9`** on the charter node `jpl_lunarPlanetaryRecon`, while its dedicated part
+  `RO-FluxgateMagnet` sits at `mic_boomMagnetometryII` (T8). This is the mission-part leak noted under
+  B and set aside as marginal. It is not marginal: it is the one thing that breaks the monotonic climb
+  above, making T8 (149k) and T9 (211k) both pay *less* than the tier before them. Same shape for
+  `RPWS2` (31,115) on the same part.
+- **Film photography and imaging spectrometry pay ~1% of their peers.** Realised: `photos1` 96,
+  `photos1a` 48, `photos2` 192, `photos3` 500, `photos4` 10,000; `imageSpec1/2/3` 2,234-2,979,
+  `imageSpec4` 4,468 -- against 26k-862k for the TV-camera, mass-spec and magnetometer lines. So the
+  original "OpticsPhotonics is nearly worthless" was also mis-aimed: `visibleImaging` (the TV cameras)
+  is the most valuable line in the game. It is specifically the `RP0photos*` and `RP0imageSpec*`
+  sub-lanes -- about 9 nodes -- that pay almost nothing.
 
 ### D. Level ladders: `commsTL` is the model, five others are compressed
 | ladder | rungs → tiers | verdict |
