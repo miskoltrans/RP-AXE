@@ -294,6 +294,22 @@ def solar_rung(wkg):
     return best[1], best[2], best[0]
 
 
+
+# NON-SHIPPING SCAFFOLD. Three nodes exist so parts are reachable IN GAME while the author decides
+# what to do with them; none of their contents ships today, so no balance statement about them is
+# meaningful. The pipeline runs parking -> experimental -> tree:
+#   parking            the build fall-through -- every part is wildcarded here by AxePartPlacement.cfg
+#                      and then overridden onto its real node, so this is "whatever the tree did not
+#                      place". Held for P2 reconsideration; most of it is expected to be sacked.
+#   experimental       the shortlist PROMOTED out of parking -- parts under consideration for a real
+#                      home. Not "uncurated parts land here", which is what docs/RESTART.md's early
+#                      wording suggested and what this audit initially mis-read.
+#   us2_serviceSandbox the same idea for the Universal Storage set, organised together pending an
+#                      axe-or-place decision.
+# Tools must treat all three as invisible: a part promoted to the shortlist for testing must not
+# start generating findings. (Author, 2026-07-29.)
+SCAFFOLD = {"parking", "experimental", "us2_serviceSandbox"}
+
 # ---------------------------------------------------------------- families
 def classify(m):
     """Functional family. Order matters -- first match wins."""

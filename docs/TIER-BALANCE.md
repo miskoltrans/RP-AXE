@@ -68,6 +68,22 @@ Two mechanisms were mis-read at first and are worth recording:
    (probe instruments) is genuinely tech-gated. Mixing the two makes the science ladder look
    catastrophically front-loaded when it isn't.
 
+### Non-shipping scaffold -- three nodes the tools must ignore
+Corrected by the author 2026-07-29, after this audit mis-read `experimental` as "where uncurated parts
+land". The real pipeline is **`parking` -> `experimental` -> tree**, and *none of the three ships today*
+-- they exist so the parts are reachable **in game while being evaluated**:
+
+| node | what it is |
+|---|---|
+| `parking` | the build fall-through. `AxePartPlacement.cfg` wildcards every part here, then overrides the placed ones onto their real nodes, so this is "whatever the tree did not place". Held for P2 reconsideration; most of it is expected to be sacked. |
+| `experimental` | the **shortlist promoted out of `parking`** -- parts under consideration for a real home. |
+| `us2_serviceSandbox` | the same idea for the Universal Storage set, organised together pending an axe-or-place decision. |
+
+So a tier, a cost or a science payload on any of them means nothing yet, and **a part promoted to the
+shortlist must not start generating findings**. `tools/tier_balance.py` defines `SCAFFOLD` and the
+detectors honour it. This had been applied to the part-dominance check but *not* to
+`instrument_reachability`, which is exactly why finding B1 fired on a shortlist part.
+
 **Also note:** the emitted `AxePartPlacement.cfg` (and therefore the live cache) can lag
 `tree/nodes.yaml`. All tools prefer `nodes.yaml` for placement and fall back to the cache only for
 upgrades the tree does not place. When cache and source disagree, source wins.
@@ -191,12 +207,14 @@ RPWS01-03) but were placed by *what each node is about* rather than *by generati
 
 **RESOLVED 2026-07-29 (hard defects only; same-tier pairs deliberately left).**
 
-- **`experimental` (T1, 1 science) was handing out the gen-4 camera.**
-  `aquila_sensor_visible_light_telescope_s0_1` carried `RP0visibleImaging4` (cap 6) as a bare module,
-  beating anything the optics lane delivers through T6 and killing VI01/VI02/VI03 outright. **Dropped
-  from the manifest** -- `RO-AdvancedImager` already carries VI04 at its proper rung, so the part was a
-  pure duplicate. Its sibling SAR part carries no experiment and stays. Note nothing strips science
-  from parts homed on `experimental`, so a science-bearing part must never be placed there.
+- **`aquila_sensor_visible_light_telescope_s0_1` dropped -- as a DUPLICATE, not as a leak.**
+  It carried `RP0visibleImaging4` (cap 6) as a bare module while sitting on `experimental`.
+  **Correction (author, 2026-07-29):** the original write-up called this a gate leak "handing out the
+  gen-4 camera at T1 for 1 science". That reasoning does not hold -- `experimental` is non-shipping
+  scaffold (see below), so nothing it contains is player-facing and no balance claim about it is
+  meaningful. The argument that stands is the other one in the same commit: `RO-AdvancedImager`
+  already carries `RP0visibleImaging4` at its proper rung, so this part was a pure duplicate. Its
+  sibling SAR part carries no experiment and stays.
 - **`RO-NIMS` re-homed** `opt_uvSpectrometry` (T6) -> `opt_multiSpectralImaging` (T7). Three defects in
   one placement: a **near-infrared mapping** spectrometer was sitting on the **ultraviolet** node
   (id-vs-title); it shared that node with `RO-UVSpectrometer`, making IS02 obsolete on arrival; and at

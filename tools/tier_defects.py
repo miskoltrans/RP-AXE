@@ -411,7 +411,7 @@ def instrument_reachability(cache, nodes, part_node, authored=None):
             for st in m.find("SETUP"):
                 e = next((k.get("id_value") for k in st.kids if k.get("type") == "Experiment"), None)
                 tech = authored.get(st.get("name") or "", st.get("tech"))
-                if e:
+                if e and tech not in tb.SCAFFOLD:
                     configured.add(e)
                     if tech:
                         t2 = nodes[tech]["tier"] if tech in nodes else None
@@ -420,7 +420,7 @@ def instrument_reachability(cache, nodes, part_node, authored=None):
         for m in p.find("MODULE"):
             if m.get("name") == "Experiment":
                 e = m.get("experiment_id")
-                if e and e not in configured and tier is not None:
+                if e and e not in configured and tier is not None and node not in tb.SCAFFOLD:
                     # A bare module on a part that ALSO has a Configure block is RP-1's WELDED
                     # convention: boom magnetometers and plasma-wave antennas physically integral
                     # to a spacecraft are attached directly instead of being swappable slots.
@@ -508,7 +508,7 @@ def part_defects(rows):
     COMPARABLE = {"solar", "battery", "reaction_wheel", "radiator", "antenna"}
     byfam = collections.defaultdict(list)
     for r in rows:
-        if r["tier"] is None or r["node"] in ("parking", "experimental"):
+        if r["tier"] is None or r["node"] in tb.SCAFFOLD:
             continue
         # Fixed-catalog DEAD-ENDS exist precisely to hold era-frozen hardware off the main lane
         # (design rule 7). Flagging their contents for being behind the curve reports the feature.
