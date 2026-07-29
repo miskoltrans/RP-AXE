@@ -27,6 +27,7 @@ const EDGE_W = 2;                        // uniform stroke width (stock lineThic
 const ARROW = 9;                        // arrowhead size (screen px here; KSP arrow sprite scales with the grid transform)
 const GOLD = '#f4d35e', GRAY = '#8a8f98';
 const DIM_EDGE = 0.10, DIM_NODE = 0.10; // alpha for de-emphasised (ghosted) elements when a lineage is focused
+const DIM_DONE = 0.45;                  // ghosted RESEARCHED nodes ride higher: green = done must survive the focus dim
 const FAN_LO = 0.18, FAN_HI = 0.82;     // fraction range along a node side for distributed endpoints
 
 // ---- vec helpers ----
@@ -626,15 +627,19 @@ function drawNode(n, focusing){
   const dimFocus = focusing && !inFocus;                // off it -> ghost (DIM_NODE)
   // 3-state read (portable: tint + alpha + badge). LOCKED = desaturated + dim; RESEARCHABLE = glow ring;
   // RESEARCHED = ✓ badge. But a LOCKED node ON the focused lineage pops at full colour (not desaturated).
+  // RESEARCHED keeps its full styling OFF the lineage too (green tile / ring / badge, just at DIM_DONE):
+  // ghosting it like everything else erased the one state the player scans the tree for. Matches the
+  // in-game R&D port (AxeTreeHighlight.GhostTile).
   const lockedRest = opt.progress && st===LOCKED && !inFocus;
-  const doneTile = opt.progress && st===RESEARCHED && !dimFocus && opt.doneStyle==='tile';   // recolour the whole tile green
-  const alpha = dimFocus ? DIM_NODE : (lockedRest ? 0.42 : 1);
+  const doneRest = opt.progress && st===RESEARCHED;
+  const doneTile = doneRest && opt.doneStyle==='tile';   // recolour the whole tile green
+  const alpha = dimFocus ? (doneRest ? DIM_DONE : DIM_NODE) : (lockedRest ? 0.42 : 1);
   const fill = lockedRest ? desat(disc.color, 0.8) : (doneTile ? C_DONE_FILL : disc.color);
   ctx.globalAlpha = alpha;
 
   roundRect(x,y,w,h,Math.max(2,3*cam.s)); ctx.fillStyle=fill; ctx.fill();
 
-  if(opt.progress && !dimFocus){
+  if(opt.progress && (!dimFocus || st===RESEARCHED)){   // ghosts keep only the DONE styling (see above)
     if(st===RESEARCHABLE){                         // AVAILABLE: bright glow ring — the actionable frontier
       ctx.save(); ctx.shadowColor=C_AVAIL; ctx.shadowBlur=Math.max(4,9*cam.s);
       ctx.strokeStyle=C_AVAIL; ctx.lineWidth=Math.max(2,3*cam.s); ctx.stroke(); ctx.restore();
@@ -671,13 +676,13 @@ function drawNode(n, focusing){
       ctx.fillText(`T${n.tier} · ${np?np+'p':'—'}${nu?'+'+nu+'u':''}${ng?'+'+ng+'g':''}`, x+w/2, y+h-8*cam.s);
     }
   }
-  if((n.grants||[]).length && cam.s>0.15 && !(opt.progress && !dimFocus && st===RESEARCHED)){   // grant marker: gold diamond (top-right) = avionics / DSN capability tier
+  if((n.grants||[]).length && cam.s>0.15 && !(opt.progress && st===RESEARCHED)){   // grant marker: gold diamond (top-right) = avionics / DSN capability tier
     const gr=Math.max(3,4*cam.s), gx=x+w-gr-2*cam.s, gy=y+gr+2*cam.s;
     ctx.globalAlpha=alpha; ctx.fillStyle=GOLD;
     ctx.beginPath(); ctx.moveTo(gx,gy-gr); ctx.lineTo(gx+gr,gy); ctx.lineTo(gx,gy+gr); ctx.lineTo(gx-gr,gy); ctx.closePath(); ctx.fill();
     ctx.strokeStyle='rgba(20,14,0,.85)'; ctx.lineWidth=Math.max(.6,cam.s); ctx.stroke();
   }
-  if(opt.progress && !dimFocus && st===RESEARCHED && cam.s>0.15){    // ✓ researched badge: bold green disc + tick
+  if(opt.progress && st===RESEARCHED && cam.s>0.15){    // ✓ researched badge: bold green disc + tick
     const r=Math.max(6,8.5*cam.s), cx=x+w-r-1, cy=y+r+1;
     ctx.globalAlpha=alpha;
     ctx.fillStyle=C_DONE; ctx.beginPath(); ctx.arc(cx,cy,r,0,6.2832); ctx.fill();
