@@ -524,6 +524,16 @@ nodes:
     parents: [start]
     flavor: "Encode a reading as the gap between radio pulses and beam it down on a fixed carrier — the beep-beep that proved a satellite was alive and returned its first data. The whole point of orbit, if you can't hear it."
     parts: [SXTAntenna, SurfAntenna, longAntenna, nfex-antenna-rover-2]
+  # Onboard recording is its own field: the live downlink (tel_telemetry) and the physical return
+  # (opt_filmReturn) both already have a home, store-and-forward had none — so every HDD rung was
+  # riding a borrowed node. This is the third leg of that taxonomy. (Rungs from 1969 on ride the
+  # Computing flight-computer lane, which by then is honest: storage IS the computer's memory.)
+  - id: tel_onboardRecording
+    title: "Endless-Loop Tape Recording"
+    discipline: Telecommunications
+    tier: 2
+    parents: [tel_telemetry]
+    flavor: "A loop of magnetic tape that writes while the craft is alone and plays it all back on command when a station rises over the horizon — the difference between a satellite that reports what happens overhead and one that reports its whole orbit."
     upgrades: [HDD-Upgrade-Early]
   - id: th_hermeticBus
     title: "Hermetic Thermal-Control Bus"

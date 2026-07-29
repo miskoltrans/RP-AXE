@@ -40,7 +40,7 @@ overridden, so it must match — that is the reason these values are kept in syn
 
 | RP-1 (HDD tier / era) | AXE node | | RP-1 | AXE node |
 |---|---|---|---|---|
-| `earlyAvionics` (Early tape) | `tel_telemetry` (T1) | | `advancedAvionics` (1975) | `comp_multiplyRedundantFlightComputer` |
+| `earlyAvionics` (Early tape) | `tel_onboardRecording` (T2) | | `advancedAvionics` (1975) | `comp_multiplyRedundantFlightComputer` |
 | `basicAvionics` (Basic) | `elec_semiconductorDiode` (T2) | | `longTermAvionics` (1990) | `comp_softwareDefinedFlightControl` |
 | `interplanetaryProbes` (1961) | `elec_transistor` (T3) | | `internationalAvionics` (1998) | `comp_interoperableAvionicsStandard` |
 | `matureAvionics` (1964) | `tel_appSatellites` (T4) | | `modernAvionics` (2010) | `comp_commercialOffTheShelfAvionics` |
@@ -52,8 +52,15 @@ RP-1's `earlyAvionics` costs 7 (23 science from `start`), AXE's `gnc_earlyAvioni
 `start`) and `gnc_basicAvionics` is **T5**. With `proceduralAvionics` basing at `dataCapacity = 0` (RP-1's
 own default, kept), that left a fresh career with *literally zero* data storage until 44 science — every file
 experiment unrunnable except as a real-time transmit stream, and the VAB capacity slider dead because it
-multiplies the base. Storage now homes on the **data-handling spine** (telemetry → diode → transistor →
-relay payloads), which is where recording hardware actually lives; guidance keeps the guidance.
+multiplies the base. Storage now homes on the **data-handling spine**, which is where recording hardware
+actually lives; guidance keeps the guidance.
+
+The first rung got its own node, `tel_onboardRecording` (**Endless-Loop Tape Recording**, Telecom T2), added
+2026-07-29. AXE already had a lane for the live downlink (`tel_telemetry`) and one for physical return
+(`opt_filmReturn`), but none for store-and-forward — which is why every HDD rung sat on a borrowed node.
+Rungs `-1969` onward stay on the Computing flight-computer lane; by then storage genuinely *is* the
+computer's memory, so that home is honest. The middle rungs ride the electronics that drove their density
+(diode → transistor → operational-satellite payloads). Cumulative science from `start`: **4 / 4 / 15 / 44**.
 
 If the tree's HDD-Upgrade placement changes (re-run `build_tree.py`), re-sync these `techRequired`/
 `techRequired__` values to the new `AxePartPlacement.cfg` mapping.
