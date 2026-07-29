@@ -864,8 +864,22 @@ in-game explanation rather than a slow squeeze.
 ### What is still open
 
 - ~~**Nothing tells the player Fundraising exists.**~~ **CLOSED 2026-07-29 — see §12.**
-- **Not verified in game.** The `@ADMINISTRATION` block needs the same cold-load confirmation §8's
-  8-entry `@RESEARCH` does, and for the same reason: CustomBarnKit's size check is silent.
+- ~~**Not verified in game.**~~ ✅ **CONFIRMED LIVE 2026-07-30, from a career rather than the UI.**
+  The cold load merged `strategyCommitRange = 0.5, 0.75, 1` with **no CustomBarnKit `wrong size`
+  warning**, and Contract Configurator loaded **373 of 373** against the cache's own 373 node count
+  (so the two-run under-load did not bite). The staged patches are on the contracts —
+  `AtmoSat` / `FirstPolarSat` / `FirstSolarSat` all read `rewardFunds = 25862`, `maxCompletions = 1`
+  — and the merged cache carries **188 paying types totalling 23,999,994 raw**, i.e. Channel 1
+  reconciling to target *after* ModuleManager, not just in the generator's own arithmetic.
+  **The runtime proof is stronger than a screenshot:** `saves/default3` holds an active
+  `FundraisingCampaignCfg` at **`factor = 0.49`** with `SpaceCenter/Administration` at **`lvl = 0`**.
+  A 0.49 commitment at building level 1 is unreachable under CustomBarnKit's 0.25 cap, so the block
+  is live at runtime and not merely in the cache. (0.49 rather than 0.50 because
+  `factorSliderSteps = 20` quantises the slider.) Effective yield **108.4 funds/reputation** against
+  the old **33.2**, matching the 109.3 this section predicts for a clean 0.5.
+  The same save shows the pass working end to end: funds **−348 → 208,712**, reputation 596 → 431 as
+  the converter diverts incoming gains, and the launchpad at `lvl = 0.333` — the **200 t rung §10 cut
+  to 90,000**, bought at 130,000 cumulative.
 - **Era-scaling of old contract rewards** (§7) is untouched, and still the lever for repeatable
   contracts paying 1950s reputation in 1975.
 
