@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ContractConfigurator;
 using HarmonyLib;
+using RPAxe.Contracts;
 using Strategies;
 using Strategies.Effects;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace RPAxe
     ///      nothing, and that programme quietly pays less. Counted here.
     ///   1b. EVERY PROGRAMME PAYS BEFORE ITS BONUS. The §11 staging is what makes a programme
     ///      flyable without savings, and a bare count cannot see it fail: the two files above patch
-    ///      DISJOINT contract sets (15 capstones + 138 staged objectives), so if one stopped
+    ///      DISJOINT contract sets (15 capstones + 137 staged objectives), so if one stopped
     ///      applying the combined count would still look healthy and the budget would still be
     ///      inside tolerance. This asserts the design property directly — every AXE_Complete_* must
     ///      have at least one CompleteContract objective that itself pays funds.
@@ -42,6 +43,19 @@ namespace RPAxe
     ///      analogue of tools/check_tech_refs.py: each completion contract gates on its programme's
     ///      objectives BY CONTRACT-TYPE NAME. A name that no longer resolves can never be satisfied,
     ///      so the contract is unpayable for the whole career — and nothing in the game says so.
+    ///   3b. EVERY COMPLETION CONTRACT CLOSES ITS PROGRAM (§13). That contract is the ONLY way a
+    ///      program ends, via a `ConcludeProgram` behaviour. Two silent rots: the generator stops
+    ///      emitting the BEHAVIOUR block, or `type = ConcludeProgram` stops resolving — CC registers
+    ///      behaviour factories by class name minus "Factory", so renaming ConcludeProgramFactory
+    ///      unbinds the config with no error. Either way the money still pays and the program stays
+    ///      active for the whole career. Asserts the behaviour exists AND names the same program the
+    ///      contract's ProgramActive requirement gates on.
+    ///   3c. NOTHING RE-ENABLES THE FAILURE PENALTY (§13). ProgramActiveRequirement defaults
+    ///      checkOnActiveContract = FALSE on purpose, diverging from RP-1. With it true, CC re-checks
+    ///      already-ACTIVE contracts and answers an unmet requirement with Contract.Fail(), which runs
+    ///      stock PenalizeFailure() — so concluding a program would fine the player for every member
+    ///      contract in flight, including any of the 66 repeatable ones. Counts any contract that opts
+    ///      back in by writing the value itself.
     ///   4. THE STRATEGY REPUTATION GATE. Regression guard for the bug fixed in 883508d/fc0d025:
     ///      requiredReputationMin/Max is a lerp over the commitment slider, NOT a window, so
     ///      "widening" it to +/-1e6 demands a million reputation at full commitment. We assert stock
@@ -137,6 +151,37 @@ namespace RPAxe
                     if (!known.Contains(dep)) dangling.Add(ct.name + "->" + dep);
             }
 
+            // (3b) every completion contract must actually CLOSE the program it gates on. Two ways for
+            // this to rot silently, both of which still pay the money and leave the program active for
+            // the rest of the career: the BEHAVIOUR block goes missing from the generator, or
+            // `type = ConcludeProgram` stops resolving (CC registers behaviour factories by class name
+            // minus "Factory", so renaming ConcludeProgramFactory unbinds the config with no error).
+            var noClosure = new List<string>();
+            foreach (ContractType ct in completions)
+            {
+                string gated = ProgramGate(ct);
+                string closed = ConcludedProgram(ct);
+                if (gated == null || closed != gated)
+                    noClosure.Add(ct.name + "(gates=" + (gated ?? "?") + ",closes=" + (closed ?? "none") + ")");
+            }
+
+            // (3c) the failure-penalty guard. ProgramActiveRequirement defaults
+            // checkOnActiveContract = false ON PURPOSE (AXE diverges from RP-1 here): with it true, CC
+            // re-checks an already-ACTIVE contract and answers an unmet requirement with
+            // Contract.Fail(), which runs stock's PenalizeFailure(). Concluding a program would then
+            // fine the player for every member contract in flight. A seed contract that opts back in
+            // by writing the value itself would reintroduce that quietly, so count them.
+            var penalising = new List<string>();
+            foreach (ContractType ct in all)
+            {
+                IEnumerable<ContractRequirement> reqs;
+                try { reqs = ct.Requirements; } catch { continue; }
+                if (reqs == null) continue;
+                foreach (ContractRequirement r in reqs)
+                    if (r is ProgramActiveRequirement pa && pa.ChecksOnActiveContract)
+                        penalising.Add(ct.name);
+            }
+
             var sb = new StringBuilder();
             sb.Append("contracts: types=").Append(all.Count)
               .Append(" completion=").Append(completions.Count).Append('/').Append(completionFunds.ToString("N0"))
@@ -164,7 +209,49 @@ namespace RPAxe
                     ? " | charter-value OK (" + charters.Count + ")"
                     : " | CHARTER HAS NO VALUE NOTE: " + Join(unpriced));
             sb.Append(dangling.Count == 0 ? " | deps OK" : " | DANGLING CompleteContract: " + Join(dangling));
+            sb.Append(noClosure.Count == 0
+                ? " | closure OK"
+                : " | DOES NOT CLOSE ITS PROGRAM: " + Join(noClosure));
+            sb.Append(penalising.Count == 0
+                ? " | no-penalty OK"
+                : " | WOULD FAIL IN-FLIGHT CONTRACTS ON CONCLUSION: " + Join(penalising));
             return sb.ToString();
+        }
+
+        /// <summary>The single program this contract's ProgramActive requirement gates on, or null if
+        /// it has none / more than one (a completion contract must gate on exactly its own).</summary>
+        private static string ProgramGate(ContractType ct)
+        {
+            IEnumerable<ContractRequirement> reqs;
+            try { reqs = ct.Requirements; }
+            catch { return null; }
+            if (reqs == null) return null;
+
+            string found = null;
+            foreach (ContractRequirement r in reqs)
+            {
+                if (!(r is ProgramActiveRequirement pa)) continue;
+                if (pa.Programs == null || pa.Programs.Count != 1) return null;
+                if (found != null) return null;
+                found = pa.Programs[0];
+            }
+            return found;
+        }
+
+        /// <summary>The program this contract's ConcludeProgram behaviour closes, or null if it has
+        /// none. Read off Contract Configurator's parsed factories, so it proves the BEHAVIOUR block
+        /// both survived generation and bound to a live factory.</summary>
+        private static string ConcludedProgram(ContractType ct)
+        {
+            IEnumerable<BehaviourFactory> factories;
+            try { factories = ct.BehaviourFactories; }
+            catch { return null; }
+            if (factories == null) return null;
+
+            foreach (BehaviourFactory bf in factories)
+                if (bf is ConcludeProgramFactory cp && !string.IsNullOrEmpty(cp.Program))
+                    return cp.Program;
+            return null;
         }
 
         /// <summary>
