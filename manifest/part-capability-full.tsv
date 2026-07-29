@@ -1012,17 +1012,17 @@ ius_dec_ss	separator	pc_solidUpperStage	9	PropellantChemistry	0.007	IUS Second S
 ca_draco_as	separator	int_atmosphericEntryProbe	10	SystemsIntegration	0.015	Huygens Aeroshell	CoatlAerospace									0								873.15			0
 rn_huygen_hs_top	separator	jpl_discoveryEra	11	SystemsIntegration	0.00812	Huygens Heatshield Top	RN_US_Probes									0								14000			0
 RO_EarlyTinySolarPanel	solar	elec_siliconPV	3	ElectricalPower	0.00056	ST1 Tiny Solar Panel	Squad				0.005625	0.00315				0								448			0
+1x3SPanels	solar	elec_deployableArrays	5	ElectricalPower	0.010584	OX-2L 1x3 Photovoltaic Panels	VenStockRevamp				0.00535714	0.0567				0								1073.15			0
 RO_EarlyMediumSolarPanel	solar	elec_deployableArrays	5	ElectricalPower	0.0014	ST1 Medium Solar Panel	Squad				0.005625	0.007875				0								448			0
-1x3SPanels	solar	elec_deployablePanelII	7	ElectricalPower	0.010584	OX-2L 1x3 Photovoltaic Panels	VenStockRevamp				0.00535714	0.0567				0								1073.15			0
+solarPanels2	solar	elec_deployableArrays	5	ElectricalPower	0.022275	XT2 Solar Panel Array Mk1	Squad				0.00848485	0.189				0								448			0
+solarPanels4	solar	elec_deployableArrays	5	ElectricalPower	0.016128	XT1 Solar Panel Array Mk1	Squad				0.00535714	0.0864				0								448			0
+solarPanels5	solar	elec_deployableArrays	5	ElectricalPower	0.0028	ST1 Solar Panel	Squad				0.00803571	0.0225				0								448			0
 1x3WPanels	solar	elec_deployablePanelII	7	ElectricalPower	0.03078	OX-4M 2x3 Photovoltaic Panels	VenStockRevamp				0.00933333	0.28728				0								1073.15			0
 LgRadialSolarPanel	solar	elec_deployablePanelII	7	ElectricalPower	0.01116	ST3 Solar Panel	Squad				0.014	0.15624				0								448			0
 RO-rangerSolarPanel	solar	elec_deployablePanelII	7	ElectricalPower	0.017416784	Ranger Solar Panel	RealismOverhaul				0.00730519	0.127233				0								1073.15			0
 ROC-D2Solar	solar	elec_deployablePanelII	7	ElectricalPower	0.06946155	D-2 Solar Array	ROCapsules				0.00933333	0.648308				0								448			0
 aje_solarPanels	solar	elec_deployablePanelII	7	ElectricalPower	0.045	ST4 Solar Panel	Squad				0.014	0.63				0								1073.15			0
 rn_surveyor_solar	solar	jpl_lunarPlanetaryRecon	7	SystemsIntegration	0.01	Surveyor Solar Panels	RN_US_Probes				0.0085	0.085				0								773.15			0
-solarPanels2	solar	elec_deployablePanelII	7	ElectricalPower	0.022275	XT2 Solar Panel Array Mk1	Squad				0.00848485	0.189				0								448			0
-solarPanels4	solar	elec_deployablePanelII	7	ElectricalPower	0.016128	XT1 Solar Panel Array Mk1	Squad				0.00535714	0.0864				0								448			0
-solarPanels5	solar	elec_deployablePanelII	7	ElectricalPower	0.0028	ST1 Solar Panel	Squad				0.00803571	0.0225				0								448			0
 solarPanels5HiTech	solar	elec_deployablePanelII	7	ElectricalPower	0.00225	ST2 Solar Panel	Squad				0.014	0.0315				0								448			0
 sp_mariner_a	solar	gnc_threeAxisStabilizedBus	7	GuidanceControl	0.012	CA-E100 1x2 Solar Panel	CoatlAerospace				0.0166667	0.2				0								873.15			0
 ca_explorer_solar	solar	elec_busArrayCatalog	8	ElectricalPower	0.0091	IUE Solar Array Wing (SAW)	CoatlAerospace				0.00778571	0.07085				0								873.15			0
@@ -1032,13 +1032,13 @@ ca_landv_sp	solar	int_surveyorOrbiter	8	SystemsIntegration	0.006	Surveyor Orbite
 ca_vor_sp	solar	elec_busArrayCatalog	8	ElectricalPower	0.12	4MV Spacecraft Bus SAW & TCS (Standard)	CoatlAerospace				0.00458333	0.55				0						0.833333	100	873.15			0
 ca_vor_sp2	solar	elec_busArrayCatalog	8	ElectricalPower	0.1	4MV Spacecraft Bus SAW & TCS (Small)	CoatlAerospace				0.00275	0.275				0						1	100	873.15			0
 sp_mariner_b	solar	elec_refinedSolarSimulation	8	ElectricalPower	0.014	CA-E100-SPV 1x2 Solar Panel	CoatlAerospace				0.0142857	0.2				0								873.15			0
+ROC-ApolloSolarBlockV	solar	elec_stationClassSolarArrays	9	ElectricalPower	0.07728	Apollo Block V Solar Array	ROCapsules				0.01875	1.449				0								448			0
+ROC-OrionSolar	solar	elec_stationClassSolarArrays	9	ElectricalPower	0.1	Orion Solar Panels	ROCapsules				0.0275	2.75				0								448			0
 SXTsolarPanelLarge	solar	elec_probeBusSolarWings	9	ElectricalPower	0.0624	OX-VL Photovoltaic Array	SXT				0.0230769	1.44				0								448			0
 SXTsolarPanelhex	solar	elec_probeBusSolarWings	9	ElectricalPower	0.0051	OX-HEX Photovoltaic Panels	SXT				0.03	0.153				0								448			0
 largeSolarPanelEarly	solar	elec_stationClassSolarArrays	9	ElectricalPower	0.0576	XT3 Solar Panel Array Mk1	Squad				0.01875	1.08				0								448			0
 solarPanels1	solar	elec_stationClassSolarArrays	9	ElectricalPower	0.01584	XT2 Solar Panel Array Mk2	Squad				0.0170455	0.27				0								448			0
 solarPanels3	solar	elec_stationClassSolarArrays	9	ElectricalPower	0.009216	XT1 Solar Panel Array Mk2	Squad				0.01875	0.1728				0								448			0
-ROC-ApolloSolarBlockV	solar	elec_matureSolarArrays	10	ElectricalPower	0.07728	Apollo Block V Solar Array	ROCapsules				0.01875	1.449				0								448			0
-ROC-OrionSolar	solar	elec_matureSolarArrays	10	ElectricalPower	0.1	Orion Solar Panels	ROCapsules				0.0275	2.75				0								448			0
 largeSolarPanel	solar	elec_matureSolarArrays	10	ElectricalPower	0.06825	XT4 Solar Panel Array Mk1	Squad				0.0390476	2.665				0								448			0
 nfs-panel-deploying-advanced-2x20-hub-1	solar	elec_advancedRigidArray	13	ElectricalPower	0.0247008	K55-A 'Megalador' Advanced Solar Array	NearFutureSolar				0.37625	9.29368				0								1073.15			0
 nfs-panel-deploying-blanket-arm-1	solar	elec_deployableBlanketArray	13	ElectricalPower	0.10476	OKEB-150R 'Halo' Circular Blanket Photovoltaic Array	NearFutureSolar				0.418056	43.7955				0								1073.15			0
