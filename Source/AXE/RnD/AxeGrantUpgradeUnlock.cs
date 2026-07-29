@@ -7,10 +7,18 @@ namespace RPAxe
     /// Marks AXE's capability display-tokens (avionics tiers, DSN tracking-station levels) as unlocked the
     /// moment their tech node is researched, so they read as <i>granted</i> in R&amp;D rather than a 0-cost
     /// purchase prompt — the same thing RP-1's ProceduralAvionicsTechManager does with
-    /// <c>PartUpgradeManager.Handler.SetUnlocked</c>. These tokens carry no stat MODULE: the real tier effect
-    /// is applied elsewhere (ModuleAxeAvionics reads the researched node directly; the tracking-station level
-    /// is enforced by AxeTrackingStationGate). Token names come from the generated AXE_GRANT_UPGRADES config
-    /// node (design/Tree/AxeGrantUpgrades.cfg).
+    /// <c>PartUpgradeManager.Handler.SetUnlocked</c>. Token names come from the generated AXE_GRANT_UPGRADES
+    /// config node (design/Tree/AxeGrantUpgrades.cfg), which holds two kinds of entry:
+    ///
+    ///   * display tokens (Science-Core-*/Deep-Space-*, RP0Level*TrackingStation) carry no stat MODULE — the
+    ///     real tier effect is applied elsewhere (ModuleAxeAvionics reads the researched node directly; the
+    ///     tracking-station level is enforced by AxeTrackingStationGate);
+    ///   * GRANTED capability ladders (build_tree.py GRANTED_UPGRADE_PREFIXES — currently HDD-Upgrade-*) DO
+    ///     carry a stat: the Kerbalism HardDrive UPGRADE block. SetUnlocked applies it, free, which is the
+    ///     intent. RP-1 sells both its avionics tiers (EntryCostManager.PurchaseConfig) and its HDD rungs;
+    ///     AXE grants avionics, so billing storage taught two rules for one kind of thing.
+    ///
+    /// Either way this only ever GRANTS: it charges nothing and never gates.
     ///
     /// EveryScene so a sweep runs whenever the player is somewhere R&amp;D state exists (it also catches an
     /// already-researched tree on load), plus a live hook on OnTechnologyResearched. SetUnlocked is idempotent,
