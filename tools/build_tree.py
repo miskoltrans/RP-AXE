@@ -593,6 +593,19 @@ GRANTED_UPGRADE_PREFIXES = (
     "HDD-Upgrade-",
 )
 
+# RealFuels engine tech-LEVEL icons -- the same story as RFUpgrade_*, and zeroed for the same reason.
+# RealFuels never reads these names: the string "RFTech" does not occur in RealFuels.dll at all. A level
+# is gated by RF_TECHLEVELS TLTECH<n> -> GetTechnologyState (see emit_engine_tech_levels, which points
+# TLTECH<n> at whatever node the matching token sits on), so the token itself is a tree ICON. Priced, it
+# billed 270-1650 funds each -- ~15,000 across the 14 -- for something that unlocks nothing. At 0,
+# EntryCostDatabase.UpdateEntryCosts() auto-unlocks any upgrade under 1.1 whose tech is researched, so it
+# reads as owned the moment its node is researched instead of advertising a price that buys nothing.
+#
+# Deliberately NOT all RFTech-*: the tank-type ladders (RFTech-Battery-*, RFTech-SM-*, RFTech-Tank-*,
+# RFTech-ComSat/NavSat-*) ARE consumed by name -- 151 ModuleFuelTanks UPGRADE blocks reference them, each
+# carrying a typeAvailable -- so those stay priced. Match on the tltech shape, not the RFTech prefix.
+TL_ICON_UPGRADE = re.compile(r"^RFTech-\w+-tltech\d+$")
+
 def emit_part_cost(p2n, u2n, by, meta):
     """Emit GameData/RP-AXE/design/Tree/AxePartCost.cfg — part/upgrade funds unlock cost.
     entryCost(part)    = part_cost_base[tier] * part_cost_weight[costcat(part)]
@@ -628,9 +641,13 @@ def emit_part_cost(p2n, u2n, by, meta):
         cc = cats.get(part, "misc"); catcount[cc] += 1
         ec = round(base.get(tier, 0) * weight.get(cc, 1.0))
         L.append(f"@PART[{part}]:FOR[RP-AXE] {{ %entryCost = {ec} }}")
-    nup, ngranted = 0, 0
+    nup, ngranted, nicon = 0, 0, 0
     for up, node in sorted(u2n.items()):
         if node not in by or up.startswith("RFUpgrade_"): continue      # engine icons: zeroed above
+        if TL_ICON_UPGRADE.match(up):                                   # engine tech-LEVEL icons: see above
+            L.append(f"@PARTUPGRADE[{up}]:FOR[RP-AXE] {{ %entryCost = 0 }}  // tech-level icon, gate is TLTECH")
+            nicon += 1
+            continue
         if up.startswith(GRANTED_UPGRADE_PREFIXES):                     # granted, not sold
             L.append(f"@PARTUPGRADE[{up}]:FOR[RP-AXE] {{ %entryCost = 0 }}"); ngranted += 1
             continue
@@ -638,7 +655,8 @@ def emit_part_cost(p2n, u2n, by, meta):
         L.append(f"@PARTUPGRADE[{up}]:FOR[RP-AXE] {{ %entryCost = {ec} }}"); nup += 1
     with open(os.path.join(OUTD, "AxePartCost.cfg"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
-    print(f"part cost: {sum(catcount.values())} parts + {nup} upgrades + {ngranted} granted(0) -> AxePartCost.cfg  "
+    print(f"part cost: {sum(catcount.values())} parts + {nup} upgrades + {ngranted} granted(0) "
+          f"+ {nicon} tech-level icons(0) -> AxePartCost.cfg  "
           f"(by cat: {', '.join(f'{k}={catcount[k]}' for k in sorted(catcount, key=lambda k:-catcount[k]))})")
 
 def _esc(s):
