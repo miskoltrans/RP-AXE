@@ -101,21 +101,6 @@ nodes:
     # tree, but their mounting CORES were dropped -> this restores the full system so it can be evaluated
     # whole. Deliberately NOT in curated-parts.tsv (on trial); if kept, formalize via build_manifest ADD and
     # split into real nodes. Detached root like experimental/parking/hire_JPL: unlockable, gates nothing.
-  - id: coatl_scienceSandbox
-    title: "Gamma-Ray Spectrometer (Sandbox)"
-    discipline: SystemsIntegration
-    tier: 1
-    parents: []
-    flavor: "A gamma-ray spectrometer reads a body's surface elemental makeup from orbit — the one planetary measurement the tree carries no instrument for. A detached sandbox: unlock and fly it to confirm it returns science, and to weigh whether surface-composition mapping should join the tree as a new experiment category."
-    parts: [ca_GRS]
-    # SANDBOX (2026-07, TRIMMED from 6): the other 5 Coatl instruments proved redundant, not novel — RP-1
-    # already covers IR spectrometry (RO-VIMS at opt_thermalMappingSpectrometry), plasma/solar-wind/ionization
-    # (ProbePlasma on every probe bus), dust (ca_micrometeoroid) and surface sampling (surfaceSample) with its
-    # preferred RO-configured instruments, so it cut Coatl's duplicates. ca_GRS (ca_gammaRay "Gamma Ray
-    # Spectrometry") is the sole exception: no kept gamma-ray/elemental instrument exists (the one X-ray part is
-    # deprecated). This is NOT a gap RP-1 missed — RP-1 has no surface-composition science CATEGORY at all. Kept
-    # on trial to decide whether to ADD that category (a deferred science-budget/balance-pass call). Off-start,
-    # not in curated-parts.tsv.
   - id: hire_JPL
     title: "Charter a Deep-Space Probe Lab (JPL)"
     discipline: SystemsIntegration

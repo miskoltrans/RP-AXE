@@ -493,3 +493,33 @@ programme. Part unlocks are a minor term in it (~1.3M by the Moon landing) and a
 be an off-by-one in how every facility `upgrades` array was read (the first entry is never charged), the
 launchpad has been re-shaped 10.33M → 7.29M, and the remaining income-shape fix is an open user call. Nothing
 there moves `part_cost_base`.
+
+---
+
+## 6. Open — AXE has no surface-composition science category
+
+Recorded 2026-07-29, when the `coatl_scienceSandbox` node was dropped. The node was a deliberate
+off-tree trial (like `us2_serviceSandbox`): unlock it, fly its one part, and decide whether
+surface-composition mapping should become a science category. It could never do that job — its only
+part, `ca_GRS`, is deleted by `seed/Science/CleanupParts/RemoveScienceParts.cfg:23`, so the node
+existed but granted nothing. Dropping it removed a node that was inert; it did not answer the
+question the node was asking, which is worth keeping:
+
+> **A gamma-ray spectrometer reads a body's surface elemental makeup from orbit. AXE carries no
+> instrument for that measurement, and neither does RP-1 — this is not a gap RP-1 missed, it is a
+> science CATEGORY neither mod has.** The other five Coatl instruments were cut as genuine
+> duplicates (RP-1 covers IR spectrometry with `RO-VIMS`, plasma/solar-wind with `ProbePlasma`,
+> dust with `ca_micrometeoroid`, sampling with `surfaceSample`); `ca_GRS` was the sole exception.
+
+To reopen the trial, exempt `ca_GRS` from the deletion list — one line — and re-add the node.
+The larger question (add elemental/surface-composition as a new experiment category, with its own
+instrument ladder and science budget) belongs to a balance pass, not a tree edit.
+
+**Related open thread — nodes that grant no NEW science.** `mic_atmoSounding` ("Upper-Atmosphere
+Sounding", T1) has one part, `USThermoBaroWedge`, whose only two Kerbalism SETUPs are `Barometer`
+and `Thermometer`, both gated `tech = start` — and `start` already ships `sensorBarometer` and
+`sensorThermometer`. Researching it buys a wedge-shaped repackaging of two turn-one instruments.
+The other four US2 science wedges are not like this: `USFluidSpectroWedge` carries a four-rung mass
+spectrometer ladder across three nodes, `USAccelGravWedge` five SETUPs across three, `USGooBayWedge`
+a real `RP0bioScan2`, and `USMatBayWedge` gates 27 KerbalismLab experiments. Only the thermo/baro
+wedge is hollow, and it was placed by reading the part's title rather than its SETUPs.

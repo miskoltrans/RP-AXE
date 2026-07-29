@@ -327,7 +327,7 @@ def validate_design(disc, nodes, by):
     # (gs_soundingStands), and the US2 evaluation sandbox (us2_serviceSandbox) — each a standalone-but-
     # startable line detached from the main tree by design.
     for r in roots:
-        if r not in ("start", "parking", "experimental", "gs_soundingStands", "us2_serviceSandbox", "coatl_scienceSandbox") and not r.startswith("hire_"):
+        if r not in ("start", "parking", "experimental", "gs_soundingStands", "us2_serviceSandbox") and not r.startswith("hire_"):
             warns.append(f"extra root (no parents besides start): {r}")
     print(f"design checks: {'clean' if not warns else str(len(warns))+' warning(s)'}")
     for w in warns: print(f"   ! {w}")
