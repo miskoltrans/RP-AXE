@@ -3867,14 +3867,34 @@ nodes:
     # same docking module, not separate science/comms breakthroughs). MOL port + Mk2 Clamp-O-Tron = the
     # same docking-hardware generation, parallel programs.
   - id: gnc_largeReactionWheels
-    title: "Large-Class Reaction Wheels"
+    title: "Gimballed Momentum Exchange"
     discipline: GuidanceControl
     tier: 9
     parents: [gnc_reactionWheelAttitude]
-    flavor: "The same momentum-exchange trick, sized for a station instead of a probe — a flywheel heavy enough to hold a whole crewed module steady without spending a gram of propellant."
-    parts: [ca_rw_large, advSasModule, asasmodule1-2, restock-reactionwheel-radial-1]
+    flavor: "Stop changing the flywheel's speed and start tilting it instead. A rotor held at constant spin, swung on a gimbal, trades a small motion of the gimbal for a large torque on the spacecraft — the same momentum-exchange trick, but geared."
+    parts: [ca_rw_large, restock-reactionwheel-radial-1]
     # Bases (ca_rw_small/medium/xsmall, sasModule) already king gnc_reactionWheelAttitude, which is at its
     # 6-part cap - genuine next size class, not a doctrine-4 upgrade catch.
+    # RETIERED 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md A). RO derives reaction-wheel torque
+    # from a declared power budget on two very different curves (RO_ReactionWheels.cfg): `wheel` mode
+    # floors out around 1e-4 kNm, `CMG` mode is super-exponential. ca_rw_large (wheel) and
+    # restock-reactionwheel-radial-1 (CMG) draw an IDENTICAL 180 W yet return 1.35e-4 vs 0.143 kNm - a
+    # 1054x gap. So the gimbal, not the size class, is the breakthrough this node is really about; it
+    # now introduces the smallest CMG. advSasModule (500 W) and asasmodule1-2 (1 kW) moved up to
+    # gnc_kilowattCMG so a bolt-on can no longer out-torque a station core of its own tier.
+  - id: gnc_kilowattCMG
+    title: "Kilowatt-Class Momentum Exchange"
+    discipline: GuidanceControl
+    tier: 11
+    parents: [gnc_largeReactionWheels, elec_matureSolarArrays]
+    flavor: "Feed the gimbal a kilowatt and it will hold a laboratory. At this scale the gyro stops being an instrument and becomes a consumer — the array that powers it is as much of the design as the rotor itself."
+    parts: [advSasModule, asasmodule1-2]
+    # NEW 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md A). At T9 these two out-torqued every
+    # station core they were supposed to steer (asasmodule1-2 = 10.6 kNm vs the T10 3.38 m core's 2.94).
+    # Second parent is a PLAIN PHYSICAL DEPENDENCY, not a celebrated crossover: RO derives CMG torque
+    # straight from power draw, so "gated only on affording 1 kW" was the whole balance problem - this
+    # makes the power prerequisite explicit instead of implicit, and keeps the edge a single tier.
+    # Integrated station cores (sspx 6.75 m/9 m 29.4 kNm, Kvant-1 60.6 kNm) still top the ladder at T11.
 
   # ---- Lane 4: robotic grapple (a genuinely new capability - Robotics, not GuidanceControl) ----
   - id: rob_grappleEndEffector

@@ -121,9 +121,39 @@ draw *identical* 180 W; one is tagged `wheel` and the other `CMG`, and RO's two 
 3. `asasmodule1-2` at 10.6 kN.m from a 200 kg unit is roughly 40x beyond a real ISS CMG. That is
    RO's CMG curve extrapolating badly at kilowatt scale, inherited rather than AXE-authored.
 
-**The fix is curation/placement, not patching** -- these are already at RO scale. CMGs genuinely are
-the station technology the node's flavor describes, so the node concept is sound; the open calls are
-whether `ca_rw_large` belongs on it and whether a 1 kW CMG should sit at T9 at all.
+There is a third population the formula does not explain at all: RaiderNick/Coatl probe buses with a
+hardcoded `PitchTorque` (0.0015 - 0.07 kN.m, T6-T12). And the `wheel` curve is **flat in the range
+AXE actually uses** -- `ca_rw_xsmall` (48 W), `ca_rw_small` (60 W), `sasModule` (100 W) and
+`ca_rw_medium` (120 W) all return exactly 1.00010e-4, because RO's `LOG_SOLVER` converges to ~0 for
+any power draw below its 150 W reference. So all four T8 wheels are mechanically identical, and
+`ca_rw_xsmall` (1.6 kg, 48 W) strictly dominates `sasModule` (50 kg, 100 W). **Noted, deferred**
+(user call, 2026-07-29) -- it is an RO solver defect, not an AXE placement one.
+
+**RESOLVED 2026-07-29** -- re-tiered, not patched (these are already at RO scale). The node had no
+dependents, so the change was ripple-free; `build_tree.py` reports the same 6 pre-existing warnings
+before and after.
+
+| | before | after |
+|---|---|---|
+| T9 `gnc_largeReactionWheels` | "Large-Class Reaction Wheels" - `ca_rw_large`, `restock…radial-1`, `advSasModule`, `asasmodule1-2` | **"Gimballed Momentum Exchange"** - `ca_rw_large`, `restock…radial-1` |
+| T11 `gnc_kilowattCMG` | — | **"Kilowatt-Class Momentum Exchange"** (new) - `advSasModule`, `asasmodule1-2` |
+
+The gimbal, not the size class, is what the T9 node is really about -- so it now *introduces* the
+smallest CMG, and T11 scales it to kilowatts. The new node takes a second parent,
+`elec_matureSolarArrays` (T10): a plain physical dependency rather than a celebrated crossover, since
+RO derives CMG torque straight from power draw and "gated only on affording 1 kW" was the whole
+balance problem. It also keeps the edge to a single tier.
+
+Resulting attitude ladder -- no bolt-on out-torques a station core of its own tier:
+
+```
+T9   0.143  bolt-on  restock-reactionwheel-radial-1   180 W
+T10  2.94   core     sspx-core-1875-1 (3.38 m)        600 W
+T11  1.86   bolt-on  advSasModule                     500 W
+T11  10.6   bolt-on  asasmodule1-2                    1 kW
+T11  29.4   core     sspx-core-375-1 / -5-1           1.5 kW
+T11  60.6   core     acamar_crew_s2_1 (Kvant-1)       2 kW
+```
 
 ### B. Probe-instrument generations collapse onto one node (the user-reported symptom)
 The `Experiments` Configure slot, sorted by tier:
