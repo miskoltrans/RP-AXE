@@ -111,6 +111,13 @@ owns it:
 | `Simulation/AxeSimulationFlight.cs` | `[KSPAddon(Flight)]` — recovery intercept, sim window, `ProcessSimulation` move, autosave-off | `FlightAddon` + `ProcessSimulation` + `DrawSimulationWindow` |
 | `Simulation/AxeSimulationRestore.cs` | `GameEvents.onLevelWasLoaded` hook: restore backup on entering EDITOR/SPACECENTER/TRACKSTATION | `KCTEvents.cs:377-382` |
 | `Simulation/AxeSimulationGate.cs` | 2-rung body gate + node-title lookup for tooltips | (new — see §5) |
+| `Simulation/AxeSimulationPrefs.cs` | Remembers the last-used setup so the window reopens on it | (new) |
+
+**The one thing that does persist: the player's last *inputs*.** `AxeSimulationPrefs` writes the
+window's fields (body, in-orbit/pad, Pe/Ap/inc, pad delay, warp days) to
+`saves/<save>/AXE_sim_prefs.cfg` — deliberately a file *beside* persistent.sfs, never inside it,
+since the restore below would roll back anything stored in the save. Per-career, so each career
+keeps its own defaults; a remembered body that isn't unlocked (or doesn't exist) falls back to home.
 
 **Session state, not save state.** `IsSimulatedFlight` and `Params` are static fields (survive the
 editor→flight scene load). The **source of truth for "a sim is in progress" is the backup file's

@@ -35,6 +35,7 @@ namespace RPAxe.Simulation
         {
             GameEvents.onGUIApplicationLauncherReady.Remove(AddButton);
             RemoveButton();
+            Remember();
             _open = false;
         }
 
@@ -73,26 +74,52 @@ namespace RPAxe.Simulation
             _open = true;
         }
 
-        private void Close() => _open = false;
+        private void Close()
+        {
+            Remember();
+            _open = false;
+        }
 
         private void CloseFromCode()
         {
+            Remember();
             _open = false;
             _button?.SetFalse(false);
         }
 
+        /// <summary>Seed the window from the last simulation the player set up (see
+        /// <see cref="AxeSimulationPrefs"/>); first ever run falls back to "home, on the pad".</summary>
         private void EnsureParams()
         {
             if (_p != null) return;
+
+            AxeSimulationPrefs.Load();
+            CelestialBody body = AxeSimulationPrefs.ResolveBody();
+            bool home = Planetarium.fetch != null && body == Planetarium.fetch.Home;
+
             _p = new AxeSimulationParams
             {
-                Body = Planetarium.fetch != null ? Planetarium.fetch.Home : null,
-                InOrbit = false,
+                Body = body,
+                InOrbit = !home || AxeSimulationPrefs.InOrbit,
                 Periapsis = 200000,
                 Apoapsis = 200000,
                 Inclination = 0,
                 DelaySeconds = 0,
             };
+
+            _sPe = AxeSimulationPrefs.Pe;
+            _sAp = AxeSimulationPrefs.Ap;
+            _sInc = AxeSimulationPrefs.Inc;
+            _sDelay = AxeSimulationPrefs.Delay;
+            _sWarp = AxeSimulationPrefs.Warp;
+        }
+
+        /// <summary>Persist the current window contents as next session's defaults.</summary>
+        private void Remember()
+        {
+            if (_p == null) return;
+            AxeSimulationPrefs.Capture(_p.Body, _p.InOrbit, _sPe, _sAp, _sInc, _sDelay, _sWarp);
+            AxeSimulationPrefs.Save();
         }
 
         // --- GUI ---
