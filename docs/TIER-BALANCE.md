@@ -481,14 +481,31 @@ running `gnc_postWarAvionics` T1 -> `gnc_avionicsPrototypes` T2 -> `gnc_earlyAvi
 The early rungs are simply filed under GuidanceControl. Counting nodes per discipline made a
 continuous ladder look like a lane that starts late.
 
-### 3d. What actually stands: node sizing
-**48 nodes exceed the 6-part hard max** after removing the documented exemptions (GroundSupport MLP
-line, `str_structuralHardware`, `start`/`parking`/`experimental`, and the `Catalog` / `Prefabricated`
-/ `Stamped` / `Interchangeable` dead-ends). Worst: `str_stationStructures` 31 (T8),
-`life_stationLogistics` 17 (T10), `str_diameterAdapters` 16 (T2), `str_modularTrussSystem` 15 (T10),
-`elec_semiconductorDiode` 15 (T2). Several are plausibly utility catch-alls that were never added to
-the exemption list -- this is a **curation/legibility** item against design rule 8, not a balance one,
-and it wants triage rather than a blanket fix.
+### 3d. What actually stands: node sizing -- and rule 8 was being measured wrong
+Counting **part INSTANCES** flags 67 nodes and is mostly noise. Rule 8 is about how many distinct
+things a node asks the player to understand, so the honest count is **part FAMILIES** -- titles
+normalised by stripping sizes, dimensions and length qualifiers. `str_adjustableGear` holds 8 parts
+that are *one* undercarriage in eight sizes; `life_stationLogistics` holds 17 that are *three*
+storage modules in every length. Neither is a rule-8 violation.
+
+`tools/check_node_sizing.py` implements that, plus two exemption classes beyond the ids the rubric
+already lists: the GroundSupport line and catalog dead-ends (documented), and **mission-charter nodes
+(`jpl_*`, `okb_*`), which hold COMPLETE SPACECRAFT by design** -- Huygens alone is a lander, a
+parachute, two heatshield halves and a heatshield parachute.
+
+```
+nodes over 6 parts: 67
+  exempt by class ............ 26
+  <= 6 FAMILIES (rule 8 met) . 19
+  genuinely over ............. 22
+```
+
+The 22 are a **curation backlog against design rule 8, not a balance defect** -- nearly all are
+commodity families (tanks, lights, chutes, docking mechanisms, airframes, trusses) that want either a
+split or a place on the exemption list, node by node. Two stand out as real crowding rather than
+commodity: **`fd_restartableUpper`** (T4) puts 8 distinct engine families on one breakthrough node,
+and **`opt_vidicon`** (T4) mixes its real king, the VI01 Early Television Camera, with 9 utility
+hull-cameras that belong in a catalog dead-end.
 
 The T12-T16 tail (1.8 -> 0.2 parts/node) is the known, deliberately deferred colonization scaffold
 (RESTART P6) -- 46 nodes with no real hardware yet.
