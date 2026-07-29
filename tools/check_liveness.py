@@ -232,6 +232,29 @@ def name_in_assemblies(names, dlls):
     return found
 
 
+def boot_started(log, fallback):
+    """Wall-clock time this KSP run began, from the first timestamp KSP wrote to its log.
+
+    KSP stamps `[LOG HH:MM:SS.mmm]` with no date, so anchor it to the log file's own date. If the
+    result lands in the future relative to that date (a run that crossed midnight), step back a day.
+    Falls back to the caller's value if the log has no parsable stamp."""
+    import datetime
+    with open(log, encoding="utf-8", errors="replace") as f:
+        for _ in range(200):
+            line = f.readline()
+            if not line:
+                break
+            m = re.match(r"\[(?:LOG|WRN|ERR|EXC) (\d{2}):(\d{2}):(\d{2})", line)
+            if m:
+                end = datetime.datetime.fromtimestamp(os.path.getmtime(log))
+                started = end.replace(hour=int(m.group(1)), minute=int(m.group(2)),
+                                      second=int(m.group(3)), microsecond=0)
+                if started > end:
+                    started -= datetime.timedelta(days=1)
+                return started.timestamp()
+    return fallback
+
+
 # ---------------------------------------------------------------- checks
 
 def main():
@@ -250,11 +273,22 @@ def main():
     fail = 0
 
     # ---- 0: is this boot new enough to judge the current configs? ---------------------------
-    # Judge on the CACHE, never on KSP.log: a running KSP writes to the log continuously, so the
-    # log's mtime is "now" and would call any stale state fresh. ModuleManager rewrites the cache
-    # exactly when the config SHA changes, so `cache mtime >= newest cfg mtime` is precisely
-    # "the merge we are reading saw the configs we are checking".
-    booted = os.path.getmtime(cache)
+    # The question is "did the run that produced this cache READ this config", and the honest
+    # reference point is when the boot STARTED, not when it finished.
+    #
+    # Two wrong answers were tried first, both of which this check exists to prevent:
+    #   - KSP.log mtime: a running KSP writes continuously, so it is always "now" and calls
+    #     everything fresh.
+    #   - ConfigCache mtime: MM READS every config at load and WRITES the cache minutes later, so
+    #     anything edited during that window gets a false PASS. Observed 2026-07-29: a config saved
+    #     at 15:20:12 was absent from a cache stamped 15:20:36, and this check said "verdict is
+    #     current" while reporting a merge that predated the edit. Exactly the family-C failure in
+    #     docs/BUG-CLASSES.md, produced by the tool written to catch family-C failures.
+    #   - st_ctime is not usable either: NTFS file-system tunnelling hands a recreated KSP.log the
+    #     ORIGINAL creation time, so it reads as hours or days stale.
+    # What is left is the log's own first timestamp, which KSP writes at startup. It carries no
+    # date, so pair it with the log file's date and step back a day if that lands in the future.
+    booted = boot_started(log, os.path.getmtime(cache))
     newest, newest_f = 0, None
     for dirpath, _, files in os.walk(AXE):
         for fn in files:
@@ -266,13 +300,13 @@ def main():
                 newest, newest_f = m, p
     when = time.strftime("%Y-%m-%d %H:%M", time.localtime(booted))
     if newest > booted:
-        print(f"\n*** STALE: the merged cache is from {when}, but {rel(newest_f)} changed after it. ***")
+        print(f"\n*** STALE: this KSP run started {when}, but {rel(newest_f)} changed after it. ***")
         print("    Every verdict below describes the PREVIOUS boot. Delete")
         print(f"    {os.path.join(args.instance, 'GameData', 'ModuleManager.ConfigCache')}")
         print("    and relaunch KSP (`-axe-autotest` for a hands-free run), then re-run this.\n")
         fail = 1
     else:
-        print(f"          merge of {when} saw every shipped cfg/dll -- verdict is current")
+        print(f"          boot of {when} started after every shipped cfg/dll -- verdict is current")
 
     live, usable, dead_compile, missing_modules = usable_parts(cache, log)
     print(f"          {len(live)} parts merged, {len(dead_compile)} failed to compile\n")
