@@ -546,6 +546,45 @@ COLLAPSE class as the `solarTL` pairing fixed in D. Smaller stakes, since both a
 (190 kg / 456) on `cmp_lunarLandingAblator` (T9) looks like a dead LEO variant next to its lunar
 sibling. It is a mass trade -- the LEO shield is 20% lighter -- so both have a role.
 
+### I. Crew pods -- audited; volume-per-seat is the ladder (2026-07-29)
+Third of the punted families. The original dismissal ("seat count is a mission-class axis, not a tech
+axis") was right, but for a stronger reason than stated, and it missed the axis that IS real.
+
+**`kg/seat` is role-dominated, not a tech axis.** It spans 250 - 10,000 across the family, and the
+spread tracks *function*, not generation: cockpits 325-1081, reentry capsules 395-1215, station
+habitats 620-8358, greenhouses and observation domes 7000-9358. A greenhouse is not a worse capsule.
+
+**`m3/seat` (Kerbalism `Habitat.volume`) IS the ladder, and it ascends correctly.** Habitable volume
+per crew is what drives Kerbalism comfort/stress and therefore mission duration:
+
+```
+T3-T7  cockpits and capsules   1.10 - 4.50      T10  3.36 - 22.05
+T8     first station modules   3.85 -  8.07     T11  6.63 - 95.40
+T9                             7.06 - 33.75     T12 13.37 - 95.50
+```
+
+**A test that looked role-neutral and was not.** "Within one node, does a sibling have both more
+m3/seat and less kg/seat?" produced 51 pairs -- and most compare across the family's ~10 functional
+roles: an **airlock** out-scoring a reentry capsule, a **cockpit** (which flies the aircraft) against a
+passenger cabin, a **station core** (docking ports, avionics, controls) against a bare habitation
+module, a **lab** against anything at all. Recorded because the lesson keeps recurring in this audit:
+an intensive metric is only comparable inside a single role, and "crew pod" is not one role.
+
+**One same-role outlier**, all three on `life_inflatableHabitat` (T11):
+
+| part | mod | total | crew | kg/seat | m3/seat |
+|---|---|---|---|---|---|
+| `InflatableHAB` | VenStockRevamp | 25.0 t / 66 m3 | 10 | **2500** | **6.63** |
+| `sspx-inflatable-hab-125-3` | StationPartsExpansionRedux | 1.4 t / 25.7 m3 | 3 | 467 | 8.57 |
+| `sspx-inflatable-hab-25-1` | StationPartsExpansionRedux | 31.6 t / 635 m3 | 18 | 1756 | 35.28 |
+
+Both mods are RO-patched (`RO_VNP_Command.cfg` covers `InflatableHAB`), so this is **not** an
+unpatched-part leak like the reaction wheels or the curved solar panel -- it is a cross-mod scaling
+disagreement about what an inflatable weighs. Against the real reference, Bigelow B330 at 20 t / 330 m3
+/ 6 crew = 3333 kg/seat and 55 m3/seat, `InflatableHAB`'s MASS is realistic and its VOLUME is roughly
+8x too low: priced like an inflatable, sized like a rigid module. The sspx parts are light on mass but
+sane on volume. **Open call, not yet acted on.**
+
 ## 3. Tier shape -- three claims made, three retracted
 
 Every tier-shape finding in the first draft turned out to be an artefact of measuring the wrong
