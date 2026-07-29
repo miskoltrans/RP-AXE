@@ -29,11 +29,11 @@ is a silent break.
 
 | Sub-class | How it bites | Past instances | Detector |
 |---|---|---|---|
-| **A1** Config node with no reader | A top-level `NODE {}` does nothing unless some DLL calls `GetConfigNodes("NODE")`. RP-1's readers live in `RP0.dll`, which AXE does not ship. | `GAMEPARAMETERS` (dead until `9cb4afe`/`dc5b7a7`); `IGNORED_EXPERIMENTS`; `AVIONICSCONFIGS` | `check_liveness.py` check C |
-| **A2** Part module with no class | `MODULE { name = X }` where no assembly defines `X`. KSP drops the module and logs one line among thousands. Anything keyed on it — a Kerbalism `requirements = Module:X`, a contract `PartValidation` — can then never match. | the 16 `*LabExperimentPackage` markers (**open**, see below) | `check_liveness.py` check B |
-| **A3** Dangling tech-node id | Fails **closed**: `GetTechnologyState(unknown)` → `Unavailable`, so the gated thing is locked forever. | `autoStrutTechRequired = generalConstruction` (`4708e6c`); 4 orphaned stock/CTT ids (`c3e6620`); HDD-Upgrade gates (`1d0f3db`); US2 wedge `Configure` gates (`1d5472c`); 702 RCS engine CONFIGs (**open**) | `check_tech_refs.py --cache` |
-| **A4** Placed part that isn't there | The tree places a part that another AXE config deletes, that a missing mod owns, or that fails to compile. The node still costs science and grants nothing. | `ca_GRS`, the 5 `dmUS2*` wedges (**open**) | `check_liveness.py` check A |
-| **A5** Global setting that reverts to stock | RP-1 was the *only* source of a CustomBarnKit section or difficulty key; dropping RP-1 resurrected the stock value nobody chose. | the 7-item punch-list (`5c12181`, `4708e6c`, `25e2b80`, `7e3b58f`); 17 more found 2026-07-29 | `check_settings_parity.py` |
+| **A1** Config node with no reader | A top-level `NODE {}` does nothing unless some DLL calls `GetConfigNodes("NODE")`. RP-1's readers live in `RP0.dll`, which AXE does not ship. | `GAMEPARAMETERS` (dead until `9cb4afe`/`dc5b7a7`); `IGNORED_EXPERIMENTS` (deleted); `AVIONICSCONFIGS` (kept, allow-listed) | `check_liveness.py` check C |
+| **A2** Part module with no class | `MODULE { name = X }` where no assembly defines `X`. KSP drops the module and logs one line among thousands. Anything keyed on it — a Kerbalism `requirements = Module:X`, a contract `PartValidation` — can then never match. | the 16 `*LabExperimentPackage` markers (`30c75ae`) | `check_liveness.py` check B |
+| **A3** Dangling tech-node id | Fails **closed**: `GetTechnologyState(unknown)` → `Unavailable`, so the gated thing is locked forever. | `autoStrutTechRequired = generalConstruction` (`4708e6c`); 4 orphaned stock/CTT ids (`c3e6620`); HDD-Upgrade gates (`1d0f3db`); US2 wedge `Configure` gates (`1d5472c`); 702 RCS engine CONFIGs (`3d16480`) | `check_tech_refs.py --cache` |
+| **A4** Placed part that isn't there | The tree places a part that another AXE config deletes, that a missing mod owns, or that fails to compile. The node still costs science and grants nothing. | `ca_GRS`, the 5 `dmUS2*` wedges (`93b9725`, `1bd9aeb`); `aje_solarPanels` (`AxeUpstreamPartFixes.cfg`) | `check_liveness.py` check A |
+| **A5** Global setting that reverts to stock | RP-1 was the *only* source of a CustomBarnKit section or difficulty key; dropping RP-1 resurrected the stock value nobody chose. | the 7-item punch-list (`5c12181`, `4708e6c`, `25e2b80`, `7e3b58f`); 17 more found + decided 2026-07-29 | `check_settings_parity.py` |
 
 ### B. Semantic misread — the API does not mean what the field name says
 
@@ -49,6 +49,10 @@ built on: a balance pass, a shipped price curve, a plugin predicate.
 | `CONTRACT_TYPE rewardFunds` | Read as what the player receives. Stock multiplies by prestige (1/1.25/1.5) × the difficulty gain multiplier — ×1.529 on funds. | `cef220c`, `ecc8e41` |
 | `GameEvents.*.Add(staticMethod)` | Assumed legal. `EvtDelegate..ctor` derefs `evt.Target` with no null guard → deterministic boot NRE. | `9010107` |
 | `DifficultyPresetChanger` at MainMenu | Assumed sufficient. `MainMenu.Start` caches `GetDefaultParameters` in the same scene load and wins the race. | `dc5b7a7` |
+| CBK `unlockedEVAChute` | Read as a facility level, like the four keys it sits next to. CBK only treats it as one when `EVAChuteOnBuilding = true` — false everywhere in this install — and otherwise tests raw crew **XP**. "EVA chutes at a maxed Astronaut Complex" was never true. | the settings pass, 2026-07-29 |
+| `GameVariables.GetCrewLevelLimit` | Assumed enforced, and written off as harmless collateral of cutting crew progression. It has **two** references in all of Assembly-CSharp: its own definition and `KSCFacilityLevelText` — the upgrade **tooltip**. It caps nothing. | the settings pass, 2026-07-29 |
+
+The last two are worth more than their severity: both wrong beliefs were **written down in `check_settings_parity.py`'s own disposition table**, i.e. in the detector. A disposition is a claim like any other, and "we looked at this" is not the same as "we read the consumer". Decompiling five keys took about ten minutes and overturned two of them.
 
 **The rule that would have prevented all seven: decompile, don't infer.** `ilspycmd` is installed
 globally; a stock-semantics question is one command and about a minute:
@@ -111,11 +115,22 @@ compares **values against the live cache**, so a key RO supplies anyway is not r
 
 ---
 
-## Open findings (2026-07-29 hunt)
+## Findings (2026-07-29 hunt) — all closed
 
-Severity is "what a playtester hits", not "how wrong the config looks".
+Severity is "what a playtester hits", not "how wrong the config looks". **Every finding below is
+now fixed**; the entries stay as the reasoning trail, each with what closed it. Findings 1-3 were
+fixed within hours of the hunt; 4-6 in the follow-up settings pass the same day.
 
-### 1. Every hypergolic RCS propellant is permanently locked — A3 · **high**
+| # | Finding | Severity | Closed by |
+|---|---|---|---|
+| 1 | Every hypergolic RCS propellant permanently locked | high | `3d16480` |
+| 2 | The whole KerbalismLab science suite uncollectable | high | `30c75ae` |
+| 3 | Four tree nodes grant nothing | medium | `93b9725`, `1bd9aeb` (+ a membership gate in `build_tree.py`) |
+| 4 | Three parts fail to compile | low | `design/Parts/AxeUpstreamPartFixes.cfg` |
+| 5 | Two inert vendored config nodes | low | one deleted, one allow-listed |
+| 6 | Seventeen settings AXE never re-authored | medium | 4 configs + 13 recorded decisions |
+
+### 1. Every hypergolic RCS propellant is permanently locked — A3 · **high** · ✅ FIXED `3d16480`
 
 702 RealFuels engine `CONFIG` blocks across **82 parts (66 of them placed in the tree)** still
 carry RP-1 tech ids that AXE deleted:
@@ -139,7 +154,7 @@ parts: `earlyDocking → pc_storableRcsPropellants` / `pc_caveaB`.
 Fix: derive the catch-all key set from **every** RP-1 node the walker touches, not just the
 residual, and hard-fail the build when an RP-1 node has no catch-all target.
 
-### 2. The whole KerbalismLab science suite is uncollectable — A2 · **high**
+### 2. The whole KerbalismLab science suite is uncollectable — A2 · **high** · ✅ FIXED `30c75ae`
 
 `design/Science/KerbalismLab/InstrumentTagging.cfg` tags parts with 16 `*LabExperimentPackage`
 marker modules. Those classes live in the upstream fork's own assembly
@@ -165,7 +180,7 @@ their `experiment_id` HAS-filters (10 hosts each), and `Drill` via `@PART[*Drill
 case-insensitive. The two `Part:`-instead-of-`Module:` experiments need their own two-line fix and
 are unaffected by (a).
 
-### 3. Four tree nodes grant nothing — A4 · **medium**
+### 3. Four tree nodes grant nothing — A4 · **medium** · ✅ FIXED `93b9725`, `1bd9aeb`
 
 | Node | Title | Missing part | Why |
 |---|---|---|---|
@@ -192,18 +207,42 @@ Which is its own finding: **nothing checks that a placed part is in `manifest/cu
 `coatl_scienceSandbox` is the other flavour of the same thing: a self-contradiction entirely
 inside AXE, placing and deleting the same part in the same shipped mod.
 
-### 4. Three parts fail to compile — A4 · **low**
+### 4. Three parts fail to compile — A4 · **low** · ✅ FIXED
 
-`B10_APASv2` (clones a Bluedog_DB model that is not installed), `aje_solarPanels` (see above),
-`RO-Castor30B` (`ConfigNode.ParseVector3` — a malformed vector in the RO config). Only
-`aje_solarPanels` is placed. `ca_hera` also fails to clone its model but still compiles.
+All three are **upstream** defects, in mods AXE only consumes. All three are now corrected by
+minimal overrides in `design/Parts/AxeUpstreamPartFixes.cfg`, each carrying the provenance line
+that says when to drop it. (`ca_hera` also fails to clone its model but still compiles — untouched.)
 
-### 5. Two inert vendored config nodes — A1 · **low**
+| Part | The upstream defect | Fix |
+|---|---|---|
+| `aje_solarPanels` | AJE clones `solarPanels5` and hardcodes `Squad/…/radialFlatSolarPanel/model` — a folder **ReStock blacklists**, so the mesh is not in the asset DB. ReStock re-points the original but not the clone. | Point it at ReStock's own `restock-solarpanel-static-small`, a dimensional drop-in, keeping AJE's 4.47× scale. |
+| `RO-Castor30B` | `RO_Restock_Engines_SRB.cfg:94` writes `%scale = 1.1482. 1, 1.1482` — **a period where the first comma belongs**. `ParseVector3` throws `FormatException`. | Restate the vector. |
+| `B10_APASv2` | ROCapsules guards it with `NEEDS[!Benjee10_sharedAssets]` but its MODEL points into `Bluedog_DB`. **The guard names the wrong mod**, so without BDB it can never compile. | `!PART[B10_APASv2]:NEEDS[!Bluedog_DB]` — what the guard was trying to say. |
 
-`IGNORED_EXPERIMENTS` (known; RP-1 reads it in `RP0/Singletons/Database.cs` to pre-complete
-body/experiment/situation combos — in AXE they stay collectible, mostly overlapped by
-`EarthScienceRemoval.cfg`) and `AVIONICSCONFIGS` in `seed/Parts/_RP-AXE-extra/ProceduralAvionics.cfg`,
-which is dead weight now that `proceduralAvionics` carries `ModuleAxeAvionics`.
+Only `aje_solarPanels` was placed, and it is not redundant: same panel at 4.47× the area and 4× the
+charge rate, sitting at `elec_deployablePanelII` next to the `solarPanels5` it clones.
+
+### 5. Two inert vendored config nodes — A1 · **low** · ✅ RESOLVED
+
+Split, because the two are not the same case:
+
+- **`IGNORED_EXPERIMENTS` — deleted.** RP-1 reads it in `RP0/Singletons/Database.cs` to
+  pre-complete body/experiment/situation combos; AXE ships no reader, so 280 lines looked authored
+  and did nothing. AXE's equivalent intent already lives in `design/Science/EarthScienceRemoval.cfg`,
+  which zeroes the situations rather than pre-completing them. Removed via **`sync-seed.ps1`'s
+  `$designOwned` strip list**, not by hand — `seed/` is a wholesale re-vendor, so a hand deletion
+  would have come straight back on the next sync.
+- **`AVIONICSCONFIGS` — kept, and now allow-listed.** It is the implementation reference the
+  avionics port is checked against (`UPGRADES.md` §C1, `AVIONICS_COMPARISON.md`). Deleting it would
+  need a *partial-file* strip — the block is 893 lines inside a file whose other stanzas are live —
+  which is not worth building for one dead node.
+
+The mechanism matters more than either: **check C had no disposition table**, so it failed the gate
+on two known-and-accepted items forever. `rebuild-instance.ps1` step 6 runs `check_liveness.py`, so
+that was a permanent red light, which is the fastest way to teach everyone to ignore a gate. It now
+carries `INERT_BY_DESIGN`, the same contract as check A's `INTENTIONALLY_EMPTY` and
+`check_settings_parity`'s `DISPOSITIONS`: a listed node prints as `kept` with its reason, anything
+unlisted still fails.
 
 ### 6. Seventeen settings AXE never re-authored — A5 · **medium**
 
@@ -211,33 +250,65 @@ which is dead weight now that `proceduralAvionics` carries `ModuleAxeAvionics`.
 where the **live merged value** actually differs. 1,564 are settled decisions (RP-1's
 SpaceCenterManagement economy, crew progression, KCT, Programs — all cut on purpose). 17 are not:
 
+**All 17 are now decided** (user calls, 2026-07-29). Four things changed; the rest are recorded as
+deliberate in `DISPOSITIONS`. The gate reports **0 OPEN, 0 undispositioned**.
+
 **EVA rides on the Astronaut Complex, not on the crew system.** Cutting crew progression handed
-these to stock without anyone choosing them:
+these to stock without anyone choosing them. Decompiling first was worth it — three of the five keys
+do not mean what their names suggest, and RP-1's numbers are not comparable to stock's because the
+two ladders are different lengths (`normLevel > (value − 1.1)/(levels − 1)`).
 
-| key | live | RP-1 | consequence |
-|---|---|---|---|
-| `ASTRONAUTS/unlockedEVA` | 2 | 4 | EVA needs Astronaut Complex L2 — a **75,000-fund** upgrade AXE never designed |
-| `ASTRONAUTS/homebodyAtmoEVA` | false | true | no EVA inside Earth's atmosphere at all |
-| `ASTRONAUTS/unlockedEVAChute` | 3 | 1 | EVA chutes only at a maxed Astronaut Complex |
-| `ASTRONAUTS/unlockedEVAClamber`, `unlockedEVAFlags` | 3, 2 | 5, 5 | ride along |
+| key | live | RP-1 | what it actually does | outcome |
+|---|---|---|---|---|
+| `homebodyAtmoEVA` | false | true | **the one that mattered.** `EVAIsPossible` falls back to `v.LandedOrSplashed` when false — so no LEO spacewalk and no orbital EVA science without the facility. True makes EVA free anywhere in Earth's SOI. | **→ true** |
+| `unlockedEVAChute` | 3 | 1 | **not a facility level.** `EVAChuteOnBuilding` is false, so CBK tests raw crew **XP ≥ 3** (xpPerLevel is 2/8/16/32/64). | **→ 1** |
+| `unlockedEVA` | 2 | 4 | L2 = 75,000 here; RP-1's 4 is L4 on a 5-level ladder = **480,000**. AXE is already 6× cheaper. | kept — the beyond-Earth gate |
+| `unlockedEVAClamber` | 3 | 5 | 3-of-3 == 5-of-5. Both put it at the **top** level; no divergence in fact. | kept |
+| `unlockedEVAFlags` | 2 | 5 | L2 vs RP-1's top level — AXE is the more permissive, and flags are cosmetic. | kept |
 
-AXE ships EVA science, an EVA flight log and crewed contracts, so this is the same shape as the
-autostrut and on-orbit-fuel-transfer items from the original punch-list.
+Net: **EVA in Earth's SOI now costs nothing**, and the 75,000 upgrade gates only EVA beyond Earth —
+RP-1's shape at an eighth of RP-1's price. Shipped as `@ASTRONAUTS` in `AxeFacilities.cfg`.
 
-**Two reputation faucets nobody modelled:** `MISSION/reputationKerbalRecovery` is live at **25 per
-kerbal** × `RepGainMultiplier` on every recovered crewed vessel, against RP-1's 1 — and
-`tools/rep_budget.py` does not model it. It does not convert to funds directly, but reputation is
-what the strategy commitment slider is measured against, so it still moves Channel 2.
-`reputationKerbalDeath` is live at 10 against RP-1's 200: killing a crew is nearly free.
+**Two neighbours in the same block, checked while we were there — one inert, one already fine:**
+`crewLevelLimit = 1, 3, -1` is **never enforced** (see family B), which is what closes the
+KerbalismLab crew-star question in `KERBALISMLAB.md`: `Scientist:4+` is reachable at any Astronaut
+Complex level, so those 36 experiments are a progression curve, not dead content. `activeCrewLimit =
+5, 12, -1` *is* enforced (on hiring) — but RP-1's own first rung is **4**, so stock is the more
+generous of the two and there was nothing to fix.
 
-**Five kerbal G-tolerance keys** (`PHYSICSGLOBALS/kerbalGThresholdLOC` 60000 vs RP-1's 90000, plus
-Warn/Offset/BadMult/BraveMult) are at stock. The earlier audit cleared "G/pressure **part** limits"
-as intact — these are the **kerbal** limits, a different set, never checked.
+**Two reputation faucets nobody modelled — kept, deliberately.**
+`MISSION/reputationKerbalRecovery` is live at 25/kerbal × `RepGainMultiplier` = **+30 on Normal** for
+every recovered crew member, against RP-1's 1; `reputationKerbalDeath` is 10 × `RepLossMultiplier` =
+**−7.5**, against RP-1's 200 (= −150). So recovering a crew pays 4× what killing one costs. Kept
+anyway: AXE has no crew system for a loss to propagate through, so a heavy penalty would be purely
+punitive. **Known gap it leaves:** `tools/rep_budget.py` models neither, so Channel 2's ceiling is
+understated by roughly 30 × (crew recovered).
 
-**Five KSPCommunityFixes patches** RP-1 turns on and AXE leaves at the mod's default `false`. Two
-are more relevant here than in RP-1: `PartTooltipUpgradesApplyToSubstituteParts` (AXE ships 603
-PARTUPGRADEs) and `StrategyDuration` (AXE uses stock strategies as a funds channel). The other
-three — `OnSymmetryFieldChanged`, `FewerSaves`, `DisableNewGameIntro` — are QoL.
+**Five kerbal G-tolerance keys** were at stock. The earlier audit cleared "G/pressure **part** limits"
+as intact — these are the **kerbal** limits, a different set, never checked. All five now take RP-1's
+values in `design/Settings/AxeCrewPhysics.cfg`. The dial that decides it: accumulation floor
+`kerbalGOffset^0.25` rises 5.48 g → 6.50 g and LOC rises 60,000 → 90,000, so a sustained 8 g blacks a
+kerbal out at **39 s instead of 19 s** — a ballistic Soyuz reentry becomes survivable, which it was
+in reality. **The trait modifiers had to come too:** `GeeForceTolerance(level)` multiplies both the
+floor and the threshold, and stock's 2.0× veteran pilot would have eaten most of the change. RP-1
+flattens all three traits; so do we. That table is `EXPERIENCE_TRAIT`, which **this gate was not even
+scanning** — added to `SETTINGS_NODES`, coarsely (the walker strips `[index]`, so all three traits
+collapse to one path: it detects "never re-authored", not "re-authored one of three").
+
+**Five KSPCommunityFixes patches** RP-1 turns on and AXE left at the mod's default `false`. Four
+taken in `design/Settings/AxeCommunityFixes.cfg`: `PartTooltipUpgradesApplyToSubstituteParts` (AXE
+ships 603 PARTUPGRADEs, so this matters more here than in RP-1), `OnSymmetryFieldChanged`,
+`FewerSaves`, `DisableNewGameIntro`. **`StrategyDuration` refused**, and it is the only one with
+teeth: the 7 live strategies carry `minLeastDuration` 60–100 and `maxLongestDuration` 1200–1600 days,
+so honouring them would lock AXE's rep→funds channel after each commit and expire it every 3–4 years
+— time pressure, which AXE cut with KCT.
+
+**Provenance worth recording:** the G keys hid inside RP-1's `CrewSettings.cfg`, which `sync-seed.ps1`
+excludes as *"RP0.dll crew retirement system"*. That reason was true of most of the file and false of
+the part that mattered — **a file excluded on the strength of its name.** Two other exclusion reasons
+had drifted the same way (`CustomBarnKit.cfg` still said "RP-AXE uses CBK defaults", six facility
+ladders later; `KSPCommunityFixes.cfg` still read as an open option). All three rewritten, because
+that list is where a future RP-1 bump gets triaged.
 
 ### 7. NOT A BUG CLASS — "a node that grants no NEW capability", investigated and dropped
 
@@ -301,6 +372,7 @@ not hollow for granting no science. And be clear about the limit: this answers "
   `RFUpgrade_8x_NK-43`, `RFUpgrade_RD-0108`.
 - `RP0LiquidsMicrogravity` has `baseValue = 16` / `scienceCap = 8`, so it pays 8. Inherited
   verbatim from RP-1 — flagged only because any budget line that reads 16 is wrong.
-- The tracking-station ladder is copied verbatim from RP-1 and does **not** carry the
-  `upgrades[0]`-is-dead note that `AxeFacilities.cfg` carries. `docs/ECONOMY.md` already accounts
-  for it correctly ("11 levels, 10 purchases", 2.53M); the comment is what is missing.
+- ~~The tracking-station ladder is copied verbatim from RP-1 and does **not** carry the
+  `upgrades[0]`-is-dead note that `AxeFacilities.cfg` carries.~~ ✅ **Comment added 2026-07-29.**
+  The numbers were always right (`docs/ECONOMY.md`: 11 levels, 10 purchases, 2,525,000); the
+  warning was the only thing missing, on the one array in the repo most likely to be misread twice.

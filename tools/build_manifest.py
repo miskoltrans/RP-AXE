@@ -16,10 +16,39 @@ get pruned by RP-1's tree-validity cleanup). We keep RP-1's 12; see SCANSAT_CUTS
 Sources: ksp_rp1_clean cache, ksp_ro_expanded cache, scratchpad/rp1_cuts_from_packs.txt.
 Outputs: manifest/curated-parts.tsv (mod<TAB>name<TAB>title), curated-parts.txt (names).
 """
-import os, collections
+import os, collections, sys
 G=r"C:\git\ksp"
+# ⚠ THIS SCRIPT CANNOT CURRENTLY RUN -- see the CUTS_INPUT note below. The manifest it produces
+# (manifest/curated-parts.tsv, 1,820 parts) is the single source of truth the whole tree is placed
+# against, so it is REAL and correct; it is simply hand-maintained now, and this generator can no
+# longer reproduce it. Confirmed still broken 2026-07-29.
 SCRATCH=r"C:\Users\User\AppData\Local\Temp\claude\C--git-ksp\8108a075-9f8b-4a7c-89f0-2cd28a7f8a8f\scratchpad"
+CUTS_INPUT=os.path.join(SCRATCH,"rp1_cuts_from_packs.txt")
 OUTDIR=os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","manifest")
+
+if not os.path.exists(CUTS_INPUT):
+    sys.exit(
+        "build_manifest.py CANNOT RUN: its third input is gone.\n"
+        f"  missing: {CUTS_INPUT}\n"
+        "  (the two ConfigCache inputs are fine -- ksp_rp1_clean and ksp_ro_expanded are both present)\n"
+        "\n"
+        "rp1_cuts_from_packs.txt was a formatted dump of the parts RP-1 DELETES from the curated\n"
+        "expansion part-mods, produced in an analysis session whose scratch directory no longer\n"
+        "exists. Without it this script cannot tell 'RP-1 cut this' from 'RP-1 kept this', so it\n"
+        "cannot reproduce manifest/curated-parts.tsv.\n"
+        "\n"
+        "TO REVIVE IT, re-derive the cuts from RP-1's own configs (the real source) and check the\n"
+        "result into manifest/ rather than a temp dir -- it is derived data this build depends on.\n"
+        "\n"
+        "DO NOT reconstruct it by subtracting the current TSV from the ro_expanded cache. That makes\n"
+        "the script reproduce its own output by construction, so an RP-1 bump that changes the cuts\n"
+        "would silently produce no diff -- the offline-fixture trap, in the one place it would cost\n"
+        "the most (docs/BUG-CLASSES.md family C).\n"
+        "\n"
+        "UNTIL THEN the TSV is authoritative and hand-maintained: a new AXE part needs a row there\n"
+        "AND an AXE_PARTS entry below (see docs/SCIENCE.md 6). build_tree.py's membership check is\n"
+        "what keeps the tree honest about it in the meantime."
+    )
 
 def parse_cache(cache):
     with open(cache,encoding="utf-8",errors="replace") as f: lines=f.readlines()

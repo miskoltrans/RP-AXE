@@ -54,6 +54,20 @@ INTENTIONALLY_EMPTY = {
     "mic_atmoSounding": "roots the Microelectronics science lane (mic_massSpec + mic_magnetometer); "
                         "its only part granted two experiments already available at start",
 }
+# Top-level config nodes AXE ships that NO assembly reads, and that we are keeping anyway. Same
+# contract as INTENTIONALLY_EMPTY and as check_settings_parity's DISPOSITIONS: an inert node is
+# normally a defect (bug family A1 -- a file that looks authored and does nothing), so each entry
+# has to say why it stays. Anything NOT listed here fails the gate.
+INERT_BY_DESIGN = {
+    "AVIONICSCONFIGS": "RP-1's ModuleProceduralAvionics coefficient table, vendored with "
+                       "seed/Parts/_RP-AXE-extra/ProceduralAvionics.cfg. Its reader is RP0.dll, "
+                       "which AXE does not ship, and AXE's own ModuleAxeAvionics TIER ladder "
+                       "(design/Tree/AxeAvionicsCore.cfg) supersedes it. KEPT as the implementation "
+                       "reference the avionics port is checked against -- docs/UPGRADES.md C1, "
+                       "docs/AVIONICS_COMPARISON.md. Deleting it would need a partial-file strip in "
+                       "sync-seed.ps1 (the block is 893 lines inside a file whose other stanzas are "
+                       "live), which is not worth building for one dead node.",
+}
 
 # Node names KSP/other mods define; we only audit the ones RP-AXE actually ships.
 STOCK_NODES = {
@@ -301,14 +315,19 @@ def main():
     shipped = shipped_top_nodes()
     candidates = {n for n in shipped if n not in PATCH_TIME_ONLY}
     readers = name_in_assemblies(candidates, assemblies(args.instance))
-    inert = sorted(n for n in candidates if n not in readers)
-    print(f"=== C. top-level config nodes no assembly reads ({len(inert)}) ===")
+    unread = sorted(n for n in candidates if n not in readers)
+    inert = [n for n in unread if n not in INERT_BY_DESIGN]
+    kept = [n for n in unread if n in INERT_BY_DESIGN]
+    print(f"=== C. top-level config nodes no assembly reads ({len(inert)}; "
+          f"{len(kept)} allow-listed as deliberate) ===")
     if inert:
         print("  (ModuleManager merges them either way -- the file looks authored and does nothing.)")
     for n in inert:
         print(f"  {n}")
         for f, i in shipped[n][:3]:
             print(f"      {f}:{i}")
+    for n in kept:
+        print(f"  kept   {n} -- {INERT_BY_DESIGN[n]}")
     if inert:
         fail = 1
     print()
