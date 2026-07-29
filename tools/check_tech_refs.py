@@ -54,6 +54,12 @@ GATE_PATTERNS = [
     ("techRequired__", re.compile(r"^\s*techRequired__\s*=\s*(\S+)", re.M)),
     ("tech",           re.compile(r"^\s*tech\s*=\s*(\w+)\s*$", re.M)),        # Kerbalism SETUP / contract; node-shaped only
     ("#TechRequired",  re.compile(r"#TechRequired\[(\w+)\]")),
+    # RealFuels RF_TECHLEVELS: TechLevel.CanTL gates engine tech level n on
+    # GetTechnologyState(TLTECH<n>) == Available, so these ARE tech gates even though the key is not
+    # named techRequired. Missing this pattern is how 29 of 32 TLTECH values sat pointing at RP-1 and
+    # stock node IDs that AXE deleted -- every RCS thruster and the procedural SRB pinned at TL0, and
+    # this checker reporting clean the whole time. The `%` matches the generated overlay's assignments.
+    ("TLTECH",         re.compile(r"^\s*%?TLTECH\d+\s*=\s*(\S+)", re.M)),
 ]
 CS_PATTERN = re.compile(r'GetTechnologyState\(\s*"(\w+)"')
 SKIP_DIR = re.compile(r"[\\/](Localization|Flags|Textures?|Sounds?|PluginData)[\\/]", re.I)

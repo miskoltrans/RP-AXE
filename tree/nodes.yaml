@@ -871,6 +871,10 @@ nodes:
     parents: [gnc_rcs]
     flavor: "Precision jigs, fixtures and go/no-go gauges let unskilled hands turn out thousands of identical, interchangeable thruster blocks — pull the one you want off the shelf and bolt it on, no machinist required. The procedural block is lighter, cleaner and always the default; research this only if you truly, really must have the fixed catalog hardware."
     parts: [InlineRCS, RCSBlockSmall_138, RCSBlockSmall_28, RCSBlockSmall_69, RCSBlock_138, RCSBlock_28, RCSBlock_69, RCSBoonExt, RCSLinearSmall_28, RCSLinearSmall_69, RO-RestockPlus-RCS-Block-Dual-138, RO-RestockPlus-RCS-Block-Dual-28, RO-RestockPlus-RCS-Block-Quad-138, RO-RestockPlus-RCS-Block-Quad-28, RO-RestockPlus-RCS-Block-Quad-Angled-28, RO-RestockPlus-RCS-Block-Quint-138, RO-RestockPlus-RCS-Block-Quint-28, RO-RestockPlus-RCS-Block-Triple-Angled-138, RO-RestockPlus-RCS-Block-Triple-Angled-28, RO-RestockPlus-RCS-Linear-28, RO-nflv-rcs-aero-heavy-1-half, RO-nflv-rcs-aero-heavy-1-quarter, RO-nflv-rcs-aero-heavy-2-half, RO-nflv-rcs-aero-heavy-2-quarter, RO_FASA_ExplorerRCS, RO_FASA_MercuryPodRCS, RO_RCSBlock_restock_138, RO_RCSBlock_restock_28, RO_RCSBlock_restock_69, RO_RCSBlock_restock_mini_138, RO_RCSBlock_restock_mini_28, RO_RCSBlock_restock_mini_69, RO_linearRcs_tenth, ca_RM01, ca_rs01, ca_rs04, restock-rcs-block-dual-mini-1, restock-rcs-block-quad-angled-mini-1, restock-rcs-block-quad-mini-1, restock-rcs-block-qunit-mini-1, restock-rcs-block-triple-angled-mini-1, restock-rcs-single-mini-1]
+    upgrades: [RFTech-rcs-tltech2]
+    # RealFuels RCS tech level 2. Interchangeable-part manufacture is the mechanism the TL ladder is
+    # actually measuring here — TL is thruster mass fraction (TLTWR 44.7 at TL0 -> 93.4 at TL7), which is
+    # a manufacturing-quality axis, not a propellant one.
 
   # ============ BAND 1 * STAMPED WINGS (optional DEAD-END; procedural B9 wing stays the default) ============
   - id: aero_stampedWings
@@ -1594,7 +1598,7 @@ nodes:
     parents: [gnc_rcs]
     flavor: "Trade the cold-gas puffers for small liquid thrusters on a storable propellant — peroxide, or hypergolics that light on contact — for many times the impulse in the same mass. The reaction control a manoeuvring spacecraft needs to point, hold and turn through a whole mission."
     parts: [ROE-generic-full, ROE-generic-half, ROE-generic-quarter, ca_jib, microEngine, vernierEngine]
-    upgrades: [RFTech-rcs-tltech1]
+    upgrades: [RFTech-rcs-tltech3]
   - id: life_pressurisedCabin
     title: "Sealed Cabin Pressurisation"
     discipline: LifeSupport
@@ -3072,7 +3076,7 @@ nodes:
     tier: 8
     parents: [pc_ntoHypergolics, gnc_smallRcsCatalog]
     flavor: "The same reaction-control block, filled with whatever storable hypergolic blend the mission calls for — five real combinations flown across five different programs, none of them meaningfully better than the others. A menu, not a ladder."
-    upgrades: [RFUpgrade_MMH+NTO, RFUpgrade_MMH+MON3, RFUpgrade_MMH+MON10, RFUpgrade_UDMH+NTO, RFUpgrade_Aerozine50+NTO, RFUpgrade_ISPS, RFUpgrade_ISPS-HDA, RFTech-rcs-tltech2, RFTech-rcs-tltech3]
+    upgrades: [RFUpgrade_MMH+NTO, RFUpgrade_MMH+MON3, RFUpgrade_MMH+MON10, RFUpgrade_UDMH+NTO, RFUpgrade_Aerozine50+NTO, RFUpgrade_ISPS, RFUpgrade_ISPS-HDA, RFTech-rcs-tltech4]
     # 2026-07 (tail): ISPS/ISPS-HDA extend the storable-RCS propellant menu; rcs-tltech3 continues
     # the RCS tech-level ladder (bases in gnc_rcs, doctrine-4 clean).
     # Confirmed via the live RealismOverhaul config (thrusterPower 0.442-0.455, ALL specLevel=operational):
@@ -3429,6 +3433,8 @@ nodes:
     parents: [pc_scoutMarkII]
     flavor: "The Scout stack's own first stage, cast and refined once more — the same all-solid launcher, still cheap, still ready, still needing no pad crew to fuel it."
     parts: [ROE-Algol3, ROE-Algol3_Inline]
+    upgrades: [RFTech-solids-tltech4]
+    # RealFuels solid tech level 4 (RF dates it 1972 — Algol III's own generation).
     # Direct next mark of Algol I (pc_scoutSolids) -> Algol II (pc_scoutMarkII). Own node only because
     # pc_scoutMarkII is already at its 6-part cap, not because this is a different mechanism.
   - id: pc_shuttleSRB
@@ -3438,6 +3444,8 @@ nodes:
     parents: [pc_largeSegmentedBooster]
     flavor: "Scale segmented casting to a booster big enough to loft a crewed orbiter, and rate it to fly people — the largest solid rocket motor ever flown, proven over a hundred missions where the drawing-board monsters before it never left the test stand."
     parts: [RO-RSRM, restock-srb-anvil-1]
+    upgrades: [RFTech-solids-tltech5]
+    # RealFuels solid tech level 5 — RF dates it 1981, which is the RSRM's own first flight year.
     # King RSRM - the Shuttle SRB. Deliberate contrast to pc_largeSegmentedBooster's AJ-260 ("drawn but
     # never poured"): this one is flight-proven and crew-rated. Held at T9 (one step above its parent, not
     # stretched to match SSME/NERVA-I's T11) - mechanically a one-step scale-up-and-human-rate of already-
@@ -3562,7 +3570,8 @@ nodes:
     parents: [pc_storableRcsPropellants]
     flavor: "Trade the reaction-control block's simple storable monopropellant for a genuine two-propellant combustion chamber — a real flame instead of a catalytic fizz, and a meaningful jump in specific impulse for every correction burn and apogee kick a spacecraft makes on its own."
     parts: [ROE-HiPAT, ca_trident, ROE-R40B, ca_lahar, ROC-OrionRCS, ROC-OrionESM]
-    upgrades: [RFUpgrade_LEROS-1c]  # R-4D-15/DM (own base part ROE-HiPAT here) moved down to gnc_deepSpaceApogeeEngine, doctrine-4 fix 2026-07
+    upgrades: [RFUpgrade_LEROS-1c, RFTech-rcs-tltech5]  # R-4D-15/DM (own base part ROE-HiPAT here) moved down to gnc_deepSpaceApogeeEngine, doctrine-4 fix 2026-07
+    # +RFTech-rcs-tltech5 2026-07-29: RealFuels RCS tech level 5.
     # ROC-OrionESM (2026-07, band-5 sweep): 8x R-4D-11 cluster - same real R-4D family as king ROE-HiPAT,
     # just a service-module application. Reaches the 6-part cap.
     # King R-4D (HiPAT) - the real, still-flying OMS/RCS workhorse (Apollo and many modern spacecraft).
@@ -3698,8 +3707,21 @@ nodes:
     tier: 11
     parents: [gnc_bipropAttitudeThrust]
     flavor: "Build the reaction-control thruster to fire tens of thousands of times without eroding its throat or coking its injector — the durability a space station holds attitude with for decades, and a reusable stage relights on descent after descent. The RCS that stops being a consumable."
-    upgrades: [RFTech-rcs-tltech4, RFTech-rcs-tltech5, RFTech-rcs-tltech7]
-    # Late RCS tech-levels (spaceStation/largeSpaceplane/gridFins eras); the RCS lane had no home past T8.
+    upgrades: [RFTech-rcs-tltech7]
+    # RealFuels RCS tech level 7, the top of the ladder.
+    #
+    # 2026-07-29: this node used to hold tltech4, 5 AND 7 while tltech6 sat a tier below on
+    # pc_cryogenicRcsFeed. That mattered more than it looked. These tokens are NOT just R&D display
+    # entries: build_tree.py emits RF_TECHLEVELS TLTECH<n> from wherever they are placed, and
+    # TechLevel.CanTL gates each level on GetTechnologyState(TLTECH<n>) — so their placement IS the
+    # in-game gate for 86 RCS thruster configs (engineType L/L+). Three levels on one node meant one
+    # purchase jumped TLTWR 66.8 -> 93.4.
+    #
+    # The ladder is now one level per node across the whole RCS lane, strictly ascending:
+    #   TL1 gnc_rcs T2 | TL2 gnc_standardRCS T3 | TL3 gnc_spacecraftRCS T5 | TL4 pc_storableRcsPropellants
+    #   T8 | TL5 gnc_bipropAttitudeThrust T9 | TL6 pc_cryogenicRcsFeed T10 | TL7 here T11.
+    # TL0 stays `start` (the baseline every thruster must always have). The catalog nodes
+    # gnc_smallRcsCatalog / gnc_fixedRcsCatalog are deliberately skipped — they are opt-in dead ends.
   - id: elec_secondaryBatteries
     title: "Sealed Rechargeable Battery Cells"
     discipline: ElectricalPower
@@ -4213,7 +4235,11 @@ nodes:
     parents: [pc_shuttleSRB]
     flavor: "Wind the motor case out of graphite and epoxy instead of forging it from steel, and the dead weight falls away. The filament-wound composite case — on the giant SRMU, the standalone Castor 120, the Titan solids — is the material leap past the heavy segmented steel of the Shuttle booster, more impulse for less structure."
     parts: [ROE-SRMU, ROE-Castor120, ROE-UA1208, ROE-1208sepMotor, ROE-Castor30, ROE-Castor30XL]
-    upgrades: [RFUpgrade_FWC-SRM, RFUpgrade_RSRM-1986, RFTech-solids-tltech4, RFTech-solids-tltech6, RFTech-solids-tltech7]  # +solids-tltech4 (1972 solid tech-level) 2026-07 Group-B
+    upgrades: [RFUpgrade_FWC-SRM, RFUpgrade_RSRM-1986, RFTech-solids-tltech6]
+    # RealFuels solid tech level 6 — RF dates it 1986, and RFUpgrade_RSRM-1986 sits right here, so the
+    # filament-wound case IS that generation. 2026-07-29: tltech4 (1972) and tltech7 (1998) moved off this
+    # node — it was granting three levels 26 years apart in one purchase while tltech5 (1981) sat alone a
+    # tier ABOVE it, so buying this jumped solid TLTWR 8.33 -> 12.5 and made tltech5 unreachable in order.
     # ROE-Castor30/30XL (2026-07, band-5 sweep): direct siblings of Castor 120 already here - same real
     # Castor-30-series commercial family (Antares stage 2), not a separate lineage. Reaches the 6-part cap.
   - id: pc_gemStrapOnCatalog
@@ -5377,7 +5403,10 @@ nodes:
     parents: [pc_filamentWoundSolid]
     flavor: "Add one more segment to the Shuttle's own composite-case booster and it becomes the largest solid rocket motor ever flown — the same casting and winding technique, scaled up one more time for a heavier successor vehicle."
     parts: [MassiveBooster]
-    upgrades: [RFTech-solids-tltech5]  # 1981 solid tech-level (five-segment era) 2026-07 Group-B
+    upgrades: [RFTech-solids-tltech7]
+    # RealFuels solid tech level 7, the top of the ladder (RF dates it 1998). Was tltech5 (1981), which
+    # belongs at pc_shuttleSRB — the RSRM's own year — and left this node holding a level EARLIER than the
+    # T10 node below it. Five-segment scale-up is the last solid generation in the tree, so it takes TL7.
     # King RSRMV (SLS). Sibling of pc_gemStrapOnCatalog off the same filament-wound composite-case parent.
 
   # ---- GuidanceControl: commercial-crew abort engines learn to also land ----
