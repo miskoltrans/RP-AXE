@@ -953,6 +953,29 @@ nodes:
     parents: [elec_siliconPV]
     flavor: "Etch and coat the cell face so less sunlight reflects away and more drives current — a few points of efficiency per generation, compounding across the tech tree. The first rung of the solar-cell efficiency ladder."
     upgrades: [solarTL0, solarTL1]
+    # solarTL0 is INERT: ModuleROSolar consumes solarTL1-solarTL10 only, so TL0 is a baseline marker
+    # ROSolar defines but never references. The real ladder is 10 rungs -- see the note below.
+  - id: elec_griddedContacts
+    title: "Gridded Contact Metallisation"
+    discipline: ElectricalPower
+    tier: 5
+    parents: [elec_arCoatings]
+    flavor: "Print the front contact as a fine grid instead of a solid bar. Thinner fingers shade less of the cell while still carrying its current away, series resistance falls, and the same silicon returns more power for nothing but a better mask."
+    upgrades: [solarTL2]
+    # NEW 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md D). The solar tech ladder is exactly 10
+    # real rungs (TL1-TL10) and spans exactly 10 tiers (T4-T13), so one rung per tier is achievable --
+    # the shape commsTL already has. It was doubled at T6 (TL2+TL3) and T7 (TL4+TL5) with T5 and T8
+    # empty. This node and elec_violetCell take the displaced rungs, continuing the lane's own
+    # one-cell-breakthrough-per-rung pattern rather than parking them on deployment/simulation nodes.
+  - id: elec_violetCell
+    title: "Violet-Cell Shallow Junction"
+    discipline: ElectricalPower
+    tier: 8
+    parents: [elec_dopedCoverglass]
+    flavor: "Move the junction close enough to the surface and the cell stops throwing away the blue end of the spectrum. Light that used to die in the dead layer above the junction becomes current instead."
+    upgrades: [solarTL5]
+    # NEW 2026-07-29 -- see elec_griddedContacts. Historically the 1972 COMSAT violet cell is the step
+    # immediately before the back-surface-field cell this node now feeds.
     # solarTL1 moved here 2026-07-28 (cell-lane pass, see "Lane 5c" below): TL1 is a pure MASS step
     # (11.2 from 12 kg/m², identical 63 W/m² and identical 11-day degradation) — a thinner wafer, which is
     # a fact about the cell, not about the paddle it was mounted on. It had been sitting on
@@ -4763,21 +4786,21 @@ nodes:
     title: "N-on-P Radiation-Tolerant Cells"
     discipline: ElectricalPower
     tier: 6
-    parents: [elec_arCoatings]
+    parents: [elec_griddedContacts]
     flavor: "Build the junction the other way up — diffuse phosphorus into a boron-doped wafer instead of the reverse — and the cell stops dying in the belts. The first satellites came home with their output halved after a few months in the trapped radiation; the same silicon, inverted, holds its power for a season and gives back more of the blue end of the spectrum besides."
-    upgrades: [solarTL2, solarTL3]
+    upgrades: [solarTL3]
   - id: elec_dopedCoverglass
     title: "Cerium-Doped Cover Glass"
     discipline: ElectricalPower
     tier: 7
     parents: [elec_nOnPCell]
     flavor: "The cell was never the fragile part — the glass over it was. Ultraviolet darkens an ordinary cover slip until the array is looking at the sun through smoked quartz. Dope the glass with cerium and it stops browning, and a panel that used to fade inside a month holds its output for a third of a year."
-    upgrades: [solarTL4, solarTL5]
+    upgrades: [solarTL4]
   - id: elec_backSurfaceField
     title: "Back-Surface-Field Silicon Cells"
     discipline: ElectricalPower
     tier: 9
-    parents: [elec_dopedCoverglass, elec_integratedCircuit]
+    parents: [elec_violetCell, elec_integratedCircuit]
     # CROSSOVER (2026-07-28) — elec_integratedCircuit (Microelectronics T7). Same-family, not "X led to Y":
     # this is the rung where cell-making stops being metallurgy and becomes semiconductor PROCESSING. A
     # back-surface field IS a heavy p+ diffusion laid across the back of the wafer, and the textured front

@@ -155,6 +155,24 @@ def engine_defects(ladders, part_node, nodes):
     return ded
 
 
+
+def referenced_upgrades(cache):
+    """Every PARTUPGRADE name a module actually consumes, from its UPGRADES block.
+
+    A PARTUPGRADE can be defined and never referenced -- `solarTL0` is declared by ROSolar but
+    ModuleROSolar only consumes solarTL1-solarTL10, so TL0 is an inert baseline marker that buys
+    nothing. Counting it as a rung made the solar ladder look doubled at its first node.
+    """
+    out = set()
+    for p in cache["PART"]:
+        for n in p.walk():
+            if n.kind == "UPGRADE":
+                nm = n.get("name__") or n.get("name")
+                if nm:
+                    out.add(nm)
+    return out
+
+
 # --------------------------------------------------------------- ladder source B
 LEVEL_RE = re.compile(r"level\s+(I{1,3}V?|VI{0,3}|IX|X|\d+)\b", re.I)
 ROMAN = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10}
@@ -199,9 +217,17 @@ def level_ladders(cache, nodes, upg_node):
         if fam and lvl is not None:
             recs.append({"name": nm, "fam": fam, "lvl": lvl, "node": node, "tier": tier,
                          "title": u.get("title", ""), "info": u.get("basicInfo", "")})
+    # Drop rungs no module consumes -- but only when SIBLINGS in the same family are consumed, so a
+    # ladder whose mechanism is something other than a module UPGRADES block is never silently lost.
+    ref = referenced_upgrades(cache)
     g = collections.defaultdict(list)
     for r in recs:
         g[r["fam"]].append(r)
+    for fam, v in g.items():
+        if any(r["name"] in ref for r in v):
+            live = [r for r in v if r["name"] in ref]
+            if live:
+                g[fam] = live
     return {k: sorted(v, key=lambda r: r["lvl"]) for k, v in g.items() if len(v) >= 2}
 
 

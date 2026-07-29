@@ -271,20 +271,50 @@ keeps its job.
 re-flagged. *Noted:* the RPWS2 gap is 2 tiers rather than 1 because the finding-B RPWS ladder split
 moved `RO-SWPlasmaAnalyzer` from T8 to T9 -- this audit widened it.
 
-### D. Level ladders: `commsTL` is the model, five others are compressed
-| ladder | rungs → tiers | verdict |
-|---|---|---|
-| `commsTL` | 1→T5, 2→T6, 3→T7, 4→T8, 5→T9, 6→T10, 7→T11, 8→T12, 9→T13, 10→T14 | **exactly one rung per tier — the reference implementation** |
-| `solarTL` | 0,1→T4 · 2,3→T6 · 4,5→T7 · 6→T9 · 7→T10 · 8→T11 · 9→T12 · 10→T13 | 11 rungs, but the first six arrive **two at a time** |
-| `RFTech-rcs-tltech` | 1→T5 · 2,3→T8 · **6→T10** · 4,5,7→T11 | 3 rungs on one node; **level 6 unlocks before 4 and 5** |
-| `RFTech-solids-tltech` | 1,2→T7 · 3→T8 · 4,6,7→T10 · **5→T11** | 3 rungs on one node; **level 5 arrives after 6 and 7** |
-| `MLI.Upgrade` | 1→T3 · 2,3→T9 · 4,5→T11 | paired rungs **and** a 6-tier dead stretch T3→T9 |
-| `PFTech-Fairing` | I,II→T4 · III,IV→T9 · V,VI→T12 | paired throughout |
-| `HDD-Upgrade` | 1961→T3 · 1964→T4 · 1969→T10 · 1975→T11 · 1990→T13 · 1998→T14 · 2010,2020→T15 | 6-tier gap T4→T10 |
-| `RFTech-ComSat` / `RFTech-NavSat` | 2→T5 · 3→T10 | 5-tier gap |
-| `RFTech-Battery` | II→T6 · III→T7 · IV→T9 | **fixed during this audit** (was II,IV→T6 · III→T7, i.e. IV before III) |
-| `RFTech-SM` | II→T5 · III→T7 · IV→T9 | clean |
-| `airlaunchTL` | 1→T2 · 2→T3 · 3→T5 · 4→T6 | clean |
+### D. Level ladders -- `solarTL` fixed to match `commsTL`; the rest are not defects
+A levelled ladder should spend one rung per tier where it has the tiers to do it. Ground-truthing what
+each rung actually *delivers* turned most of this list into non-findings.
+
+**RESOLVED 2026-07-29 -- `solarTL`.** The decisive fact: `ModuleROSolar` consumes **solarTL1-solarTL10
+only**. `solarTL0` is declared by ROSolar but never referenced -- an inert baseline marker. So the real
+ladder is **10 rungs, and it spans exactly 10 tiers (T4-T13)**: one rung per tier is achievable, which
+is the shape `commsTL` already has. It was doubled at T6 (TL2+TL3) and T7 (TL4+TL5) with T5 and T8
+holding no rung at all.
+
+Two new cell-chemistry nodes take the displaced rungs, continuing the lane's own
+one-cell-breakthrough-per-rung pattern rather than parking them on deployment or simulation nodes:
+
+| tier | node | rung | W/kg |
+|---|---|---|---|
+| T4 | `elec_arCoatings` | TL1 | 5.6 |
+| **T5** | **`elec_griddedContacts`** "Gridded Contact Metallisation" *(new)* | TL2 | 8.0 |
+| T6 | `elec_nOnPCell` | TL3 | 9.4 |
+| T7 | `elec_dopedCoverglass` | TL4 | 11.0 |
+| **T8** | **`elec_violetCell`** "Violet-Cell Shallow Junction" *(new)* | TL5 | 14.0 |
+| T9 | `elec_backSurfaceField` | TL6 | 30.0 |
+| T10-T13 | thinSilicon / GaAs / tripleJunction / metamorphic | TL7-TL10 | 58.6 - 376 |
+
+Both inserts re-parent the chain (`elec_nOnPCell` onto `elec_griddedContacts`, `elec_backSurfaceField`
+onto `elec_violetCell`) so no transitively-redundant edge appears. Historically the 1972 COMSAT violet
+cell really is the step immediately before the back-surface-field cell. `tier_defects.py` now also
+drops **inert rungs** -- a PARTUPGRADE no module consumes -- but only when siblings in the same family
+*are* consumed, so a ladder with a different mechanism is never silently lost.
+
+*Accepted consequence:* this shifts the TL->tier map that finding F used to home the fixed catalog
+panels (T7 is now TL4 rather than TL5). Every panel stays within the +/-1 tier band F already treated
+as tolerance, so nothing needs re-homing (user call).
+
+**NOT defects -- checked and dismissed:**
+- **`PFTech-Fairing` I-VI.** The pairs group *material generations*: T4 metal stringer (Al 0.135 ->
+  Mg 0.124), T9 fibreglass -> isogrid (0.074 -> 0.068), T12 composite -> advanced (0.042 -> 0.040).
+  Each node is one materials family with its own refinement, and the big steps (-40%, -38%) land on
+  the node boundaries. Deliberate.
+- **`MLI.Upgrade` 2-5.** The upgrades' own text reads *"this is not a part you can use, it just
+  symbolizes"* additional insulation layers. Pairing them makes a bigger single step; low impact.
+- **`RFTech-ComSat` / `RFTech-NavSat`.** Only two rungs exist (II, III). A 2-rung ladder spanning five
+  tiers is a short ladder, not a gap.
+- **`HDD-Upgrade` 2010+2020** (T15) and the `RFTech-solids-tltech` same-tier pairs -- endgame and
+  side-lane respectively; noted, not chased.
 
 ### E. Engine configs that unlock out of order -- 28 claimed, 4 real
 The first pass compared configs on thrust and vacuum Isp alone and reported 28. That is the wrong
