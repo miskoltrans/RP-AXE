@@ -85,22 +85,45 @@ Census at time of writing: **112 findings** — 26 SUPERSEDED, 38 DOMINATED, 26 
 
 ## 2. Findings, ranked
 
-### A. Stock reaction wheels were never RO-rebalanced — and they share a node with RO ones
-`gnc_largeReactionWheels` (T9) holds, measured off the live cache:
+### A. `reactionWheelMode` is a ~1,000x lever, and `gnc_largeReactionWheels` is really a CMG node
+**Corrected 2026-07-29** — the first draft of this finding claimed these parts were never
+RO-rebalanced. That was wrong. RO ships a global solver, `RO_ReactionWheels.cfg`, that derives
+torque from a declared power budget and deletes any `ModuleReactionWheel` it did not configure:
 
-| part | mod | torque (kN·m) | mass | vs Coatl |
-|---|---|---|---|---|
-| `ca_rw_large` RW-4A | CoatlAerospace | 0.000135 | 12 kg | 1× |
-| `restock-reactionwheel-radial-1` | ReStockPlus | 0.143 | 8.1 kg | **1,054×** |
-| `advSasModule` | Squad | 1.86 | 100 kg | **13,700×** |
-| `asasmodule1-2` | Squad | 10.6 | 200 kg | **78,400×** |
+```
+Torque[kN.m] = 0.0001 * 10^(log_base(reactionWheelPowerDraw / reactionWheelPowerBase))
+    wheel mode: log_base 4.0, powerBase 0.150 (150 W)
+    CMG   mode: log_base 2.5, powerBase 0.010 (10 W)
+```
 
-`sasModule` (T8) *is* patched down to 1.0e-4, so RO's stock-wheel patch exists — it just doesn't
-cover these three. `RSSROConfig` is absent on all of them, so `HardRemoveNonRO` doesn't delete them
-either; RO only ever uses `+PART[asasmodule1-2]` as a *clone template* for its own avionics parts.
-From T9 a 200 kg part gives more attitude authority than any real spacecraft, which retires the
-whole Coatl wheel line and most RCS budgeting. RP-1 ships these parts too (`TREE-Parts.cfg`), so
-this is inherited, not AXE-introduced. **Fix: patch them to RO scale or cut them.**
+The formula reproduces every measured value in the tree exactly, so all eight wheels are
+RO-configured:
+
+| part | mode | power | torque kN.m | node | tier |
+|---|---|---|---|---|---|
+| `ca_rw_xsmall` | wheel | 48 W | 1.00e-4 | `gnc_reactionWheelAttitude` | T8 |
+| `ca_rw_small` | wheel | 60 W | 1.00e-4 | `gnc_reactionWheelAttitude` | T8 |
+| `sasModule` | wheel | 100 W | 1.00e-4 | `gnc_reactionWheelAttitude` | T8 |
+| `ca_rw_medium` | wheel | 120 W | 1.00e-4 | `gnc_reactionWheelAttitude` | T8 |
+| `ca_rw_large` | **wheel** | **180 W** | **1.35e-4** | `gnc_largeReactionWheels` | T9 |
+| `restock-reactionwheel-radial-1` | **CMG** | **180 W** | **0.143** | `gnc_largeReactionWheels` | T9 |
+| `advSasModule` | CMG | 500 W | 1.86 | `gnc_largeReactionWheels` | T9 |
+| `asasmodule1-2` | CMG | 1 kW | 10.6 | `gnc_largeReactionWheels` | T9 |
+
+The real defect is the **mode tag**, not the mod of origin. `ca_rw_large` and the ReStock radial
+draw *identical* 180 W; one is tagged `wheel` and the other `CMG`, and RO's two curves return
+1.35e-4 vs 0.143 -- a 1,054x difference for the same power budget. Consequences for the tree:
+
+1. `ca_rw_large` is stranded: it is the only `wheel`-mode part on a node otherwise made of CMGs,
+   so it can never be the sensible pick there.
+2. **T9 is a 78,000x single-tier step** in attitude authority (1.35e-4 -> 10.6 kN.m), gated only on
+   affording 1 kW -- about 33 kg of T9-era solar.
+3. `asasmodule1-2` at 10.6 kN.m from a 200 kg unit is roughly 40x beyond a real ISS CMG. That is
+   RO's CMG curve extrapolating badly at kilowatt scale, inherited rather than AXE-authored.
+
+**The fix is curation/placement, not patching** -- these are already at RO scale. CMGs genuinely are
+the station technology the node's flavor describes, so the node concept is sound; the open calls are
+whether `ca_rw_large` belongs on it and whether a 1 kW CMG should sit at T9 at all.
 
 ### B. Probe-instrument generations collapse onto one node (the user-reported symptom)
 The `Experiments` Configure slot, sorted by tier:
