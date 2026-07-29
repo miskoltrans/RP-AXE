@@ -29,9 +29,18 @@ Consequences baked into `tools/tier_balance.py`:
 
 - **Integrated buses are excluded from equipment leagues.** Vanguard 1 carries solar cells, but you
   do not pick it for its W/kg. Anything with `ModuleCommand`/crew is classified as a pod/core first.
-- **Six families have a defensible scalar** and are checked for dominance: solar, battery, RTG,
-  reaction wheel, radiator, antenna. Deliberately **excluded**, because the obvious proxy is *wrong*
-  rather than merely noisy:
+- **Five families have a defensible scalar** and are checked for dominance: solar, battery, reaction
+  wheel, radiator, antenna. For **solar the axis is the TL RUNG, not W/kg** -- ROSolar's grid charges a
+  folded panel 1.05-1.75x and a sun-tracking panel 1.2-2.0x the mass for the *same* cell technology,
+  so raw W/kg conflates geometry with generation (a folded TL5 reads 9.3 against a static TL5's 14.0).
+  Every catalog panel fits the grid to within 5%, so the rung is the honest axis and deployment is an
+  orthogonal choice. Deliberately **excluded**, because the obvious proxy is *wrong* rather than
+  merely noisy:
+  - *RTG* (dropped 2026-07-29 after it produced 23 findings, all artefacts) -- W/kg penalises exactly
+    the right hardware. MMRTG (2.52 W/kg) really is less efficient than GPHS-RTG (5.37) because it
+    trades efficiency for the ability to run in an **atmosphere**, which is why Curiosity carries one;
+    and the Universal Storage wedge, quad-rack and `[Shielded]` variants are heavier by construction.
+    Output class, atmosphere capability and form factor are the real axes, and none is a scalar;
   - *parachute* — `deployedDiameter`/kg conflates drogues with mains; RealChute doesn't store the
     number that matters (canopy area at deployment pressure);
   - *heatshield* — PART `maxTemp` is the structure's limit, not the ablator's capability;

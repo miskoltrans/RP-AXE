@@ -264,6 +264,28 @@ def part_metrics(part):
     return m
 
 
+
+# ROSolar's tech grid (Instance/GameData/ROSolar/TechLimits.cfg): W/kg per rung, and the mass
+# multipliers a folded or sun-tracking panel pays for the SAME cell technology. A folded TL5 panel
+# is 9.3 W/kg against a static TL5's 14.0 -- that is geometry, not a worse generation, so raw W/kg
+# conflates the two. Every fixed catalog panel fits this grid to within 5%, so the RUNG is the
+# honest capability axis and deployment is an orthogonal choice.
+SOLAR_TL = {0: (5.0, 1.75, 2.0), 1: (5.625, 1.75, 2.0), 2: (8.036, 1.5, 2.0), 3: (9.434, 1.5, 2.0),
+            4: (11.0, 1.5, 1.75), 5: (14.0, 1.5, 1.75), 6: (30.0, 1.3, 1.6), 7: (58.57, 1.2, 1.5),
+            8: (122.6, 1.15, 1.4), 9: (265.0, 1.1, 1.3), 10: (376.2, 1.05, 1.2)}
+
+
+def solar_rung(wkg):
+    """Best-fit (rung, deployment) for a panel's measured W/kg."""
+    best = None
+    for lv, (base, mf, mt) in SOLAR_TL.items():
+        for lab, mult in (("static", 1.0), ("folded", mf), ("tracking", mt)):
+            err = abs(base / mult - wkg) / wkg
+            if best is None or err < best[0]:
+                best = (err, lv, lab)
+    return best[1], best[2], best[0]
+
+
 # ---------------------------------------------------------------- families
 def classify(m):
     """Functional family. Order matters -- first match wins."""
@@ -339,7 +361,7 @@ FAMILY_AXES = {
     "engine_electric":    (["ispVac"], ["maxThrust"]),
     "engine_airbreathing": (["ispVac"], ["maxThrust"]),
     "rcs":                (["ispVac"], ["maxThrust"]),
-    "solar":              (["solar_per_kg"], ["solarRate"]),
+    "solar":              (["solar_tl"], ["solarRate"]),
     "rtg":                (["gen_per_kg"], ["genRate"]),
     "generator":          (["gen_per_kg"], ["genRate"]),
     "battery":            (["ec_per_kg"], ["ec"]),
@@ -362,6 +384,9 @@ def derive(m):
             d["twr"] = m["maxThrust"] * 1000.0 / (kg * 9.80665)
         if m.get("solarRate"):
             d["solar_per_kg"] = m["solarRate"] / kg
+            rung, dep, err = solar_rung(m["solarRate"] * 1000.0 / kg)
+            d["solar_tl"] = rung
+            d["solar_fit"] = err
         if m.get("genRate"):
             d["gen_per_kg"] = m["genRate"] / kg
         if m.get("ec"):

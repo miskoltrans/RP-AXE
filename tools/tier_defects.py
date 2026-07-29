@@ -481,6 +481,9 @@ def instrument_defects(cache, nodes, part_node):
 # --------------------------------------------------------------- ladder source D
 SCALE_TOL = 2.0     # only compare parts within this factor on the extensive axis
 
+# Opt-in dead-ends whose whole purpose is to park era-frozen catalog hardware off the main lane.
+CATALOG_DEADENDS = {"elec_busArrayCatalog"}
+
 
 def part_defects(rows):
     out = []
@@ -497,10 +500,19 @@ def part_defects(rows):
     #   crewpod    -- crew count is a mission-class axis, not a tech axis;
     #   engines    -- role/propellant/geometry dominate; the engine-CONFIG ladder above is the
     #                 right instrument for them.
-    COMPARABLE = {"solar", "battery", "rtg", "reaction_wheel", "radiator", "antenna"}
+    #   rtg        -- REMOVED 2026-07-29. W/kg is the wrong proxy: MMRTG (2.52 W/kg) really is less
+    #                 efficient than GPHS-RTG (5.37) because it trades efficiency for the ability to
+    #                 run in an ATMOSPHERE, which is why Curiosity carries one; and the wedge, quad-rack
+    #                 and [Shielded] variants are heavier by construction. Output class, atmosphere
+    #                 capability and form factor are the real axes and none is a scalar.
+    COMPARABLE = {"solar", "battery", "reaction_wheel", "radiator", "antenna"}
     byfam = collections.defaultdict(list)
     for r in rows:
         if r["tier"] is None or r["node"] in ("parking", "experimental"):
+            continue
+        # Fixed-catalog DEAD-ENDS exist precisely to hold era-frozen hardware off the main lane
+        # (design rule 7). Flagging their contents for being behind the curve reports the feature.
+        if r["node"] in CATALOG_DEADENDS:
             continue
         if r["family"] not in COMPARABLE:
             continue
