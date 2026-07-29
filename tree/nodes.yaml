@@ -1412,13 +1412,40 @@ nodes:
     # (667 kN) new hydrolox engine that never got a base-part home; same vacuum-optimized mechanism as
     # RL10A-3-1, just bigger.
   - id: fd_restartableUpper
-    title: "Restartable Vacuum Ignition"
+    title: "Vacuum Turbopump Restart"
     discipline: FluidDynamics
     tier: 4
     parents: [pc_hypergolics]
     flavor: "A storable-hypergolic upper that coasts dark through a long parking orbit and relights on command — the engine that stops being a single burn and becomes a manoeuvring stage. Agena's XLR81 shuts down and restarts in space: the key to circularising, changing plane, and the rendezvous still to come."
-    parts: [ROE-Agena, ROE-AJ10Mid, ROE-Juno45K, ROE-Juno6K, ROE-AJ10Adv, RO-KTDU5A, ROE-KTDU35, ROE-S523, LargeOMS]
+    parts: [ROE-Agena, RO-KTDU5A, ROE-S523]
+    # SPLIT 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md 3d). This node held 9 engines spanning
+    # 4-200 kN -- the only FluidDynamics node in its lane over 5 parts -- and its own name did not hold:
+    # the king's base config (Model117) has ignitions=1, so "Restartable Vacuum Ignition" shipped an
+    # engine that cannot restart (Agena gains it at XLR81-BA-7, ign=2).
+    # Split on FEED SYSTEM, the axis this whole lane already uses (turbopump -> single-chamber ->
+    # multi-chamber -> regen cooling), and a real bottleneck difference: a pressure-fed engine relights
+    # by reopening a valve, a pump-fed one must re-spin a turbopump on unsettled propellant. The tree
+    # already assumed this reading -- fd_propellantUllage (T7) hangs off THIS node, and ullage settling
+    # exists only because of the pump-fed restart problem.
+    # -> fd_blowdownRestart took the 5 pressure-fed engines; ROE-KTDU35 (4.09 kN, 25 ignitions,
+    #    1020 s) went to fd_spacecraftPropulsion, whose description it matches exactly.
+    # The RFUpgrade_AJ10-* tokens below stay: they belong to ROE-AJ10Early, homed elsewhere, so they are
+    # correctly placed enabler-node upgrades rather than co-located with their base part.
     upgrades: [RFUpgrade_AJ10-42, RFUpgrade_AJ10-101A, RFUpgrade_AJ10-118]
+  - id: fd_blowdownRestart
+    title: "Blowdown Vacuum Restart"
+    discipline: FluidDynamics
+    tier: 4
+    parents: [pc_hypergolics]
+    flavor: "No pump to restart, so nothing to spin back up: hold the tanks under gas pressure and the engine relights as often as the valves will cycle. It buys the manoeuvring stage cheaply, and pays for it in tank walls heavy enough to hold that pressure all the way up."
+    parts: [ROE-AJ10Mid, ROE-AJ10Adv, LargeOMS, ROE-Juno6K, ROE-Juno45K]
+    # NEW 2026-07-29 -- the pressure-fed half of the fd_restartableUpper split; see the note there.
+    # Every part here reads pressureFed=True in manifest/engine-stats.tsv.
+    # This is the EARLY rung of a mechanism the tree already matures: fd_pressureFedRestart (T8,
+    # "Pressure-Fed Multi-Restart Combustion", Apollo SPS) is the same idea grown up -- no turbopump,
+    # trusted to relight months into a mission. Deliberately NOT wired as its parent: that node was
+    # simplified from 3 parents to 2 in 2026-07 on purpose, and it already reaches this lineage through
+    # fd_propellantUllage <- fd_restartableUpper. Naming kept distinct so the two never read as one node.
     # 4 more base parts added (2026-07, part-count-pass find), all the same restartable-storable-vernier
     # mechanism this node already covers: ROE-AJ10Adv (another AJ10-family vernier), RO-KTDU5A/ROE-KTDU35
     # (the Soviet KTDU family — "correction-braking propulsion," the direct Eastern-bloc counterpart to
@@ -1431,7 +1458,10 @@ nodes:
     tier: 5
     parents: [fd_restartableUpper]
     flavor: "Shrink the restartable engine to a spacecraft's own propulsion: a small, deeply-throttleable, many-times-restartable motor for the midcourse nudge and the retro burn a probe or capsule steers itself home with. Agena's secondary fires twenty times; a lunar probe lives or dies on one clean correction."
-    parts: [ROE-AgenaSPS, RO-KDU414, ROE-RangerRetro, ROE-C1, ROC-VostokService]
+    parts: [ROE-AgenaSPS, RO-KDU414, ROE-RangerRetro, ROE-C1, ROC-VostokService, ROE-KTDU35]
+    # +ROE-KTDU35 2026-07-29 from fd_restartableUpper (tier-balance audit). Soyuz's service propulsion:
+    # 4.09 kN, 25 ignitions, 1020 s rated burn -- this node's own description ("small, deeply-throttleable,
+    # many-times-restartable") with the numbers to match, against its former node's 4-200 kN spread.
     upgrades: [RFUpgrade_XLR81-BA-1, RFUpgrade_AJ10-142]
     # 2026-07 (tail): C-1 (small Aerozine50 maneuvering thruster) joins the small-spacecraft-engine family;
     # Model8096-HDA = an uprated Agena secondary-propulsion (SPS) mark.
