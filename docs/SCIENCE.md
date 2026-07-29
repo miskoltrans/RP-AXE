@@ -587,8 +587,23 @@ roughly an order of magnitude more than its `baseValue` reads. The correct bench
 other biome-from-orbit family, `RP0infraredRad1–4` at 2/3/4/6 — **not** `magScan` (6/12/40) or
 `massSpec` (8/12/20/30), which are biome-blind or landed-only. 6/10/16 sits just above the
 radiometers. Benchmarked against the biome-blind families these would read absurdly cheap, and that
-reading is the trap. **Still to do: measure the real career total with `tools/science_budget.py` once
-the instance has booted with these in it — the arithmetic is an estimate, not a measurement.**
+reading is the trap.
+
+**Validation is by playtest, not by `science_budget.py`** (user call, 2026-07-29). The arithmetic is
+an estimate and stays one; these are feel numbers, and a career total would not settle whether the
+lane is fun. What to watch for in play: whether one instrument at one body dwarfs the rest of its era
+— the biome multiplier is what would cause that — and whether the per-biome dwell (12 h / 8 h / 6 h)
+reads as a mapping campaign rather than a chore.
+
+**Durations are per biome, and that bit once.** These first shipped with CosmicRay's `dataScale` /
+`data_rate` pair copied verbatim — 1.9656 MB over 7,862,400 s, a 3-month integration. Correct for
+CosmicRay, which is biome-*blind*: one global subject, one long run. Biome-split, the same numbers
+mean three months of cumulative over-biome dwell **per biome** — about 51 months to finish the Moon's
+seventeen, i.e. the instrument never completes anything. RP-1 sizes its own biome-split family in
+hours and says so inline (`//~10,000 seconds per biome` on `RP0infraredRad1`). Fixed in `7bac1e6`.
+Note this is the *same* wrong-peer mistake as the values above, made twice in one file: copying from
+a family whose masks differ is invisible, and the masks are what change the meaning of every other
+number.
 
 **Neutron spectrometry earns its late tier by reading hydrogen** — i.e. water ice. It is the one
 instrument here with a reason to exist beyond science points: it tells you which polar site is worth
