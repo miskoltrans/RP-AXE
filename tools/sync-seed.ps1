@@ -150,6 +150,72 @@ foreach ($rel in $designOwned) {
     if (Test-Path $p) { Remove-Item $p -Recurse -Force; Write-Host "  Stripped design-owned $rel (lives in design\Science\)" -ForegroundColor Yellow }
 }
 
+# --- rewrite RP-1 prose that describes systems AXE does not have -----------------
+# The contract DESCRIPTIONS are vendored verbatim, and some of them explain RP-1's career
+# mechanics to the player. Those paragraphs are not flavour we can leave alone: they are
+# instructions for systems AXE cut, so they are actively false in game. This is a TEXT pass
+# only -- verified 2026-07-30 that nothing mechanical rides on either one (the 17 crewed/X-plane
+# contracts carry stock CC `HasCrew`, never a training REQUIREMENT; RP-1 enforced training in
+# RP0.dll's preflight, not in the contract).
+#
+# It lives HERE, not as a hand edit of seed\, because seed\ is wholesale re-vendored from the
+# RP-1 clone on every refresh -- an edit there dies silently on the next `git pull` + re-sync.
+#
+# Each fix asserts its EXPECTED hit count and shouts when reality disagrees, because the whole
+# pass is a string match against upstream prose: if RP-1 reworded a sentence, a silent 0 matches
+# would leave the false text shipping while this step still printed success. docs/BUG-CLASSES.md
+# family C, rules 2 and 3 -- a bounded pass must report what it did not do.
+$textFixes = @(
+    @{
+        Name     = 'RP-1 crew-training note'
+        Expected = 17
+        # One byte-identical block, always the trailing sentence of `description`. Lazy to the first
+        # closing tag; `.` does not cross newlines in .NET regex and the value is a single line.
+        Pattern  = '<br><br><b><color=green>Note: Astronauts must be trained before launch\..*?toolbar\.</color></b>'
+        Replace  = ''
+        Why      = 'crew training + its toolbar UI are CUT from AXE -- there is no RP-1 window and no Training tab'
+    },
+    @{
+        Name     = 'Astronaut Complex level number'
+        Expected = 2
+        Pattern  = 'updated your Astronaut Complex to level five'
+        Replace  = 'upgraded your Astronaut Complex to level two'
+        # AXE keeps CustomBarnKit's stock 3-level Astronaut Complex on purpose (AxeFacilities.cfg
+        # @ASTRONAUTS) and leaves unlockedEVAFlags = 2, so flag planting unlocks at L2 of 3.
+        # RP-1's "level five" is the top of its own 5-level ladder and cannot be reached here.
+        Why      = 'RP-1 ladder number; AXE unlocks flags at Astronaut Complex L2 of 3'
+    }
+)
+
+$contractsRoot = Join-Path $seedRoot 'Contracts'
+if (Test-Path $contractsRoot) {
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    $cfgs = Get-ChildItem -Path $contractsRoot -Filter '*.cfg' -File -Recurse
+    foreach ($fix in $textFixes) {
+        $hits = 0
+        foreach ($cfg in $cfgs) {
+            $text = [System.IO.File]::ReadAllText($cfg.FullName)
+            $new = [regex]::Replace($text, $fix.Pattern, $fix.Replace)
+            if ($new -ne $text) {
+                [System.IO.File]::WriteAllText($cfg.FullName, $new, $utf8NoBom)
+                $hits++
+            }
+        }
+        $label = "  Rewrote $($fix.Name): $hits file(s) -- $($fix.Why)"
+        if ($hits -eq $fix.Expected) {
+            Write-Host $label -ForegroundColor Yellow
+        } elseif ($hits -eq 0) {
+            Write-Host "  !! $($fix.Name): 0 matches, EXPECTED $($fix.Expected)." -ForegroundColor Red
+            Write-Host "     The pattern has rotted -- RP-1 most likely reworded it. The false text is" -ForegroundColor Red
+            Write-Host "     SHIPPING until the pattern is re-derived. Do not ignore this." -ForegroundColor Red
+        } else {
+            Write-Host "$label  [!! expected $($fix.Expected) -- upstream changed; confirm the delta is intended]" -ForegroundColor Red
+        }
+    }
+} else {
+    Write-Host "  !! seed\Contracts missing -- RP-1 prose fixes did not run." -ForegroundColor Red
+}
+
 # --- vendor loose root .cfg files (self-cleaning: drop stale seed root *.cfg first) ---
 Get-ChildItem -Path $seedRoot -Filter '*.cfg' -File -ErrorAction SilentlyContinue | Remove-Item -Force
 foreach ($f in $rootFiles) {
