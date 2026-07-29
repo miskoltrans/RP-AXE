@@ -21,6 +21,32 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
 CAP = 6
 
+
+# COMMODITY nodes: rule 8's real clause is "one clear KING", and the part count is only a proxy for
+# it -- a bad one when the parts are interchangeable hardware. A node holding 13 tank variants has no
+# king and does not need one, because the player is choosing a SIZE. A node holding 8 distinct engine
+# families has no king and does need one, because the player is choosing a TECHNOLOGY. That is exactly
+# why fd_restartableUpper was worth splitting (2026-07-29) and why these are not.
+# Reviewed node by node with the tree's author, 2026-07-29.
+COMMODITY = {
+    # pressure vessels / tankage -- one tank in many diameters and lengths
+    "met_weldedTank", "met_isogrid", "str_serviceModuleTank",
+    # structures, adapters and trusses -- size and shape variants of one system
+    "str_stationStructures", "str_diameterAdapters", "str_modularTrussSystem",
+    "str_externalTrussStructure",
+    # airframes and cockpits -- per-airframe fuselage/cabin sets
+    "str_aircraftAirframe", "str_heavyTransportAirframe", "life_pilotedCockpits",
+    "life_spaceplaneCockpit",
+    # docking hardware -- probe/drogue halves, once per programme
+    "gnc_rendezvousDocking", "gnc_androgynousDocking",
+    # recovery and TPS -- drogue + main + shield, once per capsule
+    "edl_crewedRecovery", "cmp_lunarReturnAblator", "int_crewedRetroPack",
+    # aero surfaces, lighting, piston engines -- commodity fit-out
+    "aero_subsonicWing", "aero_liftingReentry", "elec_semiconductorDiode", "prop_recipEngine",
+    # the VI01 king plus utility hull-cameras: by design (user, 2026-07-29)
+    "opt_vidicon",
+}
+
 SIZE_WORDS = r"XL|Mini|Micro|Small|Medium|Large|Short|Long|Twin|Quad|Extended"
 
 
@@ -46,6 +72,8 @@ def exempt(node):
         return "fixed-catalog dead-end (rule 7)"
     if node["id"].split("_")[0] in ("jpl", "okb"):
         return "mission charter (complete spacecraft)"
+    if node["id"] in COMMODITY:
+        return "commodity hardware (no king needed)"
     return None
 
 
@@ -76,6 +104,10 @@ def main():
     print(f"  exempt by class ............ {len(exempted)}")
     print(f"  <= {CAP} FAMILIES (rule 8 met) . {len(spirit)}")
     print(f"  genuinely over ............. {len(over)}")
+    if not over:
+        print()
+        print("  clean -- this check is now a REGRESSION GATE: it fires when a NEW node arrives over")
+        print("  the cap, which is the job worth doing. Re-litigating settled nodes is not.")
     print()
     for f, p, n, fams, _ in sorted(over, key=lambda r: (-r[0], -r[1], r[2]["id"])):
         print(f"  {f:>2} families / {p:>2} parts   T{n['tier']:<3}{n['id']:<32}{n['title'][:38]}")
