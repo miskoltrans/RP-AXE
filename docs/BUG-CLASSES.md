@@ -158,11 +158,18 @@ Fix options: (a) define the 16 markers as empty `PartModule`s in AXE.dll — che
 `ModuleAxeMarker`, and `InstrumentTagging.cfg`'s re-pointing work then starts mattering;
 (b) rewrite the requirements onto something AXE already has.
 
+**(a) is a complete fix for the module half — checked, not assumed.** All 16 packages resolve to
+at least one live host part in the merged cache: 14 by explicit name, `Materials`/`Biology` via
+their `experiment_id` HAS-filters (10 hosts each), and `Drill` via `@PART[*Drill*]`, which matches
+`kerbalism-drill` and `kerbalism-large-drill` because ModuleManager's name wildcards are
+case-insensitive. The two `Part:`-instead-of-`Module:` experiments need their own two-line fix and
+are unaffected by (a).
+
 ### 3. Four tree nodes grant nothing — A4 · **medium**
 
 | Node | Title | Missing part | Why |
 |---|---|---|---|
-| `mic_boomMagnetometry` | Boom-Deployed Magnetometry | `dmUS2MagBoom` | AXE never authored RP-1's 5 US2 wedges (`RP-1/Parts/Science/US2.cfg`) |
+| `mic_boomMagnetometry` | Boom-Deployed Magnetometry | `dmUS2MagBoom` | **not in the curated manifest** — the part belongs to DMagic Orbital Science, which AXE does not install |
 | `opt_precisionOptics` | Precision Orbital Optics | `dmUS2Scope` | ” |
 | `opt_multiSpectralImaging` | Multi-Spectral Imaging | `dmUS2ImagingPlatform` | ” |
 | `coatl_scienceSandbox` | Gamma-Ray Spectrometer (Sandbox) | `ca_GRS` | **AXE deletes it itself** — `seed/Science/CleanupParts/RemoveScienceParts.cfg:23` |
@@ -171,8 +178,19 @@ Three more nodes are thinned rather than emptied: `opt_irRadiometry` (`dmUS2Gore
 `mic_plasmaWave` (`dmUS2RPWS`), `elec_deployablePanelII` (`aje_solarPanels`, which fails to
 compile because Restock replaced the stock `radialFlatSolarPanel` model it clones).
 
-`coatl_scienceSandbox` is the interesting one: a self-contradiction entirely inside AXE, place
-and delete in the same shipped mod.
+**Do not confuse the two US2 sets.** RP-1's `Parts/Science/US2.cfg` `@`-patches ten parts it does
+not create: five `US*Wedge` from **UniversalStorage2** and five `dmUS2*` from **DMagic Orbital
+Science**. The `US*Wedge` five are curated, installed, live, placed, and AXE owns their Kerbalism
+`Configure` gates in `design/Science/US2.cfg` (commit `1d5472c`) — that work is **done**. Only the
+`dmUS2*` five are absent, and their mod was never in the manifest, so nothing was "not ported":
+five parts were placed in the tree that the curated part list never contained.
+
+Which is its own finding: **nothing checks that a placed part is in `manifest/curated-parts.tsv`.**
+`build_tree.py` validates plenty about placement but not membership, so a part name that entered
+`nodes.yaml` from a partlist extraction rather than the manifest is never questioned.
+
+`coatl_scienceSandbox` is the other flavour of the same thing: a self-contradiction entirely
+inside AXE, placing and deleting the same part in the same shipped mod.
 
 ### 4. Three parts fail to compile — A4 · **low**
 
