@@ -515,11 +515,54 @@ To reopen the trial, exempt `ca_GRS` from the deletion list — one line — and
 The larger question (add elemental/surface-composition as a new experiment category, with its own
 instrument ladder and science budget) belongs to a balance pass, not a tree edit.
 
-**Related open thread — nodes that grant no NEW science.** `mic_atmoSounding` ("Upper-Atmosphere
-Sounding", T1) has one part, `USThermoBaroWedge`, whose only two Kerbalism SETUPs are `Barometer`
-and `Thermometer`, both gated `tech = start` — and `start` already ships `sensorBarometer` and
-`sensorThermometer`. Researching it buys a wedge-shaped repackaging of two turn-one instruments.
-The other four US2 science wedges are not like this: `USFluidSpectroWedge` carries a four-rung mass
-spectrometer ladder across three nodes, `USAccelGravWedge` five SETUPs across three, `USGooBayWedge`
-a real `RP0bioScan2`, and `USMatBayWedge` gates 27 KerbalismLab experiments. Only the thermo/baro
-wedge is hollow, and it was placed by reading the part's title rather than its SETUPs.
+### 6a. DECIDED 2026-07-29 — surface composition becomes a science category
+
+**User call: yes, add it.** What exists today, checked against the merged cache rather than assumed:
+
+- **No orbital surface-composition instrument exists in the install.** A keyword sweep over all 2,310
+  live parts (gamma / X-ray / neutron / APXS / elemental / geochemistry / LIBS) returns exactly one
+  candidate, `RP0probeVanguardXray`, which is **DEPRECATED** (editor-hidden) and unplaced. The
+  `ROE-Gamma*` hits are Black Arrow rocket engines, not instruments.
+- **One lab-based elemental analysis does exist** — `ChemCam` in the KerbalismLab suite ("uses a laser
+  to vaporize materials then analyzes their elemental composition"). It is crewed-lab + robot-arm
+  bound (`requirements = Module:ModuleRobotArmScanner`), so it is bench chemistry, not remote sensing,
+  and it only came back to life with the marker fix. It does not cover this.
+- **`ca_GRS` is a usable starting point but is not RO-configured.** It carries
+  `DMModuleScienceAnimateGeneric` + `experimentID = ca_gammaRay`, and Coatl ships the matching
+  `EXPERIMENT_DEFINITION`; DMagicScienceAnimate is installed. Neither RO nor RP-1 configures it — which
+  is *why* RP-1's cleanup deletes it. Un-deleting is one line; making it an AXE instrument is not.
+
+**So this is a content-authoring project, not a tree edit.** The real-world ladder is unusually rich
+and unusually EARLY — Luna 10 flew a gamma-ray spectrometer in **1966**, Apollo 15/16 carried GRS + XRF
+in the SIM bay, then Lunar Prospector (GRS + neutron), NEAR XGRS, Mars Odyssey GRS/HEND, MESSENGER
+GRNS/XRS, Chandrayaan C1XS, Dawn GRaND. Three distinct measurements, each a real node:
+
+| measurement | what it reads | first flight |
+|---|---|---|
+| gamma-ray spectrometry | natural + cosmic-ray-induced gamma lines → K, Th, U, Fe, Ti | Luna 10, 1966 |
+| X-ray fluorescence | solar-X-ray-excited surface fluorescence → Mg, Al, Si | Apollo 15 SIM bay, 1971 |
+| neutron spectrometry | epithermal neutron suppression → **hydrogen**, i.e. water ice | Lunar Prospector, 1998 |
+
+Neutron spectrometry is the one with a gameplay hook beyond "more science": it is how you find water
+ice, which is what makes a polar landing site interesting.
+
+**Order of work when this is picked up:** (1) decide the part source — un-delete `ca_GRS` and
+RO-configure it, or author AXE instrument configs on existing models, per RESTART.md's
+"RO-config floor + author our own configs"; (2) author the Kerbalism `EXPERIMENT_DEFINITION`s with
+body/situation masks and values budgeted against §3b; (3) home a small lane — the measurements are
+distinct enough to be three nodes, and early enough that gamma-ray spectrometry belongs in the lunar
+probe era, not the late tree; (4) add the parts to `manifest/curated-parts.tsv` so the new
+membership gate in `build_tree.py` accepts them.
+
+### 6b. SETTLED 2026-07-29 — `mic_atmoSounding` stays as it is
+
+Deliberately empty, allow-listed in `tools/check_liveness.py`, rooting the Microelectronics science
+lane. Not to be filled later; the node's contribution is progression, and the measurement it names is
+already available at turn one. Its former part, `USThermoBaroWedge`, lives in `us2_serviceSandbox`.
+
+**The wider lesson it exposed, still open — nodes that grant no NEW science.** Not one experiment on
+any of the five US2 science wedges is unique to it: every `experiment_id` is on 2–28 other parts, and
+RP-1 declares each wedge an `%identicalParts` twin of a standalone instrument. `proceduralAvionics`
+alone carries the whole instrument menu. So "this node grants an instrument" does not imply "this node
+grants science", and only `mic_atmoSounding` was ever checked. A systematic sweep is proposed in
+[`BUG-CLASSES.md`](BUG-CLASSES.md).

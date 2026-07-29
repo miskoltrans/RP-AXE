@@ -239,7 +239,39 @@ are more relevant here than in RP-1: `PartTooltipUpgradesApplyToSubstituteParts`
 PARTUPGRADEs) and `StrategyDuration` (AXE uses stock strategies as a funds channel). The other
 three — `OnSymmetryFieldChanged`, `FewerSaves`, `DisableNewGameIntro` — are QoL.
 
-### 7. Known-and-accepted, re-confirmed
+### 7. Proposed detector — a node that grants no NEW capability
+
+Not yet built. The class it covers is real and confirmed: `mic_atmoSounding` granted a part whose
+only two experiments were already available at `start`, and it was found by eye, not by a gate.
+The generalisation is that **"this node grants a part" does not imply "this node grants anything"** —
+every experiment on all five US2 science wedges is also on 2–28 other parts, and `proceduralAvionics`
+carries the entire instrument menu by itself.
+
+Two passes, cheapest first.
+
+**Pass 1 — the `identicalParts` sweep (nearly free, zero false positives).** RO/RP-1 already declare
+which parts are the same instrument in a different mounting: `%identicalParts = RO-IonMassSpectrometer`
+on `USFluidSpectroWedge`, `= BioCapsule` on `USGooBayWedge`, and so on. It is an *authored* claim, so
+acting on it is not inference. Flag any node whose parts are all `identicalParts` twins of parts
+already reachable from its ancestors.
+
+**Pass 2 — experiment reachability over the DAG.** For each node N, compute the `experiment_id`s it
+introduces versus those reachable from N's ancestors, and report:
+
+- **STRICT hollow** — nothing new versus N's own ancestors. Guaranteed dead: every prerequisite of N
+  already gave the player everything N grants.
+- **LOOSE redundant** — nothing new versus every node at or below N's tier. Probably dead, but a
+  player on a different branch might reach N first, so this is a design question, not a defect.
+
+The unit must be the **(part, SETUP) pair with its own `tech =` gate**, not the part: a Kerbalism
+`Configure` SETUP carries its own gate, so a part placed at node N routinely holds experiments that
+unlock at other nodes — which is exactly why reading part placement alone missed this for so long.
+
+Scope it to nodes that grant at least one experiment-carrying part. A node granting a fuel tank is
+not hollow for granting no science. And be clear about the limit: this answers "is it new", never
+"is it interesting".
+
+### 8. Known-and-accepted, re-confirmed
 
 - 14 `PARTUPGRADE`s still strand on the `parking` catch-all, including `RFUpgrade_30x_NK-33`,
   `RFUpgrade_8x_NK-43`, `RFUpgrade_RD-0108`.
