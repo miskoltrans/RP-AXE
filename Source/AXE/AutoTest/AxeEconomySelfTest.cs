@@ -19,9 +19,16 @@ namespace RPAxe
     /// mission or observes funds actually landing in the bank. What it does cover is every failure
     /// mode that is silent and static:
     ///
-    ///   1. CAPSTONE PATCHES LANDED. AxeCapstoneFunds.cfg sets `%rewardFunds` on VENDORED seed
-    ///      contracts by name. If a seed contract is ever renamed or re-vendored away, the patch
-    ///      hits nothing, MM logs nothing, and that programme quietly pays half. Counted here.
+    ///   1. THE SEED-CONTRACT FUNDS PATCHES LANDED. AxeCapstoneFunds.cfg and (since §11)
+    ///      AxeProgramObjectiveFunds.cfg both set `%rewardFunds` on VENDORED seed contracts by name.
+    ///      If a seed contract is renamed or re-vendored away, the patch hits nothing, MM logs
+    ///      nothing, and that programme quietly pays less. Counted here.
+    ///   1b. EVERY PROGRAMME PAYS BEFORE ITS BONUS. The §11 staging is what makes a programme
+    ///      flyable without savings, and a bare count cannot see it fail: the two files above patch
+    ///      DISJOINT contract sets (15 capstones + 138 staged objectives), so if one stopped
+    ///      applying the combined count would still look healthy and the budget would still be
+    ///      inside tolerance. This asserts the design property directly — every AXE_Complete_* must
+    ///      have at least one CompleteContract objective that itself pays funds.
     ///   2. COMPLETION CONTRACTS ARE WELL-FORMED. Every generated AXE_Complete_* must pay, and must
     ///      NOT autoAccept. The autoAccept assert used to run the other way and the money did work,
     ///      but offer+accept+complete all landed in one frame, so the bonus never appeared in Mission
@@ -38,8 +45,17 @@ namespace RPAxe
     ///   4. THE STRATEGY REPUTATION GATE. Regression guard for the bug fixed in 883508d/fc0d025:
     ///      requiredReputationMin/Max is a lerp over the commitment slider, NOT a window, so
     ///      "widening" it to +/-1e6 demands a million reputation at full commitment. We assert stock
-    ///      -500/750 survives unpatched and that the requirement at Administration L1's 0.25 cap is
-    ///      still negative (i.e. never binds), plus the Fundraising rate is AXE's 125-157.
+    ///      -500/750 survives unpatched, plus the Fundraising rate is AXE's 125-157 and its share
+    ///      floor is AXE's 0.55.
+    ///   4b. THE COMMIT RANGE IS AXE'S, READ LIVE. §11 took ADMINISTRATION off CustomBarnKit's
+    ///      default (0.25/0.6/1) to 0.5/0.75/1, because CurrencyConverter lerps BOTH the share and
+    ///      the rate off the commitment factor and the yield is therefore quadratic in it. The cap
+    ///      is read from GameVariables.GetStrategyCommitRange rather than assumed, which also
+    ///      catches CustomBarnKit's silent "wrong size" fallback (docs/ECONOMY.md §8) reverting the
+    ///      whole @ADMINISTRATION block to stock with no error visible in game.
+    ///      NOTE the L1 requirement is now 125 reputation, not negative. That is intended: at a 0.5
+    ///      cap the lerp genuinely binds in the first era, and a fresh career commits lower until it
+    ///      has the fame. Do not "fix" it back.
     ///
     /// A clean run prints `OK` in each section. Anything else is a real defect.
     /// </summary>
@@ -51,8 +67,14 @@ namespace RPAxe
 
         private const float ExpectedFundraisingMinRate = 125f;
         private const float ExpectedFundraisingMaxRate = 157f;
+        // docs/ECONOMY.md §11 — the share lerp's floor. 0 is stock and makes the yield quadratic in
+        // the commitment factor; 1 would stop the reputation BALANCE growing and lock the player out
+        // of the L2/L3 commitment levels, which gate on it.
+        private const float ExpectedFundraisingMinShare = 0.55f;
         private const float StockRequiredRepMin = -500f;
         private const float StockRequiredRepMax = 750f;
+        // AxeFacilities.cfg @ADMINISTRATION strategyCommitRange, per level. Read live and compared.
+        private static readonly float[] ExpectedCommitRange = { 0.5f, 0.75f, 1.0f };
 
         internal static string SelfTestReport()
         {
@@ -74,12 +96,23 @@ namespace RPAxe
             if (all.Count == 0) return "contracts: NONE LOADED (Contract Configurator not ready?)";
 
             var completions = all.Where(c => c.name != null && c.name.StartsWith("AXE_Complete_")).ToList();
-            // Everything else that pays is a capstone patch landing on a vendored seed contract.
-            var capstones = all.Where(c => c.name != null && !c.name.StartsWith("AXE_Complete_") && c.rewardFunds > 0f).ToList();
+            // Everything else that pays is a funds patch landing on a vendored seed contract — a
+            // capstone (AxeCapstoneFunds.cfg) or a staged objective (AxeProgramObjectiveFunds.cfg).
+            // The two sets are disjoint by construction; the generator asserts it.
+            var seedPaid = all.Where(c => c.name != null && !c.name.StartsWith("AXE_Complete_") && c.rewardFunds > 0f).ToList();
 
             double completionFunds = completions.Sum(c => (double)c.rewardFunds);
-            double capstoneFunds = capstones.Sum(c => (double)c.rewardFunds);
-            double total = completionFunds + capstoneFunds;
+            double seedFunds = seedPaid.Sum(c => (double)c.rewardFunds);
+            double total = completionFunds + seedFunds;
+
+            // (1b) every programme must have at least one PAYING objective, or its whole budget sits
+            // behind the final bonus again — the §11 defect. A count check cannot see this, because
+            // the two patch files cover disjoint contracts and either could fail alone.
+            var paying = new HashSet<string>(seedPaid.Select(c => c.name));
+            var unstaged = completions
+                .Where(ct => CompleteContractTargets(ct).Any()
+                             && !CompleteContractTargets(ct).Any(paying.Contains))
+                .Select(ct => ct.name).ToList();
 
             // (2) well-formedness of the generated half. autoAccept must be OFF — an auto-accepted
             // bonus completes in the same frame it is offered and is never seen in Mission Control.
@@ -107,13 +140,16 @@ namespace RPAxe
             var sb = new StringBuilder();
             sb.Append("contracts: types=").Append(all.Count)
               .Append(" completion=").Append(completions.Count).Append('/').Append(completionFunds.ToString("N0"))
-              .Append(" capstone=").Append(capstones.Count).Append('/').Append(capstoneFunds.ToString("N0"))
+              .Append(" seedPaid=").Append(seedPaid.Count).Append('/').Append(seedFunds.ToString("N0"))
               .Append(" total=").Append(total.ToString("N0"));
 
-            if (capstones.Count == 0)
-                sb.Append(" | CAPSTONE PATCHES DID NOT APPLY (0 paying seed contracts)");
+            if (seedPaid.Count == 0)
+                sb.Append(" | SEED FUNDS PATCHES DID NOT APPLY (0 paying seed contracts)");
             if (completions.Count == 0)
                 sb.Append(" | NO COMPLETION CONTRACTS LOADED");
+            sb.Append(unstaged.Count == 0
+                ? " | staging OK"
+                : " | PAYS ONLY AT THE END (no paying objective): " + Join(unstaged));
 
             double drift = Math.Abs(total - ExpectedChannel1) / ExpectedChannel1;
             sb.Append(drift <= BudgetTolerance
@@ -174,16 +210,37 @@ namespace RPAxe
             bool stockWindow = Mathf.Approximately(min, StockRequiredRepMin) && Mathf.Approximately(max, StockRequiredRepMax);
             sb.Append(stockWindow ? " (stock, unpatched OK)" : " | NOT STOCK -500/750 — something is patching it again");
 
-            // The gate is Lerp(min, max, factor); Administration's strategyCommitRange caps factor
-            // at 0.25 / 0.6 / 1.0 by level. Report the requirement at each cap.
-            sb.Append(" needAt[.25/.6/1]=")
-              .Append(Mathf.Lerp(min, max, 0.25f).ToString("0")).Append('/')
-              .Append(Mathf.Lerp(min, max, 0.60f).ToString("0")).Append('/')
-              .Append(Mathf.Lerp(min, max, 1.00f).ToString("0"));
+            // (4b) The commitment cap per Administration level, READ LIVE rather than assumed — this
+            // is CustomBarnKit's override of GameVariables.GetStrategyCommitRange, so it doubles as
+            // proof that AxeFacilities.cfg's @ADMINISTRATION block applied at all. CBK falls back to
+            // stock silently, per-field, when an array length disagrees with `levels`.
+            // normLevel for a 3-level building is level/(levels-1): 0, 0.5, 1.
+            var live = new float[ExpectedCommitRange.Length];
+            for (int i = 0; i < live.Length; i++)
+            {
+                float norm = live.Length > 1 ? (float)i / (live.Length - 1) : 0f;
+                try { live[i] = GameVariables.Instance.GetStrategyCommitRange(norm); }
+                catch { live[i] = float.NaN; }
+            }
+            sb.Append(" commitRange=[").Append(string.Join("/", live.Select(v => v.ToString("0.##")).ToArray())).Append(']');
 
-            // Admin L1 must never be gated by reputation — that was the shipped bug's worst symptom.
-            float atL1 = Mathf.Lerp(min, max, 0.25f);
-            sb.Append(atL1 <= 0f ? " | L1 ungated OK" : " | L1 GATED at " + atL1.ToString("0") + " rep");
+            bool commitOK = true;
+            for (int i = 0; i < live.Length; i++)
+                if (!Mathf.Approximately(live[i], ExpectedCommitRange[i])) commitOK = false;
+            sb.Append(commitOK
+                ? " (AXE's, OK)"
+                : " | NOT AXE'S 0.5/0.75/1 — @ADMINISTRATION did not apply (CustomBarnKit falls back silently)");
+
+            // The gate is Lerp(min, max, factor) evaluated at each level's cap. It is EXPECTED to
+            // bind at L1 now (125 reputation at a 0.5 cap) — see the class doc, item 4b. What must
+            // never happen again is the requirement running to five or six figures.
+            sb.Append(" needAt=")
+              .Append(string.Join("/", live.Select(v => Mathf.Lerp(min, max, v).ToString("0")).ToArray()));
+
+            float atL3 = Mathf.Lerp(min, max, live[live.Length - 1]);
+            sb.Append(atL3 <= StockRequiredRepMax
+                ? " | L3 reachable OK"
+                : " | L3 NEEDS " + atL3.ToString("0") + " rep — the lerp is being widened again");
 
             sb.Append(" | ").Append(RateReport(fund));
             return sb.ToString();
@@ -196,20 +253,27 @@ namespace RPAxe
             foreach (StrategyEffect eff in fund.Effects)
             {
                 if (!(eff is CurrencyConverter)) continue;
-                float lo, hi;
+                float lo, hi, minShare;
                 try
                 {
                     var t = Traverse.Create(eff);
                     lo = t.Field("minRate").GetValue<float>();
                     hi = t.Field("maxRate").GetValue<float>();
+                    minShare = t.Field("minShare").GetValue<float>();
                 }
                 catch (Exception e) { return "rate: UNREADABLE (" + e.Message + ")"; }
 
                 bool ok = Mathf.Approximately(lo, ExpectedFundraisingMinRate)
                           && Mathf.Approximately(hi, ExpectedFundraisingMaxRate);
+                // §11: the share floor is half the fix. Stock's 0 makes yield quadratic in the
+                // commitment factor; without this the rate check above would pass while Channel 2
+                // still paid 21% of its L3 rate at Administration L1.
+                bool shareOK = Mathf.Approximately(minShare, ExpectedFundraisingMinShare);
                 return "rate=" + lo.ToString("0.#") + "-" + hi.ToString("0.#") +
                        (ok ? " OK" : " | EXPECTED " + ExpectedFundraisingMinRate + "-" + ExpectedFundraisingMaxRate +
-                             " (AxeStrategies.cfg did not apply)");
+                             " (AxeStrategies.cfg did not apply)") +
+                       " minShare=" + minShare.ToString("0.##") +
+                       (shareOK ? " OK" : " | EXPECTED " + ExpectedFundraisingMinShare);
             }
             return "rate: NO CurrencyConverter EFFECT";
         }
