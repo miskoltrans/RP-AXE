@@ -383,11 +383,11 @@ ROE-Stentor	engine_rocket	pc_stentor	3	PropellantChemistry	0.0	Stentor Booster	R
 ROE-X405	engine_rocket	fd_singleChamber	3	FluidDynamics	0.0	X-405 (XLR50-GE-2)	ROEngines	278		135.28						0								673.15			0
 ROE-X405H	engine_rocket	fd_singleChamber	3	FluidDynamics	0.0	X-405H	ROEngines	330.53		186.42						0								673.15			0
 ROE-XLR25	engine_rocket	fd_throttleableRocketplane	3	FluidDynamics	0.0	XLR25	ROEngines	230		73.75						0								673.15			0
-LargeOMS	engine_rocket	fd_restartableUpper	4	FluidDynamics	0.35	Astris	VenStockRevamp	310	23.3078	80						0								1800			0
+LargeOMS	engine_rocket	fd_blowdownRestart	4	FluidDynamics	0.35	Astris	VenStockRevamp	310	23.3078	80						0								1800			0
 RO-KTDU5A	engine_rocket	fd_restartableUpper	4	FluidDynamics	6.0	KTDU-5A	Squad	310	25.4929	1500						0								573.15			0
 ROC-VoskhodRetroBooster	engine_rocket	pc_retroKick	4	PropellantChemistry	0.056	Voskhod Retro Package	ROCapsules	224	214.322	117.7						0								698			0
-ROE-AJ10Adv	engine_rocket	fd_restartableUpper	4	FluidDynamics	0.0	AJ10 Series (Advanced Short Nozzle)	ROEngines	433		42.1						0								673.15			0
-ROE-AJ10Mid	engine_rocket	fd_restartableUpper	4	FluidDynamics	0.0	AJ10 Series (Mid)	ROEngines	278		35.2						0								673.15			0
+ROE-AJ10Adv	engine_rocket	fd_blowdownRestart	4	FluidDynamics	0.0	AJ10 Series (Advanced Short Nozzle)	ROEngines	433		42.1						0								673.15			0
+ROE-AJ10Mid	engine_rocket	fd_blowdownRestart	4	FluidDynamics	0.0	AJ10 Series (Mid)	ROEngines	278		35.2						0								673.15			0
 ROE-Agena	engine_rocket	fd_restartableUpper	4	FluidDynamics	0.0	XLR81 (Agena) Vacuum Engine	ROEngines	446.2		75.62						0								673.15			0
 ROE-Algol1	engine_rocket	pc_scoutSolids	4	PropellantChemistry	0.0	Algol IB	ROEngines	241.4		493.644						0								673.15			0
 ROE-Algol1_Inline	engine_rocket	pc_scoutSolids	4	PropellantChemistry	0.0	Algol IB	ROEngines	241.4		493.644						0								673.15			0
@@ -398,8 +398,8 @@ ROE-Castor1	engine_rocket	pc_strapOnSolids	4	PropellantChemistry	0.0	Castor 1	RO
 ROE-Castor1_Inline	engine_rocket	pc_strapOnSolids	4	PropellantChemistry	0.0	Castor 1	ROEngines	273.21		349.3						0								673.15			0
 ROE-Gamma2	engine_rocket	pc_htpSustainer	4	PropellantChemistry	0.0	Gamma 2	ROEngines	279.4		75.1						0								673.15			0
 ROE-Gamma8	engine_rocket	pc_htpSustainer	4	PropellantChemistry	0.0	Gamma 8	ROEngines	269		266.893						0								673.15			0
-ROE-Juno45K	engine_rocket	fd_restartableUpper	4	FluidDynamics	0.0	Juno IVB JPL 45K Engine	ROEngines	305		253.369						0								673.15			0
-ROE-Juno6K	engine_rocket	fd_restartableUpper	4	FluidDynamics	0.0	Juno IV 6k Engine	ROEngines	302		34.176						0								673.15			0
+ROE-Juno45K	engine_rocket	fd_blowdownRestart	4	FluidDynamics	0.0	Juno IVB JPL 45K Engine	ROEngines	305		253.369						0								673.15			0
+ROE-Juno6K	engine_rocket	fd_blowdownRestart	4	FluidDynamics	0.0	Juno IV 6k Engine	ROEngines	302		34.176						0								673.15			0
 ROE-LR79	engine_rocket	fd_largeChamber	4	FluidDynamics	0.0	LR79	ROEngines	305.5		873						0								673.15			0
 ROE-LR89_2	engine_rocket	fd_largeChamber	4	FluidDynamics	0.0	LR43/LR89	ROEngines	293.4		1032.5						0								673.15			0
 ROE-RD107	engine_rocket	fd_orbitalSoviet	4	FluidDynamics	0.0	RD-107/117	ROEngines	319.99		1033.3						0								673.15			0
@@ -634,13 +634,13 @@ ROC-MercuryPosigradeBDB	engine_small	pc_retroKick	4	PropellantChemistry	0.00143	
 ROC-MercuryRetroBDB	engine_small	pc_retroKick	4	PropellantChemistry	0.00936	Mercury Retro (TE-M-316)	ROCapsules	206	55.5615	5.1						0								698			0
 ROE-Agena_Retro_TypeIII	engine_small	pc_retroKick	4	PropellantChemistry	0.00227	Agena Retrorocket Type III	ROEngines	217.8	27.3571	0.609						0								698			0
 ROE-Agena_Spinrocket	engine_small	pc_retroKick	4	PropellantChemistry	0.000227	Agena 1KS30HA Spin Rocket	ROEngines	114	75.9172	0.169						0								698			0
-ROE-KTDU35	engine_small	fd_restartableUpper	4	FluidDynamics	0.0	KTDU-35	ROEngines	278		4.09						0								673.15			0
 pioneer1_booster	engine_small	jpl_firstSats	4	SystemsIntegration	0.0006	Pioneer 0/1/2 Top Boosters	RN_US_Probes	235	190.347	1.12						0								773.15			0
 sputnik2	engine_small	okb_firstSputniks	4	SystemsIntegration	0.4955	Sputnik 2	RN_Soviet_Probes	2	0.0329273	0.16					5.04541	2500		3						773.15			0
 RO-KDU414	engine_small	fd_spacecraftPropulsion	5	FluidDynamics	0.02	S5.19	Squad	315	10.1972	2						0								573.15			0
 RO-LifeSupport-DummyEngine	engine_small	life_openLoopECLSS	5	LifeSupport	5.0	Life Support Config Engine	Squad	0.01	0.000203943	0.01						0								1073.15			0
 ROE-AgenaSPS	engine_small	fd_spacecraftPropulsion	5	FluidDynamics	0.0	Agena-D Secondary Propulsion System	ROEngines	278		0.9608						0								673.15			0
 ROE-C1	engine_small	fd_spacecraftPropulsion	5	FluidDynamics	0.0	C-1	ROEngines	301		0.445						0								673.15			0
+ROE-KTDU35	engine_small	fd_spacecraftPropulsion	5	FluidDynamics	0.0	KTDU-35	ROEngines	278		4.09						0								673.15			0
 ROE-RangerRetro	engine_small	fd_spacecraftPropulsion	5	FluidDynamics	0.0	MC-4-610	ROEngines	234.97		0.255						0								673.15			0
 ROE-generic-full	engine_small	gnc_spacecraftRCS	5	GuidanceControl	0.0	1.1/1.78kN Thruster	ROEngines			1.82						0								673.15			0
 ROE-generic-half	engine_small	gnc_spacecraftRCS	5	GuidanceControl	0.0035	550/890N Thruster	ROEngines		26.5126	0.91						0								673.15			0
@@ -1011,9 +1011,9 @@ ius_dec_fs	separator	pc_solidUpperStage	9	PropellantChemistry	0.007	IUS First St
 ius_dec_ss	separator	pc_solidUpperStage	9	PropellantChemistry	0.007	IUS Second Stage Decoupler	RN_US_Probes									0								773.15			0
 ca_draco_as	separator	int_atmosphericEntryProbe	10	SystemsIntegration	0.015	Huygens Aeroshell	CoatlAerospace									0								873.15			0
 rn_huygen_hs_top	separator	jpl_discoveryEra	11	SystemsIntegration	0.00812	Huygens Heatshield Top	RN_US_Probes									0								14000			0
+RO_EarlyMediumSolarPanel	solar	elec_siliconPV	3	ElectricalPower	0.0014	ST1 Medium Solar Panel	Squad				0.005625	0.007875				0								448			0
 RO_EarlyTinySolarPanel	solar	elec_siliconPV	3	ElectricalPower	0.00056	ST1 Tiny Solar Panel	Squad				0.005625	0.00315				0								448			0
 1x3SPanels	solar	elec_deployableArrays	5	ElectricalPower	0.010584	OX-2L 1x3 Photovoltaic Panels	VenStockRevamp				0.00535714	0.0567				0								1073.15			0
-RO_EarlyMediumSolarPanel	solar	elec_deployableArrays	5	ElectricalPower	0.0014	ST1 Medium Solar Panel	Squad				0.005625	0.007875				0								448			0
 solarPanels2	solar	elec_deployableArrays	5	ElectricalPower	0.022275	XT2 Solar Panel Array Mk1	Squad				0.00848485	0.189				0								448			0
 solarPanels4	solar	elec_deployableArrays	5	ElectricalPower	0.016128	XT1 Solar Panel Array Mk1	Squad				0.00535714	0.0864				0								448			0
 solarPanels5	solar	elec_deployableArrays	5	ElectricalPower	0.0028	ST1 Solar Panel	Squad				0.00803571	0.0225				0								448			0
@@ -1045,6 +1045,7 @@ nfs-panel-deploying-blanket-arm-1	solar	elec_deployableBlanketArray	13	Electrica
 nfs-panel-deploying-blanket-dsg-1	solar	elec_deployableBlanketArray	13	ElectricalPower	0.075168	OKEB-100 'Gateway' Blanket Photovoltaic Array	NearFutureSolar				0.418056	31.4244				0								1073.15			0
 nfs-panel-deploying-blanket-starship-1	solar	elec_deployableBlanketArray	13	ElectricalPower	0.0028152	OKEB-25R 'Starship' Blanket Photovoltaic Array	NearFutureSolar				0.418056	1.17691				0								1073.15			0
 nfs-panel-deploying-concentrator-1x4-juno-1	solar	elec_concentratingPhotovoltaic	13	ElectricalPower	0.001744	K12-K 1x4 Concentrating Photovoltaic Panels	NearFutureSolar				0.37625	0.65618				0								1073.15			0
+nfs-panel-deploying-curved-375-1	solar	elec_curvedExpandingArray	13	ElectricalPower	0.00179072	NIV-75-R Expanding Curved Solar Array	NearFutureSolar				41.8826	75				0								1073.15			0
 conformaldecals-flag	structural	start	0	SystemsIntegration	0.0001	CDL-F Flag Decal	ConformalDecals									0								3000			0
 conformaldecals-generic	structural	start	0	SystemsIntegration	0.0001	CDL-1 Generic Decal	ConformalDecals									0								3000			0
 conformaldecals-munar	structural	start	0	SystemsIntegration	0.0001	CDL-3 Surface Base Decal	ConformalDecals									0								3000			0
@@ -1655,7 +1656,6 @@ SXTMTVGirderOpen	structural	str_strongbackTruss	11	StructuresMechanisms	4.26	Str
 SXTMTVGirderOpenMedium	structural	str_strongbackTruss	11	StructuresMechanisms	2.13	Strongback Truss (Open Medium)	SXT									0								448			0
 SXTMTVGirderOpenSmall	structural	str_strongbackTruss	11	StructuresMechanisms	1.065	Strongback Truss (Open Short)	SXT									0								448			0
 aquila_experiment_rack_s1p5_1	structural	int_prirodaModule	11	SystemsIntegration	1.5	Priroda Experiment Platform	Tantares									0								1073.15			0
-nfs-panel-deploying-curved-375-1	structural	elec_curvedExpandingArray	11	ElectricalPower	0.00179072	NIV-75-R Expanding Curved Solar Array	NearFutureSolar									0								1073.15			0
 sspx-cupola-greenhouse-125-1	structural	life_bioregenerativeECLSS	11	LifeSupport	1.093	2.25m Greenhouse Dome	StationPartsExpansionRedux									0								773.15			0
 sspx-extendable-tube-125-1	structural	life_inflatableHabitat	11	LifeSupport	1.06	2.25m Extendable Crew Tube	StationPartsExpansionRedux									0								773.15			0
 sspx-lab-pallet-1	structural	life_externalStowage	11	LifeSupport	0.972	External Stowage Platform (3.6m x 3.6m)	StationPartsExpansionRedux									0								773.15			0

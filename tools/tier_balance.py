@@ -170,6 +170,14 @@ def part_metrics(part):
             v = mod.get("chargeRate", None, float)
             if v:
                 sol.append(v)
+    # NearFutureSolar's curved panels carry their OWN module and expose the rate as
+    # TotalEnergyRate, so a scan that only knows ModuleDeployableSolarPanel is blind to them --
+    # which is how a 111x power outlier stayed invisible until docs/TIER-BALANCE.md F.
+    for mod in part.find("MODULE"):
+        if mod.get("name") == "ModuleCurvedSolarPanel":
+            v = mod.get("TotalEnergyRate", None, float)
+            if v:
+                sol.append(v)
     m["solarRate"] = max(sol) if sol else None
     gen = []
     for mod in part.find("MODULE"):

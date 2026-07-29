@@ -4804,10 +4804,16 @@ nodes:
   - id: elec_curvedExpandingArray
     title: "Curved Expanding Solar Array"
     discipline: ElectricalPower
-    tier: 11
-    parents: [elec_matureSolarArrays]
+    tier: 13
+    parents: [elec_matureSolarArrays, elec_tripleJunctionCell]
     flavor: "Stow the array wrapped into a tight curve instead of folded flat, and let it spring open into its working shape — a third distinct way to pack more panel into less volume."
     parts: [nfs-panel-deploying-curved-375-1]
+    # RE-TIERED T11 -> T13 2026-07-29, joining the three sibling NFS array nodes moved in the same
+    # audit (docs/TIER-BALANCE.md F). It was left behind then only because its part exposed NO solar
+    # output to the scan: NearFutureSolar's curved panels use ModuleCurvedSolarPanel, not
+    # ModuleDeployableSolarPanel. Once read, NIV-75-R is TL10 like its siblings -- 2.2384 m2 at
+    # ROSolar's TL10 rung -- so it belongs where TL10 unlocks, not at T11 where the ladder reaches TL8.
+    # Its 111x over-output is corrected in design/Parts/AxeUpstreamPartFixes.cfg stanza 4.
     # 2026-07 backlog sweep: a third, separate stowage mechanism (curved/wrapped vs. rigid-fold vs.
     # roll-out blanket) - own node, not folded into either sibling.
 
