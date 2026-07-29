@@ -370,51 +370,55 @@ vs tracking on the same TL5 rung* -- legitimate geometry variety, not a generati
   all** in the cache, so it could not be fitted to the grid. Worth a look on its own -- a solar node
   whose only part may not generate power.
 
-## 3. Tier shape
+## 3. Tier shape -- three claims made, three retracted
 
-### Node census
+Every tier-shape finding in the first draft turned out to be an artefact of measuring the wrong
+quantity. Recorded in full because the *way* each was wrong is the reusable part.
+
+### 3a. "T5 is a trough" -- RETRACTED
+Measured **part count** (65, against T4's 177) and called it thin. Part count is not what a tier
+delivers. T5 carries 24 nodes with payload in **12 of 21 disciplines**, including six FluidDynamics
+nodes (restartable/throttleable upper stages, storable clustering), ablative TPS, deployable solar,
+pressurised cabin, launch escape, first lunar probes and application satellites -- a coherent "now do
+things in orbit" generation.
+
+Measured against the doctrine's own sizing rule (~3 parts/node ideal, HARD MAX 6), **T5 is the
+best-proportioned tier in the tree**:
+
 ```
-        T0  T1  T2  T3  T4  T5  T6  T7  T8  T9  T10 T11 T12 T13 T14 T15 T16
-nodes   2   19  24  25  37  24  33  55  42  59  56  51  40  23  11  8   4
-parts   15  123 164 151 177 65  111 207 217 149 198 147 73  22  3   2   3
+tier   T0   T1   T2   T3   T4   T5   T6   T7   T8   T9  T10  T11  T12  T13
+p/node 7.5  6.4  6.8  5.8  4.8  2.7  3.3  3.9  5.1  2.4  3.5  2.9  1.8  1.0
 ```
-- **T5 is a trough** — 24 nodes and only **65 parts**, sandwiched between T4 (177) and T6 (111).
-  It is also the tier immediately after first orbit (T4), so the tier you reach right after your
-  first satellite is the emptiest in the first half of the tree.
-- **T7 is a bulge** — 55 nodes / 207 parts, the largest tier in the tree.
+The bloat is at the FRONT (T0-T2 above the hard max), not at T5.
 
-### Lanes that barely exist, or exist only at one tier
-- **Thermodynamics**: 5 nodes in the whole tree (T3, T7, T9×2, T11).
-- **ResourceEngineering**: 3 nodes (T9, T10×2).
-- **Robotics**: 12 nodes, **8 of them at T7**.
-- **Computing**: contributes nothing before **T8** — the entire lane starts after lunar probes.
-- **Cryogenics**: T1 (the empty `cryo_hydrogen` commitment gate), T2, then nothing at T3, T5 or T6
-  before it ramps at T7+ — the hydrolox gamble has a three-tier hole in the middle of its own story.
+### 3b. "The solid lane has a five-tier dead zone then an 81x jump" -- RETRACTED
+Measured **peak thrust per tier** off the engine frontier -- the one axis
+[[rp-axe-milestone-tiers]] explicitly forbids tiering on ("tier follows generation/milestone-role,
+NOT thrust magnitude"). The lane actually advances at every tier: `pc_doubleBaseSolid` T1 (6p) ->
+`pc_doubleBaseBooster` T2 (3p) -> **`pc_compositeSolid` T3** (ammonium-perchlorate composite grains,
+4p) -> four nodes at T4 (`pc_scoutSolids`, `pc_strapOnSolids`, `pc_retroKick`,
+`pc_pioneerVernierTrim`) -> `int_launchEscape` T5 -> `int_crewedRetroPack` T6 -> six nodes at T7 ->
+two at T8. The T7 thrust step is where segmented casting and composite binders arrive: a real
+generation that happens to unlock big boosters. Correct as designed.
 
-### Engine frontier by propellant (best kN / best vac Isp reachable *by* that tier)
-```
-              T0    T1    T2    T3    T4    T5    T6    T7      T8      T9    T10   T11   T12
-kerolox kN    -     -     -     999   1532  =     1948  =       7775    8815  9190  =     14920
-kerolox Isp   -     -     -     315   =     326   330   =       339     342   =     =     362
-hydrolox kN   -     -     70    =     =     =     667   =       890     5338  6672  8007  =
-hydrolox Isp  -     -     410   =     422   =     427   466     =       =     =     =     483
-hypergol kN   1.9   49    99    623   1765  3113  =     3358    =       =     6713  =     =
-solid kN      147   =     218   =     =     =     =     17740   35390   =     =     =     =
-nuclear Isp   -     -     -     -     -     -     -     -       -       831   850   1350  =
-```
-- **The solid lane has a five-tier dead zone then an 81× jump.** 218 kN at T2, nothing at all until
-  **17,740 kN at T7**. Nothing between a sounding motor and a Titan/Shuttle-class SRB.
-- **Kerolox jumps 4× at T8** (1,948 → 7,775 kN) with T5 and T7 contributing nothing to the class.
-- Hypergolics are the smoothly-paced lane and are the best model in the engine set.
+### 3c. "Computing contributes nothing before T8" -- RETRACTED
+A discipline-LABEL artefact. The avionics capability ladder is one continuous 14-rung `grants:` chain
+running `gnc_postWarAvionics` T1 -> `gnc_avionicsPrototypes` T2 -> `gnc_earlyAvionics` T4 ->
+`gnc_basicAvionics` T5 -> `shd_basicAvionics` T6 -> `comp_digitalGuidanceComputer` T8 -> ... -> T16.
+The early rungs are simply filed under GuidanceControl. Counting nodes per discipline made a
+continuous ladder look like a lane that starts late.
 
-### Mission spine
-First orbit is **T4** (`jpl_firstSats` / `okb_firstSputniks`); crewed capsules T6; lunar landers T7–T8;
-stations T9–T11. Cumulative science to T4 is ~1k of a ~300k tree, so the run to orbit is cheap by
-design. No capability family was found arriving *after* the mission that strictly requires it — the
-closest call is `commsTL1` at T5 against first satellites at T4, which the base antenna tech level
-covers.
+### 3d. What actually stands: node sizing
+**48 nodes exceed the 6-part hard max** after removing the documented exemptions (GroundSupport MLP
+line, `str_structuralHardware`, `start`/`parking`/`experimental`, and the `Catalog` / `Prefabricated`
+/ `Stamped` / `Interchangeable` dead-ends). Worst: `str_stationStructures` 31 (T8),
+`life_stationLogistics` 17 (T10), `str_diameterAdapters` 16 (T2), `str_modularTrussSystem` 15 (T10),
+`elec_semiconductorDiode` 15 (T2). Several are plausibly utility catch-alls that were never added to
+the exemption list -- this is a **curation/legibility** item against design rule 8, not a balance one,
+and it wants triage rather than a blanket fix.
 
----
+The T12-T16 tail (1.8 -> 0.2 parts/node) is the known, deliberately deferred colonization scaffold
+(RESTART P6) -- 46 nodes with no real hardware yet.
 
 ## 4. Not flagged (checked, and intentional or inherited)
 
