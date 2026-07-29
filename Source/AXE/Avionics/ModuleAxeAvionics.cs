@@ -1023,17 +1023,25 @@ namespace RPAxe
         // r = live vessel mass / effective capacity. r<=1 -> no penalty. Past that, a smooth exponential
         // penalty (spec-locked k=8) — gentle at small overages, prohibitive past ~25-50% over.
         //
-        // CEILING on the multiplier. The curve is spec-locked and was calibrated over the 0-50%-over band;
-        // e^(8*0.5) = 54.6 is exactly the "50% over = a hard practical wall" reference point in
-        // docs/AVIONICS_SPEC.md. Capping AT that value leaves every calibrated case bit-identical and clips
-        // only the uncalibrated tail beyond it, where the raw curve runs to e^80 (~5.5e34 W) -- enough to
-        // flatten every battery on the vessel inside a physics tick, which drops ModuleCommand and takes
-        // staging and throttle with it. That is strictly harsher than the attitude lock this penalty
-        // replaced, and it is unrecoverable: the battery is long dead before the overloading stage separates
-        // and r falls back under 1. Previously only the EXPONENT was clamped (at 80), which fixed the
-        // literal "Infinity" readout but left the behaviour untouched. A KSPField so it can be retuned
-        // without a rebuild.
-        [KSPField] public float penaltyMultiplierCap = 54.6f;
+        // CEILING on the multiplier, set to e^8 = 2981 -- exactly the r=2 point, so the curve runs its full
+        // natural course out to TWICE capacity and only stops climbing past that. Everything below 2x over
+        // is completely untouched (1.1x -> 2.2, 1.25x -> 7.4, 1.5x -> 54.6).
+        //
+        // Sized against measured craft, not the spec's reference burn. RealFuels' ElectricCharge tank holds
+        // 500 EC/L (measured off saved craft: 41 L battery -> 20496 EC), and draw is watts/1000 EC/s, so a
+        // representative guided core (31.7 t capacity, 146 W, 41 L battery) carries ~39 HOURS of normal
+        // operation. An ascent takes 6-10 minutes. For overload to actually cost that vehicle its guidance
+        // mid-ascent the multiplier has to exceed ~390 (6 min) / ~234 (10 min); at the previous 54.6 ceiling
+        // it survived 43 minutes and sailed through ascent untouched. NOTE this means docs/AVIONICS_SPEC.md's
+        // own k=8 calibration ("50% over = 89% of vessel mass in battery") is out by orders of magnitude
+        // against the shipped EC economy -- the whole curve is arguably under-tuned, not just its ceiling.
+        //
+        // The ceiling still exists because the raw curve reaches e^80 (~5.5e34 W) by r=11, which flattens any
+        // battery inside a single physics tick -- that drops ModuleCommand and takes staging and throttle
+        // with it, which is both harsher than the attitude lock this penalty replaced and unrecoverable. At
+        // e^8 the worst case measured here (a 3 L battery) still lasts ~3 s: fatal, but the vehicle stays
+        // commandable long enough to stage. A KSPField so it can be retuned without a rebuild.
+        [KSPField] public float penaltyMultiplierCap = 2981f;
 
         float PenaltyMultiplier()
         {

@@ -218,16 +218,31 @@ mass* just in battery (a hard practical wall — you will not reach orbit built 
 absurd. `k` is the one tuning dial if this needs adjusting after real play-testing — pushing it up hardens
 both thresholds simultaneously since it's one curve, not two independently-set breakpoints.
 
-**Multiplier ceiling — ADDED 2026-07-29.** The multiplier is now clamped to `54.6` (`penaltyMultiplierCap`, a
-`KSPField`), which is `e^(8×0.5)` — *exactly* the 50%-over reference point above. Every case the curve was
-calibrated against is therefore bit-identical; only the uncalibrated tail past 50% over is clipped. That tail
-was the problem: unclamped it reaches `e^80 ≈ 5.5e34 W`, which flattens every battery on the vessel inside a
-physics tick, drops `ModuleCommand`, and takes staging and throttle with it — strictly *harsher* than the
-attitude lock this penalty was chosen over, and unrecoverable, since the battery is dead long before the
-overloading stage separates and `r` falls back under 1. (The pre-existing clamp was on the *exponent*, at 80,
-which only fixed a literal `Infinity` readout and left the behaviour untouched.) Note `r` is whole-vessel
-**wet** mass while `ec_draw_normal` is built from **dry** mass — deliberate, but worth remembering when
-reading the two numbers side by side.
+**Multiplier ceiling — ADDED 2026-07-29.** The multiplier is clamped to `2981` (`penaltyMultiplierCap`, a
+`KSPField`), which is `e^8` — *exactly* the `r=2` point. The curve therefore runs its full natural course out
+to twice capacity and only stops climbing past that; everything below 2× over is untouched (1.1× → 2.2,
+1.25× → 7.4, 1.5× → 54.6). The ceiling exists because the raw curve reaches `e^80 ≈ 5.5e34 W` by `r=11`,
+which flattens any battery inside a single physics tick — that drops `ModuleCommand` and takes staging and
+throttle with it, which is both harsher than the attitude lock this penalty was chosen over and
+unrecoverable, since the battery is dead long before the overloading stage separates and `r` falls back under
+1. At `e^8` the worst measured case (a 3 L battery) still lasts ~3 s: fatal, but commandable long enough to
+stage. (The pre-existing clamp was on the *exponent*, at 80, which only fixed a literal `Infinity` readout
+and left behaviour untouched.)
+
+**The k=8 calibration above does not survive contact with the shipped EC economy — OPEN.** The ceiling was
+first set to `54.6` on the strength of this section's own "50% over ≈ 89% of the original vessel's entire mass
+just in battery" reference, then measured against real saved craft and found to be nowhere near it. RealFuels'
+`ElectricCharge` tank holds **500 EC/L** (measured: a 41 L battery reports 20496 EC) and draw is
+`watts/1000` EC/s, so a representative guided core — `Aether B`: 31.7 t capacity, 146 W, 41 L battery —
+carries **~39 hours** of normal operation. An ascent is 6-10 minutes. At a 54.6 ceiling that core survives 43
+minutes of maximum overload, i.e. sails through ascent with 4× margin and never notices. Killing it inside a
+6-minute window needs >390; inside 10 minutes, >234. The reference burn this section was calibrated against is
+out by orders of magnitude against real battery sizing, which means **the whole curve is plausibly
+under-tuned, not just its ceiling** — `k` itself wants re-deriving against measured craft. Not done here; the
+ceiling was raised to `e^8` to make gross overload actually fatal in the ascent window, and `k` left alone.
+
+Note `r` is whole-vessel **wet** mass while `ec_draw_normal` is built from **dry** mass — deliberate, but
+worth remembering when reading the two numbers side by side.
 
 **UI**: show the penalty portion distinctly, not just a combined total — as a percentage over normal draw
 (`(e^(8(r−1))−1) × 100%`), so a player can see at a glance how much of their current draw is "penalty" versus
