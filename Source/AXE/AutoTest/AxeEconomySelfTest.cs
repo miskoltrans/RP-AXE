@@ -22,9 +22,12 @@ namespace RPAxe
     ///   1. CAPSTONE PATCHES LANDED. AxeCapstoneFunds.cfg sets `%rewardFunds` on VENDORED seed
     ///      contracts by name. If a seed contract is ever renamed or re-vendored away, the patch
     ///      hits nothing, MM logs nothing, and that programme quietly pays half. Counted here.
-    ///   2. COMPLETION CONTRACTS ARE WELL-FORMED. Every generated AXE_Complete_* must autoAccept
-    ///      (otherwise it sits Offered forever and the AXEInstant parameter never fires, because
-    ///      AxeInstantComplete only self-completes once the contract is Active) and must pay.
+    ///   2. COMPLETION CONTRACTS ARE WELL-FORMED. Every generated AXE_Complete_* must pay, and must
+    ///      NOT autoAccept. The autoAccept assert used to run the other way and the money did work,
+    ///      but offer+accept+complete all landed in one frame, so the bonus never appeared in Mission
+    ///      Control and the player saw only an unexplained funds bump. It is now a visible offer the
+    ///      player claims; AxeInstantComplete self-completes on acceptance (it fires only once the
+    ///      contract is Active), so nothing else in the chain changes.
     ///   3. NO DANGLING CompleteContract REQUIREMENT. This is the dangerous one and the direct
     ///      analogue of tools/check_tech_refs.py: each completion contract gates on its programme's
     ///      objectives BY CONTRACT-TYPE NAME. A name that no longer resolves can never be satisfied,
@@ -75,8 +78,9 @@ namespace RPAxe
             double capstoneFunds = capstones.Sum(c => (double)c.rewardFunds);
             double total = completionFunds + capstoneFunds;
 
-            // (2) well-formedness of the generated half
-            var notAutoAccept = completions.Where(c => !c.autoAccept).Select(c => c.name).ToList();
+            // (2) well-formedness of the generated half. autoAccept must be OFF — an auto-accepted
+            // bonus completes in the same frame it is offered and is never seen in Mission Control.
+            var autoAccepted = completions.Where(c => c.autoAccept).Select(c => c.name).ToList();
             var unpaid = completions.Where(c => c.rewardFunds <= 0f).Select(c => c.name).ToList();
 
             // (3) dangling CompleteContract requirements — the silent career-long failure
@@ -104,7 +108,7 @@ namespace RPAxe
                 ? " | budget OK"
                 : " | BUDGET DRIFT " + (drift * 100.0).ToString("0.#") + "% vs " + ExpectedChannel1.ToString("N0"));
 
-            sb.Append(notAutoAccept.Count == 0 ? " | autoAccept OK" : " | NOT AUTO-ACCEPT: " + Join(notAutoAccept));
+            sb.Append(autoAccepted.Count == 0 ? " | visible-offer OK" : " | AUTO-ACCEPTED (invisible): " + Join(autoAccepted));
             sb.Append(unpaid.Count == 0 ? " | rewards OK" : " | ZERO-REWARD: " + Join(unpaid));
             sb.Append(dangling.Count == 0 ? " | deps OK" : " | DANGLING CompleteContract: " + Join(dangling));
             return sb.ToString();

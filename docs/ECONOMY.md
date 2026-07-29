@@ -140,8 +140,9 @@ That budget splits two ways:
   chartered program and are paid; the other two sit on `RepeatMoonLandingCrew` and the deprecated
   `CrewedSpaceplaneDev`. → `design/Contracts/AxeCapstoneFunds.cfg`
 - **Program completion (50%, or 100% where there is no capstone).** A generated contract per
-  program, gated on every one of its `complete_contract` objectives plus `ProgramActive`,
-  auto-accepting and completing instantly. This is the half that reaches *every* program — 21 of 35
+  program, gated on every one of its `complete_contract` objectives plus `ProgramActive`. It appears
+  in Mission Control as an offer once the last objective lands; accepting it completes it on the spot
+  (§9). This is the half that reaches *every* program — 21 of 35
   have no capstone at all, including `CrewedLunar` and `CrewedMarsExp`, so without it whole eras
   would earn nothing. → `design/Programs/AxeProgramCompletion.cfg`
 
@@ -290,8 +291,8 @@ Administration upgrades are affordable. `strategyCommitRange` remains the real p
   presets (verified live in the cache and in the playtest save), so no player is ever blocked from
   building or launching for want of cash up front; they go negative and the next completion clears
   it. There is also no carrying period to fund — AXE has no KCT, so build and launch are one action.
-  And neither paying family could use an advance anyway: program-completion contracts `autoAccept`
-  and complete in the same frame, so advance and reward are indistinguishable, and a capstone is the
+  And neither paying family could use an advance anyway: a program-completion contract completes in
+  the frame it is accepted, so advance and reward are indistinguishable, and a capstone is the
   crowning mission of a program already under way. Revisit only if `AllowNegativeCurrency` is ever
   turned off.
 - **Commercial contracts as a paying family** was considered and dropped in favour of the simpler
@@ -508,3 +509,46 @@ and it needed the *top* level before, so this is a loosening. `start` is free an
 
 **Not yet verified in game.** Cold-load confirmation that CBK accepts an 8-entry `@RESEARCH` (the
 `wrong size` fallback is silent) belongs with the next instance rebuild.
+
+## 9. Program bonuses — 2026-07-29: made visible, because nobody had ever seen one
+
+The payout chain from §7 was never broken. It was **invisible**, and that is a different bug.
+
+`AXE_Complete_*` carried `autoAccept = true` and its only parameter, `AXEInstant`, self-completes on
+the first `OnUpdate` after the contract turns Active. So the contract was offered, accepted and
+completed inside one frame. It never sat in Mission Control's *Available* or *Active* list. All the
+player ever saw was funds appearing.
+
+Ground truth, from the playtest save (`saves/default3`, 4 programs chartered):
+
+| contract | state | `viewed` | funds slot |
+|---|---|---|---|
+| `AXE_Complete_SuborbRocketDev` | Completed | **Unseen** | 16,500 |
+| `AXE_Complete_SuborbRocketResearch` | Completed | **Unseen** | 16,500 |
+
+Both paid, exactly as §7 measured. Both finished `viewed = Unseen` — the save records that the
+player never opened either one. `EarlyXPlanes` and `EarlySatellites` correctly had not fired
+(4 and 6 objectives outstanding), so there was nothing else to look at either.
+
+**Fix: drop `autoAccept`.** The bonus now waits in Mission Control until claimed. One click, and it
+buys two things a silent transfer cannot:
+
+- the payout is *legible* — it lands attached to a named program, with a completion popup;
+- a finished-but-uncollected program **advertises what it is worth**, which is the only in-game
+  readout of the completion half of the budget. Previously nothing in the game showed a program's
+  value at any point, before or after.
+
+`declinable = false` / `cancellable = false` stay: `maxCompletions = 1` means a declined bonus is
+gone for the career, and there is no reason to throw one away. `minExpiry = maxExpiry = 0` still
+holds, so an unclaimed offer never withdraws — same rule as the Begin Program charters, which have
+sat in Mission Control non-declinable and non-expiring all along (7 of them at once in the playtest
+save) without clogging anything. Only programs whose every objective is already met are ever
+offered, so the list stays short.
+
+No funds changed. The generator emits the same `rewardFunds`; §3's split and totals are untouched.
+
+`AxeEconomySelfTest`'s well-formedness check ran the *other* way — it asserted every completion
+contract `autoAccept`s, on the reasoning that otherwise "it sits Offered forever and the AXEInstant
+parameter never fires". That premise was half right: `AxeInstantComplete` does gate on
+`ContractState == Active`, which is exactly why an offer waits instead of self-firing, and why
+accepting it pays immediately. The assert is now inverted — an auto-accepted bonus is the defect.
