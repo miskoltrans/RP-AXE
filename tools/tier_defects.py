@@ -28,13 +28,14 @@ Detectors:
 
 Usage: python tools/tier_defects.py [--section NAME] [--json]
 """
-import os, re, sys, json, collections
+import io, os, re, sys, json, collections
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import tier_balance as tb
 
 MAN = tb.MAN
+ROOT_GD = os.path.join(tb.ROOT, "GameData")
 F = collections.namedtuple("F", "kind group detail source severity")
 
 
@@ -224,6 +225,7 @@ def level_defects(ladders):
 
 # --------------------------------------------------------------- ladder source C
 def science_ladder(cache, nodes):
+    auth = authored_setup_techs()
     sci = {}
     for e in cache["EXPERIMENT_DEFINITION"]:
         eid = e.get("id")
@@ -237,7 +239,8 @@ def science_ladder(cache, nodes):
             if m.get("name") != "Configure":
                 continue
             for s in m.find("SETUP"):
-                nm, tech = s.get("name"), s.get("tech")
+                nm = s.get("name")
+                tech = auth.get(nm or "", s.get("tech"))
                 if not nm or not tech or nm.startswith("None"):
                     continue
                 exp = None
@@ -298,8 +301,45 @@ def science_defects(sci):
 
 
 
+
+CONFLICTS = []
+
+
+def authored_setup_techs():
+    """{setup name -> tech} straight from the AUTHORED Configure cfgs.
+
+    The live cache is only as fresh as the last KSP run, so a slot gate edited in
+    design/Science/*.cfg does not show up there until the game is launched again. Same rule
+    the placement join already follows: when source and cache disagree, SOURCE WINS.
+    """
+    import glob
+    out = {}
+    for f in glob.glob(os.path.join(ROOT_GD, "**", "*.cfg"), recursive=True):
+        try:
+            txt = io.open(f, encoding="utf-8", errors="replace").read()
+        except OSError:
+            continue
+        if "SETUP" not in txt:
+            continue
+        for blk in re.findall(r"SETUP\s*\{(.*?)\n\s*\}", txt, re.S):
+            nm = re.search(r"^\s*name\s*=\s*(.+?)\s*$", blk, re.M)
+            tc = re.search(r"^\s*tech\s*=\s*(\S+)", blk, re.M)
+            if nm and tc:
+                key = nm.group(1)
+                prev = out.get(key)
+                if prev and prev[0] != tc.group(1):
+                    # The slot list is DUPLICATED across Configure.cfg and US2.cfg. Editing one and
+                    # not the other silently leaves the old gate live on every Universal Storage
+                    # wedge -- exactly the silent-string-divergence family in docs/BUG-CLASSES.md.
+                    rec = (key, prev[1], prev[0], os.path.basename(f), tc.group(1))
+                    if rec not in CONFLICTS:
+                        CONFLICTS.append(rec)
+                out[key] = (tc.group(1), os.path.basename(f))
+    return {k: v[0] for k, v in out.items()}
+
+
 # --------------------------------------------------------------- ladder source C2
-def instrument_reachability(cache, nodes, part_node):
+def instrument_reachability(cache, nodes, part_node, authored=None):
     """EARLIEST tier at which each experiment can actually be run, by ANY route.
 
     There are two gates, and checking only one is how a leak hides:
@@ -310,6 +350,7 @@ def instrument_reachability(cache, nodes, part_node):
     perfectly correct, because route 1 gates each slot; `RO-AdvancedImager` carries one bare
     experiment and so leaks its generation onto whatever node the part happens to live on.
     """
+    authored = authored if authored is not None else authored_setup_techs()
     out = collections.defaultdict(list)
     for p in cache["PART"]:
         nm = p.get("name")
@@ -321,7 +362,7 @@ def instrument_reachability(cache, nodes, part_node):
                 continue
             for st in m.find("SETUP"):
                 e = next((k.get("id_value") for k in st.kids if k.get("type") == "Experiment"), None)
-                tech = st.get("tech")
+                tech = authored.get(st.get("name") or "", st.get("tech"))
                 if e:
                     configured.add(e)
                     if tech:
@@ -482,6 +523,11 @@ def main():
     findings = []
     findings += science_defects(sci)
     findings += instrument_defects(cache, nodes, part_node)
+    for key, f1, t1, f2, t2 in CONFLICTS:
+        findings.append(F("SPLITGATE", key,
+                          f"slot is defined in BOTH {f1} (tech = {t1}) and {f2} (tech = {t2}) -- "
+                          f"the two copies disagree, so the gate depends on which host part you use",
+                          "authored-config", 1))
     findings += level_defects(level_ladders(cache, nodes, upg_node))
     findings += engine_defects(eng, part_node, nodes)
     findings += part_defects(rows)

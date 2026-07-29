@@ -155,23 +155,59 @@ T11  29.4   core     sspx-core-375-1 / -5-1           1.5 kW
 T11  60.6   core     acamar_crew_s2_1 (Kvant-1)       2 kW
 ```
 
-### B. Probe-instrument generations collapse onto one node (the user-reported symptom)
-The `Experiments` Configure slot, sorted by tier:
+### B. Instrument generations collapse -- and there are THREE gates, not one
+An instrument generation is reachable by any of three routes, and checking only one hides leaks:
 
-| tier | node | instrument | scienceCap |
-|---|---|---|---|
-| T6 | `opt_uvSpectrometry` | Infrared Spectrometer **2** | 3 |
-| T6 | `opt_uvSpectrometry` | Infrared Spectrometer **3** | 4 |
-| T7 | `opt_infraredInterferometry` | Infrared Spectrometer (gen 1) | 3 |
-| T7 | `mic_ionMassSpec` | Mass Spectrometer **2** | 12 |
-| T7 | `mic_ionMassSpec` | Mass Spectrometer **3** | 20 |
+1. a Kerbalism `Configure` SETUP with `tech = <node>` (the multi-slot hosts);
+2. a **bare `Experiment` module** on a dedicated instrument part -- then the PART's node is the
+   gate and the tech ladder has no say at all;
+3. the same SETUP list is **duplicated in `design/Science/Configure.cfg` and `US2.cfg`**, so editing
+   one leaves the other live on every Universal Storage wedge.
 
-- `opt_uvSpectrometry` hands you IR Spectrometer 2 **and** 3 at once — gen 2 is obsolete the moment
-  you buy the node it arrives on.
-- Same for `mic_ionMassSpec` with Mass Spec 2 and 3.
-- **Gen 1 of the IR spectrometer arrives a tier *after* gens 2 and 3** — it can never be built.
-  The node names are also inverted: "Infrared Interferometry" gates the *basic* IR spectrometer
-  while "UV Spectrometry" gates the IR ones.
+`USFluidSpectroWedge` sits at T4 carrying all four mass-spectrometer experiments and is *correct*,
+because route 1 gates each slot. `RO-AdvancedImager` carries one bare experiment and so leaks its
+generation onto whatever node the part happens to live on.
+
+The dedicated `RO-*` parts form clean numbered ladders (VI01-05, IR01-04, IS01-04, MS01-04, MG01-03,
+RPWS01-03) but were placed by *what each node is about* rather than *by generation*:
+
+| family | gen -> tier (before) | defect |
+|---|---|---|
+| **VI** visible imaging | 4, 5, 6, **6**, 10 | VI04 shares VI03's node; VI04 **also on `experimental` at T1** |
+| **IR** radiometer | 5, 6, **6**, 10 | IR02/IR03 on the same tier |
+| **IS** imaging spectrometer | **7**, 6, 6, 10 | IS01 arrives *after* IS02/IS03; IS02+IS03 share a node |
+| **MS** mass spec | 4, **7, 7**, 9 | MS02+MS03 share `mic_ionMassSpec` |
+| **MG** magnetometer | 4, 5, 8 | clean -- the model the others should follow |
+| **RPWS** plasma wave | **8, 8, 8** | all three generations on one node (caps 7 / 20 / 30) |
+
+**RESOLVED 2026-07-29 (hard defects only; same-tier pairs deliberately left).**
+
+- **`experimental` (T1, 1 science) was handing out the gen-4 camera.**
+  `aquila_sensor_visible_light_telescope_s0_1` carried `RP0visibleImaging4` (cap 6) as a bare module,
+  beating anything the optics lane delivers through T6 and killing VI01/VI02/VI03 outright. **Dropped
+  from the manifest** -- `RO-AdvancedImager` already carries VI04 at its proper rung, so the part was a
+  pure duplicate. Its sibling SAR part carries no experiment and stays. Note nothing strips science
+  from parts homed on `experimental`, so a science-bearing part must never be placed there.
+- **`RO-NIMS` re-homed** `opt_uvSpectrometry` (T6) -> `opt_multiSpectralImaging` (T7). Three defects in
+  one placement: a **near-infrared mapping** spectrometer was sitting on the **ultraviolet** node
+  (id-vs-title); it shared that node with `RO-UVSpectrometer`, making IS02 obsolete on arrival; and at
+  T6 it made IS01 (T7) unbuildable. Mapping is the new node's own mechanism, and it gated no instrument
+  before. **Both gates moved together** -- the part in `nodes.yaml` AND the slot in `Configure.cfg`
+  *and* `US2.cfg`.
+- **RPWS split into a three-rung ladder:**
+  `mic_plasmaWave` T8 (RPWS01) -> **`mic_solarWindSpectrometry` T9** "Solar-Wind Ion Spectrometry"
+  (RPWS02) -> **`mic_dipoleWaveSpectrometry` T10** "Electric-Dipole Wave Spectrometry" (RPWS03).
+
+`tools/tier_defects.py` now reads slot gates from the **authored cfgs rather than the live cache**
+(which is only as fresh as the last KSP run) and reports a **SPLITGATE** finding whenever the two
+copies of the slot list disagree. They were in sync before this change; the detector exists so the
+next edit cannot silently desync them.
+
+**Left standing, by decision:** VI03+VI04 on `opt_refinedTV`; IR02+IR03 on tier T6; MS02+MS03 on
+`mic_ionMassSpec`; bioScan1+2 on `bio_cultures`; IS01/IS03 now sharing tier T7 via different nodes.
+Also noted, not fixed: `pioneer_6_7_8_9` (T7) carries RPWS02 and MG03 as bare modules, so those
+generations are reachable a tier early *if you fly that specific historic bus* -- arguably a feature,
+since the instrument comes welded to the spacecraft rather than available for your own designs.
 
 ### C. `gnc_orbitalGravimetry` (T8) is worth more than the entire rest of the probe ladder
 Orbital Perturbation carries `scienceCap = 200`. Every other probe instrument is 1.5–30, and they

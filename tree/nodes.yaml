@@ -77,7 +77,12 @@ nodes:
     tier: 1
     parents: []
     flavor: "Off-program hardware that never earned a place in the main tree — redundant instruments, third-party curiosities, flight-proven gear with nothing new left to teach. Available to build, not required to progress; a side branch for flavour and player choice, not the story the rest of the tree tells."
-    parts: [aquila_sensor_synthetic_aperture_radar_srf_1, aquila_sensor_visible_light_telescope_s0_1]
+    parts: [aquila_sensor_synthetic_aperture_radar_srf_1]
+    # aquila_sensor_visible_light_telescope_s0_1 DROPPED from the manifest 2026-07-29 (tier-balance
+    # audit, docs/TIER-BALANCE.md B): it carried RP0visibleImaging4 (cap 6) as a bare Experiment
+    # module, so this node - T1, 1 science, explicitly 'excluded from balance' - was handing out a
+    # gen-4 camera better than anything the optics lane delivers through T6. Nothing strips science
+    # from parts that land here, so a science-bearing part must not be homed on it.
     # 2026-07: the standalone Experimental side-node from docs/RESTART.md ("uncurated/3rd-party parts fall
     # to a standalone Experimental side-node - visible, low science, off the main tree, excluded from
     # balance") - designed but never actually built until now. First tenants: Spektr's SAR radar and
@@ -1181,7 +1186,7 @@ nodes:
     tier: 6
     parents: [opt_remoteSensing]
     flavor: "Disperse the ultraviolet an atmosphere emits and absorbs into a spectrum — the fingerprints of ozone, hydrogen and the rest of the high air, in wavelengths the eye and the film both miss entirely. The first instrument to read the atmosphere's chemistry from above it."
-    parts: [RO-UVSpectrometer, RO-NIMS]
+    parts: [RO-UVSpectrometer]
     # RO-NIMS added (2026-07, power+science pass): IS03, the next rung of the same Infrared/UV-Spectrometer
     # series as RO-UVSpectrometer (IS02) already here - a combined NIR+UV instrument, traced by series code.
   - id: opt_refinedTV
@@ -2231,6 +2236,11 @@ nodes:
     parents: [opt_remoteSensing]
     flavor: "Split the incoming light and recombine it after an offset path to read the whole spectrum from the interference pattern at once, rather than filtering it band by band — composition, not just temperature."
     parts: [RO-IRIS]
+    # RO-NIMS MOVED HERE from opt_uvSpectrometry 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md B).
+    # Three defects in one placement: (1) NIMS is a NEAR-INFRARED mapping spectrometer sitting on the
+    # ULTRAVIOLET node - id-vs-title; (2) it shared that node with RO-UVSpectrometer, so IS02 (cap 3) was
+    # obsolete the moment you bought IS03 (cap 4); (3) IS03 at T6 made IS01 (this node, T7, cap 3)
+    # unbuildable. Ladder now ascends: IS01+IS02 -> IS03 -> IS04 (opt_thermalMappingSpectrometry T10).
   - id: mic_ionMassSpec
     title: "Ion-Mass Spectrometry"
     discipline: Microelectronics
@@ -2244,7 +2254,14 @@ nodes:
     tier: 7
     parents: [opt_remoteSensing]
     flavor: "Capture several wavelength bands of the same scene at once instead of one — a surface picked apart by what it reflects in each band, not just what it looks like."
-    parts: [scansat-multi-abi-1, scansat-multi-modis-1, scansat-multi-msi-1]
+    parts: [scansat-multi-abi-1, scansat-multi-modis-1, scansat-multi-msi-1, RO-NIMS]
+    # RO-NIMS MOVED HERE from opt_uvSpectrometry 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md B).
+    # Three defects in one placement: (1) NIMS is a NEAR-INFRARED MAPPING spectrometer that was sitting on
+    # the ULTRAVIOLET node - id-vs-title; (2) it shared that node with RO-UVSpectrometer, so IS02 (cap 3)
+    # was obsolete the instant you bought IS03 (cap 4); (3) IS03 at T6 made IS01 (opt_infraredInterferometry,
+    # T7, cap 3) unbuildable. Mapping is this node's own mechanism, and it gated no instrument before.
+    # NOTE both gates must move together - the part AND the Kerbalism Configure slot in
+    # design/Science/Configure.cfg. Moving only the part leaves the slot handing IS03 out at T6 anyway.
     # 2026-07-29: was dmUS2ImagingPlatform (DMagic, not installed, never curated) so this granted
     # nothing — while its own child held all six SCANsat scanners. Split by what the instruments are:
     # the DISCRETE-band Earth-observation imagers land here (ABI/GOES 16 bands, MODIS/Terra 36,
@@ -3268,7 +3285,25 @@ nodes:
     tier: 8
     parents: [mic_ionMassSpec]
     flavor: "Listen to the electric and magnetic oscillations of the plasma a spacecraft flies through — the radio song of a magnetosphere, measured across frequency to map fields no camera can see."
-    parts: [RO-PlasmaWave, RO-SWPlasmaAnalyzer, RO-RPWS]
+    parts: [RO-PlasmaWave]
+    # SPLIT 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md B). This one node held the ENTIRE RPWS
+    # ladder - RPWS01 (cap 7), RPWS02 (cap 20) and RPWS03 (cap 30) - so buying it made two of its own
+    # three instruments obsolete on the spot. RPWS02/03 now ladder out to mic_solarWindSpectrometry (T9)
+    # and mic_dipoleWaveSpectrometry (T10).
+  - id: mic_solarWindSpectrometry
+    title: "Solar-Wind Ion Spectrometry"
+    discipline: Microelectronics
+    tier: 9
+    parents: [mic_plasmaWave]
+    flavor: "Bend a stream of solar-wind ions through an electrostatic analyser and count what lands where. Sorting the wind by energy rather than merely sensing that it blows turns a detector into a spectrometer."
+    parts: [RO-SWPlasmaAnalyzer]
+  - id: mic_dipoleWaveSpectrometry
+    title: "Electric-Dipole Wave Spectrometry"
+    discipline: Microelectronics
+    tier: 10
+    parents: [mic_solarWindSpectrometry]
+    flavor: "Stretch a pair of wire antennas tens of metres from the spacecraft and the whole vehicle becomes an aerial. Wideband receivers on a long dipole pick up plasma waves and planetary radio emission across decades of frequency at once."
+    parts: [RO-RPWS]
     # RO-SWPlasmaAnalyzer added (2026-07, power+science pass): RPWS02, the same Radio-and-Plasma-Wave
     # instrument series as RO-PlasmaWave already here (traced by series code, not RP-1's era bucket).
     # King RPWS plasma-wave detector. dmUS2RPWS (its US2 wedge form) dropped 2026-07-29 -- DMagic part,
