@@ -44,7 +44,7 @@ CACHE = r"C:\git\ksp\Instance\GameData\ModuleManager.ConfigCache"
 # upgrades[0] is the STARTING level's own cost and is NEVER charged (KSP bills
 # upgradeLevels[level+1]); cum(prices, L) therefore sums prices[1:L]. See ECONOMY.md 2.
 PAD_MASS = [25, 75, 200, 500, 1200, 3000, 10**9]
-PAD_PRICE= [0, 40000, 150000, 400000, 900000, 1800000, 4000000]
+PAD_PRICE= [0, 40000, 90000, 400000, 900000, 1800000, 4000000]
 RD_CAP   = [82, 265, 404, 600, 865, 1225, 1655, 10**9]
 RD_PRICE = [0, 25000, 50000, 100000, 200000, 400000, 700000, 1200000]
 TS_PRICE = [0, 50000, 50000, 100000, 175000, 100000, 150000, 1000000, 300000, 300000, 300000]

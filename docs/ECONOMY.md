@@ -61,14 +61,14 @@ Everything below is measured from this install, not estimated.
 
 | Sink | Purchasable total | Source |
 |---|--:|---|
-| Launchpad (7 levels, 6 purchases) | 7.29M | `AxeFacilities.cfg` — **re-shaped 2026-07-28, §6** (was 10.33M) |
+| Launchpad (7 levels, 6 purchases) | 7.23M | `AxeFacilities.cfg` — re-shaped 2026-07-28 §6 (was 10.33M); **200 t step 150k → 90k, 2026-07-29 §10** |
 | Tracking station (11 levels, 10 purchases) | 2.53M | `AxeTrackingStation.cfg` |
 | R&D (8 levels, 7 purchases) | 2.68M | `AxeFacilities.cfg` — **authored 2026-07-29, §8** (was 2.14M CBK default) |
 | Administration (3 levels, 2 purchases) | 0.71M | CustomBarnKit default |
 | Mission Control (5 levels, 4 purchases) | 0.68M | `AxeFacilities.cfg` |
 | Part unlocks (1,830 parts + 87 upgrades) | 5.56M | `AxePartCost.cfg` |
 | Engine-config unlocks (466) | 0.55M | `AxeEntryCostMods.cfg` |
-| **Lump total** | **~20.00M** | |
+| **Lump total** | **~19.94M** | |
 | Vehicles | ~20M (assumed) | see §5 — **not yet measured** |
 
 > **Part unlocks are a buy-everything figure — realized spend is ~3.2M, not 6.11M.** A playthrough that
@@ -106,7 +106,7 @@ size. Split 60/40.
 and tops out at **22.9M against its 16M target** on the Normal preset; the earlier "~8.4M measured"
 came from an undercount, see the box under Channel 2.
 
-### Channel 1 — contract funds (24M budgeted, **36.4M paid**), `tools/build_economy.py`
+### Channel 1 — contract funds (24M budgeted, **36.9M paid**), `tools/build_economy.py`
 
 > ⚠ **The same multiplier chain that was missed on Channel 2 applies here, and it is bigger.**
 > `Contract.SetFunds` scales `rewardFunds` by `GetContractPrestigeFactor(prestige) ×
@@ -114,8 +114,10 @@ came from an undercount, see the box under Channel 2.
 > (Assembly-CSharp, `FundsCompletion = Round(completion * GetContractFundsCompletionFactor(prestige)
 > * destinationWeight)`). AXE's generated program-completion contracts declare `prestige =
 > Significant` (×1.25) and the capstones are mostly `Exceptional` (×1.5), against
-> `FundsGainMultiplier = 1.2` on Normal — so the **×1.516** the channel actually pays is
-> **36,386,760**, not the 23,999,996 `build_economy.py` balances to. Measured 2026-07-28 from the
+> `FundsGainMultiplier = 1.2` on Normal — so the **×1.536** the channel actually pays is
+> **36,859,004**, not the 24,000,004 `build_economy.py` balances to. *(Was ×1.516 / 36,386,760 until
+> the §10 payout re-shape moved raw funds toward the mostly-Exceptional capstones; the raw total is
+> unchanged, so the whole difference is mix.)* Measured 2026-07-28 from the
 > merged cache; recomputed from the generated configs after the AsteroidExploration recovery
 > (§7) re-spread the scalar. `build_economy.py` divides a target across programmes and never models
 > the multipliers, so its printed totals are pre-multiplier throughout — including the early-game
@@ -150,11 +152,12 @@ That budget splits two ways:
 which then converts through Channel 2. Records pay reputation only. Nothing repeatable-without-a-
 launch pays anything, ever — that is the invariant that killed the Skopos maintenance layer.
 
-*Early-game check* (printed by `build_economy.py`): the two sounding-rocket programs pay 22,000 each
-= **44,000**, against a 15,000 start and the 40,000 first pad step — clears, but only after the
-§6 re-shape. At the old 75,000 it did **not**: a rocket-only career had 59,000 and could not buy the
-pad at all, which is precisely the block this whole section exists to remove. R&D L2 (451,000) then
-needs the next several programs.
+*Early-game check* (printed by `build_economy.py`): the two sounding-rocket programs pay **84,804
+each = 169,608**, against a 15,000 start and the 40,000 first pad step. *(They paid 22,000 each until
+the §10 payout re-shape; that cleared the first pad step too, but nothing beyond it — see §10 for why
+the first pad step was never the gate that mattered.)* At the pre-§6 price of 75,000 it did **not**
+clear: a rocket-only career had 59,000 and could not buy the pad at all, which is precisely the block
+this whole section exists to remove.
 
 ### Channel 2 — Administration (target 16M, **reaches 22.9M**), `design/Settings/AxeStrategies.cfg`
 
@@ -285,7 +288,11 @@ Administration upgrades are affordable. `strategyCommitRange` remains the real p
   `ConfiguredContract` reads 0**. The only contracts carrying a failure penalty were 3
   `TourismContract` + 2 `CrossBelt` — the leaked stock/Kerbalism types, already killed for new
   careers by `AxeDisableStockContracts.cfg` (`7e3b58f`). Nothing to zero.
-- ~~**Advance vs reward**~~ — ✅ **CLOSED 2026-07-28: everything stays on completion.** The case for
+- ~~**Advance vs reward**~~ — ✅ **CLOSED 2026-07-28: everything stays on completion.** ⚠ **Partly
+  wrong — see §10.** The `AllowNegativeCurrency` argument below holds for building and launching a
+  vessel and does **not** hold for facility upgrades, which refuse on a hard `cost <= Funding.Funds`
+  check. The conclusion (no advances) still stands; the reason given for it does not cover the gate
+  that actually blocks a career. The case for
   `advanceFunds` was that it funds the build instead of reimbursing it — but that is a cash-flow
   *timing* problem, and AXE structurally cannot have one. `AllowNegativeCurrency = True` in all four
   presets (verified live in the cache and in the playtest save), so no player is ever blocked from
@@ -344,7 +351,14 @@ below is for.
 
 ### What is still open — deliberately, these are design calls, not bugs
 
-1. **Income shape.** ⚠ **Re-model before acting: the deficits below are computed against
+1. ~~**Income shape.**~~ — ✅ **CLOSED 2026-07-29: re-modelled with the multipliers, the gap survived,
+   and the flattening shipped. See §10.** The open question below was whether the deficits were an
+   artefact of `build_economy.py`'s pre-multiplier arithmetic. They were not: with the ×1.5 chain
+   included, and with income counted only from eras *before* each milestone (which is the correct
+   ordering — a pad has to be bought before the missions that pay for it can be flown), first orbit
+   was 450,066 short and the Moon 1,702,225 short. `FUNDING_EXPONENT = 0.65` is now applied.
+   Kept as written for the reasoning trail:
+   ⚠ **Re-model before acting: the deficits below are computed against
    pre-multiplier income and are therefore overstated.** Every figure in this section came from
    `build_economy.py`, which never models the prestige × `FundsGainMultiplier` chain the game applies
    on top (§3, Channel 1) — real payouts are **×1.516**. Whether the early-to-mid gap survives that is
@@ -591,3 +605,114 @@ not funded, or a funded program no charter can start. That only proves the *file
 any `AXE_Begin_*` with empty `notes`, which proves the patch actually *applied*. Charter → program
 comes from each charter's own `ActivateProgram` behaviour, never from its name —
 `AXE_Begin_EarlySatellitesHeavy` charters `EarlySatellites-Heavy`.
+
+## 10. Cross-gate pass — 2026-07-29: the ladders were each sane and did not line up
+
+Closes §6 item 1. Triggered by a playtest report that reads, in full: *"T3 is orbital tech, but I
+still don't have enough money to upgrade the pad for an R-7 sized rocket — I manage because I have a
+hydrolox engine."* That is not a balance complaint about one number; it is the economy and the tree
+disagreeing about what era the player is in.
+
+### The method — order by cash flow, not by lifetime totals
+
+New tool: **`tools/gate_feasibility.py`**. Everything §3 does is a lifetime sum, and a lifetime sum
+cannot see this class of defect. **A gate has to be bought before the missions that pay for it can be
+flown**, so the tool counts income only from eras *strictly before* each milestone, and it derives
+what pad level an era needs from the actual hardware the tree hands you there — joining
+`manifest/engine-stats.tsv` to AXE nodes through `AxeEngineConfigGates.cfg` (the `CONFIG` gate is
+what really unlocks a variant in career) and rocket-equationing the lightest 2-stage LEO launcher
+available at each tier.
+
+It audits all eight gates. Five came back clean and are recorded here so nobody re-checks them:
+
+- **DSN tracking station** — every one of the 10 tech gates sits a tier *ahead* of the mission that
+  needs its range (Jupiter precursors T8 ← step 3 gated at T7; Grand Tour T9 ← step 4 gated at T8).
+  No block. Step 7 costs 1,000,000 (RP-1 verbatim) and buys range nothing in the solar system needs.
+- **R&D `scienceCostLimit`** — the §8 re-levelling holds; it never binds before income at any milestone.
+- **Science supply** — comfortable. 377 science to reach T3, against SCIENCE.md §3b's 82,802
+  collectable by first orbit.
+- **`craftSizeLimit`** — never binds before `craftMassLimit` at any level. Tightest point in the game
+  is Saturn V's 110.6 m against pad L6's 120 m height: 8% margin.
+- **Mission Control** — `ContractLimitOverrider` is correct. Contract Configurator's per-prestige cap
+  counts **Active** contracts (`ContractState == 5`), not offered ones, so the permanently-parked
+  `Begin Program` charters do not squat slots, and flattening all three tiers to `maxActive` can never
+  be tighter than stock's own global cap.
+
+### What was actually wrong
+
+The **launchpad** ladder, and it was wrong in *time*, not in magnitude.
+
+| milestone | tree hands you | pad | all gates | banked before | margin |
+|---|---|---|--:|--:|--:|
+| first orbit | R-7 8K71PS, 270 t | L4 | 650,000 | 199,934 | **−450,066** |
+| appsats + first crew | Vostok 8K72, 305 t | L4 | 895,000 | 696,675 | **−198,325** |
+| crewed lunar landing | Saturn V, 2,950 t | L6 | 3,820,000 | 2,117,775 | **−1,702,225** |
+
+**This is the answer to §6 item 1's caveat: the multipliers do not rescue it.** The ×1.5 prestige ×
+`FundsGainMultiplier` chain is already inside those `banked` figures. Nor does Channel 2 — measured
+from the merged cache, the entire pre-orbit game banks **516 reputation, 0.4% of the career's
+146,163**, worth 17,157 funds at Administration L1. The early economy is Channel 1 and nothing else.
+
+The consequence is a **route filter**, not a difficulty curve. Against 217,090 banked at first orbit:
+
+| route | node | GLOW | pad | cumulative | |
+|---|---|--:|---|--:|---|
+| R-7 8K71PS | `fd_orbitalSoviet` | 270 t | L4 | 590,000 | out of reach |
+| Atlas B | `fd_largeChamber` | 118 t | L3 | 190,000 | only if you flew X-planes |
+| Juno I | `pc_scoutSolids` | 29 t | L2 | 40,000 | fine |
+| min-max kerolox | `fd_singleChamber` | 41 t | L2 | 40,000 | fine |
+| min-max hydrolox upper | `cryo_hydroloxPrototype` | 17 t | L1 | **0** | free |
+
+So the tree's own orbital spines were the *unaffordable* options and the cheapest path to orbit was
+whatever minimised GLOW. That is what the playtester found. **The hydrolox route is left exactly as
+it is (user call, 2026-07-29)** — for the record, `cryo_hydrogen` (T1, 1 science) →
+`cryo_hydroloxPrototype` (T2, 3 science) buys 410 s of vacuum Isp when the best alternative is 277 s,
+and none of the three costs the design intends it to carry survive in AXE: program time does not
+exist (KCT is cut), reliability is off instance-wide, and LH2 tankage is not gated anywhere (all 38
+`TANK_DEFINITION`s carry `LqdHydrogen` at `techRequired = NONE`). It is a real shortcut, deliberately kept.
+
+### What was done — two dials, both already identified in §6
+
+1. **`build_economy.py` `FUNDING_EXPONENT = 0.65`.** Programme budget is now `baseFunding^0.65`
+   normalised to the same 24M, instead of `baseFunding^1`. RP-1's judgement about which programmes
+   are big survives — Mars still pays **30×** a sounding rocket, down from 190× — while the first 15
+   programmes move from **6.4% to ~14%** of the channel. Purely a redistribution in time; the
+   lifetime total does not move. `SuborbRocketDev` 21,222 → **84,804**.
+2. **Launchpad 200 t step 150,000 → 90,000** (`AxeFacilities.cfg`). This is the rung the tree's own
+   spines need — Atlas B at 118 t, Titan II at 154 t. Purchasable total 7.29M → **7.23M**; the shape
+   above the 200 t rung is untouched.
+
+| milestone | before | after |
+|---|--:|--:|
+| first orbit (R-7) | −450,066 | −17,148 |
+| appsats + first crew | −198,325 | **+1,140,276** |
+| crewed lunar landing | −1,702,225 | **+1,130,020** |
+| stations, shuttle, Grand Tour | +205,676 | +2,757,628 |
+
+Channel 1 paid moves 36,386,760 → **36,859,004** (×1.536). The raw 24M is unchanged; the whole
+difference is mix — the re-shape moved raw funds toward the capstones, 14 of whose 15 are
+`Exceptional` (×1.5) against the completion bonuses' `Significant` (×1.25).
+
+### Still open
+
+- **The R-7 is a mass-*rung* problem, not a price one.** It is the only milestone still negative, and
+  only by 17,148 (≈ break-even once Channel 2's 17,157 is counted). The rungs jump 200 → 500 t, and
+  the R-7 (270 t), Vostok 8K72 (287 t) and Soyuz (308 t) all sit just above the 200 t rung — so the
+  most iconic first-orbit vehicle in the game needs the 500 t pad. The fix is to re-rung
+  (200 → 300 t), not to discount further: cutting the 500 t step would also cheapen Saturn I and
+  Titan III, which are correctly priced there. Left as a design call.
+- **§5's `AllowNegativeCurrency` reasoning has a hole, and it is exactly the load-bearing case.**
+  "Advance vs reward" was closed on the grounds that `AllowNegativeCurrency = True` means no player is
+  ever blocked for want of cash up front. That is true for building and launching a vessel and **false
+  for facility upgrades**. Decompiled: `SpaceCenterBuilding.UpgradeFacility` refuses unless
+  `CurrencyModifierQuery.RunQuery(StructureConstruction, −cost, 0, 0).CanAfford()`, and
+  `CurrencyModifierQuery.CanAfford(Currency.Funds)` is `cost <= Funding.Instance.Funds` — a hard
+  on-hand check that never consults `AllowNegativeCurrency`. You can go negative flying; you cannot go
+  negative buying a pad. The escape hatch does not cover the one gate that blocks progression, which
+  is why this whole section exists.
+- **Era boundaries are a judgement.** `gate_feasibility.py`'s `MILESTONES` table hard-codes which
+  programme pays in which era and which real vehicle defines each milestone. The direction of every
+  finding above is robust to re-bucketing; the exact margins are not.
+- **The launcher model is optimistic by construction** — perfect staging, no fairing/interstage/avionics
+  margin, procedural-tank structure fractions. Real first orbital rockets come out 1.5–2.5× heavier
+  than its floor, so it is a lower bound on the pad level an era needs, never a build target.
