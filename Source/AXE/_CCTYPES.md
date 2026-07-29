@@ -11,7 +11,7 @@ Counts are actual failures from the M1 `KSP.log`.
 | Type | Kind | Uses | Status | Notes |
 |---|---|---|---|---|
 | `ProgramActive` | requirement | 368 | **stub: always-true** | Real gating wired in **M4** (AxeProgramHandler). Parses `program` now. |
-| `RP1CollectScience` | param | 63 | **real (simplified)** | Completes when science is received (recovered/transmitted) for a matching `subject` id or `experiment` (+ optional `targetBody`). No fractional/per-biome aggregation. |
+| `RP1CollectScience` | param | 63 | **real** | Polls `ScienceSubject.science / scienceCap` like RP-1; honours `experiment`/`subject`, `situation`/`location`, `biome`, `fractionComplete`, `fractionCompleteBiome`, `minSubjectsToComplete`. **Must poll:** Kerbalism writes `RnDSubject.science` directly and fires `OnScienceRecieved` only at 100%, so the old event-driven version ignored `fractionComplete` and stalled forever below a full subject. |
 | `RP1ReturnHome` | param | 74 | **real (simplified)** | Landed/splashed on home body. Dropped RP-1's maxSpeed/facility nuance. |
 | `DownrangeDistance` | param | 10 | **real** | Great-circle distance flown from lift-off point. |
 | `ReachMach` | param | 1 | **real** | `vessel.mach > mach`. |
