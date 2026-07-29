@@ -4,7 +4,9 @@ RP-1's own folder (RealismOverhaul, RealFuels).
 
 tools/upgrade_audit.py + curate_upgrades.py scoped T3 to "RP-1-authored PARTUPGRADEs absent under
 AXE" by walking only GameData/RP-1 for FRESH `PARTUPGRADE { }` definitions. That misses two related
-cases (found 2026-07-01 investigating human-orbital-partlist.md's `[not-in-curated]` upgrades):
+cases (found 2026-07-01 investigating the `[not-in-curated]` upgrades in what was then
+manifest/human-orbital-partlist.md -- one of the RP-1 milestone extractions, removed once the
+tree was authored; see git history if the original listing is ever wanted):
 
   1. Upgrades that ship from a KEPT dependency and bake an RP-1 techRequired directly into their own
      definition (RealismOverhaul/RO_RealFuels.cfg's per-tank-TYPE ladder — 21 upgrades). No RP-1

@@ -1,5 +1,33 @@
 #!/usr/bin/env python3
-"""Build the RP-AXE curated part manifest (the SSOT).
+"""How manifest/curated-parts.tsv was derived -- the RECORD, not a build step.
+
+⚠ THIS SCRIPT DOES NOT RUN, AND THAT IS FINE. It generated the manifest once, at T1 (`926453e`,
+2026-06-30). Its third input was scratch data that was never checked in and is now gone (see the
+exit message below). Re-running it would rebuild all ~1,800 rows from month-old reference caches
+to recreate a file the whole tree is already placed against -- risk with no upside.
+
+WHAT IS AUTHORITATIVE: `manifest/curated-parts.tsv`. It is a BUILD INPUT -- build_tree.py reads it
+directly, and every part placed in tree/nodes.yaml must appear in it or the build's membership
+check complains. The five commits that touched it since T1 all edited this file in lockstep by
+hand, which is the workflow, not a lapse.
+
+TO ADD A PART:
+  1. add the row to manifest/curated-parts.tsv  (mod<TAB>name<TAB>title)  <- this is the one that counts
+  2. mirror it into AXE_PARTS / ADD below, so this record stays a true description of the set
+  3. run tools/build_tree.py -- its membership check is what catches a part placed but not curated
+NB `manifest/curated-parts.txt` (names only) was a dead twin -- nothing but this script read it, and
+it had already drifted (missing the three AXE-* geochemistry parts added 2026-07-29). DELETED
+2026-07-29; the write below is left in place so the derivation still reads correctly.
+
+WHAT IS STILL LIVE IN HERE: the data literals. AXE_PARTS, ADD, US2_WEDGES, KEEP_DEPRECATED,
+EXPANSION_MODS and the SCANsat cut rationale are the readable statement of *which* parts AXE ships
+and why. The curation JUDGEMENT is not here at all -- that is docs/PARTLIST.md, per mod.
+
+TO REVIVE IT AS A GENERATOR (only worth it if a part mod is added or RP-1 is bumped): re-derive the
+cuts from RP-1's own configs and check the result into manifest/. Read the exit message first --
+there is one specific shortcut that must not be taken.
+
+The derivation it records:
 
 manifest = RP-1 base (rp1_clean)
          + RP-1's expansion keeps  (ro_expanded parts of the curated expansion mods, minus RP-1's cuts)
@@ -13,15 +41,13 @@ SCANsat is treated as an expansion mod too: RP-1 loads 12 of the 16 parts RO loa
 SCANsat_Scanner/2/24 and RO-PVO-ORAD -- are stuck on stock-only tech IDs with no RP-1 tree entry and
 get pruned by RP-1's tree-validity cleanup). We keep RP-1's 12; see SCANSAT_CUTS below.
 
-Sources: ksp_rp1_clean cache, ksp_ro_expanded cache, scratchpad/rp1_cuts_from_packs.txt.
-Outputs: manifest/curated-parts.tsv (mod<TAB>name<TAB>title), curated-parts.txt (names).
+Sources it used: ksp_rp1_clean cache, ksp_ro_expanded cache, scratchpad/rp1_cuts_from_packs.txt (gone).
+Outputs it produced: manifest/curated-parts.tsv (mod<TAB>name<TAB>title) + curated-parts.txt (now deleted).
 """
 import os, collections, sys
 G=r"C:\git\ksp"
-# ⚠ THIS SCRIPT CANNOT CURRENTLY RUN -- see the CUTS_INPUT note below. The manifest it produces
-# (manifest/curated-parts.tsv, 1,820 parts) is the single source of truth the whole tree is placed
-# against, so it is REAL and correct; it is simply hand-maintained now, and this generator can no
-# longer reproduce it. Confirmed still broken 2026-07-29.
+# The missing input, and the exit that explains it. See the module docstring for why this is a
+# recorded state rather than a bug to fix. (Confirmed still gone 2026-07-29.)
 SCRATCH=r"C:\Users\User\AppData\Local\Temp\claude\C--git-ksp\8108a075-9f8b-4a7c-89f0-2cd28a7f8a8f\scratchpad"
 CUTS_INPUT=os.path.join(SCRATCH,"rp1_cuts_from_packs.txt")
 OUTDIR=os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","manifest")
