@@ -14,7 +14,6 @@
 
 meta:
   scalar: 0.72
-  auto_placement: false
   # Science node cost = round(tier_cost[tier] * scalar) (per-node `cost:` overrides win). MONOTONIC
   # non-decreasing, T1=1 (bootstrap ~free; can't gate reaching orbit behind orbital science). The SHAPE
   # emerges from node COUNT (which humps mid/late) x this rising rate -- see docs/SCIENCE.md 4. Total
@@ -566,6 +565,22 @@ nodes:
     parents: [elec_semiconductorDiode]
     flavor: "Replace the fragile, power-hungry vacuum tube with a sliver of doped germanium that amplifies and switches a signal cold, on almost nothing — the active device the diode could never be. Microelectronics proper begins here: every transistorised instrument, guidance platform and television camera that follows is built on this one breakthrough."
     upgrades: [HDD-Upgrade-1961]
+  - id: elec_silverZinc
+    title: "Silver-Zinc Primary Batteries"
+    discipline: ElectricalPower
+    tier: 3
+    parents: [elec_semiconductorDiode]
+    flavor: "Pair a silver oxide cathode against a zinc anode and the cell gives up more energy for its mass than anything else that will fit in a payload — ruinously expensive, flat in a matter of days, and entirely good enough for a satellite whose whole job is to transmit until it stops. Sputnik was three of these and a radio."
+    upgrades: [RFTech-Battery-II]
+    # Battery-II: basemass 0.00007 -> 0.000054 per volume (-23%) at UNCHANGED 50% packing — a chemistry
+    # win, not a packaging one, which is what swapping to silver-zinc buys.
+    #
+    # T3 because that is when the technology is: manifest/probe-requirements.tsv gates BOTH sputnik1
+    # (1957) and vanguard-1 (1958) on `elec_silverZinc`, and the id matches so those two stop reporting
+    # as library-only on the probe-requirements pull-list. tree/library.yaml:597 carries the same node at
+    # library-tier 1 with the same reading. Parented off elec_semiconductorDiode purely because it is the
+    # ElectricalPower lane's only pre-T3 node — the same structural edge elec_siliconPV below uses, not a
+    # claim that batteries come out of solid-state physics.
   - id: elec_siliconPV
     title: "Diffused-Junction Photovoltaics"
     discipline: ElectricalPower
@@ -3685,35 +3700,18 @@ nodes:
     title: "Sealed Rechargeable Battery Cells"
     discipline: ElectricalPower
     tier: 6
-    parents: [elec_deployableArrays]
+    parents: [elec_deployableArrays, elec_silverZinc]
     flavor: "Seal a rechargeable cell so it cycles through orbital night after orbital night without venting or dying — nickel-cadmium, then nickel-hydrogen — and a spacecraft can finally store the power its arrays make in daylight. The other half of every solar power system."
-    upgrades: [RFTech-Battery-II]
-    # Battery-II ONLY. Its delta is 23% lighter at UNCHANGED 50% packing (basemass 0.00007 -> 0.000054
-    # per volume), i.e. the saving is the vent hardware and free electrolyte this node's own flavor
-    # describes shedding -- not a chemistry change. The chemistry rungs live downstream.
-    #
-    # 2026-07-29 REDESIGN. This node used to hold II AND IV while III sat on int_geminiCapsule (T7), so
-    # Battery-IV unlocked a full tier BEFORE the rung it supersedes. RealFuels tank levels are
-    # IsAdditiveUpgrade__ (RO_RealFuels_PartConfigs.cfg:231) -- IV does not require III and is strictly
-    # better (basemass 0.000024 vs 0.00004, packing 75% vs 60%) -- so III was 540 funds for nothing.
-    # III on a CAPSULE node was also mission-homing, the same mistake int_geminiCapsule's own comment
-    # records fixing for Gemini's antenna. The ladder is now one rung per node, ascending, and parallel
-    # to its sibling RFTech-SM ladder: SM-III/Battery-III at T7, SM-IV/Battery-IV at T9.
-  - id: elec_silverZincCells
-    title: "Silver-Zinc High-Energy Cells"
-    discipline: ElectricalPower
-    tier: 7
-    parents: [elec_secondaryBatteries]
-    flavor: "Trade the nickel electrode for silver and the same mass of cell gives up nearly twice the energy — ruinously expensive, good for a few dozen cycles, and worth every gram on a vehicle that only has to come home once. The chemistry that carried Mercury, Vostok and Gemini."
     upgrades: [RFTech-Battery-III]
-    # Battery-III: 26% lighter AND packing 50% -> 60%, i.e. a genuine energy-density jump rather than a
-    # packaging one, which is what a chemistry change buys. RO's own description dates it to
-    # "Gemini and Voskhod" -- silver-zinc, and the third rung of the ladder.
+    # Battery-III: 26% lighter AND packing 50% -> 60%. Second parent added 2026-07-29 so the battery
+    # ladder reads as a chain the way the solar-cell lane does (arCoatings -> nOnPCell -> ...): you are
+    # improving on the silver-zinc cell, and the arrays are what give a RECHARGEABLE cell a reason to
+    # exist. elec_silverZinc is T3, so the gate costs the player nothing in practice.
   - id: elec_thinSeparatorCells
     title: "Thin-Separator Cell Stacks"
     discipline: ElectricalPower
     tier: 9
-    parents: [elec_silverZincCells]
+    parents: [elec_secondaryBatteries]
     flavor: "Thin the separators and press the plates closer until the case is mostly active material and hardly any structure — the same chemistry, a third less mass again, and a discharge rate that will run a lander's pumps flat out. Where the battery stops being a passenger."
     upgrades: [RFTech-Battery-IV]
     # Battery-IV: 40% lighter, packing 60% -> 75% -- construction, not chemistry, so it is named for the
