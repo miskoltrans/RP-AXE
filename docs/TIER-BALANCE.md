@@ -348,9 +348,18 @@ ordering (`engine-stats.tsv` `node_title`).**
 - **RD-275.** `RD-275M` (1830 kN, RP-1 era 2004-2008) was gated at T10 while the earlier, weaker
   `RD-275` (1746 kN, era 1992-1997) sat at T11. **Swapped** between `pc_stagedCombustionCeiling`
   (T10) and `pc_operationalStorableORSC` (T11).
-  *Flagged, not acted on:* the neighbouring `RD-277M-14D16M` (T10) / `RD-277-14D16` (T11) pair has the
-  same shape. It survives the strict test on another axis, so it was left pending a look -- the two
-  nodes may have been populated back-to-front as a pair.
+  *`RD-277M` / `RD-277` -- CHECKED 2026-07-29, NOT the same defect.* The pair looks back-to-front by
+  date (RD-277M is 2009-2013, RD-277 is 1998-2003) but `RD-277M` trades **burn time**: 129 s against
+  RD-277's 225 s, 43% less, for +88 kN (+4.8%) and +2 s sea-level Isp. A genuine choice, not a free
+  upgrade -- which is precisely why the strict comparator flagged RD-275 and refused to flag this one.
+  Both configs stay viable, so there is no gameplay defect, and the placement is thematically right:
+  `pc_stagedCombustionCeiling` (T10) is about the thrust CEILING of storable staged combustion -- its
+  king is RD-270 at 6,713 kN -- so the family's highest-thrust variant belongs on it. **No action.**
+
+  *Consequence of the RD-275 swap, fixed:* `pc_operationalStorableORSC`'s flavor named "the RD-275
+  first stage", and the swap moved that config down to T10. Re-pointed at **RD-275M**, which is what
+  the node now holds and is itself the line's final operational mark -- so the flavor reads truer than
+  before rather than merely being patched.
 
 **Left standing, by decision -- 2 dead configs.** Not power creep, just clutter nobody picks; both are
 inherited from RP-1, which ships them the same way:

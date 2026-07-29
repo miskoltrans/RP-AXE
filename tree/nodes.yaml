@@ -4284,7 +4284,7 @@ nodes:
     discipline: PropellantChemistry
     tier: 11
     parents: [pc_refinedStorableORSCII]
-    flavor: "The storable staged-combustion engines of Proton and its kin reach their final operational marks — the RD-275 first stage, the Kosberg upper stages — the last refinements of a hypergolic booster line that has been flying since the sixties."
+    flavor: "The storable staged-combustion engines of Proton and its kin reach their final operational marks — the RD-275M first stage, the Kosberg upper stages — the last refinements of a hypergolic booster line that has been flying since the sixties."
     upgrades: [RFUpgrade_RD-275M, RFUpgrade_RD-253-Mk4, RFUpgrade_RD-254-11D44-Mk4, RFUpgrade_RD-277-14D16, RFUpgrade_RD-0210-Mk3, RFUpgrade_RD-0212-Mk3, RFUpgrade_RD-0213-Mk3, RFUpgrade_RD-254-11D44-Mk3, RFUpgrade_RD-253-Mk3]  # RD-254-11D44-Mk3 added 2026-07 (gap-fill; Mk4 sibling here)
 
   # ---- FluidDynamics: storable uppers + terminal gas-generator kerolox ----
