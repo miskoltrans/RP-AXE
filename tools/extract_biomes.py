@@ -2,7 +2,13 @@
 """Extract REAL per-body biome counts + summed biome values from the RP-1 merged cache."""
 import re
 import os
-CACHE = os.environ.get("RP1_CACHE", r"C:\git\ksp_rp1_clean\GameData\ModuleManager.ConfigCache")
+
+# Reference instances live NEXT TO this repo, i.e. <ksp root>/ksp_rp1_*. Derive that root from
+# __file__ rather than hardcoding it: seven tools had "C:\git\ksp_rp1_*" (one directory too
+# high), which made them die on FileNotFoundError while the data sat there intact. 2026-07-29.
+_KSPROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+CACHE = os.environ.get("RP1_CACHE",
+                       os.path.join(_KSPROOT, "ksp_rp1_clean", "GameData", "ModuleManager.ConfigCache"))
 txt = open(CACHE, encoding="utf-8", errors="ignore").read()
 
 def brace_block(s, start):

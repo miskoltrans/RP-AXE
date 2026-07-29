@@ -36,11 +36,16 @@ Output: manifest/upgrades-curated.tsv (merged, re-sorted; 626 -> 658 rows)
 """
 import os
 
+# Reference instances live NEXT TO this repo, i.e. <ksp root>/ksp_rp1_*. Derive that root from
+# __file__ rather than hardcoding it: seven tools had "C:\git\ksp_rp1_*" (one directory too
+# high), which made them die on FileNotFoundError while the data sat there intact. 2026-07-29.
+_KSPROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
 MAN = os.path.join(ROOT, "manifest")
 CURATED_TSV = os.path.join(MAN, "upgrades-curated.tsv")
-CC = r"C:\git\ksp_rp1_expanded\GameData\ModuleManager.ConfigCache"
+CC = os.path.join(_KSPROOT, "ksp_rp1_expanded", "GameData", "ModuleManager.ConfigCache")
 
 RO_REALFUELS_COMPANION = (
     "RealismOverhaul/RO_RealFuels.cfg (already live under AXE -- RealismOverhaul ships it whole, "

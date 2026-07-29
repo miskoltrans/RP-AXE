@@ -8,8 +8,13 @@ human-orbital-partlist.md, PLUS the three -2442 spillover nodes that carry the L
 soft-landing hardware. Ordered by tree x (progression order). See PROGRAMS.md / the tree x-axis method."""
 import os, collections
 
-CC = r"C:\git\ksp_rp1_expanded\GameData\ModuleManager.ConfigCache"
-REPO = r"C:\git\ksp\RP-AXE"
+# Reference instances live NEXT TO this repo, i.e. <ksp root>/ksp_rp1_*. Derive that root from
+# __file__ rather than hardcoding it: seven tools had "C:\git\ksp_rp1_*" (one directory too
+# high), which made them die on FileNotFoundError while the data sat there intact. 2026-07-29.
+_KSPROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+CC = os.path.join(_KSPROOT, "ksp_rp1_expanded", "GameData", "ModuleManager.ConfigCache")
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CURATED = os.path.join(REPO, "manifest", "curated-parts.tsv")
 UPGRADES = os.path.join(REPO, "manifest", "upgrades-curated.tsv")
 PREV = [os.path.join(REPO, "manifest", "first-orbit-partlist.tsv"),
