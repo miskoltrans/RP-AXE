@@ -58,6 +58,10 @@ are what a reviewer checks placements against._
 - **Accepted hubs:** `elec_transistor` (~5, the honest solid-state gate), `aero_subsonicWing` (~5, discipline root), `str_structuralHardware` (4, foundation catch-all).
 - **Utility catch-alls** exempt from the ≤6-parts / one-king rule: `str_structuralHardware`, the GroundSupport MLP line, the launch-clamp chain.
 - **Real generational multi-tier jumps:** `aero_subsonicWing`→`aero_supersonicWing` (T1→T3); rocketplane `X-2`→`X-15` (T3→T5); the hydrolox and film-recon (T1→T3) gaps.
+- **Welded bus instruments:** 18 of 29 historic spacecraft buses carry `RP0RPWS*` / `RP0magScan3` as
+  BARE (ungated) `Experiment` modules alongside their Configure slots — RP-1's convention for boom
+  magnetometers and plasma-wave antennas that were physically integral to the vehicle. Usable only by
+  flying that bus, so the dedicated instrument part keeps its job. Do NOT read as a gate leak.
 - **Placeholder grants:** avionics-tier + DSN nodes emit a `partUpgrade` STUB via `grants:` until the plugin/facility mechanism is wired (see memory `rp-axe-placeholder-parts`).
 - **Parked / deferred (band-2, NOT bugs):** ladders, decals, deep-space instruments, probe-charter parts, the parked partlist tail.
 

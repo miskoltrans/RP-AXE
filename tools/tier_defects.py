@@ -395,7 +395,13 @@ def instrument_reachability(cache, nodes, part_node, authored=None):
             if m.get("name") == "Experiment":
                 e = m.get("experiment_id")
                 if e and e not in configured and tier is not None:
-                    out[e].append((tier, node, "part", nm))
+                    # A bare module on a part that ALSO has a Configure block is RP-1's WELDED
+                    # convention: boom magnetometers and plasma-wave antennas physically integral
+                    # to a spacecraft are attached directly instead of being swappable slots.
+                    # 18 of 29 historic buses do this. Not a gate leak -- the instrument is usable
+                    # only by flying that bus, so the dedicated part keeps its job.
+                    kind = "welded" if configured else "part"
+                    out[e].append((tier, node, kind, nm))
     return {e: sorted(v) for e, v in out.items()}
 
 
@@ -424,6 +430,14 @@ def instrument_defects(cache, nodes, part_node):
                 if c2 <= c1:
                     continue                   # not actually an upgrade
                 if r2[0] < r1[0]:
+                    if r2[2] == "welded":
+                        out.append(F("WELDED", fam,
+                                     f"gen{g2} (cap {c2:.0f}) rides the historic bus `{r2[3]}` at T{r2[0]} "
+                                     f"(`{r2[1]}`), ahead of gen{g1} at T{r1[0]} -- RP-1's welded-instrument "
+                                     f"convention; usable only by flying that bus, so the dedicated part "
+                                     f"keeps its job",
+                                     "instrument-reach", 5))
+                        continue
                     out.append(F("SUPERSEDED", fam,
                                  f"gen{g1} (cap {c1:.0f}) first reachable at T{r1[0]} via {r1[2]} `{r1[1]}`, but "
                                  f"gen{g2} (cap {c2:.0f}) is ALREADY reachable at T{r2[0]} via {r2[2]} `{r2[1]}` "

@@ -233,19 +233,43 @@ T6  103,458  visibleImaging4    T9  210,881  massSpec4    T10  862,148  visibleI
 **No action.** Standing lesson, and the second time this audit has been caught by it: read the payout
 model, not the headline field ([[kerbalism-pays-on-sciencecap]] says exactly this).
 
-### C2. What the retraction did surface
-- **`magScan3` (262,230 realised -- the largest payout in the game before T10) is reachable at T7 via
-  `pioneer_6_7_8_9`** on the charter node `jpl_lunarPlanetaryRecon`, while its dedicated part
-  `RO-FluxgateMagnet` sits at `mic_boomMagnetometryII` (T8). This is the mission-part leak noted under
-  B and set aside as marginal. It is not marginal: it is the one thing that breaks the monotonic climb
-  above, making T8 (149k) and T9 (211k) both pay *less* than the tier before them. Same shape for
-  `RPWS2` (31,115) on the same part.
-- **Film photography and imaging spectrometry pay ~1% of their peers.** Realised: `photos1` 96,
-  `photos1a` 48, `photos2` 192, `photos3` 500, `photos4` 10,000; `imageSpec1/2/3` 2,234-2,979,
-  `imageSpec4` 4,468 -- against 26k-862k for the TV-camera, mass-spec and magnetometer lines. So the
-  original "OpticsPhotonics is nearly worthless" was also mis-aimed: `visibleImaging` (the TV cameras)
-  is the most valuable line in the game. It is specifically the `RP0photos*` and `RP0imageSpec*`
-  sub-lanes -- about 9 nodes -- that pay almost nothing.
+### C2. What the retraction surfaced -- one half real, one half the same mistake again
+**C2b RETRACTED.** The claim was "film photography and imaging spectrometry pay ~1% of their peers".
+That repeated finding C's error one finding later: the `RP0photos*` line is **Earth-only**
+(`BodyAllowed = HomeBody`, `bodies = 1`), so comparing its all-body total against instruments that
+fly to 32 bodies is meaningless. Measured on its own ground:
+
+| experiment | Earth-only yield |
+|---|---|
+| `RP0photos4` | **10,000** |
+| `RP0visibleImaging5` | 1,023 |
+| `RP0orbitalPurturbation1` | 450 |
+| `RP0magScan3` | 90 |
+| `RP0massSpec4` | 86 |
+
+Film photography is not the underpaying lane -- it is **the single largest Earth-science payout in the
+game**, which is exactly right for a film-return reconnaissance programme, and it is what makes the
+early Earth-bound game solvent. (`RP0imageSpec1-4` really are low -- caps 3-6, `sitMask 48`,
+`biomeMask 0` -> 2.2k-4.5k -- but that is RP-1's own valuation of a niche instrument, and it shares a
+lane with the photos earners, so OpticsPhotonics as a whole is healthy.)
+
+**C2a -- real, and narrower than first stated.** `pioneer_6_7_8_9` carries `RP0magScan3` and
+`RP0RPWS2` as **bare, ungated `Experiment` modules** alongside its own 21 properly Configure-gated
+slots, so those two ride the charter node `jpl_lunarPlanetaryRecon` (T7) rather than their dedicated
+parts (T8 / T9).
+
+But this is **RP-1's deliberate convention, not a leak**: **18 of 29 historic buses** carry bare
+`RP0RPWS*` / `RP0magScan3` modules -- these are the boom magnetometers and plasma-wave antennas that
+were physically integral to those spacecraft, so RP-1 welds them on instead of making them swappable.
+Every other bus in the convention sits at or after the dedicated parts (`torekka` T9, `rn_voyager` T9,
+`galileo_mb` T10, `rn_cassini` T11); **`pioneer_6_7_8_9` at T7 is the only one that lands early.**
+Nothing is dead -- the instrument is usable only by flying that specific bus, so the dedicated part
+keeps its job.
+
+**DECISION 2026-07-29: leave it, document only.** `tools/tier_defects.py` now tags this route
+`welded` and reports it as an informational **WELDED** finding rather than SUPERSEDED, so it is not
+re-flagged. *Noted:* the RPWS2 gap is 2 tiers rather than 1 because the finding-B RPWS ladder split
+moved `RO-SWPlasmaAnalyzer` from T8 to T9 -- this audit widened it.
 
 ### D. Level ladders: `commsTL` is the model, five others are compressed
 | ladder | rungs → tiers | verdict |
