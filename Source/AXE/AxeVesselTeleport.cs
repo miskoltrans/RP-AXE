@@ -102,9 +102,19 @@ namespace RPAxe
 
             List<Part> parts = vessel.parts;
             if (parts == null) return;
-            foreach (Part part in parts)
-                if (part.Modules.Contains<LaunchClamp>())
-                    part.Die();
+            // Part.Die() removes the part from vessel.parts, so the clamps must be collected before any
+            // are killed -- walking the live list throws "Collection was modified" on the first clamp,
+            // which on a pad launch aborts the teleport entirely.
+            List<Part> clamps = null;
+            for (int i = parts.Count - 1; i >= 0; --i)
+            {
+                Part part = parts[i];
+                if (part != null && part.Modules.Contains<LaunchClamp>())
+                    (clamps ?? (clamps = new List<Part>())).Add(part);
+            }
+            if (clamps == null) return;
+            foreach (Part part in clamps)
+                if (part != null) part.Die();
         }
 
         public static void ResetGroundContact(Vessel vessel)
