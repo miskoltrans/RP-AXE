@@ -1,3 +1,0 @@
-part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
-ROE-RD301	RD-301	ROEngines	pc_hypergolicChemistry	3	start	LqdAmmonia;LqdFluorine	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-sputnik2	Sputnik 2	RN_Soviet_Probes	pc_hypergolicChemistry	3	generalRocketry	LqdOxygen	ModuleCommand;ModuleScienceContainer;ModuleRealAntenna;Modul	med

@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
 """node_density — report parts+upgrades per node: the DENSE piles (workhorses to spread) and the
-EMPTY nodes (enabler/process gates vs gaps), grouped by discipline. Reads the placement TSVs + tree."""
+EMPTY nodes (enabler/process gates vs gaps), grouped by discipline.
+
+Reads tree/nodes.yaml, which IS the placement: every part and upgrade is homed by an explicit
+`parts:` / `upgrades:` seed on its node. Until 2026-07-29 this counted manifest/part-placement.tsv
+and upgrade-placement.tsv instead — the output of P2 auto-placement, an approach rejected on
+2026-07-01 and unmaintained ever since, so the numbers described a tree that no longer existed.
+Those TSVs are gone; this now reports the real one."""
 import os, collections
 import yaml
 
-ROOT = os.path.dirname(os.path.abspath(__file__)); MAN = os.path.join(ROOT, "..", "manifest")
+ROOT = os.path.dirname(os.path.abspath(__file__))
 nodes = yaml.safe_load(open(os.path.join(ROOT, "..", "tree", "nodes.yaml"), encoding="utf-8"))["nodes"]
 disc = yaml.safe_load(open(os.path.join(ROOT, "..", "tree", "disciplines.yaml"), encoding="utf-8"))
 info = {n["id"]: (n["discipline"], n["tier"], n["title"]) for n in nodes}
 
-def counts(fn, col=1):
-    c = collections.Counter()
-    for ln in open(os.path.join(MAN, fn), encoding="utf-8").read().splitlines()[1:]:
-        p = ln.split("\t")
-        if len(p) > col: c[p[col]] += 1
-    return c
-parts = counts("part-placement.tsv"); ups = counts("upgrade-placement.tsv")
+parts = collections.Counter({n["id"]: len(n.get("parts") or []) for n in nodes if n.get("parts")})
+ups = collections.Counter({n["id"]: len(n.get("upgrades") or []) for n in nodes if n.get("upgrades")})
 
 print("================ DENSE NODES (workhorse piles — spread these) ================")
 print(f"{'node':26} {'disc':20} {'T':>2} {'parts':>5} {'ups':>4}")

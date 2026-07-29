@@ -1,3 +1,0 @@
-part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
-eos_tdrs	Tracking and Data Relay Satellite H-N	RN_US_Probes	int_comsatBus	5	generalRocketry		ModuleCommand;ModuleReactionWheel;ModuleRealAntenna;ModuleFu	med
-rn_tdrs_ag	Tracking and Data Relay Satellite A-G	RN_US_Probes	int_comsatBus	5	generalRocketry		ModuleCommand;ModuleReactionWheel;ModuleRealAntenna;ModuleFu	med

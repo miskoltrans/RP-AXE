@@ -1,4 +1,0 @@
-part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
-GrapplingDevice	Advanced Grabbing Unit	Squad	str_landingLegs	3	actuators			med
-sspx-extendable-tube-125-1	2.25m Extendable Crew Tube	StationPartsExpansionRedux	str_landingLegs	3	actuators			med
-sspx-extendable-tube-25-1	4.5m Extendable Crew Tube	StationPartsExpansionRedux	str_landingLegs	3	actuators			med

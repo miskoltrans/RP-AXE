@@ -1004,27 +1004,21 @@ def emit_standalone():
     except Exception as e:
         print(f"WARN standalone bundle failed: {e}")
 
-def load_placement():
-    """part->node, upgrade->node from manifest/*-placement.tsv (skip EXPERIMENTAL/REVIEW sentinels)."""
-    def read(fn):
-        out = {}; p = os.path.join(REPO, "manifest", fn)
-        if os.path.exists(p):
-            with open(p, encoding="utf-8") as f:
-                next(f, None)
-                for ln in f:
-                    c = ln.rstrip("\n").split("\t")
-                    if len(c) >= 2 and c[1] not in ("EXPERIMENTAL", "REVIEW"): out[c[0]] = c[1]
-        return out
-    return read("part-placement.tsv"), read("upgrade-placement.tsv")
+def merge_placement(nodes, by):
+    """Collect part->node / upgrade->node from the `parts:` and `upgrades:` seeds in tree/nodes.yaml,
+    which is the ONLY source of placement. Returns both maps (the game patch is emitted from them).
 
-def merge_placement(nodes, by, use_auto=True):
-    """Fold the placement TSVs into node unlocks; inline nodes.yaml seeds win as hand overrides so each
-    part/upgrade gets exactly one home. Returns merged part->node, upgrade->node (for the game patch).
-    use_auto=False (meta.auto_placement) => parts come ONLY from explicit `parts:` seeds (spine rebuild)."""
-    hand_p = {p: n["id"] for n in nodes for p in (n.get("parts") or [])}
-    hand_u = {u: n["id"] for n in nodes for u in (n.get("upgrades") or [])}
-    p2n, u2n = load_placement() if use_auto else ({}, {})
-    p2n.update(hand_p); u2n.update(hand_u)          # hand seeds override the auto placement
+    There used to be a second source: P2 "auto-placement", which homed every curated part by rubric
+    into manifest/part-placement.tsv + upgrade-placement.tsv, with the nodes.yaml seeds layered on
+    top as hand overrides. That approach was REJECTED on 2026-07-01 (tree/nodes.yaml carried
+    `auto_placement: false` from that day to this) and the tree has been hand-authored since. The
+    mode, its `meta.auto_placement` flag, its loader and its TSVs are all removed 2026-07-29.
+
+    Removing the mode rather than just its data is the point. load_placement() treated a missing TSV
+    as an empty dict, so deleting the files while leaving the flag would have turned "auto-place
+    everything" into "place nothing" -- silently, and only for whoever flipped the flag back."""
+    p2n = {p: n["id"] for n in nodes for p in (n.get("parts") or [])}
+    u2n = {u: n["id"] for n in nodes for u in (n.get("upgrades") or [])}
     for n in nodes: n["parts"] = []; n["upgrades"] = []
     for part, node in sorted(p2n.items()):
         if node in by: by[node]["parts"].append(part)
@@ -2069,7 +2063,7 @@ def main():
     resolve(disc, meta, nodes, by)       # cost, parent defaults, lane-grid fallback positions
     routes = sugiyama_layout(disc, nodes, by)   # layered (Sugiyama) layout + dummy-routed edges
     validate_design(disc, nodes, by)
-    p2n, u2n = merge_placement(nodes, by, meta.get("auto_placement", True))  # P2 auto-placement (meta-gated)
+    p2n, u2n = merge_placement(nodes, by)   # placement comes from nodes.yaml `parts:`/`upgrades:` only
     route_probe_mods(by, p2n)            # optional US/Soviet probe packs -> their charter subtree nodes
     emit_cfg(disc, nodes)
     emit_treemeta(disc, nodes)           # AxeTreeMeta.cfg: id->{discipline,tier,cost} for the render plugin

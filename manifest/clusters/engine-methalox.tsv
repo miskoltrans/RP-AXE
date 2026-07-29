@@ -1,3 +1,0 @@
-part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
-ROE-Raptor	Raptor (Surface Variant)	ROEngines	pc_methalox	6	start	CooledLqdMethane;CooledLqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med
-ROE-RaptorVac	Raptor-Vacuum	ROEngines	pc_methalox	6	start	CooledLqdMethane;CooledLqdOxygen	ModuleEnginesRF;EngineGroupModule;ModuleEngineConfigs;Flight	med

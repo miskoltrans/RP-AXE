@@ -1,4 +1,0 @@
-part	title	mod	node	node_tier	rp1_tech	props	key_modules	confidence
-ca_louver_m	CA-TCL8 Thermal Control Louver	CoatlAerospace	th_regenCooling	3	electrics		ModuleDeployableRadiator;ModuleActiveRadiator	high
-ca_louver_s	CA-TCL4 Thermal Control Louver	CoatlAerospace	th_regenCooling	3	electrics		ModuleDeployableRadiator;ModuleActiveRadiator	high
-ca_louver_s2	CA-TCL4-B Thermal Control Louver	CoatlAerospace	th_regenCooling	3	electrics		ModuleDeployableRadiator;ModuleActiveRadiator	high
