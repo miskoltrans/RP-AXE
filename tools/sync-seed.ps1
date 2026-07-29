@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Refresh the vendored RP-1 config in GameData/RP-AXE/seed/ from the RP-1 source repo.
 
@@ -96,18 +96,18 @@ $excludeReason = [ordered]@{
     'zFinal.cfg'                 = 'ModuleShowInfo flood; clamp-command bit -> design/ if wanted'
     'ToolingDefinitions.cfg'     = 'tooling system axed (inert)'
     'TestFlightRnD.cfg'          = 'TestFlight configs out-of-scope (see docs/WORKFLOW.md)'
-    'CustomBarnKit.cfg'          = 'RP-AXE uses CBK defaults (see docs/WORKFLOW.md)'
+    'CustomBarnKit.cfg'          = 'RP-AXE authors its OWN CBK ladders in design/Settings/AxeFacilities.cfg + AxeTrackingStation.cfg (launchpad, Mission Control, VAB/SPH, runway, R&D, Astronaut Complex, tracking station). Was "RP-AXE uses CBK defaults" -- true once, false since the facility passes; kept excluded because AXE owns these numbers, not because it has no opinion.'
     'GameParameters.cfg'         = 'difficulty/funds presets double-count with design/Rewards'
     'SpaceCenterSettings.cfg'    = 'RP0.dll budget/maintenance/training economy'
     'ProgramHandlerSettings.cfg' = 'RP0.dll ProgramHandler economy'
-    'CrewSettings.cfg'           = 'RP0.dll crew retirement system'
+    'CrewSettings.cfg'           = 'RP0.dll crew retirement/training system -- BUT NOT ALL OF IT: the file also carries a @PHYSICSGLOBALS block (kerbal G tolerance) and @EXPERIENCE_TRAIT modifiers that RP0.dll has nothing to do with. Excluding the file wholesale on the strength of its name left those at stock for months (docs/BUG-CLASSES.md finding 6). AXE now re-authors that half itself in design/Settings/AxeCrewPhysics.cfg -- re-read the RP-1 file, not just this line, when bumping.'
     'CrewTrainingTimes.cfg'      = 'RP0.dll crew training'
     'changelog.cfg'              = 'KSP-AVC changelog'
     'RP-1.version'               = 'version stamp (read for _README)'
     'KACIcon15.truecolor'        = 'UI image'
     'maintecost.truecolor'       = 'UI image'
     'zTweakScale.cfg'            = 'optional (TweakScale freescale) -- move to $rootFiles to include'
-    'KSPCommunityFixes.cfg'      = 'optional (KSPCF toggles) -- move to $rootFiles to include'
+    'KSPCommunityFixes.cfg'      = 'RP-AXE authors its own KSPCF toggles in design/Settings/AxeCommunityFixes.cfg (it takes 4 of RP-1s 8 and records why StrategyDuration is refused). Do NOT move to $rootFiles -- that would re-add RP-1s set on top.'
 }
 
 # --- vendor folders -------------------------------------------------------------
@@ -135,6 +135,13 @@ $designOwned = @(
     'Parts\Science\US2.cfg'              # -> design\Science\US2.cfg (US2 wedge inline Configure tech= remapped)
     'Science\HardDriveConfigs.cfg'       # -> design\Science\HardDriveConfigs.cfg (nodes remapped)
     'Science\HardDriveConfigs.disabled'  #    (inert; design\ owns the HardDrive system)
+    # Not design-owned but DEAD: IGNORED_EXPERIMENTS has no reader outside RP0.dll (RP-1 reads it in
+    # RP0\Singletons\Database.cs to pre-complete body/experiment/situation combos). Shipping it made
+    # a 280-line file that looks authored and does nothing -- bug family A1, and it failed
+    # check_liveness.py check C on every run. AXE's equivalent intent lives in
+    # design\Science\EarthScienceRemoval.cfg, which zeroes the situations rather than pre-completing
+    # them. Re-vendor it only if AXE ever ships a reader.
+    'Science\IgnoredExperiments.cfg'
     # (Tree\HardDriveUpgrades.cfg needs no strip -- Tree\ is no longer vendored; its
     #  remapped version lives in design\Science\HardDriveUpgrades.cfg)
 )

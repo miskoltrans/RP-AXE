@@ -37,6 +37,14 @@ SETTINGS_NODES = {
     "KCT_TECH_NODE_TYPES", "SCMModuleTemplates", "RP1_Resource_Info", "AVIONICSCONFIGS",
     "IGNORED_EXPERIMENTS", "KERBALISM_HDD_SIZES", "STRATEGY_DEPARTMENT", "CUSTOMSCENARIO",
     "ENTRYCOSTMODS",
+    # Added 2026-07-29. RP-1 patches EXPERIENCE_TRAIT[Pilot/Engineer/Scientist] and this gate had
+    # never looked, so the stock 2.0x veteran-pilot G-tolerance bonus sat next to RP-1's PHYSICSGLOBALS
+    # values undetected -- the two are one dial (they multiply). COARSE ON PURPOSE, and worth knowing:
+    # the walker strips `[index]` decorations, so all three traits collapse to the single path
+    # EXPERIENCE_TRAIT/EFFECT/<key>. That detects "AXE never re-authored trait effects at all"; it
+    # does NOT detect "AXE re-authored one trait and forgot the other two". Un-stripping would need a
+    # different key scheme for the whole tool.
+    "EXPERIENCE_TRAIT",
 }
 
 # Disposition of every RP-1 settings area AXE does not match. Keyed by node name or by an exact
@@ -89,62 +97,69 @@ DISPOSITIONS = {
     "CUSTOMBARNKIT/ASTRONAUTS/upgradesVisual":    "CUT: crew progression.",
     "CUSTOMBARNKIT/ASTRONAUTS/recruitHireBaseCost":   "CUT: crew progression (no hiring model).",
     "CUSTOMBARNKIT/ASTRONAUTS/recruitHireFixedRate":  "CUT: crew progression.",
-    "CUSTOMBARNKIT/ASTRONAUTS/activeCrewLimit":   "CUT: crew progression.",
-    "CUSTOMBARNKIT/ASTRONAUTS/crewLevelLimit":    "CUT: crew progression (no crew XP ladder).",
+    "CUSTOMBARNKIT/ASTRONAUTS/activeCrewLimit":
+        "STOCK, deliberate: 5/12/-1 IS enforced (KerbalRoster + AstronautComplex, on hiring), but "
+        "RP-1's own first rung is 4, so stock is the MORE generous of the two. Nothing to fix. "
+        "(Was 'CUT: crew progression' -- true of the ladder, wrong about the cap being inert.)",
+    "CUSTOMBARNKIT/ASTRONAUTS/crewLevelLimit":
+        "STOCK, and INERT -- checked, not assumed. GameVariables.GetCrewLevelLimit has exactly two "
+        "references in Assembly-CSharp: its own definition and Upgradeables/KSCFacilityLevelText, "
+        "the facility upgrade TOOLTIP. KSP 1.12 never enforces it, so 1/3/-1 caps no kerbal. This "
+        "is what closes the KerbalismLab crew-star question (docs/KERBALISMLAB.md): Scientist:4+ is "
+        "reachable at any Astronaut Complex level.",
 
     # --- individual keys inside kept sections ---
     "CUSTOMBARNKIT/RESEARCH/scienceCostLimit":
-        "DEFERRED: the R&D per-node science cap. Punch-list #1 -- can soft-lock a 507-node tree; "
-        "revisit at the economy-polish pass (rp-axe-silent-settings-gaps).",
+        "KEPT, re-authored 2026-07-29: AXE owns an 8-level ladder (82 … -1) in "
+        "design/Settings/AxeFacilities.cfg @RESEARCH. RP-1 is NOT the precedent -- it DELETED this "
+        "mechanic (-1,-1,-1) because KCT still paced research by time; AXE cut KCT, so this is its "
+        "only funds gate across the tree. Divergence is the design. See docs/ECONOMY.md §8.",
     "CUSTOMBARNKIT/RESEARCH/dataToScienceRatio":
-        "DEFERRED: rides with scienceCostLimit above.",
+        "KEPT, re-authored: flattened to 1 at all 8 levels, matching RP-1's intent (rides with "
+        "scienceCostLimit above; the key diverges only because the ARRAY LENGTH does).",
     "CUSTOMBARNKIT/ADMINISTRATION/activeStrategyLimit":
         "DEFERRED: touches the programs economy; no user opinion yet.",
 
-    # --- OPEN: found by this gate 2026-07-29, awaiting a design call. Listed loudly every run. ---
+    # --- The EVA group: raised OPEN by this gate 2026-07-29, all five DECIDED the same day. ---
     # EVA capability is NOT crew progression -- it rides on the Astronaut Complex level, so cutting
-    # the crew system silently handed these to stock.
+    # the crew system silently handed these to stock. The decision (user call) was to take RP-1's
+    # SHAPE -- EVA in Earth's SOI costs nothing, the facility gates only beyond-Earth EVA -- at
+    # AXE's price. That shipped as @ASTRONAUTS in design/Settings/AxeFacilities.cfg, which sets
+    # homebodyAtmoEVA and unlockedEVAChute; those two now MATCH RP-1 and no longer reach this table.
+    # The three below still diverge, deliberately:
     "CUSTOMBARNKIT/ASTRONAUTS/unlockedEVA":
-        "OPEN: stock gates EVA at Astronaut Complex L2 -- a 75,000-fund upgrade AXE never designed "
-        "(live upgrades 19000/75000/282000, slot 0 dead). AXE has EVA science and crewed contracts.",
+        "STOCK value, deliberate: L2 = 75,000 is AXE's beyond-Earth EVA gate. RP-1's 4 is L4 on its "
+        "own 5-level ladder = 480,000. Same shape, an eighth of the price, and with "
+        "homebodyAtmoEVA = true (now set) it never bites on a near-Earth career at all.",
     "CUSTOMBARNKIT/ASTRONAUTS/unlockedEVAClamber":
-        "OPEN: rides with unlockedEVA. Stock L3; RP-1 pushes it to its top level.",
+        "STOCK value, deliberate: 3 of 3 levels == RP-1's 5 of 5. The number differs only because "
+        "the ladders are different lengths; both put clamber at the TOP level. No divergence in fact.",
     "CUSTOMBARNKIT/ASTRONAUTS/unlockedEVAFlags":
-        "OPEN: rides with unlockedEVA.",
-    "CUSTOMBARNKIT/ASTRONAUTS/unlockedEVAChute":
-        "OPEN: stock L3, RP-1 L1. EVA chutes at max Astronaut Complex only.",
-    "CUSTOMBARNKIT/ASTRONAUTS/homebodyAtmoEVA":
-        "OPEN: stock false = no EVA inside Earth's atmosphere. RP-1 sets true.",
+        "STOCK value, deliberate: L2, where RP-1 uses its top level. AXE is the more permissive of "
+        "the two and flag-planting is cosmetic.",
 
-    # Stock pays reputation per recovered kerbal; RP-1 all but disables it. AXE balanced its rep
-    # economy without modelling this (see ksp-contract-reward-multipliers).
+    # Stock pays reputation per recovered kerbal; RP-1 all but disables it.
     "CUSTOMBARNKIT/MISSION/reputationKerbalRecovery":
-        "OPEN: live 25/kerbal x RepGainMultiplier on EVERY recovered crewed vessel, vs RP-1's 1 -- "
-        "a reputation faucet tools/rep_budget.py does not model. It does not convert to funds "
-        "(FundraisingCampaign only fires on ContractReward/ScienceTransmission/Progression), but "
-        "reputation is what the strategy commitment slider is measured against, so it still moves "
-        "Channel 2 (see ksp-strategy-reputation-lerp, docs/ECONOMY.md).",
+        "STOCK value, deliberate (user call 2026-07-29): live 25/kerbal x RepGainMultiplier = +30 "
+        "on Normal for every recovered crew member, vs RP-1's 1. Kept as a real reputational win "
+        "for bringing people home. It does NOT convert to funds (FundraisingCampaign fires only on "
+        "ContractReward/ScienceTransmission/Progression) but reputation is what the strategy "
+        "commitment slider is measured against, so it still moves Channel 2. KNOWN GAP: "
+        "tools/rep_budget.py does not model it, so Channel 2's ceiling is understated by roughly "
+        "30 x (crew recovered) -- see docs/ECONOMY.md §3.",
     "CUSTOMBARNKIT/MISSION/reputationKerbalDeath":
-        "OPEN: live 10 vs RP-1's 200 -- killing a crew is nearly free.",
+        "STOCK value, deliberate (user call 2026-07-29): live 10 x RepLossMultiplier = -7.5 on "
+        "Normal, vs RP-1's 200 (= -150). Deaths are cheap, and cheaper than the +30 the same crew "
+        "would have paid on recovery. Accepted: AXE has no crew system for a loss to propagate "
+        "through, so a heavy rep penalty would be the only consequence and a purely punitive one.",
 
-    # RP-1 turns these KSPCF patches on; AXE inherits the mod's defaults (all false).
-    "KSP_COMMUNITY_FIXES/PartTooltipUpgradesApplyToSubstituteParts":
-        "OPEN: AXE ships 603 PARTUPGRADEs, so tooltip correctness under upgrades is more relevant "
-        "here than in RP-1, not less.",
+    # RP-1 turns these KSPCF patches on; AXE inherited the mod's defaults (all false). Four are now
+    # taken in design/Settings/AxeCommunityFixes.cfg and no longer reach this table. One is not:
     "KSP_COMMUNITY_FIXES/StrategyDuration":
-        "OPEN: AXE uses stock strategies as a funds channel, so strategy duration is live mechanics.",
-    "KSP_COMMUNITY_FIXES/OnSymmetryFieldChanged": "OPEN: editor symmetry bugfix; pure QoL.",
-    "KSP_COMMUNITY_FIXES/FewerSaves":             "OPEN: load/save perf; pure QoL.",
-    "KSP_COMMUNITY_FIXES/DisableNewGameIntro":    "OPEN: cosmetic.",
-
-    # Kerbal G-tolerance. rp-axe-silent-settings-gaps cleared 'G/pressure PART limits' as intact --
-    # these are the KERBAL limits, a different set, and they were never checked.
-    "PHYSICSGLOBALS/kerbalGThresholdLOC":
-        "OPEN: live 60000 vs RP-1 90000 -- crew black out sooner than RP-1 intends.",
-    "PHYSICSGLOBALS/kerbalGThresholdWarn":  "OPEN: rides with kerbalGThresholdLOC.",
-    "PHYSICSGLOBALS/kerbalGOffset":         "OPEN: rides with kerbalGThresholdLOC.",
-    "PHYSICSGLOBALS/kerbalGBadMult":        "OPEN: rides with kerbalGThresholdLOC.",
-    "PHYSICSGLOBALS/kerbalGBraveMult":      "OPEN: rides with kerbalGThresholdLOC.",
+        "MOD DEFAULT, deliberate (user call 2026-07-29): would make the 7 live strategies honour "
+        "minLeastDuration 60-100 / maxLongestDuration 1200-1600 days. AXE runs stock strategies as "
+        "funds Channel 2, so that locks the channel after each commit and expires it every 3-4 "
+        "years -- a time-pressure mechanic AXE cut with KCT. See AxeCommunityFixes.cfg.",
 }
 
 MM_SUFFIX = re.compile(r"(?::[A-Za-z]+(?:\[[^\]]*\])?)+$")
