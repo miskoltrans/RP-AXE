@@ -28,6 +28,9 @@ namespace RPAxe
     ///      Control and the player saw only an unexplained funds bump. It is now a visible offer the
     ///      player claims; AxeInstantComplete self-completes on acceptance (it fires only once the
     ///      contract is Active), so nothing else in the chain changes.
+    ///   2b. EVERY CHARTER STATES ITS VALUE. AxeProgramValue.cfg patches `%notes` onto the
+    ///      hand-authored AXE_Begin_* charters so a player can see what a program pays before
+    ///      committing. Rename a charter and the patch matches nothing, silently.
     ///   3. NO DANGLING CompleteContract REQUIREMENT. This is the dangerous one and the direct
     ///      analogue of tools/check_tech_refs.py: each completion contract gates on its programme's
     ///      objectives BY CONTRACT-TYPE NAME. A name that no longer resolves can never be satisfied,
@@ -83,6 +86,15 @@ namespace RPAxe
             var autoAccepted = completions.Where(c => c.autoAccept).Select(c => c.name).ToList();
             var unpaid = completions.Where(c => c.rewardFunds <= 0f).Select(c => c.name).ToList();
 
+            // (2b) the charter value notes actually landed. AxeProgramValue.cfg is a generated MM
+            // overlay (`%notes = ...`) onto the hand-authored AXE_Begin_* charters; if a charter is
+            // ever renamed, the patch matches nothing, MM logs nothing, and that program silently
+            // goes back to advertising no value at the one moment the player is choosing between
+            // programs. Read off Contract Configurator's parsed model, so this proves the patch
+            // applied — not merely that the file exists.
+            var charters = all.Where(c => c.name != null && c.name.StartsWith("AXE_Begin_")).ToList();
+            var unpriced = charters.Where(c => string.IsNullOrEmpty(c.notes)).Select(c => c.name).ToList();
+
             // (3) dangling CompleteContract requirements — the silent career-long failure
             var known = new HashSet<string>(all.Select(c => c.name));
             var dangling = new List<string>();
@@ -110,6 +122,11 @@ namespace RPAxe
 
             sb.Append(autoAccepted.Count == 0 ? " | visible-offer OK" : " | AUTO-ACCEPTED (invisible): " + Join(autoAccepted));
             sb.Append(unpaid.Count == 0 ? " | rewards OK" : " | ZERO-REWARD: " + Join(unpaid));
+            sb.Append(charters.Count == 0
+                ? " | NO CHARTERS LOADED"
+                : unpriced.Count == 0
+                    ? " | charter-value OK (" + charters.Count + ")"
+                    : " | CHARTER HAS NO VALUE NOTE: " + Join(unpriced));
             sb.Append(dangling.Count == 0 ? " | deps OK" : " | DANGLING CompleteContract: " + Join(dangling));
             return sb.ToString();
         }

@@ -552,3 +552,42 @@ contract `autoAccept`s, on the reasoning that otherwise "it sits Offered forever
 parameter never fires". That premise was half right: `AxeInstantComplete` does gate on
 `ContractState == Active`, which is exactly why an offer waits instead of self-firing, and why
 accepting it pays immediately. The assert is now inverted — an auto-accepted bonus is the defect.
+
+### 9a. What a program is worth, stated on its charter
+
+§9 fixed the payout being invisible *after* the work. The complementary gap was **before** it: both
+funds contracts are unreadable until you have already earned them. The completion bonus is not
+offered until every objective is met, and a capstone is not marked as anything special in the
+mission list — RP-1's `CAPSTONE` label is scraped from description markup that AXE does not
+re-render. So accepting a **Begin Program** charter — the one moment the player actually chooses
+between programs — said nothing about the stakes.
+
+`tools/build_economy.py` now emits a third file, `design/Programs/AxeProgramValue.cfg`, patching a
+`notes` line onto each of the 35 charters:
+
+> Worth at least 21,222 funds: 10,611 on its capstone mission, Downrange Milestone (5000 km), and
+> 10,611 as a bonus once every objective is met. Your difficulty settings scale rewards on top of
+> that, so the funds that land run higher. Chartering is permanent: the program stays active for the
+> rest of the career and its contracts remain available to fly.
+
+**`notes`, not `description`.** The flavour text is hand-authored in `ActivatePrograms.cfg` and this
+file is regenerated, so appending to `description` would need either fragile MM regex surgery or a
+`%description =` that silently reverts an edited line to whatever the generator last saw. `notes` is
+a separate field, and the whole chain is decompiler-verified rather than assumed:
+`ContractType.notes` is parsed from config → `ConfiguredContract.notes = contractType.notes` at
+generation → `GetNotes()` → stock `Contract.MissionNotes()`, called from
+**`MissionControlTextRich()`** — the Mission Control briefing pane, which is what you read before
+clicking Accept. It renders under the `Objectives:` header, above the objective list.
+
+**"At least"** is doing real work: the figures are base `rewardFunds`, and what lands is scaled by
+contract prestige × `FundsGainMultiplier` (1.5× on Normal for the Significant-prestige bonus). The
+lowest that product goes is Hard's `1.25 × 0.8 = 1.0`, so the stated number is never an overstatement
+on any preset.
+
+**Two gates, because this is a string-matched overlay** (BUG-CLASSES.md family 1). The generator
+reports `35/35 charters priced` and warns on either half of a mismatch — a charter whose program is
+not funded, or a funded program no charter can start. That only proves the *files* agree.
+`AxeEconomySelfTest` adds the other half: it reads Contract Configurator's parsed model and fails on
+any `AXE_Begin_*` with empty `notes`, which proves the patch actually *applied*. Charter → program
+comes from each charter's own `ActivateProgram` behaviour, never from its name —
+`AXE_Begin_EarlySatellitesHeavy` charters `EarlySatellites-Heavy`.
