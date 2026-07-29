@@ -329,6 +329,21 @@ def validate_design(disc, nodes, by):
     for r in roots:
         if r not in ("start", "parking", "experimental", "gs_soundingStands", "us2_serviceSandbox") and not r.startswith("hire_"):
             warns.append(f"extra root (no parents besides start): {r}")
+    # MEMBERSHIP: a placed part must be in manifest/curated-parts.tsv. The manifest is the single
+    # source of truth for what AXE ships (docs/PARTLIST.md); a part name that reaches nodes.yaml by
+    # any other route -- read off an RP-1 config, copied from a partlist extraction -- may belong to
+    # a mod that is not installed, in which case the node silently grants nothing. That is exactly
+    # how five DMagic Orbital Science parts (dmUS2*) left three nodes empty and two thinned until
+    # 2026-07-29. Placement was validated in every other respect; nobody asked if the part was ours.
+    # us2_serviceSandbox is the documented exception: it exists to hold uncurated parts on trial.
+    curated = set(load_part_titles())
+    if curated:
+        for n in nodes:
+            if n["id"] == "us2_serviceSandbox":
+                continue
+            for p in n.get("parts") or []:
+                if p not in curated:
+                    warns.append(f"placed part not in curated-parts.tsv: {p} on {n['id']}")
     print(f"design checks: {'clean' if not warns else str(len(warns))+' warning(s)'}")
     for w in warns: print(f"   ! {w}")
     return warns

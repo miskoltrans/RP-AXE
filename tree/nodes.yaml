@@ -94,7 +94,7 @@ nodes:
     tier: 1
     parents: []
     flavor: "The full Universal Storage modular service-module kit — bay cores, swappable wedges for power, propellant and life-support consumables, and the Sabatier/Elektron plants that recycle them. A detached sandbox: unlock it to fold the whole system out in the editor and see how it fits before it earns a place in the tree."
-    parts: [USQuadcore, USPenticore, USHexcore, USOctocore, USDoubleProbeCore, USACDTiny, USACDSmall, USACD1500, USACDMedium, USACDLarge, USBatteryWedge, USFoodWedge, USWaterWedge, USOxygenWedge, USCarbonDioxideWedge, USGreyWaterWedge, USSolidWasteWedge, USHydrazineWedge, USHydrogenWedge, USAerozineWedge, USSabatier, USElektron, USWaterPurifier, USAdaptorShroud0625, USAdaptorShroud1250, USAdaptorShroud1250Soyuz, USAdaptorShroud1250Vostok, USAdaptorShroud1500, USAdaptorShroud1875, USCylindricalShroud0625, USCylindricalShroud125, USCylindricalShroud125ResizedTo1875-1, USCylindricalShroud1500, USCylindricalShroud1500ResizedTo1875-2, USCylindricalShroud250]
+    parts: [USQuadcore, USPenticore, USHexcore, USOctocore, USDoubleProbeCore, USACDTiny, USACDSmall, USACD1500, USACDMedium, USACDLarge, USBatteryWedge, USFoodWedge, USWaterWedge, USOxygenWedge, USCarbonDioxideWedge, USGreyWaterWedge, USSolidWasteWedge, USHydrazineWedge, USHydrogenWedge, USAerozineWedge, USSabatier, USElektron, USWaterPurifier, USAdaptorShroud0625, USAdaptorShroud1250, USAdaptorShroud1250Soyuz, USAdaptorShroud1250Vostok, USAdaptorShroud1500, USAdaptorShroud1875, USCylindricalShroud0625, USCylindricalShroud125, USCylindricalShroud125ResizedTo1875-1, USCylindricalShroud1500, USCylindricalShroud1500ResizedTo1875-2, USCylindricalShroud250, USThermoBaroWedge]
     # SANDBOX (2026-07): all 35 dropped UniversalStorage2 parts (cores + ECLSS/propellant/power wedges +
     # chemical plants + shrouds), placed off-start for in-game inspection before deciding whether to promote
     # US2 into the tree. The 10 US2 wedges RP-1 kept (fuel-cell/RTG/science) are ALREADY placed across the
@@ -651,8 +651,15 @@ nodes:
     discipline: Microelectronics
     tier: 1
     parents: [start]
-    flavor: "A wedge of thermometers, barometers and sample cells flown up a sounding rocket to log temperature, pressure and density where balloons can't reach — the first instruments to tell us what the air is doing at the edge of space."
-    parts: [USThermoBaroWedge]
+    flavor: "Fly the thermometer and the barometer up a sounding rocket and read them where balloons can't reach — the first instruments to tell us what the air is doing at the edge of space. The measurement is turn one; carrying it above the atmosphere is the breakthrough."
+    parts: []
+    # DELIBERATELY EMPTY (2026-07-29). Its one part, USThermoBaroWedge, granted nothing: both of its
+    # Kerbalism SETUPs are `tech = start` and `start` already ships sensorBarometer + sensorThermometer
+    # as standalone parts — and proceduralAvionics carries the same instrument menu, so packaging
+    # thermo/baro on a sounding rocket was never gated on anything. The part moved to us2_serviceSandbox
+    # with the rest of the un-promoted US2 hardware (its mounting cores live there). The NODE stays: it
+    # roots the whole Microelectronics science lane (mic_massSpec + mic_magnetometer descend from it),
+    # so it earns its place as progression, not as a part grant. Allow-listed in tools/check_liveness.py.
 
   # ===================== BAND 1 ‖ AVIATION / SUPERSONIC (parallel milestone) =====================
   # Air-breathing propulsion is its OWN lane; supersonic engines DEPEND on Aerodynamics breakthroughs
@@ -1084,9 +1091,9 @@ nodes:
     tier: 6
     parents: [opt_remoteSensing]
     flavor: "A finer detector and a tighter scan resolve the infrared scene into detail the first radiometer blurred — the warm and cold of a coastline or a storm system mapped sharply, still in a single band but now worth the downlink."
-    parts: [RO-HRIRRadiometer, dmUS2GoreSat]
-    # dmUS2GoreSat added (2026-07): the US2 wedge IR radiometer, same mechanism as this node's own
-    # instrument — direct-add, no doctrine-4 conflict. Config pulled from RP-1 per band-2's own note.
+    parts: [RO-HRIRRadiometer]
+    # dmUS2GoreSat dropped 2026-07-29: a DMagic Orbital Science part, not installed and never in
+    # curated-parts.tsv, so it was a dead entry. RO-HRIRRadiometer carries the node on its own.
   - id: opt_twoChannelIR
     title: "Two-Channel Radiometry"
     discipline: OpticsPhotonics
@@ -1120,15 +1127,12 @@ nodes:
     tier: 5
     parents: [mic_magnetometer, rob_rotorActuation]
     flavor: "Swing the magnetometer out on a long boom, far from the spacecraft's own motors and wiring, so it reads the planet's field instead of the craft's — a boom that has to unfold and lock rigid on command. The measurement that only works once the sensor is metres from everything electric, and something can put it there."
-    parts: [dmUS2MagBoom]
-  - id: opt_precisionOptics
-    title: "Precision Orbital Optics"
-    discipline: OpticsPhotonics
-    tier: 5
-    parents: [opt_recon, gnc_earlyAvionics]
-    flavor: "A long-focal-length telescope trained on the surface from orbit, resolving detail a wide-angle camera smears into a blur — the optical reconnaissance that reads a runway, not just a coastline. Glass figured to the edge of the aperture and held rock-steady on a stabilised platform, for at this focal length the smallest jitter is a smear."
-    parts: [dmUS2Scope]
-
+    parts: [RO-HeliumMagnet]
+    # 2026-07-29: was dmUS2MagBoom, a DMagic Orbital Science part that is not installed and has never
+    # been in curated-parts.tsv, so this node granted nothing. The boom magnetometers were BOTH on the
+    # II node — a "II" with no "I". Split one per rung: MG02 Helium here, MG03 Fluxgate at II. Ordering
+    # is RP-1's own (RO-HeliumMagnet -> scienceAdvCapsules at x=-2612, RO-FluxgateMagnet ->
+    # deepSpaceScience at x=-1847), which also matches RO's MG02/MG03 numbering.
   # ===================== BAND 2 * SUPPORT (power / avionics / comms-DSN / structures) =====================
   # Grants + ride-alongs closing out the spacecraft-systems side of the era. Progression respected:
   # DSN L2 (T5) -> L3 (T6); solar TL0 (band-1) -> TL1; avionics early (T4) -> basic (T5). Tech-level
@@ -2123,9 +2127,10 @@ nodes:
     tier: 8
     parents: [mic_boomMagnetometry, rob_linearActuation]
     flavor: "A second, more sensitive sensor, now riding a boom that extends itself on command instead of just unfolding once — the field measured finer, and from exactly the distance the mission wants."
-    parts: [RO-HeliumMagnet, RO-FluxgateMagnet]
-    # RO-FluxgateMagnet added (2026-07, power+science pass): MG03, the next mark of the same
-    # boom-magnetometer family - this node (T8), not the T5 root, is the correct tier-generation match.
+    parts: [RO-FluxgateMagnet]
+    # RO-FluxgateMagnet: MG03, the later mark of the same boom-magnetometer family (RP-1 gates it at
+    # deepSpaceScience, well past scienceAdvCapsules where MG02 sits). MG02 moved down to the T5 root
+    # 2026-07-29, which had been left empty by a part that does not exist — see mic_boomMagnetometry.
   - id: opt_radarAltimetry
     title: "Radar Altimetry"
     discipline: OpticsPhotonics
@@ -2162,7 +2167,12 @@ nodes:
     tier: 7
     parents: [opt_remoteSensing]
     flavor: "Capture several wavelength bands of the same scene at once instead of one — a surface picked apart by what it reflects in each band, not just what it looks like."
-    parts: [dmUS2ImagingPlatform]
+    parts: [scansat-multi-abi-1, scansat-multi-modis-1, scansat-multi-msi-1]
+    # 2026-07-29: was dmUS2ImagingPlatform (DMagic, not installed, never curated) so this granted
+    # nothing — while its own child held all six SCANsat scanners. Split by what the instruments are:
+    # the DISCRETE-band Earth-observation imagers land here (ABI/GOES 16 bands, MODIS/Terra 36,
+    # MSI/Sentinel-2 13) and the CONTINUOUS-spectrum ones stay at opt_hyperspectralImaging. Both node
+    # titles were already correct for that split; only the parts were on the wrong side of it.
 
   # ================================================================================================
   # ===================== BAND 3 * ROBOTICS (T7) ====================================================
@@ -3181,10 +3191,11 @@ nodes:
     tier: 8
     parents: [mic_ionMassSpec]
     flavor: "Listen to the electric and magnetic oscillations of the plasma a spacecraft flies through — the radio song of a magnetosphere, measured across frequency to map fields no camera can see."
-    parts: [RO-PlasmaWave, dmUS2RPWS, RO-SWPlasmaAnalyzer, RO-RPWS]
+    parts: [RO-PlasmaWave, RO-SWPlasmaAnalyzer, RO-RPWS]
     # RO-SWPlasmaAnalyzer added (2026-07, power+science pass): RPWS02, the same Radio-and-Plasma-Wave
     # instrument series as RO-PlasmaWave already here (traced by series code, not RP-1's era bucket).
-    # King RPWS plasma-wave detector; dmUS2RPWS is its Universal-Storage-2 wedge form (a band-3 US2 wedge).
+    # King RPWS plasma-wave detector. dmUS2RPWS (its US2 wedge form) dropped 2026-07-29 -- DMagic part,
+    # not installed, never in curated-parts.tsv.
 
   # ---- Lane H: spaceplanes (procedural wing + winged reentry + toolkit catalogs) ----
   - id: aero_spaceplaneWing
@@ -4954,7 +4965,11 @@ nodes:
     tier: 10
     parents: [opt_multiSpectralImaging]
     flavor: "Not three colours but hundreds. A hyperspectral imager splits each pixel into a continuous spectrum, reading the mineral, chemical and biological signature of the surface below — the scanner that maps what a place is made of, not just what it looks like."
-    parts: [scansat-multi-modis-1, scansat-resources-crism-1, scansat-resources-hyperion-1, scansat-multi-abi-1, scansat-multi-msi-1, scansat-resources-mise-1]
+    parts: [scansat-resources-crism-1, scansat-resources-hyperion-1, scansat-resources-mise-1]
+    # The three genuinely HYPERspectral instruments — hundreds of contiguous bands, which is what the
+    # flavor above describes: CRISM (MRO, 544 bands), Hyperion (EO-1, 220), MISE (Europa Clipper). The
+    # three discrete-band multispectral imagers moved down to this node's parent 2026-07-29, which had
+    # been left empty by a part that does not exist.
   - id: opt_thermalMappingSpectrometry
     title: "Thermal-Mapping Spectrometry"
     discipline: OpticsPhotonics

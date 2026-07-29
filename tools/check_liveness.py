@@ -47,6 +47,14 @@ PATCH_TIME_ONLY = {
     "KERBALISM_HDD_SIZES",        # #$@KERBALISM_HDD_SIZES/<probe>/data$
     "RPAXE_REMOVAL_FLAGS",        # exists only to carry :FOR[HardRemoveNonRO]
 }
+# Tree nodes that are SUPPOSED to grant no parts: pure progression gates, where the shape of the
+# tree is the whole contribution. Keep this list short and say why -- an empty node is normally a
+# defect, and the only thing separating "deliberate" from "its part silently vanished" is this file.
+INTENTIONALLY_EMPTY = {
+    "mic_atmoSounding": "roots the Microelectronics science lane (mic_massSpec + mic_magnetometer); "
+                        "its only part granted two experiments already available at start",
+}
+
 # Node names KSP/other mods define; we only audit the ones RP-AXE actually ships.
 STOCK_NODES = {
     "PART", "PARTUPGRADE", "RESOURCE_DEFINITION", "EXPERIMENT_DEFINITION", "PARAMETER",
@@ -258,11 +266,14 @@ def main():
     # ---- A: tree nodes that grant nothing --------------------------------------------------
     empty, thin = [], []
     for nid, title, parts in tree_nodes():
+        if nid in INTENTIONALLY_EMPTY:
+            continue
         gone = [p for p in parts if p not in usable]
         if gone:
             (empty if len(gone) == len(parts) else thin).append((nid, title, parts, gone))
     print(f"=== A. tree nodes whose parts are missing from the game "
-          f"({len(empty)} empty, {len(thin)} thinned) ===")
+          f"({len(empty)} empty, {len(thin)} thinned; "
+          f"{len(INTENTIONALLY_EMPTY)} allow-listed as deliberate gates) ===")
     for nid, title, parts, gone in empty:
         print(f"  EMPTY  {nid} -- \"{title}\"  grants nothing: {gone}")
     for nid, title, parts, gone in thin:
