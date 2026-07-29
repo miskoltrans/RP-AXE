@@ -470,6 +470,44 @@ the 1.27x reward, so neither is dead.
   all** in the cache, so it could not be fitted to the grid. Worth a look on its own -- a solar node
   whose only part may not generate power.
 
+### G. Tanks -- the material ladder (2026-07-29)
+Tanks were one of five families the capability model punted on ("no defensible scalar"), which meant
+*unmeasured*, not *balanced*. RealFuels does expose the right number: each `TANK_DEFINITION` carries
+`basemass = <x> * volume`, so **dry mass per unit volume IS the capability**, and the types form
+explicit material ladders -- `Tank-Sep-` Steel -> Al -> Al2 -> AlCu -> AlLi -> Stir -> Starship, plus
+`Tank-Iso-` and `Tank-Balloon-` families. They are gated by `RFTech-Tank-*` PARTUPGRADEs wired through
+`ModuleFuelTanks` `UPGRADES { typeAvailable = ... }`.
+
+This matters more than any other family: tank dry-mass fraction drives every staging decision.
+
+**RESOLVED.** Two defects, both in the separated-tank line:
+
+- **`Tank-Sep-Al` and `Tank-Sep-Al2` shared `met_weldedTank` (T1).** Al2 is 32% lighter (27.0 vs
+  39.55) with better utilisation (92 vs 87) for 10% more cost, so Al was obsolete on arrival -- and
+  against the `Tank-Sep-Steel` start baseline of 70.0, one T1 purchase dropped tank dry mass **70 ->
+  27, 2.6x, in a single node**. Al2 moved to a new **`met_stringerTankage` (T3)**, "Stringer-Stiffened
+  Tankage". T1 -> T3 is a deliberate two-tier jump, taken to spread the gain.
+- **`Tank-Sep-AlCu` was homed on `int_geminiCapsule` (T7)** -- the only rung of the material ladder
+  outside Metallurgy, which gated the tank ladder on building a capsule. Moved to a new
+  **`met_aluminiumCopperTankage` (T7)**, keeping the pacing identical and changing only the lane;
+  `met_aluminiumCopperBalloonTank` (T9) now hangs off it so the chain is explicit. `RFTech-SM-III`
+  stays on the Gemini node -- a SERVICE-MODULE tank level genuinely is a capsule-programme
+  breakthrough.
+
+The separated-tank ladder now reads as one Metallurgy chain, one rung per step:
+
+```
+start  Tank-Sep-Steel      70.0     T7   met_aluminiumCopperTankage  AlCu      20.0
+T1     met_weldedTank      Al 39.5  T11  met_aluminiumLithiumTankage AlLi      15.5
+T3     met_stringerTankage Al2 27.0 T13  met_stirWeldedTankage       Stir      14.5
+                                    T15  met_stainlessSteelTankage   Starship  18.0
+```
+
+**Checked and dismissed:** `Tank-Sep-Starship` (T15) is *heavier* than `Tank-Sep-Stir` (T13) -- 18.0
+against 14.5 -- which looks like an inversion. It is not: Starship is **35% cheaper** at identical
+97% utilisation, a real cost/mass trade and the actual design philosophy of the vehicle it is named
+for. Same sidegrade class as the engine configs dismissed in E.
+
 ## 3. Tier shape -- three claims made, three retracted
 
 Every tier-shape finding in the first draft turned out to be an artefact of measuring the wrong

@@ -479,7 +479,36 @@ nodes:
     parents: [start]
     flavor: "Roll, fusion-weld and proof-test a thin metal cylinder that holds its propellant under pressure without bursting — the first tank that flies, and the steel the first engine chambers are cut from. Heavy, but honest."
     parts: [ROT-GenericTank-Separate, ROT-BoosterTank-Separate, ROT-RadialTank-Separate, ROT-AtlasTank-Separate, ROT-KatnissTank-Separate, ROT-LanderTank-Separate, ROT-MiscTank-Radial-Separate, ROT-MiscTank-Separate, ROT-Nose-Separate, ROT-SphericalTank-Separate, ROT-ToroidalTank-Separate, ca_tank_mp_s, ReleaseValve]
-    upgrades: [RFTech-Tank-Sep-Al2, RFTech-Tank-Sep-Al]  # early separate-wall aluminium tank tech-levels ride the base tank node (2026-07 Group-B)
+    upgrades: [RFTech-Tank-Sep-Al]
+    # SPLIT 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md G). This node gated BOTH Tank-Sep-Al
+    # (basemass 39.55) and Tank-Sep-Al2 (27.0), so Al was obsolete the moment the node was bought and a
+    # single T1 purchase took tank dry mass 70 -> 27 against the Tank-Sep-Steel baseline -- a 2.6x drop
+    # in the stat that drives every staging decision, half of it wasted on a rung nobody would use.
+    # Tank-Sep-Al2 -> met_stringerTankage (T3).
+  - id: met_stringerTankage
+    title: "Stringer-Stiffened Tankage"
+    discipline: Metallurgy
+    tier: 3
+    parents: [met_weldedTank]
+    flavor: "Run longitudinal stringers down the inside of the skin and let them carry the loads the skin alone was buckling under. The wall gets thinner than the tank it replaces and still holds the same column upright."
+    upgrades: [RFTech-Tank-Sep-Al2]
+    # NEW 2026-07-29 (tier-balance audit) -- see the note on met_weldedTank. T1 -> T3 is a two-tier jump
+    # off its parent, taken deliberately to spread the early tank-mass gain instead of handing 70 -> 27
+    # in one node. Naming follows the lane's own pattern (Machined Isogrid Stiffening, Aluminium
+    # Stringer Fairings): the stiffening MECHANISM, not the alloy.
+  - id: met_aluminiumCopperTankage
+    title: "Aluminium-Copper Alloy Tankage"
+    discipline: Metallurgy
+    tier: 7
+    parents: [met_stringerTankage]
+    flavor: "Alloy the aluminium with copper and it age-hardens: the same tank wall carries more load for less metal, and the duralumin family that made aircraft possible finally makes a lighter rocket too."
+    upgrades: [RFTech-Tank-Sep-AlCu]
+    # NEW 2026-07-29 -- takes RFTech-Tank-Sep-AlCu off int_geminiCapsule (T7), where it was the one rung
+    # of the material ladder living outside Metallurgy. Kept at T7 so the ladder's PACING is unchanged;
+    # only its lane moves. The whole chain now reads in one discipline:
+    #   met_weldedTank T1 (Al 39.6) -> met_stringerTankage T3 (Al2 27) -> HERE T7 (AlCu 20)
+    #   -> met_aluminiumCopperBalloonTank T9 -> met_aluminiumLithiumTankage T11
+    #   -> met_stirWeldedTankage T13 -> met_stainlessSteelTankage T15  # early separate-wall aluminium tank tech-levels ride the base tank node (2026-07 Group-B)
   - id: met_isogrid
     title: "Machined Isogrid Stiffening"
     discipline: Metallurgy
@@ -1874,7 +1903,10 @@ nodes:
     parents: [int_mercuryCapsule]
     flavor: "Give the capsule its own thrusters and it stops merely falling around the Earth — it can change its orbit, chase a target, hold a heading. Gemini: not a bigger Mercury, a spacecraft that flies itself."
     parts: [ROC-GeminiCMBDB, ROC-GeminiOAMSBDB, ROC-GeminiOAMSRCSBDB, ROAdvCapsule]
-    upgrades: [RFTech-SM-III, RFTech-Tank-Sep-AlCu]
+    upgrades: [RFTech-SM-III]
+    # RFTech-Tank-Sep-AlCu MOVED OUT 2026-07-29 -> met_aluminiumCopperTankage (T7). It was the only rung
+    # of the tank material ladder homed outside Metallurgy, which gated the ladder on building a capsule.
+    # RFTech-SM-III stays: a SERVICE-MODULE tank level genuinely is a capsule-programme breakthrough.
     # +2 upgrades (2026-07): RealFuels per-tank-type tech tier (service-module/separate-tank alloy),
     # confirmed KEEP-tank-typelevel, bucket=materialsScienceAdvCapsules — this IS the advanced-capsule
     # generation these describe.
@@ -3748,7 +3780,7 @@ nodes:
     title: "Aluminium-Copper Balloon Tankage"
     discipline: Metallurgy
     tier: 9
-    parents: [str_balloonTank]
+    parents: [str_balloonTank, met_aluminiumCopperTankage]
     flavor: "Swap the pressure-stabilised tank's stainless skin for an aluminium-copper alloy and the same trick — a wall so thin it needs its own pressure to stand — sheds a third of its weight again. The material the Shuttle's own External Tank flies on."
     upgrades: [RFTech-Tank-Balloon-SteelAlCu, RFTech-Tank-Iso-AlCu, RFTech-SM-IV]  # +Iso-AlCu (isogrid, same AlCu alloy) +SM-IV (service-module tankage, lunar era) 2026-07 Group-B
     # Real crossover: the upgrade token name itself (SteelAlCu) names the actual Space Shuttle External
