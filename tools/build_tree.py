@@ -1825,6 +1825,81 @@ def check_ladder_collapse(ladders, by, p2n, u2n):
             f"mid-edit.") if not os.environ.get("AXE_LADDER_SOFT") else None
     return r1
 
+# Tech-LEVEL ladders: a PARTUPGRADE family whose members are numbered generations of one capability
+# (RFTech-Battery-II/III/IV, PFTech-Fairing-I..VI, solarTL0..10, RFTech-rcs-tltech1..7). Distinct from the
+# engine-CONFIG ladders check_ladder_collapse walks: those come from engine-stats.tsv and are keyed by part,
+# these are standalone tokens keyed only by their own name, so nothing was checking their order at all.
+# That gap is how RFTech-Battery-IV came to unlock a full tier BEFORE Battery-III (fixed 2026-07-29).
+TL_LADDER_PATS = [
+    re.compile(r'^(?P<stem>.*)-(?P<lvl>I|II|III|IV|V|VI|VII|VIII|IX|X)$'),   # -I .. -X
+    re.compile(r'^(?P<stem>.*?TL)(?P<lvl>\d{1,2})$'),                        # solarTL7, commsTL10
+    re.compile(r'^(?P<stem>.*?tltech)(?P<lvl>\d{1,2})$'),                    # RFTech-rcs-tltech6
+]
+TL_ROMAN = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10}
+
+def tl_ladders(u2n):
+    """Group placed upgrade tokens into tech-level ladders -> {stem: [(level, token), ...]} sorted by level.
+
+    RFUpgrade_* is excluded wholesale: those are engine CONFIGs (check_ladder_collapse's job), and their
+    names are hardware designations, not levels -- RFUpgrade_Aestus-II and RFUpgrade_WP-6A-III would
+    otherwise read as roman rungs when "Aestus II" is simply the engine's name."""
+    lad = collections.defaultdict(list)
+    for tok in u2n:
+        if tok.startswith("RFUpgrade_"): continue
+        for pat in TL_LADDER_PATS:
+            m = pat.match(tok)
+            if not m: continue
+            lvl = m.group("lvl")
+            lad[m.group("stem")].append((TL_ROMAN.get(lvl) or int(lvl), tok))
+            break
+    return {s: sorted(v) for s, v in lad.items() if len(v) > 1}
+
+def check_techlevel_ladders(by, u2n, hard=True):
+    """Build gate: a numbered tech level must never be gated EARLIER than the level it supersedes.
+
+    These upgrades are additive and independent (RealFuels declares them IsAdditiveUpgrade__), so a
+    later level does not require the earlier one. Gate level N+1 below level N and level N becomes
+    unbuyable-but-still-charged: the player already owns something strictly better, and still gets an
+    entry cost billed for the rung they skipped past. RFTech-Battery-III cost 540 funds for exactly
+    nothing that way, because Battery-IV sat a tier below it.
+
+    D1 ERROR  a rung on a node at a lower tier than the rung it supersedes
+    D2 note   rungs sharing one node -- house style for ADJACENT generations (solarTL0+TL1 on
+              elec_arCoatings, PFTech-Fairing-V+VI, 0.042 -> 0.040 of padding), so it is counted,
+              not flagged. Non-adjacent sharing is what D1 catches once the tiers disagree.
+
+    Reports loudly every build; fatal under AXE_TREE_STRICT=1 (the CI / pre-commit convention
+    check_tech_gates uses). NOT unconditionally fatal like check_ladder_collapse's R2 yet, because two
+    descents predate this gate -- RFTech-rcs-tltech6 and RFTech-solids-tltech6 both sit a tier below the
+    rung they supersede, and unlike Battery/Fairing their PARTUPGRADEs carry no mechanism text ("This is
+    an upgrade to the technology level of Solid Engines") to re-home them by. Both obvious de-inversions
+    just trade the descent for four rungs on one node, so they want a design call, not a mechanical fix.
+    Promote this to unconditionally fatal once those two are decided."""
+    d1, shared, nlad = [], 0, 0
+    for stem, rungs in sorted(tl_ladders(u2n).items()):
+        rungs = [(l, t) for l, t in rungs if u2n.get(t) in by]
+        if len(rungs) < 2: continue
+        nlad += 1
+        seen = collections.Counter(u2n[t] for _, t in rungs)
+        shared += sum(c - 1 for c in seen.values() if c > 1)
+        prev = None
+        for lvl, tok in rungs:
+            node = u2n[tok]; tier = by[node]["tier"]
+            if prev and tier < prev[0]:
+                d1.append((stem, tok, node, tier, prev[1], prev[0]))
+            prev = (tier, tok)
+    if not d1:
+        print(f"tech-level ladder gate: clean -- {nlad} ladder(s) ascend ({shared} adjacent rung(s) sharing a node)")
+        return []
+    print(f"tech-level ladder gate: {len(d1)} DESCENDING rung(s) across {nlad} ladder(s)")
+    for stem, tok, node, tier, ptok, ptier in d1:
+        print(f"   D1 ! {stem}: {tok} @ {node} T{tier} is gated EARLIER than {ptok} (T{ptier}), "
+              f"which it supersedes")
+    if hard and os.environ.get("AXE_TREE_STRICT") and not os.environ.get("AXE_LADDER_SOFT"):
+        die(f"AXE_TREE_STRICT set: {len(d1)} descending tech-level rung(s) — see above. A later level "
+            f"must not unlock before the level it replaces.")
+    return d1
+
 def check_unplaced_upgrades(u2n, grant2n):
     """Inventory of the PARTUPGRADEs that fell through to `parking` — the upgrade-side twin of the
     "N unplaced parts -> parking" line emitted next to the placement patch.
@@ -2029,6 +2104,7 @@ def main():
     emit_impl_backlog(nodes)             # docs/IMPL-TODO.md: provisional grants + impl_todo -> checklist
     check_tech_gates(nodes)              # gate: authored tech-refs (design/*.cfg + Source) must resolve (fail closed+silent otherwise)
     check_ladder_collapse(ladders, by, p2n, u2n)   # gate: engine-config ladders must not collapse onto one node
+    check_techlevel_ladders(by, u2n)     # gate: numbered tech levels (Battery-N, Fairing-N, solarTL-N) must ascend
     check_ep_power_spread(u2n, by, hard=True)   # gate: one node must not span electric power classes (0 since 2026-07-28)
 
 if __name__ == "__main__": main()
