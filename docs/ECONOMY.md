@@ -401,6 +401,11 @@ ending. Retitled **"Program Bonus: X"** (matching the hand-authored `Begin Progr
 the pair reads as one series) and the description now states outright that the program stays active.
 The `AXEInstant` parameter reads *"Collect the bonus"*, not *"Discharge the programme"*.
 
+> **Reversed by [§13](#13-programs-end--2026-07-30-conclusion-is-earned-not-chosen).** The playtester
+> was right and this section was wrong: programs now do end, and this contract is the ending. Retitled
+> again to *"Conclude Program: X"*. The "no deactivate path" statement above is history, not current
+> behaviour.
+
 **Defect fixed in the same pass — `AsteroidExploration` was paying nothing.** RP-1 funds it at
 `baseFunding = 8,400,000` (4th richest of 35) but ships it with an **empty `OBJECTIVES` block**.
 `load_programs` dropped any programme with no objectives, so it got no completion contract, no
@@ -946,3 +951,93 @@ they already run.
 
 **Not yet confirmed in game** — it needs a career cold-load to see the popup actually spawn, the same
 outstanding verification as the `@ADMINISTRATION` and `@RESEARCH` blocks above.
+
+## 13. Programs end — 2026-07-30: conclusion is earned, not chosen
+
+`Begin Program: X` had no counterpart. A chartered program stayed active for the rest of the career,
+so its member contracts — including the 66 repeatable ones — kept being offered forever, and §7's
+`Program Bonus: X` was explicitly worded to say so.
+
+Programs now have a third state and an ending. **Inactive → Active → Concluded**, mirroring RP-1
+(`Program.IsActive => !IsComplete && acceptedUT != 0`, and `CompleteProgram` does
+`ActivePrograms.Remove(p)`). Only **Active** satisfies `ProgramActive`, so concluding a program is
+what stops its contracts being offered — one rule, and the 250 program-gated seed contracts follow
+from it.
+
+### The abandon path was designed, then cut on the data
+
+The ask was closure for *obsolete* programs, which implies abandoning one you cannot or will not
+finish. So: can every chartered program actually be finished? **34 of 35 can.** The single exception
+was `TargetedSats`, whose objective `FirstGEOSat` is gated `Any{CommercialApplications2,
+GEOCommNetwork}` — both deliberately un-chartered because RP-1 ships them `isDisabled`. One upstream
+config artefact does not justify a player-facing abandon door, a forfeit rule, an undo, and a second
+contract per program. It justifies a build gate. **Cut:** abandoning a started program, revoking a
+charter, re-chartering after conclusion, any guard against over-chartering, and a programs UI.
+
+(`NeptuneMoonLandings` looked like a second case — its only objective `landingTriton` appeared to be
+gated by `OuterGasGiantSurvey`. It is not: see the dedupe fix below.)
+
+### Shipped
+
+- **`AxeProgramHandler.Conclude()`** + a `concludedProgram` save key. Additive, so pre-existing saves
+  load as "nothing concluded" with no migration.
+- **`ConcludeProgram`** behaviour (`Source/AXE/Contracts/ConcludeProgram.cs`), on every
+  `AXE_Complete_*` contract. Fires on **`OnCompleted`, not `OnAccepted`** like its mirror
+  `ActivateProgram`: the contract sits Active for one frame while `AxeInstantComplete` waits for
+  `Root.ContractState == Active`, and pulling its own `ProgramActive` requirement inside that window
+  is precisely the state CC answers by failing the contract.
+- **`ProgramActiveRequirement` now defaults `checkOnActiveContract = false`** — a deliberate
+  divergence from RP-1, and load-bearing rather than cosmetic. With `true`, CC re-checks requirements
+  on contracts that are already Active, and `ContractRequirement.RequirementsMet` responds to one
+  going unmet by calling `Contract.Fail()`, which in stock runs `PenalizeFailure()` and posts a red
+  failure message (both verified by decompile). Collecting a program's completion bonus while any of
+  its repeatable missions was in flight would therefore have **fined the player for finishing the
+  program**. With `false`, conclusion stops the *offering* only: an offered contract that stops
+  meeting requirements is `Withdrawn`, which has no penalty path, and anything already accepted stays
+  flyable.
+
+### A build gate, and two bugs it found
+
+`tools/build_economy.py` now proves every objective can actually be offered, and **fails the build**
+if pruning leaves a program with none. This is BUG-CLASSES family 1 by construction:
+`CompleteContractRequirement` resolves its target by name against a dictionary of finished contracts,
+so an unreachable or misspelled objective never matches and **logs nothing** — it would just strand
+the program active for the whole career, invisibly.
+
+Writing the gate needed a contract→gating-program map, which turned up a second silent defect. Two
+contract names exist twice in `seed/` (`FirstTundraSat`, `landingTriton`) because RP-1 deduped at
+runtime in its own plugin; AXE deletes the redundant copy with MM in
+`design/Contracts/DedupeContracts.cfg`. The generator was scanning `seed/` naively, so **whichever
+copy the directory walk happened to hit last won** — deciding this tool's answers about a contract's
+title, `CAPSTONE` label, and gating program from a file that does not survive to runtime. For
+`landingTriton` the two copies are gated by *different* programs, which is where the phantom
+`NeptuneMoonLandings → OuterGasGiantSurvey` dependency came from. `scan_seed` now skips what the
+dedupe patch deletes.
+
+The two fixes, both visible in the regenerated config:
+
+- `FirstGEOSat` was carrying **11,089 funds no player could ever collect**. Pruned; `TargetedSats`
+  now stages over 5 objectives instead of 6, so its own slices rise 11,089 → 13,307.
+- `landingTriton` is read from the surviving copy (title *Triton Landing (Uncrewed)*, gate
+  `NeptuneMoonLandings`), so the program is concludable on its own.
+
+**No funds moved.** Channel 1 still totals exactly 24,000,000; the only redistribution is inside
+`TargetedSats`, which was previously paying part of its budget into an unreachable contract.
+
+### Player-facing
+
+`Program Bonus: X` → **`Conclude Program: X`**. The description has three jobs, all of which the
+earlier wording would have got wrong once closure existed: name the consequence *before* the click
+(missions vanishing from *Available* with no warning reads as the mod breaking), promise there is no
+deadline (AXE gates nothing by time, so nothing expires — unsaid, players feel rushed into concluding
+before they have farmed the repeatables), and note that the repeatable missions go too. The
+completion message says what happened: *"X is closed. Its missions are no longer offered."*
+
+The charter notes in `AxeProgramValue.cfg` said *"Chartering is permanent: the program stays active
+for the rest of the career and its contracts remain available to fly."* That was the one line a player
+read while choosing, and conclusion made it false. It now states both halves: concluding is one-way,
+and nothing forces or expires it.
+
+**Not yet confirmed in game.** Needs a career that concludes a program, to see the contracts leave
+*Available* and an accepted member contract survive. Contract Configurator under-loads new contract
+configs on the first run and its own "N out of N" summary lies, so run twice before believing it.

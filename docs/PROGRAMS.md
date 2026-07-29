@@ -142,6 +142,42 @@ earmarked here:
   vehicle costs** (the dominant RSS drain), not just part entry costs. *(Still unverified — vehicle cost
   above 3.75 t is a deliberate guesstimate; ECONOMY.md §5.)*
 
+## Program conclusion ✅ DONE (config + code) — 2026-07-30
+
+Programs have an ending, and it is earned. **Inactive → Active → Concluded**, mirroring RP-1
+(`Program.IsActive => !IsComplete && acceptedUT != 0`; `CompleteProgram` does
+`ActivePrograms.Remove(p)`). **Only `Active` satisfies `ProgramActive`** — that one rule is the whole
+feature, and every one of the 250 program-gated seed contracts stops being offered as a consequence of
+it.
+
+The only route is the generated `Conclude Program: X` contract
+(`design/Programs/AxeProgramCompletion.cfg`), which is not offered until every objective of the
+program is complete. It pays the program's retained budget slice and carries a `ConcludeProgram`
+behaviour that closes the program out. Full reasoning and the two silent defects the work uncovered:
+[`ECONOMY.md` §13](ECONOMY.md#13-programs-end--2026-07-30-conclusion-is-earned-not-chosen).
+
+**There is deliberately no way to abandon a program you have started.** The ask was closure for
+*obsolete* programs, so the question was whether every chartered program can be finished: **34 of 35
+can**. The one exception was a single upstream config artefact (`TargetedSats`' objective
+`FirstGEOSat`, gated only by programs AXE leaves un-chartered because RP-1 ships them `isDisabled`).
+That earns a build gate, not a player-facing door. Also **cut**: revoking a charter, re-chartering
+after conclusion, any guard against over-chartering, and a programs UI.
+
+Two things are load-bearing and easy to get wrong if this is ever reworked:
+
+- `ProgramActiveRequirement` defaults `checkOnActiveContract = **false**`, diverging from RP-1. CC
+  responds to a requirement going unmet on an already-**Active** contract by calling
+  `Contract.Fail()`, and stock's `Fail()` runs `PenalizeFailure()`. With RP-1's default, collecting a
+  program's completion bonus would fine the player for every member contract still in flight.
+  Conclusion stops *offering* (offered → `Withdrawn`, no penalty); accepted contracts stay flyable.
+- `ConcludeProgram` fires on **`OnCompleted`**, not `OnAccepted` like its mirror `ActivateProgram`.
+  The contract is Active for one frame while `AxeInstantComplete` waits, and pulling its own
+  `ProgramActive` requirement inside that window is what CC answers by failing it.
+
+`tools/build_economy.py` fails the build if any program has an objective that can never be offered —
+an unreachable objective strands a program active for the whole career, and does it silently
+(`CompleteContractRequirement` matches by name against finished contracts and logs nothing on a miss).
+
 ## Program switcher ✅ DONE (config + code)
 
 **Status:** implemented and (charters-side) complete. `AxeProgramHandler` ScenarioModule + the
