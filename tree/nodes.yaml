@@ -524,6 +524,7 @@ nodes:
     parents: [start]
     flavor: "Encode a reading as the gap between radio pulses and beam it down on a fixed carrier — the beep-beep that proved a satellite was alive and returned its first data. The whole point of orbit, if you can't hear it."
     parts: [SXTAntenna, SurfAntenna, longAntenna, nfex-antenna-rover-2]
+    upgrades: [HDD-Upgrade-Early]
   - id: th_hermeticBus
     title: "Hermetic Thermal-Control Bus"
     discipline: Thermodynamics
@@ -547,12 +548,14 @@ nodes:
     parents: [tel_telemetry]
     flavor: "A sliver of doped crystal that passes current one way only — grown up from the cat's-whisker radio detector into a rugged solid-state device. It lights an indicator on almost no power, and it is the seed of everything solid-state: rectifiers, transistors, the integrated circuit still to come. Microelectronics grows from here."
     parts: [SmallPointLight, SmallSpotLight, SmallStripLight, domeLight1, groundLight1, groundLight2, navLight1, spotLight1, spotLight1_v2, spotLight2, spotLight2_v2, spotLight3, stripLight1, ROC-ApolloDockingLightBDB, ROC-ApolloEVALightBDB]
+    upgrades: [HDD-Upgrade-Basic]
   - id: elec_transistor
     title: "Transistor Amplification"
     discipline: Microelectronics
     tier: 3
     parents: [elec_semiconductorDiode]
     flavor: "Replace the fragile, power-hungry vacuum tube with a sliver of doped germanium that amplifies and switches a signal cold, on almost nothing — the active device the diode could never be. Microelectronics proper begins here: every transistorised instrument, guidance platform and television camera that follows is built on this one breakthrough."
+    upgrades: [HDD-Upgrade-1961]
   - id: elec_siliconPV
     title: "Diffused-Junction Photovoltaics"
     discipline: ElectricalPower
@@ -822,7 +825,7 @@ nodes:
     parents: [gnc_avionicsPrototypes, elec_transistor]
     flavor: "A gimballed, gyro-held platform that stays fixed in space while the vehicle rotates around it, read by transistorized electronics light enough to fly — the guidance package that steers a satellite launcher through its whole ascent."
     grants: [Science-Core-earlyAvionics]
-    upgrades: [HDD-Upgrade-Early, RP-1-PayloadTech-EarlyAvionics]
+    upgrades: [RP-1-PayloadTech-EarlyAvionics]
 
   # ============ BAND 1 * STANDARDIZED RCS (optional DEAD-END; procedural ModularRCS stays the default) ============
   - id: gnc_standardRCS
@@ -941,6 +944,7 @@ nodes:
     parents: [th_hermeticBus]
     flavor: "A satellite built not to explore but to work: a stabilised bus carrying a communications relay or a navigation beacon, earning its launch by the service it sells back to the ground. The first spacecraft with a customer."
     parts: [RP-1-CommunicationSat, RP-1-NavigationSat]
+    upgrades: [HDD-Upgrade-1964]
 
   - id: gs_launchClamps
     title: "Launch Hold-Down Clamps"
@@ -1145,10 +1149,13 @@ nodes:
     parents: [gnc_earlyAvionics]
     flavor: "Shrink the whole gyro-and-accelerometer platform onto transistorised boards light enough that a probe, not just a launcher, can carry its own guidance — and keep pointing through a mission measured in weeks. Inertial reference, miniaturised."
     grants: [Science-Core-basicAvionics]
-    upgrades: [HDD-Upgrade-Basic, HDD-Upgrade-1961, HDD-Upgrade-1964, RFTech-ComSat-II, RFTech-NavSat-II, RP-1-PayloadTech-Axial]
-    # +5 upgrades (2026-07): confirmed KEEP-capability, not REFERENCE — same avionics-capability ladder
-    # this node already carries (HDD-Upgrade-Basic), just the next rungs. Were wrongly bucketed with the
-    # genuinely-blocked REFERENCE-avionics items just because they share the same RP-1 techRequired bucket.
+    upgrades: [RFTech-ComSat-II, RFTech-NavSat-II, RP-1-PayloadTech-Axial]
+    # +5 upgrades (2026-07): confirmed KEEP-capability, not REFERENCE — the comsat/navsat capability ladder,
+    # just the next rungs. Were wrongly bucketed with the genuinely-blocked REFERENCE-avionics items just
+    # because they share the same RP-1 techRequired bucket.
+    # HDD-Upgrade-Basic/-1961/-1964 moved OUT 2026-07-29 to the data-handling spine (elec_semiconductorDiode /
+    # elec_transistor / tel_appSatellites): three storage rungs collapsed onto this one T5 node, which put the
+    # first byte of data storage 44 science out of reach. Storage homes at recording electronics, not guidance.
   - id: shd_basicAvionics
     title: "Radiation-Shielded Avionics — Basic"
     discipline: GuidanceControl

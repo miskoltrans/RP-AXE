@@ -40,11 +40,20 @@ overridden, so it must match — that is the reason these values are kept in syn
 
 | RP-1 (HDD tier / era) | AXE node | | RP-1 | AXE node |
 |---|---|---|---|---|
-| `earlyAvionics` (Early tape) | `gnc_earlyAvionics` | | `advancedAvionics` (1975) | `comp_multiplyRedundantFlightComputer` |
-| `basicAvionics` (Basic) | `gnc_basicAvionics` | | `longTermAvionics` (1990) | `comp_softwareDefinedFlightControl` |
-| `interplanetaryProbes` (1961) | `gnc_basicAvionics` | | `internationalAvionics` (1998) | `comp_interoperableAvionicsStandard` |
-| `matureAvionics` (1964) | `gnc_basicAvionics` | | `modernAvionics` (2010) | `comp_commercialOffTheShelfAvionics` |
+| `earlyAvionics` (Early tape) | `tel_telemetry` (T1) | | `advancedAvionics` (1975) | `comp_multiplyRedundantFlightComputer` |
+| `basicAvionics` (Basic) | `elec_semiconductorDiode` (T2) | | `longTermAvionics` (1990) | `comp_softwareDefinedFlightControl` |
+| `interplanetaryProbes` (1961) | `elec_transistor` (T3) | | `internationalAvionics` (1998) | `comp_interoperableAvionicsStandard` |
+| `matureAvionics` (1964) | `tel_appSatellites` (T4) | | `modernAvionics` (2010) | `comp_commercialOffTheShelfAvionics` |
 | `largeScaleAvionics` (1969) | `comp_networkedAvionics` | | `advModernAvionics` (2020) | `comp_commercialOffTheShelfAvionics` |
+
+**The first four rungs were re-homed 2026-07-29.** The original mapping name-matched RP-1's `earlyAvionics` →
+AXE's `gnc_earlyAvionics` and bucketed the next three onto `gnc_basicAvionics`. Same words, different jobs:
+RP-1's `earlyAvionics` costs 7 (23 science from `start`), AXE's `gnc_earlyAvionics` is **T4/29** (44 from
+`start`) and `gnc_basicAvionics` is **T5**. With `proceduralAvionics` basing at `dataCapacity = 0` (RP-1's
+own default, kept), that left a fresh career with *literally zero* data storage until 44 science — every file
+experiment unrunnable except as a real-time transmit stream, and the VAB capacity slider dead because it
+multiplies the base. Storage now homes on the **data-handling spine** (telemetry → diode → transistor →
+relay payloads), which is where recording hardware actually lives; guidance keeps the guidance.
 
 If the tree's HDD-Upgrade placement changes (re-run `build_tree.py`), re-sync these `techRequired`/
 `techRequired__` values to the new `AxePartPlacement.cfg` mapping.
