@@ -44,6 +44,7 @@ SEED = os.path.join(REPO, "GameData", "RP-AXE", "seed", "Contracts")
 OUT_CAPS = os.path.join(REPO, "GameData", "RP-AXE", "design", "Contracts", "AxeCapstoneFunds.cfg")
 OUT_DONE = os.path.join(REPO, "GameData", "RP-AXE", "design", "Programs", "AxeProgramCompletion.cfg")
 OUT_VALUE = os.path.join(REPO, "GameData", "RP-AXE", "design", "Programs", "AxeProgramValue.cfg")
+OUT_OBJ = os.path.join(REPO, "GameData", "RP-AXE", "design", "Programs", "AxeProgramObjectiveFunds.cfg")
 CHARTERS = os.path.join(REPO, "GameData", "RP-AXE", "design", "Programs", "ActivatePrograms.cfg")
 
 # --- The dials (docs/ECONOMY.md §3). Lifetime funds a player who does everything can earn. -------
@@ -63,6 +64,24 @@ CAPSTONE_SHARE = 0.50          # of a programme's budget, when it has a capstone
 # judgement about which programmes are big survives, and the first 15 move to ~14% of the channel.
 # The lifetime total does not move -- this is purely a redistribution in TIME.
 FUNDING_EXPONENT = 0.65
+
+# The completion half is STAGED across the programme's own objective contracts instead of landing
+# whole at the end (docs/ECONOMY.md §11). A programme's completion pot splits into
+# `len(non-capstone objectives) + 1` equal slices: one paid on each objective as it is flown, one
+# retained as the Program Bonus so the collectable payout §9 made visible still exists.
+#
+# WHY: 20 of 35 programmes have no capstone, so before this they paid NOTHING until every objective
+# landed -- and three of them (EarlySatellites, EarthObservationScience1, CommNetwork) sit
+# consecutively at the applications-satellite era, right after two sounding-rocket programmes that
+# both paid at their midpoint. The cadence went from "money halfway through" to "five launches on
+# your own dime" exactly where vehicle costs step up. That is a SHAPE defect, not a magnitude one:
+# the lifetime total does not move at all, this only decides when within a programme it arrives.
+#
+# Capstone-labelled objectives are excluded -- they are already paid from `capstone_pot`, and
+# excluding them keeps this file's key set disjoint from AxeCapstoneFunds.cfg's (asserted below), so
+# no contract is patched twice with a `%rewardFunds` that would silently take the last value rather
+# than the sum.
+STAGE_OBJECTIVES = True
 
 
 def blocks(txt, node):
@@ -236,6 +255,34 @@ def main():
             if share > cap_pay.get(c, (0, ""))[0]:
                 cap_pay[c] = (share, p["name"])
 
+    # ---- stage the completion half across the programme's own objectives (see STAGE_OBJECTIVES) --
+    # Slice count is `non-capstone objectives + 1`: the +1 is the Program Bonus, which therefore
+    # always survives even for a programme whose every objective is a capstone (VenusSurfaceExp).
+    for p in progs:
+        p["staged"] = [o for o in p["objectives"] if o not in cap_pay] if STAGE_OBJECTIVES else []
+        p["stage"] = p["completion"] / (len(p["staged"]) + 1)
+
+    # Same "richest claim, once" rule as capstones — 3 objectives are shared between two programmes
+    # each (KarmanLine, first_OrbitRecover, FirstComSat) and a second `%rewardFunds` patch on the
+    # same contract would overwrite rather than add.
+    obj_pay = {}
+    for p in sorted(progs, key=lambda q: -q["budget"]):
+        for o in p["staged"]:
+            if p["stage"] > obj_pay.get(o, (0, ""))[0]:
+                obj_pay[o] = (p["stage"], p["name"])
+
+    # The loser of a shared objective KEEPS its slice on its own bonus rather than leaking it, so
+    # Channel 1 still totals exactly `channel1`. Asserted below.
+    for p in progs:
+        p["retained"] = p["completion"] - sum(
+            amt for o, (amt, owner) in obj_pay.items() if owner == p["name"])
+
+    overlap = set(cap_pay) & set(obj_pay)
+    assert not overlap, f"a contract is paid from both pots, `%rewardFunds` would clobber: {overlap}"
+    _t = sum(a for a, _ in cap_pay.values()) + sum(a for a, _ in obj_pay.values()) \
+        + sum(p["retained"] for p in progs)
+    assert abs(_t - channel1) < 1.0, f"Channel 1 leaked: {_t:,.2f} vs {channel1:,.2f}"
+
     os.makedirs(os.path.dirname(OUT_CAPS), exist_ok=True)
     os.makedirs(os.path.dirname(OUT_DONE), exist_ok=True)
 
@@ -293,6 +340,13 @@ def main():
 // whole eras would earn nothing. Programmes WITH a capstone split their budget with it
 // ({CAPSTONE_SHARE:.0%} / {1 - CAPSTONE_SHARE:.0%}); programmes without put all of it here.
 //
+// `rewardFunds` here is the RETAINED SLICE, not the whole completion half. Since 2026-07-29 the
+// completion pot is staged across the programme's own objectives (design/Programs/
+// AxeProgramObjectiveFunds.cfg, docs/ECONOMY.md §11) and this contract keeps one slice of
+// `objectives + 1`, so a programme pays as you fly it instead of only at the end. The bonus is kept
+// as a real payout rather than dropped to zero because it is the only in-game readout of a
+// programme's value — see the autoAccept note above.
+//
 // Never expires (minExpiry = maxExpiry = 0): Contract Configurator defaults to withdrawing an offer
 // after 5–100 days, and AXE does not gate time. Same rule as the Begin Programme charters.
 // ============================================================================
@@ -328,7 +382,7 @@ CONTRACT_GROUP
             # Not declinable/cancellable either — there is no reason to throw a bonus away, and a
             # declined offer would be gone for good (maxCompletions = 1).
             f.write("\tdeclinable = false\n\tcancellable = false\n")
-            f.write(f"\trewardFunds = {round(p['completion']):d}\n")
+            f.write(f"\trewardFunds = {round(p['retained']):d}\n")
             f.write("\trewardScience = 0\n\trewardReputation = 0\n\tadvanceFunds = 0\n\tfailureFunds = 0\n")
             f.write("\n\tPARAMETER\n\t{\n\t\tname = done\n\t\ttype = AXEInstant\n"
                     "\t\ttitle = Collect the bonus\n\t}\n")
@@ -338,6 +392,44 @@ CONTRACT_GROUP
                 f.write(f"\n\tREQUIREMENT\n\t{{\n\t\tname = Complete_{o}\n\t\ttype = CompleteContract\n"
                         f"\t\tcontractType = {o}\n\t}}\n")
             f.write("}\n\n")
+
+    with open(OUT_OBJ, "w", encoding="utf-8", newline="\n") as f:
+        f.write(f"""// ============================================================================
+// RP-AXE — staged programme funds. GENERATED by tools/build_economy.py; do not hand-edit.
+//
+// A programme's completion budget, paid out ACROSS its objectives instead of only at the end. Each
+// of the {len(obj_pay)} contracts below carries one slice of its programme's completion pot; the Program
+// Bonus in AxeProgramCompletion.cfg keeps one more slice, so the split is `objectives + 1`.
+//
+// WHY (docs/ECONOMY.md §11): {sum(1 for p in progs if not p["caps"])} of {len(progs)} programmes have no capstone, so they used to pay
+// nothing at all until every objective was flown — and EarlySatellites, EarthObservationScience1 and
+// CommNetwork are three such programmes in a row at the applications-satellite era, straight after
+// two sounding-rocket programmes that both paid at their midpoint. A player who had just been paid
+// halfway through two programmes then hit fourteen launches with no income. §10 fixed how MUCH the
+// early game earns; this fixes WHEN inside a programme it arrives. The lifetime total is unchanged.
+//
+// Capstones are NOT here — they are paid from their own pot in AxeCapstoneFunds.cfg, and the
+// generator asserts the two key sets are disjoint. Both files use `%rewardFunds` (set-or-create),
+// which OVERWRITES; two patches on one contract would silently keep the last, not the sum.
+//
+// Every contract below is `maxCompletions = 1` in the merged cache — verified, and the check that
+// matters, because a repeatable contract carrying funds would be farmable. That is the invariant
+// docs/ECONOMY.md §3 states as "nothing repeatable-without-a-launch pays anything, ever".
+//
+// Where one contract is an objective of two programmes ({len([o for o in obj_pay if sum(1 for q in progs if o in q['staged']) > 1])} of them), it is paid once from the
+// richer programme's claim; the other programme keeps that slice on its own Program Bonus, so no
+// funds are created or lost.
+//
+// Design overlay, not an edit to seed/ — that folder is re-vendored verbatim by tools/sync-seed.ps1
+// and any in-place change would be clobbered.
+// ============================================================================
+
+""")
+        for o, (amount, owner) in sorted(obj_pay.items(), key=lambda kv: (kv[1][1], kv[0])):
+            title = seed.get(o, ("", ""))[1] or o
+            f.write(f"// {esc(title)} — objective of {owner}\n")
+            f.write(f"@CONTRACT_TYPE[{o}]:NEEDS[ContractConfigurator]:FOR[RP-AXE]\n{{\n")
+            f.write(f"\t%rewardFunds = {round(amount):d}\n}}\n\n")
 
     # ---- what a programme is worth, stated on its charter -------------------------------------
     # The completion bonus and the capstone are both invisible until you have already done the work:
@@ -386,15 +478,20 @@ CONTRACT_GROUP
                 f.write(f"// {cname} -> {program}: no funded programme upstream, nothing to state.\n\n")
                 continue
             caps = cap_of.get(program, [])
+            paid = sum(a for _, a in caps)
+            mine = [o for o in p["staged"] if obj_pay.get(o, (0, ""))[1] == program]
+            bits = []
             if caps:
                 names = " and ".join(esc(seed.get(c, ("", ""))[1] or c) for c, _ in caps)
-                paid = sum(a for _, a in caps)
-                worth = (f"Worth at least {round(p['completion'] + paid):,d} funds: "
-                         f"{round(paid):,d} on its capstone mission, {names}, and "
-                         f"{round(p['completion']):,d} as a bonus once every objective is met.")
-            else:
-                worth = (f"Worth at least {round(p['completion']):,d} funds, paid as a single bonus "
-                         f"once every objective is met — this program has no capstone mission.")
+                bits.append(f"{round(paid):,d} on its capstone mission, {names}")
+            if mine:
+                bits.append(f"{round(p['stage'] * len(mine)):,d} spread across its "
+                            f"{len(mine)} objective{'s' if len(mine) > 1 else ''} as you fly them "
+                            f"({round(p['stage']):,d} each)")
+            bits.append(f"{round(p['retained']):,d} as a bonus once every objective is met")
+            worth = (f"Worth at least {round(p['budget']):,d} funds: "
+                     + ", and ".join([", ".join(bits[:-1]), bits[-1]] if len(bits) > 1 else bits)
+                     + ".")
             f.write(f"// {program} — budget {p['budget']:,.0f}; {len(p['objectives'])} objective(s)\n")
             f.write(f"@CONTRACT_TYPE[{cname}]:NEEDS[ContractConfigurator]:FOR[RP-AXE]\n{{\n")
             f.write(f"\t%notes = {worth} Your difficulty settings scale rewards on top of that, so "
@@ -403,7 +500,8 @@ CONTRACT_GROUP
                     f"\n}}\n\n")
 
     paid_caps = sum(a for a, _ in cap_pay.values())
-    paid_done = sum(p["completion"] for p in progs)
+    paid_objs = sum(a for a, _ in obj_pay.values())
+    paid_done = sum(p["retained"] for p in progs)
     # Gate, same shape as the dangling-reference checks elsewhere: a charter whose programme is not
     # funded states nothing, and a funded programme with no charter can never be started at all.
     for n in unpriced:
@@ -424,11 +522,17 @@ CONTRACT_GROUP
     print(f"scalar = {channel1:,.0f} / {total:,.0f} = {k:.5f}"
           f"   (budget ∝ baseFunding^{FUNDING_EXPONENT}; denominator is the sum of those weights)")
     print(f"  {len(cap_pay)} capstone rewards   {paid_caps:>12,.0f}")
+    print(f"  {len(obj_pay)} staged objectives {paid_objs:>12,.0f}")
     print(f"  {len(progs)} completion bonuses {paid_done:>12,.0f}")
-    print(f"  Channel 1 total               {paid_caps + paid_done:>12,.0f}"
+    print(f"  Channel 1 total               {paid_caps + paid_objs + paid_done:>12,.0f}"
           f"  (target {channel1:,.0f})")
     print(f"  Channel 2 (Administration)    {TARGET_LIFETIME - channel1:>12,.0f}")
+    nocap = [p for p in progs if not p["caps"]]
+    print(f"  {len(nocap)} programmes have no capstone; they now pay over "
+          f"{min(len(p['staged']) + 1 for p in nocap)}–{max(len(p['staged']) + 1 for p in nocap)} "
+          f"instalments instead of 1")
     print(f"\nwrote {os.path.relpath(OUT_CAPS, REPO)}\n      {os.path.relpath(OUT_DONE, REPO)}"
+          f"\n      {os.path.relpath(OUT_OBJ, REPO)}"
           f"\n      {os.path.relpath(OUT_VALUE, REPO)}  ({len(charters) - len(unpriced)}"
           f"/{len(charters)} charters priced)")
     early = sorted(progs, key=lambda q: q["funding"])[:2]
