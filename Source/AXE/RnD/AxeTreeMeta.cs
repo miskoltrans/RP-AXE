@@ -16,7 +16,12 @@ namespace RPAxe.RnD
     /// </summary>
     internal static class AxeTreeMeta
     {
-        internal struct NodeMeta { public string Discipline; public int Tier; public int Cost; }
+        // Experiments is null when the node unlocks none (the common case) — see LoadMeta.
+        internal struct NodeMeta { public string Discipline; public int Tier; public int Cost; public ExperimentMeta[] Experiments; }
+        /// <summary>One science unlock that is NOT a part: a Kerbalism `Configure` SETUP (or a
+        /// techRequired EXPERIMENT_DEFINITION) gated on this node. Stock R&amp;D only lists parts, so
+        /// without this a node whose whole payload is science shows nothing at all.</summary>
+        internal struct ExperimentMeta { public string Name; public int Sci; public string Group; }
         internal struct DiscMeta { public int Order; public Color Color; public string Icon; public string Title; }
         internal struct Settings
         {
@@ -77,6 +82,7 @@ namespace RPAxe.RnD
                     Discipline = n.GetValue("discipline") ?? "",
                     Tier = ParseInt(n.GetValue("tier"), 0),
                     Cost = ParseInt(n.GetValue("cost"), 0),
+                    Experiments = ParseExperiments(n.GetValues("experiment")),
                 };
             }
             foreach (ConfigNode d in root.GetNodes("Discipline"))
@@ -117,6 +123,30 @@ namespace RPAxe.RnD
             Render.Hover = ParseBool(r.GetValue("hover"), true);
             Render.SolidBg = ParseBool(r.GetValue("solidBg"), true);
             Render.Avoid = ParseBool(r.GetValue("avoid"), true);
+        }
+
+        /// <summary>`experiment = name|scienceCap|configureGroup` (repeated), as emitted by
+        /// build_tree.py's emit_treemeta. Empty science / group fields are allowed and mean
+        /// "unknown" — the tooltip just prints less. Null when the node unlocks no experiment,
+        /// which keeps the common case allocation-free.</summary>
+        private static ExperimentMeta[] ParseExperiments(string[] raw)
+        {
+            if (raw == null || raw.Length == 0) return null;
+            var list = new List<ExperimentMeta>(raw.Length);
+            foreach (string line in raw)
+            {
+                if (string.IsNullOrEmpty(line)) continue;
+                string[] f = line.Split('|');
+                string name = f[0].Trim();
+                if (name.Length == 0) continue;
+                list.Add(new ExperimentMeta
+                {
+                    Name = name,
+                    Sci = f.Length > 1 ? ParseInt(f[1].Trim(), 0) : 0,
+                    Group = f.Length > 2 ? f[2].Trim() : "",
+                });
+            }
+            return list.Count > 0 ? list.ToArray() : null;
         }
 
         private static void ParseFloat(ConfigNode n, string key, ref float dst)
