@@ -1657,17 +1657,17 @@ nodes:
   # feed the parallel Mercury || Vostok vehicles at T6. The 3 sanctioned crossovers live here: each
   # capsule needs TPS x ECLSS; Zenit (uncrewed recon) needs TPS x recon-optics.
   # TPS ladder: the deferred tech-level pass RAN 2026-07-30 (user call) — see cmp_heatSinkTPS below.
-  # ---- TPS ladder rung 1 (T3, band-1 tier — heads the band-2 ladder, kept here so the ladder reads
+  # ---- TPS ladder rung 1 (T4, band-1 tier — heads the band-2 ladder, kept here so the ladder reads
   #      as one block) ----
   - id: cmp_heatSinkTPS
     title: "Heat-Sink Reentry Shielding"
     discipline: CompositeMaterials
-    tier: 3
+    tier: 4
     parents: [met_stainlessSteel]
     flavor: "Survive the fireball by out-massing it. A machined beryllium block soaks the whole entry heat pulse into its own thermal mass and carries it back down still glowing — no chemistry, no char, just metal and patience. Crude and heavy, but the first thing that brings a payload home intact."
     parts: [ROH-AdjustableHS]
     upgrades: [Heatsink]
-    # NEW (2026-07-30, user call): the Heatsink rung was sitting at T5 inside cmp_ablativeTPS, two tiers
+    # NEW (2026-07-30, user call): the Heatsink rung was sitting at T5 inside cmp_ablativeTPS, a tier
     # late and in a node whose title/flavor promise ABLATION. Ground truth (RealismOverhaul/RO_Heatshields.cfg
     # heatShieldTag[Heatsink]): `heatShieldNoAblator = true`, `!MODULE[ModuleAblator]`, both Ablator RESOURCEs
     # deleted, thermalMassModifier 2.8 — it is a mass-soak, the OPPOSITE mechanism, so it could never share a
@@ -1680,7 +1680,11 @@ nodes:
     # with no preset and it is unusable.
     # Parent met_stainlessSteel (T2): plain physical prereq, not a celebrated crossover — the metallurgy of
     # metal that keeps its properties at red heat, the same lane that continues to met_nimonic at T3.
+    # Deliberately NOT met_nimonic, which would be the adjacent-tier edge: nimonic is turbine/turbopump
+    # metallurgy, and gating reentry shielding behind jet-turbine alloys is a coupling a probe-and-recovery
+    # player should never have to buy. The 2-tier span costs a render lane, not a prerequisite.
     # CompositeMaterials rather than Metallurgy (user call): keeps the whole TPS ladder in one render lane.
+    # T4, not T3 (user call 2026-07-30): one tier ahead of the ablative rung's T5 rather than two.
   # ---- Subsystems (T5) ----
   - id: cmp_ablativeTPS
     title: "Ablative Reentry Shielding"
