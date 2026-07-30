@@ -222,7 +222,7 @@ digraph AXE {
   "elec_refinedSolarSimulation" [label="Refined Solar-Array Simulation\nElectricalPower T8 · 324",fillcolor="#ffd23f",fontcolor="#111111"];
   "mic_boomMagnetometryII" [label="Extended Boom Magnetometry\nMicroelectronics T8 · 324",fillcolor="#c2a0e0",fontcolor="#111111"];
   "opt_radarAltimetry" [label="Radar Altimetry\nOpticsPhotonics T7 · 216",fillcolor="#7c8cff",fontcolor="#111111"];
-  "gnc_orbitalGravimetry" [label="Orbital Perturbation Gravimetry\nGuidanceControl T8 · 324",fillcolor="#8a5cd6",fontcolor="#111111"];
+  "gnc_orbitalGravimetry" [label="Mass-Concentration Gravity Mapping\nGuidanceControl T8 · 324",fillcolor="#8a5cd6",fontcolor="#111111"];
   "opt_infraredInterferometry" [label="Infrared Interferometer Spectrometry\nOpticsPhotonics T7 · 216",fillcolor="#7c8cff",fontcolor="#111111"];
   "mic_ionMassSpec" [label="Ion-Mass Spectrometry\nMicroelectronics T7 · 216",fillcolor="#c2a0e0",fontcolor="#111111"];
   "opt_multiSpectralImaging" [label="Multi-Spectral Imaging\nOpticsPhotonics T7 · 216",fillcolor="#7c8cff",fontcolor="#111111"];

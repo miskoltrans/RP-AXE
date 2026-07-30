@@ -2328,11 +2328,11 @@ nodes:
     # scansat-radar-seasat-1 added (2026-07, power+science pass): the real Seasat SAR antenna, cashing in
     # opt_orbitalMapping's own promised "mapping lane that fills out among the planets."
   - id: gnc_orbitalGravimetry
-    title: "Orbital Perturbation Gravimetry"
+    title: "Mass-Concentration Gravity Mapping"
     discipline: GuidanceControl
     tier: 8
     parents: [gnc_threeAxisStabilizedBus]
-    flavor: "Track a stable bus precisely enough to see the tiny course changes a mass concentration in the ground below pulls it into — gravity mapped from how the orbit itself misbehaves."
+    flavor: "A tracking fence can already tell you the world is not a sphere. Locating the heavy ground itself takes a bus that holds its attitude while it is watched, and enough passes over the same ground to separate the pull of the rock below from every other thing nudging the orbit — a gravity map fine enough to find the mass concentrations buried under the maria."
     parts: [USAccelGravWedge, sensorGravimeter]
   - id: opt_infraredInterferometry
     title: "Infrared Interferometer Spectrometry"
