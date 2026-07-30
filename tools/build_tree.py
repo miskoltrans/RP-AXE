@@ -733,6 +733,47 @@ def emit_part_fly_cost(meta):
         f.write("\n".join(L) + "\n")
     print(f"part fly cost: {n} parts priced at scalar {scalar} ({total:,} funds for one of each) -> AxePartFlyCost.cfg")
 
+_ASSIGN_RE = re.compile(r"(?:^|\s)[A-Za-z_]\w*\s=\s")
+
+def check_config_format():
+    """FAIL THE BUILD on a config line carrying more than one `key = value`.
+
+    KSP's ConfigNode splits a line at the FIRST '=' and takes everything after it as the value
+    (decompiled: `int num = str.IndexOf('=')`). So `tech = start  massFactor = 87.99` is ONE key,
+    `tech`, whose value is the rest of the line — every other assignment on that line silently
+    ceases to exist. Nothing logs, nothing errors, and the config keeps looking authoritative.
+
+    This is not hypothetical. AxeAvionicsCore.cfg's 14 TIER blocks were authored as a readable
+    table, several assignments per line, and the ENTIRE avionics ladder was therefore unreadable for
+    as long as it existed: every TryGetValue failed, ModuleAxeAvionics' all-or-nothing guard dropped
+    every tier, and it ran on its hardcoded in-code fallback. It behaved correctly the whole time —
+    the fallback is complete and identical — so nothing ever surfaced it. It was found only when a
+    ModuleManager patch tried to scale costFactor and had nothing to bind to. Fixed 2026-07-30.
+
+    The check requires whitespace on BOTH sides of the '=', which every real assignment has and
+    rich-text values like `<color=red>` do not — that distinction is what keeps it quiet enough to be
+    worth having (a naive version flagged 2,278 lines, all of them fine)."""
+    hits = []
+    root = os.path.join(REPO, "GameData", "RP-AXE", "design")
+    for dirpath, _, files in os.walk(root):
+        for fn in files:
+            if not fn.endswith(".cfg"):
+                continue
+            p = os.path.join(dirpath, fn)
+            for i, raw in enumerate(open(p, encoding="utf-8", errors="replace"), 1):
+                code = raw.split("//")[0]
+                if len(_ASSIGN_RE.findall(code)) > 1:
+                    hits.append((os.path.relpath(p, REPO), i, code.strip()[:90]))
+    if hits:
+        print(f"config format gate: {len(hits)} line(s) carry more than one 'key = value' — KSP reads"
+              " only the FIRST, and silently drops the rest:")
+        for p, i, s in hits[:12]:
+            print(f"   {p}:{i}  {s}")
+        if len(hits) > 12:
+            print(f"   ... and {len(hits) - 12} more")
+        sys.exit("config format gate FAILED — split these onto one assignment per line")
+    print("config format gate: clean -- every design cfg line carries at most one assignment")
+
 def emit_proc_cost_scale(meta):
     """Emit GameData/RP-AXE/design/Tree/AxeProcCostScale.cfg — launch_cost_scalar for the half of a
     vehicle AxePartFlyCost.cfg cannot reach.
@@ -2322,6 +2363,7 @@ def main():
     emit_part_cost(p2n, u2n, by, meta)   # AxePartCost.cfg: funds unlock cost = base[tier] * weight[costcat]
     emit_part_fly_cost(meta)             # AxePartFlyCost.cfg: per-unit LAUNCH cost = RP-1 baseline * launch_cost_scalar
     emit_proc_cost_scale(meta)           # AxeProcCostScale.cfg: same scalar for the MODULE-priced half
+    check_config_format()                # gate: one 'key = value' per line, or KSP silently drops the rest
     emit_grant_upgrades(nodes)           # AxeGrantUpgrades.cfg: visible R&D tokens for avionics tiers + DSN levels
     emit_facility_gates(nodes)           # AxeFacilityGates.cfg: tracking-station DSN tech gate (AXEBUILDINGTECHS)
     # summary
