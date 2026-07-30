@@ -580,27 +580,66 @@ namespace RPAxe
         void OnStage(int _)
         {
             UpdateRate();
-            if (setToDebrisOnStage) StartCoroutine(CheckRenameDebris());
+            // onStageActivate is a GLOBAL GameEvent -- it fires once per staging on EVERY loaded avionics
+            // module in the scene, not just on the vessel that staged. StageManager.ActivateStage() fires it
+            // against FlightGlobals.ActiveVessel and only afterwards force_activate()s that stage's parts, so
+            // at this instant a part that is about to be left behind is still aboard the active vessel.
+            // Anything not aboard it is watching someone else's staging and must not arm the check at all.
+            if (!setToDebrisOnStage || _debrisCheckRunning) return;
+            if (!FlightGlobals.ready || vessel == null || vessel != FlightGlobals.ActiveVessel) return;
+            StartCoroutine(CheckRenameDebris());
         }
 
-        // Ported from RP-1's ModuleAvionics.CheckRenameDebris(): 1s after staging, if this vessel is no
-        // longer the active one (the piece just left behind), scan it for any command-capable part whose
-        // avionics is explicitly set to "Never" (any one vetoes) — otherwise mark it Debris. Pure tracking-
-        // station hygiene; no funds/recovery/science effect.
+        // Ported from RP-1's ModuleAvionics.CheckRenameDebris(): once staging has left this piece behind,
+        // scan it for any command-capable part whose avionics is explicitly set to "Never" (any one vetoes)
+        // — otherwise mark it Debris. Pure tracking-station hygiene; no funds/recovery/science effect.
+        //
+        // RP-1 decides this exactly once, 1s after the stage fires, reading FlightGlobals.ActiveVessel and
+        // vessel.Parts raw. Both are legitimately null/empty for a while around a scene load or a vessel
+        // split, and read raw they fail toward the wrong answer in BOTH directions: a null ActiveVessel
+        // reads as "I am not the active vessel", and an empty part list reads as "no part vetoed" — which
+        // together type a fully-assembled stack Debris — while a piece that has not finished separating at
+        // the 1s mark is judged still-attached and then never looked at again. So: never conclude from
+        // unreadable state, keep looking until it IS readable, and give up quietly if it never is.
         IEnumerator CheckRenameDebris()
         {
-            yield return new WaitForSeconds(1f);
-            if (vessel == null || vessel == FlightGlobals.ActiveVessel) yield break;
-            bool rename = true;
-            foreach (Part p in vessel.Parts)
+            _debrisCheckRunning = true;
+            try
             {
-                if (p.FindModuleImplementing<ModuleCommand>() == null) continue;
-                ModuleAxeAvionics axe = p.FindModuleImplementing<ModuleAxeAvionics>();
-                bool debris = axe?.setToDebrisOnStage ?? true;
-                if (!debris) { rename = false; break; }
+                for (int tries = 0; tries < DebrisCheckTries; tries++)
+                {
+                    yield return new WaitForSeconds(1f);
+
+                    if (part == null) yield break;      // part destroyed: nothing left to judge
+                    Vessel v = part.vessel;
+                    if (v == null) yield break;
+
+                    // Unreadable — retry rather than conclude. An unloaded/mid-split vessel reports zero
+                    // parts, which is not the same fact as "no part objected".
+                    if (!FlightGlobals.ready || FlightGlobals.ActiveVessel == null) continue;
+                    if (!v.loaded || v.parts.Count == 0) continue;
+                    // Still aboard the vessel being flown — a later stage may yet separate us.
+                    if (v == FlightGlobals.ActiveVessel) continue;
+                    // Nothing sitting on the pad has been staged away from anything.
+                    if (v.situation == Vessel.Situations.PRELAUNCH) continue;
+
+                    foreach (Part p in v.Parts)
+                    {
+                        if (p.FindModuleImplementing<ModuleCommand>() == null) continue;
+                        ModuleAxeAvionics axe = p.FindModuleImplementing<ModuleAxeAvionics>();
+                        if (!(axe?.setToDebrisOnStage ?? true)) yield break;   // an explicit "Never" vetoes
+                    }
+                    v.vesselType = VesselType.Debris;
+                    yield break;
+                }
             }
-            if (rename) vessel.vesselType = VesselType.Debris;
+            finally { _debrisCheckRunning = false; }
         }
+
+        // One in-flight debris check at a time per module: MechJeb's autostage can fire onStageActivate
+        // many times in a second, and each firing used to queue its own independent verdict.
+        bool _debrisCheckRunning;
+        const int DebrisCheckTries = 10;
 
         void GoOnRails(Vessel v) => RailChange(v, true);
         void GoOffRails(Vessel v) => RailChange(v, false);
