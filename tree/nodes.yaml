@@ -52,6 +52,16 @@ meta:
   # the part. This is the ONE upgrade-shaped thing AXE still charges for, and deliberately: a config is chosen
   # per-vehicle in the VAB with its price on the row you click, not a checkbox in R&D you can miss.
   engine_config_cost_scalar: 0.3
+  # Per-unit part cost (the LAUNCH BILL) = manifest/part-fly-costs.tsv * launch_cost_scalar, emitted as
+  # AxePartFlyCost.cfg. Baseline is RP-1's own hand-normalised per-unit prices, which AXE lost when it
+  # replaced Tree/TREE-Parts.cfg for tree placement and took the pricing half with it (docs/ECONOMY.md 14).
+  # The scalar absorbs the two RP-1 launch costs AXE cannot port: tooling (per-build, via ModuleTooling*
+  # which we strip) and ops (0.02%/day of infrastructure capital -- a clock AXE does not have).
+  # 1.2 is calibrated against a real career: saves/default3 spent ~188,846 on launches, and re-pricing its
+  # stale pre-2026-07-29 contracts to current values puts that at 23.3% of income. The restore alone lifts
+  # it to ~28%; 1.2 lands near 32%. NB the scalar does NOT move procedural parts (~half of vehicle cost) --
+  # ProcCosts.cfg prices those from dimensions and needs its own pass.
+  launch_cost_scalar: 1.2
 
 nodes:
   # ================================= ROOTS =================================
