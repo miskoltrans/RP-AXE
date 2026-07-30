@@ -58,6 +58,29 @@ namespace RPAxe
         /// <summary>The shd_* node that must be researched before <see cref="shielded"/> counts.</summary>
         [KSPField] public string shieldedTech = "shd_basicAvionics";
 
+        /// <summary>
+        /// This unit's own power draw, in kW. Ports RP-1's <c>ModuleAvionics.enabledkW</c>, including its
+        /// default of -1 meaning "not authored -- adopt whatever the part's own ModuleCommand already
+        /// draws" (RP-1 authors this on 8 of its 124 entries; the rest inherit exactly this way).
+        ///
+        /// Named parts are control hardware WITHOUT a battery -- 85 of the 90 installed here carry no EC
+        /// storage at all -- so the draw is real and the storage comes from elsewhere on the craft. Today
+        /// that draw is whatever the upstream mod or RO happened to ship: present on 57 parts, absent on
+        /// 33, and spanning 0.01 to 14 EC/s with no pattern, because AXE never had a field for it.
+        ///
+        /// ADOPT-ONLY for now, deliberately. RP-1 also ZEROES the ModuleCommand resource here and delivers
+        /// the draw itself, which only works because it implements the Kerbalism bridge
+        /// (PlannerUpdate/ResourceUpdate/BackgroundUpdate) that ModuleAxeAvionics has and this module does
+        /// not. Zeroing without that bridge would silently make every named part free to run. So this
+        /// records the value and leaves ModuleCommand delivering it unchanged; taking delivery over belongs
+        /// with the shutdown/on-rails work that would give us something to modulate.
+        /// </summary>
+        [KSPField(isPersistant = true)] public float enabledkW = -1f;
+
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Avionics Power",
+                  guiFormat = "F1", guiUnits = " W", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public float currentWatts = 0f;
+
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Steerable Mass",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string capacityDisplay = "";
@@ -87,8 +110,28 @@ namespace RPAxe
         {
             base.OnStart(state);
             _command = part.FindModuleImplementing<ModuleCommand>();
+            InitializeResourceRate();
             ApplyHibernation();
             UpdateGui();
+        }
+
+        // Ports RP-1's ModuleAvionics.InitializeResourceRate, minus the part that takes delivery -- see the
+        // enabledkW field comment for why. An unauthored rate adopts the part's own ModuleCommand draw; a
+        // part with no EC input at all (33 of them: service modules, equipment sections, station cores)
+        // adopts 0, which is honest rather than invented.
+        void InitializeResourceRate()
+        {
+            if (enabledkW >= 0f) return;
+            ModuleResource ec = FindCommandEC();
+            enabledkW = ec != null ? (float)ec.rate : 0f;
+        }
+
+        ModuleResource FindCommandEC()
+        {
+            if (_command?.resHandler?.inputResources == null) return null;
+            foreach (ModuleResource r in _command.resHandler.inputResources)
+                if (r != null && r.id == PartResourceLibrary.ElectricityHashcode) return r;
+            return null;
         }
 
         // Ports RP-1's Avionics.cfg:2 ("Disable hibernation" on every ModuleCommand part), but gives the
@@ -109,41 +152,67 @@ namespace RPAxe
             UpdateGui();
         }
 
+        // Reports THIS unit against the vessel, in the same vocabulary the procedural core uses: capacity is
+        // "guided up to this mass; over it, unguided", and allowAxial decides whether unguided keeps axial
+        // thrust. Locked and Axial are not separate concepts here -- they ARE unguided-without-axial and
+        // unguided-with-axial.
+        //
+        // Two things this replaces, both of which were the readout contradicting the mechanic:
+        //   * it used to report the VESSEL-wide lock level, so a 0.875 t Voyager bus riding a 40 t stack
+        //     that a procedural core had unlocked said "guiding" -- a capability it was not providing.
+        //   * capacity 0 short-circuited to "payload only -- cannot steer" even with allowAxial set, while
+        //     ShouldLock was actually granting that part Axial. A Vostok flew retro-capable and said it
+        //     could not steer at all.
+        // Judging this unit locally also drops the per-second ShouldLock walk over every part.
         void UpdateGui()
         {
-            capacityDisplay = capacityTons > 0f ? $"{capacityTons:N2} t" : "none (payload only)";
-
-            // The Flight controller already holds the active vessel's level; anywhere else (editor, or a
-            // PAW opened on an unfocused vessel) recompute from the relevant part list.
-            AxeAvionicsController ctl = HighLogic.LoadedSceneIsFlight ? AxeAvionicsController.Instance : null;
-            AxeControlLockerUtils.LockLevel level =
-                (ctl != null && vessel != null && vessel.isActiveVessel)
-                    ? ctl.Level
-                    : AxeControlLockerUtils.ShouldLock(HighLogic.LoadedSceneIsEditor
-                        ? EditorLogic.fetch?.ship?.parts
-                        : vessel?.parts);
+            currentWatts = enabledkW * 1000f;
 
             if (capacityTons <= 0f)
-                guidanceStatus = "payload only — cannot steer";
-            else if (level == AxeControlLockerUtils.LockLevel.Unlocked)
-                guidanceStatus = shielded
-                    ? (ShieldingActive ? "guiding — hardened" : "guiding — hardening not yet researched")
-                    : "guiding";
-            else if (level == AxeControlLockerUtils.LockLevel.Axial)
-                guidanceStatus = "over capacity — axial thrust only";
-            else
-                guidanceStatus = "over capacity — attitude locked";
+            {
+                capacityDisplay = "n/a — unguided";
+                guidanceStatus = allowAxial ? "Unguided — axial thrust only (spin-stabilized)"
+                                            : "Unguided — no steering";
+                return;
+            }
+
+            capacityDisplay = $"{capacityTons:N2} t";
+
+            // mass 0 means there is nothing to judge against yet (empty editor); report the capability
+            // rather than a verdict.
+            float mass = VesselMassTons();
+            if (mass > capacityTons)
+            {
+                guidanceStatus = allowAxial ? "Over capacity — unguided, axial thrust only"
+                                            : "Over capacity — unguided, no steering";
+                return;
+            }
+
+            guidanceStatus = shielded
+                ? (ShieldingActive ? "Guided — Shielded — guidance active"
+                                   : "Guided — hardening not yet researched")
+                : "Guided — guidance active";
+        }
+
+        float VesselMassTons()
+        {
+            if (HighLogic.LoadedSceneIsEditor)
+                return EditorLogic.fetch?.ship != null ? EditorLogic.fetch.ship.GetTotalMass() : 0f;
+            return vessel != null ? (float)vessel.totalMass : 0f;
         }
 
         public override string GetInfo()
         {
             string s = capacityTons > 0f
-                ? $"Steers up to <b>{capacityTons:N2} t</b> of vessel (whole-vessel wet mass).\n"
-                : "Carries no guidance — provides command, telemetry and power only. The vessel needs an avionics core to steer.\n";
+                ? $"Guided up to <b>{capacityTons:N2} t</b> of vessel (whole-vessel wet mass).\n"
+                : "<b>Unguided</b> — provides command and telemetry, but never steers.\n";
             if (capacityTons > 0f)
             {
-                s += "Going over that mass locks attitude control; staging and throttle keep working.\n";
-                if (allowAxial) s += "Axial thrust stays available while over capacity (spin-stabilized).\n";
+                s += "Over that mass it becomes <b>unguided</b>: attitude control is lost, staging and throttle keep working.\n";
+            }
+            if (allowAxial) s += "Axial thrust stays available while unguided (spin-stabilized).\n";
+            if (capacityTons > 0f)
+            {
                 s += shielded
                     ? $"Radiation-hardened: rated for deep space, and may hibernate once <b>{shieldedTech}</b> is researched.\n"
                     : "Not radiation-hardened: no hibernation.\n";
