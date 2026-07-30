@@ -1087,3 +1087,101 @@ and nothing forces or expires it.
 **Not yet confirmed in game.** Needs a career that concludes a program, to see the contracts leave
 *Available* and an accepted member contract survive. Contract Configurator under-loads new contract
 configs on the first run and its own "N out of N" summary lies, so run twice before believing it.
+
+## 14. The launch bill — 2026-07-30: AXE had no per-unit part cost at all
+
+A part has **two** prices in KSP. `entryCost` is what R&D charges once to unlock it; `cost` is what the
+VAB charges *every time you fly it*. AXE authored the first (`AxePartCost.cfg`, calibrated in §5c) and
+never authored the second.
+
+RP-1's lived in `Tree/TREE-Parts.cfg` — `%cost` on 3,612 parts. AXE replaced that file wholesale for its
+tree placement and module tagging, and the pricing half went with it. Same shape as the
+`ModuleNonReentryRated` dormancy and the `CrewSettings.cfg` G-limits: **a file dropped for what its name
+said it was, when half of it was something else.** Third instance of that lesson.
+
+### The symptom was incoherence, not cheapness
+
+Named parts fell back to whatever their own mod happened to ship — unnormalised across three orders of
+magnitude. Measured against RP-1:
+
+| part | AXE was | RP-1 | |
+|---|--:|--:|---|
+| `ROE-SmallLC` — Small Launch Clamp | 150 | 1 | 150x |
+| `launchClamp1` — TT18-A | 200 | 1 | 200x |
+| `RO-BasicFilmCamera` | 7,500 | 500 | 15x |
+| `ROE-RD100` (engine) | 1 | 320 | 0.003x |
+| `ROE-RZ20` (engine) | 1 | 301 | 0.003x |
+
+You paid more for a launch clamp than for the engine above it. `TREE-Parts.cfg` was never an *added*
+cost layer — it was RP-1 **normalising** every part onto one scale, pushing clamps and fairings down to
+~1 and pulling engines up to 80–11,596.
+
+### What shipped
+
+`tools/build_fly_costs.py` → `manifest/part-fly-costs.tsv` recovers RP-1's own numbers for **1,542**
+parts and fills **317** AXE-only parts from RP-1's median funds/tonne in the same `costcat`.
+`build_tree.py` emits `AxePartFlyCost.cfg` = baseline × **`launch_cost_scalar`**.
+
+Two things the data corrected during the build:
+
+- **Procedural parts need no special case.** RP-1 prices them **0**, because their own modules compute
+  cost from dimensions (`ProceduralPart.costPerkL`, RealFuels `TANK_DEFINITION.baseCost = k * volume`)
+  via `seed/ProcCosts.cfg`, which AXE inherited intact. Restoring the zero is correct; a static cost
+  would charge for the same hardware twice.
+- **The fallback must key on `costcat`, not the KSP `category` field.** ModularLaunchPads structures
+  report category `none`, which priced a 2,500 t launch base at **4,009,358**. `costcat` calls them
+  `ground` (10 funds/tonne) and it becomes 25,000. Using the same taxonomy as `entryCost` means the two
+  prices can never disagree about what a part *is*.
+
+### The scalar is what ops and tooling became
+
+RP-1 charged two things per launch that AXE cannot port, both stripped with `ModuleTooling*`:
+
+- **Tooling** — `GetModuleCost` adds `d·l·costMultiplierDL` every launch, plus a 2% untooled penalty,
+  against a one-off unlock of ~21,198 for a 1.65 m × 5 m tank. **AXE assumes optimal tooling** (user
+  call), so only the per-launch dimension term is in scope: ~1.85x on tank hardware.
+- **Ops** — `MaintenanceHandler.ComputeDailyMaintenanceCost` is `0.0002 × capital` per day, ×2 for
+  launch complexes: **7.3%/year of facility capital, 14.6%/year for LCs**, offset by a `subsidyCurve`
+  paying 25,000/yr in 1951 rising to 600,000/yr from 1967 and doubled at high reputation. It is a
+  **clock**, and AXE deliberately has none, so there is no per-launch quantity to extract.
+
+Neither converts cleanly, so both are folded into the scalar rather than modelled. Per-part cost already
+scales with vehicle size, so a separate ops fee would double-count that.
+
+### Calibration — 1.2, from a real career
+
+Not from a target ratio. `saves/default3` reconstructed: 52 completed contracts paid 420,756 funds and
+1,463 reputation; facilities cost exactly 190,000 (pad L3 + MC L2) and part unlocks 7,525, leaving
+**~188,846 of launch spend** as the residual — cross-checked as ~62 launches at that career's 3,031
+average craft cost.
+
+**That save predates the §10/§11 payout work, and contract rewards are baked at generation.** Re-pricing
+its 9 stale contracts to current values adds **244,692**, so income should read ~825,558 and launch spend
+is **23.3% of income**, not the 33.4% the save shows. The restore alone lifts it to ~28%; the 1.2 scalar
+lands it at **30.2%**, measured across the same 28 craft (1.32x).
+
+### Two things this does not do
+
+- **It does not move the procedural half.** `ProcCosts` prices from dimensions through expressions
+  (`baseCost = 0.004 * volume`), so one ModuleManager multiplier cannot scale it. Procedural is ~51% of
+  measured vehicle cost, so the knob currently has roughly half the authority its name implies. Its own
+  pass.
+- **Eight Far-Future fission tanks carry RP-1's own prices up to 39.3M** — 86% of the "one of each"
+  total sits in five parts. Harmless while the colonization tier is deferred scaffold; unaffordable in a
+  40M economy if it ever ships.
+
+### §10's table was blind to all of this
+
+`gate_feasibility.py` compared banked income against facility **gates** and never modelled the money
+spent flying the missions that earn it — the largest recurring expense in the game. A launch-spend term
+is now in both tables (`flown`), as
+`objectives(era) × LAUNCHES_PER_OBJECTIVE × glow × DRY_FRACTION × FUNDS_PER_TONNE_DRY`.
+
+**Read the two tables as a bracket, never separately.** The reference table assumes every launch in an
+era flies that era's milestone-defining launcher and blocks from era B onward (era B alone: 28 objectives
+× 4 launches × an R-7 = 1.8M). The floor table assumes the lightest vehicle that can do the job and
+clears everywhere. Real play sits between, and nearer the floor — the 28 craft in `default3` are ~12 t
+dry against an R-7's ~27 t. The weakest input is not any constant but that vehicle assumption.
+
+`FUNDS_PER_TONNE_DRY = 597` is measured; **`massT` in `craft-prices.csv` is DRY** (`p.mass +
+GetModuleMass`, no resources), so it must never be applied to a GLOW figure — hence `DRY_FRACTION`.

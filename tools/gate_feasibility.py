@@ -269,6 +269,51 @@ MILESTONES = [
   ("H", "outer planets, crewed Mars",        12, "Energia / SLS-class",        2400,  900, 8, 4, 2),
 ]
 
+# ---------------------------------------------------------------- launch spend
+# THE TERM THIS TABLE IGNORED UNTIL 2026-07-30. Every margin above compares banked contract income
+# against facility GATES and says nothing about the money spent flying the missions that earn it --
+# measured at ~30% of career income in saves/default3, i.e. the single largest recurring expense.
+#
+# launch_spend(era) = objectives(era) x LAUNCHES_PER_OBJECTIVE x dry_t x FUNDS_PER_TONNE_DRY
+#
+# ALL FOUR INPUTS ARE SOFT, in increasing order of how much they can move the answer:
+#   FUNDS_PER_TONNE_DRY  measured, and the firmest: 112,013 funds over 187.6 t across the 28 real craft
+#                        in saves/default3, priced under AxePartFlyCost.cfg. Reproduce with
+#                        tools/analyze_craft_costs.py. NB craft-prices massT is DRY (p.mass +
+#                        GetModuleMass, no resources), so this must never be applied to a GLOW figure.
+#   DRY_FRACTION         dry mass as a share of GLOW. This module's own F1/F2 (0.09/0.11 of propellant)
+#                        imply ~0.10, and real vehicles bracket it -- R-7 9.6%, Saturn V 6.1%, but a V-2
+#                        is ~32%, so the term UNDER-states the smallest vehicles.
+#   LAUNCHES_PER_OBJECTIVE  calibrated from the one real career available: ~62 launches (249,257 of
+#                        launch spend at 4,000/craft) against ~16 funded objectives completed. Test
+#                        flights, aborts and reputation-only contracts all land in here.
+#   objectives(era)      counted from the generated payout configs, so it tracks build_economy.py.
+#
+# THE WEAKEST ASSUMPTION IS NOT IN THAT LIST: it is that every launch in an era flies that era's
+# REFERENCE vehicle. Players fly the smallest thing that will do the job far more often than the
+# milestone-defining launcher, which is why the floor table below is the more realistic bracket and the
+# reference table is a pessimistic ceiling. Read the pair, never either alone.
+FUNDS_PER_TONNE_DRY = 597
+DRY_FRACTION = 0.10
+LAUNCHES_PER_OBJECTIVE = 4
+
+def era_objectives():
+    """era key -> number of funded objectives, parsed from the generated payout configs."""
+    n = collections.Counter()
+    for fn in (os.path.join(GD, "Programs", "AxeProgramObjectiveFunds.cfg"),
+               os.path.join(GD, "Contracts", "AxeCapstoneFunds.cfg")):
+        if not os.path.exists(fn):
+            continue
+        txt = open(fn, encoding="utf-8", errors="replace").read()
+        for m in re.finditer(r"(?:objective|capstone) of (\S+)", txt):
+            n[m.group(1).rstrip(".,")] += 1
+    return {k: sum(n.get(p, 0) for p in v) for k, v in PROGRAM_ERA.items()}
+
+def launch_spend(era_key, glow_t, objectives):
+    """Funds spent flying an era's missions, for a fleet of `glow_t` vehicles."""
+    return objectives.get(era_key, 0) * LAUNCHES_PER_OBJECTIVE * \
+           (glow_t * DRY_FRACTION) * FUNDS_PER_TONNE_DRY
+
 def main():
     nodes, tier_cost, scalar = load_tree()
     bytier = collections.defaultdict(list)
@@ -290,35 +335,41 @@ def main():
     print("=" * 122)
     hdr = (f"{'milestone':36} {'T':>2} {'treeSci':>8} {'banked':>11} | "
            f"{'reference vehicle':>28} {'t':>5} {'pad':>4} {'padCum':>9} {'RD':>3} {'other':>9} "
-           f"{'GATES':>10} {'margin':>11}")
+           f"{'GATES':>10} {'flown':>11} {'margin':>11}")
     print(hdr); print("-" * len(hdr))
+    objectives = era_objectives()
     banked = float(START_FUNDS)
+    flown = 0.0            # cumulative launch spend, deducted from `banked` as it accrues
     blocks = []
     for key, label, t, veh, glow, floor, ts, mc, ac in MILESTONES:
         pl  = pad_level(glow); pdc = cum(PAD_PRICE, pl)
         rl  = rd_level_for_tier(tier_cost, scalar, t); rdc = cum(RD_PRICE, rl)
         oth = cum(TS_PRICE, ts) + cum(MC_PRICE, mc) + cum(AC_PRICE, ac) + rdc
         gates = pdc + oth
-        margin = banked - gates
+        margin = banked - flown - gates
         if margin < 0:
-            blocks.append((label, veh, glow, pl, gates, banked, margin, floor))
-        print(f"{label:36} {t:>2} {sci_cum[t]:>8,} {banked:>11,.0f} | {veh:>28} {glow:>5} "
-              f"L{pl:<3} {pdc:>9,} L{rl:<2} {oth-rdc:>9,} {gates:>10,} {margin:>11,.0f}"
+            blocks.append((label, veh, glow, pl, gates, banked - flown, margin, floor))
+        print(f"{label:36} {t:>2} {sci_cum[t]:>8,} {banked - flown:>11,.0f} | {veh:>28} {glow:>5} "
+              f"L{pl:<3} {pdc:>9,} L{rl:<2} {oth-rdc:>9,} {gates:>10,} {flown:>11,.0f} {margin:>11,.0f}"
               f"{'  BLOCKED' if margin < 0 else ''}")
         banked += era_funds.get(key, 0)
+        flown += launch_spend(key, glow, objectives)
 
     print()
     print("Same table, but the player min-maxes: lightest vehicle that can do the job at all")
     banked = float(START_FUNDS)
+    flown = 0.0
     for key, label, t, veh, glow, floor, ts, mc, ac in MILESTONES:
         pl  = pad_level(floor)
         rl  = rd_level_for_tier(tier_cost, scalar, t)
         gates = cum(PAD_PRICE, pl) + cum(RD_PRICE, rl) + cum(TS_PRICE, ts) + \
                 cum(MC_PRICE, mc) + cum(AC_PRICE, ac)
-        m = banked - gates
+        m = banked - flown - gates
         print(f"   {label:36} floor {floor:>5} t -> pad L{pl}  gates {gates:>10,}  "
-              f"banked {banked:>11,.0f}  margin {m:>11,.0f}{'  BLOCKED' if m < 0 else ''}")
+              f"banked {banked - flown:>11,.0f}  flown {flown:>10,.0f}  margin {m:>11,.0f}"
+              f"{'  BLOCKED' if m < 0 else ''}")
         banked += era_funds.get(key, 0)
+        flown += launch_spend(key, floor, objectives)
 
     # ---- 2. propulsion envelope: what each tier can actually lift ---------------------
     per_tier = load_engines(nodes)
