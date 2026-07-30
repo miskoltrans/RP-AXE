@@ -120,6 +120,10 @@ namespace RPAxe.Airlaunch
             if (_levels != null) return;
             _levels = new List<AxeAirlaunchTechLevel>();
 
+            int roots = GameDatabase.Instance.GetConfigNodes("KCTAIRLAUNCHTECHS").Length;
+            if (roots == 0)
+                Debug.LogWarning("[AXE][Airlaunch] no KCTAIRLAUNCHTECHS found -- airlaunch has no envelopes and "
+                    + "will never offer itself. Expected design/Tree/AxeAirlaunch.cfg to supply them.");
             foreach (ConfigNode parent in GameDatabase.Instance.GetConfigNodes("KCTAIRLAUNCHTECHS"))
             {
                 foreach (ConfigNode n in parent.GetNodes("AIRLAUNCHTECHLEVEL"))

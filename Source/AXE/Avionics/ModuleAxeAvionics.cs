@@ -375,6 +375,8 @@ namespace RPAxe
             ConfigNode[] tiers = node?.GetNodes("TIER");
             if (tiers == null || tiers.Length == 0) return;
 
+            int dropped = 0;   // tiers rejected below; a non-zero count with nothing kept means the
+                               // config was unreadable, not absent -- see the log line at the end.
             var tech = new List<string>();
             var mass = new List<float>();
             var power = new List<float>();
@@ -396,7 +398,7 @@ namespace RPAxe
             foreach (ConfigNode t in tiers)
             {
                 string tn = t.GetValue("tech");
-                if (string.IsNullOrEmpty(tn)) continue;
+                if (string.IsNullOrEmpty(tn)) { dropped++; continue; }
                 float mf = 0f, pf = 0f, scm = 0f, scp = 0f, scd = 0f;
                 bool sca = false;
                 t.TryGetValue("massFactor", ref mf);
@@ -405,7 +407,7 @@ namespace RPAxe
                 t.TryGetValue("scPowerFactor", ref scp);
                 t.TryGetValue("scDensity", ref scd);
                 t.TryGetValue("scAllowAxial", ref sca);
-                if (mf <= 0f || pf <= 0f || scm <= 0f || scp <= 0f || scd <= 0f) continue; // all-or-nothing per tier
+                if (mf <= 0f || pf <= 0f || scm <= 0f || scp <= 0f || scd <= 0f) { dropped++; continue; } // all-or-nothing per tier
                 tech.Add(tn); mass.Add(mf); power.Add(pf);
                 scMass.Add(scm); scPower.Add(scp); scDensity.Add(scd); scAxial.Add(sca);
 
@@ -428,7 +430,23 @@ namespace RPAxe
                 kosDisk.Add(kd); kosCostFactor.Add(kcf); kosMassFactor.Add(kmf); kosEcPerInstr.Add(kec);
                 shMass.Add(shm); shCost.Add(shc); shTechs.Add(sht); unshHib.Add(uh);
             }
-            if (tech.Count == 0) return; // no complete tiers => keep the hardcoded fallback ladders
+            // A SILENT FALLBACK IS HOW THIS SYSTEM HID A BUG FOR ITS ENTIRE LIFE. The TIER blocks were
+            // authored several `key = value` per line; KSP's ConfigNode keeps only the first assignment on
+            // a line, so every factor below read as absent, every tier was dropped here, and the module
+            // quietly used the in-code ladder -- which is identical, so the game behaved perfectly and
+            // nothing ever surfaced it. Falling back is fine; falling back in silence is not.
+            if (tech.Count == 0)
+            {
+                Debug.LogError($"[AXE][Avionics] {tiers.Length} TIER node(s) present but NONE parsed -- "
+                    + "using the in-code fallback ladder. The config is being ignored. Most likely cause: "
+                    + "more than one 'key = value' on a line (KSP keeps only the first). "
+                    + "See design/Tree/AxeAvionicsCore.cfg and build_tree.py's config format gate.");
+                return;
+            }
+            if (dropped > 0)
+                Debug.LogWarning($"[AXE][Avionics] {dropped} of {tiers.Length} TIER node(s) were incomplete "
+                    + "and dropped; the ladder is running on the remaining "
+                    + $"{tech.Count}. Every tier needs massFactor/powerFactor/scMassFactor/scPowerFactor/scDensity.");
             _ladTech = tech.ToArray();
             _ladMass = mass.ToArray();
             _ladPower = power.ToArray();

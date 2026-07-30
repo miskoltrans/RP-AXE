@@ -67,7 +67,12 @@ namespace RPAxe.RnD
         private static void LoadMeta()
         {
             ConfigNode[] roots = GameDatabase.Instance.GetConfigNodes("RPAXE_TREEMETA");
-            if (roots == null || roots.Length == 0) return;
+            if (roots == null || roots.Length == 0)
+            {
+                Debug.LogWarning("[AXE][TreeMeta] no RPAXE_TREEMETA found -- falling back to compiled-in "
+                    + "layout constants, which drift from build_tree.py's the moment either changes.");
+                return;
+            }
             ConfigNode root = roots[0];
             ParseFloat(root, "marginX", ref MarginX);
             ParseFloat(root, "marginY", ref MarginY);
@@ -102,7 +107,11 @@ namespace RPAxe.RnD
         private static void LoadSettings()
         {
             ConfigNode[] roots = GameDatabase.Instance.GetConfigNodes("RPAXE_RENDER");
-            if (roots == null || roots.Length == 0) return;   // no cfg -> keep the safe default (stock)
+            if (roots == null || roots.Length == 0)
+            {
+                Debug.LogWarning("[AXE][TreeMeta] no RPAXE_RENDER found -- keeping the stock R&D renderer.");
+                return;   // no cfg -> keep the safe default (stock)
+            }
             ConfigNode r = roots[roots.Length - 1];            // last wins (ModuleManager-friendly)
             string layout = r.GetValue("layout");
             Render.Layout = string.IsNullOrEmpty(layout) ? "bands" : layout.Trim().ToLowerInvariant();

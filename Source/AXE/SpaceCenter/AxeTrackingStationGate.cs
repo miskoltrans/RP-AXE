@@ -42,6 +42,11 @@ namespace RPAxe
                             map[lvl] = v.value;
                 }
             }
+            // Loud on absence: an empty AXEBUILDINGTECHS is indistinguishable from "no gates configured",
+            // and the failure mode is a tracking station with NO tech gate -- silently free upgrades.
+            if (_gates.Count == 0)
+                Debug.LogWarning("[AXE][DSN] no AXEBUILDINGTECHS found -- facility tech gates are NOT active. "
+                    + "Expected design/Tree/AxeFacilityGates.cfg to supply them.");
         }
 
         private static UpgradeableFacility FacilityOf(KSCFacilityContextMenu menu)
