@@ -277,8 +277,10 @@ MILESTONES = [
 # launch_spend(era) = objectives(era) x LAUNCHES_PER_OBJECTIVE x dry_t x FUNDS_PER_TONNE_DRY
 #
 # ALL FOUR INPUTS ARE SOFT, in increasing order of how much they can move the answer:
-#   FUNDS_PER_TONNE_DRY  measured, and the firmest: 112,013 funds over 187.6 t across the 28 real craft
-#                        in saves/default3, priced under AxePartFlyCost.cfg. Reproduce with
+#   FUNDS_PER_TONNE_DRY  measured, and the firmest: 120,831 funds over 187.6 t across the 28 real craft
+#                        in saves/default3, priced under AxePartFlyCost.cfg AND AxeProcCostScale.cfg --
+#                        BOTH halves, or this reads ~30% low (it was 597 while only named parts scaled).
+#                        Reproduce with
 #                        tools/analyze_craft_costs.py. NB craft-prices massT is DRY (p.mass +
 #                        GetModuleMass, no resources), so this must never be applied to a GLOW figure.
 #   DRY_FRACTION         dry mass as a share of GLOW. This module's own F1/F2 (0.09/0.11 of propellant)
@@ -293,7 +295,7 @@ MILESTONES = [
 # REFERENCE vehicle. Players fly the smallest thing that will do the job far more often than the
 # milestone-defining launcher, which is why the floor table below is the more realistic bracket and the
 # reference table is a pessimistic ceiling. Read the pair, never either alone.
-FUNDS_PER_TONNE_DRY = 597
+FUNDS_PER_TONNE_DRY = 644
 DRY_FRACTION = 0.10
 LAUNCHES_PER_OBJECTIVE = 4
 
