@@ -366,6 +366,19 @@ ordering (`engine-stats.tsv` `node_title`).**
 - **RD-275.** `RD-275M` (1830 kN, RP-1 era 2004-2008) was gated at T10 while the earlier, weaker
   `RD-275` (1746 kN, era 1992-1997) sat at T11. **Swapped** between `pc_stagedCombustionCeiling`
   (T10) and `pc_operationalStorableORSC` (T11).
+
+  *The swap broke the ladder gate -- re-fixed 2026-07-30.* Swapping the two configs was not a
+  like-for-like exchange: `RD-275` (1746 kN) is in the **same padding class** as `RD-253-Mk3` (1698)
+  and `RD-253-Mk4` (1748) -- within 3% on every axis `_ladder_near` reads -- and `RD-275M` is in its
+  own. So moving `RD-275M` up onto T11 put *two* classes on `pc_operationalStorableORSC` (R1
+  `1 collapsed node`, red build since `03d73d3`) and split the Mk3 class across T10/T11 (an R4).
+  Fixed by unifying the class instead of trading places: `RD-253-Mk3`, `RD-253-Mk4` **and** `RD-275`
+  all now sit on `pc_refinedStorableORSCII` (T10) -- the lane's "Mk2->Mk3 next rung" collector, where
+  the RD-253 line previously had no rung at all -- leaving `RD-275M` alone at T11 as the family's only
+  real step past that point. Ladder reads T8 1545 -> T9 1635 -> T10 {1698/1746/1748} -> T11 1830, and
+  `pc_stagedCombustionCeiling` is back to hosting only `RD-277M-14D16M` (below).
+  **Lesson: a tier swap must exchange padding CLASSES, not configs** -- both gates are needed, since
+  `tier_defects` only compares configs pairwise and cannot see that a move collapses a class boundary.
   *`RD-277M` / `RD-277` -- CHECKED 2026-07-29, NOT the same defect.* The pair looks back-to-front by
   date (RD-277M is 2009-2013, RD-277 is 1998-2003) but `RD-277M` trades **burn time**: 129 s against
   RD-277's 225 s, 43% less, for +88 kN (+4.8%) and +2 s sea-level Isp. A genuine choice, not a free

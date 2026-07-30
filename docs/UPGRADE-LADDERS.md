@@ -262,8 +262,17 @@ downgrades them to warnings while mid-edit. R4 stays advisory: a split performan
 placement choice, and some are forced by the base-config pin guard.
 
 Baseline at time of writing: **160 collapsed nodes · 0 base-node tokens · 6 non-ascending rungs ·
-127 padding duplicates**. **Current: 0 · 0 · 0 (+35 benign same-tier) · 14** — the migration is complete
+127 padding duplicates**. **Current: 0 · 0 · 0 (+35 benign same-tier) · 13** — the migration is complete
 and the gate is the standing invariant.
+
+**The invariant earned its keep, 2026-07-29 → 07-30.** R1 regressed to 1 for three commits. Cause: the
+tier-balance pass (`docs/TIER-BALANCE.md` E) fixed a dominance inversion in `ROE-RD275` by **swapping two
+configs between tiers** — but `RD-275` (1746 kN) is a padding class-mate of `RD-253-Mk3`/`Mk4` (1698/1748)
+and `RD-275M` (1830) is its own class, so the exchange moved a second class onto T11 and split the first
+across two nodes. **A tier swap must exchange CLASSES, not configs**; a pairwise dominance comparator cannot
+see a class boundary being collapsed, which is exactly the gap this gate covers. Note the build emits
+`AxeTechTree.cfg` *before* the gate runs, so a red gate still ships a cfg — read the gate line, don't infer
+health from a written file.
 
 Checks:
 

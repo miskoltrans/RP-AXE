@@ -3522,13 +3522,14 @@ nodes:
     parents: [pc_refinedStorableORSC]
     flavor: "Push oxidiser-rich staged combustion on storable hypergolics as far as raw chemistry allows — the largest hypergolic engine ever built, drawn for a booster that never flew. A record nobody has beaten since, and nobody needed to."
     parts: [ROE-RD270]
-    upgrades: [RFUpgrade_RD-277M-14D16M, RFUpgrade_RD-275]
-    # RFUpgrade_RD-275 SWAPPED IN from pc_operationalStorableORSC (T11) 2026-07-29 (tier-balance audit,
-    # docs/TIER-BALANCE.md E). RD-275M (1830 kN, RP-1 era 2004-2008) was gated HERE at T10 while the
-    # earlier, weaker RD-275 (1746 kN, RP-1 era 1992-1997) sat at T11 - inverted against both performance
-    # and history, so RD-275 could never be worth buying.
-    # NOTE the neighbouring RD-277M-14D16M (here, T10) / RD-277-14D16 (T11) pair has the same shape; it
-    # survives the strict dominance test on another axis, so it is left alone pending a look.
+    upgrades: [RFUpgrade_RD-277M-14D16M]
+    # Only ROE-RD254's top mark hangs here. The 2026-07-29 tier-balance swap (docs/TIER-BALANCE.md E)
+    # briefly parked RFUpgrade_RD-275 here to get RD-275M off T10, where it undercut its own T11 marks;
+    # that traded a dominance inversion for a collapsed ladder, because RD-275 (1746 kN) is the SAME
+    # performance class as RD-253-Mk3/Mk4 (1698/1748) and RD-275M is not. All three now sit together on
+    # pc_refinedStorableORSCII (T10) with RD-275M alone at T11 - see the note there.
+    # RD-277M-14D16M stays: 1922 kN for 129 s of burn against RD-277-14D16's 1834 kN for 225 s is a
+    # genuine trade, not a free upgrade, and this node is where the family's highest-thrust variant belongs.
     # King RD-270 (6713 kN vacuum - the real UR-700 engine, still the largest hypergolic ever tested).
     # Sibling of fd_gasGeneratorApex/cryo_largeHydrolox: every propellant family gets its own "pushed past
     # sane thrust for one more chemistry-ceiling record" dead-end. Same "drawn but never poured" flavor as AJ-260.
@@ -3567,9 +3568,14 @@ nodes:
     tier: 10
     parents: [pc_refinedStorableORSC]
     flavor: "One more pass at the same storable staged-combustion hardware — tighter tolerances, higher chamber pressure, the same dependable poison burning a little more completely each mark."
-    upgrades: [RFUpgrade_RD-0210-Mk2, RFUpgrade_RD-0212-Mk2, RFUpgrade_RD-0213-Mk2]
+    upgrades: [RFUpgrade_RD-0210-Mk2, RFUpgrade_RD-0212-Mk2, RFUpgrade_RD-0213-Mk2, RFUpgrade_RD-253-Mk3, RFUpgrade_RD-253-Mk4, RFUpgrade_RD-275]
     # Pure doctrine-4 collector, same shape as pc_refinedStorableORSC itself one tier down - the Mk2->Mk3
     # next rung of the same refinement ladder.
+    # RD-253-Mk3/Mk4 + RD-275 moved in 2026-07-30 from pc_operationalStorableORSC (T11) / the T10 ceiling
+    # node. The three are one performance class - 1698/1748/1746 kN, all within 3% on every axis a builder
+    # feels - so they are ONE tree event, and this is the node that event belongs to: the RD-253 line had
+    # no T10 rung at all while the Kosberg ladder beside it did. Leaves RD-275M (1830 kN) alone at T11 as
+    # the family's only real step past this point.
 
   # ---- Lane 5: solids -- four separate real lineages, not merged ----
   - id: pc_scoutMarkIII
@@ -4323,7 +4329,9 @@ nodes:
     tier: 11
     parents: [pc_refinedStorableORSCII]
     flavor: "The storable staged-combustion engines of Proton and its kin reach their final operational marks — the RD-275M first stage, the Kosberg upper stages — the last refinements of a hypergolic booster line that has been flying since the sixties."
-    upgrades: [RFUpgrade_RD-275M, RFUpgrade_RD-253-Mk4, RFUpgrade_RD-254-11D44-Mk4, RFUpgrade_RD-277-14D16, RFUpgrade_RD-0210-Mk3, RFUpgrade_RD-0212-Mk3, RFUpgrade_RD-0213-Mk3, RFUpgrade_RD-254-11D44-Mk3, RFUpgrade_RD-253-Mk3]  # RD-254-11D44-Mk3 added 2026-07 (gap-fill; Mk4 sibling here)
+    upgrades: [RFUpgrade_RD-275M, RFUpgrade_RD-254-11D44-Mk4, RFUpgrade_RD-277-14D16, RFUpgrade_RD-0210-Mk3, RFUpgrade_RD-0212-Mk3, RFUpgrade_RD-0213-Mk3, RFUpgrade_RD-254-11D44-Mk3]  # RD-254-11D44-Mk3 added 2026-07 (gap-fill; Mk4 sibling here)
+    # RD-253-Mk3/Mk4 moved down to pc_refinedStorableORSCII (T10) 2026-07-30 to rejoin their class-mate
+    # RD-275; RD-275M is the ROE-RD275 family's only config left here, which is what the flavor claims.
 
   # ---- FluidDynamics: storable uppers + terminal gas-generator kerolox ----
   - id: fd_multiRestartStorableUpper
