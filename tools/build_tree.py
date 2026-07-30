@@ -2112,15 +2112,41 @@ TL_LADDER_PATS = [
 ]
 TL_ROMAN = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10}
 
+# NAMED ladders: generational rungs of one capability whose names carry NO level number, so no
+# TL_LADDER_PATS pattern can ever match them and nothing above was checking their order at all. Listed
+# in ascending capability order; the index IS the level. Added 2026-07-30 after the ROHeatshields TPS
+# ladder was found with MercuryHS and GeminiHS collapsed onto a single T6 node -- invisible here because
+# "MercuryHS" is a program name, not a rung number. Same bug shape as the RFTech-Battery-IV descent, but
+# a whole family the gate could not see rather than one mis-tiered rung.
+#
+# The bar for adding a family: the rungs must be ORDERED generations of ONE capability, so that owning
+# rung N+1 makes rung N redundant. Sidegrades do not belong -- ROHeatshields' `Inflatable` is deliberately
+# absent: it is the HIAD preset on a different part (ROH-AdjustableHIAD), rated for Mars/very gentle Earth
+# entry, so it neither supersedes nor is superseded by the rigid-shield rungs.
+NAMED_LADDERS = {
+    # RO heatshield presets, ordered by rating (RealismOverhaul/RO_Heatshields.cfg heatShieldTag blocks):
+    # Heatsink 1790 K beryllium mass-soak, no ablator -> Mercury 2350 K ablative, non-lifting ->
+    # Gemini 2350 K, half the mass per metre + lifting -> EarlyLunar 3400 K -> Lunar 3600 K.
+    "ROHeatshields-TPS": ["Heatsink", "MercuryHS", "GeminiHS", "EarlyLunarHS", "LunarHS"],
+}
+
 def tl_ladders(u2n):
     """Group placed upgrade tokens into tech-level ladders -> {stem: [(level, token), ...]} sorted by level.
+
+    Two sources: NAMED_LADDERS (hand-declared, names carry no level) and TL_LADDER_PATS (level parsed off
+    the token name). Named rungs are claimed first so a token in both is never double-counted.
 
     RFUpgrade_* is excluded wholesale: those are engine CONFIGs (check_ladder_collapse's job), and their
     names are hardware designations, not levels -- RFUpgrade_Aestus-II and RFUpgrade_WP-6A-III would
     otherwise read as roman rungs when "Aestus II" is simply the engine's name."""
     lad = collections.defaultdict(list)
+    named = set()
+    for stem, rungs in NAMED_LADDERS.items():
+        for lvl, tok in enumerate(rungs, 1):
+            named.add(tok)
+            if tok in u2n: lad[stem].append((lvl, tok))
     for tok in u2n:
-        if tok.startswith("RFUpgrade_"): continue
+        if tok.startswith("RFUpgrade_") or tok in named: continue
         for pat in TL_LADDER_PATS:
             m = pat.match(tok)
             if not m: continue
@@ -2139,41 +2165,59 @@ def check_techlevel_ladders(by, u2n, hard=True):
     nothing that way, because Battery-IV sat a tier below it.
 
     D1 ERROR  a rung on a node at a lower tier than the rung it supersedes
-    D2 note   rungs sharing one node -- house style for ADJACENT generations (solarTL0+TL1 on
+    D2 note   NUMBERED rungs sharing one node -- house style for ADJACENT generations (solarTL0+TL1 on
               elec_arCoatings, PFTech-Fairing-V+VI, 0.042 -> 0.040 of padding), so it is counted,
               not flagged. Non-adjacent sharing is what D1 catches once the tiers disagree.
+    D3 ERROR  NAMED_LADDERS rungs sharing one node. Held stricter than D2 on purpose: a numbered TL step
+              is usually a few percent of one number, but a rung earns a NAME because it is a distinct
+              generation of hardware, so collapsing two onto one node sells a whole generation for free.
+              This is the check that was missing when MercuryHS and GeminiHS shared one T6 node
+              (identical temp rating, but half the shield mass per metre plus lifting entry -- a real rung)
+              and D1 could not see it, because same-tier is not descending.
 
-    D1 is at zero and FAILS THE BUILD if it regresses, same as check_ladder_collapse's R1/R2
+    D1/D3 are at zero and FAIL THE BUILD if they regress, same as check_ladder_collapse's R1/R2
     (AXE_LADDER_SOFT=1 to downgrade mid-edit). It reached zero 2026-07-29 when the last two descents --
     RFTech-rcs-tltech6 and RFTech-solids-tltech6 -- were fixed as part of repointing RF_TECHLEVELS at AXE
     nodes; see emit_engine_tech_levels. That is also why this gate matters beyond tidiness: the same
     placements it orders are what TLTECH<n> is derived from, so a descent here is a real in-game
     regression in engine tech level, not just a shelving mistake."""
-    d1, shared, nlad = [], 0, 0
+    d1, d3, shared, nlad = [], [], 0, 0
     for stem, rungs in sorted(tl_ladders(u2n).items()):
         rungs = [(l, t) for l, t in rungs if u2n.get(t) in by]
         if len(rungs) < 2: continue
         nlad += 1
         seen = collections.Counter(u2n[t] for _, t in rungs)
-        shared += sum(c - 1 for c in seen.values() if c > 1)
+        if stem in NAMED_LADDERS:
+            for node, c in sorted(seen.items()):
+                if c > 1:
+                    d3.append((stem, node, by[node]["tier"], [t for _, t in rungs if u2n[t] == node]))
+        else:
+            shared += sum(c - 1 for c in seen.values() if c > 1)
         prev = None
         for lvl, tok in rungs:
             node = u2n[tok]; tier = by[node]["tier"]
             if prev and tier < prev[0]:
                 d1.append((stem, tok, node, tier, prev[1], prev[0]))
             prev = (tier, tok)
-    if not d1:
-        print(f"tech-level ladder gate: clean -- {nlad} ladder(s) ascend ({shared} adjacent rung(s) sharing a node)")
+    if not (d1 or d3):
+        print(f"tech-level ladder gate: clean -- {nlad} ladder(s) ascend "
+              f"({len(NAMED_LADDERS)} named, one rung per node; "
+              f"{shared} adjacent numbered rung(s) sharing a node)")
         return []
-    print(f"tech-level ladder gate: {len(d1)} DESCENDING rung(s) across {nlad} ladder(s)")
+    print(f"tech-level ladder gate: {len(d1)} DESCENDING rung(s), {len(d3)} collapsed named rung(s) "
+          f"across {nlad} ladder(s)")
     for stem, tok, node, tier, ptok, ptier in d1:
         print(f"   D1 ! {stem}: {tok} @ {node} T{tier} is gated EARLIER than {ptok} (T{ptier}), "
               f"which it supersedes")
+    for stem, node, tier, toks in d3:
+        print(f"   D3 ! {stem}: {' + '.join(toks)} all sit on {node} (T{tier}) — a named rung is a whole "
+              f"hardware generation; give each its own node")
     if hard and not os.environ.get("AXE_LADDER_SOFT"):
-        die(f"{len(d1)} descending tech-level rung(s) — see above. A later level must not unlock before "
-            f"the level it replaces; for the RFTech-*-tltech ladders this also mis-gates RF_TECHLEVELS. "
+        die(f"{len(d1)} descending + {len(d3)} collapsed tech-level rung(s) — see above. A later level must "
+            f"not unlock before the level it replaces, and named rungs must not share a node; for the "
+            f"RFTech-*-tltech ladders a descent also mis-gates RF_TECHLEVELS. "
             f"This is an invariant, not a warning; set AXE_LADDER_SOFT=1 to downgrade while mid-edit.")
-    return d1
+    return d1 + d3
 
 def check_unplaced_upgrades(u2n, grant2n):
     """Inventory of the PARTUPGRADEs that fell through to `parking` — the upgrade-side twin of the

@@ -1655,31 +1655,63 @@ nodes:
   # ===================== BAND 2 * CREWED SPINE (T5 subsystems -> T6 vehicles) =====================
   # The marquee "humans" goal, the era's T6 climax. Subsystems (TPS, ECLSS, RCS, cabin, escape) at T5
   # feed the parallel Mercury || Vostok vehicles at T6. The 3 sanctioned crossovers live here: each
-  # capsule needs TPS x ECLSS; Zenit (uncrewed recon) needs TPS x recon-optics. Tech-level capability
-  # upgrades (Heatsink, MercuryHS) DEFERRED as a tech-level pass, like band-1 solarTL/commsTL.
+  # capsule needs TPS x ECLSS; Zenit (uncrewed recon) needs TPS x recon-optics.
+  # TPS ladder: the deferred tech-level pass RAN 2026-07-30 (user call) — see cmp_heatSinkTPS below.
+  # ---- TPS ladder rung 1 (T3, band-1 tier — heads the band-2 ladder, kept here so the ladder reads
+  #      as one block) ----
+  - id: cmp_heatSinkTPS
+    title: "Heat-Sink Reentry Shielding"
+    discipline: CompositeMaterials
+    tier: 3
+    parents: [met_stainlessSteel]
+    flavor: "Survive the fireball by out-massing it. A machined beryllium block soaks the whole entry heat pulse into its own thermal mass and carries it back down still glowing — no chemistry, no char, just metal and patience. Crude and heavy, but the first thing that brings a payload home intact."
+    parts: [ROH-AdjustableHS]
+    upgrades: [Heatsink]
+    # NEW (2026-07-30, user call): the Heatsink rung was sitting at T5 inside cmp_ablativeTPS, two tiers
+    # late and in a node whose title/flavor promise ABLATION. Ground truth (RealismOverhaul/RO_Heatshields.cfg
+    # heatShieldTag[Heatsink]): `heatShieldNoAblator = true`, `!MODULE[ModuleAblator]`, both Ablator RESOURCEs
+    # deleted, thermalMassModifier 2.8 — it is a mass-soak, the OPPOSITE mechanism, so it could never share a
+    # node with the ablators without the title lying. RP-1 agrees on timing: entryDescentLanding (1959), a
+    # generation before humanRatedEDL (1960).
+    # ROH-AdjustableHS moves down WITH it: a granted Heatsink with its only host part still at T5 is inert
+    # (the preset has nothing to apply to). RP-1 pairs them the same way — the part's own
+    # `TechRequired:NEEDS[RP-0] = entryDescentLanding` IS the Heatsink node. Base part + FIRST rung sharing a
+    # node is not the doctrine-4 case (that forbids an UPRATE co-locating with its base); ship a heatshield
+    # with no preset and it is unusable.
+    # Parent met_stainlessSteel (T2): plain physical prereq, not a celebrated crossover — the metallurgy of
+    # metal that keeps its properties at red heat, the same lane that continues to met_nimonic at T3.
+    # CompositeMaterials rather than Metallurgy (user call): keeps the whole TPS ladder in one render lane.
   # ---- Subsystems (T5) ----
   - id: cmp_ablativeTPS
     title: "Ablative Reentry Shielding"
     discipline: CompositeMaterials
     tier: 5
-    parents: [th_hermeticBus]
-    flavor: "Face the reentry fireball with a shield built to be destroyed: a resin-and-fibre composite that chars and boils away layer by layer, carrying the heat off with the vapour and holding the structure behind it cool. The one thing between a returning capsule and cremation."
-    parts: [ROC-MercuryHS, ROH-AdjustableHS]
-    upgrades: [Heatsink]
+    parents: [cmp_heatSinkTPS, th_hermeticBus]
+    flavor: "Face the reentry fireball with a shield built to be destroyed: a resin-and-fibre composite that chars and boils away layer by layer, carrying the heat off with the vapour instead of hoarding it. Less than half the weight of a metal heat sink, and the one thing between a returning capsule and cremation."
+    parts: [ROC-MercuryHS]
+    upgrades: [MercuryHS]
+    # 2026-07-30 (user call): now rung 2, the ABLATIVE rung, which is what its title always said it was.
+    # MercuryHS pulled down from cmp_ablativeRefinement (see there); Heatsink + ROH-AdjustableHS pushed down
+    # to cmp_heatSinkTPS. th_hermeticBus kept as a second parent so nothing downstream loosens — the ladder
+    # spine (cmp_heatSinkTPS) is additive to it, not a replacement. 6 dependents, a deliberate hub: every
+    # crewed/recon capsule of the era wants the ablative rung specifically.
   - id: cmp_ablativeRefinement
     title: "Advanced Ablator Formulation"
     discipline: CompositeMaterials
     tier: 6
     parents: [cmp_ablativeTPS]
-    flavor: "A denser char layer and a slower burn-through rate let the same shield shrug off a hotter, faster reentry — the material getting better, not the shape changing. Mercury's ablator becomes Gemini's."
+    flavor: "Halve the shield and fly it at an angle. The same ablator laid up thinner and denser takes the same peak heat over the longer, shallower entry you fly when you steer a capsule to a landing site instead of dropping it wherever the ballistics put it. Mercury's ablator becomes Gemini's."
     parts: [ROC-GeminiHSBDB]
-    upgrades: [MercuryHS, GeminiHS]
+    upgrades: [GeminiHS]
     # NEW (2026-07 fix, user call): MercuryHS/GeminiHS + ROC-GeminiHSBDB pulled out of edl_crewedRecovery.
-    # cmp_ablativeTPS already IS the TPS material ladder's real home (holds the Heatsink rung); band 2 broke
-    # the ladder by continuing it inside the parachute/recovery node instead of here. Kept at T6 (MercuryHS's
-    # original tier via edl_crewedRecovery) rather than bumping to 7 — this is a structural fix (right node),
-    # not a balance change (right tier); GeminiHS riding along in a T6 node matches the same pattern already
-    # used for edl_crewedRecovery's own Gemini/Voskhod additions.
+    # cmp_ablativeTPS already IS the TPS material ladder's real home; band 2 broke the ladder by continuing
+    # it inside the parachute/recovery node instead of here.
+    # SPLIT 2026-07-30 (user call): MercuryHS moved down to cmp_ablativeTPS, leaving GeminiHS alone here.
+    # The two shared one T6 node — a collapsed ladder, and GeminiHS is a real rung, not a reskin: identical
+    # skinMaxTemp (2350 K) but HALF the shield mass per metre of diameter (heatShieldDensity 0.020 -> 0.010)
+    # plus a lifting-entry rating. RP-1 spaces them 4 years and 2 nodes apart (humanRatedEDL 1960 ->
+    # earlyLanding 1964). Flavor rewritten to match that measured delta — the old text claimed a "hotter,
+    # faster reentry", which is false here (the temp rating does not move until EarlyLunarHS at T8).
   - id: life_openLoopECLSS
     title: "Open-Loop Life Support"
     discipline: LifeSupport
