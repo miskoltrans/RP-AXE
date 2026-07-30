@@ -169,9 +169,20 @@ namespace RPAxe
 
         // Guided only: how much vessel mass this core can steer, derived from hwVolume via the inverse of
         // the mass polynomial. 0 for Unguided (matches RP-1: Science-Core always contributes 0).
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Capacity",
-                  guiFormat = "F2", guiUnits = " t", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        // Data field, not a readout -- capacityDisplay below is what the PAW shows, because the two states
+        // that produce a zero here mean different things and "0.00 t" tells the player neither.
+        [KSPField(isPersistant = true)]
         public float capacityTons = 0f;
+
+        // Capacity as the PAW reports it. Zero has two distinct causes worth naming: Unguided has no
+        // capacity concept at all (RP-1's Science-Core contributes 0 by design, it is not undersized), and a
+        // Guided core whose hardware sits under the tier's floor -- the inverse polynomial only goes positive
+        // above massConstant * massFactor kg, i.e. 169 L of hardware at `start` falling to 22 L by the last
+        // tier. That second case is common on the Probe Bus, whose stock core models range from a 28 L OGO
+        // to a 3090 L Hera, so the fix ("make it bigger, or advance the ladder") has to be legible.
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Capacity",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public string capacityDisplay = "";
 
         // How much of the current draw is "penalty" from being over capacity (MAX across active cores).
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Overload Penalty",
@@ -224,6 +235,16 @@ namespace RPAxe
         PropertyInfo _procCurShapeProp;  // ProceduralPart.CurrentShape — for refreshing the slider bounds
         MethodInfo _procSeekVolumeMethod;// ProceduralPart.SeekVolume(target[, dir]) — nudge box to a volume
         bool _enforcingFloor;            // re-entrancy guard: SeekVolume can re-fire onEditorShipModified
+        // The OTHER procedural shape driver: ROTanks' ModuleROTank, which drives the Probe Bus (ROT-ProbeCore)
+        // and reDIRECT's avionics. Volume-read ONLY -- ROLib exposes no volumeMin and no SeekVolume, so the
+        // box floor and the auto-grow-to-fit nudge simply don't exist on those parts (RP-1 is in the same
+        // position: its GetSeekVolumeMethod() returns null unless ProceduralParts is the driver, and its
+        // Configure window prints "ROTanks does not currently support automatic resizing"). The overload
+        // penalty is the guardrail there instead of a geometric floor -- shrink the box and capacity falls
+        // visibly rather than the box refusing to shrink.
+        PartModule _rotPM;
+        PropertyInfo _rotVolumeProp;     // ModuleROTank.Volume (m^3, same units as ProceduralPart.Volume)
+        bool _sendingVolume;             // re-entrancy guard: we both send and listen for OnPartVolumeChanged
         float _cachedVolume = -1f;       // m^3 — the procedural part's total volume
 
         // kOS bridge (reflected — AXE.dll doesn't reference kOS, same duck-typed pattern as RealFuels above).
@@ -519,6 +540,43 @@ namespace RPAxe
             UpdateRate();
         }
 
+        // The authoritative "the box changed size" signal, and the ONLY one ROTanks gives us.
+        //
+        // onEditorShipModified is not enough. ProceduralParts fires it on a resize, so polling volume from
+        // OnShipModified was sufficient while that was the only driver -- but ModuleROTank's resize path
+        // (ModelChangedHandler -> UpdateDimensions/UpdateTankVolume/...) never fires it, verified against
+        // ROLib.dll's IL. On a Probe Bus that left _cachedVolume frozen at whatever EditorFirstFrameSetup()
+        // read, so every bus reported the same volume and resizing changed nothing.
+        //
+        // Both drivers DO send this: ROLib's UpdateTankVolume sets its Volume property and then calls
+        // SendVolumeChangedEvent -> part.SendEvent("OnPartVolumeChanged", {newTotalVolume}), which is fired
+        // at exactly the moment the volume changes. Same event ProceduralParts and RealFuels already speak,
+        // and the same hook RP-1's ModuleProceduralAvionics uses.
+        //
+        // REENTRANCY: this module SENDS the same event from PushBatteryToTank (with the battery segment's
+        // volume, to size the RealFuels tank). Listening without a guard would feed that back in as the new
+        // box volume and shrink the part to nothing over a few frames. RP-1 guards the identical hazard by
+        // toggling Events[...].active around its own send; _sendingVolume does the same job and also covers
+        // the RF-side echo.
+        [KSPEvent]
+        public void OnPartVolumeChanged(BaseEventDetails data)
+        {
+            if (!HighLogic.LoadedSceneIsEditor || _sendingVolume) return;
+
+            // ProceduralParts and RealFuels set this as a double; don't assume ROLib agrees.
+            float newVolume;
+            try { newVolume = (float)data.Get<double>("newTotalVolume"); }
+            catch { try { newVolume = data.Get<float>("newTotalVolume"); } catch { return; } }
+            if (newVolume <= 0f || Mathf.Approximately(newVolume, _cachedVolume)) return;
+
+            _cachedVolume = newVolume;
+            EnforceBoxFloor();
+            RecomputeSplit(_cachedVolume);
+            UpdateHardwareMass();
+            PushBatteryToTank();
+            UpdateRate();
+        }
+
         void OnStage(int _)
         {
             UpdateRate();
@@ -601,6 +659,11 @@ namespace RPAxe
                     _procSeekVolumeMethod = m.GetType().GetMethod("SeekVolume",
                         BindingFlags.Public | BindingFlags.Instance);
                 }
+                else if (_rotPM == null && n == "ModuleROTank")
+                {
+                    _rotPM = m;
+                    _rotVolumeProp = m.GetType().GetProperty("Volume", F);
+                }
                 else if (_kosPM == null && n == "kOSProcessor")
                 {
                     _kosPM = m;
@@ -631,10 +694,21 @@ namespace RPAxe
             catch { }
         }
 
+        // Total box volume, from whichever procedural driver owns this part -- ProceduralParts on the grey
+        // Avionics Core, ROTanks on the Probe Bus.
+        //
+        // This is the INITIAL/fallback read only. Live changes arrive through OnPartVolumeChanged above,
+        // because polling here is not sufficient: it runs from OnShipModified, and ModuleROTank's resize
+        // path never fires onEditorShipModified (checked against ROLib.dll's IL -- ModelChangedHandler
+        // calls UpdateDimensions/UpdateTankVolume/UpdateMass/... and nothing that reaches
+        // ROLStockInterop.FireEditorUpdate). Relying on the poll alone froze a Probe Bus at its
+        // first-frame volume: identical for every core model, unmoved by the diameter slider.
         float ReadProceduralVolume()
         {
-            if (_procPM == null || _procVolumeProp == null) return _cachedVolume;
-            try { return Convert.ToSingle(_procVolumeProp.GetValue(_procPM, null)); }
+            PartModule pm = _procPM ?? _rotPM;
+            PropertyInfo prop = _procPM != null ? _procVolumeProp : _rotVolumeProp;
+            if (pm == null || prop == null) return _cachedVolume;
+            try { return Convert.ToSingle(prop.GetValue(pm, null)); }
             catch { return _cachedVolume; }
         }
 
@@ -880,12 +954,17 @@ namespace RPAxe
             try { _rfCalcMass?.Invoke(_rfPM, null); } catch { }
         }
 
+        // Sends the battery segment's volume to RealFuels. This is the SAME event this module now listens
+        // for (OnPartVolumeChanged), so _sendingVolume must be held for the duration: without it our own
+        // broadcast comes straight back as "the box is now battery-sized" and the part collapses.
         void SendVolumeChangedEvent(double newVolume)
         {
             var data = new BaseEventDetails(BaseEventDetails.Sender.USER);
             data.Set<string>("volName", "Tankage");
             data.Set("newTotalVolume", newVolume);     // m^3 — RealFuels' ModuleFuelTanks listens for this
-            part.SendEvent("OnPartVolumeChanged", data, 0);
+            _sendingVolume = true;
+            try { part.SendEvent("OnPartVolumeChanged", data, 0); }
+            finally { _sendingVolume = false; }
         }
 
         // Called every drag-move frame by the allocation bar: writes the live split directly, so every
@@ -1165,6 +1244,11 @@ namespace RPAxe
             Actions[nameof(HibernateAction)].active = CanHibernate;
             Actions[nameof(ShutdownAction)].active = CanHibernate && (!hibernating || HighLogic.LoadedSceneIsEditor);
             Actions[nameof(ActivateAction)].active = CanHibernate && (hibernating || HighLogic.LoadedSceneIsEditor);
+
+            capacityDisplay = ScienceCoreMode ? "n/a — unguided"
+                            : hibernating     ? "none — shut down"
+                            : capacityTons > 0f ? $"{capacityTons:N2} t"
+                            : "none — box too small for this tier";
 
             guidanceStatus = hibernating ? "shut down — no guidance, out of the steerable-mass budget"
                            : ScienceCoreMode ? (_scAllowAxial ? "Unguided — axial thrust only (spin-stabilized)"
