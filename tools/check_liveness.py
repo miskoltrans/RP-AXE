@@ -22,8 +22,12 @@ Checks
   T  dangling tech gates        -- check_tech_refs.py in --cache mode, folded in so one command
                                    covers the whole family
   D  dead patch targets         -- @PART[x] we patch where x matched nothing (report only)
+  E  effect assertions          -- did the VALUE a generator emitted actually reach the game?
+                                   Every check above asks whether a string RESOLVES; this asks
+                                   whether the NUMBER LANDED, which is how a cost patch can bind
+                                   to nothing and change nothing while every other gate passes.
 
-Exit code is non-zero if 0, A, B, C or T found anything. D is advisory: RP-AXE deliberately
+Exit code is non-zero if 0, A, B, C, T or E found anything. D is advisory: RP-AXE deliberately
 carries RP-1's patches for optional mods (FASA, SSTU, ALCOR...) that this install does not have.
 
 Check 0 exists because every other verdict here is a lie without it. The cache and the log are
@@ -257,6 +261,96 @@ def boot_started(log, fallback):
 
 # ---------------------------------------------------------------- checks
 
+GEN_ONELINE = re.compile(r"@PART\[([^\]*?]+)\][^{]*\{\s*%(\w+)\s*=\s*([-\d.]+)\s*\}")
+
+def generated_intent():
+    """{generated file -> {part -> {key: value}}} — what our emitters MEANT to set."""
+    out = {}
+    for fn, key in (("AxePartCost.cfg", "entryCost"), ("AxePartFlyCost.cfg", "cost")):
+        p = os.path.join(AXE, "design", "Tree", fn)
+        if not os.path.exists(p):
+            continue
+        want = {}
+        for ln in open(p, encoding="utf-8", errors="replace"):
+            m = GEN_ONELINE.match(ln.strip())
+            if m and m.group(2) == key:
+                want[m.group(1)] = (key, float(m.group(3)))
+        if want:
+            out[fn] = want
+    return out
+
+def cache_part_fields(cache, keys):
+    """part -> {key: value}, reading each PART node's OWN fields only (never its modules')."""
+    out, cur, depth, part_depth, pending = {}, None, 0, None, False
+    for raw in open(cache, encoding="utf-8", errors="replace"):
+        s = raw.strip()
+        if s == "PART":
+            pending = True; continue
+        if s == "{":
+            depth += 1
+            if pending:
+                part_depth, cur, pending = depth, {}, False
+            continue
+        if s == "}":
+            if cur is not None and depth == part_depth:
+                if "name" in cur:
+                    out[cur["name"]] = cur
+                cur, part_depth = None, None
+            depth -= 1
+            continue
+        if cur is not None and depth == part_depth and "=" in s:
+            k, v = s.split("=", 1)
+            k = k.strip()
+            if k == "name" or k in keys:
+                cur[k] = v.strip()
+    return out
+
+def check_effects(cache):
+    """Check E — did the VALUE a generator emitted actually reach the running game?
+
+    Every other check here asks whether a string RESOLVES. None asks whether the NUMBER LANDED, and
+    that gap is how AxeProcCostScale's avionics patch shipped binding to nothing: the config was
+    valid, ModuleManager applied it, and not one value changed (docs/ECONOMY.md §14).
+
+    Judged PER FILE, because the two failure modes need opposite verdicts:
+      * a few parts mismatching  = something later (:AFTER / :FINAL, another mod) legitimately won.
+        Real and worth seeing -- RTG costs, ROH-AdjustableHS, the US shrouds -- but not our bug.
+      * MOST of a file mismatching = the patch never applied at all. That is the bug this exists for.
+    So a low match rate FAILS and scattered mismatches are advisory. Measured 2026-07-30: 3,641 of
+    3,685 values land, i.e. the honest baseline is ~98.8%, not 100%.
+    """
+    intent = generated_intent()
+    if not intent:
+        print("E  effect assertions: SKIP (no generated cost files found)")
+        return 0, []
+    keys = {k for f in intent.values() for (k, _) in f.values()}
+    live = cache_part_fields(cache, keys)
+    fail, notes = 0, []
+    for fn, want in sorted(intent.items()):
+        ok = absent = bad = 0
+        examples = []
+        for part, (key, val) in want.items():
+            got = live.get(part)
+            if got is None or key not in got:
+                absent += 1
+                continue
+            if abs(float(got[key]) - val) > max(0.01, abs(val) * 0.001):
+                bad += 1
+                if len(examples) < 5:
+                    examples.append(f"{part} {key} want {val:,.0f} got {got[key]}")
+            else:
+                ok += 1
+        seen = ok + bad
+        rate = (ok / seen * 100) if seen else 0.0
+        verdict = "OK" if rate >= 90 else "FAILED -- this patch is not reaching the game"
+        print(f"E  {fn}: {ok:,}/{seen:,} values landed ({rate:.1f}%), {absent} part(s) not loaded  {verdict}")
+        for e in examples:
+            print(f"     overridden downstream: {e}")
+        if rate < 90:
+            fail = 1
+            notes.append(fn)
+    return fail, notes
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--instance", default=os.path.join(os.path.dirname(REPO), "Instance"),
@@ -398,8 +492,13 @@ def main():
             print(f"      {f}:{i}")
     print(f"  ... plus {len(dead_t) - len(ours)} more in vendored seed/ support patches")
 
-    print("\n" + ("FAIL -- see 0/A/B/C/T above." if fail
-                  else "OK -- everything RP-AXE ships binds to something."))
+    # ---- E: did the emitted VALUES actually land? (wiring is not effect) --------------------
+    print()
+    efail, _ = check_effects(cache)
+    fail = fail or efail
+
+    print("\n" + ("FAIL -- see 0/A/B/C/T/E above." if fail
+                  else "OK -- everything RP-AXE ships binds to something, and its values landed."))
     return fail
 
 
