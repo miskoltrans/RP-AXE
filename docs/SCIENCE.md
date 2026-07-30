@@ -357,12 +357,11 @@ prioritise, you don't go bankrupt. Generated to `GameData/RP-AXE/design/Tree/Axe
 
 **Model:**
 - `entryCost(part) = part_cost_base[tier] × part_cost_weight[costcat(part)]`
-- `entryCost(upgrade) = part_cost_base[tier] × upgrade_cost_scalar` (= 0.3; light, no category — RP-1 left
-  upgrades ~free). **`RFUpgrade_*` are the exception, forced to 0** — see §5b, they are tree icons and
-  RealFuels charges for an engine variant somewhere else entirely.
-- `tier` = the AXE node the part/upgrade is placed on (T0 start-parts → 0, i.e. free). Result (2026-07-28,
-  full tree): **1,830 parts priced, span 20–32,400 funds**, total **5,455,475**; plus 87 upgrades (102,150)
-  and 466 engine configs (551,685, §5b) = **6,109,310 to buy literally everything**.
+- `entryCost(upgrade) = 0`, always. **Upgrades are granted on research, never sold — §5d.**
+- `tier` = the AXE node the part is placed on (T0 start-parts → 0, i.e. free). Result (re-measured
+  2026-07-30): **1,826 parts priced, span 20–32,400 funds**, total **5,464,190**; plus 449 engine configs
+  (526,575, §5b) = **5,990,765 to buy literally everything**. (The 2026-07-28 figures were 1,830 parts /
+  5,455,475 + 87 upgrades / 102,150; parts drifted with later tree edits, the upgrades are now free.)
 
 **`part_cost_base`** (weight-1.0 part, monotonic): T1 100 · T4 600 · T7 1800 · T10 4200 · T13 9000 · T16 18000.
 **`part_cost_weight`:** science 2.5 · crewpod 2.0 · gear 2.0 · engine 1.8 · power 1.5 · tank/avionics/misc 1.0 ·
@@ -483,7 +482,8 @@ session should watch first.
 **4. What did NOT change: `part_cost_base`, `part_cost_weight`, and both scalars.** After the fixes the
 category medians land on RP-1's for the categories RP-1 actually priced (science exactly, antenna 1.4×) and
 realized spend lands on RP-1's own share of lifetime funds. There was no evidence for moving a dial, and
-magnitude remains what it always was: the play-session's call, not a spreadsheet's.
+magnitude remains what it always was: the play-session's call, not a spreadsheet's. *(`upgrade_cost_scalar`
+is since gone — §5d. The other three stand.)*
 
 **Open — not part pricing, but the thing part pricing is calibrated against.** Contract income is far more
 back-loaded than the sinks it pays for: the first 15 programmes pay **6.4%** of channel 1 (1.54M of 24M),
@@ -493,6 +493,66 @@ programme. Part unlocks are a minor term in it (~1.3M by the Moon landing) and a
 be an off-by-one in how every facility `upgrades` array was read (the first entry is never charged), the
 launchpad has been re-shaped 10.33M → 7.29M, and the remaining income-shape fix is an open user call. Nothing
 there moves `part_cost_base`.
+
+---
+
+### 5d. Upgrades are GRANTED, never sold — 2026-07-30
+
+**Every `PARTUPGRADE` is `entryCost = 0` and is marked unlocked the moment its tech node is researched.**
+Parts and engine CONFIGs still cost funds; an upgrade does not.
+
+**Why.** Found in play: *Conventional Structure Tank Upgrade* (`RFTech-Tank-Sep-Al`, 30 funds) sat unbought
+after its node was researched, and nothing said so. That is the whole argument. A `PARTUPGRADE` is not a
+thing you fly, it is a **stat on a part you already own** — a tank material, an MLI wrap, a fairing size
+cap, a comms/solar tech level. In R&D it renders as a small extra price beside the parts, and skipping it is
+**invisible**: the VAB never tells you your tanks are still Al instead of Al-Cu. So the failure mode was
+never "I chose to spend elsewhere" (which is what *funds are texture* is for) — it was "I researched the
+node, missed a 30-funds checkbox, and flew worse rockets for ten launches". A way to lose with no decision
+in it. Research is the gate.
+
+It also settles a **split rule AXE already had**: the avionics tier tokens and the Kerbalism HDD
+data-storage ladder were granted (`ModuleAxeAvionics` replaced RP-1's per-tier
+`EntryCostManager.PurchaseConfig`), while the tank / heatshield / fairing / comms / solar ladders were billed — two rules for one kind
+of thing, and the billed half is precisely the half a player can't see. Now there is one rule.
+
+**Both halves are required, and neither is a name list:**
+
+| Half | Where | What it does |
+|---|---|---|
+| Price | `AxePartCost.cfg` — **one wildcard**, `@PARTUPGRADE[*]:FOR[RP-AXE] { %entryCost = 0 }` | R&D shows no price |
+| Unlock | `AXE.dll` `AxeGrantUpgradeUnlock` — sweeps **every** upgrade in `PartUpgradeManager` | R&D shows it owned |
+
+`entryCost = 0` alone is **not** enough: stock `PartUpgradeHandler.IsUnlocked` reads its own `unlocks`
+dictionary and never looks at the price, so a 0-cost upgrade still waits on a click. RealFuels'
+`EntryCostDatabase.UpdateEntryCosts()` does auto-unlock any upgrade under 1.1 whose tech is researched —
+which is how RP-1's `RFUpgrade_*` icons behave — but only from `EntryCostManager.OnLoad`, so an upgrade
+researched mid-session would stay locked until the next load. AXE's own sweep runs on `EveryScene` **and**
+`OnTechnologyResearched`, so it lands immediately and doesn't depend on RealFuels being installed.
+
+Wildcards on both halves, deliberately: the rule is a property of the **category**, not of a name list.
+Measured on the live `ModuleManager.ConfigCache` (605 `PARTUPGRADE`s), **81 carried a price, 125,184 funds
+in total — and only 71 of those were AXE's.** The other **10 are the Coatl Aerospace upgrades at their
+mod-authored 5,000 each (50,000)**: they fell through to `parking`, so a generated list built from placed
+upgrades would never have mentioned them, and they were the most expensive upgrades in the game. That is the
+"silent string binding" family in [`BUG-CLASSES.md`](BUG-CLASSES.md), and the wildcard is immune to it —
+including for anything a dependency adds later. There is nothing to keep in sync.
+
+**Nothing is bypassed.** Engine variants stay priced: RealFuels asks `EntryCostDatabase.IsUnlocked(<config>)`,
+never `PartUpgradeManager`, and only its own `PurchaseConfig` / `OnPartUpgradePurchased` path writes that set
+— so `SetUnlocked` on a `PARTUPGRADE` cannot unlock a config. Configs remain charged by `ENTRYCOSTMODS` (§5b),
+in the VAB engine-configs GUI, which is the right place for a paid choice: it is made per-vehicle with its
+price on the row you click, not as a checkbox in R&D you can walk past. The stat-less display tokens
+(`RFUpgrade_*`, `RFTech-*-tltech<n>`, the avionics/DSN tokens) were already 0 for the same reason and are
+unaffected; the sweep just makes them read as owned a session earlier.
+
+**Economy impact: −125,184 of a ~6.1M buy-everything (2%), and ~−2% of realized part spend.** Below the
+noise floor of the §5c calibration, and it moves in the direction §5c already flagged as the tight window
+(pre-T5). `upgrade_cost_scalar` was **removed** from `tree/nodes.yaml` rather than set to 0, so it can't read
+as a dial waiting to be turned back up.
+
+**On an existing save this is retroactive, not a refund.** The sweep runs on scene load, so every upgrade
+whose node you have already researched is unlocked the next time you load — including the one that started
+this (`RFTech-Tank-Sep-Al`). Anything already bought stays bought; nothing is paid back.
 
 ---
 

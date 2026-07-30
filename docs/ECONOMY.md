@@ -66,16 +66,17 @@ Everything below is measured from this install, not estimated.
 | R&D (8 levels, 7 purchases) | 2.68M | `AxeFacilities.cfg` — **authored 2026-07-29, §8** (was 2.14M CBK default) |
 | Administration (3 levels, 2 purchases) | 0.71M | CustomBarnKit default |
 | Mission Control (5 levels, 4 purchases) | 0.68M | `AxeFacilities.cfg` |
-| Part unlocks (1,830 parts + 87 upgrades) | 5.56M | `AxePartCost.cfg` |
-| Engine-config unlocks (466) | 0.55M | `AxeEntryCostMods.cfg` |
-| **Lump total** | **~19.94M** | |
+| Part unlocks (1,826 parts; upgrades are free — SCIENCE.md §5d) | 5.46M | `AxePartCost.cfg` |
+| Engine-config unlocks (449) | 0.53M | `AxeEntryCostMods.cfg` |
+| **Lump total** | **~19.82M** | |
 | Vehicles | ~20M (assumed) | see §5 — **not yet measured** |
 
-> **Part unlocks are a buy-everything figure — realized spend is ~3.2M, not 6.11M.** A playthrough that
+> **Part unlocks are a buy-everything figure — realized spend is ~3.2M, not 5.99M.** A playthrough that
 > buys the two cheapest parts on every node it researches spends 2.71M on parts plus configs (SCIENCE.md
-> §5c), i.e. **~8% of lifetime funds — the same share RP-1 spends on part unlocks**. The 6.11M belongs in
+> §5c), i.e. **~8% of lifetime funds — the same share RP-1 spends on part unlocks**. The 5.99M belongs in
 > this table as the ceiling; it is not what the income schedule has to cover. Re-measured 2026-07-28, when
-> the part-cost calibration pass also corrected three silent misclassifications (+2.2%).
+> the part-cost calibration pass also corrected three silent misclassifications (+2.2%); re-measured again
+> 2026-07-30, when upgrades stopped being sold (−125k measured, SCIENCE.md §5d).
 
 **The R&D ladder is the load-bearing gate** — it is the primary *funds* gate laid across science, AXE's
 primary *progression* gate, and that makes funds a real tradeoff rather than texture. **It is now priced

@@ -26,7 +26,10 @@ namespace RPAxe
     ///
     /// Tank type-switching is unaffected and always worked: those are genuine <c>PARTUPGRADE</c>s that parts
     /// reference from their own <c>UPGRADES{}</c> block (<c>RFTech-Tank-*</c> -> <c>typeAvailable</c>), which
-    /// stock KSP's PartUpgradeManager enforces. Engine configs are RealFuels' own parallel unlock system.
+    /// stock KSP's PartUpgradeManager enforces — a type whose upgrade is locked is simply absent from the
+    /// dropdown. What that gate now enforces is research alone: AXE grants every upgrade on research instead
+    /// of selling it (AxeGrantUpgradeUnlock, docs/SCIENCE.md §5d). Engine configs are the exception, and
+    /// deliberately so — they are RealFuels' own parallel unlock system, priced per variant.
     ///
     /// We gate at the point of action rather than at launch. RP-1 lets you configure freely and blocks the
     /// *launch* until you settle up, which needs a PreFlightCheck subsystem and a pay-to-resolve dialog it

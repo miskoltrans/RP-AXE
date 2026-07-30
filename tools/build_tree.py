@@ -610,83 +610,67 @@ def load_part_categories():
             out[g("name")] = costcat(g("category"), g("disc"), g("modules"), g("mod"))
     return out
 
-# Capability ladders AXE GRANTS on research instead of selling. Two halves, both required:
-#   entryCost 0 here, and the token listed in AXE_GRANT_UPGRADES (emit_grant_upgrades) so AXE.dll's
-#   AxeGrantUpgradeUnlock marks it unlocked the moment its node is researched.
-# Why: AXE already grants the avionics tier tokens (Science-Core-*/Deep-Space-*) this way, because
-# ModuleAxeAvionics replaced RP-1's ModuleProceduralAvionics and with it RP-1's per-tier funds purchase
-# (EntryCostManager.PurchaseConfig). RP-1 SELLS both ladders and is consistent; AXE granting avionics but
-# billing data storage taught the player two different rules for the same kind of thing. Unlike
-# RFUpgrade_* (zeroed because buying them unlocked nothing) these DO carry a stat -- the module's
-# UPGRADE block -- and SetUnlocked applies it for free, which is the intent.
-GRANTED_UPGRADE_PREFIXES = (
-    "HDD-Upgrade-",
-)
-
-# RealFuels engine tech-LEVEL icons -- the same story as RFUpgrade_*, and zeroed for the same reason.
-# RealFuels never reads these names: the string "RFTech" does not occur in RealFuels.dll at all. A level
-# is gated by RF_TECHLEVELS TLTECH<n> -> GetTechnologyState (see emit_engine_tech_levels, which points
-# TLTECH<n> at whatever node the matching token sits on), so the token itself is a tree ICON. Priced, it
-# billed 270-1650 funds each -- ~15,000 across the 14 -- for something that unlocks nothing. At 0,
-# EntryCostDatabase.UpdateEntryCosts() auto-unlocks any upgrade under 1.1 whose tech is researched, so it
-# reads as owned the moment its node is researched instead of advertising a price that buys nothing.
+# UPGRADES ARE GRANTED, NEVER SOLD (2026-07-30). Every PARTUPGRADE is entryCost 0 and is marked unlocked
+# the moment its tech node is researched (AXE.dll AxeGrantUpgradeUnlock). PARTS and engine CONFIGs still
+# cost funds; a PARTUPGRADE does not.
 #
-# Deliberately NOT all RFTech-*: the tank-type ladders (RFTech-Battery-*, RFTech-SM-*, RFTech-Tank-*,
-# RFTech-ComSat/NavSat-*) ARE consumed by name -- 151 ModuleFuelTanks UPGRADE blocks reference them, each
-# carrying a typeAvailable -- so those stay priced. Match on the tltech shape, not the RFTech prefix.
-TL_ICON_UPGRADE = re.compile(r"^RFTech-\w+-tltech\d+$")
+# Why: a PARTUPGRADE is not a thing you fly, it is a STAT on a part you already own -- a tank material, an
+# MLI wrap, a fairing size cap, a comms/solar tech level. In R&D it presents as a small extra price beside
+# the parts, easy to walk past, and walking past it is INVISIBLE: nothing in the VAB tells you your tanks
+# are still Al instead of Al-Cu. So the failure mode was not "I spent my funds elsewhere" (that is what
+# "funds are texture" is for) but "I researched the node, missed the 540-funds checkbox, and flew worse
+# rockets for ten launches" -- a way to lose with no decision in it. Research is the gate.
+#
+# It also settles a split rule AXE already had: the avionics tier tokens and the HDD data-storage ladder
+# were granted (ModuleAxeAvionics replaced RP-1's per-tier EntryCostManager.PurchaseConfig), while the
+# tank/heatshield/fairing/comms ladders were billed -- two rules for one kind of thing. Now there is one,
+# and it is expressible as a single wildcard, so no upgrade can be forgotten by a name list.
+#
+# Nothing is bypassed by granting them. Engine variants are unaffected: RealFuels asks
+# EntryCostDatabase.IsUnlocked(<config>), never PartUpgradeManager, and is still charged via ENTRYCOSTMODS
+# in the VAB engine-configs GUI (emit_entry_cost_mods). RFUpgrade_* were only ever tree icons (buying one
+# marked 'RFUpgrade-<cfg>' unlocked, not '<cfg>'), and RFTech-<type>-tltech<n> are icons for the
+# RF_TECHLEVELS TLTECH<n> -> GetTechnologyState gate. Both already sat at 0 for exactly that reason.
 
 def emit_part_cost(p2n, u2n, by, meta):
-    """Emit GameData/RP-AXE/design/Tree/AxePartCost.cfg — part/upgrade funds unlock cost.
+    """Emit GameData/RP-AXE/design/Tree/AxePartCost.cfg — part funds unlock cost.
     entryCost(part)    = part_cost_base[tier] * part_cost_weight[costcat(part)]
-    entryCost(upgrade) = part_cost_base[tier] * upgrade_cost_scalar   (light, no category)
-    Tier = the AXE node the part/upgrade is placed on. FUNDS = texture, not a wall (docs/SCIENCE.md 5).
+    entryCost(upgrade) = 0, ALWAYS — upgrades are granted on research, never sold (see the rule above).
+    Tier = the AXE node the part is placed on. FUNDS = texture, not a wall (docs/SCIENCE.md 5).
     No-op if the meta tables are absent (older nodes.yaml).
 
-    RFUpgrade_* is the ONE exception, forced to 0. Those PARTUPGRADEs are RP-1's tree ICONS for engine
-    configs, nothing more: RealFuels never consults PartUpgradeManager when deciding whether a config is
-    available (UnlockedConfig -> EntryCostDatabase.IsUnlocked), and OnPartUpgradePurchased marks
-    'RFUpgrade-<cfg>' unlocked rather than '<cfg>', so buying one charged funds and unlocked nothing.
-    RP-1 defines them at entryCost 0 on purpose -- EntryCostDatabase.UpdateEntryCosts() auto-unlocks any
-    upgrade under 1.1 whose tech is researched, so the icon never presents as a purchase. Engine variants
-    are priced where RealFuels actually charges for them: ENTRYCOSTMODS, see emit_entry_cost_mods()."""
+    The upgrade side is one wildcard line rather than one line per placed upgrade, deliberately: the rule
+    is "AXE does not sell upgrades", which is a property of the category, not of 71 names. A wildcard also
+    covers the upgrades that fell through to `parking` (check_unplaced_upgrades) and any a dependency adds
+    later, neither of which a generated name list would ever mention."""
     base = meta.get("part_cost_base"); weight = meta.get("part_cost_weight")
     if not base or not weight:
         print("part cost: skipped (no part_cost_base / part_cost_weight in meta)"); return
     base = {int(k): v for k, v in base.items()}
-    up_scalar = meta.get("upgrade_cost_scalar", 0.3)
     cats = load_part_categories()
     L = ["// GENERATED by tools/build_tree.py — DO NOT EDIT BY HAND",
-         "// Part/upgrade funds unlock cost = part_cost_base[tier] * weight (see tree/nodes.yaml meta, docs/SCIENCE.md 5).",
-         "// RFUpgrade_* forced to 0: they are tree icons, not the engine-config purchase (that is",
-         "// AxeEntryCostMods.cfg). 0 lets RealFuels auto-unlock them once their tech is researched, as in RP-1.",
-         "@PARTUPGRADE[RFUpgrade_*]:FOR[RP-AXE] { %entryCost = 0 }",
-         "// Granted capability ladders (see GRANTED_UPGRADE_PREFIXES): free on research, same as the avionics",
-         "// tier tokens. AXE.dll's AxeGrantUpgradeUnlock marks them unlocked; entryCost 0 so R&D never shows",
-         "// a price that is never charged. RP-1 sells these; AXE grants them, to match its own avionics."]
-    catcount = collections.Counter()
+         "// Part funds unlock cost = part_cost_base[tier] * weight (see tree/nodes.yaml meta, docs/SCIENCE.md 5).",
+         "//",
+         "// UPGRADES ARE GRANTED, NEVER SOLD (docs/SCIENCE.md 5d). A PARTUPGRADE is a stat on a part you",
+         "// already own — a tank material, an MLI wrap, a size cap, a comms/solar tech level — and an R&D",
+         "// price beside the parts is easy to walk past with nothing in the VAB to tell you that you did.",
+         "// So research is the only gate: entryCost 0 here, and AXE.dll (AxeGrantUpgradeUnlock) marks every",
+         "// upgrade unlocked the moment its node is researched, so R&D shows it owned, not for sale.",
+         "// Engine variants are NOT affected — RealFuels prices those as ENTRYCOSTMODS (AxeEntryCostMods.cfg),",
+         "// asking EntryCostDatabase.IsUnlocked(<config>) and never PartUpgradeManager.",
+         "@PARTUPGRADE[*]:FOR[RP-AXE] { %entryCost = 0 }"]
+    catcount, total = collections.Counter(), 0
     for part, node in sorted(p2n.items()):
         if node not in by: continue
         tier = by[node]["tier"]
         cc = cats.get(part, "misc"); catcount[cc] += 1
-        ec = round(base.get(tier, 0) * weight.get(cc, 1.0))
+        ec = round(base.get(tier, 0) * weight.get(cc, 1.0)); total += ec
         L.append(f"@PART[{part}]:FOR[RP-AXE] {{ %entryCost = {ec} }}")
-    nup, ngranted, nicon = 0, 0, 0
-    for up, node in sorted(u2n.items()):
-        if node not in by or up.startswith("RFUpgrade_"): continue      # engine icons: zeroed above
-        if TL_ICON_UPGRADE.match(up):                                   # engine tech-LEVEL icons: see above
-            L.append(f"@PARTUPGRADE[{up}]:FOR[RP-AXE] {{ %entryCost = 0 }}  // tech-level icon, gate is TLTECH")
-            nicon += 1
-            continue
-        if up.startswith(GRANTED_UPGRADE_PREFIXES):                     # granted, not sold
-            L.append(f"@PARTUPGRADE[{up}]:FOR[RP-AXE] {{ %entryCost = 0 }}"); ngranted += 1
-            continue
-        ec = round(base.get(by[node]["tier"], 0) * up_scalar)
-        L.append(f"@PARTUPGRADE[{up}]:FOR[RP-AXE] {{ %entryCost = {ec} }}"); nup += 1
     with open(os.path.join(OUTD, "AxePartCost.cfg"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
-    print(f"part cost: {sum(catcount.values())} parts + {nup} upgrades + {ngranted} granted(0) "
-          f"+ {nicon} tech-level icons(0) -> AxePartCost.cfg  "
+    nup = sum(1 for node in u2n.values() if node in by)
+    print(f"part cost: {sum(catcount.values())} parts priced ({total:,} funds), {nup} placed upgrades "
+          f"free (one wildcard — granted on research, never sold) -> AxePartCost.cfg  "
           f"(by cat: {', '.join(f'{k}={catcount[k]}' for k in sorted(catcount, key=lambda k:-catcount[k]))})")
 
 def _esc(s):
@@ -1260,7 +1244,7 @@ def emit_entry_cost_mods(ladders, by, meta):
     if not base:
         print("entry cost mods: skipped (no part_cost_base in meta)"); return
     base = {int(k): v for k, v in base.items()}
-    scalar = meta.get("engine_config_cost_scalar", meta.get("upgrade_cost_scalar", 0.3))
+    scalar = meta.get("engine_config_cost_scalar", 0.3)
 
     def rank(r, part):                                   # strict total order: tree progression, then name
         return (by[r["node"]]["tier"] if r["node"] in by else 99, r["era"], ecm_name(r["config"]), part)
@@ -1671,37 +1655,36 @@ def emit_grant_upgrades(nodes):
     are retitled/redescribed in AXE language (the seed's own RP-1-flavour text + node is wrong for AXE);
     DSN tokens (RP0Level*TrackingStation) have no seed PARTUPGRADE, so they are created fresh. All carry
     entryCost/cost 0 and no stat MODULE — the tier effect is applied by AXE.dll, and AXE.dll's
-    AxeGrantUpgradeUnlock auto-marks them unlocked on research (no buy step). techRequired -> node is set
-    in AxePartPlacement.cfg (via grant2n). Returns the marker list of token names."""
+    AxeGrantUpgradeUnlock marks EVERY upgrade unlocked on research (no buy step, no name list — see the
+    "granted, never sold" rule above emit_part_cost). techRequired -> node is set in AxePartPlacement.cfg
+    (via grant2n). Returns the token names emitted."""
     tiers, order = _parse_avionics_tiers()
-    av, dsn, marker = [], [], []
+    av, dsn = [], []
     for n in nodes:
         nt = n.get("title", n["id"])
         for g in (n.get("grants") or []):
             if g.startswith("Science-Core-"):
                 d = _avionics_main_desc(g[len("Science-Core-"):], nt, tiers, order)
                 if d is None: continue
-                av.append((g, "Avionics Core Upgrade", d)); marker.append(g)
+                av.append((g, "Avionics Core Upgrade", d))
             elif g.startswith("Deep-Space-"):
                 d = _avionics_shd_desc(g[len("Deep-Space-"):], nt)
-                av.append((g, "Shielded Avionics Upgrade", d)); marker.append(g)
+                av.append((g, "Shielded Avionics Upgrade", d))
             elif g.startswith("RP0Level") and g.endswith("TrackingStation"):
                 ml = re.search(r'RP0Level(\d+)TrackingStation', g)
                 if not ml: continue
                 title, d = _dsn_desc(int(ml.group(1)))
-                dsn.append((g, title, d)); marker.append(g)
+                dsn.append((g, title, d))
             # else: unrecognised grant family -> leave untouched (no token)
-        # Granted capability ladders live in `upgrades:`, not `grants:` — they are real PARTUPGRADEs with
-        # their own definitions and stat-bearing UPGRADE blocks (HardDriveConfigs.cfg), so nothing is
-        # emitted for them here. They only need to appear in the marker list so the sweep unlocks them.
-        for u in (n.get("upgrades") or []):
-            if u.startswith(GRANTED_UPGRADE_PREFIXES): marker.append(u)
+        # Stat-bearing granted ladders (HDD-Upgrade-*, the RealFuels tank types, ROHeatshields presets, …)
+        # live in `upgrades:` and define themselves; nothing is emitted for them here and — since the sweep
+        # now covers every upgrade — nothing has to enumerate them either.
     L = ["// GENERATED by tools/build_tree.py from tree/nodes.yaml -- DO NOT EDIT BY HAND",
          "// Visible R&D tokens for capability grants (avionics tiers + DSN tracking-station levels).",
          "// They carry NO stat MODULE: the tier effect is applied by AXE.dll (ModuleAxeAvionics reads the",
          "// researched node; tracking-station level via AxeTrackingStationGate). entryCost/cost = 0 and",
-         "// AXE.dll (AxeGrantUpgradeUnlock) auto-marks them unlocked on research (no buy step) -- the same",
-         "// shape as RP-1's own avionics PARTUPGRADE display tokens. techRequired is assigned in",
+         "// AXE.dll (AxeGrantUpgradeUnlock) marks every upgrade unlocked on research (no buy step) -- the",
+         "// same shape as RP-1's own avionics PARTUPGRADE display tokens. techRequired is assigned in",
          "// AxePartPlacement.cfg (parked on `parking`, then overridden onto the granting node).", ""]
     L.append("// --- avionics tiers: retitle/redescribe the seed's Science-Core-*/Deep-Space-* tokens (AXE language) ---")
     for name, title, desc in av:
@@ -1715,16 +1698,13 @@ def emit_grant_upgrades(nodes):
               "\tentryCost = 0", "\tcost = 0", "\tmanufacturer = Deep Space Network", f"\ttitle = {title}",
               "\tbasicInfo = Tracking-station facility level.", f"\tdescription = {desc}", "}"]
     L.append("")
-    L.append("// --- marker list consumed by AXE.dll AxeGrantUpgradeUnlock (auto-unlock on research) ---")
-    L.append("// Includes the GRANTED capability ladders (GRANTED_UPGRADE_PREFIXES) as well as the display")
-    L.append("// tokens above. Those DO carry a stat MODULE (the HardDrive UPGRADE block) -- SetUnlocked")
-    L.append("// applies it for free, which is the point: AXE grants these ladders, RP-1 sells them.")
-    L += ["AXE_GRANT_UPGRADES", "{"] + [f"\tupgrade = {g}" for g in marker] + ["}"]
+    L.append("// No marker list: AxeGrantUpgradeUnlock sweeps EVERY PARTUPGRADE (upgrades are granted, never")
+    L.append("// sold — docs/SCIENCE.md 5d), so these tokens need no enumeration to be unlocked on research.")
     with open(os.path.join(OUTD, "AxeGrantUpgrades.cfg"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(L) + "\n")
-    print(f"grant tokens: {len(av)} avionics + {len(dsn)} DSN + {len(marker) - len(av) - len(dsn)} granted "
-          f"ladder rung(s) = {len(marker)} auto-unlocked on research -> AxeGrantUpgrades.cfg")
-    return marker
+    print(f"grant tokens: {len(av)} avionics + {len(dsn)} DSN = {len(av) + len(dsn)} display token(s) "
+          f"-> AxeGrantUpgrades.cfg (all upgrades auto-unlocked on research, no list)")
+    return [g for g, _t, _d in av + dsn]
 
 LADDER_TOL = 0.03      # +/- band on the axes a player designs around (thrust, Isp, ignition count)
 # Rated burn time gets a much wider band. It is a reliability/qualification detail, not something a

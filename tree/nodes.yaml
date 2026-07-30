@@ -37,16 +37,20 @@ meta:
   # FUNDS ARE TEXTURE, NOT A WALL. Tier-driven + category weight; calibrated to REPRODUCE RP-1's real entryCosts
   # for the categories it priced (science/crewpod/power/antenna/gear) and to PRICE the procedural categories RP-1
   # left at ~0 because its tooling system (deleted with RP0.dll) did that gating. NO earliness premium -- the AXE
-  # tier already encodes 'how advanced, when'. Upgrades get a light flat fraction (upgrade_cost_scalar) of the base.
+  # tier already encodes 'how advanced, when'.
+  # PARTUPGRADEs have NO knob here and never will: they are entryCost 0, granted on research (docs/SCIENCE.md
+  # 5d). An upgrade is a stat on a part you already own, so an easy-to-miss R&D price could only ever cost the
+  # player a silently worse rocket. There was an upgrade_cost_scalar (0.3, ~102k across 71 upgrades); removed
+  # 2026-07-30 rather than set to 0, so nothing reads as a dial that is waiting to be turned back up.
   part_cost_base: { 1: 100, 2: 200, 3: 350, 4: 600, 5: 900, 6: 1300, 7: 1800, 8: 2400, 9: 3200, 10: 4200, 11: 5500, 12: 7000, 13: 9000, 14: 11500, 15: 14500, 16: 18000 }
   part_cost_weight: { engine: 1.8, tank: 1.0, crewpod: 2.0, avionics: 1.0, science: 2.5, power: 1.5, antenna: 0.8, rcs: 0.8, gear: 2.0, aero: 0.5, separator: 0.5, structural: 0.4, chute: 0.3, ground: 0.2, misc: 1.0 }
-  upgrade_cost_scalar: 0.3
   # Engine CONFIG unlock (funds) cost = part_cost_base[tier of the config's node] * engine_config_cost_scalar,
   # emitted as ENTRYCOSTMODS (AxeEntryCostMods.cfg) because that -- not the RFUpgrade_* tree icon -- is where
   # RealFuels charges for a variant, in the VAB engine-configs GUI. Each variant chains to the previous rung of
   # its own part's ladder, so the first one bought in a family carries the lineage and siblings after it cost
   # only their own step (RP-1's self-discounting shape, AXE's numbers). Base configs are unpriced => free with
-  # the part. Starts equal to upgrade_cost_scalar; dial separately in the P3 solvency play-session.
+  # the part. This is the ONE upgrade-shaped thing AXE still charges for, and deliberately: a config is chosen
+  # per-vehicle in the VAB with its price on the row you click, not a checkbox in R&D you can miss.
   engine_config_cost_scalar: 0.3
 
 nodes:

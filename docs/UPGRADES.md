@@ -5,6 +5,13 @@ final keep-list. Builds on the audit ([`upgrade_audit.py`](../tools/upgrade_audi
 `manifest/upgrades-absent.tsv`); curation is reproducible via
 [`tools/curate_upgrades.py`](../tools/curate_upgrades.py) → **`manifest/upgrades-curated.tsv`**.
 
+> **Pricing (2026-07-30): AXE does not sell upgrades.** Every `PARTUPGRADE` is `entryCost = 0` and is
+> marked unlocked the moment its node is researched — one wildcard in `AxePartCost.cfg` plus AXE.dll's
+> `AxeGrantUpgradeUnlock` sweep. An upgrade is a stat on a part you already own, so an easy-to-miss R&D
+> price could only ever cost the player a silently worse rocket. Rationale, the two halves and why neither
+> is a name list: [`SCIENCE.md`](SCIENCE.md) §5d. Engine CONFIGs are **not** upgrades in this sense and stay
+> priced (§5b) — they are chosen per-vehicle in the VAB, with the price on the row you click.
+
 Why upgrades matter: the part diff only compares `PART` nodes, so PARTUPGRADEs are invisible to it.
 They are also AXE's **discipline-scatter mechanism** — one part, breakthrough-gated config
 improvements unlocked across enabling-discipline nodes (RESTART.md T1 note). A node's payload is
