@@ -670,10 +670,10 @@ function drawNode(n, focusing){
       const maxw=w*0.9, lines=wrap(n.title,13,3).map(ln=>clip(ln,maxw));
       const lh=fs*1.13, top=y+h/2-(lines.length-1)*lh/2-4*cam.s;
       lines.forEach((ln,i)=> ctx.fillText(ln, x+w/2, top+i*lh));
-      const np=(n.parts||[]).length, nu=(n.upgrades||[]).length, ng=(n.grants||[]).length;
+      const np=(n.parts||[]).length, nu=(n.upgrades||[]).length, ng=(n.grants||[]).length, nx=(n.experiments||[]).length;
       ctx.font=`${Math.max(6,8*cam.s)}px Segoe UI,Helvetica,Arial`;
       ctx.globalAlpha=alpha*0.75;
-      ctx.fillText(`T${n.tier} · ${np?np+'p':'—'}${nu?'+'+nu+'u':''}${ng?'+'+ng+'g':''}`, x+w/2, y+h-8*cam.s);
+      ctx.fillText(`T${n.tier} · ${np?np+'p':(nx?'':'—')}${nu?'+'+nu+'u':''}${ng?'+'+ng+'g':''}${nx?(np?'+':'')+nx+'e':''}`, x+w/2, y+h-8*cam.s);
     }
   }
   if((n.grants||[]).length && cam.s>0.15 && !(opt.progress && st===RESEARCHED)){   // grant marker: gold diamond (top-right) = avionics / DSN capability tier
@@ -819,6 +819,11 @@ function showPanel(id){
   else h+='<div class="empty">— no parts assigned —</div>';
   if((d.upgrades||[]).length){ h+=`<div class="sec">Upgrades (${d.upgrades.length})</div><ul class="parts">`; for(const u of d.upgrades) h+=`<li><div class="pn">${esc(u)}</div></li>`; h+='</ul>'; }
   if((d.grants||[]).length){ h+=`<div class="sec">Grants — capability tiers (${d.grants.length})</div><ul class="parts">`; for(const g of d.grants) h+=`<li><div class="pt">◆ ${esc(grantLabel(g))}</div><div class="pn">${esc(g)}</div></li>`; h+='</ul>'; }
+  const xs=d.experiments||[];   // Kerbalism Configure setups / gated EXPERIMENT_DEFINITIONs -- not parts, so they show nowhere else
+  if(xs.length){ h+=`<div class="sec">Experiments (${xs.length})</div><ul class="parts">`;
+    for(const x of xs){ const m=[x.sci?x.sci+' sci':'', x.group?'Configure: '+x.group:''].filter(Boolean).join(' · ');
+      h+=`<li><div class="pt">⚗ ${esc(x.name)}</div><div class="pn">${esc(x.id||'')}${m?' · '+esc(m):''}</div></li>`; }
+    h+='</ul>'; }
   p.innerHTML=h;
 }
 function legendHTML(){
@@ -853,7 +858,7 @@ function showStamp(){                               // freshness chip: when + wh
   const m=D.meta||{};
   if(!m.generated){ el.style.display='none'; return; }
   el.innerHTML=`generated <b>${esc(m.generated)}</b>`+(m.commit?` · ${esc(m.commit)}`:'')+
-               `<br>${m.nodes||D.nodes.length} nodes · ${m.parts||0} parts · ${m.grants||0} grants`;
+               `<br>${m.nodes||D.nodes.length} nodes · ${m.parts||0} parts · ${m.grants||0} grants${m.experiments?' · '+m.experiments+' experiments':''}`;
 }
 function init(){
   cv=document.getElementById('cv'); ctx=cv.getContext('2d');
@@ -935,7 +940,7 @@ function init(){
   document.getElementById('zo').addEventListener('click',()=>{ cam.s=Math.max(.05,cam.s/1.2); updateZoomLabel(); draw(); });
   document.getElementById('q').addEventListener('keydown',e=>{ if(e.key!=='Enter')return;
     const s=e.target.value.trim().toLowerCase(); if(!s)return;
-    for(const n of D.nodes){ if(n.id.toLowerCase().includes(s)||n.title.toLowerCase().includes(s)||(n.parts||[]).some(p=>p.name.toLowerCase().includes(s)||(p.title||'').toLowerCase().includes(s))||(n.grants||[]).some(g=>g.toLowerCase().includes(s)||grantLabel(g).toLowerCase().includes(s))){
+    for(const n of D.nodes){ if(n.id.toLowerCase().includes(s)||n.title.toLowerCase().includes(s)||(n.experiments||[]).some(x=>x.name.toLowerCase().includes(s))||(n.parts||[]).some(p=>p.name.toLowerCase().includes(s)||(p.title||'').toLowerCase().includes(s))||(n.grants||[]).some(g=>g.toLowerCase().includes(s)||grantLabel(g).toLowerCase().includes(s))){
       selId=n.id; centerOn(n.id); setFocus(n.id); showPanel(n.id); draw(); break; } }
   });
 

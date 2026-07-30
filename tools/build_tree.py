@@ -485,6 +485,36 @@ def load_part_titles():
         pass
     return out
 
+_EXPERIMENTS = None
+
+def load_experiments(nodes):
+    """node id -> [experiment unlocks] (tools/experiment_index.py). An experiment is NOT a
+    part: Kerbalism serves it as a `Configure` SETUP on probe cores / labs / EVA kits gated by
+    `tech = <node>`, and crewed science as a `techRequired` EXPERIMENT_DEFINITION. None of it
+    is in nodes.yaml, so without this a node that unlocks real science renders as empty --
+    which is exactly what tel_minitrackInterferometry (the whole Orbital Perturbation
+    experiment) did. Best-effort: a scanner hiccup must not fail the tree build."""
+    global _EXPERIMENTS
+    if _EXPERIMENTS is None:
+        try:
+            if ROOT not in sys.path:
+                sys.path.insert(0, ROOT)
+            import experiment_index
+            idx, unresolved = experiment_index.build(valid={n["id"] for n in nodes})
+            _EXPERIMENTS = idx
+            n = sum(len(v) for v in idx.values())
+            print(f"experiments: {n} unlocks on {len(idx)} nodes"
+                  + (f"  ({len(unresolved)} unresolvable MM ref(s))" if unresolved else ""))
+        except Exception as e:
+            print(f"experiment index: skipped ({e})")
+            _EXPERIMENTS = {}
+    return _EXPERIMENTS
+
+def _exp_view(n, experiments):
+    """The viewer's per-node experiment rows -- trimmed to what the panel prints."""
+    return [{"name": e["name"], "id": e["id"], "sci": e["sci"], "group": e["group"]}
+            for e in experiments.get(n["id"], [])]
+
 def _fnum(s):
     try:
         return float(s)
@@ -834,6 +864,7 @@ def emit_html(disc, nodes, by, routes):
     svg = _inline_svg(disc, nodes, by, routes)
 
     titles = load_part_titles()
+    experiments = load_experiments(nodes)
     data = {}
     for n in nodes:
         parts = [{"name": p, "mod": titles.get(p, ("", ""))[0], "title": titles.get(p, ("", ""))[1]}
@@ -843,9 +874,11 @@ def emit_html(disc, nodes, by, routes):
             "color": disc[n["discipline"]]["color"], "tier": n["tier"], "cost": n["cost"],
             "anyToUnlock": bool(n.get("anyToUnlock")), "flavor": (n.get("flavor") or "").strip(),
             "parts": parts, "upgrades": list(n.get("upgrades") or []), "grants": list(n.get("grants") or []),
+            "experiments": _exp_view(n, experiments),
         }
     npart = sum(len(d["parts"]) for d in data.values())
-    sub = f"{len(nodes)} nodes · {npart} parts placed · click a node"
+    nexp = sum(len(d["experiments"]) for d in data.values())
+    sub = f"{len(nodes)} nodes · {npart} parts placed · {nexp} experiments · click a node"
     payload = json.dumps(data, ensure_ascii=False)
     # neutralize HTML-significant chars so the JSON can't break out of the <script> body
     bs = chr(92)  # a backslash, built at runtime (tool transport JSON-decodes typed uXXXX escapes)
@@ -919,6 +952,12 @@ function select(id,scroll){
   else h+='<div class="empty">— no parts assigned —</div>';
   if(d.upgrades.length){h+=`<div class="sec">Upgrades (${d.upgrades.length})</div><ul class="parts">`;
     for(const u of d.upgrades)h+=`<li><div class="pn">${esc(u)}</div></li>`;h+='</ul>';}
+  // experiments are Kerbalism Configure setups, not parts — invisible in R&D, so name them here
+  const xs=d.experiments||[];
+  if(xs.length){h+=`<div class="sec">Experiments (${xs.length})</div><ul class="parts">`;
+    for(const x of xs){const m=[x.sci?x.sci+' sci':'',x.group?'Configure: '+x.group:''].filter(Boolean).join(' · ');
+      h+=`<li><div class="pt">⚗ ${esc(x.name)}</div><div class="pn">${esc(x.id||'')}${m?' · '+esc(m):''}</div></li>`;}
+    h+='</ul>';}
   panel.innerHTML=h;
 }
 document.querySelectorAll('#canvas g.node').forEach(g=>{
@@ -955,6 +994,7 @@ def emit_prototype_data(disc, nodes, by, routes):
     os.makedirs(protod, exist_ok=True)
     titles = load_part_titles()
     engine_stats = load_engine_stats()
+    experiments = load_experiments(nodes)
     disciplines = {k: {"title": v["title"], "order": v["order"], "color": v["color"], "icon": v["icon"]}
                    for k, v in disc.items()}
     jnodes = []
@@ -987,6 +1027,7 @@ def emit_prototype_data(disc, nodes, by, routes):
             "tier": n["tier"], "cost": n["cost"], "anyToUnlock": bool(n.get("anyToUnlock")),
             "flavor": (n.get("flavor") or "").strip(),
             "parts": parts, "upgrades": list(n.get("upgrades") or []), "grants": list(n.get("grants") or []),
+            "experiments": _exp_view(n, experiments),
             "pos": [n["_x"], n["_y"]],
         })
     jedges = [{"from": pid, "to": cid, "anyToUnlock": bool(by[cid].get("anyToUnlock")),
@@ -1003,6 +1044,7 @@ def emit_prototype_data(disc, nodes, by, routes):
         "nodes": len(jnodes),
         "parts": sum(len(n["parts"]) for n in jnodes),
         "grants": sum(len(n["grants"]) for n in jnodes),
+        "experiments": sum(len(n["experiments"]) for n in jnodes),
     }
     payload = {"meta": stamp, "disciplines": disciplines, "nodes": jnodes, "edges": jedges}
     with open(os.path.join(protod, "tree-data.js"), "w", encoding="utf-8") as f:
