@@ -17,7 +17,7 @@ _SHIPPED — the 11-level ladder + DSN gain are re-provided by design/Settings/A
 
 | grant | node | tier | title |
 |---|---|---|---|
-| `RP0Level2TrackingStation` | `tel_dopplerRanging` | T5 | Coherent Doppler Ranging |
+| `RP0Level2TrackingStation` | `tel_dopplerRanging` | T4 | Coherent Doppler Ranging |
 | `RP0Level3TrackingStation` | `tel_pcmTelemetry` | T6 | Pulse-Code Modulation Telemetry |
 | `RP0Level4TrackingStation` | `tel_deployableHighGainDish` | T7 | Deployable High-Gain Dish |
 | `RP0Level5TrackingStation` | `tel_phasedArrayRelay` | T8 | Phased-Array Relay Antenna |

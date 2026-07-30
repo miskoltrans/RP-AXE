@@ -1309,11 +1309,17 @@ nodes:
     # V2 avionics redesign (2026-07-08): AXE's own Shielded axis (docs/AVIONICS_SPEC.md), mirroring RP-1's
     # Deep-Space ladder one-for-one. Serial chain (each rung needs the previous Shielded rung + the paired
     # Guided/Computing tier). Placeholder flavor/title — dedicated content-authoring pass still pending.
+  - id: tel_minitrackInterferometry
+    title: "Phase-Comparison Satellite Tracking"
+    discipline: Telecommunications
+    tier: 3
+    parents: [tel_telemetry]
+    flavor: "A fence of ground aerials reading the same carrier tone and comparing its phase between them, fixing where the spacecraft crossed to a fraction of its own beamwidth. Fly enough passes and the orbit itself becomes the instrument: it refuses to close, and what it refuses by is the shape of the mass underneath."
   - id: tel_dopplerRanging
     title: "Coherent Doppler Ranging"
     discipline: Telecommunications
-    tier: 5
-    parents: [tel_telemetry]
+    tier: 4
+    parents: [tel_minitrackInterferometry]
     flavor: "Lock a ground receiver to the exact frequency of a spacecraft's carrier and read the Doppler shift as it climbs away — velocity to a fraction of a metre per second, and range from the round-trip time of a coded tone. The two-way link that tracks a probe out past the Moon."
     grants: [RP0Level2TrackingStation]
     upgrades: [commsTL1]
