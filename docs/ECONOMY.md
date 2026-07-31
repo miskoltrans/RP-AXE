@@ -527,8 +527,18 @@ explicit cost of 999 rather than a tier rate, so it needs L6 — it is a detache
 and it needed the *top* level before, so this is a loosening. `start` is free and `experimental` /
 `hire_JPL` / `hire_OKB` cost 1, all reachable at L1 as intended.
 
-**Not yet verified in game.** Cold-load confirmation that CBK accepts an 8-entry `@RESEARCH` (the
-`wrong size` fallback is silent) belongs with the next instance rebuild.
+~~**Not yet verified in game.**~~ ✅ **CONFIRMED LIVE 2026-07-31**, cold load, read back off
+`GameVariables` by the autotest rather than from the config:
+
+```
+[AXE][AutoTest][FAC] rnd levels=8 sciCap=[82, 265, 404, 600, 865, 1225, 1655, inf]
+                     price=[25000, 50000, 100000, 200000, 400000, 700000, 1200000]
+```
+
+CustomBarnKit accepted all eight entries — its silent `wrong size` fallback did **not** fire. The same
+run confirms `@ADMINISTRATION` (§11a): `commitRange=[0.5/0.75/1] (AXE's, OK)`, so the other block
+whose size check could have reverted silently is live too. Launchpad and Mission Control read back
+correct in the same line.
 
 ## 9. Program bonuses — 2026-07-29: made visible, because nobody had ever seen one
 
@@ -1185,3 +1195,25 @@ dry against an R-7's ~27 t. The weakest input is not any constant but that vehic
 
 `FUNDS_PER_TONNE_DRY = 597` is measured; **`massT` in `craft-prices.csv` is DRY** (`p.mass +
 GetModuleMass`, no resources), so it must never be applied to a GLOW figure — hence `DRY_FRACTION`.
+
+### §14 verified on a cold load — 2026-07-31
+
+The run that closed §8's `@RESEARCH` question also settled this section. Three independent confirmations:
+
+- **Avionics scaling landed.** All **28** live `costFactor` values (2 `ModuleAxeAvionics` instances ×
+  14 tiers) equal the config × 1.2 exactly, and `scCostFactor` scaled with them (3 → 3.6). Two
+  instances rather than three because `ROT-reDIRECTAvionics` is not installed. The one surviving
+  unscaled `48.12` is inside `AVIONICSCONFIG { name = Near-Earth }` — RP-1's vendored coefficient
+  table, already allow-listed as inert-by-design in `check_liveness` because its reader is `RP0.dll`.
+  This is the piece that silently did nothing until the TIER format was fixed.
+- **The predicted magnitude held.** `AxeCraftPricer` re-priced 33 craft on the fresh load:
+  **159,284 funds over 241.0 t = 661 funds/tonne**, against 452 before the change and a **predicted
+  644**. The model came in 2.6% light. `gate_feasibility.py`'s `FUNDS_PER_TONNE_DRY` is now the
+  measured 661 rather than a derived figure.
+- **Nothing regressed.** Autotest `SUCCESS`, 0 exceptions, 0 errors outside the known
+  DynamicBatteryStorage noise, `check_liveness` check E green on both cost files
+  (`AxePartCost` 1,823/1,826, `AxePartFlyCost` 1,819/1,859) with no staleness warning.
+
+All four of the new loud-fallback warnings stayed **silent**, and the running `AXE.dll` was confirmed
+to contain their strings — so that is four config readers proven to have found their data, not four
+checks that could not fire.
