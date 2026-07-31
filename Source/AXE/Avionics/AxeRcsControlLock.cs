@@ -1,4 +1,5 @@
 using HarmonyLib;
+using UnityEngine;
 
 namespace RPAxe
 {
@@ -35,22 +36,23 @@ namespace RPAxe
             if (v == null || v != FlightGlobals.ActiveVessel) return;
 
             AxeControlLockerUtils.LockLevel level = ctl.Level;
-            float q = ctl.Authority;
-            // Unlocked AND undegraded is the only case with nothing to do.
-            if (level == AxeControlLockerUtils.LockLevel.Unlocked && q >= 1f) return;
+            float sigma = AxeControlLockerUtils.NoiseOnRcs ? ctl.ControlNoise : 0f;
+            // Unlocked AND clean is the only case with nothing to do.
+            if (level == AxeControlLockerUtils.LockLevel.Unlocked && sigma <= 0f) return;
 
             FlightCtrlState st = v.ctrlState;
             _x = st.X; _y = st.Y; _z = st.Z;
             _pitch = st.pitch; _yaw = st.yaw; _roll = st.roll;
             _saved = true;
 
-            // PROTOTYPE: over capacity but not yet unguided -- scale RCS the same way the post-autopilot
-            // hook scales everything else, so authority degrades uniformly instead of RCS staying at full
-            // strength while gimbal and wheels weaken.
+            // PROTOTYPE v2: over capacity but not yet unguided -- corrupt RCS the same way the post-autopilot
+            // hook corrupts everything else, so a craft cannot dodge the noise by steering on thrusters.
             if (level == AxeControlLockerUtils.LockLevel.Unlocked)
             {
-                st.yaw *= q; st.pitch *= q; st.roll *= q;
-                st.X *= q; st.Y *= q;
+                st.yaw = Mathf.Clamp(st.yaw + AxeControlLockerUtils.NoiseSample(0, sigma), -1f, 1f);
+                st.pitch = Mathf.Clamp(st.pitch + AxeControlLockerUtils.NoiseSample(1, sigma), -1f, 1f);
+                if (AxeControlLockerUtils.NoiseRoll)
+                    st.roll = Mathf.Clamp(st.roll + AxeControlLockerUtils.NoiseSample(2, sigma), -1f, 1f);
                 return;
             }
 

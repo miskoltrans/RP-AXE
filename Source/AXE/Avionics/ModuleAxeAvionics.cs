@@ -195,22 +195,59 @@ namespace RPAxe
         // capacity the craft keeps control but authority decays as q = e^(-k(r-1)) until RatioCut, past
         // which it is genuinely unguided. Shown as a percentage so an overloaded design is visible in the
         // VAB rather than discovered in flight -- "silent" was the real complaint about RP-1's cliff.
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Control Authority",
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Control Noise",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string authorityDisplay = "";
 
-        // PROTOTYPE TEST RIG -- remove with the rest of the prototype. Pins the vessel's authority factor so
-        // the same craft can fly the same profile at several values. Without this the only way to vary q is
-        // to rebuild the craft, which changes mass and aero too and makes the comparison worthless.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: pin authority",
+        // PROTOTYPE TEST RIG -- remove with the rest of the prototype. Every tunable is live in BOTH scenes,
+        // so the curve can be felt and changed mid-flight without a rebuild. None of these numbers has a
+        // physical anchor (KSP models no bending modes), so feel is the only way to find them.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: pin noise",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_Toggle(disabledText = "off", enabledText = "on", scene = UI_Scene.All)]
-        public bool authorityOverride = false;
+        public bool noiseOverride = false;
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: q",
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise amount",
                   guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_FloatRange(minValue = 0.05f, maxValue = 1f, stepIncrement = 0.05f, scene = UI_Scene.All)]
-        public float authorityOverrideValue = 1f;
+         UI_FloatRange(minValue = 0f, maxValue = 1f, stepIncrement = 0.05f, scene = UI_Scene.All)]
+        public float noiseOverrideValue = 0.3f;
+
+        // THE critical knob. Vessel rotational inertia low-passes control noise, so frequency decides whether
+        // this is felt at all: too fast and a heavy rocket averages it away (the same trap that killed v1 in a
+        // different guise), too slow and the autopilot simply trims it out as a steady bias.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise Hz",
+                  guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0.1f, maxValue = 20f, stepIncrement = 0.1f, scene = UI_Scene.All)]
+        public float noiseHz = 2f;
+
+        // White vs correlated: a direct test of the inertia-filtering theory. If white is invisible and
+        // correlated is felt, that confirms the vessel is acting as a low-pass filter.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: white noise",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "correlated", enabledText = "white", scene = UI_Scene.All)]
+        public bool noiseWhite = false;
+
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: ramp k",
+                  guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0.5f, maxValue = 8f, stepIncrement = 0.5f, scene = UI_Scene.All)]
+        public float noiseK = 2f;
+
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise ceiling",
+                  guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0.1f, maxValue = 1f, stepIncrement = 0.05f, scene = UI_Scene.All)]
+        public float noiseMax = 0.9f;
+
+        // Roll is by far the most perceptible axis, so it is separable -- if roll noise alone dominates the
+        // feel, that is worth knowing before tuning anything else.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise roll",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "pitch/yaw only", enabledText = "all axes", scene = UI_Scene.All)]
+        public bool noiseRoll = true;
+
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise on RCS",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "gimbal only", enabledText = "gimbal + RCS", scene = UI_Scene.All)]
+        public bool noiseOnRcs = true;
 
         [KSPField(guiActiveEditor = true, guiName = "Split",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
@@ -1211,36 +1248,41 @@ namespace RPAxe
             // unfocused vessel can't clobber the value being flown. Multiple cores on one craft: last wins.
             if (HighLogic.LoadedSceneIsEditor || (vessel != null && vessel.isActiveVessel))
             {
-                AxeControlLockerUtils.AuthorityOverrideEnabled = authorityOverride;
-                AxeControlLockerUtils.AuthorityOverrideValue = authorityOverrideValue;
+                AxeControlLockerUtils.NoiseOverrideEnabled = noiseOverride;
+                AxeControlLockerUtils.NoiseOverrideValue = noiseOverrideValue;
+                AxeControlLockerUtils.NoiseHz = noiseHz;
+                AxeControlLockerUtils.NoiseWhite = noiseWhite;
+                AxeControlLockerUtils.NoiseK = noiseK;
+                AxeControlLockerUtils.NoiseMax = noiseMax;
+                AxeControlLockerUtils.NoiseRoll = noiseRoll;
+                AxeControlLockerUtils.NoiseOnRcs = noiseOnRcs;
             }
 
             if (ScienceCoreMode) { authorityDisplay = "n/a — unguided"; return; }
 
-            if (authorityOverride)
+            if (noiseOverride)
             {
-                authorityDisplay = $"{Mathf.Clamp(authorityOverrideValue, 0.05f, 1f) * 100f:F0}% — DEBUG pinned";
+                authorityDisplay = $"{Mathf.Clamp01(noiseOverrideValue) * 100f:F0}% noise — DEBUG pinned";
                 return;
             }
 
-            float q;
+            float sigma;
             if (HighLogic.LoadedSceneIsFlight && AxeAvionicsController.Instance != null
                 && vessel != null && vessel.isActiveVessel)
             {
-                q = AxeAvionicsController.Instance.Authority;
+                sigma = AxeAvionicsController.Instance.ControlNoise;
             }
             else
             {
                 float capacity = EffectiveCapacityTons();
                 float mass = VesselMassTons();
-                q = (capacity <= 0f || mass <= 0f)
-                    ? (mass > 0f ? 0f : 1f)
-                    : AxeControlLockerUtils.AuthorityFor(mass / capacity);
+                sigma = (capacity <= 0f || mass <= 0f)
+                    ? (mass > 0f ? AxeControlLockerUtils.NoiseMax : 0f)
+                    : AxeControlLockerUtils.NoiseFor(mass / capacity);
             }
 
-            authorityDisplay = q >= 1f ? "full"
-                             : q <= AxeControlLockerUtils.AuthorityFloor ? "none — unguided"
-                             : $"{q * 100f:F0}% — degraded";
+            authorityDisplay = sigma <= 0f ? "clean"
+                             : $"{sigma * 100f:F0}% noise — degraded";
         }
 
         float PenaltyMultiplier()

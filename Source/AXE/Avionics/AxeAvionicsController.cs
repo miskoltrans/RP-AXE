@@ -29,12 +29,12 @@ namespace RPAxe
         /// because ModuleRCS reads ctrlState on its own Update, before the post-autopilot hook re-zeros it.</summary>
         public AxeControlLockerUtils.LockLevel Level => _level;
 
-        /// <summary>PROTOTYPE: control-authority factor in [AuthorityFloor..1]. 1 unless over capacity.</summary>
-        public float Authority => _authority;
+        /// <summary>PROTOTYPE: control-noise amplitude in [0..NoiseMax]. 0 unless over capacity.</summary>
+        public float ControlNoise => _noise;
 
         Vessel _vessel;
         AxeControlLockerUtils.LockLevel _level = AxeControlLockerUtils.LockLevel.Unlocked;
-        float _authority = 1f;
+        float _noise = 0f;
         bool _requested;
         bool _started;
         readonly ScreenMessage _message = new ScreenMessage("", 6f, ScreenMessageStyle.UPPER_CENTER);
@@ -84,22 +84,24 @@ namespace RPAxe
         // Hard guarantee, every physics frame: while locked, zero steering + lateral translation; leave throttle
         // & staging alone. Axial level additionally permits Z (axial-thrust) translation for spin-stabilized stages.
         //
-        // PROTOTYPE (docs/AVIONICS_AUTHORITY.md): while UNLOCKED but over capacity, the same axes are SCALED by
-        // the authority factor rather than zeroed -- the craft still steers, just badly, and progressively worse
-        // the further over it is. This hook covers reaction wheels, engine gimbal and aerodynamic surfaces;
-        // ModuleRCS reads ctrlState on its own Unity pass and is handled by AxeRcsControlLock.
+        // PROTOTYPE v2 (docs/AVIONICS_AUTHORITY.md): while UNLOCKED but over capacity, correlated NOISE is added
+        // to the rotation commands rather than the axes being scaled. v1 scaled them and was killed by test --
+        // at q=0.05 a craft ascended normally and flew BETTER, because lowering loop gain raises stability
+        // margin. An autopilot can correct a disturbance's average but cannot anticipate it, so noise is the
+        // one perturbation MechJeb has nothing to absorb it with.
         //
-        // Autopilots close the loop around this: MechJeb (which is what actually flies an ascent -- SAS is for
-        // probe attitude work and is underpowered by design) will push its output toward 1.0 to compensate, so
-        // the felt result is maximum authority reduced by q, i.e. a heavy, sluggish vehicle rather than one that
-        // ignores the stick.
+        // Rotation only: translation noise would mostly burn RCS without being felt on a launch vehicle.
+        // This hook covers reaction wheels, engine gimbal and aerodynamic surfaces; ModuleRCS reads ctrlState
+        // on its own Unity pass and is handled by AxeRcsControlLock.
         void FlightInputModifier(FlightCtrlState st)
         {
             if (_level == AxeControlLockerUtils.LockLevel.Unlocked)
             {
-                if (_authority >= 1f) return;
-                st.yaw *= _authority; st.pitch *= _authority; st.roll *= _authority;
-                st.X *= _authority; st.Y *= _authority;
+                if (_noise <= 0f) return;
+                st.yaw = Mathf.Clamp(st.yaw + AxeControlLockerUtils.NoiseSample(0, _noise), -1f, 1f);
+                st.pitch = Mathf.Clamp(st.pitch + AxeControlLockerUtils.NoiseSample(1, _noise), -1f, 1f);
+                if (AxeControlLockerUtils.NoiseRoll)
+                    st.roll = Mathf.Clamp(st.roll + AxeControlLockerUtils.NoiseSample(2, _noise), -1f, 1f);
                 return;
             }
             st.yaw = st.pitch = st.roll = 0f;
@@ -139,16 +141,16 @@ namespace RPAxe
 
         void Recompute()
         {
-            if (_vessel == null) { _authority = 1f; SetLevel(AxeControlLockerUtils.LockLevel.Unlocked); return; }
+            if (_vessel == null) { _noise = 0f; SetLevel(AxeControlLockerUtils.LockLevel.Unlocked); return; }
             AxeControlLockerUtils.LockLevel lvl;
             if (CheatOptions.InfiniteElectricity)
             {
                 lvl = AxeControlLockerUtils.LockLevel.Unlocked;
-                _authority = 1f;
+                _noise = 0f;
             }
             else
             {
-                lvl = AxeControlLockerUtils.ShouldLock(_vessel.Parts, out _, out _, out _authority);
+                lvl = AxeControlLockerUtils.ShouldLock(_vessel.Parts, out _, out _, out _noise);
             }
             SetLevel(lvl);
             UpdateMechJeb();

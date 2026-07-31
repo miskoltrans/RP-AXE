@@ -39,21 +39,48 @@ namespace RPAxe
     {
         public enum LockLevel { Locked, Axial, Unlocked }
 
-        // ---- PROTOTYPE: control-authority model (docs/AVIONICS_AUTHORITY.md) ----------------------
-        // Over capacity, control authority decays exponentially instead of the core paying an EC
-        // penalty: q = e^(-k(r-1)), floored, then handing over to the existing Axial/Locked ladder.
-        // k is the only dial; RatioCut is DERIVED, since an exponential never reaches zero and the
-        // cutoff is just where the tail stops being worth simulating.
+        // ---- PROTOTYPE v2: control NOISE (docs/AVIONICS_AUTHORITY.md) -----------------------------
+        // v1 scaled control authority down and was killed by test: at q=0.05 a medium craft ascended
+        // normally, and flew BETTER, because reducing loop gain raises stability margin. Weakness is
+        // the opposite of how an under-characterised control system actually fails.
         //
-        // Unlike the EC penalty this replaces, there is no buffer between the dial and the player:
-        // that curve was an exponent on power against a ~39-hour battery, so no value of k was felt
-        // inside a 6-10 minute ascent. q scales the control in the pilot's hands at that instant.
-        public const float AuthorityK = 3f;
-        public const float AuthorityFloor = 0.25f;
-        public static float RatioCut => 1f + Mathf.Log(1f / AuthorityFloor) / AuthorityK;   // ~1.46
+        // Noise is the version that survives that result. An autopilot can correct the AVERAGE of a
+        // disturbance but cannot anticipate it, so unlike a gain change there is nothing to absorb.
+        // It also matches the physical story: avionics sized for a vehicle means a control law
+        // characterised for its bending modes and slosh; undersized, the loop is mistuned and the
+        // vehicle jitters.
+        //
+        // TWO DESIGN POINTS DECIDE WHETHER THIS WORKS AT ALL, both learned from v1's failure:
+        //   * Noise is a fraction of the CONTROL RANGE, not an absolute torque. A rocket with strong
+        //     gimbals therefore gets strongly perturbed; otherwise big vehicles ignore it exactly as
+        //     they ignored the authority cut.
+        //   * Noise is LOW-FREQUENCY (correlated, ~NoiseHz). White noise per physics tick is averaged
+        //     away by vessel rotational inertia and would be invisible on anything heavy.
+        // All tunables are STATIC AND LIVE, driven from the core's DEBUG PAW knobs, so they can be changed
+        // in flight without a rebuild. That is the whole point of the prototype: none of these numbers has a
+        // physical anchor (KSP models no bending modes), so they can only be found by feel.
+        public static float NoiseK = 2f;      // how fast noise ramps with overload
+        public static float NoiseMax = 0.9f;  // ceiling, as a fraction of control range
+        public static float NoiseHz = 2f;     // correlation frequency -- THE critical one, see above
+        public static bool NoiseWhite;        // white instead of correlated: tests the inertia-filter theory
+        public static bool NoiseRoll = true;  // roll is the most perceptible axis; separable for that reason
+        public static bool NoiseOnRcs = true;
 
-        public static float AuthorityFor(float ratio)
-            => ratio <= 1f ? 1f : Mathf.Max(AuthorityFloor, Mathf.Exp(-AuthorityK * (ratio - 1f)));
+        public static float RatioCut => 1f + Mathf.Log(1f / Mathf.Max(0.01f, 1f - NoiseMax)) / NoiseK;
+
+        /// <summary>Noise amplitude as a fraction of control range: 0 under capacity, rising with overload.</summary>
+        public static float NoiseFor(float ratio)
+            => ratio <= 1f ? 0f : Mathf.Min(NoiseMax, 1f - Mathf.Exp(-NoiseK * (ratio - 1f)));
+
+        /// <summary>Noise sample in [-sigma, sigma] for one control axis.</summary>
+        public static float NoiseSample(int axis, float sigma)
+        {
+            if (sigma <= 0f) return 0f;
+            float n = NoiseWhite
+                ? Random.Range(-1f, 1f)
+                : Mathf.PerlinNoise(Time.time * NoiseHz, axis * 37.7f) * 2f - 1f;
+            return n * sigma;
+        }
 
         // PROTOTYPE TEST RIG. Pins q to a chosen value and keeps the vessel flyable, so the SAME craft can
         // be flown the SAME profile at several values -- which is the only way to answer the question the
@@ -61,8 +88,8 @@ namespace RPAxe
         // a fraction of the available control authority, so MechJeb can be expected to compensate until it
         // saturates; if the traces at 1.0 / 0.6 / 0.35 are indistinguishable, the degraded band does not
         // exist in practice and no value of k will create it. Driven from the core's DEBUG PAW fields.
-        public static bool AuthorityOverrideEnabled;
-        public static float AuthorityOverrideValue = 1f;
+        public static bool NoiseOverrideEnabled;
+        public static float NoiseOverrideValue = 0f;
 
         public static LockLevel ShouldLock(List<Part> parts) => ShouldLock(parts, out _, out _, out _);
 
@@ -71,11 +98,11 @@ namespace RPAxe
 
         /// <param name="maxCapacity">Steerable-mass budget: MAX across ALL avionics units, in tons.</param>
         /// <param name="vesselMass">Whole-vessel wet mass measured against it, in tons.</param>
-        /// <param name="authority">Control-authority factor in [AuthorityFloor..1]; 1 unless degraded.</param>
+        /// <param name="noise">Control-noise amplitude in [0..NoiseMax]; 0 unless over capacity.</param>
         public static LockLevel ShouldLock(List<Part> parts, out float maxCapacity, out float vesselMass,
-                                           out float authority)
+                                           out float noise)
         {
-            authority = 1f;
+            noise = 0f;
             maxCapacity = 0f;
             vesselMass = 0f;
             if (parts == null || parts.Count == 0) return LockLevel.Unlocked;
@@ -151,27 +178,27 @@ namespace RPAxe
 
             // PROTOTYPE TEST RIG: pin q and stay flyable, so one craft can be flown at several values.
             // Placed after the part walk so maxCapacity/vesselMass are still reported honestly.
-            if (AuthorityOverrideEnabled)
+            if (NoiseOverrideEnabled)
             {
-                authority = Mathf.Clamp(AuthorityOverrideValue, 0.05f, 1f);
+                noise = Mathf.Clamp(NoiseOverrideValue, 0f, 1f);
                 return LockLevel.Unlocked;
             }
 
             // A crewed pod / bare command source still bypasses everything, unconditionally (RP-1's rule).
             if (bypass) return LockLevel.Unlocked;
 
-            // PROTOTYPE: the degraded band. Under capacity, full control. Over it, control stays available
-            // but scaled by q, up to RatioCut -- past that the vessel hands over to the existing ladder and
-            // is genuinely unguided. `coreGuided` no longer short-circuits: a guided core is judged on mass
-            // like everything else, which is the whole point of replacing the EC penalty.
+            // PROTOTYPE: the degraded band. Under capacity, clean control. Over it the craft still steers
+            // but its control inputs are corrupted by noise rising with overload, up to RatioCut -- past
+            // that it hands over to the existing ladder and is genuinely unguided. `coreGuided` no longer
+            // short-circuits: a guided core is judged on mass like everything else.
             if (maxCapacity > 0f)
             {
                 float ratio = vesselMass / maxCapacity;
                 if (ratio <= 1f) return LockLevel.Unlocked;
                 if (ratio < RatioCut)
                 {
-                    authority = AuthorityFor(ratio);
-                    return LockLevel.Unlocked;   // still controllable, just badly
+                    noise = NoiseFor(ratio);
+                    return LockLevel.Unlocked;   // still controllable, just dirtily
                 }
             }
             return (coreAxial || fixedAxial) ? LockLevel.Axial : LockLevel.Locked;
