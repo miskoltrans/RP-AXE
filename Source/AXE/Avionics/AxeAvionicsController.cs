@@ -32,6 +32,12 @@ namespace RPAxe
         /// <summary>PROTOTYPE: control-noise amplitude in [0..NoiseMax]. 0 unless over capacity.</summary>
         public float ControlNoise => _noise;
 
+        // PROTOTYPE DIAGNOSTIC. FlightInputModifier is a callback registered on the vessel; if it is not
+        // subscribed, or the branch is not reached, nothing happens and the symptom is identical to "the
+        // noise is too small to see". Ticks proves the hook runs; LastNoise proves what it injected.
+        public int ModifierTicks { get; private set; }
+        public Vector3 LastNoise { get; private set; }
+
         Vessel _vessel;
         AxeControlLockerUtils.LockLevel _level = AxeControlLockerUtils.LockLevel.Unlocked;
         float _noise = 0f;
@@ -95,15 +101,20 @@ namespace RPAxe
         // on its own Unity pass and is handled by AxeRcsControlLock.
         void FlightInputModifier(FlightCtrlState st)
         {
+            ModifierTicks++;   // advances whenever the hook runs at all, noise or not
             if (_level == AxeControlLockerUtils.LockLevel.Unlocked)
             {
-                if (_noise <= 0f) return;
-                st.yaw = Mathf.Clamp(st.yaw + AxeControlLockerUtils.NoiseSample(0, _noise), -1f, 1f);
-                st.pitch = Mathf.Clamp(st.pitch + AxeControlLockerUtils.NoiseSample(1, _noise), -1f, 1f);
-                if (AxeControlLockerUtils.NoiseRoll)
-                    st.roll = Mathf.Clamp(st.roll + AxeControlLockerUtils.NoiseSample(2, _noise), -1f, 1f);
+                if (_noise <= 0f) { LastNoise = Vector3.zero; return; }
+                float ny = AxeControlLockerUtils.NoiseSample(0, _noise);
+                float np = AxeControlLockerUtils.NoiseSample(1, _noise);
+                float nr = AxeControlLockerUtils.NoiseRoll ? AxeControlLockerUtils.NoiseSample(2, _noise) : 0f;
+                LastNoise = new Vector3(np, ny, nr);
+                st.yaw = Mathf.Clamp(st.yaw + ny, -1f, 1f);
+                st.pitch = Mathf.Clamp(st.pitch + np, -1f, 1f);
+                st.roll = Mathf.Clamp(st.roll + nr, -1f, 1f);
                 return;
             }
+            LastNoise = Vector3.zero;
             st.yaw = st.pitch = st.roll = 0f;
             st.X = st.Y = 0f;
             if (_level == AxeControlLockerUtils.LockLevel.Locked) st.Z = 0f;

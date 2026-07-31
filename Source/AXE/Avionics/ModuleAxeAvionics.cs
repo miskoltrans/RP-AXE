@@ -202,6 +202,13 @@ namespace RPAxe
         // PROTOTYPE TEST RIG -- remove with the rest of the prototype. Every tunable is live in BOTH scenes,
         // so the curve can be felt and changed mid-flight without a rebuild. None of these numbers has a
         // physical anchor (KSP models no bending modes), so feel is the only way to find them.
+        // PROTOTYPE DIAGNOSTIC. Distinguishes the two failure modes that look identical from the cockpit:
+        // "the hook is not running" and "the hook is running but the noise is too small to notice".
+        // Ticks must advance every second; the p/y/r figures are what was actually added to the stick.
+        [KSPField(guiActive = true, guiActiveEditor = false, guiName = "DEBUG: injected",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public string noiseDebug = "";
+
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: pin noise",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_Toggle(disabledText = "off", enabledText = "on", scene = UI_Scene.All)]
@@ -737,7 +744,9 @@ namespace RPAxe
         // entirely by AxeAllocationBarHook reacting to PAW open/close events, not polled here.
         void Update()
         {
+            if (HighLogic.LoadedSceneIsEditor) { PushDebugKnobs(); return; }
             if (!HighLogic.LoadedSceneIsFlight) return;
+            PushDebugKnobs();   // knob changes must reach the controller without waiting for the 1 Hz tick
             if (Time.time < _nextFlightRecalc) return;
             _nextFlightRecalc = Time.time + 1f;
             UpdateRate();
@@ -1239,6 +1248,22 @@ namespace RPAxe
         // commandable long enough to stage. A KSPField so it can be retuned without a rebuild.
         [KSPField] public float penaltyMultiplierCap = 2981f;
 
+        // Pushed every frame in BOTH scenes. These are UI_ knobs, and changing one does not fire
+        // onEditorShipModified, so an editor-only push tied to the recompute never saw the change until the
+        // player happened to move a part.
+        void PushDebugKnobs()
+        {
+            if (!HighLogic.LoadedSceneIsEditor && (vessel == null || !vessel.isActiveVessel)) return;
+            AxeControlLockerUtils.NoiseOverrideEnabled = noiseOverride;
+            AxeControlLockerUtils.NoiseOverrideValue = noiseOverrideValue;
+            AxeControlLockerUtils.NoiseHz = noiseHz;
+            AxeControlLockerUtils.NoiseWhite = noiseWhite;
+            AxeControlLockerUtils.NoiseK = noiseK;
+            AxeControlLockerUtils.NoiseMax = noiseMax;
+            AxeControlLockerUtils.NoiseRoll = noiseRoll;
+            AxeControlLockerUtils.NoiseOnRcs = noiseOnRcs;
+        }
+
         // PROTOTYPE readout. In flight the controller's value is authoritative (it is what actually scales
         // ctrlState); in the editor there is no controller, so recompute from the same numbers. Unguided has
         // no capacity concept and therefore no authority concept.
@@ -1246,19 +1271,20 @@ namespace RPAxe
         {
             // Test rig: only the focused vessel's (or the editor's) core drives the statics, so a core on an
             // unfocused vessel can't clobber the value being flown. Multiple cores on one craft: last wins.
-            if (HighLogic.LoadedSceneIsEditor || (vessel != null && vessel.isActiveVessel))
-            {
-                AxeControlLockerUtils.NoiseOverrideEnabled = noiseOverride;
-                AxeControlLockerUtils.NoiseOverrideValue = noiseOverrideValue;
-                AxeControlLockerUtils.NoiseHz = noiseHz;
-                AxeControlLockerUtils.NoiseWhite = noiseWhite;
-                AxeControlLockerUtils.NoiseK = noiseK;
-                AxeControlLockerUtils.NoiseMax = noiseMax;
-                AxeControlLockerUtils.NoiseRoll = noiseRoll;
-                AxeControlLockerUtils.NoiseOnRcs = noiseOnRcs;
-            }
+            PushDebugKnobs();
 
             if (ScienceCoreMode) { authorityDisplay = "n/a — unguided"; return; }
+
+            AxeAvionicsController ctl = AxeAvionicsController.Instance;
+            if (HighLogic.LoadedSceneIsFlight)
+            {
+                if (ctl == null) noiseDebug = "no controller";
+                else
+                {
+                    Vector3 n = ctl.LastNoise;
+                    noiseDebug = $"ticks {ctl.ModifierTicks}  p{n.x:+0.00;-0.00}  y{n.y:+0.00;-0.00}  r{n.z:+0.00;-0.00}";
+                }
+            }
 
             if (noiseOverride)
             {
