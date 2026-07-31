@@ -2937,10 +2937,12 @@ nodes:
     flavor: "Heat liquid hydrogen in a fission reactor and blow it out a nozzle — twice the specific impulse of the best chemical engine, bought as a heavy, low-thrust, radioactive gamble. The road to deep space forks here."
     parts: [KIWIB48, KIWIA24]
     upgrades: [RFTech-nuclear-tltech1]
-    # RFTech-nuclear-tltech1..7 (2026-07-31): RealFuels per-engine-TYPE tech levels for class N, the one
+    # RFTech-nuclear-tltech1..8 (2026-07-31): RealFuels per-engine-TYPE tech levels for class N, the one
     # propulsion class with no AXE mapping (RP-1 gates it on its own node ids, which AXE deleted). The
-    # ladder follows the solid-core spine — debut here, then ground test, flight-rated, flight-design,
-    # advanced core, bimodal, fission-fragment — one rung per generation, strictly ascending in tier.
+    # ladder follows the fission-propulsion spine — debut here, then ground test, flight-rated,
+    # flight-design, advanced core, bimodal, fission-fragment, NSWR — one rung per generation, strictly
+    # ascending in tier. Class N is the only class RealFuels gives a 9th rung (TLTECH8), and RP-1 leaves
+    # that one stock; AXE fills it, so the ladder is complete rather than 8/9 mapped.
     # GATES NOTHING TODAY: no installed part declares `engineType = N`. Groundwork, deliberately taken.
     # King KIWI-B4E. Opens NuclearEngineering as a PROPULSION discipline (was radiation science only).
     # Reactor parent WIRED 2026-07: nuc_fissionReactor (SNAP/BES) + cryo_hydrogen (LH2) = the two prereqs.
@@ -5768,8 +5770,7 @@ nodes:
     parents: [nuc_bimodalNTR]
     flavor: "Let the fission fragments themselves be the exhaust — no propellant to heat, no working fluid at all, just the reaction products flying straight out at a meaningful fraction of the speed of light. The highest specific impulse anything in this tree will ever reach."
     parts: [RO-fftdustyplasmaffre, fft-ffre-plasma-1]
-    upgrades: [RFTech-nuclear-tltech7]    # class-N tech level: top rung. Stops here — NSWR/fusion-pulse (T16) are
-                                          # not solid-core descendants and sit past what RealFuels' N ladder models.
+    upgrades: [RFTech-nuclear-tltech7]    # class-N tech level: fission-fragment generation
     # King Dusty Plasma FFRE; the "Afterburning" mark (fft-ffre-plasma-1, one tech tier later) injects
     # propellant into the fragment stream to trade some of that absurd Isp for usable thrust. Fissile
     # magazine tankage (nuc_fissilePropellantMagazine, T12) already exists for this class of drive.
@@ -5789,5 +5790,11 @@ nodes:
     parents: [nuc_fissionFragmentRocket]
     flavor: "Dissolve fissile salts in water and let the mixture go critical continuously as it streams through the chamber — the reactor doesn't heat the propellant, the reactor IS the propellant. The wildest, most engineering-fiction concept in the curated set."
     parts: [fft-nswr-2]
+    upgrades: [RFTech-nuclear-tltech8]    # class-N top rung. RealFuels defines TLTECH0..8 but ONLY for class N
+                                          # (every other class stops at 7), and RP-1 maps only 0..7 — so upstream
+                                          # leaves rung 8 on stock `experimentalRocketry`. AXE fills it: NSWR is
+                                          # still a fission rocket, so it belongs to class N, and it is the
+                                          # highest fission propulsion in the tree. Fusion-pulse (also T16) does
+                                          # NOT go here — it is not fission and not what class N models.
     # King NSWR. Capstone of the exotic-nuclear cluster and the tree's new tier ceiling - deliberate
     # what-if/fun curation (never built even as a ground article), per [[rp-axe-fun-over-history]].
