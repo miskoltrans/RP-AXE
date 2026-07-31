@@ -38,6 +38,79 @@ namespace RPAxe.AutoTest
         private static string ReportPath => Path.Combine(
             Path.Combine(KSPUtil.ApplicationRootPath, "GameData/RP-AXE/Plugins/PluginData"), ReportName);
 
+        // A valid 256x256 fully-transparent PNG. Seeded as a stand-in thumbnail; see SeedThumbnails.
+        private const string BlankThumbPng =
+            "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAABFUlEQVR42u3BMQEAAADCoPVP7WsIoAAAAAAAAAAA" +
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+            "AAAAAAAAAAAAAAAAeAMBPAAB2ClDBAAAAABJRU5ErkJggg==";
+
+        /// <summary>Where KSP caches a craft's thumbnail: Ships/@thumbs/{VAB,SPH}/{name}.png.</summary>
+        private static string ThumbPathFor(string craftPath)
+        {
+            string norm = craftPath.Replace('\\', '/');
+            string facility = norm.Contains("/SPH/") ? "SPH" : "VAB";
+            return Path.Combine(
+                Path.Combine(KSPUtil.ApplicationRootPath, "Ships/@thumbs/" + facility),
+                Path.GetFileNameWithoutExtension(craftPath) + ".png");
+        }
+
+        /// <summary>
+        /// Give every craft a cached thumbnail before the sweep, and report which ones we invented.
+        ///
+        /// WHY: KSP's ShipConstruction.LoadThumbnail is a COROUTINE. Loading a craft whose cached
+        /// .png is missing or stale queues a render that runs on a LATER frame — but this sweep
+        /// destroys each craft's parts the moment it has priced them. When that render finally runs
+        /// it walks a culling list still holding the freed renderers and access-violates inside
+        /// Unity's per-layer cull-distance test (UnityPlayer+0x612BC4), taking KSP down ~0.5s after
+        /// the sweep. The render dies before writing the .png, so the craft stays thumbnail-less and
+        /// it recurs identically on every run.
+        ///
+        /// LoadThumbnail early-outs when a newer .png already exists, so seeding a blank one costs
+        /// the coroutine nothing and removes the render entirely. Measured on this install: all 33
+        /// save craft lacked thumbnails, crash 3/3 runs; seeded, clean 1/1 with the same build.
+        ///
+        /// Pacing the sweep does NOT help and actively hurts — a yield between craft just hands the
+        /// coroutine an earlier frame to run in, moving the crash from "after craft 33" (with the
+        /// report already written) to "after craft 1" (with no report at all).
+        /// </summary>
+        private static List<string> SeedThumbnails(List<string> craft)
+        {
+            var seeded = new List<string>();
+            byte[] blank = Convert.FromBase64String(BlankThumbPng);
+            foreach (string path in craft)
+            {
+                string thumb = ThumbPathFor(path);
+                if (File.Exists(thumb)) continue;
+                try
+                {
+                    string dir = Path.GetDirectoryName(thumb);
+                    if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                    File.WriteAllBytes(thumb, blank);
+                    seeded.Add(thumb);
+                }
+                catch (Exception e) { Debug.LogWarning("[AXE][Price] could not seed thumbnail " + thumb + ": " + e.Message); }
+            }
+            if (seeded.Count > 0)
+                Debug.Log("[AXE][Price] seeded " + seeded.Count + " placeholder thumbnail(s) to keep KSP's "
+                        + "LoadThumbnail coroutine from rendering craft this sweep destroys.");
+            return seeded;
+        }
+
+        /// <summary>Put the install back: drop only the placeholders we wrote, never a real thumbnail.</summary>
+        private static void RemoveSeededThumbnails(List<string> seeded)
+        {
+            int gone = 0;
+            foreach (string thumb in seeded)
+            {
+                try { if (File.Exists(thumb)) { File.Delete(thumb); gone++; } }
+                catch (Exception e) { Debug.LogWarning("[AXE][Price] could not remove seeded thumbnail " + thumb + ": " + e.Message); }
+            }
+            if (gone > 0) Debug.Log("[AXE][Price] removed " + gone + " placeholder thumbnail(s).");
+        }
+
         /// <summary>Every .craft under saves/*/Ships/{VAB,SPH}, excluding the autotest save's own.</summary>
         private static List<string> FindCraft()
         {
@@ -216,8 +289,16 @@ namespace RPAxe.AutoTest
                 // Let the editor finish spawning before instantiating anything into it.
                 yield return AutoTestUtil.Dwell(Math.Max(2f, AutoTestConfig.SettleSeconds));
 
+                List<string> seeded = SeedThumbnails(FindCraft());
+
                 try { Run(); }
                 catch (Exception e) { Debug.LogError("[AXE][Price] sweep threw: " + e); }
+
+                // Let every queued LoadThumbnail coroutine wake up and early-out on the seeded file
+                // BEFORE we take that file away again — deleting too early re-arms the crash.
+                for (int i = 0; i < 30; i++) yield return null;
+
+                RemoveSeededThumbnails(seeded);
 
                 if (AutoTestConfig.QuitWhenDone)
                 {
