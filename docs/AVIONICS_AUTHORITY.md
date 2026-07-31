@@ -51,30 +51,49 @@ it in watts.
 `r = vesselMass / effectiveCapacity`, unchanged from today: whole-vessel **wet** mass, capacity is
 the **MAX** across contributing units (never the sum), fixed and procedural units in the same MAX.
 
-Authority factor `q`:
+Authority factor `q`, **exponential decay** — capacity has to bite fast enough to be a real
+constraint:
+
+```
+q = e^(-k(r-1))
+```
 
 | r | q | state |
 |---|---|---|
 | `r <= 1` | `1.0` | full control |
-| `1 < r < R_cut` | `1 / r` | **degraded** — control authority scaled |
+| `1 < r < R_cut` | `e^(-k(r-1))` | **degraded** — control authority scaled |
 | `r >= R_cut` | — | **unguided** (Axial if any unit allows it, else Locked) |
 
-**`q = 1/r` is derived, not tuned.** The unit was built to control `capacity` tonnes; asked to
-control `r` times that, the authority available per tonne is `1/r`. This is the whole point of
-preferring it to `k`: there is no invented constant in the curve. `R_cut` is the single dial, and it
-sets the floor implicitly (`q_floor = 1/R_cut`).
+**`k` is the only dial. `R_cut` is derived, not chosen.** Exponential decay never reaches zero, so
+`R_cut` is just where the asymptotic tail stops being worth simulating:
 
-Starting value: **`R_cut = 3`**, floor `q = 0.33`. Rationale: it leaves a wide, genuinely flyable
-degraded band (a craft 50% over keeps 67% authority — sluggish, obviously wrong, still recoverable),
-and cuts out before `q` gets low enough for closed-loop instability to dominate (see §6).
+```
+R_cut = 1 + ln(1 / q_floor) / k
+```
+
+Starting values: **`k = 3`, `q_floor = 0.25`**, giving `R_cut ~= 1.46`.
 
 | over capacity | q | reads as |
 |---|---|---|
-| 10% | 0.91 | barely noticeable |
-| 25% | 0.80 | soft, obviously heavier than it should be |
-| 50% | 0.67 | wallowing |
-| 100% | 0.50 | half authority, hard to fly |
-| 200%+ | — | unguided |
+| 10% | 0.74 | noticeably heavy, clearly flyable |
+| 25% | 0.47 | half authority — obviously wrong, recoverable |
+| 40% | 0.30 | barely controllable |
+| 46% | 0.25 | floor; unguided beyond |
+
+Gentler alternative if that band proves too tight in play: `k = 2, q_floor = 0.20` gives
+`R_cut ~= 1.80` (25% over -> 0.61, 50% -> 0.37, 80% -> 0.20).
+
+**Why 1/r was rejected.** It is too gentle to constrain anything: 25% over keeps 80% authority —
+effectively free — and even 100% over leaves half. A limit the player can routinely ignore is not a
+limit. Exponential decay also matches how control margins actually collapse once a vehicle is
+outside the envelope its control laws were designed for, and it preserves the felt shape of the
+mechanic it replaces.
+
+**Why this `k` will not repeat the old `k`'s failure.** The old one was an exponent on *power*, and
+a representative core carries ~39 hours of EC — the medium swallowed the signal, so no value of `k`
+produced a felt effect inside a 6-10 minute ascent. Authority has no buffer: `q` scales the control
+the player is using at that instant. Same shape, different medium, and on this medium the dial has
+real travel.
 
 **Unguided is still a real state, not `q -> 0`.** "Axial thrust only" is a discrete capability
 (spin-stabilized kick stage), not a weak version of full control — it cannot be reached by scaling.
@@ -153,9 +172,12 @@ legible before launch, not discovered in flight.
    by q* — the craft turns slower. Expected to read as sluggishness. Must be confirmed in flight,
    with and without MechJeb.
 2. **Oscillation at low `q`.** Stock SAS's PID is tuned for unscaled authority; at low `q` the
-   integral term may wind up and overshoot. This is the reason for a floor rather than `q -> 0`, and
-   the reason `R_cut = 3` rather than 10. If oscillation appears above `q = 0.33`, raise the floor.
-3. **`R_cut` itself.** 3 is a starting guess. It is the only tunable in the design.
+   integral term may wind up and overshoot. This is the reason for a floor rather than letting the
+   exponential run to zero. If oscillation appears above `q_floor = 0.25`, raise the floor — which
+   shortens `R_cut` automatically, since it is derived.
+3. **`k` itself.** 3 is a starting guess, and the only real tunable. Raising it narrows the degraded
+   band toward the cliff this design exists to remove; lowering it toward ~1 makes overload cheap
+   again. The band should cover "I miscalculated" and not much beyond it.
 4. **Should `q` apply to translation (X/Y) as well as rotation?** Proposed yes, for consistency, but
    translation authority arguably belongs to RCS sizing rather than avionics.
 5. **Rover wheels.** AXE's `LockMask` omits `WHEEL_STEER`/`WHEEL_THROTTLE` (RP-1 includes them), and
