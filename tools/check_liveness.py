@@ -465,7 +465,11 @@ def main():
     findings = check_tech_refs.scan_cache(cache, valid)
     axe_bad, ext_bad = check_tech_refs.split_findings(findings)
     dangling = sorted(axe_bad + ext_bad)          # in cache mode nothing is external -- see that tool
+    inert_tl = sum(1 for refs in findings.values() for r in refs if r[3])
     print(f"=== T. tech-gate references that resolve to no tree node ({len(dangling)}) ===")
+    if inert_tl:
+        print(f"  (skipped {inert_tl} RealFuels TLTECH rung(s) for engine classes no TechLevel-driven "
+              f"part uses -- they gate nothing; see check_tech_refs.live_engine_types)")
     if dangling:
         print("  (GetTechnologyState(unknown) -> Unavailable: whatever they gate is locked forever.)")
     for node, refs in dangling:

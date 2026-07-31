@@ -48,6 +48,46 @@ OVERLAY_FIXED = {
     ("surfaceScience", "tech", "SurfaceSample.cfg"): "fixed by design/Science/AxeSurfaceSampleGate.cfg",
 }
 
+# RealFuels ships an ENGINETYPE tech-level ladder for every engine class it knows (O, U, U+, L,
+# L+, A, S, S+, N), each rung gated on a STOCK tech id. AXE re-points the ladders that matter --
+# but a ladder only bites on parts whose ModuleEngineConfigs actually opts into TechLevel
+# (`techLevel` / `origTechLevel`). Measured 2026-07-31: 128 such configs exist, and every one is
+# class L (RCS thrusters) or S (the procedural SRB) -- both already re-pointed. The remaining
+# classes have no TechLevel-driven part at all, so their TLTECH ids are dead text: RealFuels reads
+# them, nothing gates on them. (ROE-NK9V declares `engineType = U+` but drives itself from an
+# explicit CONFIG, so it is not TechLevel-gated either.) RP-1 leaves the same classes untouched
+# and its own tree defines none of the stock rocketry ids, so this is inherited, not AXE breakage.
+#
+# Rather than allow-list the ids -- which would go stale silently the day a nuclear engine lands,
+# exactly the worthless-check family in docs/BUG-CLASSES.md -- derive the live classes from the
+# cache and skip TLTECH refs for the rest. The check re-arms by itself when a part starts using one.
+TL_ENABLED = re.compile(r"^\s*(?:orig)?[tT]echLevel\s*=\s*\d+")
+ENGINE_TYPE = re.compile(r"^\s*engineType\s*=\s*(\S+)")
+
+
+def live_engine_types(cache_path):
+    """Engine classes some installed part actually drives through RealFuels' TechLevel system.
+
+    A class absent from this set has no part whose tech level could be gated, so its TLTECH
+    values gate nothing and a dangling id there is inert rather than a break."""
+    live, cur = set(), [None, False]          # [engineType, saw a techLevel/origTechLevel]
+    with open(cache_path, encoding="utf-8", errors="replace") as fh:
+        for line in fh:
+            if re.match(r"\s*PART\s*$", line):
+                if cur[0] and cur[1]:
+                    live.add(cur[0])
+                cur = [None, False]
+                continue
+            m = ENGINE_TYPE.match(line)
+            if m:
+                cur[0] = m.group(1)
+            elif TL_ENABLED.match(line):
+                cur[1] = True
+    if cur[0] and cur[1]:
+        live.add(cur[0])
+    return live
+
+
 # gate-field patterns: (label, compiled regex capturing the node id)
 GATE_PATTERNS = [
     ("techRequired",   re.compile(r"^\s*techRequired\s*=\s*(\S+)", re.M)),
@@ -233,6 +273,8 @@ def scan_cache(cache_path, valid):
     findings = defaultdict(list)
     if not os.path.isfile(cache_path):
         sys.exit(f"ConfigCache not found: {cache_path} (launch KSP once to generate it)")
+    live_types = live_engine_types(cache_path)
+    et_name = None            # nearest preceding `name = X`; inside RF_TECHLEVELS that is the ENGINETYPE
     parent = "?"
     # skip inert `disabled<X>` nodes (e.g. RO's disabledPARTUPGRADE templates) -- their
     # techRequired isn't a live gate. Track brace depth from the disabled header.
@@ -254,13 +296,18 @@ def scan_cache(cache_path, valid):
             if m:
                 parent = m.group(1)
                 continue
+            m = re.match(r"\s*name\s*=\s*(\S+)", line)
+            if m:
+                et_name = m.group(1)
             for label, pat in GATE_PATTERNS:
                 if label == "#TechRequired":
                     continue
                 mm = pat.match(line)
                 if mm and mm.group(1) not in valid:
                     is_axe = "RP-AXE" in parent
-                    findings[mm.group(1)].append((label, parent, is_axe, False))
+                    # a TLTECH rung for an engine class no TechLevel-driven part uses gates nothing
+                    inert = label == "TLTECH" and et_name not in live_types
+                    findings[mm.group(1)].append((label, parent, is_axe, inert))
     return findings
 
 
