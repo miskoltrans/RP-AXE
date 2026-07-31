@@ -199,6 +199,19 @@ namespace RPAxe
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string authorityDisplay = "";
 
+        // PROTOTYPE TEST RIG -- remove with the rest of the prototype. Pins the vessel's authority factor so
+        // the same craft can fly the same profile at several values. Without this the only way to vary q is
+        // to rebuild the craft, which changes mass and aero too and makes the comparison worthless.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: pin authority",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "off", enabledText = "on", scene = UI_Scene.All)]
+        public bool authorityOverride = false;
+
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: q",
+                  guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0.05f, maxValue = 1f, stepIncrement = 0.05f, scene = UI_Scene.All)]
+        public float authorityOverrideValue = 1f;
+
         [KSPField(guiActiveEditor = true, guiName = "Split",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string allocationSummary = "";
@@ -1194,7 +1207,21 @@ namespace RPAxe
         // no capacity concept and therefore no authority concept.
         void UpdateAuthorityDisplay()
         {
+            // Test rig: only the focused vessel's (or the editor's) core drives the statics, so a core on an
+            // unfocused vessel can't clobber the value being flown. Multiple cores on one craft: last wins.
+            if (HighLogic.LoadedSceneIsEditor || (vessel != null && vessel.isActiveVessel))
+            {
+                AxeControlLockerUtils.AuthorityOverrideEnabled = authorityOverride;
+                AxeControlLockerUtils.AuthorityOverrideValue = authorityOverrideValue;
+            }
+
             if (ScienceCoreMode) { authorityDisplay = "n/a — unguided"; return; }
+
+            if (authorityOverride)
+            {
+                authorityDisplay = $"{Mathf.Clamp(authorityOverrideValue, 0.05f, 1f) * 100f:F0}% — DEBUG pinned";
+                return;
+            }
 
             float q;
             if (HighLogic.LoadedSceneIsFlight && AxeAvionicsController.Instance != null

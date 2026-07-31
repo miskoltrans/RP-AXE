@@ -55,6 +55,15 @@ namespace RPAxe
         public static float AuthorityFor(float ratio)
             => ratio <= 1f ? 1f : Mathf.Max(AuthorityFloor, Mathf.Exp(-AuthorityK * (ratio - 1f)));
 
+        // PROTOTYPE TEST RIG. Pins q to a chosen value and keeps the vessel flyable, so the SAME craft can
+        // be flown the SAME profile at several values -- which is the only way to answer the question the
+        // prototype exists for: does an autopilot simply absorb the reduction? A nominal gravity turn needs
+        // a fraction of the available control authority, so MechJeb can be expected to compensate until it
+        // saturates; if the traces at 1.0 / 0.6 / 0.35 are indistinguishable, the degraded band does not
+        // exist in practice and no value of k will create it. Driven from the core's DEBUG PAW fields.
+        public static bool AuthorityOverrideEnabled;
+        public static float AuthorityOverrideValue = 1f;
+
         public static LockLevel ShouldLock(List<Part> parts) => ShouldLock(parts, out _, out _, out _);
 
         public static LockLevel ShouldLock(List<Part> parts, out float maxCapacity, out float vesselMass)
@@ -138,6 +147,14 @@ namespace RPAxe
                 // crewed pod OR a probe core with no avionics at all (an avionics unit's own command never
                 // bypasses; neither does a launch clamp's, or every pad stand would unlock the rocket).
                 if (cmd && !isCore && !isClamp) bypass = true;
+            }
+
+            // PROTOTYPE TEST RIG: pin q and stay flyable, so one craft can be flown at several values.
+            // Placed after the part walk so maxCapacity/vesselMass are still reported honestly.
+            if (AuthorityOverrideEnabled)
+            {
+                authority = Mathf.Clamp(AuthorityOverrideValue, 0.05f, 1f);
+                return LockLevel.Unlocked;
             }
 
             // A crewed pod / bare command source still bypasses everything, unconditionally (RP-1's rule).
