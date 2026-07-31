@@ -711,14 +711,14 @@ nodes:
     discipline: Microelectronics
     tier: 4
     parents: [mic_atmoSounding, elec_transistor]
-    flavor: "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there. Earth answers in a single global figure; it is on another world's surface, the Moon first, that every landing site returns a different spectrum."
+    flavor: "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there. Earth's upper air is stirred until it is the same everywhere, so orbit returns one answer for the planet; the Moon's whisper-thin exosphere is not mixed at all, and a spectrometer left on the ground finds a different mixture at every site."
     parts: [RO-IonMassSpectrometer, USFluidSpectroWedge]
   - id: mic_magnetometer
     title: "Fluxgate Magnetometry"
     discipline: Microelectronics
     tier: 4
     parents: [mic_atmoSounding, elec_transistor]
-    flavor: "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron. Over Earth it can only file one global figure; the field changes site by site once you can set the instrument down, and the Moon is the first place you can."
+    flavor: "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron. Earth's dipole is one smooth field that reads the same from any orbit you fly. The Moon has no dipole at all — only patches of crustal magnetism frozen in four billion years ago, and telling them apart means a station left standing on the ground."
     parts: [RO-EarlyMagnet]
   - id: bio_cultures
     title: "Space-Exposed Biology"
@@ -1275,7 +1275,7 @@ nodes:
     discipline: Microelectronics
     tier: 5
     parents: [mic_magnetometer, rob_rotorActuation]
-    flavor: "Swing the magnetometer out on a long boom, far from the spacecraft's own motors and wiring, so it reads the planet's field instead of the craft's — a boom that has to unfold and lock rigid on command. The measurement that only works once the sensor is metres from everything electric, and something can put it there. Like the fluxgate before it, Earth is one figure and the reward waits on landing somewhere else — the Moon first."
+    flavor: "Swing the magnetometer out on a long boom, far from the spacecraft's own motors and wiring, so it reads the planet's field instead of the craft's — a boom that has to unfold and lock rigid on command. The measurement that only works once the sensor is metres from everything electric, and something can put it there. The boom buys sensitivity, not new ground: Earth still answers with one number, and the crustal patchwork worth resolving is still sitting on the lunar surface."
     parts: [RO-HeliumMagnet]
     # 2026-07-29: was dmUS2MagBoom, a DMagic Orbital Science part that is not installed and has never
     # been in curated-parts.tsv, so this node granted nothing. The boom magnetometers were BOTH on the
@@ -1755,7 +1755,7 @@ nodes:
     discipline: LifeSupport
     tier: 5
     parents: [life_highAltCompartment]
-    flavor: "Seal a cabin tight enough to hold near sea-level pressure while the air outside thins to nothing, feeding it breathing gas and bleeding off the heat of hypersonic flight — the pilot rides to the edge of space in something close to shirtsleeves. The X-15's sealed cabin and the pressurised fuselage behind it. The goo canister riding along reads the same everywhere on Earth; open it on another surface — the Moon first — and each site answers differently."
+    flavor: "Seal a cabin tight enough to hold near sea-level pressure while the air outside thins to nothing, feeding it breathing gas and bleeding off the heat of hypersonic flight — the pilot rides to the edge of space in something close to shirtsleeves. The X-15's sealed cabin and the pressurised fuselage behind it."
     parts: [Mark1Cockpit, Mark2Cockpit, SXTSmallFuselage, MK1Cargobay]
   - id: int_launchEscape
     title: "Tractor Escape Rocket"
