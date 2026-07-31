@@ -711,14 +711,14 @@ nodes:
     discipline: Microelectronics
     tier: 4
     parents: [mic_atmoSounding, elec_transistor]
-    flavor: "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there."
+    flavor: "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there. Earth answers in a single global figure; it is on another world's surface, the Moon first, that every landing site returns a different spectrum."
     parts: [RO-IonMassSpectrometer, USFluidSpectroWedge]
   - id: mic_magnetometer
     title: "Fluxgate Magnetometry"
     discipline: Microelectronics
     tier: 4
     parents: [mic_atmoSounding, elec_transistor]
-    flavor: "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron."
+    flavor: "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron. Over Earth it can only file one global figure; the field changes site by site once you can set the instrument down, and the Moon is the first place you can."
     parts: [RO-EarlyMagnet]
   - id: bio_cultures
     title: "Space-Exposed Biology"
@@ -1275,7 +1275,7 @@ nodes:
     discipline: Microelectronics
     tier: 5
     parents: [mic_magnetometer, rob_rotorActuation]
-    flavor: "Swing the magnetometer out on a long boom, far from the spacecraft's own motors and wiring, so it reads the planet's field instead of the craft's — a boom that has to unfold and lock rigid on command. The measurement that only works once the sensor is metres from everything electric, and something can put it there."
+    flavor: "Swing the magnetometer out on a long boom, far from the spacecraft's own motors and wiring, so it reads the planet's field instead of the craft's — a boom that has to unfold and lock rigid on command. The measurement that only works once the sensor is metres from everything electric, and something can put it there. Like the fluxgate before it, Earth is one figure and the reward waits on landing somewhere else — the Moon first."
     parts: [RO-HeliumMagnet]
     # 2026-07-29: was dmUS2MagBoom, a DMagic Orbital Science part that is not installed and has never
     # been in curated-parts.tsv, so this node granted nothing. The boom magnetometers were BOTH on the
@@ -1755,7 +1755,7 @@ nodes:
     discipline: LifeSupport
     tier: 5
     parents: [life_highAltCompartment]
-    flavor: "Seal a cabin tight enough to hold near sea-level pressure while the air outside thins to nothing, feeding it breathing gas and bleeding off the heat of hypersonic flight — the pilot rides to the edge of space in something close to shirtsleeves. The X-15's sealed cabin and the pressurised fuselage behind it."
+    flavor: "Seal a cabin tight enough to hold near sea-level pressure while the air outside thins to nothing, feeding it breathing gas and bleeding off the heat of hypersonic flight — the pilot rides to the edge of space in something close to shirtsleeves. The X-15's sealed cabin and the pressurised fuselage behind it. The goo canister riding along reads the same everywhere on Earth; open it on another surface — the Moon first — and each site answers differently."
     parts: [Mark1Cockpit, Mark2Cockpit, SXTSmallFuselage, MK1Cargobay]
   - id: int_launchEscape
     title: "Tractor Escape Rocket"
@@ -2936,6 +2936,12 @@ nodes:
     parents: [cryo_hydrogen, nuc_fissionReactor]
     flavor: "Heat liquid hydrogen in a fission reactor and blow it out a nozzle — twice the specific impulse of the best chemical engine, bought as a heavy, low-thrust, radioactive gamble. The road to deep space forks here."
     parts: [KIWIB48, KIWIA24]
+    upgrades: [RFTech-nuclear-tltech1]
+    # RFTech-nuclear-tltech1..7 (2026-07-31): RealFuels per-engine-TYPE tech levels for class N, the one
+    # propulsion class with no AXE mapping (RP-1 gates it on its own node ids, which AXE deleted). The
+    # ladder follows the solid-core spine — debut here, then ground test, flight-rated, flight-design,
+    # advanced core, bimodal, fission-fragment — one rung per generation, strictly ascending in tier.
+    # GATES NOTHING TODAY: no installed part declares `engineType = N`. Groundwork, deliberately taken.
     # King KIWI-B4E. Opens NuclearEngineering as a PROPULSION discipline (was radiation science only).
     # Reactor parent WIRED 2026-07: nuc_fissionReactor (SNAP/BES) + cryo_hydrogen (LH2) = the two prereqs.
   - id: nuc_nuclearRamjet
@@ -3706,6 +3712,7 @@ nodes:
     parents: [nuc_nuclearThermalRocket]
     flavor: "Move on from a demonstration reactor to full engine-scale ground tests — NRX proves the reactor survives real duty, Phoebus proves it can run bigger still, NERVA-XE proves the whole engine system together. The ground-test programme a flight engine still has to earn its way out of."
     parts: [NERVA_NRX, Phoebus1N50, ROE-NERVAXE]
+    upgrades: [RFTech-nuclear-tltech2]    # class-N tech level: full-scale ground test generation
     # Real lineage: KIWI (already kinged in nuc_nuclearThermalRocket) -> NRX -> Phoebus-1 -> NERVA-XE, the
     # actual NASA/AEC ground-test progression toward a flight engine.
   - id: nuc_flightRatedNTR
@@ -3715,6 +3722,7 @@ nodes:
     parents: [nuc_fullScaleNTRTesting]
     flavor: "The design NASA actually meant to fly — bracketed by Pewee's efficiency record and Phoebus-2A's raw power, the ground tests that shaped it. Cancelled in 1972 before it ever left the test stand; build it here instead."
     parts: [ROE-NERVA, PEWEE100, Phoebus2N100, RO-KA-PrincetonLNTR]
+    upgrades: [RFTech-nuclear-tltech3]    # class-N tech level: flight-rated generation
     # King NERVA I - the flight-design goal of the whole US NTR programme. Pewee (highest-Isp test
     # article) and Phoebus-2A (most powerful test) ride along; Princeton LNTR (a modern LEU what-if
     # design) too. Ties cryo_ssme for the deepest tier in this pass - both real flight-design capstones.
@@ -4624,6 +4632,7 @@ nodes:
     parents: [nuc_flightRatedNTR]
     flavor: "The nuclear rocket stops being a ground-test article and becomes a flight design. The Soviet RD-0410 was actually built and fired; NERVA II is the largest solid-core engine ever drawn. The end of the solid-core line — reactors meant, at last, to leave the ground."
     parts: [RD0410MID, ROE-NERVAII, restock-engine-cherenkov]
+    upgrades: [RFTech-nuclear-tltech4]    # class-N tech level: flight-design generation, end of the solid-core line
   - id: nuc_particleBedNTR
     title: "Particle-Bed NTR"
     discipline: NuclearEngineering
@@ -4640,7 +4649,7 @@ nodes:
     parents: [nuc_particleBedNTR]
     flavor: "Let the fuel melt, or turn to gas, and the temperature ceiling — and the Isp — rises with it. The liquid-core NTR reaches fourteen hundred seconds; the low-pressure gas-core start pushes further. Engineering fiction for now, and the doorway to the gas-core lane a later era will open."
     parts: [RO-KA-LRCNTR, ntr-gc-25-1]
-    upgrades: [RFUpgrade_PrincetonLNTR-WCH, RFUpgrade_SNTPPFE100-Hydrogen]  # SNTPPFE100-Hydrogen moved down from nuc_particleBedNTR, doctrine-4 fix 2026-07
+    upgrades: [RFUpgrade_PrincetonLNTR-WCH, RFUpgrade_SNTPPFE100-Hydrogen, RFTech-nuclear-tltech5]  # SNTPPFE100-Hydrogen moved down from nuc_particleBedNTR, doctrine-4 fix 2026-07; tltech5 = class-N advanced-core generation
     # doctrine-4 fix (2026-07): LPNTR-3600HP (this node's OWN base part ntr-gc-25-1's later mark) moved
     # further down to nuc_bimodalNTR.
 
@@ -5750,7 +5759,7 @@ nodes:
     tier: 14
     parents: [nuc_advancedCoreNTR]
     flavor: "The same reactor that heats propellant for thrust keeps running between burns as a power source — real NASA bimodal-NTR design studies, squeezing a second job out of the mass a nuclear stage already has to carry."
-    upgrades: [RFUpgrade_LPNTR-3600HP]  # moved down from nuc_advancedCoreNTR (own base part ntr-gc-25-1 there), doctrine-4 fix 2026-07
+    upgrades: [RFUpgrade_LPNTR-3600HP, RFTech-nuclear-tltech6]  # moved down from nuc_advancedCoreNTR (own base part ntr-gc-25-1 there), doctrine-4 fix 2026-07; tltech6 = class-N bimodal generation
     parts: [ROE-BNTR]
   - id: nuc_fissionFragmentRocket
     title: "Fission-Fragment Rocket"
@@ -5759,6 +5768,8 @@ nodes:
     parents: [nuc_bimodalNTR]
     flavor: "Let the fission fragments themselves be the exhaust — no propellant to heat, no working fluid at all, just the reaction products flying straight out at a meaningful fraction of the speed of light. The highest specific impulse anything in this tree will ever reach."
     parts: [RO-fftdustyplasmaffre, fft-ffre-plasma-1]
+    upgrades: [RFTech-nuclear-tltech7]    # class-N tech level: top rung. Stops here — NSWR/fusion-pulse (T16) are
+                                          # not solid-core descendants and sit past what RealFuels' N ladder models.
     # King Dusty Plasma FFRE; the "Afterburning" mark (fft-ffre-plasma-1, one tech tier later) injects
     # propellant into the fragment stream to trade some of that absurd Isp for usable thrust. Fissile
     # magazine tankage (nuc_fissilePropellantMagazine, T12) already exists for this class of drive.

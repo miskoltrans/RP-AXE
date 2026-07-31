@@ -1292,10 +1292,25 @@ def emit_placement_patch(p2n, u2n, grant2n=None, parking="parking"):
 # than authored separately, so the R&D display and the actual gate cannot drift apart, and the tech-level
 # ladder gate's ordering check applies to both at once.
 RF_ENGINETYPE_LADDERS = {          # token infix -> ENGINETYPE name selector (S covers S/S+, L covers L/L+)
-    "solids": "S*",
-    "rcs":    "L*",
+    "solids":  "S*",
+    "rcs":     "L*",
+    "nuclear": "N",
 }
 RF_TL0_NODE = "start"              # level 0 is the baseline every engine must always have
+
+# Families whose RFTech-<infix>-tltech<n> PARTUPGRADEs do not exist in seed/ and so must be created here.
+# RP-1 authors rcs + solids tokens in Tree/RFTechLevels.cfg but no nuclear ones (it gates class N straight
+# off its own node ids), so AXE mints them the same way emit_grant_upgrades mints the DSN levels: display
+# only, entryCost/cost 0, techRequired assigned from nodes.yaml by AxePartPlacement.cfg.
+#
+# NOTE ON SCOPE: as of 2026-07-31 no installed part drives itself through TechLevel as class N -- zero
+# parts even declare `engineType = N` (all 128 TechLevel-driven configs are class L or S). This ladder
+# therefore gates nothing today; it is groundwork so the rungs exist the day an NTR ships with tech
+# levels, and so class N stops being the one propulsion family with no AXE mapping at all.
+# check_tech_refs.live_engine_types() is what keeps the liveness gate honest about that.
+RF_LADDER_SELF_DEFINED = {
+    "nuclear": {"icon": "NERVA_NRX", "label": "Nuclear Engine", "mfr": "Generic"},
+}
 
 def emit_engine_tech_levels(u2n, by):
     """AxeEngineTechLevels.cfg: point RF_TECHLEVELS' TLTECH<n> at AXE nodes instead of RP-1/stock ones.
@@ -1320,6 +1335,22 @@ def emit_engine_tech_levels(u2n, by):
             L.append(f"\t\t\t%TLTECH{lvl} = {levels[lvl]}    // T{by[levels[lvl]]['tier']}")
         L += ["\t\t}"]
     L += ["\t}", "}"]
+
+    # PARTUPGRADE display tokens for families seed/ does not define (see RF_LADDER_SELF_DEFINED).
+    # Plain nodes, not :FOR patches: they must exist at load time so AxePartPlacement.cfg's
+    # @PARTUPGRADE[...] { %techRequired = <node> } has something to bind to.
+    for infix, meta in sorted(RF_LADDER_SELF_DEFINED.items()):
+        if infix not in out:
+            continue
+        L += ["", f"// --- {meta['label']} tech-level tokens: created fresh (no seed PARTUPGRADE exists) ---"]
+        for lvl in sorted(out[infix]):
+            L += ["PARTUPGRADE", "{", f"\tname = RFTech-{infix}-tltech{lvl}",
+                  f"\tpartIcon = {meta['icon']}", "\tentryCost = 0", "\tcost = 0",
+                  f"\tmanufacturer = {meta['mfr']}",
+                  f"\ttitle = {meta['label']} Real Fuels Technology Upgrade Level {lvl}",
+                  f"\tbasicInfo = This is an upgrade to the technology level of {meta['label']}s",
+                  f"\tdescription = This is an upgrade to the technology level of {meta['label']}s", "}"]
+
     with open(os.path.join(OUTD, "AxeEngineTechLevels.cfg"), "w", encoding="utf-8") as f:
         f.write("\n".join(L) + "\n")
     tot = sum(len(v) for v in out.values())
