@@ -251,6 +251,20 @@ namespace RPAxe
          UI_Toggle(disabledText = "pitch/yaw only", enabledText = "all axes", scene = UI_Scene.All)]
         public bool noiseRoll = true;
 
+        // Two different mechanics, not two tunings of one. Additive wanders with no input; on-input leaves a
+        // null stick null and only corrupts what you actually command.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise mode",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "on input", enabledText = "uncommanded", scene = UI_Scene.All)]
+        public bool noiseAdditive = true;
+
+        // RCS responds instantly and has no inertia to filter anything, so the sigma that gently wallows a
+        // launcher makes fine attitude work impossible. Scaled rather than merely switched off.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: RCS noise scale",
+                  guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0f, maxValue = 1f, stepIncrement = 0.05f, scene = UI_Scene.All)]
+        public float noiseRcsScale = 0.25f;
+
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise on RCS",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_Toggle(disabledText = "gimbal only", enabledText = "gimbal + RCS", scene = UI_Scene.All)]
@@ -1262,6 +1276,8 @@ namespace RPAxe
             AxeControlLockerUtils.NoiseMax = noiseMax;
             AxeControlLockerUtils.NoiseRoll = noiseRoll;
             AxeControlLockerUtils.NoiseOnRcs = noiseOnRcs;
+            AxeControlLockerUtils.NoiseAdditive = noiseAdditive;
+            AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
         }
 
         // PROTOTYPE readout. In flight the controller's value is authoritative (it is what actually scales

@@ -36,7 +36,11 @@ namespace RPAxe
             if (v == null || v != FlightGlobals.ActiveVessel) return;
 
             AxeControlLockerUtils.LockLevel level = ctl.Level;
-            float sigma = AxeControlLockerUtils.NoiseOnRcs ? ctl.ControlNoise : 0f;
+            // RCS has no inertia to filter anything and responds instantly, so the sigma that gently wallows a
+            // launch vehicle makes fine attitude work impossible. Scaled down separately.
+            float sigma = AxeControlLockerUtils.NoiseOnRcs
+                ? ctl.ControlNoise * AxeControlLockerUtils.NoiseRcsScale
+                : 0f;
             // Unlocked AND clean is the only case with nothing to do.
             if (level == AxeControlLockerUtils.LockLevel.Unlocked && sigma <= 0f) return;
 
@@ -49,10 +53,10 @@ namespace RPAxe
             // hook corrupts everything else, so a craft cannot dodge the noise by steering on thrusters.
             if (level == AxeControlLockerUtils.LockLevel.Unlocked)
             {
-                st.yaw = Mathf.Clamp(st.yaw + AxeControlLockerUtils.NoiseSample(0, sigma), -1f, 1f);
-                st.pitch = Mathf.Clamp(st.pitch + AxeControlLockerUtils.NoiseSample(1, sigma), -1f, 1f);
+                st.yaw = AxeControlLockerUtils.ApplyNoise(st.yaw, 0, sigma);
+                st.pitch = AxeControlLockerUtils.ApplyNoise(st.pitch, 1, sigma);
                 if (AxeControlLockerUtils.NoiseRoll)
-                    st.roll = Mathf.Clamp(st.roll + AxeControlLockerUtils.NoiseSample(2, sigma), -1f, 1f);
+                    st.roll = AxeControlLockerUtils.ApplyNoise(st.roll, 2, sigma);
                 return;
             }
 

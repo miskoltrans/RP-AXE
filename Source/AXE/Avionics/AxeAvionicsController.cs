@@ -105,13 +105,12 @@ namespace RPAxe
             if (_level == AxeControlLockerUtils.LockLevel.Unlocked)
             {
                 if (_noise <= 0f) { LastNoise = Vector3.zero; return; }
-                float ny = AxeControlLockerUtils.NoiseSample(0, _noise);
-                float np = AxeControlLockerUtils.NoiseSample(1, _noise);
-                float nr = AxeControlLockerUtils.NoiseRoll ? AxeControlLockerUtils.NoiseSample(2, _noise) : 0f;
-                LastNoise = new Vector3(np, ny, nr);
-                st.yaw = Mathf.Clamp(st.yaw + ny, -1f, 1f);
-                st.pitch = Mathf.Clamp(st.pitch + np, -1f, 1f);
-                st.roll = Mathf.Clamp(st.roll + nr, -1f, 1f);
+                float y0 = st.yaw, p0 = st.pitch, r0 = st.roll;
+                st.yaw = AxeControlLockerUtils.ApplyNoise(st.yaw, 0, _noise);
+                st.pitch = AxeControlLockerUtils.ApplyNoise(st.pitch, 1, _noise);
+                if (AxeControlLockerUtils.NoiseRoll)
+                    st.roll = AxeControlLockerUtils.ApplyNoise(st.roll, 2, _noise);
+                LastNoise = new Vector3(st.pitch - p0, st.yaw - y0, st.roll - r0);
                 return;
             }
             LastNoise = Vector3.zero;

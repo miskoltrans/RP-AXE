@@ -66,6 +66,28 @@ namespace RPAxe
         public static bool NoiseRoll = true;  // roll is the most perceptible axis; separable for that reason
         public static bool NoiseOnRcs = true;
 
+        // ADDITIVE vs ON-INPUT. Two genuinely different mechanics, not two tunings of one:
+        //   additive  -- noise is added regardless of what the pilot commands, so a craft wanders on its own.
+        //                Reads as a vehicle that will not sit still.
+        //   on-input  -- noise SCALES the command, so a null stick stays null and only what you ask for comes
+        //                out wrong. Reads as controls you cannot trust. No uncommanded drift.
+        // The second is the better fit for "the computer is mis-executing your guidance", the first for "the
+        // loop is unstable". Which one is right is a feel question, hence the toggle.
+        public static bool NoiseAdditive = true;
+
+        // RCS was reported unusable at any penalty: thrusters respond instantly and have no inertia to filter
+        // anything, so the same sigma that gently wallows a launch vehicle makes fine attitude work
+        // impossible and burns monopropellant doing it. Scaled separately rather than just on/off.
+        public static float NoiseRcsScale = 1f;
+
+        /// <summary>Perturb one control axis, honouring the additive / on-input mode.</summary>
+        public static float ApplyNoise(float command, int axis, float sigma)
+        {
+            if (sigma <= 0f) return command;
+            float n = NoiseSample(axis, sigma);
+            return Mathf.Clamp(NoiseAdditive ? command + n : command * (1f + n), -1f, 1f);
+        }
+
         public static float RatioCut => 1f + Mathf.Log(1f / Mathf.Max(0.01f, 1f - NoiseMax)) / NoiseK;
 
         /// <summary>Noise amplitude as a fraction of control range: 0 under capacity, rising with overload.</summary>
