@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;   // TerminateProcess (see AutoTestUtil.HardQuit)
 using Contracts;          // ContractSystem
 using KSP.UI.Screens;     // SpaceCenterBuilding + facility buildings + facility-scene despawners
 using UnityEngine;
@@ -235,6 +236,40 @@ AXE_AUTOTEST
     /// <summary>Shared helpers for the harness.</summary>
     internal static class AutoTestUtil
     {
+        [DllImport("kernel32.dll")] private static extern IntPtr GetCurrentProcess();
+        [DllImport("kernel32.dll", SetLastError = true)] private static extern bool TerminateProcess(IntPtr handle, uint exitCode);
+
+        /// <summary>
+        /// Exit the process WITHOUT running Unity/Mono teardown.
+        ///
+        /// <c>Application.Quit()</c> unwinds the runtime, which races with editor work still in flight
+        /// (RealFuels' UpdateUsedBySets, craft-thumbnail autogen) and reliably access-violates at
+        /// UnityPlayer+0x612BC4 — a dangling-pointer read on a Unity worker thread while Mono is
+        /// already in mono_threads_set_shutting_down. It reproduced on 8/8 runs at that exact offset
+        /// with 85 MB..3.8 GB of free RAM, so it is a shutdown race, not memory pressure.
+        ///
+        /// The crash is harmless (it lands after SUCCESS is logged and every artifact is flushed) but
+        /// it leaves a crash dump and a nonzero exit code. Teardown buys a smoke test nothing, so skip
+        /// it. Callers must keep their pre-quit dwell: TerminateProcess drops anything still sitting in
+        /// KSP.log's buffer.
+        /// </summary>
+        public static void HardQuit()
+        {
+            Debug.Log("[AXE][AutoTest] hard-exit (skipping Unity teardown; see AutoTestUtil.HardQuit).");
+            try
+            {
+                if (TerminateProcess(GetCurrentProcess(), 0)) return;   // on success this never returns
+                Debug.LogWarning("[AXE][AutoTest] TerminateProcess returned false (win32 err " +
+                                 Marshal.GetLastWin32Error() + "); falling back to Application.Quit().");
+            }
+            catch (Exception e)
+            {
+                // P/Invoke unavailable — fall back to the crashy-but-working path rather than hanging.
+                Debug.LogWarning("[AXE][AutoTest] HardQuit threw, falling back to Application.Quit(): " + e);
+            }
+            Application.Quit();
+        }
+
         /// <summary>
         /// Wait <paramref name="seconds"/> of REAL time. Unlike <c>WaitForSeconds</c> (scaled game
         /// time, which never advances while the game is paused — e.g. inside facility screens or under
@@ -382,8 +417,7 @@ AXE_AUTOTEST
             {
                 Debug.Log("[AXE][AutoTest] Test finished; quitting KSP in " + AutoTestConfig.QuitDelaySeconds + "s...");
                 yield return AutoTestUtil.Dwell(AutoTestConfig.QuitDelaySeconds);
-                Debug.Log("[AXE][AutoTest] Calling Application.Quit() to close the instance.");
-                Application.Quit();
+                AutoTestUtil.HardQuit();
             }
         }
 

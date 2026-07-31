@@ -261,7 +261,7 @@ namespace RPAxe.AutoTest
                 {
                     Debug.Log(Tag + "test finished; quitting KSP in " + AutoTestConfig.QuitDelaySeconds + "s...");
                     yield return AutoTestUtil.Dwell(AutoTestConfig.QuitDelaySeconds);
-                    Application.Quit();
+                    AutoTestUtil.HardQuit();
                 }
             }
         }
