@@ -72,13 +72,19 @@ namespace RPAxe
         public static float NoiseFor(float ratio)
             => ratio <= 1f ? 0f : Mathf.Min(NoiseMax, 1f - Mathf.Exp(-NoiseK * (ratio - 1f)));
 
+        // Unity's Perlin is bell-shaped, not uniform: it clusters near 0.5 and rarely approaches 0 or 1, so
+        // mapped to +/-1 its RMS is about 0.2-0.3 against uniform white's 0.577. Without this gain the
+        // white/correlated toggle compares LOUDNESS rather than frequency content, and white looks worse for
+        // the wrong reason. Roughly RMS-matched, then clamped.
+        const float PerlinGain = 2.4f;
+
         /// <summary>Noise sample in [-sigma, sigma] for one control axis.</summary>
         public static float NoiseSample(int axis, float sigma)
         {
             if (sigma <= 0f) return 0f;
             float n = NoiseWhite
                 ? Random.Range(-1f, 1f)
-                : Mathf.PerlinNoise(Time.time * NoiseHz, axis * 37.7f) * 2f - 1f;
+                : Mathf.Clamp((Mathf.PerlinNoise(Time.time * NoiseHz, axis * 37.7f) * 2f - 1f) * PerlinGain, -1f, 1f);
             return n * sigma;
         }
 
