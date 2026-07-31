@@ -1,7 +1,41 @@
-# Control Authority — proposed replacement for the overload penalty
+# Control Authority — REJECTED BY TEST
 
-**Status: PROPOSAL, not built.** Amends `docs/AVIONICS_SPEC.md`. Nothing here is shipped; the
-overload power penalty described in AVIONICS_SPEC "Under-capacity penalty" is still what runs today.
+**Status: TESTED AND REJECTED (2026-07-31).** Built as a prototype, flown, and killed by the result.
+The design below is kept as the record of what was tried and why it fails, so it is not re-proposed.
+
+## TEST RESULT — the degraded band does not exist
+
+Flown in the live instance with the debug override pinning `q` (commit `0938788`):
+
+- **At `q = 0.05` a medium-weight craft ascended normally.** That is 5% of authority — twenty times
+  below the `0.25` floor this design proposed, and far past `RatioCut`. There is no value of `k`
+  that creates a penalty, because there is no band in which reduced attitude authority costs the
+  player anything.
+- **It flew BETTER with less gimbal authority.** Real behaviour, not a bug: high control gain causes
+  overcontrol and oscillation, so cutting authority improves tracking. The proposed penalty is
+  potentially a *bonus*.
+
+**Why, generally:** a nominal ascent needs a tiny fraction of available control authority — pitch
+rates around 0.5 deg/s against gimbal authority an order of magnitude larger — and any autopilot
+closes the loop around what remains. Attitude authority is simply not a scarce resource on a launch
+vehicle.
+
+**The conclusion that matters, beyond this design:** RP-1's binary lock is binary *for a good
+reason*. Partial attitude authority is nearly as good as full, so any partial consequence gets
+absorbed. The cliff at `r = 1` is not a design flaw to be smoothed away — it is forced by the fact
+that there is no meaningful middle ground between "steers" and "does not steer".
+
+**What this leaves.** The real complaint about the cliff was never that it is a cliff; it was that it
+is a *surprise*. That is a visibility problem with an editor answer — state the ratio and the
+consequence in the VAB before launch — not something to be solved by gradation in flight. See
+"Fallback" at the bottom.
+
+---
+
+## (Original proposal follows, for the record)
+
+Amends `docs/AVIONICS_SPEC.md`. The overload power penalty described in AVIONICS_SPEC
+"Under-capacity penalty" is what runs today.
 
 The one-line change: **going over capacity degrades how well the craft steers, instead of taxing its
 electric charge.** Everything else in the avionics design — the box-volume capacity model, the MAX
@@ -199,3 +233,37 @@ Not caused by this proposal; worth writing down because they are easy to mistake
   leaves throttle and staging free at every level, which is a design choice rather than the same rot.
 - **`dead` / "Disable Avionics permanently"** is not ported (`AVIONICS_SPEC.md:280`), so neither is
   its antenna-kill cascade.
+
+---
+
+## 8. Fallback — what to do instead (post-test)
+
+The authority model is dead; the problem it was solving is not. Three things survive it.
+
+**1. The cliff stays, because it has to.** Demote at `r = 1`: over capacity, the unit is unguided
+(Axial if `allowAxial`, else Locked). Same rule for procedural cores and named parts — which is the
+unification this whole thread was after, and the prototype's `ShouldLock` change already implements
+it. Only the scalar comes out.
+
+**2. Fix the surprise, in the editor.** This is the actual complaint. The VAB should state the ratio
+and the consequence before launch:
+
+    Capacity          31.70 t
+    Vessel mass       38.20 t
+    Guidance          WILL BE LOST AT LAUNCH — 1.21x over capacity
+
+RP-1's own failure here is instructive: it validates *utilization* (does the hardware fit the box)
+and never mass-against-capacity, so an overweight craft launches clean and loses attitude in flight.
+Checking the thing that actually matters, in the editor, is most of the fix.
+
+**3. The EC penalty should still go.** It is not vindicated by this result — it remains untuned,
+unfelt inside an ascent (a representative core carries ~39 h of EC), and impossible for named parts
+to share since 33 of 90 draw no power. Deleting it and demoting is one rule for both classes.
+
+**Not worth pursuing:** scoping the authority scalar to probes only, where SAS is genuinely
+underpowered and `q` might bite. A consequence that applies to spacecraft but not launch vehicles is
+not a coherent overload rule, and the machinery costs more than it buys.
+
+**Loose thread worth its own look:** gimbal authority appears to be over-provisioned enough that
+reducing it improves ascents. That is a balance observation about gimbal ranges or autopilot tuning,
+unrelated to avionics, and it should not be lost with this document.
