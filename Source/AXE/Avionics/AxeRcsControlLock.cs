@@ -35,12 +35,24 @@ namespace RPAxe
             if (v == null || v != FlightGlobals.ActiveVessel) return;
 
             AxeControlLockerUtils.LockLevel level = ctl.Level;
-            if (level == AxeControlLockerUtils.LockLevel.Unlocked) return;
+            float q = ctl.Authority;
+            // Unlocked AND undegraded is the only case with nothing to do.
+            if (level == AxeControlLockerUtils.LockLevel.Unlocked && q >= 1f) return;
 
             FlightCtrlState st = v.ctrlState;
             _x = st.X; _y = st.Y; _z = st.Z;
             _pitch = st.pitch; _yaw = st.yaw; _roll = st.roll;
             _saved = true;
+
+            // PROTOTYPE: over capacity but not yet unguided -- scale RCS the same way the post-autopilot
+            // hook scales everything else, so authority degrades uniformly instead of RCS staying at full
+            // strength while gimbal and wheels weaken.
+            if (level == AxeControlLockerUtils.LockLevel.Unlocked)
+            {
+                st.yaw *= q; st.pitch *= q; st.roll *= q;
+                st.X *= q; st.Y *= q;
+                return;
+            }
 
             st.yaw = st.pitch = st.roll = 0f;   // no steering
             st.X = st.Y = 0f;                    // no lateral translation

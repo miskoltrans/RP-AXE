@@ -29,8 +29,12 @@ namespace RPAxe
         /// because ModuleRCS reads ctrlState on its own Update, before the post-autopilot hook re-zeros it.</summary>
         public AxeControlLockerUtils.LockLevel Level => _level;
 
+        /// <summary>PROTOTYPE: control-authority factor in [AuthorityFloor..1]. 1 unless over capacity.</summary>
+        public float Authority => _authority;
+
         Vessel _vessel;
         AxeControlLockerUtils.LockLevel _level = AxeControlLockerUtils.LockLevel.Unlocked;
+        float _authority = 1f;
         bool _requested;
         bool _started;
         readonly ScreenMessage _message = new ScreenMessage("", 6f, ScreenMessageStyle.UPPER_CENTER);
@@ -79,9 +83,25 @@ namespace RPAxe
 
         // Hard guarantee, every physics frame: while locked, zero steering + lateral translation; leave throttle
         // & staging alone. Axial level additionally permits Z (axial-thrust) translation for spin-stabilized stages.
+        //
+        // PROTOTYPE (docs/AVIONICS_AUTHORITY.md): while UNLOCKED but over capacity, the same axes are SCALED by
+        // the authority factor rather than zeroed -- the craft still steers, just badly, and progressively worse
+        // the further over it is. This hook covers reaction wheels, engine gimbal and aerodynamic surfaces;
+        // ModuleRCS reads ctrlState on its own Unity pass and is handled by AxeRcsControlLock.
+        //
+        // Autopilots close the loop around this: MechJeb (which is what actually flies an ascent -- SAS is for
+        // probe attitude work and is underpowered by design) will push its output toward 1.0 to compensate, so
+        // the felt result is maximum authority reduced by q, i.e. a heavy, sluggish vehicle rather than one that
+        // ignores the stick.
         void FlightInputModifier(FlightCtrlState st)
         {
-            if (_level == AxeControlLockerUtils.LockLevel.Unlocked) return;
+            if (_level == AxeControlLockerUtils.LockLevel.Unlocked)
+            {
+                if (_authority >= 1f) return;
+                st.yaw *= _authority; st.pitch *= _authority; st.roll *= _authority;
+                st.X *= _authority; st.Y *= _authority;
+                return;
+            }
             st.yaw = st.pitch = st.roll = 0f;
             st.X = st.Y = 0f;
             if (_level == AxeControlLockerUtils.LockLevel.Locked) st.Z = 0f;
@@ -119,10 +139,17 @@ namespace RPAxe
 
         void Recompute()
         {
-            if (_vessel == null) { SetLevel(AxeControlLockerUtils.LockLevel.Unlocked); return; }
-            AxeControlLockerUtils.LockLevel lvl = CheatOptions.InfiniteElectricity
-                ? AxeControlLockerUtils.LockLevel.Unlocked
-                : AxeControlLockerUtils.ShouldLock(_vessel.Parts);
+            if (_vessel == null) { _authority = 1f; SetLevel(AxeControlLockerUtils.LockLevel.Unlocked); return; }
+            AxeControlLockerUtils.LockLevel lvl;
+            if (CheatOptions.InfiniteElectricity)
+            {
+                lvl = AxeControlLockerUtils.LockLevel.Unlocked;
+                _authority = 1f;
+            }
+            else
+            {
+                lvl = AxeControlLockerUtils.ShouldLock(_vessel.Parts, out _, out _, out _authority);
+            }
             SetLevel(lvl);
             UpdateMechJeb();
         }

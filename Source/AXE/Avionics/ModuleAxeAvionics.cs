@@ -185,9 +185,19 @@ namespace RPAxe
         public string capacityDisplay = "";
 
         // How much of the current draw is "penalty" from being over capacity (MAX across active cores).
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Overload Penalty",
+        // PROTOTYPE: stood down while the authority model is being flown -- PenaltyMultiplier() returns 1,
+        // so this reads 0. Hidden rather than deleted; the whole penalty path is still here to revert to.
+        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "Overload Penalty",
                   guiFormat = "F0", guiUnits = "%", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public float penaltyPercent = 0f;
+
+        // PROTOTYPE (docs/AVIONICS_AUTHORITY.md): what the overload penalty is being replaced with. Over
+        // capacity the craft keeps control but authority decays as q = e^(-k(r-1)) until RatioCut, past
+        // which it is genuinely unguided. Shown as a percentage so an overloaded design is visible in the
+        // VAB rather than discovered in flight -- "silent" was the real complaint about RP-1's cliff.
+        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Control Authority",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public string authorityDisplay = "";
 
         [KSPField(guiActiveEditor = true, guiName = "Split",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
@@ -1179,6 +1189,33 @@ namespace RPAxe
         // commandable long enough to stage. A KSPField so it can be retuned without a rebuild.
         [KSPField] public float penaltyMultiplierCap = 2981f;
 
+        // PROTOTYPE readout. In flight the controller's value is authoritative (it is what actually scales
+        // ctrlState); in the editor there is no controller, so recompute from the same numbers. Unguided has
+        // no capacity concept and therefore no authority concept.
+        void UpdateAuthorityDisplay()
+        {
+            if (ScienceCoreMode) { authorityDisplay = "n/a — unguided"; return; }
+
+            float q;
+            if (HighLogic.LoadedSceneIsFlight && AxeAvionicsController.Instance != null
+                && vessel != null && vessel.isActiveVessel)
+            {
+                q = AxeAvionicsController.Instance.Authority;
+            }
+            else
+            {
+                float capacity = EffectiveCapacityTons();
+                float mass = VesselMassTons();
+                q = (capacity <= 0f || mass <= 0f)
+                    ? (mass > 0f ? 0f : 1f)
+                    : AxeControlLockerUtils.AuthorityFor(mass / capacity);
+            }
+
+            authorityDisplay = q >= 1f ? "full"
+                             : q <= AxeControlLockerUtils.AuthorityFloor ? "none — unguided"
+                             : $"{q * 100f:F0}% — degraded";
+        }
+
         float PenaltyMultiplier()
         {
             // A shut-down (or on-rails) core has already left EffectiveCapacityTons and is not running a
@@ -1187,12 +1224,19 @@ namespace RPAxe
             // excluded ITSELF from the vessel MAX, capacity fell to 0, r went to +Infinity, and the
             // advertised "5% depth" was 5% of e^80 -- which is why shutting an overloaded core down never
             // saved it, and why hibernation could not be used as an escape from overload at all.
+            // PROTOTYPE (docs/AVIONICS_AUTHORITY.md): the EC overload penalty is STOOD DOWN while the
+            // control-authority model is being flown, so the two do not stack and the feel being judged is
+            // one mechanic. Everything below is left intact -- k, the cap, the curve -- so reverting is
+            // deleting this line. Delete the rest only once the authority model is actually chosen.
+            return 1f;
+#pragma warning disable CS0162 // unreachable while stood down -- deliberate, see above
             if (!guidanceEnabled || Asleep) return 1f;
             float mass = VesselMassTons();
             if (mass <= 0f) return 1f;
             float capacity = EffectiveCapacityTons();
             float r = mass / capacity;   // capacity 0 => +Infinity => pinned at the cap below, never NaN
             return r <= 1f ? 1f : Mathf.Min(Mathf.Exp(8f * (r - 1f)), penaltyMultiplierCap);
+#pragma warning restore CS0162
         }
 
         // Operating EC draw (watts) for the current model, before idle/hibernation reduction, WITH the
@@ -1233,6 +1277,7 @@ namespace RPAxe
         {
             currentWatts = HighLogic.LoadedSceneIsEditor ? ComputeBaseWatts() : ComputeWatts();
             penaltyPercent = (PenaltyMultiplier() - 1f) * 100f;
+            UpdateAuthorityDisplay();
             _ecConsumption = new KeyValuePair<string, double>(EcName, -currentWatts / 1000.0);
             if (_commandEC != null) _commandEC.rate = KerbalismPresent ? 0f : currentWatts / 1000f;
             UpdateAllocationSummary();

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace RPAxe
 {
@@ -38,12 +39,34 @@ namespace RPAxe
     {
         public enum LockLevel { Locked, Axial, Unlocked }
 
-        public static LockLevel ShouldLock(List<Part> parts) => ShouldLock(parts, out _, out _);
+        // ---- PROTOTYPE: control-authority model (docs/AVIONICS_AUTHORITY.md) ----------------------
+        // Over capacity, control authority decays exponentially instead of the core paying an EC
+        // penalty: q = e^(-k(r-1)), floored, then handing over to the existing Axial/Locked ladder.
+        // k is the only dial; RatioCut is DERIVED, since an exponential never reaches zero and the
+        // cutoff is just where the tail stops being worth simulating.
+        //
+        // Unlike the EC penalty this replaces, there is no buffer between the dial and the player:
+        // that curve was an exponent on power against a ~39-hour battery, so no value of k was felt
+        // inside a 6-10 minute ascent. q scales the control in the pilot's hands at that instant.
+        public const float AuthorityK = 3f;
+        public const float AuthorityFloor = 0.25f;
+        public static float RatioCut => 1f + Mathf.Log(1f / AuthorityFloor) / AuthorityK;   // ~1.46
 
-        /// <param name="maxCapacity">Steerable-mass budget: MAX across fixed-capacity units, in tons.</param>
-        /// <param name="vesselMass">Whole-vessel wet mass measured against it, in tons.</param>
+        public static float AuthorityFor(float ratio)
+            => ratio <= 1f ? 1f : Mathf.Max(AuthorityFloor, Mathf.Exp(-AuthorityK * (ratio - 1f)));
+
+        public static LockLevel ShouldLock(List<Part> parts) => ShouldLock(parts, out _, out _, out _);
+
         public static LockLevel ShouldLock(List<Part> parts, out float maxCapacity, out float vesselMass)
+            => ShouldLock(parts, out maxCapacity, out vesselMass, out _);
+
+        /// <param name="maxCapacity">Steerable-mass budget: MAX across ALL avionics units, in tons.</param>
+        /// <param name="vesselMass">Whole-vessel wet mass measured against it, in tons.</param>
+        /// <param name="authority">Control-authority factor in [AuthorityFloor..1]; 1 unless degraded.</param>
+        public static LockLevel ShouldLock(List<Part> parts, out float maxCapacity, out float vesselMass,
+                                           out float authority)
         {
+            authority = 1f;
             maxCapacity = 0f;
             vesselMass = 0f;
             if (parts == null || parts.Count == 0) return LockLevel.Unlocked;
@@ -58,7 +81,8 @@ namespace RPAxe
                                 || vessel.situation == Vessel.Situations.PRELAUNCH;
 
             bool bypass = false;      // a non-avionics command source grants control outright
-            bool coreGuided = false;  // a procedural Avionics Core with guidance active grants full control
+            // (was `coreGuided`: a guided core used to grant full control outright, with no mass term. Under
+            // the authority model it contributes capacity instead and is judged on r, so the flag is gone.)
             bool coreAxial = false;   // a Science-Core Avionics Core grants axial-thrust-only control
             bool fixedAxial = false;  // a fixed unit that keeps axial thrust when over capacity
 
@@ -78,7 +102,14 @@ namespace RPAxe
                     if (m is ModuleAxeAvionics axe)
                     {
                         isCore = true;
-                        if (axe.GuidanceActive) guided = true;
+                        // PROTOTYPE: a guided core now CONTRIBUTES ITS CAPACITY instead of unlocking the
+                        // vessel outright. It used to short-circuit to Unlocked with no mass term at all,
+                        // because overload was answered in watts; under the authority model it is judged on
+                        // r like every other unit. Still gated on GuidanceActive -- an un-researched or
+                        // shut-down core provides no control, which is a separate concern from whether its
+                        // rated mass counts toward the EC curve (see EffectiveCapacityTons, deliberately
+                        // ungated there since 17009ce).
+                        if (axe.GuidanceActive) { guided = true; partCapacity += axe.capacityTons; }
                         if (axe.AxialActive) axial = true;
                     }
                     else if (m is ModuleAxeFixedAvionics fix)
@@ -101,16 +132,31 @@ namespace RPAxe
                 if (isClamp && ignoreClamps) partMass = 0f;
                 vesselMass += partMass;
 
-                if (isCore && guided) coreGuided = true;
                 if (isCore && axial) coreAxial = true;
-                if (hasFixed && partCapacity > maxCapacity) maxCapacity = partCapacity;
+                // PROTOTYPE: was `hasFixed &&` -- procedural cores now feed the same MAX.
+                if ((hasFixed || guided) && partCapacity > maxCapacity) maxCapacity = partCapacity;
                 // crewed pod OR a probe core with no avionics at all (an avionics unit's own command never
                 // bypasses; neither does a launch clamp's, or every pad stand would unlock the rocket).
                 if (cmd && !isCore && !isClamp) bypass = true;
             }
 
-            if (bypass || coreGuided) return LockLevel.Unlocked;
-            if (maxCapacity > 0f && vesselMass <= maxCapacity) return LockLevel.Unlocked;
+            // A crewed pod / bare command source still bypasses everything, unconditionally (RP-1's rule).
+            if (bypass) return LockLevel.Unlocked;
+
+            // PROTOTYPE: the degraded band. Under capacity, full control. Over it, control stays available
+            // but scaled by q, up to RatioCut -- past that the vessel hands over to the existing ladder and
+            // is genuinely unguided. `coreGuided` no longer short-circuits: a guided core is judged on mass
+            // like everything else, which is the whole point of replacing the EC penalty.
+            if (maxCapacity > 0f)
+            {
+                float ratio = vesselMass / maxCapacity;
+                if (ratio <= 1f) return LockLevel.Unlocked;
+                if (ratio < RatioCut)
+                {
+                    authority = AuthorityFor(ratio);
+                    return LockLevel.Unlocked;   // still controllable, just badly
+                }
+            }
             return (coreAxial || fixedAxial) ? LockLevel.Axial : LockLevel.Locked;
         }
 
