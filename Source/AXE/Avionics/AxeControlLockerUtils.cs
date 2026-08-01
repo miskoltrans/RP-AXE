@@ -111,7 +111,6 @@ namespace RPAxe
         //                out wrong. Reads as controls you cannot trust. No uncommanded drift.
         // The second is the better fit for "the computer is mis-executing your guidance", the first for "the
         // loop is unstable". Which one is right is a feel question, hence the toggle.
-        public static bool NoiseAdditive = false;
 
         // RCS was reported unusable at any penalty: thrusters respond instantly and have no inertia to filter
         // anything, so the same sigma that gently wallows a launch vehicle makes fine attitude work
@@ -121,12 +120,48 @@ namespace RPAxe
         // Kept only so the two can be compared in flight. Off by default -- see the note at the cutoff site.
         public static bool HardCutoff = false;
 
-        /// <summary>Perturb one control axis, honouring the additive / on-input mode.</summary>
+        // ---- MODE 2: OVERGAIN ---------------------------------------------------------------------
+        // Models the failure mechanism instead of its symptom. An undersized control system does not make
+        // RANDOM errors -- it has TOO MUCH GAIN for the vehicle it is flying. Insufficient phase margin,
+        // unfiltered bending modes, overcontrol. That is what the first flight already showed from the other
+        // side: cutting gimbal authority flew BETTER, because it raised the stability margin.
+        //
+        // Why it should beat noise, and this is the whole argument: a feedback loop is DESIGNED to reject
+        // disturbances -- that is its job -- so injected noise gets averaged out, which is exactly what
+        // happened to the authority scalar. Gain is not a disturbance. It modifies the PLANT the controller
+        // is closing around, so the controller's own corrections are amplified too. It cannot counter-steer
+        // its way out, because the counter-steer is also too big. Past the loop's gain margin it oscillates
+        // by itself, with no randomness supplied by us.
+        //
+        // Consequences that fall out for free:
+        //   * the oscillation FREQUENCY emerges from the vehicle's own dynamics, so no Hz parameter and no
+        //     m^(-1/3) scaling law is needed at all;
+        //   * it saturates the command SOONER rather than being clipped by the clamp, so unlike additive and
+        //     on-input it does not go soft exactly when the vehicle is working hardest;
+        //   * it is deterministic, so NoiseHz / white / correlated have no effect in this mode.
+        //
+        // Anchored on the same sentence as k. Typical loop gain margin is 2-4x, so G = 3 should push most
+        // controllers unstable: G(1.2) = 3 gives slope 10.
+        public static float OvergainSlope = 10f;
+
+        // sigma = 1 - e^(-k(r-1)) inverted, so gain can be derived from sigma without plumbing the ratio
+        // through -- and so the DEBUG pin drives overgain consistently with the other two modes.
+        public static float RatioFromSigma(float sigma)
+            => 1f + (-Mathf.Log(Mathf.Max(1e-4f, 1f - sigma)) / Mathf.Max(0.01f, NoiseK));
+
+        public static float GainFor(float sigma)
+            => sigma <= 0f ? 1f : 1f + OvergainSlope * (RatioFromSigma(sigma) - 1f);
+
+        /// <summary>Mode: 0 = uncommanded noise, 1 = on-input noise, 2 = overgain.</summary>
+        public static int NoiseMode = 1;
+
+        /// <summary>Perturb one control axis according to the current mode.</summary>
         public static float ApplyNoise(float command, int axis, float sigma)
         {
             if (sigma <= 0f) return command;
+            if (NoiseMode == 2) return Mathf.Clamp(command * GainFor(sigma), -1f, 1f);
             float n = NoiseSample(axis, sigma);
-            return Mathf.Clamp(NoiseAdditive ? command + n : command * (1f + n), -1f, 1f);
+            return Mathf.Clamp(NoiseMode == 0 ? command + n : command * (1f + n), -1f, 1f);
         }
 
         public static float RatioCut => 1f + Mathf.Log(1f / Mathf.Max(0.01f, 1f - NoiseMax)) / NoiseK;

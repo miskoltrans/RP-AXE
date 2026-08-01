@@ -266,12 +266,23 @@ namespace RPAxe
          UI_Toggle(disabledText = "noise only", enabledText = "unguided past cut", scene = UI_Scene.All)]
         public bool hardCutoff = false;
 
-        // Two different mechanics, not two tunings of one. Additive wanders with no input; on-input leaves a
-        // null stick null and only corrupts what you actually command.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise mode",
+        // Three genuinely different mechanics, not three tunings of one.
+        //   0 uncommanded -- noise added regardless of input; the craft wanders on its own.
+        //   1 on input    -- noise scales the command; a null stick stays null, small commands survive.
+        //   2 overgain    -- no noise at all: the command is AMPLIFIED, so the loop overcontrols and
+        //                    oscillates by itself. Models the mechanism rather than the symptom, and makes
+        //                    noise Hz / white / correlated irrelevant.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: mode",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_Toggle(disabledText = "on input", enabledText = "uncommanded", scene = UI_Scene.All)]
-        public bool noiseAdditive = false;   // on-input: preserves small commands
+         UI_ChooseOption(options = new[] { "uncommanded", "on input", "overgain" }, scene = UI_Scene.All)]
+        public int noiseMode = 1;
+
+        // Slope in G = 1 + slope*(r-1). Anchored like k: typical loop gain margin is 2-4x, so G = 3 should
+        // push most controllers unstable, and G(1.2) = 3 gives slope 10.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: overgain slope",
+                  guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 1f, maxValue = 40f, stepIncrement = 1f, scene = UI_Scene.All)]
+        public float overgainSlope = 10f;   // on-input: preserves small commands
 
         // RCS responds instantly and has no inertia to filter anything, so the sigma that gently wallows a
         // launcher makes fine attitude work impossible. Scaled rather than merely switched off.
@@ -1292,7 +1303,8 @@ namespace RPAxe
             AxeControlLockerUtils.NoiseMax = noiseMax;
             AxeControlLockerUtils.NoiseRoll = noiseRoll;
             AxeControlLockerUtils.NoiseOnRcs = noiseOnRcs;
-            AxeControlLockerUtils.NoiseAdditive = noiseAdditive;
+            AxeControlLockerUtils.NoiseMode = noiseMode;
+            AxeControlLockerUtils.OvergainSlope = overgainSlope;
             AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
             AxeControlLockerUtils.HardCutoff = hardCutoff;
         }
