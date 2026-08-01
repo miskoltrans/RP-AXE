@@ -167,6 +167,26 @@ namespace RPAxe
     }
 
     // ---------------------------------------------------------------------------------------------
+    // 8 — MISDIRECTION. Rotates the command vector: ask for pitch, get yaw and roll, and at the limit
+    // almost nothing on the axis you wanted. Not dodgeable by flying gently (the misdirected FRACTION is
+    // constant), magnitude-preserving (weakness was already proven not to work), and the only mode that
+    // survives binary actuators, since it changes WHICH thrusters fire rather than how hard.
+    public sealed class PenaltyMisdirect : AxeControlPenalty
+    {
+        public override string Id => "misdirect";
+        public override bool Stateful => true;   // cross-axis; must not be applied twice in a frame
+        public override void Reset(Vessel v)
+        {
+            if (v != null) AxeControlLockerUtils.SeedCoupling((int)v.persistentId);
+        }
+        public override void Apply(ref float p, ref float y, ref float r, float sigma)
+            => AxeControlLockerUtils.ApplyMisdirect(ref p, ref y, ref r, sigma);
+        public override string Describe(float sigma)
+            => sigma <= 0f ? "clean"
+             : $"{sigma * AxeControlLockerUtils.MisdirectMaxDeg:F0}° off-axis — degraded";
+    }
+
+    // ---------------------------------------------------------------------------------------------
     /// <summary>The selectable set. Index is driven by the core's DEBUG mode knob; order is the PAW order.</summary>
     public static class AxeControlPenalties
     {
@@ -180,10 +200,11 @@ namespace RPAxe
             new PenaltyCoupling(),
             new PenaltyDelay(),
             new PenaltyDropout(),
+            new PenaltyMisdirect(),
         };
 
         public static readonly string[] Names =
-            { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts" };
+            { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts", "misdirect" };
 
         public static int Index = 3;   // on input
 

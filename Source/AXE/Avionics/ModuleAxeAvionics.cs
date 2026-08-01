@@ -309,8 +309,15 @@ namespace RPAxe
         // are not rejectable in the same way.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: mode",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_ChooseOption(options = new[] { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts" }, scene = UI_Scene.All)]
+         UI_ChooseOption(options = new[] { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts", "misdirect" }, scene = UI_Scene.All)]
         public int noiseMode = 3;
+
+        // Rotation at sigma = 1. Past 90 the intended-axis component goes negative and control REVERSES,
+        // which is available deliberately but is not the default.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: misdirect deg",
+                  guiFormat = "F0", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 10f, maxValue = 180f, stepIncrement = 10f, scene = UI_Scene.All)]
+        public float misdirectMaxDeg = 90f;
 
         // Mean dropout length. Bursts matter more than the duty cycle: per-tick randomness is averaged
         // away by vessel inertia, which is what made white noise invisible.
@@ -1362,6 +1369,7 @@ namespace RPAxe
             AxeControlLockerUtils.OvergainSlope = overgainSlope;
             AxeControlLockerUtils.DelayTicksMax = delayTicksMax;
             AxeControlLockerUtils.DropoutMs = dropoutMs;
+            AxeControlLockerUtils.MisdirectMaxDeg = misdirectMaxDeg;
             AxeControlLockerUtils.NoiseDrift = noiseDrift;
             AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
             AxeControlLockerUtils.HardCutoff = hardCutoff;

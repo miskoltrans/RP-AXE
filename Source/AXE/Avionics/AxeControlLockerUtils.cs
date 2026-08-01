@@ -188,6 +188,49 @@ namespace RPAxe
             roll  = Mathf.Clamp(r0 + sigma * (_cc[4] * DriftFor(4) * p0 + _cc[5] * DriftFor(5) * y0), -1f, 1f);
         }
 
+        // ---- MODE 8: MISDIRECTION ----------------------------------------------------------------
+        // ROTATES the command vector instead of scaling it: you ask for pitch, some of it comes out as yaw
+        // and roll, and as it worsens almost none of it reaches the axis you wanted.
+        //
+        // This answers the objection that killed amplitude-based penalties. Scaling ONLY with input
+        // amplitude is dodgeable -- a player or MechJeb learns to make minimal inputs and is bitten
+        // proportionally less. Rotation cannot be dodged that way: the FRACTION reaching the intended axis
+        // is cos(theta) regardless of magnitude, so flying gently just gets you a gentle amount of the wrong
+        // thing. There is no input size at which the penalty softens.
+        //
+        // It also preserves MAGNITUDE, which matters because weakness was already proven not to work
+        // (docs/AVIONICS_AUTHORITY.md: at 5% authority a craft ascended normally, and flew better). This is
+        // not less control, it is control pointed somewhere else.
+        //
+        // And it is the only formulation that survives BINARY ACTUATORS. RCS is effectively on/off, so a
+        // magnitude perturbation is invisible to it -- scaling 0.7 vs 1.0 fires the same thrusters. Changing
+        // WHICH axis the command lands on changes which thrusters fire, so RCS degrades like everything else
+        // instead of needing its own special case.
+        //
+        // Axis is drawn from the same per-vessel seed as coupling, so a craft has one coherent character;
+        // with drift on it wanders, so adaptive tuning cannot settle on it. Past 90 degrees the intended-axis
+        // component goes NEGATIVE -- control reverses -- which is available but not the default.
+        public static float MisdirectMaxDeg = 90f;
+
+        static Vector3 MisdirectAxis()
+        {
+            float a = _cc[0], b = _cc[1], c = _cc[2];
+            if (NoiseDrift) { a *= DriftFor(0); b *= DriftFor(1); c *= DriftFor(2); }
+            Vector3 ax = new Vector3(a, b, c);
+            return ax.sqrMagnitude < 1e-6f ? Vector3.up : ax.normalized;
+        }
+
+        public static void ApplyMisdirect(ref float pitch, ref float yaw, ref float roll, float sigma)
+        {
+            Vector3 v = new Vector3(pitch, yaw, roll);
+            if (v.sqrMagnitude < 1e-8f) return;   // nothing commanded, nothing to misdirect
+            float theta = Mathf.Clamp01(sigma) * MisdirectMaxDeg;
+            Vector3 outv = Quaternion.AngleAxis(theta, MisdirectAxis()) * v;
+            pitch = Mathf.Clamp(outv.x, -1f, 1f);
+            yaw   = Mathf.Clamp(outv.y, -1f, 1f);
+            roll  = Mathf.Clamp(outv.z, -1f, 1f);
+        }
+
         // ---- MODE 7: RANDOM DROPOUTS -------------------------------------------------------------
         // The answer to "anything that is not random can be learned by the player and by MechJeb".
         //
