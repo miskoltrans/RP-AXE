@@ -1580,9 +1580,15 @@ namespace RPAxe
             // RP-1 sets guiActive and guiActiveEditor alike from GetToggleable() -- so a stage's avionics can
             // be BUILT already shut down instead of only being switched off after launch. Guided only, gated
             // by CanHibernate (Unshielded needs index 9; Shielded from its own first tier).
+            // Unguided has no capacity concept, so it has nothing to engage, disengage or auto-manage.
+            // Showing these on a Science-Core reads as a control that does nothing, which is worse than
+            // absent. EvaluateAutoGuidance already skips ScienceCoreMode; this hides the UI to match.
             BaseEvent ge = Events[nameof(ToggleGuidanceEngaged)];
             ge.guiName = guidanceEngaged ? "Disengage Guidance" : "Engage Guidance";
             ge.guiActive = ge.guiActiveEditor = !ScienceCoreMode;
+
+            BaseField af = Fields[nameof(autoGuidance)];
+            af.guiActive = af.guiActiveEditor = !ScienceCoreMode;
 
             BaseEvent hb = Events[nameof(ToggleHibernation)];
             hb.guiActive = CanHibernate;

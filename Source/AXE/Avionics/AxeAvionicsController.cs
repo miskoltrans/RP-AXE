@@ -180,7 +180,7 @@ namespace RPAxe
             else
             {
                 lvl = AxeControlLockerUtils.ShouldLock(_vessel.Parts, out float maxCap, out float vesselMass, out _noise);
-                AnnounceRegime(maxCap, vesselMass);
+                AnnounceRegime(maxCap, vesselMass, lvl);
                 // Each vehicle is perturbed at its OWN attitude-response frequency (Hz ~ m^-1/3), which is
                 // what keeps the effect comparable between a 5 t probe and a 300 t stack instead of being
                 // accidentally tuned to whatever was last flown.
@@ -194,9 +194,12 @@ namespace RPAxe
         // WHY -- and re-posts periodically while degraded, because a player in map view during staging
         // misses the entry message and then has no persistent indicator short of opening a PAW. A missed
         // callout is the difference between "my avionics is undersized" and "this mod is broken".
-        void AnnounceRegime(float maxCapacity, float vesselMass)
+        void AnnounceRegime(float maxCapacity, float vesselMass, AxeControlLockerUtils.LockLevel lvl)
         {
-            bool degraded = _noise > 0f;
+            // "Guided" means a unit is actually flying the vessel right now. Staging onto an unguided stage
+            // also leaves the degraded regime, but that is a LOSS of guidance, not a return to it.
+            bool guided = lvl == AxeControlLockerUtils.LockLevel.Unlocked && maxCapacity > 0f;
+            bool degraded = _noise > 0f && guided;
 
             if (degraded && !_wasDegraded)
             {
@@ -208,7 +211,10 @@ namespace RPAxe
             }
             else if (!degraded && _wasDegraded)
             {
-                Announce("Vessel within avionics rating. Guidance nominal.");
+                // Only claim nominal if the vessel really is guided again. Dropping to an unguided stage
+                // exits the degraded regime too, and announcing "nominal control" there is actively wrong --
+                // SetLevel already posts the correct message for that transition.
+                if (guided) Announce("Vessel within avionics rating. Guidance nominal.");
             }
             else if (degraded && Time.time >= _nextReminder)
             {

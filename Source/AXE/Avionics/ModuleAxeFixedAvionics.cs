@@ -302,9 +302,13 @@ namespace RPAxe
             UpdateDraw();
             UpdateEditorRatios();
 
+            // A capacity-0 unit is unguided by authorship -- nothing to engage or auto-manage.
             BaseEvent ge = Events[nameof(ToggleGuidanceEngaged)];
             ge.guiName = guidanceEngaged ? "Disengage Guidance" : "Engage Guidance";
             ge.guiActive = ge.guiActiveEditor = capacityTons > 0f;
+
+            BaseField af = Fields[nameof(autoGuidance)];
+            af.guiActive = af.guiActiveEditor = capacityTons > 0f;
 
             if (capacityTons > 0f && !guidanceEngaged)
             {
