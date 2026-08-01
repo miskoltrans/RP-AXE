@@ -218,6 +218,18 @@ namespace RPAxe
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string authorityDisplay = "";
 
+        // A4. Editor legibility. The complaint about RP-1's cliff was never that it is a cliff, it is that
+        // it is a SURPRISE -- and RP-1 validates utilization rather than mass against capacity, so an
+        // overweight craft launches clean there and loses attitude in flight. Checking the variable that
+        // actually matters, before launch, is most of the fix.
+        [KSPField(guiActiveEditor = true, guiName = "Vessel vs rating",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public string vesselRatioDisplay = "";
+
+        [KSPField(guiActiveEditor = true, guiName = "At full tanks",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public string fullTankDisplay = "";
+
         // PROTOTYPE TEST RIG -- remove with the rest of the prototype. Every tunable is live in BOTH scenes,
         // so the curve can be felt and changed mid-flight without a rebuild. None of these numbers has a
         // physical anchor (KSP models no bending modes), so feel is the only way to find them.
@@ -1394,6 +1406,32 @@ namespace RPAxe
             }
 
             authorityDisplay = AxeControlPenalties.Current.Describe(sigma);
+            UpdateEditorRatios();
+        }
+
+        void UpdateEditorRatios()
+        {
+            if (!HighLogic.LoadedSceneIsEditor) return;
+            float cap = EffectiveCapacityTons();
+            if (cap <= 0f || ScienceCoreMode)
+            {
+                vesselRatioDisplay = fullTankDisplay = "n/a";
+                return;
+            }
+            System.Collections.Generic.List<Part> parts = EditorLogic.fetch?.ship?.parts;
+            float now = VesselMassTons();
+            float full = AxeControlLockerUtils.FullTankMassTons(parts);
+            vesselRatioDisplay = Verdict(now, cap);
+            fullTankDisplay = full > now + 0.01f ? Verdict(full, cap) : "same as configured";
+        }
+
+        static string Verdict(float mass, float cap)
+        {
+            float r = mass / cap;
+            string state = r <= 1f ? "clean"
+                         : AxeControlPenalties.Current.LocksInstead ? "guidance lost"
+                         : "degraded";
+            return $"{mass:N2} t  ({r:0.00}x — {state})";
         }
 
         float PenaltyMultiplier()

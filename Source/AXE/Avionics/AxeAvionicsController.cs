@@ -41,6 +41,14 @@ namespace RPAxe
         Vessel _vessel;
         AxeControlLockerUtils.LockLevel _level = AxeControlLockerUtils.LockLevel.Unlocked;
         float _noise = 0f;
+
+        // A3 regime callouts. Remembering the previous capacity is what lets "mass rose past capacity" be
+        // told apart from "capacity fell because you staged the primary unit" -- both land in the degraded
+        // regime, both look identical from the cockpit, and they have different remedies.
+        bool _wasDegraded;
+        float _lastCapacity = -1f;
+        float _nextReminder;
+        const float ReminderInterval = 30f;
         bool _requested;
         bool _started;
         readonly ScreenMessage _message = new ScreenMessage("", 6f, ScreenMessageStyle.UPPER_CENTER);
@@ -171,7 +179,8 @@ namespace RPAxe
             }
             else
             {
-                lvl = AxeControlLockerUtils.ShouldLock(_vessel.Parts, out _, out float vesselMass, out _noise);
+                lvl = AxeControlLockerUtils.ShouldLock(_vessel.Parts, out float maxCap, out float vesselMass, out _noise);
+                AnnounceRegime(maxCap, vesselMass);
                 // Each vehicle is perturbed at its OWN attitude-response frequency (Hz ~ m^-1/3), which is
                 // what keeps the effect comparable between a 5 t probe and a 300 t stack instead of being
                 // accidentally tuned to whatever was last flown.
@@ -179,6 +188,36 @@ namespace RPAxe
             }
             SetLevel(lvl);
             UpdateMechJeb();
+        }
+
+        // Called once per recompute (1 Hz). Announces entry to and exit from the degraded regime, naming
+        // WHY -- and re-posts periodically while degraded, because a player in map view during staging
+        // misses the entry message and then has no persistent indicator short of opening a PAW. A missed
+        // callout is the difference between "my avionics is undersized" and "this mod is broken".
+        void AnnounceRegime(float maxCapacity, float vesselMass)
+        {
+            bool degraded = _noise > 0f;
+
+            if (degraded && !_wasDegraded)
+            {
+                bool capacityFell = _lastCapacity >= 0f && maxCapacity < _lastCapacity - 0.01f;
+                Announce(capacityFell
+                    ? $"Primary avionics staged — remaining unit rated {maxCapacity:N1} t, vessel {vesselMass:N1} t. Guidance degraded."
+                    : $"Avionics over capacity — {vesselMass:N1} t vs {maxCapacity:N1} t rated. Guidance degraded.");
+                _nextReminder = Time.time + ReminderInterval;
+            }
+            else if (!degraded && _wasDegraded)
+            {
+                Announce("Vessel within avionics rating. Guidance nominal.");
+            }
+            else if (degraded && Time.time >= _nextReminder)
+            {
+                Announce($"Avionics still over capacity — {vesselMass:N1} t vs {maxCapacity:N1} t rated.");
+                _nextReminder = Time.time + ReminderInterval;
+            }
+
+            _wasDegraded = degraded;
+            _lastCapacity = maxCapacity;
         }
 
         void SetLevel(AxeControlLockerUtils.LockLevel level)

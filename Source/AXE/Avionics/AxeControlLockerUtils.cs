@@ -253,6 +253,30 @@ namespace RPAxe
         public static bool NoiseOverrideEnabled;
         public static float NoiseOverrideValue = 0f;
 
+        // A4. Mass this vessel would have with every tank full. The KSP editor shows tanks full by default,
+        // so the configured figure is normally already the worst case -- but a player who deliberately
+        // EMPTIES tanks to launch light and refuel on site (or assembles in orbit, or launches dry) gets a
+        // warning computed against a craft that never flies. One extra line closes that generally, with no
+        // ISRU-specific machinery.
+        public static float FullTankMassTons(List<Part> parts)
+        {
+            if (parts == null) return 0f;
+            float t = 0f;
+            for (int i = 0; i < parts.Count; i++)
+            {
+                Part p = parts[i];
+                if (p == null) continue;
+                t += p.mass + p.GetModuleMass(p.mass);
+                for (int j = 0; j < p.Resources.Count; j++)
+                {
+                    PartResource r = p.Resources[j];
+                    if (r?.info == null) continue;
+                    t += (float)(r.maxAmount * r.info.density);
+                }
+            }
+            return t;
+        }
+
         public static LockLevel ShouldLock(List<Part> parts) => ShouldLock(parts, out _, out _, out _);
 
         public static LockLevel ShouldLock(List<Part> parts, out float maxCapacity, out float vesselMass)

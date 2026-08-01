@@ -96,6 +96,15 @@ namespace RPAxe
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string capacityDisplay = "";
 
+        // A4. Same editor readouts as the procedural core.
+        [KSPField(guiActiveEditor = true, guiName = "Vessel vs rating",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public string vesselRatioDisplay = "";
+
+        [KSPField(guiActiveEditor = true, guiName = "At full tanks",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public string fullTankDisplay = "";
+
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Guidance",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string guidanceStatus = "";
@@ -227,6 +236,7 @@ namespace RPAxe
         void UpdateGui()
         {
             currentWatts = enabledkW * 1000f;
+            UpdateEditorRatios();
 
             BaseEvent ge = Events[nameof(ToggleGuidanceEngaged)];
             ge.guiName = guidanceEngaged ? "Disengage Guidance" : "Engage Guidance";
@@ -263,6 +273,25 @@ namespace RPAxe
                 ? (ShieldingActive ? "Guided — Shielded — guidance active"
                                    : "Guided — hardening not yet researched")
                 : "Guided — guidance active";
+        }
+
+        void UpdateEditorRatios()
+        {
+            if (!HighLogic.LoadedSceneIsEditor) return;
+            if (capacityTons <= 0f) { vesselRatioDisplay = fullTankDisplay = "n/a"; return; }
+            float now = VesselMassTons();
+            float full = AxeControlLockerUtils.FullTankMassTons(EditorLogic.fetch?.ship?.parts);
+            vesselRatioDisplay = Verdict(now, capacityTons);
+            fullTankDisplay = full > now + 0.01f ? Verdict(full, capacityTons) : "same as configured";
+        }
+
+        static string Verdict(float mass, float cap)
+        {
+            float r = mass / cap;
+            string state = r <= 1f ? "clean"
+                         : AxeControlPenalties.Current.LocksInstead ? "guidance lost"
+                         : "degraded";
+            return $"{mass:N2} t  ({r:0.00}x — {state})";
         }
 
         float VesselMassTons()

@@ -22,7 +22,7 @@ namespace RPAxe
     {
         // ModuleRCS.Update is never reentrant, so a single shared save-slot is safe across all RCS modules.
         private static bool _saved;
-        private static float _x, _y, _z, _pitch, _yaw, _roll;
+        private static float _x, _y, _z, _pitch, _yaw, _roll, _throttle;
 
         [HarmonyPrefix]
         internal static void Prefix(ModuleRCS __instance)
@@ -47,6 +47,7 @@ namespace RPAxe
             FlightCtrlState st = v.ctrlState;
             _x = st.X; _y = st.Y; _z = st.Z;
             _pitch = st.pitch; _yaw = st.yaw; _roll = st.roll;
+            _throttle = st.mainThrottle;
             _saved = true;
 
             // PROTOTYPE v2: over capacity but not yet unguided -- corrupt RCS the same way the post-autopilot
@@ -66,6 +67,14 @@ namespace RPAxe
             st.X = st.Y = 0f;                    // no lateral translation
             if (level == AxeControlLockerUtils.LockLevel.Locked)
                 st.Z = 0f;                       // Locked: no axial translation either (Axial keeps Z)
+
+            // A5. Stock ModuleRCS does, in effect, `if (Z ~= 0 && useThrottle) num2 -= mainThrottle`, so with
+            // no translation input THE THROTTLE BECOMES THE AXIAL COMMAND. Zeroing Z without handling
+            // mainThrottle leaves an avionics-locked vessel able to translate axially on RCS via the
+            // throttle. RP-1 patched this as an exploit in 2023 (816d8656); AXE never ported it until now.
+            // Zero at Locked, snap to full at Axial (where axial thrust is meant to be available anyway),
+            // and restore in the postfix so nothing else sees it.
+            st.mainThrottle = level == AxeControlLockerUtils.LockLevel.Locked ? 0f : 1f;
         }
 
         [HarmonyPostfix]
@@ -77,6 +86,7 @@ namespace RPAxe
             FlightCtrlState st = __instance.vessel.ctrlState;
             st.X = _x; st.Y = _y; st.Z = _z;
             st.pitch = _pitch; st.yaw = _yaw; st.roll = _roll;
+            st.mainThrottle = _throttle;
         }
     }
 }
