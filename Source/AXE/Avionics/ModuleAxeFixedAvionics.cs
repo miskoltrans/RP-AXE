@@ -81,6 +81,17 @@ namespace RPAxe
                   guiFormat = "F1", guiUnits = " W", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public float currentWatts = 0f;
 
+        // ---- A1/A2: Engage / Disengage Guidance. Same semantics as the procedural core (see
+        // docs/AVIONICS_PLAN.md): capacity-only, no tier gate, no power effect. A named unit riding a stage
+        // it cannot fly must be able to stand down rather than contribute a rating it cannot honour.
+        [KSPField(isPersistant = true)]
+        public bool guidanceEngaged = true;
+
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Guidance auto",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "manual", enabledText = "auto", scene = UI_Scene.All)]
+        public bool autoGuidance = true;
+
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Steerable Mass",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string capacityDisplay = "";
@@ -94,7 +105,7 @@ namespace RPAxe
         const float GuiRefreshInterval = 1f;   // ShouldLock() walks every part; don't do it per frame
 
         /// <summary>What this unit contributes to the vessel's steerable-mass budget.</summary>
-        public float CapacityTons => capacityTons > 0f ? capacityTons : 0f;
+        public float CapacityTons => (guidanceEngaged && capacityTons > 0f) ? capacityTons : 0f;
 
         /// <summary>Hardened AND the hardening researched — the only state that keeps hibernation.</summary>
         public bool ShieldingActive => shielded && Researched(shieldedTech);
@@ -110,6 +121,7 @@ namespace RPAxe
         {
             base.OnStart(state);
             _command = part.FindModuleImplementing<ModuleCommand>();
+            GameEvents.onPartCouple.Add(OnCouple);
             InitializeResourceRate();
             ApplyHibernation();
             UpdateGui();
@@ -149,10 +161,58 @@ namespace RPAxe
             if (Time.unscaledTime < _nextGuiRefresh) return;
             _nextGuiRefresh = Time.unscaledTime + GuiRefreshInterval;
             ApplyHibernation();   // shieldedTech can be researched mid-flight
+            EvaluateAutoGuidance();
             UpdateGui();
         }
 
-        // Reports THIS unit against the vessel, in the same vocabulary the procedural core uses: capacity is
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Disengage Guidance",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public void ToggleGuidanceEngaged() => SetEngaged(!guidanceEngaged, manual: true);
+
+        [KSPAction("Engage Guidance")]
+        public void EngageAction(KSPActionParam _) => SetEngaged(true, manual: true);
+
+        [KSPAction("Disengage Guidance")]
+        public void DisengageAction(KSPActionParam _) => SetEngaged(false, manual: true);
+
+        void SetEngaged(bool value, bool manual)
+        {
+            if (value == guidanceEngaged) return;
+            guidanceEngaged = value;
+            if (HighLogic.LoadedSceneIsFlight)
+            {
+                float mass = VesselMassTons();
+                if (value)
+                    AxeAvionicsController.Announce(mass > capacityTons
+                        ? "Guidance engaged over capacity — control will be unreliable."
+                        : "Vessel within rating. Guidance engaged.");
+                else
+                    AxeAvionicsController.Announce(manual
+                        ? "Guidance disengaged — attitude control lost, staging and throttle retained."
+                        : $"Docked mass {mass:N1} t exceeds {capacityTons:N1} t rating. Guidance disengaged — attitude locked.");
+                if (vessel != null) GameEvents.onVesselWasModified.Fire(vessel);
+            }
+            UpdateGui();
+        }
+
+        // Auto-engage against THIS unit's rating, never the vessel MAX -- a disengaged unit contributes 0,
+        // so a MAX-based test could never become true again. Auto-disengage on coupling events only.
+        void EvaluateAutoGuidance()
+        {
+            if (!autoGuidance || !HighLogic.LoadedSceneIsFlight || capacityTons <= 0f) return;
+            float mass = VesselMassTons();
+            if (mass <= 0f) return;
+            if (!guidanceEngaged && mass <= capacityTons) SetEngaged(true, manual: false);
+            else if (guidanceEngaged && _coupledThisTick && mass > capacityTons) SetEngaged(false, manual: false);
+            _coupledThisTick = false;
+        }
+
+        bool _coupledThisTick;
+        void OnCouple(GameEvents.FromToAction<Part, Part> _) { _coupledThisTick = true; }
+
+        public void OnDestroy() => GameEvents.onPartCouple.Remove(OnCouple);
+
+                // Reports THIS unit against the vessel, in the same vocabulary the procedural core uses: capacity is
         // "guided up to this mass; over it, unguided", and allowAxial decides whether unguided keeps axial
         // thrust. Locked and Axial are not separate concepts here -- they ARE unguided-without-axial and
         // unguided-with-axial.
@@ -167,6 +227,17 @@ namespace RPAxe
         void UpdateGui()
         {
             currentWatts = enabledkW * 1000f;
+
+            BaseEvent ge = Events[nameof(ToggleGuidanceEngaged)];
+            ge.guiName = guidanceEngaged ? "Disengage Guidance" : "Engage Guidance";
+            ge.guiActive = ge.guiActiveEditor = capacityTons > 0f;
+
+            if (capacityTons > 0f && !guidanceEngaged)
+            {
+                capacityDisplay = $"{capacityTons:N2} t (disengaged)";
+                guidanceStatus = "Disengaged — contributing no guidance";
+                return;
+            }
 
             if (capacityTons <= 0f)
             {

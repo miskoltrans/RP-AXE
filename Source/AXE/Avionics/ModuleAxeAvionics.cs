@@ -167,6 +167,25 @@ namespace RPAxe
                   guiFormat = "F0", guiUnits = " f", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public float avionicsCost = 0f;
 
+        // ---- A1/A2: Engage / Disengage Guidance (docs/AVIONICS_PLAN.md) --------------------------
+        // Capacity-only. Disengaged, this unit contributes nothing to the vessel's steerable-mass budget
+        // and provides no guidance -- so the vessel falls to the passive Axial/Locked ladder instead of
+        // having its controls corrupted by a unit that cannot fly it anyway.
+        //
+        // Deliberately NOT the same thing as Shutdown Avionics (`hibernating`), which is RP-1's power
+        // feature and is gated at tier index 9 -- useless for the early career where a capsule riding a
+        // dumb stage is the common configuration. No tier gate here, and no effect on EC draw.
+        [KSPField(isPersistant = true)]
+        public bool guidanceEngaged = true;
+
+        // Auto: engage once the vessel is light enough for THIS unit, disengage on docking if it is not.
+        // Build-time state is the player's decision and carries its consequences; only run-time surprises
+        // are protected.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Guidance auto",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "manual", enabledText = "auto", scene = UI_Scene.All)]
+        public bool autoGuidance = true;
+
         // Guided only: how much vessel mass this core can steer, derived from hwVolume via the inverse of
         // the mass polynomial. 0 for Unguided (matches RP-1: Science-Core always contributes 0).
         // Data field, not a readout -- capacityDisplay below is what the PAW shows, because the two states
@@ -442,7 +461,7 @@ namespace RPAxe
         { -1f, -1f, -1f, -1f, -1f, -1f, -1f, -1f, -1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
 
         public bool GuidanceUnlocked => Researched(guidanceTech);
-        public bool GuidanceActive => GuidanceUnlocked && guidanceEnabled && !hibernating;
+        public bool GuidanceActive => GuidanceUnlocked && guidanceEnabled && !hibernating && guidanceEngaged;
         public bool ScienceCoreMode => !guidanceEnabled;
         public bool AxialActive => ScienceCoreMode && _scAllowAxial && !hibernating;
         float EffectiveDensity() => guidanceEnabled ? avionicsDensity : (_scDensity > 0f ? _scDensity : avionicsDensity);
@@ -630,6 +649,7 @@ namespace RPAxe
                 // fallback compute from whatever hwVolume was persisted (0 for pre-redesign saves).
                 if (avionicsMass <= 0f) UpdateHardwareMass();
                 GameEvents.onStageActivate.Add(OnStage);
+                GameEvents.onPartCouple.Add(OnCouple);
                 GameEvents.onVesselGoOnRails.Add(GoOnRails);
                 GameEvents.onVesselGoOffRails.Add(GoOffRails);
 
@@ -664,6 +684,7 @@ namespace RPAxe
         {
             GameEvents.onEditorShipModified.Remove(OnShipModified);
             GameEvents.onStageActivate.Remove(OnStage);
+            GameEvents.onPartCouple.Remove(OnCouple);
             GameEvents.onVesselGoOnRails.Remove(GoOnRails);
             GameEvents.onVesselGoOffRails.Remove(GoOffRails);
         }
@@ -806,6 +827,7 @@ namespace RPAxe
             PushDebugKnobs();   // knob changes must reach the controller without waiting for the 1 Hz tick
             if (Time.time < _nextFlightRecalc) return;
             _nextFlightRecalc = Time.time + 1f;
+            EvaluateAutoGuidance();
             UpdateRate();
         }
 
@@ -1270,7 +1292,8 @@ namespace RPAxe
                 Part p = parts[i];
                 if (p == null) continue;
                 ModuleAxeAvionics axe = p.FindModuleImplementing<ModuleAxeAvionics>();
-                if (axe != null && axe.guidanceEnabled && !axe.hibernating && axe.capacityTons > max)
+                if (axe != null && axe.guidanceEnabled && !axe.hibernating && axe.guidanceEngaged
+                    && axe.capacityTons > max)
                     max = axe.capacityTons;
                 // Fixed-capacity units (ModuleAxeFixedAvionics) count toward the same MAX. A vessel already
                 // covered by, say, a 16 t Agena bus is not overloaded just because a small procedural core
@@ -1474,6 +1497,63 @@ namespace RPAxe
             catch { return 0f; }
         }
 
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Disengage Guidance",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public void ToggleGuidanceEngaged() => SetEngaged(!guidanceEngaged, manual: true);
+
+        [KSPAction("Engage Guidance")]
+        public void EngageAction(KSPActionParam _) => SetEngaged(true, manual: true);
+
+        [KSPAction("Disengage Guidance")]
+        public void DisengageAction(KSPActionParam _) => SetEngaged(false, manual: true);
+
+        void SetEngaged(bool value, bool manual)
+        {
+            if (value == guidanceEngaged) return;
+            guidanceEngaged = value;
+
+            if (HighLogic.LoadedSceneIsFlight)
+            {
+                float mass = VesselMassTons();
+                if (value)
+                    AxeAvionicsController.Announce(mass > capacityTons && capacityTons > 0f
+                        ? "Guidance engaged over capacity — control will be unreliable."
+                        : "Vessel within rating. Guidance engaged.");
+                else
+                    AxeAvionicsController.Announce(manual
+                        ? "Guidance disengaged — attitude control lost, staging and throttle retained."
+                        : $"Docked mass {mass:N1} t exceeds {capacityTons:N1} t rating. Guidance disengaged — attitude locked.");
+            }
+
+            if (HighLogic.LoadedSceneIsEditor && EditorLogic.fetch?.ship != null)
+                GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+            else if (vessel != null)
+                GameEvents.onVesselWasModified.Fire(vessel);
+            UpdateRate();
+        }
+
+        // AUTO-ENGAGE tests THIS UNIT'S capacity, never the vessel MAX. A disengaged unit contributes 0, so
+        // if it is the only avionics aboard the MAX is 0 and r is infinite -- a MAX-based condition could
+        // never become true again and the unit would be stuck off forever.
+        //
+        // AUTO-DISENGAGE fires on COUPLING EVENTS only, never on a mass watch: r also rises when CAPACITY
+        // falls (staging away the primary unit), which a mass watch misses entirely, and ISRU raises mass
+        // continuously, which a mass watch would trip on mid-run.
+        void EvaluateAutoGuidance()
+        {
+            if (!autoGuidance || !HighLogic.LoadedSceneIsFlight || ScienceCoreMode) return;
+            if (capacityTons <= 0f) return;
+            float mass = VesselMassTons();
+            if (mass <= 0f) return;
+
+            if (!guidanceEngaged && mass <= capacityTons) SetEngaged(true, manual: false);
+            else if (guidanceEngaged && _coupledThisTick && mass > capacityTons) SetEngaged(false, manual: false);
+            _coupledThisTick = false;
+        }
+
+        bool _coupledThisTick;
+        void OnCouple(GameEvents.FromToAction<Part, Part> _) { _coupledThisTick = true; }
+
         void SetGui()
         {
             // Model selector: VAB-only (model + mass are frozen at launch).
@@ -1492,6 +1572,10 @@ namespace RPAxe
             // RP-1 sets guiActive and guiActiveEditor alike from GetToggleable() -- so a stage's avionics can
             // be BUILT already shut down instead of only being switched off after launch. Guided only, gated
             // by CanHibernate (Unshielded needs index 9; Shielded from its own first tier).
+            BaseEvent ge = Events[nameof(ToggleGuidanceEngaged)];
+            ge.guiName = guidanceEngaged ? "Disengage Guidance" : "Engage Guidance";
+            ge.guiActive = ge.guiActiveEditor = !ScienceCoreMode;
+
             BaseEvent hb = Events[nameof(ToggleHibernation)];
             hb.guiActive = CanHibernate;
             hb.guiActiveEditor = CanHibernate;

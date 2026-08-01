@@ -51,6 +51,16 @@ namespace RPAxe
         static PropertyInfo _mjDeactivate;
         object _masterMechJeb;
 
+        // Shared regime callout. Screen messages are the only channel KSP gives us that does not need the
+        // player to have a PAW open, and a missed transition is the difference between "my avionics is
+        // undersized" and "this mod is broken".
+        static readonly ScreenMessage _announce = new ScreenMessage("", 7f, ScreenMessageStyle.UPPER_CENTER);
+        public static void Announce(string text)
+        {
+            _announce.message = text;
+            ScreenMessages.PostScreenMessage(_announce);
+        }
+
         void Awake()
         {
             Instance = this;   // set before the (static, one-shot) MechJeb-reflection guard below
