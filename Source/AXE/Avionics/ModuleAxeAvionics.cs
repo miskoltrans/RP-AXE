@@ -319,6 +319,13 @@ namespace RPAxe
          UI_FloatRange(minValue = 10f, maxValue = 180f, stepIncrement = 10f, scene = UI_Scene.All)]
         public float misdirectMaxDeg = 90f;
 
+        // How fast the misdirection precesses. THE feel knob for mode 8: too slow and it is a fixed offset
+        // an integrator trims out, too fast and it becomes noise the vehicle filters.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: precess Hz",
+                  guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0.01f, maxValue = 1f, stepIncrement = 0.01f, scene = UI_Scene.All)]
+        public float misdirectRateHz = 0.08f;
+
         // Mean dropout length. Bursts matter more than the duty cycle: per-tick randomness is averaged
         // away by vessel inertia, which is what made white noise invisible.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: dropout ms",
@@ -1370,6 +1377,7 @@ namespace RPAxe
             AxeControlLockerUtils.DelayTicksMax = delayTicksMax;
             AxeControlLockerUtils.DropoutMs = dropoutMs;
             AxeControlLockerUtils.MisdirectMaxDeg = misdirectMaxDeg;
+            AxeControlLockerUtils.MisdirectRateHz = misdirectRateHz;
             AxeControlLockerUtils.NoiseDrift = noiseDrift;
             AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
             AxeControlLockerUtils.HardCutoff = hardCutoff;

@@ -188,44 +188,55 @@ namespace RPAxe
             roll  = Mathf.Clamp(r0 + sigma * (_cc[4] * DriftFor(4) * p0 + _cc[5] * DriftFor(5) * y0), -1f, 1f);
         }
 
-        // ---- MODE 8: MISDIRECTION ----------------------------------------------------------------
-        // ROTATES the command vector instead of scaling it: you ask for pitch, some of it comes out as yaw
-        // and roll, and as it worsens almost none of it reaches the axis you wanted.
+        // ---- MODE 8: MISDIRECTION (gyro drift) -----------------------------------------------------
+        // ROTATES the command vector instead of scaling it: you ask for pitch, some comes out as yaw and
+        // roll. It is the drifting-IMU failure -- the vehicle's idea of its own orientation is wrong, so
+        // everything it commands is referred to the wrong frame.
         //
-        // This answers the objection that killed amplitude-based penalties. Scaling ONLY with input
-        // amplitude is dodgeable -- a player or MechJeb learns to make minimal inputs and is bitten
-        // proportionally less. Rotation cannot be dodged that way: the FRACTION reaching the intended axis
-        // is cos(theta) regardless of magnitude, so flying gently just gets you a gentle amount of the wrong
-        // thing. There is no input size at which the penalty softens.
+        // THE ROTATION PRECESSES; it is not a fixed offset. A static rotation is a fixed linear transform,
+        // and a fixed transform is exactly what integral terms trim out over a few seconds -- MechJeb would
+        // simply learn "pitch needs a bit of yaw" and stop caring. So the offset wanders continuously: you
+        // get one configuration for a while, adapt to it, and it has moved. You cannot get on top of it,
+        // which is the whole point.
         //
-        // It also preserves MAGNITUDE, which matters because weakness was already proven not to work
-        // (docs/AVIONICS_AUTHORITY.md: at 5% authority a craft ascended normally, and flew better). This is
-        // not less control, it is control pointed somewhere else.
+        // Three independent slow Perlin channels form a ROTATION VECTOR -- its direction is the axis, its
+        // length the angle. Because the channels evolve independently the axis precesses rather than the
+        // angle merely pulsing on a fixed axis. Bounded by sigma * MisdirectMaxDeg, so overload sets how far
+        // wrong it can get while the rate knob sets how fast it moves.
         //
-        // And it is the only formulation that survives BINARY ACTUATORS. RCS is effectively on/off, so a
-        // magnitude perturbation is invisible to it -- scaling 0.7 vs 1.0 fires the same thrusters. Changing
-        // WHICH axis the command lands on changes which thrusters fire, so RCS degrades like everything else
-        // instead of needing its own special case.
+        // Why this formulation and not amplitude scaling:
+        //   * NOT DODGEABLE BY FLYING GENTLY. Scaling with input amplitude is exploitable -- a player or
+        //     MechJeb learns to make minimal inputs and is bitten proportionally less. Here the fraction
+        //     reaching the intended axis is cos(theta) regardless of magnitude, so small inputs buy a small
+        //     amount of the wrong thing and nothing more.
+        //   * MAGNITUDE-PRESERVING. Weakness was already disproven: at 5% authority a craft ascended
+        //     normally and flew BETTER. This is not less control, it is control pointed elsewhere.
+        //   * SURVIVES BINARY ACTUATORS. RCS is effectively on/off, so scaling 0.7 vs 1.0 fires the same
+        //     thrusters and a magnitude perturbation is invisible to it. Changing which AXIS the command
+        //     lands on changes which thrusters fire.
         //
-        // Axis is drawn from the same per-vessel seed as coupling, so a craft has one coherent character;
-        // with drift on it wanders, so adaptive tuning cannot settle on it. Past 90 degrees the intended-axis
-        // component goes NEGATIVE -- control reverses -- which is available but not the default.
+        // Past 90 degrees the intended-axis component goes negative and control reverses -- available, not
+        // the default. Per-vessel seed offsets the sample coordinates so two craft drift differently.
         public static float MisdirectMaxDeg = 90f;
-
-        static Vector3 MisdirectAxis()
-        {
-            float a = _cc[0], b = _cc[1], c = _cc[2];
-            if (NoiseDrift) { a *= DriftFor(0); b *= DriftFor(1); c *= DriftFor(2); }
-            Vector3 ax = new Vector3(a, b, c);
-            return ax.sqrMagnitude < 1e-6f ? Vector3.up : ax.normalized;
-        }
+        public static float MisdirectRateHz = 0.08f;   // ~12 s to noticeably change character
 
         public static void ApplyMisdirect(ref float pitch, ref float yaw, ref float roll, float sigma)
         {
             Vector3 v = new Vector3(pitch, yaw, roll);
             if (v.sqrMagnitude < 1e-8f) return;   // nothing commanded, nothing to misdirect
-            float theta = Mathf.Clamp01(sigma) * MisdirectMaxDeg;
-            Vector3 outv = Quaternion.AngleAxis(theta, MisdirectAxis()) * v;
+
+            float t = Time.time * MisdirectRateHz;
+            float seed = _coupleSeed == int.MinValue ? 0f : (_coupleSeed % 977) * 0.31f;
+            Vector3 rot = new Vector3(
+                Mathf.PerlinNoise(t, seed + 0.0f) * 2f - 1f,
+                Mathf.PerlinNoise(t, seed + 7.3f) * 2f - 1f,
+                Mathf.PerlinNoise(t, seed + 13.9f) * 2f - 1f);
+
+            float mag = rot.magnitude;
+            if (mag < 1e-5f) return;
+            float theta = Mathf.Clamp01(sigma) * MisdirectMaxDeg * Mathf.Clamp01(mag);
+
+            Vector3 outv = Quaternion.AngleAxis(theta, rot / mag) * v;
             pitch = Mathf.Clamp(outv.x, -1f, 1f);
             yaw   = Mathf.Clamp(outv.y, -1f, 1f);
             roll  = Mathf.Clamp(outv.z, -1f, 1f);
