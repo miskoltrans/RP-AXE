@@ -97,7 +97,7 @@ default3/Aether,VAB,RO-B9ProcWing-Early,B9 Procedural Wing (Early),0,0.001,0,0.0
 default3/Aether,VAB,RO-B9ProcWing-Early,B9 Procedural Wing (Early),0,0.001,0,0.001,0,0.001,0
 default3/Aether,VAB,RO-RFTank-Integral,Procedural Tank (Isogrid Structure),0,0.4641,0,0.4641,0,0.4641,0.0033
 default3/Aether,VAB,ROT-Nose-Integral,Modular Nose Tank (Isogrid Structure),0,30.7534,0.0279,30.7255,0.0279,30.7534,0.097
-default3/Auto-Saved Ship,VAB,proceduralAvionics,Avionics Core [Procedural],0,314.7443,0,314.7443,0,314.7443,0.0265
+default3/Auto-Saved Ship,VAB,proceduralAvionics,Avionics Core [Procedural],0,388.5588,0,388.5588,0,388.5588,0.0274
 default3/Auto-Saved Ship,VAB,ROS-StaticSolarPanel,Static Solar Panel,0,0,0,0,0,0,0.0001
 default3/Auto-Saved Ship,VAB,ROS-StaticSolarPanel,Static Solar Panel,0,0,0,0,0,0,0.0001
 default3/Auto-Saved Ship,VAB,ROS-StaticSolarPanel,Static Solar Panel,0,0,0,0,0,0,0.0001
@@ -107,21 +107,21 @@ default3/Auto-Saved Ship,VAB,ROS-StaticSolarPanel,Static Solar Panel,0,0,0,0,0,0
 default3/Auto-Saved Ship,VAB,KzResizableFairingBaseRing,FB - Procedural Fairing Base Ring,1,-1,0,0,0,0,0
 default3/Auto-Saved Ship,VAB,KzProcFairingSide1.TU,Procedural Fairing (Recolorable),1,-1,0,0,0,0,0.0001
 default3/Auto-Saved Ship,VAB,KzProcFairingSide1.TU,Procedural Fairing (Recolorable),1,-1,0,0,0,0,0.0001
-default3/Auto-Saved Ship,VAB,RO-RFTank-BalloonNew,Procedural Tank (Balloon),0,429.9577,0.3062,429.6516,0.3062,429.9577,0.2721
-default3/Auto-Saved Ship,VAB,proceduralAvionics,Avionics Core [Procedural],0,678.6715,0,678.6715,0,678.6715,0.2723
+default3/Auto-Saved Ship,VAB,RO-RFTank-BalloonNew,Procedural Tank (Balloon),0,457.3186,0.3256,456.993,0.3256,457.3186,0.2895
+default3/Auto-Saved Ship,VAB,proceduralAvionics,Avionics Core [Procedural],0,738.9489,0,738.9489,0,738.9489,0.2723
 default3/Auto-Saved Ship,VAB,ROE-RL10Fixed,RL-10 Series (Non-Extendable Nozzle),353,0,0,353,0,353,0.1311
 default3/Auto-Saved Ship,VAB,proceduralStackDecoupler,Decoupler [Procedural],0,0,0,0,0,0,0.0508
 default3/Auto-Saved Ship,VAB,RSBTrussBase.Boattail,Boattail Adapter (Truss),1,-1,0,0,0,0,0
 default3/Auto-Saved Ship,VAB,KzProcFairingSide1.TU,Procedural Fairing (Recolorable),1,-1,0,0,0,0,0.0001
 default3/Auto-Saved Ship,VAB,KzProcFairingSide1.TU,Procedural Fairing (Recolorable),1,-1,0,0,0,0,0.0001
 default3/Auto-Saved Ship,VAB,KzProcFairingSide1.TU,Procedural Fairing (Recolorable),1,-1,0,0,0,0,0.0001
-default3/Auto-Saved Ship,VAB,ROT-SphericalTank-Integral,Spherical Tank (Isogrid Structure),0,3.8679,0,3.8679,0,3.8679,0.0084
+default3/Auto-Saved Ship,VAB,ROT-SphericalTank-Integral,Spherical Tank (Isogrid Structure),0,3.8072,0.0009,3.8063,0.0009,3.8072,0.0267
 default3/Auto-Saved Ship,VAB,ROE-ModularRCS,Modular RCS,2,-0.571,0,1.429,0,1.429,0.0182
 default3/Auto-Saved Ship,VAB,ROE-ModularRCS,Modular RCS,2,-0.571,0,1.429,0,1.429,0.0182
 default3/Auto-Saved Ship,VAB,ROE-ModularRCS,Modular RCS,2,-0.571,0,1.429,0,1.429,0.0182
 default3/Auto-Saved Ship,VAB,ROE-ModularRCS,Modular RCS,2,-0.571,0,1.429,0,1.429,0.0182
-default3/Auto-Saved Ship,VAB,proceduralAvionics,Avionics Core [Procedural],0,869.2657,0,869.2657,0,869.2657,0.9808
-default3/Auto-Saved Ship,VAB,RO-RFTank-BalloonNew,Procedural Tank (Balloon),0,1628.6274,1.1597,1627.4678,1.1597,1628.6274,1.0308
+default3/Auto-Saved Ship,VAB,proceduralAvionics,Avionics Core [Procedural],0,1035.2815,0,1035.2815,0,1035.2815,0.9808
+default3/Auto-Saved Ship,VAB,RO-RFTank-BalloonNew,Procedural Tank (Balloon),0,1628.6277,1.1597,1627.468,1.1597,1628.6277,1.0308
 default3/Auto-Saved Ship,VAB,KzThrustPlate,Thrust Plate [Procedural],1,-1,0,0,0,0,0
 default3/Auto-Saved Ship,VAB,ROE-RZ20,RZ.20,361,0,0,361,0,361,0.131
 default3/Auto-Saved Ship,VAB,ROE-RZ20,RZ.20,361,0,0,361,0,361,0.131
@@ -143,10 +143,10 @@ default3/Auto-Saved Ship,VAB,ROE-SmallLC,Small Launch Clamp (0.375 m),1,0,0,1,0,
 default3/Auto-Saved Ship,VAB,ROT-BoosterTank-Integral,Modular Booster Tank (Isogrid Structure),0,136.2584,2.4286,133.8298,2.4286,136.2584,0.2352
 default3/Auto-Saved Ship,VAB,ROE-A4,Model 39,384,20,0,404,0,404,0.8462
 default3/Auto-Saved Ship,VAB,ROE-SmallLC,Small Launch Clamp (0.375 m),1,0,0,1,0,1,0.25
-default3/Auto-Saved Ship,VAB,RO-B9ProcWing-Early,B9 Procedural Wing (Early),0,0.0073,0,0.0073,0,0.0073,0
-default3/Auto-Saved Ship,VAB,RO-B9ProcWing-Early,B9 Procedural Wing (Early),0,0.0073,0,0.0073,0,0.0073,0
-default3/Auto-Saved Ship,VAB,RO-B9ProcWing-Early,B9 Procedural Wing (Early),0,0.0073,0,0.0073,0,0.0073,0
-default3/Auto-Saved Ship,VAB,RO-B9ProcWing-Early,B9 Procedural Wing (Early),0,0.0073,0,0.0073,0,0.0073,0
+default3/Auto-Saved Ship,VAB,RO-B9ProcWing-Early,B9 Procedural Wing (Early),0,0.0068,0,0.0068,0,0.0068,0
+default3/Auto-Saved Ship,VAB,RO-B9ProcWing-Early,B9 Procedural Wing (Early),0,0.0068,0,0.0068,0,0.0068,0
+default3/Auto-Saved Ship,VAB,RO-B9ProcWing-Early,B9 Procedural Wing (Early),0,0.0068,0,0.0068,0,0.0068,0
+default3/Auto-Saved Ship,VAB,RO-B9ProcWing-Early,B9 Procedural Wing (Early),0,0.0068,0,0.0068,0,0.0068,0
 default3/Auto-Saved Ship,VAB,KzThrustPlate,Thrust Plate [Procedural],1,-1,0,0,0,0,0
 default3/Auto-Saved Ship,VAB,ROE-S2253,S2.253/S3.42/S5.2,221,-38,0.0004,182.9996,0.0004,183,0.018
 default3/Auto-Saved Ship,VAB,ROE-MediumLC,Medium Launch Clamp (1.65m),1,0,0,1,0,1,0.5
@@ -154,6 +154,7 @@ default3/Auto-Saved Ship,VAB,ROE-S2253,S2.253/S3.42/S5.2,221,-38,0.0004,182.9996
 default3/Auto-Saved Ship,VAB,ROE-S2253,S2.253/S3.42/S5.2,221,-38,0.0004,182.9996,0.0004,183,0.018
 default3/Auto-Saved Ship,VAB,ROE-S2253,S2.253/S3.42/S5.2,221,-38,0.0004,182.9996,0.0004,183,0.018
 default3/Auto-Saved Ship,VAB,ROE-S2253,S2.253/S3.42/S5.2,221,-38,0.0004,182.9996,0.0004,183,0.018
+default3/Auto-Saved Ship,VAB,RO-EarlyMagnet,MG01 - Early Magnetometer,300,0,0,300,0,300,0.0018
 default3/B1b,VAB,proceduralAvionics,Avionics Core [Procedural],0,22.0072,0,22.0072,0,22.0072,0.0357
 default3/B1b,VAB,RO-RFTank-Separate,Procedural Tank (Conventional Structure),0,11.2144,0.4316,10.7827,0.4316,11.2144,0.1826
 default3/B1b,VAB,ROE-VeroniqueAK,Véronique,96,12,0.0002,107.9998,0.0002,108,0.15
