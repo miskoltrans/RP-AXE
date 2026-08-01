@@ -53,15 +53,12 @@ namespace RPAxe
             // hook corrupts everything else, so a craft cannot dodge the noise by steering on thrusters.
             if (level == AxeControlLockerUtils.LockLevel.Unlocked)
             {
-                // Modes 3/4 are skipped here on purpose: the post-autopilot hook has already transformed
-                // ctrlState this frame, and re-applying a stateful transform (a second delay buffer push, or
-                // a second coupling pass) would double it. The per-axis modes are re-applied because RCS
+                // Stateful penalties are skipped here on purpose: the post-autopilot hook has already
+                // transformed ctrlState this frame, and re-applying one (a second delay buffer push, or a
+                // second coupling pass) would double it. Stateless ones ARE re-applied, because ModuleRCS
                 // reads ctrlState on its own Unity pass and would otherwise steer clean.
-                if (AxeControlLockerUtils.ModeIsTriple) return;
-                st.yaw = AxeControlLockerUtils.ApplyNoise(st.yaw, 0, sigma);
-                st.pitch = AxeControlLockerUtils.ApplyNoise(st.pitch, 1, sigma);
-                if (AxeControlLockerUtils.NoiseRoll)
-                    st.roll = AxeControlLockerUtils.ApplyNoise(st.roll, 2, sigma);
+                if (AxeControlPenalties.Current.Stateful) return;
+                AxeControlPenalties.Current.Apply(ref st.pitch, ref st.yaw, ref st.roll, sigma);
                 return;
             }
 

@@ -284,8 +284,8 @@ namespace RPAxe
         // are not rejectable in the same way.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: mode",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_ChooseOption(options = new[] { "uncommanded", "on input", "overgain", "coupling", "delay" }, scene = UI_Scene.All)]
-        public int noiseMode = 1;
+         UI_ChooseOption(options = new[] { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay" }, scene = UI_Scene.All)]
+        public int noiseMode = 3;
 
         // Physics ticks of lag at sigma = 1. KSP runs 50 Hz, so 10 ticks = 200 ms -- already past what
         // destabilises most controllers.
@@ -1320,7 +1320,7 @@ namespace RPAxe
             AxeControlLockerUtils.NoiseMax = noiseMax;
             AxeControlLockerUtils.NoiseRoll = noiseRoll;
             AxeControlLockerUtils.NoiseOnRcs = noiseOnRcs;
-            AxeControlLockerUtils.NoiseMode = noiseMode;
+            AxeControlPenalties.Index = noiseMode;
             AxeControlLockerUtils.OvergainSlope = overgainSlope;
             AxeControlLockerUtils.DelayTicksMax = delayTicksMax;
             AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
@@ -1370,8 +1370,7 @@ namespace RPAxe
                     : AxeControlLockerUtils.NoiseFor(mass / capacity);
             }
 
-            authorityDisplay = sigma <= 0f ? "clean"
-                             : $"{sigma * 100f:F0}% noise — degraded";
+            authorityDisplay = AxeControlPenalties.Current.Describe(sigma);
         }
 
         float PenaltyMultiplier()

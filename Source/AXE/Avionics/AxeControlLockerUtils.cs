@@ -218,27 +218,9 @@ namespace RPAxe
             pitch = _dp[read]; yaw = _dy[read]; roll = _dr[read];
         }
 
-        /// <summary>0 = uncommanded, 1 = on-input, 2 = overgain, 3 = cross-coupling, 4 = transport delay.</summary>
-        public static int NoiseMode = 1;
+        // Mode selection now lives in AxeControlPenalties; these helpers stay as the shared maths the
+        // individual penalties call into.
 
-        /// <summary>Modes 3 and 4 act on all three axes at once and carry state, so they cannot go through
-        /// the per-axis ApplyNoise path.</summary>
-        public static bool ModeIsTriple => NoiseMode >= 3;
-
-        public static void ApplyTriple(ref float pitch, ref float yaw, ref float roll, float sigma)
-        {
-            if (NoiseMode == 3) ApplyCoupling(ref pitch, ref yaw, ref roll, sigma);
-            else ApplyDelay(ref pitch, ref yaw, ref roll, sigma);
-        }
-
-        /// <summary>Perturb one control axis according to the current mode.</summary>
-        public static float ApplyNoise(float command, int axis, float sigma)
-        {
-            if (sigma <= 0f) return command;
-            if (NoiseMode == 2) return Mathf.Clamp(command * GainFor(sigma), -1f, 1f);
-            float n = NoiseSample(axis, sigma);
-            return Mathf.Clamp(NoiseMode == 0 ? command + n : command * (1f + n), -1f, 1f);
-        }
 
         public static float RatioCut => 1f + Mathf.Log(1f / Mathf.Max(0.01f, 1f - NoiseMax)) / NoiseK;
 
@@ -376,6 +358,12 @@ namespace RPAxe
                 float ratio = vesselMass / maxCapacity;
                 if (ratio <= 1f) return LockLevel.Unlocked;
                 noise = NoiseFor(ratio);
+
+                // PenaltyLock is RP-1's original rule as a selectable option: over capacity locks outright
+                // instead of degrading. Kept both as the A/B baseline and as the fallback if no perturbation
+                // survives testing, so choosing it needs no code change.
+                if (AxeControlPenalties.Current.LocksInstead)
+                    return (coreAxial || fixedAxial) ? LockLevel.Axial : LockLevel.Locked;
 
                 // NO CUTOFF by default. A hard flip to unguided past some ratio is the same arbitrary cliff
                 // this design exists to remove, just relocated -- and it is redundant, because the noise
