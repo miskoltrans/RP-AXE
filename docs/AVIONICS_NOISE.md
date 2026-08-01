@@ -126,8 +126,8 @@ The unit would be permanently stuck off. Condition must be `vesselMass <= thisUn
 
 **3. Only ISRU raises mass continuously — refuelling does not.** Corrected: once docked it is a
 single vessel, so transferring propellant between its tanks moves mass around internally and leaves
-the total unchanged. Genuine continuous mass gain comes from ISRU/drills alone, which is rare enough
-to ignore for now. Coupling events remain the trigger regardless.
+the total unchanged. Genuine continuous mass gain comes from ISRU/drills alone — worked through in
+4b-ter, where it turns out to need no special machinery. Coupling events remain the trigger.
 
 **4. THE ONE THAT BREAKS THE MASS-INCREASE RULE: `r` also rises when CAPACITY falls.** Staging away
 the stage carrying the big core drops `maxCapacity` while mass also drops — so `r` jumps without any
@@ -147,6 +147,38 @@ The principle: **build-time state is the player's decision and carries its conse
 run-time surprises are protected.** This also answers the clamp-release worry — the mechanic stays
 live at launch, where it is the actual balance lever, and stands down at docking, where it would
 merely be dangerous.
+
+### 4b-ter. ISRU
+
+The one genuine source of continuous mass gain with no coupling event, so worth working through
+rather than waving at.
+
+**It mostly covers itself.** Tank capacity is fixed at build time, and the KSP editor shows tanks
+full, so the VAB figure is already the worst case. A miner launched full, landed, drained and
+refilled cannot exceed the mass the VAB already displayed. Nothing new happens.
+
+**The real gap is deliberate under-fuelling, and it is not really an ISRU problem.** Launch with tanks
+set empty to save mass, fill them on site, and the VAB warning was computed against the light
+configuration. The player is then over capacity in the field having been told they were clean. Same
+hole applies to anything assembled in orbit or launched dry.
+
+**Fix belongs in the editor, not in flight:** show the ratio at **full tanks** alongside the ratio as
+configured. One extra line, it costs nothing, and it closes the case generally instead of
+special-casing ISRU.
+
+    Capacity        15.00 t
+    As configured    9.20 t   (0.61x — clean)
+    At full tanks   22.40 t   (1.49x — degraded)
+
+**Do NOT auto-disengage on ISRU mass gain.** It is tempting for symmetry with docking, and it is
+wrong: a miner needs guidance to fly off the surface, and standing the unit down would leave it
+locked rather than wobbly. Wobbly beats locked when you still have to fly. Coupling events remain the
+only auto-disengage trigger; the player can always disengage by hand if they prefer the lock.
+
+**Drop-a-stage-then-refill is already covered.** A lander that sheds its descent stage (capacity
+falls), mines and refills (mass rises) is the capacity-falls case from 4b-bis — a build-time decision,
+so it stays engaged and wobbles. Correct outcome: you designed a vehicle whose avionics cannot handle
+its own refuelled mass.
 
 ### 4c. Flight callout — REQUIRED
 
