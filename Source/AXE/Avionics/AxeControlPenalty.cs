@@ -151,6 +151,22 @@ namespace RPAxe
     }
 
     // ---------------------------------------------------------------------------------------------
+    // 7 — AVAILABILITY. Randomly drops control cycles, holding the last command. The only candidate that
+    // is neither learnable (timing is random) nor rejectable (there is nothing to command against during a
+    // dropout). Models an overloaded flight computer missing cycles, which is what insufficient throughput
+    // actually does. Self-scaling: irrelevant on a gentle coast, severe at max-Q or on final approach.
+    public sealed class PenaltyDropout : AxeControlPenalty
+    {
+        public override string Id => "dropouts";
+        public override bool Stateful => true;
+        public override void Reset(Vessel v) => AxeControlLockerUtils.ResetDropout();
+        public override void Apply(ref float p, ref float y, ref float r, float sigma)
+            => AxeControlLockerUtils.ApplyDropout(ref p, ref y, ref r, sigma);
+        public override string Describe(float sigma)
+            => sigma <= 0f ? "clean" : $"{sigma * 100f:F0}% of cycles missed — degraded";
+    }
+
+    // ---------------------------------------------------------------------------------------------
     /// <summary>The selectable set. Index is driven by the core's DEBUG mode knob; order is the PAW order.</summary>
     public static class AxeControlPenalties
     {
@@ -163,10 +179,11 @@ namespace RPAxe
             new PenaltyOvergain(),
             new PenaltyCoupling(),
             new PenaltyDelay(),
+            new PenaltyDropout(),
         };
 
         public static readonly string[] Names =
-            { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay" };
+            { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts" };
 
         public static int Index = 3;   // on input
 

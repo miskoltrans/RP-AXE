@@ -153,7 +153,7 @@ namespace RPAxe
             => 1f + (-Mathf.Log(Mathf.Max(1e-4f, 1f - sigma)) / Mathf.Max(0.01f, NoiseK));
 
         public static float GainFor(float sigma)
-            => sigma <= 0f ? 1f : 1f + OvergainSlope * (RatioFromSigma(sigma) - 1f);
+            => sigma <= 0f ? 1f : 1f + OvergainSlope * DriftFor(0) * (RatioFromSigma(sigma) - 1f);
 
         // ---- MODE 3: CROSS-AXIS COUPLING ----------------------------------------------------------
         // Commanding one axis bleeds into the others. A feedback loop closes each axis assuming they are
@@ -183,10 +183,75 @@ namespace RPAxe
         public static void ApplyCoupling(ref float pitch, ref float yaw, ref float roll, float sigma)
         {
             float p0 = pitch, y0 = yaw, r0 = roll;
-            pitch = Mathf.Clamp(p0 + sigma * (_cc[0] * y0 + _cc[1] * r0), -1f, 1f);
-            yaw   = Mathf.Clamp(y0 + sigma * (_cc[2] * p0 + _cc[3] * r0), -1f, 1f);
-            roll  = Mathf.Clamp(r0 + sigma * (_cc[4] * p0 + _cc[5] * y0), -1f, 1f);
+            pitch = Mathf.Clamp(p0 + sigma * (_cc[0] * DriftFor(0) * y0 + _cc[1] * DriftFor(1) * r0), -1f, 1f);
+            yaw   = Mathf.Clamp(y0 + sigma * (_cc[2] * DriftFor(2) * p0 + _cc[3] * DriftFor(3) * r0), -1f, 1f);
+            roll  = Mathf.Clamp(r0 + sigma * (_cc[4] * DriftFor(4) * p0 + _cc[5] * DriftFor(5) * y0), -1f, 1f);
         }
+
+        // ---- MODE 7: RANDOM DROPOUTS -------------------------------------------------------------
+        // The answer to "anything that is not random can be learned by the player and by MechJeb".
+        //
+        // Every other candidate fails one of two tests. Deterministic ones (overgain, coupling, delay) are
+        // LEARNABLE -- MechJeb has adaptive gain, a player just flies gently, and in a mod where the
+        // autopilot flies the ascent "learnable" means learned by software in seconds. Random ones (both
+        // noise modes) are REJECTABLE, because rejecting disturbances is exactly what a feedback loop is
+        // for. Deterministic gets learned; random gets averaged out.
+        //
+        // Dropouts escape both by randomising AVAILABILITY rather than VALUE. A loop rejects a disturbance
+        // by commanding against it -- which assumes it can command at all. During a dropout there is
+        // nothing to reject and nothing to command with; the loop integrates up blind and then
+        // over-corrects when control returns. And the timing is random, so it cannot be anticipated.
+        //
+        // It is also the better fiction: an overloaded flight computer MISSES CYCLES. Not wrong output --
+        // no output. That is literally what insufficient throughput does.
+        //
+        // ZERO-ORDER HOLD, not zeroing. When no new command arrives an actuator keeps its last position,
+        // which is both the correct model and the more interesting failure: the vehicle carries on doing
+        // whatever it was doing, so a dropout mid-correction over-rotates rather than merely pausing.
+        //
+        // Bursts, not per-tick coin flips: per-tick randomness is averaged away by vessel inertia, the same
+        // trap that made white noise invisible. Gap length is solved so the long-run duty cycle equals
+        // sigma -- at sigma 0.05 that is a ~120 ms dropout every ~2.3 s, at 0.5 it is half the time.
+        public static float DropoutMs = 120f;
+        static int _dropTicksLeft;
+        static float _holdP, _holdY, _holdR;
+
+        public static void ResetDropout() { _dropTicksLeft = 0; }
+
+        public static void ApplyDropout(ref float pitch, ref float yaw, ref float roll, float sigma)
+        {
+            float dt = Time.fixedDeltaTime > 0f ? Time.fixedDeltaTime : 0.02f;
+            int lenTicks = Mathf.Max(1, Mathf.RoundToInt((DropoutMs / 1000f) / dt));
+
+            if (_dropTicksLeft > 0)
+            {
+                _dropTicksLeft--;
+                pitch = _holdP; yaw = _holdY; roll = _holdR;
+                return;
+            }
+
+            float duty = Mathf.Clamp(sigma, 0f, 0.95f);
+            float gapTicks = lenTicks * (1f - duty) / Mathf.Max(0.0001f, duty);
+            if (Random.value < 1f / Mathf.Max(1f, gapTicks))
+            {
+                _dropTicksLeft = lenTicks;   // hold values already captured below on the previous tick
+                pitch = _holdP; yaw = _holdY; roll = _holdR;
+                return;
+            }
+
+            _holdP = pitch; _holdY = yaw; _holdR = roll;
+        }
+
+        // ---- DRIFT: make the deterministic attacks non-stationary ---------------------------------
+        // The other escape from "deterministic gets learned". Overgain and coupling are learnable only
+        // because their parameters are FIXED; a slow random walk means adaptive tuning is always chasing a
+        // target that has moved. Very low frequency (~20 s period) so it reads as a system that will not
+        // settle rather than as noise.
+        public static bool NoiseDrift;
+        public static float DriftHz = 0.05f;
+
+        public static float DriftFor(int idx)
+            => NoiseDrift ? 0.5f + Mathf.PerlinNoise(Time.time * DriftHz, idx * 13.1f) : 1f;
 
         // ---- MODE 4: TRANSPORT DELAY --------------------------------------------------------------
         // Hold the command for N physics ticks, N rising with overload. Pure delay is the classic loop

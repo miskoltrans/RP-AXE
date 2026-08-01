@@ -309,8 +309,22 @@ namespace RPAxe
         // are not rejectable in the same way.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: mode",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_ChooseOption(options = new[] { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay" }, scene = UI_Scene.All)]
+         UI_ChooseOption(options = new[] { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts" }, scene = UI_Scene.All)]
         public int noiseMode = 3;
+
+        // Mean dropout length. Bursts matter more than the duty cycle: per-tick randomness is averaged
+        // away by vessel inertia, which is what made white noise invisible.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: dropout ms",
+                  guiFormat = "F0", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 20f, maxValue = 500f, stepIncrement = 20f, scene = UI_Scene.All)]
+        public float dropoutMs = 120f;
+
+        // Makes overgain and coupling non-stationary, so adaptive tuning is always chasing a target that
+        // has moved. No effect on the other modes.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: drift",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "fixed", enabledText = "drifting", scene = UI_Scene.All)]
+        public bool noiseDrift = false;
 
         // Physics ticks of lag at sigma = 1. KSP runs 50 Hz, so 10 ticks = 200 ms -- already past what
         // destabilises most controllers.
@@ -1347,6 +1361,8 @@ namespace RPAxe
             AxeControlPenalties.Index = noiseMode;
             AxeControlLockerUtils.OvergainSlope = overgainSlope;
             AxeControlLockerUtils.DelayTicksMax = delayTicksMax;
+            AxeControlLockerUtils.DropoutMs = dropoutMs;
+            AxeControlLockerUtils.NoiseDrift = noiseDrift;
             AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
             AxeControlLockerUtils.HardCutoff = hardCutoff;
         }
