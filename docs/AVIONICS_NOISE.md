@@ -67,9 +67,9 @@ A player-facing toggle whose ONLY effect is whether the unit contributes capacit
 ### 4b. Auto-engage AND auto-disengage — noise becomes opt-in
 
 Revised. The unit engages automatically when vessel mass drops to where it can control the vehicle,
-and **disengages automatically when mass rises past that**. Mass only rises by docking, fuel
-transfer, ISRU, boarding or cargo — staging and burning always reduce it — so in practice this fires
-on docking.
+and **disengages automatically on docking** — see 4b-bis, which narrows this from the "any mass
+increase" rule it started as, because `r` also rises when capacity falls (staging away the good core)
+and because refuelling raises mass continuously rather than as an event.
 
 I previously argued auto-disengage must never happen, on the grounds that a unit which always drops
 out rather than take the noise collapses the mechanic back into RP-1's lock. That objection is wrong,
@@ -98,6 +98,48 @@ naive threshold would chatter between engaged and disengaged — spamming the 4c
 control state mid-flight. Either use a deadband (engage at `r <= 0.95`, disengage at `r >= 1.05`) or
 evaluate only on discrete events (docking, undocking, staging) rather than continuously. Decide
 before building.
+
+### 4b-bis. Wet mass, and the edge cases it brings
+
+`r` uses **wet** mass today — `p.mass + p.resourceMass`, propellant included — matching RP-1. Dry
+mass is used only for the EC draw curve, never for capacity. Wet is the physically right call: a full
+rocket genuinely is harder to slew. Keeping it, but it is not free.
+
+**The framing choice underneath it:** wet mass makes overload a *transient*; dry mass would make it a
+*binary design constraint*. Worth stating plainly because everything below follows from it.
+
+**1. Overload heals itself as propellant burns.** A craft 20% over at liftoff may be at capacity by
+the time the tanks are half empty. So "undersize the core, tough out the first minute, save the mass"
+becomes a viable strategy. Probably legitimate — it is exactly the margin-shaving RO players enjoy,
+and the cost is real, since a wobbly max-Q can break the vehicle under FAR. But it does mean capacity
+is effectively sized for liftoff mass and anyone willing to eat 60 s of wobble gets a discount. Watch
+whether it becomes the dominant strategy rather than a gamble.
+
+**2. Chatter.** `r` crosses 1.0 continuously rather than at events, so any threshold-driven auto
+behaviour flaps. See 4b.
+
+**3. Refuelling and ISRU raise mass CONTINUOUSLY, not as an event.** A mass-watching auto-disengage
+would trip partway through a propellant transfer or a mining run. Docking is discrete; what follows
+it is not.
+
+**4. THE ONE THAT BREAKS THE MASS-INCREASE RULE: `r` also rises when CAPACITY falls.** Staging away
+the stage carrying the big core drops `maxCapacity` while mass also drops — so `r` jumps without any
+mass increase at all. A rule that watches mass would miss it entirely.
+
+**Therefore the trigger is docking/coupling events, not a mass watch.** That is discrete, cheap,
+immune to refuelling creep and chatter, and it draws the line where it belongs:
+
+| event | auto behaviour | why |
+|---|---|---|
+| Launch over capacity | **stay engaged**, wobble | You built it that way and the VAB told you. Your decision. |
+| Stage away the good core | **stay engaged**, wobble | Also a build-time decision, made in the editor. |
+| Dock to something heavy | **auto-disengage** → clean lock | A mission-time surprise you did not design. Also where wobble is most dangerous. |
+| Undock / stage down | **auto-engage** if now under capacity | Guidance returns without the player remembering. |
+
+The principle: **build-time state is the player's decision and carries its consequences; only
+run-time surprises are protected.** This also answers the clamp-release worry — the mechanic stays
+live at launch, where it is the actual balance lever, and stands down at docking, where it would
+merely be dangerous.
 
 ### 4c. Flight callout — REQUIRED
 
