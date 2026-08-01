@@ -80,6 +80,9 @@ namespace RPAxe
         // impossible and burns monopropellant doing it. Scaled separately rather than just on/off.
         public static float NoiseRcsScale = 1f;
 
+        // Kept only so the two can be compared in flight. Off by default -- see the note at the cutoff site.
+        public static bool HardCutoff = false;
+
         /// <summary>Perturb one control axis, honouring the additive / on-input mode.</summary>
         public static float ApplyNoise(float command, int axis, float sigma)
         {
@@ -223,11 +226,19 @@ namespace RPAxe
             {
                 float ratio = vesselMass / maxCapacity;
                 if (ratio <= 1f) return LockLevel.Unlocked;
-                if (ratio < RatioCut)
-                {
-                    noise = NoiseFor(ratio);
-                    return LockLevel.Unlocked;   // still controllable, just dirtily
-                }
+                noise = NoiseFor(ratio);
+
+                // NO CUTOFF by default. A hard flip to unguided past some ratio is the same arbitrary cliff
+                // this design exists to remove, just relocated -- and it is redundant, because the noise
+                // curve already asymptotes to unusable: at sigma near 1 the command is close to random, so
+                // the vehicle cannot be flown regardless. The limit enforces itself, continuously, and the
+                // only thing a threshold adds is a jarring change to a DIFFERENT failure mode at a number
+                // nothing physical picked.
+                //
+                // Discrete "unguided" survives only where it is a PROPERTY OF THE PART rather than a
+                // threshold crossing: an Unguided/Science-Core core, a capacity-0 named part, or no avionics
+                // at all. Those fall through below with maxCapacity == 0 and are unaffected.
+                if (!HardCutoff || ratio < RatioCut) return LockLevel.Unlocked;
             }
             return (coreAxial || fixedAxial) ? LockLevel.Axial : LockLevel.Locked;
         }

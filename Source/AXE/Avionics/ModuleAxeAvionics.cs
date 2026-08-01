@@ -251,6 +251,14 @@ namespace RPAxe
          UI_Toggle(disabledText = "pitch/yaw only", enabledText = "all axes", scene = UI_Scene.All)]
         public bool noiseRoll = true;
 
+        // Off by default: a hard flip to unguided past some ratio is the same arbitrary cliff this design
+        // exists to remove, only relocated, and it is redundant because the noise curve already asymptotes
+        // to unflyable. Kept as a toggle purely so the two can be compared.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: hard cutoff",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "noise only", enabledText = "unguided past cut", scene = UI_Scene.All)]
+        public bool hardCutoff = false;
+
         // Two different mechanics, not two tunings of one. Additive wanders with no input; on-input leaves a
         // null stick null and only corrupts what you actually command.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise mode",
@@ -1278,6 +1286,7 @@ namespace RPAxe
             AxeControlLockerUtils.NoiseOnRcs = noiseOnRcs;
             AxeControlLockerUtils.NoiseAdditive = noiseAdditive;
             AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
+            AxeControlLockerUtils.HardCutoff = hardCutoff;
         }
 
         // PROTOTYPE readout. In flight the controller's value is authoritative (it is what actually scales
