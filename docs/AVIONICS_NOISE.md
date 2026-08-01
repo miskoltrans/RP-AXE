@@ -180,15 +180,39 @@ falls), mines and refills (mass rises) is the capacity-falls case from 4b-bis �
 so it stays engaged and wobbles. Correct outcome: you designed a vehicle whose avionics cannot handle
 its own refuelled mass.
 
-### 4c. Flight callout — REQUIRED
+### 4c. Flight callout — REQUIRED, with the reason
 
-Legibility in the VAB is considered solved by any of these designs. What is missing is a screen
-message on **regime transition** in flight: entering over-capacity, and returning to clean. AXE
-already posts exactly this kind of message on lock transitions in `AxeAvionicsController.SetLevel`,
-so it is one more branch on an existing mechanism.
+Legibility in the VAB is considered solved (plus the full-tanks line from 4b-ter). What is missing is
+flight. AXE already posts this kind of message on lock transitions in
+`AxeAvionicsController.SetLevel`, so the mechanism exists; what it needs is a **reason**, because the
+player's remedy differs depending on why the regime changed.
 
-With the callout plus visibly shaking inputs on the control gauges, an experienced player diagnoses
-it instantly. Without it, a wallowing rocket reads as a broken mod.
+Every transition and what it says:
+
+| trigger | message |
+|---|---|
+| Mass rose past capacity | `Avionics over capacity — 38.2 t vs 31.7 t rated. Guidance degraded.` |
+| **Capacity fell** (staged away the primary unit) | `Primary avionics staged — remaining unit rated 2.0 t, vessel 8.4 t. Guidance degraded.` |
+| Back under capacity | `Vessel within avionics rating. Guidance nominal.` |
+| Auto-disengage on docking | `Docked mass 84 t exceeds 15 t rating. Guidance disengaged — attitude locked.` |
+| Auto-engage after undock/staging | `Vessel within rating. Guidance engaged.` |
+| Manual engage while over capacity | `Guidance engaged over capacity — control will be unreliable.` |
+| Manual disengage | `Guidance disengaged — attitude control lost, staging and throttle retained.` |
+| No/unguided avionics | existing `SetLevel` messages, unchanged |
+
+**Rows 1 and 2 are the reason this needs reasons.** Both land the player in the degraded regime, but
+one is fixed by dropping mass and the other by not staging away your good core — and the two are
+indistinguishable from the cockpit without being told.
+
+**Two residual gaps, neither fatal:**
+
+- **Continuous degradation has no transition to announce.** Sliding from 1.05x to 1.4x produces no
+  event, so the player feels it worsening with nothing said. Acceptable: the entry callout names the
+  regime, the wobble conveys the severity, and the PAW carries the number.
+- **Screen messages are missable.** A player in map view during staging sees nothing, and then has no
+  persistent indicator short of right-clicking the part. Cheapest fix that needs no new UI: while
+  degraded, **re-post a short reminder every ~30 s** rather than only on entry. Worth doing —
+  a missed callout is the difference between "my avionics is undersized" and "this mod is broken".
 
 ### 4d. Framing: in reality, rockets fly themselves
 
