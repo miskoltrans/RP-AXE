@@ -1,3 +1,12 @@
+> **SUPERSEDED IN PART (2026-08-01).** The "Under-capacity penalty", "Multiplier ceiling" and the open
+> `k` calibration item below describe an EC overload penalty that **no longer exists** — it was deleted
+> in Phase C of `docs/AVIONICS_PLAN.md`. It was inert against a ~39-hour battery in a 6-10 minute
+> ascent, both of its recorded justifications had collapsed, and named parts could never share a
+> consequence measured in watts. Removing it is also RP-1 parity: RP-1 has no overload EC term either.
+> Going over capacity is now a selectable `AxeControlPenalty`, shared by procedural and named units
+> alike, with `PenaltyLock` reproducing RP-1's original rule exactly. The `k` open item closes by
+> removal. Everything else in this document still stands.
+
 # RP-AXE Avionics V2 Spec (SHIPPED 2026-07-10 — this is the as-built record; design reasoning below is historical)
 
 **Goal**: feature parity with RP-1's avionics, with better UX. Not a simplification pass — everything RP-1's

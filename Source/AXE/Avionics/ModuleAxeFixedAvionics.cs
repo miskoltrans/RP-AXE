@@ -19,14 +19,15 @@ namespace RPAxe
     /// AXE's curve needs 84.5 kg of hardware (a 169 L box) before capacity goes positive at tier 0, and
     /// Sputnik 1's entire 83 kg falls under that floor — independently reproducing RP-1's authored 0.
     ///
-    /// OVERLOAD CONSEQUENCE differs from the procedural core, deliberately. The proc core answers going
-    /// over capacity with a smooth exp(8*(r-1)) power penalty rather than a lock, because a player who
-    /// sized their own box slightly small made a sizing mistake worth softening. A fixed part has no
-    /// sizing decision to get wrong, so it uses RP-1's own rule instead: over capacity locks attitude
-    /// (see <see cref="AxeControlLockerUtils"/>), while command itself keeps working — staging and
-    /// throttle still respond, the craft just can't steer. Routing these through the penalty path instead
-    /// would mean a capacity-0 part draws exp(80) watts, flattens the battery and drops ModuleCommand
-    /// entirely, which is both harsher than RP-1 and much less legible in the VAB.
+    /// OVERLOAD CONSEQUENCE is now SHARED with the procedural core, not different from it. Both feed one
+    /// vessel-wide MAX and both get whichever <see cref="AxeControlPenalty"/> is selected. The old
+    /// asymmetry — proc core pays watts, named part locks — is gone: the EC penalty behind it was inert,
+    /// and neither justification survived (the exp(80) hazard was removed by its own cap 19 hours after it
+    /// was written; "a fixed part has no sizing decision to get wrong" is false, because choosing a
+    /// 0.875 t Voyager bus for a 2 t spacecraft is exactly a sizing decision, made in the VAB).
+    ///
+    /// A unit that cannot fly the vessel it is on can Disengage rather than contribute a rating it cannot
+    /// honour — capacity-only, no tier gate, no power effect, and distinct from Shutdown Avionics.
     ///
     /// SHIELDING is a fact about the part, not a player choice: Voyager was radiation-hardened, Sputnik
     /// was not. <see cref="shielded"/> is baked per part (ported from RP-1's `interplanetary` flag, which

@@ -14,14 +14,17 @@ namespace RPAxe
     ///     (both are the spin-stabilized kick-stage case).
     ///   * Locked   — fully dumb (throttle + staging only), otherwise.
     ///
-    /// MASS RULE — applies to FIXED-capacity units only (<see cref="ModuleAxeFixedAvionics"/>), not to the
-    /// procedural core. The procedural core deliberately has no mass gate: the player sizes its box, and
-    /// going over its capacity costs a smooth EC-draw penalty rather than a lock, so a slightly-undersized
-    /// box degrades instead of bricking the flight (docs/AVIONICS_SPEC.md). A fixed unit has no sizing
-    /// decision to get wrong — its capacity is authored hardware — so it uses RP-1's original rule, which
-    /// is both more faithful and far more legible than routing it through the penalty curve (a capacity-0
-    /// part on the penalty path would draw exp(80) watts, flatten the battery and drop ModuleCommand
-    /// altogether, losing staging and throttle too — RP-1 kept those and locked only attitude).
+    /// MASS RULE — applies to BOTH module types now. Every unit that provides guidance contributes its
+    /// capacity to one vessel-wide MAX and is judged against it, procedural or named alike. The old split
+    /// (procedural cores answered overload in watts, named parts locked) is gone: the EC penalty it rested
+    /// on was proven inert against a ~39-hour battery in a 6-10 minute ascent, and its two recorded
+    /// justifications both collapsed — the exp(80) hazard was removed by its own cap 19 hours after it was
+    /// written, and "a fixed part has no sizing decision to get wrong" is false, since r = mass/capacity has
+    /// two terms and the player sets both (choosing a 0.875 t Voyager bus for a 2 t spacecraft is a sizing
+    /// decision made in the VAB).
+    ///
+    /// What happens over capacity is now a selectable <see cref="AxeControlPenalty"/> — including
+    /// <see cref="PenaltyLock"/>, which reproduces RP-1's original rule exactly. See docs/AVIONICS_PLAN.md.
     ///
     /// Vessel mass is whole-vessel WET mass (part.mass + part.resourceMass), and the budget is the MAX
     /// across parts, never the sum — RP-1's own anti-cheese rule, matching the procedural core's
