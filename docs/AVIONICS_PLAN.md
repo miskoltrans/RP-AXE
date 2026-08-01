@@ -1,171 +1,207 @@
-# Avionics overload — build plan
+# Avionics overload — complete build plan
 
 Companion to `docs/AVIONICS_NOISE.md` (the design) and `docs/AVIONICS_AUTHORITY.md` (the rejected
-predecessor). This is the execution order.
+predecessor). This is the whole of the work, planned before building.
 
-**The one rule this plan is built around: the exact mechanic stays OPEN.** Phase A contains nothing
-that depends on which perturbation wins, and every item in it improves the currently-shipped lock
-system too. If all five modes fail the flight test, Phase A still ships and the day was not wasted.
+**The rule this plan is built around: the exact mechanic stays OPEN.** Everything except Phase D is
+independent of which perturbation wins, and improves the currently-shipped lock system too. If every
+mode fails the flight test, all of it still ships and the fallback (`PenaltyLock`) is a one-knob
+change with no code edit.
 
-| phase | what | gate |
-|---|---|---|
-| **A** | mode-agnostic build | none — start now |
-| **B** | fly the five modes, decide | needs A3/A4 for the legibility half |
-| **C** | commit the winner, delete the rest | needs B |
+| phase | what | gate | status |
+|---|---|---|---|
+| **0** | penalty abstraction layer | — | **DONE** (`a5c9845`) |
+| **A** | player-facing behaviour | — | A1/A2 done; A3–A5 to build |
+| **B** | RP-1 parity audit + fixes | — | to build |
+| **C** | sack the EC penalty | — | to build |
+| **D** | fly the modes, pick one, clean up | needs A+B+C | tomorrow |
 
 ---
 
-## Phase A — mode-agnostic, buildable now
+## Phase 0 — penalty abstraction (DONE)
 
-### A1. Engage / Disengage Guidance
+`AxeControlPenalty` + `AxeControlPenalties` registry. Seven selectable consequences behind one
+interface, chosen at runtime from the core's DEBUG mode knob:
 
-New persistent field on **both** `ModuleAxeAvionics` and `ModuleAxeFixedAvionics`.
+| # | id | family |
+|---|---|---|
+| 0 | `none` | experimental control |
+| 1 | `lock (RP-1)` | RP-1's rule — the A/B baseline and the fallback |
+| 2 | `uncommanded` | disturbance |
+| 3 | `on input` | disturbance |
+| 4 | `overgain` | margin attack — gain margin |
+| 5 | `coupling` | margin attack — decoupling |
+| 6 | `delay` | margin attack — phase margin |
 
-- Effect is **capacity only**: disengaged, the unit contributes 0 to the MAX and provides no guidance.
-- **No tier gate.** (Today's Shutdown Avionics is gated at tier index 9 — useless for the era where
-  this matters most.)
-- **No power effect.** Distinct from Shutdown/hibernation, which keeps RP-1's semantics.
-- Editor + flight, persistent, plus Engage / Disengage / Toggle actions for staging sequences.
-- Naming: **Engage / Disengage Guidance**. "Shutdown Avionics" is taken.
+`LocksInstead` is honoured inside `ShouldLock`, `Stateful` tells the RCS patch to skip
+double-application, `Reset(vessel)` drops per-vessel state, `Describe()` gives each mode its own PAW
+wording. Choosing the ship mechanic later is one index; deleting the losers is deleting files.
 
-*Why it is required, not optional:* a lock is passive, a perturbation is active sabotage. A capsule
-over capacity riding a big unguided stage must be able to stand down rather than corrupt the controls
-of whatever is actually flying.
+---
 
-**Acceptance:** a disengaged core on an otherwise-guided vessel drops out of `EffectiveCapacityTons`
-and `ShouldLock`'s MAX; the vessel falls to Axial/Locked if nothing else covers it.
+## Phase A — player-facing behaviour
 
-### A2. Auto-engage / auto-disengage
+### A1 Engage / Disengage Guidance — **DONE**
+Capacity-only, no tier gate, no power effect, both module types, with actions. Distinct from Shutdown
+Avionics (RP-1's power feature, gated at tier index 9 — useless for the era where this matters).
 
-- **Auto-engage** when `vesselMass <= thisUnit.capacityTons`.
-  **Not** against the vessel MAX — a disengaged unit contributes 0, so if it is the only avionics
-  aboard the MAX is 0, `r` is infinite, and a MAX-based condition can never become true again. The
-  unit would be stuck off forever.
-- **Auto-disengage on coupling events only** (docking), never on a mass watch. `r` also rises when
-  *capacity* falls (staging away the good core), which a mass watch misses entirely; and ISRU raises
-  mass continuously, which a mass watch would trip on.
-- Per-unit "auto" toggle, default on.
+### A2 Auto-engage / auto-disengage — **DONE**
+Engage when `vesselMass <= thisUnit.capacityTons` (never the vessel MAX — a disengaged sole unit makes
+the MAX 0 and `r` infinite, so a MAX test could never become true again). Disengage on coupling events
+only (`r` also rises when *capacity* falls; ISRU raises mass continuously).
 
-**The principle:** build-time state is the player's decision and carries its consequences; only
-run-time surprises are protected. So launching over capacity stays engaged and is punished, staging
-away your own core stays engaged and is punished, docking to something heavy stands down.
-
-**Acceptance:** capsule on a dumb stage launches locked, auto-engages on staging; a tug docking to a
-heavy station auto-disengages and does not corrupt station attitude.
-
-### A3. Regime callouts
-
-Screen messages on transition, **with the reason** — `AxeAvionicsController.SetLevel` already posts
-this kind of message, so it is one more branch.
+### A3 Regime callouts — TO BUILD
+Screen message on every transition, **with the reason**, driven from a small state machine in
+`AxeAvionicsController` that remembers the previous `(level, sigma>0, maxCapacity)`.
 
 | trigger | message |
 |---|---|
 | Mass rose past capacity | `Avionics over capacity — 38.2 t vs 31.7 t rated. Guidance degraded.` |
-| Capacity fell (staged the primary) | `Primary avionics staged — remaining unit rated 2.0 t, vessel 8.4 t. Guidance degraded.` |
+| **Capacity fell** (staged the primary) | `Primary avionics staged — remaining unit rated 2.0 t, vessel 8.4 t. Guidance degraded.` |
 | Back under capacity | `Vessel within avionics rating. Guidance nominal.` |
-| Auto-disengage on docking | `Docked mass 84 t exceeds 15 t rating. Guidance disengaged — attitude locked.` |
-| Auto-engage | `Vessel within rating. Guidance engaged.` |
-| Manual engage while over | `Guidance engaged over capacity — control will be unreliable.` |
-| Manual disengage | `Guidance disengaged — attitude control lost, staging and throttle retained.` |
+| Engage/disengage | done in A1 |
 
-Rows 1 and 2 are why the reason is needed: both land in the degraded regime, but one is fixed by
-dropping mass and the other by not staging away your core, and they are indistinguishable from the
-cockpit.
+Rows 1 and 2 both land in the degraded regime but have different remedies, and are indistinguishable
+from the cockpit — that is why the reason, not just the state, is required. Distinguished by comparing
+this tick's `maxCapacity` against last tick's: if capacity fell, it is row 2.
 
-**Plus: re-post a short reminder every ~30 s while degraded.** A player in map view during staging
-misses the entry message and then has no persistent indicator short of right-clicking the part. A
-missed callout is the whole difference between "my avionics is undersized" and "this mod is broken".
+**Plus a ~30 s re-post while degraded.** A player in map view during staging misses the entry message
+and then has no persistent indicator. A missed callout is the difference between "my avionics is
+undersized" and "this mod is broken".
 
-### A4. VAB legibility
-
+### A4 VAB legibility — TO BUILD
 On both module types:
 
     Capacity        15.00 t
     As configured    9.20 t   (0.61x — clean)
     At full tanks   22.40 t   (1.49x — degraded)
 
-The full-tanks line closes the under-fuelling hole: launch with tanks emptied to save mass, fill on
-site, and a configured-mass-only warning was computed against a craft that never flies. Covers ISRU,
-orbital assembly and launched-dry in one line, with no ISRU-specific machinery.
+Full-tank mass = current mass + `sum over resources of (maxAmount - amount) * density`. Closes the
+under-fuelling hole in one line: launch with tanks emptied to save mass, fill on site, and a
+configured-mass-only warning was computed against a craft that never flies. Covers ISRU, orbital
+assembly and launched-dry with no ISRU-specific machinery.
 
-### A5. Fix the `useThrottle` bypass — unrelated live bug, same files
-
+### A5 `useThrottle` bypass — TO BUILD
 Stock `ModuleRCS` uses `mainThrottle` as the axial command when `Z` is idle and `useThrottle` is set,
-so **an avionics-locked vessel can still translate axially on RCS via the throttle today.** RP-1
-patched this as an exploit in 2023 (`816d8656`); AXE never ported it. Fix regardless of which
-direction the design goes.
+so **an avionics-locked vessel can translate axially on RCS via the throttle today**. RP-1 patched it
+as an exploit in 2023 (`816d8656`); AXE never ported it. Zero `mainThrottle` at Locked and snap it to
+full at Axial, inside the existing prefix/postfix window.
 
 ---
 
-## Phase B — decide the mechanic
+## Phase B — RP-1 parity audit
 
-The rig is already built and committed: five modes, a pin, and live knobs (`2faad24`).
+Ground-truthed against `C:\git\ksp\RP-1`. Every row gets a disposition; nothing is left implicit.
 
-### B1. Mode comparison
-
-One craft, `pin noise` on, through all five modes at two amplitudes:
-
-- σ = **0.44** (≈5% over at `k = 11.5`)
-- σ = **0.68** (≈10% over)
-
-| mode | is it a disturbance? | prediction |
+| RP-1 behaviour | AXE | disposition |
 |---|---|---|
-| 0 uncommanded | yes | absorbed |
-| 1 on input | yes | absorbed, possibly toothless |
-| 2 overgain | no — gain margin | 2nd |
-| 3 coupling | no — decoupling | **predicted winner** |
-| 4 delay | no — phase margin | too sharp |
+| `maxMass` = MAX across parts, sum within a part | same | ✅ parity |
+| Vessel mass = wet (`p.mass + p.resourceMass`) | same | ✅ parity |
+| `forceUnlock` from any command part with no avionics | same | ✅ parity |
+| Blanket `massLimit = 0` on uncrewed command parts (`Avionics.cfg:11`) | same | ✅ parity |
+| Blanket hibernation strip (`Avionics.cfg:2`) | same | ✅ parity |
+| `allowAxial` OR'd vessel-wide, no capacity condition | same | ✅ parity |
+| Launch clamps zeroed pre-flight, never grant control | same | ✅ parity |
+| `isEVA` / `InfiniteElectricity` unlock | same | ✅ parity |
+| 124-entry `massLimit` table | ported (90 installed) | ✅ parity |
+| `setToDebrisOnStage` | ported | ✅ parity |
+| Four enforcement points | all four present | ✅ parity |
+| **`useThrottle` RCS bypass patch** | **missing** | 🔧 **A5 — fix** |
+| **Avionics counts only with EC connected** | no EC gate | 🔧 **B1 — decide** |
+| **`interplanetary` range gate** | not ported | 🔧 **B2 — decide** |
+| **`enabledkW` delivery** (RP-1 zeroes ModuleCommand and delivers itself) | adopt-only | 🔧 **B3 — build** |
+| `techRequired` per-unit gate | not ported | ⛔ deliberate — RP-1 tech IDs do not exist in AXE's tree and `GetTechnologyState()` returns `Unavailable` on a miss, silently zeroing those parts forever |
+| `dead` / permanent disable + antenna cascade | not ported | ⛔ deliberate — no current need |
+| Throttle + wheel locks in the mask | not ported | ⛔ deliberate — AXE leaves throttle/staging free at every level. (RP-1's throttle lock has also been broken since KSP 1.9: `THROTTLE` no longer covers X/Z, which moved to `THROTTLE_CUT_MAX`, and its 2015 mask was never updated) |
+| Typed `controllableMass` slider | replaced by box volume | ⛔ deliberate — the point of the V2 redesign |
+| Utilization launch block | replaced by A4 readouts | ⛔ deliberate — RP-1 validates the wrong variable; it never checks mass against capacity, which is why an overweight craft launches clean there |
 
-Recorded so it can be wrong. It has been wrong three times already in this work: authority scaling,
-the frequency direction, and white-vs-correlated.
+### B1. EC-connected gate — **DECIDED: do not port**
+RP-1 only counts a unit toward `maxMass` if it has EC connected. AXE has no such check. Porting it
+would be wrong here: 33 of 90 named parts draw no EC at all and would silently contribute nothing,
+and stock `ModuleCommand` brownout already removes control when the battery dies. Record as a
+deliberate divergence in the class docs.
 
-**Watch for:** MechJeb has some adaptive gain, so it may partially retune against mode 2 where SAS
-will not. A split result between autopilot and hand-flying is itself a finding.
+### B2. Interplanetary range gate — **DECIDED: do not port**
+`IsLockedByInterplanetary` zeroes capacity when a non-interplanetary unit leaves near-Earth
+(threshold = home `spaceAltitudeThreshold * 2`). AXE's `shielded` affects hibernation only. Not
+porting: AXE deliberately moved range to comms (RealAntennas), stated in `AxeAvionicsCore.cfg`.
+Record as deliberate.
 
-### B2. Scaling check — on the winner only
+### B3. `enabledkW` delivery — **BUILD**
+This is the last thing making named parts second-class. RP-1 adopts the part's `ModuleCommand` rate,
+**zeroes it**, and delivers the draw itself so it can be modulated. AXE's fixed module currently only
+adopts, because zeroing without a Kerbalism bridge would make every named part free to run.
 
-Small probe vs large launcher, same σ. With `Hz scaling` on then off (modes 0/1 only; 2/3/4 have no
-frequency term by construction). If the effect is comparable across sizes, the design survives; if
-not, σ needs a term that is not just the overload ratio.
-
-### B3. Legibility check — needs A3/A4 first
-
-Fly overloaded without being told what to look for. Does it read as *undersized avionics* or as *a
-broken mod*? This is the question the whole design exists to answer and it cannot be tested until the
-callouts exist. **B3 gates the commit, not just B1.**
-
-### B4. Failure exit
-
-If no mode survives B1, fall back to **lock + everything in Phase A**. That is still a materially
-better system than what ships today, and Phase A was built to be worth having on its own.
-
----
-
-## Phase C — commit and clean up (only after B)
-
-Deliberately deferred: this is the irreversible half.
-
-1. Pick the mode, fix the numbers, delete the losing modes.
-2. **Delete the EC penalty path** — `PenaltyMultiplier()`, the hardcoded `8f`, `penaltyMultiplierCap`,
-   `penaltyPercent`, and the `#pragma`-guarded stood-down block.
-3. Strip every `DEBUG:` knob and the pin.
-4. **Rewrite `AVIONICS_SPEC.md`** — it still documents the penalty as current behaviour, including
-   the open `k` item at line 232, which closes by removal.
-5. **Fix the three stale `e^80` justifications** (`AVIONICS_SPEC.md:144`,
-   `AxeControlLockerUtils.cs:22`, `ModuleAxeFixedAvionics.cs:27`). They state a hazard that
-   `19b7c1b` removed 19 hours after it was written, and they are still the recorded reason for the
-   lock/penalty split.
+Port the bridge from `ModuleAxeAvionics` to `ModuleAxeFixedAvionics`: `PlannerUpdate`,
+`ResourceUpdate`, static `BackgroundUpdate`, the `KerbalismPresent` branch, and `OnSave` writing the
+on-rails figure. Then zero the `ModuleCommand` resource and drive it from `enabledkW`. Acceptance:
+total vessel EC draw unchanged for a named part before and after.
 
 ---
 
-## Loose ends found along the way — not part of this work
+## Phase C — sack the EC overload penalty
+
+The penalty is proven inert (a representative core carries ~39 h of EC against a 6–10 minute ascent),
+both of its recorded justifications are dead, and named parts can never share a consequence measured
+in watts. It goes regardless of which perturbation wins — RP-1 has no overload EC term either, so
+removing it is *also* parity.
+
+**Delete:**
+- `PenaltyMultiplier()` including the hardcoded `8f` and the `#pragma`-guarded stood-down block
+- `penaltyMultiplierCap` (`KSPField`) and `penaltyPercent`
+- the multiplication in `ComputeBaseWatts()` → becomes `TierWatts()` alone
+
+**Keep:** the whole tier × dry-mass EC draw model, the Kerbalism bridge, hibernation depths,
+on-rails reduction. Only the *overload multiplier* goes.
+
+**Docs to correct in the same pass:**
+- `AVIONICS_SPEC.md` — the "Under-capacity penalty", "Multiplier ceiling" and "k=8 calibration ... OPEN"
+  sections describe current behaviour that will no longer exist; line 232's open item closes by removal
+- the three stale `e^80` justifications (`AVIONICS_SPEC.md:144`, `AxeControlLockerUtils.cs:22`,
+  `ModuleAxeFixedAvionics.cs:27`) — they state a hazard `19b7c1b` removed 19 hours after it was written
+- `AxeAvionicsCore.cfg` header, which advertises the power penalty as the mechanic
+
+---
+
+## Phase D — fly it, decide, clean up (tomorrow)
+
+### D1 Mode comparison
+One craft, `pin noise` on, all seven modes at σ = **0.44** (≈5% over) and **0.68** (≈10% over).
+
+Prediction on record so it can be wrong — it has been three times already (authority scaling, the
+frequency direction, white-vs-correlated): **coupling wins, overgain second, delay too sharp, both
+noise modes absorbed.**
+
+Watch for MechJeb's adaptive gain partially retuning against `overgain` where SAS will not. A split
+between autopilot and hand-flying is itself a result.
+
+### D2 Scaling check — winner only
+Small probe vs large launcher, same σ, `Hz scaling` on then off (modes 2/3 only; 4/5/6 have no
+frequency term). Comparable effect across sizes = the design survives.
+
+### D3 Legibility check — needs A3/A4
+Fly overloaded without being told what to look for. Reads as *undersized avionics* or as *a broken
+mod*? **This gates the commit, not just the mode choice.**
+
+### D4 Cleanup, after the decision
+Fix the mode and numbers, delete the losing penalty classes, strip every `DEBUG:` knob and the pin,
+rewrite the design docs to describe what shipped.
+
+### D5 Failure exit
+No mode survives → set the registry to `PenaltyLock` and ship Phases A+B+C. That is a materially
+better system than today, needs no code change to select, and Phase A was built to be worth having on
+its own.
+
+---
+
+## Loose ends — recorded, not scheduled
 
 - **Editor and flight gate capacity differently.** `ShouldLock` counts a core only if `GuidanceActive`
   (which includes `GuidanceUnlocked`); `EffectiveCapacityTons` deliberately does not gate on
-  `GuidanceUnlocked` (the `17009ce` fix, correct for the EC curve). So before guidance tech is
-  researched the VAB can read "clean" while flight would be unguided — under-warning. Settle before ship.
-- **Gimbal authority looks over-provisioned**, enough that reducing it *improves* ascents. That is a
-  balance observation about gimbal ranges or MechJeb tuning, nothing to do with avionics, and it
-  should not be lost with this document.
+  `GuidanceUnlocked` (the `17009ce` fix, correct for the EC curve). Before guidance tech is researched
+  the VAB can read "clean" while flight would be unguided — under-warning. Settle before ship.
+- **Gimbal authority looks over-provisioned** — cutting it *improves* ascents. A balance observation
+  about gimbal ranges or MechJeb tuning, nothing to do with avionics.
 - **`ModuleRangeSafety` survives its `!MODULE` strip** on both procedural parts, so something re-adds
   it after `:LAST[RP-AXE]`. Pre-existing, not a regression.
