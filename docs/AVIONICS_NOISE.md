@@ -64,17 +64,40 @@ A player-facing toggle whose ONLY effect is whether the unit contributes capacit
 - Disengaged, the unit contributes zero capacity, so a vessel with nothing else falls through to the
   existing Axial/Locked ladder. That is the desired outcome: the passive lock, not noise.
 
-### 4b. Auto-engage — probably the default, with one refinement
+### 4b. Auto-engage AND auto-disengage — noise becomes opt-in
 
-Engage automatically once vessel mass drops to where this unit can control it, so staging restores
-guidance without the player remembering.
+Revised. The unit engages automatically when vessel mass drops to where it can control the vehicle,
+and **disengages automatically when mass rises past that**. Mass only rises by docking, fuel
+transfer, ISRU, boarding or cargo — staging and burning always reduce it — so in practice this fires
+on docking.
 
-**It must latch upward only — never auto-disengage.** If it also disengaged whenever the craft went
-over capacity, the unit would always drop out rather than take the noise, and the entire noise
-mechanic would collapse back into RP-1's lock. Once engaged, an overloaded unit stays engaged and
-pays for it.
+I previously argued auto-disengage must never happen, on the grounds that a unit which always drops
+out rather than take the noise collapses the mechanic back into RP-1's lock. That objection is wrong,
+because it assumed noise had to be the *default* consequence. It does not. Noise becomes an **opt-in
+gamble** instead, and that is a better design than a mandatory one:
 
-Fits the fiction (see 4d): a programmed probe brings its guidance online when it can use it.
+- **Default (auto):** you are always either guided-and-clean, or unguided-and-locked. Never a
+  surprise, never sabotage, and it matches RP-1's behaviour for a player who never touches the
+  toggle.
+- **Override (manual engage while over capacity):** you accept a faulty flight computer and fly with
+  the wobble.
+
+**The choice is real because both options cost.** It is not "penalty vs no penalty" — it is *no
+guidance* versus *unreliable guidance*, and unreliable is often better than none. A player 10% over
+who needs to finish a burn has a genuine decision to make, and the wobble is simultaneously the
+punishment and the information that tells them what they chose.
+
+This also substantially de-risks 4f: if the noise regime is opted into rather than stumbled into,
+imperfect tuning across vehicle sizes is far less damaging.
+
+Fits the fiction (see 4d): a programmed probe brings its guidance online when it can use it, and
+stands down when it cannot.
+
+**Needs hysteresis.** `r` will cross 1.0 back and forth as propellant burns and mass shifts, and a
+naive threshold would chatter between engaged and disengaged — spamming the 4c callout and flipping
+control state mid-flight. Either use a deadband (engage at `r <= 0.95`, disengage at `r >= 1.05`) or
+evaluate only on discrete events (docking, undocking, staging) rather than continuously. Decide
+before building.
 
 ### 4c. Flight callout — REQUIRED
 
@@ -110,12 +133,17 @@ is **not new** — RP-1 has identical behaviour, and station cores carry large a
 (35-160 t) which usually cover it.
 
 What *is* new: under noise the failure is wobble rather than a lock, and wobble during proximity
-operations is considerably more dangerous than simply having no attitude authority. Needs testing
-before this ships, and may be an argument for auto-disengage on docking specifically.
+operations is considerably more dangerous than simply having no attitude authority.
 
-### 4f. Tuning must work out of the box across vehicle sizes — THE open risk
+Resolved by 4b as revised: auto-disengage on rising mass fires exactly here, so docking to something
+heavy stands the unit down into a clean lock rather than starting a wobble against a station.
+
+### 4f. Tuning must work out of the box across vehicle sizes — the open risk, now smaller
 
 `sigma` is a fraction of control range, but the *consequence* depends on inertia, TWR and aero. A
 value that gently wallows a 300 t launcher may be lethal on a 5 t probe. If it turns out
 size-dependent, sigma needs a term that is not just the overload ratio, and the design gets
 materially uglier. **Test small probe vs large launcher before fixing any numbers.**
+
+Downgraded from "could sink the design" by 4b: with noise opted into rather than stumbled into, a
+player who never engages an overloaded unit never meets the tuning at all.
