@@ -283,7 +283,7 @@ namespace RPAxe
         bool _coupledThisTick;
         void OnCouple(GameEvents.FromToAction<Part, Part> _) { _coupledThisTick = true; }
 
-        public void OnDestroy() => GameEvents.onPartCouple.Remove(OnCouple);
+        void OnDestroy() => GameEvents.onPartCouple.Remove(OnCouple);
 
                 // Reports THIS unit against the vessel, in the same vocabulary the procedural core uses: capacity is
         // "guided up to this mass; over it, unguided", and allowAxial decides whether unguided keeps axial

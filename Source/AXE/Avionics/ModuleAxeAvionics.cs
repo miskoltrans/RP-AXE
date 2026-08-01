@@ -629,8 +629,26 @@ namespace RPAxe
             node.SetValue(nameof(currentWatts), ComputeWatts(true), true);
         }
 
+        // The DEBUG mode selector is the control the whole Phase D flight test runs through, and nothing
+        // else in AXE declares UI_ChooseOption via the attribute alone. Populate it explicitly in both
+        // scenes so a silent attribute failure cannot strand the test with an unswitchable mode.
+        void SetupModeChooser()
+        {
+            BaseField f = Fields[nameof(noiseMode)];
+            if (f == null) return;
+            foreach (UI_Control c in new UI_Control[] { f.uiControlEditor, f.uiControlFlight })
+            {
+                if (c is UI_ChooseOption opt)
+                {
+                    opt.options = AxeControlPenalties.Names;
+                    opt.display = AxeControlPenalties.Names;
+                }
+            }
+        }
+
         public override void OnStartFinished(StartState state)
         {
+            SetupModeChooser();
             _commandEC = FindCommandEC();
             ResolveTankBridge();
             ApplyTier();
