@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPAxe
@@ -68,16 +69,16 @@ namespace RPAxe
         /// that draw is whatever the upstream mod or RO happened to ship: present on 57 parts, absent on
         /// 33, and spanning 0.01 to 14 EC/s with no pattern, because AXE never had a field for it.
         ///
-        /// ADOPT-ONLY for now, deliberately. RP-1 also ZEROES the ModuleCommand resource here and delivers
-        /// the draw itself, which only works because it implements the Kerbalism bridge
-        /// (PlannerUpdate/ResourceUpdate/BackgroundUpdate) that ModuleAxeAvionics has and this module does
-        /// not. Zeroing without that bridge would silently make every named part free to run. So this
-        /// records the value and leaves ModuleCommand delivering it unchanged; taking delivery over belongs
-        /// with the shutdown/on-rails work that would give us something to modulate.
+        /// B3: this module now TAKES DELIVERY, matching RP-1. It adopts the rate, zeroes the ModuleCommand
+        /// resource so the draw is not double-counted, and reports the load itself -- through Kerbalism's
+        /// duck-typed bridge (PlannerUpdate / ResourceUpdate / BackgroundUpdate) when Kerbalism is present,
+        /// and by driving the ModuleCommand resource directly when it is not. Zeroing WITHOUT that bridge
+        /// would have silently made every named part free to run, which is why this waited for the bridge.
+        /// Net vessel draw is unchanged; what changes is that the value is now ours to modulate.
         /// </summary>
         [KSPField(isPersistant = true)] public float enabledkW = -1f;
 
-        [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Avionics Power",
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Avionics Power",
                   guiFormat = "F1", guiUnits = " W", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public float currentWatts = 0f;
 
@@ -142,9 +143,71 @@ namespace RPAxe
         // adopts 0, which is honest rather than invented.
         void InitializeResourceRate()
         {
-            if (enabledkW >= 0f) return;
-            ModuleResource ec = FindCommandEC();
-            enabledkW = ec != null ? (float)ec.rate : 0f;
+            _commandEC = FindCommandEC();
+            if (enabledkW < 0f) enabledkW = _commandEC != null ? (float)_commandEC.rate : 0f;
+            // Ours now. Under Kerbalism the module reports the load instead; without Kerbalism we drive
+            // this same resource from UpdateDraw, so either way it must not also bill itself.
+            if (_commandEC != null) _commandEC.rate = 0f;
+        }
+
+        // Mirrors ModuleAxeAvionics: Kerbalism reads ecConsumption off the module, so ModuleCommand's own
+        // input must be zero there or the draw is counted twice.
+        void UpdateDraw()
+        {
+            currentWatts = Mathf.Max(0f, enabledkW) * 1000f;
+            _ecConsumption = new KeyValuePair<string, double>(EcName, -currentWatts / 1000.0);
+            if (_commandEC != null) _commandEC.rate = KerbalismPresent ? 0f : currentWatts / 1000f;
+        }
+
+        // ---- Kerbalism bridge (duck-typed, same shape as the procedural core) ----------------------
+        const string EcName = "ElectricCharge";
+        KeyValuePair<string, double> _ecConsumption = new KeyValuePair<string, double>(EcName, 0);
+        ModuleResource _commandEC;
+        static bool? _kerbalismPresent;
+
+        static bool KerbalismPresent
+        {
+            get
+            {
+                if (_kerbalismPresent == null)
+                {
+                    _kerbalismPresent = false;
+                    foreach (var a in AssemblyLoader.loadedAssemblies)
+                        if (a.name == "Kerbalism") { _kerbalismPresent = true; break; }
+                }
+                return _kerbalismPresent.Value;
+            }
+        }
+
+        public string PlannerUpdate(List<KeyValuePair<string, double>> resources, CelestialBody _,
+                                    Dictionary<string, double> environment)
+        {
+            resources.Add(_ecConsumption);
+            return "avionics";
+        }
+
+        public string ResourceUpdate(Dictionary<string, double> availableResources,
+                                     List<KeyValuePair<string, double>> resourceChangeRequest)
+        {
+            resourceChangeRequest.Add(_ecConsumption);
+            return "avionics";
+        }
+
+        // Kerbalism reads currentWatts straight out of the module snapshot for an unloaded vessel, so the
+        // persisted figure must be the one a parked craft should actually be billed.
+        public static string BackgroundUpdate(Vessel v,
+            ProtoPartSnapshot partSnapshot, ProtoPartModuleSnapshot moduleSnapshot,
+            PartModule protoPartModule, Part protoPart,
+            Dictionary<string, double> availableResources,
+            List<KeyValuePair<string, double>> resourceChangeRequest, double elapsed_s)
+        {
+            if (availableResources.ContainsKey(EcName))
+            {
+                float cw = 0f;
+                if (moduleSnapshot.moduleValues.TryGetValue("currentWatts", ref cw) && cw > 0f)
+                    resourceChangeRequest.Add(new KeyValuePair<string, double>(EcName, -cw / 1000.0));
+            }
+            return "avionics";
         }
 
         ModuleResource FindCommandEC()
@@ -235,7 +298,7 @@ namespace RPAxe
         // Judging this unit locally also drops the per-second ShouldLock walk over every part.
         void UpdateGui()
         {
-            currentWatts = enabledkW * 1000f;
+            UpdateDraw();
             UpdateEditorRatios();
 
             BaseEvent ge = Events[nameof(ToggleGuidanceEngaged)];

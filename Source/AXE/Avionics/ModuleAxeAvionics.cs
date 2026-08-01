@@ -203,12 +203,6 @@ namespace RPAxe
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string capacityDisplay = "";
 
-        // How much of the current draw is "penalty" from being over capacity (MAX across active cores).
-        // PROTOTYPE: stood down while the authority model is being flown -- PenaltyMultiplier() returns 1,
-        // so this reads 0. Hidden rather than deleted; the whole penalty path is still here to revert to.
-        [KSPField(guiActive = false, guiActiveEditor = false, guiName = "Overload Penalty",
-                  guiFormat = "F0", guiUnits = "%", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
-        public float penaltyPercent = 0f;
 
         // PROTOTYPE (docs/AVIONICS_AUTHORITY.md): what the overload penalty is being replaced with. Over
         // capacity the craft keeps control but authority decays as q = e^(-k(r-1)) until RatioCut, past
@@ -1317,29 +1311,6 @@ namespace RPAxe
             return max;
         }
 
-        // r = live vessel mass / effective capacity. r<=1 -> no penalty. Past that, a smooth exponential
-        // penalty (spec-locked k=8) — gentle at small overages, prohibitive past ~25-50% over.
-        //
-        // CEILING on the multiplier, set to e^8 = 2981 -- exactly the r=2 point, so the curve runs its full
-        // natural course out to TWICE capacity and only stops climbing past that. Everything below 2x over
-        // is completely untouched (1.1x -> 2.2, 1.25x -> 7.4, 1.5x -> 54.6).
-        //
-        // Sized against measured craft, not the spec's reference burn. RealFuels' ElectricCharge tank holds
-        // 500 EC/L (measured off saved craft: 41 L battery -> 20496 EC), and draw is watts/1000 EC/s, so a
-        // representative guided core (31.7 t capacity, 146 W, 41 L battery) carries ~39 HOURS of normal
-        // operation. An ascent takes 6-10 minutes. For overload to actually cost that vehicle its guidance
-        // mid-ascent the multiplier has to exceed ~390 (6 min) / ~234 (10 min); at the previous 54.6 ceiling
-        // it survived 43 minutes and sailed through ascent untouched. NOTE this means docs/AVIONICS_SPEC.md's
-        // own k=8 calibration ("50% over = 89% of vessel mass in battery") is out by orders of magnitude
-        // against the shipped EC economy -- the whole curve is arguably under-tuned, not just its ceiling.
-        //
-        // The ceiling still exists because the raw curve reaches e^80 (~5.5e34 W) by r=11, which flattens any
-        // battery inside a single physics tick -- that drops ModuleCommand and takes staging and throttle
-        // with it, which is both harsher than the attitude lock this penalty replaced and unrecoverable. At
-        // e^8 the worst case measured here (a 3 L battery) still lasts ~3 s: fatal, but the vehicle stays
-        // commandable long enough to stage. A KSPField so it can be retuned without a rebuild.
-        [KSPField] public float penaltyMultiplierCap = 2981f;
-
         // Pushed every frame in BOTH scenes. These are UI_ knobs, and changing one does not fire
         // onEditorShipModified, so an editor-only push tied to the recompute never saw the change until the
         // player happened to move a part.
@@ -1434,37 +1405,19 @@ namespace RPAxe
             return $"{mass:N2} t  ({r:0.00}x — {state})";
         }
 
-        float PenaltyMultiplier()
-        {
-            // A shut-down (or on-rails) core has already left EffectiveCapacityTons and is not running a
-            // guidance loop, so there is nothing to penalise -- RP-1's disabled rate is likewise a plain
-            // fraction of the enabled rate with no overload term. Without this guard a lone sleeping core
-            // excluded ITSELF from the vessel MAX, capacity fell to 0, r went to +Infinity, and the
-            // advertised "5% depth" was 5% of e^80 -- which is why shutting an overloaded core down never
-            // saved it, and why hibernation could not be used as an escape from overload at all.
-            // PROTOTYPE (docs/AVIONICS_AUTHORITY.md): the EC overload penalty is STOOD DOWN while the
-            // control-authority model is being flown, so the two do not stack and the feel being judged is
-            // one mechanic. Everything below is left intact -- k, the cap, the curve -- so reverting is
-            // deleting this line. Delete the rest only once the authority model is actually chosen.
-            return 1f;
-#pragma warning disable CS0162 // unreachable while stood down -- deliberate, see above
-            if (!guidanceEnabled || Asleep) return 1f;
-            float mass = VesselMassTons();
-            if (mass <= 0f) return 1f;
-            float capacity = EffectiveCapacityTons();
-            float r = mass / capacity;   // capacity 0 => +Infinity => pinned at the cap below, never NaN
-            return r <= 1f ? 1f : Mathf.Min(Mathf.Exp(8f * (r - 1f)), penaltyMultiplierCap);
-#pragma warning restore CS0162
-        }
 
         // Operating EC draw (watts) for the current model, before idle/hibernation reduction, WITH the
         // overload penalty already folded in (so both the editor preview and the flight readout show it):
         //   Guided draws off live DRY mass and gets lighter per researched tier, then scaled by the
         //   overload penalty; Science-Core draws a flat per-tier rate (no capacity concept, no penalty).
-        float ComputeBaseWatts() => TierWatts() * (guidanceEnabled ? PenaltyMultiplier() : 1f);
+        // C: the overload multiplier is GONE. Proven inert (a representative core carries ~39 h of EC
+        // against a 6-10 minute ascent), both recorded justifications dead, and named parts could never
+        // share a consequence measured in watts. Removing it is also RP-1 parity -- RP-1 has no overload
+        // EC term either. Overload is answered by AxeControlPenalty now.
+        float ComputeBaseWatts() => TierWatts();
 
-        // The tier/mass-based draw BEFORE the overload penalty is applied (ComputeBaseWatts() multiplies
-        // this by PenaltyMultiplier()) -- kept separate since some callers need the unpenalized figure.
+        // The tier/mass-based draw. Since C removed the overload multiplier this is the whole of it, but it
+        // stays a separate method because shutdown/on-rails build their reduced rate from it directly.
         float TierWatts()
         {
             if (!guidanceEnabled) return _scPowerFactor;
@@ -1494,7 +1447,6 @@ namespace RPAxe
         void UpdateRate()
         {
             currentWatts = HighLogic.LoadedSceneIsEditor ? ComputeBaseWatts() : ComputeWatts();
-            penaltyPercent = (PenaltyMultiplier() - 1f) * 100f;
             UpdateAuthorityDisplay();
             _ecConsumption = new KeyValuePair<string, double>(EcName, -currentWatts / 1000.0);
             if (_commandEC != null) _commandEC.rate = KerbalismPresent ? 0f : currentWatts / 1000f;
