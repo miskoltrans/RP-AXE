@@ -243,8 +243,8 @@ namespace RPAxe
 
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: ramp k",
                   guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_FloatRange(minValue = 0.5f, maxValue = 8f, stepIncrement = 0.5f, scene = UI_Scene.All)]
-        public float noiseK = 2.3f;   // anchored: sigma(2.0)=0.9
+         UI_FloatRange(minValue = 0.5f, maxValue = 25f, stepIncrement = 0.5f, scene = UI_Scene.All)]
+        public float noiseK = 11.5f;   // anchored: sigma(1.2)=0.9
 
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise ceiling",
                   guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),

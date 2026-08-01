@@ -55,10 +55,29 @@ free numbers is not an improvement on one, so they were reduced rather than tune
 saturation — the command is fully swamped. A ceiling parameter was capping a curve that caps itself.
 Default 1 (off), kept only as a debug knob.
 
-**`k`: anchored to a statement, not tuned.** *"At twice its rated mass, a unit is hopeless"* means
-`sigma(2.0) = 0.9`, which solves to **`k = 2.3`**. The curve follows: 10% over -> 0.21, 25% -> 0.44,
-50% -> 0.68. The number is now a consequence of a sentence that can be argued about in English, which
-is the property `k = 8` never had.
+**`k`: anchored to a statement, not tuned.** *"At 20% over its rated mass, a unit is hopeless"* means
+`sigma(1.2) = 0.9`, which solves to **`k = 11.5`**:
+
+| over capacity | sigma |
+|---|---|
+| 2% | 0.21 |
+| 5% | 0.44 |
+| 10% | 0.68 |
+| 15% | 0.82 |
+| **20%** | **0.90 — hopeless** |
+
+A deliberately narrow tolerance band: a few percent of grace, then it goes away fast. That makes
+rated capacity close to a hard constraint, which is how real vehicles treat control design margin —
+nobody flies 20% over what the control system was characterised for. The number is a consequence of a
+sentence that can be argued about in English, which is the property `k = 8` never had.
+
+**Two knock-ons of the steeper curve:**
+
+- The wet-mass "undersize and tough out the first minute" strategy (4b-bis item 1) largely dies. At
+  20% over you cannot fly at all, so there is nothing to tough out; only a genuinely marginal craft
+  (a few percent) has anything to ride out. The exploit shrinks to a rounding error.
+- The VAB numbers matter *more*, not less. With clean and hopeless only 20% apart, the editor
+  readout and the full-tanks line from 4b-ter carry most of the legibility load.
 
 **Hz: scaled by vessel, which also dissolves 4f.** A fixed frequency cannot be right for both a 5 t
 probe and a 300 t launcher, because each vehicle low-passes the noise according to its own rotational

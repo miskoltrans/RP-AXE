@@ -59,10 +59,14 @@ namespace RPAxe
         // All tunables are STATIC AND LIVE, driven from the core's DEBUG PAW knobs, so they can be changed
         // in flight without a rebuild. That is the whole point of the prototype: none of these numbers has a
         // physical anchor (KSP models no bending modes), so they can only be found by feel.
-        // k is ANCHORED, not tuned: it falls out of one design statement -- "at twice its rated mass a unit
-        // is hopeless" -- i.e. sigma(2.0) = 0.9, which solves to k = 2.3. Argue about the sentence, not the
-        // number. Gives 10% over -> 0.21, 25% -> 0.44, 50% -> 0.68.
-        public static float NoiseK = 2.3f;
+        // k is ANCHORED, not tuned: it falls out of one design statement -- "at 20% over its rated mass a
+        // unit is hopeless" -- i.e. sigma(1.2) = 0.9, which solves to k = 11.5. Argue about the sentence,
+        // not the number.
+        //   2% over -> 0.21    5% -> 0.44    10% -> 0.68    15% -> 0.82    20% -> 0.90
+        // A deliberately narrow tolerance band: a few percent of grace, then it goes away fast. Rated
+        // capacity is close to a hard constraint, which is how real vehicles treat their control design
+        // margin -- nobody flies 20% over what the control system was characterised for.
+        public static float NoiseK = 11.5f;
 
         // Ceiling defaults to 1 = OFF. sigma = 1 - e^(-k(r-1)) already asymptotes to 1, which is the natural
         // saturation (the command is fully swamped), so a separate cap was capping a curve that caps itself.
