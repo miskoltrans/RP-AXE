@@ -108,19 +108,26 @@ rocket genuinely is harder to slew. Keeping it, but it is not free.
 **The framing choice underneath it:** wet mass makes overload a *transient*; dry mass would make it a
 *binary design constraint*. Worth stating plainly because everything below follows from it.
 
-**1. Overload heals itself as propellant burns.** A craft 20% over at liftoff may be at capacity by
-the time the tanks are half empty. So "undersize the core, tough out the first minute, save the mass"
-becomes a viable strategy. Probably legitimate — it is exactly the margin-shaving RO players enjoy,
-and the cost is real, since a wobbly max-Q can break the vehicle under FAR. But it does mean capacity
-is effectively sized for liftoff mass and anyone willing to eat 60 s of wobble gets a discount. Watch
-whether it becomes the dominant strategy rather than a gamble.
+**1. Overload heals itself as propellant burns — ACCEPTED.** A craft 20% over at liftoff may be at
+capacity by the time the tanks are half empty, so "undersize the core, tough out the first minute,
+save the mass" becomes a viable strategy. Decided we are fine with this even though it eases
+progression: it is exactly the margin-shaving RO players enjoy, and the cost is real, since a wobbly
+max-Q can break the vehicle under FAR.
 
-**2. Chatter.** `r` crosses 1.0 continuously rather than at events, so any threshold-driven auto
-behaviour flaps. See 4b.
+**2. Chatter — NOT A REAL CONCERN, retracted.** I claimed `r` would cross 1.0 repeatedly and flap the
+auto behaviour. It will not: mass falls monotonically through a burn and rises only at coupling
+events, so `r` crosses once, downward. The worry belonged to the continuous mass-watch design that
+4b-bis already replaced with docking events, and does not survive it.
 
-**3. Refuelling and ISRU raise mass CONTINUOUSLY, not as an event.** A mass-watching auto-disengage
-would trip partway through a propellant transfer or a mining run. Docking is discrete; what follows
-it is not.
+**2-bis. The real trap in its place: auto-engage must test THIS UNIT'S capacity, not the vessel MAX.**
+A disengaged unit contributes zero, so if it is the only avionics aboard, `maxCapacity` is 0 and `r`
+is infinite — and an auto-engage condition written against vessel `r` can never become true again.
+The unit would be permanently stuck off. Condition must be `vesselMass <= thisUnit.capacityTons`.
+
+**3. Only ISRU raises mass continuously — refuelling does not.** Corrected: once docked it is a
+single vessel, so transferring propellant between its tanks moves mass around internally and leaves
+the total unchanged. Genuine continuous mass gain comes from ISRU/drills alone, which is rare enough
+to ignore for now. Coupling events remain the trigger regardless.
 
 **4. THE ONE THAT BREAKS THE MASS-INCREASE RULE: `r` also rises when CAPACITY falls.** Staging away
 the stage carrying the big core drops `maxCapacity` while mass also drops — so `r` jumps without any
