@@ -160,7 +160,11 @@ namespace RPAxe
             }
             else
             {
-                lvl = AxeControlLockerUtils.ShouldLock(_vessel.Parts, out _, out _, out _noise);
+                lvl = AxeControlLockerUtils.ShouldLock(_vessel.Parts, out _, out float vesselMass, out _noise);
+                // Each vehicle is perturbed at its OWN attitude-response frequency (Hz ~ m^-1/3), which is
+                // what keeps the effect comparable between a 5 t probe and a 300 t stack instead of being
+                // accidentally tuned to whatever was last flown.
+                AxeControlLockerUtils.EffectiveNoiseHz = AxeControlLockerUtils.HzForMass(vesselMass);
             }
             SetLevel(lvl);
             UpdateMechJeb();

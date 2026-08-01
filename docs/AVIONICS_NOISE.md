@@ -42,6 +42,53 @@ part, no avionics), never as a threshold crossing.
 - **RCS is unusable at any meaningful sigma.** Thrusters respond instantly with no inertia to filter
   anything. Now scaled separately, default 0.25.
 
+## 3-bis. The numbers — five knobs reduced to two
+
+The previous two designs died because a single free number could not be anchored to anything. Five
+free numbers is not an improvement on one, so they were reduced rather than tuned.
+
+| was | now |
+|---|---|
+| `k`, ceiling, Hz, RCS scale, mode | **`k = 2.3`** (from one sentence) and **`C = 2`** (from a scaling law) |
+
+**Ceiling: deleted.** `sigma = 1 - e^(-k(r-1))` already asymptotes to 1, which is the natural
+saturation — the command is fully swamped. A ceiling parameter was capping a curve that caps itself.
+Default 1 (off), kept only as a debug knob.
+
+**`k`: anchored to a statement, not tuned.** *"At twice its rated mass, a unit is hopeless"* means
+`sigma(2.0) = 0.9`, which solves to **`k = 2.3`**. The curve follows: 10% over -> 0.21, 25% -> 0.44,
+50% -> 0.68. The number is now a consequence of a sentence that can be argued about in English, which
+is the property `k = 8` never had.
+
+**Hz: scaled by vessel, which also dissolves 4f.** A fixed frequency cannot be right for both a 5 t
+probe and a 300 t launcher, because each vehicle low-passes the noise according to its own rotational
+response — the big stack filters 2 Hz heavily, the probe barely at all. That *is* the size-scaling
+risk, restated.
+
+    Hz = C / mass^(1/3)
+
+Rigid-body attitude response time scales with linear dimension (`I ~ m*L^2`, torque roughly `~ m`, so
+timescale `~ L`, frequency `~ 1/L ~ m^(-1/3)`). At `C = 2`, a 1 t probe gets 2 Hz and a 100 t stack
+gets 0.43 Hz — each perturbed at its own response frequency, so the effect is comparable across sizes
+instead of accidentally tuned to whatever was flown last. Toggleable to flat Hz for A/B comparison.
+
+**RCS scale: deleted, because it was the wrong diagnosis.** RCS being unusable is not an inertia
+problem, it is a SMALL-COMMAND problem — docking uses commands around 0.05, so additive noise of
++/-0.3 is six times the signal. RCS is merely where small commands live. On-input mode preserves the
+ratio at any magnitude (0.05 becomes 0.035-0.065: degraded, not destroyed), so the separate scale is
+unnecessary. Default back to 1.
+
+**Mode: defaults to ON-INPUT.** This reverses the earlier lean toward uncommanded. The fiction
+argument for uncommanded (real rockets fly themselves) is still true but weaker than the
+signal-to-noise argument above, and largely moot in practice: MechJeb and SAS command continuously
+during any active flight, so on-input noise still fires. The only time it does not is when nothing is
+flying — exactly when nothing should be corrupted. It also makes 4a less load-bearing.
+
+**The open risk this creates:** on-input mode has never been flown. It is better on every axis I can
+reason about, but proportional noise may simply be too weak — during a nominal ascent MechJeb's
+corrections are small, so the absolute perturbation is small too. **That is now the most important
+untested question, ahead of any number.**
+
 ## 4. Open items
 
 ### 4a. Engage / Disengage Guidance — REQUIRED, not optional
@@ -243,7 +290,7 @@ operations is considerably more dangerous than simply having no attitude authori
 Resolved by 4b as revised: auto-disengage on rising mass fires exactly here, so docking to something
 heavy stands the unit down into a clean lock rather than starting a wobble against a station.
 
-### 4f. Tuning must work out of the box across vehicle sizes — the open risk, now smaller
+### 4f. Tuning must work out of the box across vehicle sizes — addressed by Hz scaling, needs confirming
 
 `sigma` is a fraction of control range, but the *consequence* depends on inertia, TWR and aero. A
 value that gently wallows a 300 t launcher may be lethal on a 5 t probe. If it turns out

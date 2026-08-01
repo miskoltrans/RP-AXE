@@ -59,26 +59,60 @@ namespace RPAxe
         // All tunables are STATIC AND LIVE, driven from the core's DEBUG PAW knobs, so they can be changed
         // in flight without a rebuild. That is the whole point of the prototype: none of these numbers has a
         // physical anchor (KSP models no bending modes), so they can only be found by feel.
-        public static float NoiseK = 2f;      // how fast noise ramps with overload
-        public static float NoiseMax = 0.9f;  // ceiling, as a fraction of control range
-        public static float NoiseHz = 2f;     // correlation frequency -- THE critical one, see above
+        // k is ANCHORED, not tuned: it falls out of one design statement -- "at twice its rated mass a unit
+        // is hopeless" -- i.e. sigma(2.0) = 0.9, which solves to k = 2.3. Argue about the sentence, not the
+        // number. Gives 10% over -> 0.21, 25% -> 0.44, 50% -> 0.68.
+        public static float NoiseK = 2.3f;
+
+        // Ceiling defaults to 1 = OFF. sigma = 1 - e^(-k(r-1)) already asymptotes to 1, which is the natural
+        // saturation (the command is fully swamped), so a separate cap was capping a curve that caps itself.
+        // Kept only as a debug knob.
+        public static float NoiseMax = 1f;
+
+        // C in Hz = C / mass^(1/3). NOT a frequency itself -- see HzForMass.
+        public static float NoiseHz = 2f;
+        public static bool NoiseHzAutoScale = true;
+        public static float EffectiveNoiseHz = 2f;   // set per-vessel by the controller
+
+        // A FIXED frequency cannot be right for both a 5 t probe and a 300 t launcher: the vehicle low-passes
+        // the noise according to its own rotational response, so a big stack filters 2 Hz heavily while a
+        // small probe barely does. Perturbing each vehicle at its OWN response frequency is what makes the
+        // effect comparable across sizes instead of accidentally tuned to whatever was last flown.
+        //
+        // Rigid-body attitude response time scales with linear dimension: I ~ m*L^2 and torque roughly ~ m,
+        // so timescale ~ L and natural frequency ~ 1/L ~ m^(-1/3). At C = 2 a 1 t probe gets 2 Hz and a 100 t
+        // stack gets 0.43 Hz.
+        public static float HzForMass(float massTons)
+            => NoiseHzAutoScale ? NoiseHz / Mathf.Pow(Mathf.Max(0.1f, massTons), 1f / 3f) : NoiseHz;
         public static bool NoiseWhite;        // white instead of correlated: tests the inertia-filter theory
         public static bool NoiseRoll = true;  // roll is the most perceptible axis; separable for that reason
         public static bool NoiseOnRcs = true;
 
-        // ADDITIVE vs ON-INPUT. Two genuinely different mechanics, not two tunings of one:
+        // ADDITIVE vs ON-INPUT. Defaults to ON-INPUT. The deciding argument turned out not to be the fiction
+        // but signal-to-noise: RCS was reported unusable at any sigma, and that is not an inertia problem, it
+        // is a SMALL-COMMAND problem. Docking uses commands around 0.05, so additive noise of +/-0.3 is six
+        // times the signal and the input is pure garbage; RCS is simply where small commands live. Scaling
+        // the command instead preserves the ratio at any magnitude -- 0.05 becomes 0.035-0.065, degraded
+        // rather than destroyed -- which removes the need for a separate RCS scale.
+        //
+        // The fiction argument (real rockets fly themselves, so the program should be corrupted even with no
+        // pilot input) is still true but weaker, and mostly moot: MechJeb and SAS command continuously during
+        // any active flight, so on-input noise still fires. The only time it does not is when nothing is
+        // flying, which is exactly when nothing should be corrupted.
+        //
+        // Two genuinely different mechanics, not two tunings of one:
         //   additive  -- noise is added regardless of what the pilot commands, so a craft wanders on its own.
         //                Reads as a vehicle that will not sit still.
         //   on-input  -- noise SCALES the command, so a null stick stays null and only what you ask for comes
         //                out wrong. Reads as controls you cannot trust. No uncommanded drift.
         // The second is the better fit for "the computer is mis-executing your guidance", the first for "the
         // loop is unstable". Which one is right is a feel question, hence the toggle.
-        public static bool NoiseAdditive = true;
+        public static bool NoiseAdditive = false;
 
         // RCS was reported unusable at any penalty: thrusters respond instantly and have no inertia to filter
         // anything, so the same sigma that gently wallows a launch vehicle makes fine attitude work
         // impossible and burns monopropellant doing it. Scaled separately rather than just on/off.
-        public static float NoiseRcsScale = 1f;
+        public static float NoiseRcsScale = 1f;   // on-input mode preserves small commands, so no longer needs cutting
 
         // Kept only so the two can be compared in flight. Off by default -- see the note at the cutoff site.
         public static bool HardCutoff = false;
@@ -109,7 +143,7 @@ namespace RPAxe
             if (sigma <= 0f) return 0f;
             float n = NoiseWhite
                 ? Random.Range(-1f, 1f)
-                : Mathf.Clamp((Mathf.PerlinNoise(Time.time * NoiseHz, axis * 37.7f) * 2f - 1f) * PerlinGain, -1f, 1f);
+                : Mathf.Clamp((Mathf.PerlinNoise(Time.time * EffectiveNoiseHz, axis * 37.7f) * 2f - 1f) * PerlinGain, -1f, 1f);
             return n * sigma;
         }
 

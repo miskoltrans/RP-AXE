@@ -222,10 +222,17 @@ namespace RPAxe
         // THE critical knob. Vessel rotational inertia low-passes control noise, so frequency decides whether
         // this is felt at all: too fast and a heavy rocket averages it away (the same trap that killed v1 in a
         // different guise), too slow and the autopilot simply trims it out as a steady bias.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise Hz",
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise Hz (C)",
                   guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_FloatRange(minValue = 0.1f, maxValue = 20f, stepIncrement = 0.1f, scene = UI_Scene.All)]
         public float noiseHz = 2f;
+
+        // With auto-scale on, the knob above is C in Hz = C / mass^(1/3) rather than a frequency, so each
+        // vehicle is perturbed at its own attitude-response frequency. Off = flat Hz, for A/B comparison.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: Hz scaling",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "flat", enabledText = "by vessel mass", scene = UI_Scene.All)]
+        public bool noiseHzAuto = true;
 
         // White vs correlated: a direct test of the inertia-filtering theory. If white is invisible and
         // correlated is felt, that confirms the vessel is acting as a low-pass filter.
@@ -237,12 +244,12 @@ namespace RPAxe
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: ramp k",
                   guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_FloatRange(minValue = 0.5f, maxValue = 8f, stepIncrement = 0.5f, scene = UI_Scene.All)]
-        public float noiseK = 2f;
+        public float noiseK = 2.3f;   // anchored: sigma(2.0)=0.9
 
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise ceiling",
                   guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_FloatRange(minValue = 0.1f, maxValue = 1f, stepIncrement = 0.05f, scene = UI_Scene.All)]
-        public float noiseMax = 0.9f;
+        public float noiseMax = 1f;   // 1 = ceiling off; the curve saturates on its own
 
         // Roll is by far the most perceptible axis, so it is separable -- if roll noise alone dominates the
         // feel, that is worth knowing before tuning anything else.
@@ -264,14 +271,14 @@ namespace RPAxe
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise mode",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_Toggle(disabledText = "on input", enabledText = "uncommanded", scene = UI_Scene.All)]
-        public bool noiseAdditive = true;
+        public bool noiseAdditive = false;   // on-input: preserves small commands
 
         // RCS responds instantly and has no inertia to filter anything, so the sigma that gently wallows a
         // launcher makes fine attitude work impossible. Scaled rather than merely switched off.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: RCS noise scale",
                   guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_FloatRange(minValue = 0f, maxValue = 1f, stepIncrement = 0.05f, scene = UI_Scene.All)]
-        public float noiseRcsScale = 0.25f;
+        public float noiseRcsScale = 1f;   // on-input mode removed the need to cut RCS
 
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise on RCS",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
@@ -1279,6 +1286,7 @@ namespace RPAxe
             AxeControlLockerUtils.NoiseOverrideEnabled = noiseOverride;
             AxeControlLockerUtils.NoiseOverrideValue = noiseOverrideValue;
             AxeControlLockerUtils.NoiseHz = noiseHz;
+            AxeControlLockerUtils.NoiseHzAutoScale = noiseHzAuto;
             AxeControlLockerUtils.NoiseWhite = noiseWhite;
             AxeControlLockerUtils.NoiseK = noiseK;
             AxeControlLockerUtils.NoiseMax = noiseMax;
