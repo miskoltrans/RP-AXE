@@ -152,8 +152,84 @@ namespace RPAxe
         public static float GainFor(float sigma)
             => sigma <= 0f ? 1f : 1f + OvergainSlope * (RatioFromSigma(sigma) - 1f);
 
-        /// <summary>Mode: 0 = uncommanded noise, 1 = on-input noise, 2 = overgain.</summary>
+        // ---- MODE 3: CROSS-AXIS COUPLING ----------------------------------------------------------
+        // Commanding one axis bleeds into the others. A feedback loop closes each axis assuming they are
+        // independent, so correcting the induced yaw induces pitch, correcting that induces roll: the loop
+        // ends up fighting itself rather than fighting us. That is an attack on the DECOUPLING assumption,
+        // the third of the three ways to destabilise a loop (gain margin, phase margin, coupling) -- and
+        // like the other two it is not a disturbance, so there is nothing to average out.
+        //
+        // Physically this is what a control system that was never characterised for its vehicle looks like:
+        // misaligned IMU axes, gimbal cross-talk, a decoupling matrix nobody tuned.
+        //
+        // Coefficients are FIXED PER VESSEL, not re-rolled. That makes it a systematic misalignment -- this
+        // particular rocket pulls left when you pitch up -- which is learnable, and reads as a characteristic
+        // of the vehicle rather than as random malfunction. Inherits on-input's best property for free: it
+        // is proportional to command, so no uncommanded drift and small commands stay proportionally intact.
+        static int _coupleSeed = int.MinValue;
+        static readonly float[] _cc = new float[6];
+
+        public static void SeedCoupling(int seed)
+        {
+            if (seed == _coupleSeed) return;
+            _coupleSeed = seed;
+            System.Random rng = new System.Random(seed);
+            for (int i = 0; i < 6; i++) _cc[i] = (float)(rng.NextDouble() * 2.0 - 1.0);
+        }
+
+        public static void ApplyCoupling(ref float pitch, ref float yaw, ref float roll, float sigma)
+        {
+            float p0 = pitch, y0 = yaw, r0 = roll;
+            pitch = Mathf.Clamp(p0 + sigma * (_cc[0] * y0 + _cc[1] * r0), -1f, 1f);
+            yaw   = Mathf.Clamp(y0 + sigma * (_cc[2] * p0 + _cc[3] * r0), -1f, 1f);
+            roll  = Mathf.Clamp(r0 + sigma * (_cc[4] * p0 + _cc[5] * y0), -1f, 1f);
+        }
+
+        // ---- MODE 4: TRANSPORT DELAY --------------------------------------------------------------
+        // Hold the command for N physics ticks, N rising with overload. Pure delay is the classic loop
+        // killer: it eats PHASE margin, and unlike gain there is nothing a fixed-gain controller can do
+        // about it at all. 100-200 ms of unexpected lag destabilises most controllers, and at KSP's 50 Hz
+        // that is only 5-10 ticks.
+        //
+        // Expected to be the sharpest of the five and quite possibly a cliff wearing a gradient's clothes.
+        // Built to find out rather than because it is predicted to win.
+        const int DelayBufferMax = 64;
+        static readonly float[] _dp = new float[DelayBufferMax];
+        static readonly float[] _dy = new float[DelayBufferMax];
+        static readonly float[] _dr = new float[DelayBufferMax];
+        static int _dIdx;
+        public static float DelayTicksMax = 10f;   // at sigma = 1, in 50 Hz physics ticks
+
+        public static void ResetDelay()
+        {
+            System.Array.Clear(_dp, 0, DelayBufferMax);
+            System.Array.Clear(_dy, 0, DelayBufferMax);
+            System.Array.Clear(_dr, 0, DelayBufferMax);
+            _dIdx = 0;
+        }
+
+        public static void ApplyDelay(ref float pitch, ref float yaw, ref float roll, float sigma)
+        {
+            int n = Mathf.Clamp(Mathf.RoundToInt(DelayTicksMax * sigma), 0, DelayBufferMax - 1);
+            _dp[_dIdx] = pitch; _dy[_dIdx] = yaw; _dr[_dIdx] = roll;
+            int read = (_dIdx - n + DelayBufferMax) % DelayBufferMax;
+            _dIdx = (_dIdx + 1) % DelayBufferMax;
+            if (n == 0) return;
+            pitch = _dp[read]; yaw = _dy[read]; roll = _dr[read];
+        }
+
+        /// <summary>0 = uncommanded, 1 = on-input, 2 = overgain, 3 = cross-coupling, 4 = transport delay.</summary>
         public static int NoiseMode = 1;
+
+        /// <summary>Modes 3 and 4 act on all three axes at once and carry state, so they cannot go through
+        /// the per-axis ApplyNoise path.</summary>
+        public static bool ModeIsTriple => NoiseMode >= 3;
+
+        public static void ApplyTriple(ref float pitch, ref float yaw, ref float roll, float sigma)
+        {
+            if (NoiseMode == 3) ApplyCoupling(ref pitch, ref yaw, ref roll, sigma);
+            else ApplyDelay(ref pitch, ref yaw, ref roll, sigma);
+        }
 
         /// <summary>Perturb one control axis according to the current mode.</summary>
         public static float ApplyNoise(float command, int axis, float sigma)

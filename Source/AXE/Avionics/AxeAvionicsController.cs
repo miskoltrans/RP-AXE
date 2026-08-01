@@ -106,10 +106,19 @@ namespace RPAxe
             {
                 if (_noise <= 0f) { LastNoise = Vector3.zero; return; }
                 float y0 = st.yaw, p0 = st.pitch, r0 = st.roll;
-                st.yaw = AxeControlLockerUtils.ApplyNoise(st.yaw, 0, _noise);
-                st.pitch = AxeControlLockerUtils.ApplyNoise(st.pitch, 1, _noise);
-                if (AxeControlLockerUtils.NoiseRoll)
-                    st.roll = AxeControlLockerUtils.ApplyNoise(st.roll, 2, _noise);
+                if (AxeControlLockerUtils.ModeIsTriple)
+                {
+                    // Coupling and delay act on all three axes together and carry state, so they bypass the
+                    // per-axis path. The roll toggle does not apply: both are cross-axis by construction.
+                    AxeControlLockerUtils.ApplyTriple(ref st.pitch, ref st.yaw, ref st.roll, _noise);
+                }
+                else
+                {
+                    st.yaw = AxeControlLockerUtils.ApplyNoise(st.yaw, 0, _noise);
+                    st.pitch = AxeControlLockerUtils.ApplyNoise(st.pitch, 1, _noise);
+                    if (AxeControlLockerUtils.NoiseRoll)
+                        st.roll = AxeControlLockerUtils.ApplyNoise(st.roll, 2, _noise);
+                }
                 LastNoise = new Vector3(st.pitch - p0, st.yaw - y0, st.roll - r0);
                 return;
             }
@@ -145,6 +154,11 @@ namespace RPAxe
                 _vessel = FlightGlobals.ActiveVessel;
                 _masterMechJeb = null;
                 _requested = true;
+                // Per-vessel state for modes 3/4: coupling coefficients are seeded from the vessel so the
+                // misalignment is a stable characteristic of THIS craft, and the delay buffer must not carry
+                // another vessel's commands across the switch.
+                AxeControlLockerUtils.ResetDelay();
+                if (_vessel != null) AxeControlLockerUtils.SeedCoupling((int)_vessel.persistentId);
             }
             if (_requested) { _requested = false; Recompute(); }
         }

@@ -272,10 +272,27 @@ namespace RPAxe
         //   2 overgain    -- no noise at all: the command is AMPLIFIED, so the loop overcontrols and
         //                    oscillates by itself. Models the mechanism rather than the symptom, and makes
         //                    noise Hz / white / correlated irrelevant.
+        //   3 coupling    -- commanding one axis bleeds into the others, coefficients fixed per vessel. The
+        //                    loop fights itself: correcting induced yaw induces pitch. Learnable, so it
+        //                    reads as a characteristic of the craft rather than a malfunction.
+        //   4 delay       -- the command is held for N ticks. Eats phase margin, which a fixed-gain
+        //                    controller can do nothing about. Expected to be the sharpest and possibly a
+        //                    cliff; built to find out.
+        //
+        // 0 and 1 are DISTURBANCES, which a feedback loop exists to reject -- hence their weakness. 2, 3 and
+        // 4 are the three classical ways to destabilise a loop (gain margin, decoupling, phase margin) and
+        // are not rejectable in the same way.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: mode",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_ChooseOption(options = new[] { "uncommanded", "on input", "overgain" }, scene = UI_Scene.All)]
+         UI_ChooseOption(options = new[] { "uncommanded", "on input", "overgain", "coupling", "delay" }, scene = UI_Scene.All)]
         public int noiseMode = 1;
+
+        // Physics ticks of lag at sigma = 1. KSP runs 50 Hz, so 10 ticks = 200 ms -- already past what
+        // destabilises most controllers.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: delay ticks",
+                  guiFormat = "F0", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 1f, maxValue = 40f, stepIncrement = 1f, scene = UI_Scene.All)]
+        public float delayTicksMax = 10f;
 
         // Slope in G = 1 + slope*(r-1). Anchored like k: typical loop gain margin is 2-4x, so G = 3 should
         // push most controllers unstable, and G(1.2) = 3 gives slope 10.
@@ -1305,6 +1322,7 @@ namespace RPAxe
             AxeControlLockerUtils.NoiseOnRcs = noiseOnRcs;
             AxeControlLockerUtils.NoiseMode = noiseMode;
             AxeControlLockerUtils.OvergainSlope = overgainSlope;
+            AxeControlLockerUtils.DelayTicksMax = delayTicksMax;
             AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
             AxeControlLockerUtils.HardCutoff = hardCutoff;
         }
