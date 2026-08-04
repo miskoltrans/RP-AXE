@@ -1302,7 +1302,7 @@ namespace RPAxe
             {
                 Part p = parts[i];
                 if (p == null) continue;
-                t += p.mass + p.GetModuleMass(p.mass);
+                t += AxeControlLockerUtils.PartDryMassTons(p);
             }
             return t;
         }
@@ -1522,10 +1522,14 @@ namespace RPAxe
         // hollow-volume mass), and RealFuels reports itself NON-ADDITIVELY (`mass - prefabMass`, replacing
         // the part's 1 t prefab mass rather than adding to it). Adding our own two numbers would quietly
         // disagree with the mass KSP actually flies.
+        //
+        // "KSP's own dry-mass path" is PartDryMassTons (prefabMass + the module terms) — NOT
+        // `part.mass + part.GetModuleMass(...)`, which was the earlier form and double-counted every one
+        // of those module terms on top of a `part.mass` that already contained them.
         void UpdateMassReadouts()
         {
             batteryMass = ReadTankMass();
-            totalPartMass = part.mass + part.GetModuleMass(part.mass) + part.GetResourceMass();
+            totalPartMass = AxeControlLockerUtils.PartDryMassTons(part) + part.GetResourceMass();
         }
 
         // RealFuels' own computed tank mass for the battery segment (tankage base + cells). 0 if RealFuels

@@ -185,8 +185,11 @@ namespace RPAxe.AutoTest
                     double dry = baseCost + moduleCost - resourceAtFull;
                     double fuel = resourceLoaded;
 
+                    // Dry mass, via KSP's own Part.UpdateMass() formula. The earlier form added
+                    // GetModuleMass on top of p.mass, which already contains it — double-counting every
+                    // mass modifier (avionics hardware, ProceduralPart hull, RealFuels tank).
                     double mass = 0d;
-                    try { mass = p.mass + p.GetModuleMass(p.partInfo.partPrefab != null ? p.partInfo.partPrefab.mass : p.mass, ModifierStagingSituation.CURRENT); }
+                    try { mass = AxeControlLockerUtils.PartDryMassTons(p); }
                     catch { mass = p.mass; }
 
                     shipDry += dry; shipFuel += fuel; shipMass += mass;

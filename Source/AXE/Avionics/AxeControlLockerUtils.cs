@@ -375,6 +375,26 @@ namespace RPAxe
         public static bool NoiseOverrideEnabled;
         public static float NoiseOverrideValue = 0f;
 
+        // Dry mass of one part, computed the way KSP itself computes it in Part.UpdateMass():
+        //   mass = prefabMass + SUM(IPartMassModifier.GetModuleMass(prefabMass))
+        //
+        // NOT `p.mass + p.GetModuleMass(p.mass)`. Once UpdateMass() has run, `p.mass` ALREADY equals
+        // prefabMass + moduleMass, so adding the module term again double-counts every mass modifier on
+        // the part -- this module's own hardware mass, ProceduralPart's hull, and RealFuels' tank (which
+        // reports NON-additively, as `mass - prefabMass`, so it gets double-counted too). On an avionics
+        // box that is most of the part's mass, which is why the readouts built on it came out near 2x.
+        //
+        // Deriving from the prefab rather than reading `p.mass` also makes this independent of whether
+        // UpdateMass() has already run this frame: in flight KSP keeps `p.mass` current, but in the editor
+        // it is only refreshed when something calls ShipConstruct.GetShipMass(), so reading it directly
+        // makes the answer depend on call order.
+        public static float PartDryMassTons(Part p)
+        {
+            if (p == null) return 0f;
+            float prefab = (p.partInfo != null && p.partInfo.partPrefab != null) ? p.partInfo.partPrefab.mass : p.mass;
+            return prefab + p.GetModuleMass(prefab);
+        }
+
         // A4. Mass this vessel would have with every tank full. The KSP editor shows tanks full by default,
         // so the configured figure is normally already the worst case -- but a player who deliberately
         // EMPTIES tanks to launch light and refuel on site (or assembles in orbit, or launches dry) gets a
@@ -388,7 +408,7 @@ namespace RPAxe
             {
                 Part p = parts[i];
                 if (p == null) continue;
-                t += p.mass + p.GetModuleMass(p.mass);
+                t += PartDryMassTons(p);
                 for (int j = 0; j < p.Resources.Count; j++)
                 {
                     PartResource r = p.Resources[j];
