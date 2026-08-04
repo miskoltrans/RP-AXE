@@ -700,6 +700,8 @@ namespace RPAxe
                 // Flight: hardware mass/cost/capacity are frozen (persisted). Legacy craft (mass 0) get one
                 // fallback compute from whatever hwVolume was persisted (0 for pre-redesign saves).
                 if (avionicsMass <= 0f) UpdateHardwareMass();
+                // ...but the RealFuels battery tank is NOT self-freezing: see FlightRestoreBatteryVolume().
+                StartCoroutine(FlightRestoreBatteryVolume());
                 GameEvents.onStageActivate.Add(OnStage);
                 GameEvents.onPartCouple.Add(OnCouple);
                 GameEvents.onVesselGoOnRails.Add(GoOnRails);
@@ -1209,6 +1211,61 @@ namespace RPAxe
             if (!HighLogic.LoadedSceneIsEditor || _rfPM == null) return;
             SendVolumeChangedEvent(battVolume);
             try { _rfCalcMass?.Invoke(_rfPM, null); } catch { }
+        }
+
+        // FLIGHT counterpart to PushBatteryToTank, and the reason the box does not gain mass at launch.
+        //
+        // PushBatteryToTank() is an editor-only OVERRIDE of what the procedural shape driver tells
+        // RealFuels: the RF tank is only the BATTERY slice of the box, not the whole box. ROLib's
+        // ModuleROTank re-announces the FULL box volume on start (SendVolumeChangedEvent -> the very event
+        // RealFuels listens for), and in flight nothing was left to correct it, so RF resized the battery
+        // tank to the entire box on load. Measured on a Probe Bus: tank volume 31.4 L -> 179.9 L and tank
+        // mass 0.452 t -> 2.592 t, i.e. +2.14 t the VAB never showed and the player never built. Exactly
+        // desiredTotalVolume/battVolume (5.7295x), which is what made it identifiable.
+        //
+        // ProceduralParts does NOT re-push on load, which is why only ROLib-driven parts drifted -- but
+        // re-asserting unconditionally is both simpler and safe: on a part already holding the right
+        // volume this is a no-op write of the same number.
+        //
+        // The EC amount is carried across by hand. RealFuels rebuilds its resource when the volume
+        // changes, so without the snapshot a load would silently refill or empty the battery. Clamping to
+        // the NEW maxAmount is the point on an affected craft: its oversized battery is as much a bug as
+        // its oversized mass, and the stored charge has to come down with the tank.
+        IEnumerator FlightRestoreBatteryVolume()
+        {
+            // Let the shape driver's own start-up volume push land first, so this is the last write
+            // rather than one it overwrites. Same one-frame idiom as EditorFirstFrameSetup().
+            yield return null;
+            yield return null;
+            RestoreBatteryVolume();
+        }
+
+        void RestoreBatteryVolume()
+        {
+            if (!HighLogic.LoadedSceneIsFlight || _rfPM == null || battVolume <= 0f) return;
+
+            PartResource ec = FindEcResource();
+            double held = ec != null ? ec.amount : -1d;
+
+            SendVolumeChangedEvent(battVolume);
+            try { _rfCalcMass?.Invoke(_rfPM, null); } catch { }
+
+            ec = FindEcResource();
+            if (ec != null && held >= 0d) ec.amount = Math.Min(held, ec.maxAmount);
+
+            // RF's reported mass just changed; refresh the part's own mass and let anything that caches
+            // vessel mass (MechJeb's dv readout above all) recompute against the corrected number.
+            part.UpdateMass();
+            UpdateMassReadouts();
+            if (vessel != null) GameEvents.onVesselWasModified.Fire(vessel);
+        }
+
+        PartResource FindEcResource()
+        {
+            if (part.Resources == null) return null;
+            for (int i = 0; i < part.Resources.Count; i++)
+                if (part.Resources[i]?.resourceName == EcName) return part.Resources[i];
+            return null;
         }
 
         // Sends the battery segment's volume to RealFuels. This is the SAME event this module now listens
