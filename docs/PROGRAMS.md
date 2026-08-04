@@ -209,6 +209,29 @@ Pacing consequence, accepted deliberately: the early game is more serial. `Subor
 objectives must be flown and concluded before `EarlySatellites` is offered, and its 5 before the
 seven branches below it open.
 
+### The handler reconciles against the contract log
+
+`AxeProgramHandler` does not trust its own scenario node. On every load it re-arms a check that
+scans finished contracts for a **completed `AXE_Complete_X`** and concludes `X` if the node did not
+already say so.
+
+This is not defensive coding for its own sake — it repairs a real corruption class. A conclude
+contract only updates the handler if the `ConcludeProgram` **behaviour** was attached when it
+completed, and early generated conclude contracts had no `BEHAVIOUR` block at all. Saves exist with
+`AXE_Complete_SuborbRocketDev`, `AXE_Complete_SuborbRocketResearch` and
+`AXE_Complete_EarlySatellites` all `state = Completed` while the same save still lists those three
+as `activeProgram`: the bonus paid, the contract closed, the program never did. `maxCompletions = 1`
+means replaying the contract cannot fix it.
+
+Under `ProgramActive` charters that was cosmetic. Under `ProgramConcluded` it is a softlock — a
+program stuck Active is one whose successors can never be chartered — so the repair is what makes
+the gate change safe on an existing career.
+
+Readiness is **tested, not latched** (`ksp-lazily-loaded-empty-not-absent`): `ContractSystem.loaded`
+goes false in its `OnAwake` and true at the end of its `OnLoad`, so a scenario loading first would
+read a live-but-empty contract list and "helpfully" conclude nothing. The check stays pending across
+frames until the list is really there.
+
 `tools/build_economy.py` fails the build if any program has an objective that can never be offered —
 an unreachable objective strands a program active for the whole career, and does it silently
 (`CompleteContractRequirement` matches by name against finished contracts and logs nothing on a miss).

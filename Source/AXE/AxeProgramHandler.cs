@@ -1,3 +1,5 @@
+using ContractConfigurator;
+using Contracts;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -80,6 +82,60 @@ namespace RPAxe
                 Debug.Log("[AXE] Program concluded: " + program);
         }
 
+        // --- Reconciliation against the contract log -------------------------------------------
+        //
+        // A "Conclude Program: X" contract that COMPLETED is the authoritative record that X is
+        // closed, and it is a stronger record than this scenario node: the contract log is written
+        // by stock, while the Conclude() call that updates this node depends on the ConcludeProgram
+        // BEHAVIOUR being attached to that contract at the moment it completed.
+        //
+        // It was not always attached. Saves exist in which AXE_Complete_SuborbRocketDev,
+        // AXE_Complete_SuborbRocketResearch and AXE_Complete_EarlySatellites are all state =
+        // Completed with NO BEHAVIOUR block at all — generated before the behaviour shipped. The
+        // money paid, the contract closed, and the program stayed active forever. It cannot be
+        // repaired by replaying the contract either: maxCompletions = 1, so it is never re-offered.
+        //
+        // That was cosmetic while charters gated on ProgramActive. It stopped being cosmetic when
+        // they moved to ProgramConcluded: a program stuck Active is now one whose successors can
+        // never be chartered, which is the exact softlock that change existed to remove. So the
+        // handler reconciles instead of trusting its own node.
+        //
+        // The prefix has to match tools/build_economy.py's `AXE_Complete_{name}`.
+        private const string CompletePrefix = "AXE_Complete_";
+        private bool _reconcilePending;
+
+        private void Update()
+        {
+            if (!_reconcilePending) return;
+            // Readiness is TESTED, never latched: ContractSystem.loaded is set false in its OnAwake
+            // and true at the end of its OnLoad, so a scenario that loads before it reads a live but
+            // EMPTY contract list. Answering "nothing is finished" from that frame would silently
+            // decline to repair anything. Staying pending until the list is really there costs one
+            // branch per frame.
+            if (!ContractSystem.loaded || ContractSystem.Instance == null) return;
+            List<Contract> finished = ContractSystem.Instance.ContractsFinished;
+            if (finished == null) return;
+
+            _reconcilePending = false;
+            foreach (Contract c in finished)
+            {
+                if (c == null || c.ContractState != Contract.State.Completed) continue;
+                ConfiguredContract cc = c as ConfiguredContract;
+                if (cc == null) continue;
+                // subType is read straight off the save node in ConfiguredContract.OnLoad and
+                // survives a contractType that failed to resolve; contractType.name is the fallback.
+                string sub = !string.IsNullOrEmpty(cc.subType) ? cc.subType : cc.contractType?.name;
+                if (string.IsNullOrEmpty(sub) || !sub.StartsWith(CompletePrefix)) continue;
+
+                string program = sub.Substring(CompletePrefix.Length);
+                if (_concluded.Contains(program)) continue;
+                Debug.LogWarning("[AXE] Program " + program + " has a completed conclusion contract "
+                                 + "but was not recorded as concluded — repairing. (Save predates the "
+                                 + "ConcludeProgram behaviour.)");
+                Conclude(program);
+            }
+        }
+
         public override void OnSave(ConfigNode node)
         {
             foreach (string p in _active)
@@ -91,7 +147,7 @@ namespace RPAxe
         public override void OnLoad(ConfigNode node)
         {
             // `concludedProgram` is additive: a save written before program conclusion existed has
-            // no such keys and loads as "nothing concluded yet", which is correct. No migration.
+            // no such keys and loads as "nothing concluded yet", which is correct.
             _active.Clear();
             _concluded.Clear();
             foreach (string p in node.GetValues("activeProgram"))
@@ -101,6 +157,10 @@ namespace RPAxe
                 _concluded.Add(p);
                 _active.Remove(p);
             }
+            // What the node says is only a starting point — see Update(). Re-armed on every load
+            // rather than run once per career: it is idempotent, and a scene that loads before the
+            // contract system has to get its chance in a later frame.
+            _reconcilePending = true;
         }
     }
 }
