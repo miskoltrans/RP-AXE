@@ -7,6 +7,51 @@ using UnityEngine;
 namespace RPAxe
 {
     /// <summary>
+    /// Is Kerbalism actually loaded?
+    ///
+    /// This is NOT answerable from <c>AssemblyLoader.loadedAssemblies</c>. Kerbalism ships as
+    /// <c>Kerbalism1xx.kbin</c> and is pulled in by KerbalismBootstrap via <c>Assembly.Load</c> at
+    /// runtime, so KSP's own list holds only "KerbalismBootstrap" — never "Kerbalism". A check written
+    /// against that list therefore answers FALSE on every install that HAS Kerbalism, which is the exact
+    /// inverse of the truth, and it fails silently.
+    ///
+    /// That inversion is not cosmetic: the avionics modules use it to decide whether to route their EC
+    /// draw through Kerbalism or through stock ModuleCommand. Answering "no Kerbalism" made them do
+    /// BOTH — stock drained the full avionics wattage for real while the module also reported the same
+    /// wattage to Kerbalism, so every probe paid twice and Kerbalism filed the stock half under its
+    /// "Others" broker (ResourceInfo.Sync attributes any resource delta it did not itself cause).
+    ///
+    /// The CLR knows what is loaded, so ask the CLR. Cached: Kerbalism is loaded during KSP's loading
+    /// screen, long before any editor or flight scene, so the first call always sees the final answer.
+    /// </summary>
+    internal static class AxeKerbalism
+    {
+        private static bool? _present;
+
+        public static bool Present
+        {
+            get
+            {
+                if (_present == null)
+                {
+                    _present = false;
+                    foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies())
+                    {
+                        // Name match is definitive (AXE references the assembly as "Kerbalism"); the
+                        // type probe is insurance against a future repack under a different identity.
+                        if (a.GetName().Name == "Kerbalism" || a.GetType("KERBALISM.Kerbalism", false) != null)
+                        {
+                            _present = true;
+                            break;
+                        }
+                    }
+                }
+                return _present.Value;
+            }
+        }
+    }
+
+    /// <summary>
     /// Renders Kerbalism's ElectricCharge displays as SI power (W/kW/MW) instead of "EC/s", matching
     /// RO's convention that 1 EC = 1 kJ (so 1 EC/s = 1 kW). Adapted from RP-1's KerbalismPatcher EC
     /// block, which was hard-gated to Kerbalism <= 3.17; AXE ships Kerbalism 3.32, whose UI internals

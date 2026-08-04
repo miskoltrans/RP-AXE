@@ -166,16 +166,14 @@ namespace RPAxe
         ModuleResource _commandEC;
         static bool? _kerbalismPresent;
 
+        // See AxeKerbalism.Present — same silent inversion this module shared with ModuleAxeAvionics:
+        // the old AssemblyLoader.loadedAssemblies scan can never match "Kerbalism", so EC was charged
+        // twice (stock ModuleCommand + the Kerbalism API report).
         static bool KerbalismPresent
         {
             get
             {
-                if (_kerbalismPresent == null)
-                {
-                    _kerbalismPresent = false;
-                    foreach (var a in AssemblyLoader.loadedAssemblies)
-                        if (a.name == "Kerbalism") { _kerbalismPresent = true; break; }
-                }
+                if (_kerbalismPresent == null) _kerbalismPresent = AxeKerbalism.Present;
                 return _kerbalismPresent.Value;
             }
         }

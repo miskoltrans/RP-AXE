@@ -523,16 +523,15 @@ namespace RPAxe
         // timewarp would be noise. Nothing steers while unloaded anyway, so the distinction is inert.
         bool Asleep => guidanceEnabled && CanHibernate && (hibernating || _onRails);
 
+        // See AxeKerbalism.Present: AssemblyLoader.loadedAssemblies NEVER contains "Kerbalism" (the
+        // .kbin is Assembly.Load-ed by KerbalismBootstrap), so the old scan of that list always said
+        // "no Kerbalism" and this module double-charged EC — stock ModuleCommand drained the full
+        // wattage while ResourceUpdate reported the same wattage to Kerbalism.
         static bool KerbalismPresent
         {
             get
             {
-                if (_kerbalismPresent == null)
-                {
-                    _kerbalismPresent = false;
-                    foreach (var a in AssemblyLoader.loadedAssemblies)
-                        if (a.name == "Kerbalism") { _kerbalismPresent = true; break; }
-                }
+                if (_kerbalismPresent == null) _kerbalismPresent = AxeKerbalism.Present;
                 return _kerbalismPresent.Value;
             }
         }
