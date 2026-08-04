@@ -34,6 +34,7 @@ Emits (both regenerated wholesale; never hand-edit):
 
 Usage: python tools/build_economy.py [path-to-RP-1-Programs.cfg]
 """
+import collections
 import os
 import re
 import sys
@@ -261,6 +262,34 @@ def scan_charters():
     return out
 
 
+def scan_successors():
+    """programme -> [programmes whose charter it unlocks by being CONCLUDED].
+
+    Charters gate on `REQUIREMENT { type = ProgramConcluded }` (see the header of
+    design/Programs/ActivatePrograms.cfg for why it is conclusion and not activity). That makes
+    concluding a programme the thing that opens the next tier, which the completion contract has to
+    SAY: without it the text reads as pure loss ("its missions stop being offered") and a player
+    optimising for missions available would rationally never conclude anything, stalling the career.
+
+    Parsed off the same file the game reads rather than kept as a second list here, so re-homing a
+    programme in the DAG cannot leave the advertised unlock lying.
+    """
+    if not os.path.exists(CHARTERS):
+        return {}
+    txt = open(CHARTERS, encoding="utf-8").read()
+    out = collections.defaultdict(list)
+    for body in blocks(txt, "CONTRACT_TYPE"):
+        program = val(body, "program")   # first `program =` is the ActivateProgram behaviour's
+        if not program:
+            continue
+        for req in re.findall(r"REQUIREMENT\s*\n\s*\{(.*?)\n\t\}", body, re.S):
+            if "type = ProgramConcluded" not in req:
+                continue
+            for m in re.finditer(r"program = (\S+)", req):
+                out[m.group(1)].append(program)
+    return out
+
+
 def main():
     src = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_SRC
     if not os.path.exists(src):
@@ -352,6 +381,11 @@ def main():
 
     os.makedirs(os.path.dirname(OUT_CAPS), exist_ok=True)
     os.makedirs(os.path.dirname(OUT_DONE), exist_ok=True)
+
+    # Both halves of the "what does concluding buy me" text below need these, so they are built once
+    # here rather than at each use site.
+    by_name = {p["name"]: p for p in progs}
+    succ = scan_successors()
 
     with open(OUT_CAPS, "w", encoding="utf-8", newline="\n") as f:
         f.write(f"""// ============================================================================
@@ -446,17 +480,24 @@ CONTRACT_GROUP
             # in design/Programs/ActivatePrograms.cfg, so the pair reads as one series in the
             # contract list. Docs and comments keep the British spelling.
             f.write(f"\ttitle = Conclude Program: {ptitle(p['title'])}\n")
-            # Three things this text has to do or the feature reads as a bug: name the consequence
+            # Four things this text has to do or the feature reads as a bug: name the consequence
             # BEFORE the click (missions vanishing from Available with no warning reads as the mod
-            # breaking), promise there is no deadline (AXE gates nothing by time, so nothing can
-            # expire — unsaid, players feel rushed into concluding before they have farmed the
+            # breaking), name the REWARD beyond the funds — concluding is what charters the next tier
+            # of programs, and a player reading only the downside would rationally never conclude and
+            # stall the career — promise there is no deadline (AXE gates nothing by time, so nothing
+            # can expire — unsaid, players feel rushed into concluding before they have farmed the
             # repeatables), and stay on one line (KSP config is line-based).
+            opens = [ptitle(by_name[s]["title"]) for s in succ.get(p["name"], []) if s in by_name]
+            unlock = (f" Concluding it charters the next programs: {', '.join(sorted(opens))}."
+                      if opens else "")
             f.write(f"\tdescription = Every objective of the {ptitle(p['title'])} program has been met. "
                     "Collect the program's remaining budget and close the books. Its missions — "
-                    "including the repeatable ones — will no longer be offered. There is no deadline: "
+                    "including the repeatable ones — will no longer be offered." + unlock +
+                    " There is no deadline: "
                     "fly them as long as you like and conclude whenever you are ready.\n")
             f.write(f"\tsynopsis = Close out the {ptitle(p['title'])} program and collect its remaining budget.\n")
-            f.write(f"\tcompletedMessage = {ptitle(p['title'])} is closed. Its missions are no longer offered.\n")
+            f.write(f"\tcompletedMessage = {ptitle(p['title'])} is closed. Its missions are no longer offered."
+                    + (f" New programs are available: {', '.join(sorted(opens))}." if opens else "") + "\n")
             f.write("\tprestige = Significant\n\tmaxCompletions = 1\n\tmaxSimultaneous = 1\n")
             f.write("\tminExpiry = 0\n\tmaxExpiry = 0\n\tdeadline = 0\n")
             # No autoAccept: this has to be visible in Mission Control (see the file header).
@@ -520,7 +561,6 @@ CONTRACT_GROUP
     # the bonus is not offered until every objective is met, and a capstone looks like any other
     # mission. So the one moment a player chooses between programmes -- accepting a "Begin Program"
     # charter -- was also the one moment nothing said what the choice was worth.
-    by_name = {p["name"]: p for p in progs}
     cap_of = {}
     for c, (amount, owner) in cap_pay.items():
         cap_of.setdefault(owner, []).append((c, amount))
@@ -580,13 +620,17 @@ CONTRACT_GROUP
             # The tail states how the programme ENDS. It has to be here rather than left unsaid,
             # because chartering is the one moment the player chooses, and the previous wording
             # ("Chartering is permanent: the program stays active for the rest of the career") became
-            # false the moment conclusion shipped. Both halves of the promise matter: nothing forces
-            # you to conclude and nothing expires, but concluding is one-way.
+            # false the moment conclusion shipped. Three halves of the promise now matter: nothing
+            # forces you to conclude and nothing expires, concluding is one-way, and concluding is
+            # how the programs below this one get chartered at all.
+            opens = [ptitle(by_name[s]["title"]) for s in succ.get(program, []) if s in by_name]
+            unlock = (f" Concluding it is also what charters {', '.join(sorted(opens))}."
+                      if opens else "")
             f.write(f"\t%notes = {worth} Your difficulty settings scale rewards on top of that, so "
                     f"the funds that land run higher. Once every objective is met you can conclude "
                     f"the program to collect that bonus, which closes it out — its missions stop "
-                    f"being offered, including the repeatable ones. Nothing expires, so the program "
-                    f"stays active for as long as you want to keep flying it."
+                    f"being offered, including the repeatable ones.{unlock} Nothing expires, so the "
+                    f"program stays active for as long as you want to keep flying it."
                     f"\n}}\n\n")
 
     paid_caps = sum(a for a, _ in cap_pay.values())

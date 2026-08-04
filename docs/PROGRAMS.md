@@ -148,7 +148,7 @@ Programs have an ending, and it is earned. **Inactive → Active → Concluded**
 (`Program.IsActive => !IsComplete && acceptedUT != 0`; `CompleteProgram` does
 `ActivePrograms.Remove(p)`). **Only `Active` satisfies `ProgramActive`** — that one rule is the whole
 feature, and every one of the 250 program-gated seed contracts stops being offered as a consequence of
-it.
+it. Only `Concluded` satisfies `ProgramConcluded`, which is how the *next* programs are chartered.
 
 The only route is the generated `Conclude Program: X` contract
 (`design/Programs/AxeProgramCompletion.cfg`), which is not offered until every objective of the
@@ -173,6 +173,41 @@ Two things are load-bearing and easy to get wrong if this is ever reworked:
 - `ConcludeProgram` fires on **`OnCompleted`**, not `OnAccepted` like its mirror `ActivateProgram`.
   The contract is Active for one frame while `AxeInstantComplete` waits, and pulling its own
   `ProgramActive` requirement inside that window is what CC answers by failing it.
+- **Successor charters gate on `ProgramConcluded`, never `ProgramActive`** — see below.
+
+### Conclusion is the progression gate — 2026-08-05
+
+The 32 gated `AXE_Begin_*` charters used to require their predecessor **active**. That combination —
+one-way conclusion, `maxCompletions = 1` charters, and a requirement that can go *unmet* — was a
+trap: collecting a program's completion bonus permanently withdrew every charter below it, with no
+warning and no recovery short of a save edit. **16 of the 35 programs** could brick a branch that
+way; concluding `EarlySatellites` took seven successors, and `SuborbRocketResearch` took the whole
+career at minute one.
+
+The charters now use `ProgramConcluded` (`Source/AXE/Contracts/ProgramConcluded.cs`), met once the
+predecessor's `Conclude Program: X` contract has completed. The requirement is **monotonic** — unmet
+→ met exactly once, never back — so no successor can be stranded, and the failure class is gone by
+construction rather than by a warning. Member contracts are unchanged and keep `ProgramActive`, so
+concluding still closes a program's own missions.
+
+That makes conclusion a **hand-off** rather than a payout with a downside: it ends one program's
+missions and charters the next tier in the same click. Both generated texts say so — the conclude
+contract's `description`/`completedMessage` and the charter's `notes` name the programs it opens,
+parsed from `ActivatePrograms.cfg` by `scan_successors()` so they cannot drift from the DAG.
+
+Two invariants this relies on, both verified across the current 35 programs and worth re-checking if
+an objective is ever re-homed:
+
+- **A program's objectives must be gated on that same program.** An objective sitting behind an
+  *ancestor* would be unreachable — the ancestor is always concluded by the time the successor
+  charters — leaving the successor permanently unconcludable.
+- **No contract may require two programs active at once.** A predecessor is now always concluded
+  before its successor starts, so such a gate is unsatisfiable. (Currently zero of the 292
+  program-gated seed contracts do this.)
+
+Pacing consequence, accepted deliberately: the early game is more serial. `SuborbRocketResearch`'s 4
+objectives must be flown and concluded before `EarlySatellites` is offered, and its 5 before the
+seven branches below it open.
 
 `tools/build_economy.py` fails the build if any program has an objective that can never be offered —
 an unreachable objective strands a program active for the whole career, and does it silently

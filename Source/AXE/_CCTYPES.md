@@ -10,7 +10,8 @@ Counts are actual failures from the M1 `KSP.log`.
 
 | Type | Kind | Uses | Status | Notes |
 |---|---|---|---|---|
-| `ProgramActive` | requirement | 368 | **stub: always-true** | Real gating wired in **M4** (AxeProgramHandler). Parses `program` now. |
+| `ProgramActive` | requirement | 368 | **real** (M4) | Met while every named program is in `AxeProgramHandler._active`. Used by **member** contracts, so concluding a program stops its own missions being offered. Defaults `checkOnActiveContract = false` (diverges from RP-1) so conclusion cannot fail in-flight contracts. |
+| `ProgramConcluded` | requirement | 32 | **real** (AXE-only) | Met once every named program has been *closed out*. Used by the **charter** contracts (`AXE_Begin_*`) as the successor gate. Not an RP-1 type — it exists because gating a successor on the predecessor being *active* let the one-way `Conclude()` permanently withdraw `maxCompletions = 1` charters (16 of 35 programs could brick a branch). Monotonic, so nothing can be stranded. |
 | `RP1CollectScience` | param | 63 | **real** | Polls `ScienceSubject.science / scienceCap` like RP-1; honours `experiment`/`subject`, `situation`/`location`, `biome`, `fractionComplete`, `fractionCompleteBiome`, `minSubjectsToComplete`. **Must poll:** Kerbalism writes `RnDSubject.science` directly and fires `OnScienceRecieved` only at 100%, so the old event-driven version ignored `fractionComplete` and stalled forever below a full subject. |
 | `RP1ReturnHome` | param | 74 | **real (simplified)** | Landed/splashed on home body. Dropped RP-1's maxSpeed/facility nuance. |
 | `DownrangeDistance` | param | 10 | **real** | Great-circle distance flown from lift-off point. |
@@ -27,7 +28,7 @@ Counts are actual failures from the M1 `KSP.log`.
 
 Implementation: `Source/AXE/Contracts/` — `AxeAlwaysComplete.cs` (shared no-op), `NoOpFactories.cs`,
 `ReachMach.cs`, `ReturnHome.cs`, `DownrangeDistance.cs`, `CollectScience.cs`, `ProgramActive.cs`,
-`AcceptContract.cs`.
+`ProgramConcluded.cs`, `AcceptContract.cs`.
 
 ## Known M2 leftovers
 - **Duplicate contract names:** ✅ resolved — `design/Contracts/DedupeContracts.cfg` deletes the
