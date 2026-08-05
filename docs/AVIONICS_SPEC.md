@@ -188,9 +188,14 @@ a spacecraft. **This is the tuning dial** — Mars at 96 W for a Standard bus is
 - **Hibernation does NOT reduce it** (user): the heater doesn't care whether the computer is running, and
   it gives deep space an irreducible power floor. Added to the draw, never multiplied into it. (Strictly,
   hibernating means *less* waste heat and so *more* heater — modelling that would make hibernation a trap.)
-- **Eclipse NOT modelled.** It is thoroughly historical — eclipse thermal cycling is the dominant LEO
-  design driver and battery heaters are a real LEO power-budget line — but it is a *near-Earth* mechanic,
-  and this one is deliberately Mars-and-beyond. Deferred on scope, not on realism.
+- **Eclipse IS modelled (user, 2026-08-05 — reversing the deferral above).** Eclipse thermal cycling is the
+  dominant LEO design driver and battery heaters are a real LEO power-budget line, so it earns its place.
+  Shadow test is a dependency-free cylindrical occultation of the main body (`InShadow`), so it behaves
+  identically loaded, in background, and with or without Kerbalism. In shadow the **solar term goes to
+  zero**; the body term does not, which is what stops a LEO eclipse costing the same watts as Neptune —
+  Earth keeps radiating IR and bouncing albedo at a craft in its shadow, and from low orbit it fills a
+  third of the sky. Tunable via `bodyIrFraction` (0.35 = combined albedo + planetary IR as a fraction of
+  the solar constant at that body).
 - **Cold side only.** The inner system (Venus 1.9×, Mercury 6.7× flux) is a *cooling* problem costing mass
   in radiators and sunshades, not watts in heaters. Separate mechanic, phase 2.
 - **NOT a part-temperature mechanic.** Purely an EC load, so it collides with nothing — not stock thermal,
@@ -212,10 +217,33 @@ previously only affected propellant boiloff. So a deep-space bus's thermal perfo
 *Thermal* research, not Guidance research — and Thermodynamics gains teeth. A Standard bus never benefits
 from MLI research at all; that is the capability the Deep-Space Bus sells.
 
-**OPEN — VAB planning by target body.** At Earth the live load is 0, so the mechanic is invisible exactly
-where you plan. Shipped stopgap is a static `Thermal at deep space` readout (the asymptote). The better
-answer, per user: a target-body selector like RealAntennas', so you can see the load at the body you
-intend to orbit. Not built.
+**VAB planning by target body — DONE, and it needed no new UI.** The selector already existed: it is
+Kerbalism's own planner, whose body and sunlight/shadow pickers feed straight into
+`PlannerUpdate(resources, CelestialBody body, environment)`. AXE was discarding **both** parameters and
+reporting a flat number. It now reads `environment["sun_dist"]` and `environment["sunlight"]` (keys from
+`KERBALISM.Planner.ResourceSimulator`) and reports the real heater load for the selected body and lighting
+state. The static `Thermal at deep space` PAW readout stays as a quick asymptote reference.
+
+**Live numbers as built** (0.30 m³ box, A = 2.69 m², Standard k=63 | best MLI k=8):
+
+| situation | deficit | Standard | best MLI |
+|---|--:|--:|--:|
+| LEO 400 km, sunlit | 0.000 | 0 W | 0 W |
+| LEO 400 km, **eclipse** | 0.884 | **150 W** | 19 W |
+| GEO, eclipse | 0.998 | 169 W | 21 W |
+| Lunar orbit, eclipse | 0.882 | 149 W | 19 W |
+| Mars orbit, sunlit | 0.524 | 89 W | 11 W |
+| Jupiter cruise | 0.963 | 163 W | 21 W |
+| Neptune cruise | 0.999 | 169 W | 21 W |
+
+> **BALANCE CONCERN, unresolved.** A Standard bus in LEO eclipse now wants ~150 W with **no counterplay** —
+> Standard is deliberately locked out of the MLI ladder, so no amount of Thermodynamics research helps, and
+> the Deep-Space Bus is not purchasable until T5. Early LEO satellites therefore pay a large, unavoidable
+> eclipse bill. Three ways out if play confirms it is too harsh: (a) let Standard ride the MLI ladder too
+> but with a floor above what Deep-Space reaches (e.g. 63→42→32→26 vs 42→21→13→8, keeping DS ~2-3× better);
+> (b) raise `bodyIrFraction`; (c) accept it — early satellites carrying big batteries is historically true.
+> (a) is the most honest, since MLI is MLI, and it restores counterplay without weakening what the
+> Deep-Space Bus sells.
 
 **Mass/cost: own per-tier ladder, authored as real data — not a live multiplier. SHIPPED.** Matching RP-1's
 real shape meant ~10 *separate* tech-node placements in AXE's tree (mirroring each Guided-tier unlock

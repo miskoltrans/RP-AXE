@@ -108,6 +108,12 @@ namespace RPAxe
         static readonly string[] _mliTech = { "th_hermeticBus", "th_extendedMLIWrapping", "th_advancedMLI" };
         static readonly float[] _mliK = { 21f, 13f, 8f };   // eps_eff 0.05 / 0.03 / 0.02
 
+        // Combined albedo + planetary IR reaching a craft from the body it orbits, as a fraction of the
+        // solar constant at that body's distance. ~0.35 for Earth (IR alone is ~240 of 1361 W/m^2, albedo
+        // adds the rest). This is what keeps a LEO ECLIPSE from costing the same watts as Neptune: Earth
+        // goes on radiating at a craft in its shadow, and from low orbit it fills half the sky.
+        [KSPField] public float bodyIrFraction = 0.35f;
+
         // AS-BUILT, persisted, frozen at launch. New features are built craft-sharing-first (user,
         // 2026-08-05): the k a craft flies with is the one resolved when it was BUILT, so a shared .craft
         // performs as its designer intended instead of silently re-deriving from the recipient's research.
@@ -1209,23 +1215,72 @@ namespace RPAxe
             return k;
         }
 
-        /// <summary>
-        /// Fraction of the full radiative loss the heaters must supply: 0 at the home body's orbit, rising
-        /// to 1 far from the Sun. Static and vessel-keyed so the BACKGROUND path can call it -- an unloaded
-        /// probe coasting outward must keep re-evaluating this, and reading a frozen snapshot value would
-        /// mean the load never grows during exactly the unattended cruise where it matters.
-        /// </summary>
-        public static float SolarDeficit(Vessel v)
+        /// <summary>How much of the sky the body fills, as a fraction (0.5 at the surface, → 0 far away).</summary>
+        static double SkyFraction(double bodyRadius, double distFromCentre)
         {
-            if (v == null || Planetarium.fetch == null) return 0f;
-            CelestialBody home = Planetarium.fetch.Home, sun = Planetarium.fetch.Sun;
-            if (home?.orbit == null || sun == null) return 0f;
-            double refR = home.orbit.semiMajorAxis;
-            if (refR <= 0d) return 0f;
-            double r = (v.GetWorldPos3D() - sun.position).magnitude;
-            if (r <= 0d) return 0f;
-            double f = 1d - refR * refR / (r * r);
+            if (bodyRadius <= 0d || distFromCentre <= bodyRadius) return 0.5d;
+            double s = bodyRadius / distFromCentre;
+            return 0.5d * (1d - System.Math.Sqrt(1d - s * s));
+        }
+
+        /// <summary>
+        /// Fraction of the full radiative loss the heaters must supply. The shared core of the thermal
+        /// model, so flight, background and the Kerbalism planner all agree.
+        ///
+        ///   deficit = 1 − solar − bodyIR      (clamped 0..1)
+        ///     solar   = (homeSMA/r)²          ... ZERO in eclipse: the Sun is the only term that occults
+        ///     bodyIR  = skyFraction · irFrac · (homeSMA/rBody)²
+        ///
+        /// The body term is why an eclipse in LEO is NOT as cold as Neptune. Earth keeps radiating IR and
+        /// bouncing albedo at a craft in its shadow, and at low altitude it fills half the sky. Without it,
+        /// a 35-minute LEO eclipse would cost the same watts as interplanetary cruise, which is wrong.
+        /// </summary>
+        public static float ThermalDeficit(double sunDist, bool inShadow, CelestialBody body,
+                                           double distFromBodyCentre, float irFrac)
+        {
+            if (Planetarium.fetch?.Home?.orbit == null) return 0f;
+            double refR = Planetarium.fetch.Home.orbit.semiMajorAxis;
+            if (refR <= 0d || sunDist <= 0d) return 0f;
+
+            double solar = inShadow ? 0d : refR * refR / (sunDist * sunDist);
+
+            double bodyIr = 0d;
+            if (body != null && body != Planetarium.fetch.Sun && distFromBodyCentre > 0d)
+            {
+                double rBody = body.orbit != null ? body.orbit.semiMajorAxis : sunDist;
+                if (rBody > 0d)
+                    bodyIr = SkyFraction(body.Radius, distFromBodyCentre) * irFrac * (refR * refR / (rBody * rBody));
+            }
+
+            double f = 1d - solar - bodyIr;
             return f <= 0d ? 0f : (f >= 1d ? 1f : (float)f);
+        }
+
+        /// <summary>
+        /// Cylindrical-shadow test: is the body we orbit between us and the Sun? Geometric and
+        /// dependency-free, so it works identically with or without Kerbalism, loaded or in background.
+        /// </summary>
+        public static bool InShadow(Vessel v)
+        {
+            CelestialBody sun = Planetarium.fetch?.Sun, b = v?.mainBody;
+            if (sun == null || b == null || b == sun) return false;
+            Vector3d vp = v.GetWorldPos3D();
+            Vector3d toSun = sun.position - vp, toBody = b.position - vp;
+            double sunDist = toSun.magnitude, bodyDist = toBody.magnitude;
+            if (sunDist <= 0d || bodyDist <= 0d) return false;
+            double along = Vector3d.Dot(toBody, toSun / sunDist);
+            if (along <= 0d) return false;                       // body is behind us; nothing occults
+            return (toBody - toSun / sunDist * along).magnitude < b.Radius;
+        }
+
+        /// <summary>Live deficit for a real vessel — used by both the flight and background paths.</summary>
+        public static float VesselDeficit(Vessel v, float irFrac)
+        {
+            if (v == null || Planetarium.fetch?.Sun == null) return 0f;
+            Vector3d vp = v.GetWorldPos3D();
+            double sunDist = (vp - Planetarium.fetch.Sun.position).magnitude;
+            double bodyDist = v.mainBody != null ? (vp - v.mainBody.position).magnitude : 0d;
+            return ThermalDeficit(sunDist, InShadow(v), v.mainBody, bodyDist, irFrac);
         }
 
         // Heater draw. NOT reduced by hibernation (user, 2026-08-05): the heater does not care whether the
@@ -1234,7 +1289,7 @@ namespace RPAxe
         float ThermalWatts()
         {
             float k = HighLogic.LoadedSceneIsEditor || asBuiltThermalK <= 0f ? ResolveThermalK() : asBuiltThermalK;
-            return k * ThermalArea() * SolarDeficit(vessel);
+            return k * ThermalArea() * VesselDeficit(vessel, bodyIrFraction);
         }
 
         // ---- Attitude reference ("star tracker") -- docs/AVIONICS_SPEC.md, Axis 2. ----
@@ -2036,9 +2091,34 @@ namespace RPAxe
         }
 
         #region Kerbalism (duck-typed; invoked by reflection only if Kerbalism is present)
-        public string PlannerUpdate(List<KeyValuePair<string, double>> resources, CelestialBody _, Dictionary<string, double> environment)
+        // The VAB "simulate at body X" selector already EXISTS -- it is Kerbalism's own planner, whose body
+        // and sunlight/shadow pickers feed straight into these two parameters. AXE used to discard both and
+        // report a flat number. Now the planner shows the real heater load for the body and lighting state
+        // you selected, which is the whole point: at Earth in sunlight the load is 0, so without this the
+        // mechanic is invisible exactly where you plan for it.
+        //
+        // Keys come from KERBALISM.Planner.ResourceSimulator: "sun_dist" (m), "sunlight" (1 sunlit / 0
+        // shadow). Fall back to the live vessel figure if either is missing.
+        public string PlannerUpdate(List<KeyValuePair<string, double>> resources, CelestialBody body, Dictionary<string, double> environment)
         {
-            resources.Add(_ecConsumption);
+            double sunDist = 0d, sunlight = 1d;
+            bool haveEnv = environment != null
+                           && environment.TryGetValue("sun_dist", out sunDist) && sunDist > 0d;
+            if (environment != null) environment.TryGetValue("sunlight", out sunlight);
+
+            double watts = ComputeBaseWatts();
+            if (haveEnv)
+            {
+                // Planner bodies are evaluated in orbit about themselves, so use the body's own radius as
+                // the stand-in for "how much sky does it fill" -- low orbit, the conservative case.
+                double bodyDist = body != null ? body.Radius * 1.1d : 0d;
+                float k = asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK();
+                watts += k * ThermalArea()
+                         * ThermalDeficit(sunDist, sunlight < 0.5d, body, bodyDist, bodyIrFraction);
+            }
+            else watts += thermalWatts;
+
+            resources.Add(new KeyValuePair<string, double>(EcName, -watts / 1000.0));
             return "avionics";
         }
 
@@ -2071,11 +2151,12 @@ namespace RPAxe
                 float liveThermal = staleThermal;
                 if (k > 0f)
                 {
-                    float bv = 0f, hv = 0f;
+                    float bv = 0f, hv = 0f, irf = 0.35f;
                     moduleSnapshot.moduleValues.TryGetValue("battVolume", ref bv);
                     moduleSnapshot.moduleValues.TryGetValue("hwVolume", ref hv);
+                    moduleSnapshot.moduleValues.TryGetValue("bodyIrFraction", ref irf);
                     float vol = bv + hv;
-                    if (vol > 0f) liveThermal = k * 6f * Mathf.Pow(vol, 2f / 3f) * SolarDeficit(v);
+                    if (vol > 0f) liveThermal = k * 6f * Mathf.Pow(vol, 2f / 3f) * VesselDeficit(v, irf);
                 }
 
                 double watts = cw - staleThermal + liveThermal;
