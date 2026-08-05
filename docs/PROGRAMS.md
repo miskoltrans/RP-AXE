@@ -251,15 +251,24 @@ loaded.
 
 Rules:
 
-- **Not program-gated → never touched.** `AXEPrograms` (the charters), `Records`, `HumanRecords`.
-  The charters gate on `ProgramConcluded`, which `Collect()` deliberately ignores: a charter must be
-  visible precisely when its program is *not* active.
+- **Exhausted one-offs retire.** `maxCompletions != 0 && ActualCompletions() >= maxCompletions`, CC's
+  own test from the "Completed" status image. `maxCompletions == 0` means unlimited, so repeatables
+  are never exhausted. This half is not optional: the program test alone left
+  **Suborbital Rocket Development's folder on screen after it was concluded**, because
+  `first_FirstFlight` sits in that group but is gated on *any starting program* and X-Plane Research
+  was still active — so the gate passed for a contract already `Completed` at `maxCompletions = 1`,
+  which could never be offered to anyone again. A folder showing only dead entries is the clutter
+  this feature exists to remove.
+- **Not program-gated → judged on exhaustion alone.** `AXEPrograms` (the charters), `Records`,
+  `HumanRecords`. The charters gate on `ProgramConcluded`, which `Collect()` deliberately ignores: a
+  charter must be visible precisely when its program is *not* active. Taken charters retire
+  individually, so the folder shrinks to the ones still on offer and disappears once all 35 are
+  chartered.
 - **Flattened ANY, not ALL.** A contract naming several programs does so inside a `type = Any` OR
   group; verified across all 292 program-gated seed contracts that none ANDs two programs. So
-  "is any referenced program active" is exactly the OR the config expresses. It is also why the
-  `SuborbRocketDev` and `CrewedOrbit` folders correctly survive their own program's conclusion —
-  each still holds one contract (`first_FirstFlight`, `first_OrbitRecover`) whose `Any` group names a
-  program that *is* active.
+  "is any referenced program active" is exactly the OR the config expresses. It is why the
+  `CrewedOrbit` folder correctly outlives its own (never-chartered) program: it still holds
+  `first_OrbitRecover`, accepted and unflown, whose `Any` group names `EarthObservationScience1`.
 - **Load-time value is a ceiling.** A type that failed to parse also has `enabled == false`;
   re-enabling one would resurrect a broken contract. The set CC accepted is snapshotted before the
   first flip, so this can only narrow, never widen.

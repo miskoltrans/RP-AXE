@@ -70,20 +70,32 @@ namespace RPAxe
                 if (ct == null || ct.name == null) continue;
                 if (!_loadable.Contains(ct.name)) continue;   // never resurrect a type that failed to load
 
+                // A one-off that has already been flown can never be offered again, so its folder is
+                // showing a dead entry. CC's own test, from MissionControlUI's "Completed" status
+                // image: maxCompletions == 0 means unlimited, so repeatables are never exhausted.
+                //
+                // This is why concluding Suborbital Rocket Development did not remove its folder:
+                // `first_FirstFlight` sits in that group but is gated on ANY starting program, and
+                // X-Plane Research was still active — so the program test passed for a contract that
+                // was already Completed with maxCompletions = 1 and could not be offered to anyone.
+                bool exhausted = ct.maxCompletions != 0 && ct.ActualCompletions() >= ct.maxCompletions;
+
                 programs.Clear();
                 try { Collect(ct.Requirements, programs); }
                 catch { continue; }                            // malformed requirement tree: leave it alone
-                if (programs.Count == 0) continue;             // not program-gated (Milestones, Records, the charters)
 
                 // ANY, not ALL. A contract naming several programs does so inside a `type = Any` OR
                 // group — verified across all 292 program-gated seed contracts, none of which ANDs
                 // two programs (an AND would be unsatisfiable anyway now that a predecessor is always
                 // concluded before its successor starts). Flattening the tree and asking "is any of
-                // them active" is therefore exactly the OR the config expresses.
-                bool open = false;
-                for (int i = 0; i < programs.Count; i++)
-                    if (handler.IsActive(programs[i])) { open = true; break; }
+                // them active" is therefore exactly the OR the config expresses. No programs named at
+                // all (Records, HumanRecords, the charters) means nothing gates it, so it stays on
+                // its own merits — exhaustion alone can still retire it.
+                bool open = programs.Count == 0;
+                for (int i = 0; i < programs.Count && !open; i++)
+                    if (handler.IsActive(programs[i])) open = true;
 
+                open &= !exhausted;
                 if (ct.enabled != open) Traverse.Create(ct).Property("enabled").SetValue(open);
                 if (open) shown++; else hidden++;
             }
