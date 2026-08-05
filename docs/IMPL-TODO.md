@@ -37,23 +37,23 @@ _SHIPPED — the tier effect is applied by AXE.dll's ModuleAxeAvionics, which re
 | `Science-Core-postWarAvionics` | `gnc_postWarAvionics` | T1 | Gyroscopic Autopilot |
 | `Science-Core-avionicsPrototypes` | `gnc_avionicsPrototypes` | T2 | Analog Inertial Guidance |
 | `Science-Core-earlyAvionics` | `gnc_earlyAvionics` | T4 | Stable-Platform Guidance |
+| `Deep-Space-basicAvionics` | `shd_basicAvionics` | T5 | Deep-Space Bus — Basic |
 | `Science-Core-basicAvionics` | `gnc_basicAvionics` | T5 | Miniaturised Inertial Guidance |
-| `Deep-Space-basicAvionics` | `shd_basicAvionics` | T6 | Radiation-Shielded Avionics — Basic |
 | `Science-Core-interplanetaryProbes` | `gnc_interplanetaryAvionics` | T7 | Long-Duration Cruise Guidance |
-| `Deep-Space-interplanetaryProbes` | `shd_interplanetaryAvionics` | T8 | Radiation-Shielded Avionics — Interplanetary |
+| `Deep-Space-interplanetaryProbes` | `shd_interplanetaryAvionics` | T8 | Deep-Space Bus — Interplanetary |
 | `Science-Core-improvedAvionics` | `comp_digitalGuidanceComputer` | T8 | Digital Guidance Computer |
-| `Deep-Space-improvedAvionics` | `shd_digitalGuidanceComputer` | T9 | Radiation-Shielded Avionics — Digital |
+| `Deep-Space-improvedAvionics` | `shd_digitalGuidanceComputer` | T9 | Deep-Space Bus — Digital |
 | `Science-Core-matureAvionics` | `comp_realTimeFlightComputer` | T9 | Priority-Interrupt Flight Computer |
-| `Deep-Space-matureAvionics` | `shd_realTimeFlightComputer` | T10 | Radiation-Shielded Avionics — Real-Time |
+| `Deep-Space-matureAvionics` | `shd_realTimeFlightComputer` | T10 | Deep-Space Bus — Real-Time |
 | `Science-Core-largeScaleAvionics` | `comp_networkedAvionics` | T10 | Multi-Vehicle Avionics Integration |
-| `Deep-Space-largeScaleAvionics` | `shd_networkedAvionics` | T11 | Radiation-Shielded Avionics — Networked |
+| `Deep-Space-largeScaleAvionics` | `shd_networkedAvionics` | T11 | Deep-Space Bus — Networked |
 | `Science-Core-advancedAvionics` | `comp_multiplyRedundantFlightComputer` | T11 | Multiply-Redundant General-Purpose Computer |
-| `Deep-Space-advancedAvionics` | `shd_multiplyRedundantFlightComputer` | T12 | Radiation-Shielded Avionics — Redundant |
+| `Deep-Space-advancedAvionics` | `shd_multiplyRedundantFlightComputer` | T12 | Deep-Space Bus — Redundant |
 | `Science-Core-nextGenAvionics` | `comp_distributedAvionicsBus` | T12 | Distributed Avionics Data Bus |
-| `Deep-Space-nextGenAvionics` | `shd_distributedAvionicsBus` | T13 | Radiation-Shielded Avionics — Distributed Bus |
+| `Deep-Space-nextGenAvionics` | `shd_distributedAvionicsBus` | T13 | Deep-Space Bus — Distributed |
 | `Science-Core-longTermAvionics` | `comp_softwareDefinedFlightControl` | T13 | Software-Defined Flight Control |
-| `Deep-Space-longTermAvionics` | `shd_softwareDefinedFlightControl` | T14 | Radiation-Shielded Avionics — Software-Defined |
+| `Deep-Space-longTermAvionics` | `shd_softwareDefinedFlightControl` | T14 | Deep-Space Bus — Software-Defined |
 | `Science-Core-internationalAvionics` | `comp_interoperableAvionicsStandard` | T14 | Interoperable Avionics Standard |
-| `Deep-Space-internationalAvionics` | `shd_interoperableAvionicsStandard` | T15 | Radiation-Shielded Avionics — Interoperable |
+| `Deep-Space-internationalAvionics` | `shd_interoperableAvionicsStandard` | T15 | Deep-Space Bus — Interoperable |
 | `Science-Core-modernAvionics` | `comp_commercialOffTheShelfAvionics` | T15 | Commercial Off-The-Shelf Flight Computer |
-| `Deep-Space-modernAvionics` | `shd_commercialOffTheShelfAvionics` | T16 | Radiation-Shielded Avionics — Commercial |
+| `Deep-Space-modernAvionics` | `shd_commercialOffTheShelfAvionics` | T16 | Deep-Space Bus — Commercial |

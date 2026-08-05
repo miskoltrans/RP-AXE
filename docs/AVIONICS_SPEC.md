@@ -27,7 +27,38 @@ Already shipped, unaffected by this redesign. Guided = Near-Earth shape (vessel-
 Unguided = Science-Core shape (flat per-tier, axial-only from `improvedAvionics`). Range is not gated here —
 handled entirely by comms (RealAntennas).
 
-## Axis 2 — Unshielded / Radiation-Shielded (naming CONFIRMED), stands in for RP-1's Deep-Space, Guided-only
+## Axis 2 — Standard / Deep-Space Bus (RENAMED 2026-08-05), stands in for RP-1's Deep-Space, Guided-only
+
+> **RENAMED 2026-08-05: "Unshielded / Radiation-Shielded" → "Standard / Deep-Space Bus".** The earlier
+> "naming CONFIRMED" was wrong and this supersedes it. The mass premium was never a radiation claim:
+> RP-1's own `AVIONICSCONFIG` description calls it *"added complexity (Thermal/Radiation Shielding, Star
+> Trackers, etc.)"* — a whole-bus premium in which radiation is one line item and not the load-bearing
+> one. The old AXE name narrowed that defensible bundle down to the single justification that does not
+> survive scrutiny: Earth's Van Allen belts are a *harsher* radiation environment than deep space, so
+> "you need shielding to leave Earth" reads backwards as physics. Judged as a deep-space **bus** premium
+> — thermal mass, MLI, star trackers, redundancy, bigger antenna — the same numbers are directionally
+> correct and physically honest. **No mass/cost/mechanic changed; only the name was wrong.**
+>
+> Scope of the rename: 10 `shd_*` node titles in `tree/nodes.yaml`, the two PAW strings in
+> `ModuleAxeAvionics.cs` (`"Switch to Deep-Space Bus"` / `"Switch to Standard Bus"`), and this doc. The
+> `shd_*` node **ids**, the `shTech`/`shMassFactor`/`shCostFactor` config keys, and the persistent
+> `shieldedEnabled` field are all deliberately UNCHANGED — they are silent string bindings (and one is
+> save-breaking), and per `docs/BUG-CLASSES.md` renaming them fails closed and quiet.
+>
+> **Also moved `shd_basicAvionics` T6 → T5** (re-parented `gnc_basicAvionics` → `gnc_earlyAvionics`,
+> since `build_tree.py` requires forward edges and `gnc_basicAvionics` is itself T5). Rationale:
+> `tel_dopplerRanging` (commsTL1, "Lunar Range Comms") is T4, so the gap between "can talk to the Moon"
+> and "can build something that survives there" is now one tier instead of two. **That gap is the
+> mechanic, not slack** — it is the flyby-and-impactor era. Do not close it to zero: ladder indices 0-3
+> carry `shMassFactor` copied verbatim from their Unshielded values, so a T4 rung would grant the
+> deep-space bus at *zero* premium, and index 3 has no `shTech` so it is not selectable at all.
+>
+> Known consequence of the re-parent, accepted not fixed: this rung no longer requires its paired
+> Unshielded tier, so `gnc_earlyAvionics` (idx 3, massFactor 59.13) + this node yields the idx-4
+> Deep-Space factors (55.168) — lighter than the player's own Unshielded tier, though dearer (85.26 vs
+> 54.13). That is a cross-*generation* comparison; the invariant that matters (same-tier premium,
+> 55.168 > 50.153 at idx 4) still holds. Fixing it would mean authoring idx-3 Deep-Space numbers RP-1
+> never had.
 
 Tech-gated second choice, only available once appropriate tech is researched (mirrors RP-1: Deep-Space wasn't
 available from `start`, it unlocked around Near-Earth's `basicAvionics`-equivalent point). Unguided/

@@ -471,8 +471,14 @@ namespace RPAxe
         // "basicAvionics" on -- RP-1 has no Deep-Space data before that). Indices 0-3 ("start" through
         // "earlyAvionics") have no RP-1 equivalent to port; reused from the Unshielded ladder verbatim
         // (matches _ladMass/_ladCost at the same indices) so the ladder has no gaps for tree/tooling
-        // symmetry. The Shielded TOGGLE itself stays gated behind ShieldedUnlocked (gnc_basicAvionics),
-        // same as before this fill-in -- see ShieldedUnlocked below.
+        // symmetry. The Deep-Space TOGGLE itself is gated by ShieldedUnlocked, which is `_bestShieldedIdx
+        // >= 0` -- i.e. "a real rung is researched", NOT a hardcoded tech id. (Corrected 2026-08-05: this
+        // comment used to claim "gnc_basicAvionics", which never matched the implementation below and is
+        // doubly wrong now that shd_basicAvionics moved to T5 off gnc_earlyAvionics.)
+        //
+        // Indices 0-3 are why the toggle cannot simply be moved earlier: their shMass/shCost are COPIES of
+        // the Unshielded values, so a rung there would sell the deep-space bus at zero premium -- and they
+        // carry no shTech, so ApplyShieldedTier skips them regardless.
         static float[] _ladShMass =
         { 87.99f, 87.99f, 69.712f, 59.13f, 55.168f, 46.794f, 39.69f, 33.665f, 28.554f, 24.22f, 20.543f, 17.424f, 14.779f, 12.536f };
         static float[] _ladShCost =
@@ -1666,7 +1672,7 @@ namespace RPAxe
             BaseEvent sh = Events[nameof(ToggleShielding)];
             sh.guiActive = false;
             sh.guiActiveEditor = guidanceEnabled && ShieldedUnlocked;
-            sh.guiName = shieldedEnabled ? "Switch to Unshielded" : "Switch to Shielded";
+            sh.guiName = shieldedEnabled ? "Switch to Standard Bus" : "Switch to Deep-Space Bus";
 
             // Shutdown/Activate: RP-1's own avionics toggle. Available in the EDITOR as well as in flight --
             // RP-1 sets guiActive and guiActiveEditor alike from GetToggleable() -- so a stage's avionics can
@@ -1721,7 +1727,7 @@ namespace RPAxe
         }
 
         // VAB-only, Guided-only: pick Shielded vs Unshielded. Blocked (no-op) until ShieldedUnlocked.
-        [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Switch to Shielded", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        [KSPEvent(guiActive = false, guiActiveEditor = true, guiName = "Switch to Deep-Space Bus", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public void ToggleShielding()
         {
             if (!guidanceEnabled || !ShieldedUnlocked) return;

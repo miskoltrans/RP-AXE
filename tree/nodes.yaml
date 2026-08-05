@@ -1314,15 +1314,38 @@ nodes:
     # elec_transistor / tel_appSatellites): three storage rungs collapsed onto this one T5 node, which put the
     # first byte of data storage 44 science out of reach. Storage homes at recording electronics, not guidance.
   - id: shd_basicAvionics
-    title: "Radiation-Shielded Avionics — Basic"
+    title: "Deep-Space Bus — Basic"
     discipline: GuidanceControl
-    tier: 6
-    parents: [gnc_basicAvionics]
-    flavor: "Wrap the same guidance stack in radiation shielding and a hardened chassis so it can outlast a passage through the Van Allen belts and beyond — heavier and pricier than the bare avionics it protects, but no longer confined to Earth's magnetosphere."
+    tier: 5
+    parents: [gnc_earlyAvionics]
+    flavor: "Build the guidance stack for somewhere the Sun is the only landmark and Earth's field no longer reaches — star trackers to know which way is up, heaters and insulation against the cold, hardened parts and redundant paths for a mission measured in years. Heavier and costlier than the bare avionics inside it, and the price of working outside the magnetosphere."
     grants: [Deep-Space-basicAvionics]
-    # V2 avionics redesign (2026-07-08): AXE's own Shielded axis (docs/AVIONICS_SPEC.md), mirroring RP-1's
-    # Deep-Space ladder one-for-one. Serial chain (each rung needs the previous Shielded rung + the paired
-    # Guided/Computing tier). Placeholder flavor/title — dedicated content-authoring pass still pending.
+    # V2 avionics redesign (2026-07-08): AXE's own second avionics axis (docs/AVIONICS_SPEC.md), mirroring
+    # RP-1's Deep-Space ladder one-for-one. Serial chain (each rung needs the previous rung + the paired
+    # Guided/Computing tier).
+    #
+    # RENAMED 2026-08-05, "Radiation-Shielded" -> "Deep-Space Bus". The mass premium was never a radiation
+    # claim: RP-1's own AVIONICSCONFIG description calls it "Thermal/Radiation Shielding, Star Trackers,
+    # etc." — a whole-bus premium, of which radiation is one line item and not the load-bearing one. The
+    # old name narrowed that to the single justification that does not survive scrutiny (Earth's belts are
+    # a HARSHER radiation environment than deep space, so "shielding to leave Earth" reads backwards).
+    # Mass/cost numbers are unchanged — only the name was wrong. The `grants:` token below was already
+    # "Deep-Space-*", so the internal naming now agrees with the player-facing one.
+    #
+    # MOVED T6 -> T5 same pass. tel_dopplerRanging (commsTL1, "Lunar Range Comms") is T4, so the old T6
+    # left a 2-tier window; T5 tightens it to one. The window is deliberate, not slack: it is the era
+    # where the Moon is reachable but nothing sent there survives long — flyby-and-impactor missions.
+    # Do NOT close it to zero by pulling this to T4: indices 0-3 carry shMassFactor COPIED from their
+    # Unshielded values (AxeAvionicsCore.cfg:170-234), so a T4 rung would grant the deep-space bus at
+    # zero mass and zero cost premium, and index 3 has no shTech so it is not selectable at all.
+    #
+    # Re-parented gnc_basicAvionics -> gnc_earlyAvionics because build_tree.py requires forward edges
+    # (parent tier < child tier) and gnc_basicAvionics is itself T5. Consequence: this rung no longer
+    # requires its paired Unshielded tier. A player holding gnc_earlyAvionics (idx 3, massFactor 59.13)
+    # plus this node gets the idx-4 Shielded factors (55.168) — lighter than their Unshielded tier, though
+    # dearer (85.26 vs 54.13). That is a cross-GENERATION comparison; the same-tier premium invariant that
+    # actually matters still holds (55.168 > 50.153 at idx 4). Flagged rather than fixed: fixing it means
+    # authoring idx-3 Deep-Space numbers RP-1 never had.
   - id: tel_minitrackInterferometry
     title: "Phase-Comparison Satellite Tracking"
     discipline: Telecommunications
@@ -2990,7 +3013,7 @@ nodes:
     flavor: "Stretch the same miniaturised inertial stack to survive a cruise measured in months instead of an orbit measured in hours — redundant circuitry and a sun-and-star reference that never loses its lock on the long coast out to another planet."
     grants: [Science-Core-interplanetaryProbes]
   - id: shd_interplanetaryAvionics
-    title: "Radiation-Shielded Avionics — Interplanetary"
+    title: "Deep-Space Bus — Interplanetary"
     discipline: GuidanceControl
     tier: 8
     parents: [shd_basicAvionics, gnc_interplanetaryAvionics]
@@ -3015,7 +3038,7 @@ nodes:
     # this generation of digital guidance hardware (early-mid 1960s) - tagged for AXE's own avionics module
     # at the P4 config-patch pass, per docs/PARTLIST.md.
   - id: shd_digitalGuidanceComputer
-    title: "Radiation-Shielded Avionics — Digital"
+    title: "Deep-Space Bus — Digital"
     discipline: Computing
     tier: 9
     parents: [shd_interplanetaryAvionics, comp_digitalGuidanceComputer]
@@ -3034,7 +3057,7 @@ nodes:
     # that carried the actual Apollo Guidance Computer's ground-side LVDC counterpart. Tagged for AXE's
     # own avionics module at the P4 config-patch pass, per docs/PARTLIST.md.
   - id: shd_realTimeFlightComputer
-    title: "Radiation-Shielded Avionics — Real-Time"
+    title: "Deep-Space Bus — Real-Time"
     discipline: Computing
     tier: 10
     parents: [shd_digitalGuidanceComputer, comp_realTimeFlightComputer]
@@ -3050,7 +3073,7 @@ nodes:
     grants: [Science-Core-largeScaleAvionics]
     upgrades: [HDD-Upgrade-1969, RFTech-ComSat-III, RFTech-NavSat-III]  # 2026-07 tech-level fill: HDD/comsat/navsat rungs of the largeScaleAvionics era (siblings on the earlier avionics nodes)
   - id: shd_networkedAvionics
-    title: "Radiation-Shielded Avionics — Networked"
+    title: "Deep-Space Bus — Networked"
     discipline: Computing
     tier: 11
     parents: [shd_realTimeFlightComputer, comp_networkedAvionics]
@@ -3071,7 +3094,7 @@ nodes:
     # pattern as comp_digitalGuidanceComputer/comp_realTimeFlightComputer/comp_networkedAvionics
     # (pure grants nodes, no parts - these mark an avionics-generation milestone, not new hardware).
   - id: shd_multiplyRedundantFlightComputer
-    title: "Radiation-Shielded Avionics — Redundant"
+    title: "Deep-Space Bus — Redundant"
     discipline: Computing
     tier: 12
     parents: [shd_networkedAvionics, comp_multiplyRedundantFlightComputer]
@@ -3086,7 +3109,7 @@ nodes:
     flavor: "Stop wiring every sensor and actuator straight to the computer and put them all on one shared data bus instead — a single twisted pair carrying every subsystem's traffic, addressed and time-sliced instead of home-run cabled. The wiring-harness weight a modular station can no longer afford to carry."
     grants: [Science-Core-nextGenAvionics]
   - id: shd_distributedAvionicsBus
-    title: "Radiation-Shielded Avionics — Distributed Bus"
+    title: "Deep-Space Bus — Distributed"
     discipline: Computing
     tier: 13
     parents: [shd_multiplyRedundantFlightComputer, comp_distributedAvionicsBus]
@@ -3112,7 +3135,7 @@ nodes:
     grants: [Science-Core-longTermAvionics]
     upgrades: [HDD-Upgrade-1990]  # 2026-07 tech-level fill: HDD rung of the longTermAvionics era
   - id: shd_softwareDefinedFlightControl
-    title: "Radiation-Shielded Avionics — Software-Defined"
+    title: "Deep-Space Bus — Software-Defined"
     discipline: Computing
     tier: 14
     parents: [shd_distributedAvionicsBus, comp_softwareDefinedFlightControl]
@@ -3128,7 +3151,7 @@ nodes:
     grants: [Science-Core-internationalAvionics]
     upgrades: [HDD-Upgrade-1998]  # 2026-07 tech-level fill: HDD rung of the internationalAvionics era
   - id: shd_interoperableAvionicsStandard
-    title: "Radiation-Shielded Avionics — Interoperable"
+    title: "Deep-Space Bus — Interoperable"
     discipline: Computing
     tier: 15
     parents: [shd_softwareDefinedFlightControl, comp_interoperableAvionicsStandard]
@@ -3144,7 +3167,7 @@ nodes:
     grants: [Science-Core-modernAvionics]
     upgrades: [HDD-Upgrade-2010, HDD-Upgrade-2020]  # 2026-07 tech-level fill: HDD rungs of the modern/advModern era (avionics ladder tops out here, no separate advModern node)
   - id: shd_commercialOffTheShelfAvionics
-    title: "Radiation-Shielded Avionics — Commercial"
+    title: "Deep-Space Bus — Commercial"
     discipline: Computing
     tier: 16
     parents: [shd_interoperableAvionicsStandard, comp_commercialOffTheShelfAvionics]
