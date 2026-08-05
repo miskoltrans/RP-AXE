@@ -275,12 +275,18 @@ is stripped.
    *and* a separate player-chosen Hibernate toggle (Guided only, from `postWarAvionics` — see item 4) — two
    mechanics where RP-1 has one, but the player-facing outcome (trade control for a power cut) is the same.
 
-## Planned — not yet built
+## Design record — what was proposed here, and what shipped since
 
-**Steerable-mass redesign (2026-07-08 design session, NOT STARTED — this is a real rework, not a tweak).**
-AXE currently has no "controllable mass" concept at all — every core auto-sizes off whatever the vessel
-weighs when the ship is last modified in the editor, frozen at launch (`UpdateHardwareMass()`, `load =
-VesselMassTons() - avionicsMass`). This section records a full design pass toward reintroducing RP-1's real
+*Status audit 2026-08-05: everything below except "Decouple battery volume from box volume" has since
+been built. The per-item status lines are current; the surrounding design prose is kept as the record of
+how each decision was reached, and still describes the pre-build state where it says "currently".*
+
+**Steerable-mass redesign (2026-07-08 design session) — SHIPPED 2026-07-10.** Box size → hardware mass →
+inverse mass polynomial → `capacityTons`; one vessel-wide MAX (`EffectiveCapacityTons`, never SUM); over
+capacity answered by a selectable `AxeControlPenalty` rather than RP-1's hard lock. What follows is the
+design pass as written on 07-08, when AXE still had no "controllable mass" concept at all — every core
+auto-sized off whatever the vessel weighed when the ship was last modified in the editor, frozen at launch
+(`UpdateHardwareMass()`, `load = VesselMassTons() - avionicsMass`). It records the route to reintroducing RP-1's real
 tradeoff (cheap payload core + separate disposable ascent core, which is RP-1's own documented recommended
 strategy — see `Procedural-Avionics-Basics` wiki) without RP-1's `controllableMass` slider or its hard
 control-lock cliff (confirmed via research to be RP-1's #1 player complaint — silent failure misdiagnosed as
@@ -372,18 +378,29 @@ unconditional-leftover behavior. Shape sketched 2026-07-08: a second AXE-owned f
 actually gets sent onward to RealFuels; the rest stays dead volume in the box) — needs design first, not
 started.
 
-**Auto-hibernate on timewarp (on-rails).** RP-1's base `ModuleAvionics.cs` hooks `GameEvents.
-onVesselGoOnRails`/`onVesselGoOffRails` and calls `UpdateRate(onRails: true)` on rails — which, for any
-config/tier that's toggleable (`disabledPowerFactor > 0`: Deep-Space always, Near-Earth from
-`advancedAvionics` on), automatically drops to the reduced draw rate for the whole warp, independent of the
-player's manual `systemEnabled` state, and restores automatically on load. AXE has no equivalent: no
-onRails/offRails hooks anywhere in `ModuleAxeAvionics.cs`, `Update()` (which drives the live draw calc)
-simply doesn't run for unloaded vessels at all, so draw freezes at its last computed value and keeps applying
-for the entire warp unless the player manually hits Hibernate first. AXE also explicitly disables stock
-KSP's own built-in probe-hibernation fallback (`%hasHibernation = False` in `AxeAvionicsCore.cfg`), so
-there's no automatic protection from either direction today. Noted 2026-07-08 (user), not started — would
-need onRails/offRails hooks calling into the existing Hibernate-equivalent draw reduction, Guided-only per
-the 07-08 hibernation-restriction change, and a decision on how it interacts with the manual toggle.
+**Auto-hibernate on timewarp (on-rails) — DONE.** *(Was the last open item in this section; noted
+2026-07-08, shipped since, and this entry described it as unbuilt until 2026-08-05.)* RP-1's base
+`ModuleAvionics.cs` hooks `GameEvents.onVesselGoOnRails`/`onVesselGoOffRails` and calls
+`UpdateRate(onRails: true)` on rails — which, for any config/tier that's toggleable
+(`disabledPowerFactor > 0`: Deep-Space always, Near-Earth from `advancedAvionics` on), automatically drops
+to the reduced draw rate for the whole warp, independent of the player's manual `systemEnabled` state, and
+restores automatically on load. **AXE ports this directly**: `GoOnRails`/`GoOffRails` →
+`RailChange(v, onRails)` → `UpdateRate()` (`ModuleAxeAvionics.cs`, hooks registered in `OnStartFinished`),
+with `Asleep => guidanceEnabled && CanHibernate && (hibernating || _onRails)` and
+`ComputeWatts(onRails)` returning `TierWatts() * CurrentHibernateFactor` — same "drop regardless of the
+manual toggle, restore off rails" behaviour, Guided-only per the 07-08 hibernation restriction.
+
+One deliberate difference from RP-1 on the automatic path: `_onRails` feeds the POWER calc only, not
+`EffectiveCapacityTons`. RP-1's `currentlyEnabled = systemEnabled && !(toggleable && onRails)` also zeroes
+`CurrentMassLimit` during warp, so a warping vessel's steerable-mass budget momentarily reads 0. Capacity is
+a build-time property the player reads in the VAB, and blinking it to zero on entering timewarp is noise;
+nothing steers while unloaded, so the distinction is inert. The manual `hibernating` toggle DOES leave the
+budget, matching RP-1.
+
+AXE also disables stock KSP's built-in probe hibernation (`%hasHibernation = False` in
+`AxeAvionicsCore.cfg`) so it can't shadow the avionics' own toggle — except on named parts, where
+`ModuleAxeFixedAvionics.ApplyHibernation()` re-enables it for a radiation-hardened unit whose
+`shieldedTech` is researched, giving the `shd_*` lane something to sell there.
 
 ## Where the numbers live
 - RP-1 coeffs: `RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg` (`AVIONICSCONFIGS`: Near-Earth …)
