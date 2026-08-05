@@ -72,6 +72,8 @@ namespace RPAxe
         [KSPField] public float powerConstant = 1.035f;
         // (`idleFactor` DELETED 2026-08-05 — idle/disengaged no longer reduces draw at all. Hibernation is
         // the power feature; engage/disengage is a control feature. See ComputeWatts.)
+        // Stock SAS level granted when this core provides an attitude reference (see ProvidesAttitudeReference).
+        [KSPField] public int fullSasLevel = 3;
         [KSPField] public float hibernationFactor = 0.05f;  // Shielded hibernate depth (tier-invariant, RP-1 Deep-Space)
 
         // ---- hardware MASS curve exponent/constant (Unshielded / Near-Earth) ----
@@ -1133,7 +1135,30 @@ namespace RPAxe
                  + " | scienceCore=never";
         }
 
-        bool ShieldedActive => shieldedEnabled && _bestShieldedIdx >= 0;
+        public bool ShieldedActive => shieldedEnabled && _bestShieldedIdx >= 0;
+
+        // ---- Attitude reference ("star tracker") -- docs/AVIONICS_SPEC.md, Axis 2. ----
+        // Only a Deep-Space Bus knows which way it points in an inertial frame. A Standard bus still has
+        // gyros, so it can HOLD an attitude (stock SAS level 0) but cannot acquire prograde/normal/target/
+        // node -- those need an orbital frame. Pure bus tie: no SOI, distance or tech check beyond owning
+        // the bus.
+        public bool ProvidesAttitudeReference => !dead && guidanceEnabled && ShieldedActive;
+
+        // Drives THIS part's ModuleSAS only. Vessel level resolves as a MAX across parts via
+        // part.PartValues.AutopilotSkill, so vessel-MAX and the crewed exemption both fall out for free --
+        // a crewed pod carries its own ModuleSAS at full level and simply wins the max.
+        //
+        // Writes targetSASServiceLevel, NOT SASServiceLevel: ModuleSAS.FixedUpdate recomputes the latter
+        // every frame as ApplySASServiceLevelAdjustments(targetSASServiceLevel), so writing SASServiceLevel
+        // is clobbered within a frame. (AxeAvionicsCore.cfg's @SASServiceLevel = 3 works only because MM
+        // lands it on the prefab before OnStart copies it into targetSASServiceLevel.)
+        void ApplyAttitudeReference()
+        {
+            if (_sas == null) _sas = part.FindModuleImplementing<ModuleSAS>();
+            if (_sas == null) return;
+            _sas.targetSASServiceLevel = ProvidesAttitudeReference ? fullSasLevel : 0;
+        }
+        ModuleSAS _sas;
         // Whether the Shielded TOGGLE itself is unlocked. Now that each Shielded rung gates on its own shd_*
         // node (see ApplyShieldedTier + _ladShTech), _bestShieldedIdx becomes >= 0 exactly when the player has
         // researched a real Shielded tier -- so the toggle tracks that directly (first appears once
@@ -1598,6 +1623,7 @@ namespace RPAxe
 
         void UpdateRate()
         {
+            ApplyAttitudeReference();   // cheap; keeps SAS in step with the Shielded toggle and tier
             currentWatts = HighLogic.LoadedSceneIsEditor ? ComputeBaseWatts() : ComputeWatts();
             UpdateAuthorityDisplay();
             _ecConsumption = new KeyValuePair<string, double>(EcName, -currentWatts / 1000.0);

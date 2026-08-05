@@ -83,11 +83,42 @@ capability, or the tree will appear to sell star trackers twice.
 
 | | Standard bus | Deep-Space Bus | crewed |
 |---|---|---|---|
-| stock SAS | `SASServiceLevel` **0** (hold attitude only) | 3 (full) | 3, always |
-| MechJeb attitude | `MechJebModuleAttitudeController.Enabled = false` | on | on |
+| stock SAS | `targetSASServiceLevel` **0** (gyro attitude-hold only) | 3 (full) | 3, always |
+| MechJeb `SmartASS` | disabled | on | on |
+| MechJeb `NodeExecutor` | disabled | on | on |
+| MechJeb **ascent guidance** | **ON — never gated, by anything** | on | on |
+| everything else in MechJeb | untouched | untouched | untouched |
 
 No SOI check, no distance check, no tech check beyond owning the bus. The scoped-to-outside-Earth-SOI
-alternative was offered and **rejected** — a pure bus tie is the gameplay.
+alternative was offered and **rejected** — a pure bus tie is the gameplay. Resolved across two rounds:
+
+**Round 1 got the layer wrong.** The first plan disabled `MechJebModuleAttitudeController`. That is the
+shared *service*, not a capability — `Core.Attitude` keeps a `Users` list, and `MechJebModuleNodeExecutor`,
+`MechJebModuleAscentBaseAutopilot` and `MechJebModuleSmartASS` all register into it via
+`Core.Attitude.Users.Add(this)`. Disabling the service therefore also killed **ascent guidance**, which is
+near-Earth technology with nothing to do with star finding — a V-2 flies a pitch program on gyros and local
+vertical and never sees a star. Gate the *clients*, leave the service running.
+
+**The line is: does the capability need absolute attitude in an inertial frame?**
+
+| capability | inertial frame? | verdict |
+|---|---|---|
+| ascent guidance | no — pitch program vs local vertical | never gated |
+| docking / rendezvous | no — relative nav off the target | untouched |
+| landing guidance | no — surface-relative, altimetry | untouched |
+| SmartASS vector holds | **yes** — prograde/normal/target need an orbital frame | bus-tied |
+| node executor | **yes** — same, plus precision | bus-tied |
+
+That line matches the stock SAS ladder exactly: level 0 is gyro attitude-hold, levels 1-3 are the
+frame-dependent holds. So both halves of the mechanic say the same thing.
+
+**Ascent guidance is NOT tech-gated either (user, 2026-08-05).** A `unlockTechs` autonomy ladder was
+proposed and declined — all 16 MechJeb modules stay at `unlockTechs = start`. Nothing in this design
+touches `unlockTechs`.
+
+**Accepted consequence, and the point of the whole thing:** on a Standard bus you cannot execute a maneuver
+node anywhere, **including LEO**. You place stock KSP nodes and hand-fly them. That is the intended early-
+game texture, not collateral damage.
 
 **Crewed is free.** Vessel SAS resolves through `part.PartValues.AutopilotSkill`, a MAX across parts, so a
 crewed pod's own `ModuleSAS` wins automatically. No crew special-case to write.
@@ -101,18 +132,19 @@ crewed pod's own `ModuleSAS` wins automatically. No crew special-case to write.
   or `AutopilotSkill` anywhere in the binary. `MechJebModuleAttitudeController.Drive(FlightCtrlState)`
   either writes ctrl state directly or calls `vessel.Autopilot.SAS.SetTargetOrientation()`, and neither is
   gated by service level. It must be closed separately.
-- The choke point is **`MechJebModuleAttitudeController`** — SmartASS, the node executor, ascent guidance
-  and rendezvous all route attitude through it. Reach it via `MechJebCore.GetComputerModule(string)` (it has
-  a string overload, so AXE's existing duck-typed reflection needs no new type references) and set
-  `ComputerModule.Enabled = false`. Verified respected: `MechJebCore.Drive` gates on `if
-  (computerModule.Enabled)` before calling each module's `Drive(s)`.
-- Prefer that over the already-reflected `MechJebCore.DeactivateControl`, which kills *all* MJ control on
-  the vessel including the warp helper and thrust window — blunter than the mechanic needs.
+- Disable exactly two clients by name: **`MechJebModuleSmartASS`** and **`MechJebModuleNodeExecutor`**.
+  Reach them via `MechJebCore.GetComputerModule(string)` (it has a string overload, so AXE's existing
+  duck-typed reflection needs no new type references) and set `ComputerModule.Enabled = false`. Verified
+  respected: `MechJebCore.Drive` gates on `if (computerModule.Enabled)` before calling each module's
+  `Drive(s)`. Do **not** touch `MechJebModuleAttitudeController` — see round 1 above.
+- Do not use the already-reflected `MechJebCore.DeactivateControl` for this. It kills *all* MJ control on
+  the vessel, ascent guidance included. It stays for the existing dumb-craft case only.
+- MechJeb is resolved per *vessel* via the master core, so the MechJeb half needs the vessel-MAX and the
+  crewed exemption applied **explicitly** — unlike stock SAS, where `part.PartValues.AutopilotSkill` gives
+  both for free.
 
-**Known consequence, accepted:** a launch vehicle on a Standard bus has no MechJeb ascent guidance and no
-vector holds. Whether a Deep-Space payload lifts that for the whole stack (a vessel-MAX rule, matching how
-stock SAS already resolves) is an OPEN implementation question — it materially changes how harsh this is in
-early career.
+**Vessel MAX (user, 2026-08-05).** If ANY core aboard provides attitude reference, the whole stack has it —
+matching how stock SAS already resolves across parts. So a Deep-Space payload covers its own launch stack.
 
 **Mass/cost: own per-tier ladder, authored as real data — not a live multiplier. SHIPPED.** Matching RP-1's
 real shape meant ~10 *separate* tech-node placements in AXE's tree (mirroring each Guided-tier unlock

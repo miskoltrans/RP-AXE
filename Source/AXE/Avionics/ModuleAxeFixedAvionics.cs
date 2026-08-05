@@ -134,6 +134,26 @@ namespace RPAxe
         /// <summary>Hardened AND the hardening researched — the only state that keeps hibernation.</summary>
         public bool ShieldingActive => !dead && shielded && Researched(shieldedTech);
 
+        // ---- Attitude reference ("star tracker") -- docs/AVIONICS_SPEC.md, Axis 2. ----
+        // Same rule as the procedural core: only a deep-space unit knows which way it points in an inertial
+        // frame. Named parts are included deliberately -- leaving them out would be a trivial dodge (fly a
+        // fixed-capacity unit and keep full attitude autonomy for free).
+        public bool ProvidesAttitudeReference => ShieldingActive;
+
+        // Drives THIS part's ModuleSAS only; KSP MAXes AutopilotSkill across parts, so vessel-MAX and the
+        // crewed exemption come for free. Writes targetSASServiceLevel, NOT SASServiceLevel -- ModuleSAS
+        // .FixedUpdate recomputes the latter from the former every frame.
+        void ApplyAttitudeReference()
+        {
+            if (_sas == null) _sas = part.FindModuleImplementing<ModuleSAS>();
+            if (_sas == null) return;
+            _sas.targetSASServiceLevel = ProvidesAttitudeReference ? fullSasLevel : 0;
+        }
+        ModuleSAS _sas;
+
+        /// <summary>Stock SAS level granted when this unit provides an attitude reference.</summary>
+        [KSPField] public int fullSasLevel = 3;
+
         static bool Researched(string tech)
         {
             if (string.IsNullOrEmpty(tech)) return true;
@@ -150,6 +170,7 @@ namespace RPAxe
             GameEvents.onPartCouple.Add(OnCouple);
             InitializeResourceRate();
             ApplyHibernation();
+            ApplyAttitudeReference();
             UpdateGui();
         }
 
@@ -246,7 +267,8 @@ namespace RPAxe
             if (!HighLogic.LoadedSceneIsEditor && !HighLogic.LoadedSceneIsFlight) return;
             if (Time.unscaledTime < _nextGuiRefresh) return;
             _nextGuiRefresh = Time.unscaledTime + GuiRefreshInterval;
-            ApplyHibernation();   // shieldedTech can be researched mid-flight
+            ApplyHibernation();
+            ApplyAttitudeReference();   // shieldedTech can be researched mid-flight
             EvaluateAutoGuidance();
             UpdateGui();
         }
@@ -295,7 +317,8 @@ namespace RPAxe
             AxeAvionicsKill.DisableModuleCommand(part);
             // After `dead` is set: the test is "is anything still alive", and this unit no longer is.
             AxeAvionicsKill.KillAntennasIfLastAvionicsDead(vessel);
-            ApplyHibernation();   // ShieldingActive is now false -> stock hibernation off with it
+            ApplyHibernation();
+            ApplyAttitudeReference();   // ShieldingActive is now false -> stock hibernation off with it
             UpdateGui();          // draw -> 0 via UpdateDraw
             // This unit's capacity leaves the vessel-wide MAX, so other units' overload verdicts move.
             if (vessel != null) GameEvents.onVesselWasModified.Fire(vessel);

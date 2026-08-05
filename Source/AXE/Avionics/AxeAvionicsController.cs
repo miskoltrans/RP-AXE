@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
@@ -59,6 +60,21 @@ namespace RPAxe
         static PropertyInfo _mjDeactivate;
         object _masterMechJeb;
 
+        // Star-tracker consequence for MechJeb (docs/AVIONICS_SPEC.md, Axis 2). MechJeb ignores
+        // SASServiceLevel entirely -- no reference to it, AvailableAtLevel, CanEngageSAS or AutopilotSkill
+        // anywhere in its binary -- so the stock-SAS half of the mechanic does nothing to it and it has to
+        // be closed separately.
+        static MethodInfo _mjGetModule;       // MechJebCore.GetComputerModule(string)
+        static PropertyInfo _mjModuleEnabled; // ComputerModule.Enabled
+
+        // Gate the CLIENTS of the attitude service, never MechJebModuleAttitudeController itself. That is
+        // the shared service (Core.Attitude, with a Users list that NodeExecutor, SmartASS and the ASCENT
+        // autopilot all register into); disabling it would also kill ascent guidance -- which is near-Earth
+        // technology, a pitch program flown on gyros and local vertical that never needs a star. Ascent
+        // stays available to everyone, always, by design. Only these two need an inertial frame.
+        static readonly string[] MjAttitudeClients = { "MechJebModuleSmartASS", "MechJebModuleNodeExecutor" };
+        bool _mjClientsAllowed = true;
+
         // Shared regime callout. Screen messages are the only channel KSP gives us that does not need the
         // player to have a PAW open, and a missed transition is the difference between "my avionics is
         // undersized" and "this mod is broken".
@@ -82,6 +98,15 @@ namespace RPAxe
                 System.Type ext = a.assembly.GetType("MuMech.VesselExtensions");
                 if (core != null) _mjDeactivate = core.GetProperty("DeactivateControl", BindingFlags.Public | BindingFlags.Instance);
                 if (ext != null) _getMasterMechJeb = ext.GetMethod("GetMasterMechJeb", BindingFlags.Public | BindingFlags.Static);
+                // MechJebCore.GetComputerModule has a STRING overload, so the attitude clients can be
+                // reached without AXE referencing any MuMech type. ComputerModule.Enabled is a plain public
+                // property, and MechJebCore.Drive gates on `if (computerModule.Enabled)` before calling each
+                // module's Drive(s) -- verified, so clearing it really does stop the module flying.
+                if (core != null)
+                    _mjGetModule = core.GetMethod("GetComputerModule", BindingFlags.Public | BindingFlags.Instance,
+                                                  null, new System.Type[] { typeof(string) }, null);
+                System.Type cm = a.assembly.GetType("MuMech.ComputerModule");
+                if (cm != null) _mjModuleEnabled = cm.GetProperty("Enabled", BindingFlags.Public | BindingFlags.Instance);
                 break;
             }
         }
@@ -159,6 +184,10 @@ namespace RPAxe
             {
                 _vessel = FlightGlobals.ActiveVessel;
                 _masterMechJeb = null;
+                // Reset to MechJeb's own default for a freshly-loaded vessel. Without this, switching
+                // between two craft that BOTH lack a reference sees no transition and the new vessel's
+                // modules (separate objects) are never disabled.
+                _mjClientsAllowed = true;
                 _requested = true;
                 // Per-vessel state for modes 3/4: coupling coefficients are seeded from the vessel so the
                 // misalignment is a stable characteristic of THIS craft, and the delay buffer must not carry
@@ -252,8 +281,53 @@ namespace RPAxe
             if (_getMasterMechJeb == null || _mjDeactivate == null) return;
             if (_masterMechJeb == null)
                 _masterMechJeb = _getMasterMechJeb.Invoke(null, new object[] { FlightGlobals.ActiveVessel });
-            if (_masterMechJeb != null)
-                _mjDeactivate.SetValue(_masterMechJeb, _level != AxeControlLockerUtils.LockLevel.Unlocked, null);
+            if (_masterMechJeb == null) return;
+            _mjDeactivate.SetValue(_masterMechJeb, _level != AxeControlLockerUtils.LockLevel.Unlocked, null);
+            UpdateMechJebAttitudeClients();
+        }
+
+        // Whether ANY unit aboard supplies an inertial attitude reference. This is the vessel MAX -- one
+        // Deep-Space Bus anywhere in the stack covers the whole stack, matching how stock SAS already
+        // resolves through part.PartValues.AutopilotSkill. Crew are exempt outright.
+        //
+        // Stock SAS gets both of those free from KSP's own MAX; MechJeb resolves per VESSEL through the
+        // master core, so both have to be applied by hand here.
+        //
+        // Fails OPEN (returns true) on a null/empty vessel: mid-scene-change reads see a live-but-empty
+        // Parts list, and answering "no reference" there would disable MechJeb on a craft that has one.
+        bool VesselHasAttitudeReference()
+        {
+            Vessel v = _vessel;
+            if (v == null || v.Parts == null || v.Parts.Count == 0) return true;
+            if (v.GetCrewCount() > 0) return true;
+            for (int i = 0; i < v.Parts.Count; i++)
+            {
+                PartModuleList mods = v.Parts[i].Modules;
+                for (int j = 0; j < mods.Count; j++)
+                {
+                    if (mods[j] is ModuleAxeAvionics a && a.ProvidesAttitudeReference) return true;
+                    if (mods[j] is ModuleAxeFixedAvionics f && f.ProvidesAttitudeReference) return true;
+                }
+            }
+            return false;
+        }
+
+        // Enable/disable only the two frame-dependent clients. Everything else MechJeb offers -- ascent
+        // guidance, docking, rendezvous, landing, throttle, warp helper, every readout window -- is
+        // untouched, because none of it needs to know absolute attitude.
+        void UpdateMechJebAttitudeClients()
+        {
+            if (_mjGetModule == null || _mjModuleEnabled == null) return;
+            bool allowed = VesselHasAttitudeReference();
+            if (allowed == _mjClientsAllowed) return;   // 1 Hz poll; only touch MechJeb on a real transition
+            _mjClientsAllowed = allowed;
+            for (int i = 0; i < MjAttitudeClients.Length; i++)
+            {
+                object mod = _mjGetModule.Invoke(_masterMechJeb, new object[] { MjAttitudeClients[i] });
+                if (mod != null) _mjModuleEnabled.SetValue(mod, allowed, null);
+            }
+            if (!allowed)
+                Announce("No attitude reference — vector holds and node execution unavailable. Deep-Space Bus required.");
         }
 
         void OnDestroy()
