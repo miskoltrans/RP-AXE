@@ -74,6 +74,56 @@ namespace RPAxe
         // the power feature; engage/disengage is a control feature. See ComputeWatts.)
         // Stock SAS level granted when this core provides an attitude reference (see ProvidesAttitudeReference).
         [KSPField] public int fullSasLevel = 3;
+
+        // ---- Thermal control: you must SPEND POWER to stay warm (docs/AVIONICS_SPEC.md) ----
+        // A craft radiates continuously into a ~3 K sky and gets heat back only from absorbed sunlight and
+        // its own dissipation. Far from the Sun the income collapses and the loss does not, so heaters run.
+        // This is the opposite of everything stock KSP models: nothing in stock or Kerbalism gives a PROBE
+        // a "too cold" state at all (Kerbalism's temperature is habitat/crew comfort, per_capita).
+        //
+        //     Q = k * A * (1 - (homeSMA / r)^2),  clamped >= 0
+        //
+        // k = eps_eff * sigma * T_set^4 W/m^2. At a 293 K setpoint sigma*T^4 = 418 W/m^2, so k is just
+        // 418 x the installed effective emissivity. It ASYMPTOTES -- as r grows the solar term vanishes and
+        // demand tops out at the full radiative loss at setpoint, so Jupiter (96% of max) and Neptune
+        // (99.9%) cost nearly the same and the outer system never spirals.
+        //
+        // Deliberately NOT a part-temperature mechanic. Cold is modelled purely as an EC load, so it
+        // collides with nothing: not stock thermal, not FAR/RO reentry heating, not RealFuels boiloff.
+        // Flattening the battery is already fatal, so no new failure state is needed.
+        //
+        // eps_eff values are installed performance (seams, penetrations and cable feedthroughs cost 2-5x
+        // over lab figures), not datasheet numbers:
+        //   0.15 Standard bus  -- near-Earth thermal design, sized for REJECTING heat, performs poorly
+        //                         when the load reverses. Not bare (0.8 = 334 W/m^2); it is still a bus.
+        //   0.10 Deep-Space bus before any MLI tech
+        //   0.05 / 0.03 / 0.02 the three researched MLI rungs
+        [KSPField] public float thermalKStandard = 63f;    // eps_eff 0.15
+        [KSPField] public float thermalKDeepSpace = 42f;   // eps_eff 0.10, deep-space bus, no MLI tech yet
+
+        // The MLI ladder is NOT AXE's own -- it is RealFuels' MLI PARTUPGRADEs, which AXE already re-homed
+        // off their stock tech ids onto these Thermodynamics nodes (they currently only affect propellant
+        // boiloff). Reusing them makes this a real cross-lane gate: a deep-space bus's thermal performance
+        // depends on THERMAL research, not guidance research. th_hermeticBus is T3, before the bus at T5.
+        static readonly string[] _mliTech = { "th_hermeticBus", "th_extendedMLIWrapping", "th_advancedMLI" };
+        static readonly float[] _mliK = { 21f, 13f, 8f };   // eps_eff 0.05 / 0.03 / 0.02
+
+        // AS-BUILT, persisted, frozen at launch. New features are built craft-sharing-first (user,
+        // 2026-08-05): the k a craft flies with is the one resolved when it was BUILT, so a shared .craft
+        // performs as its designer intended instead of silently re-deriving from the recipient's research.
+        // Same freeze-at-launch idiom as avionicsMass/avionicsCost. (The avionics TIER is still runtime-
+        // derived -- that rework is deliberately deferred, see AVIONICS_COMPARISON.md.)
+        [KSPField(isPersistant = true)] public float asBuiltThermalK = -1f;
+
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Thermal Load",
+                  guiFormat = "N1", guiUnits = " W", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public float thermalWatts = 0f;
+
+        // At Earth the load is 0, so the mechanic is invisible exactly where the player plans. This shows
+        // the asymptote -- what the heaters will want once far from the Sun.
+        [KSPField(guiActiveEditor = true, guiName = "Thermal at deep space",
+                  guiFormat = "N1", guiUnits = " W", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public float thermalWattsDeepSpace = 0f;
         [KSPField] public float hibernationFactor = 0.05f;  // Shielded hibernate depth (tier-invariant, RP-1 Deep-Space)
 
         // ---- hardware MASS curve exponent/constant (Unshielded / Near-Earth) ----
@@ -1137,6 +1187,56 @@ namespace RPAxe
 
         public bool ShieldedActive => shieldedEnabled && _bestShieldedIdx >= 0;
 
+        // ---- Thermal ----
+        // Radiating area from box volume. No geometry property is exposed by either procedural driver, and
+        // RP-1's own shielding-mass add-on already uses V^(2/3) as the volume->surface proxy, so this is the
+        // house idiom rather than a new approximation. Cube coefficient (6); a cylinder with h=d is ~5.5.
+        // AVIONICS box only, not the whole vessel: the avionics is what has to be kept warm.
+        float ThermalArea()
+        {
+            float v = _cachedVolume > 0f ? _cachedVolume : (hwVolume + battVolume);
+            return v > 0f ? 6f * Mathf.Pow(v, 2f / 3f) : 0f;
+        }
+
+        // Best researched MLI rung, else the flat per-model value. Standard NEVER benefits from MLI
+        // research -- that is the capability the Deep-Space Bus is selling.
+        float ResolveThermalK()
+        {
+            if (!ShieldedActive) return thermalKStandard;
+            float k = thermalKDeepSpace;
+            for (int i = 0; i < _mliTech.Length; i++)
+                if (Researched(_mliTech[i]) && _mliK[i] < k) k = _mliK[i];
+            return k;
+        }
+
+        /// <summary>
+        /// Fraction of the full radiative loss the heaters must supply: 0 at the home body's orbit, rising
+        /// to 1 far from the Sun. Static and vessel-keyed so the BACKGROUND path can call it -- an unloaded
+        /// probe coasting outward must keep re-evaluating this, and reading a frozen snapshot value would
+        /// mean the load never grows during exactly the unattended cruise where it matters.
+        /// </summary>
+        public static float SolarDeficit(Vessel v)
+        {
+            if (v == null || Planetarium.fetch == null) return 0f;
+            CelestialBody home = Planetarium.fetch.Home, sun = Planetarium.fetch.Sun;
+            if (home?.orbit == null || sun == null) return 0f;
+            double refR = home.orbit.semiMajorAxis;
+            if (refR <= 0d) return 0f;
+            double r = (v.GetWorldPos3D() - sun.position).magnitude;
+            if (r <= 0d) return 0f;
+            double f = 1d - refR * refR / (r * r);
+            return f <= 0d ? 0f : (f >= 1d ? 1f : (float)f);
+        }
+
+        // Heater draw. NOT reduced by hibernation (user, 2026-08-05): the heater does not care whether the
+        // computer is running, which also gives deep space an irreducible power floor hibernation can't
+        // dodge. Added to the draw, never multiplied into it.
+        float ThermalWatts()
+        {
+            float k = HighLogic.LoadedSceneIsEditor || asBuiltThermalK <= 0f ? ResolveThermalK() : asBuiltThermalK;
+            return k * ThermalArea() * SolarDeficit(vessel);
+        }
+
         // ---- Attitude reference ("star tracker") -- docs/AVIONICS_SPEC.md, Axis 2. ----
         // Only a Deep-Space Bus knows which way it points in an inertial frame. A Standard bus still has
         // gyros, so it can HOLD an attitude (stock SAS level 0) but cannot acquire prograde/normal/target/
@@ -1613,18 +1713,27 @@ namespace RPAxe
         float ComputeWatts(bool onRails)
         {
             if (dead) return 0f;   // RP-1 ModuleAvionics.GetPowerDraw: a dead unit draws nothing, ever
+            // Heaters are ADDED, never scaled by the hibernate depth -- see ThermalWatts().
+            float thermal = thermalWatts;
             if (guidanceEnabled && CanHibernate && (hibernating || onRails))
-                return TierWatts() * CurrentHibernateFactor;
+                return TierWatts() * CurrentHibernateFactor + thermal;
             // No idle reduction: engage/disengage and the guidance tech gate are CONTROL mechanics, not
             // power ones. Only hibernation (above) and on-rails (above) cut the draw. See the note on
             // ComputeWatts() for why.
-            return ComputeBaseWatts();
+            return ComputeBaseWatts() + thermal;
         }
 
         void UpdateRate()
         {
             ApplyAttitudeReference();   // cheap; keeps SAS in step with the Shielded toggle and tier
-            currentWatts = HighLogic.LoadedSceneIsEditor ? ComputeBaseWatts() : ComputeWatts();
+
+            // Resolve-and-freeze the as-built k in the editor, then fly what was built (craft-sharing).
+            if (HighLogic.LoadedSceneIsEditor) asBuiltThermalK = ResolveThermalK();
+            thermalWatts = ThermalWatts();
+            // Editor readout only: the asymptote, since at the home body the live figure is 0.
+            thermalWattsDeepSpace = (asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK()) * ThermalArea();
+
+            currentWatts = HighLogic.LoadedSceneIsEditor ? ComputeBaseWatts() + thermalWatts : ComputeWatts();
             UpdateAuthorityDisplay();
             _ecConsumption = new KeyValuePair<string, double>(EcName, -currentWatts / 1000.0);
             if (_commandEC != null) _commandEC.rate = KerbalismPresent ? 0f : currentWatts / 1000f;
@@ -1948,8 +2057,30 @@ namespace RPAxe
             if (availableResources.ContainsKey(EcName))
             {
                 float cw = 0f;
-                if (moduleSnapshot.moduleValues.TryGetValue("currentWatts", ref cw) && cw > 0f)
-                    resourceChangeRequest.Add(new KeyValuePair<string, double>(EcName, -cw / 1000.0));
+                if (!moduleSnapshot.moduleValues.TryGetValue("currentWatts", ref cw)) cw = 0f;
+
+                // currentWatts in the snapshot is FROZEN at whatever it was when the vessel last unloaded,
+                // which is fine for the tier/mass term (mass freezes at launch anyway) but wrong for the
+                // heaters: an unloaded probe coasting outward gets colder every day, and that is precisely
+                // the unattended cruise the mechanic exists for. So re-evaluate the thermal term live here
+                // from the vessel's CURRENT distance, and swap it for the stale one baked into the snapshot.
+                float staleThermal = 0f, k = 0f;
+                moduleSnapshot.moduleValues.TryGetValue("thermalWatts", ref staleThermal);
+                moduleSnapshot.moduleValues.TryGetValue("asBuiltThermalK", ref k);
+
+                float liveThermal = staleThermal;
+                if (k > 0f)
+                {
+                    float bv = 0f, hv = 0f;
+                    moduleSnapshot.moduleValues.TryGetValue("battVolume", ref bv);
+                    moduleSnapshot.moduleValues.TryGetValue("hwVolume", ref hv);
+                    float vol = bv + hv;
+                    if (vol > 0f) liveThermal = k * 6f * Mathf.Pow(vol, 2f / 3f) * SolarDeficit(v);
+                }
+
+                double watts = cw - staleThermal + liveThermal;
+                if (watts > 0d)
+                    resourceChangeRequest.Add(new KeyValuePair<string, double>(EcName, -watts / 1000.0));
             }
             return "avionics";
         }

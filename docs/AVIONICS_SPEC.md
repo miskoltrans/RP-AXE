@@ -146,6 +146,77 @@ crewed pod's own `ModuleSAS` wins automatically. No crew special-case to write.
 **Vessel MAX (user, 2026-08-05).** If ANY core aboard provides attitude reference, the whole stack has it —
 matching how stock SAS already resolves across parts. So a Deep-Space payload covers its own launch stack.
 
+### Thermal control — BUILT 2026-08-05
+
+**The mechanic is: you spend power to stay warm.** The inverse of everything KSP models. A craft radiates
+continuously into a ~3 K sky and gets heat back only from absorbed sunlight and its own dissipation; far
+from the Sun the income collapses and the loss doesn't. Real consequence, not flavour — batteries lose
+capacity cold, and hydrazine freezes at ~2 °C, so every propellant line on a deep-space probe carries
+heater tape. Nothing else in the modlist models this: stock has no "too cold" state at all, and
+Kerbalism's temperature is habitat/crew comfort (`per_capita`).
+
+```
+Q = k · A · (1 − (homeSMA / r)²),   clamped ≥ 0
+k = ε_eff · σ · T_set⁴     (σT⁴ = 418 W/m² at 293 K, so k = 418 × ε_eff)
+A = 6 · V^(2/3)            (avionics BOX volume — RP-1's own volume→surface idiom)
+```
+
+**It asymptotes** — as `r` grows the solar term vanishes and demand tops out at the full radiative loss at
+setpoint. That is why the outer system doesn't spiral:
+
+| k | ε_eff | Earth | Mars | Ceres | Jupiter | Saturn | Neptune |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| Standard | 0.15 | 0 W | 96 W | 147 W | 163 W | 168 W | **169 W** |
+| Deep-Space, no MLI | 0.10 | 0 | 64 | 98 | 109 | 112 | 113 |
+| + `th_hermeticBus` | 0.05 | 0 | 32 | 49 | 54 | 56 | 56 |
+| + `th_extendedMLIWrapping` | 0.03 | 0 | 20 | 30 | 34 | 35 | 35 |
+| + `th_advancedMLI` | 0.02 | 0 | 12 | 19 | 21 | 21 | 21 |
+
+*(0.30 m³ box ≈ a 1 t-capacity core, A = 2.69 m². Jupiter is already 96% of maximum.)*
+
+**The scissors.** Solar output falls as 1/r² while heater demand rises on the same curve. Where they cross
+is where RTGs stop being optional — and that falls out of physics rather than a tuned threshold. A
+Mariner-class 7 m² array gives ~310 W at Earth and ~11 W at Jupiter; a Standard bus there wants 163 W.
+
+**ε_eff values are INSTALLED performance**, not datasheets — seams, penetrations and cable feedthroughs
+cost 2–5× over lab figures. Standard sits at 0.15 because near-Earth thermal design is sized for
+*rejecting* heat and performs poorly when the load reverses; it is not bare (0.8 → 334 W/m²), it is still
+a spacecraft. **This is the tuning dial** — Mars at 96 W for a Standard bus is the number to watch in play.
+
+**Decisions taken:**
+- **Box volume, not vessel** (user): the avionics is what must be kept warm.
+- **Hibernation does NOT reduce it** (user): the heater doesn't care whether the computer is running, and
+  it gives deep space an irreducible power floor. Added to the draw, never multiplied into it. (Strictly,
+  hibernating means *less* waste heat and so *more* heater — modelling that would make hibernation a trap.)
+- **Eclipse NOT modelled.** It is thoroughly historical — eclipse thermal cycling is the dominant LEO
+  design driver and battery heaters are a real LEO power-budget line — but it is a *near-Earth* mechanic,
+  and this one is deliberately Mars-and-beyond. Deferred on scope, not on realism.
+- **Cold side only.** The inner system (Venus 1.9×, Mercury 6.7× flux) is a *cooling* problem costing mass
+  in radiators and sunshades, not watts in heaters. Separate mechanic, phase 2.
+- **NOT a part-temperature mechanic.** Purely an EC load, so it collides with nothing — not stock thermal,
+  not FAR/RO reentry heating, not RealFuels boiloff. Flattening the battery is already fatal.
+
+**`k` is resolved at BUILD time and persisted (`asBuiltThermalK`), frozen at launch** — new features are
+built craft-sharing-first (user, 2026-08-05), so a shared `.craft` performs as its designer intended
+rather than silently re-deriving from the recipient's research. Same idiom as `avionicsMass`/`avionicsCost`.
+The avionics *tier* is still runtime-derived; that rework stays deferred.
+
+**Background vessels re-evaluate live.** `BackgroundUpdate` reads `currentWatts` out of a frozen module
+snapshot, which is right for the tier/mass term but wrong for heaters — an unloaded probe coasting outward
+gets colder every day, and that is exactly the unattended cruise this exists for. So the background path
+subtracts the stale thermal term and recomputes it from the vessel's current distance.
+
+**Cross-lane gate.** `k` rides RealFuels' MLI `PARTUPGRADE`s, which AXE had already re-homed onto its own
+Thermodynamics nodes (`th_hermeticBus` T3 → `th_extendedMLIWrapping` T9 → `th_advancedMLI` T11), where they
+previously only affected propellant boiloff. So a deep-space bus's thermal performance depends on
+*Thermal* research, not Guidance research — and Thermodynamics gains teeth. A Standard bus never benefits
+from MLI research at all; that is the capability the Deep-Space Bus sells.
+
+**OPEN — VAB planning by target body.** At Earth the live load is 0, so the mechanic is invisible exactly
+where you plan. Shipped stopgap is a static `Thermal at deep space` readout (the asymptote). The better
+answer, per user: a target-body selector like RealAntennas', so you can see the load at the body you
+intend to orbit. Not built.
+
 **Mass/cost: own per-tier ladder, authored as real data — not a live multiplier. SHIPPED.** Matching RP-1's
 real shape meant ~10 *separate* tech-node placements in AXE's tree (mirroring each Guided-tier unlock
 one-for-one, not a single gate riding whatever Guided tier happens to be active). RP-1's actual Deep-Space
