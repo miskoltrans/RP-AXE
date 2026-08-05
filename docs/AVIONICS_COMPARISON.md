@@ -37,13 +37,13 @@ curve + the battery you size.
 
 | | **RP-1 proc avionics** | **RP-AXE core** |
 |---|---|---|
-| Models | Near-Earth / Deep-Space / Science-Core (separate configs) | **Near-Earth (guided) / Science-Core (unguided)**, one VAB toggle |
+| Models | Near-Earth / Deep-Space / Science-Core (one 3-way dropdown) | **all three, on TWO orthogonal VAB toggles**: Guided/Unguided (= NE / Science-Core) × Standard/Deep-Space Bus (Guided-only) |
 | Mass input (NE) | **rated** `controllableMass` (slider, ≥ vessel) | **live vessel load** (auto, ≈ vessel mass), frozen at launch |
 | Hardware mass (NE) | `(M^0.46172 + 0.96)·massFactor/1000` | **same formula** |
 | Draw input | rated `controllableMass`, **static** | **live DRY mass** — steady on burn, steps down on staging |
 | Control cliff | hard — vessel > massLimit ⇒ **no control** | **none** — bigger just costs more |
 | Out of power | no custom check — feeds `ModuleCommand`'s EC rate, stock handles it | **same** — no custom check either (see below) |
-| Low-power | Deep-Space always; Near-Earth from `advancedAvionics`; Science-Core never | **Guided always** (no tier gate); **Unguided never** |
+| Low-power | Deep-Space always; Near-Earth from `advancedAvionics`; Science-Core never | **same** — Deep-Space Bus 0.05 from its first rung, Standard can't until idx 9 then 0.1, Unguided never |
 | Battery | leftover part volume after hardware | **same** — hardware reserves vol, rest is EC |
 | Cost | `(M^0.46172+3.034)·costFactor`, hump-shaped | **same formula**, frozen at launch like mass (§H) |
 | Science container | on from `basicAvionics` (both models) | **same** — checked off at flight start if tier lacks it |
@@ -254,15 +254,21 @@ is stripped.
 
 ## What still differs (all intended, all easier)
 
-1. **Two models on the guided/unguided toggle.** Guided = Near-Earth, unguided = Science-Core (RP-1's third
-   config, Deep-Space, is dropped — range is comms, not avionics). Chosen in the VAB, frozen at launch.
+1. **RP-1's 3-way dropdown becomes two orthogonal toggles.** Guided = Near-Earth, Unguided = Science-Core;
+   a second Guided-only toggle picks Standard vs **Deep-Space Bus** (RP-1's third config). Both chosen in
+   the VAB, frozen at launch. What AXE actually dropped is not the model but RP-1's `interplanetary`
+   *range lock* — range is comms (RealAntennas), not avionics. (Updated 2026-08-05: this item used to say
+   "Deep-Space is dropped", which stopped being true when the axis shipped 2026-07-10 and was renamed
+   Deep-Space Bus 2026-08-05.)
 2. **Hardware keys off actual load, not rated mass** (NE). RP-1 players set `controllableMass ≥ vessel` (margin);
    AXE uses the real load ⇒ a touch lighter.
 3. **Draw is live off DRY mass.** Steady as fuel burns, steps down as stages drop; RP-1's is static at the rated
    value. (Mass itself still freezes at launch — RP-1-like.)
-4. **Hibernation is Guided-only, not tier-gated.** RP-1 gives Near-Earth a toggle only from `advancedAvionics`
-   on and never gives Science-Core one at all, at any tier. AXE matches the model split (Guided can hibernate,
-   Unguided never can) but doesn't additionally gate Near-Earth by tier — available from `postWarAvionics`.
+4. **~~Hibernation is Guided-only, not tier-gated.~~ CLOSED 2026-07-10 — AXE now matches RP-1 exactly.**
+   Deep-Space Bus hibernates to 0.05 from its first rung; Standard cannot hibernate at all until ladder
+   index 9 (`advancedAvionics`-equivalent) and then only reaches 0.1; Unguided never can, at any tier.
+   See `_ladUnshHibernate` / `hibernationFactor` / `CanHibernate` in `ModuleAxeAvionics.cs`. This is no
+   longer a divergence and is kept only so the item numbering below stays stable.
 5. **Guidance gate** at `postWarAvionics` vs RP-1's `start` — so the very start flies Science-Core only.
 6. **SAS** is a flat level 3 (config), suppressed while dumb/axial by `AxeAvionicsController`.
 7. **Funds, science storage, kOS — closed 2026-07-07.** Cost now has a real hardware-efficiency curve
@@ -272,7 +278,7 @@ is stripped.
    (`disabledPowerFactor`) and its Hibernate mechanic are actually the *same* underlying `systemEnabled` flag —
    RP-1 doesn't have two separate concepts here, "hibernation" is just what that toggle is called for
    Deep-Space. AXE keeps its own idle multiplier (`idleFactor`, 0.1×, automatic whenever guidance isn't active)
-   *and* a separate player-chosen Hibernate toggle (Guided only, from `postWarAvionics` — see item 4) — two
+   *and* a separate player-chosen Hibernate toggle (Guided only, tier-gated as RP-1 does — see item 4) — two
    mechanics where RP-1 has one, but the player-facing outcome (trade control for a power cut) is the same.
 
 ## Unintended divergence — the TIER is not persisted (LOGGED 2026-08-05, undecided)
