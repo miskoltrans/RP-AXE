@@ -274,12 +274,16 @@ is stripped.
 7. **Funds, science storage, kOS — closed 2026-07-07.** Cost now has a real hardware-efficiency curve
    (§H, `GetModuleCost`), science storage is tier-gated like RP-1 (§I), and a kOS reflection bridge exists
    (§I, inert until kOS is an AXE dependency). See `docs/UPGRADES.md` §C1.
-8. **No manual "disable for power" toggle distinct from Hibernate.** RP-1's `advancedAvionics`+ toggle
-   (`disabledPowerFactor`) and its Hibernate mechanic are actually the *same* underlying `systemEnabled` flag —
-   RP-1 doesn't have two separate concepts here, "hibernation" is just what that toggle is called for
-   Deep-Space. AXE keeps its own idle multiplier (`idleFactor`, 0.1×, automatic whenever guidance isn't active)
-   *and* a separate player-chosen Hibernate toggle (Guided only, tier-gated as RP-1 does — see item 4) — two
-   mechanics where RP-1 has one, but the player-facing outcome (trade control for a power cut) is the same.
+8. **~~No manual "disable for power" toggle distinct from Hibernate.~~ CLOSED 2026-08-05 — AXE now has
+   RP-1's single mechanic.** RP-1's `advancedAvionics`+ toggle (`disabledPowerFactor`) and its Hibernate
+   mechanic are the *same* underlying `systemEnabled` flag; "hibernation" is just what that toggle is called
+   for Deep-Space. AXE used to carry a second, automatic `idleFactor` (0.1×) on top — and because
+   `GuidanceActive` includes `guidanceEngaged`, merely **disengaging** guidance bought the full 10× power
+   saving, contradicting `guidanceEngaged`'s own documented "no effect on EC draw" contract and leaving
+   hibernation with nothing to sell (Standard's hibernate depth is *also* 0.1, so the tier-9 gate gated a
+   number every core already had for free). Measured: the entire Deep-Space-vs-Standard cruise advantage on
+   a 500 kg probe was **2.5 W**; with idle removed it is **47.3 W**. `idleFactor` is **deleted** — hibernation
+   and on-rails are the only things that reduce draw.
 
 ## Unintended divergence — the TIER is not persisted (LOGGED 2026-08-05, undecided)
 

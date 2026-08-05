@@ -70,7 +70,8 @@ namespace RPAxe
         // ---- EC draw curve (Unshielded / Near-Earth): watts = (dryMass^exp + const) * powerFactor(tier) ----
         [KSPField] public float powerExponent = 0.57853f;
         [KSPField] public float powerConstant = 1.035f;
-        [KSPField] public float idleFactor = 0.1f;          // draw multiplier while guidance is inactive (dumb)
+        // (`idleFactor` DELETED 2026-08-05 — idle/disengaged no longer reduces draw at all. Hibernation is
+        // the power feature; engage/disengage is a control feature. See ComputeWatts.)
         [KSPField] public float hibernationFactor = 0.05f;  // Shielded hibernate depth (tier-invariant, RP-1 Deep-Space)
 
         // ---- hardware MASS curve exponent/constant (Unshielded / Near-Earth) ----
@@ -189,6 +190,9 @@ namespace RPAxe
         // Deliberately NOT the same thing as Shutdown Avionics (`hibernating`), which is RP-1's power
         // feature and is gated at tier index 9 -- useless for the early career where a capsule riding a
         // dumb stage is the common configuration. No tier gate here, and no effect on EC draw.
+        // (2026-08-05: "no effect on EC draw" is now TRUE. It was false from launch until today --
+        // guidanceEngaged fed GuidanceActive, which gated a 10x idle multiplier, so disengaging bought
+        // the whole power saving for free and left hibernation with nothing to sell. See ComputeWatts.)
         [KSPField(isPersistant = true)]
         public bool guidanceEngaged = true;
 
@@ -1556,8 +1560,25 @@ namespace RPAxe
         }
 
         // Actual live draw: forced to the current hibernate depth while shut down OR on rails (matches
-        // RP-1's auto-drop-on-warp, independent of the manual toggle); otherwise Science-Core stays flat,
-        // Guided draws full when guiding and idleFactor when dumb.
+        // RP-1's auto-drop-on-warp, independent of the manual toggle); otherwise the full tier/mass draw.
+        //
+        // 2026-08-05: HIBERNATION AND ON-RAILS ARE NOW THE ONLY THINGS THAT REDUCE DRAW. The old
+        // `GuidanceActive ? b : b * idleFactor` cut draw 10x whenever guidance was inactive -- and
+        // GuidanceActive includes `guidanceEngaged`, so merely DISENGAGING (a capacity/control mechanic
+        // for a capsule riding a dumb stage) silently bought the full power saving. That directly
+        // contradicted guidanceEngaged's own documented contract ("no effect on EC draw", see its
+        // declaration) and it made hibernation worthless: Standard's hibernate depth is 0.1, identical
+        // to the idle multiplier every core already got for free, so the tier-9 gate gated access to a
+        // number you already had. Measured on a 500 kg probe at interplanetaryProbes, the entire
+        // Deep-Space-vs-Standard cruise advantage was 2.5 W; with idle removed it is 47.3 W, which is
+        // what the Deep-Space Bus is supposed to be selling.
+        //
+        // Safe for the case the idle path was protecting: a capsule riding a dumb stage now draws full
+        // power through ascent, but that is 6-10 minutes against a ~39-hour battery -- inert, by the same
+        // measurement that retired the overload EC penalty in Phase C of docs/AVIONICS_PLAN.md.
+        //
+        // This also collapses AXE back to RP-1's SINGLE power mechanic (see differs-item 8 in
+        // docs/AVIONICS_COMPARISON.md, now closed).
         float ComputeWatts() => ComputeWatts(_onRails);
 
         // RP-1 parity (ModuleAvionics.GetPowerDraw / ModuleProceduralAvionics.GetDisabledkW): the disabled
@@ -1569,9 +1590,10 @@ namespace RPAxe
             if (dead) return 0f;   // RP-1 ModuleAvionics.GetPowerDraw: a dead unit draws nothing, ever
             if (guidanceEnabled && CanHibernate && (hibernating || onRails))
                 return TierWatts() * CurrentHibernateFactor;
-            float b = ComputeBaseWatts();
-            if (!guidanceEnabled) return b;
-            return GuidanceActive ? b : b * idleFactor;
+            // No idle reduction: engage/disengage and the guidance tech gate are CONTROL mechanics, not
+            // power ones. Only hibernation (above) and on-rails (above) cut the draw. See the note on
+            // ComputeWatts() for why.
+            return ComputeBaseWatts();
         }
 
         void UpdateRate()
