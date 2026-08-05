@@ -275,6 +275,47 @@ is stripped.
    *and* a separate player-chosen Hibernate toggle (Guided only, from `postWarAvionics` — see item 4) — two
    mechanics where RP-1 has one, but the player-facing outcome (trade control for a power cut) is the same.
 
+## Unintended divergence — the TIER is not persisted (LOGGED 2026-08-05, undecided)
+
+Unlike every item in the list above, this one is **not a design decision**. It has no record anywhere, and
+it diverges from RP-1 *and* from the wider RO/RealFuels house pattern. Logged so a future avionics rework
+starts from a known gap instead of rediscovering it.
+
+**The RO/RF pattern is: tech gates what you may SELECT; the selection persists in the craft.** RealFuels
+stores `_numberOfAddedMLILayers` on the part and clamps it to `maxMLILayers` on load. RP-1's
+`ModuleProceduralAvionics` stores *both* axes explicitly:
+
+```csharp
+[KSPField(isPersistant = true, guiActiveEditor = true, guiName = "Configuration", ...UI_ChooseOption)]
+public string avionicsConfigName;   // Near-Earth / Deep-Space / Science-Core
+[KSPField(isPersistant = true)]
+public string avionicsTechLevel;    // the TIER, stored as the tech node name
+```
+
+plus a `SetFallbackConfigForLegacyCraft()` path for a craft referencing a config that no longer exists.
+
+**AXE stores the axes but derives the tier.** `guidanceEnabled`, `shieldedEnabled`, `hwVolume`, `battVolume`
+and the split all persist. There is no persisted tier field — `ApplyTier()` recomputes it at runtime from
+whatever is currently researched, and `ApplyShieldedTier()` does the same through `_bestShieldedIdx`.
+
+**The consequence is not subtle.** `massFactor` runs 87.99 (tier 0) → 11.396 (tier 13), a **7.7× span**. The
+same `.craft` opened in a save with more tech gets ~7.7× lighter avionics hardware and correspondingly more
+steerable capacity from an identical box — a different spacecraft, not a different readout. In a sandbox
+(everything researched) every shared craft silently maxes. An RP-1 craft carries its designed tier and
+behaves the same anywhere, up to the recipient's own ceiling.
+
+**Both patterns have real virtues** — this is logged as *undecided*, not as a bug to fix on sight:
+
+- *Tech-derived (AXE today)*: saved designs improve as you research, so there's no graveyard of obsolete
+  `.craft` files, and it needs zero extra UI. Cost: not portable; a sandbox silently grants max.
+- *Explicit-persisted (RP-1, RF)*: reproducible, self-documenting, survives sharing. Cost: needs a
+  clamp-or-fallback path for recipients lacking the tech, and old designs go stale rather than improving.
+
+Note that explicit-persisted buys only *partial* portability anyway:
+`Mathf.Clamp(_numberOfAddedMLILayers, 0, maxMLILayers)` means a shared craft gives the designer's intent
+only up to the recipient's own ceiling. Still strictly better than silently maxing, because the designed
+value survives as data and degrades **visibly** instead of inflating **invisibly**.
+
 ## Design record — what was proposed here, and what shipped since
 
 *Status audit 2026-08-05: everything below except "Decouple battery volume from box volume" has since
