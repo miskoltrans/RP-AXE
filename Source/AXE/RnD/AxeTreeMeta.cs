@@ -33,6 +33,7 @@ namespace RPAxe.RnD
             public float XfanPitch;  // px between staggered risers
             public bool SolidBg;     // replace the stock R&D grid with a solid backdrop (matches the prototype)
             public bool Avoid;       // detour edges around node boxes they'd otherwise cross
+            public bool OrDash;      // dash the edges into an anyToUnlock node (stock has no OR visual at all)
             // routing override is active (we replace stock elbows) for any non-stock style
             public bool RouteOverride => Routing == "lanes" || Routing == "ortho-late" || Routing == "ortho-early" || Routing == "junction";
         }
@@ -42,7 +43,7 @@ namespace RPAxe.RnD
         internal static readonly Dictionary<string, NodeMeta> Nodes = new Dictionary<string, NodeMeta>();
         internal static readonly Dictionary<string, DiscMeta> Disciplines = new Dictionary<string, DiscMeta>();
         // Default = stock (feature off) so a missing/absent cfg can never brick the scene.
-        internal static Settings Render = new Settings { Layout = "stock", LaneRouting = true, Routing = "lanes", FlipY = true, Xfan = true, XfanPitch = 10f, Fan = true, LanePitch = 13f, DiscColor = true, Legend = true, Hover = true, SolidBg = true, Avoid = true };
+        internal static Settings Render = new Settings { Layout = "stock", LaneRouting = true, Routing = "lanes", FlipY = true, Xfan = true, XfanPitch = 10f, Fan = true, LanePitch = 13f, DiscColor = true, Legend = true, Hover = true, SolidBg = true, Avoid = true, OrDash = true };
         internal static bool Loaded { get; private set; }
 
         internal static void EnsureLoaded()
@@ -132,6 +133,7 @@ namespace RPAxe.RnD
             Render.Hover = ParseBool(r.GetValue("hover"), true);
             Render.SolidBg = ParseBool(r.GetValue("solidBg"), true);
             Render.Avoid = ParseBool(r.GetValue("avoid"), true);
+            Render.OrDash = ParseBool(r.GetValue("orDash"), true);
         }
 
         /// <summary>`experiment = name|scienceCap|configureGroup` (repeated), as emitted by

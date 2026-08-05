@@ -113,6 +113,7 @@ namespace RPAxe.RnD
             PendingNodes = null; PendingEdges = null; PendingById = null;
             Routes.Clear();
             NodeById.Clear();
+            Dashed.Clear();   // the VectorLines are rebuilt per spawn -> the old handles are dead
             _over = null; _lastMousePos = new Vector3(float.NaN, float.NaN, 0f);   // force a fresh raycast next frame (no stale node ref across a reopen)
             try
             {
@@ -339,9 +340,11 @@ namespace RPAxe.RnD
             yield return null; yield return null; yield return null;   // let the nodes' Setup apply localPositions
             EnsureRoutes(null);   // graphics exist now -> calibrate the node box + route (before/with the arrow draw)
             FitContentNow();
+            DashOrEdges(RDController.Instance);      // dash OR (anyToUnlock) edges if their lines exist yet
             CenterOnStart(RDController.Instance);   // land the initial view on the start node
             yield return new WaitForSecondsRealtime(1.25f);
             FitContentNow();
+            DashOrEdges(RDController.Instance);      // ...and again for any drawn late (no-op for ones already done)
         }
 
         // Scroll the initial view to the start node: vertically centred, ~25% from the left (the tree only
@@ -671,6 +674,60 @@ namespace RPAxe.RnD
                 Image im = g.GetComponent<Image>();
                 if (im != null) im.color = DotBaseColor(i);
             }
+        }
+
+        // ---- OR edges (anyToUnlock) ----------------------------------------------------------------------
+        // Stock ships NO visual for an OR node: its two line materials (LineMaterial / LineMaterialGray) split
+        // on whether the PARENT is researched, not on OR-ness, and neither is a dash texture — verified by
+        // decompile and by the fact that every line in-game renders as a solid run. So "any ONE of these
+        // unlocks me" is invisible. Dash those edges, matching the HTML prototype's setLineDash([6,4]).
+        //
+        // Mechanism: Vectrosity maps one texture repeat per (textureScale * lineWidth) px of line LENGTH and
+        // carries the UV offset across segments (SetTextureScale: `offset = (offset + span) % 1`), so a
+        // repeating on/off strip dashes the whole routed polyline continuously — rounded corners included —
+        // with no geometry change. UVs are only rebuilt on Draw(), which regenerates identical vertices from
+        // the unchanged points2 and never touches the transform stock reparented, so a re-draw is safe.
+        private const float DASH_PERIOD = 14f;   // px of line length per on+off cycle
+        private static Texture2D DashTex;
+        private static readonly HashSet<Vectrosity.VectorLine> Dashed = new HashSet<Vectrosity.VectorLine>();
+
+        // One-shot per line (the HashSet), so this is free on the repeat calls that catch late-drawn arrows.
+        private static void DashOrEdges(RDController ctrl)
+        {
+            if (!AxeTreeMeta.Render.OrDash || ctrl == null || ctrl.nodes == null) return;
+            try
+            {
+                int n = 0;
+                foreach (RDNode rd in ctrl.nodes)
+                {
+                    if (rd == null || !rd.AnyParentToUnlock || rd.parents == null) continue;
+                    foreach (RDNode.Parent par in rd.parents)
+                    {
+                        Vectrosity.VectorLine line = par != null ? par.line : null;
+                        if (line == null || !Dashed.Add(line)) continue;
+                        if (DashTex == null) DashTex = MakeDashTexture();
+                        line.texture = DashTex;
+                        line.textureScale = DASH_PERIOD / Mathf.Max(0.5f, line.lineWidth);
+                        line.Draw();   // regenerate UVs (vertices come out identical)
+                        n++;
+                    }
+                }
+                if (n > 0) Debug.Log($"[AXE] render-port: dashed {n} OR (anyToUnlock) edges.");
+            }
+            catch (Exception e) { Debug.LogError("[AXE] OR-dash failed: " + e); }
+        }
+
+        // A 1px-tall on/off strip tiled along the line. Point filtering + Repeat keeps the dash ends crisp and
+        // stops the wrap from bleeding; 1px tall because stock's lines render hard-edged (no cross-line AA).
+        private static Texture2D MakeDashTexture()
+        {
+            const int W = 16, ON = 10;   // ~62% duty — reads as a dash, not a dotted line
+            var tex = new Texture2D(W, 1, TextureFormat.ARGB32, false)
+            { wrapMode = TextureWrapMode.Repeat, filterMode = FilterMode.Point };
+            var px = new Color32[W];
+            for (int x = 0; x < W; x++) px[x] = new Color32(255, 255, 255, (byte)(x < ON ? 255 : 0));
+            tex.SetPixels32(px); tex.Apply();
+            return tex;
         }
 
         // A soft-edged white circle sprite (1px AA), tinted per-dot via Image.color.
