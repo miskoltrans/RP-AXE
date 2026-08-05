@@ -152,6 +152,62 @@ namespace RPAxe
         {
             base.OnStart(state);
             if (busTemperature <= 0f) busTemperature = setpointK;
+            if (HighLogic.LoadedSceneIsEditor) SetupSimSelector();
+        }
+
+        void SetupSimSelector()
+        {
+            if (_simBodies.Count == 0 && FlightGlobals.Bodies != null)
+                for (int i = 0; i < FlightGlobals.Bodies.Count; i++)
+                {
+                    CelestialBody b = FlightGlobals.Bodies[i];
+                    if (b != null && b.orbit != null && b != Planetarium.fetch?.Sun) _simBodies.Add(b);
+                }
+            if (_simBodies.Count == 0) return;
+
+            string[] names = new string[_simBodies.Count];
+            for (int i = 0; i < _simBodies.Count; i++) names[i] = _simBodies[i].displayName.LocalizeRemoveGender();
+            if (Fields["simBodyIndex"].uiControlEditor is UI_ChooseOption opt)
+            {
+                opt.options = names;
+                opt.onFieldChanged = (f, o) => UpdateSim();
+            }
+            if (Fields["simDeepSpace"].uiControlEditor is UI_Toggle tog)
+                tog.onFieldChanged = (f, o) => UpdateSim();
+
+            if (simBodyIndex < 0 || simBodyIndex >= _simBodies.Count)
+                simBodyIndex = Mathf.Max(0, _simBodies.IndexOf(Planetarium.fetch?.Home));
+            UpdateSim();
+        }
+
+        void OnEditorShipModified(ShipConstruct _) => UpdateSim();
+
+        /// <summary>Editor-only: heater bill for the selected destination, at steady state.</summary>
+        public void UpdateSim()
+        {
+            if (!HighLogic.LoadedSceneIsEditor) return;
+
+            double dryTons = 0d;
+            if (EditorLogic.fetch?.ship?.Parts != null)
+                foreach (Part p in EditorLogic.fetch.ship.Parts) dryTons += p.mass;
+            simArea = dryTons > 0d ? areaCoefficient * Mathf.Pow((float)(dryTons * 1000d), 2f / 3f) : 0f;
+            thermalArea = simArea;
+
+            if (simArea <= 0f || thermalK <= 0f || simBodyIndex < 0 || simBodyIndex >= _simBodies.Count)
+            { simWatts = 0f; return; }
+
+            CelestialBody b = _simBodies[simBodyIndex];
+            // "in orbit" = low orbit about the selected body, sunlit, so the body's own IR still helps --
+            // the honest everyday case. "in deep space" = same distance from the Sun but nothing nearby to
+            // radiate back, which is the cruise leg and the number that actually sizes an RTG.
+            double sunDist = b.orbit != null ? b.orbit.semiMajorAxis : 0d;
+            float deficit = simDeepSpace
+                ? ModuleAxeAvionics.ThermalDeficit(sunDist, 1d, null, 0d, bodyIrFraction)
+                : ModuleAxeAvionics.ThermalDeficit(sunDist, 1d, b, b.Radius * 1.1d, bodyIrFraction);
+
+            float t = 0f;   // steady state, not a live craft's history
+            simWatts = ModuleAxeAvionics.StepThermal(deficit, simArea, thermalK, 1d,
+                                                     specificHeat, setpointK, minK, double.MaxValue / 4d, ref t);
         }
 
         void FixedUpdate()
