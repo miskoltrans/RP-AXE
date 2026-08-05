@@ -153,11 +153,9 @@ namespace RPAxe
         [KSPField] public float minK = 273f;
 
         [KSPField(isPersistant = true)] public float busTemperature = -1f;   // K; <0 = uninitialised
-        double _lastThermalUT = -1d;   // universe time of the last thermal step; <0 = none yet
+        ModuleAxeThermal _thermal;   // owns the heater state + its own Kerbalism line
 
-        [KSPField(isPersistant = true, guiActive = true, guiName = "Bus Temperature",
-                  guiFormat = "N0", guiUnits = " K", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
-        public float busTemperatureDisplay = 0f;
+        // (Bus Temperature is drawn by ModuleAxeThermal, which owns the state.)
 
         // AS-BUILT, persisted, frozen at launch. New features are built craft-sharing-first (user,
         // 2026-08-05): the k a craft flies with is the one resolved when it was BUILT, so a shared .craft
@@ -166,9 +164,9 @@ namespace RPAxe
         // derived -- that rework is deliberately deferred, see AVIONICS_COMPARISON.md.)
         [KSPField(isPersistant = true)] public float asBuiltThermalK = -1f;
 
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Thermal Load",
-                  guiFormat = "N1", guiUnits = " W", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
-        public float thermalWatts = 0f;
+        // Mirror of ModuleAxeThermal.thermalWatts, kept so ComputeWatts can fold heaters into the
+        // ModuleCommand rate when Kerbalism is absent. NOT shown -- the thermal module draws the PAW line.
+        [KSPField(isPersistant = true)] public float thermalWatts = 0f;
 
         // At Earth the load is 0, so the mechanic is invisible exactly where the player plans. This shows
         // the asymptote -- what the heaters will want once far from the Sun.
@@ -1415,25 +1413,11 @@ namespace RPAxe
             return need > 0f ? need : 0f;
         }
 
-        // Heater draw. NOT reduced by hibernation (user, 2026-08-05): the heater does not care whether the
-        // computer is running, which also gives deep space an irreducible power floor hibernation can't
-        // dodge. Added to the draw, never multiplied into it.
-        float ThermalWatts(double dt)
-        {
-            float k = HighLogic.LoadedSceneIsEditor || asBuiltThermalK <= 0f ? ResolveThermalK() : asBuiltThermalK;
-            float area = ThermalArea();
-            if (HighLogic.LoadedSceneIsEditor)
-            {
-                // No vessel, no clock: report the steady state at the deep-space asymptote's deadband.
-                busTemperatureDisplay = setpointK;
-                return 0f;
-            }
-            float def = VesselDeficit(vessel, bodyIrFraction);
-            double massKg = vessel != null ? vessel.GetTotalMass() * 1000d : 1000d;
-            float w = StepThermal(def, area, k, massKg, specificHeat, setpointK, minK, dt, ref busTemperature);
-            busTemperatureDisplay = busTemperature;
-            return w;
-        }
+        // (The heater draw itself moved to ModuleAxeThermal 2026-08-05, so it can carry its own Kerbalism
+        // label. This core keeps ResolveThermalK/ThermalArea -- the two inputs that depend on the bus
+        // configuration -- and pushes them across each update. Heaters are never reduced by hibernation:
+        // the heater does not care whether the computer is running, which also gives deep space an
+        // irreducible power floor that hibernation cannot dodge.)
 
         // ---- Attitude reference ("star tracker") -- docs/AVIONICS_SPEC.md, Axis 2. ----
         // Only a Deep-Space Bus knows which way it points in an inertial frame. A Standard bus still has
@@ -1927,20 +1911,30 @@ namespace RPAxe
 
             // Resolve-and-freeze the as-built k in the editor, then fly what was built (craft-sharing).
             if (HighLogic.LoadedSceneIsEditor) asBuiltThermalK = ResolveThermalK();
-            // Real elapsed universe time between updates, so the integration is warp-correct.
-            double now = Planetarium.GetUniversalTime();
-            double dt = _lastThermalUT > 0d ? now - _lastThermalUT : 0d;
-            if (dt < 0d) dt = 0d;                 // reverted save / scene reload
-            _lastThermalUT = now;
-            thermalWatts = ThermalWatts(dt);
+            // Heaters are OWNED BY ModuleAxeThermal, which reports them to Kerbalism under their own
+            // "heaters" label -- one PartModule can only carry one label, so a separate line needs a
+            // separate module. This core just supplies the two config-dependent inputs.
+            if (_thermal == null) _thermal = part.FindModuleImplementing<ModuleAxeThermal>();
+            if (_thermal != null)
+            {
+                _thermal.SetBusThermal(asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK(), ThermalArea());
+                thermalWatts = _thermal.thermalWatts;
+            }
+            else thermalWatts = 0f;
             // Editor readout only: the asymptote, since at the home body the live figure is 0.
             // Editor reference figure: the sustained deep-space load, deadband included.
             thermalWattsDeepSpace = (asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK())
                                     * ThermalArea() * Mathf.Pow(minK / setpointK, 4f);
 
+            // NOTE: currentWatts (and the ModuleCommand rate below) still INCLUDE thermalWatts, because
+            // without Kerbalism the ModuleCommand resource is the only channel that exists. With Kerbalism
+            // present that rate is zeroed and each module reports its own share, so nothing double-counts.
             currentWatts = HighLogic.LoadedSceneIsEditor ? ComputeBaseWatts() + thermalWatts : ComputeWatts();
             UpdateAuthorityDisplay();
-            _ecConsumption = new KeyValuePair<string, double>(EcName, -currentWatts / 1000.0);
+            // Kerbalism path only: report our share WITHOUT heaters -- ModuleAxeThermal reports those
+            // under its own label. The ModuleCommand rate below still carries the total for the
+            // no-Kerbalism case, where there is no second reporter.
+            _ecConsumption = new KeyValuePair<string, double>(EcName, -(currentWatts - thermalWatts) / 1000.0);
             if (_commandEC != null) _commandEC.rate = KerbalismPresent ? 0f : currentWatts / 1000f;
             UpdateAllocationSummary();
             UpdateMassReadouts();
