@@ -481,7 +481,9 @@ namespace RPAxe
                         isCore = true;
                         hasFixed = true;
                         partCapacity += fix.CapacityTons;   // summed within a part, MAX across parts
-                        if (fix.allowAxial) fixedAxial = true;
+                        // allowAxial is authored data, not state, so it needs the dead check the
+                        // capacity path already gets from CapacityTons.
+                        if (fix.allowAxial && !fix.dead) fixedAxial = true;
                     }
                     else if (m is ModuleCommand mc && (IsValidCommand(mc) || HighLogic.LoadedSceneIsEditor))
                     {

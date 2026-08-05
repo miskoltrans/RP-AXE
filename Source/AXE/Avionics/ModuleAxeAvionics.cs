@@ -45,6 +45,10 @@ namespace RPAxe
     /// A "Set to Debris: Never/On Stage" toggle (ported from RP-1's ModuleAvionics) lets a spent stage that
     /// happened to carry avionics not clutter the tracking station as a permanent "Ship" after separating.
     ///
+    /// "Disable Avionics permanently" (RP-1's <c>dead</c>) is the one-way counterpart to Shutdown: zero draw
+    /// forever, ModuleCommand cut, out of the steerable-mass budget, and — if it was the vessel's last live
+    /// avionics — every antenna on board goes with it. See <see cref="AxeAvionicsKill"/>.
+    ///
     /// Kerbalism's radiation-reliability wiring described in docs/AVIONICS_SPEC.md is deliberately NOT part
     /// of this pass (Kerbalism's Reliability feature is off instance-wide; that is a separate, later,
     /// game-wide balance task).
@@ -99,6 +103,16 @@ namespace RPAxe
         [KSPField(isPersistant = true)] public bool shieldedEnabled = false;
         // Flight-only deep sleep: cuts EC draw to the current hibernate depth and suspends control until woken.
         [KSPField(isPersistant = true)] public bool hibernating = false;
+        // ---- permanent shutdown (RP-1's ModuleAvionics.canPermaDisable / dead) ----
+        // Shutdown is reversible and still costs the hibernate trickle forever; this is the one-way version
+        // for a spacecraft being written off: zero draw, no command, no control, and if it was the vessel's
+        // last live avionics its antennas go down too (see AxeAvionicsKill). Config can withhold it.
+        [KSPField] public bool canPermaDisable = true;
+        // guiActive is driven from SetGui rather than set here: RP-1 shows a "Permanently disabled: False"
+        // row on every avionics part for the entire life of a vessel that never uses the feature.
+        [KSPField(isPersistant = true, guiActive = false, guiName = "Permanently disabled",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public bool dead = false;
         // Per-part "Set to Debris" preference (RP-1 ModuleAvionics): a spent stage with this off (any one
         // command-capable part vetoes) never gets force-renamed to Debris on staging.
         [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "Set to Debris",
@@ -501,16 +515,16 @@ namespace RPAxe
         { -1f, -1f, -1f, -1f, -1f, -1f, -1f, -1f, -1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
 
         public bool GuidanceUnlocked => Researched(guidanceTech);
-        public bool GuidanceActive => GuidanceUnlocked && guidanceEnabled && !hibernating && guidanceEngaged;
+        public bool GuidanceActive => !dead && GuidanceUnlocked && guidanceEnabled && !hibernating && guidanceEngaged;
         public bool ScienceCoreMode => !guidanceEnabled;
-        public bool AxialActive => ScienceCoreMode && _scAllowAxial && !hibernating;
+        public bool AxialActive => !dead && ScienceCoreMode && _scAllowAxial && !hibernating;
         float EffectiveDensity() => guidanceEnabled ? avionicsDensity : (_scDensity > 0f ? _scDensity : avionicsDensity);
         public string GuidanceTech => guidanceTech;
 
         // Guided only: can this core hibernate at all right now, and how deep. Shielded needs a researched
         // Shielded tier (any of them — depth is tier-invariant); Unshielded needs the late tier that
         // unlocks the shallow depth.
-        public bool CanHibernate => guidanceEnabled && (shieldedEnabled ? _bestShieldedIdx >= 0 : _unshHibernateFactor > 0f);
+        public bool CanHibernate => !dead && guidanceEnabled && (shieldedEnabled ? _bestShieldedIdx >= 0 : _unshHibernateFactor > 0f);
         public float CurrentHibernateFactor => (shieldedEnabled && _bestShieldedIdx >= 0) ? hibernationFactor : _unshHibernateFactor;
 
         // This is RP-1's "Shutdown Avionics" (ModuleAvionics.systemEnabled), NOT stock probe hibernation --
@@ -681,6 +695,9 @@ namespace RPAxe
 
         public override void OnStartFinished(StartState state)
         {
+            // First, before anything reads the part as a command source: `dead` is persistent, so a killed
+            // unit has to re-cut ModuleCommand on every load (RP-1 OnStartFinished does the same).
+            if (dead) AxeAvionicsKill.DisableModuleCommand(part);
             SetupModeChooser();
             _commandEC = FindCommandEC();
             ResolveTankBridge();
@@ -1406,7 +1423,7 @@ namespace RPAxe
                 Part p = parts[i];
                 if (p == null) continue;
                 ModuleAxeAvionics axe = p.FindModuleImplementing<ModuleAxeAvionics>();
-                if (axe != null && axe.guidanceEnabled && !axe.hibernating && axe.guidanceEngaged
+                if (axe != null && !axe.dead && axe.guidanceEnabled && !axe.hibernating && axe.guidanceEngaged
                     && axe.capacityTons > max)
                     max = axe.capacityTons;
                 // Fixed-capacity units (ModuleAxeFixedAvionics) count toward the same MAX. A vessel already
@@ -1549,6 +1566,7 @@ namespace RPAxe
         // TierWatts(), the raw tier/mass draw, NOT from ComputeBaseWatts(), which folds the penalty in.
         float ComputeWatts(bool onRails)
         {
+            if (dead) return 0f;   // RP-1 ModuleAvionics.GetPowerDraw: a dead unit draws nothing, ever
             if (guidanceEnabled && CanHibernate && (hibernating || onRails))
                 return TierWatts() * CurrentHibernateFactor;
             float b = ComputeBaseWatts();
@@ -1683,10 +1701,18 @@ namespace RPAxe
             // absent. EvaluateAutoGuidance already skips ScienceCoreMode; this hides the UI to match.
             BaseEvent ge = Events[nameof(ToggleGuidanceEngaged)];
             ge.guiName = guidanceEngaged ? "Disengage Guidance" : "Engage Guidance";
-            ge.guiActive = ge.guiActiveEditor = !ScienceCoreMode;
+            ge.guiActive = ge.guiActiveEditor = !ScienceCoreMode && !dead;
 
             BaseField af = Fields[nameof(autoGuidance)];
-            af.guiActive = af.guiActiveEditor = !ScienceCoreMode;
+            af.guiActive = af.guiActiveEditor = !ScienceCoreMode && !dead;
+
+            // Permanent shutdown: flight-only (RP-1 KillEvent is guiActive, never guiActiveEditor -- there
+            // is no reason to build a craft with its avionics already bricked), and it removes itself once
+            // used. `dead` shows only after the fact, as the explanation for a part that does nothing.
+            BaseEvent kill = Events[nameof(KillEvent)];
+            kill.guiActive = kill.active = canPermaDisable && !dead;
+            Actions[nameof(KillAction)].active = canPermaDisable && !dead;
+            Fields[nameof(dead)].guiActive = dead;
 
             BaseEvent hb = Events[nameof(ToggleHibernation)];
             hb.guiActive = CanHibernate;
@@ -1700,12 +1726,14 @@ namespace RPAxe
             Actions[nameof(ShutdownAction)].active = CanHibernate && (!hibernating || HighLogic.LoadedSceneIsEditor);
             Actions[nameof(ActivateAction)].active = CanHibernate && (hibernating || HighLogic.LoadedSceneIsEditor);
 
-            capacityDisplay = ScienceCoreMode ? "n/a — unguided"
+            capacityDisplay = dead      ? "none — permanently disabled"
+                            : ScienceCoreMode ? "n/a — unguided"
                             : hibernating     ? "none — shut down"
                             : capacityTons > 0f ? $"{capacityTons:N2} t"
                             : "none — box too small for this tier";
 
-            guidanceStatus = hibernating ? "shut down — no guidance, out of the steerable-mass budget"
+            guidanceStatus = dead ? "permanently disabled — no command, no control, no power"
+                           : hibernating ? "shut down — no guidance, out of the steerable-mass budget"
                            : ScienceCoreMode ? (_scAllowAxial ? "Unguided — axial thrust only (spin-stabilized)"
                                                               : "Unguided — no steering")
                            : !GuidanceUnlocked ? "Guided — guidance not yet researched (dumb)"
@@ -1768,6 +1796,49 @@ namespace RPAxe
 
         [KSPAction("Activate Avionics")]
         public void ActivateAction(KSPActionParam _) { if (hibernating) ToggleHibernation(); }
+
+        // ---- Permanent shutdown (RP-1's ModuleAvionics.KillEvent / KillAction) --------------------
+        // Flight-only and one-way. Shutdown above is the reversible version and still burns the hibernate
+        // trickle indefinitely; this is for a spacecraft being written off.
+        [KSPEvent(guiActive = true, guiActiveEditor = false, guiName = "Disable Avionics permanently",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public void KillEvent()
+        {
+            if (!canPermaDisable || dead || BlockedByCrew()) return;
+            AxeAvionicsKill.ConfirmKill(Kill);
+        }
+
+        [KSPAction("Disable Avionics permanently")]
+        public void KillAction(KSPActionParam _)
+        {
+            // No dialog on the action-group path -- RP-1 does the same, and a confirm popup fired by a
+            // staging sequence would be worse than no confirm at all.
+            if (!canPermaDisable || dead || BlockedByCrew()) return;
+            Kill();
+        }
+
+        // DELIBERATE DEVIATION FROM RP-1: RP-1 blocks the reversible Shutdown while a pod is crewed
+        // (ModuleAvionics.ToggleEvent) but leaves the IRREVERSIBLE kill unguarded, so an action group can
+        // brick a crewed capsule's command with no way back. AXE guards both — the crewed case is the one
+        // where "cannot be undone" is unrecoverable rather than merely expensive.
+        bool BlockedByCrew()
+        {
+            if ((part.protoModuleCrew?.Count ?? 0) == 0) return false;
+            ScreenMessages.PostScreenMessage("Cannot permanently disable avionics while crewed");
+            return true;
+        }
+
+        void Kill()
+        {
+            dead = true;
+            AxeAvionicsKill.DisableModuleCommand(part);
+            // Must run AFTER `dead` is set: the check is "is anything still alive", and this unit isn't.
+            AxeAvionicsKill.KillAntennasIfLastAvionicsDead(vessel);
+            UpdateRate();   // draw -> 0, and re-runs SetGui
+            // This core's capacity leaves the vessel-wide MAX, so every other core's overload verdict moves.
+            if (vessel != null) GameEvents.onVesselWasModified.Fire(vessel);
+            AxeAvionicsController.Announce("Avionics permanently disabled.");
+        }
 
         // ---- IPartMassModifier: the frozen hardware mass (battery mass is RealFuels') ----
         public float GetModuleMass(float defaultMass, ModifierStagingSituation sit) => avionicsMass;

@@ -96,15 +96,18 @@ then only reaches `0.1`. Shielded: deep `0.05`, available from tier 0, no gate. 
 gives every Guided core the deep `0.05` unconditionally regardless of shielding — that was an accidental
 side effect of porting the number without the gate, and gets axed in favor of the real RP-1 split.
 
-**Auto-hibernate on warp — CONFIRMED, port RP-1's mechanism directly, not a separate open question.** RP-1's
-base `ModuleAvionics.cs` hooks `GameEvents.onVesselGoOnRails`/`onVesselGoOffRails`, calling
-`UpdateRate(onRails: true)`: while a vessel is on rails (unloaded/timewarping), draw automatically drops to
-the reduced/idle rate — independent of the player's manual Hibernate toggle state — and reverts to whatever
-the vessel's actual current state is the moment it goes back off rails (loads/becomes active). AXE currently
-has zero `onRails`/`offRails` hooks anywhere in `ModuleAxeAvionics.cs`, and also disables stock KSP's own
-probe-hibernation fallback (`%hasHibernation = False`), so today draw just freezes at its last live value and
-keeps applying for the whole warp unless the player manually hits Hibernate first. Port RP-1's hook pattern
-directly: same events, same "auto-drop during warp regardless of manual state, auto-restore on load" behavior.
+**Auto-hibernate on warp — SHIPPED** *(was "CONFIRMED, port RP-1's mechanism directly"; built since, this
+paragraph described the pre-build state until 2026-08-05).* RP-1's base `ModuleAvionics.cs` hooks
+`GameEvents.onVesselGoOnRails`/`onVesselGoOffRails`, calling `UpdateRate(onRails: true)`: while a vessel is
+on rails (unloaded/timewarping), draw automatically drops to the reduced/idle rate — independent of the
+player's manual Hibernate toggle state — and reverts to whatever the vessel's actual current state is the
+moment it goes back off rails (loads/becomes active). **AXE now hooks the same two events**:
+`GoOnRails`/`GoOffRails` → `RailChange` → `UpdateRate` in `ModuleAxeAvionics.cs`, with `_onRails` feeding
+both `Asleep` and `ComputeWatts(onRails)` so the drop happens regardless of the manual toggle and reverts
+off rails. `_onRails` deliberately does NOT feed `EffectiveCapacityTons` (RP-1's on-rails path also zeroes
+`CurrentMassLimit`; capacity is a VAB-facing number and blinking it to zero on entering warp is noise —
+nothing steers while unloaded). Stock probe hibernation stays disabled (`%hasHibernation = False`) so it
+can't shadow the module's own toggle, except on radiation-hardened named parts (see `ApplyHibernation`).
 
 **Radiation reliability — DEFERRED, NOT SHIPPED IN THIS PASS (2026-07-08 decision, still holds).** Everything
 below was designed and numbers-locked before implementation started, then explicitly scoped OUT at the start
@@ -316,9 +319,24 @@ change can be dropped into a staging sequence without depending on the current s
 snapshot for an unloaded vessel, so persisting the live active figure billed a parked craft the penalised rate
 for the entire time it sat unloaded.
 
-**Deliberately not ported:** the crew veto ("Cannot shut down avionics while crewed") — this part is never
-crewed; and `dead` / "Disable Avionics permanently", a separate one-way action with its own antenna-kill
-cascade (`KillAntennasIfLastAvionicsDead`) that AXE has no current need for.
+**Deliberately not ported:** the crew veto on *Shutdown* ("Cannot shut down avionics while crewed") — the
+procedural core is never crewed.
+
+**`dead` / "Disable Avionics permanently" — PORTED 2026-08-05** (was listed here as "no current need").
+A separate one-way action on both avionics modules, with RP-1's antenna-kill cascade
+(`KillAntennasIfLastAvionicsDead`) intact: shared implementation in `Source/AXE/Avionics/AxeAvionicsKill.cs`,
+`KillEvent`/`KillAction`/`dead`/`canPermaDisable` on `ModuleAxeAvionics` and `ModuleAxeFixedAvionics`.
+A killed unit draws 0 W, disables its `ModuleCommand`, leaves the steerable-mass MAX, loses its Hibernate
+and Engage controls, and re-applies all of that on load (`dead` is persistent). If it was the vessel's last
+live avionics, every RealAntennas antenna on board is permanently shut down with it — without that clause
+Kerbalism-side comms leave the "dead" probe still controllable, which is RP-1's own stated reason for it.
+RealAntennas is reached by reflection (not an AXE assembly reference) and logs at error level if either
+bound member ever stops resolving, so the clause can never silently become a no-op.
+
+**One deliberate deviation:** the kill is blocked while the part is crewed. RP-1 guards the *reversible*
+Shutdown against crew but leaves the irreversible kill unguarded, so an action group can brick a crewed
+capsule's command with no way back. That matters for `ModuleAxeFixedAvionics`, which rides real crewed
+capsules.
 
 **Player-facing naming follows RP-1** — the PAW reads *Shutdown Avionics* / *Activate Avionics*, because the
 unit leaving the steerable-mass budget is the point and "hibernate" does not convey it. Internal names

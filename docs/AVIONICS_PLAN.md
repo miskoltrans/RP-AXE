@@ -111,7 +111,7 @@ Ground-truthed against `C:\git\ksp\RP-1`. Every row gets a disposition; nothing 
 | **`interplanetary` range gate** | not ported | 🔧 **B2 — decide** |
 | **`enabledkW` delivery** (RP-1 zeroes ModuleCommand and delivers itself) | adopt-only | 🔧 **B3 — build** |
 | `techRequired` per-unit gate | not ported | ⛔ deliberate — RP-1 tech IDs do not exist in AXE's tree and `GetTechnologyState()` returns `Unavailable` on a miss, silently zeroing those parts forever |
-| `dead` / permanent disable + antenna cascade | not ported | ⛔ deliberate — no current need |
+| `dead` / permanent disable + antenna cascade | ported (both modules) | ✅ parity — shipped 2026-08-05, `AxeAvionicsKill.cs`. Adds a crew guard RP-1 lacks (see below) |
 | Throttle + wheel locks in the mask | not ported | ⛔ deliberate — AXE leaves throttle/staging free at every level. (RP-1's throttle lock has also been broken since KSP 1.9: `THROTTLE` no longer covers X/Z, which moved to `THROTTLE_CUT_MAX`, and its 2015 mask was never updated) |
 | Typed `controllableMass` slider | replaced by box volume | ⛔ deliberate — the point of the V2 redesign |
 | Utilization launch block | replaced by A4 readouts | ⛔ deliberate — RP-1 validates the wrong variable; it never checks mass against capacity, which is why an overweight craft launches clean there |

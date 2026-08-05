@@ -29,6 +29,10 @@ namespace RPAxe
     /// A unit that cannot fly the vessel it is on can Disengage rather than contribute a rating it cannot
     /// honour — capacity-only, no tier gate, no power effect, and distinct from Shutdown Avionics.
     ///
+    /// "Disable Avionics permanently" (RP-1's <c>dead</c>) is the one-way write-off: zero draw, ModuleCommand
+    /// cut, out of the steerable-mass budget, stock hibernation off, and the vessel's antennas shut down with
+    /// it if this was the last live avionics unit aboard. See <see cref="AxeAvionicsKill"/>.
+    ///
     /// SHIELDING is a fact about the part, not a player choice: Voyager was radiation-hardened, Sputnik
     /// was not. <see cref="shielded"/> is baked per part (ported from RP-1's `interplanetary` flag, which
     /// marked exactly the units rated to work beyond near-Earth) and still gated on researching
@@ -111,15 +115,24 @@ namespace RPAxe
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string guidanceStatus = "";
 
+        // ---- permanent shutdown (RP-1's ModuleAvionics.canPermaDisable / dead) ----
+        // Disengage above is reversible and the unit keeps drawing its full rate; this is the one-way
+        // write-off: zero draw, no command, no control, and the vessel's antennas go with it if this was
+        // the last live avionics on board. Shared implementation in AxeAvionicsKill.
+        [KSPField] public bool canPermaDisable = true;
+        [KSPField(isPersistant = true, guiActive = false, guiName = "Permanently disabled",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public bool dead = false;
+
         ModuleCommand _command;
         float _nextGuiRefresh;
         const float GuiRefreshInterval = 1f;   // ShouldLock() walks every part; don't do it per frame
 
         /// <summary>What this unit contributes to the vessel's steerable-mass budget.</summary>
-        public float CapacityTons => (guidanceEngaged && capacityTons > 0f) ? capacityTons : 0f;
+        public float CapacityTons => (!dead && guidanceEngaged && capacityTons > 0f) ? capacityTons : 0f;
 
         /// <summary>Hardened AND the hardening researched — the only state that keeps hibernation.</summary>
-        public bool ShieldingActive => shielded && Researched(shieldedTech);
+        public bool ShieldingActive => !dead && shielded && Researched(shieldedTech);
 
         static bool Researched(string tech)
         {
@@ -132,6 +145,8 @@ namespace RPAxe
         {
             base.OnStart(state);
             _command = part.FindModuleImplementing<ModuleCommand>();
+            // `dead` is persistent, so a killed unit re-cuts ModuleCommand on every load (RP-1 parity).
+            if (dead) AxeAvionicsKill.DisableModuleCommand(part);
             GameEvents.onPartCouple.Add(OnCouple);
             InitializeResourceRate();
             ApplyHibernation();
@@ -155,7 +170,7 @@ namespace RPAxe
         // input must be zero there or the draw is counted twice.
         void UpdateDraw()
         {
-            currentWatts = Mathf.Max(0f, enabledkW) * 1000f;
+            currentWatts = dead ? 0f : Mathf.Max(0f, enabledkW) * 1000f;
             _ecConsumption = new KeyValuePair<string, double>(EcName, -currentWatts / 1000.0);
             if (_commandEC != null) _commandEC.rate = KerbalismPresent ? 0f : currentWatts / 1000f;
         }
@@ -246,6 +261,47 @@ namespace RPAxe
         [KSPAction("Disengage Guidance")]
         public void DisengageAction(KSPActionParam _) => SetEngaged(false, manual: true);
 
+        // ---- Permanent shutdown (RP-1's ModuleAvionics.KillEvent / KillAction) --------------------
+        [KSPEvent(guiActive = true, guiActiveEditor = false, guiName = "Disable Avionics permanently",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public void KillEvent()
+        {
+            if (!canPermaDisable || dead || BlockedByCrew()) return;
+            AxeAvionicsKill.ConfirmKill(Kill);
+        }
+
+        [KSPAction("Disable Avionics permanently")]
+        public void KillAction(KSPActionParam _)
+        {
+            // No dialog on the action-group path (RP-1 parity): a confirm popup fired mid-staging would be
+            // worse than no confirm at all.
+            if (!canPermaDisable || dead || BlockedByCrew()) return;
+            Kill();
+        }
+
+        // Deviation from RP-1, same as the procedural core: RP-1 guards the reversible Shutdown against
+        // crew but not the irreversible kill. Named parts are where this bites — this module rides real
+        // crewed capsules, and bricking one from an action group would be unrecoverable.
+        bool BlockedByCrew()
+        {
+            if ((part.protoModuleCrew?.Count ?? 0) == 0) return false;
+            ScreenMessages.PostScreenMessage("Cannot permanently disable avionics while crewed");
+            return true;
+        }
+
+        void Kill()
+        {
+            dead = true;
+            AxeAvionicsKill.DisableModuleCommand(part);
+            // After `dead` is set: the test is "is anything still alive", and this unit no longer is.
+            AxeAvionicsKill.KillAntennasIfLastAvionicsDead(vessel);
+            ApplyHibernation();   // ShieldingActive is now false -> stock hibernation off with it
+            UpdateGui();          // draw -> 0 via UpdateDraw
+            // This unit's capacity leaves the vessel-wide MAX, so other units' overload verdicts move.
+            if (vessel != null) GameEvents.onVesselWasModified.Fire(vessel);
+            AxeAvionicsController.Announce("Avionics permanently disabled.");
+        }
+
         void SetEngaged(bool value, bool manual)
         {
             if (value == guidanceEngaged) return;
@@ -303,10 +359,25 @@ namespace RPAxe
             // A capacity-0 unit is unguided by authorship -- nothing to engage or auto-manage.
             BaseEvent ge = Events[nameof(ToggleGuidanceEngaged)];
             ge.guiName = guidanceEngaged ? "Disengage Guidance" : "Engage Guidance";
-            ge.guiActive = ge.guiActiveEditor = capacityTons > 0f;
+            ge.guiActive = ge.guiActiveEditor = capacityTons > 0f && !dead;
 
             BaseField af = Fields[nameof(autoGuidance)];
-            af.guiActive = af.guiActiveEditor = capacityTons > 0f;
+            af.guiActive = af.guiActiveEditor = capacityTons > 0f && !dead;
+
+            // Permanent shutdown: flight-only, and it removes itself once used. Offered even on a
+            // capacity-0 unit -- an unguided bus still draws power and still carries the vessel's command
+            // function, so writing it off is exactly as meaningful there.
+            BaseEvent kill = Events[nameof(KillEvent)];
+            kill.guiActive = kill.active = canPermaDisable && !dead;
+            Actions[nameof(KillAction)].active = canPermaDisable && !dead;
+            Fields[nameof(dead)].guiActive = dead;
+
+            if (dead)
+            {
+                capacityDisplay = "none — permanently disabled";
+                guidanceStatus = "permanently disabled — no command, no control, no power";
+                return;
+            }
 
             if (capacityTons > 0f && !guidanceEngaged)
             {

@@ -231,8 +231,10 @@ Not caused by this proposal; worth writing down because they are easy to mistake
   since ~KSP 1.9 — KSP carved X and Z out of `ControlTypes.THROTTLE` into `THROTTLE_CUT_MAX` and
   RP-1's 2015-era mask was never updated, so it blocks Shift/Ctrl but not X or Z. AXE deliberately
   leaves throttle and staging free at every level, which is a design choice rather than the same rot.
-- **`dead` / "Disable Avionics permanently"** is not ported (`AVIONICS_SPEC.md:280`), so neither is
-  its antenna-kill cascade.
+- **`dead` / "Disable Avionics permanently"** — ported 2026-08-05, antenna-kill cascade included
+  (`AxeAvionicsKill.cs`; see `AVIONICS_SPEC.md`). This entry previously said it was not ported.
+  A killed unit contributes no capacity to the MAX and no `allowAxial`, so it drops out of every
+  authority calculation on this page.
 
 ---
 
