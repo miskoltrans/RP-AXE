@@ -64,12 +64,67 @@ Tech-gated second choice, only available once appropriate tech is researched (mi
 available from `start`, it unlocked around Near-Earth's `basicAvionics`-equivalent point). Unguided/
 Science-Core never had a Deep-Space equivalent in RP-1 either — this axis doesn't apply to it.
 
+### Attitude reference ("star tracker") — DECIDED 2026-08-05, NOT YET BUILT
+
+**Why this exists.** Measured this session: the Deep-Space Bus bought *nothing* beyond hibernation, and
+hibernation itself was worth 2.5 W (see `docs/AVIONICS_COMPARISON.md` differs-item 8 — the `idleFactor`
+bug that made it worthless is now fixed, restoring it to 47.3 W). Even so, one job is thin for +10% mass
+and +50% cost. Attitude reference is the second job, and it is the physically honest one: near Earth you
+can navigate on horizon sensors and magnetometers; past Earth it's a sun sensor and a star tracker or
+nothing.
+
+**Bundled into the bus, no separate tech node.** Deliberate — RP-1's own config description bundles the
+same way ("Thermal/Radiation Shielding, **Star Trackers**, etc."), and splitting it out would re-thin the
+axis immediately after thickening it. Note `library.yaml` still holds unplaced `opt_starTracker` (T4) and
+`gnc_opticalNav` (T6); if either is ever placed it should be framed as the *instrument/technique*, not the
+capability, or the tree will appear to sell star trackers twice.
+
+**Rule — PURE BUS TIE (user call 2026-08-05): "SAS 0 and controller off for Standard, everywhere."**
+
+| | Standard bus | Deep-Space Bus | crewed |
+|---|---|---|---|
+| stock SAS | `SASServiceLevel` **0** (hold attitude only) | 3 (full) | 3, always |
+| MechJeb attitude | `MechJebModuleAttitudeController.Enabled = false` | on | on |
+
+No SOI check, no distance check, no tech check beyond owning the bus. The scoped-to-outside-Earth-SOI
+alternative was offered and **rejected** — a pure bus tie is the gameplay.
+
+**Crewed is free.** Vessel SAS resolves through `part.PartValues.AutopilotSkill`, a MAX across parts, so a
+crewed pod's own `ModuleSAS` wins automatically. No crew special-case to write.
+
+**Implementation notes (all ground-truthed 2026-08-05):**
+- Write **`targetSASServiceLevel`**, NOT `SASServiceLevel` — `ModuleSAS.FixedUpdate` recomputes the latter
+  every frame from the former (`SASServiceLevel = ApplySASServiceLevelAdjustments(targetSASServiceLevel)`).
+  Writing `SASServiceLevel` is clobbered within a frame. AXE already sets level 3 at
+  `AxeAvionicsCore.cfg:473`, which works only because MM lands it before `OnStart` copies it across.
+- MechJeb **ignores `SASServiceLevel` entirely** — no reference to it, `AvailableAtLevel`, `CanEngageSAS`,
+  or `AutopilotSkill` anywhere in the binary. `MechJebModuleAttitudeController.Drive(FlightCtrlState)`
+  either writes ctrl state directly or calls `vessel.Autopilot.SAS.SetTargetOrientation()`, and neither is
+  gated by service level. It must be closed separately.
+- The choke point is **`MechJebModuleAttitudeController`** — SmartASS, the node executor, ascent guidance
+  and rendezvous all route attitude through it. Reach it via `MechJebCore.GetComputerModule(string)` (it has
+  a string overload, so AXE's existing duck-typed reflection needs no new type references) and set
+  `ComputerModule.Enabled = false`. Verified respected: `MechJebCore.Drive` gates on `if
+  (computerModule.Enabled)` before calling each module's `Drive(s)`.
+- Prefer that over the already-reflected `MechJebCore.DeactivateControl`, which kills *all* MJ control on
+  the vessel including the warp helper and thrust window — blunter than the mechanic needs.
+
+**Known consequence, accepted:** a launch vehicle on a Standard bus has no MechJeb ascent guidance and no
+vector holds. Whether a Deep-Space payload lifts that for the whole stack (a vessel-MAX rule, matching how
+stock SAS already resolves) is an OPEN implementation question — it materially changes how harsh this is in
+early career.
+
 **Mass/cost: own per-tier ladder, authored as real data — not a live multiplier. SHIPPED.** Matching RP-1's
 real shape meant ~10 *separate* tech-node placements in AXE's tree (mirroring each Guided-tier unlock
 one-for-one, not a single gate riding whatever Guided tier happens to be active). RP-1's actual Deep-Space
 ladder (ground-truthed against `RP-1/GameData/RP-1/Tree/ProceduralAvionics.cfg`) is its own literal per-tier
-`massFactor`/`costFactor` table (NOT a clean ×1.10/×1.50 multiplier on Near-Earth's values — that was an
-early approximation, corrected once the real numbers were pulled), `powerFactor` identical to NE at every
+`massFactor`/`costFactor` table (**CORRECTED 2026-08-05: it IS exactly ×1.10 mass and ×1.50 cost on
+Near-Earth's values, at every one of the ten rungs — 55.168/50.153 = 1.100, 85.26/56.84 = 1.500, and so on
+to the last digit, in RP-1's own source numbers as well as AXE's copy. This sentence used to say it was
+"NOT a clean ×1.10/×1.50 multiplier — that was an early approximation, corrected once the real numbers were
+pulled"; the early approximation was right and the correction was the error. Authoring it as a literal
+per-tier table is still the correct implementation — it survives RP-1 ever breaking the pattern — but
+nobody should plan on the belief that the pattern isn't there**), `powerFactor` identical to NE at every
 corresponding tier, `powerConstant` 1.096 (vs NE's 1.035), across DS's 10 real tiers (`techLevel0..9`, mapping
 to NE's tier names `basicAvionics` through `modernAvionics` — DS skips NE's first three tiers, `start`/
 `avionicsPrototypes`/`earlyAvionics`, entirely, RP-1 has no Deep-Space data there). Constants: `massConstant`
