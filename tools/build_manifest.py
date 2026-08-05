@@ -171,12 +171,27 @@ ADD={  # our divergences (names; mod/title resolved from ro_expanded)
   "nfs-panel-deploying-blanket-arm-1","nfs-panel-deploying-advanced-2x20-hub-1","nfs-panel-deploying-curved-375-1",
   # NFE nuclear fuel cycle (4) -- reprocessor + fuel drums, home the RO reactors' EnrichedUranium/DepletedFuel loop
   "nuclear-recycler-25","nuclearfuel-0625","nuclearfuel-125","nuclearfuel-25",
-  # MakingHistory reversal (1). The 53-part SquadExpansion cut is inherited wholesale (docs/PARTLIST.md,
-  # "procedural + RO replace them") and stays inherited -- this is the single exception. `kv1Pod` (KV-1
-  # 'Onion') is the only spherical crewed reentry vehicle in stock/MH, RO-configured as a Vostok analogue
-  # ("Soviet Vostok pod with built in decoupler", rescale 1.304 -> ~2.3 m ball, 2.12 t, 1 crew). It is
-  # placed as the stockish sibling of ROC-VostokCapsule on int_vostokCapsule; the seat it took there had
-  # been filled by mk1pod_v2, which is a CONE and moved to int_mercuryCapsule. kv2Pod/kv3Pod stay cut.
+  # MakingHistory reinstatement (1) -- NOT a reversal of a curation judgement. Traced 2026-08-06:
+  # RP-1 CARRIED kv1Pod until 2023, on `basicCapsules` at cost 1600, tagged "From RO-MakingHistory mod"
+  # -- the SAME node it gives ROC-VostokCapsule and mk1pod_v2, i.e. it reached this placement itself.
+  # RP-1 commit 369fc0f1 ("regen configs which removes all the removed mods", 2023-09-25) net-dropped
+  # 696 entries BY SOURCE MOD as folders left the generator's input list -- FASA 222, Chaka Monkey 109,
+  # SSTU 98, AIES 69, KW 56, TACLS 55, RealEngines 44, and RO-MakingHistory 11 with zero survivors
+  # (8 MH engines + Mk2Pod + kv1Pod + kv3Pod). Nobody weighed the KV-1; its source folder evaporated.
+  # Losing the TREE-Parts entry then DELETES the part: RP-1/NonRP0.cfg:105
+  # `!PART[*]:HAS[~RP0conf[*rue]]:NEEDS[HardRemoveNonRP0]` removes anything TREE-Parts.cfg never listed.
+  # So it was already gone from ksp_rp1_clean, which is the cache `base` above parses -- the part never
+  # reached curation review at all, and docs/PARTLIST.md's "187 stock/MH parts: inherit the cut" line
+  # counts it as deliberate stock-bloat removal, which it is not. (The tell: RP-1 STILL ships
+  # CrewTrainingTimes.cfg with `kv1Pod = Vostok` / `kv3Pod = Voskhod` -- the training table names parts
+  # it deletes.) NB AXE has no HardRemoveNonRP0 (no NonRP0.cfg, we replace RP-1), so these three were
+  # never deleted here -- they have been loading on `parking` all along, merely uncurated.
+  # KEPT because it is the only spherical crewed reentry vehicle in stock/MH and RO configures it as a
+  # Vostok analogue ("Soviet Vostok pod with built in decoupler", rescale 1.304 -> ~2.3 m ball, 2.12 t,
+  # 1 crew): the stockish sibling of ROC-VostokCapsule on int_vostokCapsule. The seat it took there had
+  # been filled by mk1pod_v2, which is a CONE and moved to int_mercuryCapsule.
+  # kv3Pod (RP-1: `secondGenCapsules` -> AXE int_voskhodCabin) is the same case and is NOT reinstated --
+  # decide it on its own merits, not by inertia. kv2Pod RP-1 never carried, and RO mistitles it "KV-3".
   "kv1Pod",
   # Kerwis DFH-1 + clean-drop reversals
   "DFH-1","proceduralTankOre","RO-SaturnI-IU","restock-drone-core-375-1","restock-airlock-1",
