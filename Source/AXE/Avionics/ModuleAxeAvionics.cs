@@ -108,6 +108,19 @@ namespace RPAxe
         static readonly string[] _mliTech = { "th_hermeticBus", "th_extendedMLIWrapping", "th_advancedMLI" };
         static readonly float[] _mliK = { 21f, 13f, 8f };   // eps_eff 0.05 / 0.03 / 0.02
 
+        // A Standard bus DOES ride the same ladder, capped (2026-08-05). The earlier "Standard never
+        // benefits from MLI research" rule was ahistorical: keeping a bus alive through eclipse is a 1957
+        // problem that was SOLVED in 1957. Sputnik 1 was a pressurised nitrogen sphere with a polished
+        // skin, a fan and a thermal switch -- the satellite essentially WAS its thermal control system --
+        // and Explorer 1 balanced absorptivity against emissivity with nothing but stripes of paint. Both
+        // flew without heaters. th_hermeticBus is literally that node, at T3.
+        //
+        // So Standard's floor is passive thermal control, not deep-space blanketing: it caps at eps 0.05
+        // (21 W/m^2), exactly where the Deep-Space ladder STARTS its MLI rungs. Deep-Space stays 2.6x
+        // better at the top, and the axis still sells something -- but a LEO satellite is no longer
+        // punished with no counterplay available.
+        static readonly float[] _mliKStandard = { 33f, 25f, 21f };   // eps_eff 0.08 / 0.06 / 0.05
+
         // Combined albedo + planetary IR reaching a craft from the body it orbits, as a fraction of the
         // solar constant at that body's distance. ~0.35 for Earth (IR alone is ~240 of 1361 W/m^2, albedo
         // adds the rest). This is what keeps a LEO ECLIPSE from costing the same watts as Neptune: Earth
@@ -1208,10 +1221,11 @@ namespace RPAxe
         // research -- that is the capability the Deep-Space Bus is selling.
         float ResolveThermalK()
         {
-            if (!ShieldedActive) return thermalKStandard;
-            float k = thermalKDeepSpace;
+            bool ds = ShieldedActive;
+            float k = ds ? thermalKDeepSpace : thermalKStandard;
+            float[] rungs = ds ? _mliK : _mliKStandard;
             for (int i = 0; i < _mliTech.Length; i++)
-                if (Researched(_mliTech[i]) && _mliK[i] < k) k = _mliK[i];
+                if (Researched(_mliTech[i]) && rungs[i] < k) k = rungs[i];
             return k;
         }
 

@@ -236,14 +236,43 @@ state. The static `Thermal at deep space` PAW readout stays as a quick asymptote
 | Jupiter cruise | 0.963 | 163 W | 21 W |
 | Neptune cruise | 0.999 | 169 W | 21 W |
 
-> **BALANCE CONCERN, unresolved.** A Standard bus in LEO eclipse now wants ~150 W with **no counterplay** —
-> Standard is deliberately locked out of the MLI ladder, so no amount of Thermodynamics research helps, and
-> the Deep-Space Bus is not purchasable until T5. Early LEO satellites therefore pay a large, unavoidable
-> eclipse bill. Three ways out if play confirms it is too harsh: (a) let Standard ride the MLI ladder too
-> but with a floor above what Deep-Space reaches (e.g. 63→42→32→26 vs 42→21→13→8, keeping DS ~2-3× better);
-> (b) raise `bodyIrFraction`; (c) accept it — early satellites carrying big batteries is historically true.
-> (a) is the most honest, since MLI is MLI, and it restores counterplay without weakening what the
-> Deep-Space Bus sells.
+**RESOLVED 2026-08-05 — Standard rides the ladder, capped.** The earlier "Standard never benefits from MLI
+research" rule was *ahistorical*, and eclipse is what exposed it: keeping a bus alive through eclipse is a
+1957 problem that was **solved in 1957**. Sputnik 1 was a pressurised nitrogen sphere with a polished skin,
+a fan and a thermal switch — the satellite essentially *was* its thermal-control system. Explorer 1
+balanced absorptivity against emissivity with nothing but stripes of paint. Neither carried a heater.
+`th_hermeticBus` is literally that node, and it is already at T3.
+
+So a Standard bus's floor is **passive thermal control**, not deep-space blanketing:
+
+| researched | Standard k | Deep-Space k |
+|---|--:|--:|
+| nothing | 63 (ε .15) | 42 (ε .10) |
+| `th_hermeticBus` | 33 (ε .08) | 21 (ε .05) |
+| `th_extendedMLIWrapping` | 25 (ε .06) | 13 (ε .03) |
+| `th_advancedMLI` | **21 (ε .05) — cap** | 8 (ε .02) |
+
+Standard caps exactly where Deep-Space *starts* its MLI rungs, so Deep-Space stays 2.6× better at the top
+and the axis still sells something real — but a LEO satellite now has counterplay. Resulting loads:
+
+| | LEO eclipse | Mars | Jupiter |
+|---|--:|--:|--:|
+| Standard, no thermal tech | 150 W | 89 W | 163 W |
+| Standard + `th_hermeticBus` | 78 W | 46 W | 85 W |
+| Standard, capped | 50 W | 30 W | 54 W |
+| Deep-Space, capped | 19 W | 11 W | 21 W |
+
+> **OPEN — THERMAL MASS is not modelled, and it matters most for eclipse.** A real satellite does not cool
+> instantly: it rides out a ~35-minute eclipse on stored heat and reheats in sunlight, which is precisely
+> why passive-only designs like Explorer 1 worked. Treating eclipse as a full steady-state heater load
+> therefore *overstates* the LEO case, possibly a lot. The honest fix is to drive the deficit off an
+> ORBIT-AVERAGED sunlight fraction rather than the instantaneous shadow flag (Kerbalism exposes
+> `shadow_period`/`orbital_period` in the planner and `Sim.SampleSunFactor` in flight). Deferred: it is a
+> real modelling change, not a tuning value, and the numbers above are playable meanwhile.
+
+> **GAP — `ModuleAxeFixedAvionics` has no thermal at all.** Named fixed-capacity parts got
+> `ProvidesAttitudeReference` but not the heater load, so flying a named bus dodges thermal entirely — the
+> same class of hole the star tracker deliberately closed. Should be ported across.
 
 **Mass/cost: own per-tier ladder, authored as real data — not a live multiplier. SHIPPED.** Matching RP-1's
 real shape meant ~10 *separate* tech-node placements in AXE's tree (mirroring each Guided-tier unlock
