@@ -262,7 +262,55 @@ and the axis still sells something real — but a LEO satellite now has counterp
 | Standard, capped | 50 W | 30 W | 54 W |
 | Deep-Space, capped | 19 W | 11 W | 21 W |
 
-**THERMAL MASS — DONE 2026-08-05, via orbit averaging.** A spacecraft does not cool the instant it enters
+**THERMAL MASS — MODELLED PROPERLY 2026-08-05, superseding the orbit-averaging version below.** Orbit
+averaging worked but required a situation branch (averaged for orbiting craft, instantaneous for landed),
+and two models with a discontinuity at touchdown was an artifact of having no temperature to remember.
+With a real temperature state the branch is simply unnecessary — a craft on the Mun's night side and a
+craft in a 35-minute LEO eclipse are the same physics at different timescales, and the only thing
+separating them is how long the dark lasts against the craft's own τ.
+
+```
+T_env = T_set · (1 − deficit)^¼          equilibrium with NO heater
+τ     = C / G,  C = vesselMass · c,  G = 4·ε·σ·A·T_set³
+T    += (T_env − T) · (1 − e^(−dt/τ))    unconditionally stable at any dt
+heater runs only once T would fall below T_min, then holds exactly that floor
+```
+
+**The deadband is what makes LEO free.** Heaters defend the *battery* — the tightest-toleranced thing
+aboard and the real reason spacecraft carry heater tape — so `T_min` is 273 K, a floor, not the 293 K
+setpoint. The bus drifts down to it for nothing and only pays watts below.
+
+Simulated, five LEO orbits at 400 km then steady cruise:
+
+| craft | τ | LEO avg heater | end T |
+|---|--:|--:|--:|
+| 500 kg, no thermal tech | 54 h | **0 W** | 287 K |
+| 500 kg, + `th_hermeticBus` | 103 h | **0 W** | 290 K |
+| 500 kg, capped | 162 h | **0 W** | 291 K |
+| **50 kg**, + `th_hermeticBus` | 10 h | **4.7 W** | 273 K |
+
+| cruise | deficit | heater |
+|---|--:|--:|
+| Mars, capped | 0.569 | 18 W |
+| Jupiter, capped | 0.963 | 41 W |
+| Jupiter, best MLI | 0.963 | 15 W |
+| Neptune, capped | 0.999 | 43 W |
+
+**Mass now matters, which was the point.** A 500 kg probe rides out every LEO eclipse on heat capacity
+alone and never fires a heater — exactly as Explorer 1 did on paint stripes. A 50 kg one has τ ≈ 10 h
+against a 1.5 h orbit, drops to the floor, and pays. Whole-*vessel* mass, because the bus is conductively
+bolted to the craft and a probe strapped to a full tank really is buffered by it.
+
+Background uses the identical `StepThermal` and writes `busTemperature` back into the module snapshot, so
+an unloaded craft keeps evolving and cannot diverge from a loaded one.
+
+*Aliasing at extreme warp is self-limiting:* sampling all-sunlit or all-shadow only matters when τ is short
+relative to the orbit, and a short-τ craft is a light one whose absolute watts are small. Where the error
+could be large in watts, τ is long and T barely moves.
+
+---
+
+*(Superseded, kept for the reasoning:)* **THERMAL MASS — via orbit averaging.** A spacecraft does not cool the instant it enters
 shadow; it coasts through a ~35-minute eclipse on stored heat and reheats in sunlight. That is precisely
 why passive-only designs worked — Explorer 1 rode out every eclipse of its life on paint stripes and heat
 capacity, with no heater aboard. Charging a full steady-state load for the shadow half of every orbit

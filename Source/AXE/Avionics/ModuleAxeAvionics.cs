@@ -127,6 +127,38 @@ namespace RPAxe
         // goes on radiating at a craft in its shadow, and from low orbit it fills half the sky.
         [KSPField] public float bodyIrFraction = 0.35f;
 
+        // ---- Thermal STATE. Real heat capacity, integrated -- not an orbit-averaging approximation. ----
+        // This replaced a situation branch (orbit-averaged sunlight for orbiting craft, instantaneous
+        // shadow for landed ones). Two models with a discontinuity at touchdown was an artifact of having
+        // no temperature to remember; with one, the branch is simply unnecessary. A craft on the Mun's
+        // night side and a craft in a 35-minute LEO eclipse are the same physics at different timescales,
+        // and the only thing that separated them was how long the dark lasts against the craft's own tau.
+        //
+        //   T_env = T_set * (1 - deficit)^(1/4)     equilibrium with NO heater
+        //   tau   = C / G,  C = mass*specificHeat,  G = 4*eps*sigma*A*T_set^3
+        //   T    += (T_env - T) * (1 - exp(-dt/tau))
+        //   heater runs only once T would fall below T_min, and then holds exactly that floor
+        //
+        // The exponential form is unconditionally stable at ANY timestep -- dt >> tau collapses to
+        // "T = T_env", which is what timewarp and background updates need.
+        //
+        // MASS NOW MATTERS, which was the point: a 10 kg probe has tau ~1 h and swings tens of kelvin per
+        // orbit; a 500 kg one has tau ~54 h and drifts under a kelvin. Whole-VESSEL mass, because the bus
+        // is conductively bolted to the craft and a probe strapped to a full tank really is buffered by it.
+        [KSPField] public float specificHeat = 900f;      // J/kg.K, aluminium-ish structure
+        [KSPField] public float setpointK = 293f;         // 20 C -- nominal electronics temperature
+        // Heaters defend the BATTERY, which is the tightest-toleranced thing aboard and the real reason
+        // spacecraft carry heater tape at all. 273 K is the floor, not the setpoint: the bus is allowed to
+        // drift down to it for free, and only pays watts below. That deadband is why LEO is nearly free.
+        [KSPField] public float minK = 273f;
+
+        [KSPField(isPersistant = true)] public float busTemperature = -1f;   // K; <0 = uninitialised
+        double _lastThermalUT = -1d;   // universe time of the last thermal step; <0 = none yet
+
+        [KSPField(isPersistant = true, guiActive = true, guiName = "Bus Temperature",
+                  guiFormat = "N0", guiUnits = " K", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public float busTemperatureDisplay = 0f;
+
         // AS-BUILT, persisted, frozen at launch. New features are built craft-sharing-first (user,
         // 2026-08-05): the k a craft flies with is the one resolved when it was BUILT, so a shared .craft
         // performs as its designer intended instead of silently re-deriving from the recipient's research.
@@ -1335,31 +1367,72 @@ namespace RPAxe
             return (toBody - toSun / sunDist * along).magnitude < b.Radius;
         }
 
-        /// <summary>Live deficit for a real vessel — used by both the flight and background paths.</summary>
+        /// <summary>
+        /// INSTANTANEOUS deficit for a real vessel. No situation branch and no orbit averaging: the
+        /// temperature integration below is what supplies the memory, so this only ever has to answer
+        /// "how cold is it right now". Used identically by flight, background and (with an explicit
+        /// override) the planner.
+        ///
+        /// Aliasing at extreme warp is self-limiting: sampling all-sunlit or all-shadow only matters when
+        /// tau is SHORT relative to the orbit, and a craft with a short tau is a light one whose absolute
+        /// watts are small anyway. Where the error could be large in watts, tau is long and T barely moves.
+        /// </summary>
         public static float VesselDeficit(Vessel v, float irFrac)
         {
             if (v == null || Planetarium.fetch?.Sun == null) return 0f;
             Vector3d vp = v.GetWorldPos3D();
             double sunDist = (vp - Planetarium.fetch.Sun.position).magnitude;
             double bodyDist = v.mainBody != null ? (vp - v.mainBody.position).magnitude : 0d;
+            return ThermalDeficit(sunDist, InShadow(v) ? 0d : 1d, v.mainBody, bodyDist, irFrac);
+        }
 
-            // Orbiting craft average over the orbit (thermal mass rides out the eclipse). Landed and
-            // prelaunch craft have no orbit to average, so fall back to the instantaneous test.
-            bool orbiting = v.situation != Vessel.Situations.LANDED
-                            && v.situation != Vessel.Situations.SPLASHED
-                            && v.situation != Vessel.Situations.PRELAUNCH;
-            double sunlit = orbiting ? SunlitFraction(v) : (InShadow(v) ? 0d : 1d);
+        /// <summary>
+        /// Advance the bus temperature by <paramref name="dt"/> seconds and return the heater watts needed
+        /// to hold the floor. Shared by flight and background so the two cannot diverge.
+        /// </summary>
+        /// <param name="tRef">temperature in/out (K); pass &lt;0 to initialise at setpoint</param>
+        public static float StepThermal(float deficit, float area, float k, double massKg,
+                                        float specHeat, float tSet, float tMin, double dt, ref float tRef)
+        {
+            if (area <= 0f || k <= 0f || tSet <= 0f) { tRef = tSet; return 0f; }
+            if (tRef <= 0f) tRef = tSet;                       // fresh craft starts at setpoint
 
-            return ThermalDeficit(sunDist, sunlit, v.mainBody, bodyDist, irFrac);
+            float qMax = k * area;                             // full radiative loss at setpoint, W
+            float tEnv = tSet * Mathf.Pow(Mathf.Max(0f, 1f - deficit), 0.25f);
+
+            double C = System.Math.Max(1d, massKg) * System.Math.Max(1d, specHeat);
+            double G = 4d * qMax / tSet;                       // linearised dQ/dT at setpoint, W/K
+            double tau = G > 0d ? C / G : 0d;
+
+            // Unconditionally stable at any dt: dt >> tau collapses to T = tEnv.
+            float blend = tau > 0d && dt > 0d ? (float)(1d - System.Math.Exp(-dt / tau)) : 1f;
+            tRef += (tEnv - tRef) * blend;
+
+            if (tRef >= tMin) return 0f;                       // free: the deadband is doing its job
+            tRef = tMin;                                       // heaters hold the floor exactly
+            // Radiative, not linearised -- this spans hundreds of kelvin out at Neptune.
+            float need = qMax * (Mathf.Pow(tMin / tSet, 4f) - Mathf.Max(0f, 1f - deficit));
+            return need > 0f ? need : 0f;
         }
 
         // Heater draw. NOT reduced by hibernation (user, 2026-08-05): the heater does not care whether the
         // computer is running, which also gives deep space an irreducible power floor hibernation can't
         // dodge. Added to the draw, never multiplied into it.
-        float ThermalWatts()
+        float ThermalWatts(double dt)
         {
             float k = HighLogic.LoadedSceneIsEditor || asBuiltThermalK <= 0f ? ResolveThermalK() : asBuiltThermalK;
-            return k * ThermalArea() * VesselDeficit(vessel, bodyIrFraction);
+            float area = ThermalArea();
+            if (HighLogic.LoadedSceneIsEditor)
+            {
+                // No vessel, no clock: report the steady state at the deep-space asymptote's deadband.
+                busTemperatureDisplay = setpointK;
+                return 0f;
+            }
+            float def = VesselDeficit(vessel, bodyIrFraction);
+            double massKg = vessel != null ? vessel.GetTotalMass() * 1000d : 1000d;
+            float w = StepThermal(def, area, k, massKg, specificHeat, setpointK, minK, dt, ref busTemperature);
+            busTemperatureDisplay = busTemperature;
+            return w;
         }
 
         // ---- Attitude reference ("star tracker") -- docs/AVIONICS_SPEC.md, Axis 2. ----
@@ -1854,9 +1927,16 @@ namespace RPAxe
 
             // Resolve-and-freeze the as-built k in the editor, then fly what was built (craft-sharing).
             if (HighLogic.LoadedSceneIsEditor) asBuiltThermalK = ResolveThermalK();
-            thermalWatts = ThermalWatts();
+            // Real elapsed universe time between updates, so the integration is warp-correct.
+            double now = Planetarium.GetUniversalTime();
+            double dt = _lastThermalUT > 0d ? now - _lastThermalUT : 0d;
+            if (dt < 0d) dt = 0d;                 // reverted save / scene reload
+            _lastThermalUT = now;
+            thermalWatts = ThermalWatts(dt);
             // Editor readout only: the asymptote, since at the home body the live figure is 0.
-            thermalWattsDeepSpace = (asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK()) * ThermalArea();
+            // Editor reference figure: the sustained deep-space load, deadband included.
+            thermalWattsDeepSpace = (asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK())
+                                    * ThermalArea() * Mathf.Pow(minK / setpointK, 4f);
 
             currentWatts = HighLogic.LoadedSceneIsEditor ? ComputeBaseWatts() + thermalWatts : ComputeWatts();
             UpdateAuthorityDisplay();
@@ -2222,15 +2302,29 @@ namespace RPAxe
                 moduleSnapshot.moduleValues.TryGetValue("thermalWatts", ref staleThermal);
                 moduleSnapshot.moduleValues.TryGetValue("asBuiltThermalK", ref k);
 
+                // Same integration as the loaded path, or a craft would jump the moment it unloads. The
+                // temperature is written BACK into the snapshot so it keeps evolving across background
+                // ticks -- that is the whole state this model carries.
                 float liveThermal = staleThermal;
                 if (k > 0f)
                 {
-                    float bv = 0f, hv = 0f, irf = 0.35f;
+                    float bv = 0f, hv = 0f, irf = 0.35f, sh = 900f, tSet = 293f, tMin = 273f, temp = -1f;
                     moduleSnapshot.moduleValues.TryGetValue("battVolume", ref bv);
                     moduleSnapshot.moduleValues.TryGetValue("hwVolume", ref hv);
                     moduleSnapshot.moduleValues.TryGetValue("bodyIrFraction", ref irf);
+                    moduleSnapshot.moduleValues.TryGetValue("specificHeat", ref sh);
+                    moduleSnapshot.moduleValues.TryGetValue("setpointK", ref tSet);
+                    moduleSnapshot.moduleValues.TryGetValue("minK", ref tMin);
+                    moduleSnapshot.moduleValues.TryGetValue("busTemperature", ref temp);
+
                     float vol = bv + hv;
-                    if (vol > 0f) liveThermal = k * 6f * Mathf.Pow(vol, 2f / 3f) * VesselDeficit(v, irf);
+                    if (vol > 0f)
+                    {
+                        liveThermal = StepThermal(VesselDeficit(v, irf), 6f * Mathf.Pow(vol, 2f / 3f), k,
+                                                  v != null ? v.totalMass * 1000d : 1000d,
+                                                  sh, tSet, tMin, elapsed_s, ref temp);
+                        moduleSnapshot.moduleValues.SetValue("busTemperature", temp, true);
+                    }
                 }
 
                 double watts = cw - staleThermal + liveThermal;
