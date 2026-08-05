@@ -572,11 +572,15 @@ function draw(){
     if(!e.geom) continue;
     const lit = !focusing || (litEdges && litEdges.has(e));
     const parentDone = researched.has(e.from);
+    // Provenance (which discipline this came from) only matters while the source is still AHEAD of the
+    // player. Once it's researched the edge is history, so it drops the discipline hue and joins the
+    // done-green its source tile wears -- same rule as the in-game render port (AxeTreeRender.EdgeColor).
+    const liveCol = e.anyToUnlock ? GOLD : ((opt.discEdges && !opt.baseline) ? e.discColor : GRAY);
+    const restCol = (opt.progress && parentDone && opt.discEdges && !opt.baseline) ? C_DONE_FILL : liveCol;
     let color;
-    if(focusing && lit)                                                              // focused path: full discipline
-      color = e.anyToUnlock ? GOLD : ((opt.discEdges && !opt.baseline) ? e.discColor : GRAY);   // colour so it pops
+    if(focusing && lit) color = restCol;                                             // focused path: pops
     else if(opt.progress && !parentDone) color = e.anyToUnlock ? GOLD_DIM : EDGE_LOCK;   // prereq not researched (stock gray)
-    else color = e.anyToUnlock ? GOLD : ((opt.discEdges && !opt.baseline) ? e.discColor : GRAY);
+    else color = restCol;
     ctx.globalAlpha = focusing ? (lit?1:DIM_EDGE) : 1;
     ctx.strokeStyle = color;
     ctx.lineWidth = EDGE_W;              // uniform; emphasis is colour+alpha only (no rebuild)
@@ -592,7 +596,8 @@ function draw(){
   if(opt.routing==='junction') for(const j of junctions){   // schematic branch dots where edges peel off the bus
     const lit = !focusing || (litEdges && litEdges.has(j.e));   // dim dots off the highlighted lineage
     ctx.globalAlpha = focusing ? (lit?1:DIM_EDGE) : 1;
-    ctx.fillStyle=(opt.discEdges&&!opt.baseline)?j.col:GRAY; ctx.beginPath();
+    const jDone = opt.progress && researched.has(j.e.from) && opt.discEdges && !opt.baseline;   // dot rides its bus's colour
+    ctx.fillStyle=jDone?C_DONE_FILL:((opt.discEdges&&!opt.baseline)?j.col:GRAY); ctx.beginPath();
     ctx.arc(SX(j.x),SY(j.y),Math.max(1.8,2.8*cam.s),0,6.2832); ctx.fill();
   }
   ctx.globalAlpha=1;
