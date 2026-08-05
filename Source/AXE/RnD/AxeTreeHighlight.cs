@@ -91,9 +91,12 @@ namespace RPAxe.RnD
                     RDNode parentNode = par.parent != null ? par.parent.node : null;
                     // an edge is "on the lineage" only if BOTH ends are (the chain to/from the selection)
                     bool edgeIn = inLineage && parentNode != null && lineage.Contains(parentNode);
-                    if (edgeIn && AxeTreeMeta.TryDisciplineColor(parentNode.tech?.techID, out Color ec))
+                    if (edgeIn && AxeTreeMeta.TryDisciplineColor(parentNode.tech?.techID, out Color dcol))
                     {
-                        if (par.line != null) par.line.color = ec;                  // path edge pops at source discipline
+                        // Path edge pops — at the source's discipline, or done-green once that source is
+                        // researched (provenance stops mattering there; matches the resting rule).
+                        Color ec = parentNode.state == RDNode.State.RESEARCHED ? AxeTreeRenderHost.DoneTile : dcol;
+                        if (par.line != null) par.line.color = ec;
                         if (par.arrowHead != null) par.arrowHead.color = ec;
                     }
                     else if (!edgeIn)

@@ -49,12 +49,27 @@ namespace RPAxe.RnD
         private const float SPACING_F = 0.7f;          // compact (prototype default)
         private const float SUG_SPACING_Y = 122f;       // sugiyama px per rank unit (prototype 94 * 1.3 default) — clears the 65px tile
         private const bool FLIP_Y = true;              // top-to-bottom discipline order (flip if bands look inverted)
-        private const float NODE_W = 70f, NODE_H = 65f;   // real node size at scale 1.0 (prefab ~70x65) — routing + stacking
+        private const float NODE_H = 65f;              // stock prefab logical height — legacy bands stacking only
+        private const float TILE_PX = 64f;             // the tile's own rect after AlignNode (graphics-local units)
+
+        // The node's VISUAL box measured in pos-space (the space RDNode.pos and our routes live in). Not 64:
+        // RDNode.Setup does graphics.transform.SetParent(node.transform) with worldPositionStays, which pins the
+        // node art at the content's scale AT SPAWN, while positions/routes scale with the content. So the tile is
+        // TILE_PX * (graphicsScale / rootScale) pos-units — measured ~53 at the default zoom, vs the 70x65 the
+        // routing used to assume. That mismatch is what put every edge ~20px right of the tile edge and ~7px
+        // below its centre. Calibrated once per spawn from the live transforms, so zoom/resolution can't drift it.
+        private static float BoxW = TILE_PX, BoxH = TILE_PX;
 
         private const bool DEBUG_DUMP = false;         // flip on to log coordinate-space numbers 1.5s after tree spawn
 
         private static bool installed;
         private static bool ready;
+        private static bool routesBuilt;               // routing is DEFERRED to first use (needs the calibration above)
+        private static List<AxeTreeLayout.LNode> PendingNodes;
+        private static List<AxeTreeLayout.LEdge> PendingEdges;
+        private static Dictionary<string, AxeTreeLayout.LNode> PendingById;
+        private static float PendingAy = -1f;
+        private static readonly Dictionary<string, RDNode> NodeById = new Dictionary<string, RDNode>();
         private static readonly Dictionary<string, List<Vector2>> Routes = new Dictionary<string, List<Vector2>>();
         private static readonly List<AxeTreeLayout.JunctionDot> Dots = new List<AxeTreeLayout.JunctionDot>();   // junction-bus branch dots
         private static readonly List<GameObject> DotPool = new List<GameObject>();   // pooled dot Images (children of RDNodeRoot)
@@ -94,7 +109,10 @@ namespace RPAxe.RnD
         private void OnTreeSpawn(RDTechTree tree)
         {
             ready = false;
+            routesBuilt = false;
+            PendingNodes = null; PendingEdges = null; PendingById = null;
             Routes.Clear();
+            NodeById.Clear();
             _over = null; _lastMousePos = new Vector3(float.NaN, float.NaN, 0f);   // force a fresh raycast next frame (no stale node ref across a reopen)
             try
             {
@@ -116,7 +134,9 @@ namespace RPAxe.RnD
                 foreach (RDNode rd in ctrl.nodes)
                 {
                     string id = rd?.tech?.techID;
-                    if (string.IsNullOrEmpty(id) || byId.ContainsKey(id) || !AxeTreeMeta.Nodes.TryGetValue(id, out AxeTreeMeta.NodeMeta m)) continue;
+                    if (string.IsNullOrEmpty(id)) continue;
+                    if (!NodeById.ContainsKey(id)) NodeById[id] = rd;   // techID -> node, for O(1) state reads (junction dots)
+                    if (byId.ContainsKey(id) || !AxeTreeMeta.Nodes.TryGetValue(id, out AxeTreeMeta.NodeMeta m)) continue;
                     var ln = new AxeTreeLayout.LNode { Id = id, Discipline = m.Discipline, Tier = m.Tier, Cost = m.Cost };
                     lnodes.Add(ln); byId[id] = ln;
                 }
@@ -224,30 +244,12 @@ namespace RPAxe.RnD
                     ay = AxeTreeMeta.Render.FlipY ? -1f : 1f;
                 }
 
-                if (AxeTreeMeta.Render.RouteOverride)
-                {
-                    AxeTreeLayout.ComputeSlots(edges, byId, AxeTreeMeta.Render.Fan);
-                    // The fan endpoint offset is in Y, so nodeH must follow the vertical-axis sign to stay on the node's side.
-                    float signedH = NODE_H * Mathf.Sign(ay);
-                    bool xf = AxeTreeMeta.Render.Xfan; float xp = AxeTreeMeta.Render.XfanPitch;
-                    Dots.Clear();
-                    switch (AxeTreeMeta.Render.Routing)
-                    {
-                        case "ortho-late":  AxeTreeLayout.RouteOrthoLate(edges, byId, NODE_W, signedH, xf, xp); break;
-                        case "ortho-early": AxeTreeLayout.RouteOrthoEarly(edges, byId, NODE_W, signedH, xf, xp); break;
-                        case "junction":    AxeTreeLayout.RouteJunctionBus(edges, byId, NODE_W, signedH, Dots); break;
-                        default:            AxeTreeLayout.BuildLaneRoutes(lnodes, edges, NODE_W, signedH, AxeTreeMeta.Render.LanePitch); break;
-                    }
-                    if (AxeTreeMeta.Render.Avoid)   // detour edge runs around the node boxes they'd cross
-                        foreach (AxeTreeLayout.LEdge e in edges)
-                            if (e.Geom != null) e.Geom = AxeTreeLayout.AvoidNodes(e.Geom, lnodes, NODE_W, signedH);
-                    foreach (AxeTreeLayout.LEdge e in edges)
-                        if (e.Geom != null) Routes[e.From + ">" + e.To] = e.Geom;
-                    BuildJunctionDots(ctrl);   // instantiate/refresh bus branch dots (no-op unless routing=junction)
-                }
+                // Routing is DEFERRED (see EnsureRoutes): the endpoint offsets are the node's VISUAL box, which
+                // can only be measured once the nodes' graphics exist (Setup runs next frame). Stash the model.
+                PendingNodes = lnodes; PendingEdges = edges; PendingById = byId; PendingAy = ay;
 
                 ready = true;
-                Debug.Log($"[AXE] render-port: {lnodes.Count} unique nodes ({(reposition ? placed + " placed" : "stock pos")}), {Routes.Count} edges routed " +
+                Debug.Log($"[AXE] render-port: {lnodes.Count} unique nodes ({(reposition ? placed + " placed" : "stock pos")}), {edges.Count} edges pending route " +
                           $"(layout={AxeTreeMeta.Render.Layout} routing={AxeTreeMeta.Render.Routing} fan={AxeTreeMeta.Render.Fan})");
                 StartCoroutine(FitContentToNodes());   // grow the scroll content to bound a tall/wide tree (else it clips)
                 OverrideBackground(ctrl);               // replace the stock grid with a solid backdrop (matches the prototype)
@@ -255,6 +257,66 @@ namespace RPAxe.RnD
                 if (AxeRenderPerf.Enabled) StartCoroutine(AxeRenderPerf.HoverBench());   // -axe-perf: time the lineage recolour at the live node count
             }
             catch (Exception e) { Debug.LogError("[AXE] render-port OnTreeSpawn failed: " + e); ready = false; }
+        }
+
+        // Measure the node's visual box IN POS-SPACE, then route. Deferred out of OnTreeSpawn because the
+        // measurement needs a live RDNodePrefab (created in RDNode.Setup, a frame later). Idempotent; called
+        // from both the fit coroutine and the arrow hook, whichever reaches it first.
+        private static void EnsureRoutes(RDNode probe)
+        {
+            if (routesBuilt || !ready || PendingEdges == null) return;
+            routesBuilt = true;   // set first: a throw must not retry forever, it falls back to stock elbows
+            try
+            {
+                RDController ctrl = RDController.Instance;
+                if (ctrl == null) return;
+                Calibrate(probe, ctrl);
+                if (!AxeTreeMeta.Render.RouteOverride) return;
+
+                List<AxeTreeLayout.LNode> lnodes = PendingNodes;
+                List<AxeTreeLayout.LEdge> edges = PendingEdges;
+                Dictionary<string, AxeTreeLayout.LNode> byId = PendingById;
+                AxeTreeLayout.ComputeSlots(edges, byId, AxeTreeMeta.Render.Fan);
+                // The fan endpoint offset is in Y, so the box height must follow the vertical-axis sign to stay on the node's side.
+                float signedH = BoxH * Mathf.Sign(PendingAy);
+                bool xf = AxeTreeMeta.Render.Xfan; float xp = AxeTreeMeta.Render.XfanPitch;
+                Dots.Clear();
+                switch (AxeTreeMeta.Render.Routing)
+                {
+                    case "ortho-late":  AxeTreeLayout.RouteOrthoLate(edges, byId, BoxW, signedH, xf, xp); break;
+                    case "ortho-early": AxeTreeLayout.RouteOrthoEarly(edges, byId, BoxW, signedH, xf, xp); break;
+                    case "junction":    AxeTreeLayout.RouteJunctionBus(edges, byId, BoxW, signedH, Dots); break;
+                    default:            AxeTreeLayout.BuildLaneRoutes(lnodes, edges, BoxW, signedH, AxeTreeMeta.Render.LanePitch); break;
+                }
+                if (AxeTreeMeta.Render.Avoid)   // detour edge runs around the node boxes they'd cross
+                    foreach (AxeTreeLayout.LEdge e in edges)
+                        if (e.Geom != null) e.Geom = AxeTreeLayout.AvoidNodes(e.Geom, lnodes, BoxW, signedH);
+                foreach (AxeTreeLayout.LEdge e in edges)
+                    if (e.Geom != null) Routes[e.From + ">" + e.To] = e.Geom;
+                BuildJunctionDots(ctrl);   // instantiate/refresh bus branch dots (no-op unless routing=junction)
+                Debug.Log($"[AXE] render-port: {Routes.Count} edges routed, node box {BoxW:F1}x{BoxH:F1} pos-units");
+            }
+            catch (Exception e) { Debug.LogError("[AXE] render-port EnsureRoutes failed: " + e); }
+        }
+
+        // The tile's rect is TILE_PX in GRAPHICS-local units, but routes are built in pos-space (RDNodeRoot-local).
+        // Those two differ by the ratio of their world scales — RDNode.Setup reparents the prefab with
+        // worldPositionStays, so the art keeps the world scale it was instantiated at while pos-space scales with
+        // the content. Convert: box = TILE_PX * graphicsScale / rootScale. Falls back to TILE_PX (the 1:1 case).
+        private static void Calibrate(RDNode probe, RDController ctrl)
+        {
+            BoxW = BoxH = TILE_PX;
+            RDNodePrefab g = probe != null ? probe.graphics : null;
+            if (g == null && ctrl.nodes != null)
+                foreach (RDNode n in ctrl.nodes) { if (n != null && n.graphics != null) { g = n.graphics; break; } }
+            Transform root = ctrl.RDNodeRoot;
+            if (g == null || root == null) { Debug.LogWarning("[AXE] render-port: no live node graphics to calibrate against; using 1:1 node box."); return; }
+            // The TILE's own transform (SetScale puts the node scale on 'scalar', a child of the prefab root), so
+            // measure there rather than on the prefab root — they only agree while node scale == 1.
+            Transform tile = g.button != null && g.button.Image != null ? g.button.Image.transform : g.transform;
+            float gs = tile.lossyScale.x, rs = root.lossyScale.x;
+            if (gs <= 1e-4f || rs <= 1e-4f) return;
+            BoxW = BoxH = TILE_PX * gs / rs;
         }
 
         // TEMP instrumentation: dump the live coordinate space once, after Setup + scroll settle.
@@ -275,6 +337,7 @@ namespace RPAxe.RnD
         private System.Collections.IEnumerator FitContentToNodes()
         {
             yield return null; yield return null; yield return null;   // let the nodes' Setup apply localPositions
+            EnsureRoutes(null);   // graphics exist now -> calibrate the node box + route (before/with the arrow draw)
             FitContentNow();
             CenterOnStart(RDController.Instance);   // land the initial view on the start node
             yield return new WaitForSecondsRealtime(1.25f);
@@ -326,7 +389,7 @@ namespace RPAxe.RnD
                 {
                     if (rd == null) continue;
                     Vector3 p = rd.transform.localPosition;
-                    if (p.x < mnx) mnx = p.x; if (p.x + NODE_W > mxx) mxx = p.x + NODE_W;   // include the tile's right extent
+                    if (p.x < mnx) mnx = p.x; if (p.x + BoxW > mxx) mxx = p.x + BoxW;   // include the tile's right extent
                     if (p.y < mny) mny = p.y; if (p.y > mxy) mxy = p.y;
                 }
                 if (mxx < mnx) return;
@@ -505,6 +568,7 @@ namespace RPAxe.RnD
             if (!ready || !AxeTreeMeta.Render.RouteOverride) return true;
             try
             {
+                if (!routesBuilt) EnsureRoutes(__0?.parent?.node);   // DrawArrow just ran Setup on the parent -> graphics are live
                 string from = __0?.parent?.node?.tech?.techID;
                 string to = __instance?.tech?.techID;
                 if (from == null || to == null) return true;
@@ -569,11 +633,14 @@ namespace RPAxe.RnD
             }
         }
 
-        // A junction dot's resting colour = its bus source's discipline colour (neutral grey fallback).
+        // A junction dot's resting colour = its bus source's discipline colour (neutral grey fallback) — or
+        // done-green once that source is researched, so a dot matches the bus lines it sits on (see EdgeColor).
         private static Color DotBaseColor(int i)
         {
-            if (i >= 0 && i < Dots.Count
-                && AxeTreeMeta.Nodes.TryGetValue(Dots[i].From, out AxeTreeMeta.NodeMeta m)
+            if (i < 0 || i >= Dots.Count) return new Color(0.54f, 0.56f, 0.59f, 1f);
+            string from = Dots[i].From;
+            if (NodeById.TryGetValue(from, out RDNode src) && src != null && src.state == RDNode.State.RESEARCHED) return DoneTile;
+            if (AxeTreeMeta.Nodes.TryGetValue(from, out AxeTreeMeta.NodeMeta m)
                 && AxeTreeMeta.Disciplines.TryGetValue(m.Discipline, out AxeTreeMeta.DiscMeta d)) return d.Color;
             return new Color(0.54f, 0.56f, 0.59f, 1f);
         }
@@ -650,7 +717,7 @@ namespace RPAxe.RnD
                     if (from != null && AxeTreeMeta.Nodes.TryGetValue(from, out AxeTreeMeta.NodeMeta pm)
                         && AxeTreeMeta.Disciplines.TryGetValue(pm.Discipline, out AxeTreeMeta.DiscMeta pd))
                     {
-                        Color ec = StateTint(pd.Color, src.state != RDNode.State.RESEARCHED);   // lit once source researched
+                        Color ec = EdgeColor(src, pd.Color);   // researched source -> done-green; else receded discipline
                         if (par.line != null) par.line.color = ec;
                         if (par.arrowHead != null) par.arrowHead.color = ec;
                     }
@@ -658,6 +725,12 @@ namespace RPAxe.RnD
             }
             catch (Exception e) { Debug.LogException(e); }
         }
+
+        // An edge's colour. Provenance (the source's discipline) is only worth showing while the source is still
+        // AHEAD of the player — once it's researched the edge is history, so it joins the done-green the source's
+        // own tile wears. Un-researched sources keep the receded discipline hue (which lane is this coming from).
+        internal static Color EdgeColor(RDNode src, Color disc)
+            => src != null && src.state == RDNode.State.RESEARCHED ? DoneTile : StateTint(disc, true);
 
         // Recede = desaturate the colour toward its own grey + dim the alpha (locked nodes / un-researched edges).
         private static Color StateTint(Color c, bool recede)
@@ -732,7 +805,7 @@ namespace RPAxe.RnD
                 if (from != null && AxeTreeMeta.Nodes.TryGetValue(from, out AxeTreeMeta.NodeMeta pm)
                     && AxeTreeMeta.Disciplines.TryGetValue(pm.Discipline, out AxeTreeMeta.DiscMeta pd))
                 {
-                    Color ec = StateTint(pd.Color, src.state != RDNode.State.RESEARCHED);
+                    Color ec = EdgeColor(src, pd.Color);
                     if (par.line != null) par.line.color = ec;
                     if (par.arrowHead != null) par.arrowHead.color = ec;
                 }
