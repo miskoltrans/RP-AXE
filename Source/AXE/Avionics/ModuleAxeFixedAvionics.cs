@@ -134,6 +134,34 @@ namespace RPAxe
         /// <summary>Hardened AND the hardening researched — the only state that keeps hibernation.</summary>
         public bool ShieldingActive => !dead && shielded && Researched(shieldedTech);
 
+        // ---- Thermal: named parts are buses too ----
+        // Ported 2026-08-05. Omitting it here was a free dodge -- fly a named bus and pay no heater load
+        // at all -- exactly the hole the star tracker was careful to close. The ladder itself is shared
+        // with the procedural core (ModuleAxeAvionics.ResolveThermalK) so the two cannot drift.
+        //
+        // Only the insulation coefficient lives here. Radiating area comes from vessel dry mass and the
+        // integration lives in ModuleAxeThermal, which also enforces one heater owner per vessel -- so a
+        // stack carrying both a named unit and a procedural core is billed once, not twice.
+        [KSPField] public float thermalKStandard = 63f;    // eps_eff 0.15
+        [KSPField] public float thermalKDeepSpace = 42f;   // eps_eff 0.10, deep-space bus, no MLI tech yet
+
+        // AS-BUILT and frozen, same craft-sharing rule as the procedural core: a shared .craft flies the
+        // insulation it was designed with rather than re-deriving from the recipient's research.
+        [KSPField(isPersistant = true)] public float asBuiltThermalK = -1f;
+
+        ModuleAxeThermal _thermal;
+
+        float ResolveThermalK() =>
+            ModuleAxeAvionics.ResolveThermalK(ShieldingActive, thermalKStandard, thermalKDeepSpace);
+
+        void ApplyThermal()
+        {
+            if (_thermal == null) _thermal = part.FindModuleImplementing<ModuleAxeThermal>();
+            if (_thermal == null) return;
+            if (HighLogic.LoadedSceneIsEditor) asBuiltThermalK = ResolveThermalK();
+            _thermal.SetBusThermal(asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK(), 0f);
+        }
+
         // ---- Attitude reference ("star tracker") -- docs/AVIONICS_SPEC.md, Axis 2. ----
         // Same rule as the procedural core: only a deep-space unit knows which way it points in an inertial
         // frame. Named parts are included deliberately -- leaving them out would be a trivial dodge (fly a
@@ -171,6 +199,7 @@ namespace RPAxe
             InitializeResourceRate();
             ApplyHibernation();
             ApplyAttitudeReference();
+            ApplyThermal();
             UpdateGui();
         }
 
@@ -268,7 +297,8 @@ namespace RPAxe
             if (Time.unscaledTime < _nextGuiRefresh) return;
             _nextGuiRefresh = Time.unscaledTime + GuiRefreshInterval;
             ApplyHibernation();
-            ApplyAttitudeReference();   // shieldedTech can be researched mid-flight
+            ApplyAttitudeReference();
+            ApplyThermal();   // shieldedTech can be researched mid-flight
             EvaluateAutoGuidance();
             UpdateGui();
         }
@@ -318,7 +348,8 @@ namespace RPAxe
             // After `dead` is set: the test is "is anything still alive", and this unit no longer is.
             AxeAvionicsKill.KillAntennasIfLastAvionicsDead(vessel);
             ApplyHibernation();
-            ApplyAttitudeReference();   // ShieldingActive is now false -> stock hibernation off with it
+            ApplyAttitudeReference();
+            ApplyThermal();   // ShieldingActive is now false -> stock hibernation off with it
             UpdateGui();          // draw -> 0 via UpdateDraw
             // This unit's capacity leaves the vessel-wide MAX, so other units' overload verdicts move.
             if (vessel != null) GameEvents.onVesselWasModified.Fire(vessel);

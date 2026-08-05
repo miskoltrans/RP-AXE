@@ -1249,11 +1249,17 @@ namespace RPAxe
 
         // Best researched MLI rung, else the flat per-model value. Standard NEVER benefits from MLI
         // research -- that is the capability the Deep-Space Bus is selling.
-        float ResolveThermalK()
+        float ResolveThermalK() => ResolveThermalK(ShieldedActive, thermalKStandard, thermalKDeepSpace);
+
+        /// <summary>
+        /// Shared by the procedural core and <see cref="ModuleAxeFixedAvionics"/> so both walk the same
+        /// MLI ladder. A named part is a bus like any other — leaving it out would be a free dodge, the
+        /// same hole the star tracker deliberately closed.
+        /// </summary>
+        public static float ResolveThermalK(bool deepSpace, float kStandard, float kDeepSpace)
         {
-            bool ds = ShieldedActive;
-            float k = ds ? thermalKDeepSpace : thermalKStandard;
-            float[] rungs = ds ? _mliK : _mliKStandard;
+            float k = deepSpace ? kDeepSpace : kStandard;
+            float[] rungs = deepSpace ? _mliK : _mliKStandard;
             for (int i = 0; i < _mliTech.Length; i++)
                 if (Researched(_mliTech[i]) && rungs[i] < k) k = rungs[i];
             return k;

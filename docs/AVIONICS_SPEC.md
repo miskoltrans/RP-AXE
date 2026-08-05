@@ -343,9 +343,21 @@ and prelaunch craft have no orbit to average over, so they fall back to the inst
 solar panels), so the planner honours it as a hard 0/1 — "what if I sat in the dark". Flight uses the
 orbit-averaged figure and therefore reads *between* the planner's two extremes.
 
-> **GAP — `ModuleAxeFixedAvionics` has no thermal at all.** Named fixed-capacity parts got
-> `ProvidesAttitudeReference` but not the heater load, so flying a named bus dodges thermal entirely — the
-> same class of hole the star tracker deliberately closed. Should be ported across.
+**Named parts carry thermal too — CLOSED 2026-08-05.** `ModuleAxeFixedAvionics` had
+`ProvidesAttitudeReference` but no heater load, so flying a named bus (Sputnik, a Voyager bus, an Agena,
+an Apollo CM) dodged thermal entirely — the same class of hole the star tracker was careful to close. It
+now resolves its own `k` through the *shared* `ModuleAxeAvionics.ResolveThermalK`, so the two model
+families walk one MLI ladder and cannot drift.
+
+`ModuleAxeThermal` is attached by a single blanket rule at the bottom of `AxeAvionicsCore.cfg`
+(`@PART[*]:HAS[@MODULE[ModuleAxeFixedAvionics],!MODULE[ModuleAxeThermal]]:FINAL`) rather than emitted 38
+times into `design/Parts/AxeFixedAvionics.cfg`, which is generated — one rule stays correct as parts come
+and go. `:FINAL` so it lands after that file's own `:LAST[RP-AXE]` assignments *and* its `:FINAL` blanket
+fallback, otherwise the parts caught by the fallback would be missed.
+
+No double-billing: only the insulation coefficient comes from the avionics unit. Area is derived from
+vessel dry mass, and `ModuleAxeThermal` enforces one heater owner per vessel, so a stack carrying both a
+named unit and a procedural core is charged once.
 
 **Mass/cost: own per-tier ladder, authored as real data — not a live multiplier. SHIPPED.** Matching RP-1's
 real shape meant ~10 *separate* tech-node placements in AXE's tree (mirroring each Guided-tier unlock
