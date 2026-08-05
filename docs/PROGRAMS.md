@@ -232,6 +232,46 @@ goes false in its `OnAwake` and true at the end of its `OnLoad`, so a scenario l
 read a live-but-empty contract list and "helpfully" conclude nothing. The check stays pending across
 frames until the list is really there.
 
+### A program's Mission Control folder lives only while it is active
+
+Contract Configurator decides whether to draw a group at all with
+`ContractType.AllValidContractTypes.Any(ct => g.BelongsToGroup(ct))` — at the root
+(`MissionControlUI.GetGroups`) and at the child level (`MissionControlUI.CreateGroupItem`).
+`AllValidContractTypes` filters on `ContractType.enabled`, which is a **load-time** flag set when the
+CONTRACT_TYPE parses and never re-consulted against requirements. So stock behaviour draws a folder
+for every program from the first minute of a career to the last; concluding one only greys its
+counter to `Offered 0`. By the late game that is ~29 dead folders — the clutter conclusion was meant
+to clear.
+
+`AxeProgramGroupVisibility.Sync()` flips `enabled` (private setter, via Harmony `Traverse`) to match
+program state, so no UI patching is needed — it drives the predicate CC already asks about. Called
+from `Activate()`, `Conclude()`, and unconditionally after the load-time reconcile, because `enabled`
+is static per KSP session and would otherwise carry one career's hidden folders into the next save
+loaded.
+
+Rules:
+
+- **Not program-gated → never touched.** `AXEPrograms` (the charters), `Records`, `HumanRecords`.
+  The charters gate on `ProgramConcluded`, which `Collect()` deliberately ignores: a charter must be
+  visible precisely when its program is *not* active.
+- **Flattened ANY, not ALL.** A contract naming several programs does so inside a `type = Any` OR
+  group; verified across all 292 program-gated seed contracts that none ANDs two programs. So
+  "is any referenced program active" is exactly the OR the config expresses. It is also why the
+  `SuborbRocketDev` and `CrewedOrbit` folders correctly survive their own program's conclusion —
+  each still holds one contract (`first_FirstFlight`, `first_OrbitRecover`) whose `Any` group names a
+  program that *is* active.
+- **Load-time value is a ceiling.** A type that failed to parse also has `enabled == false`;
+  re-enabling one would resurrect a broken contract. The set CC accepted is snapshotted before the
+  first flip, so this can only narrow, never widen.
+
+Three things that could plausibly have broken, and why they don't: accepted contracts stay listed and
+flyable (the grouped tree is only built for the Available view — `displayModeAll && displayMode == 0`
+— while the Active and Archive tabs return early into stock's flat list); save loading is unaffected
+(`ContractType.GetContractType` reads the dictionary directly and does not filter on `enabled`); and
+the only other readers of `AllValidContractTypes` are contract generation (skipping an inactive
+program's types is correct — their `ProgramActive` requirement would reject them anyway) and one
+display-title lookup that falls back to the raw name.
+
 `tools/build_economy.py` fails the build if any program has an objective that can never be offered —
 an unreachable objective strands a program active for the whole career, and does it silently
 (`CompleteContractRequirement` matches by name against finished contracts and logs nothing on a miss).

@@ -59,7 +59,10 @@ namespace RPAxe
         public void Activate(string program)
         {
             if (!string.IsNullOrEmpty(program) && _active.Add(program))
+            {
                 Debug.Log("[AXE] Program activated: " + program);
+                AxeProgramGroupVisibility.Sync();
+            }
         }
 
         /// <summary>
@@ -80,6 +83,9 @@ namespace RPAxe
             _active.Remove(program);
             if (_concluded.Add(program))
                 Debug.Log("[AXE] Program concluded: " + program);
+            // The program's Mission Control folder goes away with it — see
+            // AxeProgramGroupVisibility. Its already-accepted missions are unaffected.
+            AxeProgramGroupVisibility.Sync();
         }
 
         // --- Reconciliation against the contract log -------------------------------------------
@@ -134,6 +140,12 @@ namespace RPAxe
                                  + "ConcludeProgram behaviour.)");
                 Conclude(program);
             }
+
+            // Unconditional, not just when the repair loop changed something: `enabled` is static
+            // per KSP session, so a save loaded after another one carries the previous career's
+            // hidden folders until this runs. Conclude() also calls it, but only for programs it
+            // actually closed.
+            AxeProgramGroupVisibility.Sync();
         }
 
         public override void OnSave(ConfigNode node)

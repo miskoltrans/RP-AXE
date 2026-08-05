@@ -73,6 +73,31 @@ namespace RPAxe
                   guiFormat = "N0", guiUnits = " K", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public float busTemperatureDisplay = 0f;
 
+        // ---- VAB simulation: pick a body, see the heater bill before you fly it ----
+        // At the home body in sunlight the live load is 0, so without this the mechanic is invisible
+        // exactly where it has to be designed against. Kerbalism's planner has its own body picker and this
+        // module feeds that too (PlannerUpdate), but the planner only answers "the body I am orbiting right
+        // now" -- a probe is designed for where it is GOING, so the part needs its own selector.
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "Simulate at",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_ChooseOption(scene = UI_Scene.Editor)]
+        public int simBodyIndex = 0;
+
+        [KSPField(isPersistant = true, guiActiveEditor = true, guiName = "Simulate",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_Toggle(disabledText = "in orbit", enabledText = "in deep space", scene = UI_Scene.Editor)]
+        public bool simDeepSpace = false;
+
+        [KSPField(guiActiveEditor = true, guiName = "Heater draw (sim)", guiFormat = "N1", guiUnits = " W",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public float simWatts = 0f;
+
+        [KSPField(guiActiveEditor = true, guiName = "Radiating area", guiFormat = "N1", guiUnits = " m²",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay)]
+        public float simArea = 0f;
+
+        static readonly List<CelestialBody> _simBodies = new List<CelestialBody>();
+
         double _lastUT = -1d;
         KeyValuePair<string, double> _ec = new KeyValuePair<string, double>(EcName, 0d);
 
