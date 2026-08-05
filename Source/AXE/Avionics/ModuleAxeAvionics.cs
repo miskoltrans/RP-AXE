@@ -1249,14 +1249,15 @@ namespace RPAxe
         /// bouncing albedo at a craft in its shadow, and at low altitude it fills half the sky. Without it,
         /// a 35-minute LEO eclipse would cost the same watts as interplanetary cruise, which is wrong.
         /// </summary>
-        public static float ThermalDeficit(double sunDist, bool inShadow, CelestialBody body,
+        public static float ThermalDeficit(double sunDist, double sunlitFraction, CelestialBody body,
                                            double distFromBodyCentre, float irFrac)
         {
             if (Planetarium.fetch?.Home?.orbit == null) return 0f;
             double refR = Planetarium.fetch.Home.orbit.semiMajorAxis;
             if (refR <= 0d || sunDist <= 0d) return 0f;
 
-            double solar = inShadow ? 0d : refR * refR / (sunDist * sunDist);
+            if (sunlitFraction < 0d) sunlitFraction = 0d; else if (sunlitFraction > 1d) sunlitFraction = 1d;
+            double solar = sunlitFraction * refR * refR / (sunDist * sunDist);
 
             double bodyIr = 0d;
             if (body != null && body != Planetarium.fetch.Sun && distFromBodyCentre > 0d)
@@ -1271,8 +1272,55 @@ namespace RPAxe
         }
 
         /// <summary>
+        /// Fraction of an orbit spent in sunlight, beta-angle aware. THIS, not the instantaneous shadow
+        /// flag, is what drives the thermal model.
+        ///
+        /// WHY: a spacecraft has thermal mass. It does not cool the instant it enters shadow -- it coasts
+        /// through a ~35 minute eclipse on stored heat and reheats in sunlight, which is exactly why
+        /// passive-only designs worked at all: Explorer 1 rode out every eclipse of its life on paint
+        /// stripes and heat capacity, with no heater aboard. Charging a full steady-state heater load for
+        /// the shadow half of every orbit overstates LEO enormously. What actually sizes the heaters is the
+        /// ORBIT-AVERAGED energy balance, which is also how real thermal engineers do the sum.
+        ///
+        /// Standard closed form for a circular orbit, with beta the angle between the orbit plane and the
+        /// Sun: no eclipse at all once |sin B| >= R/r, else
+        ///     shadowFraction = acos( sqrt(r^2 - R^2) / (r cos B) ) / pi
+        /// Beta-awareness is not decoration: it is why a dawn-dusk sun-synchronous orbit never eclipses,
+        /// and it makes orbit choice a real thermal decision instead of a flat tax on being in LEO.
+        /// </summary>
+        public static double SunlitFraction(Vessel v)
+        {
+            Orbit o = v?.orbit;
+            CelestialBody b = v?.mainBody, sun = Planetarium.fetch?.Sun;
+            if (o == null || b == null || sun == null || b == sun) return 1d;
+
+            double r = o.semiMajorAxis, R = b.Radius;      // circular approximation
+            if (r <= R || R <= 0d) return 1d;
+
+            double sinBetaStar = R / r;
+            double cosBeta = 1d;                            // worst case if the normal is unusable
+            Vector3d n = o.GetOrbitNormal().xzy;            // orbit frame -> world frame
+            if (n.sqrMagnitude > 0d)
+            {
+                Vector3d toSun = sun.position - b.position;
+                if (toSun.sqrMagnitude > 0d)
+                {
+                    double sinBeta = Vector3d.Dot(n.normalized, toSun.normalized);
+                    if (System.Math.Abs(sinBeta) >= sinBetaStar) return 1d;   // never enters shadow
+                    cosBeta = System.Math.Sqrt(System.Math.Max(0d, 1d - sinBeta * sinBeta));
+                }
+            }
+            if (cosBeta <= 0d) return 1d;
+
+            double x = System.Math.Sqrt(System.Math.Max(0d, r * r - R * R)) / (r * cosBeta);
+            if (x >= 1d) return 1d;
+            if (x < -1d) x = -1d;
+            return 1d - System.Math.Acos(x) / System.Math.PI;
+        }
+
+        /// <summary>
         /// Cylindrical-shadow test: is the body we orbit between us and the Sun? Geometric and
-        /// dependency-free, so it works identically with or without Kerbalism, loaded or in background.
+        /// dependency-free. Retained for LANDED/prelaunch craft, which have no orbit to average over.
         /// </summary>
         public static bool InShadow(Vessel v)
         {
@@ -1294,7 +1342,15 @@ namespace RPAxe
             Vector3d vp = v.GetWorldPos3D();
             double sunDist = (vp - Planetarium.fetch.Sun.position).magnitude;
             double bodyDist = v.mainBody != null ? (vp - v.mainBody.position).magnitude : 0d;
-            return ThermalDeficit(sunDist, InShadow(v), v.mainBody, bodyDist, irFrac);
+
+            // Orbiting craft average over the orbit (thermal mass rides out the eclipse). Landed and
+            // prelaunch craft have no orbit to average, so fall back to the instantaneous test.
+            bool orbiting = v.situation != Vessel.Situations.LANDED
+                            && v.situation != Vessel.Situations.SPLASHED
+                            && v.situation != Vessel.Situations.PRELAUNCH;
+            double sunlit = orbiting ? SunlitFraction(v) : (InShadow(v) ? 0d : 1d);
+
+            return ThermalDeficit(sunDist, sunlit, v.mainBody, bodyDist, irFrac);
         }
 
         // Heater draw. NOT reduced by hibernation (user, 2026-08-05): the heater does not care whether the
@@ -2125,10 +2181,14 @@ namespace RPAxe
             {
                 // Planner bodies are evaluated in orbit about themselves, so use the body's own radius as
                 // the stand-in for "how much sky does it fill" -- low orbit, the conservative case.
+                // The planner's sunlight/shadow toggle is a WORST-CASE switch (that is what it means for
+                // solar panels), so honour it as a hard 0/1 here: "shadow" answers "what if I sat in the
+                // dark", not "what does an average orbit cost". Flight uses the orbit-averaged figure and
+                // will therefore read between the planner's two extremes.
                 double bodyDist = body != null ? body.Radius * 1.1d : 0d;
                 float k = asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK();
                 watts += k * ThermalArea()
-                         * ThermalDeficit(sunDist, sunlight < 0.5d, body, bodyDist, bodyIrFraction);
+                         * ThermalDeficit(sunDist, sunlight < 0.5d ? 0d : 1d, body, bodyDist, bodyIrFraction);
             }
             else watts += thermalWatts;
 

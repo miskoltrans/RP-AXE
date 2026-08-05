@@ -262,13 +262,38 @@ and the axis still sells something real — but a LEO satellite now has counterp
 | Standard, capped | 50 W | 30 W | 54 W |
 | Deep-Space, capped | 19 W | 11 W | 21 W |
 
-> **OPEN — THERMAL MASS is not modelled, and it matters most for eclipse.** A real satellite does not cool
-> instantly: it rides out a ~35-minute eclipse on stored heat and reheats in sunlight, which is precisely
-> why passive-only designs like Explorer 1 worked. Treating eclipse as a full steady-state heater load
-> therefore *overstates* the LEO case, possibly a lot. The honest fix is to drive the deficit off an
-> ORBIT-AVERAGED sunlight fraction rather than the instantaneous shadow flag (Kerbalism exposes
-> `shadow_period`/`orbital_period` in the planner and `Sim.SampleSunFactor` in flight). Deferred: it is a
-> real modelling change, not a tuning value, and the numbers above are playable meanwhile.
+**THERMAL MASS — DONE 2026-08-05, via orbit averaging.** A spacecraft does not cool the instant it enters
+shadow; it coasts through a ~35-minute eclipse on stored heat and reheats in sunlight. That is precisely
+why passive-only designs worked — Explorer 1 rode out every eclipse of its life on paint stripes and heat
+capacity, with no heater aboard. Charging a full steady-state load for the shadow half of every orbit
+overstated LEO by ~3×.
+
+So the solar term is now scaled by the **orbit-averaged sunlit fraction**, which is also how real thermal
+engineers size heaters. Standard closed form for a circular orbit, **beta-angle aware** — no eclipse at all
+once `|sin β| ≥ R/r`, else `shadowFraction = acos( √(r²−R²) / (r·cos β) ) / π`.
+
+Beta-awareness is not decoration. It makes orbit choice a real thermal decision instead of a flat tax on
+being in LEO, and it reproduces actual spaceflight behaviour:
+
+| orbit | sunlit | deficit | no tech | + `th_hermeticBus` | capped |
+|---|--:|--:|--:|--:|--:|
+| LEO 400 km, β 0 (worst) | 0.610 | 0.274 | 46 W | 24 W | 15 W |
+| LEO 400 km, β 45 | 0.659 | 0.225 | 38 W | 20 W | 13 W |
+| LEO 400 km, **dawn-dusk β 75** | **1.000** | 0.000 | 0 W | 0 W | 0 W |
+| GEO, β 0 (equinox) | 0.952 | 0.046 | 8 W | 4 W | 3 W |
+| GEO, β 23 (solstice) | **1.000** | 0.000 | 0 W | 0 W | 0 W |
+
+A dawn-dusk sun-synchronous orbit never eclipses — which is exactly why real missions fly them. And GEO
+eclipses only near the equinoxes, because `asin(R/r) = 8.7°` there and β exceeds that for most of the year:
+the model reproduces the real GEO eclipse season without being told about it.
+
+*Approximation, stated plainly:* orbit averaging assumes the thermal time constant is long relative to the
+orbital period. True for a dense, insulated avionics box; less true for a large deployed structure. Landed
+and prelaunch craft have no orbit to average over, so they fall back to the instantaneous shadow test.
+
+*Planner note:* Kerbalism's sunlight/shadow toggle is a **worst-case switch** (that is what it means for
+solar panels), so the planner honours it as a hard 0/1 — "what if I sat in the dark". Flight uses the
+orbit-averaged figure and therefore reads *between* the planner's two extremes.
 
 > **GAP — `ModuleAxeFixedAvionics` has no thermal at all.** Named fixed-capacity parts got
 > `ProvidesAttitudeReference` but not the heater load, so flying a named bus dodges thermal entirely — the
