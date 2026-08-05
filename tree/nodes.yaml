@@ -1794,18 +1794,28 @@ nodes:
     tier: 6
     parents: [cmp_ablativeTPS, life_openLoopECLSS]
     flavor: "A blunt cone that rides its own shockwave down, the heatshield taking the fire while the crewman lies on his back against the deceleration. Mercury: one seat, a retrofire to leave orbit, a splashdown under a single canopy. The first American in orbit."
-    parts: [ROC-MercuryCMBDB, ROC-MercuryAirbrakeBDB, RP0HumanRatedFlag]
+    parts: [ROC-MercuryCMBDB, ROC-MercuryAirbrakeBDB, RP0HumanRatedFlag, mk1pod_v2]
     # RP0HumanRatedFlag added (2026-07, parking cleanup): the cosmetic human-rating flag decal, listed as a
     # ride-along of this exact capsule king (ROC-MercuryCMBDB) in the original design (human-orbital design)
     # and just missed during authoring. Belongs with the first crewed capsule — it only means anything once
     # you are flying people.
+    # mk1pod_v2 moved IN from int_vostokCapsule (2026-08-06 fix): the Mk1 pod is a blunt CONE, not a
+    # sphere — it was the one part on the spherical node whose shape contradicted the node. RO's own
+    # config states the intent ("set mass equal to Mercury CM + Mercury RCS", integral HTP RCS), and RP-1
+    # homes it on `basicCapsules`, its Mercury-era node. This is the stockish twin of ROC-MercuryCMBDB.
   - id: int_vostokCapsule
     title: "Spherical Reentry Capsule"
     discipline: SystemsIntegration
     tier: 6
     parents: [cmp_ablativeTPS, life_openLoopECLSS]
     flavor: "A perfect sphere, its mass offset so it finds its own heat-shielded attitude with no active control — crude, heavy, utterly reliable. Vostok brought the first human back from orbit, the cosmonaut ejecting to land under his own parachute while the ball thumped down nearby."
-    parts: [ROC-VostokCapsule, mk1pod_v2]
+    parts: [ROC-VostokCapsule, kv1Pod]
+    # kv1Pod swapped in for mk1pod_v2 (2026-08-06 fix): this node's whole mechanism is "a perfect sphere
+    # that trims itself heat-shield-first", and the Mk1 pod is a cone — it went to int_mercuryCapsule,
+    # where its shape and RO's own Mercury-derived mass belong. KV-1 'Onion' is the stockish spherical
+    # reentry vehicle (RO: "Soviet Vostok pod with built in decoupler", rescaled to a ~2.3 m ball), so it
+    # is the one stock/MH pod that reads as this node. Reverses RP-1's inherited MakingHistory cut for
+    # this one part — recorded in tools/build_manifest.py ADD.
   - id: int_zenitRecon
     title: "Film-Return Reconnaissance Capsule"
     discipline: SystemsIntegration

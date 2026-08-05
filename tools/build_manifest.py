@@ -171,6 +171,13 @@ ADD={  # our divergences (names; mod/title resolved from ro_expanded)
   "nfs-panel-deploying-blanket-arm-1","nfs-panel-deploying-advanced-2x20-hub-1","nfs-panel-deploying-curved-375-1",
   # NFE nuclear fuel cycle (4) -- reprocessor + fuel drums, home the RO reactors' EnrichedUranium/DepletedFuel loop
   "nuclear-recycler-25","nuclearfuel-0625","nuclearfuel-125","nuclearfuel-25",
+  # MakingHistory reversal (1). The 53-part SquadExpansion cut is inherited wholesale (docs/PARTLIST.md,
+  # "procedural + RO replace them") and stays inherited -- this is the single exception. `kv1Pod` (KV-1
+  # 'Onion') is the only spherical crewed reentry vehicle in stock/MH, RO-configured as a Vostok analogue
+  # ("Soviet Vostok pod with built in decoupler", rescale 1.304 -> ~2.3 m ball, 2.12 t, 1 crew). It is
+  # placed as the stockish sibling of ROC-VostokCapsule on int_vostokCapsule; the seat it took there had
+  # been filled by mk1pod_v2, which is a CONE and moved to int_mercuryCapsule. kv2Pod/kv3Pod stay cut.
+  "kv1Pod",
   # Kerwis DFH-1 + clean-drop reversals
   "DFH-1","proceduralTankOre","RO-SaturnI-IU","restock-drone-core-375-1","restock-airlock-1",
   "KF-ScrewDrive","KF-Skid","KF-TrackInverting","KF-TrackLong","KF-TrackMedium","KF-TrackMole","KF-TrackSimple",
