@@ -25,8 +25,8 @@ files keep their original `:FOR[RP-0]` / `:*[RP-0-Kerbalism]` / `:BEFORE[zzzKerb
 | RP-1 node | AXE node | | RP-1 node | AXE node |
 |---|---|---|---|---|
 | `start` | `start` (unchanged) | | `earlySpaceStations` | `life_convertedStageStation` |
-| `basicCapsules` | `int_mercuryCapsule` | | `spaceStationPrototypes` | `life_stationHabitation` |
-| `earlyFlightControl` | `gnc_spacecraftRCS` | | `spaceStationDev` | `life_convertedStageStation` |
+| `basicCapsules` | *(no gate — see below)* | | `spaceStationPrototypes` | `life_stationHabitation` |
+| `earlyFlightControl` | `gnc_rcs` | | `spaceStationDev` | `life_convertedStageStation` |
 | `improvedComms` | `tel_pcmTelemetry` | | `modularSpaceStations` | `life_modularHabitat` |
 | `electronicsHuman` | `int_geminiCapsule` | | `largeScaleOrbitalCon` | `str_stationHubs` |
 | `materialsScienceHuman` | `int_geminiCapsule` | | `improvedOrbitalConstruction` | `str_modularTrussSystem` |
@@ -38,6 +38,42 @@ Targets are era-matched (not 1:1 — RP-1's crewed-lunar/station gating is finer
 and several RP-1 nodes are `//Placeholder`). Every target was verified to exist in
 `design/Tree/AxeTechTree.cfg` before use. `CockpitExperiments.cfg`'s four supersonic experiments
 carry no tech gate in RP-1 and were left as-is.
+
+## A capsule-generation node cannot be remapped 1:1 (fixed for basic, OPEN for second-gen)
+
+RP-1's `basicCapsules` / `secondGenCapsules` are **single** nodes covering every capsule of a
+generation. AXE deliberately scatters capsules across per-vehicle nodes, so there is no AXE node
+that means "early capsule": the only common ancestors of the five basic-tier carriers
+(`int_mercuryCapsule`, `int_vostokCapsule`, `life_pressurisedCabin`, `life_spaceplaneCockpit`,
+`life_crewedExperimentBay`) are `start`, `life_highAltCompartment` and `met_weldedTank` — and the
+nine second-gen carriers share exactly the same three.
+
+Remapping such a node to one arbitrary capsule **orphans every other path**: a player who
+researched `int_vostokCapsule` got a Vostok with a 2-slot Crew Science Configure whose only
+selectable entry was "None", hard-blocking the `CollectCrewedScienceBasic` capstone. Nothing logs.
+
+Rule: **when the RP-1 gate was a capsule-generation node, drop the gate** — the `gets*Experiments`
+tag on the carrier part already restricts the setup to that tier, so buying the part *is* the gate.
+Only keep a gate when it names a genuinely different technology (a dish, mapping optics, RCS).
+
+Applied to `getsBasicCapsuleExperiments`. **Still open for the other three tiers**, where the same
+remap over-gated — including five second-gen and two mature setups that RP-1 left at `start`:
+
+| Setup | RP-1 gate | current AXE gate | note |
+|---|---|---|---|
+| Orbital Maneuvering | `secondGenCapsules` | `gnc_spacecraftRCS` | plausible — OMS is a real capability |
+| Visual Acuity | `start` | `int_geminiCapsule` | over-gated |
+| Star Occultation Navigation | `earlyFlightControl` | `gnc_spacecraftRCS` | should follow `gnc_rcs` |
+| Power Tool Evaluation | `materialsScienceHuman` | `int_geminiCapsule` | wrong lane (EVA tooling) |
+| Simple Organism Egg Growth | `materialsScienceHuman` | `int_geminiCapsule` | wrong lane — `bio_cultures`? |
+| White Blood Cells / Sleep / Food / Work Tolerance | `start` | `int_geminiCapsule` | over-gated (4 setups) |
+| Simple Navigation, Zodiacal Light Photography | `secondGenCapsules` | `int_geminiCapsule` | orphans Voskhod/Apollo |
+| Ion Sensing Attitude Control | `electronicsHuman` | `int_geminiCapsule` | wrong lane — `elec_integratedCircuit`? |
+| Night Image Intensification | `electronicsHuman` | `int_geminiCapsule` | wrong lane |
+| Synoptic Terrain / Weather Photography | `start` | `opt_orbitalMapping` | over-gated (2 setups) |
+
+`UHF/VHF Polarization` → `tel_deployableHighGainDish` and `Space Television Broadcast` →
+`tel_pcmTelemetry` are correct: those name real, different technologies.
 
 ## sync-seed handling (resolved)
 
