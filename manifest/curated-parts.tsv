@@ -1467,8 +1467,6 @@ Squad	mediumDishAntenna	Communotron DTS-M1
 Squad	microEngine	1.1/1.78kN Thruster
 Squad	miniIntake	Small Pitot Intake
 Squad	miniJetEngine	J85 Turbojet (No Afterburner)
-Squad	mk1-3pod	Mk1-3 Command Pod (4m)
-Squad	mk1pod_v2	Mk1 Pod (2m)
 Squad	mk2CargoBayL	Mk2 Cargo Bay CRG-08
 Squad	mk2CargoBayS	Mk2 Cargo Bay CRG-04
 Squad	mk2Cockpit_Inline	Mk2 Inline Cockpit
@@ -1585,7 +1583,6 @@ SquadExpansion	kerbalEVAVintage
 SquadExpansion	kerbalEVAfemale	
 SquadExpansion	kerbalEVAfemaleFuture	
 SquadExpansion	kerbalEVAfemaleVintage	
-SquadExpansion	kv1Pod	KV-1 Rentry Vehicle
 SquadExpansion	piston_01	3P6 Hydraulic Cylinder
 SquadExpansion	piston_02	1P2 Hydraulic Cylinder
 SquadExpansion	piston_03	3PT Telescoping Hydraulic Cylinder

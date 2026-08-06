@@ -171,28 +171,6 @@ ADD={  # our divergences (names; mod/title resolved from ro_expanded)
   "nfs-panel-deploying-blanket-arm-1","nfs-panel-deploying-advanced-2x20-hub-1","nfs-panel-deploying-curved-375-1",
   # NFE nuclear fuel cycle (4) -- reprocessor + fuel drums, home the RO reactors' EnrichedUranium/DepletedFuel loop
   "nuclear-recycler-25","nuclearfuel-0625","nuclearfuel-125","nuclearfuel-25",
-  # MakingHistory reinstatement (1) -- NOT a reversal of a curation judgement. Traced 2026-08-06:
-  # RP-1 CARRIED kv1Pod until 2023, on `basicCapsules` at cost 1600, tagged "From RO-MakingHistory mod"
-  # -- the SAME node it gives ROC-VostokCapsule and mk1pod_v2, i.e. it reached this placement itself.
-  # RP-1 commit 369fc0f1 ("regen configs which removes all the removed mods", 2023-09-25) net-dropped
-  # 696 entries BY SOURCE MOD as folders left the generator's input list -- FASA 222, Chaka Monkey 109,
-  # SSTU 98, AIES 69, KW 56, TACLS 55, RealEngines 44, and RO-MakingHistory 11 with zero survivors
-  # (8 MH engines + Mk2Pod + kv1Pod + kv3Pod). Nobody weighed the KV-1; its source folder evaporated.
-  # Losing the TREE-Parts entry then DELETES the part: RP-1/NonRP0.cfg:105
-  # `!PART[*]:HAS[~RP0conf[*rue]]:NEEDS[HardRemoveNonRP0]` removes anything TREE-Parts.cfg never listed.
-  # So it was already gone from ksp_rp1_clean, which is the cache `base` above parses -- the part never
-  # reached curation review at all, and docs/PARTLIST.md's "187 stock/MH parts: inherit the cut" line
-  # counts it as deliberate stock-bloat removal, which it is not. (The tell: RP-1 STILL ships
-  # CrewTrainingTimes.cfg with `kv1Pod = Vostok` / `kv3Pod = Voskhod` -- the training table names parts
-  # it deletes.) NB AXE has no HardRemoveNonRP0 (no NonRP0.cfg, we replace RP-1), so these three were
-  # never deleted here -- they have been loading on `parking` all along, merely uncurated.
-  # KEPT because it is the only spherical crewed reentry vehicle in stock/MH and RO configures it as a
-  # Vostok analogue ("Soviet Vostok pod with built in decoupler", rescale 1.304 -> ~2.3 m ball, 2.12 t,
-  # 1 crew): the stockish sibling of ROC-VostokCapsule on int_vostokCapsule. The seat it took there had
-  # been filled by mk1pod_v2, which is a CONE and moved to int_mercuryCapsule.
-  # kv3Pod (RP-1: `secondGenCapsules` -> AXE int_voskhodCabin) is the same case and is NOT reinstated --
-  # decide it on its own merits, not by inertia. kv2Pod RP-1 never carried, and RO mistitles it "KV-3".
-  "kv1Pod",
   # Kerwis DFH-1 + clean-drop reversals
   "DFH-1","proceduralTankOre","RO-SaturnI-IU","restock-drone-core-375-1","restock-airlock-1",
   "KF-ScrewDrive","KF-Skid","KF-TrackInverting","KF-TrackLong","KF-TrackMedium","KF-TrackMole","KF-TrackSimple",
@@ -223,6 +201,43 @@ os.makedirs(OUTDIR,exist_ok=True)
 # tech-places it (unlike its RADAR/SAR/MULTI siblings, which really are dead and stay cut).
 KEEP_DEPRECATED={"RP0-SampleReturnCapsule","RP0-SampleReturnCommand","SCANsat_Scanner32"}
 manifest={n:mt for n,mt in manifest.items() if n in KEEP_DEPRECATED or "DEPRECATED" not in mt[1].upper()}
+
+# ---------------------------------------------------------------------------------------------------
+# DROP -- parts that reach `manifest` above but that AXE curates OUT. This is the one place where a
+# considered AXE judgement subtracts from the RP-1-derived set, so the reasoning lives here in full.
+#
+# STOCK-POD DUPLICATE PASS (2026-08-06, user call). PARTLIST.md rule 3 -- "from the eligible set,
+# exclude REDUNDANT or LOW-VALUE parts" -- and each of these is a reskin of the ROCapsules part sitting
+# on the same AXE node, measured, not assumed:
+#
+#   mk1pod_v2  int_mercuryCapsule  0.725 t / 1 crew / HTP+He RCS   vs ROC-MercuryCMBDB 0.565 t / 1 / HTP+He
+#   mk1-3pod   int_apolloCSM       3.644 t / 3 crew / MMH+NTO RCS  vs ROC-ApolloCMBDB  3.583 t / 3 / MMH+MON1
+#   kv1Pod     int_vostokCapsule   2.124 t / 1 crew / decoupler    vs ROC-VostokCapsule 0.933 t / 1
+#
+# The "the stock pod is one part instead of three" defence is FALSE for the first two -- both ROCapsules
+# kings carry the same integral RCS (checked in manifest/part-capabilities.tsv, not inferred from the
+# name). kv1Pod's integral decoupler is real but duplicates ROC-VostokDecoupler and costs 2.3x the mass
+# of the capsule it stands beside, so it flies as a different vehicle rather than an alternative skin.
+#
+# WHY RP-1 KEEPING THEM IS NOT EVIDENCE: RP-1 is a compatibility layer, not a curation. Its
+# `basicCapsules` node carries FIVE Vostok analogues at a matched cost of 1600 (ROC-VostokCapsule,
+# IronVostok_Crew_A, restock-pod-sphere-1, rn_vostok_sc, and kv1Pod until 2023) and FOUR Mercury
+# analogues (ROC-MercuryCM, mk1pod, mk1pod_v2 at 2468; ROC-MercuryCMBDB at 1700). Matched prices across
+# brands is the signature: it prices whichever mod's build of the vehicle you happen to have installed.
+# AXE hard-depends on ROCapsules (RP-AXE.netkan `depends`), so the named part is ALWAYS present and the
+# fallback those parallel entries buy is worth nothing here. AXE had already dropped every other brand's
+# twin on these same nodes (IronVostok, RN Soyuz, ReStock's sphere, ROC-MercuryCM, mk1pod) -- keeping the
+# Squad ones was inconsistency, not policy.
+#
+# NOT dropped, decided separately: ROAdvCapsule (RO's own, and genuinely differs -- integral hypergolic
+# RCS where ROC-GeminiCMBDB needs separate OAMS parts) and the landerCabin* / mk2LanderCabin_v2 cans on
+# int_compactCrewPod (a generic 1/2/3-crew size ladder, not a reskin of one vehicle).
+#
+# EFFECT: AXE ships no HardRemoveNonRP0, so a dropped part is not deleted -- emit_placement_patch parks
+# it on `parking`, present but unreachable. Reversing any of these is a one-line edit here plus the row
+# in curated-parts.tsv.
+DROP={"mk1pod_v2","mk1-3pod","kv1Pod"}
+manifest={n:mt for n,mt in manifest.items() if n not in DROP}
 rows=sorted(manifest.items(),key=lambda kv:(kv[1][0],kv[0]))
 with open(os.path.join(OUTDIR,"curated-parts.tsv"),"w",encoding="utf-8") as f:
     f.write("mod\tname\ttitle\n")

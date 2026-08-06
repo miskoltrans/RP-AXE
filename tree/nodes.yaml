@@ -1794,28 +1794,31 @@ nodes:
     tier: 6
     parents: [cmp_ablativeTPS, life_openLoopECLSS]
     flavor: "A blunt cone that rides its own shockwave down, the heatshield taking the fire while the crewman lies on his back against the deceleration. Mercury: one seat, a retrofire to leave orbit, a splashdown under a single canopy. The first American in orbit."
-    parts: [ROC-MercuryCMBDB, ROC-MercuryAirbrakeBDB, RP0HumanRatedFlag, mk1pod_v2]
+    parts: [ROC-MercuryCMBDB, ROC-MercuryAirbrakeBDB, RP0HumanRatedFlag]
     # RP0HumanRatedFlag added (2026-07, parking cleanup): the cosmetic human-rating flag decal, listed as a
     # ride-along of this exact capsule king (ROC-MercuryCMBDB) in the original design (human-orbital design)
     # and just missed during authoring. Belongs with the first crewed capsule — it only means anything once
     # you are flying people.
-    # mk1pod_v2 moved IN from int_vostokCapsule (2026-08-06 fix): the Mk1 pod is a blunt CONE, not a
-    # sphere — it was the one part on the spherical node whose shape contradicted the node. RO's own
-    # config states the intent ("set mass equal to Mercury CM + Mercury RCS", integral HTP RCS), and RP-1
-    # homes it on `basicCapsules`, its Mercury-era node. This is the stockish twin of ROC-MercuryCMBDB.
+    # mk1pod_v2 SACKED from curation (2026-08-06, stock-pod duplicate pass — see build_manifest.py DROP).
+    # It briefly landed here on its way out: it had been sitting on int_vostokCapsule, where a blunt CONE
+    # contradicted a node about spheres, and RO's own config says where it really belongs ("set mass equal
+    # to Mercury CM + Mercury RCS"). But once beside the part it was modelled on it had no reason to exist
+    # — ROC-MercuryCMBDB is 0.565 t to its 0.725 t, same 1 crew, and carries the same integral HTP/Helium
+    # RCS, so the "one part instead of three" argument for it is simply false.
   - id: int_vostokCapsule
     title: "Spherical Reentry Capsule"
     discipline: SystemsIntegration
     tier: 6
     parents: [cmp_ablativeTPS, life_openLoopECLSS]
     flavor: "A perfect sphere, its mass offset so it finds its own heat-shielded attitude with no active control — crude, heavy, utterly reliable. Vostok brought the first human back from orbit, the cosmonaut ejecting to land under his own parachute while the ball thumped down nearby."
-    parts: [ROC-VostokCapsule, kv1Pod]
-    # kv1Pod swapped in for mk1pod_v2 (2026-08-06 fix): this node's whole mechanism is "a perfect sphere
-    # that trims itself heat-shield-first", and the Mk1 pod is a cone — it went to int_mercuryCapsule,
-    # where its shape and RO's own Mercury-derived mass belong. KV-1 'Onion' is the stockish spherical
-    # reentry vehicle (RO: "Soviet Vostok pod with built in decoupler", rescaled to a ~2.3 m ball), so it
-    # is the one stock/MH pod that reads as this node. Reverses RP-1's inherited MakingHistory cut for
-    # this one part — recorded in tools/build_manifest.py ADD.
+    parts: [ROC-VostokCapsule]
+    # 2026-08-06: this node used to carry mk1pod_v2, a blunt CONE on a node whose whole mechanism is "a
+    # perfect sphere that trims itself heat-shield-first". kv1Pod (KV-1 'Onion') was brought in to replace
+    # it as the stockish sphere, then BOTH were sacked in the stock-pod duplicate pass — see
+    # build_manifest.py DROP. ROCapsules is a hard dependency, so ROC-VostokCapsule is always present and
+    # a second Vostok buys nothing; kv1Pod's one real difference (integral decoupler, duplicating
+    # ROC-VostokDecoupler) came with 2.3x the mass, so it flew like a different vehicle. One king, no
+    # twin — same shape as int_zenitRecon next door.
   - id: int_zenitRecon
     title: "Film-Return Reconnaissance Capsule"
     discipline: SystemsIntegration
@@ -3421,9 +3424,14 @@ nodes:
     tier: 8
     parents: [int_geminiCapsule]
     flavor: "A conical command module for three, mated to a service module that carries the propulsion, power and consumables for a two-week voyage — the first spacecraft built to leave Earth orbit with a crew and bring them back."
-    parts: [ROC-ApolloCMBDB, mk1-3pod]
-    # King Apollo CM. mk1-3pod = the generic 4m 3-crew pod. Lights/seat/Big-Gemini cabin = utility ride-alongs.
-    # The SPS engine (AJ10-137) already lives in fd_pressureFedRestart; the heatshield in cmp_lunarReturnAblator.
+    parts: [ROC-ApolloCMBDB]
+    # King Apollo CM. The SPS engine (AJ10-137) already lives in fd_pressureFedRestart; the heatshield
+    # in cmp_lunarReturnAblator.
+    # mk1-3pod SACKED from curation (2026-08-06, stock-pod duplicate pass — see build_manifest.py DROP):
+    # a reskin of ROC-ApolloCMBDB with no difference to fly. 3.644 t vs 3.583 t, both 3 crew, both with
+    # integral hypergolic RCS (MMH/NTO vs MMH/MON1). It was here only because RP-1 carried it, and RP-1
+    # is a compatibility layer, not a curation — its `secondGenCapsules`/`basicCapsules` nodes hold every
+    # brand's build of the same vehicle at matched prices.
   - id: int_d2LunarCraft
     title: "Circumlunar Descent Craft"
     discipline: SystemsIntegration
