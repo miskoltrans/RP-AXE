@@ -4254,9 +4254,33 @@ nodes:
     tier: 9
     parents: [int_apolloCSM]
     flavor: "Stretch the same Apollo stack for a mission measured in months instead of weeks — a bigger service module, a mission module bolted on for the extra volume a Skylab-length stay demands, and a high-gain antenna that can still find Earth from wherever the longer mission sends it. The same capsule, built to not come home so soon."
-    parts: [ROC-ApolloCMBDBBlockIII, ROC-ApolloSMBlockIII, ROC-ApolloMissionModule, ROC-ApolloHGABlockIII, ROC-ApolloMissionModule4, ROC-ApolloSMDBDBlockIV]
+    parts: [ROC-ApolloCMBDBBlockIII, ROC-ApolloSMBlockIII, ROC-ApolloMissionModule, ROC-ApolloHGABlockIII]
     # King Apollo Block III+ CM. Direct next generation of int_apolloCSM's own CM/SM (not a doctrine-4
     # catch - these are new parts, not upgrade configs of the Block I/II parts already there).
+    # SPLIT 2026-08-06 (user call): the two Block IV parts (ROC-ApolloMissionModule4,
+    # ROC-ApolloSMDBDBlockIV) moved out to int_apolloBlockIV below. They were a second generation
+    # sharing this node, which was also sitting exactly at the 6-part hard cap; 4 parts now, one king.
+  - id: int_apolloBlockIV
+    title: "Station-Ferry Pressurised Can"
+    discipline: SystemsIntegration
+    tier: 10
+    parents: [int_apolloBlockIII]
+    flavor: "Fly the ferry with a bigger can. A larger lifter means the stack no longer has to fit the volume it carries into the space a lunar module used to occupy — a three-times-roomier pressurised module rides up in that slot instead, berthing through a full-size androgynous port, with the extra service-module propellant to push the added mass around."
+    parts: [ROC-ApolloMissionModule4, ROC-ApolloSMDBDBlockIV]
+    # NEW 2026-08-06 (user call): split out of int_apolloBlockIII, into the empty T10 slot that already
+    # sat between it (T9, x=-2528) and int_commercialCrewCapsule (T11, x=-1920) on the same render row.
+    # King Block IV mission module, and it is a real generation rather than a reskin - measured against
+    # the Block III+ can it replaces: a DIFFERENT mesh (bluedog_Apollo_Block4_MissionModule), 750 ->
+    # 2500 L of pressurised volume at 3.00 -> 4.25 t, and a widened top node the config says exists "for
+    # using larger androgynous docking ports". The SM rides along as the propellant to match: same mesh
+    # and scale as the Block III+ SM, 3000 -> 3500 L. ETS's own description is the node in one line -
+    # "following the introduction of more capable lifters for crewed LEO missions, the venerable Block
+    # III+ mission module was replaced with a larger can".
+    # int_commercialCrewCapsule (T11) deliberately LEFT parented on int_apolloBlockIII, not re-chained
+    # through here: real commercial crew descends from the Apollo capsule lineage, and routing it through
+    # an alt-history ETS node would make the player buy fiction to reach it.
+    # Single parent by design (crossovers sparingly): gnc_androgynousDocking is the obvious second edge
+    # for the widened berthing node, but it is also T10, so it would be a same-tier non-forward edge.
 
   # ---- Lane 2: Gemini's other fork (station logistics, never flown) ----
   - id: int_bigGeminiLogistics
