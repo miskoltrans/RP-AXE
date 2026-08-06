@@ -1675,10 +1675,18 @@ nodes:
     parts: [GearMedium, GearLarge, GearMediumSpaceplane, GearLargeSpaceplane]
 
   # ================================================================================================
-  # ===================== BAND 2 * CREWED SPINE (T5 subsystems -> T6 vehicles) =====================
-  # The marquee "humans" goal, the era's T6 climax. Subsystems (TPS, ECLSS, RCS, cabin, escape) at T5
-  # feed the parallel Mercury || Vostok vehicles at T6. The 3 sanctioned crossovers live here: each
-  # capsule needs TPS x ECLSS; Zenit (uncrewed recon) needs TPS x recon-optics.
+  # ===================== BAND 2 * CREWED SPINE (T4/T5 subsystems -> T5 vehicles) =====================
+  # The marquee "humans" goal. Subsystems (TPS, ECLSS, RCS, cabin, escape) feed the parallel
+  # Mercury || Vostok vehicles.
+  # 2026-08-06 (user call): the capsule airframe and its heatshield are PARALLEL developments, not a
+  # ladder — the TPS parent came off int_mercuryCapsule/int_vostokCapsule, ECLSS dropped to T4 and both
+  # capsules to T5. The TPS ladder now runs beside the crewed spine (buy in either order) instead of
+  # gating it. Ground truth backing the cut: ROC-VostokCapsule carries its shield INSIDE the part
+  # (`heatShieldTag = Mercury`, VostokCapsule.cfg — a plain MM patch, no upgrade), so the sphere was
+  # already flyable with zero TPS tech; and Mercury's separate shield is servable by the procedural
+  # ROH-AdjustableHS on the T4 Heatsink rung, which is what Mercury's own suborbital flights actually
+  # flew (beryllium heat sink) before the ablative shield existed. Remaining crossover: Zenit (uncrewed
+  # recon) still needs TPS x recon-optics.
   # TPS ladder: the deferred tech-level pass RAN 2026-07-30 (user call) — see cmp_heatSinkTPS below.
   # ---- TPS ladder rung 1 (T4, band-1 tier — heads the band-2 ladder, kept here so the ladder reads
   #      as one block) ----
@@ -1720,8 +1728,11 @@ nodes:
     # 2026-07-30 (user call): now rung 2, the ABLATIVE rung, which is what its title always said it was.
     # MercuryHS pulled down from cmp_ablativeRefinement (see there); Heatsink + ROH-AdjustableHS pushed down
     # to cmp_heatSinkTPS. th_hermeticBus kept as a second parent so nothing downstream loosens — the ladder
-    # spine (cmp_heatSinkTPS) is additive to it, not a replacement. 6 dependents, a deliberate hub: every
-    # crewed/recon capsule of the era wants the ablative rung specifically.
+    # spine (cmp_heatSinkTPS) is additive to it, not a replacement.
+    # 2026-08-06 (user call): no longer the crewed-spine hub — int_mercuryCapsule/int_vostokCapsule were
+    # unparented from it (capsule and shield are parallel developments). Down to 3 dependents:
+    # cmp_ablativeRefinement (the ladder), int_zenitRecon, aero_liftingReentry. Both capsules still WANT
+    # the ablative rung — half the shield mass of the heat sink — they just no longer have to buy it first.
   - id: cmp_ablativeRefinement
     title: "Advanced Ablator Formulation"
     discipline: CompositeMaterials
@@ -1742,8 +1753,12 @@ nodes:
   - id: life_openLoopECLSS
     title: "Open-Loop Life Support"
     discipline: LifeSupport
-    tier: 5
+    tier: 4
     parents: [life_highAltCompartment]
+    # T5 -> T4 (2026-08-06, user call): bottled-oxygen/LiOH life support is the same generation as the
+    # sealed high-altitude compartment it comes off, not a generation later, and it is now the SOLE
+    # parent of both T5 capsules — at T5 it would have left them nowhere to sit. Parent
+    # life_highAltCompartment is T3, so the edge stays forward.
     flavor: "Keep a human alive in vacuum the simple way — bottled oxygen bled into a sealed cabin, carbon dioxide scrubbed from the air with lithium hydroxide, heat and moisture carried off — all of it vented or consumed, nothing recycled. Hours of life for a first flight, no more asked."
     parts: [RO-LifeSupport-DummyEngine, kerbalism-lifesupportmodule]
     # 2026-07-07 story thread: + bio_cultures co-parent. Space-biology sample return -> crew now runs
@@ -1787,12 +1802,18 @@ nodes:
     parents: [pc_strapOnSolids]
     flavor: "A solid rocket on a lattice tower above the capsule that, at the first sign of a failing booster, fires to haul the crew up and clear faster than the fireball can climb — then throws itself away once the ascent is safe. The one system on a manned rocket that exists only to go unused."
     parts: [ROC-MercuryLESBDB, RO_mk1_LES]
-  # ---- Vehicles (T6, parallel) ----
+  # ---- Vehicles (T5, parallel) ----
   - id: int_mercuryCapsule
     title: "Blunt-Body Reentry Capsule"
     discipline: SystemsIntegration
-    tier: 6
-    parents: [cmp_ablativeTPS, life_openLoopECLSS]
+    tier: 5
+    parents: [life_openLoopECLSS]
+    # 2026-08-06 (user call): cmp_ablativeTPS parent DROPPED and T6 -> T5. A capsule and its heatshield
+    # were developed in parallel, not one out of the other — the shield is a separate line of work you
+    # buy alongside the airframe, in either order. Nothing breaks functionally: ROC-MercuryCMBDB's own
+    # ablator is a token anti-occlusion layer, the flight shield is the separate ROC-MercuryHS, and the
+    # procedural ROH-AdjustableHS at cmp_heatSinkTPS (T4) already covers the capsule — which is the
+    # historical pairing anyway (Mercury's suborbital flights flew a beryllium heat sink).
     flavor: "A blunt cone that rides its own shockwave down, the heatshield taking the fire while the crewman lies on his back against the deceleration. Mercury: one seat, a retrofire to leave orbit, a splashdown under a single canopy. The first American in orbit."
     parts: [ROC-MercuryCMBDB, ROC-MercuryAirbrakeBDB, RP0HumanRatedFlag]
     # RP0HumanRatedFlag added (2026-07, parking cleanup): the cosmetic human-rating flag decal, listed as a
@@ -1808,8 +1829,12 @@ nodes:
   - id: int_vostokCapsule
     title: "Spherical Reentry Capsule"
     discipline: SystemsIntegration
-    tier: 6
-    parents: [cmp_ablativeTPS, life_openLoopECLSS]
+    tier: 5
+    parents: [life_openLoopECLSS]
+    # 2026-08-06 (user call): cmp_ablativeTPS parent DROPPED and T6 -> T5, same call as
+    # int_mercuryCapsule. Even stronger here: ROC-VostokCapsule carries its shield integrally
+    # (`heatShieldTag = Mercury` on the part, VostokCapsule.cfg — a load-time MM patch, not a
+    # PARTUPGRADE), so the TPS node never gated anything about flying the sphere.
     flavor: "A perfect sphere, its mass offset so it finds its own heat-shielded attitude with no active control — crude, heavy, utterly reliable. Vostok brought the first human back from orbit, the cosmonaut ejecting to land under his own parachute while the ball thumped down nearby."
     parts: [ROC-VostokCapsule]
     # 2026-08-06: this node used to carry mk1pod_v2, a blunt CONE on a node whose whole mechanism is "a
