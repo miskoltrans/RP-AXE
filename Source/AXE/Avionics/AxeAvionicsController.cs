@@ -74,11 +74,15 @@ namespace RPAxe
         //   2. SmartASS commands via Core.Attitude.attitudeTo(target, ref, this), registering itself in the
         //      attitude controller's `Users` pool. The CONTROLLER then flies the attitude. Disabling the
         //      client afterwards leaves that registration — and the hold — completely untouched.
-        // So the real lever is the controller's own release path: pull the disallowed clients out of Users
-        // and call attitudeDeactivate(), continuously. That is exactly what SmartASS itself does to let go.
-        static MethodInfo _mjAttitudeDeactivate;   // MechJebModuleAttitudeController.attitudeDeactivate()
+        // So the real lever is the controller's own user pool: pull the disallowed clients out of Users,
+        // continuously. UserPool.Remove is already exactly scoped -- it drops that one user and disables
+        // the controller only if the pool is left empty.
+        //
+        // attitudeDeactivate() is deliberately NOT resolved or called. It is `Users.Clear()`, a BLANKET
+        // wipe that also evicts MechJebModuleAscentBaseAutopilot and shuts the controller down; calling it
+        // killed ascent guidance mid-launch whenever SmartASS happened to be in the pool at the same time.
         static MemberInfo _mjUsersMember;          // .Users (UserPool : List<object>)
-        static MethodInfo _mjUsersRemove;          // UserPool.Remove(object)
+        static MethodInfo _mjUsersRemove;          // UserPool.Remove(object) -- the DECLARED one, see below
 
         // Gate the CLIENTS of the attitude service, never MechJebModuleAttitudeController itself. That is
         // the shared service (Core.Attitude, with a Users list that NodeExecutor, SmartASS and the ASCENT
@@ -128,13 +132,13 @@ namespace RPAxe
                 System.Type att = a.assembly.GetType("MuMech.MechJebModuleAttitudeController");
                 if (att != null)
                 {
-                    _mjAttitudeDeactivate = att.GetMethod("attitudeDeactivate", BindingFlags.Public | BindingFlags.Instance);
                     _mjUsersMember = (MemberInfo)att.GetField("Users", BindingFlags.Public | BindingFlags.Instance)
                                   ?? att.GetProperty("Users", BindingFlags.Public | BindingFlags.Instance);
                 }
                 System.Type pool = a.assembly.GetType("MuMech.UserPool");
                 if (pool != null)
-                    _mjUsersRemove = pool.GetMethod("Remove", BindingFlags.Public | BindingFlags.Instance,
+                    _mjUsersRemove = pool.GetMethod("Remove",
+                                                    BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly,
                                                     null, new System.Type[] { typeof(object) }, null);
                 break;
             }
@@ -355,7 +359,7 @@ namespace RPAxe
             {
                 _mjClientsAllowed = allowed;
                 // Window visibility only -- a clear signal that the capability is gone, but never the
-                // enforcement. See the note on _mjAttitudeDeactivate.
+                // enforcement. See the note in EnforceAttitudeClients.
                 for (int i = 0; i < MjAttitudeClients.Length; i++)
                 {
                     object mod = _mjGetModule.Invoke(_masterMechJeb, new object[] { MjAttitudeClients[i] });
@@ -400,8 +404,17 @@ namespace RPAxe
             }
             if (evict == null) return;
 
+            // UserPool.Remove is ALREADY correctly scoped -- it drops just this user and only disables the
+            // attitude controller if the pool is left empty:
+            //     if (user != null && Contains(user)) base.Remove(user);
+            //     if (base.Count == 0) _controlledModule.Enabled = false;
+            // So other users survive, which is exactly what we want.
+            //
+            // DO NOT add attitudeDeactivate() back here. It is `Users.Clear(); attitudeChanged = true;` --
+            // a BLANKET wipe that also evicts MechJebModuleAscentBaseAutopilot and shuts the controller
+            // down. Calling it killed ascent guidance mid-launch whenever SmartASS happened to be in the
+            // pool at the same time, which made it look like a random ascent failure rather than a bug.
             for (int i = 0; i < evict.Count; i++) _mjUsersRemove.Invoke(pool, new[] { evict[i] });
-            _mjAttitudeDeactivate?.Invoke(att, null);
 
             // TELL THE PLAYER WHY. Without this the craft simply drifts off the commanded vector and the
             // mod looks broken -- the one thing this whole avionics redesign set out to avoid (RP-1's
