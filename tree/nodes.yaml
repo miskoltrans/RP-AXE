@@ -2273,8 +2273,12 @@ nodes:
   - id: pc_scoutMarkII
     title: "Refined Propellant-Grain Casting"
     discipline: PropellantChemistry
-    tier: 7
+    tier: 6
     parents: [pc_scoutSolids]
+    # T7 -> T6 (2026-08-06, T7 audit): the solid-motor tech-level ladder was FLAT — RFTech-solids-tltech1
+    # (here) and RFTech-solids-tltech2 (pc_strapOnMarkII) both landed on T7, so rung 1 and rung 2 of the
+    # same RealFuels ladder arrived together (tools/tier_defects.py: FLAT). Parent pc_scoutSolids is T4,
+    # so rung 1 drops a tier and the ladder ascends T6 -> T7.
     flavor: "Cast the same grain to a truer shape and the same chemistry burns cleaner — Algol and Antares hold their exact propellant and simply gain thrust and Isp from the refined pour; Altair's own upper stage goes one step further, crossing to a tougher composite polybutadiene binder outright. Scout's own stages, uprated stage by stage."
     parts: [ROE-Algol2, ROE-Algol2_Inline, ROE-Antares2, ROE-Antares2_Inline, ROE-AltairII, ROE-AltairIII]
     upgrades: [RFTech-solids-tltech1]
@@ -2500,8 +2504,15 @@ nodes:
   - id: opt_infraredInterferometry
     title: "Infrared Interferometer Spectrometry"
     discipline: OpticsPhotonics
-    tier: 7
+    tier: 6
     parents: [opt_remoteSensing]
+    # T7 -> T6 (2026-08-06, T7 audit): IS01 was DEAD ON ARRIVAL. This node grants RP0imageSpec1 and
+    # opt_uvSpectrometry (T6) grants RP0imageSpec2 — and seed/Science/Experiments/ImagingSpectrometry.cfg
+    # gives both the SAME numbers, baseValue 3 / scienceCap 3. Identical value one tier apart means the
+    # later one is worth nothing when you reach it (tools/tier_defects.py: SUPERSEDED). Note the fix can
+    # only go this direction: with equal caps, whichever instrument lands second is the dead one, so a
+    # lateral pair on one tier is the only clean answer short of re-valuing an experiment. Both hang off
+    # opt_remoteSensing (T5), so the move costs nothing structurally.
     flavor: "Split the incoming light and recombine it after an offset path to read the whole spectrum from the interference pattern at once, rather than filtering it band by band — composition, not just temperature."
     parts: [RO-IRIS]
     # RO-NIMS MOVED HERE from opt_uvSpectrometry 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md B).
@@ -2736,8 +2747,13 @@ nodes:
   - id: nuc_isotopePower
     title: "Radioisotope Thermoelectric Power"
     discipline: ElectricalPower
-    tier: 7
+    tier: 6
     parents: [nuc_geiger]
+    # T7 -> T6 (2026-08-06, T7 audit): SNAP-3 (RO-SNAP-3-RTGPo210) flew on Transit 4A in 1961, but sat on
+    # the tier of the 1965-66 hardware (Gemini's OAMS, the Voskhod airlock, the Luna soft-landers) while
+    # AXE's own 1961 vehicles — Vostok, Zenit — are T5. Nothing was holding it there: the only parent is
+    # nuc_geiger at T1, five tiers of slack. RP-1 agrees on timing, giving it a dedicated early node
+    # (firstRTG). T6 rather than T5 keeps one tier between it and nuc_isotopePowerII (T8).
     flavor: "Stack thermocouples across a radioactive pellet and draw current straight from the heat of its own decay — power with no sun angle and no moving part, fuelled with whatever isotope happens to be on hand. Polonium-210 proves the generator works; it does not prove it lasts — the source itself is mostly spent within a season."
     parts: [RO-SNAP-3-RTGPo210]
     # REVIEW FIX (2026-07, band-3 review #medium): dropped elec_deployableArrays as
@@ -2806,8 +2822,11 @@ nodes:
   - id: th_activeLouvers
     title: "Active Thermal Louvers"
     discipline: Thermodynamics
-    tier: 7
+    tier: 6
     parents: [th_hermeticBus]
+    # T7 -> T6 (2026-08-06, T7 audit): Mariner 2 flew thermal louvers in 1962, two vehicle generations
+    # before the T7 set. Parent th_hermeticBus is T3 and the only dependent is T9, so the tier was never
+    # forced — the node had simply been placed by neighbourhood rather than by generation.
     flavor: "Blades that open to radiate heat away and close to hold it in, driven by the bus temperature itself — the hermetic sphere's fixed skin becomes a thermostat instead of a single fixed compromise."
     parts: [ca_louver_s, ca_louver_s2, ca_louver_m]
     # ca_louver_m added (2026-07, power+science pass): CA-TCL8, a medium-size louver - RP-1 buckets it
