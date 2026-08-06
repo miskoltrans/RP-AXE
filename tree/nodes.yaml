@@ -2489,10 +2489,31 @@ nodes:
   - id: mic_ionMassSpec
     title: "Ion-Mass Spectrometry"
     discipline: Microelectronics
-    tier: 7
+    tier: 6
     parents: [mic_massSpec]
     flavor: "Steer ions through a magnetic sector built for the ion environment of open space rather than a lab bench atmosphere — the same sorting-by-mass principle, reading the solar wind instead of the upper air."
-    parts: [RO-MIMS, RO-QuadropoleMassSpectrometer]
+    parts: [RO-MIMS]
+    # SPLIT 2026-08-06 (user call): MS02 (RO-MIMS) pulled back a tier, T7 -> T6, and MS03
+    # (RO-QuadropoleMassSpectrometer) left behind at T7 in its own node below. The two shared this node,
+    # which docs/TIER-BALANCE.md §B logged as a known collapse and left standing; tools/tier_defects.py
+    # reports it twice (COLLAPSE + instrument-reach) with the numbers that make it real — gen2 cap 12
+    # vs gen3 cap 20, so MS02 was obsolete the instant you bought the node that granted it. Ladder now
+    # ascends one rung per tier: MS01 T4 (mic_massSpec) -> MS02 T6 -> MS03 T7 -> MS04 T9.
+    # This node keeps the MIMS: "Ion-Mass Spectrometry" and the magnetic-sector flavor are a description
+    # of MS02 specifically, so the part stays and the tier moves under it — no id rename, nothing
+    # downstream to re-point. Parent mic_massSpec is T4, so the edge stays forward.
+  - id: mic_quadrupoleMassSpec
+    title: "Quadrupole Mass Filtering"
+    discipline: Microelectronics
+    tier: 7
+    parents: [mic_ionMassSpec]
+    flavor: "Throw the magnet away. Four parallel rods with a radio-frequency field between them let exactly one mass-to-charge ratio thread the gap while everything else is flung into the metal — and sweeping that field walks the filter across the whole spectrum electrically, with no heavy sector magnet to lift."
+    parts: [RO-QuadropoleMassSpectrometer]
+    # NEW 2026-08-06 (user call), holding MS03 at the tier it already had. A real mechanism change rather
+    # than a bigger version of the rung below: the magnetic sector sorts ions by bending them, the
+    # quadrupole filters them with an RF field and no magnet at all.
+    # mic_gasChromatographMassSpec (MS04, T9) re-parented from mic_ionMassSpec onto this node so the mass
+    # spec ladder stays a single chain instead of forking around the new rung.
   - id: opt_multiSpectralImaging
     title: "Multi-Spectral Imaging"
     discipline: OpticsPhotonics
@@ -5242,7 +5263,10 @@ nodes:
     title: "Gas Chromatograph-Mass Spectrometry"
     discipline: Microelectronics
     tier: 9
-    parents: [mic_ionMassSpec]
+    parents: [mic_quadrupoleMassSpec]
+    # Parent moved mic_ionMassSpec -> mic_quadrupoleMassSpec 2026-08-06 with the MS02/MS03 split: MS04 is
+    # the rung after MS03, and pointing it at the T6 node instead would have forked the ladder and let a
+    # player skip the quadrupole entirely on the way to the GC/MS.
     flavor: "Separate a gas sample by how fast each component moves through a column, then weigh what comes out in the mass spectrometer behind it — two instruments in series reading a single sample far more precisely than either alone."
     parts: [sensorAtmosphere, SXTsciencenosecone]
     # King GC-MS (sensorAtmosphere). SXTsciencenosecone rides along - it's a genuine dual-function part
