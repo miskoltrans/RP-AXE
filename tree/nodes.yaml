@@ -1685,8 +1685,12 @@ nodes:
   # (`heatShieldTag = Mercury`, VostokCapsule.cfg — a plain MM patch, no upgrade), so the sphere was
   # already flyable with zero TPS tech; and Mercury's separate shield is servable by the procedural
   # ROH-AdjustableHS on the T4 Heatsink rung, which is what Mercury's own suborbital flights actually
-  # flew (beryllium heat sink) before the ablative shield existed. Remaining crossover: Zenit (uncrewed
-  # recon) still needs TPS x recon-optics.
+  # flew (beryllium heat sink) before the ablative shield existed. int_zenitRecon followed the same call
+  # in the same pass (its part is the Vostok sphere, same integral shield) — so NO capsule in the tree
+  # is parented on the TPS ladder any more, and the crewed spine has no TPS crossover left. The follow-on
+  # capsules (int_geminiCapsule, int_voskhodCabin, int_apolloCSM, ...) never had one: they inherit
+  # through vehicle lineage only, and keep their own tiers, which are set by their own breakthrough
+  # generation (powered maneuvering, EVA airlock) rather than by parent+1.
   # TPS ladder: the deferred tech-level pass RAN 2026-07-30 (user call) — see cmp_heatSinkTPS below.
   # ---- TPS ladder rung 1 (T4, band-1 tier — heads the band-2 ladder, kept here so the ladder reads
   #      as one block) ----
@@ -1847,8 +1851,15 @@ nodes:
   - id: int_zenitRecon
     title: "Film-Return Reconnaissance Capsule"
     discipline: SystemsIntegration
-    tier: 6
-    parents: [cmp_ablativeTPS, opt_recon]
+    tier: 5
+    parents: [opt_recon]
+    # 2026-08-06 (user call): cmp_ablativeTPS parent DROPPED and T6 -> T5, same call as the two crewed
+    # capsules beside it — and the ground truth is identical, since ROC-ZenitCapsule is the Vostok
+    # sphere and carries the same integral `heatShieldTag = Mercury` (ZenitCapsule.cfg), so the TPS node
+    # never gated flying it. Left on opt_recon alone rather than picking up a structural co-parent: the
+    # sphere is the same one everyone already has, so the real bottleneck for an UNCREWED film-return
+    # capsule is the recon camera system. Deliberately NOT parented on int_vostokCapsule — that would
+    # charge a probe-and-recon player for crew life support to fly an unmanned satellite.
     flavor: "Strip the cosmonaut out of the sphere and fill it with cameras — the same descent capsule flown unmanned, exposing long rolls of film over the target and dropping them home to be recovered. Vostok and Zenit are one airframe: one carries a man, the other carries the eyes."
     parts: [ROC-ZenitCapsule]
   - id: edl_crewedRecovery
