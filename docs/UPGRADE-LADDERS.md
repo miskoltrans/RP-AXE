@@ -380,12 +380,21 @@ with `cryo_deepThrottleExpander` T12 branching off for CECE's 10:1 throttle and 
 The lesson generalises: **`catalog: true` is only honest when NO axis orders the family.** Before reaching
 for it, check every axis — thrust, both Isp figures, ignitions, burn time — not just the obvious one.
 
-### Remaining worklist (re-measured 2026-07-27, after the scatter pass)
+### ~~Remaining worklist~~ — ✅ **CLOSED. Re-measured 2026-08-06: the worklist is empty.**
 
-`ladder gate: 100 collapsed · 0 base-node · 10 non-ascending · 31 split padding`
+The gate now reads:
 
-**54 nodes / 87 parts / 223 configs** left, down from 62 / 111 / 320. Every node the design doc named by
-name is now clean. What remains is the long tail of maturation and uprating nodes:
+`ladder gate: 0 collapsed node(s), 0 base-node token(s), 0 DESCENDING rung(s) (+35 benign same-tier), 13 split padding class(es)`
+
+The long tail below was worked through; nothing on it survives. Note the metric changed shape while it
+was being cleared — "non-ascending" was split into genuinely **DESCENDING** rungs (a real defect, now 0)
+and **same-tier** rungs (benign, 35 of them, a rung landing on a node in the same tier as its
+predecessor). Split padding fell 31 → 13 and is intentional per §10 — padding co-locates rather than
+being deleted, so those classes are not work. **The gate fails the build on regression**, so this stays
+closed without anyone watching it.
+
+Kept below as the historical record of what the tail actually was (measured 2026-07-27, after the
+scatter pass: 54 nodes / 87 parts / 223 configs, down from 62 / 111 / 320):
 
 | node | T | parts | configs | | node | T | parts | configs |
 |---|--:|--:|--:|---|---|--:|--:|--:|

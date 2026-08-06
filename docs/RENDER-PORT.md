@@ -37,10 +37,12 @@ Model after the working `Source/AXE/RnD/AxeTreeHighlight.cs` (Harmony postfix, a
 - **Arrow routing**: `RDNode.GetVectorArray(Parent)` builds each edge's flat point list; `RDNode.DrawArrow` creates the Vectrosity `VectorLine`s; endpoints via `RDNode.GetPosition(anchor,…)`. To lane-route, Harmony-replace `GetVectorArray` (or post-process in `DrawArrow`) to emit the lane-routed points. Colour = `Color32`, uniform width, build once (don't vary width → mesh rebuild).
 - Re-decompile if needed: `~/.dotnet/tools/ilspycmd.exe "<KSP>/KSP_x64_Data/Managed/Assembly-CSharp.dll" -p -o <out>` then read `KSP.UI.Screens/RDNode.cs`, `RDNodePrefab.cs`, `RDController.cs`, `UIGridArea.cs`. (Vectrosity is in `Assembly-CSharp-firstpass.dll`.)
 
-## OPEN ISSUE — discipline + tier per node in-game
+## ~~OPEN ISSUE~~ — discipline + tier per node in-game — ✅ **RESOLVED**
 The game `RDNode` has **no discipline/tier field** (only `icon` + `pos`). Bands need discipline; both need tier.
-- **Recommended**: have `build_tree.py` (layout agent's file — coordinate) emit a plugin-readable mapping `nodeID → {discipline, tier}` into GameData (e.g. a `RPAXE_TREEMETA` ConfigNode), which the plugin loads via `GameDatabase.Instance.GetConfigNodes`.
-- Fallback: derive tier from `pos.x` (`tier = round((x-MARGIN_X)/TIERW)`), discipline from icon (unreliable — icons are shared). Prefer the explicit mapping.
+- **Shipped as the recommended option**: `build_tree.py` emits the `nodeID → {discipline, tier}` mapping to
+  `GameData/RP-AXE/design/Tree/AxeTreeMeta.cfg`, and `Source/AXE/RnD/AxeTreeMeta.cs` loads it via
+  `GameDatabase`. The tree build regenerates it, so it cannot drift from the tree it describes.
+- Fallback (not used): derive tier from `pos.x` (`tier = round((x-MARGIN_X)/TIERW)`), discipline from icon — unreliable, icons are shared. The explicit mapping is why.
 
 ## Config design
 A settings ConfigNode, e.g. `GameData/RP-AXE/RenderSettings.cfg`:

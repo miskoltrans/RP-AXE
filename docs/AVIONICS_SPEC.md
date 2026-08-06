@@ -64,7 +64,12 @@ Tech-gated second choice, only available once appropriate tech is researched (mi
 available from `start`, it unlocked around Near-Earth's `basicAvionics`-equivalent point). Unguided/
 Science-Core never had a Deep-Space equivalent in RP-1 either — this axis doesn't apply to it.
 
-### Attitude reference ("star tracker") — DECIDED 2026-08-05, NOT YET BUILT
+### Attitude reference ("star tracker") — DECIDED 2026-08-05, ✅ **BUILT the same day** (`047ae1d`)
+
+**As shipped:** `ModuleAxeAvionics.ProvidesAttitudeReference` (`!dead && guidanceEnabled && ShieldedActive`)
+drives `targetSASServiceLevel` — a vessel with no Deep-Space Bus gets SAS level 0, i.e. no attitude hold.
+`AxeAvionicsController.VesselHasAttitudeReference()` is the vessel-wide check. Same on
+`ModuleAxeFixedAvionics` for the named parts.
 
 **Why this exists.** Measured this session: the Deep-Space Bus bought *nothing* beyond hibernation, and
 hibernation itself was worth 2.5 W (see `docs/AVIONICS_COMPARISON.md` differs-item 8 — the `idleFactor`
