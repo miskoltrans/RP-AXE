@@ -87,6 +87,10 @@ namespace RPAxe
         // stays available to everyone, always, by design. Only these two need an inertial frame.
         static readonly string[] MjAttitudeClients = { "MechJebModuleSmartASS", "MechJebModuleNodeExecutor" };
         bool _mjClientsAllowed = true;
+        // Callout throttle: a still-selected SmartASS mode re-asserts every frame, so the eviction --
+        // and therefore the message -- would otherwise repeat at frame rate.
+        const float AttitudeNagInterval = 8f;
+        float _nextAttitudeNag;
 
         // Shared regime callout. Screen messages are the only channel KSP gives us that does not need the
         // player to have a PAW open, and a missed transition is the difference between "my avionics is
@@ -398,6 +402,23 @@ namespace RPAxe
 
             for (int i = 0; i < evict.Count; i++) _mjUsersRemove.Invoke(pool, new[] { evict[i] });
             _mjAttitudeDeactivate?.Invoke(att, null);
+
+            // TELL THE PLAYER WHY. Without this the craft simply drifts off the commanded vector and the
+            // mod looks broken -- the one thing this whole avionics redesign set out to avoid (RP-1's
+            // "silent hard-lock cliff", docs/AVIONICS_SPEC.md). Stock SAS needs no equivalent callout
+            // because at level 0 KSP just doesn't draw the vector-hold buttons; MechJeb's stay clickable.
+            //
+            // Fires on the ATTEMPT, not on the transition, because that is the moment the player is
+            // actually confused. Throttled: a still-selected SmartASS mode re-asserts every frame, so an
+            // unthrottled message would be a solid wall of text.
+            if (Time.time < _nextAttitudeNag) return;
+            _nextAttitudeNag = Time.time + AttitudeNagInterval;
+            bool node = false;
+            for (int i = 0; i < evict.Count; i++)
+                if (evict[i].GetType().Name == "MechJebModuleNodeExecutor") { node = true; break; }
+            Announce(node
+                ? "No attitude reference — this bus cannot execute a maneuver node. Fit a Deep-Space Bus, or burn it by hand."
+                : "No attitude reference — this bus cannot hold a vector. Fit a Deep-Space Bus, or fly it by hand.");
         }
 
         void OnDestroy()
