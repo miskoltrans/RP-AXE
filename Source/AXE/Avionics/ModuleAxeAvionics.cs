@@ -1265,6 +1265,24 @@ namespace RPAxe
             return k;
         }
 
+        /// <summary>
+        /// Distance from the STAR, walking up the parent chain.
+        ///
+        /// A moon's own <c>orbit.semiMajorAxis</c> is its orbit about its PLANET, not about the Sun --
+        /// Phobos reads ~9,376 km. Feeding that in as a heliocentric distance inflated both the solar and
+        /// body-IR terms by ~(1 AU / 9376 km)² ≈ 2.5e8, which clamped the deficit to zero and made every
+        /// moon in the game report a plausible-looking 0 W while its parent planet reported correctly.
+        /// </summary>
+        public static double HeliocentricDistance(CelestialBody b)
+        {
+            CelestialBody sun = Planetarium.fetch?.Sun;
+            if (b == null || sun == null || b == sun) return 0d;
+            CelestialBody cur = b;
+            for (int guard = 0; guard < 16 && cur.referenceBody != null && cur.referenceBody != sun; guard++)
+                cur = cur.referenceBody;
+            return cur?.orbit != null ? cur.orbit.semiMajorAxis : 0d;
+        }
+
         /// <summary>How much of the sky the body fills, as a fraction (0.5 at the surface, → 0 far away).</summary>
         static double SkyFraction(double bodyRadius, double distFromCentre)
         {
@@ -1298,7 +1316,11 @@ namespace RPAxe
             double bodyIr = 0d;
             if (body != null && body != Planetarium.fetch.Sun && distFromBodyCentre > 0d)
             {
-                double rBody = body.orbit != null ? body.orbit.semiMajorAxis : sunDist;
+                // NOT body.orbit.semiMajorAxis -- that is a moon's orbit about its planet. See
+                // HeliocentricDistance. A moon still radiates at you; it just does so from ITS OWN
+                // surface temperature, which is set by the parent system's distance from the Sun.
+                double rBody = HeliocentricDistance(body);
+                if (rBody <= 0d) rBody = sunDist;
                 if (rBody > 0d)
                     bodyIr = SkyFraction(body.Radius, distFromBodyCentre) * irFrac * (refR * refR / (rBody * rBody));
             }

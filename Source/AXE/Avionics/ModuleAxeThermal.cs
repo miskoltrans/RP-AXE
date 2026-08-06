@@ -200,7 +200,9 @@ namespace RPAxe
             // "in orbit" = low orbit about the selected body, sunlit, so the body's own IR still helps --
             // the honest everyday case. "in deep space" = same distance from the Sun but nothing nearby to
             // radiate back, which is the cruise leg and the number that actually sizes an RTG.
-            double sunDist = b.orbit != null ? b.orbit.semiMajorAxis : 0d;
+            // Walk to the heliocentric ancestor: selecting Phobos must mean "at Mars's distance from the
+            // Sun", not "9,376 km from the Sun". See ModuleAxeAvionics.HeliocentricDistance.
+            double sunDist = ModuleAxeAvionics.HeliocentricDistance(b);
             float deficit = simDeepSpace
                 ? ModuleAxeAvionics.ThermalDeficit(sunDist, 1d, null, 0d, bodyIrFraction)
                 : ModuleAxeAvionics.ThermalDeficit(sunDist, 1d, b, b.Radius * 1.1d, bodyIrFraction);
