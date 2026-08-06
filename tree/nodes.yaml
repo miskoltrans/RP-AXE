@@ -71,9 +71,22 @@ nodes:
     tier: 0
     parents: []
     flavor: "1950. You begin with the de Laval nozzle, a procedural airframe, avionics, the first instruments and a handful of sounding motors — enough to fly above the Karman line turn one. Rocketry is the default; whether to fly aeroplanes at all is yours to choose."
-    parts: [proceduralNoseCone, proceduralStructural, RO-B9ProcWing-Early, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, conformaldecals-flag, conformaldecals-generic, conformaldecals-munar, conformaldecals-semiotic, conformaldecals-text]
+    parts: [proceduralNoseCone, proceduralStructural, RO-B9ProcWing-Early, RO-RFTank-Separate, proceduralAvionics, sensorBarometer, sensorThermometer, ROE-ORM65, TinyTim, ROSmallSpinMotor, conformaldecals-flag, conformaldecals-generic, conformaldecals-munar, conformaldecals-semiotic, conformaldecals-text, evaJetpack]
     # +5 conformal decals (2026-07, backlog sweep): purely cosmetic labeling, no tech story of their own -
     # every vehicle can carry one from day one, same as RP-1's own "Starting Parts" placement.
+    # +evaJetpack (2026-08-06, user call): NOT a tree part in any real sense — it is one of the two
+    # DEFAULTPARTS on the kerbalEVA prefab (kerbalEVA.cfg `ModuleInventoryPart/DEFAULTPARTS`), i.e. the
+    # kit a kerbal is *wearing* when they step outside. Decompiled ModuleInventoryPart.SetInventoryDefaults:
+    # each default item is skipped unless `ResearchAndDevelopment.PartModelPurchased(ap)` — and
+    # partModelPurchased has NO entryCost==0 fallthrough, it needs the part in the node's partsPurchased
+    # list. So while this part is locked, every kerbal EVAs with no jetpack at all: step out in vacuum
+    # and there is no way back to the hatch. It was sitting on int_voskhodCabin (T7) — and worse, on the
+    # SOVIET-only Vostok->Voskhod branch, so a Mercury->Gemini->Apollo player never unlocked it. `start`
+    # is the only placement that actually guarantees it: verified against a live career save, where all
+    # 15 start parts appear in the save's `Tech { id = start }` purchased list. Stock agrees
+    # (`TechRequired = start`, entryCost 0); RP-1 puts it at earlyLifeSupport, which works there because
+    # its own EVA content sits behind that same node. The AMU-realism story (RO balances this part as
+    # Gemini's 76 kg nitrogen AMU) is not worth a silent one-way trip.
   - id: parking
     title: "Unsorted Parts (Parking)"
     discipline: SystemsIntegration
@@ -1764,7 +1777,7 @@ nodes:
     # parent of both T5 capsules — at T5 it would have left them nowhere to sit. Parent
     # life_highAltCompartment is T3, so the edge stays forward.
     flavor: "Keep a human alive in vacuum the simple way — bottled oxygen bled into a sealed cabin, carbon dioxide scrubbed from the air with lithium hydroxide, heat and moisture carried off — all of it vented or consumed, nothing recycled. Hours of life for a first flight, no more asked."
-    parts: [RO-LifeSupport-DummyEngine, kerbalism-lifesupportmodule]
+    parts: [RO-LifeSupport-DummyEngine, kerbalism-lifesupportmodule, evaCylinder]
     # 2026-07-07 story thread: + bio_cultures co-parent. Space-biology sample return -> crew now runs
     # those experiments by hand. Roots the life-sciences lane on bio_cultures (was an isolated T1 stub).
   - id: life_crewedExperimentBay
@@ -2063,9 +2076,14 @@ nodes:
     tier: 7
     parents: [int_vostokCapsule]
     flavor: "Bolt an inflatable fabric tunnel to the hatch and a cosmonaut can leave the capsule entirely — the first door opened in vacuum. Voskhod, stripped down to fit three, then opened up to let one of them out."
-    parts: [ROC-VoskhodCapsule, ROC-VoskhodAirlock, evaCylinder, evaJetpack]
+    parts: [ROC-VoskhodCapsule, ROC-VoskhodAirlock]
     # +2 ride-alongs (2026-07): EVA fuel cylinders + jetpack — the actual gear the airlock breakthrough
     # exists to use. Genuinely part of this vehicle's capability, not a new breakthrough.
+    # BOTH PULLED 2026-08-06 (user call). evaJetpack -> start: it is a kerbalEVA DEFAULTPART, so locking
+    # it means kerbals EVA with no jetpack at all (see the note on `start`), and this node is on the
+    # Soviet-only branch, so half the tree's players never reached it. evaCylinder -> life_openLoopECLSS
+    # for the same branch reason: it is a bottled-gas refill canister, which is that node's mechanism
+    # exactly, and it is cargo the player chooses to pack rather than default kit, so it can stay priced.
 
   - id: str_evaAccessLadder
     title: "Fixed Rung Ladder"
