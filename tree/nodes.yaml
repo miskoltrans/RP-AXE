@@ -776,15 +776,38 @@ nodes:
     parents: [str_structuralHardware]
     flavor: "Shock-strut legs that swing out to land and fold away in flight — the wheels a runway launch and recovery need, from a fixed skid on a light trainer up to a steerable retractable leg."
     parts: [GearFixed, SmallGearBay, GearSmall, GearFree, GearSmallSpaceplane, SmallGearBaySpaceplane, ROC-DynaSkidFront, ROC-DynaSkidRear]
+  - id: str_sprungLanderLegs
+    title: "Sprung Landing Struts"
+    discipline: StructuresMechanisms
+    tier: 4
+    parents: [str_landingGear]
+    flavor: "A small strut with a spring and a damper inside it, folded away for flight and swung out to land — light legs for something that sets down gently and under its own power, not the full weight of a lander."
+    parts: [landingLeg1, landingLeg1-2]
+    # NEW 2026-08-06 (user call: "we need lt1 and lt2 much earlier"). LT-1 and LT-2 were sitting on
+    # str_fixedLanderLegs at T7, three tiers after the last thing that needs them, and they contradicted
+    # that node twice over. Module data: both carry ModuleWheelBase + ModuleWheelDeployment +
+    # ModuleWheelSuspension — retractable and genuinely sprung — while every other part on that node
+    # (ROC-LEMLegsBDB, vela_landing_leg_srf_1/2) carries only ModuleAnimateGeneric, a one-shot deploy
+    # with no suspension at all. So the node whose flavor says "no wheels, no retraction" was holding
+    # the only two parts in the tree built on the wheel modules.
+    # T4: nothing here needs anything the T2 oleo-strut undercarriage does not already have, and these
+    # are the light utility legs (0.05 / 0.1 t) a probe or a test article stands on rather than lander
+    # gear. str_fixedLanderLegs re-parents onto this node, which also closes the 5-tier T2 -> T7 span
+    # that made spacecraft legs descend directly from aeroplane undercarriage.
   - id: str_fixedLanderLegs
     title: "Fixed Landing Struts"
     discipline: StructuresMechanisms
     tier: 7
-    parents: [str_landingGear]
+    parents: [str_sprungLanderLegs]
     flavor: "No wheels, no retraction — just a shock-absorbing strut that swings out once and takes the full load of touching down somewhere with no runway at all."
-    parts: [landingLeg1, landingLeg1-2, ROC-LEMLegsBDB, ROC-LEMDescentBDB, ROC-LEMTruckPlatformBDB, vela_landing_leg_srf_1, vela_landing_leg_srf_2]
+    parts: [ROC-LEMLegsBDB, ROC-LEMDescentBDB, ROC-LEMTruckPlatformBDB, vela_landing_leg_srf_1, vela_landing_leg_srf_2]
     # vela_landing_leg_srf_1/2 (2026-07, Tantares placement pass): LK-700's own legs - same fixed-strut
     # mechanism as the LM's, a different lunar-lander programme.
+    # KEPT HERE 2026-08-06 (user asked): LK-700's legs stay with the LM's because the module data says
+    # they are the same mechanism (ModuleAnimateGeneric, no suspension), just heavier duty - crash
+    # tolerance 20 vs 12, breaking force 500 vs 250. int_lk700Lander being T9 is not an argument to move
+    # them: scatter-by-difficulty homes a leg at the leg node whatever vehicle it flew on, which is
+    # already why the LM's legs are here while the LM's own engines are at T9 fd_deepThrottleLanding.
     # ROC-LEMTruckPlatformBDB added (2026-07, power+science pass): the AES LM Truck's cargo pallet - a
     # landed-structure variant of the same descent-stage lineage already here, no crew cabin of its own.
     # NEW (2026-07 fix, user call — "make them a simple one off node"): split out of
