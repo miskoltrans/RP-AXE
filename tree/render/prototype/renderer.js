@@ -882,7 +882,9 @@ function init(){
   if(P0.has('avoid')) opt.avoid = P0.get('avoid')!=='0';
   buildModel(); restore();
   const rq=new URLSearchParams(location.search).get('research');   // ?research=id,id — shareable snapshot / demo
-  if(rq) rq.split(',').forEach(x=>{ if(byId[x]) researched.add(x); });
+  // AUTHORITATIVE: the param REPLACES restore()'s localStorage progress, so a generated link
+  // (tools/save_progress.py mirrors a save game) shows THAT state, not a union with local clicks.
+  if(rq!==null){ researched.clear(); rq.split(',').forEach(x=>{ if(byId[x]) researched.add(x); }); }
   if(opt.layout!=='compiler') computeLayout(); applyLayout();
   buildGeometry(); loadIcons(); showStamp();
   new ResizeObserver(resize).observe(cv);
@@ -891,6 +893,10 @@ function init(){
   const selParam=new URLSearchParams(location.search).get('sel');
   if(selParam && byId[selParam]){ selId=selParam; setFocus(selId); centerOn(selId); showPanel(selId); }
   else showPanel(null);
+  // ?zoom=<world scale>&center=<id> - open framed like the in-game R&D (tiles near native size,
+  // parked on a node) instead of fit-the-whole-tree. Applied last so it wins over ?sel centring.
+  const zP=+P0.get('zoom'); if(zP>0){ cam.s=Math.max(0.05,Math.min(6,zP)); updateZoomLabel(); }
+  const cP=P0.get('center'); if(cP && byId[cP]) centerOn(cP);
   draw();
 
   // pan (drag) vs click
