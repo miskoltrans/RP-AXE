@@ -67,6 +67,19 @@ namespace RPAxe
         static MethodInfo _mjGetModule;       // MechJebCore.GetComputerModule(string)
         static PropertyInfo _mjModuleEnabled; // ComputerModule.Enabled
 
+        // Disabling the client modules is NOT sufficient on its own, which in-flight testing proved:
+        //   1. MechJebModuleSmartASS is a DisplayModule, and DisplayModule.Enabled is WINDOW VISIBILITY.
+        //      It is persisted as EnabledEditor/EnabledFlight and restored on load, so clearing it just
+        //      closes a window the player reopens.
+        //   2. SmartASS commands via Core.Attitude.attitudeTo(target, ref, this), registering itself in the
+        //      attitude controller's `Users` pool. The CONTROLLER then flies the attitude. Disabling the
+        //      client afterwards leaves that registration — and the hold — completely untouched.
+        // So the real lever is the controller's own release path: pull the disallowed clients out of Users
+        // and call attitudeDeactivate(), continuously. That is exactly what SmartASS itself does to let go.
+        static MethodInfo _mjAttitudeDeactivate;   // MechJebModuleAttitudeController.attitudeDeactivate()
+        static MemberInfo _mjUsersMember;          // .Users (UserPool : List<object>)
+        static MethodInfo _mjUsersRemove;          // UserPool.Remove(object)
+
         // Gate the CLIENTS of the attitude service, never MechJebModuleAttitudeController itself. That is
         // the shared service (Core.Attitude, with a Users list that NodeExecutor, SmartASS and the ASCENT
         // autopilot all register into); disabling it would also kill ascent guidance -- which is near-Earth
@@ -107,6 +120,18 @@ namespace RPAxe
                                                   null, new System.Type[] { typeof(string) }, null);
                 System.Type cm = a.assembly.GetType("MuMech.ComputerModule");
                 if (cm != null) _mjModuleEnabled = cm.GetProperty("Enabled", BindingFlags.Public | BindingFlags.Instance);
+
+                System.Type att = a.assembly.GetType("MuMech.MechJebModuleAttitudeController");
+                if (att != null)
+                {
+                    _mjAttitudeDeactivate = att.GetMethod("attitudeDeactivate", BindingFlags.Public | BindingFlags.Instance);
+                    _mjUsersMember = (MemberInfo)att.GetField("Users", BindingFlags.Public | BindingFlags.Instance)
+                                  ?? att.GetProperty("Users", BindingFlags.Public | BindingFlags.Instance);
+                }
+                System.Type pool = a.assembly.GetType("MuMech.UserPool");
+                if (pool != null)
+                    _mjUsersRemove = pool.GetMethod("Remove", BindingFlags.Public | BindingFlags.Instance,
+                                                    null, new System.Type[] { typeof(object) }, null);
                 break;
             }
         }
@@ -195,6 +220,9 @@ namespace RPAxe
                 AxeControlPenalties.Current.Reset(_vessel);
             }
             if (_requested) { _requested = false; Recompute(); }
+            // Every frame, not at Recompute's 1 Hz: a vector hold commanded between polls would otherwise
+            // stand for up to a second. Cheap, and a no-op whenever the vessel has an attitude reference.
+            EnforceAttitudeClients();
         }
 
         void Recompute()
@@ -319,15 +347,57 @@ namespace RPAxe
         {
             if (_mjGetModule == null || _mjModuleEnabled == null) return;
             bool allowed = VesselHasAttitudeReference();
-            if (allowed == _mjClientsAllowed) return;   // 1 Hz poll; only touch MechJeb on a real transition
-            _mjClientsAllowed = allowed;
-            for (int i = 0; i < MjAttitudeClients.Length; i++)
+            if (allowed != _mjClientsAllowed)
             {
-                object mod = _mjGetModule.Invoke(_masterMechJeb, new object[] { MjAttitudeClients[i] });
-                if (mod != null) _mjModuleEnabled.SetValue(mod, allowed, null);
+                _mjClientsAllowed = allowed;
+                // Window visibility only -- a clear signal that the capability is gone, but never the
+                // enforcement. See the note on _mjAttitudeDeactivate.
+                for (int i = 0; i < MjAttitudeClients.Length; i++)
+                {
+                    object mod = _mjGetModule.Invoke(_masterMechJeb, new object[] { MjAttitudeClients[i] });
+                    if (mod != null) _mjModuleEnabled.SetValue(mod, allowed, null);
+                }
+                if (!allowed)
+                    Announce("No attitude reference — vector holds and node execution unavailable. Deep-Space Bus required.");
             }
-            if (!allowed)
-                Announce("No attitude reference — vector holds and node execution unavailable. Deep-Space Bus required.");
+        }
+
+        /// <summary>
+        /// THE actual enforcement, run every frame rather than on transitions: evict SmartASS and the node
+        /// executor from the attitude controller's user pool and release the hold.
+        ///
+        /// Every frame because a player can command prograde at any moment, and a 1 Hz check would let the
+        /// hold stand for up to a second. Cheap: one reflected read plus a type-name test per registered
+        /// user, and the pool is normally empty or has one entry.
+        ///
+        /// The ASCENT autopilot is a user of the same pool and is deliberately left alone — it needs no
+        /// star tracker, and killing the controller outright (the first attempt) took ascent guidance with
+        /// it. Only the two frame-dependent clients get evicted.
+        /// </summary>
+        void EnforceAttitudeClients()
+        {
+            if (_mjClientsAllowed || _masterMechJeb == null) return;
+            if (_mjGetModule == null || _mjUsersMember == null || _mjUsersRemove == null) return;
+
+            object att = _mjGetModule.Invoke(_masterMechJeb, new object[] { "MechJebModuleAttitudeController" });
+            if (att == null) return;
+
+            object pool = _mjUsersMember is FieldInfo f ? f.GetValue(att)
+                        : ((PropertyInfo)_mjUsersMember).GetValue(att, null);
+            if (!(pool is System.Collections.IEnumerable users)) return;
+
+            List<object> evict = null;
+            foreach (object u in users)
+            {
+                if (u == null) continue;
+                string n = u.GetType().Name;
+                for (int i = 0; i < MjAttitudeClients.Length; i++)
+                    if (n == MjAttitudeClients[i]) { (evict ??= new List<object>()).Add(u); break; }
+            }
+            if (evict == null) return;
+
+            for (int i = 0; i < evict.Count; i++) _mjUsersRemove.Invoke(pool, new[] { evict[i] });
+            _mjAttitudeDeactivate?.Invoke(att, null);
         }
 
         void OnDestroy()
