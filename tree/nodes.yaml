@@ -2138,6 +2138,13 @@ nodes:
     anyToUnlock: true
     flavor: "Close the last few metres by eye and thruster, then latch two spacecraft nose to nose in orbit — the manoeuvre every later mission depends on. Any maneuverable crewed vehicle can get you here; it isn't tied to one program's specific propulsion choice."
     parts: [ROC-AgenaPort, ROC-AgenaFairing, ROC-GeminiNoseconeBDB, dockingPort3, RO-ApolloDockingPort, ROC-ApolloDrogueDockPortBDB, ROC-ApolloProbeDockPortBDB, ROC-D2DockDrogue, ROC-D2DockProbe, ROC-DynaDockingArms, ROC-DynaDockingSystem]
+    # FIXED (2026-07): was an AND-gate on [int_geminiCapsule, gnc_spacecraftRCS]. Docking doesn't need
+    # storable-propellant RCS specifically (ahistorical — a different maneuvering approach could reach the
+    # same milestone), and it shouldn't be tied exclusively to Gemini either — anyToUnlock against BOTH
+    # advanced capsule lines instead. dockingPort3 (a plain propellant-transfer docking port, mod=Squad)
+    # added as a ride-along — same mechanism family, not RCS-specific.
+    # (Comment relocated 2026-08-06: it had been sitting three lines down inside
+    # gnc_inflatableDockingAirlock's block, describing this node's parents and this node's dockingPort3.)
 
   - id: gnc_inflatableDockingAirlock
     title: "Inflatable Docking Airlock"
@@ -2150,11 +2157,6 @@ nodes:
     # already reachable via gnc_rendezvousDocking's own parent, so not re-listed here) with docking-adapter
     # function into one integrated module - a genuine crossover, not a plain docking port or plain airlock.
     # Sibling of gnc_stationBerthing (T9).
-    # FIXED (2026-07): was an AND-gate on [int_geminiCapsule, gnc_spacecraftRCS]. Docking doesn't need
-    # storable-propellant RCS specifically (ahistorical — a different maneuvering approach could reach the
-    # same milestone), and it shouldn't be tied exclusively to Gemini either — anyToUnlock against BOTH
-    # advanced capsule lines instead. dockingPort3 (a plain propellant-transfer docking port, mod=Squad)
-    # added as a ride-along — same mechanism family, not RCS-specific.
   - id: gnc_smallRcsCatalog
     title: "Small-Class RCS Catalog"
     discipline: GuidanceControl
