@@ -439,11 +439,13 @@ namespace RPAxe
         public float misdirectMaxDeg = 90f;
 
         // How fast the misdirection precesses. THE feel knob for mode 8: too slow and it is a fixed offset
-        // an integrator trims out, too fast and it becomes noise the vehicle filters.
+        // an integrator trims out, too fast and it becomes noise the vehicle filters. The first cut sat at
+        // the slow end (0.08 Hz, a 12 s sweep) and read as something you could wait out, so the default moved
+        // to 0.6 Hz and the ceiling to 4 -- the whole interesting range is above where the old slider ended.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: precess Hz",
                   guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_FloatRange(minValue = 0.01f, maxValue = 1f, stepIncrement = 0.01f, scene = UI_Scene.All)]
-        public float misdirectRateHz = 0.08f;
+         UI_FloatRange(minValue = 0.05f, maxValue = 4f, stepIncrement = 0.05f, scene = UI_Scene.All)]
+        public float misdirectRateHz = 0.6f;
 
         // Mean dropout length. Bursts matter more than the duty cycle: per-tick randomness is averaged
         // away by vessel inertia, which is what made white noise invisible.

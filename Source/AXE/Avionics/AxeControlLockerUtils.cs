@@ -199,10 +199,27 @@ namespace RPAxe
         // get one configuration for a while, adapt to it, and it has moved. You cannot get on top of it,
         // which is the whole point.
         //
-        // Three independent slow Perlin channels form a ROTATION VECTOR -- its direction is the axis, its
+        // Three independent Perlin channels form a ROTATION VECTOR -- its direction is the axis, its
         // length the angle. Because the channels evolve independently the axis precesses rather than the
         // angle merely pulsing on a fixed axis. Bounded by sigma * MisdirectMaxDeg, so overload sets how far
         // wrong it can get while the rate knob sets how fast it moves.
+        //
+        // WHAT THE FIRST CUT GOT WRONG, from flying it: the precession was too slow and too SMOOTH to read as
+        // a failing gyro -- it was a slow sweep you could sit and wait out, not something you cannot get on
+        // top of. Three fixes, all aimed at the same property:
+        //   * RATE. 0.08 Hz is a ~12 s wander, well inside what both an integral term and a player track.
+        //     0.6 Hz re-arranges the configuration every second or two: too fast to be worth adapting to,
+        //     still an order of magnitude below the vehicle's own attitude response, so it is not simply
+        //     low-passed away the way the white-noise mode was.
+        //   * OCTAVES. One Perlin lane is a smooth curve -- it has a rate but no texture, so the axis sweeps
+        //     rather than jumps. Summing three octaves at half amplitude each lays fast structure over the
+        //     slow wander, which is what makes it read as random instead of as a slow oscillation.
+        //   * DECORRELATED CHANNELS. All three axes were sampled at the SAME x with only a lane offset in y,
+        //     so they crossed the noise lattice in lockstep and the axis re-arranged on a common beat.
+        //     Mutually incommensurate per-channel rates remove the beat.
+        // The channels are also gained: Unity's Perlin clusters near its midpoint (see PerlinGain), so the
+        // raw vector was typically only ~0.43 long and the angle actually flown ran at well under half what
+        // the PAW advertised. Typical is now ~0.7 of the bound, with excursions that clamp at it.
         //
         // Why this formulation and not amplitude scaling:
         //   * NOT DODGEABLE BY FLYING GENTLY. Scaling with input amplitude is exploitable -- a player or
@@ -218,7 +235,31 @@ namespace RPAxe
         // Past 90 degrees the intended-axis component goes negative and control reverses -- available, not
         // the default. Per-vessel seed offsets the sample coordinates so two craft drift differently.
         public static float MisdirectMaxDeg = 90f;
-        public static float MisdirectRateHz = 0.08f;   // ~12 s to noticeably change character
+        public static float MisdirectRateHz = 0.6f;   // ~1.5 s to noticeably change character
+
+        // Octave structure is a SHAPE choice, not a feel knob, so it stays out of the PAW -- the rig already
+        // has enough sliders, and rate is the one number that actually needs flying to find.
+        const int MisdirectOctaves = 3;
+        const float MisdirectLacunarity = 2.7f;   // non-integer, so octaves never re-align on the lattice
+        const float MisdirectGain = 2.4f;         // Perlin bell-shape correction, same reason as PerlinGain
+
+        // Per-channel base rates, mutually incommensurate so the three axes never come back into phase, and
+        // separate y lanes so they sample unrelated noise to begin with.
+        static readonly float[] _mdRate = { 1.00f, 1.37f, 1.79f };
+        static readonly float[] _mdLane = { 0.0f, 7.3f, 13.9f };
+
+        static float MisdirectFbm(int ch, float t, float seed)
+        {
+            float sum = 0f, amp = 1f, norm = 0f, f = _mdRate[ch];
+            for (int i = 0; i < MisdirectOctaves; i++)
+            {
+                sum += amp * (Mathf.PerlinNoise(t * f, seed + _mdLane[ch] + i * 4.7f) * 2f - 1f);
+                norm += amp;
+                amp *= 0.5f;
+                f *= MisdirectLacunarity;
+            }
+            return Mathf.Clamp(sum / norm * MisdirectGain, -1f, 1f);
+        }
 
         public static void ApplyMisdirect(ref float pitch, ref float yaw, ref float roll, float sigma)
         {
@@ -227,10 +268,9 @@ namespace RPAxe
 
             float t = Time.time * MisdirectRateHz;
             float seed = _coupleSeed == int.MinValue ? 0f : (_coupleSeed % 977) * 0.31f;
-            Vector3 rot = new Vector3(
-                Mathf.PerlinNoise(t, seed + 0.0f) * 2f - 1f,
-                Mathf.PerlinNoise(t, seed + 7.3f) * 2f - 1f,
-                Mathf.PerlinNoise(t, seed + 13.9f) * 2f - 1f);
+            Vector3 rot = new Vector3(MisdirectFbm(0, t, seed),
+                                      MisdirectFbm(1, t, seed),
+                                      MisdirectFbm(2, t, seed));
 
             float mag = rot.magnitude;
             if (mag < 1e-5f) return;
