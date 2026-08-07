@@ -1,5 +1,7 @@
 using ContractConfigurator;
+using ContractConfigurator.Util;
 using HarmonyLib;
+using KSP.UI.Screens;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,6 +48,10 @@ namespace RPAxe
         /// BEFORE the first flip, so our own edits can never pollute the baseline.</summary>
         private static HashSet<string> _loadable;
 
+        /// <summary>Raised by Sync() when a folder actually appeared or disappeared, consumed by
+        /// RefreshIfPending() from AxeProgramHandler.Update(). Never acted on inline — see there.</summary>
+        private static bool _refreshPending;
+
         /// <summary>Re-derive `enabled` for every program-gated contract type from the current
         /// program states. Idempotent and cheap enough to call on any state change.</summary>
         public static void Sync()
@@ -65,6 +71,7 @@ namespace RPAxe
 
             var programs = new List<string>();
             int shown = 0, hidden = 0;
+            bool changed = false;
             foreach (ContractType ct in all)
             {
                 if (ct == null || ct.name == null) continue;
@@ -96,11 +103,75 @@ namespace RPAxe
                     if (handler.IsActive(programs[i])) open = true;
 
                 open &= !exhausted;
-                if (ct.enabled != open) Traverse.Create(ct).Property("enabled").SetValue(open);
+                if (ct.enabled != open)
+                {
+                    Traverse.Create(ct).Property("enabled").SetValue(open);
+                    changed = true;
+                }
                 if (open) shown++; else hidden++;
             }
             Debug.Log("[AXE] Mission Control groups synced to program state: "
                       + shown + " contract type(s) visible, " + hidden + " hidden.");
+            if (changed) _refreshPending = true;
+        }
+
+        /// <summary>
+        /// Redraw Mission Control's grouped list if the last Sync() moved anything, so a program's
+        /// folder appears the moment it is chartered and goes the moment it is concluded, instead of
+        /// on the player's next visit to the screen. Cheap when nothing changed (one branch), which
+        /// is why AxeProgramHandler can call it every frame.
+        ///
+        /// The redraw itself needs no patching: CC's OnClickAll rebuilds the tree from
+        /// `ContractType.AllValidContractTypes`, which is a lazy iterator filtering on `enabled` at
+        /// enumeration time, not a cached list — so it sees what Sync() just wrote.
+        ///
+        /// WHY DEFERRED, RATHER THAN CALLED FROM Sync() ITSELF. Sync() runs inside
+        /// `contract.Accept()`, underneath ContractConfigurator's own accept-click handler. That
+        /// handler carries on afterwards and does `((Component)selectedButton).GetComponent&lt;
+        /// MCListItem&gt;()` on the very row the player clicked — a row this rebuild destroys. The
+        /// same shape of trap AxeInstantComplete waits a tick to avoid. Consuming the flag from
+        /// Update() puts the rebuild strictly after the accept has finished, and on conclusion after
+        /// CC's own onFinished bookkeeping, whichever order Unity runs the two components in.
+        ///
+        /// Only the All tab is CC's grouped tree. The other three are flat lists of contract
+        /// INSTANCES, and neither chartering nor concluding a program offers or withdraws a contract
+        /// on the spot, so a redraw there would show the player exactly what is already on screen —
+        /// and CC redraws them itself when a contract really does come or go.
+        /// </summary>
+        public static void RefreshIfPending()
+        {
+            if (!_refreshPending) return;
+
+            // Cleared before every early return below, not held: each of them means the tree is
+            // going to be built from scratch before the player sees it again (MissionControlUI's own
+            // ticks == 1/2 pass re-runs OnClickAll off lastMCButton on entry), so a held flag would
+            // do nothing here and then fire into an unrelated later visit.
+            _refreshPending = false;
+
+            MissionControlUI ui = MissionControlUI.Instance;
+            // Screen closed, or we are in a scene that has none. Instance is a plain static that CC
+            // never nulls, so in another scene this is a destroyed object — the Unity == overload is
+            // what makes that read as null, and it is load-bearing.
+            if (ui == null || MissionControl.Instance == null) return;
+            if (ui.ticks < 2) return;              // CC is still wiring the screen up; its own pass covers us
+            if (HighLogic.CurrentGame == null) return;
+            if (HighLogic.CurrentGame.Parameters.CustomParams<ContractConfiguratorParameters>().lastMCButton
+                != ContractConfiguratorParameters.MissionControlButton.All) return;
+
+            // Drop the selection FIRST. OnClickAll destroys every row but leaves the info panel up
+            // with a live Accept button and `selectedButton` pointing at a destroyed row, which CC's
+            // AcceptContract dereferences with no null check. This is the same teardown CC does in
+            // HandleRemovedContract; selectedButton is private, hence Traverse.
+            MissionControl.Instance.ClearInfoPanel();
+            MissionControl.Instance.panelView.gameObject.SetActive(false);
+            MissionControl.Instance.selectedMission = null;
+            Traverse.Create(ui).Field("selectedButton").SetValue(null);
+
+            // Folders come back collapsed: `expanded` lives on the GroupContainer and this builds
+            // new ones. Same as toggling Available -> All by hand, which is the only other way to
+            // reach this method.
+            ui.OnClickAll(true);
+            Debug.Log("[AXE] Mission Control list rebuilt for a program state change.");
         }
 
         private static void Collect(IEnumerable<ContractRequirement> reqs, List<string> into)

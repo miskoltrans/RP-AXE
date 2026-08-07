@@ -112,6 +112,15 @@ namespace RPAxe
 
         private void Update()
         {
+            Reconcile();
+            // A program that just started or ended changes which Mission Control folders exist. The
+            // redraw has to happen a frame later than the change that caused it, off a flag, rather
+            // than inside Activate()/Conclude() — see AxeProgramGroupVisibility.RefreshIfPending.
+            AxeProgramGroupVisibility.RefreshIfPending();
+        }
+
+        private void Reconcile()
+        {
             if (!_reconcilePending) return;
             // Readiness is TESTED, never latched: ContractSystem.loaded is set false in its OnAwake
             // and true at the end of its OnLoad, so a scenario that loads before it reads a live but
