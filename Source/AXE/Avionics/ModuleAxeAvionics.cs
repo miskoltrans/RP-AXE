@@ -948,14 +948,32 @@ namespace RPAxe
             float newVolume;
             try { newVolume = (float)data.Get<double>("newTotalVolume"); }
             catch { try { newVolume = data.Get<float>("newTotalVolume"); } catch { return; } }
-            if (newVolume <= 0f || Mathf.Approximately(newVolume, _cachedVolume)) return;
+            if (newVolume <= 0f) return;
 
-            _cachedVolume = newVolume;
-            EnforceBoxFloor();
-            RecomputeSplit(_cachedVolume);
-            UpdateHardwareMass();
+            // A re-announcement at the SAME volume is not a no-op, and treating it as one is what let the
+            // battery tank drift in the editor (see the FlightRestoreBatteryVolume() header for the flight
+            // twin of this bug). RealFuels listens to this same event and ALWAYS resizes its tank to
+            // whatever it is told, so the moment ROLib re-announces the box, RF is holding the whole box --
+            // whether or not the box changed size. "Did the box change size?" and "was RF just handed the
+            // box volume?" are different questions; only the second one decides whether we must re-assert.
+            //
+            // Measured (Probe Bus, 2026-08-08): returning from a simulation re-instantiated the part, ROLib
+            // re-announced its unchanged 0.21185 m^3 nineteen seconds into the editor session, and this
+            // handler returned early because _cachedVolume already held exactly that. RF's tank went
+            // 8.36 L -> 105.93 L and 0.120 t -> 1.526 t, and the player saved that to the .craft. A resize
+            // always announces a DIFFERENT volume, which is why building never tripped it and only a
+            // reload/re-init did. ModuleROTank fires no onEditorShipModified either, so OnShipModified's
+            // unconditional push is not a backstop here -- this handler is the only one that hears it.
+            bool changed = !Mathf.Approximately(newVolume, _cachedVolume);
+            if (changed)
+            {
+                _cachedVolume = newVolume;
+                EnforceBoxFloor();
+                RecomputeSplit(_cachedVolume);
+                UpdateHardwareMass();
+            }
             PushBatteryToTank();
-            UpdateRate();
+            if (changed) UpdateRate();
         }
 
         void OnStage(int _)
