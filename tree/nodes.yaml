@@ -800,7 +800,11 @@ nodes:
     tier: 7
     parents: [str_sprungLanderLegs]
     flavor: "No wheels, no retraction — just a shock-absorbing strut that swings out once and takes the full load of touching down somewhere with no runway at all."
-    parts: [ROC-LEMLegsBDB, ROC-LEMDescentBDB, ROC-LEMTruckPlatformBDB, vela_landing_leg_srf_1, vela_landing_leg_srf_2]
+    parts: [ROC-LEMLegsBDB, vela_landing_leg_srf_1, vela_landing_leg_srf_2]
+    # 2026-08-06: ROC-LEMDescentBDB -> str_serviceModuleTank (T4) and ROC-LEMTruckPlatformBDB ->
+    # str_equipmentBays (T5). Neither was a leg — a 9483 L ModuleFuelTanks descent stage and an open
+    # cargo deck — and the descent stage was the structure these legs bolt onto. This node now holds
+    # legs only: the LM's and the LK-700's.
     # vela_landing_leg_srf_1/2 (2026-07, Tantares placement pass): LK-700's own legs - same fixed-strut
     # mechanism as the LM's, a different lunar-lander programme.
     # KEPT HERE 2026-08-06 (user asked): LK-700's legs stay with the LM's because the module data says
@@ -1006,7 +1010,18 @@ nodes:
     tier: 4
     parents: [str_balloonTank]
     flavor: "Let the propellant tank be the spacecraft spine — its walls carry the flight loads and mount the engine, thrusters, power and radios behind the payload, so the service module needs no separate airframe. The integrated tankage a satellite or probe bus is built around."
-    parts: [RO-RFTank-SM, ROT-LanderTank-SM, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-ServiceModule, LFUELM3, LSVCM3, LSmallFuelMod, ROC-ApolloSMB2BDB, ROC-ApolloEngineMountBDB, ROC-D2ServiceModule]
+    parts: [RO-RFTank-SM, ROT-LanderTank-SM, ROT-MiscTank-ServiceModule, ROT-Nose-ServiceModule, ROT-ServiceModule, LFUELM3, LSVCM3, LSmallFuelMod, ROC-ApolloSMB2BDB, ROC-ApolloEngineMountBDB, ROC-D2ServiceModule, ROC-LEMDescentBDB]
+    # ROC-LEMDescentBDB MOVED HERE from str_fixedLanderLegs 2026-08-06 (user call). It is not a leg: it
+    # is ModuleFuelTanks with volume 9483 L at 0.691 t dry — the LM's DPS tankage, the biggest thing in
+    # the node it left, and the structure the legs bolt ONTO. This node's own flavor describes it
+    # exactly ("let the propellant tank be the spacecraft spine — its walls carry the flight loads and
+    # mount the engine, thrusters, power and radios"): the octagonal descent stage IS what carries the
+    # LMDE, the legs, the batteries, the MESA and the rover. Precedent already in this node:
+    # ROT-LanderTank-SM (a lander tank), ROC-ApolloSMB2BDB, ROC-D2ServiceModule — the same class.
+    # T4 vs the LMDE at T9 is the accepted gap, not a leak: it is the same span this node already has
+    # between ROC-ApolloSMB2BDB and the SPS at fd_pressureFedRestart (T8), and a tank with no
+    # throttleable engine lands nothing. RealFuels procedural tankage covers the same job from T0, so no
+    # capability arrives early — only a named shape.
 
   - id: met_stiffenedFairings
     title: "Aluminium Stringer Fairings"
@@ -1411,7 +1426,15 @@ nodes:
     tier: 5
     parents: [str_serviceModuleTank]
     flavor: "A sealed structural bay behind the payload that shelters avionics, batteries and radios from launch acoustics and the vacuum beyond — the enclosed volume a working spacecraft is built around, from a service bay to a universal-storage rack, capped by a jettisonable nose."
-    parts: [RO_ServiceBay_300, ServiceBay_250_v2, USRadialTanks, restock-nosecone-1875-1, ROC-LEMMESABDB, ROC-GeminiEquipmentSectionBDB]
+    parts: [RO_ServiceBay_300, ServiceBay_250_v2, USRadialTanks, restock-nosecone-1875-1, ROC-LEMMESABDB, ROC-GeminiEquipmentSectionBDB, ROC-LEMTruckPlatformBDB]
+    # ROC-LEMTruckPlatformBDB MOVED HERE from str_fixedLanderLegs 2026-08-06, with the descent stage
+    # pass. The AES LM Truck platform is 0.1 t of pure structure (ModuleAnimateGeneric, no tank, no
+    # leg) — the deck that replaces the ascent stage on an uncrewed descent stage. Its closest sibling
+    # in the tree is ROC-LEMMESABDB already here: the LM's OWN equipment-carrying structure, same
+    # vehicle, same job one size down. RP-1 splits it away from the legs too (advancedUncrewedLanding,
+    # a different node from the legs/descent pair's lunarLanding). Caveat kept honest: this node says
+    # ENCLOSED bays and the Truck deck is open, so it is the nearest home rather than a perfect one —
+    # the tree has no cargo-deck mechanism, and one 0.1 t pallet does not earn a node of its own.
     upgrades: [RFTech-SM-II]
 
   # ================================================================================================
