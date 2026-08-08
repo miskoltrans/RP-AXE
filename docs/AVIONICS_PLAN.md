@@ -79,6 +79,32 @@ The fiction is not a malicious computer — it is a **gain schedule characterise
 vehicle**. Real control laws are scheduled per flight regime; an under-rated unit's table is wrong in
 every cell, and wrong in a different way in each.
 
+### Arming — a third axis, orthogonal to all of the above
+
+*When* the penalty is live is a separate question from *what* it does, so it is a gate on every mode
+(`DEBUG: arm on`) rather than three near-copies of mode 10. The axis it varies is **how much safe
+harbour the player gets** — how much of the envelope they can retreat into and be certain nothing is
+being done to them:
+
+| setting | safe harbour | consequence |
+|---|---|---|
+| `always` | none | a craft over capacity is corrupted even sitting still doing nothing |
+| `any input incl throttle` | **fully idle** — not burning, not steering | keeps mode 10's no-escape property: throttle alone arms it, so a straight burn still lands in the `drift` cell |
+| `steering only` | **not steering** — burning is free | hands back a version of the dominant escape: during a coast, "stop commanding" is safe again, and under mode 10 the `drift` cell becomes nearly unreachable |
+
+The middle setting is the real design claim: **a flight computer that is not being asked for anything
+should not fail.** It is also the cheapest answer to the §4a objection that noise is active sabotage
+against a capsule riding a stage it is not flying — under `always` that needs the Engage/Disengage
+toggle to answer it; under either gate it largely answers itself.
+
+**Deadband, not `> 0`.** The hook runs post-autopilot, so what it reads is the vehicle's program, not a
+human stick, and MechJeb and SAS emit small nonzero commands continuously. A strict zero test would read
+armed essentially always and collapse the three variants into one — which would look exactly like the
+gate not working.
+
+Disarmed passes σ = 0 rather than skipping the penalty, so every stateful move keeps advancing and
+re-arming cannot read a stale delay buffer or a cold EMA and jump.
+
 `LocksInstead` is honoured inside `ShouldLock`, `Stateful` tells the RCS patch to skip
 double-application, `Reset(vessel)` drops per-vessel state, `Describe()` gives each mode its own PAW
 wording. Choosing the ship mechanic later is one index; deleting the losers is deleting files.
@@ -238,6 +264,22 @@ Predictions, on record:
 - **10 is the strongest and the least legible.** Specifically: it will beat 9 on *feel* and be at risk
   on **D3**, because a failure that changes character is harder to attribute than one that is always
   present. The dwell time and the regime name in the PAW exist to buy that back.
+
+### D1-bis Arming comparison
+
+Mode 10 at each of the three `arm on` settings, same craft, same σ. These bracket the space rather than
+sampling it, so one of the three is the answer:
+
+- **`always`** — the version already flown. The question is whether being corrupted while doing nothing
+  reads as *broken* or as *a vehicle that will not sit still*.
+- **`any input incl throttle`** — the one to beat. Keeps the no-escape property while removing the
+  "corrupted while idle" complaint, so if it feels as strong as `always` it wins on both axes.
+- **`steering only`** — the permissive end, and the one with a known structural cost: it makes coasting
+  safe, so mode 10 loses its `drift` cell. Worth flying anyway, because if it feels *no weaker*, that is
+  evidence the drift cell was never carrying its weight and the policy is really a three-cell design.
+
+Also worth one pass with **mode 2 `uncommanded` + `any input`**, since arming is an independent fix for
+that mode's §4a problem and may change the mode-2-vs-mode-3 verdict on its own.
 
 **The D1 question 10 actually has to answer, and it is not "is it hard":** watch the regime readout and
 check whether it *tracks what you are doing* or *thrashes*. A thrashing readout means the AC gain is

@@ -489,6 +489,18 @@ namespace RPAxe
          UI_FloatRange(minValue = 0.5f, maxValue = 10f, stepIncrement = 0.5f, scene = UI_Scene.All)]
         public float adversarialAcGain = 3f;
 
+        // WHEN the penalty is live, independent of which one it is. Three settings, and the axis they vary
+        // is how much SAFE HARBOUR the player gets: none, fully-idle, or not-steering. See the ARMING block
+        // in AxeControlLockerUtils -- the short version is that `any input incl throttle` is the only gate
+        // that keeps mode 10's no-escape property, because throttle alone arms it.
+        //
+        // Applies to every mode, not just 10. It is the cheapest available answer to the 4a objection
+        // against mode 2 (uncommanded corrupting a capsule that is not flying anything).
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: arm on",
+                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_ChooseOption(options = new[] { "always", "any input incl throttle", "steering only" }, scene = UI_Scene.All)]
+        public int armMode = 0;
+
         // Makes overgain and coupling non-stationary, so adaptive tuning is always chasing a target that
         // has moved. No effect on the other modes -- mode 9 generates its own non-stationarity.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: drift",
@@ -823,14 +835,20 @@ namespace RPAxe
         // scenes so a silent attribute failure cannot strand the test with an unswitchable mode.
         void SetupModeChooser()
         {
-            BaseField f = Fields[nameof(noiseMode)];
+            PopulateChooser(nameof(noiseMode), AxeControlPenalties.Names);
+            PopulateChooser(nameof(armMode), AxeControlLockerUtils.ArmNames);
+        }
+
+        void PopulateChooser(string fieldName, string[] names)
+        {
+            BaseField f = Fields[fieldName];
             if (f == null) return;
             foreach (UI_Control c in new UI_Control[] { f.uiControlEditor, f.uiControlFlight })
             {
                 if (c is UI_ChooseOption opt)
                 {
-                    opt.options = AxeControlPenalties.Names;
-                    opt.display = AxeControlPenalties.Names;
+                    opt.options = names;
+                    opt.display = names;
                 }
             }
         }
@@ -1853,6 +1871,7 @@ namespace RPAxe
             AxeControlLockerUtils.MisdirectRateHz = misdirectRateHz;
             AxeControlLockerUtils.AdaptiveTauCycles = adaptiveTau;
             AxeControlLockerUtils.AdversarialAcGain = adversarialAcGain;
+            AxeControlLockerUtils.ArmMode = armMode;
             AxeControlLockerUtils.NoiseDrift = noiseDrift;
             AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
             AxeControlLockerUtils.HardCutoff = hardCutoff;
@@ -1902,6 +1921,10 @@ namespace RPAxe
             }
 
             authorityDisplay = AxeControlPenalties.Current.Describe(sigma);
+            // Over capacity but disarmed is NOT "clean", and reading it as clean would be the difference
+            // between "the gate is working" and "the mode is broken" during the arming A/B.
+            if (sigma > 0f && armMode > 0 && HighLogic.LoadedSceneIsFlight && !AxeControlLockerUtils.Armed)
+                authorityDisplay = $"idle — armed on {AxeControlLockerUtils.ArmNames[Mathf.Clamp(armMode, 0, 2)]}";
             UpdateEditorRatios();
         }
 

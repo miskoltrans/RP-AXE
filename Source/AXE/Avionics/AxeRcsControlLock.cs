@@ -38,7 +38,11 @@ namespace RPAxe
             AxeControlLockerUtils.LockLevel level = ctl.Level;
             // RCS has no inertia to filter anything and responds instantly, so the sigma that gently wallows a
             // launch vehicle makes fine attitude work impossible. Scaled down separately.
-            float sigma = AxeControlLockerUtils.NoiseOnRcs
+            // Arming is read from the post-autopilot hook's cached verdict rather than recomputed: ModuleRCS
+            // runs on Unity's Update and the hook on FixedUpdate, so recomputing here would judge a ctrlState
+            // the rest of the frame has not seen. Worst case the value is one frame old, which is well below
+            // anything the arming rule is trying to distinguish.
+            float sigma = AxeControlLockerUtils.NoiseOnRcs && AxeControlLockerUtils.Armed
                 ? ctl.ControlNoise * AxeControlLockerUtils.NoiseRcsScale
                 : 0f;
             // Unlocked AND clean is the only case with nothing to do.

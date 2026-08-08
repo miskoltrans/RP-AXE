@@ -181,8 +181,12 @@ namespace RPAxe
             if (_level == AxeControlLockerUtils.LockLevel.Unlocked)
             {
                 if (_noise <= 0f) { LastNoise = Vector3.zero; return; }
+                // Disarmed passes sigma = 0 rather than skipping Apply: every stateful move still advances,
+                // so re-arming cannot read a stale delay buffer or a cold EMA and jump. Zero sigma is a
+                // no-op inside every penalty by construction.
+                float sigma = AxeControlLockerUtils.ComputeArmed(st) ? _noise : 0f;
                 float y0 = st.yaw, p0 = st.pitch, r0 = st.roll;
-                AxeControlPenalties.Current.Apply(ref st.pitch, ref st.yaw, ref st.roll, _noise);
+                AxeControlPenalties.Current.Apply(ref st.pitch, ref st.yaw, ref st.roll, sigma);
                 LastNoise = new Vector3(st.pitch - p0, st.yaw - y0, st.roll - r0);
                 return;
             }

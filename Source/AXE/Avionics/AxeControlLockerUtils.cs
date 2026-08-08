@@ -579,6 +579,45 @@ namespace RPAxe
             }
         }
 
+        // ---- ARMING: WHEN the penalty is live at all ----------------------------------------------
+        // Orthogonal to WHICH penalty runs, so it is a gate on every mode rather than three near-identical
+        // copies of mode 10. It is really a question about SAFE HARBOUR -- how much of the flight envelope
+        // the player can retreat into and be certain nothing is being done to them:
+        //
+        //   always              no safe harbour. A craft over capacity is corrupted whatever it is doing,
+        //                       including sitting still doing nothing.
+        //   any input+throttle  safe harbour = FULLY IDLE. Not burning and not steering. Any active flight
+        //                       is armed, so the no-escape property of mode 10 survives intact: throttle
+        //                       alone arms it, which means a straight burn still lands in the drift cell.
+        //   steering only       safe harbour = NOT STEERING. You may burn freely. Note what this costs:
+        //                       under mode 10 it makes the drift cell nearly unreachable, which hands back
+        //                       a version of the dominant escape ("stop commanding") during any coast.
+        //
+        // The middle one is the interesting design claim: a flight computer that is not being ASKED for
+        // anything should not fail, which is also the cleanest answer to the 4a objection that noise is
+        // active sabotage against a capsule riding a stage it is not flying. Under `always` that objection
+        // needs the Engage/Disengage toggle to answer it; under either gate it mostly answers itself.
+        //
+        // DEADBAND, not `> 0`. This hook runs POST-autopilot, so what it reads is the vehicle's program,
+        // not a human stick -- and MechJeb and SAS emit small nonzero commands continuously. A strict
+        // zero test would read "armed" essentially always and the three variants would be one variant.
+        public static int ArmMode = 0;
+        public const float ArmDeadband = 0.01f;
+        public static readonly string[] ArmNames = { "always", "any input incl throttle", "steering only" };
+
+        static bool _armed = true;
+        /// <summary>Last computed arming state. Read by the RCS patch, which cannot see ctrlState first.</summary>
+        public static bool Armed => _armed;
+
+        public static bool ComputeArmed(FlightCtrlState st)
+        {
+            if (ArmMode <= 0 || st == null) return _armed = true;
+            const float d = ArmDeadband;
+            bool steering = Mathf.Abs(st.pitch) > d || Mathf.Abs(st.yaw) > d || Mathf.Abs(st.roll) > d
+                         || Mathf.Abs(st.X) > d || Mathf.Abs(st.Y) > d || Mathf.Abs(st.Z) > d;
+            return _armed = ArmMode == 1 ? (steering || st.mainThrottle > d) : steering;
+        }
+
         // ---- DRIFT: make the deterministic attacks non-stationary ---------------------------------
         // The other escape from "deterministic gets learned". Overgain and coupling are learnable only
         // because their parameters are FIXED; a slow random walk means adaptive tuning is always chasing a
