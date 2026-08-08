@@ -13,12 +13,18 @@ namespace RPAxe
     /// surrounding work be built, shipped and tested while the mechanic stays a runtime choice, and lets the
     /// losers be deleted afterwards by removing files rather than by unpicking branches.
     ///
-    /// The candidates split into two families, and the split predicts their strength:
+    /// The candidates split into families, and the split predicts their strength:
     ///   * DISTURBANCES (noise, in either mode) — a feedback loop exists to reject disturbances, which is
     ///     precisely why they keep getting absorbed.
-    ///   * MARGIN ATTACKS (overgain, coupling, delay) — the three classical ways to destabilise a loop:
-    ///     gain margin, the decoupling assumption, phase margin. None is rejectable, because each modifies
-    ///     what the controller is closing around rather than adding a signal to it.
+    ///   * MARGIN ATTACKS (overgain, coupling, delay, misdirect) — the classical ways to destabilise a
+    ///     loop: gain margin, the decoupling assumption, phase margin, a wrong reference frame. None is
+    ///     rejectable, because each modifies what the controller is closing around rather than adding a
+    ///     signal to it. All are open-loop and therefore LEARNABLE, which is what drift and precession
+    ///     exist to blunt.
+    ///   * AVAILABILITY (dropouts) — randomises whether the command lands at all rather than its value,
+    ///     so there is nothing to reject and nothing to learn.
+    ///   * CLOSED LOOP (adaptive) — the corruption is a function of the loop's own recent output, so the
+    ///     controller's reaction feeds the failure. The only family with no fixed point to converge on.
     /// <see cref="PenaltyLock"/> is RP-1's original rule, kept selectable so it is both an A/B baseline and
     /// the fallback if no perturbation survives testing.
     /// </summary>
@@ -188,6 +194,24 @@ namespace RPAxe
     }
 
     // ---------------------------------------------------------------------------------------------
+    // 9 — CLOSED LOOP. Overgain scheduled on the loop's own recent effort instead of on sigma alone: the
+    // harder the controller is working, the more it is over-driven. The only mode that is neither open-loop
+    // nor random — backing gain off lowers effort, which withdraws the penalty, which makes the backed-off
+    // gain wrong, so an adaptive controller hunts instead of converging. Same slope as mode 4, so the A/B
+    // between them isolates exactly one variable. Dodgeable by flying gently, which is accepted.
+    public sealed class PenaltyAdaptive : AxeControlPenalty
+    {
+        public override string Id => "adaptive";
+        public override bool Stateful => true;   // carries the effort EMA; must advance once per frame
+        public override void Reset(Vessel v) => AxeControlLockerUtils.ResetAdaptive();
+        public override void Apply(ref float p, ref float y, ref float r, float sigma)
+            => AxeControlLockerUtils.ApplyAdaptive(ref p, ref y, ref r, sigma);
+        public override string Describe(float sigma)
+            => sigma <= 0f ? "clean"
+             : $"gain x{AxeControlLockerUtils.AdaptiveGainFor(sigma):F2} at {AxeControlLockerUtils.AdaptiveEffort * 100f:F0}% effort — degraded";
+    }
+
+    // ---------------------------------------------------------------------------------------------
     /// <summary>The selectable set. Index is driven by the core's DEBUG mode knob; order is the PAW order.</summary>
     public static class AxeControlPenalties
     {
@@ -202,10 +226,11 @@ namespace RPAxe
             new PenaltyDelay(),
             new PenaltyDropout(),
             new PenaltyMisdirect(),
+            new PenaltyAdaptive(),
         };
 
         public static readonly string[] Names =
-            { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts", "misdirect" };
+            { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts", "misdirect", "adaptive" };
 
         public static int Index = 3;   // on input
 

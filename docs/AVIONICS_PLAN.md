@@ -20,7 +20,7 @@ change with no code edit.
 
 ## Phase 0 — penalty abstraction (DONE)
 
-`AxeControlPenalty` + `AxeControlPenalties` registry. Seven selectable consequences behind one
+`AxeControlPenalty` + `AxeControlPenalties` registry. Ten selectable consequences behind one
 interface, chosen at runtime from the core's DEBUG mode knob:
 
 | # | id | family |
@@ -32,6 +32,15 @@ interface, chosen at runtime from the core's DEBUG mode knob:
 | 4 | `overgain` | margin attack — gain margin |
 | 5 | `coupling` | margin attack — decoupling |
 | 6 | `delay` | margin attack — phase margin |
+| 7 | `dropouts` | availability |
+| 8 | `misdirect` | margin attack — reference frame |
+| 9 | `adaptive` | closed loop |
+
+The families are the argument, not the list. Disturbances get **rejected** (that is what a loop is for);
+margin attacks are not rejectable but are **open-loop and therefore learnable**, which drift and
+precession exist to blunt. The last two are the only escapes from both: `dropouts` randomises whether
+the command lands at all, and `adaptive` makes the corruption a function of the loop's own output, so
+there is no fixed point for an adaptive controller to converge on.
 
 `LocksInstead` is honoured inside `ShouldLock`, `Stateful` tells the RCS patch to skip
 double-application, `Reset(vessel)` drops per-vessel state, `Describe()` gives each mode its own PAW
@@ -167,7 +176,7 @@ on-rails reduction. Only the *overload multiplier* goes.
 ## Phase D — fly it, decide, clean up (tomorrow)
 
 ### D1 Mode comparison
-One craft, `pin noise` on, all seven modes at σ = **0.44** (≈5% over) and **0.68** (≈10% over).
+One craft, `pin noise` on, all ten modes at σ = **0.44** (≈5% over) and **0.68** (≈10% over).
 
 Prediction on record so it can be wrong — it has been three times already (authority scaling, the
 frequency direction, white-vs-correlated): **coupling wins, overgain second, delay too sharp, both
@@ -175,6 +184,20 @@ noise modes absorbed.**
 
 Watch for MechJeb's adaptive gain partially retuning against `overgain` where SAS will not. A split
 between autopilot and hand-flying is itself a result.
+
+**Two pairs are controlled A/Bs, not free-for-alls, and should be flown back to back:**
+
+- **4 `overgain` vs 9 `adaptive`** — same slope by construction, so the only difference is whether the
+  gain is scheduled on the loop's own effort. This is the direct test of the retune worry above: if
+  MechJeb tunes its way out of 4 but hunts against 9, that is the closed-loop claim confirmed.
+- **2 `uncommanded` vs 3 `on input`** — the mode question from `AVIONICS_NOISE.md` §3-bis, still open
+  because on-input has never actually been flown.
+
+`adaptive` prediction, on record: **it hunts rather than diverges, and reads as a vehicle that is fine
+until you ask it for something** — good in flight, but at risk on D3, because a failure that appears
+only under load is harder to attribute than one that is always present. Its known weakness is that it
+is dodgeable by flying gently; whether that reads as a *skill* or as an *exploit* is the thing to
+judge, and it cannot be judged from the code.
 
 ### D2 Scaling check — winner only
 Small probe vs large launcher, same σ, `Hz scaling` on then off (modes 2/3 only; 4/5/6 have no

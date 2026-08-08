@@ -410,25 +410,34 @@ namespace RPAxe
          UI_Toggle(disabledText = "noise only", enabledText = "unguided past cut", scene = UI_Scene.All)]
         public bool hardCutoff = false;
 
-        // Three genuinely different mechanics, not three tunings of one.
-        //   0 uncommanded -- noise added regardless of input; the craft wanders on its own.
-        //   1 on input    -- noise scales the command; a null stick stays null, small commands survive.
-        //   2 overgain    -- no noise at all: the command is AMPLIFIED, so the loop overcontrols and
+        // Genuinely different mechanics, not tunings of one. Indices match AxeControlPenalties.All, which is
+        // also what populates this chooser at runtime (SetupModeChooser) -- the literal below is only the
+        // fallback if that attribute pass fails.
+        //   0 none        -- experimental control: over capacity, no consequence at all.
+        //   1 lock        -- RP-1's original rule. The A/B baseline and the ship fallback.
+        //   2 uncommanded -- noise added regardless of input; the craft wanders on its own.
+        //   3 on input    -- noise scales the command; a null stick stays null, small commands survive.
+        //   4 overgain    -- no noise at all: the command is AMPLIFIED, so the loop overcontrols and
         //                    oscillates by itself. Models the mechanism rather than the symptom, and makes
         //                    noise Hz / white / correlated irrelevant.
-        //   3 coupling    -- commanding one axis bleeds into the others, coefficients fixed per vessel. The
-        //                    loop fights itself: correcting induced yaw induces pitch. Learnable, so it
-        //                    reads as a characteristic of the craft rather than a malfunction.
-        //   4 delay       -- the command is held for N ticks. Eats phase margin, which a fixed-gain
-        //                    controller can do nothing about. Expected to be the sharpest and possibly a
-        //                    cliff; built to find out.
+        //   5 coupling    -- commanding one axis bleeds into the others, coefficients fixed per vessel. The
+        //                    loop fights itself: correcting induced yaw induces pitch.
+        //   6 delay       -- the command is held for N ticks. Eats phase margin, which a fixed-gain
+        //                    controller can do nothing about. Expected to be the sharpest, possibly a cliff.
+        //   7 dropouts    -- control cycles are randomly missed, last command held. Randomises AVAILABILITY
+        //                    rather than value, so it is neither learnable nor rejectable.
+        //   8 misdirect   -- the command vector is ROTATED, and the rotation precesses. Not dodgeable by
+        //                    flying gently; the only mode that survives binary actuators.
+        //   9 adaptive    -- overgain scheduled on the loop's OWN recent effort. Closed-loop, so backing
+        //                    gain off withdraws the penalty and the controller hunts instead of converging.
         //
-        // 0 and 1 are DISTURBANCES, which a feedback loop exists to reject -- hence their weakness. 2, 3 and
-        // 4 are the three classical ways to destabilise a loop (gain margin, decoupling, phase margin) and
-        // are not rejectable in the same way.
+        // 2 and 3 are DISTURBANCES, which a feedback loop exists to reject -- hence their weakness. 4-6 and
+        // 8 are the classical ways to destabilise a loop and are not rejectable in the same way, but being
+        // open-loop they are learnable. 7 and 9 are the two escapes from that: randomise availability, or
+        // close the loop around the controller.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: mode",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_ChooseOption(options = new[] { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts", "misdirect" }, scene = UI_Scene.All)]
+         UI_ChooseOption(options = new[] { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts", "misdirect", "adaptive" }, scene = UI_Scene.All)]
         public int noiseMode = 3;
 
         // Rotation at sigma = 1. Past 90 the intended-axis component goes negative and control REVERSES,
@@ -454,8 +463,18 @@ namespace RPAxe
          UI_FloatRange(minValue = 20f, maxValue = 500f, stepIncrement = 20f, scene = UI_Scene.All)]
         public float dropoutMs = 120f;
 
+        // THE feel knob for mode 9, and its only one -- depth is shared with overgain deliberately, so an
+        // A/B against mode 4 changes exactly one thing. Measured in attitude-response cycles rather than
+        // seconds, so it rides the same m^(-1/3) law as noise Hz and needs no scaling switch of its own:
+        // 3 cycles is ~1.5 s on a 1 t probe and ~7 s on a 100 t stack. Too short and effort just tracks the
+        // instantaneous command, which collapses the mode back into plain overgain.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: effort window",
+                  guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0.5f, maxValue = 20f, stepIncrement = 0.5f, scene = UI_Scene.All)]
+        public float adaptiveTau = 3f;
+
         // Makes overgain and coupling non-stationary, so adaptive tuning is always chasing a target that
-        // has moved. No effect on the other modes.
+        // has moved. No effect on the other modes -- mode 9 generates its own non-stationarity.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: drift",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_Toggle(disabledText = "fixed", enabledText = "drifting", scene = UI_Scene.All)]
@@ -1798,6 +1817,7 @@ namespace RPAxe
             AxeControlLockerUtils.DropoutMs = dropoutMs;
             AxeControlLockerUtils.MisdirectMaxDeg = misdirectMaxDeg;
             AxeControlLockerUtils.MisdirectRateHz = misdirectRateHz;
+            AxeControlLockerUtils.AdaptiveTauCycles = adaptiveTau;
             AxeControlLockerUtils.NoiseDrift = noiseDrift;
             AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
             AxeControlLockerUtils.HardCutoff = hardCutoff;
