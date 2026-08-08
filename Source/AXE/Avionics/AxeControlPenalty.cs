@@ -23,8 +23,10 @@ namespace RPAxe
     ///     exist to blunt.
     ///   * AVAILABILITY (dropouts) — randomises whether the command lands at all rather than its value,
     ///     so there is nothing to reject and nothing to learn.
-    ///   * CLOSED LOOP (adaptive) — the corruption is a function of the loop's own recent output, so the
-    ///     controller's reaction feeds the failure. The only family with no fixed point to converge on.
+    ///   * CLOSED LOOP (effort gain, adversarial) — the corruption is a function of the loop's own recent
+    ///     output, so the controller's reaction feeds the failure. `effort gain` closes it on DEPTH, which
+    ///     leaves "fly gently" as a dominant escape; `adversarial` closes it on CHOICE, selecting the move
+    ///     that beats the regime the pilot is actually in, so no fixed stick policy is safe.
     /// <see cref="PenaltyLock"/> is RP-1's original rule, kept selectable so it is both an A/B baseline and
     /// the fallback if no perturbation survives testing.
     /// </summary>
@@ -194,14 +196,18 @@ namespace RPAxe
     }
 
     // ---------------------------------------------------------------------------------------------
-    // 9 — CLOSED LOOP. Overgain scheduled on the loop's own recent effort instead of on sigma alone: the
-    // harder the controller is working, the more it is over-driven. The only mode that is neither open-loop
-    // nor random — backing gain off lowers effort, which withdraws the penalty, which makes the backed-off
-    // gain wrong, so an adaptive controller hunts instead of converging. Same slope as mode 4, so the A/B
-    // between them isolates exactly one variable. Dodgeable by flying gently, which is accepted.
-    public sealed class PenaltyAdaptive : AxeControlPenalty
+    // 9 — CLOSED LOOP, by DEPTH. Overgain scheduled on the loop's own recent effort instead of on sigma
+    // alone: the harder the controller is working, the more it is over-driven. Backing gain off lowers
+    // effort, which withdraws the penalty, which makes the backed-off gain wrong, so an adaptive controller
+    // hunts instead of converging. Same slope as mode 4, so the A/B between them isolates one variable.
+    //
+    // ITS KNOWN DEFECT, and why mode 10 exists: it is MONOTONE in effort, so "fly gently" is a dominant
+    // strategy. A penalty with a dominant escape is a tax you can route around, not an adversary. Kept as
+    // the middle rung of a three-way ladder — fixed gain (4), scheduled depth (9), matched policy (10) —
+    // because it is the only way to tell whether the policy is doing the work or the scheduling is.
+    public sealed class PenaltyEffortGain : AxeControlPenalty
     {
-        public override string Id => "adaptive";
+        public override string Id => "effort gain";
         public override bool Stateful => true;   // carries the effort EMA; must advance once per frame
         public override void Reset(Vessel v) => AxeControlLockerUtils.ResetAdaptive();
         public override void Apply(ref float p, ref float y, ref float r, float sigma)
@@ -209,6 +215,33 @@ namespace RPAxe
         public override string Describe(float sigma)
             => sigma <= 0f ? "clean"
              : $"gain x{AxeControlLockerUtils.AdaptiveGainFor(sigma):F2} at {AxeControlLockerUtils.AdaptiveEffort * 100f:F0}% effort — degraded";
+    }
+
+    // ---------------------------------------------------------------------------------------------
+    // 10 — CLOSED LOOP, by CHOICE. Adds no corruption of its own: it reads which of four regimes the recent
+    // command is in and plays the move that beats that regime, turning the other modes into a move set.
+    // Splits the command into a sustained part and a transient part, then:
+    //
+    //     holding little + not moving it -> UNCOMMANDED   (the counter to no input is the mode that
+    //                                                      does not read input — the answer to "fly gently")
+    //     holding little + moving it     -> OVERGAIN      (amplification needs headroom below the clamp)
+    //     holding a lot  + not moving it -> WASHOUT       (the held command decays; DC gain -> 0)
+    //     holding a lot  + moving it     -> DELAY         (lag does nothing to a constant command, and is
+    //                                                      the sharpest thing against a moving one)
+    //
+    // No absorbing state: every escape is the entrance to another cell, so no fixed stick policy is safe
+    // and the only remedy left is a unit actually rated for the vehicle. The risk is legibility rather than
+    // strength — held together by a dwell time, a switching margin, and naming the live regime in the PAW.
+    public sealed class PenaltyAdversarial : AxeControlPenalty
+    {
+        public override string Id => "adversarial";
+        public override bool Stateful => true;   // regime state + every move's state advances once a frame
+        public override void Reset(Vessel v) => AxeControlLockerUtils.ResetAdversarial();
+        public override void Apply(ref float p, ref float y, ref float r, float sigma)
+            => AxeControlLockerUtils.ApplyAdversarial(ref p, ref y, ref r, sigma);
+        public override string Describe(float sigma)
+            => sigma <= 0f ? "clean"
+             : $"{AxeControlLockerUtils.AdversarialRegimeName} — degraded";
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -226,11 +259,13 @@ namespace RPAxe
             new PenaltyDelay(),
             new PenaltyDropout(),
             new PenaltyMisdirect(),
-            new PenaltyAdaptive(),
+            new PenaltyEffortGain(),
+            new PenaltyAdversarial(),
         };
 
         public static readonly string[] Names =
-            { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts", "misdirect", "adaptive" };
+            { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts",
+              "misdirect", "effort gain", "adversarial" };
 
         public static int Index = 3;   // on input
 

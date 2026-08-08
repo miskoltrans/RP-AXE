@@ -414,6 +414,171 @@ namespace RPAxe
             roll  = Mathf.Clamp(roll * g, -1f, 1f);
         }
 
+        // ---- MODE 10: ADVERSARIAL (regime matching) -----------------------------------------------
+        // Mode 9's defect, and the reason this exists: gain scheduled on effort is MONOTONE in effort, so
+        // "minimise effort" is a dominant strategy and the mechanic has a loophole rather than a cost. A
+        // penalty with a dominant escape is not adversarial, it is a tax you can route around. The fix is
+        // not a deeper penalty, it is to make every escape the ENTRANCE TO ANOTHER ATTACK.
+        //
+        // So this mode adds no new corruption of its own. It is a POLICY over the mechanics already built,
+        // and the eight modes stop being eight competing candidates and become a move set.
+        //
+        // The command is split into the two things it can be -- a sustained part (the EMA, m) and a
+        // transient part (c - m) -- and each attack is placed where ITS OWN effect is largest:
+        //
+        //                    | not moving it        | moving it
+        //   -----------------+----------------------+-------------------
+        //   holding little   | UNCOMMANDED          | OVERGAIN
+        //   holding a lot    | WASHOUT              | DELAY
+        //
+        //   * UNCOMMANDED for the empty cell, and this is the whole answer to "fly gently and you are
+        //     safe": the counter to minimal input is the one mechanic that does not read input at all.
+        //   * OVERGAIN where commands are SMALL -- amplification needs headroom below the clamp, and a
+        //     x3 on 0.3 is a different event from a x3 on 0.9, which merely saturates.
+        //   * WASHOUT where the command is mostly DC. Its standalone weakness (the loop compensates by
+        //     commanding 1/(1-sigma) harder, which is the authority scalar AVIONICS_AUTHORITY.md killed)
+        //     is exactly what makes it work HERE: commanding harder moves you into another cell.
+        //   * DELAY where the command is changing. Pure lag does nothing at all to a constant command, and
+        //     is the sharpest thing in the set against one that is moving.
+        //
+        // There is no absorbing state, which is the property being bought. Do nothing -> drift forces a
+        // correction -> you are now holding or twitching. Hold it -> it decays -> you re-command -> the
+        // transient rises -> lag. Fight it -> it destabilises -> you back off -> drift. Any fixed stick
+        // policy walks into something, and the only real remedy is a unit rated for the vehicle -- which is
+        // the constraint the whole design is trying to make binding.
+        //
+        // NOT IN THE POLICY, deliberately: dropouts, misdirect and coupling are strong in EVERY regime, so
+        // there is no cell where they are the specific answer. That makes them standalone candidates rather
+        // than moves; a policy whose job is regime matching has nothing to gain from a move that does not
+        // vary by regime.
+        //
+        // THE RISK IS LEGIBILITY, not strength: a failure that changes character is harder to attribute,
+        // and D3 gates the commit on exactly that. Three things hold it together -- a dwell time so a
+        // regime lasts long enough to read, a margin so it does not flap on the boundary, and the regime
+        // NAMED in the PAW. The player-facing statement stays learnable in one sentence per cell ("it
+        // wanders when I coast, it lags when I fight it"), which is a mechanic with depth rather than
+        // randomness. If it reads as one incoherent malfunction instead, that is the result that kills it.
+        //
+        // The fiction is not a malicious computer -- it is a GAIN SCHEDULE characterised for a different
+        // vehicle. Real control laws are scheduled per flight regime; an under-rated unit's table is wrong
+        // in every cell, and wrong in a different way in each. The design is adversarial, the story is a
+        // lookup table full of the wrong numbers.
+        public static float AdversarialAcGain = 3f;      // maps |c - m| onto 0..1; the balance knob
+        const float AdversarialDwellSec = 2f;            // minimum time in a regime, so it can be read
+        const float AdversarialMargin = 0.15f;           // lead needed to switch, so it cannot flap
+
+        static float _advDc, _advAc, _advHold;
+        static int _advRegime = -1;
+
+        public static readonly string[] AdversarialNames = { "drift", "overgain", "washout", "lag" };
+        public static int AdversarialRegime => _advRegime;
+        public static string AdversarialRegimeName
+            => _advRegime < 0 ? "settling" : AdversarialNames[_advRegime];
+
+        // The sustained component, shared by the washout move and by the regime split -- one EMA, so the
+        // two can never disagree about what "holding" means.
+        static float _wp, _wy, _wr;
+
+        public static void ResetAdversarial()
+        {
+            _advDc = _advAc = _advHold = 0f;
+            _advRegime = -1;
+            _wp = _wy = _wr = 0f;
+            ResetDelay();
+            ResetDropout();
+        }
+
+        static float AdversarialTau => Mathf.Max(0.05f, AdaptiveTauCycles / Mathf.Max(0.01f, EffectiveNoiseHz));
+
+        // Subtract the sustained component: a held command decays toward nothing, a transient passes whole.
+        // At sigma = 1 the DC gain is exactly zero, and an integrator cannot restore DC gain removed
+        // DOWNSTREAM of it -- winding up further just produces more DC, which is what is being removed.
+        static void ApplyWashout(ref float pitch, ref float yaw, ref float roll, float sigma)
+        {
+            pitch = Mathf.Clamp(pitch - sigma * _wp, -1f, 1f);
+            yaw   = Mathf.Clamp(yaw   - sigma * _wy, -1f, 1f);
+            roll  = Mathf.Clamp(roll  - sigma * _wr, -1f, 1f);
+        }
+
+        static void UpdateAdversarialRegime(float p, float y, float r)
+        {
+            float dt = Time.fixedDeltaTime > 0f ? Time.fixedDeltaTime : 0.02f;
+            float a = Mathf.Clamp01(dt / AdversarialTau);
+            _wp += (p - _wp) * a;
+            _wy += (y - _wy) * a;
+            _wr += (r - _wr) * a;
+
+            // DC = what is being held, AC = what is being moved. Measured as deviation from the vessel's own
+            // recent mean rather than as a per-tick delta: at 50 Hz a per-tick difference is dominated by
+            // autopilot jitter and would read "moving it" during a dead-steady hold.
+            float dc = Mathf.Clamp01(new Vector3(_wp, _wy, _wr).magnitude);
+            float ac = Mathf.Clamp01(new Vector3(p - _wp, y - _wy, r - _wr).magnitude * AdversarialAcGain);
+            _advDc += (dc - _advDc) * a;
+            _advAc += (ac - _advAc) * a;
+
+            // Membership products, so the boundaries are soft and a craft sitting between two regimes has a
+            // genuinely close call rather than an arbitrary one.
+            float wDrift    = (1f - _advDc) * (1f - _advAc);
+            float wOvergain = (1f - _advDc) * _advAc;
+            float wWashout  = _advDc * (1f - _advAc);
+            float wLag      = _advDc * _advAc;
+
+            int best = 0;
+            float bestW = wDrift;
+            if (wOvergain > bestW) { best = 1; bestW = wOvergain; }
+            if (wWashout  > bestW) { best = 2; bestW = wWashout; }
+            if (wLag      > bestW) { best = 3; bestW = wLag; }
+
+            _advHold += dt;
+            if (_advRegime < 0) { _advRegime = best; _advHold = 0f; return; }
+
+            float currentW = _advRegime == 0 ? wDrift : _advRegime == 1 ? wOvergain
+                           : _advRegime == 2 ? wWashout : wLag;
+            if (best != _advRegime && _advHold >= AdversarialDwellSec && bestW > currentW + AdversarialMargin)
+            {
+                _advRegime = best;
+                _advHold = 0f;
+            }
+        }
+
+        public static void ApplyAdversarial(ref float pitch, ref float yaw, ref float roll, float sigma)
+        {
+            UpdateAdversarialRegime(pitch, yaw, roll);
+
+            // ADVANCE EVERY STATEFUL MOVE, APPLY ONLY THE SELECTED ONE. Running just the winner leaves the
+            // others' state stale, so a switch into lag reads a ring buffer full of an older flight and
+            // jumps -- a switching artefact that would be indistinguishable from the mechanic working.
+            float dp = pitch, dy = yaw, dr = roll;
+            ApplyDelay(ref dp, ref dy, ref dr, sigma);
+            float op = pitch, oy = yaw, orr = roll;
+            ApplyDropout(ref op, ref oy, ref orr, sigma);
+
+            switch (_advRegime)
+            {
+                case 1:
+                {
+                    float g = GainFor(sigma);
+                    pitch = Mathf.Clamp(pitch * g, -1f, 1f);
+                    yaw   = Mathf.Clamp(yaw * g, -1f, 1f);
+                    roll  = Mathf.Clamp(roll * g, -1f, 1f);
+                    break;
+                }
+                case 2:
+                    ApplyWashout(ref pitch, ref yaw, ref roll, sigma);
+                    break;
+                case 3:
+                    pitch = dp; yaw = dy; roll = dr;
+                    break;
+                default:
+                    // Uncommanded: additive, so it is the only move that still bites a null stick. Roll
+                    // follows the same NoiseRoll switch as mode 2 so the two stay comparable.
+                    yaw   = Mathf.Clamp(yaw + NoiseSample(0, sigma), -1f, 1f);
+                    pitch = Mathf.Clamp(pitch + NoiseSample(1, sigma), -1f, 1f);
+                    if (NoiseRoll) roll = Mathf.Clamp(roll + NoiseSample(2, sigma), -1f, 1f);
+                    break;
+            }
+        }
+
         // ---- DRIFT: make the deterministic attacks non-stationary ---------------------------------
         // The other escape from "deterministic gets learned". Overgain and coupling are learnable only
         // because their parameters are FIXED; a slow random walk means adaptive tuning is always chasing a

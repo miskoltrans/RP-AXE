@@ -428,16 +428,22 @@ namespace RPAxe
         //                    rather than value, so it is neither learnable nor rejectable.
         //   8 misdirect   -- the command vector is ROTATED, and the rotation precesses. Not dodgeable by
         //                    flying gently; the only mode that survives binary actuators.
-        //   9 adaptive    -- overgain scheduled on the loop's OWN recent effort. Closed-loop, so backing
-        //                    gain off withdraws the penalty and the controller hunts instead of converging.
+        //   9 effort gain -- overgain scheduled on the loop's OWN recent effort. Closed-loop, so backing
+        //                    gain off withdraws the penalty and the controller hunts. But it is monotone in
+        //                    effort, so flying gently is a dominant escape.
+        //  10 adversarial -- no corruption of its own: reads which regime the recent command is in and
+        //                    plays the move that beats it, so every escape enters another attack.
         //
         // 2 and 3 are DISTURBANCES, which a feedback loop exists to reject -- hence their weakness. 4-6 and
         // 8 are the classical ways to destabilise a loop and are not rejectable in the same way, but being
-        // open-loop they are learnable. 7 and 9 are the two escapes from that: randomise availability, or
-        // close the loop around the controller.
+        // open-loop they are learnable. 7, 9 and 10 are the escapes from that: randomise availability,
+        // close the loop on depth, or close it on choice.
+        //
+        // 4 -> 9 -> 10 is a deliberate ladder (fixed gain, scheduled depth, matched policy) and should be
+        // flown in that order: it is the only way to tell whether the policy is doing the work.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: mode",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_ChooseOption(options = new[] { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts", "misdirect", "adaptive" }, scene = UI_Scene.All)]
+         UI_ChooseOption(options = new[] { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts", "misdirect", "effort gain", "adversarial" }, scene = UI_Scene.All)]
         public int noiseMode = 3;
 
         // Rotation at sigma = 1. Past 90 the intended-axis component goes negative and control REVERSES,
@@ -472,6 +478,16 @@ namespace RPAxe
                   guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_FloatRange(minValue = 0.5f, maxValue = 20f, stepIncrement = 0.5f, scene = UI_Scene.All)]
         public float adaptiveTau = 3f;
+
+        // Mode 10's balance knob, and its only one. Maps the transient part of the command onto 0..1, so it
+        // decides where the "moving it" boundary sits and therefore how the flight time divides between the
+        // four regimes. Too high and everything reads as movement (the mode collapses to overgain/lag), too
+        // low and a craft under active autopilot control never leaves the two holding regimes. Watch the
+        // regime name in the PAW readout before touching it: the number to aim for is a spread, not a value.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: regime AC gain",
+                  guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0.5f, maxValue = 10f, stepIncrement = 0.5f, scene = UI_Scene.All)]
+        public float adversarialAcGain = 3f;
 
         // Makes overgain and coupling non-stationary, so adaptive tuning is always chasing a target that
         // has moved. No effect on the other modes -- mode 9 generates its own non-stationarity.
@@ -1818,6 +1834,7 @@ namespace RPAxe
             AxeControlLockerUtils.MisdirectMaxDeg = misdirectMaxDeg;
             AxeControlLockerUtils.MisdirectRateHz = misdirectRateHz;
             AxeControlLockerUtils.AdaptiveTauCycles = adaptiveTau;
+            AxeControlLockerUtils.AdversarialAcGain = adversarialAcGain;
             AxeControlLockerUtils.NoiseDrift = noiseDrift;
             AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
             AxeControlLockerUtils.HardCutoff = hardCutoff;

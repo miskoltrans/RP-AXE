@@ -20,7 +20,7 @@ change with no code edit.
 
 ## Phase 0 — penalty abstraction (DONE)
 
-`AxeControlPenalty` + `AxeControlPenalties` registry. Ten selectable consequences behind one
+`AxeControlPenalty` + `AxeControlPenalties` registry. Eleven selectable consequences behind one
 interface, chosen at runtime from the core's DEBUG mode knob:
 
 | # | id | family |
@@ -34,13 +34,50 @@ interface, chosen at runtime from the core's DEBUG mode knob:
 | 6 | `delay` | margin attack — phase margin |
 | 7 | `dropouts` | availability |
 | 8 | `misdirect` | margin attack — reference frame |
-| 9 | `adaptive` | closed loop |
+| 9 | `effort gain` | closed loop — by depth |
+| 10 | `adversarial` | closed loop — by choice |
 
 The families are the argument, not the list. Disturbances get **rejected** (that is what a loop is for);
 margin attacks are not rejectable but are **open-loop and therefore learnable**, which drift and
-precession exist to blunt. The last two are the only escapes from both: `dropouts` randomises whether
-the command lands at all, and `adaptive` makes the corruption a function of the loop's own output, so
-there is no fixed point for an adaptive controller to converge on.
+precession exist to blunt. The last three escape both: `dropouts` randomises whether the command lands
+at all, and 9/10 make the corruption a function of the loop's own output, so there is no fixed point for
+an adaptive controller to converge on.
+
+### The test that separates 9 from 10 — a dominant escape
+
+`effort gain` is **monotone in effort**, so *minimise effort* beats it: fly gently and the penalty
+withdraws itself. A mechanic with a dominant escape strategy is a tax you can route around, not an
+adversary, and the fix is not a deeper penalty — it is to make **every escape the entrance to another
+attack.**
+
+`adversarial` therefore adds no corruption of its own. It splits the recent command into a sustained
+part and a transient part, and plays the move whose own effect is largest in that cell:
+
+| | **not moving it** | **moving it** |
+|---|---|---|
+| **holding little** | `uncommanded` | `overgain` |
+| **holding a lot** | `washout` | `delay` |
+
+- **Fly gently → `uncommanded`.** The counter to minimal input is the one mechanic that does not read
+  input. That cell is the whole answer to the dominant-escape problem.
+- **`overgain` where commands are small** — amplification needs headroom below the clamp; ×3 on 0.3 is an
+  event, ×3 on 0.9 merely saturates.
+- **`washout` where the command is mostly DC.** Its standalone weakness (the loop just commands
+  `1/(1−σ)` harder, which is the authority scalar `AVIONICS_AUTHORITY.md` killed) is what makes it work
+  *here*: commanding harder moves you into another cell. Rejected as a mode, correct as a move.
+- **`delay` where the command is changing** — pure lag does nothing to a constant command.
+
+**No absorbing state**, which is the property being bought: do nothing → drift forces a correction → you
+are holding or twitching; hold → it decays → you re-command → lag; fight → it destabilises → you back
+off → drift. The only remedy left is a unit rated for the vehicle, which is the constraint the whole
+design exists to make binding.
+
+Not in the policy, deliberately: `dropouts`, `misdirect` and `coupling` are strong in *every* regime, so
+no cell is theirs. That makes them standalone candidates rather than moves.
+
+The fiction is not a malicious computer — it is a **gain schedule characterised for a different
+vehicle**. Real control laws are scheduled per flight regime; an under-rated unit's table is wrong in
+every cell, and wrong in a different way in each.
 
 `LocksInstead` is honoured inside `ShouldLock`, `Stateful` tells the RCS patch to skip
 double-application, `Reset(vessel)` drops per-vessel state, `Describe()` gives each mode its own PAW
@@ -176,7 +213,7 @@ on-rails reduction. Only the *overload multiplier* goes.
 ## Phase D — fly it, decide, clean up (tomorrow)
 
 ### D1 Mode comparison
-One craft, `pin noise` on, all ten modes at σ = **0.44** (≈5% over) and **0.68** (≈10% over).
+One craft, `pin noise` on, all eleven modes at σ = **0.44** (≈5% over) and **0.68** (≈10% over).
 
 Prediction on record so it can be wrong — it has been three times already (authority scaling, the
 frequency direction, white-vs-correlated): **coupling wins, overgain second, delay too sharp, both
@@ -185,19 +222,27 @@ noise modes absorbed.**
 Watch for MechJeb's adaptive gain partially retuning against `overgain` where SAS will not. A split
 between autopilot and hand-flying is itself a result.
 
-**Two pairs are controlled A/Bs, not free-for-alls, and should be flown back to back:**
+**These are controlled A/Bs, not a free-for-all, and should be flown back to back:**
 
-- **4 `overgain` vs 9 `adaptive`** — same slope by construction, so the only difference is whether the
-  gain is scheduled on the loop's own effort. This is the direct test of the retune worry above: if
-  MechJeb tunes its way out of 4 but hunts against 9, that is the closed-loop claim confirmed.
+- **4 `overgain` → 9 `effort gain` → 10 `adversarial`**, in that order. Same slope throughout by
+  construction, so each step changes exactly one thing: fixed gain, then gain scheduled on the loop's
+  own effort, then the move itself chosen to match the regime. Flying 10 without 9 cannot tell you
+  whether the *policy* is doing the work or the *scheduling* is.
 - **2 `uncommanded` vs 3 `on input`** — the mode question from `AVIONICS_NOISE.md` §3-bis, still open
   because on-input has never actually been flown.
 
-`adaptive` prediction, on record: **it hunts rather than diverges, and reads as a vehicle that is fine
-until you ask it for something** — good in flight, but at risk on D3, because a failure that appears
-only under load is harder to attribute than one that is always present. Its known weakness is that it
-is dodgeable by flying gently; whether that reads as a *skill* or as an *exploit* is the thing to
-judge, and it cannot be judged from the code.
+Predictions, on record:
+
+- **9 hunts rather than diverges, and reads as a vehicle that is fine until you ask it for something.**
+  Known defect, already argued rather than measured: dodgeable by flying gently.
+- **10 is the strongest and the least legible.** Specifically: it will beat 9 on *feel* and be at risk
+  on **D3**, because a failure that changes character is harder to attribute than one that is always
+  present. The dwell time and the regime name in the PAW exist to buy that back.
+
+**The D1 question 10 actually has to answer, and it is not "is it hard":** watch the regime readout and
+check whether it *tracks what you are doing* or *thrashes*. A thrashing readout means the AC gain is
+wrong and the mode is being judged on a tuning artefact. A readout that sits in one cell for a whole
+ascent means the policy never engaged and you are really only testing that one move.
 
 ### D2 Scaling check — winner only
 Small probe vs large launcher, same σ, `Hz scaling` on then off (modes 2/3 only; 4/5/6 have no
