@@ -919,6 +919,51 @@ function init(){
     cam.s=Math.max(0.05,Math.min(6,cam.s*f)); cam.x=mx-wx*cam.s; cam.y=my-wy*cam.s;
     updateZoomLabel(); draw();
   },{passive:false});
+  // touch: 1-finger pan, 2-finger pinch-zoom, tap = pin, double-tap = research.
+  // A phone has no wheel/hover/dblclick, so the whole pointer path is reimplemented rather than
+  // leaning on the browser's compat mouse events -- preventDefault suppresses those so one tap
+  // can't fire the mouse path too. #cv also sets touch-action:none, else the browser eats the
+  // drag as a page scroll and the canvas never sees it.
+  const tRel=t=>{ const r=cv.getBoundingClientRect(); return {x:t.clientX-r.left, y:t.clientY-r.top}; };
+  const tGap=(a,b)=>Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+  const tMid=(a,b)=>{ const r=cv.getBoundingClientRect();
+    return {x:(a.clientX+b.clientX)/2-r.left, y:(a.clientY+b.clientY)/2-r.top}; };
+  let tg=null, tgMoved=false, tapAt=0, tapId=null;
+  const panFrom=p=>({mode:1, x:p.x, y:p.y, cx:cam.x, cy:cam.y});
+  cv.addEventListener('touchstart',e=>{ e.preventDefault();
+    if(e.touches.length===1){ tg=panFrom(tRel(e.touches[0])); tgMoved=false; }
+    else if(e.touches.length>=2){ const m=tMid(e.touches[0],e.touches[1]);
+      tg={mode:2, x:m.x, y:m.y, cx:cam.x, cy:cam.y, s:cam.s, d:tGap(e.touches[0],e.touches[1])||1};
+      tgMoved=true; }                                   // a pinch is never a tap
+  },{passive:false});
+  cv.addEventListener('touchmove',e=>{ e.preventDefault(); if(!tg)return;
+    if(tg.mode===1 && e.touches.length===1){ const p=tRel(e.touches[0]);
+      const dx=p.x-tg.x, dy=p.y-tg.y;
+      if(Math.abs(dx)+Math.abs(dy)>8) tgMoved=true;     // slop: fingers wobble more than a mouse
+      cam.x=tg.cx+dx; cam.y=tg.cy+dy; draw(); }
+    else if(tg.mode===2 && e.touches.length>=2){        // pin the world point under the ORIGINAL
+      const m=tMid(e.touches[0],e.touches[1]);          // midpoint to wherever the midpoint is now,
+      const wx=(tg.x-tg.cx)/tg.s, wy=(tg.y-tg.cy)/tg.s; // so a pinch zooms AND drags in one gesture
+      cam.s=Math.max(0.05,Math.min(6, tg.s*(tGap(e.touches[0],e.touches[1])/tg.d)));
+      cam.x=m.x-wx*cam.s; cam.y=m.y-wy*cam.s;
+      updateZoomLabel(); draw(); }
+  },{passive:false});
+  cv.addEventListener('touchend',e=>{ e.preventDefault();
+    if(tg && tg.mode===1 && !tgMoved){
+      const id=hitTest(tg.x,tg.y), now=performance.now();
+      if(id && id===tapId && now-tapAt<350 && opt.progress){       // second tap = the dblclick path
+        const st=stateOf(id);
+        if(st===RESEARCHABLE) research(id); else if(st===RESEARCHED) unresearch(id); else researchPathTo(id);
+        selId=id; setFocus(activeFocus()); afterStateChange(); tapAt=0; tapId=null;
+      } else {                                                     // first tap = the click path (pin)
+        selId=id; setFocus(activeFocus()); showPanel(selId); draw();
+        tapAt=now; tapId=id;
+      }
+    }
+    if(!e.touches.length) tg=null;
+    else if(e.touches.length===1){ tg=panFrom(tRel(e.touches[0])); tgMoved=true; }  // pinch -> 1 finger
+  },{passive:false});
+  cv.addEventListener('touchcancel',()=>{ tg=null; });
 
   cv.addEventListener('dblclick',e=>{ const id=hitTest(e.offsetX,e.offsetY); if(!id||!opt.progress)return;
     const s=stateOf(id);

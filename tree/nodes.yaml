@@ -1316,9 +1316,14 @@ nodes:
     tier: 6
     parents: [opt_tvRecon]
     flavor: "A finer vidicon target and a denser scan resolve detail the early television camera smeared away — reconnaissance and weather imagery sharp enough to be worth the bandwidth to send it down. The electronic eye growing up."
-    parts: [RO-ImprovedTVCamera, RO-AdvancedImager]
+    parts: [RO-ImprovedTVCamera]
     # RO-AdvancedImager added (2026-07, power+science pass): VI04, the next rung of the same
     # Visible-Imaging series as RO-ImprovedTVCamera (VI03) already here - traced by series code.
+    # MOVED OUT 2026-08-10 (user call) -> opt_digitalImaging (T9). "Traced by series code" was the whole
+    # mistake: RP-1's own part description says VI04 is "fully digital ... flown on Galileo", i.e. a CCD,
+    # so a solid-state camera was sitting on the node whose entire mechanism is a scanned vidicon beam.
+    # It also collapsed the ladder (VI03 cap 3 and VI04 cap 6 on one node) and put Mariner 10 (1974)
+    # beside Galileo (1989). This node keeps VI03, the Mariner-10 vidicon, which is what it describes.
   # US2 wedges (config from RP-1): magnetometer boom gates above MG01; the "Orbital Telescope" is a
   # long-focal-length SURFACE imager (scopeScan/Terrain, hirise tag) -> recon/optics lane, not astronomy.
   - id: mic_boomMagnetometry
@@ -5347,10 +5352,21 @@ nodes:
     tier: 9
     parents: [opt_refinedTV]
     flavor: "Replace the vidicon's scanned electron beam with a solid-state sensor read out electronically, line by line — the same instinct that took reconnaissance from film to television, one generation further. Higher resolution than any vidicon, and nothing left to wear out or burn in."
-    parts: [RO-DigitalCamera]
+    parts: [RO-DigitalCamera, RO-AdvancedImager]
     # A real generational breakthrough (film -> vidicon/TV -> true digital sensor), not another vidicon
     # mark - PH05 is explicitly a digital imaging device, not a VI-series (vidicon) part, so it earns its
     # own node rather than folding into opt_refinedTV alongside RO-AdvancedImager.
+    # RO-AdvancedImager MOVED HERE 2026-08-10 (user call), which also corrects the line above: the
+    # "VI-series = vidicon" shorthand does not hold for VI04. RP-1's own description of the part is
+    # "this camera is FULLY DIGITAL ... historically flown on Galileo", so it belongs on the solid-state
+    # node this flavor describes, not on opt_refinedTV's scanned-beam vidicon. Three defects cleared at
+    # once: mechanism (a CCD on a vidicon node), a collapsed ladder (VI03 cap 3 + VI04 cap 6 sharing one
+    # node, tools/tier_defects.py instrument-reach), and era (Mariner 10 1974 beside Galileo 1989).
+    # The VI ladder now ascends in tier AND cap: T4 cap 2 -> T5 cap 2 -> T6 cap 3 -> T9 cap 6 ->
+    # T10 cap 50 (RO-HIRES, opt_highResolutionImager). No collision with PH05 here: different
+    # experiment family, so the two digital cameras share a node without either going dead.
+    # Second gate moved with it: the "Advanced Visible Imaging Device" SETUP in Science/US2.cfg.
+    # (Science/Configure.cfg has no VI04 slot at all - its probe-core Configure stops at VI03.)
 
   # ================================================================================================
   # ============ BAND 4 * SHUTTLE & STATION ERA -- AJ10-190 (the missed engine, 2026-07) =============
