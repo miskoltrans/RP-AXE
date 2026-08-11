@@ -108,12 +108,19 @@ enforcement by `AXE.dll`'s `AxeTrackingStationGate`. Smoke-tested in-game.
 | RP0Level3TrackingStation | tel_pcmTelemetry | T6 |
 | RP0Level4TrackingStation | tel_deployableHighGainDish | T7 |
 | RP0Level5TrackingStation | tel_phasedArrayRelay | T8 |
-| RP0Level6TrackingStation | tel_xBandDownlink | T9 |
-| RP0Level7TrackingStation | tel_kaBandDownlink | T10 |
-| RP0Level8TrackingStation | tel_concatenatedCoding | T11 |
+| RP0Level6TrackingStation | tel_blockCoding | T9 |
+| RP0Level7TrackingStation | tel_convolutionalCoding | T10 |
+| RP0Level8TrackingStation | tel_xBandDownlink | T11 |
 | RP0Level9TrackingStation | tel_antennaArraying | T12 |
-| RP0Level10TrackingStation | tel_bandwidthEfficientModulation | T13 |
+| RP0Level10TrackingStation | tel_kaBandDownlink | T13 |
 | RP0Level11TrackingStation | tel_opticalDownlink | T14 |
+
+Ground station TL tracks the facility level directly (`GroundStationTechLevel =
+round(MaxTL × normalisedFacilityLevel)`, career only — sandbox/science pin it to max), so with an
+11-level ladder and `MaxTL = 10` each rung is worth exactly one ground tech level. That is what makes
+the two band rungs land where they do: `RP0Level8` puts the ground at TL7, which is where RO gives the
+DSN its X-band dish, and `commsTL7` on the same node clears `BandInfo[X].TechLevel = 7` onboard —
+both ends of the link open together. `RP0Level10` + `commsTL9` do the same for Ka.
 
 ## Agent checklist (per milestone)
 1. Read the milestone partlist; collect `KEEP-avionics` / `KEEP-dsn` items whose tier lands here.

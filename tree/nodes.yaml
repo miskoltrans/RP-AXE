@@ -2035,7 +2035,10 @@ nodes:
     tier: 10
     parents: [pc_mmh]
     flavor: "Dissolve nitric oxide back into the dinitrogen tetroxide until the mixture stops freezing at temperatures a spacecraft will actually see. A few percent of a gas nobody wants, and the oxidiser survives the shadow side of the orbit without a heater on every line."
-    upgrades: [RFUpgrade_Model8096B, RFUpgrade_LEROS-2b, RFUpgrade_R-4D-15DM]
+    upgrades: [RFUpgrade_Model8096B, RFUpgrade_LEROS-2b]
+    # RFUpgrade_R-4D-15DM moved OUT 2026-08 -> gnc_dualModePropulsion (T12). It was homed here by
+    # OXIDISER, but the oxidiser fork had already happened: the base R-4D-11 burns MMH+MON3 at T9,
+    # four tiers below this node. The DM mark's change is the fuel (MMH -> hydrazine), not the MON.
   - id: fd_longLifeStorableUpper
     title: "Long-Life Storable Upper Stage"
     discipline: FluidDynamics
@@ -4918,7 +4921,24 @@ nodes:
     upgrades: [RFUpgrade_R-4D-15]  # moved down from gnc_bipropAttitudeThrust (own base part ROE-HiPAT there), doctrine-4 fix 2026-07
     # ROE-LEROS4 (2026-07, band-5 sweep): bigger mark of the same real LEROS manufacturer lineage.
     # doctrine-4 fix (2026-07): R-42DM/R-42DM-NTO are this node's own base part's (ROE-R42) later marks -
-    # moved down to gnc_deepThrottlingAbortLandingEngine.
+    # re-homed 2026-08 to gnc_dualModePropulsion below (they are the dual-mode marks, not abort engines).
+
+  - id: gnc_dualModePropulsion
+    title: "Dual-Mode Hydrazine Propulsion"
+    discipline: GuidanceControl
+    tier: 12
+    parents: [gnc_deepSpaceApogeeEngine, pc_hydrazineMonoprop]
+    flavor: "Run the attitude thrusters and the apogee engine off one tank. Neat hydrazine feeds the catalyst beds as a monopropellant and burns against nitrogen tetroxide in the big chamber, so a satellite carries two propulsion systems' worth of capability on three tanks instead of four. It buys efficiency and restarts; it costs continuous burn time, because hydrazine will not sit hot in a chamber the way monomethylhydrazine will."
+    upgrades: [RFUpgrade_R-4D-15DM, RFUpgrade_R-42DM, RFUpgrade_R-42DM-NTO]
+    # 2026-08: the three dual-mode marks, reunited. The 2026-07 doctrine-4 sweep pushed each off its base
+    # part's node by PROXIMITY rather than by mechanism: R-4D-15DM landed on pc_mon (wrong - the base
+    # R-4D-11 already burns MON3 at T9, so MON is not what changed) and R-42DM/-NTO on
+    # gnc_deepThrottlingAbortLandingEngine (wrong - SuperDraco's node, no relationship at all).
+    # What actually changes in all three is the FUEL: MMH -> neat hydrazine, shared with the monoprop
+    # RCS. Hence the cross-lane parent on pc_hydrazineMonoprop: dual mode is not possible without the
+    # catalyst bed, and that is a real physical prerequisite, not a decorative crossover.
+    # The trade is legible and worth keeping: R-4D-15DM is +6.8s Isp and +172 ignitions over R-4D-15,
+    # and its CONTINUOUS burn rating collapses 7200s -> 1800s (R-42DM: 3940s -> 1000s).
 
   # ================================================================================================
   # ========= BAND 4 * SHUTTLE & STATION ERA -- LANDING/POWER/COMMS/AVIONICS/SCIENCE (2026-07) =======
@@ -5250,62 +5270,100 @@ nodes:
     flavor: "Standardise the RTG into modular General-Purpose Heat Source bricks, stack as many as the mission needs, and the same design flies Galileo, Ulysses, Cassini and every deep-space mission after them for the next forty years."
     parts: [SXTDepolyRTGI, SXTDepolyRTGII, ca_mer_rtg, nfe-rtg-gphs-1, RO-MMRTG, nfe-rtg-mmrtg-1, nfe-rtg-asrg-1, USRTGWedgeMM]
 
-  # ---- Lane 6b: deep-space link capability (X-band generation — first rung of the advanced-comms ladder) ----
-  - id: tel_xBandDownlink
-    title: "X-Band Deep-Space Downlink"
+  # ---- Lane 6b: deep-space link capability (the advanced-comms ladder, commsTL5-10 / DSN L6-11) ----
+  #
+  # NAMING INVARIANT (fixed 2026-08-11): a node may only be named after a radio band if researching it
+  # ACTUALLY OPENS that band. The band a node opens is decided entirely by the `upgrades: [commsTLn]`
+  # it grants, checked against BandInfo.TechLevel in the LIVE merged config — not by the era the node
+  # evokes. Under RealismOverhaul's band table the thresholds are: S = TL3, X = TL7, Ku = TL8, Ka = TL9.
+  # (Skopos appends three more: "L (Wideband)" and "C (Wideband)" at TL3, "Ku (Wideband)" at TL6. Those
+  # are commercial-comsat bands carried only by the Intelsat-era earth stations, never by the DSN, so no
+  # deep-space node is named for them.) Before renaming anything here, re-read the merged
+  # ModuleManager.ConfigCache — RealAntennas' own cfg is NOT the whole table.
+  #
+  # This block previously named its first two rungs "X-Band" (commsTL5) and "Ka-Band" (commsTL6). Neither
+  # opened its band: X needs TL7 and Ka needs TL9, so each name sat two rungs ahead of the capability it
+  # promised, and a player researching "X-Band Deep-Space Downlink" still could not select X-band. The
+  # grants are correct and unchanged — the DSN rung and the onboard tech level land together on every node,
+  # so both ends of the link open at once. Only the names moved, onto the rungs that deliver.
+  - id: tel_blockCoding
+    title: "Block-Coded Telemetry"
     discipline: Telecommunications
     tier: 9
     parents: [tel_phasedArrayRelay]
-    flavor: "Move the deep-space link up from S-band to X-band — roughly four times the frequency, and with it the beam narrows and the data rate climbs, wringing a usable stream out of a signal smeared across the outer Solar System. It takes both ends at once: an onboard transponder that transmits on the new band, and a DSN dish upgraded to hear it. Voyager flew its whole grand tour home on X-band."
+    flavor: "Stop spending every decibel on brute transmitter power and start spending some on arithmetic: group the bits into blocks carrying enough redundancy that the receiver can spot its own errors and repair them, while a cooled front end at the ground station drops the hiss they have to be found in. The same dish, the same watts, and a link that suddenly holds together further out."
     grants: [RP0Level6TrackingStation]
     upgrades: [commsTL5]
+    # RENAMED 2026-08-11 from `tel_xBandDownlink` / "X-Band Deep-Space Downlink" — it grants commsTL5 and
+    # X-band needs TL7, so the old name promised a band it did not open (see the invariant above). Retitled
+    # to what commsTL5 actually is: RealAntennas' "Advanced Comms, 1967-1971 — noise reduction 1968, block
+    # coding 1969". The X-band name moved down to the TL7 rung.
+    #
     # 2026-07 (pays down the Voyager probe-requirements gap): continues the DSN-level + RealAntennas
     # tech-level ladder off tel_phasedArrayRelay (Level5/commsTL4) with its next rung, Level6/commsTL5 —
     # RP-1 gates exactly this pair at its own `advancedComms` node, the first of the advanced/deep-space
     # comms tiers. Capability node (no new dish — the deep-space parabolics are separate hardware catalogs).
-    # The remaining rungs (commsTL6-10 / DSN Level7-11) continue as the modern-comms ladder below.
-  - id: tel_kaBandDownlink
-    title: "Ka-Band High-Rate Downlink"
+  - id: tel_convolutionalCoding
+    title: "Convolutional Coding"
     discipline: Telecommunications
     tier: 10
-    parents: [tel_xBandDownlink]
-    flavor: "Climb the band again, from X to Ka — near four times the frequency once more, the beam tightening to a needle and the data rate leaping with it. The band a modern flagship saves for its high-rate science: the step from an X-band trickle to a torrent, on a carrier so narrow the dish must be aimed to a hair."
+    parents: [tel_blockCoding]
+    flavor: "Abandon the block boundary entirely and encode the stream as one continuous convolution, every output bit carrying a memory of the ones before it — then let the decoder walk every path the transmitter could have taken and keep the likeliest. Coding gain worth more than doubling the dish, bought with nothing but computation on the ground."
     grants: [RP0Level7TrackingStation]
     upgrades: [commsTL6]
-    # 2026-07 (extends the comms ladder past tel_xBandDownlink, at the user's request). commsTL6-10 are
-    # RealAntennas' onboard tech levels (KEEP-techlevel — the live, real progression). The RP0Level7-11 grants
-    # map to RP-1's deepSpaceComms->modernComms DSN rungs; they KEEP (the DSN axis stays in the tree so it's
-    # here to build against), continuing the L2-6 grants pattern. Their in-game effect (per-level DSN gain)
-    # still needs wiring — tracked automatically in docs/IMPL-TODO.md via the grants: mechanism, not dropped.
-  - id: tel_concatenatedCoding
-    title: "Concatenated Channel Coding"
+    # RENAMED 2026-08-11 from `tel_kaBandDownlink` / "Ka-Band High-Rate Downlink" — it grants commsTL6 and
+    # Ka needs TL9, three rungs later. Retitled to commsTL6's real content: RealAntennas' "Deep Space Comms,
+    # 1972-1975 — antenna improvements 1971-1972, convolutional coding ~1973". The Ka name moved to TL9.
+    #
+    # 2026-07 (extends the comms ladder, at the user's request). commsTL6-10 are RealAntennas' onboard tech
+    # levels (KEEP-techlevel — the live, real progression). The RP0Level7-11 grants map to RP-1's
+    # deepSpaceComms->modernComms DSN rungs; they KEEP (the DSN axis stays in the tree so it's here to build
+    # against), continuing the L2-6 grants pattern. Their in-game effect (per-level DSN gain) still needs
+    # wiring — tracked automatically in docs/IMPL-TODO.md via the grants: mechanism, not dropped.
+  - id: tel_xBandDownlink
+    title: "X-Band Deep-Space Downlink"
     discipline: Telecommunications
     tier: 11
-    parents: [tel_kaBandDownlink]
-    flavor: "Stop reaching for a bigger dish and start encoding smarter: wrap a Reed-Solomon block code around a convolutional inner code and the receiver rebuilds bits it would once have lost in the hiss — coding gain worth more than doubling the antenna. The same hardware suddenly carries several times the data, for the price of arithmetic. Voyager came home this way."
+    parents: [tel_convolutionalCoding]
+    flavor: "Move the deep-space link up from S-band to X-band — roughly four times the frequency, and with it the beam narrows and the data rate climbs, wringing a usable stream out of a signal smeared across the outer Solar System. It takes both ends at once: an onboard transponder that transmits on the new band, and a DSN dish upgraded to hear it. Voyager flew its whole grand tour home on X-band, its telemetry wrapped in a Reed-Solomon shell around the convolutional code beneath."
     grants: [RP0Level8TrackingStation]
     upgrades: [commsTL7]
+    # RENAMED 2026-08-11 from `tel_concatenatedCoding` / "Concatenated Channel Coding". THIS is the rung that
+    # opens X-band: commsTL7 clears BandInfo[X].TechLevel = 7, and the paired RP0Level8TrackingStation puts
+    # the ground TL at 7, which is exactly where RO gives the DSN its X-band dish — both ends at once.
+    # RealAntennas' own name for TL7 is "High Data Rate Comms, 1976-1980: X-Band ~1975, concatenated coding":
+    # the band and the concatenated code arrive together, and per the one-concept-per-name rule the title
+    # takes the band (the player-visible capability) while the coding stays in the flavor.
   - id: tel_antennaArraying
     title: "Ground-Station Antenna Arraying"
     discipline: Telecommunications
     tier: 12
-    parents: [tel_concatenatedCoding]
+    parents: [tel_xBandDownlink]
     flavor: "Phase a whole field of ground dishes together and they act as one impossible aperture — a 70-metre giant and a cluster of 34-metre beam-waveguide antennas combined to hear a probe going quiet at the edge of the Solar System. When Voyager reached Neptune, it took the whole array to keep the pictures coming."
     grants: [RP0Level9TrackingStation]
     upgrades: [commsTL8]
-  - id: tel_bandwidthEfficientModulation
-    title: "Bandwidth-Efficient Modulation"
+    # Name UNCHANGED and deliberately not a band name. commsTL8 does clear BandInfo[Ku].TechLevel = 8, but Ku
+    # is unusable for deep space: no DSN station carries it (RO gives Goldstone/Canberra/Madrid VHF, UHF, S,
+    # X and Ka only), so naming this rung for Ku would advertise a band with nothing on the far end. Its real
+    # capability is the arraying itself — RealAntennas' "Massive Scale Comms, 1986-1997: 70m antennas 1988".
+  - id: tel_kaBandDownlink
+    title: "Ka-Band High-Rate Downlink"
     discipline: Telecommunications
     tier: 13
     parents: [tel_antennaArraying]
-    flavor: "Spectrum is finite and crowded, so pack more bits into every hertz of it — shaped, suppressed-carrier schemes and modern low-density coding that push the link toward its theoretical limit instead of simply shouting louder. The efficient radio a whole fleet of spacecraft can share without drowning one another out."
+    flavor: "Climb the band again, from X to Ka — near four times the frequency once more, the beam tightening to a needle and the data rate leaping with it. The band a modern flagship saves for its high-rate science: the step from an X-band trickle to a torrent, on a carrier so narrow the dish must be aimed to a hair, packed by shaped suppressed-carrier modulation that pushes the link toward its theoretical limit."
     grants: [RP0Level10TrackingStation]
     upgrades: [commsTL9]
+    # RENAMED 2026-08-11 from `tel_bandwidthEfficientModulation` / "Bandwidth-Efficient Modulation". THIS is
+    # the rung that opens Ka: commsTL9 clears BandInfo[Ka].TechLevel = 9, and RP0Level10TrackingStation puts
+    # the ground TL at 9, exactly where RO gives the DSN its 34m Ka dish — again both ends together.
+    # RealAntennas calls TL9 "Efficient Comms, 1998-2008: super-cooled maser & feed 1995, Ka-band 2004"; the
+    # modulation efficiency stays in the flavor, the band takes the title.
   - id: tel_opticalDownlink
     title: "Optical Deep-Space Downlink"
     discipline: Telecommunications
     tier: 14
-    parents: [tel_bandwidthEfficientModulation]
+    parents: [tel_kaBandDownlink]
     flavor: "Leave radio behind and modulate a laser: an optical carrier tens of thousands of times higher in frequency than X-band, packing orders of magnitude more data onto a beam so tight it must be pointed to the arc-second across light-minutes of empty space. The downlink of the present frontier — flown from lunar orbit, and now from the asteroid belt."
     grants: [RP0Level11TrackingStation]
     upgrades: [commsTL10]
@@ -5912,7 +5970,10 @@ nodes:
     parents: [gnc_deepSpaceApogeeEngine]
     flavor: "A launch-abort engine that can also fly a controlled, propulsive touchdown — pressure-fed hypergolics deep-throttled and restarted enough times to trust a crew's life to it twice in one mission, once going up wrong and once coming down right."
     parts: [ROE-SuperDraco, ROE-SuperDracoDouble, ROC-CSTRS88, ROC-OrionLAS, ROC-OrionCover1, ROC-OrionCover2, ROC-OrionCover3]
-    upgrades: [RFUpgrade_R-42DM, RFUpgrade_R-42DM-NTO]  # moved down from gnc_deepSpaceApogeeEngine (own base part ROE-R42 there), doctrine-4 fix 2026-07
+    # RFUpgrade_R-42DM / -NTO moved OUT 2026-08 -> gnc_dualModePropulsion (T12). The 2026-07 doctrine-4
+    # sweep parked them here because this was the nearest node downstream of their base part's
+    # (ROE-R42, on gnc_deepSpaceApogeeEngine) - proximity, not mechanism. They are dual-mode apogee
+    # thrusters and have no relationship to a deep-throttling abort/landing engine.
     # King SuperDraco/Twin SuperDraco (Dragon 2) - real breakthrough beyond any prior abort motor. CSTRS88
     # (CST-100's own abort-only cluster) rides along as the parallel commercial-crew system without the
     # landing capability. Orion's own solid LAS + its 3 jettisoned fairing covers ride along too (same

@@ -21,11 +21,11 @@ _SHIPPED — the 11-level ladder + DSN gain are re-provided by design/Settings/A
 | `RP0Level3TrackingStation` | `tel_pcmTelemetry` | T6 | Pulse-Code Modulation Telemetry |
 | `RP0Level4TrackingStation` | `tel_deployableHighGainDish` | T7 | Deployable High-Gain Dish |
 | `RP0Level5TrackingStation` | `tel_phasedArrayRelay` | T8 | Phased-Array Relay Antenna |
-| `RP0Level6TrackingStation` | `tel_xBandDownlink` | T9 | X-Band Deep-Space Downlink |
-| `RP0Level7TrackingStation` | `tel_kaBandDownlink` | T10 | Ka-Band High-Rate Downlink |
-| `RP0Level8TrackingStation` | `tel_concatenatedCoding` | T11 | Concatenated Channel Coding |
+| `RP0Level6TrackingStation` | `tel_blockCoding` | T9 | Block-Coded Telemetry |
+| `RP0Level7TrackingStation` | `tel_convolutionalCoding` | T10 | Convolutional Coding |
+| `RP0Level8TrackingStation` | `tel_xBandDownlink` | T11 | X-Band Deep-Space Downlink |
 | `RP0Level9TrackingStation` | `tel_antennaArraying` | T12 | Ground-Station Antenna Arraying |
-| `RP0Level10TrackingStation` | `tel_bandwidthEfficientModulation` | T13 | Bandwidth-Efficient Modulation |
+| `RP0Level10TrackingStation` | `tel_kaBandDownlink` | T13 | Ka-Band High-Rate Downlink |
 | `RP0Level11TrackingStation` | `tel_opticalDownlink` | T14 | Optical Deep-Space Downlink |
 
 ## Avionics capability tiers (23) — WIRED
