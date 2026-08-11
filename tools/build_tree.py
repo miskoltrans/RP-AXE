@@ -2349,6 +2349,41 @@ def check_ep_power_spread(u2n, by, hard=False):
         die(f"{len(bad)} node(s) span >{EP_SPREAD_MAX:g}x in electric input power — see above.")
     return bad
 
+def check_engine_config_gates():
+    """Build gate: resolve every RealFuels engine CONFIG through the emitted overlay and prove
+    it lands on a real node. check_tech_gates() above cannot see this — it scans SOURCE, where
+    all 949 seed CONFIG gates carry RP-1 node ids BY DESIGN and are rewritten at :FINAL by
+    AxeEngineConfigGates.cfg (written just above). A stranded config is silent: RealFuels'
+    CanConfig() just never offers it. Must run AFTER emit_engine_config_gates(); reads the
+    emitted artifact rather than this module's bookkeeping, so it can catch a blind spot here
+    instead of agreeing with one. See tools/check_engine_config_gates.py."""
+    if ROOT not in sys.path:
+        sys.path.insert(0, ROOT)
+    try:
+        import check_engine_config_gates as cecg
+    except Exception as e:
+        print(f"engine config gate sweep: skipped ({e})"); return
+    nodes = cecg.load_tree_nodes(cecg.TREE)
+    seed = cecg.load_seed_gates(cecg.SEED)
+    rows = cecg.load_overlay_rows(cecg.OVERLAY)
+    bad = []
+    for part, cfgs in cecg.load_part_configs(cecg.CACHES).items():
+        for cfg in (c for c in cfgs if c and c in seed):
+            target, rule = cecg.resolve(part, cfg, seed[cfg], rows)
+            if rule is None or target == cecg.PARKING or target not in nodes:
+                bad.append((part, cfg, target, "uncovered" if rule is None else
+                            "parked" if target == cecg.PARKING else "no such node"))
+    if not bad:
+        print("engine config gate sweep: clean -- every gated engine CONFIG resolves to a real AXE node")
+        return
+    print(f"engine config gate sweep: {len(bad)} engine CONFIG(s) unreachable in career "
+          f"-- RealFuels will never offer them; run tools/check_engine_config_gates.py:")
+    for part, cfg, target, why in bad[:12]:
+        print(f"   {part:<26} {cfg:<26} -> {target}  ({why})")
+    if len(bad) > 12:
+        print(f"   ... and {len(bad) - 12} more")
+
+
 def check_tech_gates(nodes):
     """Build gate: every RP-AXE-*authored* raw tech gate (design/*.cfg + Source/*.cs) must
     resolve to a real tree node. Otherwise it fails CLOSED and SILENT in-game — renaming or
@@ -2456,6 +2491,7 @@ def main():
     check_probe_requirements(nodes)
     emit_impl_backlog(nodes)             # docs/IMPL-TODO.md: provisional grants + impl_todo -> checklist
     check_tech_gates(nodes)              # gate: authored tech-refs (design/*.cfg + Source) must resolve (fail closed+silent otherwise)
+    check_engine_config_gates()          # gate: every engine CONFIG's RESOLVED gate must land on a real node
     check_ladder_collapse(ladders, by, p2n, u2n)   # gate: engine-config ladders must not collapse onto one node
     check_techlevel_ladders(by, u2n)     # gate: numbered tech levels (Battery-N, Fairing-N, solarTL-N) must ascend
     emit_engine_tech_levels(u2n, by)     # RF_TECHLEVELS TLTECH<n> -> AXE nodes (RP-1/stock names dangle)
