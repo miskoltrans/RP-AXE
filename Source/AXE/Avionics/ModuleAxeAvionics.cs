@@ -152,10 +152,13 @@ namespace RPAxe
         // drift down to it for free, and only pays watts below. That deadband is why LEO is nearly free.
         [KSPField] public float minK = 273f;
 
-        [KSPField(isPersistant = true)] public float busTemperature = -1f;   // K; <0 = uninitialised
         ModuleAxeThermal _thermal;   // owns the heater state + its own Kerbalism line
 
-        // (Bus Temperature is drawn by ModuleAxeThermal, which owns the state.)
+        // (Bus Temperature is drawn by ModuleAxeThermal, which owns the state -- and, since 2026-08-12,
+        // is the ONLY thing that carries it. This module used to persist a `busTemperature` of its own
+        // that no loaded code path ever touched; it existed solely so the duplicate heater integration in
+        // BackgroundUpdate below had somewhere to keep a second, divergent copy of the bus temperature.
+        // That integration is gone, so the field went with it.)
 
         // AS-BUILT, persisted, frozen at launch. New features are built craft-sharing-first (user,
         // 2026-08-05): the k a craft flies with is the one resolved when it was BUILT, so a shared .craft
@@ -1488,23 +1491,35 @@ namespace RPAxe
         /// <summary>
         /// Advance the bus temperature by <paramref name="dt"/> seconds and return the heater watts needed
         /// to hold the floor. Shared by flight and background so the two cannot diverge.
+        ///
+        /// THE TEMPERATURE IS A DOUBLE, AND THAT IS NOT COSMETIC. This integrator's normal resting state is
+        /// tRef sitting EXACTLY on tMin: once a craft has cooled to the floor, every subsequent step nudges
+        /// it a hair below and the clamp puts it straight back. The nudge is tiny -- with a 14-day tau, one
+        /// 0.02 s physics tick moves the bus 8e-7 K -- and float32's ulp at 273 K is 3.1e-5 K, ~40x larger.
+        /// So as a float the nudge ROUNDED AWAY, `tRef >= tMin` stayed true, and the heaters billed a clean
+        /// 0 W. Not approximately zero: zero, forever, at any warp under ~19x (the rate at which dt finally
+        /// makes the step exceed half an ulp). A probe therefore flew heater-free in flight and paid full
+        /// price the moment it unloaded, which is what sent Benera 3's battery to empty on a Venus cruise.
+        ///
+        /// The same rounding also froze the cooldown itself: stepping down from the 293 K setpoint moves
+        /// 1.6e-6 K per tick against a 3.1e-5 K ulp, so a craft watched at 1x never got cold at all.
         /// </summary>
         /// <param name="tRef">temperature in/out (K); pass &lt;0 to initialise at setpoint</param>
         public static float StepThermal(float deficit, float area, float k, double massKg,
-                                        float specHeat, float tSet, float tMin, double dt, ref float tRef)
+                                        float specHeat, float tSet, float tMin, double dt, ref double tRef)
         {
             if (area <= 0f || k <= 0f || tSet <= 0f) { tRef = tSet; return 0f; }
-            if (tRef <= 0f) tRef = tSet;                       // fresh craft starts at setpoint
+            if (tRef <= 0d) tRef = tSet;                       // fresh craft starts at setpoint
 
             float qMax = k * area;                             // full radiative loss at setpoint, W
-            float tEnv = tSet * Mathf.Pow(Mathf.Max(0f, 1f - deficit), 0.25f);
+            double tEnv = tSet * System.Math.Pow(System.Math.Max(0d, 1d - deficit), 0.25d);
 
             double C = System.Math.Max(1d, massKg) * System.Math.Max(1d, specHeat);
             double G = 4d * qMax / tSet;                       // linearised dQ/dT at setpoint, W/K
             double tau = G > 0d ? C / G : 0d;
 
             // Unconditionally stable at any dt: dt >> tau collapses to T = tEnv.
-            float blend = tau > 0d && dt > 0d ? (float)(1d - System.Math.Exp(-dt / tau)) : 1f;
+            double blend = tau > 0d && dt > 0d ? 1d - System.Math.Exp(-dt / tau) : 1d;
             tRef += (tEnv - tRef) * blend;
 
             if (tRef >= tMin) return 0f;                       // free: the deadband is doing its job
@@ -2395,41 +2410,25 @@ namespace RPAxe
                 float cw = 0f;
                 if (!moduleSnapshot.moduleValues.TryGetValue("currentWatts", ref cw)) cw = 0f;
 
-                // currentWatts in the snapshot is FROZEN at whatever it was when the vessel last unloaded,
-                // which is fine for the tier/mass term (mass freezes at launch anyway) but wrong for the
-                // heaters: an unloaded probe coasting outward gets colder every day, and that is precisely
-                // the unattended cruise the mechanic exists for. So re-evaluate the thermal term live here
-                // from the vessel's CURRENT distance, and swap it for the stale one baked into the snapshot.
-                float staleThermal = 0f, k = 0f;
+                // HEATERS ARE NOT OURS. currentWatts (written by OnSave) still carries the total, because
+                // without Kerbalism the ModuleCommand resource is the only channel that exists -- so the
+                // heater share has to come back OUT here, exactly as the loaded path does it in
+                // UpdateRate() (`currentWatts - thermalWatts`). ModuleAxeThermal.BackgroundUpdate bills the
+                // live, re-integrated heater load under its own "heaters" label.
+                //
+                // 2026-08-12: this block used to re-integrate the thermal term itself and ADD it back on
+                // (`cw - staleThermal + liveThermal`), left over from before heaters moved to their own
+                // module on 2026-08-05. That double-billed every unloaded craft's heaters -- once here and
+                // once in ModuleAxeThermal -- and did it against the retired box-volume area (6*vol^(2/3))
+                // rather than the vessel area, so the two copies were not even the same number. Measured on
+                // Benera 3 (Venus cruise, 1.74 AU): 3.7 W of avionics was billed as 28.1 W, and with the
+                // heaters' own 24.6 W on top the vessel drew 52.7 W in the tracking station against 3.7 W
+                // in flight, on ~39 W of panels. Deleting the block is the whole fix; there is nothing
+                // stale left to refresh, because the only stale part WAS the heaters.
+                float staleThermal = 0f;
                 moduleSnapshot.moduleValues.TryGetValue("thermalWatts", ref staleThermal);
-                moduleSnapshot.moduleValues.TryGetValue("asBuiltThermalK", ref k);
 
-                // Same integration as the loaded path, or a craft would jump the moment it unloads. The
-                // temperature is written BACK into the snapshot so it keeps evolving across background
-                // ticks -- that is the whole state this model carries.
-                float liveThermal = staleThermal;
-                if (k > 0f)
-                {
-                    float bv = 0f, hv = 0f, irf = 0.35f, sh = 900f, tSet = 293f, tMin = 273f, temp = -1f;
-                    moduleSnapshot.moduleValues.TryGetValue("battVolume", ref bv);
-                    moduleSnapshot.moduleValues.TryGetValue("hwVolume", ref hv);
-                    moduleSnapshot.moduleValues.TryGetValue("bodyIrFraction", ref irf);
-                    moduleSnapshot.moduleValues.TryGetValue("specificHeat", ref sh);
-                    moduleSnapshot.moduleValues.TryGetValue("setpointK", ref tSet);
-                    moduleSnapshot.moduleValues.TryGetValue("minK", ref tMin);
-                    moduleSnapshot.moduleValues.TryGetValue("busTemperature", ref temp);
-
-                    float vol = bv + hv;
-                    if (vol > 0f)
-                    {
-                        liveThermal = StepThermal(VesselDeficit(v, irf), 6f * Mathf.Pow(vol, 2f / 3f), k,
-                                                  v != null ? v.totalMass * 1000d : 1000d,
-                                                  sh, tSet, tMin, elapsed_s, ref temp);
-                        moduleSnapshot.moduleValues.SetValue("busTemperature", temp, true);
-                    }
-                }
-
-                double watts = cw - staleThermal + liveThermal;
+                double watts = cw - staleThermal;
                 if (watts > 0d)
                     resourceChangeRequest.Add(new KeyValuePair<string, double>(EcName, -watts / 1000.0));
             }

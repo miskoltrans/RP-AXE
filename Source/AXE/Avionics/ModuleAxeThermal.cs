@@ -63,7 +63,10 @@ namespace RPAxe
         [KSPField] public float minK = 273f;           // battery floor -- heaters defend THIS, not setpoint
         [KSPField] public float bodyIrFraction = 0.35f;
 
-        [KSPField(isPersistant = true)] public float busTemperature = -1f;
+        // DOUBLE, not float -- see ModuleAxeAvionics.StepThermal. At the 273 K floor a single tick's
+        // temperature step is ~40x smaller than float32's ulp there, so as a float this state variable
+        // physically could not move and the heaters silently billed 0 W below ~19x warp.
+        [KSPField(isPersistant = true)] public double busTemperature = -1d;
 
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Thermal Load",
                   guiFormat = "N1", guiUnits = " W", groupName = PAWGroup, groupDisplayName = GroupDisplay)]
@@ -151,7 +154,7 @@ namespace RPAxe
         public override void OnStart(StartState state)
         {
             base.OnStart(state);
-            if (busTemperature <= 0f) busTemperature = setpointK;
+            if (busTemperature <= 0d) busTemperature = setpointK;
             if (HighLogic.LoadedSceneIsEditor) SetupSimSelector();
         }
 
@@ -207,7 +210,7 @@ namespace RPAxe
                 ? ModuleAxeAvionics.ThermalDeficit(sunDist, 1d, null, 0d, bodyIrFraction)
                 : ModuleAxeAvionics.ThermalDeficit(sunDist, 1d, b, b.Radius * 1.1d, bodyIrFraction);
 
-            float t = 0f;   // steady state, not a live craft's history
+            double t = 0d;   // steady state, not a live craft's history
             simWatts = ModuleAxeAvionics.StepThermal(deficit, simArea, thermalK, 1d,
                                                      specificHeat, setpointK, minK, double.MaxValue / 4d, ref t);
         }
@@ -227,7 +230,7 @@ namespace RPAxe
                 // Someone else aboard is billing the vessel's heaters; stay silent rather than double-bill.
                 thermalWatts = 0f;
                 busTemperature = setpointK;
-                busTemperatureDisplay = busTemperature;
+                busTemperatureDisplay = (float)busTemperature;
                 _ec = new KeyValuePair<string, double>(EcName, 0d);
                 return;
             }
@@ -237,7 +240,7 @@ namespace RPAxe
             // (propellant genuinely stores heat, and it is what makes an ascending stack thermally inert).
             thermalWatts = ModuleAxeAvionics.StepThermal(deficit, thermalArea, thermalK,
                 vessel.GetTotalMass() * 1000d, specificHeat, setpointK, minK, dt, ref busTemperature);
-            busTemperatureDisplay = busTemperature;
+            busTemperatureDisplay = (float)busTemperature;
             _ec = new KeyValuePair<string, double>(EcName, -thermalWatts / 1000.0);
         }
 
@@ -270,7 +273,7 @@ namespace RPAxe
                 double bodyDist = body != null ? body.Radius * 1.1d : 0d;
                 float deficit = ModuleAxeAvionics.ThermalDeficit(sunDist, sunlight < 0.5d ? 0d : 1d,
                                                                  body, bodyDist, bodyIrFraction);
-                float t = 0f;   // fresh: steady state, not the live craft's history
+                double t = 0d;   // fresh: steady state, not the live craft's history
                 watts = ModuleAxeAvionics.StepThermal(deficit, area, thermalK,
                                                       1d, specificHeat, setpointK, minK, double.MaxValue / 4d, ref t);
             }
@@ -293,7 +296,8 @@ namespace RPAxe
         {
             if (!availableResources.ContainsKey(EcName)) return "heaters";
 
-            float k = 0f, temp = -1f, sh = 900f, tSet = 293f, tMin = 273f, irf = 0.35f, coeff = 0.04f;
+            float k = 0f, sh = 900f, tSet = 293f, tMin = 273f, irf = 0.35f, coeff = 0.04f;
+            double temp = -1d;
             moduleSnapshot.moduleValues.TryGetValue("thermalK", ref k);
             moduleSnapshot.moduleValues.TryGetValue("areaCoefficient", ref coeff);
             float area = VesselArea(v, coeff);
@@ -313,8 +317,14 @@ namespace RPAxe
             if (k <= 0f || area <= 0f) return "heaters";
             moduleSnapshot.moduleValues.SetValue("thermalArea", area, true);
 
+            // GetTotalMass(), not the totalMass FIELD: that field is only ever written from inside
+            // GetTotalMass() itself (Assembly-CSharp), so on an unloaded vessel nothing refreshes it and it
+            // can still be whatever it was -- or 0. Zero mass means zero heat capacity, which collapses tau
+            // from days to seconds and drops a craft onto the heater floor the instant it unloads. The
+            // accessor branches on `loaded` and sums the proto snapshots, which is what the loaded path
+            // gets too, so the two integrations stay the same physics.
             float w = ModuleAxeAvionics.StepThermal(ModuleAxeAvionics.VesselDeficit(v, irf), area, k,
-                v != null ? v.totalMass * 1000d : 1000d, sh, tSet, tMin, elapsed_s, ref temp);
+                v != null ? v.GetTotalMass() * 1000d : 1000d, sh, tSet, tMin, elapsed_s, ref temp);
 
             // Write the evolved temperature back, or an unloaded craft would never actually cool.
             moduleSnapshot.moduleValues.SetValue("busTemperature", temp, true);
