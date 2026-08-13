@@ -153,6 +153,7 @@ If `dotnet` resolves the wrong toolchain, mirror RP-1's approach: it pins Roslyn
    ```
    python tools/check_liveness.py          # empty nodes, phantom modules, inert cfgs, dead tech gates
    python tools/check_settings_parity.py   # settings RP-1 owned that we never re-authored
+   python tools/check_model_anims.py       # PAW buttons bound to animations the model doesn't have
    ```
    `check_liveness.py` refuses to answer if the cache predates your edits, so a green run means
    the verdict is about the build you just made. `rebuild-instance.ps1` runs both automatically.
