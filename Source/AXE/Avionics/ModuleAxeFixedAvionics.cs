@@ -168,9 +168,10 @@ namespace RPAxe
         // fixed-capacity unit and keep full attitude autonomy for free).
         public bool ProvidesAttitudeReference => ShieldingActive;
 
-        // Drives THIS part's ModuleSAS only; KSP MAXes AutopilotSkill across parts, so vessel-MAX and the
-        // crewed exemption come for free. Writes targetSASServiceLevel, NOT SASServiceLevel -- ModuleSAS
-        // .FixedUpdate recomputes the latter from the former every frame.
+        // Drives THIS part's ModuleSAS only; KSP MAXes AutopilotSkill across parts, so vessel-MAX comes for
+        // free. The crewed exemption does not -- it is bought by AxeCrewSasSkill.cs. Writes
+        // targetSASServiceLevel, NOT SASServiceLevel -- ModuleSAS.FixedUpdate recomputes the latter from
+        // the former every frame.
         void ApplyAttitudeReference()
         {
             if (_sas == null) _sas = part.FindModuleImplementing<ModuleSAS>();

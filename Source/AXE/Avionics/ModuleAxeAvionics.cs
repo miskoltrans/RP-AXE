@@ -1543,8 +1543,9 @@ namespace RPAxe
         public bool ProvidesAttitudeReference => !dead && guidanceEnabled && ShieldedActive;
 
         // Drives THIS part's ModuleSAS only. Vessel level resolves as a MAX across parts via
-        // part.PartValues.AutopilotSkill, so vessel-MAX and the crewed exemption both fall out for free --
-        // a crewed pod carries its own ModuleSAS at full level and simply wins the max.
+        // part.PartValues.AutopilotSkill, so vessel-MAX falls out for free. The crewed exemption does NOT:
+        // most crewed pods ship no ModuleSAS at all and stock's crew contributor is the kerbal's XP level.
+        // AxeCrewSasSkill.cs + design/Settings/AxeCrewAutopilot.cfg pin that contributor at full level.
         //
         // Writes targetSASServiceLevel, NOT SASServiceLevel: ModuleSAS.FixedUpdate recomputes the latter
         // every frame as ApplySASServiceLevelAdjustments(targetSASServiceLevel), so writing SASServiceLevel

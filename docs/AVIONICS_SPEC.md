@@ -125,8 +125,23 @@ touches `unlockTechs`.
 node anywhere, **including LEO**. You place stock KSP nodes and hand-fly them. That is the intended early-
 game texture, not collateral damage.
 
-**Crewed is free.** Vessel SAS resolves through `part.PartValues.AutopilotSkill`, a MAX across parts, so a
-crewed pod's own `ModuleSAS` wins automatically. No crew special-case to write.
+**Crewed is free — but it needed a special case after all (2026-08-13).** The original claim here was
+that vessel SAS resolves as a MAX across parts through `part.PartValues.AutopilotSkill`, so a crewed
+pod's own `ModuleSAS` wins automatically. The MAX is real; the pod's `ModuleSAS` is not. Of the 72
+crewed command parts in the live MM cache, **52 carry no `ModuleSAS` node at all**, 11 sit at level 1
+and only 9 at level 3. Stock's other contributor is the crew's own `AutopilotSkill` experience effect,
+whose value is `Parent.CrewMemberExperienceLevel()` — the kerbal's XP level, and only the Pilot trait
+has the effect. So in practice a rookie pilot gave stability assist and nothing else, and an
+engineer- or scientist-only crew gave **no SAS at all** (with no contributor the value stays at its
+`-1` default, and `AvailableAtLevel` fails even for mode 0).
+
+The rule AXE wants is the one the MechJeb half already enforces — a human aboard *is* the attitude
+reference — and crew progression is cut forever, so XP is not a currency the player plans around.
+Both halves now say it: `design/Settings/AxeCrewAutopilot.cfg` gives Engineer and Scientist the
+`AutopilotSkill` effect (Tourist excluded), and `Avionics/AxeCrewSasSkill.cs` postfixes
+`AutopilotSkill.GetValue` to a flat 3. The value, not `AvailableAtLevel`, so every consumer of
+`VesselValues.AutopilotSkill` agrees. Config alone cannot do it: `GetValue` reads neither the EFFECT
+node's `level` nor its `modifiers`.
 
 **Implementation notes (all ground-truthed 2026-08-05):**
 - Write **`targetSASServiceLevel`**, NOT `SASServiceLevel` — `ModuleSAS.FixedUpdate` recomputes the latter
