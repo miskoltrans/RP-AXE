@@ -34,6 +34,7 @@ is a silent break.
 | **A3** Dangling tech-node id | Fails **closed**: `GetTechnologyState(unknown)` → `Unavailable`, so the gated thing is locked forever. | `autoStrutTechRequired = generalConstruction` (`4708e6c`); 4 orphaned stock/CTT ids (`c3e6620`); HDD-Upgrade gates (`1d0f3db`); US2 wedge `Configure` gates (`1d5472c`); 702 RCS engine CONFIGs (`3d16480`) | `check_tech_refs.py --cache` |
 | **A4** Placed part that isn't there | The tree places a part that another AXE config deletes, that a missing mod owns, or that fails to compile. The node still costs science and grants nothing. | `ca_GRS`, the 5 `dmUS2*` wedges (`93b9725`, `1bd9aeb`); `aje_solarPanels` (`AxeUpstreamPartFixes.cfg`) | `check_liveness.py` check A |
 | **A5** Global setting that reverts to stock | RP-1 was the *only* source of a CustomBarnKit section or difficulty key; dropping RP-1 resurrected the stock value nobody chose. | the 7-item punch-list (`5c12181`, `4708e6c`, `25e2b80`, `7e3b58f`); 17 more found + decided 2026-07-29 | `check_settings_parity.py` |
+| **A6** Animation name with no clip | `animationName = X` where the part's `.mu` has no clip `X`. The module is **not** dropped — it keeps its PAW button over a null `anim`, so the failure is deferred to the moment a player presses it. | `ROC-VoskhodCapsule` "Extend Antenna" → NRE on click, found in flight 2026-08-13 (`AxeUpstreamPartFixes.cfg` 5) | `check_model_anims.py` |
 
 ### B. Semantic misread — the API does not mean what the field name says
 
@@ -102,10 +103,16 @@ The reason a bug in family A or B survives long enough to reach playtesting.
 | `tools/check_settings_parity.py` | A5 | RP-1 checked out; a cache sharpens it |
 | `tools/check_forks.py`, `check_ladder_collapse` (in `build_tree.py`) | tree-design invariants | repo only |
 | `tools/check_nonreentry.py` | reentry-rating coverage | repo only |
+| `tools/check_model_anims.py` | A6 | a booted instance + the `.mu` assets |
 
 `rebuild-instance.ps1` step 6 boots the instance with `-axe-autotest` and runs `check_liveness.py`
-+ `check_settings_parity.py` against the cache that boot produced, so a rebuild that reaches the
-end is a rebuild somebody checked. `-NoVerify` opts out and says so loudly.
++ `check_settings_parity.py` + `check_model_anims.py` against the cache that boot produced, so a
+rebuild that reaches the end is a rebuild somebody checked. `-NoVerify` opts out and says so loudly.
+
+A6 is the first class here that a boot **cannot** surface on its own: the part compiles, loads, and
+works, and the one diagnostic line is a `[LOG]` emitted only when the part is first instantiated —
+never at load. Short of pressing every button on every part, the config-vs-asset comparison is the
+only way to see it, which is why the detector reads the `.mu` binaries rather than the log.
 
 `check_liveness.py` opens with a **staleness check**: if the merged cache predates any shipped
 `.cfg`/`.dll`, it refuses to answer rather than describing the previous boot. That check is
