@@ -35,6 +35,7 @@ is a silent break.
 | **A4** Placed part that isn't there | The tree places a part that another AXE config deletes, that a missing mod owns, or that fails to compile. The node still costs science and grants nothing. | `ca_GRS`, the 5 `dmUS2*` wedges (`93b9725`, `1bd9aeb`); `aje_solarPanels` (`AxeUpstreamPartFixes.cfg`) | `check_liveness.py` check A |
 | **A5** Global setting that reverts to stock | RP-1 was the *only* source of a CustomBarnKit section or difficulty key; dropping RP-1 resurrected the stock value nobody chose. | the 7-item punch-list (`5c12181`, `4708e6c`, `25e2b80`, `7e3b58f`); 17 more found + decided 2026-07-29 | `check_settings_parity.py` |
 | **A6** Animation name with no clip | `animationName = X` where the part's `.mu` has no clip `X`. The module is **not** dropped — it keeps its PAW button over a null `anim`, so the failure is deferred to the moment a player presses it. | `ROC-VoskhodCapsule` "Extend Antenna" → NRE on click, found in flight 2026-08-13 (`AxeUpstreamPartFixes.cfg` 5) | `check_model_anims.py` |
+| **A7** Facility level above the ladder | A vendored `minLevel` written against RP-1's CustomBarnKit rung count, where AXE left the section at CBK's shorter default. Not a name that fails to resolve — a **number out of range** — but it fails the same way: closed, and silent. The contract is never *offered*, so there is nothing to inspect. | `first_EVA` asked AstronautComplex 4 against a 3-rung ladder, found 2026-08-13 (`AxeFirstEvaRequirements.cfg`) | `check_liveness.py` check F |
 
 ### B. Semantic misread — the API does not mean what the field name says
 
@@ -98,7 +99,7 @@ The reason a bug in family A or B survives long enough to reach playtesting.
 
 | Tool | Covers | Needs |
 |---|---|---|
-| `tools/check_liveness.py` | A1, A2, A4 + A3 (folds in `check_tech_refs --cache`) | a booted instance (`ConfigCache` + `KSP.log`) |
+| `tools/check_liveness.py` | A1, A2, A4, A7 + A3 (folds in `check_tech_refs --cache`) | a booted instance (`ConfigCache` + `KSP.log`) |
 | `tools/check_tech_refs.py --cache <ConfigCache>` | A3 alone, with fuller output | a booted instance |
 | `tools/check_settings_parity.py` | A5 | RP-1 checked out; a cache sharpens it |
 | `tools/check_forks.py`, `check_ladder_collapse` (in `build_tree.py`) | tree-design invariants | repo only |

@@ -351,6 +351,78 @@ def check_effects(cache):
             notes.append(fn)
     return fail, notes
 
+FACILITY_SECTION = {              # Contract Configurator's facility name -> CustomBarnKit's section
+    "AstronautComplex": "ASTRONAUTS",
+    "ResearchAndDevelopment": "RESEARCH",
+    "MissionControl": "MISSION",
+    "TrackingStation": "TRACKING",
+    "LaunchPad": "LAUNCHPAD",
+    "Runway": "RUNWAY",
+    "VehicleAssemblyBuilding": "VAB",
+    "SpaceplaneHangar": "SPH",
+    "Administration": "ADMINISTRATION",
+}
+
+
+def check_facility_gates(cache):
+    """Check F — a contract that asks for a facility level the building cannot reach.
+
+    RP-1's contracts are written against RP-1's CustomBarnKit ladders, and AXE re-authored only
+    some of those sections. Where it did not, the building silently runs at CustomBarnKit's default
+    length, and any vendored `minLevel` above that becomes unsatisfiable. It fails the same way a
+    dangling tech id does -- CLOSED, and silently: the requirement is never met, so the contract is
+    never OFFERED, so there is nothing in the log and nothing in the contract list to notice.
+
+    Found 2026-08-13 on first_EVA, which asks AstronautComplex minLevel = 4. RP-1 gives that
+    building `levels = 5` (and `unlockedEVA = 4`, which is what the requirement was restating);
+    AXE never re-authored the section, so it runs at CustomBarnKit's default `levels = 3` and the
+    contract could never appear. The same sweep clears the ten TrackingStation gates, which reach
+    minLevel 7 against an 11-rung DSN ladder.
+
+    Reads both sides from the merged cache, so it stays true if either the ladders or the contracts
+    change. A facility whose section is absent from the cache is reported as UNKNOWN rather than
+    assumed fine -- not knowing the cap is not the same as the cap being high enough.
+    """
+    text = open(cache, encoding="utf-8", errors="replace").read()
+    caps = {}
+    for fac, section in FACILITY_SECTION.items():
+        m = re.search(r"\n\t+%s\n\t+\{" % section, text)
+        if not m:
+            continue
+        lv = re.search(r"\n\s*levels = (\d+)", text[m.end():m.end() + 900])
+        if lv:
+            caps[fac] = int(lv.group(1))
+
+    bad, unknown, checked = [], [], 0
+    for blk in text.split("\nUrlConfig\n{\n"):
+        m = re.match(r"\tparentUrl = (.+)\n\tCONTRACT_TYPE\n", blk)
+        if not m:
+            continue
+        nm = re.search(r"\n\t\tname = (.+)", blk)
+        name = nm.group(1).strip() if nm else "?"
+        for fm in re.finditer(r"type = Facility\n((?:\s+\w+ = .*\n)+)", blk):
+            fac = re.search(r"facility = (\w+)", fm.group(1))
+            mn = re.search(r"minLevel = (\d+)", fm.group(1))
+            if not fac or not mn:
+                continue
+            checked += 1
+            f, want = fac.group(1), int(mn.group(1))
+            if f not in caps:
+                unknown.append((name, f, want))
+            elif want > caps[f]:
+                bad.append((name, f, want, caps[f], m.group(1)))
+
+    print(f"=== F. contract facility gates above the building's ladder ({len(bad)} of {checked}) ===")
+    for name, f, want, cap, url in bad:
+        print(f"  UNREACHABLE  {name}: {f} minLevel={want} but the ladder is {cap} rung(s)")
+        print(f"      {url}")
+    for name, f, want in unknown:
+        print(f"  UNKNOWN      {name}: {f} minLevel={want} -- no CustomBarnKit section in the cache")
+    if not bad and not unknown:
+        print(f"  all {checked} facility gate(s) are reachable")
+    return (1 if bad else 0), bad
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--instance", default=os.path.join(os.path.dirname(REPO), "Instance"),
@@ -501,7 +573,12 @@ def main():
     efail, _ = check_effects(cache)
     fail = fail or efail
 
-    print("\n" + ("FAIL -- see 0/A/B/C/T/E above." if fail
+    # ---- F: contract gates on a facility rung that does not exist --------------------------
+    print()
+    ffail, _ = check_facility_gates(cache)
+    fail = fail or ffail
+
+    print("\n" + ("FAIL -- see 0/A/B/C/T/E/F above." if fail
                   else "OK -- everything RP-AXE ships binds to something, and its values landed."))
     return fail
 
