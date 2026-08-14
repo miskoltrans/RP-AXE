@@ -326,10 +326,11 @@ namespace RPAxe
         public string capacityDisplay = "";
 
 
-        // PROTOTYPE (docs/AVIONICS_AUTHORITY.md): what the overload penalty is being replaced with. Over
-        // capacity the craft keeps control but authority decays as q = e^(-k(r-1)) until RatioCut, past
-        // which it is genuinely unguided. Shown as a percentage so an overloaded design is visible in the
-        // VAB rather than discovered in flight -- "silent" was the real complaint about RP-1's cliff.
+        // Over capacity the craft keeps control, but sigma = 1 - e^(-k(r-1)) of the command is corrupted by
+        // the regime-matching policy; there is no cutoff past which it flips to unguided (the curve
+        // asymptotes to unflyable on its own). Names the live regime AND the strength, so an overloaded
+        // design is visible in the VAB rather than discovered in flight -- "silent" was the real complaint
+        // about RP-1's cliff, and naming the regime is what keeps a policy that changes character legible.
         [KSPField(guiActive = true, guiActiveEditor = true, guiName = "Control Noise",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
         public string authorityDisplay = "";
@@ -398,144 +399,78 @@ namespace RPAxe
          UI_FloatRange(minValue = 0.1f, maxValue = 1f, stepIncrement = 0.05f, scene = UI_Scene.All)]
         public float noiseMax = 1f;   // 1 = ceiling off; the curve saturates on its own
 
-        // Roll is by far the most perceptible axis, so it is separable -- if roll noise alone dominates the
-        // feel, that is worth knowing before tuning anything else.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise roll",
-                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_Toggle(disabledText = "pitch/yaw only", enabledText = "all axes", scene = UI_Scene.All)]
-        public bool noiseRoll = true;
-
-        // Off by default: a hard flip to unguided past some ratio is the same arbitrary cliff this design
-        // exists to remove, only relocated, and it is redundant because the noise curve already asymptotes
-        // to unflyable. Kept as a toggle purely so the two can be compared.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: hard cutoff",
-                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_Toggle(disabledText = "noise only", enabledText = "unguided past cut", scene = UI_Scene.All)]
-        public bool hardCutoff = false;
-
-        // Genuinely different mechanics, not tunings of one. Indices match AxeControlPenalties.All, which is
-        // also what populates this chooser at runtime (SetupModeChooser) -- the literal below is only the
-        // fallback if that attribute pass fails.
-        //   0 none        -- experimental control: over capacity, no consequence at all.
-        //   1 lock        -- RP-1's original rule. The A/B baseline and the ship fallback.
-        //   2 uncommanded -- noise added regardless of input; the craft wanders on its own.
-        //   3 on input    -- noise scales the command; a null stick stays null, small commands survive.
-        //   4 overgain    -- no noise at all: the command is AMPLIFIED, so the loop overcontrols and
-        //                    oscillates by itself. Models the mechanism rather than the symptom, and makes
-        //                    noise Hz / white / correlated irrelevant.
-        //   5 coupling    -- commanding one axis bleeds into the others, coefficients fixed per vessel. The
-        //                    loop fights itself: correcting induced yaw induces pitch.
-        //   6 delay       -- the command is held for N ticks. Eats phase margin, which a fixed-gain
-        //                    controller can do nothing about. Expected to be the sharpest, possibly a cliff.
-        //   7 dropouts    -- control cycles are randomly missed, last command held. Randomises AVAILABILITY
-        //                    rather than value, so it is neither learnable nor rejectable.
-        //   8 misdirect   -- the command vector is ROTATED, and the rotation precesses. Not dodgeable by
-        //                    flying gently; the only mode that survives binary actuators.
-        //   9 effort gain -- overgain scheduled on the loop's OWN recent effort. Closed-loop, so backing
-        //                    gain off withdraws the penalty and the controller hunts. But it is monotone in
-        //                    effort, so flying gently is a dominant escape.
-        //  10 adversarial -- no corruption of its own: reads which regime the recent command is in and
-        //                    plays the move that beats it, so every escape enters another attack.
-        //
-        // 2 and 3 are DISTURBANCES, which a feedback loop exists to reject -- hence their weakness. 4-6 and
-        // 8 are the classical ways to destabilise a loop and are not rejectable in the same way, but being
-        // open-loop they are learnable. 7, 9 and 10 are the escapes from that: randomise availability,
-        // close the loop on depth, or close it on choice.
-        //
-        // 4 -> 9 -> 10 is a deliberate ladder (fixed gain, scheduled depth, matched policy) and should be
-        // flown in that order: it is the only way to tell whether the policy is doing the work.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: mode",
-                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_ChooseOption(options = new[] { "none", "lock (RP-1)", "uncommanded", "on input", "overgain", "coupling", "delay", "dropouts", "misdirect", "effort gain", "adversarial" }, scene = UI_Scene.All)]
-        public int noiseMode = 3;
-
-        // Rotation at sigma = 1. Past 90 the intended-axis component goes negative and control REVERSES,
-        // which is available deliberately but is not the default.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: misdirect deg",
-                  guiFormat = "F0", groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_FloatRange(minValue = 10f, maxValue = 180f, stepIncrement = 10f, scene = UI_Scene.All)]
-        public float misdirectMaxDeg = 90f;
-
-        // How fast the misdirection precesses. THE feel knob for mode 8: too slow and it is a fixed offset
-        // an integrator trims out, too fast and it becomes noise the vehicle filters. The first cut sat at
-        // the slow end (0.08 Hz, a 12 s sweep) and read as something you could wait out, so the default moved
-        // to 0.6 Hz and the ceiling to 4 -- the whole interesting range is above where the old slider ended.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: precess Hz",
-                  guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_FloatRange(minValue = 0.05f, maxValue = 4f, stepIncrement = 0.05f, scene = UI_Scene.All)]
-        public float misdirectRateHz = 0.6f;
-
-        // Mean dropout length. Bursts matter more than the duty cycle: per-tick randomness is averaged
-        // away by vessel inertia, which is what made white noise invisible.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: dropout ms",
-                  guiFormat = "F0", groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_FloatRange(minValue = 20f, maxValue = 500f, stepIncrement = 20f, scene = UI_Scene.All)]
-        public float dropoutMs = 120f;
-
-        // THE feel knob for mode 9, and its only one -- depth is shared with overgain deliberately, so an
-        // A/B against mode 4 changes exactly one thing. Measured in attitude-response cycles rather than
-        // seconds, so it rides the same m^(-1/3) law as noise Hz and needs no scaling switch of its own:
-        // 3 cycles is ~1.5 s on a 1 t probe and ~7 s on a 100 t stack. Too short and effort just tracks the
-        // instantaneous command, which collapses the mode back into plain overgain.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: effort window",
+        // THE WINDOW the regime split is measured over. Both the sustained/transient split and the washout
+        // move read this one EMA, so they can never disagree about what "holding" means. Measured in
+        // attitude-response cycles rather than seconds, so it rides the same m^(-1/3) law as noise Hz and
+        // needs no scaling switch of its own: 3 cycles is ~1.5 s on a 1 t probe and ~7 s on a 100 t stack.
+        // Too short and the split just tracks the instantaneous command, so every cell reads as "moving it".
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: regime window",
                   guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_FloatRange(minValue = 0.5f, maxValue = 20f, stepIncrement = 0.5f, scene = UI_Scene.All)]
-        public float adaptiveTau = 3f;
+        public float regimeTau = 3f;
 
-        // Mode 10's balance knob, and its only one. Maps the transient part of the command onto 0..1, so it
-        // decides where the "moving it" boundary sits and therefore how the flight time divides between the
-        // four regimes. Too high and everything reads as movement (the mode collapses to overgain/lag), too
-        // low and a craft under active autopilot control never leaves the two holding regimes. Watch the
-        // regime name in the PAW readout before touching it: the number to aim for is a spread, not a value.
+        // THE balance knob. Maps the transient part of the command onto 0..1, so it decides where the
+        // "moving it" boundary sits and therefore how the flight time divides between the four regimes. Too
+        // high and everything reads as movement (the policy collapses to overgain/lag), too low and a craft
+        // under active autopilot control never leaves the two holding regimes. Watch the dc/ac figures in
+        // the injected readout before touching it: the number to aim for is a SPREAD, not a value.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: regime AC gain",
                   guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_FloatRange(minValue = 0.5f, maxValue = 10f, stepIncrement = 0.5f, scene = UI_Scene.All)]
         public float adversarialAcGain = 3f;
 
-        // WHEN the penalty is live, independent of which one it is. Three settings, and the axis they vary
-        // is how much SAFE HARBOUR the player gets: none, fully-idle, or not-steering. See the ARMING block
-        // in AxeControlLockerUtils -- the short version is that `any input incl throttle` is the only gate
-        // that keeps mode 10's no-escape property, because throttle alone arms it.
-        //
-        // Applies to every mode, not just 10. It is the cheapest available answer to the 4a objection
-        // against mode 2 (uncommanded corrupting a capsule that is not flying anything).
+        // THE TWO LEGIBILITY KNOBS, and the mechanic's real risk is legibility rather than strength. Dwell
+        // is the minimum time a regime holds, so it lasts long enough to be read as a thing that is
+        // happening; margin is the lead a rival cell needs before it can take over, so the policy cannot
+        // flap on a boundary. Between them they decide whether the failure reads as four learnable
+        // characters or as one incoherent malfunction. Too high on either and the policy stops matching what
+        // the player is actually doing, which throws away the whole point of matching.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: regime dwell s",
+                  guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0f, maxValue = 10f, stepIncrement = 0.5f, scene = UI_Scene.All)]
+        public float adversarialDwell = 2f;
+
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: regime margin",
+                  guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0f, maxValue = 0.5f, stepIncrement = 0.05f, scene = UI_Scene.All)]
+        public float adversarialMargin = 0.15f;
+
+        // WHEN the penalty is live at all, which is a separate question from what it does. Three settings,
+        // and the axis they vary is how much SAFE HARBOUR the player gets: none, fully-idle, or
+        // not-steering. See the ARMING block in AxeControlLockerUtils -- the short version is that `any
+        // input incl throttle` is the only gate that keeps the no-escape property, because throttle alone
+        // arms it, so a straight burn still lands in the drift cell.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: arm on",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_ChooseOption(options = new[] { "always", "any input incl throttle", "steering only" }, scene = UI_Scene.All)]
         public int armMode = 0;
 
-        // Makes overgain and coupling non-stationary, so adaptive tuning is always chasing a target that
-        // has moved. No effect on the other modes -- mode 9 generates its own non-stationarity.
+        // Makes the overgain cell non-stationary, so adaptive tuning is always chasing a target that has
+        // moved. That cell is the only deterministic move with a parameter to walk, so this touches nothing
+        // else: drift is already random, washout and lag follow the command.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: drift",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_Toggle(disabledText = "fixed", enabledText = "drifting", scene = UI_Scene.All)]
         public bool noiseDrift = false;
 
-        // Physics ticks of lag at sigma = 1. KSP runs 50 Hz, so 10 ticks = 200 ms -- already past what
-        // destabilises most controllers.
+        // The `lag` cell. Physics ticks of lag at sigma = 1; KSP runs 50 Hz, so 10 ticks = 200 ms -- already
+        // past what destabilises most controllers.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: delay ticks",
                   guiFormat = "F0", groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_FloatRange(minValue = 1f, maxValue = 40f, stepIncrement = 1f, scene = UI_Scene.All)]
         public float delayTicksMax = 10f;
 
-        // Slope in G = 1 + slope*(r-1). Anchored like k: typical loop gain margin is 2-4x, so G = 3 should
-        // push most controllers unstable, and G(1.2) = 3 gives slope 10.
+        // The `overgain` cell. Slope in G = 1 + slope*(r-1). Anchored like k: typical loop gain margin is
+        // 2-4x, so G = 3 should push most controllers unstable, and G(1.2) = 3 gives slope 10.
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: overgain slope",
                   guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_FloatRange(minValue = 1f, maxValue = 40f, stepIncrement = 1f, scene = UI_Scene.All)]
-        public float overgainSlope = 10f;   // on-input: preserves small commands
+        public float overgainSlope = 10f;
 
-        // RCS responds instantly and has no inertia to filter anything, so the sigma that gently wallows a
-        // launcher makes fine attitude work impossible. Scaled rather than merely switched off.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: RCS noise scale",
-                  guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_FloatRange(minValue = 0f, maxValue = 1f, stepIncrement = 0.05f, scene = UI_Scene.All)]
-        public float noiseRcsScale = 1f;   // on-input mode removed the need to cut RCS
-
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: noise on RCS",
-                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_Toggle(disabledText = "gimbal only", enabledText = "gimbal + RCS", scene = UI_Scene.All)]
-        public bool noiseOnRcs = true;
+        // NO RCS KNOBS. They existed because a stateless mode could be applied a SECOND time inside the
+        // ModuleRCS patch and therefore needed its own scale; the shipped mechanic is stateful in every
+        // cell, so it is applied exactly once, in the post-autopilot hook, and RCS flies the same corrupted
+        // ctrlState as the gimbals. Nothing left to scale separately. See AxeRcsControlLock.
 
         [KSPField(guiActiveEditor = true, guiName = "Split",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
@@ -833,12 +768,11 @@ namespace RPAxe
             node.SetValue(nameof(currentWatts), ComputeWatts(true), true);
         }
 
-        // The DEBUG mode selector is the control the whole Phase D flight test runs through, and nothing
-        // else in AXE declares UI_ChooseOption via the attribute alone. Populate it explicitly in both
-        // scenes so a silent attribute failure cannot strand the test with an unswitchable mode.
+        // Nothing else in AXE declares UI_ChooseOption via the attribute alone, so populate it explicitly in
+        // both scenes: a silent attribute failure would otherwise strand the arming gate unswitchable, and
+        // the names would drift from ArmNames (which is what ComputeArmed and the PAW readout both index).
         void SetupModeChooser()
         {
-            PopulateChooser(nameof(noiseMode), AxeControlPenalties.Names);
             PopulateChooser(nameof(armMode), AxeControlLockerUtils.ArmNames);
         }
 
@@ -1877,20 +1811,14 @@ namespace RPAxe
             AxeControlLockerUtils.NoiseWhite = noiseWhite;
             AxeControlLockerUtils.NoiseK = noiseK;
             AxeControlLockerUtils.NoiseMax = noiseMax;
-            AxeControlLockerUtils.NoiseRoll = noiseRoll;
-            AxeControlLockerUtils.NoiseOnRcs = noiseOnRcs;
-            AxeControlPenalties.Index = noiseMode;
             AxeControlLockerUtils.OvergainSlope = overgainSlope;
             AxeControlLockerUtils.DelayTicksMax = delayTicksMax;
-            AxeControlLockerUtils.DropoutMs = dropoutMs;
-            AxeControlLockerUtils.MisdirectMaxDeg = misdirectMaxDeg;
-            AxeControlLockerUtils.MisdirectRateHz = misdirectRateHz;
-            AxeControlLockerUtils.AdaptiveTauCycles = adaptiveTau;
+            AxeControlLockerUtils.RegimeTauCycles = regimeTau;
             AxeControlLockerUtils.AdversarialAcGain = adversarialAcGain;
+            AxeControlLockerUtils.AdversarialDwellSec = adversarialDwell;
+            AxeControlLockerUtils.AdversarialMargin = adversarialMargin;
             AxeControlLockerUtils.ArmMode = armMode;
             AxeControlLockerUtils.NoiseDrift = noiseDrift;
-            AxeControlLockerUtils.NoiseRcsScale = noiseRcsScale;
-            AxeControlLockerUtils.HardCutoff = hardCutoff;
         }
 
         // PROTOTYPE readout. In flight the controller's value is authoritative (it is what actually scales
@@ -1910,8 +1838,14 @@ namespace RPAxe
                 if (ctl == null) noiseDebug = "no controller";
                 else
                 {
+                    // dc/ac are what the AC-gain knob is tuned against: they are the two memberships the
+                    // regime is chosen from, so they say WHICH WAY the split is wrong when the readout sits
+                    // in one cell all flight (dc pinned high = window too long; ac pinned high = gain too
+                    // high). The regime name alone cannot distinguish "correct" from "stuck".
                     Vector3 n = ctl.LastNoise;
-                    noiseDebug = $"ticks {ctl.ModifierTicks}  p{n.x:+0.00;-0.00}  y{n.y:+0.00;-0.00}  r{n.z:+0.00;-0.00}";
+                    noiseDebug = $"ticks {ctl.ModifierTicks}  p{n.x:+0.00;-0.00}  y{n.y:+0.00;-0.00}  r{n.z:+0.00;-0.00}"
+                               + $"  dc {AxeControlLockerUtils.AdversarialDc:F2} ac {AxeControlLockerUtils.AdversarialAc:F2}"
+                               + $" -> {AxeControlLockerUtils.AdversarialRegimeName}";
                 }
             }
 
@@ -1936,7 +1870,7 @@ namespace RPAxe
                     : AxeControlLockerUtils.NoiseFor(mass / capacity);
             }
 
-            authorityDisplay = AxeControlPenalties.Current.Describe(sigma);
+            authorityDisplay = AxeControlLockerUtils.DescribePenalty(sigma);
             // Over capacity but disarmed is NOT "clean", and reading it as clean would be the difference
             // between "the gate is working" and "the mode is broken" during the arming A/B.
             if (sigma > 0f && armMode > 0 && HighLogic.LoadedSceneIsFlight && !AxeControlLockerUtils.Armed)
@@ -1963,10 +1897,7 @@ namespace RPAxe
         static string Verdict(float mass, float cap)
         {
             float r = mass / cap;
-            string state = r <= 1f ? "clean"
-                         : AxeControlPenalties.Current.LocksInstead ? "guidance lost"
-                         : "degraded";
-            return $"{mass:N2} t  ({r:0.00}x — {state})";
+            return $"{mass:N2} t  ({r:0.00}x — {(r <= 1f ? "clean" : "degraded")})";
         }
 
 
@@ -1977,7 +1908,7 @@ namespace RPAxe
         // C: the overload multiplier is GONE. Proven inert (a representative core carries ~39 h of EC
         // against a 6-10 minute ascent), both recorded justifications dead, and named parts could never
         // share a consequence measured in watts. Removing it is also RP-1 parity -- RP-1 has no overload
-        // EC term either. Overload is answered by AxeControlPenalty now.
+        // EC term either. Overload is answered by control degradation now (AxeControlLockerUtils).
         float ComputeBaseWatts() => TierWatts();
 
         // The tier/mass-based draw. Since C removed the overload multiplier this is the whole of it, but it

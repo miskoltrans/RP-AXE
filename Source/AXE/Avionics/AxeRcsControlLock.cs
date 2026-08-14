@@ -36,36 +36,20 @@ namespace RPAxe
             if (v == null || v != FlightGlobals.ActiveVessel) return;
 
             AxeControlLockerUtils.LockLevel level = ctl.Level;
-            // RCS has no inertia to filter anything and responds instantly, so the sigma that gently wallows a
-            // launch vehicle makes fine attitude work impossible. Scaled down separately.
-            // Arming is read from the post-autopilot hook's cached verdict rather than recomputed: ModuleRCS
-            // runs on Unity's Update and the hook on FixedUpdate, so recomputing here would judge a ctrlState
-            // the rest of the frame has not seen. Worst case the value is one frame old, which is well below
-            // anything the arming rule is trying to distinguish.
-            float sigma = AxeControlLockerUtils.NoiseOnRcs && AxeControlLockerUtils.Armed
-                ? ctl.ControlNoise * AxeControlLockerUtils.NoiseRcsScale
-                : 0f;
-            // Unlocked AND clean is the only case with nothing to do.
-            if (level == AxeControlLockerUtils.LockLevel.Unlocked && sigma <= 0f) return;
+            // DEGRADATION IS NOT RE-APPLIED HERE, and does not need to be: the post-autopilot hook mutates
+            // vessel.ctrlState IN PLACE, and ModuleRCS reads that same object on its own Unity pass, so
+            // thrusters already fly the corrupted command and a craft cannot dodge the mechanic by steering
+            // on RCS. The shipped mechanic is stateful in every cell (a delay buffer, a washout EMA, a
+            // regime that only switches on a dwell timer), so a second application per frame would push the
+            // buffer twice and advance the regime at double rate -- a switching artefact indistinguishable
+            // from the mechanic working. This patch therefore only handles the two LOCKED levels.
+            if (level == AxeControlLockerUtils.LockLevel.Unlocked) return;
 
             FlightCtrlState st = v.ctrlState;
             _x = st.X; _y = st.Y; _z = st.Z;
             _pitch = st.pitch; _yaw = st.yaw; _roll = st.roll;
             _throttle = st.mainThrottle;
             _saved = true;
-
-            // PROTOTYPE v2: over capacity but not yet unguided -- corrupt RCS the same way the post-autopilot
-            // hook corrupts everything else, so a craft cannot dodge the noise by steering on thrusters.
-            if (level == AxeControlLockerUtils.LockLevel.Unlocked)
-            {
-                // Stateful penalties are skipped here on purpose: the post-autopilot hook has already
-                // transformed ctrlState this frame, and re-applying one (a second delay buffer push, or a
-                // second coupling pass) would double it. Stateless ones ARE re-applied, because ModuleRCS
-                // reads ctrlState on its own Unity pass and would otherwise steer clean.
-                if (AxeControlPenalties.Current.Stateful) return;
-                AxeControlPenalties.Current.Apply(ref st.pitch, ref st.yaw, ref st.roll, sigma);
-                return;
-            }
 
             st.yaw = st.pitch = st.roll = 0f;   // no steering
             st.X = st.Y = 0f;                    // no lateral translation

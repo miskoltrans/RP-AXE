@@ -20,7 +20,7 @@ namespace RPAxe
     /// Sputnik 1's entire 83 kg falls under that floor — independently reproducing RP-1's authored 0.
     ///
     /// OVERLOAD CONSEQUENCE is now SHARED with the procedural core, not different from it. Both feed one
-    /// vessel-wide MAX and both get whichever <see cref="AxeControlPenalty"/> is selected. The old
+    /// vessel-wide MAX and both get the same degradation (see AxeControlLockerUtils). The old
     /// asymmetry — proc core pays watts, named part locks — is gone: the EC penalty behind it was inert,
     /// and neither justification survived (the exp(80) hazard was removed by its own cap 19 hours after it
     /// was written; "a fixed part has no sizing decision to get wrong" is false, because choosing a
@@ -480,10 +480,7 @@ namespace RPAxe
         static string Verdict(float mass, float cap)
         {
             float r = mass / cap;
-            string state = r <= 1f ? "clean"
-                         : AxeControlPenalties.Current.LocksInstead ? "guidance lost"
-                         : "degraded";
-            return $"{mass:N2} t  ({r:0.00}x — {state})";
+            return $"{mass:N2} t  ({r:0.00}x — {(r <= 1f ? "clean" : "degraded")})";
         }
 
         float VesselMassTons()

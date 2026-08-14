@@ -23,8 +23,12 @@ namespace RPAxe
     /// two terms and the player sets both (choosing a 0.875 t Voyager bus for a 2 t spacecraft is a sizing
     /// decision made in the VAB).
     ///
-    /// What happens over capacity is now a selectable <see cref="AxeControlPenalty"/> — including
-    /// <see cref="PenaltyLock"/>, which reproduces RP-1's original rule exactly. See docs/AVIONICS_PLAN.md.
+    /// OVER CAPACITY NEVER LOCKS. RP-1's rule (over capacity = attitude locked outright) was one of eleven
+    /// candidate consequences flown against each other in Phase D; the one that shipped is ADVERSARIAL
+    /// REGIME MATCHING, below — the craft keeps control and the command is corrupted by the move that beats
+    /// whatever the pilot is currently doing. The losing ten are deleted rather than parked behind a knob.
+    /// Discrete "unguided" survives only where it is a PROPERTY OF THE PART (an Unguided/Science-Core core, a
+    /// capacity-0 named part, or no avionics at all), never as a threshold crossing. See docs/AVIONICS_PLAN.md.
     ///
     /// Vessel mass is whole-vessel WET mass (part.mass + part.resourceMass), and the budget is the MAX
     /// across parts, never the sum — RP-1's own anti-cheese rule, matching the procedural core's
@@ -92,44 +96,27 @@ namespace RPAxe
         public static float HzForMass(float massTons)
             => NoiseHzAutoScale ? NoiseHz / Mathf.Pow(Mathf.Max(0.1f, massTons), 1f / 3f) : NoiseHz;
         public static bool NoiseWhite;        // white instead of correlated: tests the inertia-filter theory
-        public static bool NoiseRoll = true;  // roll is the most perceptible axis; separable for that reason
-        public static bool NoiseOnRcs = true;
 
-        // ADDITIVE vs ON-INPUT. Defaults to ON-INPUT. The deciding argument turned out not to be the fiction
-        // but signal-to-noise: RCS was reported unusable at any sigma, and that is not an inertia problem, it
-        // is a SMALL-COMMAND problem. Docking uses commands around 0.05, so additive noise of +/-0.3 is six
-        // times the signal and the input is pure garbage; RCS is simply where small commands live. Scaling
-        // the command instead preserves the ratio at any magnitude -- 0.05 becomes 0.035-0.065, degraded
-        // rather than destroyed -- which removes the need for a separate RCS scale.
-        //
-        // The fiction argument (real rockets fly themselves, so the program should be corrupted even with no
-        // pilot input) is still true but weaker, and mostly moot: MechJeb and SAS command continuously during
-        // any active flight, so on-input noise still fires. The only time it does not is when nothing is
-        // flying, which is exactly when nothing should be corrupted.
-        //
-        // Two genuinely different mechanics, not two tunings of one:
-        //   additive  -- noise is added regardless of what the pilot commands, so a craft wanders on its own.
-        //                Reads as a vehicle that will not sit still.
-        //   on-input  -- noise SCALES the command, so a null stick stays null and only what you ask for comes
-        //                out wrong. Reads as controls you cannot trust. No uncommanded drift.
-        // The second is the better fit for "the computer is mis-executing your guidance", the first for "the
-        // loop is unstable". Which one is right is a feel question, hence the toggle.
+        // ALL THREE AXES. Roll was separable while the modes were being compared -- it is by far the most
+        // perceptible axis, so "is roll alone carrying the whole feel?" was worth being able to answer. It
+        // is answered; roll is degraded like the other two and the switch is gone.
 
-        // RCS was reported unusable at any penalty: thrusters respond instantly and have no inertia to filter
-        // anything, so the same sigma that gently wallows a launch vehicle makes fine attitude work
-        // impossible and burns monopropellant doing it. Scaled separately rather than just on/off.
-        public static float NoiseRcsScale = 1f;   // on-input mode preserves small commands, so no longer needs cutting
+        // WHY EXACTLY ONE MOVE IS ADDITIVE. Additive noise on a command that is already small is not
+        // degradation, it is replacement: docking runs commands around 0.05, so +/-0.3 of noise is six times
+        // the signal and the input becomes garbage rather than degraded -- which is what made an
+        // additive-everywhere mode unusable on RCS, where small commands live. Every other move here is
+        // proportional to the command or is a pure time shift, so it preserves the ratio at any magnitude.
+        // The DRIFT cell is additive deliberately, and it is the only one: it is selected precisely when
+        // there is no command to be proportional TO, it is the one mechanic that still bites a null stick,
+        // and that is the whole answer to "fly gently and you are safe".
 
-        // Kept only so the two can be compared in flight. Off by default -- see the note at the cutoff site.
-        public static bool HardCutoff = false;
-
-        // ---- MODE 2: OVERGAIN ---------------------------------------------------------------------
+        // ---- MOVE: OVERGAIN -----------------------------------------------------------------------
         // Models the failure mechanism instead of its symptom. An undersized control system does not make
         // RANDOM errors -- it has TOO MUCH GAIN for the vehicle it is flying. Insufficient phase margin,
         // unfiltered bending modes, overcontrol. That is what the first flight already showed from the other
         // side: cutting gimbal authority flew BETTER, because it raised the stability margin.
         //
-        // Why it should beat noise, and this is the whole argument: a feedback loop is DESIGNED to reject
+        // Why it beats a disturbance, and this is the whole argument: a feedback loop is DESIGNED to reject
         // disturbances -- that is its job -- so injected noise gets averaged out, which is exactly what
         // happened to the authority scalar. Gain is not a disturbance. It modifies the PLANT the controller
         // is closing around, so the controller's own corrections are amplified too. It cannot counter-steer
@@ -138,290 +125,38 @@ namespace RPAxe
         //
         // Consequences that fall out for free:
         //   * the oscillation FREQUENCY emerges from the vehicle's own dynamics, so no Hz parameter and no
-        //     m^(-1/3) scaling law is needed at all;
-        //   * it saturates the command SOONER rather than being clipped by the clamp, so unlike additive and
-        //     on-input it does not go soft exactly when the vehicle is working hardest;
-        //   * it is deterministic, so NoiseHz / white / correlated have no effect in this mode.
+        //     m^(-1/3) scaling law is needed for this move;
+        //   * it saturates the command SOONER rather than being clipped by the clamp, so unlike the additive
+        //     drift move it does not go soft exactly when the vehicle is working hardest;
+        //   * it is deterministic, so NoiseHz / white / correlated have no effect on it.
+        // Which is also why the policy places it in a cell where commands are SMALL: amplification needs
+        // headroom below the clamp, and a x3 on 0.3 is a different event from a x3 on 0.9.
         //
         // Anchored on the same sentence as k. Typical loop gain margin is 2-4x, so G = 3 should push most
         // controllers unstable: G(1.2) = 3 gives slope 10.
         public static float OvergainSlope = 10f;
 
         // sigma = 1 - e^(-k(r-1)) inverted, so gain can be derived from sigma without plumbing the ratio
-        // through -- and so the DEBUG pin drives overgain consistently with the other two modes.
+        // through -- and so the DEBUG pin drives the overgain cell consistently with the rest.
         public static float RatioFromSigma(float sigma)
             => 1f + (-Mathf.Log(Mathf.Max(1e-4f, 1f - sigma)) / Mathf.Max(0.01f, NoiseK));
 
         public static float GainFor(float sigma)
             => sigma <= 0f ? 1f : 1f + OvergainSlope * DriftFor(0) * (RatioFromSigma(sigma) - 1f);
 
-        // ---- MODE 3: CROSS-AXIS COUPLING ----------------------------------------------------------
-        // Commanding one axis bleeds into the others. A feedback loop closes each axis assuming they are
-        // independent, so correcting the induced yaw induces pitch, correcting that induces roll: the loop
-        // ends up fighting itself rather than fighting us. That is an attack on the DECOUPLING assumption,
-        // the third of the three ways to destabilise a loop (gain margin, phase margin, coupling) -- and
-        // like the other two it is not a disturbance, so there is nothing to average out.
+        // ================ THE MECHANIC: ADVERSARIAL REGIME MATCHING ================================
+        // THE ONE THAT SHIPPED. Ten other consequences were built and flown against it (EC drain, authority
+        // scaling, RP-1's outright lock, two noise modes, coupling, misdirect, dropouts, plain overgain, and
+        // overgain scheduled on the loop's own effort); this is what survived, and the losers are deleted.
         //
-        // Physically this is what a control system that was never characterised for its vehicle looks like:
-        // misaligned IMU axes, gimbal cross-talk, a decoupling matrix nobody tuned.
+        // The defect that killed the closest rival, and the reason this shape exists: gain scheduled on
+        // effort is MONOTONE in effort, so "minimise effort" is a dominant strategy and the mechanic has a
+        // loophole rather than a cost. A penalty with a dominant escape is not adversarial, it is a tax you
+        // can route around. The fix is not a deeper penalty, it is to make every escape the ENTRANCE TO
+        // ANOTHER ATTACK.
         //
-        // Coefficients are FIXED PER VESSEL, not re-rolled. That makes it a systematic misalignment -- this
-        // particular rocket pulls left when you pitch up -- which is learnable, and reads as a characteristic
-        // of the vehicle rather than as random malfunction. Inherits on-input's best property for free: it
-        // is proportional to command, so no uncommanded drift and small commands stay proportionally intact.
-        static int _coupleSeed = int.MinValue;
-        static readonly float[] _cc = new float[6];
-
-        public static void SeedCoupling(int seed)
-        {
-            if (seed == _coupleSeed) return;
-            _coupleSeed = seed;
-            System.Random rng = new System.Random(seed);
-            for (int i = 0; i < 6; i++) _cc[i] = (float)(rng.NextDouble() * 2.0 - 1.0);
-        }
-
-        public static void ApplyCoupling(ref float pitch, ref float yaw, ref float roll, float sigma)
-        {
-            float p0 = pitch, y0 = yaw, r0 = roll;
-            pitch = Mathf.Clamp(p0 + sigma * (_cc[0] * DriftFor(0) * y0 + _cc[1] * DriftFor(1) * r0), -1f, 1f);
-            yaw   = Mathf.Clamp(y0 + sigma * (_cc[2] * DriftFor(2) * p0 + _cc[3] * DriftFor(3) * r0), -1f, 1f);
-            roll  = Mathf.Clamp(r0 + sigma * (_cc[4] * DriftFor(4) * p0 + _cc[5] * DriftFor(5) * y0), -1f, 1f);
-        }
-
-        // ---- MODE 8: MISDIRECTION (gyro drift) -----------------------------------------------------
-        // ROTATES the command vector instead of scaling it: you ask for pitch, some comes out as yaw and
-        // roll. It is the drifting-IMU failure -- the vehicle's idea of its own orientation is wrong, so
-        // everything it commands is referred to the wrong frame.
-        //
-        // THE ROTATION PRECESSES; it is not a fixed offset. A static rotation is a fixed linear transform,
-        // and a fixed transform is exactly what integral terms trim out over a few seconds -- MechJeb would
-        // simply learn "pitch needs a bit of yaw" and stop caring. So the offset wanders continuously: you
-        // get one configuration for a while, adapt to it, and it has moved. You cannot get on top of it,
-        // which is the whole point.
-        //
-        // Three independent Perlin channels form a ROTATION VECTOR -- its direction is the axis, its
-        // length the angle. Because the channels evolve independently the axis precesses rather than the
-        // angle merely pulsing on a fixed axis. Bounded by sigma * MisdirectMaxDeg, so overload sets how far
-        // wrong it can get while the rate knob sets how fast it moves.
-        //
-        // WHAT THE FIRST CUT GOT WRONG, from flying it: the precession was too slow and too SMOOTH to read as
-        // a failing gyro -- it was a slow sweep you could sit and wait out, not something you cannot get on
-        // top of. Three fixes, all aimed at the same property:
-        //   * RATE. 0.08 Hz is a ~12 s wander, well inside what both an integral term and a player track.
-        //     0.6 Hz re-arranges the configuration every second or two: too fast to be worth adapting to,
-        //     still an order of magnitude below the vehicle's own attitude response, so it is not simply
-        //     low-passed away the way the white-noise mode was.
-        //   * OCTAVES. One Perlin lane is a smooth curve -- it has a rate but no texture, so the axis sweeps
-        //     rather than jumps. Summing three octaves at half amplitude each lays fast structure over the
-        //     slow wander, which is what makes it read as random instead of as a slow oscillation.
-        //   * DECORRELATED CHANNELS. All three axes were sampled at the SAME x with only a lane offset in y,
-        //     so they crossed the noise lattice in lockstep and the axis re-arranged on a common beat.
-        //     Mutually incommensurate per-channel rates remove the beat.
-        // The channels are also gained: Unity's Perlin clusters near its midpoint (see PerlinGain), so the
-        // raw vector was typically only ~0.43 long and the angle actually flown ran at well under half what
-        // the PAW advertised. Typical is now ~0.7 of the bound, with excursions that clamp at it.
-        //
-        // Why this formulation and not amplitude scaling:
-        //   * NOT DODGEABLE BY FLYING GENTLY. Scaling with input amplitude is exploitable -- a player or
-        //     MechJeb learns to make minimal inputs and is bitten proportionally less. Here the fraction
-        //     reaching the intended axis is cos(theta) regardless of magnitude, so small inputs buy a small
-        //     amount of the wrong thing and nothing more.
-        //   * MAGNITUDE-PRESERVING. Weakness was already disproven: at 5% authority a craft ascended
-        //     normally and flew BETTER. This is not less control, it is control pointed elsewhere.
-        //   * SURVIVES BINARY ACTUATORS. RCS is effectively on/off, so scaling 0.7 vs 1.0 fires the same
-        //     thrusters and a magnitude perturbation is invisible to it. Changing which AXIS the command
-        //     lands on changes which thrusters fire.
-        //
-        // Past 90 degrees the intended-axis component goes negative and control reverses -- available, not
-        // the default. Per-vessel seed offsets the sample coordinates so two craft drift differently.
-        public static float MisdirectMaxDeg = 90f;
-        public static float MisdirectRateHz = 0.6f;   // ~1.5 s to noticeably change character
-
-        // Octave structure is a SHAPE choice, not a feel knob, so it stays out of the PAW -- the rig already
-        // has enough sliders, and rate is the one number that actually needs flying to find.
-        const int MisdirectOctaves = 3;
-        const float MisdirectLacunarity = 2.7f;   // non-integer, so octaves never re-align on the lattice
-        const float MisdirectGain = 2.4f;         // Perlin bell-shape correction, same reason as PerlinGain
-
-        // Per-channel base rates, mutually incommensurate so the three axes never come back into phase, and
-        // separate y lanes so they sample unrelated noise to begin with.
-        static readonly float[] _mdRate = { 1.00f, 1.37f, 1.79f };
-        static readonly float[] _mdLane = { 0.0f, 7.3f, 13.9f };
-
-        static float MisdirectFbm(int ch, float t, float seed)
-        {
-            float sum = 0f, amp = 1f, norm = 0f, f = _mdRate[ch];
-            for (int i = 0; i < MisdirectOctaves; i++)
-            {
-                sum += amp * (Mathf.PerlinNoise(t * f, seed + _mdLane[ch] + i * 4.7f) * 2f - 1f);
-                norm += amp;
-                amp *= 0.5f;
-                f *= MisdirectLacunarity;
-            }
-            return Mathf.Clamp(sum / norm * MisdirectGain, -1f, 1f);
-        }
-
-        public static void ApplyMisdirect(ref float pitch, ref float yaw, ref float roll, float sigma)
-        {
-            Vector3 v = new Vector3(pitch, yaw, roll);
-            if (v.sqrMagnitude < 1e-8f) return;   // nothing commanded, nothing to misdirect
-
-            float t = Time.time * MisdirectRateHz;
-            float seed = _coupleSeed == int.MinValue ? 0f : (_coupleSeed % 977) * 0.31f;
-            Vector3 rot = new Vector3(MisdirectFbm(0, t, seed),
-                                      MisdirectFbm(1, t, seed),
-                                      MisdirectFbm(2, t, seed));
-
-            float mag = rot.magnitude;
-            if (mag < 1e-5f) return;
-            float theta = Mathf.Clamp01(sigma) * MisdirectMaxDeg * Mathf.Clamp01(mag);
-
-            Vector3 outv = Quaternion.AngleAxis(theta, rot / mag) * v;
-            pitch = Mathf.Clamp(outv.x, -1f, 1f);
-            yaw   = Mathf.Clamp(outv.y, -1f, 1f);
-            roll  = Mathf.Clamp(outv.z, -1f, 1f);
-        }
-
-        // ---- MODE 7: RANDOM DROPOUTS -------------------------------------------------------------
-        // The answer to "anything that is not random can be learned by the player and by MechJeb".
-        //
-        // Every other candidate fails one of two tests. Deterministic ones (overgain, coupling, delay) are
-        // LEARNABLE -- MechJeb has adaptive gain, a player just flies gently, and in a mod where the
-        // autopilot flies the ascent "learnable" means learned by software in seconds. Random ones (both
-        // noise modes) are REJECTABLE, because rejecting disturbances is exactly what a feedback loop is
-        // for. Deterministic gets learned; random gets averaged out.
-        //
-        // Dropouts escape both by randomising AVAILABILITY rather than VALUE. A loop rejects a disturbance
-        // by commanding against it -- which assumes it can command at all. During a dropout there is
-        // nothing to reject and nothing to command with; the loop integrates up blind and then
-        // over-corrects when control returns. And the timing is random, so it cannot be anticipated.
-        //
-        // It is also the better fiction: an overloaded flight computer MISSES CYCLES. Not wrong output --
-        // no output. That is literally what insufficient throughput does.
-        //
-        // ZERO-ORDER HOLD, not zeroing. When no new command arrives an actuator keeps its last position,
-        // which is both the correct model and the more interesting failure: the vehicle carries on doing
-        // whatever it was doing, so a dropout mid-correction over-rotates rather than merely pausing.
-        //
-        // Bursts, not per-tick coin flips: per-tick randomness is averaged away by vessel inertia, the same
-        // trap that made white noise invisible. Gap length is solved so the long-run duty cycle equals
-        // sigma -- at sigma 0.05 that is a ~120 ms dropout every ~2.3 s, at 0.5 it is half the time.
-        public static float DropoutMs = 120f;
-        static int _dropTicksLeft;
-        static float _holdP, _holdY, _holdR;
-
-        public static void ResetDropout() { _dropTicksLeft = 0; }
-
-        public static void ApplyDropout(ref float pitch, ref float yaw, ref float roll, float sigma)
-        {
-            float dt = Time.fixedDeltaTime > 0f ? Time.fixedDeltaTime : 0.02f;
-            int lenTicks = Mathf.Max(1, Mathf.RoundToInt((DropoutMs / 1000f) / dt));
-
-            if (_dropTicksLeft > 0)
-            {
-                _dropTicksLeft--;
-                pitch = _holdP; yaw = _holdY; roll = _holdR;
-                return;
-            }
-
-            float duty = Mathf.Clamp(sigma, 0f, 0.95f);
-            float gapTicks = lenTicks * (1f - duty) / Mathf.Max(0.0001f, duty);
-            if (Random.value < 1f / Mathf.Max(1f, gapTicks))
-            {
-                _dropTicksLeft = lenTicks;   // hold values already captured below on the previous tick
-                pitch = _holdP; yaw = _holdY; roll = _holdR;
-                return;
-            }
-
-            _holdP = pitch; _holdY = yaw; _holdR = roll;
-        }
-
-        // ---- MODE 9: MIS-ADAPTIVE GAIN (closed loop) ----------------------------------------------
-        // Every other candidate is OPEN LOOP -- a fixed transform applied to the command, blind to what the
-        // command is. This one reads the loop's own recent output and schedules the attack on it, which
-        // makes it the only mode where the controller's reaction is an INPUT to the failure rather than a
-        // response to it.
-        //
-        //   g = 1 + slope*(r-1) * effort,   effort = EMA of the commanded vector magnitude
-        //
-        // Identical to overgain except for that last factor, deliberately: same slope, so an A/B against
-        // mode 4 isolates exactly one variable -- whether scheduling on effort matters at all.
-        //
-        // Why the extra factor is not merely a softening:
-        //   * IT HAS NO FIXED POINT, and this is the whole argument. Overgain's recorded risk is that
-        //     MechJeb's adaptive gain retunes against it. Here that retune is self-defeating: backing gain
-        //     off lowers effort, which withdraws the penalty, which makes the backed-off gain wrong, so the
-        //     loop climbs again and overshoots. It hunts instead of converging. NoiseDrift fakes that with
-        //     a random walk; here the non-stationarity is GENERATED BY THE CONTROLLER, so it cannot be
-        //     out-waited or averaged the way a walk can.
-        //   * SELF-SCALING, like dropouts. Quiescent on a gentle coast, vicious at max-Q and on final
-        //     approach -- the failure arrives when the vehicle is being asked to work, which is when an
-        //     under-rated computer would actually fall over.
-        //   * PROPORTIONAL, so a null stick stays null and small commands stay proportionally intact. That
-        //     is on-input's one virtue, and it is what demoted uncommanded over RCS.
-        // The cost is that it is DODGEABLE BY FLYING GENTLY -- the weakness misdirect was built to avoid.
-        // Accepted here rather than fixed: "an undersized computer is fine until you demand something of
-        // it" is a defensible lesson, and the demand is not optional during an ascent or a landing.
-        //
-        // The fiction is the strongest of the set and it is not invented. The X-15's MH-96 adaptive
-        // controller raised gain when it should have lowered it and drove the aircraft into a divergent
-        // limit cycle (flight 3-65-97, 1967, fatal). An adaptive control law mis-adapting IS the canonical
-        // avionics failure, and a unit flying a vehicle it was never characterised for is exactly when it
-        // happens.
-        //
-        // WHAT WAS REJECTED FOR THIS SLOT: a WASHOUT -- subtract an EMA of the command, so sustained inputs
-        // decay and only transients get through. Attractive on its face (DC authority is exactly zero at
-        // sigma = 1, and an integrator cannot restore DC gain removed downstream of it) but at any sigma
-        // below 1 its steady state is out = in*(1-sigma), which IS the authority scalar that
-        // docs/AVIONICS_AUTHORITY.md already killed by test -- the loop simply commands 1/(1-sigma) harder
-        // until it saturates. A linear filter is always invertible by gain, which is why this slot needs a
-        // nonlinearity rather than a cleverer filter.
-        //
-        // tau reuses EffectiveNoiseHz (the m^(-1/3) attitude-response law) rather than adding a second
-        // scaling knob: the window has to be SLOWER than the vehicle's own response, or effort just tracks
-        // the instantaneous command and the mode collapses back into plain overgain. At the default 3
-        // cycles a 1 t probe averages over ~1.5 s and a 100 t stack over ~7 s.
-        //
-        // No DriftFor() term: the adaptation IS the non-stationarity here, and stacking a random walk on
-        // top would hide which of the two is doing the work.
-        public static float AdaptiveTauCycles = 3f;
-        static float _effort;
-
-        public static float AdaptiveEffort => _effort;
-        public static void ResetAdaptive() { _effort = 0f; }
-
-        public static float AdaptiveGainFor(float sigma)
-            => sigma <= 0f ? 1f : 1f + OvergainSlope * (RatioFromSigma(sigma) - 1f) * _effort;
-
-        public static void ApplyAdaptive(ref float pitch, ref float yaw, ref float roll, float sigma)
-        {
-            // Measured PRE-gain: what the controller ASKED FOR, not what we did to it. Feeding the
-            // amplified command back into its own scheduling variable would diverge on arithmetic alone,
-            // which is a numerical runaway rather than the control-loop one the mode is about.
-            float dt = Time.fixedDeltaTime > 0f ? Time.fixedDeltaTime : 0.02f;
-            float tau = Mathf.Max(0.05f, AdaptiveTauCycles / Mathf.Max(0.01f, EffectiveNoiseHz));
-            float demand = Mathf.Clamp01(new Vector3(pitch, yaw, roll).magnitude);
-            _effort += (demand - _effort) * Mathf.Clamp01(dt / tau);
-
-            // ONE effort figure for the whole vessel, not one per axis: it is one flight computer. Working
-            // hard in pitch degrading roll is the correct emergent behaviour, not a bug to separate out.
-            //
-            // Effort starts cold, so the failure DEVELOPS over the first tau after crossing capacity rather
-            // than snapping on. Deliberate -- and the PAW readout shows it arming.
-            float g = AdaptiveGainFor(sigma);
-            pitch = Mathf.Clamp(pitch * g, -1f, 1f);
-            yaw   = Mathf.Clamp(yaw * g, -1f, 1f);
-            roll  = Mathf.Clamp(roll * g, -1f, 1f);
-        }
-
-        // ---- MODE 10: ADVERSARIAL (regime matching) -----------------------------------------------
-        // Mode 9's defect, and the reason this exists: gain scheduled on effort is MONOTONE in effort, so
-        // "minimise effort" is a dominant strategy and the mechanic has a loophole rather than a cost. A
-        // penalty with a dominant escape is not adversarial, it is a tax you can route around. The fix is
-        // not a deeper penalty, it is to make every escape the ENTRANCE TO ANOTHER ATTACK.
-        //
-        // So this mode adds no new corruption of its own. It is a POLICY over the mechanics already built,
-        // and the eight modes stop being eight competing candidates and become a move set.
+        // So this adds no new corruption of its own. It is a POLICY over mechanics that already existed, and
+        // the candidates that lost as modes stop being competitors and become its move set.
         //
         // The command is split into the two things it can be -- a sustained part (the EMA, m) and a
         // transient part (c - m) -- and each attack is placed where ITS OWN effect is largest:
@@ -447,25 +182,32 @@ namespace RPAxe
         // policy walks into something, and the only real remedy is a unit rated for the vehicle -- which is
         // the constraint the whole design is trying to make binding.
         //
-        // NOT IN THE POLICY, deliberately: dropouts, misdirect and coupling are strong in EVERY regime, so
-        // there is no cell where they are the specific answer. That makes them standalone candidates rather
+        // NOT IN THE POLICY, deliberately: dropouts, misdirect and coupling were strong in EVERY regime, so
+        // there was no cell where they were the specific answer. That made them standalone candidates rather
         // than moves; a policy whose job is regime matching has nothing to gain from a move that does not
-        // vary by regime.
+        // vary by regime. They lost as modes, so they are gone entirely.
         //
-        // THE RISK IS LEGIBILITY, not strength: a failure that changes character is harder to attribute,
-        // and D3 gates the commit on exactly that. Three things hold it together -- a dwell time so a
-        // regime lasts long enough to read, a margin so it does not flap on the boundary, and the regime
-        // NAMED in the PAW. The player-facing statement stays learnable in one sentence per cell ("it
-        // wanders when I coast, it lags when I fight it"), which is a mechanic with depth rather than
-        // randomness. If it reads as one incoherent malfunction instead, that is the result that kills it.
+        // THE RISK IS LEGIBILITY, not strength: a failure that changes character is harder to attribute than
+        // one that is always present. Three things hold it together -- a dwell time so a regime lasts long
+        // enough to read, a margin so it does not flap on the boundary, and the regime NAMED in the PAW. The
+        // player-facing statement has to stay learnable in one sentence per cell ("it wanders when I coast,
+        // it lags when I fight it"); if it reads as one incoherent malfunction instead, the tuning is wrong.
+        // That is why dwell and margin are live knobs rather than constants -- they are the two numbers that
+        // decide whether the mechanic is legible, and legibility is what it has to be tuned for.
         //
         // The fiction is not a malicious computer -- it is a GAIN SCHEDULE characterised for a different
         // vehicle. Real control laws are scheduled per flight regime; an under-rated unit's table is wrong
         // in every cell, and wrong in a different way in each. The design is adversarial, the story is a
         // lookup table full of the wrong numbers.
-        public static float AdversarialAcGain = 3f;      // maps |c - m| onto 0..1; the balance knob
-        const float AdversarialDwellSec = 2f;            // minimum time in a regime, so it can be read
-        const float AdversarialMargin = 0.15f;           // lead needed to switch, so it cannot flap
+        public static float AdversarialAcGain = 3f;        // maps |c - m| onto 0..1; the balance knob
+        public static float AdversarialDwellSec = 2f;      // minimum time in a regime, so it can be read
+        public static float AdversarialMargin = 0.15f;     // lead needed to switch, so it cannot flap
+
+        // The regime EMA window, in attitude-response cycles rather than seconds, so it rides the same
+        // m^(-1/3) law as noise Hz and needs no scaling switch of its own: 3 cycles is ~1.5 s on a 1 t probe
+        // and ~7 s on a 100 t stack. It has to be SLOWER than the vehicle's own response, or the split just
+        // tracks the instantaneous command and every cell reads as "moving it".
+        public static float RegimeTauCycles = 3f;
 
         static float _advDc, _advAc, _advHold;
         static int _advRegime = -1;
@@ -474,6 +216,15 @@ namespace RPAxe
         public static int AdversarialRegime => _advRegime;
         public static string AdversarialRegimeName
             => _advRegime < 0 ? "settling" : AdversarialNames[_advRegime];
+
+        // Tuning readouts. AC gain is set by watching these: the number to aim for is a SPREAD across the
+        // four cells over a flight, not a value, and dc/ac are what say which way it is wrong.
+        public static float AdversarialDc => _advDc;
+        public static float AdversarialAc => _advAc;
+
+        /// <summary>PAW one-liner for the current degradation.</summary>
+        public static string DescribePenalty(float sigma)
+            => sigma <= 0f ? "clean" : $"{AdversarialRegimeName} {sigma * 100f:F0}% — degraded";
 
         // The sustained component, shared by the washout move and by the regime split -- one EMA, so the
         // two can never disagree about what "holding" means.
@@ -485,10 +236,9 @@ namespace RPAxe
             _advRegime = -1;
             _wp = _wy = _wr = 0f;
             ResetDelay();
-            ResetDropout();
         }
 
-        static float AdversarialTau => Mathf.Max(0.05f, AdaptiveTauCycles / Mathf.Max(0.01f, EffectiveNoiseHz));
+        static float AdversarialTau => Mathf.Max(0.05f, RegimeTauCycles / Mathf.Max(0.01f, EffectiveNoiseHz));
 
         // Subtract the sustained component: a held command decays toward nothing, a transient passes whole.
         // At sigma = 1 the DC gain is exactly zero, and an integrator cannot restore DC gain removed
@@ -548,10 +298,10 @@ namespace RPAxe
             // ADVANCE EVERY STATEFUL MOVE, APPLY ONLY THE SELECTED ONE. Running just the winner leaves the
             // others' state stale, so a switch into lag reads a ring buffer full of an older flight and
             // jumps -- a switching artefact that would be indistinguishable from the mechanic working.
+            // Delay is the only move that carries a buffer; the washout EMA advances in the regime update
+            // above, and overgain and drift are memoryless.
             float dp = pitch, dy = yaw, dr = roll;
             ApplyDelay(ref dp, ref dy, ref dr, sigma);
-            float op = pitch, oy = yaw, orr = roll;
-            ApplyDropout(ref op, ref oy, ref orr, sigma);
 
             switch (_advRegime)
             {
@@ -570,28 +320,28 @@ namespace RPAxe
                     pitch = dp; yaw = dy; roll = dr;
                     break;
                 default:
-                    // Uncommanded: additive, so it is the only move that still bites a null stick. Roll
-                    // follows the same NoiseRoll switch as mode 2 so the two stay comparable.
+                    // Drift: additive, so it is the only move that still bites a null stick -- which is the
+                    // entire reason this cell exists. All three axes; roll is no longer separable.
                     yaw   = Mathf.Clamp(yaw + NoiseSample(0, sigma), -1f, 1f);
                     pitch = Mathf.Clamp(pitch + NoiseSample(1, sigma), -1f, 1f);
-                    if (NoiseRoll) roll = Mathf.Clamp(roll + NoiseSample(2, sigma), -1f, 1f);
+                    roll  = Mathf.Clamp(roll + NoiseSample(2, sigma), -1f, 1f);
                     break;
             }
         }
 
         // ---- ARMING: WHEN the penalty is live at all ----------------------------------------------
-        // Orthogonal to WHICH penalty runs, so it is a gate on every mode rather than three near-identical
-        // copies of mode 10. It is really a question about SAFE HARBOUR -- how much of the flight envelope
-        // the player can retreat into and be certain nothing is being done to them:
+        // Orthogonal to the policy, which is why it is one gate in front of it rather than three near-copies
+        // of the mechanic. It is really a question about SAFE HARBOUR -- how much of the flight envelope the
+        // player can retreat into and be certain nothing is being done to them:
         //
         //   always              no safe harbour. A craft over capacity is corrupted whatever it is doing,
         //                       including sitting still doing nothing.
         //   any input+throttle  safe harbour = FULLY IDLE. Not burning and not steering. Any active flight
-        //                       is armed, so the no-escape property of mode 10 survives intact: throttle
-        //                       alone arms it, which means a straight burn still lands in the drift cell.
-        //   steering only       safe harbour = NOT STEERING. You may burn freely. Note what this costs:
-        //                       under mode 10 it makes the drift cell nearly unreachable, which hands back
-        //                       a version of the dominant escape ("stop commanding") during any coast.
+        //                       is armed, so the no-escape property survives intact: throttle alone arms it,
+        //                       which means a straight burn still lands in the drift cell.
+        //   steering only       safe harbour = NOT STEERING. You may burn freely. Note what this costs: it
+        //                       makes the drift cell nearly unreachable, which hands back a version of the
+        //                       dominant escape ("stop commanding") during any coast.
         //
         // The middle one is the interesting design claim: a flight computer that is not being ASKED for
         // anything should not fail, which is also the cleanest answer to the 4a objection that noise is
@@ -618,25 +368,27 @@ namespace RPAxe
             return _armed = ArmMode == 1 ? (steering || st.mainThrottle > d) : steering;
         }
 
-        // ---- DRIFT: make the deterministic attacks non-stationary ---------------------------------
-        // The other escape from "deterministic gets learned". Overgain and coupling are learnable only
-        // because their parameters are FIXED; a slow random walk means adaptive tuning is always chasing a
-        // target that has moved. Very low frequency (~20 s period) so it reads as a system that will not
-        // settle rather than as noise.
+        // ---- NON-STATIONARITY: make the deterministic move un-learnable ---------------------------
+        // The other escape from "deterministic gets learned". Overgain is learnable only because its slope
+        // is FIXED; a slow random walk means adaptive tuning is always chasing a target that has moved. Very
+        // low frequency (~20 s period) so it reads as a system that will not settle rather than as noise.
+        //
+        // The OVERGAIN cell is all it touches now (it is the only deterministic move left with a parameter
+        // to walk), so this is a knob about that one cell, not about the mechanic as a whole.
         public static bool NoiseDrift;
         public static float DriftHz = 0.05f;
 
         public static float DriftFor(int idx)
             => NoiseDrift ? 0.5f + Mathf.PerlinNoise(Time.time * DriftHz, idx * 13.1f) : 1f;
 
-        // ---- MODE 4: TRANSPORT DELAY --------------------------------------------------------------
+        // ---- MOVE: TRANSPORT DELAY (the `lag` cell) -----------------------------------------------
         // Hold the command for N physics ticks, N rising with overload. Pure delay is the classic loop
         // killer: it eats PHASE margin, and unlike gain there is nothing a fixed-gain controller can do
         // about it at all. 100-200 ms of unexpected lag destabilises most controllers, and at KSP's 50 Hz
         // that is only 5-10 ticks.
         //
-        // Expected to be the sharpest of the five and quite possibly a cliff wearing a gradient's clothes.
-        // Built to find out rather than because it is predicted to win.
+        // The sharpest thing in the set, which is why the policy spends it only where it bites: lag does
+        // NOTHING to a constant command, so it is reserved for the cell where the command is moving.
         const int DelayBufferMax = 64;
         static readonly float[] _dp = new float[DelayBufferMax];
         static readonly float[] _dy = new float[DelayBufferMax];
@@ -661,12 +413,6 @@ namespace RPAxe
             if (n == 0) return;
             pitch = _dp[read]; yaw = _dy[read]; roll = _dr[read];
         }
-
-        // Mode selection now lives in AxeControlPenalties; these helpers stay as the shared maths the
-        // individual penalties call into.
-
-
-        public static float RatioCut => 1f + Mathf.Log(1f / Mathf.Max(0.01f, 1f - NoiseMax)) / NoiseK;
 
         /// <summary>Noise amplitude as a fraction of control range: 0 under capacity, rising with overload.</summary>
         public static float NoiseFor(float ratio)
@@ -839,33 +585,24 @@ namespace RPAxe
             // A crewed pod / bare command source still bypasses everything, unconditionally (RP-1's rule).
             if (bypass) return LockLevel.Unlocked;
 
-            // PROTOTYPE: the degraded band. Under capacity, clean control. Over it the craft still steers
-            // but its control inputs are corrupted by noise rising with overload, up to RatioCut -- past
-            // that it hands over to the existing ladder and is genuinely unguided. `coreGuided` no longer
-            // short-circuits: a guided core is judged on mass like everything else.
+            // THE DEGRADED BAND. Under capacity, clean control. Over it the craft still steers, but its
+            // commands are corrupted by the regime-matching policy at a strength rising with overload.
+            // A guided core does not short-circuit: it is judged on mass like everything else.
+            //
+            // NO CUTOFF, at any ratio. A hard flip to unguided past some threshold is the same arbitrary
+            // cliff this design exists to remove, just relocated -- and it is redundant, because sigma
+            // already asymptotes to unusable: near 1 the command is close to useless, so the vehicle cannot
+            // be flown regardless. The limit enforces itself, continuously, and the only thing a threshold
+            // adds is a jarring change to a DIFFERENT failure mode at a number nothing physical picked.
+            //
+            // Discrete "unguided" survives only where it is a PROPERTY OF THE PART: an Unguided/Science-Core
+            // core, a capacity-0 named part, or no avionics at all. Those fall through below with
+            // maxCapacity == 0 and are unaffected.
             if (maxCapacity > 0f)
             {
                 float ratio = vesselMass / maxCapacity;
-                if (ratio <= 1f) return LockLevel.Unlocked;
-                noise = NoiseFor(ratio);
-
-                // PenaltyLock is RP-1's original rule as a selectable option: over capacity locks outright
-                // instead of degrading. Kept both as the A/B baseline and as the fallback if no perturbation
-                // survives testing, so choosing it needs no code change.
-                if (AxeControlPenalties.Current.LocksInstead)
-                    return (coreAxial || fixedAxial) ? LockLevel.Axial : LockLevel.Locked;
-
-                // NO CUTOFF by default. A hard flip to unguided past some ratio is the same arbitrary cliff
-                // this design exists to remove, just relocated -- and it is redundant, because the noise
-                // curve already asymptotes to unusable: at sigma near 1 the command is close to random, so
-                // the vehicle cannot be flown regardless. The limit enforces itself, continuously, and the
-                // only thing a threshold adds is a jarring change to a DIFFERENT failure mode at a number
-                // nothing physical picked.
-                //
-                // Discrete "unguided" survives only where it is a PROPERTY OF THE PART rather than a
-                // threshold crossing: an Unguided/Science-Core core, a capacity-0 named part, or no avionics
-                // at all. Those fall through below with maxCapacity == 0 and are unaffected.
-                if (!HardCutoff || ratio < RatioCut) return LockLevel.Unlocked;
+                if (ratio > 1f) noise = NoiseFor(ratio);
+                return LockLevel.Unlocked;
             }
             return (coreAxial || fixedAxial) ? LockLevel.Axial : LockLevel.Locked;
         }

@@ -186,7 +186,7 @@ namespace RPAxe
                 // no-op inside every penalty by construction.
                 float sigma = AxeControlLockerUtils.ComputeArmed(st) ? _noise : 0f;
                 float y0 = st.yaw, p0 = st.pitch, r0 = st.roll;
-                AxeControlPenalties.Current.Apply(ref st.pitch, ref st.yaw, ref st.roll, sigma);
+                AxeControlLockerUtils.ApplyAdversarial(ref st.pitch, ref st.yaw, ref st.roll, sigma);
                 LastNoise = new Vector3(st.pitch - p0, st.yaw - y0, st.roll - r0);
                 return;
             }
@@ -226,10 +226,10 @@ namespace RPAxe
                 // modules (separate objects) are never disabled.
                 _mjClientsAllowed = true;
                 _requested = true;
-                // Per-vessel state for modes 3/4: coupling coefficients are seeded from the vessel so the
-                // misalignment is a stable characteristic of THIS craft, and the delay buffer must not carry
-                // another vessel's commands across the switch.
-                AxeControlPenalties.Current.Reset(_vessel);
+                // Drop the mechanic's per-vessel state: the delay buffer must not carry another vessel's
+                // commands across the switch, and the regime EMA must not import another craft's idea of
+                // what "holding" means.
+                AxeControlLockerUtils.ResetAdversarial();
             }
             if (_requested) { _requested = false; Recompute(); }
             // Every frame, not at Recompute's 1 Hz: a vector hold commanded between polls would otherwise
