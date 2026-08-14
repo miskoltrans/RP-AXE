@@ -443,7 +443,7 @@ namespace RPAxe
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: arm on",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_ChooseOption(options = new[] { "always", "any input incl throttle", "steering only" }, scene = UI_Scene.All)]
-        public int armMode = 0;
+        public int armMode = 1;
 
         // Makes the overgain cell non-stationary, so adaptive tuning is always chasing a target that has
         // moved. That cell is the only deterministic move with a parameter to walk, so this touches nothing
@@ -467,10 +467,27 @@ namespace RPAxe
          UI_FloatRange(minValue = 1f, maxValue = 40f, stepIncrement = 1f, scene = UI_Scene.All)]
         public float overgainSlope = 10f;
 
-        // NO RCS KNOBS. They existed because a stateless mode could be applied a SECOND time inside the
-        // ModuleRCS patch and therefore needed its own scale; the shipped mechanic is stateful in every
-        // cell, so it is applied exactly once, in the post-autopilot hook, and RCS flies the same corrupted
-        // ctrlState as the gimbals. Nothing left to scale separately. See AxeRcsControlLock.
+        // THE BASE LAYER, and the answer to the one escape the policy has: its cells corrupt magnitude, and
+        // three of the four do it proportionally, so small inputs buy small errors and an autopilot can
+        // simply ask for less. Misdirection rotates instead of scaling, so the wrong-axis fraction is
+        // cos(theta) at any magnitude. It runs under every cell, and it is also what corrupts RCS
+        // TRANSLATION (the hook is rotation-only, so docking was flying clean at any overload).
+        //
+        // Rotation at sigma = 1. 0 turns the layer off, which is the A/B against the bare policy. Past 90
+        // the intended-axis component goes negative and control REVERSES -- available, not the default.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: misdirect deg",
+                  guiFormat = "F0", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0f, maxValue = 180f, stepIncrement = 10f, scene = UI_Scene.All)]
+        public float misdirectMaxDeg = 90f;
+
+        // How fast the misdirection precesses, and THE feel knob for the layer: too slow and it is a fixed
+        // offset an integrator trims out, too fast and it becomes noise the vehicle filters. The first cut
+        // sat at the slow end (0.08 Hz, a 12 s sweep) and read as something you could wait out; the whole
+        // interesting range turned out to be above where that slider ended.
+        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: precess Hz",
+                  guiFormat = "F2", groupName = PAWGroup, groupDisplayName = GroupDisplay),
+         UI_FloatRange(minValue = 0.05f, maxValue = 4f, stepIncrement = 0.05f, scene = UI_Scene.All)]
+        public float misdirectRateHz = 0.6f;
 
         [KSPField(guiActiveEditor = true, guiName = "Split",
                   groupName = PAWGroup, groupDisplayName = GroupDisplay)]
@@ -1817,6 +1834,8 @@ namespace RPAxe
             AxeControlLockerUtils.AdversarialAcGain = adversarialAcGain;
             AxeControlLockerUtils.AdversarialDwellSec = adversarialDwell;
             AxeControlLockerUtils.AdversarialMargin = adversarialMargin;
+            AxeControlLockerUtils.MisdirectMaxDeg = misdirectMaxDeg;
+            AxeControlLockerUtils.MisdirectRateHz = misdirectRateHz;
             AxeControlLockerUtils.ArmMode = armMode;
             AxeControlLockerUtils.NoiseDrift = noiseDrift;
         }

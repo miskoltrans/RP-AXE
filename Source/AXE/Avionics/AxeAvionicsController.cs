@@ -152,6 +152,9 @@ namespace RPAxe
             GameEvents.onStageActivate.Add(OnStage);
             _vessel = FlightGlobals.ActiveVessel;
             if (_vessel != null && _vessel.loaded) _vessel.OnPostAutopilotUpdate += FlightInputModifier;
+            // Seed here as well as on switch: Update only re-seeds when the active vessel CHANGES, so the
+            // craft you launch with would otherwise fly the whole mission on the default seed.
+            if (_vessel != null) AxeControlLockerUtils.SeedMisdirect((int)_vessel.persistentId);
             StartCoroutine(CheckLoop());
         }
 
@@ -187,6 +190,11 @@ namespace RPAxe
                 float sigma = AxeControlLockerUtils.ComputeArmed(st) ? _noise : 0f;
                 float y0 = st.yaw, p0 = st.pitch, r0 = st.roll;
                 AxeControlLockerUtils.ApplyAdversarial(ref st.pitch, ref st.yaw, ref st.roll, sigma);
+                // Base layer, AFTER the policy: the frame is wrong for whatever ends up being commanded, so
+                // it rotates the corrupted command rather than the requested one. Rotation only here --
+                // translation is not part of ctrlState's autopilot path in any way that gimbals care about,
+                // and is handled where it is actually consumed (AxeRcsControlLock).
+                AxeControlLockerUtils.ApplyMisdirect(ref st.pitch, ref st.yaw, ref st.roll, sigma);
                 LastNoise = new Vector3(st.pitch - p0, st.yaw - y0, st.roll - r0);
                 return;
             }
@@ -228,8 +236,10 @@ namespace RPAxe
                 _requested = true;
                 // Drop the mechanic's per-vessel state: the delay buffer must not carry another vessel's
                 // commands across the switch, and the regime EMA must not import another craft's idea of
-                // what "holding" means.
+                // what "holding" means. The misdirection seed is per-vessel for the opposite reason -- it
+                // is a stable characteristic of THIS craft's IMU, so two craft drift differently.
                 AxeControlLockerUtils.ResetAdversarial();
+                if (_vessel != null) AxeControlLockerUtils.SeedMisdirect((int)_vessel.persistentId);
             }
             if (_requested) { _requested = false; Recompute(); }
             // Every frame, not at Recompute's 1 Hz: a vector hold commanded between polls would otherwise

@@ -16,6 +16,12 @@ namespace RPAxe
     /// locked; the Axial level still permits axial-thrust (Z) translation for spin-stabilized kick stages. We
     /// save the real ctrlState, zero it for the duration of ModuleRCS.Update, and restore it in the postfix so
     /// no other consumer (or the control display) sees the temporarily-zeroed values.
+    ///
+    /// IT IS ALSO THE TRANSLATION DEGRADATION PATH. The post-autopilot hook corrupts rotation only, so
+    /// X/Y/Z reached the thrusters clean at any overload — docking and station-keeping were the one place
+    /// an autopilot could absorb the entire mechanic by making small inputs. The same save/restore window
+    /// used for the lock is where translation gets misdirected, because that window is already scoped to
+    /// ModuleRCS: nothing written here escapes into the gimbal path or into any stateful buffer.
     /// </summary>
     [HarmonyPatch(typeof(ModuleRCS), "Update")]
     internal static class AxeRcsControlLock
@@ -36,20 +42,41 @@ namespace RPAxe
             if (v == null || v != FlightGlobals.ActiveVessel) return;
 
             AxeControlLockerUtils.LockLevel level = ctl.Level;
-            // DEGRADATION IS NOT RE-APPLIED HERE, and does not need to be: the post-autopilot hook mutates
-            // vessel.ctrlState IN PLACE, and ModuleRCS reads that same object on its own Unity pass, so
-            // thrusters already fly the corrupted command and a craft cannot dodge the mechanic by steering
-            // on RCS. The shipped mechanic is stateful in every cell (a delay buffer, a washout EMA, a
-            // regime that only switches on a dwell timer), so a second application per frame would push the
-            // buffer twice and advance the regime at double rate -- a switching artefact indistinguishable
-            // from the mechanic working. This patch therefore only handles the two LOCKED levels.
-            if (level == AxeControlLockerUtils.LockLevel.Unlocked) return;
+
+            // ROTATION is not re-applied here, and must not be: the post-autopilot hook mutates
+            // vessel.ctrlState IN PLACE and ModuleRCS reads that same object, so thrusters already fly the
+            // corrupted pitch/yaw/roll. The policy is stateful in every cell (a delay buffer, a washout EMA,
+            // a regime on a dwell timer) and this prefix runs once PER THRUSTER MODULE, so re-applying it
+            // would advance that state several times a frame -- a switching artefact indistinguishable from
+            // the mechanic working.
+            //
+            // TRANSLATION is a different story and needs its own path, which is what this is. X/Y/Z never
+            // pass through the post-autopilot hook's corruption at all (it is rotation-only, deliberately:
+            // translation noise on a launch vehicle just burns RCS unfelt), so docking and station-keeping
+            // were flying CLEAN at any overload -- the one place where an autopilot could simply absorb the
+            // whole mechanic. Misdirection is what goes here, and only misdirection:
+            //   * it is MAGNITUDE-INDEPENDENT, so the "nudge it in small pulses" escape that works against
+            //     the three proportional cells does not work against it;
+            //   * it is STATELESS and a pure function of Time.time, which is the only kind of corruption
+            //     that is safe to run per-thruster on Unity's Update phase;
+            //   * it rotates the WHOLE translation vector, so an axial approach bleeds into lateral and a
+            //     lateral correction bleeds into axial -- which is exactly the docking failure a drifting
+            //     IMU produces, and it is the same rotation the gimbals got this frame.
+            float sigma = AxeControlLockerUtils.Armed ? ctl.ControlNoise : 0f;
+            bool misdirectTranslation = sigma > 0f && AxeControlLockerUtils.MisdirectMaxDeg > 0f;
+            if (level == AxeControlLockerUtils.LockLevel.Unlocked && !misdirectTranslation) return;
 
             FlightCtrlState st = v.ctrlState;
             _x = st.X; _y = st.Y; _z = st.Z;
             _pitch = st.pitch; _yaw = st.yaw; _roll = st.roll;
             _throttle = st.mainThrottle;
             _saved = true;
+
+            if (level == AxeControlLockerUtils.LockLevel.Unlocked)
+            {
+                AxeControlLockerUtils.ApplyMisdirect(ref st.X, ref st.Y, ref st.Z, sigma);
+                return;   // the postfix restores, so nothing outside ModuleRCS sees the rotated command
+            }
 
             st.yaw = st.pitch = st.roll = 0f;   // no steering
             st.X = st.Y = 0f;                    // no lateral translation

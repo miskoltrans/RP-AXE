@@ -222,9 +222,14 @@ namespace RPAxe
         public static float AdversarialDc => _advDc;
         public static float AdversarialAc => _advAc;
 
-        /// <summary>PAW one-liner for the current degradation.</summary>
+        /// <summary>PAW one-liner: the live regime, the strength, and the base layer's bound if it is on.
+        /// The layer is named separately because it is not one of the regimes and does not switch with
+        /// them -- reading "drift" while the craft is also pointing 40° wrong is otherwise misleading.</summary>
         public static string DescribePenalty(float sigma)
-            => sigma <= 0f ? "clean" : $"{AdversarialRegimeName} {sigma * 100f:F0}% — degraded";
+            => sigma <= 0f ? "clean"
+             : MisdirectMaxDeg > 0f
+                 ? $"{AdversarialRegimeName} {sigma * 100f:F0}% +{sigma * MisdirectMaxDeg:F0}° off-axis — degraded"
+                 : $"{AdversarialRegimeName} {sigma * 100f:F0}% — degraded";
 
         // The sustained component, shared by the washout move and by the regime split -- one EMA, so the
         // two can never disagree about what "holding" means.
@@ -329,6 +334,120 @@ namespace RPAxe
             }
         }
 
+        // ================ BASE LAYER: MISDIRECTION (gyro drift) ====================================
+        // NOT a move in the policy, and that is the point. The four cells all corrupt the MAGNITUDE of a
+        // command (or its timing), and three of the four are PROPORTIONAL to it -- which was a deliberate
+        // fix (additive-everywhere made RCS unusable at any sigma) and is also their shared loophole: make
+        // your inputs small and you buy a proportionally small error. Autopilots are very good at exactly
+        // that. Misdirection has no such loophole, because it rotates rather than scales: the fraction that
+        // reaches the intended axis is cos(theta) regardless of magnitude, so a smaller input buys a smaller
+        // amount of the wrong thing and nothing more. It is also the only mechanic here that survives NEAR
+        // BINARY actuators, where scaling 0.7 vs 1.0 fires the same thrusters but changing which AXIS the
+        // command lands on changes which thrusters fire.
+        //
+        // It therefore runs ALWAYS, underneath whichever cell the policy has selected, instead of competing
+        // for a cell. The two do different jobs: the policy decides how badly you are punished for what you
+        // are doing, misdirection decides that you cannot get the direction right at all. It is deliberately
+        // paired with the arming gate -- a base layer with no safe harbour would be corruption with no off
+        // switch, and `any input incl throttle` is what makes "stop asking for anything" the answer.
+        //
+        // THE ROTATION PRECESSES; it is not a fixed offset. A static rotation is a fixed linear transform,
+        // and a fixed transform is exactly what integral terms trim out over a few seconds -- MechJeb would
+        // simply learn "pitch needs a bit of yaw" and stop caring. So the offset wanders continuously: you
+        // get one configuration for a while, adapt to it, and it has moved.
+        //
+        // Three independent Perlin channels form a ROTATION VECTOR -- its direction is the axis, its length
+        // the angle. Because the channels evolve independently the axis precesses rather than the angle
+        // merely pulsing on a fixed axis. Bounded by sigma * MisdirectMaxDeg, so overload sets how far wrong
+        // it can get while the rate knob sets how fast it moves.
+        //
+        // WHAT THE FIRST CUT GOT WRONG, from flying it: the precession was too slow and too SMOOTH to read
+        // as a failing gyro -- a slow sweep you could sit and wait out. Three fixes, all aimed at the same
+        // property:
+        //   * RATE. 0.08 Hz is a ~12 s wander, well inside what both an integral term and a player track.
+        //     0.6 Hz re-arranges the configuration every second or two: too fast to be worth adapting to,
+        //     still an order of magnitude below the vehicle's own attitude response, so it is not simply
+        //     low-passed away the way the white-noise mode was.
+        //   * OCTAVES. One Perlin lane is a smooth curve -- it has a rate but no texture, so the axis sweeps
+        //     rather than jumps. Three octaves at half amplitude each lay fast structure over the slow
+        //     wander, which is what makes it read as random instead of as a slow oscillation.
+        //   * DECORRELATED CHANNELS. All three were sampled at the SAME x with only a lane offset in y, so
+        //     they crossed the noise lattice in lockstep and the axis re-arranged on a common beat.
+        //     Mutually incommensurate per-channel rates remove the beat.
+        // The channels are also gained: Unity's Perlin clusters near its midpoint (see PerlinGain), so the
+        // raw vector was typically only ~0.43 long and the angle actually flown ran at well under half what
+        // the PAW advertised. Typical is now ~0.7 of the bound, with excursions that clamp at it.
+        //
+        // Past 90 degrees the intended-axis component goes negative and control REVERSES -- available, not
+        // the default. 0 turns the layer off, which is how it gets A/B'd against the bare policy in flight.
+        public static float MisdirectMaxDeg = 90f;
+        public static float MisdirectRateHz = 0.6f;   // ~1.5 s to noticeably change character
+
+        // Octave structure is a SHAPE choice, not a feel knob, so it stays out of the PAW -- the rig already
+        // has enough sliders, and rate is the one number that actually needs flying to find.
+        const int MisdirectOctaves = 3;
+        const float MisdirectLacunarity = 2.7f;   // non-integer, so octaves never re-align on the lattice
+        const float MisdirectGain = 2.4f;         // Perlin bell-shape correction, same reason as PerlinGain
+
+        // Per-channel base rates, mutually incommensurate so the three axes never come back into phase, and
+        // separate y lanes so they sample unrelated noise to begin with.
+        static readonly float[] _mdRate = { 1.00f, 1.37f, 1.79f };
+        static readonly float[] _mdLane = { 0.0f, 7.3f, 13.9f };
+
+        // Per-vessel, so two craft drift differently. Seeded on vessel switch.
+        static int _mdSeed = int.MinValue;
+        public static void SeedMisdirect(int seed) { _mdSeed = seed; }
+
+        static float MisdirectFbm(int ch, float t, float seed)
+        {
+            float sum = 0f, amp = 1f, norm = 0f, f = _mdRate[ch];
+            for (int i = 0; i < MisdirectOctaves; i++)
+            {
+                sum += amp * (Mathf.PerlinNoise(t * f, seed + _mdLane[ch] + i * 4.7f) * 2f - 1f);
+                norm += amp;
+                amp *= 0.5f;
+                f *= MisdirectLacunarity;
+            }
+            return Mathf.Clamp(sum / norm * MisdirectGain, -1f, 1f);
+        }
+
+        /// <summary>
+        /// The wrong reference frame, as a rotation. Identity when the layer is off or clean.
+        ///
+        /// A PURE FUNCTION OF Time.time, which is what makes it usable from both the post-autopilot hook and
+        /// the ModuleRCS patch: those run on different Unity phases and the RCS one runs once PER THRUSTER,
+        /// so anything stateful would advance several times a frame and anything freshly random would point
+        /// each thruster somewhere different. Here every caller in a frame gets the SAME rotation, which is
+        /// also the correct fiction -- there is one drifting IMU, and every command it issues, rotational or
+        /// translational, is referred to that same wrong frame.
+        /// </summary>
+        public static Quaternion MisdirectRotation(float sigma)
+        {
+            if (sigma <= 0f || MisdirectMaxDeg <= 0f) return Quaternion.identity;
+            float t = Time.time * MisdirectRateHz;
+            float seed = _mdSeed == int.MinValue ? 0f : (_mdSeed % 977) * 0.31f;
+            Vector3 rot = new Vector3(MisdirectFbm(0, t, seed),
+                                      MisdirectFbm(1, t, seed),
+                                      MisdirectFbm(2, t, seed));
+            float mag = rot.magnitude;
+            if (mag < 1e-5f) return Quaternion.identity;
+            return Quaternion.AngleAxis(Mathf.Clamp01(sigma) * MisdirectMaxDeg * Mathf.Clamp01(mag), rot / mag);
+        }
+
+        /// <summary>Rotate one command triple into the wrong frame. Axis-agnostic on purpose: the same call
+        /// serves pitch/yaw/roll in the hook and X/Y/Z in the RCS patch.</summary>
+        public static void ApplyMisdirect(ref float a, ref float b, ref float c, float sigma)
+        {
+            Vector3 v = new Vector3(a, b, c);
+            if (v.sqrMagnitude < 1e-8f) return;   // nothing commanded, nothing to misdirect
+            Quaternion q = MisdirectRotation(sigma);
+            if (q == Quaternion.identity) return;
+            Vector3 outv = q * v;
+            a = Mathf.Clamp(outv.x, -1f, 1f);
+            b = Mathf.Clamp(outv.y, -1f, 1f);
+            c = Mathf.Clamp(outv.z, -1f, 1f);
+        }
+
         // ---- ARMING: WHEN the penalty is live at all ----------------------------------------------
         // Orthogonal to the policy, which is why it is one gate in front of it rather than three near-copies
         // of the mechanic. It is really a question about SAFE HARBOUR -- how much of the flight envelope the
@@ -351,7 +470,13 @@ namespace RPAxe
         // DEADBAND, not `> 0`. This hook runs POST-autopilot, so what it reads is the vehicle's program,
         // not a human stick -- and MechJeb and SAS emit small nonzero commands continuously. A strict
         // zero test would read "armed" essentially always and the three variants would be one variant.
-        public static int ArmMode = 0;
+        //
+        // DEFAULTS TO 1 (`any input incl throttle`). It was `always` while the modes were being compared,
+        // because a mode that only fires sometimes is harder to A/B; with the mechanic settled the design
+        // claim wins -- a flight computer that is not being ASKED for anything should not fail. It also
+        // pays for the misdirection base layer: a corruption that runs under every cell needs a safe
+        // harbour, and this makes the harbour "stop asking for anything" rather than "ask quietly".
+        public static int ArmMode = 1;
         public const float ArmDeadband = 0.01f;
         public static readonly string[] ArmNames = { "always", "any input incl throttle", "steering only" };
 
