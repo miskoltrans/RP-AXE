@@ -2524,9 +2524,24 @@ nodes:
     tier: 7
     parents: [opt_orbitalMapping]
     flavor: "Bounce a radar pulse straight down and time the echo — terrain height where a camera only gives shape, filling in the mapping lane's one missing dimension."
-    parts: [scansat-radar-poseidon-3b-1, ROC-ApolloDipoleBDB, scansat-radar-seasat-1]
-    # scansat-radar-seasat-1 added (2026-07, power+science pass): the real Seasat SAR antenna, cashing in
-    # opt_orbitalMapping's own promised "mapping lane that fills out among the planets."
+    parts: [scansat-radar-poseidon-3b-1, ROC-ApolloDipoleBDB]
+    # This node is LO-RES ONLY, deliberately: hi-res is what opt_syntheticApertureRadar exists to unlock,
+    # and every part here must read sensorType 1 / SCANsatAltimetryLoRes in the merged cache.
+    # scansat-radar-seasat-1 sat here from the 2026-07 power+science pass, added to cash in
+    # opt_orbitalMapping's promised "mapping lane that fills out among the planets" — but the title was
+    # taken at face value and the part data never read. RO_SCANsat.cfg:249 flips Seasat to sensorType 2 /
+    # SCANsatAltimetryHiRes, so it was handing out hi-res SAR two tiers before the SAR node, leaving that
+    # node with no capability left to unlock. Moved to opt_syntheticApertureRadar 2026-08-14.
+    #
+    # RO-PVO-ORAD (Pioneer Venus "Surface Radar Mapper") was considered as the lo-res replacement and
+    # REJECTED on the merged numbers. On RO's source config it looks like the planetary-range rung
+    # (max_alt 4.7 Mm vs poseidon's 250 km) — but RealSolarSystem/Compatibility/SCANsat.cfg:74 patches
+    # `@PART[*]:HAS[@MODULE[SCANsat]]:FOR[RealSolarSystem]` and rewrites min/max/best_alt from sensorType
+    # alone, and :FOR[RealSolarSystem] sorts after :FOR[RealismOverhaul], so RO's per-part altitudes are
+    # overwritten install-wide. Merged, PVO and poseidon have IDENTICAL 10/500/10 km altitudes; PVO is
+    # then narrower (fov 2.3 vs 4.5), 16x heavier (0.097 vs 0.006 t) and 27x pricier (3300 vs 120), and
+    # wins only on power (0.018 vs 0.2 EC/s). That is a sidegrade, not a generation, so it stays on
+    # `parking` where RP-1 also left it. Read the CACHE, never RO's source, for any SCANsat altitude.
   - id: gnc_orbitalGravimetry
     title: "Mass-Concentration Gravity Mapping"
     discipline: GuidanceControl
@@ -5684,10 +5699,19 @@ nodes:
   - id: opt_syntheticApertureRadar
     title: "Synthetic-Aperture Radar"
     discipline: OpticsPhotonics
-    tier: 10
+    tier: 9
     parents: [opt_radarAltimetry]
     flavor: "See through cloud and darkness by making your own illumination. Synthetic-aperture radar bounces a beam off the surface and reconstructs a high-resolution image from the echoes — the instrument that mapped the whole cloud-shrouded surface of Venus."
-    parts: [RO-MagellanRadar, scansat-sar-paz-1]
+    parts: [scansat-radar-seasat-1, RO-MagellanRadar, scansat-sar-paz-1]
+    # The hi-res ladder, all three rungs: Seasat (1978, the first spaceborne SAR) -> Magellan RDRS (1989)
+    # -> PAZ (2018). RP-1 encodes the same order — ECM-Parts.cfg:401 discounts RO-MagellanRadar off
+    # scansat-radar-seasat-1 — it just spreads them over three separate nodes.
+    # T10 -> T9 (2026-08-14): Seasat moved in from opt_radarAltimetry (see that node), and T10 is the
+    # shuttle-era band, so a 1978 instrument gating the whole capability read late. No node parents this
+    # one, so the drop cascades nowhere; opt_radarAltimetry at T7 still sits two tiers below.
+    # RO-MagellanRadar is only a real SAR because AxeUpstreamPartFixes.cfg stanza 6 makes it one — RO's
+    # +PART clone of the lo-res poseidon-3b never overrode sensorType. Without that stanza this node's
+    # king part is a lo-res altimeter and the node is half a lie.
   - id: opt_orbitalResourceScanning
     title: "Orbital Resource Scanning"
     discipline: OpticsPhotonics
