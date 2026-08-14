@@ -1991,14 +1991,23 @@ namespace RPAxe
             if (_thermal == null) _thermal = part.FindModuleImplementing<ModuleAxeThermal>();
             if (_thermal != null)
             {
-                _thermal.SetBusThermal(asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK(), ThermalArea());
+                // Area is NOT ours -- SetBusThermal has ignored its second argument since area moved to
+                // vessel dry mass (2026-08-05). Passing ThermalArea() here only made the retired
+                // box-volume figure look live; ModuleAxeFixedAvionics already passes 0f.
+                _thermal.SetBusThermal(asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK(), 0f);
                 thermalWatts = _thermal.thermalWatts;
             }
             else thermalWatts = 0f;
             // Editor readout only: the asymptote, since at the home body the live figure is 0.
             // Editor reference figure: the sustained deep-space load, deadband included.
+            //
+            // Area comes from ModuleAxeThermal (vessel/ship DRY MASS), never this core's ThermalArea(),
+            // which is the retired box-volume basis. They are different numbers, so this readout and the
+            // thermal module's own "Heater draw (sim)" used to disagree about the same craft's deep-space
+            // heater bill -- in the same PAW group, one row apart.
             thermalWattsDeepSpace = (asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK())
-                                    * ThermalArea() * Mathf.Pow(minK / setpointK, 4f);
+                                    * (_thermal != null ? _thermal.CurrentArea() : 0f)
+                                    * Mathf.Pow(minK / setpointK, 4f);
 
             // NOTE: currentWatts (and the ModuleCommand rate below) still INCLUDE thermalWatts, because
             // without Kerbalism the ModuleCommand resource is the only channel that exists. With Kerbalism
@@ -2309,38 +2318,26 @@ namespace RPAxe
         }
 
         #region Kerbalism (duck-typed; invoked by reflection only if Kerbalism is present)
-        // The VAB "simulate at body X" selector already EXISTS -- it is Kerbalism's own planner, whose body
-        // and sunlight/shadow pickers feed straight into these two parameters. AXE used to discard both and
-        // report a flat number. Now the planner shows the real heater load for the body and lighting state
-        // you selected, which is the whole point: at Earth in sunlight the load is 0, so without this the
-        // mechanic is invisible exactly where you plan for it.
+        // HEATERS ARE NOT OURS -- ModuleAxeThermal reports them to the planner under its own "heaters"
+        // label, off the same body/sunlight environment. This method used to add its own copy of the
+        // heater term on top, so the planner billed the load TWICE: once here inside "avionics" and once
+        // in "heaters". That is why the avionics line moved with the planner's body picker at all, and
+        // why it climbed again in shadow -- a line that should be pure tier-and-dry-mass and therefore
+        // flat across the whole solar system.
         //
-        // Keys come from KERBALISM.Planner.ResourceSimulator: "sun_dist" (m), "sunlight" (1 sunlit / 0
-        // shadow). Fall back to the live vessel figure if either is missing.
+        // The two copies were not even the same number. This one charged raw k*A*deficit, the full
+        // radiative loss at SETPOINT with no deadband, against the retired box-volume ThermalArea();
+        // ModuleAxeThermal charges StepThermal, which is zero until the bus would fall through the 273 K
+        // floor and then only holds that floor, against the vessel dry-mass area. At Mars the honest load
+        // is ~0.32*qMax and this added ~0.57*qMax on top of it.
+        //
+        // Identical defect to the one deleted from BackgroundUpdate on 2026-08-12 (see the note there):
+        // both were left over from before heaters moved into their own module on 2026-08-05, and this was
+        // the path that pass missed. ResourceUpdate has always been correct -- it reports
+        // `currentWatts - thermalWatts`.
         public string PlannerUpdate(List<KeyValuePair<string, double>> resources, CelestialBody body, Dictionary<string, double> environment)
         {
-            double sunDist = 0d, sunlight = 1d;
-            bool haveEnv = environment != null
-                           && environment.TryGetValue("sun_dist", out sunDist) && sunDist > 0d;
-            if (environment != null) environment.TryGetValue("sunlight", out sunlight);
-
-            double watts = ComputeBaseWatts();
-            if (haveEnv)
-            {
-                // Planner bodies are evaluated in orbit about themselves, so use the body's own radius as
-                // the stand-in for "how much sky does it fill" -- low orbit, the conservative case.
-                // The planner's sunlight/shadow toggle is a WORST-CASE switch (that is what it means for
-                // solar panels), so honour it as a hard 0/1 here: "shadow" answers "what if I sat in the
-                // dark", not "what does an average orbit cost". Flight uses the orbit-averaged figure and
-                // will therefore read between the planner's two extremes.
-                double bodyDist = body != null ? body.Radius * 1.1d : 0d;
-                float k = asBuiltThermalK > 0f ? asBuiltThermalK : ResolveThermalK();
-                watts += k * ThermalArea()
-                         * ThermalDeficit(sunDist, sunlight < 0.5d ? 0d : 1d, body, bodyDist, bodyIrFraction);
-            }
-            else watts += thermalWatts;
-
-            resources.Add(new KeyValuePair<string, double>(EcName, -watts / 1000.0));
+            resources.Add(new KeyValuePair<string, double>(EcName, -ComputeBaseWatts() / 1000.0));
             return "avionics";
         }
 

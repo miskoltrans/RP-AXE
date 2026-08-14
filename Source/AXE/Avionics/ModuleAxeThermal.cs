@@ -125,6 +125,25 @@ namespace RPAxe
         }
 
         /// <summary>
+        /// Live radiating area for whichever scene is running — the editor ship, or the flight vessel.
+        ///
+        /// The dry-mass sum used to be written out three times (UpdateSim, PlannerUpdate, VesselArea), and
+        /// the planner line and the PAW sim readout are precisely the two numbers a player cross-checks
+        /// against each other when sizing power, so they are the last two that may drift apart.
+        /// </summary>
+        public float CurrentArea()
+        {
+            if (HighLogic.LoadedSceneIsEditor)
+            {
+                double dryTons = 0d;
+                if (EditorLogic.fetch?.ship?.Parts != null)
+                    foreach (Part p in EditorLogic.fetch.ship.Parts) dryTons += p.mass;
+                return dryTons > 0d ? areaCoefficient * Mathf.Pow((float)(dryTons * 1000d), 2f / 3f) : 0f;
+            }
+            return VesselArea(vessel, areaCoefficient);
+        }
+
+        /// <summary>
         /// Exactly ONE thermal module per vessel charges the heater load.
         ///
         /// Now that area comes from the whole vessel rather than each avionics box, every core aboard would
@@ -155,7 +174,21 @@ namespace RPAxe
         {
             base.OnStart(state);
             if (busTemperature <= 0d) busTemperature = setpointK;
-            if (HighLogic.LoadedSceneIsEditor) SetupSimSelector();
+            if (HighLogic.LoadedSceneIsEditor)
+            {
+                // OnEditorShipModified existed but was never subscribed, so the sim readouts refreshed
+                // only when the player touched the body dropdown or the deep-space toggle. Radiating area
+                // is derived from ship DRY MASS, so every part added or removed moves it — and thermalK
+                // arrives later still, pushed in by the avionics core's first UpdateRate. Without this the
+                // figure a player sizes an RTG against is stale from the moment they keep building.
+                GameEvents.onEditorShipModified.Add(OnEditorShipModified);
+                SetupSimSelector();
+            }
+        }
+
+        void OnDestroy()
+        {
+            GameEvents.onEditorShipModified.Remove(OnEditorShipModified);
         }
 
         void SetupSimSelector()
@@ -190,10 +223,7 @@ namespace RPAxe
         {
             if (!HighLogic.LoadedSceneIsEditor) return;
 
-            double dryTons = 0d;
-            if (EditorLogic.fetch?.ship?.Parts != null)
-                foreach (Part p in EditorLogic.fetch.ship.Parts) dryTons += p.mass;
-            simArea = dryTons > 0d ? areaCoefficient * Mathf.Pow((float)(dryTons * 1000d), 2f / 3f) : 0f;
+            simArea = CurrentArea();
             thermalArea = simArea;
 
             if (simArea <= 0f || thermalK <= 0f || simBodyIndex < 0 || simBodyIndex >= _simBodies.Count)
@@ -254,14 +284,8 @@ namespace RPAxe
                            && environment.TryGetValue("sun_dist", out sunDist) && sunDist > 0d;
             if (environment != null) environment.TryGetValue("sunlight", out sunlight);
 
-            float area = 0f;
-            if (HighLogic.LoadedSceneIsEditor && EditorLogic.fetch?.ship != null)
-            {
-                double dry = 0d;
-                foreach (Part p in EditorLogic.fetch.ship.Parts) dry += p.mass;
-                if (dry > 0d) area = areaCoefficient * Mathf.Pow((float)(dry * 1000d), 2f / 3f);
-            }
-            else area = thermalArea;
+            float area = HighLogic.LoadedSceneIsEditor ? CurrentArea() : 0f;
+            if (area <= 0f) area = thermalArea;
             thermalArea = area;
 
             float watts = 0f;
