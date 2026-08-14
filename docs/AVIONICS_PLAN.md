@@ -12,11 +12,31 @@ independent of which perturbation won, and improves the shipped lock system on i
 > "unguided" now survives only as a property of the part (Unguided/Science-Core, capacity 0, or no
 > avionics at all). Roll is degraded like pitch and yaw; the `noise roll` switch is gone.
 >
-> **The `DEBUG:` knobs deliberately STAY** — this is where D4 is knowingly incomplete. Sixteen remain and
-> every one drives something: the strength curve, the drift cell, the regime split, or one of the four
-> moves. Two constants were PROMOTED to knobs in the same pass — regime dwell and regime margin --
-> because they are the two numbers that decide legibility, and legibility is what the mechanic still has
-> to be tuned for. Stripping the rig is the last commit before ship, not part of this cleanup.
+> **AMENDED same day, from flying it.** Two escapes the policy on its own could not close:
+>
+> - **RCS translation was never corrupted at all.** The post-autopilot hook is rotation-only (deliberate:
+>   translation noise on a launcher burns RCS unfelt), so `X/Y/Z` reached the thrusters clean at any
+>   overload. Docking and station-keeping were the one place an autopilot absorbed the whole mechanic.
+>   Translation now gets its own path inside the existing `ModuleRCS` prefix/postfix window.
+> - **Three of the four cells are PROPORTIONAL** to the command (`overgain`, `washout`, `lag`), so small
+>   inputs buy small errors — "ask for less" is a partial escape, and autopilots are good at it.
+>
+> Both are closed by bringing **`misdirect` back as an always-on BASE LAYER** under the policy rather than
+> as a competing mode: it rotates instead of scaling, so the wrong-axis fraction is `cos θ` at any
+> magnitude, and it is stateless, which is the only kind of corruption safe to run per-thruster on Unity's
+> Update phase. Same rotation for gimbals and for RCS in a given frame — one drifting IMU, one wrong frame.
+> `misdirect deg = 0` turns the layer off, which is the A/B against the bare policy.
+>
+> **`arm on` now defaults to `any input incl throttle`** (was `always`). It was `always` only because a
+> mode that fires intermittently is harder to A/B; with the mechanic settled the design claim wins, and a
+> base layer that runs under every cell needs a safe harbour — this makes it "stop asking for anything"
+> rather than "ask quietly".
+>
+> **The `DEBUG:` knobs deliberately STAY** — this is where D4 is knowingly incomplete. Eighteen remain
+> (17 sliders/toggles plus the injected readout) and every one drives something: the strength curve, the
+> drift cell, the regime split, one of the four moves, or the base layer. Two constants were PROMOTED to
+> knobs in the same pass — regime dwell and regime margin — because they are the two numbers that decide
+> legibility, and legibility is what the mechanic still has to be tuned for. Stripping the rig is the last commit before ship, not part of this cleanup.
 
 | phase | what | gate | status |
 |---|---|---|---|
@@ -44,7 +64,7 @@ flown while the mechanic stayed open, and so the losers could be deleted by dele
 | 5 | `coupling` | margin attack — decoupling | deleted |
 | 6 | `delay` | margin attack — phase margin | **survives as the `lag` move** |
 | 7 | `dropouts` | availability | deleted |
-| 8 | `misdirect` | margin attack — reference frame | deleted |
+| 8 | `misdirect` | margin attack — reference frame | **restored as the always-on base layer** |
 | 9 | `effort gain` | closed loop — by depth | deleted |
 | 10 | `adversarial` | closed loop — by choice | **SHIPPED — it is the mechanic** |
 
@@ -296,8 +316,8 @@ Fly overloaded without being told what to look for. Reads as *undersized avionic
 
 ### D4 Cleanup — **PARTIAL, deliberately**
 Done: the losing penalty classes and `AxeControlPenalty.cs` deleted; the mode chooser and every knob
-belonging to a dead mode removed (`noise roll`, `hard cutoff`, `mode`, `misdirect deg`, `precess Hz`,
-`dropout ms`, `RCS noise scale`, `noise on RCS`); the RCS re-application path removed with them (a
+belonging to a dead mode removed (`noise roll`, `hard cutoff`, `mode`, `dropout ms`, `RCS noise scale`,
+`noise on RCS`; `misdirect deg` and `precess Hz` came back with the base layer); the RCS re-application path removed with them (a
 stateful mechanic must be applied exactly once, and the post-autopilot hook already mutates the ctrlState
 ModuleRCS reads); the lock/cutoff branches removed from `ShouldLock`; docs rewritten to describe what
 shipped.
