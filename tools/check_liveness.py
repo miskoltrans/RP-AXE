@@ -423,6 +423,69 @@ def check_facility_gates(cache):
     return (1 if bad else 0), bad
 
 
+def child_nodes(body, indent):
+    """(type, body) for each child node at the given tab depth of a cache block."""
+    out = []
+    for m in re.finditer(r"\n%s(\w+)\n%s\{\n" % ("\t" * indent, "\t" * indent), body):
+        depth, i = 1, m.end()
+        start = i
+        while i < len(body) and depth:
+            depth += (body[i] == "{") - (body[i] == "}")
+            i += 1
+        out.append((m.group(1), body[start:i - 1]))
+    return out
+
+
+def check_docking_latch(cache):
+    """Check G — a NewVessel parameter that docking will un-satisfy.
+
+    NewVessel is an ALL-PARTS predicate (VesselUtilities.VesselLaunchedAfterID: any part with a
+    launchID older than the contract disqualifies the whole vessel). Docking merges the target's
+    pre-contract parts into the tracked vessel, so in a VesselParameterGroup that asks for BOTH
+    NewVessel and Docking, the first parameter goes false at the exact instant the second goes
+    true and the group can never complete. Reported from a live First Docking attempt 2026-08-14.
+
+    `disableOnStateChange = true` on the NewVessel is the fix (it clears allowStateReset, after
+    which VesselParameter.SetState discards an Incomplete result and the earned completion holds).
+    RP-1's station-supply contracts already do this; its two capstone docking contracts did not.
+
+    This checks the EFFECT rather than the wiring: AxeDockingNewVesselLatch.cfg is written against
+    the parameter SHAPE, using a nested-HAS selector with no precedent elsewhere in the project, so
+    what matters is whether the flag is on the merged parameter -- not whether the patch exists.
+    """
+    text = open(cache, encoding="utf-8", errors="replace").read()
+    bad, total = [], 0
+    for blk in text.split("\nUrlConfig\n{\n"):
+        m = re.match(r"\tparentUrl = (.+)\n\tCONTRACT_TYPE\n\t\{\n", blk)
+        if not m:
+            continue
+        body = blk[m.end():]
+        cn = re.search(r"^\t\tname = (.+)$", body, re.M)
+        cname = cn.group(1).strip() if cn else "?"
+        for typ, grp in child_nodes(body, 2):
+            if typ != "PARAMETER":
+                continue
+            kids = child_nodes(grp, 3)
+            types = {t.group(1) for _, k in kids
+                     for t in [re.search(r"^\s*type = (\S+)", k, re.M)] if t}
+            if not {"NewVessel", "Docking"} <= types:
+                continue
+            total += 1
+            for _, k in kids:
+                t = re.search(r"^\s*type = (\S+)", k, re.M)
+                if t and t.group(1) == "NewVessel" and \
+                        not re.search(r"disableOnStateChange = (true|True)", k):
+                    bad.append((cname, m.group(1)))
+
+    print(f"=== G. NewVessel parameters that docking will un-satisfy ({len(bad)} of {total}) ===")
+    for cname, url in bad:
+        print(f"  UNLATCHED  {cname}: NewVessel + Docking in one group, no disableOnStateChange")
+        print(f"      {url}")
+    if not bad:
+        print(f"  all {total} NewVessel+Docking group(s) latch the launch")
+    return (1 if bad else 0), bad
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--instance", default=os.path.join(os.path.dirname(REPO), "Instance"),
@@ -578,7 +641,12 @@ def main():
     ffail, _ = check_facility_gates(cache)
     fail = fail or ffail
 
-    print("\n" + ("FAIL -- see 0/A/B/C/T/E/F above." if fail
+    # ---- G: a NewVessel that the contract's own Docking parameter will break ----------------
+    print()
+    gfail, _ = check_docking_latch(cache)
+    fail = fail or gfail
+
+    print("\n" + ("FAIL -- see 0/A/B/C/T/E/F/G above." if fail
                   else "OK -- everything RP-AXE ships binds to something, and its values landed."))
     return fail
 
