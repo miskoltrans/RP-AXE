@@ -3,45 +3,58 @@
 Companion to `docs/AVIONICS_NOISE.md` (the design) and `docs/AVIONICS_AUTHORITY.md` (the rejected
 predecessor). This is the whole of the work, planned before building.
 
-**The rule this plan is built around: the exact mechanic stays OPEN.** Everything except Phase D is
-independent of which perturbation wins, and improves the currently-shipped lock system too. If every
-mode fails the flight test, all of it still ships and the fallback (`PenaltyLock`) is a one-knob
-change with no code edit.
+**The rule this plan was built around: the exact mechanic stayed OPEN.** Everything except Phase D was
+independent of which perturbation won, and improves the shipped lock system on its own.
+
+> **DECIDED (2026-08-14): `adversarial` ships, and it is the only mechanic left in the code.** The other
+> ten consequences are deleted — files, knobs and branches — rather than parked behind a chooser. Over
+> capacity NEVER locks: `LocksInstead`, the hard cutoff and `RatioCut` went with them, so discrete
+> "unguided" now survives only as a property of the part (Unguided/Science-Core, capacity 0, or no
+> avionics at all). Roll is degraded like pitch and yaw; the `noise roll` switch is gone.
+>
+> **The `DEBUG:` knobs deliberately STAY** — this is where D4 is knowingly incomplete. Sixteen remain and
+> every one drives something: the strength curve, the drift cell, the regime split, or one of the four
+> moves. Two constants were PROMOTED to knobs in the same pass — regime dwell and regime margin --
+> because they are the two numbers that decide legibility, and legibility is what the mechanic still has
+> to be tuned for. Stripping the rig is the last commit before ship, not part of this cleanup.
 
 | phase | what | gate | status |
 |---|---|---|---|
-| **0** | penalty abstraction layer | — | **DONE** (`a5c9845`) |
-| **A** | player-facing behaviour | — | A1/A2 done; A3–A5 to build |
-| **B** | RP-1 parity audit + fixes | — | to build |
-| **C** | sack the EC penalty | — | to build |
-| **D** | fly the modes, pick one, clean up | needs A+B+C | tomorrow |
+| **0** | penalty abstraction layer | — | **DONE** (`a5c9845`), then **DELETED** — its job was to let the losers be removed by removing files, and that is what happened |
+| **A** | player-facing behaviour | — | **DONE** (A1–A5) |
+| **B** | RP-1 parity audit + fixes | — | B1/B2 decided; B3 to build |
+| **C** | sack the EC penalty | — | **DONE** |
+| **D** | fly the modes, pick one, clean up | needs A+B+C | **mechanic chosen, losers deleted; D4 partial — the rig stays until the numbers are nailed down** |
 
 ---
 
-## Phase 0 — penalty abstraction (DONE)
+## Phase 0 — penalty abstraction (DONE, then removed)
 
-`AxeControlPenalty` + `AxeControlPenalties` registry. Eleven selectable consequences behind one
-interface, chosen at runtime from the core's DEBUG mode knob:
+`AxeControlPenalty` + `AxeControlPenalties` held eleven selectable consequences behind one interface,
+chosen at runtime from the core's DEBUG mode knob. It existed so the surrounding work could be built and
+flown while the mechanic stayed open, and so the losers could be deleted by deleting files. Both happened:
 
-| # | id | family |
-|---|---|---|
-| 0 | `none` | experimental control |
-| 1 | `lock (RP-1)` | RP-1's rule — the A/B baseline and the fallback |
-| 2 | `uncommanded` | disturbance |
-| 3 | `on input` | disturbance |
-| 4 | `overgain` | margin attack — gain margin |
-| 5 | `coupling` | margin attack — decoupling |
-| 6 | `delay` | margin attack — phase margin |
-| 7 | `dropouts` | availability |
-| 8 | `misdirect` | margin attack — reference frame |
-| 9 | `effort gain` | closed loop — by depth |
-| 10 | `adversarial` | closed loop — by choice |
+| # | id | family | outcome |
+|---|---|---|---|
+| 0 | `none` | experimental control | deleted |
+| 1 | `lock (RP-1)` | RP-1's rule — the A/B baseline and the fallback | deleted |
+| 2 | `uncommanded` | disturbance | **survives as the `drift` move** |
+| 3 | `on input` | disturbance | deleted |
+| 4 | `overgain` | margin attack — gain margin | **survives as the `overgain` move** |
+| 5 | `coupling` | margin attack — decoupling | deleted |
+| 6 | `delay` | margin attack — phase margin | **survives as the `lag` move** |
+| 7 | `dropouts` | availability | deleted |
+| 8 | `misdirect` | margin attack — reference frame | deleted |
+| 9 | `effort gain` | closed loop — by depth | deleted |
+| 10 | `adversarial` | closed loop — by choice | **SHIPPED — it is the mechanic** |
 
-The families are the argument, not the list. Disturbances get **rejected** (that is what a loop is for);
-margin attacks are not rejectable but are **open-loop and therefore learnable**, which drift and
-precession exist to blunt. The last three escape both: `dropouts` randomises whether the command lands
-at all, and 9/10 make the corruption a function of the loop's own output, so there is no fixed point for
-an adaptive controller to converge on.
+The families were the argument, not the list. Disturbances get **rejected** (that is what a loop is for);
+margin attacks are not rejectable but are **open-loop and therefore learnable**. The last three escape
+both: `dropouts` randomises whether the command lands at all, and 9/10 make the corruption a function of
+the loop's own output, so there is no fixed point for an adaptive controller to converge on.
+
+Four of the eleven survive, but **not as modes** — as the move set 10 plays from. `washout` is the
+fourth, and it was never a mode: it was rejected as one (below) and only works as a move.
 
 ### The test that separates 9 from 10 — a dominant escape
 
@@ -122,7 +135,7 @@ Engage when `vesselMass <= thisUnit.capacityTons` (never the vessel MAX — a di
 the MAX 0 and `r` infinite, so a MAX test could never become true again). Disengage on coupling events
 only (`r` also rises when *capacity* falls; ISRU raises mass continuously).
 
-### A3 Regime callouts — TO BUILD
+### A3 Regime callouts — **DONE**
 Screen message on every transition, **with the reason**, driven from a small state machine in
 `AxeAvionicsController` that remembers the previous `(level, sigma>0, maxCapacity)`.
 
@@ -141,7 +154,7 @@ this tick's `maxCapacity` against last tick's: if capacity fell, it is row 2.
 and then has no persistent indicator. A missed callout is the difference between "my avionics is
 undersized" and "this mod is broken".
 
-### A4 VAB legibility — TO BUILD
+### A4 VAB legibility — **DONE**
 On both module types:
 
     Capacity        15.00 t
@@ -153,7 +166,7 @@ under-fuelling hole in one line: launch with tanks emptied to save mass, fill on
 configured-mass-only warning was computed against a craft that never flies. Covers ISRU, orbital
 assembly and launched-dry with no ISRU-specific machinery.
 
-### A5 `useThrottle` bypass — TO BUILD
+### A5 `useThrottle` bypass — **DONE**
 Stock `ModuleRCS` uses `mainThrottle` as the axial command when `Z` is idle and `useThrottle` is set,
 so **an avionics-locked vessel can translate axially on RCS via the throttle today**. RP-1 patched it
 as an exploit in 2023 (`816d8656`); AXE never ported it. Zero `mainThrottle` at Locked and snap it to
@@ -238,70 +251,63 @@ on-rails reduction. Only the *overload multiplier* goes.
 
 ## Phase D — fly it, decide, clean up (tomorrow)
 
-### D1 Mode comparison
-One craft, `pin noise` on, all eleven modes at σ = **0.44** (≈5% over) and **0.68** (≈10% over).
+### D1 Mode comparison — **FLOWN, DECIDED**
 
-Prediction on record so it can be wrong — it has been three times already (authority scaling, the
-frequency direction, white-vs-correlated): **coupling wins, overgain second, delay too sharp, both
-noise modes absorbed.**
+One craft, `pin noise` on, the modes at sigma = **0.44** (~5% over) and **0.68** (~10% over), flown as
+controlled A/Bs: **4 `overgain` → 9 `effort gain` → 10 `adversarial`** (same slope throughout, so
+each step changes exactly one thing — fixed gain, then gain scheduled on the loop's own effort, then
+the move itself chosen to match the regime), and **2 `uncommanded` vs 3 `on input`**.
 
-Watch for MechJeb's adaptive gain partially retuning against `overgain` where SAS will not. A split
-between autopilot and hand-flying is itself a result.
+The prediction on record was *"coupling wins, overgain second, delay too sharp, both noise modes
+absorbed"*, plus a second one: **10 is the strongest and the least legible.** The second is what the
+decision rests on. `adversarial` ships, and the ten losers are deleted rather than kept selectable — a
+chooser with one live option is a branch that has to be reasoned about at every call site for no benefit,
+and `LocksInstead` / `Stateful` were exactly that kind of branch.
 
-**These are controlled A/Bs, not a free-for-all, and should be flown back to back:**
+The question 10 had to answer, and still has to under tuning: watch the regime readout and check whether
+it **tracks what you are doing** or **thrashes**. A thrashing readout means the AC gain is wrong and the
+mechanic is being judged on a tuning artefact; a readout that sits in one cell for a whole ascent means
+the policy never engaged and only one move is really being tested. `DEBUG: injected` now prints `dc`/`ac`
+next to the regime name for exactly this — the name alone cannot tell "correct" from "stuck", and dc/ac
+say which way it is wrong (dc pinned high → window too long; ac pinned high → AC gain too high).
 
-- **4 `overgain` → 9 `effort gain` → 10 `adversarial`**, in that order. Same slope throughout by
-  construction, so each step changes exactly one thing: fixed gain, then gain scheduled on the loop's
-  own effort, then the move itself chosen to match the regime. Flying 10 without 9 cannot tell you
-  whether the *policy* is doing the work or the *scheduling* is.
-- **2 `uncommanded` vs 3 `on input`** — the mode question from `AVIONICS_NOISE.md` §3-bis, still open
-  because on-input has never actually been flown.
+### D1-bis Arming comparison — still open, knob retained
 
-Predictions, on record:
-
-- **9 hunts rather than diverges, and reads as a vehicle that is fine until you ask it for something.**
-  Known defect, already argued rather than measured: dodgeable by flying gently.
-- **10 is the strongest and the least legible.** Specifically: it will beat 9 on *feel* and be at risk
-  on **D3**, because a failure that changes character is harder to attribute than one that is always
-  present. The dwell time and the regime name in the PAW exist to buy that back.
-
-### D1-bis Arming comparison
-
-Mode 10 at each of the three `arm on` settings, same craft, same σ. These bracket the space rather than
+`arm on` at each of its three settings, same craft, same sigma. These bracket the space rather than
 sampling it, so one of the three is the answer:
 
-- **`always`** — the version already flown. The question is whether being corrupted while doing nothing
-  reads as *broken* or as *a vehicle that will not sit still*.
+- **`always`** — the current default. Is being corrupted while doing nothing *broken*, or *a vehicle
+  that will not sit still*?
 - **`any input incl throttle`** — the one to beat. Keeps the no-escape property while removing the
   "corrupted while idle" complaint, so if it feels as strong as `always` it wins on both axes.
-- **`steering only`** — the permissive end, and the one with a known structural cost: it makes coasting
-  safe, so mode 10 loses its `drift` cell. Worth flying anyway, because if it feels *no weaker*, that is
-  evidence the drift cell was never carrying its weight and the policy is really a three-cell design.
+- **`steering only`** — the permissive end, with a known structural cost: it makes coasting safe, so the
+  `drift` cell becomes nearly unreachable. Worth flying anyway — if it feels *no weaker*, that is
+  evidence the drift cell was never carrying its weight and this is really a three-cell design.
 
-Also worth one pass with **mode 2 `uncommanded` + `any input`**, since arming is an independent fix for
-that mode's §4a problem and may change the mode-2-vs-mode-3 verdict on its own.
+### D2 Scaling check — outstanding
+Small probe vs large launcher, same sigma, `Hz scaling` on then off. Comparable effect across sizes = the
+design survives. It now touches two things rather than one: `noise Hz (C)` sets the drift cell's frequency
+**and**, through `EffectiveNoiseHz`, the regime window's real length in seconds — so a scaling error
+shows up as the wrong *cell mix* on heavy craft, not merely as the wrong feel.
 
-**The D1 question 10 actually has to answer, and it is not "is it hard":** watch the regime readout and
-check whether it *tracks what you are doing* or *thrashes*. A thrashing readout means the AC gain is
-wrong and the mode is being judged on a tuning artefact. A readout that sits in one cell for a whole
-ascent means the policy never engaged and you are really only testing that one move.
+### D3 Legibility check — needs A3
+Fly overloaded without being told what to look for. Reads as *undersized avionics* or as *a broken mod*?
+**This gates the ship, and it is what `regime dwell s` and `regime margin` exist to tune.**
 
-### D2 Scaling check — winner only
-Small probe vs large launcher, same σ, `Hz scaling` on then off (modes 2/3 only; 4/5/6 have no
-frequency term). Comparable effect across sizes = the design survives.
+### D4 Cleanup — **PARTIAL, deliberately**
+Done: the losing penalty classes and `AxeControlPenalty.cs` deleted; the mode chooser and every knob
+belonging to a dead mode removed (`noise roll`, `hard cutoff`, `mode`, `misdirect deg`, `precess Hz`,
+`dropout ms`, `RCS noise scale`, `noise on RCS`); the RCS re-application path removed with them (a
+stateful mechanic must be applied exactly once, and the post-autopilot hook already mutates the ctrlState
+ModuleRCS reads); the lock/cutoff branches removed from `ShouldLock`; docs rewritten to describe what
+shipped.
 
-### D3 Legibility check — needs A3/A4
-Fly overloaded without being told what to look for. Reads as *undersized avionics* or as *a broken
-mod*? **This gates the commit, not just the mode choice.**
+Not done, on purpose: **the `DEBUG:` rig stays** until the numbers are nailed down. Stripping it is the
+last commit before ship, and at that point the surviving values get frozen into the code.
 
-### D4 Cleanup, after the decision
-Fix the mode and numbers, delete the losing penalty classes, strip every `DEBUG:` knob and the pin,
-rewrite the design docs to describe what shipped.
-
-### D5 Failure exit
-No mode survives → set the registry to `PenaltyLock` and ship Phases A+B+C. That is a materially
-better system than today, needs no code change to select, and Phase A was built to be worth having on
-its own.
+### D5 Failure exit — spent
+There is no `PenaltyLock` to fall back to any more. If the mechanic fails D3 the fallback is a new
+decision rather than a knob — the cost of deleting the losers, accepted knowingly.
 
 ---
 

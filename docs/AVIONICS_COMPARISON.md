@@ -334,7 +334,7 @@ how each decision was reached, and still describes the pre-build state where it 
 
 **Steerable-mass redesign (2026-07-08 design session) — SHIPPED 2026-07-10.** Box size → hardware mass →
 inverse mass polynomial → `capacityTons`; one vessel-wide MAX (`EffectiveCapacityTons`, never SUM); over
-capacity answered by a selectable `AxeControlPenalty` rather than RP-1's hard lock. What follows is the
+capacity answered by control degradation (adversarial regime matching) rather than RP-1's hard lock. What follows is the
 design pass as written on 07-08, when AXE still had no "controllable mass" concept at all — every core
 auto-sized off whatever the vessel weighed when the ship was last modified in the editor, frozen at launch
 (`UpdateHardwareMass()`, `load = VesselMassTons() - avionicsMass`). It records the route to reintroducing RP-1's real

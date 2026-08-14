@@ -3,8 +3,9 @@
 > in Phase C of `docs/AVIONICS_PLAN.md`. It was inert against a ~39-hour battery in a 6-10 minute
 > ascent, both of its recorded justifications had collapsed, and named parts could never share a
 > consequence measured in watts. Removing it is also RP-1 parity: RP-1 has no overload EC term either.
-> Going over capacity is now a selectable `AxeControlPenalty`, shared by procedural and named units
-> alike, with `PenaltyLock` reproducing RP-1's original rule exactly. The `k` open item closes by
+> Going over capacity is now **adversarial regime matching** (`AxeControlLockerUtils`), shared by
+> procedural and named units alike: the craft keeps control and the command is corrupted by whichever of
+> four moves beats what the pilot is currently doing. It never locks. The `k` open item closes by
 > removal. Everything else in this document still stands.
 
 # RP-AXE Avionics V2 Spec (SHIPPED 2026-07-10 — this is the as-built record; design reasoning below is historical)
