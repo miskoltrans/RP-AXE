@@ -11,31 +11,77 @@ namespace RPAxe.Airlaunch
     /// holds the vessel on a straight, constant-velocity line (counteracting Keplerian drift while it sits
     /// on rails) before releasing control. Ported from RP-1's AirlaunchUtils.DoAirlaunchRoutine; the
     /// teleport + situation clobber are AXE's, everything else is the original hold logic.
+    ///
+    /// Runs on every flight scene load, not just the one straight out of the editor: "Revert to Launch"
+    /// reloads the runway spawn without going near the editor hook, so the airlaunch has to re-apply
+    /// itself there or the player reverts onto the runway. See <see cref="AxeAirlaunchState"/>.
     /// </summary>
     [KSPAddon(KSPAddon.Startup.Flight, false)]
     public class AxeAirlaunchFlight : MonoBehaviour
     {
+        // Cap on how long we wait for a vessel to appear and finish spawning, in seconds of physics time.
+        private const float SpawnTimeout = 60f;
+
         private void Start()
         {
-            AxeAirlaunchParams p = AxeAirlaunchState.ConsumePending();
-            if (p == null) return;
-            Debug.Log($"[AXE] airlaunch pending -> alt {p.Altitude:0} m, vel {p.Velocity:0} m/s, hdg {p.Heading:0}°");
-            StartCoroutine(Run(p));
+            AxeAirlaunchParams pending = AxeAirlaunchState.ConsumePending();
+            // Nothing armed by the editor, and nothing airlaunched this session that could be reverting
+            // into this scene -> this is an ordinary flight, don't even watch it.
+            if (pending == null && !AxeAirlaunchState.HasApplied) return;
+            StartCoroutine(Run(pending));
         }
 
-        private IEnumerator Run(AxeAirlaunchParams p)
+        private IEnumerator Run(AxeAirlaunchParams pending)
         {
-            // Wait for the vessel to finish spawning before we move it.
-            do { yield return new WaitForFixedUpdate(); }
-            while (FlightGlobals.ActiveVessel != null && FlightGlobals.ActiveVessel.vesselSpawning);
-
-            Vessel v = FlightGlobals.ActiveVessel;
+            // Wait for the vessel to finish spawning before we move it. ActiveVessel is null for the first
+            // frames of a scene load and a vessel mid-spawn has no parts yet, so wait for a whole one
+            // rather than reading "not there yet" as "gone" and dropping a valid airlaunch on the floor.
+            Vessel v = null;
+            for (float waited = 0f; waited < SpawnTimeout; waited += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                Vessel a = FlightGlobals.ActiveVessel;
+                if (a != null && !a.vesselSpawning && a.parts != null && a.parts.Count > 0) { v = a; break; }
+            }
             if (v == null)
             {
-                Debug.LogWarning("[AXE] airlaunch aborted: no active vessel after spawn.");
+                if (pending != null)
+                    Debug.LogWarning("[AXE] airlaunch aborted: no vessel finished spawning.");
                 yield break;
             }
+
+            AxeAirlaunchParams p = pending;
+            AxeAirlaunchSite site = null;
+            if (p != null)
+            {
+                Debug.Log($"[AXE] airlaunch pending -> alt {p.Altitude:0} m, vel {p.Velocity:0} m/s, hdg {p.Heading:0}°");
+            }
+            else
+            {
+                // Nothing armed by the editor, so this is a respawn. Airlaunch it again only if it is the
+                // vessel we already airlaunched (revert to launch restores KSP's own Guid) AND it came
+                // back as a fresh prelaunch spawn — a quickload into an already-released flight is a
+                // normal load and must be left exactly where it is.
+                if (!AxeAirlaunchState.TryGetApplied(v.id, out p, out site)) yield break;
+                if (v.situation != Vessel.Situations.PRELAUNCH)
+                {
+                    Debug.Log($"[AXE] airlaunch: {v.vesselName} came back as {v.situation}, not a prelaunch respawn; leaving it alone.");
+                    yield break;
+                }
+                Debug.Log($"[AXE] airlaunch: reverted to launch -> repeating airlaunch, alt {p.Altitude:0} m, vel {p.Velocity:0} m/s, hdg {p.Heading:0}°");
+            }
             Guid id = v.id;
+
+            // Reference point: the site the vessel is standing on first time round, the site we recorded
+            // then on any repeat — so a revert releases where the original launch did.
+            Vector3d? sitePos = site?.RelativePosition(v.mainBody);
+            if (sitePos == null)
+            {
+                sitePos = v.GetWorldPos3D() - v.mainBody.position;
+                site = AxeAirlaunchSite.FromVessel(v);
+            }
+            // Record before moving: a revert has to land on the same reference, not on the release point.
+            AxeAirlaunchState.SetApplied(p, id, site);
 
             // The teleport wants the vessel out of PRELAUNCH first (matching RP-1).
             if (v.situation == Vessel.Situations.PRELAUNCH)
@@ -43,7 +89,7 @@ namespace RPAxe.Airlaunch
 
             try
             {
-                AxeAirlaunchTeleport.DoAirlaunch(v, p.Altitude, p.Velocity, p.Heading, p.Distance, p.Bearing);
+                AxeAirlaunchTeleport.DoAirlaunch(v, sitePos.Value, p.Altitude, p.Velocity, p.Heading, p.Distance, p.Bearing);
             }
             catch (Exception e)
             {

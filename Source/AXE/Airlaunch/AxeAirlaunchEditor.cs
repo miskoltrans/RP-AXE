@@ -36,6 +36,13 @@ namespace RPAxe.Airlaunch
         private void Awake()
         {
             Instance = this;
+
+            // Entering the editor ends the previous launch session: whatever the player launches next is
+            // a new vessel with a new id, and reverting to the *editor* is not reverting to launch. The
+            // id check in AxeAirlaunchState would refuse a stale record anyway; this just stops one
+            // hanging around for the rest of the session.
+            AxeAirlaunchState.Clear();
+
             if (_patched) return;
             _patched = true;
             _goForLaunch = AccessTools.Method(typeof(EditorLogic), "goForLaunch");

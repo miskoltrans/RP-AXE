@@ -4,25 +4,26 @@ using UnityEngine;
 namespace RPAxe.Airlaunch
 {
     /// <summary>
-    /// The airlaunch teleport. Computes an atmospheric release point from the vessel's own launch site
-    /// (its current position) plus a downrange offset, then hands the resulting orbit state to the shared
+    /// The airlaunch teleport. Computes an atmospheric release point from the launch site plus a
+    /// downrange offset, then hands the resulting orbit state to the shared
     /// <see cref="AxeVesselTeleport"/> primitive (ported from ROUtils/KCT HyperEdit_Utilities).
     ///
-    /// The reference point is the vessel's own current position — the runway it just launched from —
-    /// instead of a canonical KSC. The launch site IS the reference, which is both simpler and the right
-    /// semantics for a relocatable launch site. <paramref name="distance"/> then offsets the drop point
-    /// downrange along a great circle on the <paramref name="bearingDeg"/> bearing; distance 0 releases
-    /// straight above the site.
+    /// The reference point is <paramref name="sitePos"/> — normally the vessel's own position, i.e. the
+    /// runway it just launched from — instead of a canonical KSC. The launch site IS the reference, which
+    /// is both simpler and the right semantics for a relocatable launch site. The caller passes it in so
+    /// a repeat run (revert to launch) can re-use the original site rather than wherever the restored
+    /// vessel happens to sit. <paramref name="distance"/> then offsets the drop point downrange along a
+    /// great circle on the <paramref name="bearingDeg"/> bearing; distance 0 releases straight above the
+    /// site.
     /// </summary>
     internal static class AxeAirlaunchTeleport
     {
-        public static void DoAirlaunch(Vessel vessel, double altitude, double velocity, double headingDeg,
-                                       double distance, double bearingDeg)
+        /// <param name="sitePos">Launch site, Unity XYZ relative to the body centre.</param>
+        public static void DoAirlaunch(Vessel vessel, Vector3d sitePos, double altitude, double velocity,
+                                       double headingDeg, double distance, double bearingDeg)
         {
             CelestialBody body = vessel.mainBody;
 
-            // Reference = the launch site the vessel is sitting on (its current position, Unity XYZ rel body).
-            Vector3d sitePos = vessel.GetWorldPos3D() - body.position;
             Vector3d siteUp = sitePos.normalized;
             Vector3d siteEast = Vector3d.Cross(body.angularVelocity, sitePos).normalized;
             Vector3d siteNorth = Vector3d.Cross(siteEast, siteUp);

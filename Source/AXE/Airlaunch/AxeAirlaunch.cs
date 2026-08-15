@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,10 +9,26 @@ namespace RPAxe.Airlaunch
     /// before it lets the stock launch proceed; the flight-scene hook consumes them once the vessel has
     /// spawned on the runway. Editor -> flight is a single scene hop inside one session, so a static field
     /// is sufficient (no ScenarioModule / save persistence needed).
+    ///
+    /// The applied record is the same idea one step further on. "Revert to Launch" does not re-run the
+    /// editor, it reloads FlightDriver.PostInitState — the vessel as it spawned, on the runway — so a
+    /// one-shot pending value leaves the player reverting onto the runway instead of back into the air.
+    /// The restored vessel keeps KSP's own Guid, so that id identifies the launch across any number of
+    /// reverts; RP-1 uses the same trick (SpaceCenterManagement keeps AirlaunchParams.KSPVesselId alive
+    /// past the first run for exactly this case). Session-scoped as well: stock can't revert across a
+    /// save/quit/reload anyway (PostInitState is a static that a fresh process starts empty), so
+    /// persisting this would buy nothing.
     /// </summary>
     public static class AxeAirlaunchState
     {
         private static AxeAirlaunchParams _pending;
+
+        private static AxeAirlaunchParams _applied;
+        private static Guid _appliedVesselId;
+        private static AxeAirlaunchSite _appliedSite;
+
+        /// <summary>True if some vessel this session has been airlaunched and could still be reverted.</summary>
+        public static bool HasApplied => _applied != null;
 
         public static void SetPending(AxeAirlaunchParams p) => _pending = p;
 
@@ -20,6 +37,68 @@ namespace RPAxe.Airlaunch
             AxeAirlaunchParams p = _pending;
             _pending = null;
             return p;
+        }
+
+        /// <summary>Record an airlaunch we just carried out, so a revert-to-launch can repeat it.</summary>
+        public static void SetApplied(AxeAirlaunchParams p, Guid vesselId, AxeAirlaunchSite site)
+        {
+            _applied = p;
+            _appliedVesselId = vesselId;
+            _appliedSite = site;
+        }
+
+        /// <summary>The airlaunch to repeat for a vessel that just respawned, or false if it isn't ours.</summary>
+        public static bool TryGetApplied(Guid vesselId, out AxeAirlaunchParams p, out AxeAirlaunchSite site)
+        {
+            p = null;
+            site = null;
+            if (_applied == null || vesselId != _appliedVesselId) return false;
+            p = _applied;
+            site = _appliedSite;
+            return true;
+        }
+
+        /// <summary>Drop everything — the launch session is over (the player is back in the editor).</summary>
+        public static void Clear()
+        {
+            _pending = null;
+            _applied = null;
+            _appliedVesselId = Guid.Empty;
+            _appliedSite = null;
+        }
+    }
+
+    /// <summary>
+    /// The launch site an airlaunch was measured from, kept in geodetic terms so it can be rebuilt at any
+    /// planet rotation. Recorded when the airlaunch first runs and reused if it runs again, so a revert
+    /// releases exactly where the original launch did no matter where the restored vessel sits: stock
+    /// snapshots the revert state 15 frames into the scene (FlightDriver.framesBeforeInitialSave), which
+    /// is a frame race against our own teleport, so the vessel can come back either on the runway or
+    /// already moved. Anchoring on the site takes that race out of the answer.
+    /// </summary>
+    public class AxeAirlaunchSite
+    {
+        public string BodyName;
+        public double Latitude, Longitude, Altitude;
+
+        public static AxeAirlaunchSite FromVessel(Vessel v)
+        {
+            CelestialBody b = v.mainBody;
+            Vector3d wp = v.GetWorldPos3D();
+            return new AxeAirlaunchSite
+            {
+                BodyName = b.bodyName,
+                Latitude = b.GetLatitude(wp),
+                Longitude = b.GetLongitude(wp),
+                Altitude = b.GetAltitude(wp),
+            };
+        }
+
+        /// <summary>Body-relative position (Unity XYZ) of the site, or null if it isn't on this body.</summary>
+        public Vector3d? RelativePosition(CelestialBody body)
+        {
+            if (body == null || body.bodyName != BodyName) return null;
+            return body.GetWorldSurfacePosition(Latitude, Longitude, Altitude) - body.position;
         }
     }
 

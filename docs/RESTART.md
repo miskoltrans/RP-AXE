@@ -304,8 +304,14 @@ RealAntennas, ROSolar…), present via their mods.
   RP-1 `AirlaunchUtils` (`Vessel.SetPhysicsHoldExpiryOverride` reached by reflection — it's `internal`
   in stock Assembly-CSharp), editor `goForLaunch` Harmony hook + IMGUI window. Downrange/bearing are
   referenced to the **launch site the vessel spawns on** (no FindKSC — dovetails with **Relocatable /
-  selectable KSC** below). Load-verified in a smoke run (tree renders, configs parse, tokens land on
-  the right nodes); **in-game playtest still pending**. (The RP-1 `airlaunchTL1-4` PARTUPGRADEs stay
+  selectable KSC** below). **Revert to Launch repeats the airlaunch** (fixed 2026-08-15): stock reverts
+  by reloading `FlightDriver.PostInitState`, the *runway* spawn, and never re-runs the editor hook, so
+  the flight half re-applies itself when a respawning vessel carries the id of one it already
+  airlaunched — RP-1's `AirlaunchParams.KSPVesselId` trick. It anchors the repeat on the recorded
+  launch-site lat/lon (stock snapshots the revert state 15 frames in, a race against our own teleport)
+  and skips anything not back in `PRELAUNCH`, so a mid-flight quickload is left alone. Load-verified in
+  a smoke run (tree renders, configs parse, tokens land on the right nodes); **in-game playtest still
+  pending**. (The RP-1 `airlaunchTL1-4` PARTUPGRADEs stay
   dropped, superseded by AXE's re-authored copies; see [`UPGRADES.md`](UPGRADES.md) §D.)
 - **Relocatable / selectable KSC** — let the player choose or move the launch site ("united
   Kerbalkind → launch from anywhere"), where it's valid gameplay. Mechanically grounded:
