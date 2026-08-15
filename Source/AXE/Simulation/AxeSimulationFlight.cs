@@ -32,8 +32,28 @@ namespace RPAxe.Simulation
             _showWindow = true;
             if (HighLogic.CurrentGame?.Parameters?.Flight != null)
                 HighLogic.CurrentGame.Parameters.Flight.CanAutoSave = false;
+            // Instance handler, never a static one: GameEvents' EvtDelegate ctor dereferences the target.
+            GameEvents.OnRevertToLaunchFlightState.Add(OnRevertToLaunch);
             StartCoroutine(HookRecoveryButton());
             StartCoroutine(MoveRoutine());
+        }
+
+        private void OnDestroy()
+        {
+            GameEvents.OnRevertToLaunchFlightState.Remove(OnRevertToLaunch);
+        }
+
+        /// <summary>
+        /// A revert-to-launch re-runs this scene from the pad spawn, so the sim has to place the craft in
+        /// its orbit again — drop the "already moved" latch. Hooked on the event rather than done in the
+        /// Restart button below because stock's own pause menu reverts too (PauseMenu calls
+        /// FlightDriver.RevertToLaunch directly, gated on CanRestart, which a sim force-enables), and a
+        /// player who takes that door would otherwise be dumped on the pad with the simulated orbit gone.
+        /// The event fires inside RevertToLaunch, before the scene reloads, so the clear lands in time.
+        /// </summary>
+        private void OnRevertToLaunch(FlightState st)
+        {
+            if (AxeSimulation.IsSimulatedFlight) AxeSimulation.Params?.Reset();
         }
 
         private void Update()
@@ -46,7 +66,8 @@ namespace RPAxe.Simulation
             if (action == Pending.Restart)
             {
                 AxeSimulationSave.EnableSimLocks();
-                AxeSimulation.Params?.Reset();
+                // The Moved latch is cleared by OnRevertToLaunch, so it only drops if the revert really
+                // happens — clearing it here would strand it cleared when CanRevertToPostInit is false.
                 if (FlightDriver.CanRevertToPostInit) FlightDriver.RevertToLaunch();
             }
             else if (action == Pending.Revert)
@@ -78,8 +99,13 @@ namespace RPAxe.Simulation
             AxeSimulationParams p = AxeSimulation.Params;
             if (p == null || !p.InOrbit || p.Moved) yield break;
 
-            do { yield return new WaitForFixedUpdate(); }
-            while (FlightGlobals.ActiveVessel != null && FlightGlobals.ActiveVessel.vesselSpawning);
+            var spawn = new AxeSpawnWait();
+            yield return StartCoroutine(spawn.Run());
+            if (spawn.Vessel == null)
+            {
+                Debug.LogWarning("[AXE][Sim] no vessel finished spawning; not moving to orbit.");
+                yield break;
+            }
 
             for (int i = p.DelaySeconds; i > 0; i--)
             {

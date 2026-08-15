@@ -1,9 +1,38 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPAxe
 {
+    /// <summary>
+    /// Shared "wait until there is a vessel to move" coroutine, for anything that teleports a craft as it
+    /// spawns. FlightGlobals.ActiveVessel is null for the first frames of a flight scene load and a vessel
+    /// mid-spawn has no parts yet, so the obvious <c>while (ActiveVessel.vesselSpawning)</c> loop reads
+    /// "not there yet" as "gone" and silently drops the work it was waiting to do. Wait for a whole vessel
+    /// instead, and give up only on a real timeout.
+    /// </summary>
+    internal class AxeSpawnWait
+    {
+        /// <summary>The spawned vessel, or null if the wait timed out.</summary>
+        public Vessel Vessel;
+
+        /// <param name="timeout">Seconds of physics time to wait before giving up.</param>
+        public IEnumerator Run(float timeout = 60f)
+        {
+            for (float waited = 0f; waited < timeout; waited += Time.fixedDeltaTime)
+            {
+                yield return new WaitForFixedUpdate();
+                Vessel v = FlightGlobals.ActiveVessel;
+                if (v != null && !v.vesselSpawning && v.parts != null && v.parts.Count > 0)
+                {
+                    Vessel = v;
+                    yield break;
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Shared low-level vessel teleport primitive, ported self-contained from ROUtils/KCT
     /// <c>HyperEdit_Utilities</c> (originally the HyperEdit lander by khyperia &amp; Ezriilc). Stock API

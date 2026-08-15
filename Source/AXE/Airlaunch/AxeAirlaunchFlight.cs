@@ -19,9 +19,6 @@ namespace RPAxe.Airlaunch
     [KSPAddon(KSPAddon.Startup.Flight, false)]
     public class AxeAirlaunchFlight : MonoBehaviour
     {
-        // Cap on how long we wait for a vessel to appear and finish spawning, in seconds of physics time.
-        private const float SpawnTimeout = 60f;
-
         private void Start()
         {
             AxeAirlaunchParams pending = AxeAirlaunchState.ConsumePending();
@@ -33,16 +30,10 @@ namespace RPAxe.Airlaunch
 
         private IEnumerator Run(AxeAirlaunchParams pending)
         {
-            // Wait for the vessel to finish spawning before we move it. ActiveVessel is null for the first
-            // frames of a scene load and a vessel mid-spawn has no parts yet, so wait for a whole one
-            // rather than reading "not there yet" as "gone" and dropping a valid airlaunch on the floor.
-            Vessel v = null;
-            for (float waited = 0f; waited < SpawnTimeout; waited += Time.fixedDeltaTime)
-            {
-                yield return new WaitForFixedUpdate();
-                Vessel a = FlightGlobals.ActiveVessel;
-                if (a != null && !a.vesselSpawning && a.parts != null && a.parts.Count > 0) { v = a; break; }
-            }
+            // Wait for the vessel to finish spawning before we move it.
+            var spawn = new AxeSpawnWait();
+            yield return StartCoroutine(spawn.Run());
+            Vessel v = spawn.Vessel;
             if (v == null)
             {
                 if (pending != null)

@@ -147,9 +147,14 @@ the real save.
      `AxeVesselTeleport.PutInCircularOrbit(activeVessel, Body, Altitude, Inclination)`; set `Moved`.
    - (optional) warp to `TargetUT` if set.
 10. Sim window (IMGUI): header "This is a simulation — nothing is saved."; buttons:
-    - **Restart** → `FlightDriver.RevertToLaunch()`; `Params.Moved = false`.
+    - **Restart** → `FlightDriver.RevertToLaunch()`.
     - **Revert to Editor** → `FlightDriver.RevertToPrelaunch(vabOrSph)`.
     - **Close**.
+    `Params.Moved = false` hangs off `GameEvents.OnRevertToLaunchFlightState`, **not** off the Restart
+    button (fixed 2026-08-15): stock's pause menu reverts too — `PauseMenu` calls
+    `FlightDriver.RevertToLaunch()` directly, gated on `CanRestart`, which a sim force-enables (step 6)
+    — so a player taking that door kept the latch set and landed back on the pad with the simulated
+    orbit gone. On the event it also only drops when the revert actually happens.
 
 **Exit / restore (fail-safe), `AxeSimulationRestore`:**
 11. `GameEvents.onLevelWasLoaded(scene)`: if `scene ∈ {EDITOR, SPACECENTER, TRACKSTATION}` and
