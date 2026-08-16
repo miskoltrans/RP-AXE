@@ -12,6 +12,47 @@
   Authored here because the `tech =` gates live inside `@PART` patch bodies (not overlayable); both are in
   sync-seed's `$designOwned` strip-list. `AxeSurfaceSampleGate.cfg` is a 1-gate late-pass overlay for the
   lone EVA `Deep Surface Sample` gate in seed's `SurfaceSample.cfg`.
+- `KerbalismGroupUpgrades.cfg` — the **`PARTUPGRADE` definitions** for the Kerbalism `Configure`-*group*
+  upgrades (lab experiment slot, lab field-reconfigure, US2 wedge slots). See below.
+
+## Configure-group upgrades — ported 2026-08-16
+
+A Kerbalism `Configure` module can carry `UPGRADES { UPGRADE { name__ = X  techRequired__ = Y  <stat> } }`
+to widen itself later (an extra slot, field reconfiguration). That block is only a **reference**: stock
+`PartUpgradeHandler.LinkUpgrades()` looks `X` up in the `PARTUPGRADE` dictionary and, finding nothing,
+fabricates an *untracked* upgrade via `SetFromUntrackedUpgrade()` — whose title is
+`#autoLOC_6002276`, literally **"Unknown Upgrade"**. It still functions (and `AxeGrantUpgradeUnlock`
+still grants it on research); it is simply nameless in R&D. Three were shipping that way:
+
+| upgrade | node | effect | why it was missing |
+|---|---|---|---|
+| `Lab-Upgrade1` | `life_convertedStageStation` | lab experiment slots 1 → 2 | upstream def never ported |
+| `Lab-Upgrade2` | `life_stationHabitation` | lab reconfigurable in flight (L5 Scientist) | upstream def never ported |
+| `Upgrade-Slots` → `AXE-US2-*-Slots` | see below | US2 wedge +1 Configure slot | never defined upstream at all |
+
+The lab pair's upstream definitions live in `KerbalismScienceOnly/System/ScienceRework/Groups/
+Upgrades.cfg`. AXE ported only that file's **HDD half** (→ `HardDriveUpgrades.cfg`); the group half
+was left behind while `build_kerbalismlab.py` kept emitting the `UPGRADE` blocks that reference it.
+
+`Upgrade-Slots` additionally had a **name collision**: `KerbalismConfig/Support/US2.cfg` hangs that one
+name on three parts under two different techs (`USWaterPurifier` at `improvedLifeSupport` →
+`life_stationHabitation`; `USSabatier` + `USElektron` at `longTermLifeSupport` →
+`life_bioregenerativeECLSS`). `LinkUpgrades()` keys by name and **first one seen wins**, so all three
+silently shared whichever tech `PartLoader` reached first. Split into `AXE-US2-LifeSupport-Slots` and
+`AXE-US2-ChemPlant-Slots` by an `:AFTER[RP-AXE]` rename, which is what makes both authored gates real.
+
+**Placement is what matters.** `AxePartPlacement.cfg` line 5 parks *every* `PARTUPGRADE` on `parking`,
+so defining one without also adding it to `tree/nodes.yaml` `upgrades:` turns a working-but-nameless
+upgrade into a named-but-unreachable one. All four are placed; re-sync `nodes.yaml` ↔
+`KerbalismLab/Framework-2-LabGroup.cfg` (`UpgradeTech`/`ReconfigureTech`, from `build_kerbalismlab.py`'s
+`REMAP`) ↔ this file if any of the three moves.
+
+**Still open:** `Upgrade-Colony` (KerbalismConfig `Sickbay.cfg`, "Permanent habitation" — comfort upgrade
+for `GravityRing` centrifuges and the MLP crew towers) *is* defined, so it shows a title, but nothing
+places it, so the parking wildcard leaves it gated on an off-start node — unreachable. `build_tree.py`
+reports it under `unplaced upgrades: … LIVE`. Fix is one `upgrades:` entry once its home is decided
+(`life_stationHabitation`, matching AXE's `improvedHabitats` remap, or the first centrifuge node
+`life_centrifugeHabitat`, where the hardware it modifies actually arrives).
 
 ## HardDrive (science data storage) — ported 2026-07-08
 

@@ -3612,7 +3612,12 @@ nodes:
     parents: [life_openLoopECLSS]
     flavor: "A pressurised volume built for people to live in for weeks, not the hours a capsule allows — room to stand, sleep and work while a life-support loop keeps the air breathable. The core a space station grows around."
     parts: [crewCabin, sspx-core-125-1, sspx-habitation-1875-2, SXTCrewCabSSP10, SXTCrewCabSSP20, ROC-GeminiLCMBDB]
+    upgrades: [Lab-Upgrade2, AXE-US2-LifeSupport-Slots]
     # King habitation module. The station's crewed volume; structural tubes/adapters live in str_stationStructures.
+    # Upgrades = the two Kerbalism Configure-group upgrades whose UPGRADE blocks already gate here
+    # (KerbalismLab/Framework-2-LabGroup.cfg ReconfigureTech; AxeKerbalismTechRemap improvedLifeSupport).
+    # Placed 2026-08-16 alongside their new PARTUPGRADE definitions in design/Science/
+    # KerbalismGroupUpgrades.cfg -- without a placement the parking wildcard would strand them.
   - id: int_tksFerry
     title: "TKS Ferry and Return Capsule"
     discipline: SystemsIntegration
@@ -4204,6 +4209,7 @@ nodes:
     parents: [life_stationHabitation]
     flavor: "Build the station module out of a spent launch-vehicle stage's own tooling and diameter instead of designing a bespoke pressure vessel from scratch — decks and stowage where the tankage used to be. Skylab flew fitted-out on the ground rather than converted in orbit as first planned, but the trick is the same: a station's worth of volume for the price of hardware already proven to fly."
     parts: [SXTISSHabISK30, SXTSPKTRCabin, sspx-airlock-125-1, sspx-adjusting-stairs-1]
+    upgrades: [Lab-Upgrade1]   # lab +1 experiment slot; = Framework-2-LabGroup.cfg UpgradeTech (advScienceTech)
     # sspx-adjusting-stairs-1 added (2026-07, power+science pass): station access hardware, same theme as
     # the airlock already here.
     # King Skylab (SXTISSHabISK30) - the first space station, the headline part of this whole batch.
@@ -5560,6 +5566,7 @@ nodes:
     parents: [life_modularHabitat, life_crewedExperimentBay]
     flavor: "Close the loop with living things: a greenhouse that grows food and scrubs carbon dioxide back into oxygen, turning the open-loop consumables chain toward a self-sustaining one. The first bioregenerative step for missions too long to resupply."
     parts: [sspx-greenhouse-25-1, sspx-cupola-greenhouse-125-1]
+    upgrades: [AXE-US2-ChemPlant-Slots]   # US2 chemical-plant +1 slot; = AxeKerbalismTechRemap longTermLifeSupport
   - id: life_largeGreenhouseDome
     title: "Large-Scale Greenhouse Dome"
     discipline: LifeSupport
