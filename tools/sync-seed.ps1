@@ -184,6 +184,20 @@ $textFixes = @(
         # @ASTRONAUTS) and leaves unlockedEVAFlags = 2, so flag planting unlocks at L2 of 3.
         # RP-1's "level five" is the top of its own 5-level ladder and cannot be reached here.
         Why      = 'RP-1 ladder number; AXE unlocks flags at Astronaut Complex L2 of 3'
+    },
+    @{
+        Name     = 'TV broadcast briefing (FirstCrewedLunarOrbit)'
+        Expected = 1
+        # Sole upstream mention of the node; one line, so lazy matching is not needed.
+        Pattern  = 'You must also broadcast live TV during the mission, the experiment for which is unlocked in the Improved Communications technology node\.'
+        Replace  = 'The crew must also put on a live television broadcast twice: once from high space over Earth, which begins at 35,786 km and so has to be done on the coast out or the coast home, and once from high space over the Moon, which begins at 250 km. Fit the Space Television Broadcast experiment, unlocked by the Pulse-Code Modulation Telemetry node. Each broadcast runs for four hours, wants two crew aboard and a link of at least 18.75 kB/s, and only counts once it has been transmitted in full, so bring an S-band dish.'
+        # "Improved Communications" is RP-1's improvedComms, which AXE does not have -- the SETUP
+        # gate is tech = tel_pcmTelemetry (Pulse-Code Modulation Telemetry). The rewrite also names
+        # what the two RP1CollectScience parameters actually want, none of which upstream states:
+        # RP0TelevisionBroadcast at Earth AND Moon InSpaceHigh (RSS spaceAltitudeThreshold 35,786 km
+        # / 250 km), fractionComplete = 1 so it must be fully transmitted, and the Kerbalism module's
+        # requires = CrewMin:2,CommSpeedMin:0.01875.
+        Why      = 'names an RP-1 node AXE lacks, and never says which experiment, where, or at what data rate'
     }
 )
 
