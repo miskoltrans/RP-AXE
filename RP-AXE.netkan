@@ -125,9 +125,6 @@
             "name": "KSPWheel"
         },
         {
-            "name": "LunarTransferPlanner"
-        },
-        {
             "name": "MakingHistory-DLC"
         },
         {
@@ -264,6 +261,9 @@
         },
         {
             "name": "SXTContinued"
+        },
+        {
+            "name": "TargetInterceptPlanner"
         },
         {
             "name": "TestFlight"
