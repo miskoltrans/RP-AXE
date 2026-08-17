@@ -39,7 +39,7 @@ and several RP-1 nodes are `//Placeholder`). Every target was verified to exist 
 `design/Tree/AxeTechTree.cfg` before use. `CockpitExperiments.cfg`'s four supersonic experiments
 carry no tech gate in RP-1 and were left as-is.
 
-## A capsule-generation node cannot be remapped 1:1 (fixed for basic, OPEN for second-gen)
+## A capsule-generation node cannot be remapped 1:1 (RESOLVED for every tier)
 
 RP-1's `basicCapsules` / `secondGenCapsules` are **single** nodes covering every capsule of a
 generation. AXE deliberately scatters capsules across per-vehicle nodes, so there is no AXE node
@@ -56,21 +56,50 @@ Rule: **when the RP-1 gate was a capsule-generation node, drop the gate** — th
 tag on the carrier part already restricts the setup to that tier, so buying the part *is* the gate.
 Only keep a gate when it names a genuinely different technology (a dish, mapping optics, RCS).
 
-Applied to `getsBasicCapsuleExperiments`. **Still open for the other three tiers**, where the same
-remap over-gated — including five second-gen and two mature setups that RP-1 left at `start`:
+Applied to `getsBasicCapsuleExperiments` first, and now to every remaining tier. The second-gen
+case was not hypothetical: `int_geminiCapsule` and `int_voskhodCabin` are **sibling** branches off
+`life_openLoopECLSS` (via `int_mercuryCapsule` / `int_vostokCapsule`), so a Soviet-line career
+never reaches the Gemini node and nine of the thirteen setups on a Voskhod's Crew Science menu were
+permanently unselectable — unless you bought 274 sci of American capsule line to unlock experiments
+for a Russian capsule.
 
-| Setup | RP-1 gate | current AXE gate | note |
+| Setup | RP-1 gate | was | now |
 |---|---|---|---|
-| Orbital Maneuvering | `secondGenCapsules` | `gnc_spacecraftRCS` | plausible — OMS is a real capability |
-| Visual Acuity | `start` | `int_geminiCapsule` | over-gated |
-| Star Occultation Navigation | `earlyFlightControl` | `gnc_spacecraftRCS` | should follow `gnc_rcs` |
-| Power Tool Evaluation | `materialsScienceHuman` | `int_geminiCapsule` | wrong lane (EVA tooling) |
-| Simple Organism Egg Growth | `materialsScienceHuman` | `int_geminiCapsule` | wrong lane — `bio_cultures`? |
-| White Blood Cells / Sleep / Food / Work Tolerance | `start` | `int_geminiCapsule` | over-gated (4 setups) |
-| Simple Navigation, Zodiacal Light Photography | `secondGenCapsules` | `int_geminiCapsule` | orphans Voskhod/Apollo |
-| Ion Sensing Attitude Control | `electronicsHuman` | `int_geminiCapsule` | wrong lane — `elec_integratedCircuit`? |
-| Night Image Intensification | `electronicsHuman` | `int_geminiCapsule` | wrong lane |
-| Synoptic Terrain / Weather Photography | `start` | `opt_orbitalMapping` | over-gated (2 setups) |
+| Orbital Maneuvering | `secondGenCapsules` | `gnc_spacecraftRCS` | kept — OMS is a real capability |
+| Visual Acuity | `start` | `int_geminiCapsule` | no gate |
+| Star Occultation Navigation | `earlyFlightControl` | `gnc_spacecraftRCS` | `gnc_rcs` |
+| Power Tool Evaluation | `materialsScienceHuman` | `int_geminiCapsule` | no gate — AXE has no EVA-tooling lane |
+| Simple Organism Egg Growth | `materialsScienceHuman` | `int_geminiCapsule` | `bio_cultures` |
+| White Blood Cells / Sleep / Food / Work Tolerance | `start` | `int_geminiCapsule` | no gate (4 setups) |
+| Simple Navigation, Zodiacal Light Photography | `secondGenCapsules` | `int_geminiCapsule` | no gate (2 setups) |
+| Ion Sensing Attitude Control | `electronicsHuman` | `int_geminiCapsule` | `elec_integratedCircuit` |
+| Night Image Intensification | `electronicsHuman` | `int_geminiCapsule` | `opt_refinedTV` — low-light vidicon optics |
+| Synoptic Terrain / Weather Photography | `start` | `opt_orbitalMapping` | **kept** — see below |
+
+`Synoptic Terrain / Weather Photography` is the one row where this table's old note ("over-gated")
+contradicted the rule three paragraphs up, which names *mapping optics* as a legitimate keep.
+`opt_orbitalMapping` is Synoptic Orbital Scanning — it names the instrument, not the ride — so the
+rule wins and the gate stays. Flip it if you disagree; it is a judgement call, not a defect.
+
+The same remap damaged the two lunar-surface tiers, which this table never covered. RP-1 gated
+those on `surfaceScience` / `deepSpaceScience` / `advancedUncrewedLanding`; AXE landed them on
+propulsion, so six of the eight sat behind a hopper node and you could hold a crewed lunar base
+without being allowed to set out a seismometer:
+
+| Setup | RP-1 gate | was | now |
+|---|---|---|---|
+| Lunar Surface Experiments Package | `surfaceScience` | `fd_deepThrottleLanding` (descent engines) | no gate |
+| Short-Term Lunar Habitation | `advancedUncrewedLanding` | `int_surveyorLanderBus` (uncrewed probe bus) | no gate |
+| Lunar Night Astronomy | `deepSpaceScience` | `fd_lunarSurfaceMobility` | no gate |
+| Long-Duration LSEP | `deepSpaceScience` | `fd_lunarSurfaceMobility` | no gate |
+| Long-Baseline Lunar Seismic Network | `deepSpaceScience` | `fd_lunarSurfaceMobility` | **kept** — a long baseline really does need mobility |
+| O2-from-Regolith Demo | `deepSpaceScience` | `fd_lunarSurfaceMobility` | `res_regolithExtraction` |
+| Closed-Loop Agriculture Demo | `deepSpaceScience` | `fd_lunarSurfaceMobility` | `life_bioregenerativeECLSS` |
+| Regolith Microbiome Incubation | `deepSpaceScience` | `fd_lunarSurfaceMobility` | `bio_cultures` |
+
+Not every vehicle-node gate is wrong. The X-plane setups (`Supersonic` / `Mach 2` / `High altitude`
+/ `Hypersonic flight` → `av_afterburner` / `av_ramjet`) are correct and were left alone: there the
+engine *is* the capability under test, and RP-1 gated them on vehicle nodes too.
 
 `UHF/VHF Polarization` → `tel_deployableHighGainDish` and `Space Television Broadcast` →
 `tel_pcmTelemetry` are correct: those name real, different technologies.
