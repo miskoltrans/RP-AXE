@@ -166,7 +166,6 @@ SXTISSHabISK30	crewpod	life_convertedStageStation	9	LifeSupport	28.0	Skylab Orbi
 SXTSPKTRCabin	crewpod	life_convertedStageStation	9	LifeSupport	4.8	SPKTR-10 Lacuga Storage Container	SXT								4.5	21600								448			2
 mk3Cockpit_Shuttle	crewpod	int_shuttleOrbiter	9	SystemsIntegration	9.16	Mk3 Cockpit	Squad								4.71616	43200		1.5						448			4
 mk3CrewCabin	crewpod	int_shuttleOrbiter	9	SystemsIntegration	12.0	Mk3 Passenger Module	Squad								3.6	43200								448			16
-restock-airlock-1	crewpod	gnc_inflatableDockingAirlock	9	GuidanceControl	0.25	AL-1 'Lychee' Inflatable Docking Airlock	ReStockPlus									0								448			1
 ro_TKS_crew_s1p5_2	crewpod	int_tksFerry	9	SystemsIntegration	3.7	TKS Crew Compartment 3	Tantares								0.00405405	15								1073.15			1
 sspx-airlock-125-1	crewpod	life_convertedStageStation	9	LifeSupport	0.62	2.25m Service Airlock	StationPartsExpansionRedux									0								773.15			1
 sspx-habitation-125-1	crewpod	life_habitatModuleCatalog	9	LifeSupport	3.67	2.25m Habitation Module	StationPartsExpansionRedux								2.94278	10800								773.15			2
@@ -977,8 +976,6 @@ SXTK1Decoupler	separator	str_standardDecouplers	4	StructuresMechanisms	3.5	N-1 B
 SXTK1Decoupler2	separator	str_standardDecouplers	4	StructuresMechanisms	14.0	N-1 Block A/B Decoupler	SXT									0								448			0
 mer_ringDecoupler	separator	str_standardDecouplers	4	StructuresMechanisms	0.01	Huygens Structural Adapter	CoatlAerospace									0								873.15			0
 p1_decoupler	separator	jpl_firstSats	4	SystemsIntegration	0.0003	Pioneer 0/1/2 Booster Decoupler	RN_US_Probes									0								773.15			0
-restock-decoupler-1875-1	separator	str_standardDecouplers	4	StructuresMechanisms	0.012	TD-18 Decoupler	ReStockPlus									0								600			0
-restock-separator-1875-1	separator	str_standardDecouplers	4	StructuresMechanisms	0.012	TS-18 Separator	ReStockPlus									0								600			0
 shortDecoupler1-2	separator	str_standardDecouplers	4	StructuresMechanisms	0.325	Shorter Rockomax Brand Decoupler	VenStockRevamp									0								448			0
 ROC-GeminiBRetrogradeSection	separator	int_crewedRetroPack	6	SystemsIntegration	0.12349	Gemini B Retro Module	ROCapsules									0								448			0
 ROC-MercuryRetropackBDB	separator	int_crewedRetroPack	6	SystemsIntegration	0.0215	Mercury Retropack	ROCapsules									0								698			0

@@ -608,6 +608,10 @@ nodes:
     # sputnik1 (the integrated RN craft) moved to the charter chronology (2026-07 split); SXTSputnik stays
     # as this node's hermetic-sphere exemplar.
     upgrades: [MLI.Upgrade1]
+    # Rung 1 of 5 on the MLI ladder (6 layers) -> th_netSpacedFilm T7 -> th_extendedMLIWrapping T9 ->
+    # th_advancedMLI T11 -> th_bondedBlanketAttachment T13. Layer counts in design/Tree/AxeMliLadder.cfg.
+    # Stays a ride-along rather than a node of its own: the first foil wrap is what a hermetic bus IS,
+    # not a separate breakthrough, and a T3 node for one blanket would be filler.
     # MLI.Upgrade1 added (2026-07): multi-layer-insulation wrapping-density tier, confirmed KEEP-capability
     # — a passive thermal-blanketing improvement, fits this node's own passive hermetic-sealing mechanism
     # (as opposed to th_activeLouvers' active heat rejection).
@@ -1116,7 +1120,14 @@ nodes:
     tier: 4
     parents: [str_radialDecouplers]
     flavor: "The rest of the catalogue shelf: pre-made in-line decouplers, separators and the skirt rings that drop a spent booster, in fixed sizes — for when you would rather bolt on a stock part than shape a procedural one. The procedural decoupler stays the default; this is the shelf."
-    parts: [Decoupler_0, Decoupler_1, Decoupler_2, restock-decoupler-1875-1, restock-separator-1875-1, shortDecoupler1-2, ROT-AtlasDecoupler, SXTK1Decoupler, SXTK1Decoupler2, ROC-D2Block1LESDecoupler, ROC-LEMDecouplerBDB, ROC-MercuryDecouplerAtlasBDB, ROC-MercuryDecouplerBDB, ROC-VostokDecoupler, ROC-ApolloDecouplerBDB, mer_ringDecoupler, ROC-OrionEUSDecoupler]
+    parts: [Decoupler_0, Decoupler_1, Decoupler_2, shortDecoupler1-2, ROT-AtlasDecoupler, SXTK1Decoupler, SXTK1Decoupler2, ROC-D2Block1LESDecoupler, ROC-LEMDecouplerBDB, ROC-MercuryDecouplerAtlasBDB, ROC-MercuryDecouplerBDB, ROC-VostokDecoupler, ROC-ApolloDecouplerBDB, mer_ringDecoupler, ROC-OrionEUSDecoupler]
+    # DROPPED 2026-08-18: restock-decoupler-1875-1 + restock-separator-1875-1, the 1.875 m size class.
+    # Same ReStockPlus MHReplacement kill as the sacked gnc_inflatableDockingAirlock (see there) -- both
+    # come back category=none / TechHidden=True whenever MakingHistory is installed, which for RP-AXE is
+    # always. RP-1 keeps them, but dead the same way: ksp_rp1_clean and ksp_rp1_expanded both carry them
+    # at category=none too. Inheriting a keep that cannot be built is inheriting nothing. MH's own
+    # Decoupler_1p5 / Separator_1p5 are the live 1.875 m parts, but they are absent from RP-1, so this
+    # catalog simply has no 1.875 m rung -- the procedural decoupler covers it, as the flavor says.
   - id: tel_appSatellites
     title: "Radio-Relay Payloads"
     discipline: Telecommunications
@@ -2174,20 +2185,23 @@ nodes:
     # same milestone), and it shouldn't be tied exclusively to Gemini either — anyToUnlock against BOTH
     # advanced capsule lines instead. dockingPort3 (a plain propellant-transfer docking port, mod=Squad)
     # added as a ride-along — same mechanism family, not RCS-specific.
-    # (Comment relocated 2026-08-06: it had been sitting three lines down inside
-    # gnc_inflatableDockingAirlock's block, describing this node's parents and this node's dockingPort3.)
-
-  - id: gnc_inflatableDockingAirlock
-    title: "Inflatable Docking Airlock"
-    discipline: GuidanceControl
-    tier: 9
-    parents: [gnc_rendezvousDocking]
-    flavor: "Fold Voskhod's inflatable fabric tunnel into a compact module that latches onto a docking port instead of a single hatch — one lightweight ring that gives a crew both a way to meet another spacecraft and a way outside it, without the mass of two separate systems."
-    parts: [restock-airlock-1]
-    # 2026-07 backlog sweep: AL-1 'Lychee' combines the inflatable-airlock lineage (int_voskhodCabin, T7 -
-    # already reachable via gnc_rendezvousDocking's own parent, so not re-listed here) with docking-adapter
-    # function into one integrated module - a genuine crossover, not a plain docking port or plain airlock.
-    # Sibling of gnc_stationBerthing (T9).
+    # (Comment relocated 2026-08-06 from the since-deleted gnc_inflatableDockingAirlock block, where it
+    # had been describing THIS node's parents and THIS node's dockingPort3.)
+    #
+    # SACKED 2026-08-18: gnc_inflatableDockingAirlock (T9, "Inflatable Docking Airlock") stood here and
+    # granted restock-airlock-1. It rendered EMPTY in R&D, and the cause was two independent kills:
+    #   1. ReStockPlus/Patches/MakingHistoryPartHiding.cfg sets %TechHidden=True / @category=none on every
+    #      #MHReplacement[True] part :NEEDS[SquadExpansion/MakingHistory] -- and MakingHistory is a HARD
+    #      DEP of RP-AXE (docs/RELEASE.md). So the part merges, compiles, passes every liveness check, and
+    #      is invisible in both the VAB and the R&D node. Nothing in AXE could have made it appear.
+    #   2. The node's whole reason to exist -- airlock AND docking port in one module -- is false under RO:
+    #      RO_SuggestedMods/RestockPlus/RO_RestockPlus_Coupling_Parts_Config.cfg does
+    #      `!MODULE[ModuleDockingNode] {}   //there's no reason this needs a docking port`, then hangs a
+    #      B9PS N2/O2 auxiliary-tank switch off it. The shipped part is a Voskhod-class airlock, not a
+    #      crossover. The 2026-07 rationale was read off the raw ReStockPlus cfg, never off the live part.
+    # MH's own InflatableAirlock is NOT a substitute: absent from RP-1 (0 in ksp_rp1_clean AND
+    # ksp_rp1_expanded), no Kerbalism Habitat, no RO tank treatment. Node deleted, part uncurated.
+    # See docs/PARTLIST.md "215-drop review" cat 3 for the reversal of the reversal.
   - id: gnc_smallRcsCatalog
     title: "Small-Class RCS Catalog"
     discipline: GuidanceControl
@@ -4039,15 +4053,27 @@ nodes:
   # ========= ca_fom_lander probe-bus king, not authored until the avionics/probes pass.             ==
   # ================================================================================================
 
+  - id: th_netSpacedFilm
+    title: "Net-Spaced Aluminised Film"
+    discipline: Thermodynamics
+    tier: 7
+    parents: [th_hermeticBus]
+    flavor: "Stop wrapping foil and start making blankets. Crinkled double-aluminised film, held apart by a netting so thin it barely touches, stacks a dozen radiation shields into a few millimetres — each one reflecting most of what got past the last. The first insulation you can specify by the metre instead of improvising per spacecraft."
+    upgrades: [MLI.Upgrade2]
+    # Rung 2 of 5 (12 layers). NEW 2026-08-18, splitting the old th_extendedMLIWrapping which carried
+    # MLI.Upgrade2 AND MLI.Upgrade3 on one node -- so the player went straight from rung 1 to rung 3 and
+    # one paid-for rung was invisible. See design/Tree/AxeMliLadder.cfg for the layer curve.
+
   - id: th_extendedMLIWrapping
     title: "Extended Multi-Layer Insulation"
     discipline: Thermodynamics
     tier: 9
-    parents: [th_hermeticBus]
+    parents: [th_netSpacedFilm]
     flavor: "Wrap the bus in another few layers of aluminised film and the heat leak keeps dropping further still — the same passive blanket, thickened for a mission measured in months rather than weeks."
-    upgrades: [MLI.Upgrade2, MLI.Upgrade3]  # MLI.Upgrade2 (earlier MLI generation) rides the MLI node 2026-07 Group-B
-    # Continues th_hermeticBus's passive-insulation ladder (MLI.Upgrade1 there). MLI.Upgrade2 is a known
-    # gap (never curated/placed - see the band-2 handover note) skipped over here, not silently absorbed.
+    upgrades: [MLI.Upgrade3]
+    # Rung 3 of 5 (25 layers). Re-parented onto th_netSpacedFilm (was th_hermeticBus) so the ladder is
+    # one chain. MLI.Upgrade2 moved up to that node 2026-08-18 -- it had been co-located here, which is
+    # the same collapsed-ladder defect the (part, node) upgrade gate catches, one rung short of its reach.
   - id: th_pumpedLoopRadiators
     title: "Pumped-Loop Radiator Panels"
     discipline: Thermodynamics
@@ -4122,8 +4148,24 @@ nodes:
     tier: 11
     parents: [th_extendedMLIWrapping]
     flavor: "Refine the multi-layer blanket — more and thinner double-aluminised layers, perforated to vent the trapped gas so they pack tighter without conducting — and the parasitic heat leak into a cryogenic tank or a cold instrument drops again. The insulation that lets propellant and coolant last a long mission."
-    upgrades: [MLI.Upgrade4, MLI.Upgrade5, RFTech-MLI-UpgradeBalloon]
-    # Later MLI generations (materialsScienceSpaceplanes/LongTerm), past the T9 MLI node.
+    upgrades: [MLI.Upgrade4]
+    # Rung 4 of 5 (50 layers). MLI.Upgrade5 + RFTech-MLI-UpgradeBalloon moved out to
+    # th_bondedBlanketAttachment T13 on 2026-08-18 -- three rungs on one node made the top of the ladder
+    # a single purchase, and buried the balloon-tank unlock (the one real capability change) inside it.
+
+  - id: th_bondedBlanketAttachment
+    title: "Bonded Blanket Attachment"
+    discipline: Thermodynamics
+    tier: 13
+    parents: [th_advancedMLI]
+    flavor: "The lightest tanks are the ones you cannot put a fastener through. A pressure-stabilised skin holds its shape by being pressurised, and every stud punched through it is a leak path and a heat path at once — so the blanket has to be bonded on instead, in a stack thick enough to matter, without touching the wall that carries the load. The insulation that finally reaches the tankage that needed it most."
+    upgrades: [MLI.Upgrade5, RFTech-MLI-UpgradeBalloon]
+    # Rung 5 of 5 (100 layers) + the balloon-tank rung. These two belong together and nowhere else:
+    # RFTech-MLI-UpgradeBalloon is the ONLY MLI a balloon tank can ever have (seed/Tree/RFTechLevels.cfg
+    # strips every MLI* UPGRADE off #type[Tank-Balloon*] and grants this one at 100 layers), so the top
+    # of the ladder is also the moment the game's lightest tankage stops being uninsulable. Sits at T13
+    # alongside met_stirWeldedTankage rather than riding it: the tank material and the blanket bonded to
+    # it are different breakthroughs, and the balloon tanks themselves arrive far earlier (T9).
   - id: gnc_longLifeRCS
     title: "Long-Life Reaction-Control Thrusters"
     discipline: GuidanceControl

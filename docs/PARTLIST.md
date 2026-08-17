@@ -32,8 +32,29 @@ RO and RP-1 reference installs. Tooling: `tools/ro_coverage.py` parser; diff scr
 |---|---|---|
 | 1 · RO parts | `B10_APASv2` (APAS-95 dock), `ROE-ModularResistojetRCS` | ✅ **Drop** — duplicates available elsewhere |
 | 2 · ProceduralParts RF | `proceduralTankOre`; `proceduralTankRealFuels`; `proceduralSRBRealFuels` | ✅ **Keep Ore** (ISRU); **sack** the PP tank (covered by `RO-RFTank-*` series + ROTanks) and the PP SRB |
-| 3 · ReStockPlus | Saturn I + IB/V IUs; inflatable airlock; 3 fairings, 2 adapters, battery, nosecone | ✅ **Keep** the 2 Saturn IUs (+ tag with AXE avionics) and the airlock; **sack** the rest (procedural fairings/adapters cover them) |
+| 3 · ReStockPlus | Saturn I + IB/V IUs; inflatable airlock; 3 fairings, 2 adapters, battery, nosecone | ✅ **Keep** the 2 Saturn IUs (+ tag with AXE avionics); **sack** the rest (procedural fairings/adapters cover them). ~~and the airlock~~ — **reversed 2026-08-18**, see below |
 | 4 · KerbalFoundries | rover wheels (kept by RP-1); 8 tracks, screw-drive, skid, truck wheels | ✅ **Keep the plausible mobility** (reverse RP-1's cut) — all real engineering; screw-drive flagged for the "low-value" pass |
+
+### Correction 2026-08-18 — the ReStockPlus airlock keep is withdrawn (cat 3)
+`restock-airlock-1` was un-cut above and given its own node (`gnc_inflatableDockingAirlock`, T9). It
+rendered **empty in R&D**, and the review that kept it had read the raw ReStockPlus cfg rather than the
+live part. Two independent kills, either one fatal:
+- **ReStockPlus deletes it here.** `ReStockPlus/Patches/MakingHistoryPartHiding.cfg` sets
+  `%TechHidden = True` / `@category = none` on every `#MHReplacement[True]` part
+  `:NEEDS[SquadExpansion/MakingHistory]` — and MakingHistory is a **hard dep** of RP-AXE
+  (`docs/RELEASE.md`). The part merges and compiles; it is simply invisible in the VAB *and* the R&D node.
+- **It is not a docking airlock.** `RO_SuggestedMods/RestockPlus/RO_RestockPlus_Coupling_Parts_Config.cfg`
+  does `!MODULE[ModuleDockingNode] {}   //there's no reason this needs a docking port`, then bolts on a
+  B9PS N₂/O₂ auxiliary-tank switch. The node's "docking + airlock crossover" rationale was never true of
+  the shipped part.
+
+MH's own `InflatableAirlock` is **not** a substitute — absent from RP-1 (0 in both `ksp_rp1_clean` and
+`ksp_rp1_expanded`), no Kerbalism `Habitat`, no RO tank treatment. Same call for the other two
+MHReplacement parts AXE curated, `restock-decoupler-1875-1` / `restock-separator-1875-1` (the 1.875 m
+class in `str_standardDecouplers`): RP-1 keeps them, but at `category = none` in RP-1's own install too, so
+the keep was never worth anything. All three uncurated; node deleted. 52 ReStockPlus parts carry the flag
+— these 3 were the only ones AXE had curated. **Rule going forward: a `#MHReplacement[True]` ReStockPlus
+part is uncurable while MH is a hard dep.** `tools/check_liveness.py` check A now enforces it.
 
 ### Build notes carried forward
 - Kept Saturn IUs (and historical avionics generally) get the **AXE avionics module/tag** at placement.

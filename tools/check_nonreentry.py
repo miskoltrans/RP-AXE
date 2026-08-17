@@ -49,7 +49,9 @@ AXE_EXTRA = {"SXTLander"}   # PPD-8 Lander Can
 
 # AXE crewed parts reviewed 2026-07-14 and deliberately LEFT untagged (RP-1's rule exempts them):
 # orbital station / lab modules (never reenter), ModularLaunchPads crew arms/elevators/towers (ground
-# support, never fly), reentry-rated capsules (KV reentry vehicles, Mk2 pod), a docking airlock.
+# support, never fly), reentry-rated capsules (KV reentry vehicles, Mk2 pod).
+# (restock-airlock-1 -- "a docking airlock" -- was exempt here until 2026-08-18; uncurated now, see
+#  tools/build_manifest.py's cuts block.)
 # When the audit flags a NEW part that belongs here, add it. Regenerate wholesale if the mod set changes.
 REVIEWED_EXEMPT = {
     "acamar_crew_s2_1", "acamar_science_processor_s2_1", "AM_MLP_GeneralCrewArm",
@@ -63,7 +65,7 @@ REVIEWED_EXEMPT = {
     "aquila_crew_s1p5_2", "aquila_lab_s1_1", "aquila_lab_s1p5_1", "aquila_lab_s1p5_2",
     "aquila_node_s0p5_2", "eridani_crew_s1p5_1", "eridani_crew_s2_1", "eridani_crew_s2_s1p5_1",
     "eridani_node_adapter_s1p5_s0p5_1", "hadar_crew_s1_1", "hadar_crew_s1_2", "kv1Pod", "kv2Pod",
-    "kv3Pod", "mira_crew_s1p2_1", "Mk2Pod", "restock-airlock-1", "ro_kvant-2_crew_s1p5_2",
+    "kv3Pod", "mira_crew_s1p2_1", "Mk2Pod", "ro_kvant-2_crew_s1p5_2",
     "ro_Nauka_crew_s1p5_2", "ro_Nauka_node_s0p5_2", "ro_priroda_crew_s1p5_2", "ro_spektr_crew_s1p5_2",
     "ro_TKS_crew_s1p5_2", "ro_Zarya_crew_s1p5_2", "ro_Zvezda_crew_s1p5_1", "ro_Zvezda_crew_s2_1",
     "ro_Zvezda_crew_s2_s1p5_1", "ro_Zvezda_node_adapter_s1p5_s0p5_1",

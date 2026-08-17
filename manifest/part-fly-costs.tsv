@@ -1516,10 +1516,8 @@ rana_truss_srf_2	23.84	catmedian	structural	0.04
 reactor-0625	19115.0	rp1	power	1.648
 reactor-125	1503.0	rp1	power	0.935
 reactor-25	15000.0	rp1	power	4.1
-restock-airlock-1	416.67	catmedian	tank	0.25
 restock-antenna-stack-2	5.0	rp1	antenna	0.004
 restock-antenna-stack-3	10.0	rp1	antenna	0.00625
-restock-decoupler-1875-1	50.0	rp1	separator	0.012
 restock-decoupler-radial-tiny-1	25.0	rp1	separator	0.015
 restock-drone-core-375-1	2000.0	rp1	crewpod	1.933664
 restock-engine-125-pug	77.0	rp1	engine	0.2
@@ -1537,7 +1535,6 @@ restock-rcs-block-triple-angled-mini-1	16.0	rp1	engine	0.0075
 restock-rcs-single-mini-1	8.0	rp1	engine	0.0025
 restock-reactionwheel-radial-1	10000.0	rp1	misc	0.0081
 restock-relay-radial-2	5.0	rp1	antenna	0.004
-restock-separator-1875-1	50.0	rp1	separator	0.012
 restock-srb-anvil-1	0.0	rp1	engine	10.0
 rmm_arenysaurus	2216.0	rp1	engine	1.05
 rmm_arsia	6337.0	rp1	engine	1.8

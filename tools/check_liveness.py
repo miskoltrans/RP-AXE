@@ -83,8 +83,22 @@ STOCK_NODES = {
 # ---------------------------------------------------------------- ground truth from the instance
 
 def live_parts(cache):
-    """Part names that survived ModuleManager patching."""
-    live, depth, part_at, pending = set(), 0, None, False
+    """(parts that survived ModuleManager patching, {part: why it cannot appear in an R&D node}).
+
+    Surviving the merge is NOT the same as being grantable. `TechHidden = True` removes a part from
+    the R&D node list while it sits in the cache fully merged and compiled, looking alive to every
+    name-based check. That is how gnc_inflatableDockingAirlock rendered empty for its whole life:
+    ReStockPlus's own MakingHistoryPartHiding.cfg stamps it on every #MHReplacement[True] part
+    whenever MakingHistory is installed, and MakingHistory is a hard dep of RP-AXE. The node granted
+    a part nobody could see, and check A -- written to catch nodes that grant nothing -- passed it,
+    because it only ever asked whether the name was present.
+
+    Deliberately NOT keyed on `category = none`, which looks like the same signal and is not: 248
+    parts carry it alone here, 227 of them ModularLaunchPads, which sit in a CommunityCategoryKit
+    custom category and build normally. Only TechHidden empties the node.
+
+    Read at the part's OWN depth, so a TechHidden inside a MODULE cannot be mistaken for the part's."""
+    live, hidden, depth, part_at, pending, cur = set(), {}, 0, None, False, None
     for line in open(cache, encoding="utf-8", errors="replace"):
         s = line.strip()
         if s == "PART":
@@ -96,12 +110,15 @@ def live_parts(cache):
             depth += 1
         elif s == "}":
             if part_at is not None and depth == part_at:
-                part_at = None
+                part_at, cur = None, None
             depth -= 1
-        elif part_at is not None and depth == part_at and s.startswith("name = "):
-            live.add(s[7:].strip())
-            part_at = None            # the part's own name is the first one in the block
-    return live
+        elif part_at is not None and depth == part_at:
+            if cur is None and s.startswith("name = "):
+                cur = s[7:].strip()
+                live.add(cur)
+            elif cur is not None and s.replace(" ", "").lower() == "techhidden=true":
+                hidden[cur] = "TechHidden = True -- merged, but absent from the R&D node"
+    return live, hidden
 
 
 def load_failures(log):
@@ -126,12 +143,14 @@ def load_failures(log):
 
 
 def usable_parts(cache, log):
-    live = live_parts(cache)
+    live, hidden = live_parts(cache)
     failed, missing_modules = load_failures(log)
     # the log url mangles '.' to '_'
     by_url = {n.replace(".", "_"): n for n in live}
     dead = {by_url[f] for f in failed if f in by_url}
-    return live, live - dead, dead, missing_modules
+    # A hidden part is as good as absent for anything a node could grant, so it is subtracted the same
+    # way a compile failure is -- check A reports it as missing and says which of the two it was.
+    return live, live - dead - set(hidden), dead, missing_modules, hidden
 
 
 # ---------------------------------------------------------------- what RP-AXE ships
@@ -537,8 +556,9 @@ def main():
     else:
         print(f"          boot of {when} started after every shipped cfg/dll -- verdict is current")
 
-    live, usable, dead_compile, missing_modules = usable_parts(cache, log)
-    print(f"          {len(live)} parts merged, {len(dead_compile)} failed to compile\n")
+    live, usable, dead_compile, missing_modules, hidden = usable_parts(cache, log)
+    print(f"          {len(live)} parts merged, {len(dead_compile)} failed to compile, "
+          f"{len(hidden)} merged-but-hidden\n")
 
     # ---- A: tree nodes that grant nothing --------------------------------------------------
     empty, thin = [], []
@@ -548,13 +568,18 @@ def main():
         gone = [p for p in parts if p not in usable]
         if gone:
             (empty if len(gone) == len(parts) else thin).append((nid, title, parts, gone))
+    why = lambda p: f" [{hidden[p]}]" if p in hidden else ""
     print(f"=== A. tree nodes whose parts are missing from the game "
           f"({len(empty)} empty, {len(thin)} thinned; "
           f"{len(INTENTIONALLY_EMPTY)} allow-listed as deliberate gates) ===")
     for nid, title, parts, gone in empty:
-        print(f"  EMPTY  {nid} -- \"{title}\"  grants nothing: {gone}")
+        print(f"  EMPTY  {nid} -- \"{title}\"  grants nothing:")
+        for p in gone:
+            print(f"             {p}{why(p)}")
     for nid, title, parts, gone in thin:
-        print(f"  thin   {nid} -- \"{title}\"  {len(gone)}/{len(parts)} missing: {gone}")
+        print(f"  thin   {nid} -- \"{title}\"  {len(gone)}/{len(parts)} missing:")
+        for p in gone:
+            print(f"             {p}{why(p)}")
     if empty:
         fail = 1
     print()

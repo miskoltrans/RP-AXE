@@ -1160,10 +1160,8 @@ ReStockPlus	RO_RCSBlock_restock_825	Angled RCS Block [ 825/1335 N Class]
 ReStockPlus	RO_RCSBlock_restock_mini_138	Angled RCS Block [ 138/223 N Class] (elbows)
 ReStockPlus	RO_RCSBlock_restock_mini_28	Angled RCS Block [  28/45 N Class] (elbows)
 ReStockPlus	RO_RCSBlock_restock_mini_69	Angled RCS Block [  69/111 N Class] (elbows)
-ReStockPlus	restock-airlock-1	AL-1 'Lychee' Inflatable Docking Airlock
 ReStockPlus	restock-antenna-stack-2	Communotron DTS-J1
 ReStockPlus	restock-antenna-stack-3	Communotron HG-61
-ReStockPlus	restock-decoupler-1875-1	TD-18 Decoupler
 ReStockPlus	restock-decoupler-radial-tiny-1	TT-14 Radial Decoupler
 ReStockPlus	restock-drone-core-375-1	Saturn IB/V Instrument Unit [6.6 m]
 ReStockPlus	restock-engine-125-pug	Aestus
@@ -1181,7 +1179,6 @@ ReStockPlus	restock-rcs-block-triple-angled-mini-1	RCS Triple Angled [69/111 N C
 ReStockPlus	restock-rcs-single-mini-1	RCS Thruster [69/111 N Class]
 ReStockPlus	restock-reactionwheel-radial-1	Radial Reaction Wheel (Large)
 ReStockPlus	restock-relay-radial-2	HG-20 High Gain Antenna
-ReStockPlus	restock-separator-1875-1	TS-18 Separator
 ReStockPlus	restock-srb-anvil-1	RSRM
 RealChute	RC_cone	Parachute - Cone
 RealChute	RC_cone_double	Parachute - Cone (Double)

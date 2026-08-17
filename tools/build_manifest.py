@@ -124,6 +124,16 @@ with open(os.path.join(SCRATCH,"rp1_cuts_from_packs.txt"),encoding="utf-8",error
 # clone (RO-PVO-ORAD) that never got a TREE-Parts.cfg tech-node remap.
 cuts|={"SCANsat_Scanner","SCANsat_Scanner2","SCANsat_Scanner24","RO-PVO-ORAD"}
 
+# OUR cut, not RP-1's (2026-08-18): the ReStockPlus parts that ReStockPlus itself deletes on any install
+# with MakingHistory. ReStockPlus/Patches/MakingHistoryPartHiding.cfg puts %TechHidden=True /
+# @category=none on every #MHReplacement[True] part :NEEDS[SquadExpansion/MakingHistory], and MH is a HARD
+# DEP of RP-AXE -- so these can never be built here. RP-1 "keeps" them only in the sense that
+# HardRemoveNonRP0 spares them; verified category=none in ksp_rp1_clean and ksp_rp1_expanded too, i.e.
+# dead there as well. 52 ReStockPlus parts carry the MHReplacement flag; these are the only 3 AXE curated.
+# The MH originals they stand in for (InflatableAirlock, Decoupler_1p5, Separator_1p5) are absent from
+# RP-1, so we inherit RP-1's MH cut rather than substitute them.
+cuts|={"restock-decoupler-1875-1","restock-separator-1875-1"}
+
 # the curated expansion part-mods we inherit RP-1's keep from (DMagic + NF-Spacecraft excluded; KF treated as base)
 EXPANSION_MODS={"CoatlAerospace","CryoEngines","FarFutureTechnologies","HullCameraVDS","KerbalAtomics",
   "KerwisChineseAerospacePack","NearFutureAeronautics","NearFutureConstruction","NearFutureElectrical",
@@ -172,7 +182,9 @@ ADD={  # our divergences (names; mod/title resolved from ro_expanded)
   # NFE nuclear fuel cycle (4) -- reprocessor + fuel drums, home the RO reactors' EnrichedUranium/DepletedFuel loop
   "nuclear-recycler-25","nuclearfuel-0625","nuclearfuel-125","nuclearfuel-25",
   # Kerwis DFH-1 + clean-drop reversals
-  "DFH-1","proceduralTankOre","RO-SaturnI-IU","restock-drone-core-375-1","restock-airlock-1",
+  # (restock-airlock-1 was here as the PARTLIST.md cat-3 "keep the airlock" reversal; withdrawn
+  #  2026-08-18 -- ReStockPlus hides it whenever MakingHistory is installed, see the cuts block above.)
+  "DFH-1","proceduralTankOre","RO-SaturnI-IU","restock-drone-core-375-1",
   "KF-ScrewDrive","KF-Skid","KF-TrackInverting","KF-TrackLong","KF-TrackMedium","KF-TrackMole","KF-TrackSimple",
   "KF-TrackSmall","KF-TrackSurface","KF-TrackTiny","KF-WheelTruck-Dual","KF-WheelTruck-Single",
 }
