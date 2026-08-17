@@ -200,6 +200,28 @@ Step 3 "Install CKAN dependencies (RP-AXE-deps.ckan)"
 if ($LASTEXITCODE -ne 0) { throw "ckan install failed (exit $LASTEXITCODE)" }
 Write-Host "  dependencies installed."
 
+# VERIFY the install actually contains what we asked for. `ckan install` can exit 0 having quietly
+# dropped a module from its plan -- on 2026-08-17 it resolved Scatterer-config (a HARD dependency of
+# Scatterer) out of the run, exited 0, and left an instance whose Scatterer had no config.cfg and no
+# planetsList. Scatterer then did nothing at all, so every atmosphere, ocean and sky was missing and
+# the game just "looked different" -- no crash, no error at build time, discovered only by eye.
+# Exit code 0 from ckan is therefore NOT evidence the dependency set is present; compare the two
+# lists and say so.
+$regPath = Join-Path $instFull 'CKAN\registry.json'
+if (-not (Test-Path $regPath)) { throw "no CKAN registry at $regPath -- cannot verify the install" }
+$declared = (Get-Content $DepsCkan -Raw | ConvertFrom-Json).depends.name
+$installed = (Get-Content $regPath -Raw | ConvertFrom-Json).installed_modules.PSObject.Properties.Name
+# Identifiers that are 'provides' aliases, satisfied by a differently-named module, so they never
+# appear in installed_modules. Keep this list SHORT and justified -- each entry blinds the check.
+$providesAliases = @('Scatterer-sunflare-default')   # provided by Scatterer-sunflare
+$missingDeps = $declared | Where-Object { $_ -notin $installed -and $_ -notin $providesAliases }
+if ($missingDeps) {
+    Write-Host "  DECLARED BUT NOT INSTALLED:" -ForegroundColor Red
+    $missingDeps | ForEach-Object { Write-Host "    $_" -ForegroundColor Red }
+    throw "$($missingDeps.Count) declared dependency/dependencies did not install (see above). The instance is incomplete."
+}
+Write-Host "  verified: all $($declared.Count) declared dependencies present in the CKAN registry."
+
 # --- step 4: build + install our SCANsat fork (not a CKAN dependency) -------------------------
 Step 4 "Build and install SCANsat fork"
 # Version source of truth = SCANsat.version.props, same as the fork's build-release.ps1. The csproj
