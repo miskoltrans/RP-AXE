@@ -1,10 +1,11 @@
 <#
 .SYNOPSIS
     Rebuild the KSP test Instance from a pristine snapshot: nuke -> copy clean -> install
-    RP-AXE CKAN deps -> install our SCANsat fork -> deploy RP-AXE. No RP-1 anywhere.
+    RP-AXE CKAN deps -> install our SCANsat fork -> install local non-CKAN mods -> deploy
+    RP-AXE. No RP-1 anywhere.
 
 .DESCRIPTION
-    Six steps:
+    Seven steps:
       1. NUKE     - delete C:\git\ksp\Instance (after first unlinking the RP-AXE junction so the
                     recursive delete can't follow it into the repo and wipe GameData\RP-AXE).
       2. COPY     - mirror the pristine snapshot (..\ksp_instance_clean) into a fresh Instance.
@@ -15,18 +16,24 @@
                     targeting the instance directly via --gamedir (no CKAN registration needed).
       4. SCANSAT  - build our SCANsat fork (C:\git\ksp\SCANsat, not on CKAN) and copy its
                     GameData\SCANsat into the instance. NOT a CKAN dependency on purpose.
-      5. DEPLOY   - junction GameData\RP-AXE in via deploy.ps1 (AXE.dll ships in the repo, so no
+      5. LOCAL    - copy the non-CKAN mods we develop or vendor locally (see -LocalModGameData)
+                    into GameData. These live in sibling repos, not on CKAN, so step 3 cannot
+                    bring them back and a rebuild silently DELETES them -- which is exactly what
+                    happened on 2026-08-17: FuelTankOptimizer and KSPTOTConnect vanished in a
+                    rebuild and nothing noticed, because a missing mod looks identical to a mod
+                    that was never installed. Anything not in RP-AXE-deps.ckan belongs here.
+      6. DEPLOY   - junction GameData\RP-AXE in via deploy.ps1 (AXE.dll ships in the repo, so no
                     build step is required).
-      6. VERIFY   - boot the instance once with -axe-autotest (hands-free: new career, walk R&D +
+      7. VERIFY   - boot the instance once with -axe-autotest (hands-free: new career, walk R&D +
                     Mission Control, quit), then run tools\check_liveness.py and
                     tools\check_settings_parity.py against the cache that boot produced.
                     Skip with -NoVerify.
 
     The pristine snapshot does NOT contain RP-1, so nothing has to be disabled.
 
-    WHY STEP 6 IS PART OF THE REBUILD. Every liveness question -- does this node grant a part, does
+    WHY STEP 7 IS PART OF THE REBUILD. Every liveness question -- does this node grant a part, does
     this MODULE exist, does this tech gate resolve -- can only be answered from the MERGED cache,
-    which does not exist until KSP has booted. A rebuild that stops at step 5 leaves an instance
+    which does not exist until KSP has booted. A rebuild that stops at step 6 leaves an instance
     nobody has checked, and the checks then run when someone remembers, which is how 702 RCS engine
     configs stayed locked (docs\BUG-CLASSES.md). Booting here is the cheapest moment: the cache has
     to be built on first launch anyway.
@@ -44,11 +51,24 @@
     `dotnet build SCANsat\SCANsat.csproj -c Release` (not the .sln -- SCANmechjeb in the same
     solution doesn't build against the current MechJeb API and isn't needed).
 
+.PARAMETER LocalModGameData
+    GameData roots of mods that are NOT on CKAN and NOT built by step 4, so nothing else in this
+    script would reinstall them. Each entry is a directory that CONTAINS mod folders (i.e. a
+    "GameData"), and every child of it is copied into the instance's GameData.
+
+    Defaults:
+      C:\git\ksp\FuelTankOptimizer\GameData                          -> FuelTankOptimizer
+      C:\git\ksp\KSP_Trajectory_Optimization_Tool-1.6.10.1\GameData  -> KSPTOTConnect
+
+    NB the FuelTankOptimizer DLL under its GameData is gitignored build output -- same trap as
+    SCANsat (step 4). This step copies whatever is there; it does NOT build. If you changed FTO
+    source, build it first or you will ship a stale DLL that looks perfectly installed.
+
 .PARAMETER Force
     Skip the "are you sure" confirmation before the destructive nuke.
 
 .PARAMETER NoVerify
-    Skip step 6 (boot + liveness gate). The instance is then unverified -- run
+    Skip step 7 (boot + liveness gate). The instance is then unverified -- run
     `python tools\check_liveness.py` yourself after the first launch.
 
 .PARAMETER VerifyTimeoutMinutes
@@ -76,6 +96,10 @@ param(
     [string]$CkanExe         = (Join-Path $KspRoot 'ckan.exe'),
     [string]$DepsCkan        = (Join-Path $AxeRepo 'RP-AXE-deps.ckan'),
     [string]$ScanSatForkPath = (Join-Path $KspRoot 'SCANsat'),
+    [string[]]$LocalModGameData = @(
+        (Join-Path $KspRoot 'FuelTankOptimizer\GameData')
+        (Join-Path $KspRoot 'KSP_Trajectory_Optimization_Tool-1.6.10.1\GameData')
+    ),
     [switch]$Force,
     [switch]$NoVerify,
     [int]$VerifyTimeoutMinutes = 15
@@ -84,7 +108,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $deployScript = Join-Path $PSScriptRoot 'deploy.ps1'
 
-function Step($n, $msg) { Write-Host "`n[$n/6] $msg" -ForegroundColor Cyan }
+function Step($n, $msg) { Write-Host "`n[$n/7] $msg" -ForegroundColor Cyan }
 
 # Unlink a directory junction / reparse point WITHOUT deleting its target contents.
 function Remove-JunctionLink([string]$path) {
@@ -106,6 +130,14 @@ if (-not (Test-Path $deployScript)) { throw "deploy.ps1 not found: $deployScript
 $scanSatCsproj = Join-Path $ScanSatForkPath 'SCANsat\SCANsat.csproj'
 if (-not (Test-Path $scanSatCsproj)) { throw "SCANsat fork not found: $scanSatCsproj  (-ScanSatForkPath wrong?)" }
 if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) { throw "dotnet CLI not found on PATH (needed to build the SCANsat fork)" }
+# Check the local (non-CKAN) mod sources BEFORE the nuke: they are the one class of mod nothing
+# else can restore, so a bad path here has to stop the run, not lose the mod.
+foreach ($lm in $LocalModGameData) {
+    if (-not (Test-Path $lm)) { throw "Local mod GameData not found: $lm  (-LocalModGameData wrong?)" }
+    if (-not (Get-ChildItem $lm -Directory -ErrorAction SilentlyContinue)) {
+        throw "Local mod GameData has no mod folders in it: $lm"
+    }
+}
 # Guard against the snapshot living inside the instance we're about to wipe.
 $instFull  = [IO.Path]::GetFullPath($InstancePath)
 $cleanFull = [IO.Path]::GetFullPath($CleanSnapshot)
@@ -209,12 +241,30 @@ if ($LASTEXITCODE -ge 8) { throw "robocopy (SCANsat) failed (exit $LASTEXITCODE)
 $global:LASTEXITCODE = 0
 Write-Host "  SCANsat fork built and installed -> $scanSatDst"
 
-# --- step 5: deploy RP-AXE -------------------------------------------------------------------
-Step 5 "Deploy RP-AXE (junction in)"
+# --- step 5: install local (non-CKAN) mods ----------------------------------------------------
+Step 5 "Install local (non-CKAN) mods"
+# Step 3 only knows what is in RP-AXE-deps.ckan and step 4 only knows SCANsat, so a mod that lives
+# in a sibling repo is invisible to both and the nuke in step 1 is the end of it. Copy each one in
+# and NAME it -- a silent step here just moves the failure to the next rebuild.
+$localInstalled = 0
+foreach ($lm in $LocalModGameData) {
+    foreach ($modDir in Get-ChildItem $lm -Directory) {
+        $dst = Join-Path $instFull "GameData\$($modDir.Name)"
+        robocopy $modDir.FullName $dst /E /COPY:DAT /DCOPY:DAT /R:1 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null
+        if ($LASTEXITCODE -ge 8) { throw "robocopy (local mod $($modDir.Name)) failed (exit $LASTEXITCODE)" }
+        $global:LASTEXITCODE = 0
+        Write-Host "  installed $($modDir.Name)  <- $($modDir.FullName)"
+        $localInstalled++
+    }
+}
+Write-Host "  $localInstalled local mod(s) installed."
+
+# --- step 6: deploy RP-AXE -------------------------------------------------------------------
+Step 6 "Deploy RP-AXE (junction in)"
 & $deployScript -InstancePath $instFull
 
-# --- step 6: boot once, then judge what the boot produced -------------------------------------
-Step 6 "Verify (boot with -axe-autotest, then run the liveness gate)"
+# --- step 7: boot once, then judge what the boot produced -------------------------------------
+Step 7 "Verify (boot with -axe-autotest, then run the liveness gate)"
 if ($NoVerify) {
     Write-Host "  skipped (-NoVerify). The instance is UNVERIFIED -- after the first launch run:" -ForegroundColor Yellow
     Write-Host "    python tools\check_liveness.py" -ForegroundColor Yellow
@@ -236,7 +286,10 @@ if ($NoVerify) {
 
     $log = Join-Path $instFull 'KSP.log'
     if (Test-Path $log) {
-        $result = Select-String -Path $log -Pattern '\[AXE\]\[AutoTest\].*(RESULT|FAILED)' |
+        # The harness prints "SUCCESS: visited N screen(s)" -- matching only RESULT|FAILED made a
+        # passing run report "(no result line)" every single time, i.e. a check that could never
+        # say yes (docs\BUG-CLASSES.md, worthless-check family).
+        $result = Select-String -Path $log -Pattern '\[AXE\]\[AutoTest\].*(SUCCESS|RESULT|FAILED)' |
                   Select-Object -Last 5
         if ($result) { $result | ForEach-Object { Write-Host "  $($_.Line.Trim())" } }
         else { Write-Host "  (no [AXE][AutoTest] result line in KSP.log)" -ForegroundColor Yellow }
