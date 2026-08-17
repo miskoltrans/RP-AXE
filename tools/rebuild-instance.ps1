@@ -211,10 +211,18 @@ $regPath = Join-Path $instFull 'CKAN\registry.json'
 if (-not (Test-Path $regPath)) { throw "no CKAN registry at $regPath -- cannot verify the install" }
 $declared = (Get-Content $DepsCkan -Raw | ConvertFrom-Json).depends.name
 $installed = (Get-Content $regPath -Raw | ConvertFrom-Json).installed_modules.PSObject.Properties.Name
-# Identifiers that are 'provides' aliases, satisfied by a differently-named module, so they never
-# appear in installed_modules. Keep this list SHORT and justified -- each entry blinds the check.
-$providesAliases = @('Scatterer-sunflare-default')   # provided by Scatterer-sunflare
-$missingDeps = $declared | Where-Object { $_ -notin $installed -and $_ -notin $providesAliases }
+# Some deps are 'provides' aliases, satisfied by a differently-named module, so the alias itself
+# never appears in installed_modules. Map alias -> the module that must actually be there, rather
+# than skipping the alias: skipping would blind the check for exactly the modules most at risk
+# (we deliberately use the alias form BECAUSE the bare identifier is ambiguous, see RP-AXE-deps.ckan).
+$providesAliases = @{
+    'Scatterer-sunflare-default' = 'Scatterer-sunflare'
+    'Scatterer-config-default'   = 'Scatterer-config'
+}
+$missingDeps = $declared | Where-Object {
+    $needed = if ($providesAliases.ContainsKey($_)) { $providesAliases[$_] } else { $_ }
+    $needed -notin $installed
+}
 if ($missingDeps) {
     Write-Host "  DECLARED BUT NOT INSTALLED:" -ForegroundColor Red
     $missingDeps | ForEach-Object { Write-Host "    $_" -ForegroundColor Red }
