@@ -170,6 +170,60 @@ namespace RPAxe
             return true;
         }
 
+        /// <summary>
+        /// Planner twin of <see cref="IsThermalOwner"/>, and the reason the two cannot be one method:
+        /// there are no flight IDs in the editor, so ownership there has to resolve by position in
+        /// <c>EditorLogic.fetch.ship.Parts</c> instead. Outside the editor this defers to the flight rule
+        /// so the two answers cannot disagree about the same vessel.
+        ///
+        /// WHY THE PLANNER NEEDS THIS AT ALL. Kerbalism calls <c>PlannerUpdate</c> on EVERY enabled module
+        /// on EVERY part (<c>Planner.ResourceSimulator.Analyze</c> -> <c>Process_apiModule</c>), and since
+        /// 2026-08-05 the area is the WHOLE VESSEL's rather than each avionics box's. So a craft carrying
+        /// N cores reported the same vessel-wide heater load N times on one "heaters" line, while flight
+        /// and background billed it once. Measured on Svetovit 1 (five Deep-Space cores, k=21,
+        /// A=8.73 m^2): the planner showed 690 W at Neptune against the 138 W it actually flies.
+        ///
+        /// Same defect class as the two double-billing blocks deleted on 2026-08-12 -- that pass closed
+        /// avionics-vs-heaters and missed heaters-vs-heaters, because the owner check it was relying on
+        /// only ever existed on the flight paths.
+        /// </summary>
+        bool IsPlannerOwner()
+        {
+            if (!HighLogic.LoadedSceneIsEditor) return IsThermalOwner();
+            List<Part> parts = EditorLogic.fetch?.ship?.Parts;
+            if (parts == null || parts.Count == 0) return true;
+            for (int i = 0; i < parts.Count; i++)
+            {
+                Part p = parts[i];
+                if (p?.Modules == null || !PlannerConsiders(p)) continue;
+                for (int j = 0; j < p.Modules.Count; j++)
+                    if (p.Modules[j] is ModuleAxeThermal t && t.isEnabled && t.thermalK > 0f)
+                        return ReferenceEquals(t, this);
+            }
+            return true;   // nobody can bill anything; whoever asked may as well answer
+        }
+
+        /// <summary>
+        /// Kerbalism's per-part "count this one in the planner" toggle, read BY NAME rather than by type:
+        /// this module is deliberately Kerbalism-free (the whole API is duck-typed) and has to compile and
+        /// run with the mod absent.
+        ///
+        /// A part the planner skips must not be allowed to claim ownership, or switching one probe core
+        /// off in the planner would zero the vessel's entire heater line instead of handing the load to
+        /// the next core — a silently wrong answer of exactly the kind this check exists to prevent.
+        /// </summary>
+        static bool PlannerConsiders(Part p)
+        {
+            for (int j = 0; j < p.Modules.Count; j++)
+            {
+                PartModule m = p.Modules[j];
+                if (m == null || m.moduleName != "PlannerController") continue;
+                BaseField f = m.Fields["considered"];
+                return !(f?.GetValue(m) is bool considered) || considered;
+            }
+            return true;
+        }
+
         public override void OnStart(StartState state)
         {
             base.OnStart(state);
@@ -286,7 +340,12 @@ namespace RPAxe
 
             float area = HighLogic.LoadedSceneIsEditor ? CurrentArea() : 0f;
             if (area <= 0f) area = thermalArea;
-            thermalArea = area;
+            thermalArea = area;   // a readout, so keep it live on every module, owner or not
+
+            // One heater bill per vessel here too, not just in flight and background -- see IsPlannerOwner.
+            // Adding nothing rather than a zero entry: Kerbalism turns every entry into a broker line, and
+            // four "heaters 0 W" rows in the tooltip would be its own kind of wrong answer.
+            if (!IsPlannerOwner()) return "heaters";
 
             float watts = 0f;
             if (haveEnv && area > 0f && thermalK > 0f)

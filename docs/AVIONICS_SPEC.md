@@ -177,35 +177,69 @@ heater tape. Nothing else in the modlist models this: stock has no "too cold" st
 Kerbalism's temperature is habitat/crew comfort (`per_capita`).
 
 ```
-Q = k · A · (1 − (homeSMA / r)²),   clamped ≥ 0
+Q = k · A · ( (T_min/T_set)⁴ − (1 − deficit) ),   clamped ≥ 0        [steady state]
+deficit = 1 − sunlit·(homeSMA/r)² − skyFrac·f_IR·(homeSMA/r_body)²,  clamped 0..1
 k = ε_eff · σ · T_set⁴     (σT⁴ = 418 W/m² at 293 K, so k = 418 × ε_eff)
-A = 6 · V^(2/3)            (avionics BOX volume — RP-1's own volume→surface idiom)
+A = 0.04 · m_dry^(2/3)     (VESSEL dry mass, kg)
 ```
 
-**It asymptotes** — as `r` grows the solar term vanishes and demand tops out at the full radiative loss at
-setpoint. That is why the outer system doesn't spiral:
+**Two things in that formula are not what this section originally shipped, and the table below is the
+first one to reflect either** (corrected 2026-08-18, found while auditing a craft whose heater bill looked
+too big):
 
-| k | ε_eff | Earth | Mars | Ceres | Jupiter | Saturn | Neptune |
-|---|--:|--:|--:|--:|--:|--:|--:|
-| Standard | 0.15 | 0 W | 96 W | 147 W | 163 W | 168 W | **169 W** |
-| Deep-Space, no MLI | 0.10 | 0 | 64 | 98 | 109 | 112 | 113 |
-| + `th_hermeticBus` | 0.05 | 0 | 32 | 49 | 54 | 56 | 56 |
-| + `th_extendedMLIWrapping` | 0.03 | 0 | 20 | 30 | 34 | 35 | 35 |
-| + `th_advancedMLI` | 0.02 | 0 | 12 | 19 | 21 | 21 | 21 |
+- **`A` is the vessel's, not the avionics box's** (changed 2026-08-05). It is the whole spacecraft that
+  radiates. Box area was wrong by ~7×: measured across 74 cores in the dev save, real probe cores are
+  0.017 m³ / 0.39 m², against the 0.30 m³ / 2.69 m² the original calibration assumed. Checked against real
+  spacecraft — Luna 1 at 361 kg → 2.0 m² (actual sphere ~2 m²), Voyager at 825 kg → 3.5 m² (actual bus
+  ~4 m²). **This makes the load scale with the craft**, so one table can no longer cover the game; the two
+  below bracket the range.
+- **The 273 K deadband** (`ModuleAxeAvionics.StepThermal`). The heater does not hold the 293 K setpoint —
+  it does nothing until the bus would fall through the 273 K battery floor and then holds exactly that.
+  So the ceiling is the loss at 273 K, `(273/293)⁴ = 0.754` of `k·A`, not `k·A`. The original table
+  charged the full `k·A·deficit`, i.e. ~33% high at every distance.
 
-*(0.30 m³ box ≈ a 1 t-capacity core, A = 2.69 m². Jupiter is already 96% of maximum.)*
+**It still asymptotes** — as `r` grows the solar term vanishes and demand tops out at that 0.754 ceiling.
+That is why the outer system doesn't spiral. Cruise (deep space, sunlit, nothing nearby to radiate back):
+
+| bus | ε_eff | k | Earth | Mars | Ceres | Jupiter | Saturn | Neptune |
+|---|--:|--:|--:|--:|--:|--:|--:|--:|
+| **Voyager-class, 825 kg dry — A = 3.52 m²** ||||||||
+| Standard, no thermal tech | 0.15 | 63 | 0 W | 72 W | 138 W | 159 W | 165 W | **167 W** |
+| Standard + full MLI chain (capped) | 0.05 | 21 | 0 | 24 | 46 | 53 | 55 | 56 |
+| Deep-Space, no MLI | 0.10 | 42 | 0 | 48 | 92 | 106 | 110 | 111 |
+| + `th_hermeticBus` | 0.05 | 21 | 0 | 24 | 46 | 53 | 55 | 56 |
+| + `th_extendedMLIWrapping` | 0.03 | 13 | 0 | 15 | 28 | 33 | 34 | 34 |
+| + `th_advancedMLI` | 0.02 | 8 | 0 | 9 | 18 | 20 | 21 | 21 |
+| **Svetovit-class, 3.22 t dry — A = 8.73 m²** ||||||||
+| Standard, no thermal tech | 0.15 | 63 | 0 W | 178 W | 343 W | 394 W | 408 W | **414 W** |
+| Deep-Space, no MLI | 0.10 | 42 | 0 | 118 | 228 | 263 | 272 | 276 |
+| + `th_hermeticBus` | 0.05 | 21 | 0 | 59 | 114 | 131 | 136 | 138 |
+| + `th_advancedMLI` | 0.02 | 8 | 0 | 23 | 43 | 50 | 52 | 53 |
+
+*(Jupiter is already 95% of maximum. A LEO eclipse costs less than Ceres — 48 W and 119 W respectively at
+k = 21 — because Earth fills 29% of the sky at 1.1 R and goes on radiating at a craft in its shadow.)*
+
+**Mass scaling is sub-linear**, which is the right shape and worth stating because it is a design lever:
+`A ∝ m^(2/3)`, so a 4× heavier craft pays only 2.5× the heaters. **Consequence: flying stacked probes as
+one vessel is cheaper than flying them separately** — Svetovit 1's five-probe stack asks 138 W at Neptune
+where five separated 640 kg probes would ask 47 W each, 235 W total. Nobody designed that in; it falls out
+of surface-area-to-mass, same as it does in reality.
 
 **The scissors.** Solar output falls as 1/r² while heater demand rises on the same curve. Where they cross
 is where RTGs stop being optional — and that falls out of physics rather than a tuned threshold. A
-Mariner-class 7 m² array gives ~310 W at Earth and ~11 W at Jupiter; a Standard bus there wants 163 W.
+Mariner-class 7 m² array gives ~310 W at Earth and ~11 W at Jupiter; a Standard bus there wants 159 W.
 
 **ε_eff values are INSTALLED performance**, not datasheets — seams, penetrations and cable feedthroughs
 cost 2–5× over lab figures. Standard sits at 0.15 because near-Earth thermal design is sized for
 *rejecting* heat and performs poorly when the load reverses; it is not bare (0.8 → 334 W/m²), it is still
-a spacecraft. **This is the tuning dial** — Mars at 96 W for a Standard bus is the number to watch in play.
+a spacecraft. **This is the tuning dial** — Mars at 72 W for a Voyager-class Standard bus is the number to
+watch in play.
 
 **Decisions taken:**
-- **Box volume, not vessel** (user): the avionics is what must be kept warm.
+- **~~Box volume, not vessel~~ (user) — REVERSED 2026-08-05.** The original call was that the avionics is
+  what must be kept warm, so the box was what should set the area. Ground-truthing the box sizes killed it:
+  a real probe core is 0.39 m², so a Luna-class probe was billed 2 W at Jupiter. Vessel dry mass it is; see
+  the two bullets under the formula. Nothing else about the mechanic changed.
 - **Hibernation does NOT reduce it** (user): the heater doesn't care whether the computer is running, and
   it gives deep space an irreducible power floor. Added to the draw, never multiplied into it. (Strictly,
   hibernating means *less* waste heat and so *more* heater — modelling that would make hibernation a trap.)
@@ -379,6 +413,25 @@ fallback, otherwise the parts caught by the fallback would be missed.
 No double-billing: only the insulation coefficient comes from the avionics unit. Area is derived from
 vessel dry mass, and `ModuleAxeThermal` enforces one heater owner per vessel, so a stack carrying both a
 named unit and a procedural core is charged once.
+
+**…on all three paths, as of 2026-08-18.** That claim was true of flight (`IsThermalOwner`) and background
+(the lowest-`flightID` test) but NOT of the planner, which had no owner check at all. Kerbalism calls
+`PlannerUpdate` on every enabled module on every part (`Planner.ResourceSimulator.Analyze` →
+`Process_apiModule`), and once area became the whole vessel's, each core aboard reported the same
+vessel-wide load — so the VAB "heaters" line read **N× what the craft actually flies**. Found on
+Svetovit 1: five Deep-Space cores, 690 W shown against 138 W flown. `IsPlannerOwner` is the editor twin of
+`IsThermalOwner`, resolving by position in `EditorLogic.fetch.ship.Parts` because there are no flight IDs
+in the editor, and skipping parts the player has switched off via Kerbalism's `PlannerController` so that
+excluding one core hands the load to the next rather than zeroing the line.
+
+Third of its family, and the tell is the same each time: **a "heaters" figure that moves when it shouldn't,
+or fails to match between the VAB and the flight scene.** The other two were the stale-thermal blocks
+deleted from `ModuleAxeAvionics.PlannerUpdate` and `.BackgroundUpdate` on 2026-08-12 — that pass closed
+avionics-vs-heaters and missed heaters-vs-heaters, because the owner check it assumed was doing the work
+only ever existed on the flight paths. All three date to heaters moving into their own module on
+2026-08-05 and are worth remembering as one shape: **when a per-vessel quantity is computed by a per-part
+module, every code path that reports it needs its own ownership test — including the ones that only draw
+UI.**
 
 **Mass/cost: own per-tier ladder, authored as real data — not a live multiplier. SHIPPED.** Matching RP-1's
 real shape meant ~10 *separate* tech-node placements in AXE's tree (mirroring each Guided-tier unlock

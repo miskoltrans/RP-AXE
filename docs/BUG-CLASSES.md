@@ -81,6 +81,7 @@ The reason a bug in family A or B survives long enough to reach playtesting.
 | The `RSSRP1` save that "proved" `GAMEPARAMETERS` worked | Made in `ksp_rp1_clean`, where RP-1's own plugin was doing the work. **A save from an RP-1 instance can never prove an AXE mechanism.** |
 | Contract Configurator's `Loaded N out of N` | CC reads the pre-patch database on the run that regenerates the MM cache: 338/338 is printed while 34 new types are silently missing. Always validate on a **second** run. |
 | Hand-authored test fixtures (FTO) | Inputs built from the mental model under test can only confirm it. Sprang three times. |
+| `AVIONICS_SPEC.md`'s "one heater owner per vessel" | The invariant was **stated as a property of the module** and implemented on two of its three code paths — flight and background had the owner test, the Kerbalism planner never did. So the VAB billed a five-core craft's heaters 5×, and the sentence asserting otherwise is what stopped anyone looking. Third bug of this family; the 2026-08-12 pass fixed two and missed this one *because it trusted the same sentence*. **A doc claim is not a check** — a per-vessel quantity computed by a per-part module needs its ownership test on every path that reports it, UI-only ones included. *Fixed 2026-08-18, `ModuleAxeThermal.IsPlannerOwner`.* |
 | `AxeFundraisingTip`'s "is anything converting?" test | Guarded `Strategies == null` but not `Strategies.Count == 0`. `StrategySystem.OnLoad` defers to a coroutine that opens `yield return null`, so for a frame the list is **non-null and empty** — and empty answers every "is X active?" question with "no". It then latched the verdict, making the wrong answer final. **Empty is not absent; it is the state a lazily-populated collection is in before its coroutine runs.** *Caught by playtest the day it shipped, ECONOMY.md §12.* |
 
 **Rules, in order of how often they would have helped:**
@@ -89,7 +90,11 @@ The reason a bug in family A or B survives long enough to reach playtesting.
 2. Any bounded pass must `log()` what it dropped. Silent truncation reads as coverage.
 3. A gate that reports and exits 0 is documentation, not a gate.
 4. New `CONTRACT_TYPE` configs need two runs before a verdict.
-5. **Separate "not yet" from "no", and never cache a "not yet".** Before reading any KSP system in an
+5. **An invariant is only as wide as the paths that enforce it.** When a doc says "X guarantees Y",
+   grep for the enforcing code and count the call sites — flight, background, planner, and any PAW
+   readout are four separate answers to the same question, and the ones that only draw UI are the ones
+   that get skipped. Prefer one shared helper every path must call over a rule restated in prose.
+6. **Separate "not yet" from "no", and never cache a "not yet".** Before reading any KSP system in an
    addon, ask what it looks like mid-load — a `ScenarioModule` that loads in a coroutine presents as
    live-but-empty, so a null check passes and the answer is wrong. Test readiness explicitly, and latch
    only on facts that cannot change (the game mode), never on ones that merely have not arrived.
