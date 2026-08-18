@@ -17,6 +17,13 @@
     <Nullable>disable</Nullable>
     <!-- KSP ships its own copies; never copy framework/engine DLLs to output. -->
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <!--
+      Kerbalism 3.41 is built against net481. MSBuild's default reaction to referencing a HIGHER framework
+      than the target is to DROP the reference (MSB3274) and let the compile fail with CS0246s that read
+      like a missing using. Retargeting AXE to net481 is not the fix: KSP runs Unity's Mono against the
+      4.8 profile, and 4.8.1 adds no API this uses. Everything AXE touches in Kerbalism exists in 4.8.
+    -->
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
   </PropertyGroup>
 
   <ItemGroup>
@@ -68,8 +75,15 @@
       <HintPath>$(KSPRoot)\GameData\ModularFlightIntegrator\ModularFlightIntegrator.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <!--
+      Kerbalism shipped its assembly as Kerbalism112.kbin (a renamed DLL that KerbalismBootstrap loads,
+      which is why AssemblyLoader can never see it) through 3.1x; 3.41 ships a plain Kerbalism.dll and no
+      .kbin at all. Reference whichever the instance actually has, or a Kerbalism update silently breaks
+      the build with six CS0246s that read like a missing using.
+    -->
     <Reference Include="Kerbalism">
-      <HintPath>$(KSPRoot)\GameData\Kerbalism\Kerbalism112.kbin</HintPath>
+      <HintPath Condition="Exists('$(KSPRoot)\GameData\Kerbalism\Kerbalism.dll')">$(KSPRoot)\GameData\Kerbalism\Kerbalism.dll</HintPath>
+      <HintPath Condition="!Exists('$(KSPRoot)\GameData\Kerbalism\Kerbalism.dll')">$(KSPRoot)\GameData\Kerbalism\Kerbalism112.kbin</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
