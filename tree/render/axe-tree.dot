@@ -68,7 +68,7 @@ digraph AXE {
   "opt_vidicon" [label="Vidicon Imaging\nOpticsPhotonics T4 · 29",fillcolor="#7c8cff",fontcolor="#111111"];
   "nuc_geiger" [label="Geiger-Müller Ionization Counting\nNuclearEngineering T1 · 1",fillcolor="#83c341",fontcolor="#111111"];
   "mic_massSpec" [label="Magnetic-Sector Mass Spectrometry\nMicroelectronics T4 · 29",fillcolor="#c2a0e0",fontcolor="#111111"];
-  "mic_magnetometer" [label="Fluxgate Magnetometry\nMicroelectronics T4 · 29",fillcolor="#c2a0e0",fontcolor="#111111"];
+  "mic_magnetometer" [label="Search-Coil Magnetometry\nMicroelectronics T4 · 29",fillcolor="#c2a0e0",fontcolor="#111111"];
   "bio_cultures" [label="Space-Exposed Biology\nLifeSupport T1 · 1",fillcolor="#f0508a",fontcolor="#111111"];
   "mic_atmoSounding" [label="Upper-Atmosphere Sounding\nMicroelectronics T1 · 1",fillcolor="#c2a0e0",fontcolor="#111111"];
   "aero_subsonicWing" [label="Subsonic Aerodynamics\nAerodynamics T1 · 1",fillcolor="#5aa0e2",fontcolor="#111111"];

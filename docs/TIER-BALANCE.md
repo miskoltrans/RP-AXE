@@ -202,7 +202,7 @@ RPWS01-03) but were placed by *what each node is about* rather than *by generati
 | **IR** radiometer | 5, 6, **6**, 10 | IR02/IR03 on the same tier |
 | **IS** imaging spectrometer | **7**, 6, 6, 10 | IS01 arrives *after* IS02/IS03; IS02+IS03 share a node |
 | **MS** mass spec | 4, **7, 7**, 9 | MS02+MS03 share `mic_ionMassSpec` |
-| **MG** magnetometer | 4, 5, 8 | clean -- the model the others should follow |
+| **MG** magnetometer | 4, 5, 8 | tiers clean -- but see the naming correction below |
 | **RPWS** plasma wave | **8, 8, 8** | all three generations on one node (caps 7 / 20 / 30) |
 
 **RESOLVED 2026-07-29 (hard defects only; same-tier pairs deliberately left).**
@@ -229,6 +229,19 @@ RPWS01-03) but were placed by *what each node is about* rather than *by generati
 (which is only as fresh as the last KSP run) and reports a **SPLITGATE** finding whenever the two
 copies of the slot list disagree. They were in sync before this change; the detector exists so the
 next edit cannot silently desync them.
+
+**Naming correction 2026-08-19 (MG family).** The table above judged this family on *tiers only* and
+called it clean. It was not: the T4 root `mic_magnetometer` was titled **"Fluxgate Magnetometry"** and
+its flavor described the fluxgate saturation cycle read **"on a boom"** -- while the fluxgate part is
+MG03 (`RO-FluxgateMagnet`, `mic_boomMagnetometryII`, T8) and the boom is the T5 breakthrough
+(`mic_boomMagnetometry`). The node holds only MG01, a surface-attach early magnetometer whose RP-1
+provenance note cites **Explorer VI**, a search-coil instrument read off the spacecraft's own spin.
+Retitled **"Search-Coil Magnetometry"** with a search-coil flavor; the lunar-surface payoff sentences
+from `bc420b1` are kept verbatim. The **id is unchanged** -- `mic_magnetometer` is a fine generic root
+and renaming it would break string refs silently (`Configure.cfg`, `US2.cfg`, `AxePartPlacement.cfg`,
+saves). Same id-vs-title shape as the `RO-NIMS`-on-the-UV-node defect above; the cause was age, not
+judgement -- the title was correct when MG01 was the tree's only magnetometer (`321ea81`, band 1) and
+never came back down as the ladder grew above it in bands 2 and 4.
 
 **Left standing, by decision:** VI03+VI04 on `opt_refinedTV`; IR02+IR03 on tier T6; MS02+MS03 on
 `mic_ionMassSpec`; bioScan1+2 on `bio_cultures`; IS01/IS03 now sharing tier T7 via different nodes.

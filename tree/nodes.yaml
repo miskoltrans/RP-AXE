@@ -731,12 +731,19 @@ nodes:
     flavor: "Ionise a gas sample and bend the ions through a magnetic field — heavier species curve less, sorting the upper atmosphere into a spectrum of masses. What the air is actually made of, up there. Earth's upper air is stirred until it is the same everywhere, so orbit returns one answer for the planet; the Moon's whisper-thin exosphere is not mixed at all, and a spectrometer left on the ground finds a different mixture at every site."
     parts: [RO-IonMassSpectrometer, USFluidSpectroWedge]
   - id: mic_magnetometer
-    title: "Fluxgate Magnetometry"
+    title: "Search-Coil Magnetometry"
     discipline: Microelectronics
     tier: 4
     parents: [mic_atmoSounding, elec_transistor]
-    flavor: "Drive a soft-ferrite core in and out of saturation and read how the ambient field skews the cycle — a solid-state compass sensitive enough to map the planet's field from orbit, on a boom to escape the craft's own iron. Earth's dipole is one smooth field that reads the same from any orbit you fly. The Moon has no dipole at all — only patches of crustal magnetism frozen in four billion years ago, and telling them apart means a station left standing on the ground."
+    flavor: "Wind a coil and let the satellite's own spin sweep it through the ambient field — the rotation induces an alternating voltage, and its amplitude is the strength of the field lying across the spin axis. The instrument has no moving parts of its own; the spacecraft is already turning. Earth's dipole is one smooth field that reads the same from any orbit you fly. The Moon has no dipole at all — only patches of crustal magnetism frozen in four billion years ago, and telling them apart means a station left standing on the ground."
     parts: [RO-EarlyMagnet]
+    # RETITLED 2026-08-19: was "Fluxgate Magnetometry", flavor was the fluxgate saturation cycle "on a
+    # boom". Both belonged four tiers up: the fluxgate part is MG03 (RO-FluxgateMagnet,
+    # mic_boomMagnetometryII T8) and the boom is the T5 breakthrough (mic_boomMagnetometry). This node
+    # holds only MG01, a surface-attach early magnetometer whose RP-1 provenance note cites Explorer VI
+    # -- a search-coil instrument read off the spacecraft's own spin. Named when MG01 was the tree's ONLY
+    # magnetometer (321ea81, band 1); the ladder grew above it in bands 2 and 4 and the title never
+    # came back down. ID left alone on purpose -- string refs to mic_magnetometer fail closed.
   - id: bio_cultures
     title: "Space-Exposed Biology"
     discipline: LifeSupport
