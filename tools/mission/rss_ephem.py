@@ -117,12 +117,24 @@ class System:
                         self.bodies[b.name] = b
         sun = self.bodies.get("Sun")
         self.mu_sun = sun.mu if sun else 1.3271244004193938e20
+        # RSS states its elements at B1950.0, NOT at UT 0. RSSKopernicusSettings.cfg carries
+        # `Epoch = -31542641.784` ("time in seconds until the epoch of orbital elements"), and
+        # Kopernicus propagates M(t) = M0 + n*(t - Epoch). Ignore it and every body sits a full
+        # year out of phase -- which still looks self-consistent, because ALL of them do.
+        self.epoch = 0.0
+        settings = os.path.join(gamedata, "RealSolarSystem", "RSSKopernicusSettings.cfg")
+        if os.path.exists(settings):
+            for line in open(settings, encoding="utf-8", errors="replace"):
+                line = line.split("//")[0].strip()
+                if line.startswith("Epoch") and "=" in line:
+                    self.epoch = float(line.split("=", 1)[1].strip())
+                    break
 
     def rel(self, name, ut):
         b = self.bodies[name]
         mu = self.bodies[b.parent].mu
         n = math.sqrt(mu / b.a ** 3)
-        return elements_to_rv(b.a, b.e, b.inc, b.lan, b.argp, b.M0 + n * ut, mu)
+        return elements_to_rv(b.a, b.e, b.inc, b.lan, b.argp, b.M0 + n * (ut - self.epoch), mu)
 
     def helio(self, name, ut):
         r = (0.0, 0.0, 0.0)
