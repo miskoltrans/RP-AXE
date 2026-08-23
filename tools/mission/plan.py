@@ -728,7 +728,8 @@ def cmd_correct(args):
     best, scan = maneuver.cheapest_correction(system, body.name, r0, v0, ut0, target.name,
                                               t_arr, peR, t_end=t_end,
                                               n_times=args.samples, watch=watch,
-                                              verbose=args.verbose)
+                                              verbose=args.verbose,
+                                              max_dv=args.max_dv, diff_step=args.diff_step)
     if not scan:
         sys.exit("  no correction converged; widen --horizon or check the target")
     print(f"  {'burn date':>22s} {'dV m/s':>10s}  result")
@@ -772,7 +773,8 @@ def cmd_flyby(args):
             t_arr = arr.get("ca_ut")
             best, scan = maneuver.cheapest_correction(system, body.name, r0, v0, ut0, fly.name,
                                                       t_arr, peR, t_end=t_end,
-                                                      n_times=args.samples, watch=watch)
+                                                      n_times=args.samples, watch=watch,
+                                                      max_dv=args.max_dv)
             if scan:
                 print(f"  {'burn date':>22s} {'dV m/s':>10s}  result")
                 for o in scan:
@@ -1359,11 +1361,14 @@ def main(argv=None):
                    help="burn times to try; with --through, arrival epochs to scan")
     p.add_argument("--span", type=float, default=90.0,
                    help="days either side of the natural encounter to scan (--through)")
-    p.add_argument("--max-dv", type=float, default=500.0,
-                   help="bound on the correction, m/s per axis (--through). Unbounded, the "
-                        "solver can find a wholly different trajectory through the aim point.")
+    p.add_argument("--max-dv", type=float, default=1000.0,
+                   help="bound on the correction, m/s per axis. Unbounded, least squares "
+                        "can find a wholly different trajectory that grazes the aim point "
+                        "-- measured, a 4,892 m/s answer with a 0 km miss. Raise it if a "
+                        "genuinely large correction is expected.")
     p.add_argument("--diff-step", type=float, default=1e-2,
-                   help="finite-difference step for the shooting Jacobian, m/s (--through)")
+                   help="finite-difference step for the shooting Jacobian, m/s. SciPy's is "
+                        "relative, so this is the step near zero.")
     p.add_argument("--max-nfev", type=int, default=60, help="shots per arrival epoch")
     p.add_argument("--verbose", action="store_true")
     p.set_defaults(func=cmd_correct)
@@ -1373,6 +1378,8 @@ def main(argv=None):
     p.add_argument("body_target", metavar="BODY", help="the body to fly past")
     p.add_argument("--peri", help="solve for this flyby periapsis if there is no encounter")
     p.add_argument("--samples", type=int, default=12)
+    p.add_argument("--max-dv", type=float, default=1000.0,
+                   help="bound on the aim burn, m/s per axis")
     p.set_defaults(func=cmd_flyby)
 
     p = sub.add_parser("verify", help="fly the current trajectory and report what happens")

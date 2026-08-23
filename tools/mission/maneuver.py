@@ -221,7 +221,8 @@ def b_for_periapsis(mu, vinf, peR):
 
 
 def refine(system, body, r_node, v_node, ut_node, target, t_end, peR_want,
-           b_dir=None, ut_want=None, watch=None, max_nfev=60, verbose=False):
+           b_dir=None, ut_want=None, watch=None, max_nfev=60, verbose=False,
+           max_dv=1000.0, diff_step=1e-2):
     """Least-squares correct a burn until the FLOWN trajectory hits the aim point.
 
     Unknown is the 3-vector dV at a fixed node time. The aim point is a B-plane
@@ -259,8 +260,14 @@ def refine(system, body, r_node, v_node, ut_node, target, t_end, peR_want,
             print(f"   dv={np.linalg.norm(x):9.2f} m/s  resid={np.linalg.norm(r):.4e}")
         return r
 
-    sol = least_squares(resid, dv0, diff_step=1e-4, xtol=1e-12, ftol=1e-12,
-                        gtol=1e-12, max_nfev=max_nfev)
+    # Bounded, for the same reason aim_through is: unbounded, least squares is free to
+    # find a wholly different trajectory that happens to graze the aim point, and it does
+    # -- a measured 4,892 m/s "solution" with a 0.0 km miss. And diff_step is RELATIVE in
+    # SciPy (h = diff_step * max(1, |x|)), so the old 1e-4 meant 0.1 mm/s steps around
+    # zero, below the shooter's own SOI root-finding noise.
+    sol = least_squares(resid, dv0, diff_step=diff_step,
+                        bounds=(-abs(max_dv), abs(max_dv)),
+                        xtol=1e-12, ftol=1e-12, gtol=1e-12, max_nfev=max_nfev)
     dv = sol.x
     traj = fly(dv)
     return {"dv": dv, "traj": traj,
@@ -563,7 +570,8 @@ def scan_arrivals(system, body, r0, v0, ut0, target, arrivals, via=None, t_end=N
 # midcourse correction
 # ---------------------------------------------------------------------------
 def cheapest_correction(system, body, r0, v0, ut0, target, t_arr, peR_want,
-                        t_end=None, n_times=24, watch=None, verbose=False):
+                        t_end=None, n_times=24, watch=None, verbose=False,
+                        max_dv=1000.0, diff_step=1e-2):
     """Where along the coast is the correction cheapest, and how big is it?
 
     A correction gets geometrically cheaper the earlier you make it, and MechJeb
@@ -577,11 +585,30 @@ def cheapest_correction(system, body, r0, v0, ut0, target, t_arr, peR_want,
     watch = watch or [target.name]
     out = []
     span = t_arr - ut0
+
+    # Where the vessel actually IS at each candidate burn time.
+    #
+    # This used to be astro.propagate(mu_of_starting_body, r0, v0, dt) -- one conic about
+    # whichever body the vessel happened to be in at ut0, for the whole coast. The moment
+    # the trajectory crosses an SOI that state is fiction, and it is fiction that still
+    # looks like a state vector, so every sampled burn was solved from a position the
+    # vessel is never at and the quoted costs were nonsense.
+    #
+    # Measured: Merkurac 2 leaves Venus's SOI 0.5 days out and the FIRST sample is at
+    # 1.45 days, so every one of the ten burn dates was on the wrong conic. The scan asked
+    # for 8,576-67,048 m/s to lower a Mercury periapsis that an impact-parameter estimate
+    # prices at 6 m/s, and rejected all of them.
+    #
+    # Fly it properly and read the state off the trajectory, which also gives the BODY the
+    # vessel is in at that moment -- refine needs the right frame, not just the right point.
+    coast = patched.shoot(system, system.body(body).name, np.asarray(r0, float),
+                          np.asarray(v0, float), ut0, max(t_end, t_arr), watch=watch)
     for i in range(n_times):
         t = ut0 + span * (0.02 + 0.9 * i / max(1, n_times - 1))
-        r, v = astro.propagate(system.body(body).mu, np.asarray(r0), np.asarray(v0), t - ut0)
+        b_at, r, v = coast.state(t)
         try:
-            res = refine(system, body, r, v, t, target.name, t_end, peR_want, watch=watch)
+            res = refine(system, b_at.name, r, v, t, target.name, t_end, peR_want,
+                         watch=watch, max_dv=max_dv, diff_step=diff_step)
         except Exception as exc:                       # noqa: BLE001 - report, do not hide
             if verbose:
                 print(f"  {t:,.0f}: {exc}")

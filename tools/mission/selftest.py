@@ -323,11 +323,27 @@ def test_save(S):
     # Only real orbits: KSP parks a LANDED craft on a stub with SMA 0, ECC 1 and
     # MNA = Infinity. `Vessel.valid` already rejects it; the check must too, or one
     # landed probe makes the whole reader look broken.
-    mnas = [v.mna for v in save.vessels
-            if v.valid and v.mna is not None and math.isfinite(v.mna)]
+    # ELLIPTICAL orbits only. Mean anomaly is bounded by 2*pi on an ellipse, which is what
+    # makes "is this radians or degrees" answerable at all -- read as degrees these would
+    # run to 360. On a hyperbola M = e*sinh(H) - H and is unbounded, so a large value there
+    # is correct, not a unit error: this save carries Merkurac 2 at 39.07 (e 1.83) and its
+    # probe at -77.57 (e 12.17), and an escape trajectory at exactly e = 1 reads inf.
+    # Testing those against 2*pi failed the reader for doing the right thing.
+    ell = [v for v in save.vessels
+           if v.valid and v.mna is not None and math.isfinite(v.mna)
+           and v.ecc is not None and v.ecc < 1.0]
+    mnas = [abs(v.mna) for v in ell]
     check("ORBIT.MNA is read as radians", mnas and max(mnas) < 2 * math.pi + 1e-6,
-          f"largest MNA over {len(mnas)} real orbits is {max(mnas):.4f}; "
-          "as degrees these would reach 360")
+          f"largest |MNA| over {len(mnas)} elliptical orbits is {max(mnas):.4f} "
+          f"(2pi = {2 * math.pi:.4f}); as degrees these would reach 360")
+
+    hyp = [abs(v.mna) for v in save.vessels
+           if v.valid and v.mna is not None and math.isfinite(v.mna)
+           and v.ecc is not None and v.ecc > 1.0]
+    check("a hyperbolic mean anomaly is allowed past 2*pi",
+          not hyp or max(hyp) >= 0.0,
+          f"{len(hyp)} hyperbolic orbits, largest |MNA| {max(hyp):.2f}" if hyp
+          else "none in this save")
     named = [v for v in save.vessels if v.valid and v.body]
     check("every orbiting vessel resolved a reference body", len(named) > 0,
           f"{len(named)} of {len(save.vessels)} have a usable orbit")
