@@ -9,8 +9,10 @@ load-bearing and each one has already cost a mission:
     Lambert still closes to 0 m/s and the departure still misses by 295 Gm.
   * A body's SOI is not always a*(mu/mu_parent)^0.4. Phobos, Deimos and Mimas carry
     an explicit `sphereOfInfluence` override, and Phobos' is twice its Hill sphere.
-  * A save's `ORBIT { REF = n }` is an index into FlightGlobals.Bodies, which is
-    neither alphabetical nor `flightGlobalsIndex`. Kopernicus.log records the real
+  * A save's `ORBIT { REF = n }` indexes FlightGlobals.Bodies. That is the body's RUNTIME
+    flightGlobalsIndex -- Kopernicus renumbers them on load so the two agree -- but it is
+    NOT the value in the Kopernicus .cfg, which is only a load-order hint and differs for
+    25 of the 33 bodies here (Ceres: cfg 50, runtime 12). Kopernicus.log records the real
     one ("Found Body: Moon:9 -> SOI = ..."), so read it instead of deriving it.
 
 Usage:

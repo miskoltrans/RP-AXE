@@ -5,9 +5,10 @@ it starts, so nothing in this toolchain asks you to. The save is authoritative.
 
 Two details the format hides:
   * ORBIT.MNA is in RADIANS at epoch ORBIT.EPH, while INC/LPE/LAN are degrees.
-  * ORBIT.REF is an index into FlightGlobals.Bodies (not flightGlobalsIndex).
-    Modern saves also write ORBIT.IDENT with the body NAME; prefer it, and fall
-    back to the index that Kopernicus.log recorded.
+  * ORBIT.REF indexes FlightGlobals.Bodies -- equal to the body's RUNTIME
+    flightGlobalsIndex, but not to the one in the Kopernicus .cfg, which differs
+    for most bodies. Modern saves also write ORBIT.IDENT with the body NAME;
+    prefer it, and fall back to the index Kopernicus.log recorded.
 """
 import math
 import os

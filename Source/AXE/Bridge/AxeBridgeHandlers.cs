@@ -25,12 +25,11 @@ namespace RPAxe.Bridge
             {
                 case "/": case "/ping": return Ping();
                 case "/bodies": return Bodies();
-                case "/vessels": return Vessels();
-                case "/vessel": return VesselDetail(req);
                 case "/predict": return Predict(req);
                 default:
                     return "{\"ok\":false,\"error\":\"unknown path " + req.Path
-                         + "; try /ping /bodies /vessels /vessel /predict\"}";
+                         + "; try /ping /bodies /predict. Live VESSEL state comes from "
+                         + "KSPTOT Connect on 8282, which already serves it -- see tools/mission/ksptot.py\"}";
             }
         }
 
@@ -39,13 +38,25 @@ namespace RPAxe.Bridge
         /// A scene can be loaded while its data is still empty for a frame or two, which reads as
         /// "no bodies" rather than "not ready yet". Test readiness explicitly and say which it is.
         /// </summary>
-        private static string NotReady()
+        private static string NotReady(bool needGame = true)
         {
-            if (HighLogic.CurrentGame == null)
-                return "{\"ok\":false,\"error\":\"no game loaded (open a save first)\"}";
             if (FlightGlobals.Bodies == null || FlightGlobals.Bodies.Count == 0)
                 return "{\"ok\":false,\"error\":\"FlightGlobals.Bodies is empty; the scene is still loading\"}";
+            // Bodies exist at the main menu; vessels and the clock do not. Ask for only
+            // what the endpoint actually needs, or /bodies refuses for no reason.
+            if (needGame && HighLogic.CurrentGame == null)
+                return "{\"ok\":false,\"error\":\"no game loaded (open a save first)\"}";
             return null;
+        }
+
+        /// <summary>
+        /// Planetarium.fetch is null until the scene is up, and GetUniversalTime() derefs it
+        /// without a guard -- so "what time is it" throws while KSP is still loading, which is
+        /// exactly when a client is most likely to ask.
+        /// </summary>
+        private static double SafeUT()
+        {
+            return Planetarium.fetch != null ? Planetarium.GetUniversalTime() : double.NaN;
         }
 
         private static string Ping()
@@ -54,10 +65,15 @@ namespace RPAxe.Bridge
             j.Val("ok", true);
             j.Val("scene", HighLogic.LoadedScene.ToString());
             j.Val("game", HighLogic.CurrentGame != null ? HighLogic.CurrentGame.Title : null);
-            j.Val("ut", HighLogic.CurrentGame != null ? Planetarium.GetUniversalTime() : double.NaN);
+            j.Val("ut", SafeUT());
+            // FlightGlobals.Vessels and .ActiveVessel both dereference FlightGlobals.fetch,
+            // which is null until the scene is up -- so "are you there yet" throws during
+            // exactly the window a client is most likely to be asking in.
+            bool fg = FlightGlobals.fetch != null;
             j.Val("bodies", FlightGlobals.Bodies != null ? FlightGlobals.Bodies.Count : 0);
-            j.Val("vessels", FlightGlobals.Vessels != null ? FlightGlobals.Vessels.Count : 0);
-            j.Val("active", FlightGlobals.ActiveVessel != null ? FlightGlobals.ActiveVessel.vesselName : null);
+            j.Val("vessels", fg && FlightGlobals.Vessels != null ? FlightGlobals.Vessels.Count : 0);
+            j.Val("active", fg && FlightGlobals.ActiveVessel != null
+                  ? FlightGlobals.ActiveVessel.vesselName : null);
             j.Val("bridge", "1.0");
             return j.EndObj().ToString();
         }
@@ -65,11 +81,11 @@ namespace RPAxe.Bridge
         // --- bodies ----------------------------------------------------------
         private static string Bodies()
         {
-            string bad = NotReady();
+            string bad = NotReady(needGame: false);
             if (bad != null) return bad;
             var j = new AxeJson().Obj();
             j.Val("ok", true);
-            j.Val("ut", Planetarium.GetUniversalTime());
+            j.Val("ut", SafeUT());
             j.Arr("bodies");
             for (int i = 0; i < FlightGlobals.Bodies.Count; i++)
             {
@@ -95,9 +111,12 @@ namespace RPAxe.Bridge
                     j.Val("argp_deg", o.argumentOfPeriapsis);
                     j.Val("mna_rad", o.meanAnomalyAtEpoch);
                     j.Val("epoch", o.epoch);
-                    double ut = Planetarium.GetUniversalTime();
-                    j.Vec("r", o.getRelativePositionAtUT(ut));
-                    j.Vec("v", o.getOrbitalVelocityAtUT(ut));
+                    double ut = SafeUT();
+                    if (!double.IsNaN(ut))
+                    {
+                        j.Vec("r", o.getRelativePositionAtUT(ut));
+                        j.Vec("v", o.getOrbitalVelocityAtUT(ut));
+                    }
                 }
                 j.EndObj();
             }
@@ -105,40 +124,12 @@ namespace RPAxe.Bridge
             return j.EndObj().ToString();
         }
 
-        // --- vessels ---------------------------------------------------------
-        private static string Vessels()
-        {
-            string bad = NotReady();
-            if (bad != null) return bad;
-            double ut = Planetarium.GetUniversalTime();
-            var j = new AxeJson().Obj();
-            j.Val("ok", true);
-            j.Val("ut", ut);
-            j.Arr("vessels");
-            var list = FlightGlobals.Vessels ?? new List<Vessel>();
-            foreach (Vessel v in list)
-            {
-                if (v == null) continue;
-                j.Obj();
-                j.Val("id", v.id.ToString());
-                j.Val("name", v.vesselName);
-                j.Val("type", v.vesselType.ToString());
-                j.Val("situation", v.situation.ToString());
-                Orbit o = v.orbit;
-                if (o != null && o.referenceBody != null)
-                {
-                    j.Val("body", o.referenceBody.bodyName);
-                    j.Val("sma", o.semiMajorAxis);
-                    j.Val("ecc", o.eccentricity);
-                    j.Val("inc_deg", o.inclination);
-                    j.Val("peR", o.PeR);
-                    j.Val("apR", o.ApR);
-                }
-                j.EndObj();
-            }
-            j.EndArr();
-            return j.EndObj().ToString();
-        }
+        // --- vessel lookup ---------------------------------------------------
+        // There is deliberately no /vessels or /vessel endpoint. KSPTOT Connect ships with
+        // KSPTOT, is already installed, and already answers GetVesselIDList /
+        // GetVesselNameByGUID / GetVesselOrbitByGUID. Duplicating that here bought nothing.
+        // What it cannot do is run KSP's own patched-conic solver over a hypothetical burn,
+        // which is what /predict is for -- so FindVessel stays, purely to serve it.
 
         private static Vessel FindVessel(AxeBridgeServer.Request req)
         {
@@ -146,7 +137,14 @@ namespace RPAxe.Bridge
             string name = req.Get("vessel") ?? req.Get("name");
             var list = FlightGlobals.Vessels ?? new List<Vessel>();
             if (!string.IsNullOrEmpty(id))
-                return list.FirstOrDefault(v => v != null && v.id.ToString() == id);
+            {
+                // KSPTOT Connect hands out Guid.ToString("N") -- 32 hex digits, no dashes --
+                // while Vessel.id.ToString() is dashed. Compare the digits only, or every
+                // GUID handed over from that side silently matches nothing.
+                string want = id.Replace("-", "").ToLowerInvariant();
+                return list.FirstOrDefault(v => v != null
+                    && v.id.ToString("N").ToLowerInvariant() == want);
+            }
             if (!string.IsNullOrEmpty(name))
             {
                 Vessel exact = list.FirstOrDefault(v => v != null && v.vesselName == name);
@@ -169,7 +167,7 @@ namespace RPAxe.Bridge
             Orbit o = v.orbit;
             if (o == null || o.referenceBody == null)
                 return "{\"ok\":false,\"error\":" + AxeJson.Str(v.vesselName + " has no orbit (" + v.situation + ")") + "}";
-            double ut = req.GetNum("ut", Planetarium.GetUniversalTime());
+            double ut = req.GetNum("ut", SafeUT());
 
             var j = new AxeJson().Obj();
             j.Val("ok", true);
@@ -236,7 +234,7 @@ namespace RPAxe.Bridge
             if (v == null || v.orbit == null || v.orbit.referenceBody == null)
                 return "{\"ok\":false,\"error\":\"no vessel with an orbit matched\"}";
 
-            double ut = req.GetNum("ut", Planetarium.GetUniversalTime());
+            double ut = req.GetNum("ut", SafeUT());
             double horizonDays = req.GetNum("horizon", 400.0);
             int maxPatches = (int)req.GetNum("maxpatches", 8);
             double dvR = 0, dvN = 0, dvP = 0;

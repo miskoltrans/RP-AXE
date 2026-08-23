@@ -24,6 +24,7 @@ import numpy as np
 
 import astro
 import bridge as bridge_mod
+import ksptot as ksptot_mod
 import maneuver
 import patched
 from lambert import lambert
@@ -107,16 +108,16 @@ def align_raan(inc_deg, u):
 def origin_state(system, save, args):
     """Where the burn starts: the running game, the save, or a synthetic parking orbit."""
     if getattr(args, "live", False):
-        br = bridge_mod.Bridge(port=args.port)
+        # Live vessel state comes from KSPTOT Connect, which is already installed and
+        # already serves it. The AXE bridge only covers what that cannot do.
+        kt = ksptot_mod.KspTot(port=args.ksptot_port)
         try:
-            body, r, vel, ut = br.state(name=args.vessel)
-        except bridge_mod.BridgeError as exc:
+            ut = parse_date(args.at) if args.at else None
+            body, r, vel, ut = kt.state(system, name=args.vessel, ut=ut)
+            label = args.vessel or kt.vessel_name(kt.vessel_ids()[0])
+        except ksptot_mod.KspTotError as exc:
             sys.exit(str(exc))
-        if args.at:
-            ut2 = parse_date(args.at)
-            r, vel = astro.propagate(system.body(body).mu, r, vel, ut2 - ut)
-            ut = ut2
-        return system.body(body), np.asarray(r), np.asarray(vel), ut,             (args.vessel or "the active vessel") + " [live]", None
+        return body, np.asarray(r), np.asarray(vel), ut, label + " [live]", None
     if args.vessel:
         v = save.vessel(args.vessel)
         if not v.valid:
@@ -606,15 +607,23 @@ def cmd_bridge(args):
     if not args.vessels:
         return
     print()
+    kt = ksptot_mod.KspTot(port=args.ksptot_port)
+    try:
+        rows = kt.vessels()
+    except ksptot_mod.KspTotError as exc:
+        print(f"  live vessels unavailable: {exc}")
+        return
+    print(f"  vessels, from KSPTOT Connect on {args.ksptot_port} "
+          f"(commandable craft only -- debris is not in its list)")
     print(f"  {'vessel':32s} {'body':10s} {'pe km':>12s} {'ap km':>13s} {'inc':>7s}")
-    for v in br.vessels():
-        if v.get("body") is None:
-            print(f"  {v['name'][:32]:32s} {'-':10s} ({v.get('situation')})")
+    for v in rows:
+        if "ref_index" not in v or not math.isfinite(v.get("sma_km", float("nan"))):
+            print(f"  {v['name'][:32]:32s} (no orbit)")
             continue
-        b = system.body(v["body"])
-        ap = "escape" if v["ecc"] >= 1 else f"{(v['apR'] - b.radius) / 1e3:,.0f}"
-        print(f"  {v['name'][:32]:32s} {v['body']:10s} {(v['peR'] - b.radius) / 1e3:12,.0f} "
-              f"{ap:>13s} {v['inc_deg']:7.2f}")
+        b = system.by_index[int(round(v["ref_index"]))]
+        ap = "escape" if v["ecc"] >= 1 else f"{v['ap_alt_km']:,.0f}"
+        print(f"  {v['name'][:32]:32s} {b.name:10s} {v['pe_alt_km']:12,.0f} {ap:>13s} "
+              f"{v['inc_deg']:7.2f}")
 
 
 def cmd_crosscheck(args):
@@ -653,23 +662,30 @@ def cmd_crosscheck(args):
     if not args.vessel:
         print("\n  (pass --vessel NAME to also check a vessel state and the shooter)")
     else:
-        print(f"\n=== 2. vessel state: {args.vessel} ===")
-        d, gr, gv = bridge_mod.check_vessel(system, br, args.vessel)
-        body = system.body(d["body"])
+        print(f"\n=== 2. vessel state: {args.vessel} (KSPTOT Connect vs the save) ===")
+        kt = ksptot_mod.KspTot(port=args.ksptot_port)
+        try:
+            body, gr, gv, live_ut = kt.state(system, name=args.vessel)
+        except ksptot_mod.KspTotError as exc:
+            sys.exit(f"  {exc}")
         try:
             save = Save(find_save(args.save, args.instance), system)
             sv = save.vessel(args.vessel)
-            mr, mv = sv.state(d["ut"])
+            mr, mv = sv.state(live_ut)
             dr = float(np.linalg.norm(np.asarray(mr) - gr))
-            print(f"  live UT {fmt_ut(d['ut'])};  save UT {fmt_ut(save.ut)}")
+            print(f"  live UT {fmt_ut(live_ut)};  save UT {fmt_ut(save.ut)}")
+            print(f"  body: live {body.name}, save {sv.body.name}")
             print(f"  save-derived vs live: |dr| = {dr:,.6f} m   "
                   f"|dv| = {np.linalg.norm(np.asarray(mv) - gv):,.9f} m/s")
+            if body.name != sv.body.name:
+                fails.append(f"reference body differs: live {body.name}, save {sv.body.name}")
             if dr > 1.0:
                 fails.append("the save-derived vessel state disagrees with the live one by "
                              f"{dr:,.1f} m -- if the UTs differ the save is simply older, "
                              "which is exactly why --live exists")
         except Exception as exc:                                    # noqa: BLE001
             print(f"  (no save comparison: {exc})")
+        d = {"ut": live_ut}
 
         print("\n=== 3. the shooter vs KSP's own patched-conic solver ===")
         dv = [float(x) for x in args.dv.split(",")] if args.dv else [0.0, 0.0, 0.0]
@@ -739,7 +755,10 @@ def main(argv=None):
             p.add_argument("--at", help="epoch for the starting state (default: the save's UT)")
             p.add_argument("--live", action="store_true",
                            help="read state from the running game via the AXE bridge, not the save")
-            p.add_argument("--port", type=int, default=bridge_mod.DEFAULT_PORT)
+            p.add_argument("--port", type=int, default=bridge_mod.DEFAULT_PORT,
+                           help="AXE bridge port")
+            p.add_argument("--ksptot-port", type=int, default=ksptot_mod.DEFAULT_PORT,
+                           help="KSPTOT Connect port (live vessel state)")
         p.add_argument("--via", nargs="*", help="extra bodies whose SOI may be entered")
         p.add_argument("--horizon", type=float, default=400.0,
                        help="days past arrival to keep flying (default 400)")
@@ -809,11 +828,13 @@ def main(argv=None):
 
     p = sub.add_parser("bridge", help="ping the running game through the AXE bridge")
     p.add_argument("--port", type=int, default=bridge_mod.DEFAULT_PORT)
+    p.add_argument("--ksptot-port", type=int, default=ksptot_mod.DEFAULT_PORT)
     p.add_argument("--vessels", action="store_true", help="also list the game's vessels")
     p.set_defaults(func=cmd_bridge)
 
     p = sub.add_parser("crosscheck", help="diff this toolchain against the running game")
     p.add_argument("--port", type=int, default=bridge_mod.DEFAULT_PORT)
+    p.add_argument("--ksptot-port", type=int, default=ksptot_mod.DEFAULT_PORT)
     p.add_argument("--vessel", help="also check this vessel's state and a predicted trajectory")
     p.add_argument("--save")
     p.add_argument("--at", help="node epoch for the prediction (default: now)")

@@ -1,8 +1,9 @@
 """Client for the AXE query bridge — ask the running game instead of the save.
 
-The mission tools reimplement KSP's orbital mechanics outside the game. Everything
-here exists to check that replica against the only authority there is, and to plan
-from live state instead of whatever was true at the last save.
+This covers only what KSPTOT Connect cannot: /predict, which runs KSP's OWN
+patched-conic solver over a proposed burn, and /bodies, which reports the SOI and the
+FlightGlobals index that KSPTOT does not send. Live VESSEL state comes from
+ksptot.py -- KSPTOT Connect is already installed and already serves it.
 
 Needs the bridge switched on in KSP (it is off by default, and read-only):
 
@@ -70,12 +71,6 @@ class Bridge:
     def bodies(self):
         return self.get("/bodies")
 
-    def vessels(self):
-        return self.get("/vessels")["vessels"]
-
-    def vessel(self, name=None, vid=None, ut=None):
-        return self.get("/vessel", vessel=name, id=vid, ut=_fmt(ut))
-
     def predict(self, name=None, vid=None, ut=None, dv=(0.0, 0.0, 0.0), horizon=400.0,
                 maxpatches=8):
         """KSP's own patched-conic answer for a burn, in maneuver-node components.
@@ -86,12 +81,6 @@ class Bridge:
         return self.get("/predict", vessel=name, id=vid, ut=_fmt(ut),
                         dv=",".join(_fmt(x) for x in dv),
                         horizon=_fmt(horizon), maxpatches=str(int(maxpatches)))
-
-    def state(self, name=None, vid=None, ut=None):
-        """(body_name, r, v, ut) for a vessel, ready to hand to the shooter."""
-        d = self.vessel(name=name, vid=vid, ut=ut)
-        return d["body"], np.array(d["r"], float), np.array(d["v"], float), d["ut"]
-
 
 def _fmt(x):
     if x is None:
@@ -125,12 +114,6 @@ def check_bodies(system, br):
                      "soi_game": b["soi"], "soi_mine": system.bodies[name].soi,
                      "index_game": b["index"], "index_mine": system.bodies[name].index})
     return ut, rows
-
-
-def check_vessel(system, br, name):
-    """Compare a vessel's state vector, read from the game vs rebuilt from the save."""
-    d = br.vessel(name=name)
-    return d, np.array(d["r"], float), np.array(d["v"], float)
 
 
 def compare_patches(system, game_patches, traj, target=None):

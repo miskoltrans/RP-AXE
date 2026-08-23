@@ -39,7 +39,8 @@ until the flown B-plane target is hit → shoot again and print the result.
 | `sfs.py` | the save: game clock, vessel orbits, planned nodes |
 | `patched.py` | the shooter — propagation through SOI entry and exit |
 | `maneuver.py` | ejection / midcourse / flyby solvers and the differential corrector |
-| `bridge.py` | client for the in-game AXE bridge (live state, and `crosscheck`) |
+| `ksptot.py` | client for KSPTOT Connect — live vessel state, no new plugin needed |
+| `bridge.py` | client for the AXE bridge — `/predict` and `/bodies` only |
 | `plan.py` | the CLI |
 | `selftest.py` | 27 checks; run before trusting a number |
 
@@ -48,9 +49,23 @@ Older single-purpose scripts (`porkchop.py`, `jupiter_arrival.py`, `jovian_tour.
 
 ## The live bridge
 
-`AXE.dll` can expose a small **read-only** HTTP endpoint on `127.0.0.1` so the tools can ask
-the running game directly instead of parsing the last save. It is **off by default** — a
-shipped mod has no business opening a socket uninvited. Turn it on with any of:
+Live state comes from **KSPTOT Connect**, which ships with KSPTOT, is already installed at
+`GameData/KSPTOTConnect`, listens on **8282**, and whitelists `127.0.0.1` unconditionally —
+no flag, no config. `ksptot.py` speaks it. Its command set already covers `GetUT`,
+`GetVesselIDList`, `GetVesselNameByGUID`, `GetVesselOrbitByGUID` and the maneuver nodes, so
+none of that is duplicated here. Two limits: it is `[KSPAddon(Startup.Flight)]`, so it only
+answers while a vessel is being flown; and `GetVesselIDList` returns *commandable* craft
+only, so debris is invisible to it.
+
+Its wire format is `[32 bytes ASCII command, SPACE-padded][1 byte class][4 bytes uint32 BE
+length][data]`. The space padding has to be measured, not read: `NetworkMessage.GetRawMessage`
+writes the command into a zero-filled buffer, and a NUL-padded request is dropped silently —
+zero bytes back, no error.
+
+`AXE.dll` covers only what KSPTOT Connect cannot: **`/predict`**, which runs KSP's own
+patched-conic solver over a proposed burn, and **`/bodies`**, which reports the SOI and the
+FlightGlobals index that KSPTOT does not send. It is **off by default** — a shipped mod has
+no business opening a socket uninvited. Turn it on with any of:
 
 ```
 KSP_x64.exe -axe-bridge
@@ -78,28 +93,43 @@ Three comparisons, each against KSP rather than against more of my own code:
    wrong epoch moves every body *consistently*, so nothing internal notices — but the game
    is not in on it. This check would have caught the B1950 bug in one command. It also
    diffs μ, SOI and the `FlightGlobals.Bodies` index.
-2. **Vessel state.** The live state vector against the one rebuilt from the save's elements.
-   A disagreement here is either a reader bug or simply a stale save, and the UTs printed
-   alongside tell you which.
+2. **Vessel state.** KSPTOT Connect's live reading against the one rebuilt from the save's
+   elements. A disagreement is either a reader bug or simply a stale save, and the UTs
+   printed alongside tell you which.
 3. **The shooter vs `PatchedConics`.** `/predict` applies a proposed burn to a throwaway
    `Orbit` and runs *KSP's own* patched-conic solver over it, returning every patch. The
    command lines that up against `patched.shoot` and reports, per patch, whether the bodies
    match, how far apart the SOI transitions are, and how far apart the periapsides are.
 
-Endpoints: `/ping`, `/bodies`, `/vessels`, `/vessel`, `/predict`. There is no write endpoint
-— it cannot place a node or touch a save.
+Endpoints: `/ping`, `/bodies`, `/predict`. There is no write endpoint — it cannot place a
+node or touch a save. (KSPTOT Connect *does* have `NodeData` / `NodeDataWRTPeri`, so pushing
+a node into the game is already solved if that is ever wanted.)
 
-### What is tested, and what is not
+For a repeatable session, `-axe-load=<save>` loads a save straight from the main menu and
+`-axe-focus=<vessel>` flies one, so a crosscheck needs no clicking. Both are command-line
+only, never config — a stray cfg value that loads someone's save on every launch is a far
+worse failure than typing a flag.
 
-The transport (HTTP framing, JSON, query parsing, threading, error paths) is covered by a
-standalone harness that compiles `AxeJson.cs` and `AxeBridgeServer.cs` outside KSP — neither
-has a KSP dependency. That run confirms doubles round-trip bit-exact, `NaN`/`Infinity`
-serialise as `null`, strings escape, values stay invariant under a comma-decimal locale, a
-throwing handler returns HTTP 500 without killing the server, and 90 concurrent requests
-across 6 threads all succeed.
+### What it measured
 
-The KSP-facing handlers can only be exercised with the game running. `crosscheck` is how you
-do that, and until you have run it once the replica-vs-game agreement is still an assumption.
+Run against the live game (RSS/RO career at UT 496,651,291), the answer to "how far does
+this replica drift from KSP" is: **not measurably.**
+
+| check | result |
+|---|---|
+| every body's position, game vs. replica | worst **1.2e-11** relative, over 32 bodies |
+| μ, SOI, and body index | identical for all 33 |
+| vessel state, KSPTOT vs. the save reader | **0.000000 m**, 0 m/s |
+| three-way: KSPTOT vs. AXE vs. save | agree to **66 µm** |
+| SOI transition times, shooter vs. `PatchedConics` | **0.000 s** across a 3-year, 3-patch trajectory |
+| Jupiter periapsis after capture | 183,655.4 km both, **0.0 km** apart |
+| post-flyby solar periapsis | 770,364,920.3 km both, **0.0 km** apart |
+
+The transport is separately covered by a standalone harness that compiles `AxeJson.cs` and
+`AxeBridgeServer.cs` outside KSP — neither has a KSP dependency. That confirms doubles
+round-trip bit-exact, `NaN`/`Infinity` serialise as `null`, strings escape, values stay
+invariant under a comma-decimal locale, a throwing handler returns HTTP 500 without killing
+the server, and 90 concurrent requests across 6 threads all succeed.
 
 **Threading.** Accept and socket I/O run off the main thread; every handler runs *on* it, via
 a queue that the worker blocks on. Nothing in the KSP or Unity API is thread-safe, and
@@ -135,11 +165,14 @@ node the game itself planned and flies it. As saved, Perun 1's node produces a 2
 Jupiter periapsis; with normal flipped it is 21.68 Rj, with radial flipped 0.23 Rj (inside
 the planet), with prograde flipped 409 Rj.
 
-**`ORBIT.REF` is not `flightGlobalsIndex`.** It indexes `FlightGlobals.Bodies`, whose order
-comes from Kopernicus' load order. In this install Ceres has `flightGlobalsIndex = 50` but
-`REF = 12`. `Kopernicus.log` records the truth — `Found Body: Moon:9 -> SOI = 66167158.65`
-— so that file is read rather than the index being derived. Newer saves also write
-`ORBIT.IDENT` with the body *name*, which is preferred when present.
+**`ORBIT.REF` is the *runtime* `flightGlobalsIndex`, not the one in the .cfg.** It indexes
+`FlightGlobals.Bodies`, and Kopernicus renumbers `flightGlobalsIndex` on load so the two
+agree at runtime — measured across all 33 bodies through the bridge, `index ==
+flight_globals_index` every time. The **config** value is only a load-order hint and
+disagrees for 25 of 33: Ceres is `flightGlobalsIndex = 50` in its cfg and `12` at runtime,
+Callisto `4` and `15`. `Kopernicus.log` records the runtime numbering — `Found Body:
+Moon:9 -> SOI = 66167158.65` — so that file is read rather than the cfg. Newer saves also
+write `ORBIT.IDENT` with the body *name*, which is preferred when present.
 
 **A body's SOI is not always `a*(mu/mu_parent)^0.4`.** Phobos, Deimos and Mimas carry an
 explicit `sphereOfInfluence`. Phobos' is 47 km against a 7.2 km Hill sphere — six times
