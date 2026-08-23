@@ -67,6 +67,22 @@ def test_bodies(S):
     check("Earth has children", len(S.children("Earth")) >= 1,
           ", ".join(b.name for b in S.children("Earth")))
 
+    # RSS's *_Oblate.cfg files restate the gas giants' equatorial radius with
+    # `@radius *= ...`, so the raw .cfg is 1,569 km small on Jupiter alone. The
+    # trajectory does not care; every printed altitude and every contract gate does.
+    patched_r = [n for n in ("Jupiter", "Saturn", "Uranus", "Neptune") if n in S.bodies]
+    worst = max((abs(S.body(n).radius - S.body(n).radius_cfg) for n in patched_r),
+                default=0.0)
+    check("gas-giant radii come from ModuleManager, not the raw .cfg",
+          S.cache_path is not None and worst > 1e5,
+          "Jupiter " + (f"{S.body('Jupiter').radius_cfg/1e3:,.0f} -> "
+                        f"{S.body('Jupiter').radius/1e3:,.1f} km"
+                        if "Jupiter" in S.bodies else "absent"))
+    unpatched = [b.name for b in S.bodies.values()
+                 if b.name not in patched_r and abs(b.radius - b.radius_cfg) > 1.0]
+    check("only the four gas giants are radius-patched", not unpatched,
+          f"others differing: {unpatched}" if unpatched else "28 bodies agree exactly")
+
 
 def test_against_ksptot(S, path=r"C:/git/ksp/KSP_Trajectory_Optimization_Tool-1.6.10.1/bodies.ini"):
     """KSPTOT's body table was exported from the running game by its own plugin.
@@ -268,6 +284,32 @@ def test_soi_detection(S):
           f"patches: {' -> '.join(p.body.name + '/' + p.end for p in traj)}")
 
 
+def test_soi_exit_on_boundary(S):
+    """An inbound patch that starts exactly ON the SOI must still find its exit.
+
+    Every patch made by an SOI entry starts with |r| == soi to within rounding.
+    If the exit search treats that as "already outside and heading in, so it never
+    leaves", an escaping flyby is reported as a capture -- and which way it lands is
+    decided by whether |r| - soi comes out at +1e-9 or -1e-9, so the same trajectory
+    answered differently on consecutive runs.
+    """
+    J = S.body("Jupiter")
+    # A hyperbola through Jupiter, placed exactly on the SOI boundary, inbound.
+    peR, vinf = 2.5 * J.radius, 5000.0
+    a = -J.mu / vinf ** 2
+    ecc = 1.0 - peR / a
+    nu = -math.acos((a * (1 - ecc ** 2) / J.soi - 1.0) / ecc)   # inbound true anomaly
+    mna = astro.mean_anomaly(ecc, nu)
+    r, v = astro.state_from_elements(J.mu, a, ecc, 0.3, 0.0, 0.0, mna)
+    for nudge in (-1e-6, 0.0, +1e-6):        # straddle the boundary either way
+        rr = r * (1.0 + nudge / np.linalg.norm(r))
+        traj = patched.shoot(S, J, rr, v, 0.0, 900 * DAY)
+        ends = [p.end for p in traj.patches]
+        if not check(f"an inbound patch on the SOI boundary still exits ({nudge:+.0e} m)",
+                     "exit" in ends, f"patches: {' -> '.join(ends)}"):
+            break
+
+
 def test_save(S):
     try:
         save = Save(find_save(), S)
@@ -277,9 +319,14 @@ def test_save(S):
     check("save is readable", True,
           f"{os.path.basename(os.path.dirname(save.path))}: UT {save.ut:,.0f} "
           f"= {date_of(save.ut):%Y-%m-%d}, {len(save.vessels)} vessels")
-    mnas = [v.mna for v in save.vessels if v.mna is not None]
-    check("ORBIT.MNA is read as radians", max(mnas) < 2 * math.pi + 1e-6,
-          f"largest MNA in the save is {max(mnas):.4f}; as degrees these would reach 360")
+    # Only real orbits: KSP parks a LANDED craft on a stub with SMA 0, ECC 1 and
+    # MNA = Infinity. `Vessel.valid` already rejects it; the check must too, or one
+    # landed probe makes the whole reader look broken.
+    mnas = [v.mna for v in save.vessels
+            if v.valid and v.mna is not None and math.isfinite(v.mna)]
+    check("ORBIT.MNA is read as radians", mnas and max(mnas) < 2 * math.pi + 1e-6,
+          f"largest MNA over {len(mnas)} real orbits is {max(mnas):.4f}; "
+          "as degrees these would reach 360")
     named = [v for v in save.vessels if v.valid and v.body]
     check("every orbiting vessel resolved a reference body", len(named) > 0,
           f"{len(named)} of {len(save.vessels)} have a usable orbit")
@@ -366,6 +413,7 @@ def run(S=None, verbose=True):
     test_bplane()
     test_ejection(S)
     test_soi_detection(S)
+    test_soi_exit_on_boundary(S)
     save = test_save(S)
     test_node_sign_against_game(S, save)
     return _report(verbose)

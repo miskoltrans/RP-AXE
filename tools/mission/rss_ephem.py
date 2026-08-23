@@ -40,6 +40,7 @@ class Body:
         self.parent = orbit.get("referenceBody") if orbit else None
         self.mu = props.getf("gravParameter", 0.0) if props else 0.0
         self.radius = props.getf("radius", 0.0) if props else 0.0
+        self.radius_cfg = self.radius       # pre-ModuleManager, kept to show the delta
         self.rot = props.getf("rotationPeriod", 0.0) if props else 0.0
         self.soi_cfg = props.getf("sphereOfInfluence") if props else None
         self.soi = None                       # filled by System, game-measured
@@ -117,6 +118,7 @@ class System:
         self.bodies = {}
         self.log_path = None
         self._load_configs(gamedata)
+        self._load_cache_radii(gamedata)
         self._load_epoch(gamedata)
         self.by_index = {}
         self._load_kopernicus_log(instance)
@@ -163,6 +165,66 @@ class System:
         for b in self.bodies.values():
             if b.parent in alias:
                 b.parent = alias[b.parent]
+
+    def _load_cache_radii(self, gamedata):
+        """Radius as ModuleManager left it, not as the .cfg wrote it.
+
+        RSS ships Jupiter_Oblate.cfg and three siblings, which do
+        `@radius *= 1.0226...` to restate the EQUATORIAL radius. Read only the raw
+        .cfg and the four gas giants come out small -- Jupiter by 1,569 km, Saturn
+        2,000 km, Uranus 192 km, Neptune 139 km. The trajectory is untouched
+        (radius never enters the propagation) but every altitude and every "Rj"
+        printed against them is wrong by that much, and so is any periapsis
+        compared against a contract's altitude gate. The other 28 bodies agree
+        exactly, which is why this stayed invisible.
+
+        ModuleManager.ConfigCache is the post-patch truth and is already on disk.
+        """
+        self.cache_path = None
+        p = os.path.join(gamedata, "ModuleManager.ConfigCache")
+        if not os.path.exists(p):
+            return
+        radii, stack, pending, cur, depth = {}, [], None, {}, None
+        for raw in open(p, encoding="utf-8", errors="replace"):
+            line = raw.strip()
+            if not line or line.startswith("//"):
+                continue
+            if line.startswith("{"):
+                stack.append(pending or "")
+                pending = None
+                if stack[-1] == "Body" and depth is None:
+                    cur, depth = {}, len(stack)
+                continue
+            if line.startswith("}"):
+                if depth is not None and len(stack) == depth:
+                    nm = cur.get("cbNameLater") or cur.get("name")
+                    if nm and "radius" in cur:
+                        radii[nm] = cur["radius"]
+                    cur, depth = {}, None
+                if stack:
+                    stack.pop()
+                continue
+            if "=" in line:
+                if depth is None:
+                    continue
+                k, v = line.split("=", 1)          # KSP splits at the FIRST '='
+                k, v = k.strip(), v.strip()
+                if len(stack) == depth and k in ("name", "cbNameLater"):
+                    cur[k] = v
+                elif (len(stack) == depth + 1 and stack[-1] == "Properties"
+                      and k == "radius"):
+                    try:
+                        cur["radius"] = float(v)
+                    except ValueError:
+                        pass
+                continue
+            pending = line
+        self.cache_path = p
+        self.cache_radii = radii
+        for name, r in radii.items():
+            b = self.bodies.get(name) or self.bodies.get(self.alias.get(name, name))
+            if b is not None and r > 0:
+                b.radius = r
 
     def _load_epoch(self, gamedata):
         self.epoch = 0.0
