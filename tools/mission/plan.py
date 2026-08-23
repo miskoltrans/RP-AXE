@@ -5,9 +5,9 @@
     python plan.py state "Perun 1"
     python plan.py window Earth Jupiter 1964-01-01 1968-01-01
     python plan.py depart --vessel "Perun 2" --target Jupiter --arrive 1970-05-01
-    python plan.py depart --park 185 --body Earth --target Moon --tof 3 6
+    python plan.py depart --park 185 28.5 --body Earth --target Moon
     python plan.py correct --vessel "Perun 1" --target Jupiter --peri 2.5Rj
-    python plan.py flyby   --vessel "Perun 1" --body Jupiter
+    python plan.py flyby   --vessel "Perun 1" Jupiter
     python plan.py verify  --vessel "Perun 1" --target Jupiter
     python plan.py selftest
 
