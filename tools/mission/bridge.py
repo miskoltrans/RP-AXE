@@ -16,8 +16,16 @@ Needs the bridge switched on in KSP (it is off by default):
     KSP_x64.exe -axe-bridge          or  AXE_BRIDGE=1
     or  enabled = true  in  GameData/RP-AXE/Plugins/PluginData/Bridge.cfg
 
-Everything it returns is in the same right-handed z-up frame this toolchain uses,
-because Orbit.getRelativePositionAtUT already returns that frame.
+FRAMES. Every vector on this wire is the ELEMENT frame -- the one KSP's own inclination,
+LAN and argumentOfPeriapsis use, and the one rss_ephem necessarily works in.
+
+That is NOT what Orbit.getRelativePositionAtUT returns. It ends in
+Zup.WorldToLocal(...), a rotation by -Planetarium.InverseRotAngle about z, so a body's
+state vector comes out rotated relative to its own elements by a runtime angle. Bridge
+1.0 emitted both untouched, which put two frames on one wire and made `crosscheck` report
+that rotation as an EPOCH error -- crying wolf on the one check you reach for after an
+ephemeris scare. Bridge 1.1 converts state vectors back before they leave; `ping` reports
+the version and the angle so a client can tell which it is talking to.
 """
 import json
 import math
@@ -122,6 +130,25 @@ class Bridge:
         return self.get("/predict", vessel=name, id=vid, ut=_fmt(ut),
                         dv=",".join(_fmt(x) for x in dv),
                         horizon=_fmt(horizon), maxpatches=str(int(maxpatches)))
+
+    def vessel(self, name=None, vid=None, ut=None):
+        """Live vessel state: elements, state vector, and any nodes already placed.
+
+        This is what /predict cannot give you. /predict reports patch SHAPES -- sma, ecc,
+        inc, lan, argp -- with no mean anomaly and no state vector, so a trajectory can be
+        EVALUATED from it but not propagated, and solving a burn needs propagation.
+
+        KSPTOT Connect serves the same thing and ksptot.py speaks it, but it is
+        [KSPAddon(Flight)] and a separate process: "the bridge is up" and "live state is
+        available" are two different facts. This makes them one.
+        """
+        return self.get("/vessel", vessel=name, id=vid, ut=_fmt(ut))
+
+    def state(self, system, name=None, vid=None, ut=None):
+        """(body, r, v, ut) in the element frame -- the same shape ksptot.state returns."""
+        d = self.vessel(name=name, vid=vid, ut=ut)
+        body = system.body(d["body"])
+        return body, np.array(d["r"], float), np.array(d["v"], float), d["ut"]
 
     def sites(self):
         """Launch sites and the lat/lon the game will actually spawn at.

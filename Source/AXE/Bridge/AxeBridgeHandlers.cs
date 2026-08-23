@@ -14,10 +14,26 @@ namespace RPAxe.Bridge
     /// numbers off a terminal and typing them into a node gizmo — is where the mission planning
     /// actually loses its precision.
     ///
-    /// Every vector is in the right-handed z-up frame (Planetarium.Zup) that
-    /// <c>Orbit.getRelativePositionAtUT</c> and <c>getOrbitalVelocityAtUT</c> already return —
-    /// the same frame tools/mission works in — so no handedness conversion happens anywhere on
-    /// this path. Angles are in the units KSP stores them: inclination/LAN/argP in DEGREES,
+    /// FRAMES. Every vector on this wire is in the ELEMENT frame — the one KSP's own
+    /// <c>inclination</c>, <c>LAN</c> and <c>argumentOfPeriapsis</c> are expressed in, and the one
+    /// a replica built from Kopernicus configs necessarily works in.
+    ///
+    /// That needs saying because it is NOT what <c>getRelativePositionAtUT</c> returns. Follow it
+    /// down: <c>getRelativePositionFromTrueAnomaly</c> calls
+    /// <c>getPositionFromTrueAnomaly(tA, worldToLocal: true)</c>, which builds the vector from
+    /// <c>OrbitFrame</c> (element frame) and returns <c>Planetarium.Zup.WorldToLocal(...)</c> of
+    /// it — a rotation by −<c>Planetarium.InverseRotAngle</c> about z. So a body's state vector
+    /// comes out rotated relative to its own elements, by a runtime angle that tracks the
+    /// inverse-rotating body's spin.
+    ///
+    /// Emitting both untouched put two frames on one wire, and a client diffing positions against
+    /// a replica sees a rotation and reports it as an EPOCH error — the alarm fires on the one
+    /// check most likely to be run after an ephemeris scare. So state vectors are converted back
+    /// with <c>Zup.LocalToWorld</c> before they leave.
+    ///
+    /// <c>Orbit.UpdateFromStateVectors</c> applies <c>Zup.LocalToWorld</c> to its INPUT, exactly
+    /// inverting <c>getRelativePositionAtUT</c>, which is why /predict round-tripped correctly all
+    /// along and matched PatchedConics to 0.000 s: it never left that frame. Angles are in the units KSP stores them: inclination/LAN/argP in DEGREES,
     /// mean anomaly in RADIANS. That mismatch is KSP's, and it is reported rather than papered
     /// over so the reader can be checked against the save format.
     /// </summary>
@@ -33,6 +49,7 @@ namespace RPAxe.Bridge
                 case "/bodies": return Bodies();
                 case "/sites": return Sites();
                 case "/predict": return Predict(req);
+                case "/vessel": return VesselDetail(req);
                 case "/nodes": return Nodes(req);
                 case "/node": return RequirePost(req) ?? PlaceNodes(req);
                 case "/node/clear": return RequirePost(req) ?? ClearNodes(req);
@@ -41,7 +58,7 @@ namespace RPAxe.Bridge
                 case "/alarm/delete": return RequirePost(req) ?? DeleteAlarm(req);
                 default:
                     return "{\"ok\":false,\"error\":\"unknown path " + req.Path
-                         + "; try /ping /bodies /sites /predict /nodes /alarms, or POST "
+                         + "; try /ping /bodies /sites /predict /vessel /nodes /alarms, or POST "
                          + "/node /node/clear /alarm /alarm/delete. Live VESSEL state comes from "
                          + "KSPTOT Connect on 8282, which already serves it -- see tools/mission/ksptot.py\"}";
             }
@@ -73,6 +90,15 @@ namespace RPAxe.Bridge
             return Planetarium.fetch != null ? Planetarium.GetUniversalTime() : double.NaN;
         }
 
+        /// <summary>
+        /// A state vector from Orbit's accessors, put back into the element frame.
+        /// Inverse of the Zup.WorldToLocal that getPositionFromTrueAnomaly applies on the way out.
+        /// </summary>
+        private static Vector3d ToElementFrame(Vector3d v)
+        {
+            return Planetarium.Zup.LocalToWorld(v);
+        }
+
         private static string Ping()
         {
             var j = new AxeJson().Obj();
@@ -88,7 +114,10 @@ namespace RPAxe.Bridge
             j.Val("vessels", fg && FlightGlobals.Vessels != null ? FlightGlobals.Vessels.Count : 0);
             j.Val("active", fg && FlightGlobals.ActiveVessel != null
                   ? FlightGlobals.ActiveVessel.vesselName : null);
-            j.Val("bridge", "1.0");
+            // 1.1: state vectors on the wire are the ELEMENT frame, not what
+            // getRelativePositionAtUT hands back. See the class doc.
+            j.Val("bridge", "1.1");
+            j.Val("inverse_rot_angle", Planetarium.fetch != null ? Planetarium.InverseRotAngle : double.NaN);
             return j.EndObj().ToString();
         }
 
@@ -100,6 +129,9 @@ namespace RPAxe.Bridge
             var j = new AxeJson().Obj();
             j.Val("ok", true);
             j.Val("ut", SafeUT());
+            // Reported so a client can SEE that the frames now agree rather than trust it: the
+            // old wire was off by exactly a rotation of this angle about z.
+            j.Val("inverse_rot_angle", Planetarium.fetch != null ? Planetarium.InverseRotAngle : double.NaN);
             j.Arr("bodies");
             for (int i = 0; i < FlightGlobals.Bodies.Count; i++)
             {
@@ -141,8 +173,8 @@ namespace RPAxe.Bridge
                     double ut = SafeUT();
                     if (!double.IsNaN(ut))
                     {
-                        j.Vec("r", o.getRelativePositionAtUT(ut));
-                        j.Vec("v", o.getOrbitalVelocityAtUT(ut));
+                        j.Vec("r", ToElementFrame(o.getRelativePositionAtUT(ut)));
+                        j.Vec("v", ToElementFrame(o.getOrbitalVelocityAtUT(ut)));
                     }
                 }
                 j.EndObj();
@@ -152,9 +184,13 @@ namespace RPAxe.Bridge
         }
 
         // --- vessel lookup ---------------------------------------------------
-        // There is deliberately no /vessels or /vessel endpoint. KSPTOT Connect ships with
-        // KSPTOT, is already installed, and already answers GetVesselIDList /
-        // GetVesselNameByGUID / GetVesselOrbitByGUID. Duplicating that here bought nothing.
+        // /vessel exists after all. The original call was that KSPTOT Connect already serves
+        // vessel state, so duplicating it bought nothing -- true, but it is [KSPAddon(Flight)]
+        // and a separate process, so "the bridge is up" and "live state is available" were two
+        // different facts. /predict reports patch SHAPES with no mean anomaly and no state
+        // vector, so a client could evaluate a trajectory through the bridge but not propagate
+        // one, which is what solving a burn needs. This handler was already written; it was
+        // simply never routed.
         // What it cannot do is run KSP's own patched-conic solver over a hypothetical burn,
         // which is what /predict is for. FindVessel serves that and the node endpoints.
 
@@ -215,8 +251,8 @@ namespace RPAxe.Bridge
             j.Val("peR", o.PeR);
             j.Val("apR", o.ApR);
             j.Val("period", o.period);
-            j.Vec("r", o.getRelativePositionAtUT(ut));
-            j.Vec("v", o.getOrbitalVelocityAtUT(ut));
+            j.Vec("r", ToElementFrame(o.getRelativePositionAtUT(ut)));
+            j.Vec("v", ToElementFrame(o.getOrbitalVelocityAtUT(ut)));
 
             j.Arr("nodes");
             // patchedConicSolver only exists for the vessel the game is actually flying; for any
@@ -736,7 +772,10 @@ namespace RPAxe.Bridge
             j.Val("vessel", v.vesselName);
             j.Val("ut", ut);
             j.Val("horizon_ut", ut + horizonDays * 86400.0);
-            j.Vec("burn_zup", burn);
+            // The burn is BUILT in the frame Orbit's accessors use, because that is the frame
+            // UpdateFromStateVectors expects back -- that pairing is what makes /predict right.
+            // Only the reported copy is converted, so the wire stays one frame throughout.
+            j.Vec("burn_zup", ToElementFrame(burn));
             j.Val("burn_mag", burn.magnitude);
 
             double endUT = ut + horizonDays * 86400.0;

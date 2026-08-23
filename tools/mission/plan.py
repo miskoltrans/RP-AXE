@@ -114,16 +114,25 @@ def align_raan(inc_deg, u):
 def origin_state(system, save, args):
     """Where the burn starts: the running game, the save, or a synthetic parking orbit."""
     if getattr(args, "live", False):
-        # Live vessel state comes from KSPTOT Connect, which is already installed and
-        # already serves it. The AXE bridge only covers what that cannot do.
-        kt = ksptot_mod.KspTot(port=args.ksptot_port)
+        # KSPTOT Connect first -- it is already installed and already serves this. But it is
+        # [KSPAddon(Flight)] and a separate process, so it can be absent while the AXE bridge
+        # is perfectly happy. Falling back rather than failing makes --live mean --live.
+        ut = parse_date(args.at) if args.at else None
         try:
-            ut = parse_date(args.at) if args.at else None
+            kt = ksptot_mod.KspTot(port=args.ksptot_port)
             body, r, vel, ut = kt.state(system, name=args.vessel, ut=ut)
-            label = args.vessel or kt.vessel_name(kt.vessel_ids()[0])
+            label = (args.vessel or kt.vessel_name(kt.vessel_ids()[0])) + " [live]"
         except ksptot_mod.KspTotError as exc:
-            sys.exit(str(exc))
-        return body, np.asarray(r), np.asarray(vel), ut, label + " [live]", None
+            try:
+                br = bridge_mod.Bridge(port=args.port)
+                body, r, vel, ut = br.state(system, name=args.vessel, ut=ut)
+                label = (args.vessel or "active vessel") + " [live, AXE bridge]"
+            except bridge_mod.BridgeError as exc2:
+                print("no live state available.")
+                print(f"  KSPTOT Connect: {exc}")
+                print(f"  AXE bridge:     {exc2}")
+                sys.exit(1)
+        return body, np.asarray(r), np.asarray(vel), ut, label, None
     if args.vessel:
         v = save.vessel(args.vessel)
         if not v.valid:
@@ -1058,6 +1067,18 @@ def cmd_crosscheck(args):
         # "KSP is not running" is a normal thing to discover, not a crash.
         sys.exit(str(exc))
     print(f"  UT {fmt_ut(ut)}")
+    try:
+        info = br.ping()
+        ver, ira = info.get("bridge"), info.get("inverse_rot_angle")
+        if ira is not None and ira == ira:
+            print(f"  bridge {ver}, Planetarium.InverseRotAngle = {ira:.4f} deg")
+        if ver in (None, "1.0"):
+            # Say it BEFORE the table, because the table is what looks alarming.
+            print("  WARNING: bridge 1.0 emits state vectors rotated by -InverseRotAngle "
+                  "relative to its own elements. Any position disagreement below is that "
+                  "rotation, NOT an epoch error. Rebuild AXE.dll and restart KSP.")
+    except bridge_mod.BridgeError:
+        pass
     rows.sort(key=lambda r: -r["rel"])
     print(f"  {'body':10s} {'|dr| m':>14s} {'relative':>10s} {'d(mu)':>10s} {'d(SOI) m':>12s}  index")
     for r in rows[:args.top]:
