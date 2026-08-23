@@ -8,6 +8,7 @@ answer by flying it.
 python plan.py selftest                 # run this first, always
 python plan.py depart  --vessel "Perun 2" --target Jupiter --peri 2.5Rj --push
 python plan.py correct --vessel "Perun 1" --target Jupiter --peri 2.5Rj
+python plan.py correct --vessel "Perun 1" --target Mercury --through Venus
 python plan.py flyby   --vessel "Perun 1" Jupiter
 python plan.py verify  --vessel "Perun 1" --target Jupiter
 python plan.py window  Earth Jupiter 1964-01-01 1972-01-01 --site cape
@@ -45,7 +46,7 @@ until the flown B-plane target is hit → shoot again and print the result.
 | `launch.py` | launch sites, launch azimuth, and when a pad crosses an orbit plane |
 | `bridge.py` | client for the AXE bridge — queries, and the node/alarm writes |
 | `plan.py` | the CLI |
-| `selftest.py` | 47 checks; run before trusting a number |
+| `selftest.py` | 57 checks; run before trusting a number |
 
 Older single-purpose scripts (`porkchop.py`, `jupiter_arrival.py`, `jovian_tour.py`,
 `link_budget.py`, `mass_budget.py`) still work and share `rss_ephem`.
@@ -176,6 +177,55 @@ the server, and 90 concurrent requests across 6 threads all succeed.
 a queue that the worker blocks on. Nothing in the KSP or Unity API is thread-safe, and
 touching `FlightGlobals` from a socket thread shows up as a native crash in `Player.log` with
 no managed stack. KSPTOT Connect is built the same way for the same reason.
+
+## Targeting through a gravity assist
+
+`correct --target X` aims a B-plane at one body. Through a flyby that residual does not
+exist until the trajectory is already nearly right — so it is flat, then discontinuous, and
+least squares has nothing to descend. It rejects every burn date it tries.
+
+`correct --through Venus --target Mercury` uses a different solver: a shooting pass over
+**Earth SOI → heliocentric → Venus SOI → flyby → heliocentric → Mercury**, least squares on
+the **position** residual at the destination. The assists are flown by the shooter, not
+approximated. Measured on the Earth→Venus fixture: a 40,008 Mm miss closed to **1,357 km on
+0.08 m/s**, in under a second.
+
+Four things here were measured rather than reasoned, and each changed the design.
+
+**The residual is differentiable through the flyby.** `d(miss)/d(dv)` is 31 Gm per m/s,
+consistent from 0.001 to 0.01 m/s steps — it was never noise. What breaks a naive attempt is
+that SciPy's `diff_step` is *relative*: `h = diff_step · max(1, |x|)`. Differentiating a
+3 km/s ejection directly takes 30 m/s steps; differentiating around zero with the default
+takes 0.1 mm/s ones, below the shooter's own SOI root-finding noise. Solving for a small
+**correction to a guess** puts the step in the `|x| < 1` regime, where `diff_step` is the
+absolute step in m/s.
+
+**The arrival epoch cannot be guessed.** Aimed at dates the trajectory has no business being
+near, every solve "fails" — with the target simply elsewhere in its orbit, 100 Gm away, and
+no correction of any size relevant. The window comes from where the *uncorrected* trajectory
+already passes the target, not from the user.
+
+**Unbounded, the solver answers the wrong question.** It will find a wholly different
+trajectory that happens to pass through the aim point: measured, a 4,892 m/s "solution" with
+a 0.0 km miss. `--max-dv` bounds it — a bound is physical and has no weight to tune, unlike a
+regularisation term.
+
+**Losing the flyby is a topology change, not a bad aim.** With no Venus patch the destination
+residual is measured on a different leg entirely and carries no gradient back. The tell was
+every such case stalling at the *identical* 616,000 km — Venus's SOI radius to three figures.
+Recovery steers to the assist instead, and re-acquires with `refine` first.
+
+### What it does not do
+
+Re-acquiring a **lost** flyby works in 2 of 4 tested perturbations. From-scratch MGA sequence
+search — "is there a Venus assist to Mercury in 1968 at all" — is a different algorithm
+(Lambert legs chained with v∞ matching at each flyby) and is not here. The failure message
+says which case you are in rather than leaving you to find out.
+
+`reachability()` answers the hopeless case in 0.1 s instead of grinding for 17: an
+Earth→Venus flyby that leaves perihelion at 75.9 Gm cannot reach Mercury, whose aphelion is
+69.8 Gm. The bend a flyby delivers is bounded by its v∞ and its minimum periapsis, so no
+correction of any size closes that — and saying so *is* the answer.
 
 ## From a launch window to a launch
 
@@ -318,6 +368,14 @@ conversion — while `GetOrbitNormal`, an inertial quantity built from LAN and i
 are expressed in. Picking the plausible-sounding one instead puts every launch time out by
 `2 × InverseRotAngle`, which drifts with the home body's rotation.
 
+**A fixed sample count over a variable window loses fast flybys.** `_exit_time` scanned
+`linspace(ut0, ut_end, 401)` — 401 samples across however long the caller was flying. A Venus
+passage dwells 34.9 h inside a 616,000 km SOI; on a 715-day horizon the step is 43 h and the
+*entire passage falls between two samples*, so "when does it leave" answered "never". The
+shooter then reported an escaping gravity assist as a capture. The tell is that the answer
+**depended on `--horizon`** — the same flyby, two verdicts. Size the scan window from the
+conic (a few times `soi/v∞`), never from the caller's horizon.
+
 **`ORBIT.MNA` is radians; `INC`/`LPE`/`LAN` are degrees.** Reading MNA as degrees puts a
 vessel most of the way around its orbit while every other element still looks right.
 
@@ -355,7 +413,7 @@ Decompiled from the install's own `MechJeb2.dll` / `MechJebLib.dll` and `Assembl
 
 ## What `selftest` checks
 
-47 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
+57 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
 to 4e-12 over 400 random states, 37 circular orbits land exactly back on the start, energy
 holds to 6e-16 over 3,000 days, elements and the node basis round-trip, a Lambert arc really
 lands on its target position, the pad is exactly in the plane at every crossing reported, and
