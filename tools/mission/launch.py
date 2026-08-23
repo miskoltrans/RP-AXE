@@ -14,16 +14,29 @@ Three things live here.
 
 THE ZERO POINT. The pad's inertial longitude is (its body-fixed longitude) plus (how far
 the body has turned). The second term is `rotation_angle`, which KSP computes as
-`(initialRotation + 360 * UT / rotationPeriod) % 360`, read out of CelestialBody. What is
-NOT written down anywhere is the constant relating that angle to inertial longitude in
-the frame orbits are expressed in. Getting it wrong shifts every launch time by the same
-amount -- self-consistently, so no internal check would ever notice.
+`(initialRotation + 360 * UT / rotationPeriod) % 360`, read out of CelestialBody. What
+relates that to the frame orbits live in is a third term, and the algebra says it is
+exactly zero:
 
-So it is measured, not derived: `/sites` reports the pad's actual inertial position
-vector at the game's own UT, and `Site.calibrate()` reads the offset off that. Offline,
-`OFFSET_DEG` below is used instead; `plan.py crosscheck` diffs the two and will say so if
-the offline value has drifted. Trust the live number; treat the offline one as a
-convenience that is checked, not as an authority.
+  * `GetWorldSurfacePosition` goes through `BodyFrame`, which is
+    `PlanetaryFrame(0, 90, directRotAngle)` -- expand `SetFrame` and that is a plain
+    rotation about z by `directRotAngle`, nothing more.
+  * For any body that is not the inverse-rotating one,
+    `directRotAngle = rotationAngle - Planetarium.InverseRotAngle`.
+  * `Planetarium.Zup` is `PlanetaryFrame(0, 90, InverseRotAngle)`, so composing the two
+    leaves `R_z(rotationAngle)` -- and it MUST, because a pad's inertial position cannot
+    depend on which body the game happens to be inverse-rotating around.
+
+So OFFSET_DEG is 0. But `InverseRotAngle` is runtime state, rewritten every frame, and it
+only cancels for one of `CelestialFrame`'s two conversion directions -- whose names are
+the opposite way round from the intuition. Get that backwards and the offset becomes
+`-2 * InverseRotAngle`: wrong, and drifting, and self-consistent enough that no internal
+check would ever notice.
+
+Hence: measured, not asserted. `/sites` reports the pad's actual inertial position at the
+game's own UT and `Site.calibrate()` reads the offset off it; `plan.py crosscheck --sites`
+diffs that against OFFSET_DEG and fails if they part. The bridge also reports the wrong
+convention's answer alongside, so the cancellation is visible rather than argued.
 """
 import math
 import os
@@ -34,9 +47,9 @@ import cfgnode
 from rss_ephem import DAY, DEFAULT_INSTANCE
 
 # Body-fixed longitude zero relative to the inertial x-axis at rotation_angle == 0.
-# Measured against the running game (see `plan.py crosscheck --sites`), not derived.
-# A value here that is wrong by d degrees puts every launch time wrong by
-# d/360 * rotation period -- four minutes per degree on Earth.
+# Zero by the argument in the module docstring, and CHECKED by `plan.py crosscheck
+# --sites` rather than trusted. A value here that is wrong by d degrees puts every launch
+# time wrong by d/360 of a rotation period -- four minutes per degree on Earth.
 OFFSET_DEG = 0.0
 
 

@@ -6,11 +6,13 @@ answer by flying it.
 
 ```
 python plan.py selftest                 # run this first, always
-python plan.py depart  --vessel "Perun 2" --target Jupiter --peri 2.5Rj
+python plan.py depart  --vessel "Perun 2" --target Jupiter --peri 2.5Rj --push
 python plan.py correct --vessel "Perun 1" --target Jupiter --peri 2.5Rj
 python plan.py flyby   --vessel "Perun 1" Jupiter
 python plan.py verify  --vessel "Perun 1" --target Jupiter
-python plan.py window  Earth Jupiter 1964-01-01 1972-01-01
+python plan.py window  Earth Jupiter 1964-01-01 1972-01-01 --site cape
+python plan.py launch  --target Jupiter --depart 1966-09-26 --site cape --live --alarm
+python plan.py alarms                          # what the game is holding
 python plan.py crosscheck --vessel "Perun 1"   # needs KSP running with -axe-bridge
 ```
 
@@ -40,9 +42,10 @@ until the flown B-plane target is hit → shoot again and print the result.
 | `patched.py` | the shooter — propagation through SOI entry and exit |
 | `maneuver.py` | ejection / midcourse / flyby solvers and the differential corrector |
 | `ksptot.py` | client for KSPTOT Connect — live vessel state, no new plugin needed |
-| `bridge.py` | client for the AXE bridge — `/predict` and `/bodies` only |
+| `launch.py` | launch sites, launch azimuth, and when a pad crosses an orbit plane |
+| `bridge.py` | client for the AXE bridge — queries, and the node/alarm writes |
 | `plan.py` | the CLI |
-| `selftest.py` | 32 checks; run before trusting a number |
+| `selftest.py` | 47 checks; run before trusting a number |
 
 Older single-purpose scripts (`porkchop.py`, `jupiter_arrival.py`, `jovian_tour.py`,
 `link_budget.py`, `mass_budget.py`) still work and share `rss_ephem`.
@@ -63,9 +66,10 @@ writes the command into a zero-filled buffer, and a NUL-padded request is droppe
 zero bytes back, no error.
 
 `AXE.dll` covers only what KSPTOT Connect cannot: **`/predict`**, which runs KSP's own
-patched-conic solver over a proposed burn, and **`/bodies`**, which reports the SOI and the
-FlightGlobals index that KSPTOT does not send. It is **off by default** — a shipped mod has
-no business opening a socket uninvited. Turn it on with any of:
+patched-conic solver over a proposed burn; **`/bodies`**, which reports the SOI, the
+FlightGlobals index and the rotation phase that KSPTOT does not send; **`/sites`**; and the
+writes. It is **off by default** — a shipped mod has no business opening a socket uninvited.
+Turn it on with any of:
 
 ```
 KSP_x64.exe -axe-bridge
@@ -100,10 +104,47 @@ Three comparisons, each against KSP rather than against more of my own code:
    `Orbit` and runs *KSP's own* patched-conic solver over it, returning every patch. The
    command lines that up against `patched.shoot` and reports, per patch, whether the bodies
    match, how far apart the SOI transitions are, and how far apart the periapsides are.
+4. **Rotation phase and the launch-site zero point** (`--sites`). Every rotating body's
+   `rotationAngle`, and the constant that turns a pad's body-fixed longitude into an
+   inertial one. Both are things a launch *time* is built on, and both would be wrong
+   *consistently* if they were wrong at all — see below.
 
-Endpoints: `/ping`, `/bodies`, `/predict`. There is no write endpoint — it cannot place a
-node or touch a save. (KSPTOT Connect *does* have `NodeData` / `NodeDataWRTPeri`, so pushing
-a node into the game is already solved if that is ever wanted.)
+### Endpoints
+
+| | |
+|---|---|
+| `GET /ping` | scene, game, UT, counts |
+| `GET /bodies` | every celestial: μ, SOI, index, state vector, **rotation phase** |
+| `GET /sites` | launch sites, their lat/lon, and the pad's inertial position |
+| `GET /predict` | KSP's own patched conics over a *proposed* burn — places nothing |
+| `GET /nodes` | a vessel's maneuver nodes and the flight plan they produce |
+| `POST /node` | **place** maneuver nodes |
+| `POST /node/clear` | remove them |
+| `GET /alarms` | alarms, plus the type/action names KAC actually declares |
+| `POST /alarm` | **create** an alarm (KAC, or the stock clock if KAC is absent) |
+| `POST /alarm/delete` | remove one |
+
+**It is not read-only any more.** Writes are POST-only, so nothing that merely follows a
+link can trip them, and the listener is still loopback — but the single `-axe-bridge`
+opt-in now covers writes too. That is worth knowing before leaving `enabled = true` sitting
+in a config file.
+
+Two deliberate behaviours on `POST /node`. It returns KSP's resulting **flight plan in the
+same response that placed the burn**, so a sign error shows up one line later rather than
+three hours into a time warp — and `--push` prints it. And a node whose UT is already past
+is refused rather than placed: KSP accepts one and then simply never flies it, which is the
+worst of both. Pass `allow_past` if that is genuinely what you want.
+
+KAC is bound by reflection, never referenced — a hard reference would make `AXE.dll` fail to
+load on an install without KAC, taking the tech tree with it. Alarm type and action names
+are resolved against KAC's **live** enums, so there is no copied list here to drift; an
+unknown name comes back with the valid ones. `Contract`/`ContractAuto` are refused, because
+KAC deletes alarms of those types the instant anything else creates them.
+
+The transport is covered by `tools/bridge-test`, which compiles `AxeJson`, `AxeJsonReader`
+and `AxeBridgeServer` outside KSP against one `Vector3d` stub and asserts 50 things about
+them in about a second — HTTP framing, bodies split across segments, JSON round-tripping
+bit-exact, comma-decimal locales, 90 concurrent requests each getting *their own* answer.
 
 For a repeatable session, `-axe-load=<save>` loads a save straight from the main menu and
 `-axe-focus=<vessel>` flies one, so a crosscheck needs no clicking. Both are command-line
@@ -135,6 +176,77 @@ the server, and 90 concurrent requests across 6 threads all succeed.
 a queue that the worker blocks on. Nothing in the KSP or Unity API is thread-safe, and
 touching `FlightGlobals` from a socket thread shows up as a native crash in `Player.log` with
 no managed stack. KSPTOT Connect is built the same way for the same reason.
+
+## From a launch window to a launch
+
+`window` finds *dates*. Getting off the ground needs three more things, and the chain runs:
+
+```
+window  Earth Jupiter 1964-01-01 1972-01-01 --site cape    # dates, and the plane each needs
+launch  --target Jupiter --depart 1966-09-26 --site cape --live --alarm
+                                                           # the time of day, and the heading
+depart  --vessel "Perun 2" --target Jupiter --push --alarm # the ejection burn, into the game
+```
+
+**The plane.** A departure ΔV is meaningless without a parking-orbit RAAN — from an
+arbitrary node an Earth→Moon injection costs 3,426 m/s with 1,100 m/s of plane change buried
+in it, and 3,143 m/s essentially pure prograde from the coplanar node. `window` now solves
+and prints the coplanar RAAN per window, and `depart --park ALT INC` re-solves it exactly.
+
+**The time of day.** A pad at latitude φ passes through a plane of inclination *i* twice per
+rotation, and only if |φ| ≤ *i* ≤ 180−|φ|. `launch` solves
+
+```
+sin(RAAN − α) = −tan(φ) / tan(i)
+```
+
+for the pad's inertial longitude α and inverts the (linear) rotation to get UT. Two roots,
+one ascending and one descending, repeating once per **sidereal** day — the four-minutes-a-day
+drift is what makes a window slip.
+
+**The heading.** *Not* from `sin β = cos i / cos φ`. That formula cannot tell an ascending
+pass from a descending one and loses the sign on a retrograde orbit, so the in-plane velocity
+direction is built instead (`v = n × r`) and resolved into the pad's own east/north frame,
+which gets every case right with no quadrant rule. `selftest` then checks the constructed
+value *against* the textbook one for magnitude, which is what that formula is genuinely good
+for. Two azimuths are printed: the inertial one, and the one to actually fly — the Cape
+already supplies 408 m/s of eastward velocity, so the vehicle provides only the difference,
+and the two differ by about 2°.
+
+This immediately paid for itself. The September 1965 Earth→Jupiter window has a departure
+declination of 32.4° against Cape Canaveral's 28.6° minimum inclination: **no parking orbit
+from that pad contains the departure asymptote at all.** The table says `unreachable` instead
+of quoting a ΔV that cannot be flown from there.
+
+### The launch-site zero point
+
+The one number here that could be quietly wrong. A pad's inertial longitude is its
+body-fixed longitude plus how far the body has turned, and the third term — the constant
+relating `CelestialBody.rotationAngle` to the frame orbits live in — is exactly zero, by
+this argument:
+
+* `GetWorldSurfacePosition` goes through `BodyFrame`, which is
+  `PlanetaryFrame(0, 90, directRotAngle)`. Expand `CelestialFrame.SetFrame` and that is a
+  plain rotation about z by `directRotAngle`, nothing more.
+* For any body that is not the inverse-rotating one,
+  `directRotAngle = rotationAngle − Planetarium.InverseRotAngle`.
+* `Planetarium.Zup` is `PlanetaryFrame(0, 90, InverseRotAngle)`, so composing the two leaves
+  `R_z(rotationAngle)` — and it **must**, because a pad's inertial position cannot depend on
+  which body the game happens to be inverse-rotating around.
+
+But `InverseRotAngle` is runtime state, rewritten every frame, and it only cancels for one of
+`CelestialFrame`'s two conversion directions — whose names read the opposite way round from
+the intuition, the same shape of trap as MechJeb stating the normal sign backwards twice.
+Get it backwards and the offset becomes `−2 × InverseRotAngle`: wrong, drifting, and
+self-consistent enough that nothing internal would ever notice.
+
+So it is **measured, not asserted.** `/sites` reports the pad's actual inertial position at
+the game's own UT; `launch --live` reads the offset off that. `crosscheck --sites` diffs it
+against the offline constant and fails if they part — and the bridge reports the *wrong*
+convention's answer alongside, so the cancellation is something you look at rather than
+something you argue about. An uncalibrated answer says so in the output every time: the
+spacing, the azimuth and the plane are right regardless, and only the absolute time of day
+depends on the constant.
 
 ## The traps this encodes
 
@@ -199,6 +311,13 @@ write `ORBIT.IDENT` with the body *name*, which is preferred when present.
 explicit `sphereOfInfluence`. Phobos' is 47 km against a 7.2 km Hill sphere — six times
 larger. The same `Kopernicus.log` line gives the SOI the game is actually using.
 
+**`CelestialFrame.WorldToLocal` and `LocalToWorld` read backwards.** `getRelativePositionAtUT`
+returns a vector that `getTruePositionAtUT` merely swizzles and adds to the parent — no frame
+conversion — while `GetOrbitNormal`, an inertial quantity built from LAN and inclination, is
+`Zup.WorldToLocal(OrbitFrame.Z)`. So `LocalToWorld` is the direction *into* the frame orbits
+are expressed in. Picking the plausible-sounding one instead puts every launch time out by
+`2 × InverseRotAngle`, which drifts with the home body's rotation.
+
 **`ORBIT.MNA` is radians; `INC`/`LPE`/`LAN` are degrees.** Reading MNA as degrees puts a
 vessel most of the way around its orbit while every other element still looks right.
 
@@ -236,10 +355,12 @@ Decompiled from the install's own `MechJeb2.dll` / `MechJebLib.dll` and `Assembl
 
 ## What `selftest` checks
 
-32 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
+47 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
 to 4e-12 over 400 random states, 37 circular orbits land exactly back on the start, energy
 holds to 6e-16 over 3,000 days, elements and the node basis round-trip, a Lambert arc really
-lands on its target position.
+lands on its target position, the pad is exactly in the plane at every crossing reported, and
+the launch plane's normal matches `park_orbit`'s angular momentum to 1e-16 — which is the
+joint between the launch solver and every burn `plan.py` already prints.
 
 The ones that matter compare against something outside the code: Kopernicus' own log,
 KSPTOT's `bodies.ini` (exported from the running game by its plugin — 32 bodies agree to
@@ -256,3 +377,13 @@ self-consistent, which is every failure this project has actually had.
   out the next-best rows are not windows. It says how many it dropped.
 - `--horizon` is days past arrival to keep flying; a large SOI like Jupiter's takes
   hundreds of days to cross, so raise it if a flyby reports no exit.
+- `--push` needs a real vessel, so it does not work off a `--park` orbit — that orbit is
+  hypothetical and there is nothing in the game to hang a node on. It also needs the vessel
+  to be the one being flown: KSP builds a `patchedConicSolver` for the active vessel only,
+  and the bridge says which of the three possible reasons applies rather than just "no".
+- KSCSwitcher **relocates** the single KSC rather than adding sites, so `/sites` reports one
+  pad wherever the save put it. `launch` with no `--site` reads `LastLaunchSite` out of the
+  save's `LastKSC` scenario module; the 29-site table comes from KSCSwitcher's and RSS's
+  configs. RSS writes its readable site names behind a `//`, which is KSP's comment marker,
+  so the parser strips them exactly as the game does — the real text is read from
+  `RealSolarSystem/Localization/LaunchSites/en-us.cfg`.

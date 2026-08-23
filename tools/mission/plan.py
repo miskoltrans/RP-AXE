@@ -932,7 +932,11 @@ def cmd_crosscheck(args):
     fails = []
 
     print("=== 1. ephemeris: every body position, at the game's own UT ===")
-    ut, rows = bridge_mod.check_bodies(system, br)
+    try:
+        ut, rows = bridge_mod.check_bodies(system, br)
+    except bridge_mod.BridgeError as exc:
+        # "KSP is not running" is a normal thing to discover, not a crash.
+        sys.exit(str(exc))
     print(f"  UT {fmt_ut(ut)}")
     rows.sort(key=lambda r: -r["rel"])
     print(f"  {'body':10s} {'|dr| m':>14s} {'relative':>10s} {'d(mu)':>10s} {'d(SOI) m':>12s}  index")
@@ -972,7 +976,9 @@ def cmd_crosscheck(args):
         if data:
             table = launch_mod.sites(instance=args.instance)
             live_ut = data["ut"]
-            print(f"  the game is holding {len(data['sites'])} site(s) at UT {fmt_ut(live_ut)}")
+            inv = data.get("inverse_rot_angle")
+            print(f"  the game is holding {len(data['sites'])} site(s) at UT {fmt_ut(live_ut)}"
+                  + (f";  Planetarium.InverseRotAngle = {inv:.4f} deg" if inv is not None else ""))
             for entry in data["sites"]:
                 for sp in entry.get("spawn_points", []):
                     if not sp.get("resolved", True) or sp.get("r_zup") is None:
@@ -1000,6 +1006,19 @@ def cmd_crosscheck(args):
                           f"({drift:+.4f} deg out"
                           + (f" = {abs(drift) / 360 * (system.body(match.body).rot or 0) / 60:,.1f} min "
                              f"of launch time)" if drift else ")"))
+                    # The other frame convention, reported by the bridge alongside. If the
+                    # conversion direction were backwards the offset would be off by exactly
+                    # -2 * InverseRotAngle -- so showing both turns "which way round is
+                    # CelestialFrame?" from an argument into a measurement.
+                    if sp.get("r_zup_wrong") is not None and inv is not None:
+                        probe = launch_mod.Site(match.name, match.display, match.body,
+                                                match.lat, match.lon)
+                        other = probe.calibrate(system, live_ut, sp["r_zup_wrong"])
+                        if other is not None:
+                            predicted = ((-2.0 * inv + 180) % 360) - 180
+                            print(f"  {'':28s} the other convention gives {other:+.4f} deg; "
+                                  f"-2*InverseRotAngle is {predicted:+.4f} "
+                                  f"({'as predicted' if abs(((other - predicted + 180) % 360) - 180) < 0.01 else 'NOT as predicted'})")
                     # A wrong constant here shifts every OFFLINE launch time by the same
                     # amount and stays perfectly self-consistent, so this is the only place
                     # it can be caught.

@@ -610,6 +610,10 @@ namespace RPAxe.Bridge
             var j = new AxeJson().Obj();
             j.Val("ok", true);
             j.Val("ut", SafeUT());
+            // The angle the whole frame question turns on. It is RUNTIME state -- the
+            // inverse-rotating body rewrites it every frame -- which is precisely why the
+            // pad's inertial direction is measured here rather than derived from a config.
+            j.Val("inverse_rot_angle", Planetarium.InverseRotAngle);
             j.Arr("sites");
             PSystemSetup ps = PSystemSetup.Instance;
             if (ps != null && ps.LaunchSites != null)
@@ -641,6 +645,39 @@ namespace RPAxe.Bridge
                             j.Val("longitude", sp.longitude);
                             j.Val("altitude", sp.altitude);
                             j.Val("resolved", sp.latlonaltSet);
+                            // The pad's INERTIAL position right now, in the same z-up frame
+                            // getRelativePositionAtUT returns. This is what makes a launch
+                            // TIME computable: it measures where the pad points rather than
+                            // deriving it.
+                            //
+                            // CelestialFrame's method names are the opposite way round from
+                            // the intuition. GetWorldSurfacePosition goes through BodyFrame,
+                            // which is PlanetaryFrame(0, 90, directRotAngle) and therefore a
+                            // plain R_z(directRotAngle); and for a body that is not the
+                            // inverse-rotating one, directRotAngle = rotationAngle -
+                            // Planetarium.InverseRotAngle. A pad's inertial position cannot
+                            // depend on WHICH body happens to be inverse-rotating, so
+                            // InverseRotAngle has to cancel -- and only LocalToWorld cancels
+                            // it, leaving exactly R_z(rotationAngle). WorldToLocal would leave
+                            // rotationAngle - 2*InverseRotAngle, which drifts.
+                            //
+                            // Corroborated by Orbit itself: getRelativePositionAtUT's state
+                            // path ends in Zup.LocalToWorld, and GetOrbitNormal (an inertial
+                            // quantity, built from LAN/inc) is Zup.WorldToLocal(OrbitFrame.Z).
+                            // Both agree that LocalToWorld is the direction INTO this frame.
+                            //
+                            // r_zup_wrong is the other convention, reported so the client can
+                            // SEE the cancellation instead of taking this comment's word for
+                            // it: it should differ by exactly -2 * inverse_rot_angle.
+                            if (b != null)
+                            {
+                                Vector3d rel = (b.GetWorldSurfacePosition(sp.latitude, sp.longitude,
+                                                                          sp.altitude) - b.position).xzy;
+                                j.Vec("r_zup", Planetarium.Zup.LocalToWorld(rel));
+                                j.Vec("r_zup_wrong", Planetarium.Zup.WorldToLocal(rel));
+                                j.Val("direct_rot_angle", b.directRotAngle);
+                                j.Val("rotation_angle", b.rotationAngle);
+                            }
                             j.EndObj();
                         }
                     }
