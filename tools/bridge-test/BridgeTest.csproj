@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Transport tests for the bridge, run OUTSIDE KSP.
+
+    AxeJson, AxeJsonReader and AxeBridgeServer have no KSP dependency beyond one Vector3d
+    overload, which Stubs.cs supplies. That means the parts most likely to be quietly wrong (the
+    HTTP framing, the body reader, the JSON round trip, locale handling, threading) can be
+    tested in a second instead of by launching the game and eyeballing a response.
+
+        cd tools/bridge-test ; dotnet run
+
+    The handlers themselves are NOT covered here; they touch FlightGlobals and need the game.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>BridgeTest</AssemblyName>
+    <RootNamespace>RPAxe.BridgeTest</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Stubs.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="..\..\Source\AXE\Bridge\AxeJson.cs" />
+    <Compile Include="..\..\Source\AXE\Bridge\AxeJsonReader.cs" />
+    <Compile Include="..\..\Source\AXE\Bridge\AxeBridgeServer.cs" />
+  </ItemGroup>
+
+</Project>
