@@ -271,7 +271,7 @@ digraph AXE {
   "pc_refinedStorableORSC" [label="Refined Storable Staged Combustion\nPropellantChemistry T9 · 504",fillcolor="#e5533b",fontcolor="#111111"];
   "nuc_nuclearThermalRocket" [label="Solid-Core Nuclear Thermal Propulsion\nNuclearEngineering T9 · 504",fillcolor="#83c341",fontcolor="#111111"];
   "nuc_nuclearRamjet" [label="Reactor-Heated Ramjet\nNuclearEngineering T9 · 504",fillcolor="#83c341",fontcolor="#111111"];
-  "gnc_interplanetaryAvionics" [label="Long-Duration Cruise Guidance\nGuidanceControl T7 · 216",fillcolor="#8a5cd6",fontcolor="#111111"];
+  "gnc_interplanetaryAvionics" [label="Self-Contained Guidance Unit\nGuidanceControl T7 · 216",fillcolor="#8a5cd6",fontcolor="#111111"];
   "shd_interplanetaryAvionics" [label="Deep-Space Bus — Interplanetary\nGuidanceControl T8 · 324",fillcolor="#8a5cd6",fontcolor="#111111"];
   "elec_integratedCircuit" [label="Monolithic Integrated Circuits\nMicroelectronics T7 · 216",fillcolor="#c2a0e0",fontcolor="#111111"];
   "comp_digitalGuidanceComputer" [label="Digital Guidance Computer\nComputing T8 · 324",fillcolor="#d13bc4",fontcolor="#111111"];

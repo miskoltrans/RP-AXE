@@ -39,7 +39,7 @@ _SHIPPED — the tier effect is applied by AXE.dll's ModuleAxeAvionics, which re
 | `Science-Core-earlyAvionics` | `gnc_earlyAvionics` | T4 | Stable-Platform Guidance |
 | `Deep-Space-basicAvionics` | `shd_basicAvionics` | T5 | Deep-Space Bus — Basic |
 | `Science-Core-basicAvionics` | `gnc_basicAvionics` | T5 | Miniaturised Inertial Guidance |
-| `Science-Core-interplanetaryProbes` | `gnc_interplanetaryAvionics` | T7 | Long-Duration Cruise Guidance |
+| `Science-Core-interplanetaryProbes` | `gnc_interplanetaryAvionics` | T7 | Self-Contained Guidance Unit |
 | `Deep-Space-interplanetaryProbes` | `shd_interplanetaryAvionics` | T8 | Deep-Space Bus — Interplanetary |
 | `Science-Core-improvedAvionics` | `comp_digitalGuidanceComputer` | T8 | Digital Guidance Computer |
 | `Deep-Space-improvedAvionics` | `shd_digitalGuidanceComputer` | T9 | Deep-Space Bus — Digital |

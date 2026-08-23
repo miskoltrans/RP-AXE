@@ -3205,18 +3205,33 @@ nodes:
   # was never authored at all until now.
   # ================================================================================================
   - id: gnc_interplanetaryAvionics
-    title: "Long-Duration Cruise Guidance"
+    title: "Self-Contained Guidance Unit"
     discipline: GuidanceControl
     tier: 7
     parents: [gnc_basicAvionics]
-    flavor: "Stretch the same miniaturised inertial stack to survive a cruise measured in months instead of an orbit measured in hours — redundant circuitry and a sun-and-star reference that never loses its lock on the long coast out to another planet."
+    flavor: "Lift the guidance system out of the airframe and give it a hull of its own, with its own power, cooling and reference — a sealed unit that holds a stable platform and a drum-memory computer steady whether it is flying a booster for eight minutes or keeping its lock on the sun and the stars through a coast measured in months."
+    parts: [RO-SaturnI-IU]
     grants: [Science-Core-interplanetaryProbes]
+    # RO-SaturnI-IU MOVED HERE 2026-08-24 (user call) from comp_digitalGuidanceComputer (T8). Two
+    # reasons, one legibility and one factual. (a) Every other launch vehicle gets its guidance ring
+    # one tier after its engines — Saturn IB/V: J-2 and F-1 both T8, its IU T9 — but the Saturn I's
+    # engines are T6 (fd_saturnKerolox) and RL10 is T4, so its own ring trailed the rocket by TWO.
+    # (b) The Saturn I IU's computer was the ASC-15: drum memory built from discrete transistors, a
+    # Titan II hand-me-down. It is NOT an integrated-circuit machine, so it cannot be the exemplar of
+    # a node whose whole crossover is elec_integratedCircuit. The IC-built machine is the LVDC, and
+    # that already rides the Saturn IB/V IU one rung up on comp_realTimeFlightComputer. RP-1 places
+    # this part on `interplanetaryProbes` too, so this is also RP-1 parity restored.
+    # RETITLED with it: "Long-Duration Cruise Guidance" named only the deep-space half, and a booster
+    # ring that works for eight minutes reads as an intruder there. The mechanism both halves share is
+    # the packaging — guidance stops being wiring bolted through the airframe and becomes a sealed
+    # module with its own environment. That is what buys a bolt-on instrument ring AND a bus that
+    # survives a months-long coast, and it stays one mechanism, so no compound name is needed.
   - id: shd_interplanetaryAvionics
     title: "Deep-Space Bus — Interplanetary"
     discipline: GuidanceControl
     tier: 8
     parents: [shd_basicAvionics, gnc_interplanetaryAvionics]
-    flavor: "Harden the long-duration cruise stack itself, not just its chassis — shielded electronics for a coast that spends months, not hours, deep in interplanetary radiation."
+    flavor: "Harden the sealed guidance unit itself, not just its chassis — shielded electronics for a coast that spends months, not hours, deep in interplanetary radiation."
     grants: [Deep-Space-interplanetaryProbes]
     # V2 avionics redesign (2026-07-08): see shd_basicAvionics for the Shielded-axis note.
   - id: elec_integratedCircuit
@@ -3231,11 +3246,13 @@ nodes:
     tier: 8
     parents: [gnc_interplanetaryAvionics, elec_integratedCircuit]
     flavor: "Trade the analog integrator for a true digital computer, built from the first integrated circuits — a machine that computes a fresh trajectory correction instead of just holding one, fast enough to fly a booster instead of merely stabilizing it. The line between an instrument and a computer, crossed for good."
-    parts: [RO-SaturnI-IU]
     grants: [Science-Core-improvedAvionics]
-    # RO-SaturnI-IU (2026-07, backlog sweep): the Saturn I's own instrument-unit ring, contemporaneous with
-    # this generation of digital guidance hardware (early-mid 1960s) - tagged for AXE's own avionics module
-    # at the P4 config-patch pass, per docs/PARTLIST.md.
+    # Grants-only by design as of 2026-08-24. It held RO-SaturnI-IU until then; see
+    # gnc_interplanetaryAvionics for why that part is a rung too high here (pre-IC drum-memory
+    # hardware under an integrated-circuit node, and two tiers behind its own rocket). No installed
+    # part models the article this node actually marks — Minuteman II's D-17B, 1962, the first
+    # guidance computer built from ICs — so the node marks the generation and grants the avionics
+    # rung, exactly like comp_networkedAvionics and comp_multiplyRedundantFlightComputer above it.
   - id: shd_digitalGuidanceComputer
     title: "Deep-Space Bus — Digital"
     discipline: Computing
