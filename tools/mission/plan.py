@@ -1123,7 +1123,7 @@ def main(argv=None):
                        help="KAC alarm type; `plan.py alarms` lists what KAC accepts. "
                             "Contract/ContractAuto are refused -- KAC deletes those.")
 
-    def common(p, vessel=True):
+    def common(p, vessel=True, push=True):
         if vessel:
             p.add_argument("--vessel", help="vessel name from the save (substring is enough)")
             p.add_argument("--save", help="save folder or .sfs path; default = most recent")
@@ -1142,7 +1142,9 @@ def main(argv=None):
         p.add_argument("--horizon", type=float, default=400.0,
                        help="days past arrival to keep flying (default 400)")
         p.add_argument("--trajectory", action="store_true", help="print every patch")
-        if vessel:
+        # Only on commands that actually SOLVE a burn. `verify` reports what existing nodes
+        # do; giving it a --push that silently did nothing would be worse than not having it.
+        if vessel and push:
             alarm_flags(p)
             p.add_argument("--push", action="store_true",
                            help="place the solved burn in the running game as a maneuver node "
@@ -1241,7 +1243,7 @@ def main(argv=None):
     p.set_defaults(func=cmd_flyby)
 
     p = sub.add_parser("verify", help="fly the current trajectory and report what happens")
-    common(p)
+    common(p, push=False)
     p.add_argument("--target")
     p.set_defaults(func=cmd_verify)
 
