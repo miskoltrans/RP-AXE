@@ -8,8 +8,9 @@ using UnityEngine;
 namespace RPAxe.Bridge
 {
     /// <summary>
-    /// Read-only query bridge: lets <c>tools/mission/plan.py</c> ask the RUNNING game for state,
-    /// and — the point of it — ask KSP's own patched-conic solver where a proposed burn ends up.
+    /// Query-and-command bridge: lets <c>tools/mission/plan.py</c> ask the RUNNING game for state,
+    /// ask KSP's own patched-conic solver where a proposed burn ends up, and — once the answer is
+    /// trusted — place that burn as a maneuver node and set an alarm for it.
     ///
     /// The mission tools reimplement KSP's orbital mechanics outside the game. That replica has
     /// been checked against a lot of things, but until now not against the only authority that
@@ -20,7 +21,12 @@ namespace RPAxe.Bridge
     /// OFF BY DEFAULT. It opens a listening socket, and a shipped mod has no business doing that
     /// uninvited. Turn it on with the <c>-axe-bridge</c> command-line flag, the AXE_BRIDGE
     /// environment variable, or <c>enabled = true</c> in Plugins/PluginData/Bridge.cfg.
-    /// Loopback only; there is no write endpoint.
+    ///
+    /// It is NOT read-only any more. <c>/node</c>, <c>/node/clear</c>, <c>/alarm</c> and
+    /// <c>/alarm/delete</c> change the game. They are POST-only and the listener is still bound to
+    /// loopback, so nothing off this machine can reach them and nothing that merely follows a link
+    /// can trip them — but the single <c>-axe-bridge</c> opt-in now covers writes as well as
+    /// reads, and that is worth knowing before leaving it enabled in a config file.
     /// </summary>
     [KSPAddon(KSPAddon.Startup.Instantly, true)]
     public class AxeBridge : MonoBehaviour
@@ -48,7 +54,7 @@ namespace RPAxe.Bridge
                 _server = new AxeBridgeServer(_port, AxeBridgeHandlers.Handle);
                 _server.Start();
                 Debug.Log("[AXE][Bridge] listening on http://127.0.0.1:" + _port
-                          + "/  (read-only; try /ping)");
+                          + "/  (try /ping; POST /node and /alarm CHANGE THE GAME)");
             }
             catch (Exception e)
             {
