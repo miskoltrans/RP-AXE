@@ -23,6 +23,7 @@ import sys
 import numpy as np
 
 import astro
+import bridge as bridge_mod
 import maneuver
 import patched
 from lambert import lambert
@@ -104,7 +105,18 @@ def align_raan(inc_deg, u):
 
 
 def origin_state(system, save, args):
-    """Where the burn starts: a real vessel, or a synthetic parking orbit."""
+    """Where the burn starts: the running game, the save, or a synthetic parking orbit."""
+    if getattr(args, "live", False):
+        br = bridge_mod.Bridge(port=args.port)
+        try:
+            body, r, vel, ut = br.state(name=args.vessel)
+        except bridge_mod.BridgeError as exc:
+            sys.exit(str(exc))
+        if args.at:
+            ut2 = parse_date(args.at)
+            r, vel = astro.propagate(system.body(body).mu, r, vel, ut2 - ut)
+            ut = ut2
+        return system.body(body), np.asarray(r), np.asarray(vel), ut,             (args.vessel or "the active vessel") + " [live]", None
     if args.vessel:
         v = save.vessel(args.vessel)
         if not v.valid:
@@ -576,6 +588,134 @@ def cmd_verify(args):
         print()
 
 
+def cmd_bridge(args):
+    """Ping the running game, and optionally list what it is holding."""
+    system, _ = load(args)
+    br = bridge_mod.Bridge(port=args.port)
+    try:
+        info = br.ping()
+    except bridge_mod.BridgeError as exc:
+        sys.exit(str(exc))
+    print(f"AXE bridge {info.get('bridge')} on port {args.port}")
+    print(f"  scene    {info.get('scene')}")
+    print(f"  game     {info.get('game')}")
+    ut = info.get("ut")
+    print(f"  UT       {fmt_ut(ut) if ut == ut else 'no game loaded'}")
+    print(f"  bodies   {info.get('bodies')}    vessels {info.get('vessels')}"
+          f"    active {info.get('active')}")
+    if not args.vessels:
+        return
+    print()
+    print(f"  {'vessel':32s} {'body':10s} {'pe km':>12s} {'ap km':>13s} {'inc':>7s}")
+    for v in br.vessels():
+        if v.get("body") is None:
+            print(f"  {v['name'][:32]:32s} {'-':10s} ({v.get('situation')})")
+            continue
+        b = system.body(v["body"])
+        ap = "escape" if v["ecc"] >= 1 else f"{(v['apR'] - b.radius) / 1e3:,.0f}"
+        print(f"  {v['name'][:32]:32s} {v['body']:10s} {(v['peR'] - b.radius) / 1e3:12,.0f} "
+              f"{ap:>13s} {v['inc_deg']:7.2f}")
+
+
+def cmd_crosscheck(args):
+    """Diff this toolchain against the running game: ephemeris, state, and the shooter.
+
+    Every historical bug in these tools was a state-interpretation error that stayed
+    perfectly self-consistent, so nothing internal could catch it. This is the command
+    that cannot be fooled by that, because the other side of the comparison is KSP.
+    """
+    system, _ = load(args)
+    br = bridge_mod.Bridge(port=args.port)
+    fails = []
+
+    print("=== 1. ephemeris: every body position, at the game's own UT ===")
+    ut, rows = bridge_mod.check_bodies(system, br)
+    print(f"  UT {fmt_ut(ut)}")
+    rows.sort(key=lambda r: -r["rel"])
+    print(f"  {'body':10s} {'|dr| m':>14s} {'relative':>10s} {'d(mu)':>10s} {'d(SOI) m':>12s}  index")
+    for r in rows[:args.top]:
+        dmu = abs(r["mu_game"] - r["mu_mine"]) / r["mu_game"] if r["mu_game"] else 0.0
+        dsoi = abs(r["soi_game"] - r["soi_mine"])
+        same = "ok" if r["index_game"] == r["index_mine"] else f"MISMATCH {r['index_game']}/{r['index_mine']}"
+        print(f"  {r['body']:10s} {r['err_m']:14,.3f} {r['rel']:10.2e} {dmu:10.2e} {dsoi:12,.1f}  {same}")
+    worst = max((r["rel"] for r in rows), default=0.0)
+    idx_bad = [r["body"] for r in rows if r["index_game"] != r["index_mine"]]
+    soi_bad = [r["body"] for r in rows if abs(r["soi_game"] - r["soi_mine"]) > 1.0]
+    print(f"  worst relative position error {worst:.2e} over {len(rows)} bodies")
+    if worst > 1e-6:
+        fails.append(f"ephemeris disagrees with the game by {worst:.2e} relative "
+                     f"-- suspect the epoch or the element parse")
+    if idx_bad:
+        fails.append("body index mismatch: " + ", ".join(idx_bad))
+    if soi_bad:
+        fails.append("SOI mismatch: " + ", ".join(soi_bad))
+
+    if not args.vessel:
+        print("\n  (pass --vessel NAME to also check a vessel state and the shooter)")
+    else:
+        print(f"\n=== 2. vessel state: {args.vessel} ===")
+        d, gr, gv = bridge_mod.check_vessel(system, br, args.vessel)
+        body = system.body(d["body"])
+        try:
+            save = Save(find_save(args.save, args.instance), system)
+            sv = save.vessel(args.vessel)
+            mr, mv = sv.state(d["ut"])
+            dr = float(np.linalg.norm(np.asarray(mr) - gr))
+            print(f"  live UT {fmt_ut(d['ut'])};  save UT {fmt_ut(save.ut)}")
+            print(f"  save-derived vs live: |dr| = {dr:,.6f} m   "
+                  f"|dv| = {np.linalg.norm(np.asarray(mv) - gv):,.9f} m/s")
+            if dr > 1.0:
+                fails.append("the save-derived vessel state disagrees with the live one by "
+                             f"{dr:,.1f} m -- if the UTs differ the save is simply older, "
+                             "which is exactly why --live exists")
+        except Exception as exc:                                    # noqa: BLE001
+            print(f"  (no save comparison: {exc})")
+
+        print("\n=== 3. the shooter vs KSP's own patched-conic solver ===")
+        dv = [float(x) for x in args.dv.split(",")] if args.dv else [0.0, 0.0, 0.0]
+        ut_node = parse_date(args.at) if args.at else d["ut"]
+        game = br.predict(name=args.vessel, ut=ut_node, dv=dv,
+                          horizon=args.horizon, maxpatches=args.maxpatches)
+        r, v = gr, gv
+        if ut_node != d["ut"]:
+            r, v = astro.propagate(body.mu, gr, gv, ut_node - d["ut"])
+        burn = astro.from_node(r, v, dv)
+        names = {p["body"] for p in game["patches"] if p.get("body")}
+        watch = sorted(names - {body.name}) or None
+        traj = patched.shoot(system, body.name, r, v + burn, ut_node,
+                             ut_node + args.horizon * DAY, watch=watch)
+        print(f"  burn (radial, normal, prograde) = {dv}   |dV| {np.linalg.norm(burn):,.3f} m/s")
+        print(f"  watching {watch or 'the defaults'}")
+        print(f"  {'#':>2s} {'game body':12s} {'shooter':12s} {'d(start) s':>12s} "
+              f"{'game peR km':>15s} {'shooter peR km':>15s} {'d(peR) km':>12s}")
+        for row in bridge_mod.compare_patches(system, game["patches"], traj):
+            gb, mb = row["game_body"] or "-", row["mine_body"] or "-"
+            if row.get("dt_start") is None:
+                print(f"  {row['i']:2d} {gb:12s} {mb:12s} {'--':>12s} {'--':>15s} "
+                      f"{'--':>15s} {'--':>12s}")
+                fails.append(f"patch {row['i']}: one side has a patch the other does not "
+                             f"(game {gb}, shooter {mb})")
+                continue
+            flag = "" if row["same_body"] else "   <-- DIFFERENT BODY"
+            print(f"  {row['i']:2d} {gb:12s} {mb:12s} {row['dt_start']:12,.3f} "
+                  f"{row['game_peR'] / 1e3:15,.1f} {row['mine_peR'] / 1e3:15,.1f} "
+                  f"{row['dpeR'] / 1e3:12,.1f}{flag}")
+            if not row["same_body"]:
+                fails.append(f"patch {row['i']}: the game says {gb}, the shooter says {mb}")
+            elif abs(row["dt_start"]) > args.tol_s:
+                fails.append(f"patch {row['i']} ({gb}) starts {row['dt_start']:,.1f} s apart")
+        if game.get("truncated"):
+            print(f"  (the game stopped at {args.maxpatches} patches; raise --maxpatches)")
+
+    print()
+    if fails:
+        print("  DISAGREEMENTS:")
+        for f in fails:
+            print(f"    - {f}")
+        sys.exit(1)
+    print("  the replica and the running game agree.")
+
+
 def cmd_selftest(args):
     import selftest
     sys.exit(0 if selftest.run(System(instance=args.instance), verbose=True) else 1)
@@ -597,6 +737,9 @@ def main(argv=None):
                            help="parking orbit when there is no --vessel: ALT INC [RAAN]. Omit RAAN and the coplanar one is solved for.")
             p.add_argument("--body", default="Earth", help="parent body for --park")
             p.add_argument("--at", help="epoch for the starting state (default: the save's UT)")
+            p.add_argument("--live", action="store_true",
+                           help="read state from the running game via the AXE bridge, not the save")
+            p.add_argument("--port", type=int, default=bridge_mod.DEFAULT_PORT)
         p.add_argument("--via", nargs="*", help="extra bodies whose SOI may be entered")
         p.add_argument("--horizon", type=float, default=400.0,
                        help="days past arrival to keep flying (default 400)")
@@ -663,6 +806,24 @@ def main(argv=None):
     common(p)
     p.add_argument("--target")
     p.set_defaults(func=cmd_verify)
+
+    p = sub.add_parser("bridge", help="ping the running game through the AXE bridge")
+    p.add_argument("--port", type=int, default=bridge_mod.DEFAULT_PORT)
+    p.add_argument("--vessels", action="store_true", help="also list the game's vessels")
+    p.set_defaults(func=cmd_bridge)
+
+    p = sub.add_parser("crosscheck", help="diff this toolchain against the running game")
+    p.add_argument("--port", type=int, default=bridge_mod.DEFAULT_PORT)
+    p.add_argument("--vessel", help="also check this vessel's state and a predicted trajectory")
+    p.add_argument("--save")
+    p.add_argument("--at", help="node epoch for the prediction (default: now)")
+    p.add_argument("--dv", help="node components to test, 'radial,normal,prograde'")
+    p.add_argument("--horizon", type=float, default=400.0)
+    p.add_argument("--maxpatches", type=int, default=8)
+    p.add_argument("--top", type=int, default=8, help="worst N bodies to print")
+    p.add_argument("--tol-s", type=float, default=1.0,
+                   help="allowed disagreement in an SOI transition time, seconds")
+    p.set_defaults(func=cmd_crosscheck)
 
     p = sub.add_parser("selftest", help="check the whole chain against known answers")
     p.set_defaults(func=cmd_selftest)

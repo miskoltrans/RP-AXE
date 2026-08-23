@@ -11,6 +11,7 @@ python plan.py correct --vessel "Perun 1" --target Jupiter --peri 2.5Rj
 python plan.py flyby   --vessel "Perun 1" Jupiter
 python plan.py verify  --vessel "Perun 1" --target Jupiter
 python plan.py window  Earth Jupiter 1964-01-01 1972-01-01
+python plan.py crosscheck --vessel "Perun 1"   # needs KSP running with -axe-bridge
 ```
 
 Every burn prints as a UT plus the three `ManeuverNode` components, in the order and
@@ -38,11 +39,72 @@ until the flown B-plane target is hit → shoot again and print the result.
 | `sfs.py` | the save: game clock, vessel orbits, planned nodes |
 | `patched.py` | the shooter — propagation through SOI entry and exit |
 | `maneuver.py` | ejection / midcourse / flyby solvers and the differential corrector |
+| `bridge.py` | client for the in-game AXE bridge (live state, and `crosscheck`) |
 | `plan.py` | the CLI |
 | `selftest.py` | 27 checks; run before trusting a number |
 
 Older single-purpose scripts (`porkchop.py`, `jupiter_arrival.py`, `jovian_tour.py`,
 `link_budget.py`, `mass_budget.py`) still work and share `rss_ephem`.
+
+## The live bridge
+
+`AXE.dll` can expose a small **read-only** HTTP endpoint on `127.0.0.1` so the tools can ask
+the running game directly instead of parsing the last save. It is **off by default** — a
+shipped mod has no business opening a socket uninvited. Turn it on with any of:
+
+```
+KSP_x64.exe -axe-bridge
+AXE_BRIDGE=1
+enabled = true      in GameData/RP-AXE/Plugins/PluginData/Bridge.cfg
+```
+
+Then:
+
+```
+python plan.py bridge --vessels                  # what is the game holding right now
+python plan.py crosscheck --vessel "Perun 1"     # diff this toolchain against KSP
+python plan.py correct --vessel "Perun 1" --target Jupiter --live
+```
+
+`--live` works on `depart`, `correct`, `flyby` and `verify`, and takes state from the game
+rather than the save. That removes the single most likely source of a wrong answer in
+practice: **the save is only as fresh as the last save.**
+
+### `crosscheck` — the part that matters
+
+Three comparisons, each against KSP rather than against more of my own code:
+
+1. **Ephemeris.** Every body's position at the game's own UT, game vs. this toolchain. A
+   wrong epoch moves every body *consistently*, so nothing internal notices — but the game
+   is not in on it. This check would have caught the B1950 bug in one command. It also
+   diffs μ, SOI and the `FlightGlobals.Bodies` index.
+2. **Vessel state.** The live state vector against the one rebuilt from the save's elements.
+   A disagreement here is either a reader bug or simply a stale save, and the UTs printed
+   alongside tell you which.
+3. **The shooter vs `PatchedConics`.** `/predict` applies a proposed burn to a throwaway
+   `Orbit` and runs *KSP's own* patched-conic solver over it, returning every patch. The
+   command lines that up against `patched.shoot` and reports, per patch, whether the bodies
+   match, how far apart the SOI transitions are, and how far apart the periapsides are.
+
+Endpoints: `/ping`, `/bodies`, `/vessels`, `/vessel`, `/predict`. There is no write endpoint
+— it cannot place a node or touch a save.
+
+### What is tested, and what is not
+
+The transport (HTTP framing, JSON, query parsing, threading, error paths) is covered by a
+standalone harness that compiles `AxeJson.cs` and `AxeBridgeServer.cs` outside KSP — neither
+has a KSP dependency. That run confirms doubles round-trip bit-exact, `NaN`/`Infinity`
+serialise as `null`, strings escape, values stay invariant under a comma-decimal locale, a
+throwing handler returns HTTP 500 without killing the server, and 90 concurrent requests
+across 6 threads all succeed.
+
+The KSP-facing handlers can only be exercised with the game running. `crosscheck` is how you
+do that, and until you have run it once the replica-vs-game agreement is still an assumption.
+
+**Threading.** Accept and socket I/O run off the main thread; every handler runs *on* it, via
+a queue that the worker blocks on. Nothing in the KSP or Unity API is thread-safe, and
+touching `FlightGlobals` from a socket thread shows up as a native crash in `Player.log` with
+no managed stack. KSPTOT Connect is built the same way for the same reason.
 
 ## The traps this encodes
 
