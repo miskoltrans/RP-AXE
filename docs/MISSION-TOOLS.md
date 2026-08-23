@@ -42,7 +42,7 @@ until the flown B-plane target is hit → shoot again and print the result.
 | `ksptot.py` | client for KSPTOT Connect — live vessel state, no new plugin needed |
 | `bridge.py` | client for the AXE bridge — `/predict` and `/bodies` only |
 | `plan.py` | the CLI |
-| `selftest.py` | 27 checks; run before trusting a number |
+| `selftest.py` | 32 checks; run before trusting a number |
 
 Older single-purpose scripts (`porkchop.py`, `jupiter_arrival.py`, `jovian_tour.py`,
 `link_budget.py`, `mass_budget.py`) still work and share `rss_ephem`.
@@ -140,6 +140,27 @@ no managed stack. KSPTOT Connect is built the same way for the same reason.
 
 Each of these has cost a mission or an evening. They are all now covered by `selftest`.
 
+**A body's radius is what ModuleManager left, not what the .cfg wrote.** RSS ships
+`Jupiter_Oblate.cfg` and three siblings that restate the gas giants' equatorial radius with
+`@radius *= 1.0226...`. Read the raw config and Jupiter is **1,569 km small**, Saturn 2,000,
+Uranus 192, Neptune 139 — while the other 28 bodies agree exactly, which is what kept it
+hidden. The trajectory never notices, because radius does not enter the propagation. Every
+printed altitude does, every `Rj` does, and so does any periapsis checked against a contract's
+altitude gate — `orbitJupiter` asks for `maxPeA = Radius * 2`, which is 141,884 km and not
+138,746. `ModuleManager.ConfigCache` is the post-patch truth and is already on disk, so
+`rss_ephem` reads radius from there and keeps the config value as `radius_cfg`.
+
+**An inbound patch starts exactly ON the SOI, and that must not read as "never exits".**
+Every patch the shooter creates at an SOI entry begins with `|r| == soi` to within rounding.
+`_exit_time` used to treat "outside the boundary and heading inward" as no exit at all, so an
+escaping flyby came back reported as a capture and the trajectory stopped dead at the body it
+had just entered. Which way it fell was decided by whether `|r| - soi` landed at `+1e-9` or
+`-1e-9`: **the same Perun 1 trajectory answered "leaves SOI 1970-04-14" on one run and
+"captured or it impacts" on the next**, with nothing changed but the save's UT. The scan now
+starts from the first sample that is genuinely inside. The lunar check in `selftest` had been
+silently truncated by this all along — it now flies `Earth/enter:Moon -> Moon/exit ->
+Earth/exit -> Sun/horizon` where it used to stop at `Moon/horizon`.
+
 **RSS states its elements at B1950.0, not at UT 0.** `RSSKopernicusSettings.cfg` carries
 `Epoch = -31542641.784` and Kopernicus propagates `M(t) = M0 + n(t - Epoch)`. Ignore it and
 every body is 365.08 days out of phase — *self-consistently*, so Lambert still closes to
@@ -215,7 +236,7 @@ Decompiled from the install's own `MechJeb2.dll` / `MechJebLib.dll` and `Assembl
 
 ## What `selftest` checks
 
-27 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
+32 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
 to 4e-12 over 400 random states, 37 circular orbits land exactly back on the start, energy
 holds to 6e-16 over 3,000 days, elements and the node basis round-trip, a Lambert arc really
 lands on its target position.
