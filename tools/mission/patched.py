@@ -101,14 +101,24 @@ def _exit_time(patch, soi, ut_end):
         return None
     f = lambda t: float(np.linalg.norm(patch.state(t)[0])) - soi
     # A patch that begins ON the boundary is the normal case -- it was just
-    # created by an SOI entry. Only call that an exit if it is heading outward,
-    # otherwise the solver bounces the vehicle straight back out of the SOI it
-    # just entered.
-    if f(patch.ut0) >= 0:
-        return patch.ut0 if float(patch.r0 @ patch.v0) > 0 else None
+    # created by an SOI entry. If it is already heading outward, the exit is now.
+    #
+    # If it is heading INWARD, the exit is the next outward crossing, NOT "never".
+    # Returning None there reports an escaping trajectory as "captured or impacts",
+    # and since |r| - soi at the entry instant is rounding noise, the verdict
+    # flipped between runs on the same trajectory: one call found the SOI exit, the
+    # next called the same flyby a capture. So the scan below starts from the first
+    # sample that is genuinely inside and looks for a crossing after that.
+    if f(patch.ut0) >= 0 and float(patch.r0 @ patch.v0) > 0:
+        return patch.ut0
     ts = np.linspace(patch.ut0, ut_end, 401)
     pos, _ = astro.sample_conic(patch.body.mu, patch.r0, patch.v0, ts - patch.ut0)
-    out = np.nonzero(np.linalg.norm(pos[1:], axis=1) >= soi)[0] + 1
+    d = np.linalg.norm(pos, axis=1) - soi
+    inside = np.nonzero(d < 0.0)[0]
+    if len(inside) == 0:
+        return None
+    i0 = int(inside[0])
+    out = np.nonzero(d[i0 + 1:] >= 0.0)[0] + i0 + 1
     for i in out:
         # sample_conic and Shepperd agree to ~1e-4 m; near the boundary that is
         # enough to make one say "outside" and the other "inside", so confirm the
