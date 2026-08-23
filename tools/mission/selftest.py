@@ -16,6 +16,7 @@ import numpy as np
 
 import astro
 import kepler_uv
+import launch as launch_mod
 import maneuver
 import patched
 from lambert import lambert
@@ -400,6 +401,129 @@ def test_bplane():
           f"b = {bp['b']:,.0f} m, from periapsis {b_from_pe:,.0f} m")
 
 
+def test_rotation(S):
+    """The rotation phase, which every launch time is built on.
+
+    KSP: rotationAngle = (initialRotation + 360 * UT / rotationPeriod) % 360, with a
+    tidally locked body's period replaced by its orbital one first. Read out of
+    CelestialBody.updateRotation, and checked here for shape -- the ABSOLUTE agreement
+    with the game is what `plan.py crosscheck` is for, since only the game can settle it.
+    """
+    check("Earth's initialRotation is read, not assumed zero",
+          abs(S.body("Earth").initial_rotation - 100.1833) < 1e-3,
+          f"{S.body('Earth').initial_rotation:.4f} deg")
+    check("rotation_angle at UT 0 is initialRotation",
+          abs(S.rotation_angle("Earth", 0.0) - S.body("Earth").initial_rotation) < 1e-9)
+
+    # One sidereal day must bring it back to the same angle. This catches a period read
+    # in the wrong units, which would otherwise only show as a launch time that drifts.
+    per = S.body("Earth").rot
+    a0 = S.rotation_angle("Earth", 5e8)
+    a1 = S.rotation_angle("Earth", 5e8 + per)
+    check("one rotation period returns the same angle",
+          abs(((a1 - a0 + 180) % 360) - 180) < 1e-6, f"{a1 - a0:+.3e} deg")
+
+    # A tidally locked body uses its ORBITAL period. The Moon's own rotationPeriod field
+    # is 6 s different from its orbital period, so reading the wrong one is a slow drift
+    # rather than an obvious error -- exactly the kind that survives.
+    moon_orbit = S.period("Moon")
+    a0 = S.rotation_angle("Moon", 5e8)
+    a1 = S.rotation_angle("Moon", 5e8 + moon_orbit)
+    check("a tidally locked body turns once per ORBIT",
+          abs(((a1 - a0 + 180) % 360) - 180) < 1e-6,
+          f"orbital {moon_orbit:,.1f} s vs its own field {S.body('Moon').rot:,.1f} s")
+    check("the Sun has no rotation angle rather than a zero one",
+          S.rotation_angle("Sun", 1e6) is None)
+
+
+def test_launch_geometry(S):
+    """Launch azimuth and plane crossings.
+
+    The azimuth is built from the in-plane velocity direction rather than from
+    sin(beta) = cos(i)/cos(phi), because that formula cannot tell an ascending pass from
+    a descending one. So the textbook value is what it is checked AGAINST: the two must
+    agree in magnitude, and the constructed one must additionally get the quadrant right.
+    """
+    sites = launch_mod.sites()
+    check("the launch-site table loads", len(sites) > 20, f"{len(sites)} sites")
+    cape = launch_mod.site("cape")
+    check("Cape Canaveral's latitude is read from the PQSCity block",
+          abs(cape.lat - 28.6084) < 0.01, f"{cape.lat:+.4f}")
+
+    # 408 m/s is the real figure at 28.6 N, and it is worth pinning: it is free dV, and a
+    # radius or period read wrong here would quietly misprice every ascent.
+    check("the pad's eastward speed matches the real Cape figure",
+          abs(cape.rotation_speed(S) - 408) < 5, f"{cape.rotation_speed(S):,.1f} m/s")
+
+    bad_az = bad_res = 0
+    for inc in (28.7, 35.0, 51.6, 90.0, 120.0, 145.0):
+        passes = launch_mod.plane_passes(cape, S, inc, 137.0, 5e8, count=4, v_orbit=7800.0)
+        if len(passes) != 4:
+            bad_res += 1
+            continue
+        n = launch_mod.plane_normal(inc, 137.0)
+        for q in passes:
+            # The pad really is in the plane at the reported instant.
+            r = cape.direction(S, q["ut"])
+            if abs(float(r @ n)) > 1e-8:
+                bad_res += 1
+            # ... and the azimuth matches the textbook one in magnitude.
+            want = math.degrees(math.asin(max(-1.0, min(1.0,
+                   math.cos(math.radians(inc)) / math.cos(math.radians(cape.lat))))))
+            got = q["azimuth_inertial"]
+            alt = 180.0 - want
+            if min(abs(((got - want + 180) % 360) - 180),
+                   abs(((got - alt + 180) % 360) - 180)) > 1e-6:
+                bad_az += 1
+    check("the pad is exactly in the plane at every reported crossing", bad_res == 0,
+          f"{bad_res} bad")
+    check("azimuth agrees with sin(beta) = cos(i)/cos(phi)", bad_az == 0, f"{bad_az} bad")
+
+    # Ascending and descending must both appear, and be distinguished. A solver that
+    # found only one root would still look right on a single line of output.
+    passes = launch_mod.plane_passes(cape, S, 51.6, 0.0, 5e8, count=2, v_orbit=7800.0)
+    check("both the ascending and the descending pass are found",
+          sorted(q["ascending"] for q in passes) == [False, True])
+
+    # Two crossings per rotation, so the pair repeats one sidereal day later -- NOT one
+    # solar day. Four minutes a day of drift is what makes a launch window slip.
+    p4 = launch_mod.plane_passes(cape, S, 51.6, 0.0, 5e8, count=4)
+    dt = p4[2]["ut"] - p4[0]["ut"]
+    check("crossings repeat once per sidereal day, not per solar day",
+          abs(dt - S.body("Earth").rot) < 1.0,
+          f"{dt:,.1f} s vs {S.body('Earth').rot:,.1f} s")
+
+    # An inclination below the pad's latitude is unreachable, and must be refused rather
+    # than silently returning the nearest thing.
+    try:
+        launch_mod.plane_passes(cape, S, 20.0, 0.0, 5e8)
+        check("an unreachable inclination is refused", False, "it returned an answer")
+    except ValueError as exc:
+        check("an unreachable inclination is refused", "cannot reach" in str(exc))
+
+    # plane_normal and plane_from_normal must invert each other, because the crossing
+    # solver and plan.py's park_orbit have to be talking about the same plane.
+    worst = 0.0
+    for inc in (5.0, 28.5, 63.4, 98.0, 145.0):
+        for raan in (0.0, 77.0, 190.0, 300.0):
+            i2, o2 = launch_mod.plane_from_normal(launch_mod.plane_normal(inc, raan))
+            worst = max(worst, abs(i2 - inc), abs(((o2 - raan + 180) % 360) - 180))
+    check("plane_normal and plane_from_normal invert", worst < 1e-9, f"worst {worst:.2e} deg")
+
+    # And the normal must match the one the trusted parking-orbit builder produces --
+    # this is the join between the launch solver and every burn plan.py already prints.
+    import plan
+    worst = 0.0
+    for inc in (28.7, 63.4, 98.0):
+        for raan in (0.0, 137.0, 285.0):
+            pos, vel = plan.park_orbit(S.body("Earth"), 185.0, inc, raan)
+            h = np.cross(pos, vel)
+            h = h / np.linalg.norm(h)
+            worst = max(worst, float(np.linalg.norm(h - launch_mod.plane_normal(inc, raan))))
+    check("the plane normal matches park_orbit's angular momentum", worst < 1e-12,
+          f"worst {worst:.2e}")
+
+
 def run(S=None, verbose=True):
     _results.clear()
     S = S or System()
@@ -414,6 +538,8 @@ def run(S=None, verbose=True):
     test_ejection(S)
     test_soi_detection(S)
     test_soi_exit_on_boundary(S)
+    test_rotation(S)
+    test_launch_geometry(S)
     save = test_save(S)
     test_node_sign_against_game(S, save)
     return _report(verbose)

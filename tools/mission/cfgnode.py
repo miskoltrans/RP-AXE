@@ -36,6 +36,20 @@ class Node:
         except ValueError:
             return default
 
+    def getb(self, key, default=False):
+        """A boolean. KSP's parser accepts True/true/1 and their negatives alike, so
+        matching only "True" would read a perfectly valid `tidallyLocked = true` as
+        false."""
+        v = self.get(key)
+        if v is None:
+            return default
+        t = v.strip().lower()
+        if t in ("true", "yes", "1"):
+            return True
+        if t in ("false", "no", "0"):
+            return False
+        return default
+
     def getall(self, key):
         return [v for k, v in self.values if k == key]
 

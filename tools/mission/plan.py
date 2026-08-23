@@ -3,10 +3,11 @@
     python plan.py bodies
     python plan.py vessels
     python plan.py state "Perun 1"
-    python plan.py window Earth Jupiter 1964-01-01 1968-01-01
+    python plan.py window Earth Jupiter 1964-01-01 1968-01-01 --site cape
+    python plan.py launch  --target Jupiter --depart 1966-09-26 --site cape --alarm
     python plan.py depart --vessel "Perun 2" --target Jupiter --arrive 1970-05-01
     python plan.py depart --park 185 28.5 --body Earth --target Moon
-    python plan.py correct --vessel "Perun 1" --target Jupiter --peri 2.5Rj
+    python plan.py correct --vessel "Perun 1" --target Jupiter --peri 2.5Rj --push
     python plan.py flyby   --vessel "Perun 1" Jupiter
     python plan.py verify  --vessel "Perun 1" --target Jupiter
     python plan.py selftest
@@ -14,6 +15,10 @@
 Every burn is printed in the form KSP wants it: a UT and the three ManeuverNode
 components. Every answer is followed by what happens when the result is actually
 flown, because the two have disagreed before.
+
+--push places the burn in the running game as a maneuver node instead of making you
+retype it, and prints KSP's own flight plan for what it just placed. --alarm sets a
+KAC alarm for it. Both need the bridge on (-axe-bridge).
 """
 import argparse
 import json
@@ -25,6 +30,7 @@ import numpy as np
 import astro
 import bridge as bridge_mod
 import ksptot as ksptot_mod
+import launch as launch_mod
 import maneuver
 import patched
 from lambert import lambert
@@ -146,6 +152,68 @@ def print_node(system, body, r, v, dv, ut, now=None, label="BURN"):
     print(f"    radial   {node[0]:+12,.2f} m/s")
     print(f"    total    {mag:12,.2f} m/s")
     return node, mag
+
+
+def push_burns(args, burns, what="burn"):
+    """Place computed burns in the running game, and/or set an alarm for the first one.
+
+    `burns` is [(ut, (radial, normal, prograde)), ...] -- exactly what print_node prints.
+
+    The response carries KSP's OWN flight plan for what was just placed, and it is
+    printed rather than discarded. That is the entire reason to write through the bridge
+    instead of typing six numbers into a gizmo: a sign error shows up here, one line
+    later, instead of three hours into a time warp.
+    """
+    if not getattr(args, "push", False) and getattr(args, "alarm", None) is None:
+        return
+    if not burns:
+        print("\n  (nothing to push -- no burn was solved)")
+        return
+    br = bridge_mod.Bridge(port=args.port)
+    vessel = getattr(args, "push_vessel", None) or getattr(args, "vessel", None)
+
+    if getattr(args, "push", False):
+        if not vessel:
+            sys.exit("--push needs a vessel: pass --vessel NAME (a --park orbit is "
+                     "hypothetical, so there is nothing in the game to place a node on)")
+        try:
+            res = br.place_nodes([(ut, n[0], n[1], n[2]) for ut, n in burns],
+                                 name=vessel, replace=not args.push_add)
+        except bridge_mod.BridgeError as exc:
+            sys.exit(f"  push failed: {exc}")
+        print(f"\n  PUSHED to {res['vessel']}: placed {res['placed']} node(s)"
+              + (f", removed {res['removed']}" if res.get("removed") else ""))
+        for n in res.get("nodes", []):
+            print(f"    node {fmt_ut(n['ut'])}   prograde {n['prograde']:+11,.2f}  "
+                  f"normal {n['normal']:+11,.2f}  radial {n['radial']:+11,.2f}  "
+                  f"total {n['magnitude']:,.2f} m/s")
+        plan = res.get("flight_plan") or []
+        if plan:
+            print("    KSP's own flight plan for what was just placed:")
+            for i, pt in enumerate(plan):
+                pe = pt.get("peR")
+                print(f"      {i}: {pt.get('body'):10s} {fmt_ut(pt.get('start_ut'))}"
+                      f" -> {pt.get('transition')}"
+                      + (f"   pe {pe / 1e3:,.0f} km" if pe else ""))
+        else:
+            # An empty flight plan after a successful place is not "fine": it means KSP
+            # solved the burn into nothing. Say so rather than letting the ok stand alone.
+            print("    KSP returned an EMPTY flight plan for these nodes -- check the burn.")
+
+    if getattr(args, "alarm", None) is not None:
+        ut0 = burns[0][0]
+        name = args.alarm or f"AXE {what}"
+        notes = (f"{what} placed by plan.py: "
+                 + ", ".join(f"{fmt_ut(ut)} dV {math.sqrt(sum(x * x for x in n)):,.1f} m/s"
+                             for ut, n in burns))
+        try:
+            res = br.alarm(ut0, name=name, notes=notes, margin=args.alarm_margin,
+                           vessel=vessel, type=args.alarm_type)
+        except bridge_mod.BridgeError as exc:
+            sys.exit(f"  alarm failed: {exc}")
+        print(f"  ALARM  \"{name}\" ({res['backend']}) at {fmt_ut(ut0)}"
+              + (f", firing {args.alarm_margin:,.0f} s early" if args.alarm_margin else "")
+              + f"   [id {res['id']}]")
 
 
 def print_arrival(system, target, rep, indent="    "):
@@ -279,17 +347,74 @@ def cmd_window(args):
         picked.append(i)
         if len(picked) >= args.top:
             break
-    print(f"{dep.name} -> {arr.name}  from a {args.alt:.0f} km parking orbit around {dep.name}"
-          f"   ({len(deps)} departures x {len(tofs)} TOFs)")
-    print(f"{'departure':>12s} {'TOF d':>7s} {'arrival':>12s} {'C3':>8s} {'dv dep':>8s} "
-          f"{'vinf arr':>9s} {'DLA':>7s}")
+    # The parking plane. A departure dV is meaningless without one -- from an arbitrary
+    # node an Earth->Moon injection costs 3,426 m/s with 1,100 m/s of plane change in it,
+    # and 3,143 m/s essentially pure prograde from the coplanar node. So solve the RAAN
+    # that makes each window coplanar and print it, rather than quoting an inflated number
+    # and leaving the reader to discover why.
+    site = None
+    inc = args.inc
+    if args.site:
+        site = launch_mod.site(args.site, instance=args.instance, body=dep.name)
+        if inc is None:
+            inc = site.min_inclination()
+    if inc is None:
+        inc = 28.5
+
+    print(f"{dep.name} -> {arr.name}  from a {args.alt:.0f} km x {inc:.2f} deg parking orbit "
+          f"around {dep.name}   ({len(deps)} departures x {len(tofs)} TOFs)")
+    if site:
+        print(f"  launch times are for {site.display} ({site.lat:+.3f}, {site.lon:+.3f}); "
+              f"it cannot reach below i {site.min_inclination():.2f} deg")
+    head = (f"{'departure':>12s} {'TOF d':>7s} {'arrival':>12s} {'C3':>8s} {'dv dep':>8s} "
+            f"{'vinf arr':>9s} {'DLA':>7s} {'RAAN':>7s}")
+    if site:
+        head += f" {'launch (UTC)':>17s} {'az':>7s}"
+    print(head)
     for i in sorted(picked):
         td, tf, c3, dv, vinf_a, dla = rows[i]
-        print(f"{date_of(td):%Y-%m-%d}   {tf / DAY:7.0f} {date_of(td + tf):%Y-%m-%d}   "
-              f"{c3:8.2f} {dv:8,.0f} {vinf_a:9,.0f} {dla:7.2f}")
+        r1, v1b = system.state(dep.name, td, centre)
+        r2, v2b = system.state(arr.name, td + tf, centre)
+        raan = None
+        try:
+            vt1, _ = lambert(mu, np.array(r1), np.array(r2), tf)
+            cands = align_raan(inc, np.asarray(vt1) - np.asarray(v1b))
+            raan = cands[0] if cands else None
+        except Exception:                                           # noqa: BLE001
+            raan = None
+        line = (f"{date_of(td):%Y-%m-%d}   {tf / DAY:7.0f} {date_of(td + tf):%Y-%m-%d}   "
+                f"{c3:8.2f} {dv:8,.0f} {vinf_a:9,.0f} {dla:7.2f} "
+                + (f"{raan:7.2f}" if raan is not None else f"{'--':>7s}"))
+        if site:
+            when = az = None
+            if raan is not None:
+                try:
+                    # The pad crossing nearest the departure instant, not merely the next
+                    # one after it: a window quoted at midnight would otherwise report a
+                    # launch most of a day late for no reason.
+                    ps = launch_mod.plane_passes(site, system, inc, raan, td - DAY, count=4)
+                    if ps:
+                        best_p = min(ps, key=lambda q: abs(q["ut"] - td))
+                        when, az = best_p["ut"], best_p["azimuth_inertial"]
+                except ValueError:
+                    when = az = None
+            line += (f" {date_of(when):%m-%d %H:%M}     {az:7.2f}" if when is not None
+                     else f" {'unreachable':>17s} {'--':>7s}")
+        print(line)
     if dropped:
         print(f"  ({dropped} further local minima were above {args.max_c3:.0f}x the best C3 of "
               f"{best_c3:.1f} and are not launch windows; raise --max-c3 to see them)")
+    print("  RAAN is the parking-orbit ascending node that makes the departure coplanar; "
+          "`depart` re-solves it exactly.")
+    if not site:
+        print("  Pass --site NAME (e.g. --site cape) to get the launch time of day as well.")
+    else:
+        unreachable = [i for i in picked if rows[i][5] > inc or rows[i][5] < -inc]
+        if unreachable:
+            print(f"  \"unreachable\" means the departure asymptote leaves at a declination "
+                  f"steeper than i {inc:.2f} deg, so no parking orbit from this pad contains "
+                  f"it: that window costs a plane change or a dogleg on top of the dV above.")
+        _warn_uncalibrated(site)
 
 
 def _hohmann_days(system, dep, arr, r_from=None):
@@ -386,7 +511,8 @@ def cmd_depart(args):
         mag, ut_node, t_arr, rn, vn, dv = best
         print(f"  searched phase around one orbit x TOF {lo:.2f}-{hi:.2f} d; best is "
               f"{(t_arr - ut_node) / DAY:.3f} d time of flight, arriving {fmt_ut(t_arr)}")
-        print_node(system, body, rn, vn, dv, ut_node, now=(save.ut if save else None))
+        node, _ = print_node(system, body, rn, vn, dv, ut_node, now=(save.ut if save else None))
+        args._burn = (ut_node, node)
         hyp = astro.elements(body.mu, rn, vn + dv)
         print(f"    injection orbit: e {hyp.ecc:.5f}, i {math.degrees(hyp.inc):.2f} deg, "
               f"apoapsis "
@@ -425,7 +551,8 @@ def cmd_depart(args):
         ut_node = t_dep + s["dt"]
         rn, vn = astro.propagate(body.mu, r0, v0, s["dt"])
         dv = s["dv"]
-        print_node(system, body, rn, vn, dv, ut_node, now=(save.ut if save else None))
+        node, _ = print_node(system, body, rn, vn, dv, ut_node, now=(save.ut if save else None))
+        args._burn = (ut_node, node)
         hyp = astro.elements(body.mu, rn, vn + dv)
         print(f"    ejection hyperbola: e {hyp.ecc:.5f}, i {math.degrees(hyp.inc):.2f} deg, "
               f"periapsis {(hyp.peR - body.radius) / 1e3:,.0f} km, coast to burn "
@@ -448,8 +575,9 @@ def cmd_depart(args):
               f"R{target.name[0].lower()} ({(peR - target.radius) / 1e3:,.0f} km altitude) ---")
         res = maneuver.refine(system, body.name, rn, vn + dv, ut_node, target.name,
                               t_end, peR_want=peR, watch=[target.name] + list(args.via or []))
-        print_node(system, body, rn, vn, dv + res["dv"], ut_node,
-                   now=(save.ut if save else None), label="BURN")
+        node, _ = print_node(system, body, rn, vn, dv + res["dv"], ut_node,
+                             now=(save.ut if save else None), label="BURN")
+        args._burn = (ut_node, node)      # the refined burn supersedes the raw one
         print(f"    (that is {np.linalg.norm(res['dv']):,.2f} m/s different from the "
               f"uncorrected burn, found in {res['nfev']} shots)")
         print_arrival(system, target.name, res["report"])
@@ -458,6 +586,8 @@ def cmd_depart(args):
         print("\n  patches:")
         for line in traj.summary().splitlines():
             print("   ", line)
+    burn = getattr(args, "_burn", None)
+    push_burns(args, [burn] if burn else [], what="ejection")
 
 
 def cmd_correct(args):
@@ -491,9 +621,10 @@ def cmd_correct(args):
         sys.exit("  none of the sampled burn times reached the aim point")
     print()
     r, v = astro.propagate(body.mu, r0, v0, best["ut"] - ut0)
-    print_node(system, body, r, v, best["dv"], best["ut"], now=(save.ut if save else None),
-               label="CORRECTION")
+    node, _ = print_node(system, body, r, v, best["dv"], best["ut"],
+                         now=(save.ut if save else None), label="CORRECTION")
     print_arrival(system, target.name, best["res"]["report"])
+    push_burns(args, [(best["ut"], node)], what="correction")
     ok_scan = [o for o in scan if o["ok"]]
     if len(ok_scan) > 1:
         first, last = ok_scan[0], ok_scan[-1]
@@ -535,8 +666,9 @@ def cmd_flyby(args):
                          f"{' -- that is too far to fix with one burn' if arr['ca_dist'] > 50 * fly.soi else ''}"
                          f"; try `depart` for a fresh transfer instead.")
             r, v = astro.propagate(body.mu, r0, v0, best["ut"] - ut0)
-            print_node(system, body, r, v, best["dv"], best["ut"],
-                       now=(save.ut if save else None), label="AIM BURN")
+            node, _ = print_node(system, body, r, v, best["dv"], best["ut"],
+                                 now=(save.ut if save else None), label="AIM BURN")
+            args._burn = (best["ut"], node)
             traj = best["res"]["traj"]
             rep = maneuver.flyby_report(system, traj, fly.name, t_end)
         else:
@@ -560,6 +692,8 @@ def cmd_flyby(args):
         print("\n  patches:")
         for line in traj.summary().splitlines():
             print("   ", line)
+    burn = getattr(args, "_burn", None)
+    push_burns(args, [burn] if burn else [], what="flyby aim burn")
 
 
 def cmd_verify(args):
@@ -587,6 +721,166 @@ def cmd_verify(args):
         if args.target:
             print_arrival(system, args.target, patched.arrival_report(system, traj, args.target, t_end), indent="      ")
         print()
+
+
+def _warn_uncalibrated(site, calibrated=False):
+    """Say plainly when a launch TIME is only right up to an unknown constant.
+
+    The pad's inertial longitude needs a zero point that is not written down anywhere,
+    so launch.py measures it from the running game and falls back to a module constant.
+    An uncalibrated answer has the right SHAPE -- right spacing, right azimuth, right
+    inclination limits -- and a possibly wrong absolute time, which is exactly the kind
+    of wrongness that gets trusted. So it is stated every time rather than buried.
+    """
+    if calibrated or site.calibrated:
+        return
+    print(f"  NOTE: the launch TIME is uncalibrated (offset {site.offset:+.3f} deg assumed). "
+          f"Spacing, azimuth and the plane are right regardless; the absolute time of day "
+          f"is only right if that offset is. Run with --live, or check it with "
+          f"`plan.py crosscheck --sites`.")
+
+
+def _calibrate_site(site, system, args):
+    """Pin the site's zero point from the running game. Returns True if it worked."""
+    try:
+        br = bridge_mod.Bridge(port=args.port)
+        data = br.sites()
+    except bridge_mod.BridgeError as exc:
+        print(f"  (not calibrated against the game: {exc})")
+        return False
+    ut = data.get("ut")
+    for entry in data.get("sites", []):
+        for sp in entry.get("spawn_points", []):
+            r = sp.get("r_zup")
+            if not r or not sp.get("resolved", True):
+                continue
+            # KSCSwitcher relocates the single KSC, so the game reports ONE pad wherever
+            # the save put it. Match on position, not on name: the game's site is called
+            # "KSC" no matter which historical pad it currently sits on.
+            if abs(sp.get("latitude", 999) - site.lat) > 0.05:
+                continue
+            if abs(((sp.get("longitude", 999) - site.lon + 180) % 360) - 180) > 0.05:
+                continue
+            off = site.calibrate(system, ut, r)
+            if off is not None:
+                print(f"  calibrated against the running game at {fmt_ut(ut)}: "
+                      f"offset {off:+.4f} deg")
+                return True
+    print(f"  (the game is not currently at {site.display}; its live pad is somewhere else, "
+          f"so the zero point could not be measured -- switch KSC or drop --live)")
+    return False
+
+
+def cmd_launch(args):
+    """When to launch, from where, on what heading, to reach a given orbit plane."""
+    system, save = load(args)
+    body = system.body(args.body)
+    if args.site:
+        site = launch_mod.site(args.site, instance=args.instance, body=body.name)
+    else:
+        site = launch_mod.active_site(save, instance=args.instance, body=body.name)
+        if site is None:
+            sys.exit("no launch sites found; pass --site NAME")
+    inc = args.inc if args.inc is not None else max(args.park_inc, site.min_inclination())
+
+    print(f"LAUNCH  {site.display}  ({site.lat:+.4f}, {site.lon:+.4f}) on {body.name}")
+    print(f"  reachable inclinations {site.min_inclination():.3f} to "
+          f"{180 - site.min_inclination():.3f} deg without a plane change")
+    print(f"  the pad is already moving east at {site.rotation_speed(system):,.1f} m/s")
+
+    calibrated = _calibrate_site(site, system, args) if args.live else False
+
+    # --- what plane? -----------------------------------------------------
+    raan = args.raan
+    if raan is None:
+        if not args.target:
+            sys.exit("say which plane: --raan DEG, or --target BODY (with --depart DATE) "
+                     "to solve for the one that makes the departure coplanar")
+        target = system.body(args.target)
+        t_dep = parse_date(args.depart) if args.depart else (save.ut if save else 0.0)
+        direct = (target.parent == body.name)
+        if direct:
+            hoh = _hohmann_days(system, body, target, r_from=body.radius + args.alt * 1e3)
+            u, _ = system.rel(target.name, t_dep + hoh * DAY)
+        else:
+            hoh = _hohmann_days(system, body, target)
+            u, _, _ = maneuver.vinf_for_transfer(system, body.name, target.name,
+                                                 t_dep, t_dep + hoh * DAY)
+        cands = align_raan(inc, np.asarray(u))
+        if not cands:
+            sys.exit(f"inclination {inc:.2f} deg cannot contain the departure direction to "
+                     f"{target.name}; it needs at least {math.degrees(math.asin(min(1.0, abs(np.asarray(u)[2] / np.linalg.norm(u))))):.2f} deg")
+        raan = cands[0]
+        print(f"  departing to {target.name} on {fmt_ut(t_dep)}: the coplanar parking RAAN is "
+              f"{cands[0]:.2f} deg (the other node is {cands[1]:.2f} deg)")
+    after = parse_date(args.after) if args.after else (save.ut if save else 0.0)
+
+    print(f"  target plane: i {inc:.3f} deg, RAAN {raan:.3f} deg\n")
+    try:
+        passes = launch_mod.plane_passes(site, system, inc, raan, after,
+                                         count=args.count, v_orbit=args.v_orbit)
+    except ValueError as exc:
+        sys.exit(f"  {exc}")
+    if not passes:
+        sys.exit("  no crossing found -- that should not happen; report it")
+
+    print(f"  {'launch (UTC)':>22s} {'from now':>12s} {'az inertial':>12s} "
+          f"{'az flown':>10s} {'node':>11s}")
+    for q in passes:
+        dt = q["ut"] - after
+        print(f"  {date_of(q['ut']):%Y-%m-%d %H:%M:%S} {dt / 3600:10,.2f} h "
+              f"{q['azimuth_inertial']:12.2f} {q.get('azimuth_flown', float('nan')):10.2f} "
+              f"{'ascending' if q['ascending'] else 'descending':>11s}")
+    print(f"\n  az flown is the heading to actually fly: the pad already supplies "
+          f"{site.rotation_speed(system):,.0f} m/s of eastward velocity, so the vehicle "
+          f"provides only the difference.")
+    _warn_uncalibrated(site, calibrated)
+
+    if args.alarm is not None:
+        pick = passes[args.pick]
+        name = args.alarm or f"AXE launch {site.name}"
+        notes = (f"launch {site.display} into i {inc:.2f} RAAN {raan:.2f}, "
+                 f"azimuth {pick.get('azimuth_flown', pick['azimuth_inertial']):.2f} deg"
+                 + ("" if calibrated else "  [UNCALIBRATED time of day]"))
+        try:
+            br = bridge_mod.Bridge(port=args.port)
+            res = br.alarm(pick["ut"], name=name, notes=notes, margin=args.alarm_margin,
+                           type=args.alarm_type)
+        except bridge_mod.BridgeError as exc:
+            sys.exit(f"  alarm failed: {exc}")
+        print(f"\n  ALARM  \"{name}\" ({res['backend']}) at {fmt_ut(pick['ut'])}"
+              + (f", firing {args.alarm_margin:,.0f} s early" if args.alarm_margin else "")
+              + f"   [id {res['id']}]")
+
+
+def cmd_alarms(args):
+    """List the alarms the game is holding, or delete one."""
+    br = bridge_mod.Bridge(port=args.port)
+    if args.delete:
+        try:
+            br.delete_alarm(args.delete)
+        except bridge_mod.BridgeError as exc:
+            sys.exit(str(exc))
+        print(f"deleted alarm {args.delete}")
+        return
+    try:
+        data = br.alarms()
+    except bridge_mod.BridgeError as exc:
+        sys.exit(str(exc))
+    print(f"alarms via {data['backend']}   (UT {fmt_ut(data['ut'])})")
+    if data.get("kac"):
+        print(f"  {data['kac']}")
+    rows = sorted(data.get("alarms", []), key=lambda a: a.get("ut", 0.0))
+    if not rows:
+        print("  (none)")
+    for a in rows:
+        print(f"  {fmt_ut(a['ut'])}  {a.get('remaining', 0) / 3600:9,.2f} h  "
+              f"{(a.get('type') or '?'):16s} {(a.get('name') or ''):32.32s} [{a.get('id')}]")
+        if a.get("notes"):
+            print(f"      {a['notes'][:110]}")
+    if data.get("alarm_types"):
+        print("\n  types KAC accepts:  " + ", ".join(data["alarm_types"]))
+        print("  actions:            " + ", ".join(data.get("alarm_actions", [])))
 
 
 def cmd_bridge(args):
@@ -651,6 +945,15 @@ def cmd_crosscheck(args):
     idx_bad = [r["body"] for r in rows if r["index_game"] != r["index_mine"]]
     soi_bad = [r["body"] for r in rows if abs(r["soi_game"] - r["soi_mine"]) > 1.0]
     print(f"  worst relative position error {worst:.2e} over {len(rows)} bodies")
+    rot_rows = [r for r in rows if "rot_err_deg" in r]
+    if rot_rows:
+        worst_rot = max(rot_rows, key=lambda r: abs(r["rot_err_deg"]))
+        print(f"  rotation phase: worst disagreement {worst_rot['rot_err_deg']:+.6f} deg "
+              f"on {worst_rot['body']}, over {len(rot_rows)} rotating bodies")
+        if abs(worst_rot["rot_err_deg"]) > 1e-3:
+            fails.append(f"rotation angle on {worst_rot['body']} is "
+                         f"{worst_rot['rot_err_deg']:+.4f} deg out -- every launch TIME on it "
+                         f"is wrong by {abs(worst_rot['rot_err_deg']) / 360 * (system.body(worst_rot['body']).rot or 0) / 60:,.1f} min")
     if worst > 1e-6:
         fails.append(f"ephemeris disagrees with the game by {worst:.2e} relative "
                      f"-- suspect the epoch or the element parse")
@@ -658,6 +961,53 @@ def cmd_crosscheck(args):
         fails.append("body index mismatch: " + ", ".join(idx_bad))
     if soi_bad:
         fails.append("SOI mismatch: " + ", ".join(soi_bad))
+
+    if args.sites:
+        print("\n=== launch sites: the pad position, game vs the config ===")
+        try:
+            data = br.sites()
+        except bridge_mod.BridgeError as exc:
+            print(f"  unavailable: {exc}")
+            data = None
+        if data:
+            table = launch_mod.sites(instance=args.instance)
+            live_ut = data["ut"]
+            print(f"  the game is holding {len(data['sites'])} site(s) at UT {fmt_ut(live_ut)}")
+            for entry in data["sites"]:
+                for sp in entry.get("spawn_points", []):
+                    if not sp.get("resolved", True) or sp.get("r_zup") is None:
+                        continue
+                    lat, lon = sp["latitude"], sp["longitude"]
+                    match = None
+                    for cand in table.values():
+                        if (abs(cand.lat - lat) < 0.05
+                                and abs(((cand.lon - lon + 180) % 360) - 180) < 0.05):
+                            match = cand
+                            break
+                    label = f"{entry.get('name')}/{sp.get('name')}"
+                    print(f"  {label:28.28s} {lat:+9.4f} {lon:+10.4f}  "
+                          f"config match: {match.name if match else 'NONE'}")
+                    if match is None:
+                        # Not a failure. KSCSwitcher relocates the pad, and a save sitting on
+                        # a site that is not in the shipped list is a legitimate state.
+                        continue
+                    off = match.calibrate(system, live_ut, sp["r_zup"])
+                    if off is None:
+                        continue
+                    drift = ((off - launch_mod.OFFSET_DEG + 180) % 360) - 180
+                    print(f"  {'':28s} measured zero point {off:+.4f} deg; "
+                          f"launch.OFFSET_DEG is {launch_mod.OFFSET_DEG:+.4f} "
+                          f"({drift:+.4f} deg out"
+                          + (f" = {abs(drift) / 360 * (system.body(match.body).rot or 0) / 60:,.1f} min "
+                             f"of launch time)" if drift else ")"))
+                    # A wrong constant here shifts every OFFLINE launch time by the same
+                    # amount and stays perfectly self-consistent, so this is the only place
+                    # it can be caught.
+                    if abs(drift) > 0.01:
+                        fails.append(f"launch.OFFSET_DEG is {drift:+.4f} deg out against the "
+                                     f"game (measured {off:+.4f}); every offline launch time "
+                                     f"is shifted by "
+                                     f"{abs(drift) / 360 * (system.body(match.body).rot or 0) / 60:,.1f} min")
 
     if not args.vessel:
         print("\n  (pass --vessel NAME to also check a vessel state and the shooter)")
@@ -744,6 +1094,16 @@ def main(argv=None):
     ap.add_argument("--instance", default=r"C:/git/ksp/Instance")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
+    def alarm_flags(p):
+        p.add_argument("--alarm", nargs="?", const="", metavar="NAME",
+                       help="set an alarm for the result (KAC, or the stock clock if KAC is "
+                            "absent). Give a name, or pass it bare for a default one.")
+        p.add_argument("--alarm-margin", type=float, default=0.0, metavar="SECONDS",
+                       help="fire the alarm this many seconds early (default 0)")
+        p.add_argument("--alarm-type", default="Raw",
+                       help="KAC alarm type; `plan.py alarms` lists what KAC accepts. "
+                            "Contract/ContractAuto are refused -- KAC deletes those.")
+
     def common(p, vessel=True):
         if vessel:
             p.add_argument("--vessel", help="vessel name from the save (substring is enough)")
@@ -763,6 +1123,15 @@ def main(argv=None):
         p.add_argument("--horizon", type=float, default=400.0,
                        help="days past arrival to keep flying (default 400)")
         p.add_argument("--trajectory", action="store_true", help="print every patch")
+        if vessel:
+            alarm_flags(p)
+            p.add_argument("--push", action="store_true",
+                           help="place the solved burn in the running game as a maneuver node "
+                                "(needs -axe-bridge and --vessel)")
+            p.add_argument("--push-add", action="store_true",
+                           help="keep the vessel's existing nodes instead of replacing them")
+            p.add_argument("--push-vessel",
+                           help="push to this vessel instead of --vessel")
 
     p = sub.add_parser("bodies", help="every celestial, as the game loaded it")
     p.set_defaults(func=cmd_bodies)
@@ -786,12 +1155,43 @@ def main(argv=None):
     p.add_argument("--step", type=float, default=5.0)
     p.add_argument("--tofstep", type=float, default=5.0)
     p.add_argument("--alt", type=float, default=185.0, help="parking altitude, km")
+    p.add_argument("--inc", type=float,
+                   help="parking inclination, deg (default: the site's latitude, else 28.5)")
+    p.add_argument("--site", help="launch site, to also print the launch time of day")
     p.add_argument("--top", type=int, default=12)
     p.add_argument("--sep", type=float, default=150.0, help="days between distinct windows")
     p.add_argument("--include-capture", action="store_true")
     p.add_argument("--max-c3", type=float, default=3.0,
                    help="drop local minima worse than this multiple of the best C3")
     p.set_defaults(func=cmd_window)
+
+    p = sub.add_parser("launch", help="when to launch to reach a given orbit plane")
+    p.add_argument("--site", help="launch site name (default: the one the save is using)")
+    p.add_argument("--body", default="Earth", help="body being launched from")
+    p.add_argument("--target", help="solve the plane that makes a departure to this body coplanar")
+    p.add_argument("--depart", help="departure date, with --target")
+    p.add_argument("--inc", type=float, help="parking inclination, deg")
+    p.add_argument("--park-inc", type=float, default=28.5,
+                   help="inclination floor when --inc is not given (raised to the site's latitude)")
+    p.add_argument("--raan", type=float, help="parking RAAN, deg -- give this or --target")
+    p.add_argument("--alt", type=float, default=185.0, help="parking altitude, km")
+    p.add_argument("--after", help="earliest launch date to report (default: the save's UT)")
+    p.add_argument("--count", type=int, default=6, help="crossings to list")
+    p.add_argument("--pick", type=int, default=0, help="which listed crossing --alarm uses")
+    p.add_argument("--v-orbit", type=float, default=7800.0,
+                   help="orbital speed used for the rotation correction on the flown azimuth")
+    p.add_argument("--live", action="store_true",
+                   help="calibrate the pad's zero point against the running game -- do this, "
+                        "or the time of day is only right up to an unknown constant")
+    p.add_argument("--save")
+    p.add_argument("--port", type=int, default=bridge_mod.DEFAULT_PORT)
+    alarm_flags(p)
+    p.set_defaults(func=cmd_launch)
+
+    p = sub.add_parser("alarms", help="list the alarms the game is holding")
+    p.add_argument("--port", type=int, default=bridge_mod.DEFAULT_PORT)
+    p.add_argument("--delete", metavar="ID", help="delete this alarm instead of listing")
+    p.set_defaults(func=cmd_alarms)
 
     p = sub.add_parser("depart", help="ejection burn onto a transfer")
     common(p)
@@ -844,6 +1244,8 @@ def main(argv=None):
     p.add_argument("--top", type=int, default=8, help="worst N bodies to print")
     p.add_argument("--tol-s", type=float, default=1.0,
                    help="allowed disagreement in an SOI transition time, seconds")
+    p.add_argument("--sites", action="store_true",
+                   help="also check the launch-site zero point that launch times depend on")
     p.set_defaults(func=cmd_crosscheck)
 
     p = sub.add_parser("selftest", help="check the whole chain against known answers")

@@ -1,11 +1,17 @@
-"""Client for the AXE query bridge — ask the running game instead of the save.
+"""Client for the AXE bridge — ask the running game instead of the save, and tell it things.
 
 This covers only what KSPTOT Connect cannot: /predict, which runs KSP's OWN
-patched-conic solver over a proposed burn, and /bodies, which reports the SOI and the
-FlightGlobals index that KSPTOT does not send. Live VESSEL state comes from
-ksptot.py -- KSPTOT Connect is already installed and already serves it.
+patched-conic solver over a proposed burn, /bodies, which reports the SOI, the
+FlightGlobals index and the rotation phase that KSPTOT does not send, /sites, and the
+write endpoints. Live VESSEL state comes from ksptot.py -- KSPTOT Connect is already
+installed and already serves it.
 
-Needs the bridge switched on in KSP (it is off by default, and read-only):
+The writes exist because reading six numbers off a terminal and typing them into a node
+gizmo is where the precision was being lost. place_nodes() returns KSP's resulting
+flight plan in the same call that placed the burn, so a sign error is visible
+immediately rather than three hours into a time warp.
+
+Needs the bridge switched on in KSP (it is off by default):
 
     KSP_x64.exe -axe-bridge          or  AXE_BRIDGE=1
     or  enabled = true  in  GameData/RP-AXE/Plugins/PluginData/Bridge.cfg
@@ -64,6 +70,41 @@ class Bridge:
             raise BridgeError(f"{path}: {data.get('error', 'refused, with no reason given')}")
         return data
 
+    def post(self, path, **body):
+        """POST a JSON body. Writes are POST-only on the bridge side.
+
+        None-valued keys are dropped rather than sent as null: "vessel": null would
+        read as an explicit request to match a vessel named nothing, and the bridge
+        would rightly refuse it.
+        """
+        payload = json.dumps({k: v for k, v in body.items() if v is not None}).encode("utf-8")
+        req = urllib.request.Request(
+            self.base + path, data=payload, method="POST",
+            headers={"Content-Type": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=self.timeout) as fh:
+                data = json.loads(fh.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            # HTTPError subclasses URLError and MUST be caught first, or "the handler
+            # threw X" turns into "is KSP running?". See get().
+            raw = ""
+            try:
+                raw = exc.read().decode("utf-8", "replace")
+                msg = json.loads(raw).get("error")
+            except Exception:                                       # noqa: BLE001
+                msg = None
+            raise BridgeError(f"{path}: HTTP {exc.code}: {msg or raw[:300] or exc.reason}") from None
+        except urllib.error.URLError as exc:
+            raise BridgeError(
+                f"cannot reach the AXE bridge at {self.base} ({exc.reason}).\n"
+                f"  Is KSP running, and was it started with -axe-bridge?"
+            ) from None
+        except json.JSONDecodeError as exc:
+            raise BridgeError(f"{path} did not return JSON: {exc}") from None
+        if not data.get("ok", False):
+            raise BridgeError(f"{path}: {data.get('error', 'refused, with no reason given')}")
+        return data
+
     # --- endpoints -------------------------------------------------------
     def ping(self):
         return self.get("/ping")
@@ -81,6 +122,63 @@ class Bridge:
         return self.get("/predict", vessel=name, id=vid, ut=_fmt(ut),
                         dv=",".join(_fmt(x) for x in dv),
                         horizon=_fmt(horizon), maxpatches=str(int(maxpatches)))
+
+    def sites(self):
+        """Launch sites and the lat/lon the game will actually spawn at.
+
+        KSCSwitcher RELOCATES the single KSC rather than adding sites, so this is the
+        switched position -- which is the only place it can be read from.
+        """
+        return self.get("/sites")
+
+    # --- writes ----------------------------------------------------------
+    def nodes(self, name=None, vid=None):
+        """The vessel's current maneuver nodes and the flight plan they produce."""
+        return self.get("/nodes", vessel=name, id=vid)
+
+    def place_nodes(self, nodes, name=None, vid=None, replace=True, allow_past=False):
+        """Place maneuver nodes and return KSP's resulting flight plan.
+
+        `nodes` is a sequence of (ut, radial, normal, prograde) or of dicts with those
+        keys -- the same triple, in the same order, that plan.py prints and that
+        astro.to_node produces.
+        """
+        payload = []
+        for n in nodes:
+            if isinstance(n, dict):
+                payload.append({"ut": float(n["ut"]), "radial": float(n.get("radial", 0.0)),
+                                "normal": float(n.get("normal", 0.0)),
+                                "prograde": float(n.get("prograde", 0.0))})
+            else:
+                ut, r, nn, pg = n
+                payload.append({"ut": float(ut), "radial": float(r),
+                                "normal": float(nn), "prograde": float(pg)})
+        if not payload:
+            raise BridgeError("place_nodes: no nodes given")
+        return self.post("/node", vessel=name, id=vid, nodes=payload,
+                         replace=bool(replace), allow_past=bool(allow_past))
+
+    def clear_nodes(self, name=None, vid=None):
+        return self.post("/node/clear", vessel=name, id=vid)
+
+    def alarms(self):
+        return self.get("/alarms")
+
+    def alarm(self, ut, name="AXE", notes="", type="Raw", action="KillWarp",
+              margin=0.0, vessel=None, xfer_origin=None, xfer_target=None):
+        """Create an alarm. Returns the response, including its id and which backend took it.
+
+        `type` and `action` are validated against the LIVE KAC enums on the bridge side,
+        and an unknown name comes back with the full list of valid ones -- so there is no
+        copy of KAC's enum here to drift out of date.
+        """
+        return self.post("/alarm", ut=float(ut), name=name, notes=notes, type=type,
+                         action=action, margin=float(margin), vessel=vessel,
+                         xfer_origin=xfer_origin, xfer_target=xfer_target)
+
+    def delete_alarm(self, alarm_id):
+        return self.post("/alarm/delete", id=alarm_id)
+
 
 def _fmt(x):
     if x is None:
@@ -109,10 +207,20 @@ def check_bodies(system, br):
         mine_r = np.asarray(system.rel(name, ut)[0], float)
         d = float(np.linalg.norm(game_r - mine_r))
         scale = max(float(np.linalg.norm(game_r)), 1.0)
-        rows.append({"body": name, "err_m": d, "rel": d / scale,
-                     "mu_game": b["mu"], "mu_mine": system.bodies[name].mu,
-                     "soi_game": b["soi"], "soi_mine": system.bodies[name].soi,
-                     "index_game": b["index"], "index_mine": system.bodies[name].index})
+        row = {"body": name, "err_m": d, "rel": d / scale,
+               "mu_game": b["mu"], "mu_mine": system.bodies[name].mu,
+               "soi_game": b["soi"], "soi_mine": system.bodies[name].soi,
+               "index_game": b["index"], "index_mine": system.bodies[name].index}
+        # Rotation phase, when the game reports it. This is what turns a departure DATE
+        # into a launch TIME, and an error in it would move every launch time
+        # consistently -- exactly the shape of bug that survives an internal check.
+        if b.get("rotation_angle") is not None:
+            row["rot_game"] = b["rotation_angle"]
+            row["rot_mine"] = system.rotation_angle(name, ut)
+            if row["rot_mine"] is not None:
+                d_rot = (row["rot_mine"] - row["rot_game"] + 180.0) % 360.0 - 180.0
+                row["rot_err_deg"] = d_rot
+        rows.append(row)
     return ut, rows
 
 

@@ -42,6 +42,14 @@ class Body:
         self.radius = props.getf("radius", 0.0) if props else 0.0
         self.radius_cfg = self.radius       # pre-ModuleManager, kept to show the delta
         self.rot = props.getf("rotationPeriod", 0.0) if props else 0.0
+        # The rotation PHASE, which is what turns a departure date into a launch time.
+        # KSP: rotationAngle = (initialRotation + 360 * UT / rotationPeriod) % 360
+        # (CelestialBody.updateRotation), after a tidally locked body has had its
+        # rotationPeriod overwritten with its orbital period. Earth's initialRotation is
+        # 100.1833 deg in RSS; leaving it out puts every launch time 100 deg of rotation
+        # -- nearly seven hours -- wrong, consistently, so nothing internal would notice.
+        self.initial_rotation = props.getf("initialRotation", 0.0) if props else 0.0
+        self.tidally_locked = bool(props.getb("tidallyLocked", False)) if props else False
         self.soi_cfg = props.getf("sphereOfInfluence") if props else None
         self.soi = None                       # filled by System, game-measured
         if orbit:
@@ -300,6 +308,35 @@ class System:
         return "Sun"
 
     # --- geometry --------------------------------------------------------
+    def rotation_angle(self, name, ut):
+        """Degrees the body has turned at `ut`, in the game's own convention.
+
+        Returns None for a body that does not rotate, rather than 0.0 -- "not rotating"
+        and "rotated to zero" are different answers and a launch solver must not confuse
+        them. Checked against the running game by `plan.py crosscheck`.
+        """
+        b = self.body(name)
+        period = b.rot
+        if b.tidally_locked:
+            # KSP overwrites rotationPeriod with the orbital period BEFORE computing the
+            # angle, so a locked body's own rotationPeriod value is not what is used.
+            orbital = self.period(name)
+            if orbital:
+                period = orbital
+        if not period:
+            return None
+        return (b.initial_rotation + 360.0 * ut / period) % 360.0
+
+    def period(self, name):
+        """Orbital period of a body about its parent, or None for the root."""
+        b = self.body(name)
+        if not b.parent or b.parent == b.name:
+            return None
+        mu = self.body(b.parent).mu
+        if not mu or b.a <= 0:
+            return None
+        return 2 * math.pi * math.sqrt(b.a ** 3 / mu)
+
     def rel(self, name, ut):
         """State of `name` about its own parent."""
         b = self.body(name)
