@@ -329,6 +329,11 @@ def cmd_window(args):
                 vt1, vt2 = lambert(mu, np.array(r1), np.array(r2), tf)
             except Exception:
                 continue
+            # Body-centre v-infinity, deliberately: this is a SCAN over ~90,000
+            # Lambert arcs and the SOI-crossing refinement costs a propagation each.
+            # It ranks windows correctly because the error is smooth across them, but
+            # the absolute C3 and dV are optimistic and MUST NOT be flown -- see the
+            # footnote below and `depart`, which re-solves with the correction.
             vinf_d = np.asarray(vt1) - np.asarray(v1b)
             c3 = float(vinf_d @ vinf_d) / 1e6
             vinf_a = float(np.linalg.norm(np.asarray(vt2) - np.asarray(v2b)))
@@ -415,6 +420,11 @@ def cmd_window(args):
               f"{best_c3:.1f} and are not launch windows; raise --max-c3 to see them)")
     print("  RAAN is the parking-orbit ascending node that makes the departure coplanar; "
           "`depart` re-solves it exactly.")
+    print("  C3 and dv here are BODY-CENTRE Lambert values -- v_transfer - v_planet taken at "
+          "the planet's centre. The burn happens a few thousand km out and the vehicle "
+          f"crosses {dep.name}'s {dep.soi / 1e3:,.0f} km SOI days later, so flying these "
+          "numbers misses by millions of km. Use them to PICK a window; run `depart` for a "
+          "burn, which re-reads the relative velocity at the SOI crossing.")
     if not site:
         print("  Pass --site NAME (e.g. --site cape) to get the launch time of day as well.")
     else:
@@ -745,8 +755,21 @@ def cmd_correct(args):
     for o in scan:
         print(f"  {date_of(o['ut']):%Y-%m-%d %H:%M} (T+{(o['ut'] - ut0) / DAY:7.2f} d) "
               f"{o['mag']:10,.1f}  {'hits the aim point' if o['ok'] else 'did not converge'}")
+    ok_n = sum(1 for o in scan if o["ok"])
+    if ok_n == 1:
+        # Convergence tracks the size of the STARTING miss, not the physics. One lone
+        # success across a smooth sweep of burn dates is not a narrow launch window --
+        # neighbouring dates differ by hours of coast, not by feasibility. It means the
+        # other seeds started too far out for least squares to climb back.
+        print("  NOTE: exactly one burn date converged. Convergence tracks the size of the "
+              "starting miss, so a lone success across a smooth sweep points at SEEDING, "
+              "not at the geometry. Re-run with more --samples, or seed from a date nearer "
+              "the encounter with --at.")
     if best is None:
-        sys.exit("  none of the sampled burn times reached the aim point")
+        sys.exit("  none of the sampled burn times reached the aim point. Convergence "
+                 "tracks the starting miss: if every date failed by a similar amount the "
+                 "seed is the problem, and if they failed by wildly different amounts the "
+                 "geometry is.")
     print()
     r, v = astro.propagate(body.mu, r0, v0, best["ut"] - ut0)
     node, _ = print_node(system, body, r, v, best["dv"], best["ut"],

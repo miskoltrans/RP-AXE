@@ -117,6 +117,7 @@ Three comparisons, each against KSP rather than against more of my own code:
 | `GET /ping` | scene, game, UT, counts |
 | `GET /bodies` | every celestial: μ, SOI, index, state vector, **rotation phase** |
 | `GET /sites` | launch sites, their lat/lon, and the pad's inertial position |
+| `GET /vessel` | live elements, **state vector**, and any nodes already placed |
 | `GET /predict` | KSP's own patched conics over a *proposed* burn — places nothing |
 | `GET /nodes` | a vessel's maneuver nodes and the flight plan they produce |
 | `POST /node` | **place** maneuver nodes |
@@ -124,6 +125,20 @@ Three comparisons, each against KSP rather than against more of my own code:
 | `GET /alarms` | alarms, plus the type/action names KAC actually declares |
 | `POST /alarm` | **create** an alarm (KAC, or the stock clock if KAC is absent) |
 | `POST /alarm/delete` | remove one |
+
+**Frames (bridge 1.1).** Every vector on this wire is the **element frame** — the one KSP's
+own `inclination`/`LAN`/`argumentOfPeriapsis` use, and the one a replica built from Kopernicus
+configs necessarily works in. That is *not* what `Orbit.getRelativePositionAtUT` returns; see
+the traps below. Bridge 1.0 emitted elements in one frame and state vectors in another, which
+made `crosscheck` report a rotation as an **epoch error**. `ping` reports the version and
+`Planetarium.InverseRotAngle` so a client can tell which it is talking to.
+
+**`/vessel` exists because `/predict` cannot replace it.** `/predict` reports patch *shapes* —
+sma, ecc, inc, lan, argp — with no mean anomaly and no state vector, so a trajectory can be
+*evaluated* through the bridge but not *propagated*, and solving a burn needs propagation.
+KSPTOT Connect serves the same thing, but it is `[KSPAddon(Flight)]` and a separate process:
+"the bridge is up" and "live state is available" were two different facts. `--live` now tries
+KSPTOT, falls back to `/vessel`, and names both failures if neither answers.
 
 **It is not read-only any more.** Writes are POST-only, so nothing that merely follows a
 link can trip them, and the listener is still loopback — but the single `-axe-bridge`
@@ -367,6 +382,30 @@ conversion — while `GetOrbitNormal`, an inertial quantity built from LAN and i
 `Zup.WorldToLocal(OrbitFrame.Z)`. So `LocalToWorld` is the direction *into* the frame orbits
 are expressed in. Picking the plausible-sounding one instead puts every launch time out by
 `2 × InverseRotAngle`, which drifts with the home body's rotation.
+
+**`CelestialFrame`'s two conversions are not symmetric in the way the names suggest, and
+`getRelativePositionAtUT` does not return the element frame.** Follow it down:
+`getRelativePositionFromTrueAnomaly` → `getPositionFromTrueAnomaly(tA, worldToLocal: true)`,
+which builds the vector from `OrbitFrame` and returns `Planetarium.Zup.WorldToLocal(...)` of it
+— a rotation by −`InverseRotAngle` about z, by a *runtime* angle tracking the inverse-rotating
+body's spin. So a body's state vector is rotated relative to its own elements, intermittently:
+near zero the frames agree and everything looks fine. `Orbit.UpdateFromStateVectors` applies
+`Zup.LocalToWorld` to its **input**, exactly inverting the accessor — which is why `/predict`
+was always right and matched `PatchedConics` to 0.000 s. Mixing the two on one wire is what
+turns a rotation into a false epoch alarm.
+
+**`window`'s C3 and dV are body-centre Lambert values, on purpose.** `v_transfer − v_planet`
+taken at the planet's centre, over ~90,000 arcs, because the SOI-crossing refinement costs a
+propagation each. The error is smooth across windows so the *ranking* is right — but the burn
+happens a few thousand km out and the vehicle crosses Earth's 924,649 km SOI days later, so
+flying those numbers misses by millions of km. Pick a window with `window`; get a burn from
+`depart`, which re-solves with the correction. The footnote says so on every run.
+
+**Convergence tracks the size of the starting miss, not the physics.** When exactly one burn
+date out of a smooth sweep converges, that is not a narrow window — neighbouring dates differ
+by hours of coast, not by feasibility. It means the other seeds started too far out for least
+squares to climb back. Suspect the seeding, not the geometry. `correct` now says this when it
+sees a lone success, and says the converse when everything fails by a similar amount.
 
 **A fixed sample count over a variable window loses fast flybys.** `_exit_time` scanned
 `linspace(ut0, ut_end, 401)` — 401 samples across however long the caller was flying. A Venus
