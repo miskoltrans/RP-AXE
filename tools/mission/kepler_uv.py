@@ -19,7 +19,10 @@ def propagate(r0, v0, dt, mu, tol=1e-10, itmax=200):
     elif abs(alpha) < 1e-12:
         h = np.cross(r0, v0); p = float(h @ h) / mu
         s = 0.5 * math.atan(1.0 / (3.0 * math.sqrt(mu / p ** 3) * dt))
-        w = math.atan(math.tan(s) ** (1.0 / 3.0))
+        t_ = math.tan(s)
+        # tan(s) goes negative for dt < 0; a plain **(1/3) returns a complex root
+        # and raises, which is how a perfectly good parabolic case looked like a bug.
+        w = math.atan(math.copysign(abs(t_) ** (1.0 / 3.0), t_))
         chi = math.sqrt(p) * 2.0 / math.tan(2 * w)
     else:
         a = 1.0 / alpha
