@@ -316,7 +316,7 @@ def main() -> int:
     installed = sum(1 for e in entries if e["installed"])
     zero = sum(1 for e in entries if e["capacity"] == 0)
     print(f"authored entries : {len(entries)} ({installed} installed in the AXE instance)")
-    print(f"  from RP-1 cache: {len(entries) - len(table_only)}")
+    print(f"  from RP-1 cache: {len(entries) - len(table_only) - len(axe_authored)}")
     print(f"  from Avionics.cfg only (absent from RP-1's install): {len(table_only)}")
     if table_only:
         print(f"    {', '.join(table_only[:10])}{' ...' if len(table_only) > 10 else ''}")
