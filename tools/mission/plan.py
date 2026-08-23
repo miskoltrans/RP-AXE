@@ -590,9 +590,127 @@ def cmd_depart(args):
     push_burns(args, [burn] if burn else [], what="ejection")
 
 
+def print_assists(rows, indent="    "):
+    """What actually happened at each assist. Never inferred -- read off the flown patches."""
+    for a in rows:
+        if not a.get("entered"):
+            print(f"{indent}{a['body']}: NOT ENTERED -- there is no assist on this trajectory")
+            continue
+        line = (f"{indent}{a['body']}: periapsis {a['peAlt'] / 1e3:,.0f} km altitude"
+                f"   v-inf {a['vinf']:,.0f} m/s")
+        if a.get("turn"):
+            line += f"   turn {a['turn']:.2f} deg   free dV {a.get('dv_equiv', 0):,.0f} m/s"
+        print(line)
+        if a.get("impact"):
+            print(f"{indent}       *** that periapsis is INSIDE {a['body']} ***")
+        elif not a.get("exits"):
+            print(f"{indent}       does not leave {a['body']}'s SOI inside the horizon")
+
+
+def cmd_correct_through(args, system, save, body, r0, v0, ut0, who):
+    """Correct through one or more gravity assists onto a final target.
+
+    `correct` proper aims a B-plane at ONE body. Through a flyby that residual does not
+    exist until the trajectory is already nearly right, so least squares has nothing to
+    descend and the scan rejects every burn date it tries. This aims at a POSITION at the
+    destination instead, with the assists flown by the shooter rather than approximated.
+    """
+    target = system.body(args.target)
+    via = [system.body(v).name for v in args.through]
+    t_end = parse_date(args.arrive) + args.horizon * DAY if args.arrive \
+        else ut0 + args.horizon * DAY
+
+    print(f"CORRECT  {who}  ->  {' -> '.join(via)}  ->  {target.name}   "
+          f"(state at {fmt_ut(ut0)})")
+
+    if args.arrive:
+        arrivals = [parse_date(args.arrive)]
+        nat_ut = nat_d = None
+    else:
+        arrivals, nat_ut, nat_d = maneuver.default_arrivals(
+            system, body.name, r0, v0, ut0, target.name, via=via, t_end=t_end,
+            span_days=args.span, n=args.samples)
+        if not arrivals:
+            sys.exit(f"  the trajectory never comes near {target.name} inside the horizon; "
+                     f"raise --horizon or give --arrive DATE")
+        print(f"  uncorrected, it passes {target.name} on {fmt_ut(nat_ut)} at "
+              f"{nat_d / 1e9:,.2f} Gm. Scanning {len(arrivals)} arrival epochs around that "
+              f"-- the epoch cannot be guessed, and aiming at one the trajectory has no "
+              f"business being near reports a failure that is really just the target being "
+              f"elsewhere in its orbit.")
+
+    best, rows = maneuver.scan_arrivals(
+        system, body.name, r0, v0, ut0, target.name, arrivals, via=via, t_end=t_end,
+        max_dv=args.max_dv, diff_step=args.diff_step, max_nfev=args.max_nfev,
+        verbose=args.verbose)
+
+    fatal = [r for r in rows if r.get("fatal")]
+    if fatal:
+        sys.exit(f"  {fatal[0]['why']}")
+
+    print(f"\n  {'arrival':>22s} {'dV m/s':>10s} {'miss':>14s}  assist")
+    for r in rows:
+        if "traj" not in r:
+            print(f"  {date_of(r['t_arr']):%Y-%m-%d %H:%M} {'--':>10s} {'--':>14s}  "
+                  f"{r.get('why', 'did not converge')}")
+            continue
+        a = r["assists"][0] if r["assists"] else {}
+        note = ("no encounter" if not a.get("entered")
+                else f"{a['body']} pe {a['peAlt'] / 1e3:,.0f} km"
+                     + ("  IMPACT" if a.get("impact") else ""))
+        miss = r["miss"]
+        ms = f"{miss / 1e3:,.0f} km" if miss < 1e9 else f"{miss / 1e9:,.1f} Gm"
+        print(f"  {date_of(r['t_arr']):%Y-%m-%d %H:%M} "
+              f"{float(np.linalg.norm(r['correction'])):10,.2f} {ms:>14s}  {note}"
+              + ("  HIT" if r.get("ok") else ""))
+
+    if best is None:
+        sys.exit(f"\n  no arrival epoch closed. The best miss was "
+                 f"{min((r['miss'] for r in rows if 'miss' in r), default=float('nan')) / 1e9:,.2f} Gm "
+                 f"against a {target.soi / 1e9:,.4f} Gm SOI. If the misses all sit at the "
+                 f"ASSIST's SOI radius the flyby was lost and could not be re-acquired -- "
+                 f"aim at the assist first with `flyby {via[0]} --peri`, then correct again.")
+
+    print()
+    node, _ = print_node(system, body, r0, v0, best["correction"], ut0,
+                         now=(save.ut if save else None), label="CORRECTION")
+    print(f"    arrives {fmt_ut(best['t_arr'])}, {best['miss'] / 1e3:,.0f} km from "
+          f"{target.name}'s centre ({best['miss'] / target.soi:.3f} of its SOI), "
+          f"found in {best['nfev']} shots")
+    print_assists(best["assists"])
+    print("\n  --- as flown ---")
+    for line in best["traj"].summary().splitlines():
+        print("   ", line)
+    rep = patched.arrival_report(system, best["traj"], target.name, t_end)
+    print_arrival(system, target.name, rep)
+
+    if args.peri:
+        # Shape the arrival now that we are actually there. The B-plane refine could not
+        # converge from 36 Gm away; from inside the SOI it is the right tool.
+        peR = parse_radius(system, target, args.peri)
+        print(f"\n  --- shaping the arrival to periapsis {peR / target.radius:.3f} "
+              f"R{target.name[0].lower()} ---")
+        try:
+            res = maneuver.refine(system, body.name, r0, v0, ut0, target.name, t_end,
+                                  peR_want=peR, watch=via + [target.name],
+                                  max_nfev=args.max_nfev)
+        except Exception as exc:                                    # noqa: BLE001
+            print(f"    could not shape it: {type(exc).__name__}: {exc}")
+        else:
+            node, _ = print_node(system, body, r0, v0, res["dv"], ut0,
+                                 now=(save.ut if save else None), label="CORRECTION")
+            print_assists(maneuver.assist_passes(system, res["traj"], via))
+            print_arrival(system, target.name, res["report"])
+            best = {"correction": res["dv"], "t_arr": best["t_arr"]}
+
+    push_burns(args, [(ut0, node)], what="assist correction")
+
+
 def cmd_correct(args):
     system, save = load(args)
     body, r0, v0, ut0, who, free_park = origin_state(system, save, args)
+    if getattr(args, "through", None):
+        return cmd_correct_through(args, system, save, body, r0, v0, ut0, who)
     target = system.body(args.target)
     t_end = parse_date(args.arrive) + args.horizon * DAY if args.arrive else ut0 + args.horizon * DAY
     peR = parse_radius(system, target, args.peri or "1.5r")
@@ -1229,9 +1347,24 @@ def main(argv=None):
     p = sub.add_parser("correct", help="midcourse correction onto a target")
     common(p)
     p.add_argument("--target", required=True)
-    p.add_argument("--arrive", help="expected arrival date, to size the horizon")
+    p.add_argument("--through", nargs="+", metavar="BODY",
+                   help="gravity-assist bodies to fly THROUGH on the way to --target. "
+                        "Switches to a position-residual shooting solver: the assists are "
+                        "flown by the shooter, not approximated, and the B-plane residual "
+                        "that cannot see past a flyby is not used.")
+    p.add_argument("--arrive", help="expected arrival date, to size the horizon "
+                                    "(with --through, the arrival epoch to aim at)")
     p.add_argument("--peri", help="target periapsis, e.g. 2.5Rj or 250km (default 1.5r)")
-    p.add_argument("--samples", type=int, default=12, help="burn times to try")
+    p.add_argument("--samples", type=int, default=12,
+                   help="burn times to try; with --through, arrival epochs to scan")
+    p.add_argument("--span", type=float, default=90.0,
+                   help="days either side of the natural encounter to scan (--through)")
+    p.add_argument("--max-dv", type=float, default=500.0,
+                   help="bound on the correction, m/s per axis (--through). Unbounded, the "
+                        "solver can find a wholly different trajectory through the aim point.")
+    p.add_argument("--diff-step", type=float, default=1e-2,
+                   help="finite-difference step for the shooting Jacobian, m/s (--through)")
+    p.add_argument("--max-nfev", type=int, default=60, help="shots per arrival epoch")
     p.add_argument("--verbose", action="store_true")
     p.set_defaults(func=cmd_correct)
 

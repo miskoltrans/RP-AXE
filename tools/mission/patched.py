@@ -111,7 +111,34 @@ def _exit_time(patch, soi, ut_end):
     # sample that is genuinely inside and looks for a crossing after that.
     if f(patch.ut0) >= 0 and float(patch.r0 @ patch.v0) > 0:
         return patch.ut0
-    ts = np.linspace(patch.ut0, ut_end, 401)
+
+    # Scan a window sized by the ORBIT, not by the mission horizon.
+    #
+    # This used to be linspace(ut0, ut_end, 401), which spreads a fixed number of samples
+    # across however long the caller happens to be flying for. A Venus flyby on a 715-day
+    # horizon gets a 43-hour sample step and dwells 34.9 hours inside the SOI, so the
+    # entire passage falls BETWEEN two samples: no sample is inside, and the function
+    # returns None -- "never exits". The shooter then reports an escaping gravity assist
+    # as a capture, or crashes in brent with a bracket that does not straddle a root.
+    #
+    # That is the assist case exactly: fast hyperbola, small SOI, long horizon. And it is
+    # horizon-dependent, so the same flyby answers differently depending on --horizon,
+    # which is the tell.
+    #
+    # The time to cross an SOI is bounded by the conic itself. For a hyperbola the whole
+    # passage is a few times soi/v_inf; for an ellipse it is at most one period. Take the
+    # smaller of that bound and the caller's horizon, and keep the sample step below a
+    # fraction of the periapsis timescale so a close, fast passage cannot hide in a gap.
+    if el.ecc >= 1.0:
+        vinf = math.sqrt(patch.body.mu / abs(el.sma))
+        span = 8.0 * soi / max(vinf, 1e-3)
+    else:
+        span = el.period if math.isfinite(el.period) else (ut_end - patch.ut0)
+    ut_stop = min(ut_end, patch.ut0 + span)
+    v_peri = math.sqrt(patch.body.mu * (2.0 / max(el.peR, 1.0) - 1.0 / el.sma))         if el.sma != 0 else math.sqrt(patch.body.mu / max(el.peR, 1.0))
+    step_cap = max(el.peR / max(v_peri, 1e-3), 1.0)          # periapsis timescale
+    n = int(min(200_001, max(401, (ut_stop - patch.ut0) / step_cap * 4 + 1)))
+    ts = np.linspace(patch.ut0, ut_stop, n)
     pos, _ = astro.sample_conic(patch.body.mu, patch.r0, patch.v0, ts - patch.ut0)
     d = np.linalg.norm(pos, axis=1) - soi
     inside = np.nonzero(d < 0.0)[0]
@@ -123,7 +150,10 @@ def _exit_time(patch, soi, ut_end):
         # sample_conic and Shepperd agree to ~1e-4 m; near the boundary that is
         # enough to make one say "outside" and the other "inside", so confirm the
         # sign change with the propagator that will actually be used.
-        if f(float(ts[i])) >= 0:
+        # Confirm BOTH ends with the propagator that will actually be used. Checking only
+        # the outer end let a bracket through that brent then rejected with "does not
+        # straddle a root" -- an exception out of what is supposed to be a query.
+        if f(float(ts[i])) >= 0 and f(float(ts[i - 1])) < 0:
             return astro.brent(f, float(ts[i - 1]), float(ts[i]), tol=1e-6)
     return None
 

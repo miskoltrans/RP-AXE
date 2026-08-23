@@ -524,6 +524,153 @@ def test_launch_geometry(S):
           f"worst {worst:.2e}")
 
 
+def _venus_flyby_setup(S):
+    """A departure from Earth that actually flies through Venus's SOI. Shared fixture."""
+    import plan
+    earth = S.body("Earth")
+    t_dep = ut_of(1967, 8, 1)
+    pos, vel = plan.park_orbit(earth, 185.0, 28.6, 0.0)
+    best = None
+    for tof in np.arange(80, 200, 5) * DAY:
+        try:
+            vinf, _raw, _ = maneuver.vinf_for_transfer(S, "Earth", "Venus", t_dep, t_dep + tof)
+            sol = maneuver.single_impulse_hyperbolic_burn(earth.mu, pos, vel, vinf)
+        except Exception:                                           # noqa: BLE001
+            continue
+        m = float(np.linalg.norm(sol["dv"]))
+        if best is None or m < best[0]:
+            best = (m, tof, sol)
+    if best is None:
+        return None
+    _m, _tof, sol = best
+    ut_node = t_dep + sol["dt"]
+    rn, vn = astro.propagate(earth.mu, pos, vel, sol["dt"])
+    return rn, vn + sol["dv"], ut_node, ut_of(1969, 6, 1)
+
+
+def test_soi_exit_window(S):
+    """A fast flyby must not vanish because the mission horizon is long.
+
+    _exit_time used to scan linspace(ut0, ut_end, 401) -- a fixed sample count across
+    however long the caller happened to be flying. A Venus passage dwells 34.9 h inside a
+    616,000 km SOI; on a 715-day horizon the step is 43 h and the ENTIRE passage falls
+    between two samples, so the function returned None: "never exits". The shooter then
+    reported an escaping gravity assist as a capture, or brent raised on a bracket that
+    did not straddle a root.
+
+    It is horizon-dependent, which is the tell: the same flyby answered differently
+    depending on --horizon. So the check is that the answer does NOT depend on it.
+    """
+    venus = S.body("Venus")
+    peR, ecc = 26_694e3, 8.62755
+    a = peR / (1 - ecc)
+    p_ = a * (1 - ecc ** 2)
+    nu = -math.acos(max(-1.0, min(1.0, (p_ / venus.soi - 1) / ecc)))
+    r = np.array([venus.soi * math.cos(nu), venus.soi * math.sin(nu), 0.0])
+    h = math.sqrt(venus.mu * p_)
+    v = np.array([-venus.mu / h * math.sin(nu), venus.mu / h * (ecc + math.cos(nu)), 0.0])
+    ut0 = 539_154_654.0
+    patch = patched.Patch(venus, ut0, r, v)
+
+    answers = []
+    for horizon_days in (3, 10, 30, 100, 300, 715, 2000):
+        te = patched._exit_time(patch, venus.soi, ut0 + horizon_days * DAY)
+        answers.append(None if te is None else te - ut0)
+    found = [a for a in answers if a is not None]
+    check("a fast flyby exit is found at every horizon", len(found) == len(answers),
+          f"{len(found)}/{len(answers)} horizons found it")
+    if found:
+        spread = max(found) - min(found)
+        check("the exit time does not depend on the horizon", spread < 1.0,
+              f"{min(found) / 3600:.3f} h, spread {spread:.2e} s")
+
+    # Test the DEFINITION, not a sampled approximation of it. Comparing against the last
+    # sample of a 200k-point scan sounds stricter and is not: that scan has a 4.3 s
+    # spacing, so it can only ever agree to 4.3 s, and a mismatch inside that says nothing
+    # about the solver. "Is |r| equal to the SOI at the instant returned" is exact.
+    te = patched._exit_time(patch, venus.soi, ut0 + 715 * DAY)
+    err = abs(float(np.linalg.norm(patch.state(te)[0])) - venus.soi) if te else float("inf")
+    check("at the exit instant, |r| really is the SOI radius", err < 1.0, f"{err:+.6f} m")
+
+    # And it is bracketed by a dense scan, to the scan's own resolution.
+    ts = np.linspace(ut0, ut0 + 10 * DAY, 200_000)
+    pos, _ = astro.sample_conic(venus.mu, r, v, ts - ut0)
+    d = np.linalg.norm(pos, axis=1) - venus.soi
+    inside = np.nonzero(d < 0)[0]
+    truth = ts[inside[-1]] - ut0 if len(inside) else None
+    step = ts[1] - ts[0]
+    check("the exit agrees with a dense scan to the scan's own resolution",
+          truth is not None and found and abs(found[0] - truth) < 2 * step,
+          f"solver {found[0] / 3600:.4f} h vs scan {truth / 3600:.4f} h "
+          f"(scan resolution {step:.1f} s)" if truth else "no truth")
+
+
+def test_assist_targeting(S):
+    """Can the shooting solver recover a known solution on the FAR SIDE of a flyby?
+
+    Perturb a trajectory that passes through Venus and ask for the original aim point
+    back. The answer exists by construction, so a failure is the solver's and not the
+    universe's -- which is the distinction that matters, because an assist target that
+    simply cannot be reached looks identical to a solver that cannot reach it.
+    """
+    setup = _venus_flyby_setup(S)
+    if setup is None:
+        check("assist fixture builds", False, "no Earth->Venus departure found")
+        return
+    rn, v_nom, ut_node, t_end = setup
+
+    def fly(v):
+        return patched.shoot(S, "Earth", rn, v, ut_node, t_end, watch=["Venus"])
+
+    nom = fly(v_nom)
+    pv = nom.enters("Venus")
+    check("the fixture really flies through Venus's SOI", pv is not None
+          and pv.end == "exit",
+          f"pe {(pv.elements().peR - S.body('Venus').radius) / 1e3:,.0f} km alt, "
+          f"end={pv.end}" if pv else "no Venus patch")
+    if pv is None:
+        return
+    check("and there is a leg AFTER the assist to target on", len(nom.patches) >= 4,
+          f"{len(nom.patches)} patches: " + " -> ".join(p.body.name for p in nom.patches))
+
+    t_aim = nom.patches[-1].ut0 + 200 * DAY
+    aim = maneuver._to_centre(S, nom, t_aim, "Sun")
+
+    # Judge the ABSOLUTE miss, not miss/before. A perturbation that starts closer has a
+    # worse ratio while landing nearer, which is the ratio measuring the starting point
+    # rather than the solver: measured, the case with the smallest miss of the three
+    # (453 km) had the worst ratio (1.9e-4).
+    worst_miss, worst_dv, tested = 0.0, 0.0, 0
+    for pert in ([0.0, 0.5, 0.0], [0.0, 0.0, 0.5], [0.0, -0.3, 0.2]):
+        pert = np.array(pert, float)
+        before = float(np.linalg.norm(
+            maneuver._to_centre(S, fly(v_nom + pert), t_aim, "Sun") - aim))
+        res = maneuver.aim_through(S, "Earth", rn, v_nom + pert, ut_node, "Venus", t_aim,
+                                   via=["Venus"], t_end=t_end, aim_point=aim,
+                                   max_nfev=60, max_dv=200.0)
+        tested += 1
+        worst_miss = max(worst_miss, res["miss"])
+        worst_dv = max(worst_dv, float(np.linalg.norm(res["correction"])))
+        if before < 1e9:                    # the fixture must actually be perturbed
+            worst_miss = float("inf")
+    check(f"a perturbed flyby is re-aimed through the assist ({tested} cases)",
+          worst_miss < 10_000e3, f"worst miss {worst_miss / 1e3:,.0f} km "
+          f"(from >2,400 Mm), worst correction {worst_dv:.3f} m/s")
+    # A large correction means a DIFFERENT trajectory that happens to pass through the aim
+    # point -- a correct answer to the wrong question, and the reason max_dv exists.
+    check("and it does so with a correction worth calling one", worst_dv < 5.0,
+          f"{worst_dv:.3f} m/s")
+
+    # And the diagnostic that saves a minute of grinding: an orbit that cannot reach the
+    # target must be reported as unreachable, not searched.
+    why = maneuver.reachability(S, nom, "Mercury")
+    check("an unreachable target is reported, not searched for",
+          why is not None and "never touch" in why,
+          (why or "reported reachable")[:90])
+    check("a reachable target is not falsely rejected",
+          maneuver.reachability(S, nom, "Venus") is None)
+
+
 def run(S=None, verbose=True):
     _results.clear()
     S = S or System()
@@ -540,6 +687,8 @@ def run(S=None, verbose=True):
     test_soi_exit_on_boundary(S)
     test_rotation(S)
     test_launch_geometry(S)
+    test_soi_exit_window(S)
+    test_assist_targeting(S)
     save = test_save(S)
     test_node_sign_against_game(S, save)
     return _report(verbose)

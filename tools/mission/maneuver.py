@@ -269,6 +269,297 @@ def refine(system, body, r_node, v_node, ut_node, target, t_end, peR_want,
 
 
 # ---------------------------------------------------------------------------
+# targeting THROUGH a gravity assist
+# ---------------------------------------------------------------------------
+def _to_centre(system, traj, ut, centre):
+    """Spacecraft position at `ut`, expressed relative to `centre`."""
+    b, r, _v = traj.state(ut)
+    r = np.asarray(r, float)
+    if b.name == centre:
+        return r
+    rb, _vb = system.state(b.name, ut, centre)
+    return r + np.asarray(rb)
+
+
+def assist_passes(system, traj, via):
+    """What the trajectory actually did at each assist body.
+
+    Reported rather than assumed. A solver that only measures the DESTINATION will
+    happily buy the arrival with a flyby 200 km under the cloud tops, and the answer
+    looks perfect right up until the vehicle is inside the planet.
+    """
+    out = []
+    for name in via or []:
+        body = system.body(name)
+        p = traj.enters(body.name)
+        if p is None:
+            out.append({"body": body.name, "entered": False})
+            continue
+        el = p.elements()
+        vinf = math.sqrt(max(0.0, float(p.v0 @ p.v0) - 2.0 * body.mu / float(np.linalg.norm(p.r0))))
+        row = {"body": body.name, "entered": True, "ut": p.ut0,
+               "peR": el.peR, "peAlt": el.peR - body.radius, "ecc": el.ecc,
+               "vinf": vinf, "impact": el.peR <= body.radius,
+               "exits": p.end == "exit"}
+        if el.ecc > 1.0:
+            # Turn angle of the hyperbola, and the dV an equivalent burn would have cost.
+            row["turn"] = 2.0 * math.degrees(math.asin(1.0 / el.ecc))
+            row["dv_equiv"] = 2.0 * vinf * (1.0 / el.ecc)
+        out.append(row)
+    return out
+
+
+def natural_arrival(system, traj, target, t_end, after=None):
+    """When the UNCORRECTED trajectory comes closest to `target`, on its last leg.
+
+    The arrival epoch cannot be guessed. Ask for a date the trajectory has no business
+    being near and the target is simply somewhere else in its orbit -- 100 Gm away, with
+    no correction of any size able to fix it -- and the solve reports a failure that looks
+    like the method not working. It is not: the sensitivity through a Venus flyby measures
+    ~31 Gm per m/s, which closes a 36 Gm miss with about a metre per second. The whole
+    difficulty is aiming at the right WHEN.
+    """
+    last = traj.patches[-1]
+    start = max(last.ut0, after if after is not None else last.ut0)
+    stop = min(last.ut1 if last.ut1 else t_end, t_end)
+    if stop <= start:
+        return None, None
+    ut, dist, _ = patched.closest_approach(system, traj, target, start, stop)
+    return ut, dist
+
+
+def reachability(system, traj, target):
+    """Can the trajectory's final orbit reach the target's orbit at all?
+
+    A radius check, and it is worth doing FIRST because it is the difference between a
+    one-line answer and a minute of least squares that ends in "nothing closed". A Venus
+    flyby that leaves perihelion at 75.9 Gm cannot reach Mercury, whose aphelion is
+    69.8 Gm, and no correction of any size changes that -- the bend a flyby can deliver is
+    bounded by its v-infinity and its minimum periapsis.
+
+    Returns None when the two annuli overlap (i.e. nothing to report).
+    """
+    target = system.body(target)
+    last = traj.patches[-1]
+    if last.body.name != target.parent:
+        return None                       # not a common-centre comparison; say nothing
+    el = last.elements()
+    t_pe = target.a * (1 - target.e)
+    t_ap = target.a * (1 + target.e)
+    if el.ecc >= 1.0:
+        lo, hi = el.peR, float("inf")
+    else:
+        lo, hi = el.peR, el.apR
+    if lo <= t_ap and hi >= t_pe:
+        return None
+    if lo > t_ap:
+        return (f"the trajectory's perihelion is {lo / 1e9:,.1f} Gm and {target.name}'s "
+                f"aphelion is {t_ap / 1e9:,.1f} Gm -- the orbits never touch, so no "
+                f"correction reaches it. A bigger bend or a different assist is needed, "
+                f"not a better solve.")
+    return (f"the trajectory's aphelion is {hi / 1e9:,.1f} Gm and {target.name}'s "
+            f"perihelion is {t_pe / 1e9:,.1f} Gm -- the orbits never touch.")
+
+
+def aim_through(system, body, r0, v0, ut0, target, t_arr, via=None, t_end=None,
+                dv_guess=None, diff_step=1e-2, max_nfev=60, verbose=False,
+                aim_point=None, max_dv=500.0):
+    """Solve the burn at `ut0` that puts the FLOWN trajectory at `target` on `t_arr`.
+
+    The whole point is that the assists are flown, not approximated: `via` bodies go into
+    the shooter's watch list, so the trajectory really enters and leaves their SOIs and
+    the residual is measured after all of them. Earth SOI -> heliocentric -> Venus SOI ->
+    flyby -> heliocentric -> Mercury, with least squares closing the loop.
+
+    Two things differ from `refine`, and both are why `refine` cannot do this job:
+
+    * **The residual is a plain position miss**, not a B-plane miss. B-plane coordinates
+      are built from the arrival hyperbola at ONE body; through a flyby the arrival
+      hyperbola does not exist until the trajectory is already nearly right, so the
+      residual is flat-then-discontinuous and least squares has nothing to descend.
+      Position at a fixed epoch is smooth everywhere, and 3 unknowns against 3 equations
+      is square.
+    * **The unknown is a CORRECTION to a guess**, so it stays near zero. SciPy's
+      `diff_step` is relative -- `h = diff_step * max(1, |x|)` -- so differentiating a
+      3 km/s ejection directly takes 30 m/s steps, while differentiating around zero with
+      the default takes 0.1 mm/s steps that are below the shooter's own SOI root-finding
+      noise. The first is too coarse to be a derivative, the second is pure noise. Solving
+      for a small correction puts the step in the |x| < 1 regime where `diff_step` IS the
+      absolute step in m/s, and 1e-2 m/s is a real lever through a flyby.
+
+    Returns the correction (`dv`), the flown trajectory, the residual miss in metres, and
+    what happened at each assist.
+    """
+    body_name = system.body(body).name
+    target = system.body(target)
+    via = [system.body(v).name for v in (via or [])]
+    watch = list(dict.fromkeys(via + [target.name]))
+    t_end = t_end if t_end is not None else t_arr + 30 * DAY
+    if t_end < t_arr:
+        t_end = t_arr + DAY
+    centre = system.common_parent(body_name, target.name)
+    scale = target.soi if math.isfinite(target.soi) and target.soi > 0 else target.radius * 100.0
+
+    r0 = np.asarray(r0, float)
+    v0 = np.asarray(v0, float)
+    dv_guess = np.zeros(3) if dv_guess is None else np.asarray(dv_guess, float)
+
+    def fly(x):
+        return patched.shoot(system, body_name, r0, v0 + dv_guess + np.asarray(x, float),
+                             ut0, t_end, watch=watch)
+
+    def miss_vec(traj):
+        # If a required assist was LOST, steer back to it rather than to the destination.
+        #
+        # Without this the solver cannot recover from a perturbation big enough to miss
+        # the flyby: with no Venus patch the trajectory never leaves the inbound
+        # heliocentric leg, so the destination residual is measured on a completely
+        # different arc and points nowhere useful. Measured: a 0.5 m/s radial nudge lost
+        # the encounter and the solve then sat at a 156,065,501 km miss -- the same value
+        # for every such case, which is the tell that it is a topology change and not a
+        # hard aim point.
+        #
+        # The closest approach to the assist body IS continuous across that boundary, and
+        # it is the same trick _bplane_residual already uses for a direct arrival. Weighted
+        # up so re-acquiring the flyby always beats any in-SOI refinement.
+        for name in via:
+            if traj.enters(name) is None:
+                ab = system.body(name)
+                first, last = traj.patches[0], traj.patches[-1]
+                ut_ca, _d, _ = patched.closest_approach(
+                    system, traj, ab.name, first.ut0, min(last.ut1 or t_end, t_end))
+                rs = _to_centre(system, traj, ut_ca, centre)
+                rb, _ = system.state(ab.name, ut_ca, centre)
+                return (rs - np.asarray(rb, float)) * 4.0
+
+        rs = _to_centre(system, traj, t_arr, centre)
+        if aim_point is not None:
+            # A fixed point rather than a body. Used to test the shooting machinery
+            # itself: perturb a known-good trajectory and check the solver puts it back,
+            # which separates "the solver is broken" from "no solution exists".
+            return rs - np.asarray(aim_point, float)
+        rt, _ = system.state(target.name, t_arr, centre)
+        return rs - np.asarray(rt, float)
+
+    def resid(x):
+        m = miss_vec(fly(x))
+        if verbose:
+            print(f"   |x|={np.linalg.norm(x):9.3f} m/s  miss={np.linalg.norm(m) / 1e6:12,.1f} Mm")
+        return m / scale
+
+    # Re-acquire a lost assist FIRST, with the residual built for that job.
+    #
+    # The recovery term above pulls a trajectory that has lost its flyby back toward the
+    # assist body, but it stalls exactly at the SOI boundary -- measured, repeatedly, at
+    # 616,000 km for Venus, which is its SOI radius to three figures. That is the residual
+    # changing character at the boundary: outside, it measures approach; inside, it
+    # measures the destination, and the two do not meet.
+    #
+    # _bplane_residual was written to be continuous across precisely that boundary, so use
+    # it. One refine() per lost assist to get back inside, then the destination solve runs
+    # from a trajectory that has its flyby.
+    seed = np.zeros(3)
+    probe = fly(seed)
+    for name in via:
+        if probe.enters(name) is None:
+            ab = system.body(name)
+            try:
+                pre = refine(system, body_name, r0, v0 + dv_guess, ut0, ab.name,
+                             t_end, peR_want=ab.radius * 1.5, watch=watch,
+                             max_nfev=max(20, max_nfev // 2))
+            except Exception:                                       # noqa: BLE001
+                break
+            if pre["traj"].enters(ab.name) is not None:
+                seed = np.asarray(pre["dv"], float)
+                probe = fly(seed)
+            break
+
+    # Bound the correction rather than regularising it. Unbounded, the solver is free to
+    # find a completely different trajectory that happens to pass through the aim point --
+    # measured: a 4,892 m/s "solution" with a 0.0 km miss, which is a correct answer to
+    # the wrong question. A box bound says what a correction IS, with no weight to tune.
+    lo, hi = -abs(max_dv), abs(max_dv)
+    seed = np.clip(seed, lo + 1e-9, hi - 1e-9)
+    sol = least_squares(resid, seed, diff_step=diff_step,
+                        bounds=(lo, hi),
+                        xtol=1e-12, ftol=1e-12, gtol=1e-12, max_nfev=max_nfev)
+    traj = fly(sol.x)
+    m = miss_vec(traj)
+    return {"dv": dv_guess + sol.x, "correction": sol.x, "traj": traj,
+            "miss": float(np.linalg.norm(m)), "miss_vec": m,
+            "t_arr": t_arr, "nfev": sol.nfev, "cost": float(sol.cost),
+            "assists": assist_passes(system, traj, via),
+            "hit": float(np.linalg.norm(m)) < scale}
+
+
+def default_arrivals(system, body, r0, v0, ut0, target, via=None, t_end=None,
+                     dv_guess=None, span_days=90.0, n=13):
+    """Arrival epochs worth trying: a window around where the trajectory already goes.
+
+    Returns (epochs, natural_ut, natural_miss) so a caller can say what it aimed at.
+    """
+    via = [system.body(v).name for v in (via or [])]
+    watch = list(dict.fromkeys(via + [system.body(target).name]))
+    v_start = np.asarray(v0, float) + (np.zeros(3) if dv_guess is None
+                                       else np.asarray(dv_guess, float))
+    traj = patched.shoot(system, system.body(body).name, np.asarray(r0, float), v_start,
+                         ut0, t_end, watch=watch)
+    # Only look for the encounter AFTER the last assist -- the trajectory may pass close
+    # to the destination on the way in, and correcting to that would skip the flyby.
+    after = None
+    for name in via:
+        p = traj.enters(name)
+        if p is not None and p.ut1:
+            after = max(after or 0.0, p.ut1)
+    ut, dist = natural_arrival(system, traj, target, t_end, after=after)
+    if ut is None:
+        return [], None, None
+    half = span_days * DAY / 2.0
+    return list(np.linspace(ut - half, ut + half, n)), ut, dist
+
+
+def scan_arrivals(system, body, r0, v0, ut0, target, arrivals, via=None, t_end=None,
+                  dv_guess=None, peR_want=None, diff_step=1e-2, max_nfev=60,
+                  verbose=False, max_dv=500.0):
+    """`aim_through` over a set of arrival epochs, cheapest first.
+
+    An arrival date is not free to choose: through an assist the reachable set is narrow,
+    and neighbouring dates differ by hundreds of m/s or do not close at all. So the table
+    is printed rather than a single date being picked and presented as the answer.
+    """
+    rows = []
+    if arrivals:
+        probe = patched.shoot(
+            system, system.body(body).name, np.asarray(r0, float),
+            np.asarray(v0, float) + (np.zeros(3) if dv_guess is None else np.asarray(dv_guess, float)),
+            ut0, t_end if t_end is not None else max(arrivals) + 30 * DAY,
+            watch=list(dict.fromkeys([system.body(v).name for v in (via or [])]
+                                     + [system.body(target).name])))
+        why = reachability(system, probe, target)
+        if why:
+            return None, [{"t_arr": arrivals[0], "ok": False, "why": why, "fatal": True}]
+    for t_arr in arrivals:
+        try:
+            res = aim_through(system, body, r0, v0, ut0, target, t_arr, via=via,
+                              t_end=t_end, dv_guess=dv_guess, diff_step=diff_step,
+                              max_nfev=max_nfev, verbose=verbose, max_dv=max_dv)
+        except Exception as exc:                                    # noqa: BLE001
+            rows.append({"t_arr": t_arr, "ok": False, "why": f"{type(exc).__name__}: {exc}"})
+            continue
+        res["ok"] = res["hit"]
+        res["mag"] = float(np.linalg.norm(res["correction"]))
+        # An arrival bought by flying through a planet is not an arrival.
+        bad = [a for a in res["assists"] if a.get("impact") or not a.get("entered")]
+        if bad:
+            res["ok"] = False
+            res["why"] = ("missed " if not bad[0].get("entered") else "impacts ") + bad[0]["body"]
+        rows.append(res)
+    good = [r for r in rows if r.get("ok")]
+    best = min(good, key=lambda r: r["mag"]) if good else None
+    return best, rows
+
+
+# ---------------------------------------------------------------------------
 # midcourse correction
 # ---------------------------------------------------------------------------
 def cheapest_correction(system, body, r0, v0, ut0, target, t_arr, peR_want,
