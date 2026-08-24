@@ -46,7 +46,7 @@ namespace RPAxe
     {
         public enum LockLevel { Locked, Axial, Unlocked }
 
-        // ---- PROTOTYPE v2: control NOISE (docs/AVIONICS_AUTHORITY.md) -----------------------------
+        // ---- CONTROL NOISE, the shipped overload consequence (docs/AVIONICS_AUTHORITY.md) ---------
         // v1 scaled control authority down and was killed by test: at q=0.05 a medium craft ascended
         // normally, and flew BETTER, because reducing loop gain raises stability margin. Weakness is
         // the opposite of how an under-characterised control system actually fails.
@@ -65,9 +65,12 @@ namespace RPAxe
         //     away by vessel rotational inertia and would be invisible on anything heavy. (Both modes went
         //     with the drift cell; NoiseHz survives because the regime EMA window is measured in
         //     attitude-response cycles and reads it -- see AdversarialTau.)
-        // All tunables are STATIC AND LIVE, driven from the core's DEBUG PAW knobs, so they can be changed
-        // in flight without a rebuild. That is the whole point of the prototype: none of these numbers has a
-        // physical anchor (KSP models no bending modes), so they can only be found by feel.
+        // EVERY TUNABLE BELOW IS NOW A CONST. They were live statics driven from DEBUG PAW knobs for the
+        // whole prototype, because none of them has a physical anchor (KSP models no bending modes) and feel
+        // was the only way to find them. That search is over; the rig is gone and the values it found are
+        // frozen here. Changing one now needs a rebuild, which is the correct cost for a shipped balance
+        // number. Where a number has an ARGUMENT behind it rather than a feel, the argument is recorded with
+        // it -- argue with the sentence, not the digits.
         // k is ANCHORED, not tuned: it falls out of one design statement -- "at 20% over its rated mass a
         // unit is hopeless" -- i.e. sigma(1.2) = 0.9, which solves to k = 11.5. Argue about the sentence,
         // not the number.
@@ -75,17 +78,13 @@ namespace RPAxe
         // A deliberately narrow tolerance band: a few percent of grace, then it goes away fast. Rated
         // capacity is close to a hard constraint, which is how real vehicles treat their control design
         // margin -- nobody flies 20% over what the control system was characterised for.
-        public static float NoiseK = 11.5f;
-
-        // Ceiling defaults to 1 = OFF. sigma = 1 - e^(-k(r-1)) already asymptotes to 1, which is the natural
-        // saturation (the command is fully swamped), so a separate cap was capping a curve that caps itself.
-        // Kept only as a debug knob.
-        public static float NoiseMax = 1f;
+        public const float NoiseK = 11.5f;
 
         // C in Hz = C / mass^(1/3). NOT a frequency itself -- see HzForMass.
-        public static float NoiseHz = 2f;
-        public static bool NoiseHzAutoScale = true;
-        public static float EffectiveNoiseHz = 2f;   // set per-vessel by the controller
+        public const float NoiseHz = 2f;
+
+        // Live per-vessel state, not a knob: the controller writes this each recompute from HzForMass.
+        public static float EffectiveNoiseHz = 2f;
 
         // A FIXED frequency cannot be right for both a 5 t probe and a 300 t launcher: the vehicle low-passes
         // the noise according to its own rotational response, so a big stack filters 2 Hz heavily while a
@@ -96,7 +95,7 @@ namespace RPAxe
         // so timescale ~ L and natural frequency ~ 1/L ~ m^(-1/3). At C = 2 a 1 t probe gets 2 Hz and a 100 t
         // stack gets 0.43 Hz.
         public static float HzForMass(float massTons)
-            => NoiseHzAutoScale ? NoiseHz / Mathf.Pow(Mathf.Max(0.1f, massTons), 1f / 3f) : NoiseHz;
+            => NoiseHz / Mathf.Pow(Mathf.Max(0.1f, massTons), 1f / 3f);
 
         // ALL THREE AXES. Roll was separable while the modes were being compared -- it is by far the most
         // perceptible axis, so "is roll alone carrying the whole feel?" was worth being able to answer. It
@@ -146,15 +145,15 @@ namespace RPAxe
         //
         // Anchored on the same sentence as k. Typical loop gain margin is 2-4x, so G = 3 should push most
         // controllers unstable: G(1.2) = 3 gives slope 10.
-        public static float OvergainSlope = 10f;
+        public const float OvergainSlope = 10f;
 
         // sigma = 1 - e^(-k(r-1)) inverted, so gain can be derived from sigma without plumbing the ratio
-        // through -- and so the DEBUG pin drives the overgain cell consistently with the rest.
+        // through: every move takes sigma and nothing else.
         public static float RatioFromSigma(float sigma)
             => 1f + (-Mathf.Log(Mathf.Max(1e-4f, 1f - sigma)) / Mathf.Max(0.01f, NoiseK));
 
         public static float GainFor(float sigma)
-            => sigma <= 0f ? 1f : 1f + OvergainSlope * DriftFor(0) * (RatioFromSigma(sigma) - 1f);
+            => sigma <= 0f ? 1f : 1f + OvergainSlope * (RatioFromSigma(sigma) - 1f);
 
         // ================ THE MECHANIC: ADVERSARIAL REGIME MATCHING ================================
         // THE ONE THAT SHIPPED. Ten other consequences were built and flown against it (EC drain, authority
@@ -217,15 +216,15 @@ namespace RPAxe
         // vehicle. Real control laws are scheduled per flight regime; an under-rated unit's table is wrong
         // in every cell, and wrong in a different way in each. The design is adversarial, the story is a
         // lookup table full of the wrong numbers.
-        public static float AdversarialAcGain = 3f;        // maps |c - m| onto 0..1; the balance knob
-        public static float AdversarialDwellSec = 2f;      // minimum time in a regime, so it can be read
-        public static float AdversarialMargin = 0.15f;     // lead needed to switch, so it cannot flap
+        public const float AdversarialAcGain = 3f;         // maps |c - m| onto 0..1; the balance knob
+        public const float AdversarialDwellSec = 2f;       // minimum time in a regime, so it can be read
+        public const float AdversarialMargin = 0.15f;      // lead needed to switch, so it cannot flap
 
         // The regime EMA window, in attitude-response cycles rather than seconds, so it rides the same
         // m^(-1/3) law as noise Hz and needs no scaling switch of its own: 3 cycles is ~1.5 s on a 1 t probe
         // and ~7 s on a 100 t stack. It has to be SLOWER than the vehicle's own response, or the split just
         // tracks the instantaneous command and every cell reads as "moving it".
-        public static float RegimeTauCycles = 3f;
+        public const float RegimeTauCycles = 3f;
 
         static float _advDc, _advAc, _advHold;
         static int _advRegime = -1;
@@ -235,19 +234,12 @@ namespace RPAxe
         public static string AdversarialRegimeName
             => _advRegime < 0 ? "settling" : AdversarialNames[_advRegime];
 
-        // Tuning readouts. AC gain is set by watching these: the number to aim for is a SPREAD across the
-        // four cells over a flight, not a value, and dc/ac are what say which way it is wrong.
-        public static float AdversarialDc => _advDc;
-        public static float AdversarialAc => _advAc;
-
         /// <summary>PAW one-liner: the live regime, the strength, and the base layer's bound if it is on.
         /// The layer is named separately because it is not one of the regimes and does not switch with
         /// them -- reading "drift" while the craft is also pointing 40° wrong is otherwise misleading.</summary>
         public static string DescribePenalty(float sigma)
             => sigma <= 0f ? "clean"
-             : MisdirectMaxDeg > 0f
-                 ? $"{AdversarialRegimeName} {sigma * 100f:F0}% +{sigma * MisdirectMaxDeg:F0}° off-axis — degraded on input"
-                 : $"{AdversarialRegimeName} {sigma * 100f:F0}% — degraded on input";
+             : $"{AdversarialRegimeName} {sigma * 100f:F0}% +{sigma * MisdirectMaxDeg:F0}° off-axis — degraded on input";
 
         // The sustained component, shared by the washout move and by the regime split -- one EMA, so the
         // two can never disagree about what "holding" means.
@@ -395,10 +387,11 @@ namespace RPAxe
         // near 0.5 and rarely approaches 0 or 1 -- so the raw vector was typically only ~0.43 long and the
         // angle actually flown ran at well under half what the PAW advertised. Typical is now ~0.7 of the bound, with excursions that clamp at it.
         //
-        // Past 90 degrees the intended-axis component goes negative and control REVERSES -- available, not
-        // the default. 0 turns the layer off, which is how it gets A/B'd against the bare policy in flight.
-        public static float MisdirectMaxDeg = 90f;
-        public static float MisdirectRateHz = 0.6f;   // ~1.5 s to noticeably change character
+        // 90 is the edge case on purpose: at exactly 90 the intended-axis component is zero and everything
+        // commanded lands somewhere else, and past it control would REVERSE. The layer used to be switchable
+        // off (0) for A/B against the bare policy; that comparison is settled and the switch is gone.
+        public const float MisdirectMaxDeg = 90f;
+        public const float MisdirectRateHz = 0.6f;   // ~1.5 s to noticeably change character
 
         // Octave structure is a SHAPE choice, not a feel knob, so it stays out of the PAW -- the rig already
         // has enough sliders, and rate is the one number that actually needs flying to find.
@@ -440,7 +433,7 @@ namespace RPAxe
         /// </summary>
         public static Quaternion MisdirectRotation(float sigma)
         {
-            if (sigma <= 0f || MisdirectMaxDeg <= 0f) return Quaternion.identity;
+            if (sigma <= 0f) return Quaternion.identity;
             float t = Time.time * MisdirectRateHz;
             float seed = _mdSeed == int.MinValue ? 0f : (_mdSeed % 977) * 0.31f;
             Vector3 rot = new Vector3(MisdirectFbm(0, t, seed),
@@ -490,14 +483,12 @@ namespace RPAxe
         // not a human stick -- and MechJeb and SAS emit small nonzero commands continuously. A strict
         // zero test would read "armed" essentially always and the three variants would be one variant.
         //
-        // DEFAULTS TO 1 (`any input incl throttle`). It was `always` while the modes were being compared,
-        // because a mode that only fires sometimes is harder to A/B; with the mechanic settled the design
-        // claim wins -- a flight computer that is not being ASKED for anything should not fail. It also
-        // pays for the misdirection base layer: a corruption that runs under every cell needs a safe
-        // harbour, and this makes the harbour "stop asking for anything" rather than "ask quietly".
-        public static int ArmMode = 1;
+        // LOCKED TO `any input incl throttle`. The three modes existed to be A/B'd; that comparison is
+        // settled and the other two are gone. The design claim wins -- a flight computer that is not being
+        // ASKED for anything should not fail -- and it is also what pays for the misdirection base layer,
+        // which runs under every cell and therefore needs a safe harbour: "stop asking for anything" rather
+        // than "ask quietly". Throttle counts, so a hands-off burn is still armed.
         public const float ArmDeadband = 0.01f;
-        public static readonly string[] ArmNames = { "always", "any input incl throttle", "steering only" };
 
         static bool _armed = true;
         /// <summary>Last computed arming state. Read by the RCS patch, which cannot see ctrlState first.</summary>
@@ -505,25 +496,12 @@ namespace RPAxe
 
         public static bool ComputeArmed(FlightCtrlState st)
         {
-            if (ArmMode <= 0 || st == null) return _armed = true;
+            if (st == null) return _armed = true;
             const float d = ArmDeadband;
             bool steering = Mathf.Abs(st.pitch) > d || Mathf.Abs(st.yaw) > d || Mathf.Abs(st.roll) > d
                          || Mathf.Abs(st.X) > d || Mathf.Abs(st.Y) > d || Mathf.Abs(st.Z) > d;
-            return _armed = ArmMode == 1 ? (steering || st.mainThrottle > d) : steering;
+            return _armed = steering || st.mainThrottle > d;
         }
-
-        // ---- NON-STATIONARITY: make the deterministic move un-learnable ---------------------------
-        // The other escape from "deterministic gets learned". Overgain is learnable only because its slope
-        // is FIXED; a slow random walk means adaptive tuning is always chasing a target that has moved. Very
-        // low frequency (~20 s period) so it reads as a system that will not settle rather than as noise.
-        //
-        // The OVERGAIN cell is all it touches now (it is the only deterministic move left with a parameter
-        // to walk), so this is a knob about that one cell, not about the mechanic as a whole.
-        public static bool NoiseDrift;
-        public static float DriftHz = 0.05f;
-
-        public static float DriftFor(int idx)
-            => NoiseDrift ? 0.5f + Mathf.PerlinNoise(Time.time * DriftHz, idx * 13.1f) : 1f;
 
         // ---- MOVE: TRANSPORT DELAY (the `lag` cell) -----------------------------------------------
         // Hold the command for N physics ticks, N rising with overload. Pure delay is the classic loop
@@ -538,7 +516,7 @@ namespace RPAxe
         static readonly float[] _dy = new float[DelayBufferMax];
         static readonly float[] _dr = new float[DelayBufferMax];
         static int _dIdx;
-        public static float DelayTicksMax = 10f;   // at sigma = 1, in 50 Hz physics ticks
+        public const float DelayTicksMax = 10f;   // at sigma = 1, in 50 Hz physics ticks
 
         public static void ResetDelay()
         {
@@ -558,18 +536,11 @@ namespace RPAxe
             pitch = _dp[read]; yaw = _dy[read]; roll = _dr[read];
         }
 
-        /// <summary>Noise amplitude as a fraction of control range: 0 under capacity, rising with overload.</summary>
+        /// <summary>Noise amplitude as a fraction of control range: 0 under capacity, rising with overload.
+        /// Asymptotes to 1 on its own -- there is no separate ceiling, because a cap on a self-capping curve
+        /// only ever hid the shape.</summary>
         public static float NoiseFor(float ratio)
-            => ratio <= 1f ? 0f : Mathf.Min(NoiseMax, 1f - Mathf.Exp(-NoiseK * (ratio - 1f)));
-
-        // PROTOTYPE TEST RIG. Pins q to a chosen value and keeps the vessel flyable, so the SAME craft can
-        // be flown the SAME profile at several values -- which is the only way to answer the question the
-        // prototype exists for: does an autopilot simply absorb the reduction? A nominal gravity turn needs
-        // a fraction of the available control authority, so MechJeb can be expected to compensate until it
-        // saturates; if the traces at 1.0 / 0.6 / 0.35 are indistinguishable, the degraded band does not
-        // exist in practice and no value of k will create it. Driven from the core's DEBUG PAW fields.
-        public static bool NoiseOverrideEnabled;
-        public static float NoiseOverrideValue = 0f;
+            => ratio <= 1f ? 0f : 1f - Mathf.Exp(-NoiseK * (ratio - 1f));
 
         // Dry mass of one part, computed the way KSP itself computes it in Part.UpdateMass():
         //   mass = prefabMass + SUM(IPartMassModifier.GetModuleMass(prefabMass))
@@ -622,7 +593,7 @@ namespace RPAxe
 
         /// <param name="maxCapacity">Steerable-mass budget: MAX across ALL avionics units, in tons.</param>
         /// <param name="vesselMass">Whole-vessel wet mass measured against it, in tons.</param>
-        /// <param name="noise">Control-noise amplitude in [0..NoiseMax]; 0 unless over capacity.</param>
+        /// <param name="noise">Control-noise amplitude in [0..1]; 0 unless over capacity.</param>
         public static LockLevel ShouldLock(List<Part> parts, out float maxCapacity, out float vesselMass,
                                            out float noise)
         {
@@ -662,7 +633,7 @@ namespace RPAxe
                     if (m is ModuleAxeAvionics axe)
                     {
                         isCore = true;
-                        // PROTOTYPE: a guided core now CONTRIBUTES ITS CAPACITY instead of unlocking the
+                        // A guided core CONTRIBUTES ITS CAPACITY instead of unlocking the
                         // vessel outright. It used to short-circuit to Unlocked with no mass term at all,
                         // because overload was answered in watts; under the authority model it is judged on
                         // r like every other unit. Still gated on GuidanceActive -- an un-researched or
@@ -695,19 +666,11 @@ namespace RPAxe
                 vesselMass += partMass;
 
                 if (isCore && axial) coreAxial = true;
-                // PROTOTYPE: was `hasFixed &&` -- procedural cores now feed the same MAX.
+                // Was `hasFixed &&` -- procedural cores feed the same MAX.
                 if ((hasFixed || guided) && partCapacity > maxCapacity) maxCapacity = partCapacity;
                 // crewed pod OR a probe core with no avionics at all (an avionics unit's own command never
                 // bypasses; neither does a launch clamp's, or every pad stand would unlock the rocket).
                 if (cmd && !isCore && !isClamp) bypass = true;
-            }
-
-            // PROTOTYPE TEST RIG: pin q and stay flyable, so one craft can be flown at several values.
-            // Placed after the part walk so maxCapacity/vesselMass are still reported honestly.
-            if (NoiseOverrideEnabled)
-            {
-                noise = Mathf.Clamp(NoiseOverrideValue, 0f, 1f);
-                return LockLevel.Unlocked;
             }
 
             // A crewed pod / bare command source still bypasses everything, unconditionally (RP-1's rule).

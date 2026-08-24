@@ -68,11 +68,40 @@ independent of which perturbation won, and improves the shipped lock system on i
 > wall-clock **window** that expires by time instead of by consumption, plus an immediate re-evaluation on
 > the coupling frame. Both module types.
 
-> **The `DEBUG:` knobs deliberately STAY** — this is where D4 is knowingly incomplete. Seventeen remain
-> (16 sliders/toggles plus the injected readout — `DEBUG: white noise` went with the drift cell) and every
-> one drives something: the strength curve, the regime split, one of the four moves, or the base layer. Two constants were PROMOTED to
-> knobs in the same pass — regime dwell and regime margin — because they are the two numbers that decide
-> legibility, and legibility is what the mechanic still has to be tuned for. Stripping the rig is the last commit before ship, not part of this cleanup.
+> ~~**The `DEBUG:` knobs deliberately STAY** — this is where D4 is knowingly incomplete. Every one drives
+> something: the strength curve, the regime split, one of the four moves, or the base layer. Two constants
+> were PROMOTED to knobs in the same pass — regime dwell and regime margin — because they are the two
+> numbers that decide legibility, and legibility is what the mechanic still has to be tuned for. Stripping
+> the rig is the last commit before ship, not part of this cleanup.~~
+>
+> **DONE 2026-08-24 — the rig is stripped and the numbers are LOCKED IN. D4 is closed.** All 17 `DEBUG:`
+> PAW entries are gone, along with `PushDebugKnobs()`, the `ModifierTicks`/`LastNoise` hook diagnostics,
+> the `dc`/`ac` tuning readouts and the `SetupModeChooser`/`PopulateChooser` pair that existed only to fill
+> the arm-mode dropdown. Every tunable is now a `const` in `AxeControlLockerUtils`:
+>
+> | const | value | why this number |
+> |---|---|---|
+> | `NoiseK` | 11.5 | anchored: σ(1.2) = 0.9 — "at 20% over its rated mass a unit is hopeless" |
+> | `OvergainSlope` | 10 | anchored: G(1.2) = 3, since typical loop gain margin is 2–4× |
+> | `NoiseHz` | 2 | C in `C/m^(1/3)`, so each vehicle is perturbed at its own attitude-response frequency |
+> | `RegimeTauCycles` | 3 | EMA window in response cycles — must be slower than the vehicle itself |
+> | `AdversarialAcGain` | 3 | the balance knob; tuned for a *spread* across the four cells, not a value |
+> | `AdversarialDwellSec` / `AdversarialMargin` | 2 s / 0.15 | the two legibility numbers: long enough to read, sticky enough not to flap |
+> | `DelayTicksMax` | 10 | 200 ms at 50 Hz — already past what destabilises most controllers |
+> | `MisdirectMaxDeg` / `MisdirectRateHz` | 90° / 0.6 Hz | 90 = the intended axis gets nothing; 0.6 Hz = too fast to adapt to, too slow to be filtered |
+> | `ArmDeadband` | 0.01 | reads post-autopilot, so a strict `> 0` would arm always |
+>
+> **Three A/B switches are gone rather than frozen**, because each one's comparison is settled and each
+> shipped in its OFF position: `NoiseMax` (a ceiling on a curve that already asymptotes to 1), `NoiseDrift`
+> + `DriftHz` (non-stationary overgain slope, never shipped on), and `NoiseHzAutoScale` (flat-Hz mode, only
+> ever there to A/B against mass scaling). `NoiseOverrideEnabled`/`Value` — the σ pin that let one craft fly
+> the same profile at several values — goes with them, including its early-return in `ShouldLock`.
+> `ArmMode` is locked to `any input incl throttle`; the other two modes and `ArmNames` are deleted.
+>
+> The removed `KSPField`s were `isPersistant`, so existing saves carry values for fields that no longer
+> exist. KSP ignores unmatched save values, so this is a silent no-op — no save migration needed.
+> `EffectiveNoiseHz` is the only mutable static left in the file, and it is per-vessel live state written
+> by the controller, not a knob.
 
 | phase | what | gate | status |
 |---|---|---|---|
@@ -80,7 +109,7 @@ independent of which perturbation won, and improves the shipped lock system on i
 | **A** | player-facing behaviour | — | **DONE** (A1–A5) |
 | **B** | RP-1 parity audit + fixes | — | B1/B2 decided; B3 to build |
 | **C** | sack the EC penalty | — | **DONE** |
-| **D** | fly the modes, pick one, clean up | needs A+B+C | **mechanic chosen, losers deleted; D4 partial — the rig stays until the numbers are nailed down** |
+| **D** | fly the modes, pick one, clean up | needs A+B+C | **DONE 2026-08-24** — mechanic chosen, losers deleted, D4 closed: rig stripped and every tunable frozen as a `const` |
 
 ---
 

@@ -30,14 +30,8 @@ namespace RPAxe
         /// because ModuleRCS reads ctrlState on its own Update, before the post-autopilot hook re-zeros it.</summary>
         public AxeControlLockerUtils.LockLevel Level => _level;
 
-        /// <summary>PROTOTYPE: control-noise amplitude in [0..NoiseMax]. 0 unless over capacity.</summary>
+        /// <summary>Control-noise amplitude in [0..1]. 0 unless over capacity.</summary>
         public float ControlNoise => _noise;
-
-        // PROTOTYPE DIAGNOSTIC. FlightInputModifier is a callback registered on the vessel; if it is not
-        // subscribed, or the branch is not reached, nothing happens and the symptom is identical to "the
-        // noise is too small to see". Ticks proves the hook runs; LastNoise proves what it injected.
-        public int ModifierTicks { get; private set; }
-        public Vector3 LastNoise { get; private set; }
 
         Vessel _vessel;
         AxeControlLockerUtils.LockLevel _level = AxeControlLockerUtils.LockLevel.Unlocked;
@@ -169,8 +163,8 @@ namespace RPAxe
         // Hard guarantee, every physics frame: while locked, zero steering + lateral translation; leave throttle
         // & staging alone. Axial level additionally permits Z (axial-thrust) translation for spin-stabilized stages.
         //
-        // PROTOTYPE v2 (docs/AVIONICS_AUTHORITY.md): while UNLOCKED but over capacity, correlated NOISE is added
-        // to the rotation commands rather than the axes being scaled. v1 scaled them and was killed by test --
+        // While UNLOCKED but over capacity, the rotation commands are CORRUPTED rather than scaled down
+        // (docs/AVIONICS_AUTHORITY.md). Scaling them was v1, and it was killed by test --
         // at q=0.05 a craft ascended normally and flew BETTER, because lowering loop gain raises stability
         // margin. An autopilot can correct a disturbance's average but cannot anticipate it, so noise is the
         // one perturbation MechJeb has nothing to absorb it with.
@@ -180,25 +174,21 @@ namespace RPAxe
         // on its own Unity pass and is handled by AxeRcsControlLock.
         void FlightInputModifier(FlightCtrlState st)
         {
-            ModifierTicks++;   // advances whenever the hook runs at all, noise or not
             if (_level == AxeControlLockerUtils.LockLevel.Unlocked)
             {
-                if (_noise <= 0f) { LastNoise = Vector3.zero; return; }
+                if (_noise <= 0f) return;
                 // Disarmed passes sigma = 0 rather than skipping Apply: every stateful move still advances,
                 // so re-arming cannot read a stale delay buffer or a cold EMA and jump. Zero sigma is a
                 // no-op inside every penalty by construction.
                 float sigma = AxeControlLockerUtils.ComputeArmed(st) ? _noise : 0f;
-                float y0 = st.yaw, p0 = st.pitch, r0 = st.roll;
                 AxeControlLockerUtils.ApplyAdversarial(ref st.pitch, ref st.yaw, ref st.roll, sigma);
                 // Base layer, AFTER the policy: the frame is wrong for whatever ends up being commanded, so
                 // it rotates the corrupted command rather than the requested one. Rotation only here --
                 // translation is not part of ctrlState's autopilot path in any way that gimbals care about,
                 // and is handled where it is actually consumed (AxeRcsControlLock).
                 AxeControlLockerUtils.ApplyMisdirect(ref st.pitch, ref st.yaw, ref st.roll, sigma);
-                LastNoise = new Vector3(st.pitch - p0, st.yaw - y0, st.roll - r0);
                 return;
             }
-            LastNoise = Vector3.zero;
             st.yaw = st.pitch = st.roll = 0f;
             st.X = st.Y = 0f;
             if (_level == AxeControlLockerUtils.LockLevel.Locked) st.Z = 0f;
