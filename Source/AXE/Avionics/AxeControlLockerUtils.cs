@@ -62,7 +62,9 @@ namespace RPAxe
         //     gimbals therefore gets strongly perturbed; otherwise big vehicles ignore it exactly as
         //     they ignored the authority cut.
         //   * Noise is LOW-FREQUENCY (correlated, ~NoiseHz). White noise per physics tick is averaged
-        //     away by vessel rotational inertia and would be invisible on anything heavy.
+        //     away by vessel rotational inertia and would be invisible on anything heavy. (Both modes went
+        //     with the drift cell; NoiseHz survives because the regime EMA window is measured in
+        //     attitude-response cycles and reads it -- see AdversarialTau.)
         // All tunables are STATIC AND LIVE, driven from the core's DEBUG PAW knobs, so they can be changed
         // in flight without a rebuild. That is the whole point of the prototype: none of these numbers has a
         // physical anchor (KSP models no bending modes), so they can only be found by feel.
@@ -95,20 +97,30 @@ namespace RPAxe
         // stack gets 0.43 Hz.
         public static float HzForMass(float massTons)
             => NoiseHzAutoScale ? NoiseHz / Mathf.Pow(Mathf.Max(0.1f, massTons), 1f / 3f) : NoiseHz;
-        public static bool NoiseWhite;        // white instead of correlated: tests the inertia-filter theory
 
         // ALL THREE AXES. Roll was separable while the modes were being compared -- it is by far the most
         // perceptible axis, so "is roll alone carrying the whole feel?" was worth being able to answer. It
         // is answered; roll is degraded like the other two and the switch is gone.
 
-        // WHY EXACTLY ONE MOVE IS ADDITIVE. Additive noise on a command that is already small is not
-        // degradation, it is replacement: docking runs commands around 0.05, so +/-0.3 of noise is six times
-        // the signal and the input becomes garbage rather than degraded -- which is what made an
-        // additive-everywhere mode unusable on RCS, where small commands live. Every other move here is
-        // proportional to the command or is a pure time shift, so it preserves the ratio at any magnitude.
-        // The DRIFT cell is additive deliberately, and it is the only one: it is selected precisely when
-        // there is no command to be proportional TO, it is the one mechanic that still bites a null stick,
-        // and that is the whole answer to "fly gently and you are safe".
+        // ZERO IN, ZERO OUT -- an invariant of the whole mechanic, and the reason NO move is additive.
+        // Additive noise on a command that is already small is not degradation, it is replacement: docking
+        // runs commands around 0.05, so +/-0.3 of noise is six times the signal and the input becomes
+        // garbage rather than degraded -- which is what made an additive-everywhere mode unusable on RCS,
+        // where small commands live. The DRIFT cell used to be the one deliberate exception, injecting on a
+        // null stick so that "fly gently and you are safe" had an answer.
+        //
+        // IT WAS REMOVED, and the loophole is taken back knowingly. That cell was selected precisely when
+        // there was no command to be proportional TO, so its amplitude was set by sigma alone -- and sigma
+        // saturates at 1.0 for any ratio past ~1.5 (see NoiseFor). An assembled station sits at r = 2-10,
+        // not the 1.0-1.3 a launch vehicle lives in, so the cell delivered a FULL-DEFLECTION random command
+        // on all three axes to a vessel that was merely holding attitude. SAS then fought it, the fight kept
+        // the mechanic armed, and the loop sustained itself: uncommanded RCS and gimbal activity that no
+        // player action could quiet. A penalty you cannot stop by stopping is not a cost, it is a fault.
+        //
+        // So the rule is now simply: no command, no corruption. Every remaining move is proportional to the
+        // command or a pure time shift of it, and the misdirection layer rotates it -- all of them are
+        // exactly zero at zero input, at any sigma. What is given up is the counter to minimal input; what
+        // is bought is a mechanic that is always attributable to something the player just did.
 
         // ---- MOVE: OVERGAIN -----------------------------------------------------------------------
         // Models the failure mechanism instead of its symptom. An undersized control system does not make
@@ -163,11 +175,14 @@ namespace RPAxe
         //
         //                    | not moving it        | moving it
         //   -----------------+----------------------+-------------------
-        //   holding little   | UNCOMMANDED          | OVERGAIN
+        //   holding little   | IDLE (no-op)         | OVERGAIN
         //   holding a lot    | WASHOUT              | DELAY
         //
-        //   * UNCOMMANDED for the empty cell, and this is the whole answer to "fly gently and you are
-        //     safe": the counter to minimal input is the one mechanic that does not read input at all.
+        //   * IDLE for the empty cell. It was an additive disturbance -- the one move that read no input at
+        //     all, and so the only answer to "fly gently and you are safe". It is now a no-op; see the
+        //     zero-in-zero-out note above for why. The cell is KEPT rather than folded into its neighbours
+        //     because the regime split still has to classify a quiet vessel somewhere, and because "idle"
+        //     is then the honest thing for the PAW to report.
         //   * OVERGAIN where commands are SMALL -- amplification needs headroom below the clamp, and a
         //     x3 on 0.3 is a different event from a x3 on 0.9, which merely saturates.
         //   * WASHOUT where the command is mostly DC. Its standalone weakness (the loop compensates by
@@ -176,11 +191,14 @@ namespace RPAxe
         //   * DELAY where the command is changing. Pure lag does nothing at all to a constant command, and
         //     is the sharpest thing in the set against one that is moving.
         //
-        // There is no absorbing state, which is the property being bought. Do nothing -> drift forces a
-        // correction -> you are now holding or twitching. Hold it -> it decays -> you re-command -> the
-        // transient rises -> lag. Fight it -> it destabilises -> you back off -> drift. Any fixed stick
-        // policy walks into something, and the only real remedy is a unit rated for the vehicle -- which is
-        // the constraint the whole design is trying to make binding.
+        // THERE IS NOW ONE ABSORBING STATE -- doing nothing -- and that is a deliberate retreat from the
+        // property the shape was built for. The original cycle ran: do nothing -> drift forces a correction
+        // -> you are holding or twitching; hold it -> it decays -> you re-command -> the transient rises ->
+        // lag; fight it -> it destabilises -> you back off -> drift. With the drift cell gone the loop is
+        // open at the top. Everything from "hold it" onward is unchanged, so there is still no escape
+        // available WHILE FLYING, which is where the constraint has to bind: an undersized unit still
+        // cannot fly its vehicle, and the only real remedy is still a unit rated for it. What it no longer
+        // does is punish a vessel that nobody is flying.
         //
         // NOT IN THE POLICY, deliberately: dropouts, misdirect and coupling were strong in EVERY regime, so
         // there was no cell where they were the specific answer. That made them standalone candidates rather
@@ -212,7 +230,7 @@ namespace RPAxe
         static float _advDc, _advAc, _advHold;
         static int _advRegime = -1;
 
-        public static readonly string[] AdversarialNames = { "drift", "overgain", "washout", "lag" };
+        public static readonly string[] AdversarialNames = { "idle", "overgain", "washout", "lag" };
         public static int AdversarialRegime => _advRegime;
         public static string AdversarialRegimeName
             => _advRegime < 0 ? "settling" : AdversarialNames[_advRegime];
@@ -228,8 +246,8 @@ namespace RPAxe
         public static string DescribePenalty(float sigma)
             => sigma <= 0f ? "clean"
              : MisdirectMaxDeg > 0f
-                 ? $"{AdversarialRegimeName} {sigma * 100f:F0}% +{sigma * MisdirectMaxDeg:F0}° off-axis — degraded"
-                 : $"{AdversarialRegimeName} {sigma * 100f:F0}% — degraded";
+                 ? $"{AdversarialRegimeName} {sigma * 100f:F0}% +{sigma * MisdirectMaxDeg:F0}° off-axis — degraded on input"
+                 : $"{AdversarialRegimeName} {sigma * 100f:F0}% — degraded on input";
 
         // The sustained component, shared by the washout move and by the regime split -- one EMA, so the
         // two can never disagree about what "holding" means.
@@ -325,11 +343,10 @@ namespace RPAxe
                     pitch = dp; yaw = dy; roll = dr;
                     break;
                 default:
-                    // Drift: additive, so it is the only move that still bites a null stick -- which is the
-                    // entire reason this cell exists. All three axes; roll is no longer separable.
-                    yaw   = Mathf.Clamp(yaw + NoiseSample(0, sigma), -1f, 1f);
-                    pitch = Mathf.Clamp(pitch + NoiseSample(1, sigma), -1f, 1f);
-                    roll  = Mathf.Clamp(roll + NoiseSample(2, sigma), -1f, 1f);
+                    // IDLE: nothing is written. This cell is selected when there is neither something being
+                    // held nor something being moved, so under the zero-in-zero-out rule there is nothing
+                    // here to corrupt. The misdirection layer that runs after it is a rotation and is
+                    // likewise identity on a zero vector, so a null stick really does stay null.
                     break;
             }
         }
@@ -374,9 +391,9 @@ namespace RPAxe
         //   * DECORRELATED CHANNELS. All three were sampled at the SAME x with only a lane offset in y, so
         //     they crossed the noise lattice in lockstep and the axis re-arranged on a common beat.
         //     Mutually incommensurate per-channel rates remove the beat.
-        // The channels are also gained: Unity's Perlin clusters near its midpoint (see PerlinGain), so the
-        // raw vector was typically only ~0.43 long and the angle actually flown ran at well under half what
-        // the PAW advertised. Typical is now ~0.7 of the bound, with excursions that clamp at it.
+        // The channels are also gained: Unity's Perlin is bell-shaped rather than uniform -- it clusters
+        // near 0.5 and rarely approaches 0 or 1 -- so the raw vector was typically only ~0.43 long and the
+        // angle actually flown ran at well under half what the PAW advertised. Typical is now ~0.7 of the bound, with excursions that clamp at it.
         //
         // Past 90 degrees the intended-axis component goes negative and control REVERSES -- available, not
         // the default. 0 turns the layer off, which is how it gets A/B'd against the bare policy in flight.
@@ -387,7 +404,7 @@ namespace RPAxe
         // has enough sliders, and rate is the one number that actually needs flying to find.
         const int MisdirectOctaves = 3;
         const float MisdirectLacunarity = 2.7f;   // non-integer, so octaves never re-align on the lattice
-        const float MisdirectGain = 2.4f;         // Perlin bell-shape correction, same reason as PerlinGain
+        const float MisdirectGain = 2.4f;         // Perlin bell-shape correction (see above)
 
         // Per-channel base rates, mutually incommensurate so the three axes never come back into phase, and
         // separate y lanes so they sample unrelated noise to begin with.
@@ -455,12 +472,14 @@ namespace RPAxe
         //
         //   always              no safe harbour. A craft over capacity is corrupted whatever it is doing,
         //                       including sitting still doing nothing.
-        //   any input+throttle  safe harbour = FULLY IDLE. Not burning and not steering. Any active flight
-        //                       is armed, so the no-escape property survives intact: throttle alone arms it,
-        //                       which means a straight burn still lands in the drift cell.
-        //   steering only       safe harbour = NOT STEERING. You may burn freely. Note what this costs: it
-        //                       makes the drift cell nearly unreachable, which hands back a version of the
-        //                       dominant escape ("stop commanding") during any coast.
+        //   any input+throttle  safe harbour = FULLY IDLE. Not burning and not steering.
+        //   steering only       safe harbour = NOT STEERING. You may burn freely.
+        //
+        // THIS GATE MATTERS MUCH LESS THAN IT DID. It was the only thing standing between a coasting vessel
+        // and the additive drift cell; with that cell a no-op, zero-in-zero-out already gives a null stick a
+        // clean flight structurally, whatever the mode. What the gate still decides is the MISDIRECTION
+        // layer, which is a rotation and so bites any nonzero command including an autopilot's -- so
+        // "am I burning?" still changes whether a hands-off vessel is being interfered with.
         //
         // The middle one is the interesting design claim: a flight computer that is not being ASKED for
         // anything should not fail, which is also the cleanest answer to the 4a objection that noise is
@@ -542,22 +561,6 @@ namespace RPAxe
         /// <summary>Noise amplitude as a fraction of control range: 0 under capacity, rising with overload.</summary>
         public static float NoiseFor(float ratio)
             => ratio <= 1f ? 0f : Mathf.Min(NoiseMax, 1f - Mathf.Exp(-NoiseK * (ratio - 1f)));
-
-        // Unity's Perlin is bell-shaped, not uniform: it clusters near 0.5 and rarely approaches 0 or 1, so
-        // mapped to +/-1 its RMS is about 0.2-0.3 against uniform white's 0.577. Without this gain the
-        // white/correlated toggle compares LOUDNESS rather than frequency content, and white looks worse for
-        // the wrong reason. Roughly RMS-matched, then clamped.
-        const float PerlinGain = 2.4f;
-
-        /// <summary>Noise sample in [-sigma, sigma] for one control axis.</summary>
-        public static float NoiseSample(int axis, float sigma)
-        {
-            if (sigma <= 0f) return 0f;
-            float n = NoiseWhite
-                ? Random.Range(-1f, 1f)
-                : Mathf.Clamp((Mathf.PerlinNoise(Time.time * EffectiveNoiseHz, axis * 37.7f) * 2f - 1f) * PerlinGain, -1f, 1f);
-            return n * sigma;
-        }
 
         // PROTOTYPE TEST RIG. Pins q to a chosen value and keeps the vessel flyable, so the SAME craft can
         // be flown the SAME profile at several values -- which is the only way to answer the question the

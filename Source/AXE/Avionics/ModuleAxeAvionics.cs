@@ -382,13 +382,6 @@ namespace RPAxe
          UI_Toggle(disabledText = "flat", enabledText = "by vessel mass", scene = UI_Scene.All)]
         public bool noiseHzAuto = true;
 
-        // White vs correlated: a direct test of the inertia-filtering theory. If white is invisible and
-        // correlated is felt, that confirms the vessel is acting as a low-pass filter.
-        [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: white noise",
-                  groupName = PAWGroup, groupDisplayName = GroupDisplay),
-         UI_Toggle(disabledText = "correlated", enabledText = "white", scene = UI_Scene.All)]
-        public bool noiseWhite = false;
-
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "DEBUG: ramp k",
                   guiFormat = "F1", groupName = PAWGroup, groupDisplayName = GroupDisplay),
          UI_FloatRange(minValue = 0.5f, maxValue = 25f, stepIncrement = 0.5f, scene = UI_Scene.All)]
@@ -1825,7 +1818,6 @@ namespace RPAxe
             AxeControlLockerUtils.NoiseOverrideValue = noiseOverrideValue;
             AxeControlLockerUtils.NoiseHz = noiseHz;
             AxeControlLockerUtils.NoiseHzAutoScale = noiseHzAuto;
-            AxeControlLockerUtils.NoiseWhite = noiseWhite;
             AxeControlLockerUtils.NoiseK = noiseK;
             AxeControlLockerUtils.NoiseMax = noiseMax;
             AxeControlLockerUtils.OvergainSlope = overgainSlope;
@@ -2110,12 +2102,38 @@ namespace RPAxe
             if (mass <= 0f) return;
 
             if (!guidanceEngaged && mass <= capacityTons) SetEngaged(true, manual: false);
-            else if (guidanceEngaged && _coupledThisTick && mass > capacityTons) SetEngaged(false, manual: false);
-            _coupledThisTick = false;
+            else if (guidanceEngaged && CoupleWindowOpen && mass > capacityTons)
+            {
+                SetEngaged(false, manual: false);
+                _coupleWindowUntil = -1f;   // decided; don't re-announce for the rest of the window
+            }
         }
 
-        bool _coupledThisTick;
-        void OnCouple(GameEvents.FromToAction<Part, Part> _) { _coupledThisTick = true; }
+        // A COUPLING WINDOW, not a one-shot flag. onPartCouple fires while KSP is still stitching the two
+        // vessels together, and vessel.totalMass is not rebuilt until the merged vessel's physics stats are
+        // recomputed a frame or two later -- the same trap as docs: ksp-lazily-loaded-empty-not-absent, a
+        // value that is live but stale, so a guard on it passes while answering the wrong question.
+        //
+        // The old bool was consumed by whichever throttled tick happened to land first. If that tick read
+        // the PRE-DOCK mass then `mass > capacityTons` was false, the flag was cleared, and the unit stayed
+        // engaged permanently -- while every OTHER unit aboard, evaluating on its own phase, disengaged
+        // correctly. Because the vessel budget is a MAX across units and not a sum, ONE such straggler is
+        // enough to keep an entire station in the degraded band, at a sigma that saturates at 1.0 for any
+        // ratio past ~1.5. Observed on the Mirmir station: three of four rated units disengaged, the fourth
+        // did not, and it alone set the whole vessel's budget.
+        //
+        // Holding the window open for a few seconds lets the check re-run against a mass that has settled,
+        // and expiring it by TIME rather than by consumption means a stale read can no longer eat the one
+        // chance to notice. Wall-clock, so a physics-warp change to Time.timeScale cannot shorten it.
+        const float CoupleWindowSec = 3f;
+        float _coupleWindowUntil = -1f;
+        bool CoupleWindowOpen => _coupleWindowUntil > 0f && Time.unscaledTime <= _coupleWindowUntil;
+
+        void OnCouple(GameEvents.FromToAction<Part, Part> _)
+        {
+            _coupleWindowUntil = Time.unscaledTime + CoupleWindowSec;
+            _nextFlightRecalc = 0f;   // evaluate next frame instead of up to a second later
+        }
 
         void SetGui()
         {

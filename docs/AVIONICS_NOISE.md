@@ -7,6 +7,15 @@ Over capacity, the vessel's control inputs are corrupted by noise rising with ov
 the core paying an EC penalty. Everything else — box-volume capacity, the MAX rule, the named-part
 table, the Guided/Unguided/Shielded taxonomy — is unchanged.
 
+> **2026-08-24 — §4e happened, and §3's own conclusion was right all along.** The additive
+> `uncommanded`/`drift` cell is **removed**; the mechanic is now zero-in-zero-out. §3 below argued for
+> on-input mode on signal-to-noise grounds and was overruled when `adversarial` shipped, which put the
+> additive move back as the empty cell. On an assembled station (r = 2-10, where σ is pinned at ~1.0)
+> that meant a full-deflection random command into a vessel that was merely holding attitude, and SAS
+> fighting it kept it armed. **Read §3's "Mode: defaults to ON-INPUT" as the position that finally
+> won.** §4e's resolution was a claim, not a verified fact — see its amendment. Details:
+> `docs/AVIONICS_PLAN.md`, amendment of the same date.
+
 ---
 
 ## 1. Why this and not the two before it
@@ -306,8 +315,27 @@ is **not new** — RP-1 has identical behaviour, and station cores carry large a
 What *is* new: under noise the failure is wobble rather than a lock, and wobble during proximity
 operations is considerably more dangerous than simply having no attitude authority.
 
-Resolved by 4b as revised: auto-disengage on rising mass fires exactly here, so docking to something
-heavy stands the unit down into a clean lock rather than starting a wobble against a station.
+~~Resolved by 4b as revised: auto-disengage on rising mass fires exactly here, so docking to something
+heavy stands the unit down into a clean lock rather than starting a wobble against a station.~~
+
+**That resolution was a claim, not a verified fact, and it was wrong in practice (2026-08-24.)** The
+prediction — "wobble during proximity operations is considerably more dangerous" — was exactly right;
+the mitigation had a race. Auto-disengage was armed by a one-shot `_coupledThisTick` bool consumed by
+whichever throttled tick landed first after `onPartCouple`, and that event fires while KSP is still
+merging the two vessels. A tick that read the **pre-dock** `vessel.totalMass` found `mass > capacity`
+false, cleared the flag, and left that unit engaged permanently — while its neighbours, evaluating on
+different phases, stood down correctly. Since the budget is a **MAX and not a sum**, a single straggler
+sets the whole vessel's rating.
+
+Confirmed in `saves/default3` on the **Mirmir** station: of four rated units, the 20 t, 25.09 t and 35 t
+units are all `guidanceEngaged = false`, and the 51.68 t procedural core is still `true`. (Mirmir itself
+is fine — the bracket falls out of auto-*re*-engage being ungated, so a disengaged unit re-engages within
+a second of the vessel dropping under its rating: 35 t < Mirmir ≤ 51.68 t, i.e. r ≤ 1 and clean. The
+station only bites when something docks and pushes it over the largest unit.)
+
+Now a 3 s wall-clock **window** that expires by time rather than by consumption, plus an immediate
+re-evaluation on the coupling frame, in both module types. Combined with the removal of the additive
+cell, the docking case degrades to a clean stand-down instead of a wobble.
 
 ### 4f. Tuning must work out of the box across vehicle sizes — addressed by Hz scaling, needs confirming
 

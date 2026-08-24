@@ -32,9 +32,45 @@ independent of which perturbation won, and improves the shipped lock system on i
 > base layer that runs under every cell needs a safe harbour — this makes it "stop asking for anything"
 > rather than "ask quietly".
 >
-> **The `DEBUG:` knobs deliberately STAY** — this is where D4 is knowingly incomplete. Eighteen remain
-> (17 sliders/toggles plus the injected readout) and every one drives something: the strength curve, the
-> drift cell, the regime split, one of the four moves, or the base layer. Two constants were PROMOTED to
+
+> **AMENDED 2026-08-24, from an assembled station — the `drift` cell is REMOVED and the mechanic is now
+> ZERO IN, ZERO OUT.** Reported as "uncommanded input on big stations, RCS and engines go crazy", and it
+> was not a tuning problem:
+>
+> - σ has **no dynamic range above r ≈ 1.5**. `k = 11.5` was anchored on a launch-vehicle sentence
+>   ("20% over is hopeless" → σ(1.2) = 0.9), which gives σ(1.5) = 0.997 and σ(2) = 0.99999. A launch
+>   vehicle lives at r ∈ [1.0, 1.3]; an **assembled station lives at r ∈ [2, 10]**, entirely off the end
+>   of the curve, so every station sat at maximum severity regardless of how far over it was.
+> - `drift` was the one **additive** move, by design — it is selected when there is no command to be
+>   proportional to. At σ ≈ 1 that is a **full-deflection random command on all three axes**, at
+>   `2/m^(1/3)` Hz, into a vessel that was only holding attitude.
+> - It **self-armed**. `arm on = any input incl throttle` reads the *post-autopilot* command, and SAS
+>   holding a station emits well over the 0.01 deadband. drift → SAS fights it → the fight arms drift.
+>   A penalty that cannot be stopped by stopping is not a cost, it is a fault.
+>
+> The empty cell is now a **no-op** (`idle` in the PAW, renamed from `drift`). Every remaining move is
+> proportional to the command, a pure time shift of it, or a rotation of it, so **all four are exactly
+> zero at zero input, at any σ**. `NoiseSample`, `PerlinGain`, the `NoiseWhite` field and the
+> `DEBUG: white noise` knob go with it — nothing else called them.
+>
+> **What this knowingly gives back: "fly gently and you are safe" during a coast.** That was the whole
+> point of the cell and the reason `adversarial` beat `effort gain` (below). The trade is accepted: the
+> escape only exists when the pilot is commanding *nothing*, everything from "hold it" onward is
+> unchanged, and an undersized unit still cannot fly its vehicle. It just no longer attacks a vessel
+> nobody is flying. The dominant-escape argument below should be read as **historical from this date**.
+>
+> **Also fixed in the same pass — the auto-disengage-on-dock race.** `_coupledThisTick` was a one-shot
+> bool consumed by whichever throttled tick landed first after `onPartCouple`; that event fires while KSP
+> is still merging the vessels, so a tick reading the **pre-dock** `vessel.totalMass` cleared the flag and
+> the unit stayed engaged for good. Because the vessel budget is a **MAX across units, not a sum**, one
+> straggler pins the entire vessel at saturated σ. Seen on **Mirmir**: three of four rated units
+> disengaged, the fourth (51.68 t) did not, and it alone set the station's budget. Replaced with a 3 s
+> wall-clock **window** that expires by time instead of by consumption, plus an immediate re-evaluation on
+> the coupling frame. Both module types.
+
+> **The `DEBUG:` knobs deliberately STAY** — this is where D4 is knowingly incomplete. Seventeen remain
+> (16 sliders/toggles plus the injected readout — `DEBUG: white noise` went with the drift cell) and every
+> one drives something: the strength curve, the regime split, one of the four moves, or the base layer. Two constants were PROMOTED to
 > knobs in the same pass — regime dwell and regime margin — because they are the two numbers that decide
 > legibility, and legibility is what the mechanic still has to be tuned for. Stripping the rig is the last commit before ship, not part of this cleanup.
 
@@ -58,7 +94,7 @@ flown while the mechanic stayed open, and so the losers could be deleted by dele
 |---|---|---|---|
 | 0 | `none` | experimental control | deleted |
 | 1 | `lock (RP-1)` | RP-1's rule — the A/B baseline and the fallback | deleted |
-| 2 | `uncommanded` | disturbance | **survives as the `drift` move** |
+| 2 | `uncommanded` | disturbance | survived as the `drift` move; **removed 2026-08-24** — see the amendment above |
 | 3 | `on input` | disturbance | deleted |
 | 4 | `overgain` | margin attack — gain margin | **survives as the `overgain` move** |
 | 5 | `coupling` | margin attack — decoupling | deleted |
@@ -88,11 +124,12 @@ part and a transient part, and plays the move whose own effect is largest in tha
 
 | | **not moving it** | **moving it** |
 |---|---|---|
-| **holding little** | `uncommanded` | `overgain` |
+| **holding little** | `uncommanded` → **`idle` (no-op) since 2026-08-24** | `overgain` |
 | **holding a lot** | `washout` | `delay` |
 
-- **Fly gently → `uncommanded`.** The counter to minimal input is the one mechanic that does not read
-  input. That cell is the whole answer to the dominant-escape problem.
+- ~~**Fly gently → `uncommanded`.** The counter to minimal input is the one mechanic that does not read
+  input. That cell is the whole answer to the dominant-escape problem.~~ **Removed 2026-08-24.** The cell
+  is a no-op; the dominant-escape problem is reopened for a coasting vessel and closed for a flying one.
 - **`overgain` where commands are small** — amplification needs headroom below the clamp; ×3 on 0.3 is an
   event, ×3 on 0.9 merely saturates.
 - **`washout` where the command is mostly DC.** Its standalone weakness (the loop just commands
@@ -100,10 +137,11 @@ part and a transient part, and plays the move whose own effect is largest in tha
   *here*: commanding harder moves you into another cell. Rejected as a mode, correct as a move.
 - **`delay` where the command is changing** — pure lag does nothing to a constant command.
 
-**No absorbing state**, which is the property being bought: do nothing → drift forces a correction → you
-are holding or twitching; hold → it decays → you re-command → lag; fight → it destabilises → you back
-off → drift. The only remedy left is a unit rated for the vehicle, which is the constraint the whole
-design exists to make binding.
+**No absorbing state** was the property being bought: do nothing → drift forces a correction → you are
+holding or twitching; hold → it decays → you re-command → lag; fight → it destabilises → you back off →
+drift. **Since 2026-08-24 there is exactly one absorbing state — commanding nothing.** The rest of the
+cycle is intact, so the remedy for anyone actually flying is still a unit rated for the vehicle, which is
+the constraint the whole design exists to make binding.
 
 Not in the policy, deliberately: `dropouts`, `misdirect` and `coupling` are strong in *every* regime, so
 no cell is theirs. That makes them standalone candidates rather than moves.
@@ -122,8 +160,8 @@ being done to them:
 | setting | safe harbour | consequence |
 |---|---|---|
 | `always` | none | a craft over capacity is corrupted even sitting still doing nothing |
-| `any input incl throttle` | **fully idle** — not burning, not steering | keeps mode 10's no-escape property: throttle alone arms it, so a straight burn still lands in the `drift` cell |
-| `steering only` | **not steering** — burning is free | hands back a version of the dominant escape: during a coast, "stop commanding" is safe again, and under mode 10 the `drift` cell becomes nearly unreachable |
+| `any input incl throttle` | **fully idle** — not burning, not steering | since 2026-08-24 this gate only decides the `misdirect` base layer; zero-in-zero-out gives a null stick a clean flight structurally |
+| `steering only` | **not steering** — burning is free | as above; the difference between the two modes is now whether a hands-off *burn* is interfered with |
 
 The middle setting is the real design claim: **a flight computer that is not being asked for anything
 should not fail.** It is also the cheapest answer to the §4a objection that noise is active sabotage
