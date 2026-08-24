@@ -3213,14 +3213,19 @@ nodes:
     parts: [RO-SaturnI-IU]
     grants: [Science-Core-interplanetaryProbes]
     # RO-SaturnI-IU MOVED HERE 2026-08-24 (user call) from comp_digitalGuidanceComputer (T8). Two
-    # reasons, one legibility and one factual. (a) Every other launch vehicle gets its guidance ring
-    # one tier after its engines — Saturn IB/V: J-2 and F-1 both T8, its IU T9 — but the Saturn I's
-    # engines are T6 (fd_saturnKerolox) and RL10 is T4, so its own ring trailed the rocket by TWO.
-    # (b) The Saturn I IU's computer was the ASC-15: drum memory built from discrete transistors, a
-    # Titan II hand-me-down. It is NOT an integrated-circuit machine, so it cannot be the exemplar of
-    # a node whose whole crossover is elec_integratedCircuit. The IC-built machine is the LVDC, and
-    # that already rides the Saturn IB/V IU one rung up on comp_realTimeFlightComputer. RP-1 places
-    # this part on `interplanetaryProbes` too, so this is also RP-1 parity restored.
+    # reasons, one legibility and one factual. (a) A guidance ring belongs with the vehicle it flies,
+    # not a generation behind it: the Saturn I's engines are T6 (fd_saturnKerolox) and RL10 is T4, so
+    # its own ring trailed the rocket by TWO tiers. (b) The Saturn I IU's computer was the ASC-15:
+    # drum memory built from discrete transistors, a Titan II hand-me-down. It is NOT an
+    # integrated-circuit machine, so it cannot be the exemplar of a node whose whole crossover is
+    # elec_integratedCircuit. The IC-built machine is the LVDC, which rides the Saturn IB/V IU on
+    # comp_digitalGuidanceComputer. RP-1 places this part on `interplanetaryProbes` too, so this is
+    # also RP-1 parity restored.
+    # AMENDED same day: (a) originally read "every other launch vehicle gets its guidance ring one
+    # tier after its engines — Saturn IB/V: J-2 and F-1 both T8, its IU T9". That rule was circular.
+    # These two IU rings are the only fixed launch-vehicle guidance parts placed in the whole tree
+    # (GuidanceStart1m is uncurated), so the "every other" was one data point — the Saturn IB/V
+    # placement, which was itself a tier late and has since moved to T8 alongside its own engines.
     # RETITLED with it: "Long-Duration Cruise Guidance" named only the deep-space half, and a booster
     # ring that works for eight minutes reads as an intruder there. The mechanism both halves share is
     # the packaging — guidance stops being wiring bolted through the airframe and becomes a sealed
@@ -3246,13 +3251,33 @@ nodes:
     tier: 8
     parents: [gnc_interplanetaryAvionics, elec_integratedCircuit]
     flavor: "Trade the analog integrator for a true digital computer, built from the first integrated circuits — a machine that computes a fresh trajectory correction instead of just holding one, fast enough to fly a booster instead of merely stabilizing it. The line between an instrument and a computer, crossed for good."
+    parts: [restock-drone-core-375-1]
     grants: [Science-Core-improvedAvionics]
-    # Grants-only by design as of 2026-08-24. It held RO-SaturnI-IU until then; see
-    # gnc_interplanetaryAvionics for why that part is a rung too high here (pre-IC drum-memory
-    # hardware under an integrated-circuit node, and two tiers behind its own rocket). No installed
-    # part models the article this node actually marks — Minuteman II's D-17B, 1962, the first
-    # guidance computer built from ICs — so the node marks the generation and grants the avionics
-    # rung, exactly like comp_networkedAvionics and comp_multiplyRedundantFlightComputer above it.
+    # restock-drone-core-375-1 — the Saturn IB/V Instrument Unit — MOVED HERE 2026-08-24 (user call)
+    # from comp_realTimeFlightComputer (T9). Three reasons.
+    # (a) TIER. The entire Saturn V / Apollo stack is T8: F-1 (fd_gasGeneratorCeiling), J-2
+    # (cryo_gasGeneratorHydrolox), the Saturn Mobile Launcher (gs_saturnPad), the Apollo CM
+    # (int_apolloCSM), its lunar-return ablator, docking ports, RCS blocks, HGA and SNAP-27 — with the
+    # LEM ascent stage, legs and LES a tier below at T7. The IU was the ONLY piece of the launch
+    # vehicle sitting at T9, so the ring trailed the rocket it bolts to.
+    # (b) MACHINE. This ring carried the LVDC. Its logic was built from IBM Unit Logic Devices —
+    # hybrid microelectronics, silicon chips on a ceramic substrate — which makes it exactly the
+    # integrated-circuit-generation machine this node's elec_integratedCircuit crossover marks, and
+    # the flavor above ("built from the first integrated circuits ... fast enough to fly a booster
+    # instead of merely stabilizing it") describes it almost word for word. It did NOT belong on
+    # comp_realTimeFlightComputer: that node is the AGC's, and the AGC flew in the CM and the LM,
+    # never in the IU. The LVDC's signature was triple-modular redundancy under a cyclic executive,
+    # not priority-interrupt scheduling.
+    # (c) CAPABILITY. T8 is where AXE's own procedural ladder flips scAllowAxial false -> true
+    # (AxeAvionicsCore.cfg, tier index 6) — the rung at which avionics can guide a stack under
+    # thrust at all. A booster guidance ring is the natural exemplar of that rung.
+    # ACCEPTED COST: this DIVERGES from RP-1, which places the part on `matureAvionics` (1964-66,
+    # historically apt — the IU first flew on AS-201 in Feb 1966) rather than `improvedAvionics`
+    # (1962-63). RP-1 is not date-strict about these rings either: it puts RO-SaturnI-IU on
+    # `interplanetaryProbes` (1961) for hardware that flew in 1964. No capability is unlocked early
+    # — procedural avionics has no tonnage cap, so the 3000 t fixed ring is convenience and flavour,
+    # and mk3Cockpit_Shuttle still holds the other 3000 t entry at T9.
+    # Tagged for AXE's own avionics module at the P4 config-patch pass, per docs/PARTLIST.md.
   - id: shd_digitalGuidanceComputer
     title: "Deep-Space Bus — Digital"
     discipline: Computing
@@ -3267,11 +3292,14 @@ nodes:
     tier: 9
     parents: [comp_digitalGuidanceComputer]
     flavor: "One flight computer that juggles guidance, navigation and engine control at once, always answering whichever task is most urgent instead of finishing one program before starting the next — real-time computing built to fly a crew, not just a probe. The Apollo Guidance Computer's real trick, and the reason it could do five jobs on hardware that could barely do one."
-    parts: [restock-drone-core-375-1]
     grants: [Science-Core-matureAvionics]
-    # restock-drone-core-375-1 (2026-07, backlog sweep): the Saturn IB/V instrument unit - the real ring
-    # that carried the actual Apollo Guidance Computer's ground-side LVDC counterpart. Tagged for AXE's
-    # own avionics module at the P4 config-patch pass, per docs/PARTLIST.md.
+    # Grants-only as of 2026-08-24. It held restock-drone-core-375-1 (the Saturn IB/V Instrument Unit)
+    # from the 2026-07 backlog sweep until then, under a comment that had the hardware backwards — the
+    # IU carried the LVDC, and the AGC this node is named for flew in the Apollo CM and LM, never in
+    # the ring. See comp_digitalGuidanceComputer for the move. No installed part models the article
+    # this node marks: the AGC is not a separate part, it is inside ROC-ApolloCMBDB. So the node marks
+    # the generation and grants the avionics rung, exactly like comp_networkedAvionics and
+    # comp_multiplyRedundantFlightComputer above it.
   - id: shd_realTimeFlightComputer
     title: "Deep-Space Bus — Real-Time"
     discipline: Computing
