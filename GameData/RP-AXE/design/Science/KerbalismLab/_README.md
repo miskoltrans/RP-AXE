@@ -111,3 +111,24 @@ ambitious station to earn them:
 the rest kept on their surviving donor. See `InstrumentTagging.cfg` for the full table. Two review-flagged:
 Radar (kept on `SurveyScanner` pending a confirmed RO radar-altimeter part) and the crewed-star gating
 (experiments require `Scientist:N` — confirm AXE kerbal leveling reaches those tiers).
+
+**The package tags only bite because `Source/AXE/PartModules/LabExperimentPackages.cs` defines the marker
+classes** — the fork kept them in its assembly, which AXE does not vendor, and KSP silently drops a MODULE
+whose type it cannot resolve (`30c75ae`). Add a class there for every new package name, or the tag is a no-op.
+
+### Requirement re-point (`REQ_REPOINT` in `tools/build_kerbalismlab.py`)
+
+A fork *requirement* can be just as hostless as a package. Three were, and are rewritten at generation time:
+
+| upstream `requirements` token | rewritten to | why |
+|---|---|---|
+| `Greenhouse` | `Module:GreenhouseLabExperimentPackage` | Kerbalism built-in testing `vd.Greenhouses.Count > 0`, i.e. the stock Kerbalism **Greenhouse MODULE**. The RO profile ships that part `.disabled` and re-implements food growing as a `ProcessController`, so a merged AXE cache holds **zero** Greenhouse modules. ADVASC, PWM-4, ORZS-3 and base CHILLED were unrunnable. Marker now tagged on the 5 SSPX parts that carry an `_algae` food process (earliest: `sspx-greenhouse-25-1` at `life_bioregenerativeECLSS` T11 — exactly where those experiments unlock). |
+| `Part:RadioLabExperimentPackage` | `Module:RadioLabExperimentPackage` | Upstream typo in SLAC-LCLS: `Part:` looks up a PART NAME, this is a module. |
+| `Part:VisualLabExperimentPackage` | `Module:VisualLabExperimentPackage` | Same typo in SOLAR-WISPR. |
+
+The last two had been fixed **by hand in the generated files**, so the next regeneration would have silently
+reverted them. The build now fails if any `REQ_REPOINT` key stops matching upstream.
+
+`AntennaRadioLab` — the RA-100T clone that is the **only** carrier of `RadioLabExperimentPackage` — was
+never placed in the tree, so the `parking` wildcard swallowed it and 6 experiments (CubeRRT, JAGSAT,
+SLAC-LCLS, JUNO-JEDI, CXBN-2, MAXI) could not run. Homed on `tel_antennaCatalog` (T7) 2026-08-25.

@@ -247,3 +247,32 @@ no situation, body, crew, duration, slot or data size is re-authored, so Path A 
   used to misread as two dangling refs — fixed in `check_tech_refs.py` (it now follows `#$…$` references).
 - **Crew-star gating** — experiments require `Scientist:N`; confirm AXE's kerbal-leveling reaches those tiers,
   else the top-star ones are dead content (flatten to `Scientist`/`True` if not). *(Verify AXE crew leveling.)*
+
+## 8. Hostless requirements — DONE 2026-08-25
+
+§3 re-pointed the instrument **packages** whose donor part RO removes. The same failure exists one level
+down, in the **requirement strings** themselves, and three were live:
+
+| token | experiments | symptom | fix |
+|---|---|---|---|
+| `Greenhouse` | ADVASC, PWM-4, ORZS-3, base CHILLED | Kerbalism's built-in `Require.Greenhouse` tests `vd.Greenhouses.Count > 0` — the stock Kerbalism **Greenhouse MODULE**. The RO profile ships that part `.disabled` (`KerbalismConfig/Parts/Greenhouse/kerbalism-greenhouse.disabled`) and re-implements food growing as a `ProcessController`; SSPX's “Greenhouse” is likewise a `ProcessController` **title**, not the module. A merged AXE cache holds **zero** Greenhouse modules, so the requirement could never pass. | New `GreenhouseLabExperimentPackage` marker (class in `LabExperimentPackages.cs`, tag in `InstrumentTagging.cfg`), experiments re-pointed by `REQ_REPOINT`. |
+| `Part:RadioLabExperimentPackage` | SLAC-LCLS | Upstream typo — `Part:` looks up a PART NAME, this names a module. | `REQ_REPOINT` → `Module:…` |
+| `Part:VisualLabExperimentPackage` | SOLAR-WISPR | Same typo. | `REQ_REPOINT` → `Module:…` |
+
+Marker membership is by **mechanism, read out of the merged cache**: the 5 SSPX parts carrying a
+`ProcessController` with `resource = _algae` — `sspx-greenhouse-25-1` (T11 `life_bioregenerativeECLSS`),
+`sspx-greenhouse-375-1`, `sspx-greenhouse-5-1`, `sspx-aquaculture-375-1` (T12 `life_aquacultureModule`),
+`sspx-dome-greenhouse-5-1` (T12 `life_largeGreenhouseDome`). `sspx-cupola-greenhouse-125-1` is excluded:
+despite the name it is a window dome with no food process. The earliest carrier lands on exactly the node
+where ADVASC / PWM-4 / ORZS-3 unlock, so there is no dead menu window.
+
+**Process lesson.** The two `Part:` typos had been fixed *by hand inside generated files*, so the next
+`python tools/build_kerbalismlab.py` would have silently reverted both — and did, in this session, until the
+diff was read. Corrections to vendored content belong in the generator. `REQ_REPOINT` now **fails the build**
+if any of its keys stops matching upstream, so a rename cannot re-open the hole quietly.
+
+**Carrier placement.** `AntennaRadioLab` (the RA-100T clone, `InstrumentTagging.cfg`) is the only carrier of
+`RadioLabExperimentPackage`, and no node listed it — so `AxePartPlacement.cfg`'s parking wildcard left it on
+`parking` and CubeRRT, JAGSAT, SLAC-LCLS, JUNO-JEDI, CXBN-2 and MAXI could never run. Homed on
+`tel_antennaCatalog` (T7): it is literally that node's own 4 m reflector with the antenna modules stripped,
+and T7 is where the earliest four of those experiments unlock.

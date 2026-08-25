@@ -35,6 +35,13 @@ namespace RPAxe
     public class DrillLabExperimentPackage : BaseLabExperimentPackage { }
     public class FluidLabExperimentPackage : BaseLabExperimentPackage { }
     public class GravityLabExperimentPackage : BaseLabExperimentPackage { }
+    // Not an upstream package: `requirements = Greenhouse` is a Kerbalism BUILT-IN Require that tests
+    // vd.Greenhouses.Count > 0, i.e. the stock Kerbalism Greenhouse MODULE -- which the RO profile ships
+    // disabled, re-implementing food growing as a ProcessController. Zero Greenhouse modules exist in a
+    // merged AXE cache, so ADVASC / PWM-4 / ORZS-3 / CHILLED were unsatisfiable. Same treatment as the
+    // re-pointed packages: a marker on the SSPX food-growing parts, with the experiments re-pointed onto
+    // it by tools/build_kerbalismlab.py (REQ_REPOINT). Added 2026-08-25.
+    public class GreenhouseLabExperimentPackage : BaseLabExperimentPackage { }
     public class HighEnergyLabExperimentPackage : BaseLabExperimentPackage { }
     public class MagnetometerLabExperimentPackage : BaseLabExperimentPackage { }
     public class MaterialsLabExperimentPackage : BaseLabExperimentPackage { }
