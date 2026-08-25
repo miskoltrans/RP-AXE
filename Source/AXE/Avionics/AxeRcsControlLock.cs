@@ -5,10 +5,10 @@ namespace RPAxe
 {
     /// <summary>
     /// Applies the avionics attitude lock to RCS thrusters. <see cref="AxeAvionicsController"/> zeroes the
-    /// vessel's flight control state via <c>OnPostAutopilotUpdate</c>, which covers reaction wheels and engine
-    /// gimbal — but NOT RCS: <c>ModuleRCS.Update</c> reads <c>vessel.ctrlState</c> on its own Unity update,
-    /// before that post-autopilot hook re-zeroes it, so an avionics-locked vessel could still translate/rotate
-    /// on RCS. RP-1's ControlLocker hit the same wall and shipped a dedicated <c>ModuleRCS</c> patch (RP-0's
+    /// vessel's flight control state from the <c>Vessel.FeedInputFeed</c> postfix (<see cref="AxeFlightControlLast"/>),
+    /// which covers reaction wheels and engine gimbal — but NOT RCS: <c>ModuleRCS.Update</c> reads
+    /// <c>vessel.ctrlState</c> on its own Unity update phase, outside that FixedUpdate bracket, so an
+    /// avionics-locked vessel could still translate/rotate on RCS. RP-1's ControlLocker hit the same wall and shipped a dedicated <c>ModuleRCS</c> patch (RP-0's
     /// <c>Harmony/ModuleRCS.cs</c>); AXE replaces RP-1's plugin, so we re-provide it here.
     ///
     /// Semantics match AXE's <c>FlightInputModifier</c> (attitude-only — RP-1 additionally clamps throttle;
@@ -17,10 +17,10 @@ namespace RPAxe
     /// save the real ctrlState, zero it for the duration of ModuleRCS.Update, and restore it in the postfix so
     /// no other consumer (or the control display) sees the temporarily-zeroed values.
     ///
-    /// IT IS ALSO THE TRANSLATION DEGRADATION PATH. The post-autopilot hook corrupts rotation only, so
+    /// IT IS ALSO THE TRANSLATION DEGRADATION PATH. The rotation path corrupts pitch/yaw/roll only, so
     /// X/Y/Z reached the thrusters clean at any overload — docking and station-keeping were the one place
     /// an autopilot could absorb the entire mechanic by making small inputs. The same save/restore window
-    /// used for the lock is where translation gets misdirected, because that window is already scoped to
+    /// used for the lock is where translation gets corrupted, because that window is already scoped to
     /// ModuleRCS: nothing written here escapes into the gimbal path or into any stateful buffer.
     /// </summary>
     [HarmonyPatch(typeof(ModuleRCS), "Update")]
@@ -43,7 +43,7 @@ namespace RPAxe
 
             AxeControlLockerUtils.LockLevel level = ctl.Level;
 
-            // ROTATION is not re-applied here, and must not be: the post-autopilot hook mutates
+            // ROTATION is not re-applied here, and must not be: the FeedInputFeed postfix mutates
             // vessel.ctrlState IN PLACE and ModuleRCS reads that same object, so thrusters already fly the
             // corrupted pitch/yaw/roll. The policy is stateful in every cell (a delay buffer, a washout EMA,
             // a regime on a dwell timer) and this prefix runs once PER THRUSTER MODULE, so re-applying it
@@ -51,19 +51,19 @@ namespace RPAxe
             // the mechanic working.
             //
             // TRANSLATION is a different story and needs its own path, which is what this is. X/Y/Z never
-            // pass through the post-autopilot hook's corruption at all (it is rotation-only, deliberately:
+            // pass through the rotation path's corruption at all (it is rotation-only, deliberately:
             // translation noise on a launch vehicle just burns RCS unfelt), so docking and station-keeping
             // were flying CLEAN at any overload -- the one place where an autopilot could simply absorb the
-            // whole mechanic. Misdirection is what goes here, and only misdirection:
-            //   * it is MAGNITUDE-INDEPENDENT, so the "nudge it in small pulses" escape that works against
-            //     the three proportional cells does not work against it;
-            //   * it is STATELESS and a pure function of Time.time, which is the only kind of corruption
-            //     that is safe to run per-thruster on Unity's Update phase;
-            //   * it rotates the WHOLE translation vector, so an axial approach bleeds into lateral and a
-            //     lateral correction bleeds into axial -- which is exactly the docking failure a drifting
-            //     IMU produces, and it is the same rotation the gimbals got this frame.
+            // whole mechanic. Two moves go here, and only these two, because they are the only STATELESS
+            // ones -- pure functions of Time.time with nothing to advance, which is what makes them safe to
+            // run once per thruster module on Unity's Update phase:
+            //   * CHAOS, additive at full sigma, so a careful 0.05 pulse is not answered with a careful
+            //     0.05 of error. Any input at all and the thrusters stop doing what was asked.
+            //   * MISDIRECT, which rotates the WHOLE translation vector, so an axial approach bleeds into
+            //     lateral and a lateral correction bleeds into axial -- exactly the docking failure a
+            //     drifting IMU produces, and it is the same rotation the gimbals got this frame.
             float sigma = AxeControlLockerUtils.Armed ? ctl.ControlNoise : 0f;
-            bool misdirectTranslation = sigma > 0f && AxeControlLockerUtils.MisdirectMaxDeg > 0f;
+            bool misdirectTranslation = sigma > 0f;
             if (level == AxeControlLockerUtils.LockLevel.Unlocked && !misdirectTranslation) return;
 
             FlightCtrlState st = v.ctrlState;
@@ -74,8 +74,17 @@ namespace RPAxe
 
             if (level == AxeControlLockerUtils.LockLevel.Unlocked)
             {
+                // Additive chaos FIRST, then the rotation, matching the rotation path's order. Misdirect
+                // alone was still proportional in effect -- rotating a 0.05 docking pulse yields a 0.05
+                // pulse pointed wrong, so small-and-careful bought small-and-careful. Full amplitude is the
+                // rule: any input at all, and the thrusters do not do what was asked.
+                //
+                // Safe to run here despite this prefix firing once PER THRUSTER MODULE, because both moves
+                // are pure functions of Time.time with no state to advance -- every thruster in a frame gets
+                // the same numbers, which is also the correct fiction (one drifting IMU, one wrong frame).
+                AxeControlLockerUtils.ApplyChaos(ref st.X, ref st.Y, ref st.Z, sigma);
                 AxeControlLockerUtils.ApplyMisdirect(ref st.X, ref st.Y, ref st.Z, sigma);
-                return;   // the postfix restores, so nothing outside ModuleRCS sees the rotated command
+                return;   // the postfix restores, so nothing outside ModuleRCS sees the corrupted command
             }
 
             st.yaw = st.pitch = st.roll = 0f;   // no steering

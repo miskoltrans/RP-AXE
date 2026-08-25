@@ -174,24 +174,91 @@ namespace RPAxe
         // on its own Unity pass and is handled by AxeRcsControlLock.
         void FlightInputModifier(FlightCtrlState st)
         {
-            if (_level == AxeControlLockerUtils.LockLevel.Unlocked)
-            {
-                if (_noise <= 0f) return;
-                // Disarmed passes sigma = 0 rather than skipping Apply: every stateful move still advances,
-                // so re-arming cannot read a stale delay buffer or a cold EMA and jump. Zero sigma is a
-                // no-op inside every penalty by construction.
-                float sigma = AxeControlLockerUtils.ComputeArmed(st) ? _noise : 0f;
-                AxeControlLockerUtils.ApplyAdversarial(ref st.pitch, ref st.yaw, ref st.roll, sigma);
-                // Base layer, AFTER the policy: the frame is wrong for whatever ends up being commanded, so
-                // it rotates the corrupted command rather than the requested one. Rotation only here --
-                // translation is not part of ctrlState's autopilot path in any way that gimbals care about,
-                // and is handled where it is actually consumed (AxeRcsControlLock).
-                AxeControlLockerUtils.ApplyMisdirect(ref st.pitch, ref st.yaw, ref st.roll, sigma);
-                return;
-            }
+            // LOCK ONLY. The DEGRADATION path moved to ApplyDegradation, called from the FeedInputFeed
+            // postfix (AxeFlightControlLast) -- see that file for why this hook is too early for it.
+            if (_level == AxeControlLockerUtils.LockLevel.Unlocked) return;
+            ApplyLock(st);
+        }
+
+        void ApplyLock(FlightCtrlState st)
+        {
             st.yaw = st.pitch = st.roll = 0f;
             st.X = st.Y = 0f;
             if (_level == AxeControlLockerUtils.LockLevel.Locked) st.Z = 0f;
+        }
+
+        /// <summary>
+        /// THE LAST WORD ON THE CONTROL STATE. Called from a Harmony postfix on Vessel.FeedInputFeed, which
+        /// runs after all four of KSP's callback stages.
+        ///
+        /// It used to run at OnPostAutopilotUpdate, and that was a real defect, not a style point:
+        /// FeedInputFeed's order is
+        ///     OnPreAutopilotUpdate -> OnAutopilotUpdate (stock SAS) -> OnPostAutopilotUpdate -> OnFlyByWire
+        /// and MechJeb registers on OnFlyByWire (MechJebCore), i.e. AFTER us. Its attitude controller then
+        /// ASSIGNS s.pitch/s.yaw/s.roll outright whenever the value it finds is within 0.1 of trim
+        /// (MechJebModuleAttitudeController.Drive -- the "has the pilot taken over?" test). So every tick,
+        /// on any MechJeb-driven attitude, our corruption was computed, written, and then thrown away
+        /// before a single gimbal saw it. That is why a scheduled burn flew clean at 2x over capacity.
+        ///
+        /// Running last also fixes it for kOS, Atmosphere Autopilot and anything else on OnFlyByWire,
+        /// without caring what order they registered in.
+        ///
+        /// Safe against the obvious objection -- that leaving corrupted values in ctrlState would read to
+        /// MechJeb as a permanent pilot override next frame -- because FlightInputHandler rebuilds the
+        /// active vessel's ctrlState from raw input every frame (SetControlState(state) immediately before
+        /// FeedInputFeed()), so nothing we write here survives into the next frame's override test.
+        /// </summary>
+        internal void ApplyDegradation(FlightCtrlState st)
+        {
+            if (st == null) return;
+            if (_level != AxeControlLockerUtils.LockLevel.Unlocked) { ApplyLock(st); return; }
+            if (_noise <= 0f) return;
+
+            // Disarmed passes sigma = 0 rather than skipping Apply: every stateful move still advances,
+            // so re-arming cannot read a stale delay buffer or a cold EMA and jump. Zero sigma is a
+            // no-op inside every penalty by construction.
+            float sigma = AxeControlLockerUtils.ComputeArmed(st, AutopilotTargetActive()) ? _noise : 0f;
+            AxeControlLockerUtils.ApplyAdversarial(ref st.pitch, ref st.yaw, ref st.roll, sigma);
+            // Base layer 1: full-amplitude additive chaos, independent of what was commanded. The policy
+            // above and the rotation below are both proportional to the command, so without this an
+            // autopilot that commands almost nothing pays almost nothing -- which was the whole bug.
+            AxeControlLockerUtils.ApplyChaos(ref st.pitch, ref st.yaw, ref st.roll, sigma);
+            // Base layer 2, AFTER the rest: the frame is wrong for whatever ends up being commanded, so
+            // it rotates the corrupted command rather than the requested one. Rotation only here --
+            // translation is not part of ctrlState's autopilot path in any way that gimbals care about,
+            // and is handled where it is actually consumed (AxeRcsControlLock).
+            AxeControlLockerUtils.ApplyMisdirect(ref st.pitch, ref st.yaw, ref st.roll, sigma);
+        }
+
+        /// <summary>
+        /// Is an autopilot holding a commanded vector? A MODE test, deliberately -- never the command
+        /// signal itself, or arming would be downstream of our own corruption again (the fault that killed
+        /// the additive cell in the first place).
+        ///
+        /// Stability assist is excluded on purpose: "hold what I have" with no throttle and no stick is the
+        /// parked-vessel case that zero-in-zero-out exists to protect.
+        /// </summary>
+        internal bool AutopilotTargetActive()
+        {
+            Vessel v = _vessel;
+            if (v != null && v.Autopilot != null && v.Autopilot.Enabled
+                && v.Autopilot.Mode != VesselAutopilot.AutopilotMode.StabilityAssist)
+                return true;
+            return MechJebAttitudeHeld();
+        }
+
+        /// <summary>Any client in MechJeb's attitude-controller user pool -- SmartASS, the node executor,
+        /// ascent guidance. Reuses the same reflected pool EnforceAttitudeClients walks.</summary>
+        bool MechJebAttitudeHeld()
+        {
+            if (_masterMechJeb == null || _mjGetModule == null || _mjUsersMember == null) return false;
+            object att = _mjGetModule.Invoke(_masterMechJeb, new object[] { "MechJebModuleAttitudeController" });
+            if (att == null) return false;
+            object pool = _mjUsersMember is FieldInfo f ? f.GetValue(att)
+                        : ((PropertyInfo)_mjUsersMember).GetValue(att, null);
+            if (!(pool is System.Collections.IEnumerable users)) return false;
+            foreach (object u in users) if (u != null) return true;
+            return false;
         }
 
         IEnumerator CheckLoop()

@@ -16,6 +16,46 @@ table, the Guided/Unguided/Shielded taxonomy — is unchanged.
 > won.** §4e's resolution was a claim, not a verified fact — see its amendment. Details:
 > `docs/AVIONICS_PLAN.md`, amendment of the same date.
 
+> **2026-08-25 — the additive cell is BACK, and the reason it looked unnecessary was a bug.** Reported
+> as "I executed a scheduled burn no problem at 2× over capacity". Two causes, and the first one means
+> the mechanic was never actually running on an autopiloted vessel:
+>
+> 1. **HOOK ORDER — we were writing third of four, and MechJeb overwrote us.**
+>    `Vessel.FeedInputFeed()` runs `OnPreAutopilotUpdate → OnAutopilotUpdate (stock SAS) →
+>    OnPostAutopilotUpdate → OnFlyByWire`. AXE corrupted at **post-autopilot**; MechJeb registers on
+>    **`OnFlyByWire`**, after us, and `MechJebModuleAttitudeController.Drive` *assigns*
+>    `s.pitch/s.yaw/s.roll` outright whenever the value it finds is within 0.1 of trim — its "has the
+>    pilot taken over?" test. So on any MechJeb-driven attitude, σ was computed, written, and discarded
+>    in the same tick, before a gimbal or a reaction wheel ever saw it. The PAW read saturated overload
+>    the entire time and was telling the truth about σ; nothing was reaching the actuators.
+>    Fixed by a Harmony **postfix on `FeedInputFeed`** — last by construction, for MechJeb, kOS and
+>    anything else, regardless of registration order.
+>
+> 2. **PROPORTIONALITY WAS A LOOPHOLE, not the rule.** The 2026-08-24 removal replaced *zero in →
+>    chaos out* with *zero in → zero out*, but what it actually shipped was **small in → small out**:
+>    every surviving move scales with `|command|` (overgain multiplies, washout subtracts a fraction,
+>    lag time-shifts, misdirect rotates). An autopilot holding a vector commands almost nothing, so it
+>    paid almost nothing — "fly gently and you are safe" came back without even needing gentleness.
+>    **The intended rule is: the input is a SWITCH, not a volume knob.** Zero in → zero out; *any*
+>    input at all → chaos at full σ, the same amplitude the drift cell had.
+>
+> So `ApplyChaos` restores the drift cell verbatim in amplitude (σ of full control range, correlated at
+> `EffectiveNoiseHz`, same `PerlinGain`, same per-axis lanes) — but as a **base layer under every
+> regime, gated by arming alone**, not as a policy cell selected when there is nothing to be
+> proportional to. It runs on RCS translation too, which was previously misdirect-only and therefore
+> still effectively proportional.
+>
+> **The station fault does not come back, and its cause was never the amplitude — it was that arming
+> read the POST-autopilot command,** i.e. downstream of our own corruption: we perturbed, SAS
+> corrected, the correction re-armed us, self-sustaining. Arming now reads **intent only**: raw pilot
+> stick sampled at the `FeedInputFeed` *prefix* (before any autopilot writes), commanded throttle (read
+> late, because MechJeb's node executor sets throttle in `OnFlyByWire` — and safe, because this mechanic
+> never writes throttle), and whether an autopilot holds a target vector (a *mode* flag, not a command).
+> None of the three is downstream of anything we write, so the loop is open by construction.
+> **Throttle is not nothing:** a vessel under thrust is being flown, and an undersized flight computer
+> has no business getting a burn right just because nobody is touching the stick. Stability assist alone
+> still does not arm — that is the parked-station case zero-in-zero-out exists to protect.
+
 ---
 
 ## 1. Why this and not the two before it

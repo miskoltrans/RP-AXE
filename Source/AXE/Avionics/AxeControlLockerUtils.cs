@@ -239,7 +239,7 @@ namespace RPAxe
         /// them -- reading "drift" while the craft is also pointing 40° wrong is otherwise misleading.</summary>
         public static string DescribePenalty(float sigma)
             => sigma <= 0f ? "clean"
-             : $"{AdversarialRegimeName} {sigma * 100f:F0}% +{sigma * MisdirectMaxDeg:F0}° off-axis — degraded on input";
+             : $"{AdversarialRegimeName} {sigma * 100f:F0}% +{sigma * MisdirectMaxDeg:F0}° off-axis — haywire on ANY input";
 
         // The sustained component, shared by the washout move and by the regime split -- one EMA, so the
         // two can never disagree about what "holding" means.
@@ -341,6 +341,58 @@ namespace RPAxe
                     // likewise identity on a zero vector, so a null stick really does stay null.
                     break;
             }
+        }
+
+        // ================ BASE LAYER: CHAOS (the restored drift cell) ==============================
+        // THE INPUT IS A SWITCH, NOT A VOLUME KNOB. This is the correction to the 2026-08-24 removal, and
+        // the distinction the removal lost:
+        //
+        //   what was wrong before  -> zero in, CHAOS out   (the drift cell fired on a null stick)
+        //   what was shipped       -> zero in, zero out; SMALL in, SMALL out   (every move proportional)
+        //   what was actually WANTED -> zero in, zero out; ANY in, CHAOS out, at the SAME magnitude
+        //
+        // The middle line is a loophole, not a rule. Every move left in the policy scales with |command|
+        // (overgain multiplies it, washout subtracts a fraction of it, lag time-shifts it, misdirect rotates
+        // it), so an autopilot holding a vector with a 0.02 stick bought 0.02 of corruption -- and a
+        // scheduled burn, which commands almost nothing once it is pointed, sailed through 2x over capacity
+        // untouched. "Fly gently and you are safe" came back in a form that did not even need gentleness,
+        // only an autopilot competent enough to be quiet.
+        //
+        // So the additive cell is BACK, unchanged in amplitude (sigma of full control range, correlated at
+        // EffectiveNoiseHz, the same PerlinGain, the same per-axis lanes) -- but it is no longer a policy
+        // cell selected when there is nothing to be proportional TO. It is a base layer that runs under
+        // every regime, and it is gated by ARMING alone.
+        //
+        // ARMING IS WHAT MAKES THIS SAFE, and it is why the station fault does not come back. The reason
+        // drift had to die was never its amplitude, it was that arming read the POST-autopilot command:
+        // SAS fighting our own noise re-armed us, so the fault sustained itself and no player action could
+        // quiet it. Arming now reads INTENT ONLY -- raw pilot stick sampled before any autopilot writes,
+        // commanded throttle (which this mechanic never touches), and whether an autopilot is holding a
+        // target vector. None of those is downstream of anything we write, so the loop is open by
+        // construction and a parked station with no throttle and no held vector is exactly as clean as it
+        // was after the removal.
+        public const float PerlinGain = 2.4f;
+
+        /// <summary>Correlated noise sample in [-sigma, sigma] for one control axis. Unity's Perlin is
+        /// bell-shaped rather than uniform -- it clusters near 0.5 -- so the raw draw is gained and clamped
+        /// rather than used directly, or the amplitude actually flown is well under what sigma advertises.</summary>
+        public static float NoiseSample(int axis, float sigma)
+        {
+            if (sigma <= 0f) return 0f;
+            float n = Mathf.Clamp((Mathf.PerlinNoise(Time.time * EffectiveNoiseHz, axis * 37.7f) * 2f - 1f)
+                                  * PerlinGain, -1f, 1f);
+            return n * sigma;
+        }
+
+        /// <summary>Full-amplitude additive corruption, independent of what was commanded. Axis lanes are
+        /// the drift cell's original ones (0 = yaw, 1 = pitch, 2 = roll), so the magnitude and the feel are
+        /// literally the ones that flew before the removal.</summary>
+        public static void ApplyChaos(ref float pitch, ref float yaw, ref float roll, float sigma)
+        {
+            if (sigma <= 0f) return;
+            yaw   = Mathf.Clamp(yaw   + NoiseSample(0, sigma), -1f, 1f);
+            pitch = Mathf.Clamp(pitch + NoiseSample(1, sigma), -1f, 1f);
+            roll  = Mathf.Clamp(roll  + NoiseSample(2, sigma), -1f, 1f);
         }
 
         // ================ BASE LAYER: MISDIRECTION (gyro drift) ====================================
@@ -491,16 +543,55 @@ namespace RPAxe
         public const float ArmDeadband = 0.01f;
 
         static bool _armed = true;
+        static bool _stickIntent;
         /// <summary>Last computed arming state. Read by the RCS patch, which cannot see ctrlState first.</summary>
         public static bool Armed => _armed;
 
-        public static bool ComputeArmed(FlightCtrlState st)
+        /// <summary>
+        /// Raw pilot stick, sampled at the TOP of Vessel.FeedInputFeed -- i.e. after FlightInputHandler has
+        /// copied the player's input in and BEFORE OnPreAutopilotUpdate / SAS / OnFlyByWire write anything.
+        ///
+        /// THIS IS THE FIX FOR THE SELF-SUSTAINING FAULT. Arming used to read the POST-autopilot command,
+        /// which is downstream of our own corruption: we perturbed the vessel, SAS corrected the
+        /// perturbation, the correction re-armed us, and the result was uncommanded activity a player could
+        /// not stop by stopping. Reading raw stick closes that loop -- nothing here is written by anything
+        /// we do.
+        ///
+        /// Trim is subtracted rather than compared against zero because FlightInputHandler folds trim into
+        /// the state before this runs (`state.roll += state.rollTrim`), so a trimmed vessel would otherwise
+        /// read as permanently commanding.
+        /// </summary>
+        public static void SampleStickIntent(FlightCtrlState raw)
         {
-            if (st == null) return _armed = true;
             const float d = ArmDeadband;
-            bool steering = Mathf.Abs(st.pitch) > d || Mathf.Abs(st.yaw) > d || Mathf.Abs(st.roll) > d
-                         || Mathf.Abs(st.X) > d || Mathf.Abs(st.Y) > d || Mathf.Abs(st.Z) > d;
-            return _armed = steering || st.mainThrottle > d;
+            _stickIntent = raw != null
+                        && (Mathf.Abs(raw.pitch - raw.pitchTrim) > d
+                         || Mathf.Abs(raw.yaw - raw.yawTrim) > d
+                         || Mathf.Abs(raw.roll - raw.rollTrim) > d
+                         || Mathf.Abs(raw.X) > d || Mathf.Abs(raw.Y) > d || Mathf.Abs(raw.Z) > d);
+        }
+
+        /// <summary>
+        /// Is anything asking this vessel for something? Three sources, and every one of them is chosen
+        /// because it is NOT downstream of the corruption:
+        ///
+        ///   * raw pilot stick   -- sampled pre-autopilot (see SampleStickIntent);
+        ///   * commanded throttle -- read late, which is correct AND safe: MechJeb's node executor writes
+        ///     throttle in OnFlyByWire, so an early read would miss a scheduled burn entirely, and this
+        ///     mechanic never writes throttle, so it cannot feed back. THROTTLE IS NOT NOTHING: a vessel
+        ///     under thrust is being flown, and an undersized flight computer has no business getting a
+        ///     burn right just because the pilot is not touching the stick;
+        ///   * a held attitude target -- a MODE flag (stock SAS in anything but stability assist, or a
+        ///     MechJeb attitude client in the pool), not a command signal, so likewise no feedback path.
+        ///     This is what catches "MechJeb slews to the node with the throttle still shut".
+        ///
+        /// Stability assist alone deliberately does NOT arm. "Hold whatever I am at" with no throttle and no
+        /// stick is the parked-station case, and that is the one the zero-in-zero-out rule exists to protect.
+        /// </summary>
+        public static bool ComputeArmed(FlightCtrlState st, bool autopilotTarget)
+        {
+            bool throttle = st != null && st.mainThrottle > ArmDeadband;
+            return _armed = _stickIntent || throttle || autopilotTarget;
         }
 
         // ---- MOVE: TRANSPORT DELAY (the `lag` cell) -----------------------------------------------

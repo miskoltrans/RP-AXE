@@ -46,6 +46,22 @@ independent of which perturbation won, and improves the shipped lock system on i
 >   `2/m^(1/3)` Hz, into a vessel that was only holding attitude.
 > - It **self-armed**. `arm on = any input incl throttle` reads the *post-autopilot* command, and SAS
 >   holding a station emits well over the 0.01 deadband. drift → SAS fights it → the fight arms drift.
+>
+> **RE-AMENDED 2026-08-25 — the third bullet was the only real cause, and the cell is restored.**
+> Reported as "I executed a scheduled burn no problem at 2× over capacity". Removing `drift` fixed the
+> station, but it also removed the mechanic's teeth everywhere, because **every other move is
+> proportional to `|command|`** — so the rule that actually shipped was *small in → small out*, and an
+> autopilot holding a vector commands almost nothing. Worse, on any MechJeb-driven attitude the
+> corruption **never reached the actuators at all**: AXE wrote at `OnPostAutopilotUpdate`, MechJeb
+> writes at `OnFlyByWire` (after us) and assigns the axes outright. See `AVIONICS_NOISE.md`, amendment
+> of 2026-08-25, for both.
+>
+> The rule is now stated the way it was always meant: **the input is a SWITCH, not a volume knob.**
+> Zero in → zero out; *any* input → chaos at full σ. `ApplyChaos` is the old `drift` cell verbatim in
+> amplitude, promoted from a policy cell to a **base layer gated by arming alone**. The station fault
+> stays fixed by attacking its actual cause — **arming now reads intent** (raw stick sampled pre-
+> autopilot, commanded throttle, a held autopilot target), never the post-autopilot command, so nothing
+> downstream of our own corruption can re-arm us.
 >   A penalty that cannot be stopped by stopping is not a cost, it is a fault.
 >
 > The empty cell is now a **no-op** (`idle` in the PAW, renamed from `drift`). Every remaining move is
@@ -153,12 +169,15 @@ part and a transient part, and plays the move whose own effect is largest in tha
 
 | | **not moving it** | **moving it** |
 |---|---|---|
-| **holding little** | `uncommanded` → **`idle` (no-op) since 2026-08-24** | `overgain` |
+| **holding little** | `uncommanded` → `idle` (no-op) since 2026-08-24; **the additive move returned 2026-08-25 as an always-on base layer, not a cell** | `overgain` |
 | **holding a lot** | `washout` | `delay` |
 
 - ~~**Fly gently → `uncommanded`.** The counter to minimal input is the one mechanic that does not read
   input. That cell is the whole answer to the dominant-escape problem.~~ **Removed 2026-08-24.** The cell
   is a no-op; the dominant-escape problem is reopened for a coasting vessel and closed for a flying one.
+  **Superseded 2026-08-25:** the move is back as a base layer under *every* cell, so the dominant escape
+  is closed for anyone commanding anything — and still open, deliberately, for a vessel commanding
+  nothing. The cell stays a no-op; what changed is that the corruption no longer lives in a cell.
 - **`overgain` where commands are small** — amplification needs headroom below the clamp; ×3 on 0.3 is an
   event, ×3 on 0.9 merely saturates.
 - **`washout` where the command is mostly DC.** Its standalone weakness (the loop just commands
@@ -189,7 +208,7 @@ being done to them:
 | setting | safe harbour | consequence |
 |---|---|---|
 | `always` | none | a craft over capacity is corrupted even sitting still doing nothing |
-| `any input incl throttle` | **fully idle** — not burning, not steering | since 2026-08-24 this gate only decides the `misdirect` base layer; zero-in-zero-out gives a null stick a clean flight structurally |
+| `any input incl throttle` | **fully idle** — not burning, not steering | **LOCKED IN, and since 2026-08-25 it is the whole gate:** it decides both base layers (`chaos` and `misdirect`), so it is what buys back the null-stick safe harbour. Measured from **intent** — raw stick sampled pre-autopilot, commanded throttle, a held autopilot target — never the post-autopilot command, which is what made `drift` self-arming |
 | `steering only` | **not steering** — burning is free | as above; the difference between the two modes is now whether a hands-off *burn* is interfered with |
 
 The middle setting is the real design claim: **a flight computer that is not being asked for anything
