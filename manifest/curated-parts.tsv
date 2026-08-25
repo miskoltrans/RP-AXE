@@ -1137,6 +1137,7 @@ RP-1	RP0Cherenkov	CD01 - Cherenkov Cosmic Ray Detector
 RP-AXE	AXE-GammaRaySpectrometer	GR01 - Gamma-Ray Spectrometer
 RP-AXE	AXE-NeutronSpectrometer	NS01 - Neutron Spectrometer
 RP-AXE	AXE-XRayFluorescence	XR01 - X-Ray Fluorescence Spectrometer
+RP-AXE	AntennaRadioLab	RA-100T Radio Telescope
 ReStockPlus	RO-RestockPlus-RCS-Block-Dual-138	RCS Dual [138/223 N Class]
 ReStockPlus	RO-RestockPlus-RCS-Block-Dual-28	RCS Dual [28/45 N Class]
 ReStockPlus	RO-RestockPlus-RCS-Block-Quad-138	RCS Quad Angled [138/223 N Class]

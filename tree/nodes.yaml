@@ -2451,7 +2451,15 @@ nodes:
     tier: 7
     parents: [tel_pcmTelemetry]
     flavor: "The same deployable-dish generation, off the shelf in whatever size and gain a given mission needs — omni for a simple always-on link, small relay dishes through a 4m high-gain reflector. The procedural antenna stays the default; this is the named-hardware shelf."
-    parts: [RelayAntenna5, RelayAntenna50, RelayAntenna3m, RelayAntenna100, restock-antenna-stack-2, restock-antenna-stack-3, restock-relay-radial-2, antenna_quetzal, nfex-antenna-reflector-side-1, nfex-antenna-reflector-side-2, nfex-antenna-reflector-side-3, nfex-antenna-deploy-wv3-1, nfex-antenna-feeder-direct-1, nfex-antenna-static-mini-1, nfex-antenna-top-dish-1, nfex-antenna-top-dish-2, nfex-antenna-relay-tiny-1, ROC-D2Antenna, ROC-ApolloVHFBDB, ROC-ApolloScimitarBDB]
+    parts: [RelayAntenna5, RelayAntenna50, RelayAntenna3m, RelayAntenna100, restock-antenna-stack-2, restock-antenna-stack-3, restock-relay-radial-2, antenna_quetzal, nfex-antenna-reflector-side-1, nfex-antenna-reflector-side-2, nfex-antenna-reflector-side-3, nfex-antenna-deploy-wv3-1, nfex-antenna-feeder-direct-1, nfex-antenna-static-mini-1, nfex-antenna-top-dish-1, nfex-antenna-top-dish-2, nfex-antenna-relay-tiny-1, ROC-D2Antenna, ROC-ApolloVHFBDB, ROC-ApolloScimitarBDB, AntennaRadioLab]
+    # AntennaRadioLab added 2026-08-25: the RA-100T Radio Telescope — AXE's +PART clone of
+    # RelayAntenna100 with every antenna module stripped (design/Science/KerbalismLab/
+    # InstrumentTagging.cfg), i.e. literally this node's own 4m reflector pointed outward as a
+    # passive receiver. Homed on the shelf it is a variant of, not as its own breakthrough: no new
+    # technology is involved in aiming a dish at the sky. It is the ONLY carrier of
+    # RadioLabExperimentPackage, and nothing had placed it, so the parking wildcard swallowed it and
+    # 6 crewed-lab experiments (CubeRRT, JAGSAT, SLAC-LCLS, JUNO-JEDI, CXBN-2, MAXI) could never run.
+    # T7 is also where the earliest four of those unlock (life_crewedExperimentBay).
     # FIXED (2026-07, user catch): checked real era data (the partlist's own x-position) instead of
     # assuming — 17 of these 19 parts are `interplanetaryComms` (x=-2952), the EXACT SAME era as
     # `tel_deployableHighGainDish`'s own 4 parts. This was never a "later catalog" — it's more vendor

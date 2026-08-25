@@ -149,7 +149,13 @@ US2_WEDGES={  # RP-1-authored, not present in ro_expanded
 AXE_PARTS={  # authored BY AXE, so they exist in no upstream dump -- resolve them here or nowhere
   "AXE-GammaRaySpectrometer":"GR01 - Gamma-Ray Spectrometer",
   "AXE-XRayFluorescence":"XR01 - X-Ray Fluorescence Spectrometer",
-  "AXE-NeutronSpectrometer":"NS01 - Neutron Spectrometer"}
+  "AXE-NeutronSpectrometer":"NS01 - Neutron Spectrometer",
+  # +PART clone of Squad's RelayAntenna100, stripped of every antenna module (design/Science/
+  # KerbalismLab/InstrumentTagging.cfg) -- the same 4m dish pointed outward as a passive receiver.
+  # It is the ONLY carrier of RadioLabExperimentPackage, so 6 lab experiments are unrunnable
+  # without it; added to curated-parts + tel_antennaCatalog 2026-08-25 (it had defaulted to the
+  # `parking` holding pen because nothing placed it).
+  "AntennaRadioLab":"RA-100T Radio Telescope"}
 
 ADD={  # our divergences (names; mod/title resolved from ro_expanded)
   # Tantares flagship (48)
