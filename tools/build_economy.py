@@ -136,7 +136,7 @@ def scan_seed(deleted):
     gates: name -> set of programmes whose ProgramActive requirement gates the contract. Used to
     prove every objective can actually be offered (see prune_unreachable). Multiple programmes on one
     contract are RP-1's `Any` shape -- any one of them being active is enough."""
-    labels, by_program, gates = {}, {}, {}
+    labels, by_program, gates, excludes = {}, {}, {}, {}
     for root, _, files in os.walk(SEED):
         for fn in sorted(files):
             if not fn.endswith(".cfg"):
@@ -150,9 +150,117 @@ def scan_seed(deleted):
                 labels[name] = ((m.group(1).strip().upper() if m else ""), val(b, "title"))
                 progs = set(re.findall(r'^\s*program\s*=\s*(\S+)', b, re.M))
                 gates[name] = progs
+                excludes[name] = hard_exclusions(b)
                 for prog in progs:
                     by_program.setdefault(prog, []).append(name)
-    return labels, by_program, gates
+    return labels, by_program, gates, excludes
+
+
+def hard_exclusions(contract_body):
+    """Contracts this one can never be completed alongside.
+
+    RP-1 offers some objectives as either/or -- fly the 3-satellite navigation network OR the
+    4-satellite one, land on the Moon by lunar-orbit rendezvous OR direct ascent. The either/or is
+    enforced on the CONTRACT, by a requirement pointing at its twin with `invertRequirement = true`,
+    and it comes in two strengths that look identical in a grep and are not:
+
+      * AcceptContract + invert  -- you may not hold both AT ONCE. Sequential completion is fine;
+        EarlySatellites-Heavy concludes in the live save with both FirstBioSat-Heavy and
+        FirstPolarSat-Heavy completed, which is the proof.
+      * CompleteContract + invert -- finishing either one locks the other out of Mission Control
+        FOREVER. Only this strength is a real exclusion.
+
+    Only the second is returned. Treating the first as exclusive would wrap objectives in `Any` that
+    the player is expected to fly both of, quietly halving that programme's content."""
+    out = set()
+    for r in blocks(contract_body, "REQUIREMENT"):
+        if val(r, "type") != "CompleteContract":
+            continue
+        if not re.search(r'^\s*invertRequirement\s*=\s*true\s*$', r, re.M | re.I):
+            continue
+        target = val(r, "contractType")
+        if target:
+            out.add(target)
+    return out
+
+
+def max_coflyable(members, excludes):
+    """How many of these objectives one career can actually finish.
+
+    The exclusion graph is not always a clean pair. CrewedMarsExp's four objectives form one
+    connected component with only three edges: FirstCrewedMarsLanding rules out both
+    CrewedPhobosLandingSurfaceScience and MarsRoboticSampleReturn, and MarsRoboticSampleReturn also
+    rules out CollectCrewedMarsSurfaceScience. So the component is impossible to complete whole, yet
+    two of its four are co-flyable -- exactly the `ATLEAST 2 of 4` RP-1 wrote by hand.
+
+    Returning the largest independent set means the gate asks for everything the player can actually
+    deliver and never one more. Collapsing the component to `Any` instead would settle for one and
+    quietly delete a mission's worth of content from the programme."""
+    idx = {m: i for i, m in enumerate(members)}
+    bad = [[False] * len(members) for _ in members]
+    for m in members:
+        for other in excludes.get(m, ()):
+            if other in idx:
+                bad[idx[m]][idx[other]] = bad[idx[other]][idx[m]] = True
+    if len(members) > 20:                      # brute force is 2^n; nothing real comes close
+        return 1
+    best = 0
+    for mask in range(1 << len(members)):
+        picked = [i for i in range(len(members)) if mask >> i & 1]
+        if len(picked) <= best:
+            continue
+        if all(not bad[a][b] for a in picked for b in picked if a < b):
+            best = len(picked)
+    return max(best, 1)
+
+
+def group_exclusive(progs, excludes):
+    """Fold each programme's mutually-exclusive objectives into one countable group.
+
+    The completion contract ANDs every objective together, so a programme holding an either/or pair
+    is demanding the impossible -- and it fails the way prune_unreachable's docstring describes,
+    silently, because CC's CompleteContractRequirement just never matches a contract that was never
+    offered. Four programmes shipped in that state (SkoposCommercialApplications0, CrewedLunar,
+    CommNetwork, CrewedMarsExp); because SCA1 gates on SCA0 being concluded, the whole Skopos ladder
+    sat behind one of them.
+
+    Sets p["objective_groups"]: a list of (members, count). A singleton emits the plain
+    CompleteContract it always did; a group emits AtLeast(count) over its members, where count is
+    what max_coflyable says a career can really reach.
+
+    p["objectives"] is deliberately LEFT ALONE. It is what AxeProgramValue and AxeProgramObjectiveFunds
+    count and divide the budget across, and an either/or pair is still two missions' worth of staged
+    funds however the gate is spelled. Only the gate was ever wrong."""
+    merged = []
+    for p in progs:
+        objs = list(p["objectives"])
+        pos = {o: i for i, o in enumerate(objs)}
+        parent = list(range(len(objs)))
+
+        def find(i):
+            while parent[i] != i:
+                parent[i] = parent[parent[i]]
+                i = parent[i]
+            return i
+
+        for o in objs:
+            for other in excludes.get(o, ()):
+                if other in pos:                  # exclusion is symmetric; union either way
+                    a, b = find(pos[o]), find(pos[other])
+                    if a != b:
+                        parent[a] = b
+        clusters = {}
+        for i, o in enumerate(objs):
+            clusters.setdefault(find(i), []).append(o)
+        groups = []
+        for key in sorted(clusters, key=lambda k: pos[clusters[k][0]]):
+            members = clusters[key]
+            count = 1 if len(members) == 1 else max_coflyable(members, excludes)
+            groups.append((members, count))
+            if len(members) > 1:
+                merged.append((p["name"], members, count))
+        p["objective_groups"] = groups
+    return merged
 
 
 def prune_unreachable(progs, gates, chartered):
@@ -294,7 +402,7 @@ def main():
     src = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_SRC
     if not os.path.exists(src):
         sys.exit(f"Programs.cfg not found at {src}")
-    seed, by_program, gates = scan_seed(load_dedupe_deletions())
+    seed, by_program, gates, excludes = scan_seed(load_dedupe_deletions())
     progs = load_programs(src)
     if not progs:
         sys.exit("no chartered programmes parsed")
@@ -326,6 +434,13 @@ def main():
     if stranded:
         sys.exit("cannot be concluded — every objective is unreachable, so the programme would stay "
                  "active for the whole career: " + ", ".join(stranded))
+
+    # Either/or objectives must be ORed, not ANDed -- see group_exclusive. Runs after pruning, so a
+    # pair whose surviving half is already unreachable has been dropped before we get here.
+    for prog_name, group, count in group_exclusive(progs, excludes):
+        print("note: " + prog_name + " has " + str(len(group)) + " mutually exclusive objectives ("
+              + ", ".join(group) + ") - gating on AtLeast " + str(count)
+              + ", the most one career can complete")
 
     for p in progs:
         p["weight"] = p["funding"] ** FUNDING_EXPONENT
@@ -513,9 +628,22 @@ CONTRACT_GROUP
                     f"\t\tprogram = {p['name']}\n\t}}\n")
             f.write("\n\tREQUIREMENT\n\t{\n\t\tname = ProgramActive\n\t\ttype = ProgramActive\n"
                     f"\t\tprogram = {p['name']}\n\t}}\n")
-            for o in p["objectives"]:
-                f.write(f"\n\tREQUIREMENT\n\t{{\n\t\tname = Complete_{o}\n\t\ttype = CompleteContract\n"
-                        f"\t\tcontractType = {o}\n\t}}\n")
+            groups = p.get("objective_groups") or [([o], 1) for o in p["objectives"]]
+            for members, count in groups:
+                if len(members) == 1:
+                    o = members[0]
+                    f.write(f"\n\tREQUIREMENT\n\t{{\n\t\tname = Complete_{o}\n\t\ttype = CompleteContract\n"
+                            f"\t\tcontractType = {o}\n\t}}\n")
+                    continue
+                # Mutually exclusive objectives: completing one locks the others out for good,
+                # so ANDing them demands the impossible and strands the programme forever.
+                # AtLeast passes once `count` children are met (CC AtLeastRequirement).
+                f.write(f"\n\tREQUIREMENT\n\t{{\n\t\tname = Complete_AtLeast{count}_{'_'.join(members)}\n"
+                        f"\t\ttype = AtLeast\n\t\tcount = {count}\n")
+                for o in members:
+                    f.write(f"\n\t\tREQUIREMENT\n\t\t{{\n\t\t\tname = Complete_{o}\n"
+                            f"\t\t\ttype = CompleteContract\n\t\t\tcontractType = {o}\n\t\t}}\n")
+                f.write("\t}\n")
             f.write("}\n\n")
 
     with open(OUT_OBJ, "w", encoding="utf-8", newline="\n") as f:
