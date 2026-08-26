@@ -19,10 +19,10 @@ nfex-antenna-static-mini-1	antenna	tel_antennaCatalog	7	Telecommunications	0.004
 ROC-ApolloHGABDB	antenna	tel_compactHighGainAntenna	8	Telecommunications	0.0005	Apollo High Gain Antenna (HGA)	ROCapsules									0		3						448			0
 ca_landv_omni	antenna	int_surveyorLanderBus	8	SystemsIntegration	0.005	Surveyor Low Gain Antenna (LGA)	CoatlAerospace									0		3.8						873.15			0
 ROC-ApolloASTPVHFBDB	antenna	gnc_stationBerthing	9	GuidanceControl	0.0015	Apollo-Soyuz Test Project VHF-FM Antenna	ROCapsules									0		3						448			0
+ROC-LEMRover	antenna	rob_foldingRoverChassis	9	Robotics	0.168	Apollo Lunar Roving Vehicle (LRV)	ROCapsules								195.238	32800		1.5						448			0
 SXTsciencenosecone	antenna	mic_gasChromatographMassSpec	9	Microelectronics	0.004	GC-MS + Antenna	SXT									0		2						448			0
 ca_ant_gps	antenna	tel_deepSpaceProbeAntennas	9	Telecommunications	0.008	CA-GPS Omnidirectional Antenna	CoatlAerospace									0			400					873.15			0
 ca_vor_comm	antenna	tel_deepSpaceProbeAntennas	9	Telecommunications	0.015	4MV Spacecraft Bus Antenna Array	CoatlAerospace									0			25600					873.15			0
-ROC-LEMRover	antenna	fd_lunarSurfaceMobility	10	FluidDynamics	0.168	Apollo Lunar Roving Vehicle (LRV)	ROCapsules								195.238	32800		1.5						448			0
 proceduralAvionics	avionics	start	0	SystemsIntegration	1.0	Avionics [Procedural]	ProceduralParts									0		1.5						1073.15			0
 AM_MLP_TestStandEngine	avionics	gs_soundingStands	1	GroundSupport	1.0	Static Test Stand - Engine Type	ModularLaunchPads								0.5	500		1.5						1500			0
 AM_MLP_TestStandSmall	avionics	gs_soundingStands	1	GroundSupport	1.0	Static Test Stand - Cradle Type	ModularLaunchPads								0.5	500		1.5						1500			0
@@ -42,13 +42,14 @@ sputnik3	avionics	okb_firstSputniks	4	SystemsIntegration	1.30713	Sputnik 3 "Obje
 vanguard-1	avionics	jpl_firstSats	4	SystemsIntegration	0.00137	Vanguard 1	RN_US_Probes				0.00218978	0.003			85.4015	117		1.5						773.15			0
 vanguard-2	avionics	jpl_firstSats	4	SystemsIntegration	0.01065	Vanguard 2	RN_US_Probes								186.761	1989		3						773.15			0
 vanguard-3	avionics	jpl_firstSats	4	SystemsIntegration	0.00493	Vanguard 3	RN_US_Probes								2360.17	11635.6		3						773.15			0
+ROC-ZenitCapsule	avionics	int_zenitRecon	5	SystemsIntegration	0.995	Zenit Descent Module (Improved Film Camera)	ROCapsules								233.166	232000		1.5						600			0
 grab-1	avionics	jpl_appSats	5	SystemsIntegration	0.018	GRAB 1	RN_US_Probes				0.000222222	0.004			15.6	280.8		3						773.15			0
 luna2	avionics	okb_firstLuna	5	SystemsIntegration	0.3745	Luna E-1A	RN_Soviet_Probes								26.7023	10000		4						773.15			0
 pioneer_5	avionics	jpl_appSats	5	SystemsIntegration	0.02333	Pioneer 5	RN_US_Probes				0.00342906	0.08			22.4672	524.16		3						773.15			0
 transit2a	avionics	jpl_appSats	5	SystemsIntegration	0.055	Transit-2A Satellite	RN_US_Probes				0.000263636	0.0145			245.618	13509		3						773.15			0
 DFH-1	avionics	int_dongFangHong1	6	SystemsIntegration	0.173	DongFangHong-1 Satelite	KerwisChineseAerospacePack								57.8035	10000		1.5						1073.15			0
-ROC-ZenitCapsule	avionics	int_zenitRecon	6	SystemsIntegration	0.995	Zenit Descent Module (Improved Film Camera)	ROCapsules								233.166	232000		1.5						600			0
 mk2DroneCore	avionics	life_spaceplaneCockpit	6	LifeSupport	0.5	MK2 Drone Core	Squad								86.4	43200		1.5						448			0
+RO-SaturnI-IU	avionics	gnc_interplanetaryAvionics	7	GuidanceControl	1.18	Saturn I Instrument Unit [3.9 m]	ReStockPlus								6.10169	7200		1.5						448			0
 ca_argo-mk2	avionics	gnc_threeAxisStabilizedBus	7	GuidanceControl	0.155	Mariner Mars & Venus Spacecraft Bus	CoatlAerospace								27.871	4320		1.5						873.15			0
 luna11_als	avionics	okb_lunaLanders	7	SystemsIntegration	0.19483	Luna 11 ALS	RN_Soviet_Probes								17.3228	3375		1.5						773.15			0
 luna13_als	avionics	okb_lunaLanders	7	SystemsIntegration	0.08688	Luna 13 ALS	RN_Soviet_Probes								5.75506	500		1.5						773.15			0
@@ -56,12 +57,12 @@ luna9_als	avionics	okb_lunaLanders	7	SystemsIntegration	0.082	Luna 9 ALS	RN_Sovi
 luna_als	avionics	okb_lunaLanders	7	SystemsIntegration	0.12873	Luna 10 ALS	RN_Soviet_Probes								1.74784	225		1.5						773.15			0
 rn_surveyor3	avionics	jpl_lunarPlanetaryRecon	7	SystemsIntegration	0.13018	Surveyor Lunar Probe	RN_US_Probes								139.929	18216		4						773.15			0
 roverBody_v2	avionics	rob_surfaceMobility	7	Robotics	0.05	Probodobodyne RoveMate	Squad								864	43200		1.5						448			0
-RO-SaturnI-IU	avionics	comp_digitalGuidanceComputer	8	Computing	1.18	Saturn I Instrument Unit [3.9 m]	ReStockPlus								6.10169	7200		1.5						448			0
 SXTAlouetteI	avionics	gnc_reactionWheelAttitude	8	GuidanceControl	0.145	Alouette Core	SXT				0.00241379	0.35			18.6207	2700		2						448			0
 aquila_adapter_s2_s0p5_1	avionics	str_stationStructures	8	StructuresMechanisms	2.0	Kristall Crew Compartment 1	Tantares									0		1.5						1073.15			0
 aquila_adapter_s2_s1p5_1	avionics	str_stationStructures	8	StructuresMechanisms	2.0	Kristall Crew Compartment 2	Tantares									0		1.5						1073.15			0
 ca_landv_core	avionics	int_surveyorLanderBus	8	SystemsIntegration	0.15	Surveyor Lander Core	CoatlAerospace								105.6	15840		1.5						873.15			0
 ca_landv_orbiter_core	avionics	int_surveyorOrbiter	8	SystemsIntegration	0.12	Surveyor Orbiter Core	CoatlAerospace								114	13680		1.5						873.15			0
+restock-drone-core-375-1	avionics	comp_digitalGuidanceComputer	8	Computing	1.933664	Saturn IB/V Instrument Unit [6.6 m]	ReStockPlus								18.8502	36450		1.5						448			0
 ro_TKS_adapter_s2_s0p5_1	avionics	str_stationStructures	8	StructuresMechanisms	3.0	TKS Crew Compartment 1	Tantares									0		1.5						1073.15			0
 ro_TKS_adapter_s2_s1p5_1	avionics	str_stationStructures	8	StructuresMechanisms	3.0	TKS Crew Compartment 2	Tantares									0		1.5						1073.15			0
 ro_kvant-2_adapter_s2_s0p5_1	avionics	str_stationStructures	8	StructuresMechanisms	2.0	Kvant-2 Crew Compartment 1	Tantares									0		1.5						1073.15			0
@@ -71,14 +72,13 @@ ro_priroda_adapter_s2_s1p5_1	avionics	str_stationStructures	8	StructuresMechanis
 ro_spektr_adapter_s2_s0p5_1	avionics	str_stationStructures	8	StructuresMechanisms	2.0	Spektr Crew Compartment 1	Tantares									0		1.5						1073.15			0
 ro_spektr_adapter_s2_s1p5_1	avionics	str_stationStructures	8	StructuresMechanisms	2.0	Spektr Crew Compartment 2	Tantares									0		1.5						1073.15			0
 ROC-ApolloSMBlockIII	avionics	int_apolloBlockIII	9	SystemsIntegration	1.0377	Apollo Block III+ Service Module	ROCapsules								31.8011	33000								448			0
-ROC-ApolloSMDBDBlockIV	avionics	int_apolloBlockIII	9	SystemsIntegration	1.05	Apollo Block IV Service Module	ROCapsules								31.4286	33000								448			0
 aquila_control_s2_1	avionics	int_tksFerry	9	SystemsIntegration	0.764	FGB Control Block	Tantares								32.9843	25200		1.5						1073.15			0
 ca_fom_lander	avionics	gnc_sovietProbeBusFamily	9	GuidanceControl	0.66	Venera Lander Bus	CoatlAerospace								2.72727	1800		1.5						873.15			0
 ca_vor_core	avionics	gnc_sovietProbeBusFamily	9	GuidanceControl	0.84	4MV Spacecraft Bus	CoatlAerospace								18.8571	15840		1.5						873.15			0
 quetzal	avionics	gnc_usProbeBusFamily	9	GuidanceControl	0.01381	Pioneer 10/11 Core	CoatlAerospace								10.4272	144		1.5						873.15			0
-restock-drone-core-375-1	avionics	comp_realTimeFlightComputer	9	Computing	1.933664	Saturn IB/V Instrument Unit [6.6 m]	ReStockPlus								18.8502	36450		1.5						448			0
 rn_sphinx_t3e	avionics	jpl_grandTour	9	SystemsIntegration	0.1113	Sphinx	RN_US_Probes				0.000853549	0.095			49.5238	5512		10.6						773.15			0
 torekka	avionics	gnc_usProbeBusFamily	9	GuidanceControl	0.3198	Voyager Core	CoatlAerospace								49.531	15840		1.5						873.15			0
+ROC-ApolloSMDBDBlockIV	avionics	int_apolloBlockIV	10	SystemsIntegration	1.05	Apollo Block IV Service Module	ROCapsules								31.4286	33000								448			0
 RO_boeing702	avionics	gnc_commercialComsatBus	10	GuidanceControl	1.26	Boeing 702 Large Satellite Bus	Squad								8	10080		1.5						448			0
 ca_ESM2	avionics	gnc_commercialComsatBus	10	GuidanceControl	0.49	LM900 Satellite Bus	CoatlAerospace								0.367347	180		1.5		2.04096e-07	0.000100007			873.15			0
 ca_draco	avionics	int_atmosphericEntryProbe	10	SystemsIntegration	0.215	Huygens Atmospheric Lander	CoatlAerospace								26.7907	5760		1.5						873.15			0
@@ -114,6 +114,7 @@ SXTmk3Cockpit52	crewpod	life_highAltCompartment	3	LifeSupport	3.5	B-52 Stratofor
 AM_MLP_SoyuzLaunchBaseGantry	crewpod	gs_dedicatedComplexes	4	GroundSupport	0.1	Soyuz Launch Base Gantry with Hatches	ModularLaunchPads									0								1073.15			4
 Mark1Cockpit	crewpod	life_pressurisedCabin	5	LifeSupport	0.8	X-15 Cockpit	Squad								18	14400		1.5						600			1
 Mark2Cockpit	crewpod	life_pressurisedCabin	5	LifeSupport	0.7	X-15 Inline Cockpit	Squad								20.5714	14400		1.5						600			1
+ROC-VostokCapsule	crewpod	int_vostokCapsule	5	SystemsIntegration	0.933	Vostok Descent Module	ROCapsules								248.66	232000		1.5						600			1
 25mKossak	crewpod	life_spaceplaneCockpit	6	LifeSupport	2.8	Boeing 737 cockpit	SXT								15.4286	43200		1						448			4
 AM_MLP_GeneralCrewArm	crewpod	gs_crewGantries	6	GroundSupport	0.05	Crew Access Arm Large - Large Mount	ModularLaunchPads									0								1073.15			4
 AM_MLP_GeneralCrewArmSmallMount	crewpod	gs_crewGantries	6	GroundSupport	0.05	Crew Access Arm Large - Small Mount	ModularLaunchPads									0								1073.15			4
@@ -133,7 +134,6 @@ RO-Mk1CockpitInline	crewpod	life_spaceplaneCockpit	6	LifeSupport	1.1	Mk 1 Inline
 RO-Mk1CrewModule	crewpod	life_spaceplaneCockpit	6	LifeSupport	1.5	Mk1 Crew Carrier	VenStockRevamp								28.8	43200								448			3
 ROC-DynaAdapterBigMoroz	crewpod	str_aircraftAirframe	6	StructuresMechanisms	0.3	Dynasoar Aft Bay	ROCapsules								2540.16	762048								448			1
 ROC-DynaCabinMoroz	crewpod	life_spaceplaneCockpit	6	LifeSupport	0.8661	Dynasoar Crew Cabin	ROCapsules									0								1255			2
-ROC-VostokCapsule	crewpod	int_vostokCapsule	6	SystemsIntegration	0.933	Vostok Descent Module	ROCapsules								248.66	232000		1.5						600			1
 SXTEntenteCordiale	crewpod	life_spaceplaneCockpit	6	LifeSupport	3.5	Concorde cockpit	SXT								12.3429	43200		1						448			3
 mk2Cockpit_Inline	crewpod	life_spaceplaneCockpit	6	LifeSupport	1.3	Mk2 Inline Cockpit	Squad								33.2308	43200		1.5						448			2
 mk2Cockpit_Standard	crewpod	life_spaceplaneCockpit	6	LifeSupport	1.5	Mk2 Cockpit	Squad								28.8	43200		1.5						448			2
@@ -159,7 +159,6 @@ sspx-habitation-1875-2	crewpod	life_stationHabitation	8	LifeSupport	3.454	3.38m 
 L25mSci	crewpod	int_orbitalLab	9	SystemsIntegration	3.5	Station Science Module (Early)	SXT								2.05714	7200								448			1
 Large_Crewed_Lab	crewpod	int_orbitalLab	9	SystemsIntegration	12.5	Mobile Processing Lab MPL-LG-2	Squad								3.456	43200								448			2
 ROC-ApolloMissionModule	crewpod	int_apolloBlockIII	9	SystemsIntegration	3.0	Apollo Block III+ Mission Module	ROCapsules									0								448			2
-ROC-ApolloMissionModule4	crewpod	int_apolloBlockIII	9	SystemsIntegration	4.25	Apollo Block IV Mission Module	ROCapsules									0								448			2
 ROC-BigGeminiCabinBDB	crewpod	int_bigGeminiLogistics	9	SystemsIntegration	3.36	Big G Crew Module	ROCapsules									0		1.5						448			7
 ROC-BigGeminiSM	crewpod	int_bigGeminiLogistics	9	SystemsIntegration	7.5625	Big G Service Module	ROCapsules								1.90413	14400		1.5						448			3
 SXTISSHabISK30	crewpod	life_convertedStageStation	9	LifeSupport	28.0	Skylab Orbital Workshop	SXT								25.2	705600		1.5						448			8
@@ -177,6 +176,7 @@ AM_MLP_ShuttleSLC6TowerCore	crewpod	gs_shuttlePad	10	GroundSupport	0.1	SLC-6 Shu
 AM_MLP_ShuttleSLC6TowerCrew	crewpod	gs_shuttlePad	10	GroundSupport	0.1	SLC-6 Shuttle Tower Crew Section	ModularLaunchPads									0								1073.15			8
 AM_MLP_ShuttleSLC6TowerIntertank	crewpod	gs_shuttlePad	10	GroundSupport	0.1	SLC-6 Shuttle Tower Intertank Structure	ModularLaunchPads									0								1073.15			8
 AM_MLP_ShuttleSLC6TowerTop	crewpod	gs_shuttlePad	10	GroundSupport	0.1	SLC-6 Shuttle Tower Top	ModularLaunchPads									0								1073.15			8
+ROC-ApolloMissionModule4	crewpod	int_apolloBlockIV	10	SystemsIntegration	4.25	Apollo Block IV Mission Module	ROCapsules									0								448			2
 STXCANIOT	crewpod	life_modularHabitat	10	LifeSupport	9.5	PPD-H Crew Cabin	SXT								4.73684	45000								448			6
 aquila_node_s0p5_2	crewpod	str_stationHubs	10	StructuresMechanisms	1.8	Kristall Docking Node	Tantares						8.33333e-06	0.015	0.00555556	10		1.5						1073.15			2
 cupola	crewpod	life_observationCupola	10	LifeSupport	1.88	Cupola Observatory Module	Squad								22.9787	43200		1.5						448			1
@@ -437,6 +437,12 @@ YF21_Engine	engine_rocket	fd_longMarchStorable	5	FluidDynamics	2.85	YF-21	Kerwis
 YF22_Engine	engine_rocket	fd_longMarchStorable	5	FluidDynamics	0.815	YF-22	KerwisChineseAerospacePack	310	98.1555	784.5						0								1073.15			0
 YF23_Engine	engine_rocket	fd_longMarchStorable	5	FluidDynamics	0.015	YF-23	KerwisChineseAerospacePack	300	80.2177	11.8						0								1073.15			0
 YF25K_Engine	engine_rocket	fd_longMarchStorable	5	FluidDynamics	0.9	YF-20 with Boattail (no gimbal)	KerwisChineseAerospacePack	308	95.1282	839.6						0								1073.15			0
+ROE-Algol2	engine_rocket	pc_scoutMarkII	6	PropellantChemistry	0.0	Algol II	ROEngines	258.88		449.021						0								673.15			0
+ROE-Algol2_Inline	engine_rocket	pc_scoutMarkII	6	PropellantChemistry	0.0	Algol II	ROEngines	258.88		449.021						0								673.15			0
+ROE-AltairII	engine_rocket	pc_scoutMarkII	6	PropellantChemistry	0.0	Altair II X-258	ROEngines	279		35						0								673.15			0
+ROE-AltairIII	engine_rocket	pc_scoutMarkII	6	PropellantChemistry	0.0	Altair III FW-4S	ROEngines	284.22		29.36						0								673.15			0
+ROE-Antares2	engine_rocket	pc_scoutMarkII	6	PropellantChemistry	0.0	Antares IIA X-259	ROEngines	281.4		93.0746						0								673.15			0
+ROE-Antares2_Inline	engine_rocket	pc_scoutMarkII	6	PropellantChemistry	0.0	Antares IIA X-259	ROEngines	281.4		93.0746						0								673.15			0
 ROE-E1	engine_rocket	fd_saturnKerolox	6	FluidDynamics	0.0	E-1	ROEngines	310		2828.57						0								673.15			0
 ROE-G1	engine_rocket	pc_fluorine	6	PropellantChemistry	0.0	G-1	ROEngines	368		55.02						0								673.15			0
 ROE-H1C	engine_rocket	fd_saturnKerolox	6	FluidDynamics	0.902	H-1C Series	ROEngines	297	167.383	1480.6						0								673.15			0
@@ -458,12 +464,6 @@ ROE-1204sepMotor	engine_rocket	pc_segmentedCasting	7	PropellantChemistry	0.2	UA1
 ROE-1205sepMotor	engine_rocket	pc_segmentedCasting	7	PropellantChemistry	0.2	UA1205 Nosecone & Separation Motor	ROEngines	154	81.5773	160						0								673.15			0
 ROE-AJ260SLA	engine_rocket	pc_segmentedCasting	7	PropellantChemistry	0.0	AJ-260 SL Radial Solid Rocket Booster	ROEngines	263		26708						0								673.15			0
 ROE-AJ260SLF	engine_rocket	pc_segmentedCasting	7	PropellantChemistry	0.0	AJ-260 SL	ROEngines	263		26708						0								673.15			0
-ROE-Algol2	engine_rocket	pc_scoutMarkII	7	PropellantChemistry	0.0	Algol II	ROEngines	258.88		449.021						0								673.15			0
-ROE-Algol2_Inline	engine_rocket	pc_scoutMarkII	7	PropellantChemistry	0.0	Algol II	ROEngines	258.88		449.021						0								673.15			0
-ROE-AltairII	engine_rocket	pc_scoutMarkII	7	PropellantChemistry	0.0	Altair II X-258	ROEngines	279		35						0								673.15			0
-ROE-AltairIII	engine_rocket	pc_scoutMarkII	7	PropellantChemistry	0.0	Altair III FW-4S	ROEngines	284.22		29.36						0								673.15			0
-ROE-Antares2	engine_rocket	pc_scoutMarkII	7	PropellantChemistry	0.0	Antares IIA X-259	ROEngines	281.4		93.0746						0								673.15			0
-ROE-Antares2_Inline	engine_rocket	pc_scoutMarkII	7	PropellantChemistry	0.0	Antares IIA X-259	ROEngines	281.4		93.0746						0								673.15			0
 ROE-Castor2	engine_rocket	pc_strapOnMarkII	7	PropellantChemistry	0.0	Castor 2	ROEngines	282.2		369.23						0								673.15			0
 ROE-Castor2_Inline	engine_rocket	pc_strapOnMarkII	7	PropellantChemistry	0.0	Castor 2	ROEngines	282.2		369.23						0								673.15			0
 ROE-Castor4	engine_rocket	pc_strapOnMarkII	7	PropellantChemistry	0.0	Castor 4	ROEngines	261		460						0								673.15			0
@@ -628,6 +628,7 @@ ROE-JupiterVernier	engine_small	fd_verniers	3	FluidDynamics	0.06	S-3D Vernier Ex
 ROE-LR101Inline_2	engine_small	fd_verniers	3	FluidDynamics	0.0	LR101	ROEngines	247		5.304						0								673.15			0
 ROE-LR101_2	engine_small	fd_verniers	3	FluidDynamics	0.0	LR101	ROEngines	247		5.304						0								673.15			0
 PioneerVernier	engine_small	pc_pioneerVernierTrim	4	PropellantChemistry	0.0	Pioneer Adjustment Motor	ROEngines	235		0.06						0								698			0
+RO-LifeSupport-DummyEngine	engine_small	life_openLoopECLSS	4	LifeSupport	5.0	Life Support Config Engine	Squad	0.01	0.000203943	0.01						0								1073.15			0
 ROC-GeminiRetroMECBDB	engine_small	pc_retroKick	4	PropellantChemistry	0.00647	Gemini Retro Rocket (Star-13E)	ROCapsules	256.3	43.8147	2.78						0								600			0
 ROC-MercuryPosigradeBDB	engine_small	pc_retroKick	4	PropellantChemistry	0.00143	Mercury Posigrade Kick Motor	ROCapsules	206	126.858	1.779						0								698			0
 ROC-MercuryRetroBDB	engine_small	pc_retroKick	4	PropellantChemistry	0.00936	Mercury Retro (TE-M-316)	ROCapsules	206	55.5615	5.1						0								698			0
@@ -636,7 +637,6 @@ ROE-Agena_Spinrocket	engine_small	pc_retroKick	4	PropellantChemistry	0.000227	Ag
 pioneer1_booster	engine_small	jpl_firstSats	4	SystemsIntegration	0.0006	Pioneer 0/1/2 Top Boosters	RN_US_Probes	235	190.347	1.12						0								773.15			0
 sputnik2	engine_small	okb_firstSputniks	4	SystemsIntegration	0.4955	Sputnik 2	RN_Soviet_Probes	2	0.0329273	0.16					5.04541	2500		3						773.15			0
 RO-KDU414	engine_small	fd_spacecraftPropulsion	5	FluidDynamics	0.02	S5.19	Squad	315	10.1972	2						0								573.15			0
-RO-LifeSupport-DummyEngine	engine_small	life_openLoopECLSS	5	LifeSupport	5.0	Life Support Config Engine	Squad	0.01	0.000203943	0.01						0								1073.15			0
 ROE-AgenaSPS	engine_small	fd_spacecraftPropulsion	5	FluidDynamics	0.0	Agena-D Secondary Propulsion System	ROEngines	278		0.9608						0								673.15			0
 ROE-C1	engine_small	fd_spacecraftPropulsion	5	FluidDynamics	0.0	C-1	ROEngines	301		0.445						0								673.15			0
 ROE-KTDU35	engine_small	fd_spacecraftPropulsion	5	FluidDynamics	0.0	KTDU-35	ROEngines	278		4.09						0								673.15			0
@@ -696,8 +696,8 @@ rn_lro	engine_small	jpl_modernRobotic	12	SystemsIntegration	0.7645	Lunar Reconna
 rn_messenger	engine_small	jpl_modernRobotic	12	SystemsIntegration	0.2738	MESSENGER	RN_US_Probes	317	0.240218	0.645					80.5332	22050		29		5.47845e-05	0.015			973.15			0
 KzProcFairingSide1	fairing	aero_boattail	2	Aerodynamics	0.0	Procedural Fairing	ProceduralFairings									0								1000			0
 KzProcFairingSide1_TU	fairing	aero_boattail	2	Aerodynamics	0.0	Procedural Fairing (Recolorable)	ProceduralFairings									0								1000			0
+ROH-AdjustableHS	heatshield	cmp_heatSinkTPS	4	CompositeMaterials	0.01	Adjustable Heatshield	ROHeatshields									0								1073.15			0
 ROC-MercuryHS	heatshield	cmp_ablativeTPS	5	CompositeMaterials	0.1388	Mercury Heatshield	ROCapsules									0								600			0
-ROH-AdjustableHS	heatshield	cmp_ablativeTPS	5	CompositeMaterials	0.01	Adjustable Heatshield	ROHeatshields									0								1073.15			0
 ROC-D2Parachute	heatshield	edl_crewedRecovery	6	Aerodynamics	0.12	D-2 Parachute	ROCapsules									0								3600	0.00833333		0
 ROC-GeminiHSBDB	heatshield	cmp_ablativeRefinement	6	CompositeMaterials	0.04472	Gemini Heatshield	ROCapsules									0								600			0
 ROC-ApolloHSBDB	heatshield	cmp_lunarReturnAblator	8	CompositeMaterials	0.19110125	Apollo Command Module Heatshield	ROCapsules									0								1144			0
@@ -765,9 +765,9 @@ galileo_probe_parachute	parachute	cmp_extremeEntryParachutes	11	CompositeMateria
 neo_stardust_para	parachute	jpl_discoveryEra	11	SystemsIntegration	0.001	Stardust Return Capsule Parachute	RN_US_Probes									0								6200	1		0
 rn_huygen_hs_chute	parachute	jpl_discoveryEra	11	SystemsIntegration	0.008	Huygens Heatshield Parachute	RN_US_Probes									0								14000	0.125		0
 rn_huygens_chute	parachute	jpl_discoveryEra	11	SystemsIntegration	0.002	Huygens Lander Parachute	RN_US_Probes									0								1973.5	0.5		0
-ca_louver_m	radiator	th_activeLouvers	7	Thermodynamics	0.002	CA-TCL8 Thermal Control Louver	CoatlAerospace									0						2.5	5	873.15			0
-ca_louver_s	radiator	th_activeLouvers	7	Thermodynamics	0.001	CA-TCL4 Thermal Control Louver	CoatlAerospace									0						2	2	873.15			0
-ca_louver_s2	radiator	th_activeLouvers	7	Thermodynamics	0.00125	CA-TCL4-B Thermal Control Louver	CoatlAerospace									0						2	2.5	873.15			0
+ca_louver_m	radiator	th_activeLouvers	6	Thermodynamics	0.002	CA-TCL8 Thermal Control Louver	CoatlAerospace									0						2.5	5	873.15			0
+ca_louver_s	radiator	th_activeLouvers	6	Thermodynamics	0.001	CA-TCL4 Thermal Control Louver	CoatlAerospace									0						2	2	873.15			0
+ca_louver_s2	radiator	th_activeLouvers	6	Thermodynamics	0.00125	CA-TCL4-B Thermal Control Louver	CoatlAerospace									0						2	2.5	873.15			0
 RP0-SampleReturnCommand	rcs	opt_filmReturn	1	OpticsPhotonics	0.04	Sample Return Command Module (DEPRECATED)	RP-1	80							0.75	30		1.5						800	0.025		0
 ROC-D2Skirt1	rcs	str_diameterAdapters	2	StructuresMechanisms	0.8	D-2 4-engine Skirt Section	ROCapsules	260								0								448			0
 ROC-D2Skirt2	rcs	str_diameterAdapters	2	StructuresMechanisms	0.25	D-2 1-engine Skirt Section	ROCapsules	260								0								448			0
@@ -816,15 +816,14 @@ restock-rcs-block-qunit-mini-1	rcs	gnc_standardRCS	3	GuidanceControl	0.0125	RCS 
 restock-rcs-block-triple-angled-mini-1	rcs	gnc_standardRCS	3	GuidanceControl	0.0075	RCS Triple Angled [69/111 N Class]	ReStockPlus	230								0								1073.15			0
 restock-rcs-single-mini-1	rcs	gnc_standardRCS	3	GuidanceControl	0.0025	RCS Thruster [69/111 N Class]	ReStockPlus	230								0								1073.15			0
 ROC-GeminiEquipmentSectionBDB	rcs	str_equipmentBays	5	StructuresMechanisms	0.39942	Gemini Equipment Section	ROCapsules	258							221.947	88650								448			0
+ROC-MercuryCMBDB	rcs	int_mercuryCapsule	5	SystemsIntegration	0.5651	Mercury Capsule	ROCapsules	137							86.0025	48600		1.5						448			1
 luna3	rcs	okb_firstLuna	5	SystemsIntegration	0.279	Luna 3	RN_Soviet_Probes	65			0.00141577	0.395			2.49104	695		4						773.15			0
 vernierEngine	rcs	gnc_spacecraftRCS	5	GuidanceControl	0.01	Attitude Jet, Conformal (275/445 N class)	Squad	260								0								1473.15			0
 ROC-DynaButtMoroz	rcs	str_aircraftAirframe	6	StructuresMechanisms	0.8187	Dynasoar Equipment Compartment	ROCapsules	145							366.435	300000								1255			0
 ROC-DynaCockpitAltMoroz	rcs	life_spaceplaneCockpit	6	LifeSupport	1.0807	Dynasoar Cockpit (Alt)	ROCapsules	145								0		1.5						1255			1
 ROC-DynaCockpitMoroz	rcs	life_spaceplaneCockpit	6	LifeSupport	1.0807	Dynasoar Cockpit	ROCapsules	145								0		1.5						1255			1
 ROC-GeminiRetrogradeSectionBDB	rcs	int_crewedRetroPack	6	SystemsIntegration	0.12349	Gemini Retrograde Section	ROCapsules	296								0								448			0
-ROC-MercuryCMBDB	rcs	int_mercuryCapsule	6	SystemsIntegration	0.5651	Mercury Capsule	ROCapsules	137							86.0025	48600		1.5						448			1
 ROC-ReentryControlSystemBDB	rcs	int_crewedRetroPack	6	SystemsIntegration	0.12334	Gemini Re-entry Control System	ROCapsules	283								0								448			0
-mk1pod_v2	rcs	int_vostokCapsule	6	SystemsIntegration	0.72477	Mk1 Pod (2m)	Squad	137							126.661	91800		1.5						448			1
 rn_protonn4_1	rcs	okb_earlyPlanetaryComsats	6	SystemsIntegration	12.149	Proton 1-3 N-4 Satellite	RN_Soviet_Probes	60			0.000181085	2.2			17.2854	210000		3						773.15			0
 rn_protonn6_4	rcs	okb_earlyPlanetaryComsats	6	SystemsIntegration	16.949	Proton 4 N-6 Satellite	RN_Soviet_Probes	60			0.000129801	2.2			12.3901	210000		3						773.15			0
 45DegreeRCS	rcs	gnc_smallRcsCatalog	7	GuidanceControl	0.05	RCS Quad, 45deg (275/445 N class)	VenStockRevamp	240								0								1073.15			0
@@ -866,7 +865,6 @@ RO_RCSBlock_restock_2200	rcs	gnc_fixedRcsCatalog	8	GuidanceControl	0.0452	Angled
 RO_RCSBlock_restock_413	rcs	gnc_fixedRcsCatalog	8	GuidanceControl	0.0196	Angled RCS Block [ 413/668 N Class]	ReStockPlus	254								0								1073.15			0
 RO_RCSBlock_restock_550	rcs	gnc_fixedRcsCatalog	8	GuidanceControl	0.0226	Angled RCS Block [ 550/890 N Class]	ReStockPlus	254								0								1073.15			0
 RO_RCSBlock_restock_825	rcs	gnc_fixedRcsCatalog	8	GuidanceControl	0.0226	Angled RCS Block [ 825/1335 N Class]	ReStockPlus	254								0								1073.15			0
-mk1-3pod	rcs	int_apolloCSM	8	SystemsIntegration	3.644	Mk1-3 Command Pod (4m)	Squad	280.84							11.8551	43200		1.5						448			3
 pioneer_10_11	rcs	jpl_outerPlanetPrecursors	8	SystemsIntegration	0.15193	Pioneer 10/11 Probe	RN_US_Probes	228					0.000921477	0.14	18.9561	2880		4						773.15			0
 ROC-ApolloCMBDBBlockIII	rcs	int_apolloBlockIII	9	SystemsIntegration	3.48324	Apollo Block III+ Command Module (CM)	ROCapsules	274							6.14083	21390		1.5						448			5
 ROC-OrionRCS	rcs	gnc_bipropAttitudeThrust	9	GuidanceControl	0.15	Orion RCS Thrusters	ROCapsules	311								0								448			0
@@ -1042,7 +1040,7 @@ nfs-panel-deploying-blanket-arm-1	solar	elec_deployableBlanketArray	13	Electrica
 nfs-panel-deploying-blanket-dsg-1	solar	elec_deployableBlanketArray	13	ElectricalPower	0.075168	OKEB-100 'Gateway' Blanket Photovoltaic Array	NearFutureSolar				0.418056	31.4244				0								1073.15			0
 nfs-panel-deploying-blanket-starship-1	solar	elec_deployableBlanketArray	13	ElectricalPower	0.0028152	OKEB-25R 'Starship' Blanket Photovoltaic Array	NearFutureSolar				0.418056	1.17691				0								1073.15			0
 nfs-panel-deploying-concentrator-1x4-juno-1	solar	elec_concentratingPhotovoltaic	13	ElectricalPower	0.001744	K12-K 1x4 Concentrating Photovoltaic Panels	NearFutureSolar				0.37625	0.65618				0								1073.15			0
-nfs-panel-deploying-curved-375-1	solar	elec_curvedExpandingArray	13	ElectricalPower	0.00179072	NIV-75-R Expanding Curved Solar Array	NearFutureSolar				41.8826	75				0								1073.15			0
+nfs-panel-deploying-curved-375-1	solar	elec_curvedExpandingArray	13	ElectricalPower	0.00179072	NIV-75-R Expanding Curved Solar Array	NearFutureSolar				0.376273	0.6738				0								1073.15			0
 conformaldecals-flag	structural	start	0	SystemsIntegration	0.0001	CDL-F Flag Decal	ConformalDecals									0								3000			0
 conformaldecals-generic	structural	start	0	SystemsIntegration	0.0001	CDL-1 Generic Decal	ConformalDecals									0								3000			0
 conformaldecals-munar	structural	start	0	SystemsIntegration	0.0001	CDL-3 Surface Base Decal	ConformalDecals									0								3000			0
@@ -1289,7 +1287,10 @@ hc_navcam	structural	opt_vidicon	4	OpticsPhotonics	0.0001	NavCam	HullCameraVDS		
 hc_nightvision	structural	opt_vidicon	4	OpticsPhotonics	0.0001	Nightvisioncam	HullCameraVDS									0								1073.15			0
 hc_scicam	structural	opt_vidicon	4	OpticsPhotonics	0.0001	ScienceCam	HullCameraVDS									0								1073.15			0
 hc_wideangle	structural	opt_vidicon	4	OpticsPhotonics	0.0001	Wide Angle Cam	HullCameraVDS									0								1073.15			0
+kerbalism-lifesupportmodule	structural	life_openLoopECLSS	4	LifeSupport	0.0001	External ECLSS Module	KerbalismConfig									0								1073.15			0
 kerbpro	structural	opt_vidicon	4	OpticsPhotonics	0.0001	KerbPro	HullCameraVDS									0								1073.15			0
+landingLeg1	structural	str_sprungLanderLegs	4	StructuresMechanisms	0.0242	LT-1 Landing Struts	Squad									0								448			0
+landingLeg1-2	structural	str_sprungLanderLegs	4	StructuresMechanisms	0.057	LT-2 Landing Strut	Squad									0								448			0
 mumech_hullcam	structural	opt_vidicon	4	OpticsPhotonics	0.0001	Basic Hull Camera Deluxe	HullCameraVDS									0								1073.15			0
 noseCone	structural	aero_prefabNoseCones	4	Aerodynamics	0.02	Aerodynamic Nose Cone	Squad									0								448			0
 pointyNoseConeA	structural	aero_prefabNoseCones	4	Aerodynamics	0.04	Advanced Nose Cone - Type A	Squad									0								448			0
@@ -1306,10 +1307,12 @@ RO-RJ43	structural	av_ramjet	5	AirBreathing	2.7	RJ43 Ramjet	Squad	4000	5.66509	1
 RO-RJ47	structural	av_ramjet	5	AirBreathing	2.7	RJ47 Ramjet	Squad	4000	5.66509	150						0								673.15			0
 RO-RJ59	structural	av_ramjet	5	AirBreathing	2.7	RJ59 Ramjet	Squad	4000	5.66509	150						0								673.15			0
 ROC-LEMMESABDB	structural	str_equipmentBays	5	StructuresMechanisms	0.08623	Apollo LM Material Experiment Stowage Assembly	ROCapsules									0								448			0
+ROC-LEMTruckPlatformBDB	structural	str_equipmentBays	5	StructuresMechanisms	0.1	AES LM Truck Payload Platform	ROCapsules									0								448			0
+ROC-MercuryAirbrakeBDB	structural	int_mercuryCapsule	5	SystemsIntegration	0.008165	Mercury M-ASF Destabilizing Flap	ROCapsules									0								1144			0
 RO_ServiceBay_300	structural	str_equipmentBays	5	StructuresMechanisms	0.1	Service Bay [3m]	Squad									0								448			0
+RP0HumanRatedFlag	structural	int_mercuryCapsule	5	SystemsIntegration	0.00015	Human Rated Flag	Squad									0								1073.15			0
 ServiceBay_250_v2	structural	str_equipmentBays	5	StructuresMechanisms	0.24	Service Bay [4m]	Squad									0								448			0
 aje_ramjet	structural	av_ramjet	5	AirBreathing	0.8	CR2 Ramjet	Squad	9000	89.2252	700						0								673.15			0
-kerbalism-lifesupportmodule	structural	life_openLoopECLSS	5	LifeSupport	0.0001	External ECLSS Module	KerbalismConfig									0								1073.15			0
 restock-nosecone-1875-1	structural	str_equipmentBays	5	StructuresMechanisms	0.07	Protective Rocket Nose Mk18	ReStockPlus									0								1073.15			0
 AM_MLP_CrewElevatorAtlasUmbilical	structural	gs_crewGantries	6	GroundSupport	0.01	Crew Elevator Mercury-Atlas Umbilical	ModularLaunchPads									0								1073.15			0
 AM_MLP_CrewElevatorLargeExt	structural	gs_crewGantries	6	GroundSupport	0.05	Crew Elevator Large Side Extension	ModularLaunchPads									0								1073.15			0
@@ -1327,22 +1330,23 @@ AXE-GammaRaySpectrometer	structural	nuc_gammaRaySpectrometry	6	NuclearEngineerin
 AdvancedCanard	structural	aero_spaceplaneWing	6	Aerodynamics	0.08	Advanced Canard	Squad									0								448			0
 B9_Aero_Wing_Procedural_TypeB	structural	aero_spaceplaneWing	6	Aerodynamics	1e-05	B9 Procedural Control Surface (Spaceplane)	B9_Aerospace_ProceduralWings									0								1500			0
 B9_Aero_Wing_Procedural_TypeC	structural	aero_spaceplaneWing	6	Aerodynamics	1e-05	B9 Procedural Wing, All-Moving (Spaceplane)	B9_Aerospace_ProceduralWings									0								1500			0
-RO-AdvancedImager	structural	opt_refinedTV	6	OpticsPhotonics	0.028	VI04 - Advanced Visible Imaging Device	RP-1									0								1073.15			0
 RO-HRIRRadiometer	structural	opt_irRadiometry	6	OpticsPhotonics	0.0051	IR02 - High-Resolution Infrared Radiometer	RP-1									0								1073.15			0
+RO-IRIS	structural	opt_infraredInterferometry	6	OpticsPhotonics	0.013	IS01 - Infrared Interferometer Spectrometer (IRIS)	RP-1									0								1073.15			0
 RO-ImprovedTVCamera	structural	opt_refinedTV	6	OpticsPhotonics	0.04	VI03 - Improved TV Camera	RP-1									0								1073.15			0
+RO-MIMS	structural	mic_ionMassSpec	6	Microelectronics	0.0075	MS02 - Magnetic Ion-Mass Spectrometer (MIMS)	RP-1									0								1073.15			0
 RO-MK1Cargobay	structural	str_aircraftAirframe	6	StructuresMechanisms	0.207	Mk1 Cargo Bay	VenStockRevamp									0								800			0
 RO-RD012	structural	av_ramjetAdvanced	6	AirBreathing	2.7	RD-012 Ramjet	Squad	4000	5.66509	150						0								673.15			0
+RO-SNAP-3-RTGPo210	structural	nuc_isotopePower	6	ElectricalPower	0.00220033211616	SNAP-3A Series RTG (Po210)	VenStockRevamp									0								1144			0
 RO-TwoChannelIR	structural	opt_twoChannelIR	6	OpticsPhotonics	0.00375	IR03 - Two-Channel Infrared Radiometer	RP-1									0								1073.15			0
 RO-UVSpectrometer	structural	opt_uvSpectrometry	6	OpticsPhotonics	0.0055	IS02 - Ultraviolet Spectrometer	RP-1									0								1073.15			0
 ROC-DynaBayMoroz	structural	str_aircraftAirframe	6	StructuresMechanisms	0.4711	Dynasoar Cargo Bay	ROCapsules									0								1255			0
 ROC-DynaCrewTubeMoroz	structural	str_aircraftAirframe	6	StructuresMechanisms	0.15	Dyna Crew Tube	ROCapsules									0								698			0
-ROC-MercuryAirbrakeBDB	structural	int_mercuryCapsule	6	SystemsIntegration	0.008165	Mercury M-ASF Destabilizing Flap	ROCapsules									0								1144			0
 ROT-ModularCargoBay	structural	str_aircraftAirframe	6	StructuresMechanisms	0.1	Modular Cargo Bay	ROTanks									0								773.15			0
-RP0HumanRatedFlag	structural	int_mercuryCapsule	6	SystemsIntegration	0.00015	Human Rated Flag	Squad									0								1073.15			0
 SCANsat_Tracker	structural	opt_orbitalMapping	6	OpticsPhotonics	0.03	SCAN MapTraq®	SCANsat									0								1073.15			0
 SurveyScanner	structural	opt_orbitalMapping	6	OpticsPhotonics	0.2	M700 Survey Scanner	Squad									0								448			0
 mk2CargoBayL	structural	str_aircraftAirframe	6	StructuresMechanisms	1.75	Mk2 Cargo Bay CRG-08	Squad									0								448			0
 mk2CargoBayS	structural	str_aircraftAirframe	6	StructuresMechanisms	0.875	Mk2 Cargo Bay CRG-04	Squad									0								448			0
+AntennaRadioLab	structural	tel_antennaCatalog	7	Telecommunications	0.064	RA-100T Radio Telescope	RP-AXE									0								448			0
 HighGainAntenna	structural	tel_deployableHighGainDish	7	Telecommunications	0.00625	1.25m Retractable Parabolic Antenna	Squad									0								448			0
 HighGainAntenna5_v2	structural	tel_deployableHighGainDish	7	Telecommunications	0.001	HG-5 Retractable Parabolic Antenna	Squad									0								448			0
 KF-ScrewDrive	structural	rob_screwDrive	7	Robotics	1.0	KF Screw Drive	KerbalFoundries									0								1073.15			0
@@ -1353,11 +1357,8 @@ KF-TrackSurface	structural	rob_trackDrive	7	Robotics	0.05	KF Surface track	Kerba
 KF-TrackTiny	structural	rob_trackDrive	7	Robotics	0.08	KF RBI Tiny Track	KerbalFoundries									0								1073.15			0
 KF-WheelSmall	structural	rob_surfaceMobility	7	Robotics	0.02	KF Small Rover Wheel	KerbalFoundries									0								448			0
 KF-WheelTiny	structural	rob_surfaceMobility	7	Robotics	0.03	KF  Tiny Rover Wheel	KerbalFoundries									0								448			0
-RO-IRIS	structural	opt_infraredInterferometry	7	OpticsPhotonics	0.013	IS01 - Infrared Interferometer Spectrometer (IRIS)	RP-1									0								1073.15			0
-RO-MIMS	structural	mic_ionMassSpec	7	Microelectronics	0.0075	MS02 - Magnetic Ion-Mass Spectrometer (MIMS)	RP-1									0								1073.15			0
 RO-NIMS	structural	opt_multiSpectralImaging	7	OpticsPhotonics	0.0233	IS03 - Near Infrared Mapping Spectrometer (NIMS) and Ultraviolet Spectrometer (UVS)	RP-1									0								1073.15			0
-RO-QuadropoleMassSpectrometer	structural	mic_ionMassSpec	7	Microelectronics	0.0098	MS03 - Quadropole Mass Spectrometer	RP-1									0								1073.15			0
-RO-SNAP-3-RTGPo210	structural	nuc_isotopePower	7	ElectricalPower	0.00220033211616	SNAP-3A Series RTG (Po210)	VenStockRevamp									0								1144			0
+RO-QuadropoleMassSpectrometer	structural	mic_quadrupoleMassSpec	7	Microelectronics	0.0098	MS03 - Quadropole Mass Spectrometer	RP-1									0								1073.15			0
 ROC-D2Antenna	structural	tel_antennaCatalog	7	Telecommunications	0.005	D-2 High Gain Antenna	ROCapsules									0								448			0
 ROC-DynaElevonMoroz	structural	aero_liftingReentry	7	Aerodynamics	0.0783	Dynasoar Elevon	ROCapsules									0								1255			0
 ROC-DynaRudderMoroz	structural	aero_liftingReentry	7	Aerodynamics	0.0885	Dynasoar Vertical Stabilizer	ROCapsules									0								1255			0
@@ -1365,7 +1366,6 @@ ROC-GeminiAntenna	structural	tel_realAntennaTelemetry	7	Telecommunications	0.025
 ROC-GeminiFlightPackContSurf	structural	aero_liftingReentry	7	Aerodynamics	0.02	Gemini Flight Pack Control Surface	ROCapsules									0								1073.15			0
 ROC-GeminiWingContSurf	structural	aero_liftingReentry	7	Aerodynamics	0.02	Gemini Wing Control Surface	ROCapsules									0								1073.15			0
 ROC-LEMLegsBDB	structural	str_fixedLanderLegs	7	StructuresMechanisms	0.0567	Apollo LM Legs	ROCapsules									0								448			0
-ROC-LEMTruckPlatformBDB	structural	str_fixedLanderLegs	7	StructuresMechanisms	0.1	AES LM Truck Payload Platform	ROCapsules									0								448			0
 RelayAntenna100	structural	tel_antennaCatalog	7	Telecommunications	0.064	RA-100 Parabolic Antenna (4m)	Squad									0								448			0
 RelayAntenna3m	structural	tel_antennaCatalog	7	Telecommunications	0.036	3m Parabolic Antenna	Squad									0								448			0
 RelayAntenna5	structural	tel_antennaCatalog	7	Telecommunications	0.004	RA-2 Parabolic Antenna (1m)	Squad									0								448			0
@@ -1380,8 +1380,6 @@ hinge_03	structural	rob_hingeActuation	7	Robotics	0.1	G-12L Alligator Hinge	Squa
 hinge_03_s	structural	rob_hingeActuation	7	Robotics	0.08	G-01L Alligator Hinge	SquadExpansion									0								448			0
 hinge_04	structural	rob_hingeActuation	7	Robotics	0.4	G-32W Hinge	SquadExpansion									0								448			0
 kerbalism-fuelcell	structural	elec_fuelCellPower	7	ElectricalPower	0.0001	External Fuel Cell	KerbalismConfig									0								1073.15			0
-landingLeg1	structural	str_fixedLanderLegs	7	StructuresMechanisms	0.0242	LT-1 Landing Struts	Squad									0								448			0
-landingLeg1-2	structural	str_fixedLanderLegs	7	StructuresMechanisms	0.057	LT-2 Landing Strut	Squad									0								448			0
 luna9_airbag_cvr	structural	okb_lunaLanders	7	SystemsIntegration	0.01	Luna 9/13 Airbag Cover	RN_Soviet_Probes									0								773.15			0
 nfex-antenna-deploy-wv3-1	structural	tel_antennaCatalog	7	Telecommunications	0.00025	DR-3 Deployable High Gain Antenna	NearFutureExploration									0								448			0
 nfex-antenna-feeder-direct-1	structural	tel_antennaCatalog	7	Telecommunications	1.44e-05	F-DA Direct Antenna Feed	NearFutureExploration									0								448			0
@@ -1412,7 +1410,6 @@ scansat-multi-abi-1	structural	opt_multiSpectralImaging	7	OpticsPhotonics	0.338	
 scansat-multi-modis-1	structural	opt_multiSpectralImaging	7	OpticsPhotonics	0.228	MODIS Multi-Spectral Imager	SCANsat									0								1073.15			0
 scansat-multi-msi-1	structural	opt_multiSpectralImaging	7	OpticsPhotonics	0.275	MSI Multi-Spectral Imager	SCANsat									0								1073.15			0
 scansat-radar-poseidon-3b-1	structural	opt_radarAltimetry	7	OpticsPhotonics	0.006	Early Radar Altimeter	SCANsat									0								1073.15			0
-scansat-radar-seasat-1	structural	opt_radarAltimetry	7	OpticsPhotonics	0.328	Seasat SAR Radar Antenna	SCANsat									0								1073.15			0
 vela_high_gain_antenna_srf_1	structural	tel_deployableHighGainDish	7	Telecommunications	0.005	LK-700 High Gain Antenna	Tantares									0								1073.15			0
 vela_landing_leg_srf_1	structural	str_fixedLanderLegs	7	StructuresMechanisms	1.0	LK-700 Landing Leg	Tantares									0								1073.15			0
 vela_landing_leg_srf_2	structural	str_fixedLanderLegs	7	StructuresMechanisms	1.0	LK-700 Landing Leg	Tantares									0								1073.15			0
@@ -1498,7 +1495,9 @@ sspx-tube-1875-2	structural	str_stationStructures	8	StructuresMechanisms	1.6	3.3
 sspx-tube-1875-3	structural	str_stationStructures	8	StructuresMechanisms	0.9	3.38m Pressurized Crew Tube (Short)	StationPartsExpansionRedux									0								773.15			0
 telescopicLadder	structural	str_deployableAccessLadder	8	StructuresMechanisms	0.02	Kelus Mobility Enhancer	Squad									0								448			0
 wheelMed	structural	rob_heavyWheelDrive	8	Robotics	0.085	TR-2L Ruggedized Vehicular Wheel	Squad									0								448			0
+RO-AdvancedImager	structural	opt_digitalImaging	9	OpticsPhotonics	0.028	VI04 - Advanced Visible Imaging Device	RP-1									0								1073.15			0
 RO-DigitalCamera	structural	opt_digitalImaging	9	OpticsPhotonics	6.0	PH05 - Ultra Resolution Digital Imaging Camera	RP-1									0								1073.15			0
+RO-MagellanRadar	structural	opt_syntheticApertureRadar	9	OpticsPhotonics	0.196	RDRS Radar Antenna	SCANsat									0								1073.15			0
 RO-SWPlasmaAnalyzer	structural	mic_solarWindSpectrometry	9	Microelectronics	0.005	RPWS02 - Solar Wind Plasma Analyzer	RP-1									0								1073.15			0
 ROC-ApolloASTPAdapterBDB	structural	gnc_stationBerthing	9	GuidanceControl	1.832	Apollo-Soyuz Test Project Docking Module	ROCapsules									0								448			0
 ROC-ApolloASTPUVXBDB	structural	gnc_stationBerthing	9	GuidanceControl	0.1	Apollo-Soyuz Test Project UV Absorbtion Experiment	ROCapsules									0								448			0
@@ -1522,6 +1521,8 @@ nfex-antenna-reflector-large-1	structural	tel_largeApertureReflectors	9	Telecomm
 radPanelEdge	structural	th_pumpedLoopRadiators	9	Thermodynamics	0.0194	EATCS Radiator Panel (Fin)	Squad									0								448			0
 radPanelLg	structural	th_pumpedLoopRadiators	9	Thermodynamics	0.0288	EATCS Radiator Panel (Long)	Squad									0								448			0
 radPanelSm	structural	th_pumpedLoopRadiators	9	Thermodynamics	0.0144	EATCS Radiator Panel (Short)	Squad									0								448			0
+scansat-radar-seasat-1	structural	opt_syntheticApertureRadar	9	OpticsPhotonics	0.328	Seasat SAR Radar Antenna	SCANsat									0								1073.15			0
+scansat-sar-paz-1	structural	opt_syntheticApertureRadar	9	OpticsPhotonics	0.256	PAZ-SAR Radar Antenna	SCANsat									0								1073.15			0
 sensorAtmosphere	structural	mic_gasChromatographMassSpec	9	Microelectronics	0.019	MS04 - Gas Chromatograph-Mass Spectrometer (GC/MS)	Squad									0								1073.15			0
 sspx-adjusting-base-125-1	structural	str_externalTrussStructure	9	StructuresMechanisms	0.6	2.25m Adjustable Base Frame	StationPartsExpansionRedux									0								773.15			0
 sspx-adjusting-base-25-1	structural	str_externalTrussStructure	9	StructuresMechanisms	1.6	4.5m Adjustable Base Frame	StationPartsExpansionRedux									0								773.15			0
@@ -1558,7 +1559,6 @@ LiquefactionArray	structural	life_isru	10	LifeSupport	0.1	Liquefaction Array	Ker
 Liquifier	structural	life_isru	10	LifeSupport	0.05	Liquifier	KerbalismConfig									0								1073.15			0
 OrbitalScanner	structural	opt_orbitalResourceScanning	10	OpticsPhotonics	0.0329	M4435 Narrow-Band Scanner	Squad									0								448			0
 RO-HIRES	structural	opt_highResolutionImager	10	OpticsPhotonics	0.065	VI05 - High Resolution Imaging Device	RP-1									0								1073.15			0
-RO-MagellanRadar	structural	opt_syntheticApertureRadar	10	OpticsPhotonics	0.196	RDRS Radar Antenna	SCANsat									0								1073.15			0
 RO-PMIRR	structural	opt_thermalMappingSpectrometry	10	OpticsPhotonics	0.0402	IR04 - Pressure Modulated Infrared Radiometer (PMIRR)	RP-1									0								1073.15			0
 RO-RPWS	structural	mic_dipoleWaveSpectrometry	10	Microelectronics	0.0068	RPWS03 - Radio and Plasma Wave Science (RPWS)	RP-1									0								1073.15			0
 RO-VIMS	structural	opt_thermalMappingSpectrometry	10	OpticsPhotonics	0.0557	IS04 - Advanced Infrared Mapping Spectrometer (AIMS)	RP-1									0								1073.15			0
@@ -1584,7 +1584,6 @@ rn_magellan_scanner	structural	jpl_shuttleFlagships	10	SystemsIntegration	0.006	
 scansat-resources-crism-1	structural	opt_hyperspectralImaging	10	OpticsPhotonics	0.0329	CRISM Multi-Spectral Resource Scanner	SCANsat									0								1073.15			0
 scansat-resources-hyperion-1	structural	opt_hyperspectralImaging	10	OpticsPhotonics	0.049	Hyperion Multi-Spectral Resource Scanner	SCANsat									0								1073.15			0
 scansat-resources-mise-1	structural	opt_hyperspectralImaging	10	OpticsPhotonics	0.05	MISE Multi-Spectral Resource Scanner	SCANsat									0								1073.15			0
-scansat-sar-paz-1	structural	opt_syntheticApertureRadar	10	OpticsPhotonics	0.256	PAZ-SAR Radar Antenna	SCANsat									0								1073.15			0
 sspx-adapter-375-5-1	structural	str_stationMountingBases	10	StructuresMechanisms	4.253	Station Conical Adapter [6.75m to 9m]	StationPartsExpansionRedux									0								773.15			0
 sspx-adapter-375-5-2	structural	str_stationMountingBases	10	StructuresMechanisms	2.041	Station Flat Adapter [6.75m to 9m]	StationPartsExpansionRedux									0								773.15			0
 sspx-adjusting-base-375-1	structural	str_stationMountingBases	10	StructuresMechanisms	2.4	6.75m Adjustable Base Frame	StationPartsExpansionRedux									0								773.15			0
@@ -1673,6 +1672,7 @@ ScienceBoxUpgrade	structural				0.05	Hard Drive Upgrade	Squad									0								1
 flag	structural				0.0		Squad									0								1073.15			0
 RO-B9ProcWing-Early	tank	start	0	SystemsIntegration	1e-05	B9 Procedural Wing (Early)	B9_Aerospace_ProceduralWings									0								415			0
 RO-RFTank-Separate	tank	start	0	SystemsIntegration	1.0	Procedural Tank (Conventional Structure)	ProceduralParts									0								773.15			0
+evaJetpack	tank	start	0	SystemsIntegration	0.076	EVA Jetpack	Squad									0								448			0
 CircularIntake	tank	aero_subsonicWing	1	Aerodynamics	0.02	Pitot Intake	Squad									0								448			0
 IntakeRadialLong	tank	aero_subsonicWing	1	Aerodynamics	0.114	Adjustable Ramp Intake (Radial)	Squad									0								600			0
 LRadialAirIntake	tank	aero_subsonicWing	1	Aerodynamics	0.01	XM-C200 Radial Pitot Intake	SXT									0								448			0
@@ -1722,10 +1722,12 @@ LFUELM3	tank	str_serviceModuleTank	4	StructuresMechanisms	6.0	PPD-SM1600 Service
 LSVCM3	tank	str_serviceModuleTank	4	StructuresMechanisms	6.0	PPD-SM400 Service Module	SXT									0								448			0
 LSmallFuelMod	tank	str_serviceModuleTank	4	StructuresMechanisms	2.0	PPD-SM555 Service Module	SXT									0								448			0
 RO-RFTank-SM	tank	str_serviceModuleTank	4	StructuresMechanisms	1.0	Procedural Tank (Service Module)	ProceduralParts									0								773.15			0
+ROC-LEMDescentBDB	tank	str_serviceModuleTank	4	StructuresMechanisms	0.42559	Apollo LM Descent Stage	ROCapsules								473.695	201600								448			0
 ROT-LanderTank-SM	tank	str_serviceModuleTank	4	StructuresMechanisms	1.0	Modular Landing Tank (Service Module)	ROTanks									0								773.15			0
 ROT-MiscTank-ServiceModule	tank	str_serviceModuleTank	4	StructuresMechanisms	1.0	Another Modular Tank (Service Module)	ROTanks									0								773.15			0
 ROT-Nose-ServiceModule	tank	str_serviceModuleTank	4	StructuresMechanisms	0.0	Modular Nose Tank (Service Module)	ROTanks									0								773.15			0
 ROT-ServiceModule	tank	str_serviceModuleTank	4	StructuresMechanisms	1.0	Modular Tank (Service Module)	ROTanks									0								773.15			0
+evaCylinder	tank	life_openLoopECLSS	4	LifeSupport	0.001	EVA Fuel Cylinders	Squad									0								448			0
 ramAirIntake	tank	aero_variableIntake	4	Aerodynamics	0.045	Adjustable Ramp Intake	Squad									0								600			0
 SXTSmallFuselage	tank	life_pressurisedCabin	5	LifeSupport	0.012	0.625m Fuselage (Pressurized)	SXT									0								600			0
 USRadialTanks	tank	str_equipmentBays	5	StructuresMechanisms	0.003	Universal Storage: Radial Tank	UniversalStorage2									0								1073.15			0
@@ -1737,11 +1739,8 @@ RO-ProcTankSpaceplane	tank	str_aircraftAirframe	6	StructuresMechanisms	1.0	Tank 
 ROT-MiscTank-Shielded	tank	str_aircraftAirframe	6	StructuresMechanisms	1.0	Another Modular Tank (Shielded)	ROTanks									0								1473.15			0
 FuelCell	tank	elec_fuelCellPower	7	ElectricalPower	0.0001	Fuel Cell	Squad								500	50								448			0
 FuelCellArray	tank	elec_fuelCellPower	7	ElectricalPower	0.0001	Fuel Cell Array	Squad								3000	300								448			0
-ROC-LEMDescentBDB	tank	str_fixedLanderLegs	7	StructuresMechanisms	0.42559	Apollo LM Descent Stage	ROCapsules								473.695	201600								448			0
 USFuelCellMedium	tank	elec_fuelCellPower	7	ElectricalPower	0.0001	Universal Storage: 1500W Fuel Cell	UniversalStorage2								3000	300								1073.15			0
 USFuelCellSmal	tank	elec_fuelCellPower	7	ElectricalPower	0.0001	Universal Storage: 1000W Fuel Cell	UniversalStorage2								3000	300								1073.15			0
-evaCylinder	tank	int_voskhodCabin	7	SystemsIntegration	0.001	EVA Fuel Cylinders	Squad									0								448			0
-evaJetpack	tank	int_voskhodCabin	7	SystemsIntegration	0.076	EVA Jetpack	Squad									0								448			0
 MK1IntakeFuselage	tank	str_heavyTransportAirframe	8	StructuresMechanisms	0.045	1.25m Fuselage (Diverterless Intake)	Squad									0								448			0
 RO-reactor-BES5	tank	nuc_fissionReactor	8	NuclearEngineering	1.057	BES-5 Nuclear Reactor	NearFutureElectrical									0								1073.15			0
 RO-reactor-snap10a	tank	nuc_fissionReactor	8	NuclearEngineering	0.409	NASA SNAP-10A Nuclear Reactor	NearFutureElectrical									0								1073.15			0
