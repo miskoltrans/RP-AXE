@@ -2744,6 +2744,29 @@ nodes:
     # NEW (2026-07): a third distinct locomotion mechanism (screw propulsion, real amphibious use —
     # carries KSPWheelWaterPropulsion), genuinely different from both wheels and tracks. Single-part king,
     # same precedent as rob_sequencedControl (controller1000, also a lone-part node in this same batch).
+  - id: rob_foldingRoverChassis
+    title: "Folding Rover Chassis"
+    discipline: Robotics
+    tier: 9
+    parents: [rob_surfaceMobility]
+    flavor: "A whole vehicle folded flat against the lander's flank, sprung open on the surface — four driven hubs, four steered wheels, its own batteries and its own relay dish. Nothing here turns a wheel that a wheel could not already turn; what is new is that the rover stows in the space a cargo bay can spare, then carries the crew past the horizon without losing the link home."
+    parts: [ROC-LEMRover]
+    # MOVED HERE 2026-08-26 (user call, "apollo LRV is on a weird node"): ROC-LEMRover was the last LM
+    # part still parked on fd_lunarSurfaceMobility (FluidDynamics T10) — a node of rocket engines whose
+    # own rename note calls it "a hand-flown hover rocket, not a rover". Ground truth (lesson 20): the
+    # part has no engine and no propellant. 4x KSPWheelMotor (one per hub) + 4x KSPWheelSteering,
+    # suspension/brakes x4, KSPWheelDeployment (folds against the LM flank), two KerbalSeats, 32800 EC
+    # of non-rechargeable silver-zinc, and two ModuleRealAntenna (LCRU S-band dish + VHF back to the
+    # LM), at 0.21 t. That is this lane's module set, so it scatters here like every other LM part
+    # already did (legs -> str_fixedLanderLegs, MESA -> str_equipmentBays, descent tank ->
+    # str_serviceModuleTank, RCS -> gnc_fixedRcsCatalog, SNAP-27 -> nuc_isotopePowerII).
+    # PARENT rob_surfaceMobility, not rob_heavyWheelDrive: 0.21 t on 0.36 m wheels is small-class, and
+    # the heavy node is explicitly "scaled up for a heavier chassis". NO crossover to the crewed-lunar
+    # lane — scatter-by-difficulty homes a part at its OWN bottleneck, not its donor vehicle's; gating
+    # a rover behind a lander would re-import mission bucketing (lesson 10).
+    # NODE-NESS: single-part king, same precedent as rob_screwDrive/rob_sequencedControl above. The
+    # breakthrough claim over a bare wheel is not the motor (same advancedMotors bucket as the whole
+    # lane) but that the vehicle stows folded, seats crew, and brings its own power and comms.
 
   - id: str_fuelCrossfeed
     title: "Inter-Tank Fuel Crossfeed"
@@ -2976,10 +2999,13 @@ nodes:
     tier: 10
     parents: [fd_deepThrottleLanding]
     flavor: "Once you are down, get around — a throttleable open-cockpit rocket to hop the surface, and the uprated descent engine of the longer, heavier missions that follow the first footprints."
-    parts: [ROC-LFVBDB, ROC-LEMRover]
+    parts: [ROC-LFVBDB]
     upgrades: [RFUpgrade_LMDE-J, RFUpgrade_RS-18]  # TR-201/RS-18 moved down from fd_deepThrottleLanding (own base parts LMDE/LMAE there), doctrine-4 fix 2026-07
-    # Thin now (LFV + the doctrine-4-displaced LMDE-J uprate); grows into the extended-surface-ops home
-    # (LRV rover / MESA) when non-engine parts are curated.
+    # Thin by design (LFV + the doctrine-4-displaced LMDE-J/RS-18 uprates), and it stays that way. The
+    # old note here promised this would "grow into the extended-surface-ops home (LRV rover / MESA)
+    # when non-engine parts are curated" — that intent predates the RENAME below and is now dead on both
+    # counts: the MESA went to str_equipmentBays (T5), and ROC-LEMRover to rob_foldingRoverChassis
+    # (2026-08-26). Engines only — a part with no thrust does not belong on a hop-rocket node.
     # RENAMED (2026-07, band-3 review #medium): "Mobility" named the outcome; the
     # real mechanism (per its own flavor) is thrust-vectored hopping, not driving — a hand-flown hover
     # rocket, not a rover.
