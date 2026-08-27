@@ -1217,3 +1217,86 @@ The run that closed §8's `@RESEARCH` question also settled this section. Three 
 All four of the new loud-fallback warnings stayed **silent**, and the running `AXE.dll` was confirmed
 to contain their strings — so that is four config readers proven to have found their data, not four
 checks that could not fire.
+
+## 15. Reputation was never linear — 2026-08-27: a capstone cost 619 reputation and reported a gain
+
+Every reputation figure in this document — §3's 146k career, §11's Channel 2 shape, the
+`requiredReputation` ladder, `tools/rep_budget.py` — was computed as if a contract paying *N*
+reputation adds *N* reputation. Stock does not do that, and the gap had been eating the save's
+reputation for the whole career.
+
+**What stock actually does.** `Reputation.AddReputation(r, reason)` does not add `r`:
+
+```
+float num = addReputation_granular(r);                 // balance moves HERE, on RAW r
+var q = new CurrencyModifierQuery(reason, 0f, 0f, r);  // strategies also see RAW r
+GameEvents.Modifiers.OnCurrencyModifierQuery.Fire(q);  // CurrencyConverter adds its deltas
+GameEvents.Modifiers.OnCurrencyModified.Fire(q);       // Funding/Reputation apply them
+```
+
+`addReputation_granular` walks the award **one point at a time**, re-evaluating
+`GameVariables.reputationAddition.Evaluate(rep / RepRange)` after each point. A large award therefore
+climbs its own damping curve and banks a fraction of itself; losses run through
+`reputationSubtraction` instead, which amplifies. Meanwhile `CurrencyConverter.OnEffectQuery` reads
+`qry.GetInput(Reputation)` — the **raw** award — and diverts a flat share of *that*. The two
+disagree, and the disagreement grows with payout size.
+
+**Measured, save default3 (`KSP.log`, 2026-08-27 14:10:34), Fundraising at commit 0.5:**
+
+```
+Awarding 1350 reputation to player for contract completion
+[CurrencyConverter for Fundraising Campaign]: 1046.25 Reputation taken, yields 147521.3 Funds
+Added 403.0052 (1350) reputation: 'ContractReward'.
+Contract (Second Generation Space Station): ...  Reputation  304  (-1,046)
+```
+
+Banked 403, charged 1046. The capstone **cost 619 reputation** and the UI called it a gain of 304.
+Reconciled to the decimal: from `Goto_2` (rep 376.591858) the only reputation events before the
+current save are a 276-award, three crew recoveries, and this one —
+`376.59 + 208.83 + 82.35 + 403.01 = 1070.78` in, `1241.45` taken, giving the save's **−170.67**.
+
+At ordinary contract sizes the same effect is a slow bleed rather than a cliff: at that reputation
+the addition curve read **0.79** and the subtraction curve **1.03** (both measured six seconds apart
+in the same log), so a 180-point contract banked 141.9 and was charged 143.9 — **net −2 per
+contract**. The break-even is `f_add / f_sub > share`; the save sat at `0.79 / 1.03 = 0.764` against
+a share of 0.775 and had been under it since roughly rep 340.
+
+**Fix: `Source/AXE/SpaceCenter/AxeReputationScale.cs`** replaces both curves with constant 1.0, so
+`ModifyReputationDelta` is the identity, `addReputation_granular(v) == v`, and a contract nets
+exactly `reward × (1 − share)`. Re-asserted every scene — GameVariables is a ScriptableObject
+CustomBarnKit also writes, and a correction applied once is a correction that stops existing.
+
+**Why not raise `Reputation.RepRange`**, which looks like the one-line fix. It is read in four
+places and one is load-bearing: `ContractSystem` calls `GetContractCounts(Reputation.UnitRep, ...)`,
+where `UnitRep = rep / RepRange`, to decide how many Trivial/Significant/Exceptional contracts to
+offer. Widening the band pins `UnitRep` near zero, the game concludes we are unknown, and it stops
+rolling the higher prestige tiers that Contract Configurator filters AXE's contracts on — most of
+the tree's contracts would never appear. Flattening the curves touches only `ModifyReputationDelta`.
+
+Accepted consequence: with no damping the balance can climb past `RepRange`. Nothing clamps it
+(`OnLoad` assigns `rep` directly; `SetReputation`'s clamp is only reachable from the debug console)
+and both consumers degrade safely — `GetContractCounts` runs its input through `Mathf.InverseLerp`,
+which saturates at "maximum fame", and `ReputationWidget`'s gauge pins full, which rep 1000 already
+did.
+
+**Guards.** `AxeEconomySelfTest` section 5 samples both curves across the band (including negative
+`t` — reputation goes below zero, and the subtraction curve governs the climb back) and fails if
+either is off 1.0 by more than 0.001. `tools/rep_budget.py` gained a granular break-even check: a
+payout can never carry the balance above `RepRange`, while the strategy's take is flat, so
+`take ≥ RepRange` is net-negative from any non-negative start — no curve-fitting required. At AXE's
+Normal preset that is **23 contract types at Administration L1 and 37 at L3**, worst
+`FirstCrewedMarsLanding` at a 6,000-point award. Run it with `--strict` as a gate.
+
+**Also corrected in `rep_budget.py`:** it modelled Channel 2's diverted share as the commitment
+factor itself and used CustomBarnKit's stock `0.25 / 0.6 / 1.0` caps. The share is
+`Lerp(minShare = 0.55, 1.0, f)` and the caps have been AXE's `0.5 / 0.75 / 1.0` since §11. The L3
+ceiling is unchanged at 22.9M — that row was always evaluated at `f = 1` — but L1 and L2 were
+understated, now **16.0M** and **19.3M**.
+
+**Still open:** Kerbalism charges kerbal death to reputation as
+`AddReputation(-100, (TransactionReasons)(-1))`. `CurrencyConverter.OnEffectQuery` gates on
+`(qry.reason & AffectReasons) == 0`, and `-1` has every bit set, so Fundraising fires on death
+penalties too — each death also destroys `share × 100 × rate` funds (≈10,900 at commit 0.5). That
+contradicts this file's "ONLY CONTRACT REPUTATION CONVERTS" and needs a Harmony prefix on
+`Kerbalism.Misc.Kill` passing `VesselLoss` instead. Not the cause of the −170 above; the deaths in
+that log were all reverted.

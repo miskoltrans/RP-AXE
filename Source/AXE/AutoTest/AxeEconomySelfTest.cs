@@ -70,6 +70,10 @@ namespace RPAxe
     ///      NOTE the L1 requirement is now 125 reputation, not negative. That is intended: at a 0.5
     ///      cap the lerp genuinely binds in the first era, and a fresh career commits lower until it
     ///      has the fame. Do not "fix" it back.
+    ///   5. REPUTATION IS LINEAR. GameVariables.reputationAddition/Subtraction must both evaluate to
+    ///      1.0 across the band. Otherwise a contract's award is damped on the way in while
+    ///      Fundraising's share is taken off the undamped RAW value, and a large contract nets
+    ///      NEGATIVE reputation. See AxeReputationScale for the measurement that found this.
     ///
     /// A clean run prints `OK` in each section. Anything else is a real defect.
     /// </summary>
@@ -89,6 +93,10 @@ namespace RPAxe
         private const float StockRequiredRepMax = 750f;
         // AxeFacilities.cfg @ADMINISTRATION strategyCommitRange, per level. Read live and compared.
         private static readonly float[] ExpectedCommitRange = { 0.5f, 0.75f, 1.0f };
+        // Reputation-curve linearity probe (AxeReputationScale). Negative t matters: reputation can
+        // and does go below zero, and the subtraction curve is what governs the climb back.
+        private static readonly float[] RepCurveSamples = { -1f, -0.5f, 0f, 0.25f, 0.5f, 0.75f, 1f };
+        private const float RepCurveTolerance = 0.001f;
 
         internal static string SelfTestReport()
         {
@@ -330,7 +338,45 @@ namespace RPAxe
                 : " | L3 NEEDS " + atL3.ToString("0") + " rep — the lerp is being widened again");
 
             sb.Append(" | ").Append(RateReport(fund));
+            sb.Append(" | ").Append(RepCurveReport());
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// (5) REPUTATION MUST BE LINEAR. Stock damps gains and amplifies losses through
+        /// GameVariables.reputationAddition/Subtraction, evaluated at rep/RepRange and re-evaluated
+        /// per single point inside Reputation.addReputation_granular — so a large award banks a
+        /// fraction of itself while CurrencyConverter takes a flat share of the RAW value. That cost
+        /// save default3 619 reputation on one capstone (see AxeReputationScale). Every number in
+        /// docs/ECONOMY.md §3 and tools/rep_budget.py assumes linearity, so assert it live rather
+        /// than assuming AxeReputationScale ran: it patches a ScriptableObject CustomBarnKit also
+        /// writes, and a silent revert is exactly the failure this section exists to catch.
+        /// </summary>
+        private static string RepCurveReport()
+        {
+            GameVariables gv = GameVariables.Instance;
+            if (gv == null) return "repcurve: GAMEVARIABLES NOT READY";
+            if (gv.reputationAddition == null || gv.reputationSubtraction == null)
+                return "repcurve: CURVES NULL";
+
+            // Sampled across the band, not at one point: a curve that is 1.0 at the origin and
+            // damping by mid-band would pass a single-sample check and still eat a capstone.
+            float worst = 0f;
+            string at = "";
+            foreach (float t in RepCurveSamples)
+            {
+                float add = gv.reputationAddition.Evaluate(t);
+                float sub = gv.reputationSubtraction.Evaluate(t);
+                float err = Mathf.Max(Mathf.Abs(add - 1f), Mathf.Abs(sub - 1f));
+                if (err > worst) { worst = err; at = t.ToString("0.##"); }
+            }
+
+            return worst <= RepCurveTolerance
+                ? "repcurve: linear OK"
+                : "repcurve: NOT LINEAR — off by " + worst.ToString("0.###") + " at t=" + at
+                  + " (add=" + gv.reputationAddition.Evaluate(0.5f).ToString("0.###")
+                  + " sub=" + gv.reputationSubtraction.Evaluate(0.5f).ToString("0.###")
+                  + ") — AxeReputationScale did not apply or was overwritten";
         }
 
         /// <summary>Fundraising's reputation-&gt;funds rate. minRate/maxRate are private on CurrencyConverter.</summary>
