@@ -77,7 +77,7 @@ land". The real pipeline is **`parking` -> `experimental` -> tree**, and *none o
 |---|---|
 | `parking` | the build fall-through. `AxePartPlacement.cfg` wildcards every part here, then overrides the placed ones onto their real nodes, so this is "whatever the tree did not place". Held for P2 reconsideration; most of it is expected to be sacked. |
 | `experimental` | the **shortlist promoted out of `parking`** -- parts under consideration for a real home. |
-| `us2_serviceSandbox` | the same idea for the Universal Storage set, organised together pending an axe-or-place decision. |
+| ~~`us2_serviceSandbox`~~ | RETIRED 2026-08-27. Was the same idea for the Universal Storage set, organised together pending an axe-or-place decision. Decided: 19 parts promoted (`str_wedgeRack` / `str_tankedServiceCore` / `str_largeServiceCore`, plus the three chemical plants onto `life_stationHabitation` and `life_bioregenerativeECLSS`), 18 deleted outright by `design/Parts/AxeCutParts.cfg`. |
 
 So a tier, a cost or a science payload on any of them means nothing yet, and **a part promoted to the
 shortlist must not start generating findings**. `tools/tier_balance.py` defines `SCAFFOLD` and the
@@ -345,10 +345,14 @@ panels (T7 is now TL4 rather than TL5). Every panel stays within the +/-1 tier b
 as tolerance, so nothing needs re-homing (user call).
 
 **NOT defects -- checked and dismissed:**
-- **`PFTech-Fairing` I-VI.** The pairs group *material generations*: T4 metal stringer (Al 0.135 ->
-  Mg 0.124), T9 fibreglass -> isogrid (0.074 -> 0.068), T12 composite -> advanced (0.042 -> 0.040).
-  Each node is one materials family with its own refinement, and the big steps (-40%, -38%) land on
-  the node boundaries. Deliberate.
+- **`PFTech-Fairing` I-VI.** *Superseded -- the pairs are gone; the ladder now runs one rung per node.*
+  The finding was right and the dismissal was not: "one materials family with its own refinement"
+  described the pairs I/II and III/IV accurately but V/VI not at all -- 1990s sandwich monocoque and
+  2010s automated layup are two generations and two mechanisms. Split out over three passes:
+  2026-07-29 (II -> `met_magnesiumAlloy`, IV -> `met_isogridShells`) and 2026-08-28
+  (V -> `cmp_monocoqueFairings` T11). Live homes: I `met_stiffenedFairings` T4, II `met_magnesiumAlloy` T6,
+  III `cmp_compositeFairingShells` T9, IV `met_isogridShells` T10, V `cmp_monocoqueFairings` T11,
+  VI `cmp_advancedCompositeFairings` T12. The big steps (-40%, -38%) each own a node now.
 - **`MLI.Upgrade` 2-5.** The upgrades' own text reads *"this is not a part you can use, it just
   symbolizes"* additional insulation layers. Pairing them makes a bigger single step; low impact.
 - **`RFTech-ComSat` / `RFTech-NavSat`.** Only two rungs exist (II, III). A 2-rung ladder spanning five

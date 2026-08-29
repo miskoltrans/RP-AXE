@@ -916,9 +916,7 @@ nfe-rtg-asrg-1	rtg	elec_gphsRTGGeneration	10	ElectricalPower	0.031999997512	NASA
 nfe-rtg-gphs-1	rtg	elec_gphsRTGGeneration	10	ElectricalPower	0.0558995776	GPHS-RTG	NearFutureElectrical						0.00536677	0.3		0								1144			0
 nfe-rtg-mmrtg-1	rtg	elec_gphsRTGGeneration	10	ElectricalPower	0.043599708	Multi-Mission RTG	NearFutureElectrical						0.00252295	0.11		0								1144			0
 USGooBayWedge	science	bio_cultures	1	LifeSupport	0.015	Biological Sample Capsule	UniversalStorage2									0								1073.15		13	0
-USThermoBaroWedge	science	us2_serviceSandbox	1	SystemsIntegration	0.002	Atmospheric Science Unit	UniversalStorage2									0								1073.15		4	0
 USMatBayWedge	science	life_crewedExperimentBay	7	LifeSupport	0.02	Crewed Experiment Bay	UniversalStorage2									0								1073.15		32	0
-USAccelGravWedge	science	gnc_orbitalGravimetry	8	GuidanceControl	0.0001	Orbital Science Unit	UniversalStorage2									0								1073.15		22	0
 AM_MLP_LaunchRailLarge	separator	gs_soundingStands	1	GroundSupport	4.0	Launch Rail 4 - Large Size	ModularLaunchPads									0								1073.15			0
 AM_MLP_LaunchRailMedium	separator	gs_soundingStands	1	GroundSupport	2.0	Launch Rail 3 - Medium Size	ModularLaunchPads									0								1073.15			0
 AM_MLP_LaunchRailMini	separator	gs_soundingStands	1	GroundSupport	1.0	Launch Rail 1 - Mini Size	ModularLaunchPads									0								1073.15			0
@@ -1344,6 +1342,10 @@ ROC-DynaCrewTubeMoroz	structural	str_aircraftAirframe	6	StructuresMechanisms	0.1
 ROT-ModularCargoBay	structural	str_aircraftAirframe	6	StructuresMechanisms	0.1	Modular Cargo Bay	ROTanks									0								773.15			0
 SCANsat_Tracker	structural	opt_orbitalMapping	6	OpticsPhotonics	0.03	SCAN MapTraq®	SCANsat									0								1073.15			0
 SurveyScanner	structural	opt_orbitalMapping	6	OpticsPhotonics	0.2	M700 Survey Scanner	Squad									0								448			0
+USAdaptorShroud0625	structural	str_wedgeRack	6	StructuresMechanisms	0.069	Universal Storage: Tapered fairing (1m to 2m)	UniversalStorage2									0								1073.15			0
+USCylindricalShroud0625	structural	str_wedgeRack	6	StructuresMechanisms	0.041	Universal Storage: Cylindrical fairing (1m)	UniversalStorage2									0								1073.15			0
+USCylindricalShroud125	structural	str_wedgeRack	6	StructuresMechanisms	0.082	Universal Storage: Cylindrical fairing (2m)	UniversalStorage2									0								1073.15			0
+USQuadcore	structural	str_wedgeRack	6	StructuresMechanisms	0.02	Universal Storage: Four bay service core (2m)	UniversalStorage2									0								1073.15			0
 mk2CargoBayL	structural	str_aircraftAirframe	6	StructuresMechanisms	1.75	Mk2 Cargo Bay CRG-08	Squad									0								448			0
 mk2CargoBayS	structural	str_aircraftAirframe	6	StructuresMechanisms	0.875	Mk2 Cargo Bay CRG-04	Squad									0								448			0
 AntennaRadioLab	structural	tel_antennaCatalog	7	Telecommunications	0.064	RA-100T Radio Telescope	RP-AXE									0								448			0
@@ -1370,6 +1372,10 @@ RelayAntenna100	structural	tel_antennaCatalog	7	Telecommunications	0.064	RA-100 
 RelayAntenna3m	structural	tel_antennaCatalog	7	Telecommunications	0.036	3m Parabolic Antenna	Squad									0								448			0
 RelayAntenna5	structural	tel_antennaCatalog	7	Telecommunications	0.004	RA-2 Parabolic Antenna (1m)	Squad									0								448			0
 RelayAntenna50	structural	tel_antennaCatalog	7	Telecommunications	0.016	RA-15 Parabolic Antenna (2m)	Squad									0								448			0
+USAdaptorShroud1250Soyuz	structural	str_tankedServiceCore	7	StructuresMechanisms	0.083	Universal Storage: Soyuz Fairing (1.25m to 1.5m)	UniversalStorage2									0								1073.15			0
+USAdaptorShroud1250Vostok	structural	str_tankedServiceCore	7	StructuresMechanisms	0.103	Universal Storage: Vostok Fairing (1.25m to 1.5m)	UniversalStorage2									0								1073.15			0
+USCylindricalShroud1500	structural	str_tankedServiceCore	7	StructuresMechanisms	0.096	Universal Storage: Cylindrical Fairing (1.5m)	UniversalStorage2									0								1073.15			0
+USPenticore	structural	str_tankedServiceCore	7	StructuresMechanisms	0.041	Universal Storage: Five bay service core (2.4m)	UniversalStorage2									0								1073.15			0
 controller1000	structural	rob_sequencedControl	7	Robotics	0.01	KAL-1000 Controller	SquadExpansion									0								448			0
 dish_deploy_S	structural	tel_deployableHighGainDish	7	Telecommunications	0.02	CA-A10 Folding Dish Antenna	CoatlAerospace									0								873.15			0
 dish_deploy_S2	structural	tel_deployableHighGainDish	7	Telecommunications	0.035	Mariner Mars High Gain Antenna (HGA)	CoatlAerospace									0								873.15			0
@@ -1462,6 +1468,15 @@ ROS-FoldingSolarPanel	structural	elec_refinedSolarSimulation	8	ElectricalPower	0
 ROS-HingedSolarPanel	structural	elec_refinedSolarSimulation	8	ElectricalPower	0.0	Hinged Solar Panel	ROSolar									0								448			0
 SMLadderUtility	structural	str_evaAccessLadder	8	StructuresMechanisms	0.003	MK I Mobility Enhancer	VenStockRevamp									0								448			0
 TOWER_SV	structural	gs_saturnPad	8	GroundSupport	3730.0	Saturn V Launch Tower	ROCapsules									0								5773.15			0
+USAdaptorShroud1250	structural	str_largeServiceCore	8	StructuresMechanisms	0.058	Universal Storage: Tapered Fairing (1.25m to 1.875m)	UniversalStorage2									0								1073.15			0
+USAdaptorShroud1500	structural	str_largeServiceCore	8	StructuresMechanisms	0.076	Universal Storage: Tapered fairing (2.4m to 3m)	UniversalStorage2									0								1073.15			0
+USAdaptorShroud1875	structural	str_largeServiceCore	8	StructuresMechanisms	0.124	Universal Storage: Tapered fairing (3m to 4m)	UniversalStorage2									0								1073.15			0
+USCylindricalShroud125ResizedTo1875-1	structural	str_largeServiceCore	8	StructuresMechanisms	0.16875	Universal Storage: Cylindrical fairing (1.875m) (payload variant)	UniversalStorage2									0								1073.15			0
+USCylindricalShroud1500ResizedTo1875-2	structural	str_largeServiceCore	8	StructuresMechanisms	0.123046875	Universal Storage: Cylindrical fairing (1.875m) (fuelable variant)	UniversalStorage2									0								1073.15			0
+USCylindricalShroud250	structural	str_largeServiceCore	8	StructuresMechanisms	0.171	Universal Storage: Cylindrical fairing (4m)	UniversalStorage2									0								1073.15			0
+USHexcore	structural	str_largeServiceCore	8	StructuresMechanisms	0.113	Universal Storage: Six bay service core (3m)	UniversalStorage2									0								1073.15			0
+USOctocore	structural	str_largeServiceCore	8	StructuresMechanisms	0.364	Universal Storage: Eight bay service core (4m)	UniversalStorage2									0								1073.15			0
+USWaterPurifier	structural	life_stationHabitation	8	LifeSupport	0.0001	Universal Storage: Life Support Module	UniversalStorage2									0								1073.15			0
 aquila_adapter_s1p5_1	structural	str_stationStructures	8	StructuresMechanisms	0.2	Kristall Crew Compartment Adapter	Tantares									0								1073.15			0
 ca_landv_orbiter_HGA	structural	int_surveyorOrbiter	8	SystemsIntegration	0.012	Surveyor Orbiter High Gain Antenna	CoatlAerospace									0								873.15			0
 ca_startrack	structural	gnc_reactionWheelAttitude	8	GuidanceControl	0.001	CA-ACS 'StarTrack' Attitude Control System	CoatlAerospace									0								873.15			0
@@ -1651,6 +1666,8 @@ SXTMTVGirderBasic	structural	str_strongbackTruss	11	StructuresMechanisms	0.53	St
 SXTMTVGirderOpen	structural	str_strongbackTruss	11	StructuresMechanisms	4.26	Strongback Truss (Open Long)	SXT									0								448			0
 SXTMTVGirderOpenMedium	structural	str_strongbackTruss	11	StructuresMechanisms	2.13	Strongback Truss (Open Medium)	SXT									0								448			0
 SXTMTVGirderOpenSmall	structural	str_strongbackTruss	11	StructuresMechanisms	1.065	Strongback Truss (Open Short)	SXT									0								448			0
+USElektron	structural	life_bioregenerativeECLSS	11	LifeSupport	0.0001	Universal Storage: Large Chemical Plant	UniversalStorage2									0								1073.15			0
+USSabatier	structural	life_bioregenerativeECLSS	11	LifeSupport	0.0001	Universal Storage: Chemical Plant	UniversalStorage2									0								1073.15			0
 aquila_experiment_rack_s1p5_1	structural	int_prirodaModule	11	SystemsIntegration	1.5	Priroda Experiment Platform	Tantares									0								1073.15			0
 sspx-cupola-greenhouse-125-1	structural	life_bioregenerativeECLSS	11	LifeSupport	1.093	2.25m Greenhouse Dome	StationPartsExpansionRedux									0								773.15			0
 sspx-extendable-tube-125-1	structural	life_inflatableHabitat	11	LifeSupport	1.06	2.25m Extendable Crew Tube	StationPartsExpansionRedux									0								773.15			0

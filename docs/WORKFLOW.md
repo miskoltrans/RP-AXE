@@ -154,9 +154,11 @@ If `dotnet` resolves the wrong toolchain, mirror RP-1's approach: it pins Roslyn
    python tools/check_liveness.py          # empty nodes, phantom modules, inert cfgs, dead tech gates
    python tools/check_settings_parity.py   # settings RP-1 owned that we never re-authored
    python tools/check_model_anims.py       # PAW buttons bound to animations the model doesn't have
+   python tools/check_solar_wear.py        # solar panels that silently never degrade
    ```
    `check_liveness.py` refuses to answer if the cache predates your edits, so a green run means
-   the verdict is about the build you just made. `rebuild-instance.ps1` runs both automatically.
+   the verdict is about the build you just made (`check_solar_wear.py` warns on the same test).
+   `rebuild-instance.ps1` runs all four automatically.
 5. **Read `Instance/KSP.log`** for anything the gates don't model. Grep it for:
    - `[ModuleManager]` patch counts / exceptions
    - `ContractConfigurator` parse errors (these tell you which custom `type =` failed to resolve)

@@ -304,11 +304,12 @@ def solar_rung(wkg):
 #   experimental       the shortlist PROMOTED out of parking -- parts under consideration for a real
 #                      home. Not "uncurated parts land here", which is what docs/RESTART.md's early
 #                      wording suggested and what this audit initially mis-read.
-#   us2_serviceSandbox the same idea for the Universal Storage set, organised together pending an
-#                      axe-or-place decision.
-# Tools must treat all three as invisible: a part promoted to the shortlist for testing must not
-# start generating findings. (Author, 2026-07-29.)
-SCAFFOLD = {"parking", "experimental", "us2_serviceSandbox"}
+#   (us2_serviceSandbox was a third until 2026-08-27 -- the same idea for the Universal Storage set,
+#    organised together pending an axe-or-place decision. That decision was taken: 19 parts promoted
+#    into the tree, 18 deleted by design/Parts/AxeCutParts.cfg, and the node retired.)
+# Tools must treat both as invisible: a part promoted to the shortlist for testing must not
+# start generating findings. (Author, 2026-07-29; updated 2026-08-27.)
+SCAFFOLD = {"parking", "experimental"}
 
 # ---------------------------------------------------------------- families
 def classify(m):

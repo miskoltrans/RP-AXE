@@ -119,19 +119,6 @@ nodes:
     # root node like parking/hire_JPL/hire_OKB, available immediately, gates nothing, isn't gated by
     # anything. Future uncurated/3rd-party additions belong here too; excluded from the deferred science-
     # budget/balance pass (P3) when that lands.
-  - id: us2_serviceSandbox
-    title: "Universal Storage Service Modules (Sandbox)"
-    discipline: SystemsIntegration
-    tier: 1
-    parents: []
-    flavor: "The full Universal Storage modular service-module kit — bay cores, swappable wedges for power, propellant and life-support consumables, and the Sabatier/Elektron plants that recycle them. A detached sandbox: unlock it to fold the whole system out in the editor and see how it fits before it earns a place in the tree."
-    parts: [USQuadcore, USPenticore, USHexcore, USOctocore, USDoubleProbeCore, USACDTiny, USACDSmall, USACD1500, USACDMedium, USACDLarge, USBatteryWedge, USFoodWedge, USWaterWedge, USOxygenWedge, USCarbonDioxideWedge, USGreyWaterWedge, USSolidWasteWedge, USHydrazineWedge, USHydrogenWedge, USAerozineWedge, USSabatier, USElektron, USWaterPurifier, USAdaptorShroud0625, USAdaptorShroud1250, USAdaptorShroud1250Soyuz, USAdaptorShroud1250Vostok, USAdaptorShroud1500, USAdaptorShroud1875, USCylindricalShroud0625, USCylindricalShroud125, USCylindricalShroud125ResizedTo1875-1, USCylindricalShroud1500, USCylindricalShroud1500ResizedTo1875-2, USCylindricalShroud250, USThermoBaroWedge]
-    # SANDBOX (2026-07): all 35 dropped UniversalStorage2 parts (cores + ECLSS/propellant/power wedges +
-    # chemical plants + shrouds), placed off-start for in-game inspection before deciding whether to promote
-    # US2 into the tree. The 10 US2 wedges RP-1 kept (fuel-cell/RTG/science) are ALREADY placed across the
-    # tree, but their mounting CORES were dropped -> this restores the full system so it can be evaluated
-    # whole. Deliberately NOT in curated-parts.tsv (on trial); if kept, formalize via build_manifest ADD and
-    # split into real nodes. Detached root like experimental/parking/hire_JPL: unlockable, gates nothing.
   - id: hire_JPL
     title: "Charter a Deep-Space Probe Lab (JPL)"
     discipline: SystemsIntegration
@@ -762,7 +749,8 @@ nodes:
     # Kerbalism SETUPs are `tech = start` and `start` already ships sensorBarometer + sensorThermometer
     # as standalone parts — and proceduralAvionics carries the same instrument menu, so packaging
     # thermo/baro on a sounding rocket was never gated on anything. The part moved to us2_serviceSandbox
-    # with the rest of the un-promoted US2 hardware (its mounting cores live there). The NODE stays: it
+    # with the rest of the un-promoted US2 hardware, and was DELETED outright 2026-08-27 when that trial
+    # was resolved (design/Parts/AxeCutParts.cfg). The NODE stays: it
     # roots the whole Microelectronics science lane (mic_massSpec + mic_magnetometer descend from it),
     # so it earns its place as progression, not as a part grant. Allow-listed in tools/check_liveness.py.
 
@@ -1467,6 +1455,48 @@ nodes:
   # nodes hold the ~50 uprate configs (upgrades ARE parts - home them, never defer); HARDWARE nodes
   # hold the base chambers, gated by lineage + their enabler. Homed by PROPELLANT, not the disc tag.
   # ---- PropellantChemistry: chemistry enablers + solids ----
+  - id: str_wedgeRack
+    title: "Modular Wedge Service Rack"
+    discipline: StructuresMechanisms
+    tier: 6
+    parents: [str_equipmentBays]
+    flavor: "Stop designing a service module and start assembling one. A central spine carries a ring of identical wedge bays, each taking whatever the mission needs -- a battery, a tank, an instrument -- behind a skin that peels away in flight. The spacecraft becomes a rack you fill, not a shell you cut holes in."
+    parts: [USQuadcore, USCylindricalShroud125, USAdaptorShroud0625, USCylindricalShroud0625]
+    # US2 PROMOTED OUT OF THE SANDBOX (2026-08-27). The four-bay 2m rack is the king: the bare
+    # architecture, structural spine only, no integral tankage (USCostSwitch/USMassSwitch, not
+    # USFuelSwitch -- that arrives with the tanked cores below). With it the two skins that fit it:
+    # the 2m straight can and the 1m->2m taper cone. USCylindricalShroud0625 is NOT a rack skin --
+    # at 1m there is no core to wrap; it is a standalone mini cargo can (USAnimateGeneric +
+    # ModuleCargoBay, no wedge nodes), homed here as the smallest member of the same family.
+    # NB the US2 "fairings" are service-module SKINS, not payload fairings -- they belong nowhere
+    # near aero_fairings/met_stiffenedFairings, which cover jettisonable launch shrouds.
+  - id: str_tankedServiceCore
+    title: "Tanked Service Core"
+    discipline: StructuresMechanisms
+    tier: 7
+    parents: [str_wedgeRack]
+    flavor: "The spine stops being dead weight. Fill it with hypergolics and the rack carries its own propellant; leave it empty and it becomes a pressurised tunnel a crew can pass through. The skins learn the same trick, holding fuel in the wall itself."
+    parts: [USPenticore, USCylindricalShroud1500, USAdaptorShroud1250Soyuz, USAdaptorShroud1250Vostok]
+    # The MECHANISM step, not a size step: USPenticore is the first core with USFuelSwitch, so the
+    # spine switches Structural / Aerozine50+NTO / UDMH+IRFNA-III / Hydrazine across four length
+    # settings, or becomes a crew transfer tunnel. Its skins do it too -- USCylindricalShroud1500 is
+    # the fuelable 2.4m can, and the Soyuz/Vostok cones (both 2m->2.4m) carry USFuelSwitch, with the
+    # Vostok adding four internal nodes and a radiator switch. A shaped-cone pair rather than a size
+    # rung, which is why they sit with the crewed-scale core.
+  - id: str_largeServiceCore
+    title: "Large-Diameter Service Core"
+    discipline: StructuresMechanisms
+    tier: 8
+    parents: [str_tankedServiceCore]
+    flavor: "Six bays, then eight, on a spine wide enough to serve a crewed spacecraft or a deep-space probe bus -- and the taper cones to mate any of them to the stage below."
+    parts: [USHexcore, USOctocore, USAdaptorShroud1250, USAdaptorShroud1500, USAdaptorShroud1875, USCylindricalShroud125ResizedTo1875-1, USCylindricalShroud1500ResizedTo1875-2, USCylindricalShroud250]
+    # SIZE CATALOG, deliberately fat (8) and deliberately ONE node: 6-bay 3m and 8-bay 4m add no
+    # mechanism over USPenticore -- same USFuelSwitch, same crew tunnel, more bays -- so splitting
+    # 3m from 4m would be a false fork. King = USHexcore (the 3m six-bay, the common service-module
+    # size); USOctocore is the 4m eight-bay. Skins: 3m and 4m straight cans (the two ResizedTo1875
+    # parts are US2's own +PART upscales, payload- and fuelable-variant) plus the 2->3m, 2.4->3m and
+    # 3->4m taper cones. All diameters are RO metres: RO applies rescaleFactor 1.6 to every US* part,
+    # so stock 0.625/1.25/1.5/1.875/2.5 read as 1/2/2.4/3/4m.
   - id: pc_akOxidiser
     title: "Inhibited Nitric-Acid Oxidiser"
     discipline: PropellantChemistry
@@ -2415,8 +2445,26 @@ nodes:
     discipline: SystemsIntegration
     tier: 8
     parents: [fd_continuousThrottleDescent, rob_linearActuation]
-    flavor: "The command core, low/high-gain antennas and a scissoring arm that reaches out to dig and scoop the ground beside the lander — the bus built around a vehicle that has to work once it stops moving, not just while it's flying."
-    parts: [ca_landv_core, ca_landv_omni, ca_landv_hga, RO-SurfaceSampleScoop]
+    flavor: "A command core and a pair of antennas — one omnidirectional, one steered and carrying the array — built for a vehicle that has to keep working after it stops moving. Everything aboard is sized for the minutes of descent and then for the days of standing still on someone else's ground."
+    parts: [ca_landv_core, ca_landv_omni, ca_landv_hga]
+  - id: mic_soilAnalysis
+    title: "In-Situ Soil Analysis"
+    discipline: Microelectronics
+    tier: 8
+    parents: [rob_linearActuation]
+    flavor: "Put the laboratory on the end of an arm. A scoop on a scissoring pantograph reaches past the footpads, digs a trench in ground no one has touched, and reads what it finds where it lies — density, cohesion, what the dust is actually made of — with the lander's own camera watching the soil answer. The first analysis of another world's surface that does not need the sample brought home."
+    parts: [RO-SurfaceSampleScoop]
+    # 2026-08-29: split out of int_surveyorLanderBus, which held the scoop as a 4th part beside the three
+    # ca_landv_* bus pieces. Two doctrines said no: a spacecraft SCATTERS across mechanism nodes rather than
+    # landing whole on one vehicle node (memory rp-axe-scatter-spacecraft-parts), and science instruments get
+    # their own nodes -- this was the only Science-category part in the entire SystemsIntegration lane.
+    # Practical effect: it carries the surfaceAnalysis experiment (landed, biome-masked), the ONLY landed
+    # in-situ science an uncrewed vehicle can do, and it was gated behind a throttleable descent engine and a
+    # whole probe bus it does not need. Same tier, so nothing gets cheaper or earlier -- it just stops being
+    # welded to one specific lander. Shape copied from mic_boomMagnetometry: an instrument node hung off the
+    # Robotics node that makes it deployable. Single parent on purpose -- the camera that reads the trench
+    # (opt_vidicon T4) is four tiers down and long since bought, so listing it would be lineage dressed as a
+    # gate (cf. the met_isogridShells note).
   - id: int_surveyorOrbiter
     title: "Lunar Orbiter Bus"
     discipline: SystemsIntegration
@@ -2577,7 +2625,7 @@ nodes:
     tier: 8
     parents: [gnc_threeAxisStabilizedBus]
     flavor: "A tracking fence can already tell you the world is not a sphere. Locating the heavy ground itself takes a bus that holds its attitude while it is watched, and enough passes over the same ground to separate the pull of the rock below from every other thing nudging the orbit — a gravity map fine enough to find the mass concentrations buried under the maria."
-    parts: [USAccelGravWedge, sensorGravimeter]
+    parts: [sensorGravimeter]
   - id: opt_infraredInterferometry
     title: "Infrared Interferometer Spectrometry"
     discipline: OpticsPhotonics
@@ -3711,8 +3759,16 @@ nodes:
     tier: 8
     parents: [life_openLoopECLSS]
     flavor: "A pressurised volume built for people to live in for weeks, not the hours a capsule allows — room to stand, sleep and work while a life-support loop keeps the air breathable. The core a space station grows around."
-    parts: [crewCabin, sspx-core-125-1, sspx-habitation-1875-2, SXTCrewCabSSP10, SXTCrewCabSSP20, ROC-GeminiLCMBDB]
+    parts: [crewCabin, sspx-core-125-1, sspx-habitation-1875-2, SXTCrewCabSSP10, SXTCrewCabSSP20, ROC-GeminiLCMBDB, USWaterPurifier]
     upgrades: [Lab-Upgrade2, AXE-US2-LifeSupport-Slots]
+    # USWaterPurifier ADDED 2026-08-27 (US2 sandbox promotion). A form-factor twin of
+    # kerbalism-lifesupportmodule ("External ECLSS Module") already at life_openLoopECLSS T4 -- same
+    # Configure menu (LiOH/KO2/vacuum scrubbers, N2/O2 pressure control, air pump, water recycler) --
+    # but 3 slots to its 1, and it adds a Waste Processor. Better, so it tiers UP rather than
+    # co-locating with its base (doctrine-4). T8 is where its own slot upgrade AXE-US2-LifeSupport-
+    # Slots and its Advanced Vacuum Scrubber SETUP already gate, so the part now lands where the
+    # design had already put its gates -- until now the upgrade was granted for a wedge parked
+    # off-start in us2_serviceSandbox and therefore unreachable.
     # King habitation module. The station's crewed volume; structural tubes/adapters live in str_stationStructures.
     # Upgrades = the two Kerbalism Configure-group upgrades whose UPGRADE blocks already gate here
     # (KerbalismLab/Framework-2-LabGroup.cfg ReconfigureTech; AxeKerbalismTechRemap improvedLifeSupport).
@@ -4220,14 +4276,32 @@ nodes:
     upgrades: [RFUpgrade_RS-68K, RFUpgrade_RD-120F]
     # LADDER PASS (2026-07-27): RS-68K is +6 s ispVac and +11 s ispSL over RS-68B at near-identical
     # thrust -- an expansion-ratio gain, i.e. a NOZZLE MATERIALS story, not a combustion one.
+  - id: cmp_monocoqueFairings
+    title: "Honeycomb-Core Monocoque Fairings"
+    discipline: CompositeMaterials
+    tier: 11
+    parents: [cmp_compositeFairingShells]
+    flavor: "Stop stiffening the skin and make the skin the structure. Bond composite face sheets either side of an aluminium honeycomb core and cure the shroud as one shell: the stringers come out entirely, and the fairing sheds better than a third of its mass in a single step — the largest jump this ladder ever makes."
+    upgrades: [PFTech-Fairing-V]
+    # PFTech-Fairing-V: min density 0.068 -> 0.042, the biggest step in the whole PF fairing ladder, and a
+    # different MECHANISM from the rungs under it -- I..IV are all stringer-stiffened skins differing only in
+    # what the skin and the stringers are milled or laid up from, while V drops the stringers for a sandwich
+    # monocoque. RO's own description dates it 1990s ("composite monocoque"); VI is 2010s.
   - id: cmp_advancedCompositeFairings
-    title: "High-Temperature Composite Fairings"
+    title: "Out-of-Autoclave Composite Fairings"
     discipline: CompositeMaterials
     tier: 12
-    parents: [cmp_compositeFairingShells]
-    flavor: "Cure the fairing from higher-temperature resins and out-of-autoclave layups — lighter shells that also take the aerothermal load of a faster ascent, and come off a production line instead of a hand-layup bench. The payload shroud grown into a manufactured part."
-    upgrades: [PFTech-Fairing-V, PFTech-Fairing-VI]
-    # Late composite-fairing tech-levels (materialsScienceLongTerm/Commercial), past the T9 composite node.
+    parents: [cmp_monocoqueFairings]
+    flavor: "Place the fibre with a machine and cure the shell in an oven instead of an autoclave, and the same monocoque stops being a bespoke pressure-vessel build. A little lighter again — but the real change is that a five-metre shroud now comes off a production line instead of a hand-layup bench."
+    upgrades: [PFTech-Fairing-VI]
+    # 2026-08-28: PFTech-Fairing-V split off to cmp_monocoqueFairings (T11) -- two rungs a generation apart
+    # (1990s / 2010s) on one node made the top of the fairing ladder a single purchase, and buried the one
+    # that actually matters (0.068 -> 0.042) behind the one that barely moves (0.042 -> 0.040). Same
+    # treatment as II/IV in 2026-07-29 and the MLI ladder on 2026-08-18.
+    # Retitled with it: "High-Temperature Composite Fairings" was flavour, not data -- nothing in
+    # PFTech-Fairing-VI is about temperature. Its description is "2010s advanced composite monocoque", i.e.
+    # a MANUFACTURING rung (AFP + out-of-autoclave cure), which is what the old flavor's own second half
+    # already described. cmp_compositeNozzleExtension (T14) still parents here, unchanged.
   - id: th_advancedMLI
     title: "Perforated Double-Aluminised Insulation"
     discipline: Thermodynamics
@@ -5693,8 +5767,17 @@ nodes:
     tier: 11
     parents: [life_modularHabitat, life_crewedExperimentBay]
     flavor: "Close the loop with living things: a greenhouse that grows food and scrubs carbon dioxide back into oxygen, turning the open-loop consumables chain toward a self-sustaining one. The first bioregenerative step for missions too long to resupply."
-    parts: [sspx-greenhouse-25-1, sspx-cupola-greenhouse-125-1]
+    parts: [sspx-greenhouse-25-1, sspx-cupola-greenhouse-125-1, USSabatier, USElektron]
     upgrades: [AXE-US2-ChemPlant-Slots]   # US2 chemical-plant +1 slot; = AxeKerbalismTechRemap longTermLifeSupport
+    # USSabatier + USElektron ADDED 2026-08-27 (US2 sandbox promotion), for the same reason: both are
+    # wedge-form-factor twins of kerbalism-chemicalplant at life_isru T10, and both are BETTER (2
+    # slots to its 1), so they tier up instead of co-locating. T11 is where AXE-US2-ChemPlant-Slots
+    # and their headline SETUPs -- Water Electrolysis, Waste Incinerator -- already gate. The two
+    # co-locate with each other on purpose: Elektron is the LARGE plant (capacity 4/12 vs 2/6), a
+    # size pair, not an uprate -- the same treatment USFuelCellSmal/USFuelCellMedium already get at
+    # elec_fuelCellPower. Note the processes ladder independently of the part: every Configure SETUP
+    # carries its own `tech =`, spread over life_openLoopECLSS/stationHabitation/convertedStageStation/
+    # isru/bioregenerativeECLSS, so the node grants the chassis and the menu fills in as tech lands.
   - id: life_largeGreenhouseDome
     title: "Large-Scale Greenhouse Dome"
     discipline: LifeSupport

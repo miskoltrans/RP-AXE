@@ -143,8 +143,16 @@ EXPANSION_MODS={"CoatlAerospace","CryoEngines","FarFutureTechnologies","HullCame
 
 US2_WEDGES={  # RP-1-authored, not present in ro_expanded
   "USGooBayWedge":"Biological Sample Capsule","USMatBayWedge":"Crewed Experiment Bay",
-  "USFluidSpectroWedge":"Mass Spectrometer Unit","USThermoBaroWedge":"Atmospheric Science Unit",
-  "USAccelGravWedge":"Orbital Science Unit"}
+  "USFluidSpectroWedge":"Mass Spectrometer Unit"}
+# CUT 2026-08-27 (US2 promotion pass), both formerly here:
+#   USAccelGravWedge "Orbital Science Unit" -- carried micrometeoriteDetect, RP0orbitalPurturbation1 and
+#     RP0cosmicRay1/2, ALL FOUR of which proceduralAvionics already carries on `start`; the dedicated
+#     instruments (RO-Micrometeorite, RO-GeigerMuller, RO-ScintillationCounter, sensorGravimeter) cover
+#     them too, so nothing was orphaned. Left gnc_orbitalGravimetry with sensorGravimeter alone.
+#   USThermoBaroWedge "Atmospheric Science Unit" -- already homeless: mic_atmoSounding was emptied
+#     2026-07-29 because both its experiments were covered elsewhere, and it fell to the sandbox.
+# Both are DELETED outright by design/Parts/AxeCutParts.cfg, not merely unplaced -- an uncurated part
+# falls through emit_placement_patch to `parking`, and `parking` is meant to stay empty.
 
 AXE_PARTS={  # authored BY AXE, so they exist in no upstream dump -- resolve them here or nowhere
   "AXE-GammaRaySpectrometer":"GR01 - Gamma-Ray Spectrometer",
@@ -158,6 +166,18 @@ AXE_PARTS={  # authored BY AXE, so they exist in no upstream dump -- resolve the
   "AntennaRadioLab":"RA-100T Radio Telescope"}
 
 ADD={  # our divergences (names; mod/title resolved from ro_expanded)
+  # UniversalStorage2 service-module system (19), promoted out of the us2_serviceSandbox trial node
+  # 2026-08-27. PARTLIST.md originally cut all 29 modular US2 parts as "-> procedural"; the sandbox
+  # existed to judge them in the editor, and the verdict was: keep the CORES, the SKINS and the three
+  # chemical plants; sack the ACDs, the bulk tank wedges, the battery and the avionics wedge (17 parts,
+  # deleted by design/Parts/AxeCutParts.cfg). The US2 shrouds are service-module skins, NOT payload
+  # fairings. Diameters are RO metres throughout (RO sets rescaleFactor 1.6 on every US* part).
+  "USQuadcore","USPenticore","USHexcore","USOctocore",
+  "USCylindricalShroud0625","USCylindricalShroud125","USCylindricalShroud1500","USCylindricalShroud250",
+  "USCylindricalShroud125ResizedTo1875-1","USCylindricalShroud1500ResizedTo1875-2",
+  "USAdaptorShroud0625","USAdaptorShroud1250","USAdaptorShroud1250Soyuz","USAdaptorShroud1250Vostok",
+  "USAdaptorShroud1500","USAdaptorShroud1875",
+  "USSabatier","USElektron","USWaterPurifier",
   # Tantares flagship (48)
   "aquarius_crew_s1p5_1","vela_landing_leg_srf_1","vela_landing_leg_srf_2","aquarius_heatshield_s1p5_1",
   "aquarius_drogue_parachute_s0_1","aquarius_parachute_s0p5_1","vela_high_gain_antenna_srf_1",

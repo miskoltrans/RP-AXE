@@ -64,8 +64,7 @@ def exempt(node):
     """True when the <=6 rule does not apply, with the reason."""
     if node["discipline"] == "GroundSupport":
         return "ground-support line"
-    if node["id"] in ("start", "parking", "experimental", "str_structuralHardware",
-                      "us2_serviceSandbox"):
+    if node["id"] in ("start", "parking", "experimental", "str_structuralHardware"):
         return "documented catch-all"
     if any(w in node["title"] for w in ("Catalog", "Prefabricated", "Stamped",
                                         "Interchangeable", "Sandbox")):

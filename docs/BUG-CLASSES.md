@@ -36,6 +36,7 @@ is a silent break.
 | **A5** Global setting that reverts to stock | RP-1 was the *only* source of a CustomBarnKit section or difficulty key; dropping RP-1 resurrected the stock value nobody chose. | the 7-item punch-list (`5c12181`, `4708e6c`, `25e2b80`, `7e3b58f`); 17 more found + decided 2026-07-29 | `check_settings_parity.py` |
 | **A6** Animation name with no clip | `animationName = X` where the part's `.mu` has no clip `X`. The module is **not** dropped — it keeps its PAW button over a null `anim`, so the failure is deferred to the moment a player presses it. | `ROC-VoskhodCapsule` "Extend Antenna" → NRE on click, found in flight 2026-08-13 (`AxeUpstreamPartFixes.cfg` 5) | `check_model_anims.py` |
 | **A7** Facility level above the ladder | A vendored `minLevel` written against RP-1's CustomBarnKit rung count, where AXE left the section at CBK's shorter default. Not a name that fails to resolve — a **number out of range** — but it fails the same way: closed, and silent. The contract is never *offered*, so there is nothing to inspect. | `first_EVA` asked AstronautComplex 4 against a 3-rung ladder, found 2026-08-13 (`AxeFirstEvaRequirements.cfg`) | `check_liveness.py` check F |
+| **A8** Opt-in mechanic whose node was never written | Nothing dangles here — a **switch that was never authored**. RO applies solar degradation only to a part carrying a `SolarConfig` node; a part without one is skipped by every patch in the pass and keeps stock's flat `{0,1}` `timeEfficCurve`, i.e. 100% output forever. The absence is indistinguishable from a young panel, and the part's description still advertises the mechanic because RO appends that sentence unconditionally. | 12 curated panels incl. `ROC-OrionSolar` (16 flying on a station, no wear in 484 days), found 2026-08-28 (`AxeUpstreamPartFixes.cfg` 7) | `check_solar_wear.py` |
 
 ### B. Semantic misread — the API does not mean what the field name says
 
@@ -111,10 +112,12 @@ The reason a bug in family A or B survives long enough to reach playtesting.
 | `tools/check_forks.py`, `check_ladder_collapse` (in `build_tree.py`) | tree-design invariants | repo only |
 | `tools/check_nonreentry.py` | reentry-rating coverage | repo only |
 | `tools/check_model_anims.py` | A6 | a booted instance + the `.mu` assets |
+| `tools/check_solar_wear.py` | A8 | a booted instance (`ConfigCache`) |
 
 `rebuild-instance.ps1` step 6 boots the instance with `-axe-autotest` and runs `check_liveness.py`
-+ `check_settings_parity.py` + `check_model_anims.py` against the cache that boot produced, so a
-rebuild that reaches the end is a rebuild somebody checked. `-NoVerify` opts out and says so loudly.
++ `check_settings_parity.py` + `check_model_anims.py` + `check_solar_wear.py` against the cache that
+boot produced, so a rebuild that reaches the end is a rebuild somebody checked. `-NoVerify` opts out
+and says so loudly.
 
 A6 is the first class here that a boot **cannot** surface on its own: the part compiles, loads, and
 works, and the one diagnostic line is a `[LOG]` emitted only when the part is first instantiated —
@@ -396,3 +399,81 @@ not hollow for granting no science. And be clear about the limit: this answers "
   `upgrades[0]`-is-dead note that `AxeFacilities.cfg` carries.~~ ✅ **Comment added 2026-07-29.**
   The numbers were always right (`docs/ECONOMY.md`: 11 levels, 10 purchases, 2,525,000); the
   warning was the only thing missing, on the one array in the repo most likely to be misread twice.
+
+---
+
+## Finding (2026-08-28) — twelve solar panels that never degrade · A8 · **medium** · ✅ FIXED
+
+Raised by a player question — "orion panels don't degrade, is this a bug?" — about `ROC-OrionSolar`,
+16 of which fly on KSS 1 Station in save `default3`, producing 44 kW that had not lost a watt in 484
+days. It is a family, not a part: **41 of the 131 `ModuleDeployableSolarPanel` parts in the merged
+cache carry no `timeEfficCurve` at all, 12 of them curated.**
+
+**Mechanism.** RO's whole solar model hangs off one optional node. `RO_SolarConfig.cfg` selects
+`@PART[*]:HAS[...,@SolarConfig]`; the node's era `level` expands into `kwm2`/`kgm2` and four `key*`
+lines, and those keys are written onto the panel module as its `timeEfficCurve`. That curve *is*
+degradation. A part with no `SolarConfig` is not degrading slowly — it is skipped by every patch in
+the pass, and both consumers then agree on "no wear, forever":
+
+- stock `ModuleDeployableSolarPanel:136-148` substitutes a flat `{0,1}` curve when the field is null
+  (evaluated in **days**);
+- Kerbalism's `SolarPanelFixer.StockPanel.GetTimeCurve()` reads that same MDSP curve and rescales it
+  to **hours**; with no curve it falls through to a single-key curve, its `Curve.length > 1` test
+  fails, and `wearFactor` pins at 1.0. The PAW's Wear row is only made `guiActive` when
+  `wearFactor < 1`, so the missing mechanic renders identically to a young panel.
+
+And the part still *claims* it: `RO_SolarConfig.cfg:159` appends "Solar Panels degrade, affecting the
+power output over time. Check this effect in the PAW." to **every** part with an MDSP, `SolarConfig`
+or not.
+
+**Why it is its own sub-class (A8).** Nothing dangles. There is no unresolved string, no missing
+class, no out-of-range number — the switch was simply never authored upstream, and its absence is
+indistinguishable from correct young-panel behaviour. No detector in this file could have seen it:
+the part compiles, loads, produces power, and matches its own description.
+
+**Root cause is upstream, and demonstrably an omission rather than a decision.** ROCapsules ships
+`SolarConfig` on its Apollo panels (`Apollo D2/D2Solar.cfg:80` level 2, `Apollo ETS/ApolloSolar.cfg:75`
+level 3) and omits it on Orion's, whose config is hand-guessed throughout (`//this is a total work of
+guessing` sits above its mass). The Coatl family is stronger still: `RO_CA_ProbesPlus_Electrical.cfg`
+**states the intended rung in a comment on each part** — "Level 2 solar array (~85 W/m2)" and so on —
+and then deletes `SolarConfig` wholesale for the whole family at `:396` ("We configure masses directly
+here"), so the annotated level is never applied to anything.
+
+**Fix** — `design/Parts/AxeUpstreamPartFixes.cfg` stanza 7, twelve parts. Each gets the `SolarConfig`
+node its own upstream comment or its tree node calls for, with `solarUseCharge = False` and no
+`solarUseMass`, so RO's `chargeRate` and mass patches never fire: **power and mass are unchanged, only
+the life curve is added**, and the tier-balance placement made on those numbers stays valid. Levels
+come from RO's own annotation where one exists, otherwise from the tree's clock (`solarTL(n)` sits at
+tier `n+3`, and a rung maps to an RO level by identical era and curve), capped so a catalog panel
+never gets better cells than the procedural rung the player holds at that node. For `ROC-OrionSolar`
+that cap (T9 → TL6 → level 3) agrees with both the W/kg fit and the tier audit's own reading, which is
+the cross-check that the rule is not inventing a ladder.
+
+Two things to know about it:
+
+- **It applies retroactively.** Kerbalism persists `launchUT` per panel, so a flying vessel takes its
+  accrued wear the moment the patch lands — KSS 1 drops ~22%, 44 kW → ~34 kW.
+- **It depends on a narrow ModuleManager pass window.** The node has to exist *after* the mod-family
+  `!SolarConfig` deletions (all in `:FOR[RealismOverhaul]`) and *before* RO's solar pass (the
+  `RealismOverhaul_SolarPanels` pseudo-mod, which sorts after every `RealismOverhaul` pass —
+  `PatchList` orders mod passes with an `InvariantCultureIgnoreCase` `SortedDictionary` and yields
+  BEFORE/FOR/AFTER per mod). `:AFTER[RealismOverhaul]` is the only window; the AXE default
+  `:FOR[RP-AXE]` is far too late. If upstream moves one of those deletions, the stanza stops working
+  silently, which is what the detector is for.
+
+**Detector** — `tools/check_solar_wear.py`, wired into `rebuild-instance.ps1`. It fails on any curated
+part with a solar module and no config-visible curve. `ModuleROSolar` is exempt and *verified* rather
+than assumed (ROLib `ModuleROSolar.ReloadTimeCurve()` rebuilds the curve at runtime from its rung).
+
+**One part left open, deliberately.** `nfs-panel-deploying-curved-375-1` is the thirteenth member of
+the family and cannot be fixed from config: its power comes from NearFutureSolar's
+`ModuleCurvedSolarPanel`, so there is no `timeEfficCurve` field for RO to write, and Kerbalism binds
+it to `SolarPanelFixer.NFSCurvedPanel`, which does not override `GetTimeCurve()`. Kerbalism's own
+`timeEfficCurve` KSPField on `SolarPanelFixer` (in hours) looks like a way in, but it is gated on a
+private, non-serialized `prefabDefinesTimeEfficCurve` assigned only in the LOADING scene, so config
+cannot guarantee it survives cloning to a part instance. Recorded as `REVIEWED_EXEMPT` in the
+detector with that reason; it needs a Kerbalism-side fix or a different part.
+
+The 29 uncurated parts in the same state (Mir/Zvezda/Spektr station panels, Juno, MAVEN, Odyssey,
+STEREO — all parked) are left alone: `--all` lists them, and any promotion into the tree will trip
+the gate on the way in.

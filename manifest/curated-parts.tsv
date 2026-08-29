@@ -1750,16 +1750,33 @@ Tantares	sargas_decoupler_s1p5_1	TKS VA Capsule Decoupler
 Tantares	vela_high_gain_antenna_srf_1	LK-700 High Gain Antenna
 Tantares	vela_landing_leg_srf_1	LK-700 Landing Leg
 Tantares	vela_landing_leg_srf_2	LK-700 Landing Leg
-UniversalStorage2	USAccelGravWedge	Orbital Science Unit
+UniversalStorage2	USAdaptorShroud0625	Universal Storage: Tapered fairing (1m to 2m)
+UniversalStorage2	USAdaptorShroud1250	Universal Storage: Tapered Fairing (1.25m to 1.875m)
+UniversalStorage2	USAdaptorShroud1250Soyuz	Universal Storage: Soyuz Fairing (1.25m to 1.5m)
+UniversalStorage2	USAdaptorShroud1250Vostok	Universal Storage: Vostok Fairing (1.25m to 1.5m)
+UniversalStorage2	USAdaptorShroud1500	Universal Storage: Tapered fairing (2.4m to 3m)
+UniversalStorage2	USAdaptorShroud1875	Universal Storage: Tapered fairing (3m to 4m)
+UniversalStorage2	USCylindricalShroud0625	Universal Storage: Cylindrical fairing (1m)
+UniversalStorage2	USCylindricalShroud125	Universal Storage: Cylindrical fairing (2m)
+UniversalStorage2	USCylindricalShroud125ResizedTo1875-1	Universal Storage: Cylindrical fairing (1.875m) (payload variant)
+UniversalStorage2	USCylindricalShroud1500	Universal Storage: Cylindrical Fairing (1.5m)
+UniversalStorage2	USCylindricalShroud1500ResizedTo1875-2	Universal Storage: Cylindrical fairing (1.875m) (fuelable variant)
+UniversalStorage2	USCylindricalShroud250	Universal Storage: Cylindrical fairing (4m)
+UniversalStorage2	USElektron	Universal Storage: Large Chemical Plant
 UniversalStorage2	USFluidSpectroWedge	Mass Spectrometer Unit
 UniversalStorage2	USFuelCellMedium	Universal Storage: 1500W Fuel Cell
 UniversalStorage2	USFuelCellSmal	Universal Storage: 1000W Fuel Cell
 UniversalStorage2	USGooBayWedge	Biological Sample Capsule
+UniversalStorage2	USHexcore	Universal Storage: Six bay service core (3m)
 UniversalStorage2	USMatBayWedge	Crewed Experiment Bay
+UniversalStorage2	USOctocore	Universal Storage: Eight bay service core (4m)
+UniversalStorage2	USPenticore	Universal Storage: Five bay service core (2.4m)
+UniversalStorage2	USQuadcore	Universal Storage: Four bay service core (2m)
 UniversalStorage2	USRTGWedge	Universal Storage: Multi-hundred Watt RTG
 UniversalStorage2	USRTGWedgeMM	Universal Storage: Multi-Mission RTG
 UniversalStorage2	USRadialTanks	Universal Storage: Radial Tank
-UniversalStorage2	USThermoBaroWedge	Atmospheric Science Unit
+UniversalStorage2	USSabatier	Universal Storage: Chemical Plant
+UniversalStorage2	USWaterPurifier	Universal Storage: Life Support Module
 VenStockRevamp	1x3SPanels	OX-2L 1x3 Photovoltaic Panels
 VenStockRevamp	1x3WPanels	OX-4M 2x3 Photovoltaic Panels
 VenStockRevamp	45DegreeRCS	RCS Quad, 45deg (275/445 N class)

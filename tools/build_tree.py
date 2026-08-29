@@ -323,11 +323,13 @@ def validate_design(disc, nodes, by):
             if any(p2 != p and reaches(p, p2) for p2 in ps):
                 warns.append(f"redundant (transitively-implied) edge: {p} -> {n['id']} "
                              f"(reaches it via another parent)")
-    # Intentional off-start roots: start/parking/experimental, the charter gates (hire_*), the MLP subtree
-    # (gs_soundingStands), and the US2 evaluation sandbox (us2_serviceSandbox) — each a standalone-but-
-    # startable line detached from the main tree by design.
+    # Intentional off-start roots: start/parking/experimental, the charter gates (hire_*) and the MLP
+    # subtree (gs_soundingStands) — each a standalone-but-startable line detached from the main tree by
+    # design. us2_serviceSandbox was a sixth until 2026-08-27, when the US2 trial was resolved: 19 parts
+    # promoted into str_wedgeRack/str_tankedServiceCore/str_largeServiceCore + the two ECLSS nodes, 18
+    # deleted by design/Parts/AxeCutParts.cfg. Nothing should be off-start-and-uncurated again.
     for r in roots:
-        if r not in ("start", "parking", "experimental", "gs_soundingStands", "us2_serviceSandbox") and not r.startswith("hire_"):
+        if r not in ("start", "parking", "experimental", "gs_soundingStands") and not r.startswith("hire_"):
             warns.append(f"extra root (no parents besides start): {r}")
     # MEMBERSHIP: a placed part must be in manifest/curated-parts.tsv. The manifest is the single
     # source of truth for what AXE ships (docs/PARTLIST.md); a part name that reaches nodes.yaml by
@@ -335,12 +337,11 @@ def validate_design(disc, nodes, by):
     # a mod that is not installed, in which case the node silently grants nothing. That is exactly
     # how five DMagic Orbital Science parts (dmUS2*) left three nodes empty and two thinned until
     # 2026-07-29. Placement was validated in every other respect; nobody asked if the part was ours.
-    # us2_serviceSandbox is the documented exception: it exists to hold uncurated parts on trial.
+    # There is NO exception any more: us2_serviceSandbox held uncurated parts on trial and was retired
+    # 2026-08-27 (its keeps are curated, its cuts deleted). Every placed part must be in the manifest.
     curated = set(load_part_titles())
     if curated:
         for n in nodes:
-            if n["id"] == "us2_serviceSandbox":
-                continue
             for p in n.get("parts") or []:
                 if p not in curated:
                     warns.append(f"placed part not in curated-parts.tsv: {p} on {n['id']}")

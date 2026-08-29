@@ -342,6 +342,11 @@ if ($NoVerify) {
             --cache (Join-Path $instFull 'GameData\ModuleManager.ConfigCache') `
             --gamedata (Join-Path $instFull 'GameData')
         if ($LASTEXITCODE -ne 0) { $gate = 1 }
+
+        Write-Host "`n  running tools\check_solar_wear.py"
+        & python (Join-Path $PSScriptRoot 'check_solar_wear.py') `
+            --cache (Join-Path $instFull 'GameData\ModuleManager.ConfigCache')
+        if ($LASTEXITCODE -ne 0) { $gate = 1 }
     } finally { Pop-Location }
     $global:LASTEXITCODE = 0
     if ($gate -ne 0) {

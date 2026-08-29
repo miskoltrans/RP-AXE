@@ -559,7 +559,7 @@ this (`RFTech-Tank-Sep-Al`). Anything already bought stays bought; nothing is pa
 ## 6. Open — AXE has no surface-composition science category
 
 Recorded 2026-07-29, when the `coatl_scienceSandbox` node was dropped. The node was a deliberate
-off-tree trial (like `us2_serviceSandbox`): unlock it, fly its one part, and decide whether
+off-tree trial (like the since-retired `us2_serviceSandbox`): unlock it, fly its one part, and decide whether
 surface-composition mapping should become a science category. It could never do that job — its only
 part, `ca_GRS`, is deleted by `seed/Science/CleanupParts/RemoveScienceParts.cfg:23`, so the node
 existed but granted nothing. Dropping it removed a node that was inert; it did not answer the
@@ -687,7 +687,9 @@ hand-maintained until those are restored.
 
 Deliberately empty, allow-listed in `tools/check_liveness.py`, rooting the Microelectronics science
 lane. Not to be filled later; the node's contribution is progression, and the measurement it names is
-already available at turn one. Its former part, `USThermoBaroWedge`, lives in `us2_serviceSandbox`.
+already available at turn one. Its former part, `USThermoBaroWedge`, was parked in `us2_serviceSandbox`
+and is DELETED as of 2026-08-27 (`design/Parts/AxeCutParts.cfg`) — the sandbox was resolved and a part
+whose every experiment is carried elsewhere had no home to be promoted to.
 
 **The wider lesson it exposed, still open — nodes that grant no NEW science.** Not one experiment on
 any of the five US2 science wedges is unique to it: every `experiment_id` is on 2–28 other parts, and
