@@ -1058,6 +1058,7 @@ SXTTinyprop	8.0	rp1	engine	0.26
 SXTVTOLturboFan	1048.0	rp1	engine	1.8
 SXTWaxWing	300.0	rp1	engine	0.05
 SXT_Jumo213A	20.0	rp1	engine	1.07
+SXTeFan	120.0	catmedian	engine	0.1
 SXTke111	30.0	rp1	crewpod	0.6
 SXTlaunchclamp1	1.0	rp1	ground	0.05
 SXTmk3Cockpit52	2064.0	rp1	crewpod	3.5
@@ -1608,7 +1609,7 @@ roverWheel3	250.0	rp1	gear	0.75
 rtg	3550.0	rp1	power	0.03769002992
 rtg-0625	3550.0	rp1	misc	0.031999997512
 rtgMini	300.0	rp1	power	0.002293789128
-sargas_decoupler_s1p5_1	346.54	catmedian	separator	0.15
+sargas_decoupler_s1p5_1	330.69	catmedian	separator	0.15
 sasModule	250.0	rp1	misc	0.05
 scansat-multi-abi-1	4000.0	rp1	science	0.338
 scansat-multi-modis-1	2000.0	rp1	science	0.228

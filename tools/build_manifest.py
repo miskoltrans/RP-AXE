@@ -213,6 +213,14 @@ ADD={  # our divergences (names; mod/title resolved from ro_expanded)
   "DFH-1","proceduralTankOre","RO-SaturnI-IU","restock-drone-core-375-1",
   "KF-ScrewDrive","KF-Skid","KF-TrackInverting","KF-TrackLong","KF-TrackMedium","KF-TrackMole","KF-TrackSimple",
   "KF-TrackSmall","KF-TrackSurface","KF-TrackTiny","KF-WheelTruck-Dual","KF-WheelTruck-Single",
+  # SXT DS-215 Electric Ducted Fan (2026-08-31). Un-parked, not newly discovered: it was live all along
+  # (RO tags it, so HardRemoveNonRO keeps it) but uncurated, so emit_placement_patch left it on `parking`.
+  # It is the only ELECTRIC propulsion part in the set -- ModuleEnginesAJEPropeller with useOxygen=false,
+  # 0.1 t, 16.3 hp, 14000 rpm -- and it ships a second RF config, DS215-Static (0.50 kN vs the cruise
+  # config's 0.25 kN), which is a hover prop. That makes it the one part here a rotorcraft can be built
+  # from: the Breaking Ground blades RO never configured are deleted by HardRemoveNonRO, and FAR gives
+  # no rotational aero to any other aerofoil, so nothing else spins for thrust.
+  "SXTeFan",
 }
 
 manifest={}

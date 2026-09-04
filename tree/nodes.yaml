@@ -650,7 +650,16 @@ nodes:
     tier: 4
     parents: [elec_transistor]
     flavor: "A brushless electric motor married to a solid-state controller that holds it at any commanded speed or angle — the first actuator a machine can move on its own. Nothing in an unmanned launcher spins one yet, but every arm, rover wheel, tracking mount and deployable to come turns on this."
-    parts: [rotor_01, rotor_01s]
+    parts: [rotor_01, rotor_01s, SXTeFan]
+    # SXTeFan (DS-215 Electric Ducted Fan) UN-PARKED here 2026-08-31. It was live but uncurated, so it
+    # sat on `parking`. Homed at its BOTTLENECK, which is this node's exact mechanism: the fan is
+    # ModuleEnginesAJEPropeller with useOxygen=false, 16.3 hp at 14000 rpm off ElectricCharge — what
+    # gates it is the brushless motor and its speed controller, not ducted-fan aerodynamics, so it is
+    # not an av_* engine even though it makes thrust. Also the only thing that makes this node's rotors
+    # do work: RO ships no config for the six Breaking Ground blades, so HardRemoveNonRO deletes them,
+    # and FAR models no rotational aero for any other aerofoil (it strips GeometryPartModule from those
+    # blades precisely so the stock blade lift model can run). Its DS215-Static RF config (0.50 kN vs
+    # 0.25 kN cruise) is a hover prop, so four of these is a buildable quadcopter.
   - id: gnc_rcs
     title: "Cold-Gas Reaction Control"
     discipline: GuidanceControl
