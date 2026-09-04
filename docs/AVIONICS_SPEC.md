@@ -178,7 +178,9 @@ Kerbalism's temperature is habitat/crew comfort (`per_capita`).
 
 ```
 Q = k · A · ( (T_min/T_set)⁴ − (1 − deficit) ),   clamped ≥ 0        [steady state]
-deficit = 1 − sunlit·(homeSMA/r)² − skyFrac·f_IR·(homeSMA/r_body)²,  clamped 0..1
+deficit_vac = 1 − sunlit·(homeSMA/r)² − skyFrac·f_IR·(homeSMA/r_body)²,  clamped 0..1
+deficit     = lerp( deficit_vac, 1 − (T_amb/T_set)⁴, coupling ),      clamped 0..1
+coupling    = 1 − stock densityThermalLerp(ρ)      (0 in vacuum, →1 in dense air)
 k = ε_eff · σ · T_set⁴     (σT⁴ = 418 W/m² at 293 K, so k = 418 × ε_eff)
 A = 0.04 · m_dry^(2/3)     (VESSEL dry mass, kg)
 ```
@@ -193,6 +195,18 @@ too big):
   spacecraft — Luna 1 at 361 kg → 2.0 m² (actual sphere ~2 m²), Voyager at 825 kg → 3.5 m² (actual bus
   ~4 m²). **This makes the load scale with the craft**, so one table can no longer cover the game; the two
   below bracket the range.
+- **The atmospheric term** (added 2026-08-31). The original model was a pure radiative balance with no
+  convection at all, so it billed heaters by insolation even inside dense air. Measured before the fix: a
+  rocket on the pad at night drew **58%** of a deep-space heater load in 288 K air, and a lander on the
+  737 K night side of Venus drew **42%**. `T_amb` is `body.GetTemperature(altitude)` and `coupling` reuses
+  stock's own `CalculateDensityThermalLerp` curve inverted, so AXE and `FlightIntegrator` grade an
+  atmosphere the same way. Writing the ambient case as an equivalent *deficit* leaves `StepThermal`, the
+  planner and background untouched, and `Q` passes through zero at exactly `T_amb == T_min` with no extra
+  clamp — the two terms cancel. Stock's mach shock-compression factor is deliberately dropped: it would tie
+  the heater budget to post-shock entry temperature, which the part thermal system already owns. Vacuum
+  cases are bit-identical (coupling is 0 above `atmosphereDepth`); Titan barely moves (75.2% → 74.3%,
+  correctly — it really is 95 K), while the pad, Venus surface and deep Saturn entry all go to 0%.
+
 - **The 273 K deadband** (`ModuleAxeAvionics.StepThermal`). The heater does not hold the 293 K setpoint —
   it does nothing until the bus would fall through the 273 K battery floor and then holds exactly that.
   So the ceiling is the loss at 273 K, `(273/293)⁴ = 0.754` of `k·A`, not `k·A`. The original table

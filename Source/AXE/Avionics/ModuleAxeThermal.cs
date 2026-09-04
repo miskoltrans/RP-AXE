@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPAxe
@@ -291,8 +291,8 @@ namespace RPAxe
             // Sun", not "9,376 km from the Sun". See ModuleAxeAvionics.HeliocentricDistance.
             double sunDist = ModuleAxeAvionics.HeliocentricDistance(b);
             float deficit = simDeepSpace
-                ? ModuleAxeAvionics.ThermalDeficit(sunDist, 1d, null, 0d, bodyIrFraction)
-                : ModuleAxeAvionics.ThermalDeficit(sunDist, 1d, b, b.Radius * 1.1d, bodyIrFraction);
+                ? ModuleAxeAvionics.ThermalDeficit(sunDist, 1d, null, 0d, bodyIrFraction, setpointK)
+                : ModuleAxeAvionics.ThermalDeficit(sunDist, 1d, b, b.Radius * 1.1d, bodyIrFraction, setpointK);
 
             double t = 0d;   // steady state, not a live craft's history
             simWatts = ModuleAxeAvionics.StepThermal(deficit, simArea, thermalK, 1d,
@@ -319,7 +319,7 @@ namespace RPAxe
                 return;
             }
 
-            float deficit = ModuleAxeAvionics.VesselDeficit(vessel, bodyIrFraction);
+            float deficit = ModuleAxeAvionics.VesselDeficit(vessel, bodyIrFraction, setpointK);
             // Area from DRY mass (skin does not shrink as tanks drain); capacity from TOTAL mass
             // (propellant genuinely stores heat, and it is what makes an ascending stack thermally inert).
             thermalWatts = ModuleAxeAvionics.StepThermal(deficit, thermalArea, thermalK,
@@ -355,7 +355,7 @@ namespace RPAxe
                 // and will read lower whenever thermal mass is carrying the craft through a short eclipse.
                 double bodyDist = body != null ? body.Radius * 1.1d : 0d;
                 float deficit = ModuleAxeAvionics.ThermalDeficit(sunDist, sunlight < 0.5d ? 0d : 1d,
-                                                                 body, bodyDist, bodyIrFraction);
+                                                                 body, bodyDist, bodyIrFraction, setpointK);
                 double t = 0d;   // fresh: steady state, not the live craft's history
                 watts = ModuleAxeAvionics.StepThermal(deficit, area, thermalK,
                                                       1d, specificHeat, setpointK, minK, double.MaxValue / 4d, ref t);
@@ -406,7 +406,7 @@ namespace RPAxe
             // from days to seconds and drops a craft onto the heater floor the instant it unloads. The
             // accessor branches on `loaded` and sums the proto snapshots, which is what the loaded path
             // gets too, so the two integrations stay the same physics.
-            float w = ModuleAxeAvionics.StepThermal(ModuleAxeAvionics.VesselDeficit(v, irf), area, k,
+            float w = ModuleAxeAvionics.StepThermal(ModuleAxeAvionics.VesselDeficit(v, irf, tSet), area, k,
                 v != null ? v.GetTotalMass() * 1000d : 1000d, sh, tSet, tMin, elapsed_s, ref temp);
 
             // Write the evolved temperature back, or an unloaded craft would never actually cool.

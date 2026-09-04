@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -1162,9 +1162,24 @@ namespace RPAxe
         /// The body term is why an eclipse in LEO is NOT as cold as Neptune. Earth keeps radiating IR and
         /// bouncing albedo at a craft in its shadow, and at low altitude it fills half the sky. Without it,
         /// a 35-minute LEO eclipse would cost the same watts as interplanetary cruise, which is wrong.
+        ///
+        /// Then, if there is AIR, the result is blended toward ambient by <see cref="AtmosphericCoupling"/>.
+        /// A bus in a dense atmosphere does not sit at a radiative balance against the Sun at all -- it sits
+        /// at the temperature of the gas around it, and the sign of the heat flow is set by how cold that gas
+        /// is, not by insolation. Without this the model billed 58% of a deep-space heater load for a rocket
+        /// standing on the pad at night in 288 K air, and 42% for a lander on the 737 K night side of Venus.
+        ///
+        /// The ambient case is expressed as an equivalent DEFICIT so that everything downstream -- StepThermal,
+        /// the planner, background -- is untouched. StepThermal reads (1 − deficit) as (tEnv/tSet)^4, so
+        ///     deficitAmbient = 1 − (tAmbient/tSet)^4
+        /// reproduces ambient exactly, and the heater draw qMax·((tMin/tSet)^4 − (1−deficit)) passes through
+        /// zero at precisely tAmbient == tMin. No separate "warm enough" clamp is needed; it falls out.
+        ///
+        /// This bills HEATERS only. Air hotter than the setpoint just means no heater draw -- being cooked by
+        /// it is the stock part thermal system's business, not this budget's.
         /// </summary>
         public static float ThermalDeficit(double sunDist, double sunlitFraction, CelestialBody body,
-                                           double distFromBodyCentre, float irFrac)
+                                           double distFromBodyCentre, float irFrac, float setpointK)
         {
             if (Planetarium.fetch?.Home?.orbit == null) return 0f;
             double refR = Planetarium.fetch.Home.orbit.semiMajorAxis;
@@ -1186,7 +1201,54 @@ namespace RPAxe
             }
 
             double f = 1d - solar - bodyIr;
+
+            if (body != null && setpointK > 0f && distFromBodyCentre > 0d)
+            {
+                double altitude = distFromBodyCentre - body.Radius;
+                double coupling = AtmosphericCoupling(body, altitude);
+                if (coupling > 0d)
+                {
+                    double r = body.GetTemperature(altitude) / setpointK;
+                    double fAmbient = 1d - r * r * r * r;
+                    if (fAmbient < 0d) fAmbient = 0d; else if (fAmbient > 1d) fAmbient = 1d;
+                    f += (fAmbient - f) * coupling;
+                }
+            }
+
             return f <= 0d ? 0f : (f >= 1d ? 1f : (float)f);
+        }
+
+        /// <summary>
+        /// How strongly the bus is tied to the air around it: 0 in vacuum, 1 in a dense atmosphere.
+        ///
+        /// This is stock's own FlightIntegrator.CalculateDensityThermalLerp curve, INVERTED. KSP uses that
+        /// number to decide how much of the 4 K sky a part still sees; the same number answers "how much of
+        /// this environment is the air rather than the radiation field", which is the blend we want. Reusing
+        /// it means AXE and FlightIntegrator grade an atmosphere identically instead of drifting apart on two
+        /// independently hand-picked thresholds. The three branches are continuous at both joints (0.5 at
+        /// rho = 0.0625, 0.25 at rho = 0.25) -- do not "simplify" one without checking the other two.
+        ///
+        /// Stock's mach shock-compression term is deliberately DROPPED. It only ever raises the coupling, and
+        /// it would tie the heater budget to post-shock temperature during entry -- that is re-entry heating,
+        /// which the part thermal system already owns. Omitting it errs toward billing more, and it keeps this
+        /// a pure function of (body, altitude): mach is not available on an unloaded vessel or in the editor,
+        /// and flight, background and the planner MUST get the same answer here.
+        /// </summary>
+        public static double AtmosphericCoupling(CelestialBody body, double altitude)
+        {
+            if (body == null || !body.atmosphere) return 0d;
+            if (altitude < 0d) altitude = 0d;
+            if (altitude > body.atmosphereDepth) return 0d;
+
+            // Paired exactly as stock pairs them (atmDensityASL = GetDensity(GetPressure(0), GetTemperature(0))),
+            // so whatever units Kopernicus handed the curves, the two agree with each other.
+            double rho = body.GetDensity(body.GetPressure(altitude), body.GetTemperature(altitude));
+            if (!(rho > 0d)) return 0d;
+
+            double lerp = rho < 0.0625d ? 1d - System.Math.Sqrt(System.Math.Sqrt(rho))
+                        : rho < 0.25d   ? 0.75d - System.Math.Sqrt(rho)
+                                        : 0.0625d / rho;
+            return lerp <= 0d ? 1d : (lerp >= 1d ? 0d : 1d - lerp);
         }
 
         /// <summary>
@@ -1263,13 +1325,13 @@ namespace RPAxe
         /// tau is SHORT relative to the orbit, and a craft with a short tau is a light one whose absolute
         /// watts are small anyway. Where the error could be large in watts, tau is long and T barely moves.
         /// </summary>
-        public static float VesselDeficit(Vessel v, float irFrac)
+        public static float VesselDeficit(Vessel v, float irFrac, float setpointK)
         {
             if (v == null || Planetarium.fetch?.Sun == null) return 0f;
             Vector3d vp = v.GetWorldPos3D();
             double sunDist = (vp - Planetarium.fetch.Sun.position).magnitude;
             double bodyDist = v.mainBody != null ? (vp - v.mainBody.position).magnitude : 0d;
-            return ThermalDeficit(sunDist, InShadow(v) ? 0d : 1d, v.mainBody, bodyDist, irFrac);
+            return ThermalDeficit(sunDist, InShadow(v) ? 0d : 1d, v.mainBody, bodyDist, irFrac, setpointK);
         }
 
         /// <summary>
