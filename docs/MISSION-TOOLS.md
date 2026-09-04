@@ -45,8 +45,49 @@ until the flown B-plane target is hit → shoot again and print the result.
 | `ksptot.py` | client for KSPTOT Connect — live vessel state, no new plugin needed |
 | `launch.py` | launch sites, launch azimuth, and when a pad crosses an orbit plane |
 | `bridge.py` | client for the AXE bridge — queries, and the node/alarm writes |
+| `mga.py` | multi-gravity-assist sequence search: Lambert legs joined by v-infinity matching |
 | `plan.py` | the CLI |
-| `selftest.py` | 57 checks; run before trusting a number |
+| `selftest.py` | 64 checks; run before trusting a number |
+
+## `mga.py` — finding a trajectory that does not exist yet
+
+Everything else here *refines* a trajectory you already have. `mga.py` finds one from nothing:
+give it a body sequence and a date window per body and it scans every leg with Lambert, then runs
+a dynamic program over **pairs** of encounter dates — because a pair is exactly the state a flyby
+couples. The leg before it sets v-infinity in, the leg after sets v-infinity out, and the flyby
+itself can only rotate the vector, never lengthen it.
+
+```
+python mga.py Earth Jupiter Saturn Uranus Neptune     --win Earth   1977-07-15 1977-11-01 --step Earth   2      --win Jupiter 1979-01-15 1979-07-01 --step Jupiter 5      --win Saturn  1980-09-01 1981-06-01 --step Saturn  10     --win Uranus  1984-01-01 1985-06-01 --step Uranus  20     --win Neptune 1987-05-01 1988-02-01 --step Neptune 20     --cap Saturn 150000 --cap Uranus 100000 --max-c3 200
+```
+
+Three things it models that a chain of Lambert arcs does not:
+
+* **A flyby's turn angle is bounded.** `delta_max = asin(1/e_in) + asin(1/e_out)` with
+  `e = 1 + rp*vinf^2/mu`, and `rp` cannot go below the surface. Ask for more bend than that and the
+  sequence is not free, whatever the legs say. `--rp-min` / `--rp-min-body` set the floor in radii.
+* **v-infinity magnitude is conserved by an unpowered pass.** Any mismatch between the incoming and
+  outgoing legs is a real burn at periapsis, priced with Oberth at the `rp` the turn actually wants.
+* **`--cap BODY ALT_KM` carries the AXE flyby contracts' periapsis-ALTITUDE gate.** A gravity assist
+  that needs to pass at 10 Rj cannot also bank a 150,000 km Jupiter flyby, so the cap is reported per
+  body rather than silently assumed. This is what says which probe banks which contract.
+
+**Validation: handed only date grids for Earth, Venus and Mercury it recovered Mariner 10** — launch
+1973-11-03, Venus 1974-02-06 at 5,156 km altitude, Mercury 1974-04-01, C3 18.2 — from a blind scan,
+which is the real mission to within the grid step. That is the check to re-run after touching it.
+
+Things worth knowing before trusting an answer:
+
+* **The costs are for RANKING, not for flying.** They are heliocentric Lambert values taken at the
+  planet's CENTRE. Jupiter's SOI is 48.2 million km across, so the flyby really happens days from
+  where the arc puts it. The winner still goes through `maneuver.aim_through` / `patched.shoot`.
+* **A few tens of m/s at a flyby is grid resolution, not cost.** A truly ballistic solution sits
+  between the sampled dates; refine the grid before believing a non-zero number.
+* **The DP prunes to the best `--keep` states per arrival date, so it minimises total dV and nothing
+  else.** It will happily return a 15-year arc that is 50 m/s cheaper than a 10-year one. To trade
+  time against dV, narrow the final body's window and re-run — there is no `--max-span`.
+* `--by-arrival` groups the output by final-arrival date instead of by departure, which is only
+  useful when the destination window is wide.
 
 Older single-purpose scripts (`porkchop.py`, `jupiter_arrival.py`, `jovian_tour.py`,
 `link_budget.py`, `mass_budget.py`) still work and share `rss_ephem`.
@@ -452,7 +493,7 @@ Decompiled from the install's own `MechJeb2.dll` / `MechJebLib.dll` and `Assembl
 
 ## What `selftest` checks
 
-57 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
+64 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
 to 4e-12 over 400 random states, 37 circular orbits land exactly back on the start, energy
 holds to 6e-16 over 3,000 days, elements and the node basis round-trip, a Lambert arc really
 lands on its target position, the pad is exactly in the plane at every crossing reported, and

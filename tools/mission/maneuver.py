@@ -571,7 +571,7 @@ def scan_arrivals(system, body, r0, v0, ut0, target, arrivals, via=None, t_end=N
 # ---------------------------------------------------------------------------
 def cheapest_correction(system, body, r0, v0, ut0, target, t_arr, peR_want,
                         t_end=None, n_times=24, watch=None, verbose=False,
-                        max_dv=1000.0, diff_step=1e-2):
+                        max_dv=1000.0, diff_step=1e-2, b_dir=None):
     """Where along the coast is the correction cheapest, and how big is it?
 
     A correction gets geometrically cheaper the earlier you make it, and MechJeb
@@ -608,7 +608,7 @@ def cheapest_correction(system, body, r0, v0, ut0, target, t_arr, peR_want,
         b_at, r, v = coast.state(t)
         try:
             res = refine(system, b_at.name, r, v, t, target.name, t_end, peR_want,
-                         watch=watch, max_dv=max_dv, diff_step=diff_step)
+                         b_dir=b_dir, watch=watch, max_dv=max_dv, diff_step=diff_step)
         except Exception as exc:                       # noqa: BLE001 - report, do not hide
             if verbose:
                 print(f"  {t:,.0f}: {exc}")

@@ -480,6 +480,92 @@ def _direct_injection(system, body, r0, v0, ut0, target, tof_range, samples, arg
     return best
 
 
+def _realign_direct(system, body, target, t_dep, alt, inc, cands, args):
+    """Settle the parking plane against the arc it actually produces.
+
+    For a direct transfer the plane has to contain the target's position ON ARRIVAL, but
+    the arrival time is not known until the arc is searched and the arc depends on the
+    plane. Two or three passes settle it. Aligning once to a Hohmann guess is not enough:
+    the Moon moves 13 deg/day, so a 0.1 d error in the assumed time of flight leaves it
+    out of plane and the injection pays for it as a plane change.
+    """
+    hoh = _hohmann_days(system, body, target, r_from=body.radius + alt * 1e3)
+    lo, hi = args.tof if args.tof else [0.6 * hoh, 1.8 * hoh]
+    best = None
+    for _ in range(4):
+        r0, v0 = park_orbit(body, alt, inc, cands[0])
+        got = _direct_injection(system, body, r0, v0, t_dep, target,
+                                (lo, hi), args.samples, args)
+        if got is None:
+            break
+        if best is None or got[0] < best[0]:
+            best = (got[0], cands)
+        nxt = align_raan(inc, np.asarray(system.rel(target.name, got[2])[0], float))
+        if not nxt or abs((nxt[0] - cands[0] + 180.0) % 360.0 - 180.0) < 1e-3:
+            break
+        cands = nxt
+    return best[1] if best is not None else cands
+
+
+def _b_dir(args):
+    """B-plane aim direction from --bplane, or None to keep whatever the trajectory has.
+
+    `--peri` fixes only the MAGNITUDE of the miss vector, so it says how close you pass and
+    says nothing about which SIDE. Both solutions exist and the solver converges to whichever
+    is nearer the seed -- which for Earth->Saturn 1972 is the retrograde one, arriving at
+    i 158 deg. That silently breaks any tour of prograde moons and doubles an entry probe's
+    airspeed. In `astro.bplane`'s frame w.k = |s x k| * B_T/|B|, so B_T > 0 is prograde;
+    pure +/-T is also the minimum-inclination member of each branch.
+    """
+    want = getattr(args, "bplane", None)
+    if not want:
+        return None
+    return np.array([1.0, 0.0]) if want == "prograde" else np.array([-1.0, 0.0])
+
+
+def _arrival_epochs(system, body, target, t_dep, args):
+    """The arrival dates a departure search will consider, in one place.
+
+    Both the parking-plane alignment and the burn search have to walk the same list,
+    or the plane gets aligned to a transfer that is never flown.
+    """
+    if getattr(args, "arrive", None):
+        return [parse_date(args.arrive)]
+    hoh = _hohmann_days(system, body, target)
+    lo, hi = getattr(args, "tof", None) or [0.4 * hoh, 2.0 * hoh]
+    return [t_dep + d * DAY for d in np.arange(lo, hi, max((hi - lo) / 60.0, 0.05))]
+
+
+def _departure_direction(system, body, target, t_dep, direct, alt, args):
+    """Unit direction the parking orbit's plane has to contain, for the transfer FLOWN.
+
+    Aligning to a Hohmann time of flight instead is a silent, expensive error: Earth ->
+    Saturn's Hohmann is 2,204 d against the flown 1,500 d, which put the node 45 deg out
+    and turned a 7,506 m/s departure into 11,417 m/s while still calling itself coplanar.
+
+    Once the plane contains the asymptote the burn is monotonic in C3, so the cheapest
+    arrival is the one with the smallest v-infinity -- and THAT choice does not depend on
+    the parking orbit, which is what breaks the circularity between the two.
+    """
+    if direct:
+        tof = getattr(args, "tof", None)
+        days = (0.5 * (tof[0] + tof[1]) if tof
+                else _hohmann_days(system, body, target, r_from=body.radius + alt * 1e3))
+        u, _ = system.rel(target.name, t_dep + days * DAY)
+        return np.asarray(u, float)
+    best = None
+    for t_arr in _arrival_epochs(system, body, target, t_dep, args):
+        try:
+            vinf, _, _ = maneuver.vinf_for_transfer(system, body.name, target.name,
+                                                    t_dep, t_arr)
+        except Exception:
+            continue
+        m = float(np.linalg.norm(vinf))
+        if best is None or m < best[0]:
+            best = (m, vinf, t_arr)
+    return None if best is None else best[1]
+
+
 def cmd_depart(args):
     system, save = load(args)
     body, r0, v0, ut0, who, free_park = origin_state(system, save, args)
@@ -492,14 +578,10 @@ def cmd_depart(args):
     direct = (target.parent == body.name)
     if free_park is not None:
         alt, inc = free_park
-        if direct:
-            hoh = _hohmann_days(system, body, target, r_from=body.radius + alt * 1e3)
-            u, _ = system.rel(target.name, t_dep + hoh * DAY)
-        else:
-            hoh = _hohmann_days(system, body, target)
-            u, _, _ = maneuver.vinf_for_transfer(system, body.name, target.name,
-                                                 t_dep, t_dep + hoh * DAY)
-        cands = align_raan(inc, np.asarray(u))
+        u = _departure_direction(system, body, target, t_dep, direct, alt, args)
+        cands = align_raan(inc, u) if u is not None else []
+        if cands and direct:
+            cands = _realign_direct(system, body, target, t_dep, alt, inc, cands, args)
         if cands:
             args._raan_note = cands
             r0, v0 = park_orbit(body, alt, inc, cands[0])
@@ -539,12 +621,7 @@ def cmd_depart(args):
               + f", coast to burn {(ut_node - t_dep) / 60:,.1f} min")
     else:
         # pick an arrival
-        if args.arrive:
-            arrivals = [parse_date(args.arrive)]
-        else:
-            hoh = _hohmann_days(system, body, target)
-            lo, hi = args.tof if args.tof else [0.4 * hoh, 2.0 * hoh]
-            arrivals = [t_dep + d * DAY for d in np.arange(lo, hi, max((hi - lo) / 60.0, 0.05))]
+        arrivals = _arrival_epochs(system, body, target, t_dep, args)
         best = None
         for t_arr in arrivals:
             try:
@@ -580,6 +657,9 @@ def cmd_depart(args):
         if mag - ideal > 1.0:
             print(f"    {mag - ideal:,.0f} m/s of that is plane change -- a coplanar departure "
                   f"from this altitude would cost {ideal:,.0f} m/s.")
+            if getattr(args, "_raan_note", None):
+                print(f"    *** the RAAN was solved to make this coplanar and it did not: "
+                      f"the parking plane does not contain the asymptote. Do not fly this. ***")
 
     t_end = t_arr + args.horizon * DAY
     peR = parse_radius(system, target, args.peri, default_alt=None) if args.peri else None
@@ -593,7 +673,8 @@ def cmd_depart(args):
         print(f"\n  --- corrected to periapsis {peR / target.radius:.3f} "
               f"R{target.name[0].lower()} ({(peR - target.radius) / 1e3:,.0f} km altitude) ---")
         res = maneuver.refine(system, body.name, rn, vn + dv, ut_node, target.name,
-                              t_end, peR_want=peR, watch=[target.name] + list(args.via or []))
+                              t_end, peR_want=peR, b_dir=_b_dir(args),
+                              watch=[target.name] + list(args.via or []))
         node, _ = print_node(system, body, rn, vn, dv + res["dv"], ut_node,
                              now=(save.ut if save else None), label="BURN")
         args._burn = (ut_node, node)      # the refined burn supersedes the raw one
@@ -711,6 +792,7 @@ def cmd_correct_through(args, system, save, body, r0, v0, ut0, who):
               f"R{target.name[0].lower()} ---")
         try:
             res = maneuver.refine(system, body.name, r0, v0, ut0, target.name, t_end,
+                                  b_dir=_b_dir(args),
                                   peR_want=peR, watch=via + [target.name],
                                   max_nfev=args.max_nfev)
         except Exception as exc:                                    # noqa: BLE001
@@ -746,6 +828,7 @@ def cmd_correct(args):
           f"R{target.name[0].lower()} ({(peR - target.radius) / 1e3:,.0f} km altitude) ---")
     best, scan = maneuver.cheapest_correction(system, body.name, r0, v0, ut0, target.name,
                                               t_arr, peR, t_end=t_end,
+                                              b_dir=_b_dir(args),
                                               n_times=args.samples, watch=watch,
                                               verbose=args.verbose,
                                               max_dv=args.max_dv, diff_step=args.diff_step)
@@ -805,6 +888,7 @@ def cmd_flyby(args):
             t_arr = arr.get("ca_ut")
             best, scan = maneuver.cheapest_correction(system, body.name, r0, v0, ut0, fly.name,
                                                       t_arr, peR, t_end=t_end,
+                                                      b_dir=_b_dir(args),
                                                       n_times=args.samples, watch=watch,
                                                       max_dv=args.max_dv)
             if scan:
@@ -951,13 +1035,11 @@ def cmd_launch(args):
         target = system.body(args.target)
         t_dep = parse_date(args.depart) if args.depart else (save.ut if save else 0.0)
         direct = (target.parent == body.name)
-        if direct:
-            hoh = _hohmann_days(system, body, target, r_from=body.radius + args.alt * 1e3)
-            u, _ = system.rel(target.name, t_dep + hoh * DAY)
-        else:
-            hoh = _hohmann_days(system, body, target)
-            u, _, _ = maneuver.vinf_for_transfer(system, body.name, target.name,
-                                                 t_dep, t_dep + hoh * DAY)
+        # Same trap as cmd_depart: the plane has to contain the asymptote of the transfer
+        # actually flown, not of a Hohmann one. Pass --arrive/--tof to pin the arc.
+        u = _departure_direction(system, body, target, t_dep, direct, args.alt, args)
+        if u is None:
+            sys.exit(f"no transfer to {target.name} found from {fmt_ut(t_dep)}")
         cands = align_raan(inc, np.asarray(u))
         if not cands:
             sys.exit(f"inclination {inc:.2f} deg cannot contain the departure direction to "
@@ -965,6 +1047,9 @@ def cmd_launch(args):
         raan = cands[0]
         print(f"  departing to {target.name} on {fmt_ut(t_dep)}: the coplanar parking RAAN is "
               f"{cands[0]:.2f} deg (the other node is {cands[1]:.2f} deg)")
+        if not getattr(args, "arrive", None):
+            print(f"  (no --arrive given, so that plane is for the cheapest arrival in the "
+                  f"scanned range -- pass --arrive to match the arc `depart` is flying)")
     after = parse_date(args.after) if args.after else (save.ut if save else 0.0)
 
     print(f"  target plane: i {inc:.3f} deg, RAAN {raan:.3f} deg\n")
@@ -1355,6 +1440,11 @@ def main(argv=None):
     p.add_argument("--body", default="Earth", help="body being launched from")
     p.add_argument("--target", help="solve the plane that makes a departure to this body coplanar")
     p.add_argument("--depart", help="departure date, with --target")
+    p.add_argument("--arrive", help="arrival date, to pin the SAME arc `depart` is flying. "
+                                    "Without it the plane is solved for the cheapest arrival in "
+                                    "the scanned range, which is usually a different transfer.")
+    p.add_argument("--tof", nargs=2, type=float,
+                   help="time-of-flight range in days to search, with --target")
     p.add_argument("--inc", type=float, help="parking inclination, deg")
     p.add_argument("--park-inc", type=float, default=28.5,
                    help="inclination floor when --inc is not given (raised to the site's latitude)")
@@ -1385,6 +1475,10 @@ def main(argv=None):
     p.add_argument("--arrive", help="fixed arrival date")
     p.add_argument("--tof", nargs=2, type=float, help="time-of-flight range in days to search")
     p.add_argument("--peri", help="target arrival periapsis, e.g. 2.5Rj or 250km")
+    p.add_argument("--bplane", choices=["prograde", "retrograde"],
+                   help="which side of the target to pass. --peri fixes only how CLOSE you pass; "
+                        "without this the solver keeps whichever side it already has, which for "
+                        "Earth->Saturn 1972 is retrograde (i 158 deg) and breaks a moon tour.")
     p.add_argument("--samples", type=int, default=48,
                    help="phase samples around the parking orbit (direct transfers)")
     p.add_argument("--no-refine", action="store_true")
@@ -1401,6 +1495,10 @@ def main(argv=None):
     p.add_argument("--arrive", help="expected arrival date, to size the horizon "
                                     "(with --through, the arrival epoch to aim at)")
     p.add_argument("--peri", help="target periapsis, e.g. 2.5Rj or 250km (default 1.5r)")
+    p.add_argument("--bplane", choices=["prograde", "retrograde"],
+                   help="which side of the target to pass. --peri fixes only how CLOSE you pass; "
+                        "without this the solver keeps whichever side it already has, which for "
+                        "Earth->Saturn 1972 is retrograde (i 158 deg) and breaks a moon tour.")
     p.add_argument("--samples", type=int, default=12,
                    help="burn times to try; with --through, arrival epochs to scan")
     p.add_argument("--span", type=float, default=90.0,

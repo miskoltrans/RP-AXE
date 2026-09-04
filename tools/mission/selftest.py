@@ -9,6 +9,7 @@ node the game itself planned -- and those are the ones that catch the failures
 that stay self-consistent, which is every failure this project has actually had.
 """
 import configparser
+import datetime
 import math
 import os
 
@@ -266,6 +267,72 @@ def test_ejection(S):
     check("the ejection burn delivers the v-infinity it was asked for",
           worst_mag < 1.0 and worst_dir < 0.1,
           f"worst error {worst_mag:.3f} m/s and {worst_dir:.3f} deg, measured at SOI exit")
+
+
+def test_departure_plane(S):
+    """An auto-solved parking RAAN has to be coplanar with the transfer actually flown.
+
+    `cmd_depart` used to align the plane to a HOHMANN time of flight and ignore --arrive.
+    Earth->Saturn's Hohmann is 2,204 d against the flown 1,500 d, so the node came out
+    ~45 deg wrong: the tool printed "RAAN 89.38 deg puts the departure in-plane" and then
+    quoted 11,417 m/s, of which 3,911 was plane change, for a 7,506 m/s departure. Nothing
+    internal caught it because the burn really did deliver the v-infinity it was asked for
+    -- it was the PLANE that was wrong, and the tool was the only thing asserting otherwise.
+
+    Every case below is a real window whose DLA the parking inclination can hold; Jupiter's
+    1966 asymptote leaves at 39.3 deg, so it is flown from 45 deg rather than the Cape's.
+    """
+    from types import SimpleNamespace
+    import plan
+
+    alt = 185.0
+    worst, worst_case = 0.0, ""
+    cases = [("Saturn", "1972-08-17", "1976-09-25", 28.61),
+             ("Mars", "1971-05-26", "1971-12-27", 28.61),
+             ("Venus", "1973-11-08", "1974-04-12", 28.61),
+             ("Jupiter", "1966-10-03", "1968-11-06", 45.0)]
+    for target, dep, arr, inc in cases:
+        args = SimpleNamespace(arrive=arr, tof=None, samples=32)
+        body, t_dep = S.body("Earth"), plan.parse_date(dep)
+        u = plan._departure_direction(S, body, S.body(target), t_dep, False, alt, args)
+        cands = plan.align_raan(inc, u)
+        if not cands:
+            check(f"a coplanar node exists for Earth->{target}", False,
+                  f"none at i {inc} deg -- the window's DLA is steeper than the parking orbit")
+            continue
+        r0, v0 = plan.park_orbit(body, alt, inc, cands[0])
+        vinf, _, _ = maneuver.vinf_for_transfer(S, "Earth", target, t_dep, plan.parse_date(arr))
+        st = maneuver.single_impulse_hyperbolic_burn(body.mu, r0, v0, vinf)
+        rn, vn = astro.propagate(body.mu, r0, v0, st["dt"])
+        ideal = (math.sqrt(2 * body.mu / np.linalg.norm(rn) + float(vinf @ vinf))
+                 - float(np.linalg.norm(vn)))
+        excess = float(np.linalg.norm(st["dv"])) - ideal
+        if excess > worst:
+            worst, worst_case = excess, f"Earth->{target}"
+    check("an auto-solved parking RAAN is coplanar with the transfer flown",
+          worst < 1.0,
+          f"worst plane-change residue {worst:,.1f} m/s over {len(cases)} transfers"
+          + (f" ({worst_case})" if worst > 1.0 else ""))
+
+    # A direct transfer has the same failure with an extra turn of the screw: the aim point
+    # is the target's position ON ARRIVAL, so the plane depends on the time of flight and
+    # the time of flight depends on the plane. One Hohmann-guess pass left the Moon out of
+    # plane and cost 264 m/s; the alignment has to iterate against the arc it produces.
+    inc = 28.61
+    args = SimpleNamespace(arrive=None, tof=None, samples=32, depart=None)
+    body, moon = S.body("Earth"), S.body("Moon")
+    t_dep = ut_of(1972, 2, 8)
+    hoh = plan._hohmann_days(S, body, moon, r_from=body.radius + alt * 1e3)
+    span = (0.6 * hoh, 1.8 * hoh)
+    u = plan._departure_direction(S, body, moon, t_dep, True, alt, args)
+    cands = plan._realign_direct(S, body, moon, t_dep, alt, inc, plan.align_raan(inc, u), args)
+    r0, v0 = plan.park_orbit(body, alt, inc, cands[0])
+    got = plan._direct_injection(S, body, r0, v0, t_dep, moon, span, args.samples, args)
+    inj = astro.elements(body.mu, got[3], got[4] + got[5])
+    check("a direct transfer's plane is iterated against the arc it produces",
+          got is not None and abs(math.degrees(inj.inc) - inc) < 0.05 and got[0] < 3200.0,
+          f"TLI {got[0]:,.0f} m/s at i {math.degrees(inj.inc):.2f} deg "
+          f"(parking i {inc:.2f}; aligning once to the Hohmann guess cost 3,405)")
 
 
 def test_soi_detection(S):
@@ -687,6 +754,50 @@ def test_assist_targeting(S):
           maneuver.reachability(S, nom, "Venus") is None)
 
 
+def test_mga_sequence_search(S):
+    """The sequence search has to find a real mission it was never told about.
+
+    Mariner 10 is the fixture because the answer is public and the search gets nothing but
+    three body names and three date grids: no seed, no v-infinity, no arrival guess. If a
+    change to the turn-angle bound, the v-infinity match or the DP pruning quietly breaks
+    the thing, this is what notices -- an internally consistent search will still return
+    *something*, and only a known mission says whether it is the right something.
+    """
+    import mga
+    grids = [np.arange(ut_of(1973, 9, 1), ut_of(1973, 12, 15), 3 * 86400.0),
+             np.arange(ut_of(1974, 1, 1), ut_of(1974, 3, 15), 3 * 86400.0),
+             np.arange(ut_of(1974, 2, 15), ut_of(1974, 5, 15), 3 * 86400.0)]
+    seq = mga.Sequence(S, ["Earth", "Venus", "Mercury"], grids)
+    sols = seq.run(keep=40)
+    if not check("the sequence search returns a Venus-assisted Mercury mission", bool(sols)):
+        return
+    rows, total = seq.detail(sols[0][1])
+    dep = date_of(rows[0]["ut"]).date()
+    ven = date_of(rows[1]["ut"]).date()
+    mer = date_of(rows[2]["ut"]).date()
+    check("blind scan recovers Mariner 10's departure (1973-11-03)",
+          abs((dep - datetime.date(1973, 11, 3)).days) <= 3, str(dep))
+    check("and its Venus flyby (1974-02-05, 5,768 km altitude)",
+          abs((ven - datetime.date(1974, 2, 5)).days) <= 3
+          and abs(rows[1]["alt"] / 1e3 - 5768.0) < 2000.0,
+          f"{ven}, {rows[1]['alt'] / 1e3:,.0f} km altitude")
+    check("and its Mercury arrival (1974-03-29)",
+          abs((mer - datetime.date(1974, 3, 29)).days) <= 6, str(mer))
+    check("the assist is essentially free, as a gravity assist should be",
+          rows[1]["dv"] < 50.0, f"{rows[1]['dv']:.0f} m/s at Venus")
+
+    # The turn-angle bound is the one piece of physics a pure Lambert chain lacks: asking a
+    # body to bend v-infinity further than a surface-grazing pass can must cost real dV.
+    mu = S.bodies["Venus"].mu
+    rp = S.bodies["Venus"].radius * 1.05
+    vin = np.array([8000.0, 0.0, 0.0])
+    ok_dv = mga.flyby(mu, vin, np.array([8000.0 * math.cos(0.6), 8000.0 * math.sin(0.6), 0.0]), rp)[0]
+    bad_dv = mga.flyby(mu, vin, np.array([-8000.0, 0.0, 0.0]), rp)[0]
+    check("a reachable bend is free and a 180 deg one is not",
+          ok_dv < 1.0 and bad_dv > 1000.0, f"{ok_dv:.2f} vs {bad_dv:,.0f} m/s")
+
+
+
 def run(S=None, verbose=True):
     _results.clear()
     S = S or System()
@@ -699,12 +810,14 @@ def run(S=None, verbose=True):
     test_node_basis()
     test_bplane()
     test_ejection(S)
+    test_departure_plane(S)
     test_soi_detection(S)
     test_soi_exit_on_boundary(S)
     test_rotation(S)
     test_launch_geometry(S)
     test_soi_exit_window(S)
     test_assist_targeting(S)
+    test_mga_sequence_search(S)
     save = test_save(S)
     test_node_sign_against_game(S, save)
     return _report(verbose)
