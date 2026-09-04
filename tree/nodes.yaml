@@ -6002,6 +6002,23 @@ nodes:
     parents: [life_bioregenerativeECLSS]
     flavor: "Grow protein, not just greens. Aquaculture and full-scale greenhouse modules extend bioregenerative life support from air and vegetables to a fuller closed food chain — the ecosystem a base needs to feed itself for years."
     parts: [sspx-aquaculture-375-1, sspx-greenhouse-375-1, sspx-greenhouse-5-1]
+  # ---- LifeSupport capstone: the limit stops being the hardware and becomes the person ----
+  - id: life_permanentHabitation
+    title: "Indefinite-Duration Habitability"
+    discipline: LifeSupport
+    tier: 13
+    parents: [life_aquacultureModule, life_centrifugeHabitat]
+    flavor: "The hardware could always keep a crew alive longer than the crew could stand it. Give them real showers, private quarters, a proper kitchen and something to do that is not work, and the countdown to going home stops running — a crew can live at a base or aboard a spun station indefinitely. Weight is the one thing that cannot be engineered away: it has to come from the ground underfoot or from rotation."
+    upgrades: [Upgrade-Colony]
+    # Upgrade-Colony (KerbalismConfig/System/Sickbay.cfg) is the whole node. Kerbalism ships every
+    # qualifying habitat a `Sickbay` module with slots = 0, and Sickbay.Toggle() force-clears `running`
+    # while slots == 0 && !cureEverybody — so the Comforts process cannot be switched on at all until
+    # this upgrade grants slots = 1 + cureEverybody. Running it (`colony-life`, landed, 100 W + 10 L
+    # water/day per kerbal) cures stress at 8.4e-9/s against a base accrual of 8e-9/s, i.e. a landed
+    # crew stops accumulating stress permanently; the `orbital-colony` twin does the same for the six
+    # GravityRing centrifuges at 150 W + 5 L. It reaches 40 landed habitat parts and all 6 centrifuges,
+    # which is why both lines are parents: a closed food loop and artificial gravity are what separate
+    # permanent habitation from merely long. Nothing else in the tree carries this upgrade.
 
   # ---- StructuresMechanisms: annular / strongback trusses + reusable landing leg ----
   - id: str_annularTruss

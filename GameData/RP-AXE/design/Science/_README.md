@@ -47,12 +47,16 @@ upgrade into a named-but-unreachable one. All four are placed; re-sync `nodes.ya
 `KerbalismLab/Framework-2-LabGroup.cfg` (`UpgradeTech`/`ReconfigureTech`, from `build_kerbalismlab.py`'s
 `REMAP`) ↔ this file if any of the three moves.
 
-**Still open:** `Upgrade-Colony` (KerbalismConfig `Sickbay.cfg`, "Permanent habitation" — comfort upgrade
-for `GravityRing` centrifuges and the MLP crew towers) *is* defined, so it shows a title, but nothing
-places it, so the parking wildcard leaves it gated on an off-start node — unreachable. `build_tree.py`
-reports it under `unplaced upgrades: … LIVE`. Fix is one `upgrades:` entry once its home is decided
-(`life_stationHabitation`, matching AXE's `improvedHabitats` remap, or the first centrifuge node
-`life_centrifugeHabitat`, where the hardware it modifies actually arrives).
+**CLOSED 2026-09-04:** `Upgrade-Colony` (KerbalismConfig `Sickbay.cfg`, "Permanent habitation") is now
+placed on the new LifeSupport capstone **`life_permanentHabitation`** (T13, parents
+`life_aquacultureModule` + `life_centrifugeHabitat`); `build_tree.py`'s `unplaced upgrades` line drops
+18 LIVE → 17. Scope note for anyone reading the old entry: it is *not* just a centrifuge/MLP-tower
+comfort upgrade. Sickbay.cfg's second patch puts `_SickbayColony` on every part with
+`CrewCapacity > 3` + `Habitat` and no `GravityRing`/`ModuleCommand`/`Laboratory`/`LaunchClamp`/
+`ModuleUnpressurizedCockpit` — 40 parts, the whole SSPX habitation line — and that is the **landed**
+branch, i.e. the surface-base mechanic. Both branches ship `slots = 0` and `Sickbay.Toggle()` refuses
+to run at `slots == 0 && !cureEverybody`, so until this upgrade was reachable the Comforts process
+could not be enabled anywhere. Full write-up in [docs/UPGRADES.md](../../../../docs/UPGRADES.md).
 
 ## HardDrive (science data storage) — ported 2026-07-08
 

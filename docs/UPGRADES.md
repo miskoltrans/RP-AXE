@@ -246,9 +246,49 @@ describes the tree:
   `WARN N unplaced parts -> parking` line parts have always had. `build_tree.py`'s **`unplaced upgrades`**
   report (added 2026-07-28) now inventories them every build — LIVE (mod-authored, in-game now) vs
   curated-KEEP vs dormant — and reports rather than fails, because parking is a legitimate holding pen.
-  It currently lists **22 LIVE + 1 curated-KEEP**: these 4 solarTLs, 7 ProceduralFairings size caps, 10
-  Coatl Aerospace upgrades, `Upgrade-Colony` (Kerbalism Sickbay, `improvedHabitats` — a different-mod
-  one-off far past current milestone scope), and `RFUpgrade_RD-0108` (a real hole in an engine ladder).
+  It currently lists **17 LIVE + 1 curated-KEEP**: 4 solarTLs, 7 ProceduralFairings size caps, 10
+  Coatl Aerospace upgrades, and `RFUpgrade_RD-0108` (a real hole in an engine ladder). `Upgrade-Colony`
+  (Kerbalism Sickbay) was on that list until 2026-09-04 and is now homed on the LifeSupport capstone
+  `life_permanentHabitation` — see below.
 
 **Result: 626 → 658 rows** (553 → 576 KEEP). Reproduce: `python tools/curate_upgrades_addendum.py`
 (run after `curate_upgrades.py`; merges + re-sorts `upgrades-curated.tsv` in place).
+
+## Upgrade-Colony homed (2026-09-04) — LifeSupport capstone `life_permanentHabitation`
+
+`Upgrade-Colony` ("Permanent habitation", `KerbalismConfig/System/Sickbay.cfg`) was the last LIVE
+upgrade sitting on `parking`, and unlike the solarTL/fairing entries it was not merely undecided —
+it was **load-bearing and dead**.
+
+**What it gates.** Kerbalism hangs a `Sickbay` module on every part with `CrewCapacity > 3` + a
+`Habitat` and no `GravityRing`/`ModuleCommand`/`Laboratory`/`LaunchClamp`/`ModuleUnpressurizedCockpit`
+(40 parts, `resource = _SickbayColony`), and a second one on every `GravityRing` part (6 centrifuges,
+`_SickbayOrbital`). Both ship `slots = 0`, and `Sickbay.Toggle()` force-clears `running` while
+`slots == 0 && !cureEverybody` — so the Comforts process could not be switched on **at all**. The
+sole `UPGRADE` in those modules is `Upgrade-Colony`, granting `slots = 1` + `cureEverybody = True`.
+Running it (`colony-life`: landed, 100 W + 10 L water/day/kerbal) cures stress at 8.4e-9/s against the
+`stress` rule's 8e-9/s base accrual — i.e. a landed crew stops accumulating stress permanently. The
+`orbital-colony` twin does the same for centrifuges at 150 W + 5 L.
+
+**Why it was dead, not just unplaced.** `AxeExternalTechRemap.cfg` had correctly remapped the
+*module's* `UPGRADE techRequired__` off RP-1's `improvedHabitats`, which made the gap invisible — but
+`techRequired__` is never read (0 references in Assembly-CSharp's `PartModule`). The live gate is
+`PartUpgradeManager.Handler.IsUnlocked(name__)`, and `AxeGrantUpgradeUnlock.Sweep()` only calls
+`SetUnlocked` when the **PARTUPGRADE's own** `techRequired` reads `Available`. That was still
+`parking` — a parentless off-tree holding node nobody researches — so the upgrade could never be
+granted in a career. This is the [BUG-CLASSES](BUG-CLASSES.md) "worthless check" shape: a remap that
+looks like the fix, on the field that is not the gate.
+
+**Placement.** New node, the first LifeSupport entry above T12:
+
+    life_permanentHabitation  "Indefinite-Duration Habitability"  T13, 1908 sci
+      parents: life_aquacultureModule, life_centrifugeHabitat   (anyToUnlock = False)
+      upgrades: Upgrade-Colony
+
+Both parents, because the upgrade serves both branches and because a closed food loop plus artificial
+gravity is what separates permanent habitation from merely long. It does **not** gate the landed case
+on hardware the mechanic needs — `Comforts.firm_ground = EnvLanded`, so a surface base satisfies the
+runtime gravity requirement for free; the centrifuge parent is a capstone cost, not a physical prereq.
+
+`AxeExternalTechRemap.cfg`'s `techRequired__` was retargeted to the same node in the same change. It
+is cosmetic, hand-maintained, and carries a comment saying so — the two must move together.
