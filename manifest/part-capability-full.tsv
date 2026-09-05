@@ -281,6 +281,7 @@ RO-Sapphire203	engine_airbreathing	av_afterburner	4	AirBreathing	1.383	Sapphire 
 RO-model304	engine_airbreathing	av_hydrogenJet	4	AirBreathing	2.5	Model 304 Turbojet	Squad	9000	3.07546	75.4						0								673.15			0
 SXTNK12M	engine_airbreathing	av_turboprop	4	AirBreathing	2.9	NK-12 Turboprop	SXT	22600	5.27439	150						0								673.15			0
 SXTPWPT6	engine_airbreathing	av_turboprop	4	AirBreathing	0.35	PT6A Turboprop	SXT	17000	3.78752	13						0								673.15			0
+SXTeFan	engine_airbreathing	rob_rotorActuation	4	Robotics	0.1	DS-215 Electric Ducted Fan	SXT	600	0.764787	0.75						0								673.15			0
 aje_avon	engine_airbreathing	av_afterburner	4	AirBreathing	1.3	Avon Turbojet	Squad	9000	5.70806	72.77						0								673.15			0
 aje_j57	engine_airbreathing	av_afterburner	4	AirBreathing	2.155	J57 Turbojet	Squad	9000	4.12618	87.2						0								673.15			0
 aje_j75	engine_airbreathing	av_variableStator	4	AirBreathing	2.7	J75 Turbojet	Squad	9000	4.95507	131.2						0								673.15			0
@@ -1462,7 +1463,7 @@ MedLadder	structural	str_evaAccessLadder	8	StructuresMechanisms	0.006	Pegasus II
 MedLadderUtility	structural	str_evaAccessLadder	8	StructuresMechanisms	0.007	MK II Mobility Enhancer	VenStockRevamp									0								448			0
 RO-FluxgateMagnet	structural	mic_boomMagnetometryII	8	Microelectronics	0.0056	MG03 - Fluxgate Magnetometer Boom	RP-1									0								1073.15			0
 RO-PlasmaWave	structural	mic_plasmaWave	8	Microelectronics	0.005	RPWS01 - Plasma Wave Detector	RP-1									0								1073.15			0
-RO-SurfaceSampleScoop	structural	int_surveyorLanderBus	8	SystemsIntegration	0.005	Soil Mechanics Surface Sampler	RP-1									0								1073.15			0
+RO-SurfaceSampleScoop	structural	mic_soilAnalysis	8	Microelectronics	0.005	Soil Mechanics Surface Sampler	RP-1									0								1073.15			0
 ROS-BlanketSolarPanel	structural	elec_refinedSolarSimulation	8	ElectricalPower	0.0	Blanket Solar Panel	ROSolar									0								448			0
 ROS-FoldingSolarPanel	structural	elec_refinedSolarSimulation	8	ElectricalPower	0.0	Folding Solar Panel	ROSolar									0								448			0
 ROS-HingedSolarPanel	structural	elec_refinedSolarSimulation	8	ElectricalPower	0.0	Hinged Solar Panel	ROSolar									0								448			0
@@ -1577,7 +1578,7 @@ RO-HIRES	structural	opt_highResolutionImager	10	OpticsPhotonics	0.065	VI05 - Hig
 RO-PMIRR	structural	opt_thermalMappingSpectrometry	10	OpticsPhotonics	0.0402	IR04 - Pressure Modulated Infrared Radiometer (PMIRR)	RP-1									0								1073.15			0
 RO-RPWS	structural	mic_dipoleWaveSpectrometry	10	Microelectronics	0.0068	RPWS03 - Radio and Plasma Wave Science (RPWS)	RP-1									0								1073.15			0
 RO-VIMS	structural	opt_thermalMappingSpectrometry	10	OpticsPhotonics	0.0557	IS04 - Advanced Infrared Mapping Spectrometer (AIMS)	RP-1									0								1073.15			0
-ROC-ApolloHGABlockV	structural	tel_deepSpaceParabolic	10	Telecommunications	0.025	Apollo Block V High Gain Antenna	ROCapsules									0								448			0
+ROC-ApolloHGABlockV	structural	int_apolloBlockIV	10	SystemsIntegration	0.025	Apollo Block V High Gain Antenna	ROCapsules									0								448			0
 SurfaceScanner	structural	opt_orbitalResourceScanning	10	OpticsPhotonics	0.005	Surface Scanning Module	Squad									0								1073.15			0
 ca_mer_leu	structural	gnc_flagshipProbeBus	10	GuidanceControl	0.175	Cassini Lower Equipment Unit	CoatlAerospace									0								873.15			0
 dish_S	structural	tel_deepSpaceParabolic	10	Telecommunications	0.025	Ulysses Parabolic Antenna	CoatlAerospace									0								873.15			0

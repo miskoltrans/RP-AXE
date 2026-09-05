@@ -4593,8 +4593,8 @@ nodes:
     discipline: SystemsIntegration
     tier: 10
     parents: [int_apolloBlockIII]
-    flavor: "Fly the ferry with a bigger can. A larger lifter means the stack no longer has to fit the volume it carries into the space a lunar module used to occupy — a three-times-roomier pressurised module rides up in that slot instead, berthing through a full-size androgynous port, with the extra service-module propellant to push the added mass around."
-    parts: [ROC-ApolloMissionModule4, ROC-ApolloSMDBDBlockIV]
+    flavor: "Fly the ferry with a bigger can. A larger lifter means the stack no longer has to fit the volume it carries into the space a lunar module used to occupy — a three-times-roomier pressurised module rides up in that slot instead, berthing through a full-size androgynous port, with the extra service-module propellant to push the added mass around and a folding dish stowed on the service engine's bracket beside it."
+    parts: [ROC-ApolloMissionModule4, ROC-ApolloSMDBDBlockIV, ROC-ApolloHGABlockV]
     # NEW 2026-08-06 (user call): split out of int_apolloBlockIII, into the empty T10 slot that already
     # sat between it (T9, x=-2528) and int_commercialCrewCapsule (T11, x=-1920) on the same render row.
     # King Block IV mission module, and it is a real generation rather than a reskin - measured against
@@ -4607,6 +4607,21 @@ nodes:
     # int_commercialCrewCapsule (T11) deliberately LEFT parented on int_apolloBlockIII, not re-chained
     # through here: real commercial crew descends from the Apollo capsule lineage, and routing it through
     # an alt-history ETS node would make the player buy fiction to reach it.
+    # ROC-ApolloHGABlockV MOVED HERE 2026-09-05 (user call, "apollo block V antenna looks lost on its
+    # node"). It sat on tel_deepSpaceParabolic (T10) among five Coatl deep-space dishes as the smallest
+    # aperture present (1.5 m S-band, ~28.6 dBi vs Cassini's 4.0 m / ~37) and the only 448 K skin among
+    # five 873 K ones. Its own config says what it is: "Intended to be placed on the mounting bracket of
+    # the Apollo Service Engine Block V. FICTIONAL (Eyes Turned Skyward)", tags `block-V, block-5` — a
+    # bracket accessory for THIS ferry generation, not a probe dish.
+    # It was also a DEAD RUNG (lesson 21): ROC-ApolloHGABDB is 1.8 m / ~30.2 dBi, same band, same
+    # deployable HOME tracking, and unlocks two tiers EARLIER at T8 — so a T10 telecom node was selling
+    # a strictly worse antenna (and a heavier one, 0.025 t vs 0.0005 t). Homed on the vehicle it bolts
+    # to instead, matching this family's own precedent: ROC-ApolloHGABlockIII (0.9 m, equally dominated)
+    # sits on int_apolloBlockIII and is named in that node's flavor.
+    # Not a scatter-doctrine breach — scatter keeps GENERIC mechanisms from being locked behind a
+    # vehicle, and nobody picks this dish on capability; it exists to make a Block V CSM look right.
+    # Contrast ROC-ApolloSolarBlockV, which stays scattered on elec_stationClassSolarArrays: that one is
+    # a generic TL6 array any craft can use. Tier unchanged (T10), so nothing cascades; node 2 -> 3 parts.
     # Single parent by design (crossovers sparingly): gnc_androgynousDocking is the obvious second edge
     # for the widened berthing node, but it is also T10, so it would be a same-tier non-forward edge.
 
@@ -5954,7 +5969,10 @@ nodes:
     tier: 10
     parents: [tel_largeApertureReflectors]
     flavor: "A large steerable parabolic dish — the high-gain antenna that closes the link across hundreds of millions of kilometres, turning a whisper from the outer Solar System into a usable data stream."
-    parts: [mer_dish, dish_S, dish_xihe, ROC-ApolloHGABlockV, dish_hera, dish_tatsujin]
+    parts: [mer_dish, dish_S, dish_xihe, dish_hera, dish_tatsujin]
+    # Five Coatl deep-space mission dishes, one aperture ladder: Cassini 4.0 m, STEREO/Juno 2.5 m,
+    # MAVEN 1.9 m, Ulysses 1.55 m — all S-band, all 873 K skin.
+    # ROC-ApolloHGABlockV REMOVED 2026-09-05 (user call) -> int_apolloBlockIV; see the note there.
 
   # ---- SystemsIntegration: atmospheric entry probe ----
   - id: int_atmosphericEntryProbe
