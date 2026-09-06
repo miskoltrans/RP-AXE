@@ -118,6 +118,20 @@ def origin_state(system, save, args):
         # [KSPAddon(Flight)] and a separate process, so it can be absent while the AXE bridge
         # is perfectly happy. Falling back rather than failing makes --live mean --live.
         ut = parse_date(args.at) if args.at else None
+        vid = getattr(args, "vessel_id", None)
+        if vid:
+            # An id is unambiguous by construction and KSPTOT Connect keys on names, so
+            # asking it would throw the disambiguation away again. Go straight to the bridge.
+            br = bridge_mod.Bridge(port=args.port)
+            body, r, vel, ut = br.state(system, vid=vid, ut=ut)
+            info = br.nodes(vid=vid)
+            if not info.get("nodes_available"):
+                why = info.get("why") or "not the active vessel"
+                sys.exit(f"  {info.get('vessel')} [{vid}] has no patched conics: {why}. "
+                         "Live trajectory numbers for a non-active vessel are garbage and "
+                         "any node pushed to it is discarded. Switch to it in-game first.")
+            return (body, np.asarray(r), np.asarray(vel), ut,
+                    f"{info.get('vessel')} [live, id {vid[:8]}]", None)
         try:
             kt = ksptot_mod.KspTot(port=args.ksptot_port)
             body, r, vel, ut = kt.state(system, name=args.vessel, ut=ut)
@@ -180,14 +194,16 @@ def push_burns(args, burns, what="burn"):
         return
     br = bridge_mod.Bridge(port=args.port)
     vessel = getattr(args, "push_vessel", None) or getattr(args, "vessel", None)
+    vid = getattr(args, "vessel_id", None)
 
     if getattr(args, "push", False):
-        if not vessel:
+        if not vessel and not vid:
             sys.exit("--push needs a vessel: pass --vessel NAME (a --park orbit is "
                      "hypothetical, so there is nothing in the game to place a node on)")
         try:
             res = br.place_nodes([(ut, n[0], n[1], n[2]) for ut, n in burns],
-                                 name=vessel, replace=not args.push_add)
+                                 name=None if vid else vessel, vid=vid,
+                                 replace=not args.push_add)
         except bridge_mod.BridgeError as exc:
             sys.exit(f"  push failed: {exc}")
         print(f"\n  PUSHED to {res['vessel']}: placed {res['placed']} node(s)"
@@ -1382,6 +1398,13 @@ def main(argv=None):
     def common(p, vessel=True, push=True):
         if vessel:
             p.add_argument("--vessel", help="vessel name from the save (substring is enough)")
+            p.add_argument("--vessel-id", dest="vessel_id",
+                           help="vessel GUID, for --live. Names are NOT unique -- a probe and "
+                                "its bus can carry the same one, and the name lookup then "
+                                "silently answers for the wrong craft (whose patched conics do "
+                                "not exist, so the numbers are garbage and any node is "
+                                "discarded). `/nodes` with no argument reports the active "
+                                "vessel's id; use it whenever a name is ambiguous.")
             p.add_argument("--save", help="save folder or .sfs path; default = most recent")
             p.add_argument("--park", nargs="*", type=float, default=[185.0, 28.5],
                            metavar=("ALT_KM", "INC_DEG"),
