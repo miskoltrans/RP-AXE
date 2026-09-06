@@ -520,6 +520,13 @@ def _b_dir(args):
     want = getattr(args, "bplane", None)
     if not want:
         return None
+    # Same identity, read the other way: B_T = 0 puts w.k = 0, i.e. inclination 90.
+    # A polar capture is therefore a PURE +/-R aim, and the two signs are the same
+    # 90 deg orbit with its node 180 deg apart (north-going vs south-going).
+    if want == "polar":
+        return np.array([0.0, 1.0])
+    if want == "polar2":
+        return np.array([0.0, -1.0])
     return np.array([1.0, 0.0]) if want == "prograde" else np.array([-1.0, 0.0])
 
 
@@ -1475,10 +1482,12 @@ def main(argv=None):
     p.add_argument("--arrive", help="fixed arrival date")
     p.add_argument("--tof", nargs=2, type=float, help="time-of-flight range in days to search")
     p.add_argument("--peri", help="target arrival periapsis, e.g. 2.5Rj or 250km")
-    p.add_argument("--bplane", choices=["prograde", "retrograde"],
+    p.add_argument("--bplane", choices=["prograde", "retrograde", "polar", "polar2"],
                    help="which side of the target to pass. --peri fixes only how CLOSE you pass; "
                         "without this the solver keeps whichever side it already has, which for "
-                        "Earth->Saturn 1972 is retrograde (i 158 deg) and breaks a moon tour.")
+                        "Earth->Saturn 1972 is retrograde (i 158 deg) and breaks a moon tour. "
+                        "polar/polar2 aim the arrival at inclination 90 deg (the two node "
+                        "branches) -- what a biome-mapping lunar orbiter wants.")
     p.add_argument("--samples", type=int, default=48,
                    help="phase samples around the parking orbit (direct transfers)")
     p.add_argument("--no-refine", action="store_true")
@@ -1495,10 +1504,12 @@ def main(argv=None):
     p.add_argument("--arrive", help="expected arrival date, to size the horizon "
                                     "(with --through, the arrival epoch to aim at)")
     p.add_argument("--peri", help="target periapsis, e.g. 2.5Rj or 250km (default 1.5r)")
-    p.add_argument("--bplane", choices=["prograde", "retrograde"],
+    p.add_argument("--bplane", choices=["prograde", "retrograde", "polar", "polar2"],
                    help="which side of the target to pass. --peri fixes only how CLOSE you pass; "
                         "without this the solver keeps whichever side it already has, which for "
-                        "Earth->Saturn 1972 is retrograde (i 158 deg) and breaks a moon tour.")
+                        "Earth->Saturn 1972 is retrograde (i 158 deg) and breaks a moon tour. "
+                        "polar/polar2 aim the arrival at inclination 90 deg (the two node "
+                        "branches) -- what a biome-mapping lunar orbiter wants.")
     p.add_argument("--samples", type=int, default=12,
                    help="burn times to try; with --through, arrival epochs to scan")
     p.add_argument("--span", type=float, default=90.0,
