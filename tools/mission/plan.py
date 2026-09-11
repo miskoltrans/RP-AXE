@@ -250,6 +250,9 @@ def print_arrival(system, target, rep, indent="    "):
               f"  (altitude {rep['peAlt'] / 1e3:,.0f} km)")
         print(f"{indent}       v-infinity {rep['vinf']:,.1f} m/s   e {rep['ecc']:.4f}   "
               f"inclination {rep['inc']:.2f} deg")
+        if rep.get("plane"):
+            print(f"{indent}       {rep['inc_to_plane']:.2f} deg off {rep['plane']}'s orbital "
+                  f"plane (asymptote floor {rep['plane_floor']:.2f} deg)")
         if rep["peAlt"] < 0:
             print(f"{indent}       *** that periapsis is INSIDE {t.name} ***")
     else:
@@ -536,6 +539,12 @@ def _b_dir(args):
     want = getattr(args, "bplane", None)
     if not want:
         return None
+    if want.startswith("plane:"):
+        # Aim into a named body's orbital plane (plane:Ganymede for a Galilean tour). The
+        # direction depends on the flown asymptote, so maneuver.refine resolves it.
+        return want
+    if want not in ("prograde", "retrograde", "polar", "polar2"):
+        sys.exit(f"--bplane {want}: expected prograde, retrograde, polar, polar2 or plane:<Body>")
     # Same identity, read the other way: B_T = 0 puts w.k = 0, i.e. inclination 90.
     # A polar capture is therefore a PURE +/-R aim, and the two signs are the same
     # 90 deg orbit with its node 180 deg apart (north-going vs south-going).
@@ -830,6 +839,17 @@ def cmd_correct_through(args, system, save, body, r0, v0, ut0, who):
     push_burns(args, [(ut0, node)], what="assist correction")
 
 
+def parse_burn_at(text, ut0):
+    """'+2h', '+1.5d', '+90m' from the state epoch, or a date."""
+    t = str(text).strip().lower()
+    if t.startswith("+"):
+        scale = {"s": 1.0, "m": 60.0, "h": 3600.0, "d": DAY}.get(t[-1])
+        if scale is None:
+            sys.exit(f"--burn-at {text}: a relative time ends in s, m, h or d")
+        return ut0 + float(t[1:-1]) * scale
+    return parse_date(text)
+
+
 def cmd_correct(args):
     system, save = load(args)
     body, r0, v0, ut0, who, free_park = origin_state(system, save, args)
@@ -847,6 +867,28 @@ def cmd_correct(args):
     print_arrival(system, target.name, rep)
 
     t_arr = rep.get("soi_ut") or rep.get("ca_ut")
+    if getattr(args, "burn_at", None):
+        # A fixed burn time, solved once. The scan's first sample is 2 percent of the way to
+        # the encounter -- 10 days out on a Jupiter cruise -- which is useless when the burn
+        # has to happen before a launch window opens tomorrow.
+        ut_b = parse_burn_at(args.burn_at, ut0)
+        b_at, rb, vb = traj.state(ut_b)
+        print(f"\n  --- correcting to periapsis {peR / target.radius:.3f} "
+              f"R{target.name[0].lower()} ({(peR - target.radius) / 1e3:,.0f} km altitude), "
+              f"burning at {fmt_ut(ut_b)} (T+{(ut_b - ut0) / DAY:.2f} d) ---")
+        res = maneuver.refine(system, b_at.name, rb, vb, ut_b, target.name, t_end, peR,
+                              b_dir=_b_dir(args), watch=watch, max_dv=args.max_dv,
+                              diff_step=args.diff_step, verbose=args.verbose)
+        rp = res["report"]
+        if not (rp.get("captured") and abs(rp["peR"] - peR) / peR < 0.02):
+            print_arrival(system, target.name, rp)
+            sys.exit("  the correction did not converge at that burn time; try another "
+                     "--burn-at, or drop it and let the scan pick one")
+        node, _ = print_node(system, b_at, rb, vb, res["dv"], ut_b,
+                             now=(save.ut if save else None), label="CORRECTION")
+        print_arrival(system, target.name, rp)
+        push_burns(args, [(ut_b, node)], what="correction")
+        return
     print(f"\n  --- correcting to periapsis {peR / target.radius:.3f} "
           f"R{target.name[0].lower()} ({(peR - target.radius) / 1e3:,.0f} km altitude) ---")
     best, scan = maneuver.cheapest_correction(system, body.name, r0, v0, ut0, target.name,
@@ -1505,12 +1547,15 @@ def main(argv=None):
     p.add_argument("--arrive", help="fixed arrival date")
     p.add_argument("--tof", nargs=2, type=float, help="time-of-flight range in days to search")
     p.add_argument("--peri", help="target arrival periapsis, e.g. 2.5Rj or 250km")
-    p.add_argument("--bplane", choices=["prograde", "retrograde", "polar", "polar2"],
+    p.add_argument("--bplane", metavar="AIM",
                    help="which side of the target to pass. --peri fixes only how CLOSE you pass; "
                         "without this the solver keeps whichever side it already has, which for "
                         "Earth->Saturn 1972 is retrograde (i 158 deg) and breaks a moon tour. "
                         "polar/polar2 aim the arrival at inclination 90 deg (the two node "
-                        "branches) -- what a biome-mapping lunar orbiter wants.")
+                        "branches) -- what a biome-mapping lunar orbiter wants. plane:<Body> "
+                        "lays the arrival orbit in that body's orbital plane, prograde, as near "
+                        "as the asymptote's declination allows (plane:Ganymede for a Galilean "
+                        "tour -- the ecliptic 'prograde' aim sits 25 deg off it).")
     p.add_argument("--samples", type=int, default=48,
                    help="phase samples around the parking orbit (direct transfers)")
     p.add_argument("--no-refine", action="store_true")
@@ -1527,12 +1572,20 @@ def main(argv=None):
     p.add_argument("--arrive", help="expected arrival date, to size the horizon "
                                     "(with --through, the arrival epoch to aim at)")
     p.add_argument("--peri", help="target periapsis, e.g. 2.5Rj or 250km (default 1.5r)")
-    p.add_argument("--bplane", choices=["prograde", "retrograde", "polar", "polar2"],
+    p.add_argument("--burn-at", metavar="WHEN",
+                   help="burn at this time instead of scanning for the cheapest: '+2h' or "
+                        "'+1d' from the state epoch, or a date. The scan's earliest sample "
+                        "is 2 percent of the way to the encounter (10 days out on a Jupiter "
+                        "cruise), so this is how you burn NOW.")
+    p.add_argument("--bplane", metavar="AIM",
                    help="which side of the target to pass. --peri fixes only how CLOSE you pass; "
                         "without this the solver keeps whichever side it already has, which for "
                         "Earth->Saturn 1972 is retrograde (i 158 deg) and breaks a moon tour. "
                         "polar/polar2 aim the arrival at inclination 90 deg (the two node "
-                        "branches) -- what a biome-mapping lunar orbiter wants.")
+                        "branches) -- what a biome-mapping lunar orbiter wants. plane:<Body> "
+                        "lays the arrival orbit in that body's orbital plane, prograde, as near "
+                        "as the asymptote's declination allows (plane:Ganymede for a Galilean "
+                        "tour -- the ecliptic 'prograde' aim sits 25 deg off it).")
     p.add_argument("--samples", type=int, default=12,
                    help="burn times to try; with --through, arrival epochs to scan")
     p.add_argument("--span", type=float, default=90.0,

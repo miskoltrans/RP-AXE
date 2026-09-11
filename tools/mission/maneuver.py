@@ -220,6 +220,50 @@ def b_for_periapsis(mu, vinf, peR):
     return peR * math.sqrt(1.0 + 2.0 * mu / (peR * vinf * vinf))
 
 
+def _arrival_state(system, traj, target, soi_ut):
+    b, r, v = traj.state(soi_ut + 60.0)
+    if b.name != target:
+        raise ValueError(f"trajectory is in {b.name}'s SOI just after the {target} entry it reported")
+    return np.asarray(r, float), np.asarray(v, float)
+
+
+def inc_to_plane(system, traj, target, soi_ut, plane_body):
+    """Angle (deg) between the arrival orbit's normal and `plane_body`'s orbital plane."""
+    r, v = _arrival_state(system, traj, target, soi_ut)
+    pb = system.body(plane_body)
+    w = np.cross(r, v)
+    w = w / np.linalg.norm(w)
+    n = astro.plane_normal(pb.inc, pb.lan)
+    return math.degrees(math.acos(max(-1.0, min(1.0, float(w @ n)))))
+
+
+def plane_b_dir(system, traj, target, t_end, plane_body):
+    """B-plane aim that lays the arrival orbit as close to `plane_body`'s orbital plane as the
+    incoming asymptote allows, on the prograde side.
+
+    The orbit normal w must be perpendicular to the asymptote s, so the nearest w to the
+    plane's normal n is n with its s-component removed; the residual angle asin|s.n| is the
+    asymptote's declination above the plane and cannot be bought from here at any price
+    (Perun 2: floor 4.09 deg, and the ecliptic-prograde aim sat 25.6 deg off the Galilean
+    plane for the same periapsis). B lies along s x w, because r -> -L s + B on the way in
+    gives h = r x v along B x s. Returns (b_dir in astro.bplane's (T, R) basis, floor deg).
+    """
+    target = system.body(target)
+    pb = system.body(plane_body)
+    rep = patched.arrival_report(system, traj, target.name, t_end)
+    if not rep.get("captured"):
+        raise ValueError(f"no {target.name} arrival to aim a plane from -- correct the miss first")
+    r, v = _arrival_state(system, traj, target.name, rep["soi_ut"])
+    bp = astro.bplane(target.mu, r, v)
+    s = bp["s_hat"]
+    n = astro.plane_normal(pb.inc, pb.lan)
+    w = n - float(n @ s) * s
+    w = w / np.linalg.norm(w)
+    bdir = np.cross(s, w)
+    d = np.array([float(bdir @ bp["t_hat"]), float(bdir @ bp["r_hat"])])
+    return d / np.linalg.norm(d), math.degrees(math.asin(min(1.0, abs(float(s @ n)))))
+
+
 def refine(system, body, r_node, v_node, ut_node, target, t_end, peR_want,
            b_dir=None, ut_want=None, watch=None, max_nfev=60, verbose=False,
            max_dv=1000.0, diff_step=1e-2):
@@ -243,6 +287,14 @@ def refine(system, body, r_node, v_node, ut_node, target, t_end, peR_want,
     rep = patched.arrival_report(system, traj, target.name, t_end)
     vinf = rep.get("vinf") or rep.get("ca_vrel") or 1000.0
     b_mag = b_for_periapsis(target.mu, max(vinf, 1.0), peR_want)
+    plane_of, plane_floor = None, None
+    if isinstance(b_dir, str):
+        # "plane:Ganymede" -- aim into that body's orbital plane. The direction depends on
+        # the flown asymptote, so it is resolved here from the no-burn arrival.
+        if not b_dir.startswith("plane:"):
+            raise ValueError(f"unknown b_dir spec {b_dir!r}; use 'plane:<Body>' or a 2-vector")
+        plane_of = b_dir[len("plane:"):]
+        b_dir, plane_floor = plane_b_dir(system, traj, target.name, t_end, plane_of)
     if b_dir is None:
         res0 = _bplane_residual(system, traj, target.name, t_end, (0.0, 0.0), 0.0)
         cur = np.array([res0[0], res0[1]])
@@ -270,8 +322,12 @@ def refine(system, body, r_node, v_node, ut_node, target, t_end, peR_want,
                         xtol=1e-12, ftol=1e-12, gtol=1e-12, max_nfev=max_nfev)
     dv = sol.x
     traj = fly(dv)
-    return {"dv": dv, "traj": traj,
-            "report": patched.arrival_report(system, traj, target.name, t_end),
+    report = patched.arrival_report(system, traj, target.name, t_end)
+    if plane_of and report.get("captured"):
+        report["plane"] = plane_of
+        report["inc_to_plane"] = inc_to_plane(system, traj, target.name, report["soi_ut"], plane_of)
+        report["plane_floor"] = plane_floor
+    return {"dv": dv, "traj": traj, "report": report,
             "cost": float(sol.cost), "nfev": sol.nfev, "b_want": want_b}
 
 

@@ -478,6 +478,28 @@ Earth→Moon injection came out at 3,426 m/s with 1,100 m/s of normal in it. Fro
 coplanar node it is 3,143 m/s, essentially pure prograde. When `--park` is given without a
 RAAN, the coplanar one is solved for and reported; pass three numbers to pin your own.
 
+### Aiming the arrival PLANE, and burning now (2026-09-11)
+
+`--peri` fixes only how close you pass. `--bplane prograde|retrograde|polar|polar2` picks the
+side, but "prograde" there means **ecliptic**-prograde: on Perun 2 Bus B it reached 2.00 Rj at
+i 2.7 deg in KSP's frame, which is **25.6 deg off the Galilean plane** (the moons orbit at
+i ~25.4, LAN ~358) and ~45 m/s more at the perijove-raise burn. **`--bplane plane:<Body>`**
+lays the arrival orbit in that body's orbital plane, prograde, as near as the incoming
+asymptote's declination allows: the orbit normal must be perpendicular to the asymptote `s`,
+so the nearest normal to the plane's `n` is `n` minus its `s`-component, and `B` lies along
+`s x w`. The floor `asin|s.n|` is printed ("X deg off Ganymede's plane, floor Y deg") and
+cannot be bought from a midcourse burn at any price. Measured on Perun 2: `plane:Ganymede`
+gave 4.12 deg against a 4.09 deg floor for **6.20 m/s**, cheaper than the ecliptic aim's 7.64.
+
+The scan in `correct` samples burn dates from 2 % of the way to the encounter, which is ten
+days out on a Jupiter cruise. **`--burn-at +1h` (or `+2d`, or a date)** solves the one burn
+time you name instead, for when the burn has to happen before tomorrow's launch window.
+
+**Verify a node before burning it.** `verify --save quicksave.sfs --vessel X` flies the SAVED
+nodes and is the only place that prints "*** that periapsis is INSIDE Jupiter ***"; the bridge's
+`/nodes` reports a periapsis radius with no comment. Both Perun 2 buses carried MCC nodes at
+0.90 and 0.77 Rj -- a 6.8 m/s burn each, into the planet -- and looked fine in the map view.
+
 ## Where the algorithms come from
 
 Decompiled from the install's own `MechJeb2.dll` / `MechJebLib.dll` and `Assembly-CSharp.dll`:

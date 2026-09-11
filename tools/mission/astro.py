@@ -312,7 +312,13 @@ def bplane(mu_body, r_rel, v_rel):
     r_hat = np.cross(s_hat, t_hat)
     b_vec = b * np.cross(s_hat, w_hat)
     return {"vinf": vinf, "b": b, "B_T": float(b_vec @ t_hat), "B_R": float(b_vec @ r_hat),
-            "peR": a * (1 - ecc), "s_hat": s_hat, "b_vec": b_vec}
+            "peR": a * (1 - ecc), "s_hat": s_hat, "b_vec": b_vec,
+            "t_hat": t_hat, "r_hat": r_hat, "w_hat": w_hat}
+
+
+def plane_normal(inc, lan):
+    """Unit normal of an orbit plane from its inclination and node (radians), z-up frame."""
+    return np.array([math.sin(lan) * math.sin(inc), -math.cos(lan) * math.sin(inc), math.cos(inc)])
 
 
 # ---------------------------------------------------------------------------

@@ -484,6 +484,33 @@ def test_bplane():
           f"b = {bp['b']:,.0f} m, from periapsis {b_from_pe:,.0f} m")
 
 
+def test_plane_aim():
+    """plane:<Body> aim -- the normal it asks for is perpendicular to the asymptote, on the
+    prograde side, exactly the declination floor from the plane, and its (T, R) components
+    rebuild the same vector. The end-to-end version was measured live on Perun 2 Bus B:
+    4.12 deg off the Galilean plane against a 4.09 deg floor, for 6.20 m/s."""
+    mu = 1.26686534e17
+    r = np.array([4.0e10, 1.0e10, 5.0e9])
+    v = np.array([-5.0e3, -2.0e3, -1.0e3])
+    bp = astro.bplane(mu, r, v)
+    s = bp["s_hat"]
+    n = astro.plane_normal(math.radians(25.27), math.radians(358.01))     # Ganymede-like
+    w = n - float(n @ s) * s
+    w = w / np.linalg.norm(w)
+    floor = math.degrees(math.asin(abs(float(s @ n))))
+    got = math.degrees(math.acos(float(w @ n)))
+    check("plane aim: normal is perpendicular to the asymptote", abs(float(w @ s)) < 1e-12)
+    check("plane aim: normal sits at the declination floor from the plane",
+          abs(got - floor) < 1e-9, f"{got:.4f} vs floor {floor:.4f} deg")
+    check("plane aim: prograde side", float(w @ n) > 0)
+    check("plane aim: B-plane basis is orthonormal to s",
+          abs(float(bp["t_hat"] @ s)) < 1e-12 and abs(float(bp["r_hat"] @ s)) < 1e-12
+          and abs(float(bp["t_hat"] @ bp["r_hat"])) < 1e-12)
+    bdir = np.cross(s, w)
+    back = float(bdir @ bp["t_hat"]) * bp["t_hat"] + float(bdir @ bp["r_hat"]) * bp["r_hat"]
+    check("plane aim: (T, R) components round-trip to s x w", np.linalg.norm(back - bdir) < 1e-12)
+
+
 def test_rotation(S):
     """The rotation phase, which every launch time is built on.
 
@@ -809,6 +836,7 @@ def run(S=None, verbose=True):
     test_lambert(S)
     test_node_basis()
     test_bplane()
+    test_plane_aim()
     test_ejection(S)
     test_departure_plane(S)
     test_soi_detection(S)
