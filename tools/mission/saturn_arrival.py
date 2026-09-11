@@ -23,7 +23,8 @@ BURN2 = "--burn2" in sys.argv
 CAPTURE_GM = None                      # --capture 40 : push the orbit-insertion burn into a 40 Gm apoapsis
 if "--capture" in sys.argv:
     CAPTURE_GM = float(sys.argv[sys.argv.index("--capture") + 1])          # burn 1 flown and probe released: solve/push the orbiter deflection only
-PROBE_VID = "dca47272-53e1-4afc-befd-24c9036bfc50"
+PROBE_NAME = "Saturnalija Probe"   # a decoupled vessel gets a NEW guid every time it is released (reload + re-release = new id)
+PROBE_VID = sys.argv[sys.argv.index("--probe-id") + 1] if "--probe-id" in sys.argv else None
 
 PROBE_PE_KM = 59_745.0      # 7 deg inertial path at 1,400 km -- the designed corridor
 ORB_PE_KM = 80_000.0        # orbiter capture periapsis radius
@@ -194,7 +195,7 @@ if CAPTURE_GM is not None:
 
 if BURN2:
     # The probe is its own vessel now: its trajectory sets the entry clock, not the orbiter's.
-    pb, rpr, vpr, utpr = br.state(system, vid=PROBE_VID)
+    pb, rpr, vpr, utpr = br.state(system, vid=PROBE_VID, name=None if PROBE_VID else PROBE_NAME)
     assert pb.name == "Saturn"
     rpr, vpr = astro.propagate(MU, rpr, vpr, ut0 - utpr)
     tpp, elp = peri_time(rpr, vpr, ut0)
