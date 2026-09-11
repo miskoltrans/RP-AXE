@@ -509,6 +509,35 @@ def test_plane_aim():
     bdir = np.cross(s, w)
     back = float(bdir @ bp["t_hat"]) * bp["t_hat"] + float(bdir @ bp["r_hat"]) * bp["r_hat"]
     check("plane aim: (T, R) components round-trip to s x w", np.linalg.norm(back - bdir) < 1e-12)
+    # apsis aim: the closed form puts the periapsis vector IN the plane, on the prograde side
+    peR = 2.0 * 70941833.4
+    ecc = 1.0 + peR * bp["vinf"] ** 2 / mu
+    beta = math.acos(1.0 / ecc)
+    e1 = n - float(n @ s) * s
+    e1n = float(np.linalg.norm(e1))
+    e1 = e1 / e1n
+    e2 = np.cross(s, e1)
+    c = -float(n @ s) / (e1n * math.tan(beta))
+    sn = math.sqrt(1.0 - c * c)
+    for sgn in (1.0, -1.0):
+        bh = c * e1 + sgn * sn * e2
+        e_hat = math.cos(beta) * s + math.sin(beta) * bh
+        w2 = np.cross(bh, s)
+        if float(w2 @ n) > 0:
+            check("apsis aim: periapsis lies in the plane", abs(float(e_hat @ n)) < 1e-12,
+                  f"latitude {math.degrees(math.asin(float(e_hat @ n))):.2e} deg")
+            check("apsis aim: prograde", float(w2 @ n) > 0)
+            check("apsis aim: periapsis is cos(beta)=1/e from the asymptote",
+                  abs(float(e_hat @ s) - 1.0 / ecc) < 1e-12)
+    # and astro.bplane's own e_hat really is cos(beta) s + sin(beta) B_hat on a real hyperbola
+    h = np.cross(r, v)
+    e_vec = np.cross(v, h) / mu - r / np.linalg.norm(r)
+    e_hat0 = e_vec / np.linalg.norm(e_vec)
+    b_hat0 = bp["b_vec"] / np.linalg.norm(bp["b_vec"])
+    beta0 = math.acos(1.0 / np.linalg.norm(e_vec))
+    rebuilt = math.cos(beta0) * s + math.sin(beta0) * b_hat0
+    check("apsis aim: bplane's periapsis decomposes as cos(beta) s + sin(beta) B_hat",
+          np.linalg.norm(rebuilt - e_hat0) < 1e-9, f"{np.linalg.norm(rebuilt - e_hat0):.2e}")
 
 
 def test_rotation(S):

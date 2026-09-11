@@ -252,7 +252,9 @@ def print_arrival(system, target, rep, indent="    "):
               f"inclination {rep['inc']:.2f} deg")
         if rep.get("plane"):
             print(f"{indent}       {rep['inc_to_plane']:.2f} deg off {rep['plane']}'s orbital "
-                  f"plane (asymptote floor {rep['plane_floor']:.2f} deg)")
+                  f"plane (asymptote floor {rep['plane_floor']:.2f} deg); periapsis latitude "
+                  f"{rep['peri_lat']:+.2f} deg -- the apoapsis burn can take the plane down to "
+                  f"|{rep['peri_lat']:.2f}| deg, no further")
         if rep["peAlt"] < 0:
             print(f"{indent}       *** that periapsis is INSIDE {t.name} ***")
     else:
@@ -539,12 +541,14 @@ def _b_dir(args):
     want = getattr(args, "bplane", None)
     if not want:
         return None
-    if want.startswith("plane:"):
-        # Aim into a named body's orbital plane (plane:Ganymede for a Galilean tour). The
-        # direction depends on the flown asymptote, so maneuver.refine resolves it.
+    if want.startswith("plane:") or want.startswith("apsis:"):
+        # plane:<Body> = minimum inclination to that body's orbital plane; apsis:<Body> = the
+        # capture PERIAPSIS in that plane, which is what a moon tour actually needs (see
+        # maneuver.apsis_b_dir). Both depend on the flown asymptote, so refine resolves them.
         return want
     if want not in ("prograde", "retrograde", "polar", "polar2"):
-        sys.exit(f"--bplane {want}: expected prograde, retrograde, polar, polar2 or plane:<Body>")
+        sys.exit(f"--bplane {want}: expected prograde, retrograde, polar, polar2, plane:<Body> "
+                 "or apsis:<Body>")
     # Same identity, read the other way: B_T = 0 puts w.k = 0, i.e. inclination 90.
     # A polar capture is therefore a PURE +/-R aim, and the two signs are the same
     # 90 deg orbit with its node 180 deg apart (north-going vs south-going).
@@ -1552,10 +1556,13 @@ def main(argv=None):
                         "without this the solver keeps whichever side it already has, which for "
                         "Earth->Saturn 1972 is retrograde (i 158 deg) and breaks a moon tour. "
                         "polar/polar2 aim the arrival at inclination 90 deg (the two node "
-                        "branches) -- what a biome-mapping lunar orbiter wants. plane:<Body> "
-                        "lays the arrival orbit in that body's orbital plane, prograde, as near "
-                        "as the asymptote's declination allows (plane:Ganymede for a Galilean "
-                        "tour -- the ecliptic 'prograde' aim sits 25 deg off it).")
+                        "branches) -- what a biome-mapping lunar orbiter wants. apsis:<Body> "
+                        "puts the capture PERIAPSIS in that body's orbital plane, prograde -- "
+                        "the aim a moon tour needs, because the apoapsis burn can only rotate "
+                        "about the apsidal line (apsis:Ganymede, apsis:Titan). plane:<Body> is "
+                        "minimum inclination to that plane instead, which leaves the apsides at "
+                        "a latitude no later burn removes; the ecliptic 'prograde' is 25 deg "
+                        "off the Galilean plane on top of that.")
     p.add_argument("--samples", type=int, default=48,
                    help="phase samples around the parking orbit (direct transfers)")
     p.add_argument("--no-refine", action="store_true")
@@ -1582,10 +1589,13 @@ def main(argv=None):
                         "without this the solver keeps whichever side it already has, which for "
                         "Earth->Saturn 1972 is retrograde (i 158 deg) and breaks a moon tour. "
                         "polar/polar2 aim the arrival at inclination 90 deg (the two node "
-                        "branches) -- what a biome-mapping lunar orbiter wants. plane:<Body> "
-                        "lays the arrival orbit in that body's orbital plane, prograde, as near "
-                        "as the asymptote's declination allows (plane:Ganymede for a Galilean "
-                        "tour -- the ecliptic 'prograde' aim sits 25 deg off it).")
+                        "branches) -- what a biome-mapping lunar orbiter wants. apsis:<Body> "
+                        "puts the capture PERIAPSIS in that body's orbital plane, prograde -- "
+                        "the aim a moon tour needs, because the apoapsis burn can only rotate "
+                        "about the apsidal line (apsis:Ganymede, apsis:Titan). plane:<Body> is "
+                        "minimum inclination to that plane instead, which leaves the apsides at "
+                        "a latitude no later burn removes; the ecliptic 'prograde' is 25 deg "
+                        "off the Galilean plane on top of that.")
     p.add_argument("--samples", type=int, default=12,
                    help="burn times to try; with --through, arrival epochs to scan")
     p.add_argument("--span", type=float, default=90.0,

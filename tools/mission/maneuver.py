@@ -237,6 +237,68 @@ def inc_to_plane(system, traj, target, soi_ut, plane_body):
     return math.degrees(math.acos(max(-1.0, min(1.0, float(w @ n)))))
 
 
+def periapsis_latitude(system, traj, target, soi_ut, plane_body):
+    """Latitude (deg) of the arrival periapsis vector above `plane_body`'s orbital plane.
+
+    THE number that decides whether a moon tour's plane can ever be fixed: a burn only reaches
+    planes that contain the burn point, and the cheap burn point is apoapsis, on the same line.
+    """
+    r, v = _arrival_state(system, traj, target, soi_ut)
+    mu = system.body(target).mu
+    h = np.cross(r, v)
+    e_vec = np.cross(v, h) / mu - r / np.linalg.norm(r)
+    e_hat = e_vec / np.linalg.norm(e_vec)
+    pb = system.body(plane_body)
+    n = astro.plane_normal(pb.inc, pb.lan)
+    return math.degrees(math.asin(max(-1.0, min(1.0, float(e_hat @ n)))))
+
+
+def apsis_b_dir(system, traj, target, t_end, plane_body, peR_want):
+    """B-plane aim that puts the arrival PERIAPSIS in `plane_body`'s orbital plane, prograde.
+
+    This is the aim a moon tour wants, and `plane_b_dir` is NOT: minimum inclination leaves the
+    apsidal line at a latitude the apoapsis burn cannot remove (Saturnalija: 21 deg, tour dead;
+    Perun 2 as first aimed: 4 deg, Ganymede 75,000 km off the plane at perijove). With the
+    periapsis on the node line the whole arrival inclination comes out at apoapsis for
+    2 v_apo sin(i/2), folded into the periapsis raise.
+
+    Geometry: the periapsis direction is e_hat = cos(beta) s + sin(beta) B_hat with
+    cos(beta) = 1/e (astro.bplane's own construction, s downstream), and e follows from the
+    periapsis radius asked for. e_hat . n = 0 then fixes the angle of B_hat in the B-plane to
+    two roots; the prograde one has (B_hat x s) . n > 0. Returns (b_dir, |floor| deg).
+    """
+    target = system.body(target)
+    pb = system.body(plane_body)
+    rep = patched.arrival_report(system, traj, target.name, t_end)
+    if not rep.get("captured"):
+        raise ValueError(f"no {target.name} arrival to aim from -- correct the miss first")
+    r, v = _arrival_state(system, traj, target.name, rep["soi_ut"])
+    bp = astro.bplane(target.mu, r, v)
+    s = bp["s_hat"]
+    n = astro.plane_normal(pb.inc, pb.lan)
+    ecc = 1.0 + peR_want * bp["vinf"] ** 2 / target.mu
+    beta = math.acos(1.0 / ecc)
+    e1 = n - float(n @ s) * s
+    e1n = float(np.linalg.norm(e1))
+    e1 = e1 / e1n
+    e2 = np.cross(s, e1)
+    c = -float(n @ s) / (e1n * math.tan(beta))
+    if abs(c) > 1.0:
+        raise ValueError(f"the asymptote is {math.degrees(math.asin(abs(float(n @ s)))):.2f} deg "
+                         f"out of {pb.name}'s plane -- no {peR_want / 1e3:,.0f} km periapsis lies in it")
+    sn = math.sqrt(1.0 - c * c)
+    pick = None
+    for sgn in (1.0, -1.0):
+        bh = c * e1 + sgn * sn * e2
+        w = np.cross(bh, s)
+        if float(w @ n) > 0:
+            pick = bh
+    if pick is None:
+        pick = c * e1 + sn * e2
+    d = np.array([float(pick @ bp["t_hat"]), float(pick @ bp["r_hat"])])
+    return d / np.linalg.norm(d), math.degrees(math.asin(min(1.0, abs(float(s @ n)))))
+
+
 def plane_b_dir(system, traj, target, t_end, plane_body):
     """B-plane aim that lays the arrival orbit as close to `plane_body`'s orbital plane as the
     incoming asymptote allows, on the prograde side.
@@ -264,6 +326,13 @@ def plane_b_dir(system, traj, target, t_end, plane_body):
     return d / np.linalg.norm(d), math.degrees(math.asin(min(1.0, abs(float(s @ n)))))
 
 
+def _spec_b_dir(system, traj, target, t_end, spec, peR_want):
+    kind, _, plane_of = spec.partition(":")
+    if kind == "apsis":
+        return apsis_b_dir(system, traj, target, t_end, plane_of, peR_want)
+    return plane_b_dir(system, traj, target, t_end, plane_of)
+
+
 def refine(system, body, r_node, v_node, ut_node, target, t_end, peR_want,
            b_dir=None, ut_want=None, watch=None, max_nfev=60, verbose=False,
            max_dv=1000.0, diff_step=1e-2):
@@ -287,14 +356,17 @@ def refine(system, body, r_node, v_node, ut_node, target, t_end, peR_want,
     rep = patched.arrival_report(system, traj, target.name, t_end)
     vinf = rep.get("vinf") or rep.get("ca_vrel") or 1000.0
     b_mag = b_for_periapsis(target.mu, max(vinf, 1.0), peR_want)
-    plane_of, plane_floor = None, None
+    plane_of, plane_floor, spec = None, None, None
     if isinstance(b_dir, str):
-        # "plane:Ganymede" -- aim into that body's orbital plane. The direction depends on
-        # the flown asymptote, so it is resolved here from the no-burn arrival.
-        if not b_dir.startswith("plane:"):
-            raise ValueError(f"unknown b_dir spec {b_dir!r}; use 'plane:<Body>' or a 2-vector")
-        plane_of = b_dir[len("plane:"):]
-        b_dir, plane_floor = plane_b_dir(system, traj, target.name, t_end, plane_of)
+        # "plane:Ganymede" -- minimum inclination to that body's orbital plane.
+        # "apsis:Ganymede" -- periapsis IN that plane, which is what a moon tour needs.
+        # Both depend on the flown asymptote, so they are resolved here and re-resolved once
+        # on the corrected trajectory (the MCC moves the asymptote a little).
+        spec = b_dir
+        kind, _, plane_of = b_dir.partition(":")
+        if kind not in ("plane", "apsis") or not plane_of:
+            raise ValueError(f"unknown b_dir spec {b_dir!r}; use 'plane:<Body>', 'apsis:<Body>' or a 2-vector")
+        b_dir, plane_floor = _spec_b_dir(system, traj, target.name, t_end, spec, peR_want)
     if b_dir is None:
         res0 = _bplane_residual(system, traj, target.name, t_end, (0.0, 0.0), 0.0)
         cur = np.array([res0[0], res0[1]])
@@ -322,10 +394,23 @@ def refine(system, body, r_node, v_node, ut_node, target, t_end, peR_want,
                         xtol=1e-12, ftol=1e-12, gtol=1e-12, max_nfev=max_nfev)
     dv = sol.x
     traj = fly(dv)
+    if spec:
+        # second pass: the aim was built on the no-burn asymptote; rebuild it on the corrected one
+        try:
+            b_dir, plane_floor = _spec_b_dir(system, traj, target.name, t_end, spec, peR_want)
+            want_b = (b_dir[0] * b_mag, b_dir[1] * b_mag)
+            sol = least_squares(resid, dv, diff_step=diff_step,
+                                bounds=(-abs(max_dv), abs(max_dv)),
+                                xtol=1e-12, ftol=1e-12, gtol=1e-12, max_nfev=max_nfev)
+            dv = sol.x
+            traj = fly(dv)
+        except ValueError:
+            pass
     report = patched.arrival_report(system, traj, target.name, t_end)
     if plane_of and report.get("captured"):
         report["plane"] = plane_of
         report["inc_to_plane"] = inc_to_plane(system, traj, target.name, report["soi_ut"], plane_of)
+        report["peri_lat"] = periapsis_latitude(system, traj, target.name, report["soi_ut"], plane_of)
         report["plane_floor"] = plane_floor
     return {"dv": dv, "traj": traj, "report": report,
             "cost": float(sol.cost), "nfev": sol.nfev, "b_want": want_b}

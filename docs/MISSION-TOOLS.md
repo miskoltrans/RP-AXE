@@ -491,6 +491,19 @@ so the nearest normal to the plane's `n` is `n` minus its `s`-component, and `B`
 cannot be bought from a midcourse burn at any price. Measured on Perun 2: `plane:Ganymede`
 gave 4.12 deg against a 4.09 deg floor for **6.20 m/s**, cheaper than the ecliptic aim's 7.64.
 
+**`plane:<Body>` is the WRONG aim for a moon tour, and `apsis:<Body>` is the right one
+(2026-09-12).** Minimum inclination leaves the capture periapsis -- and with it the apsidal
+line -- at a latitude above the moons' plane, and a burn only reaches planes that contain the
+burn point. The cheap burn point is apoapsis, on that same line, so the apoapsis burn can take
+the inclination down to the periapsis latitude and no further. Saturnalija was aimed this way:
+apsides 21 deg out of Titan's plane, and the design's Titan ladder died. Perun 2 as first
+aimed: 4.1 deg, which put Ganymede 75,000 km off the plane at perijove -- three times its SOI.
+`--bplane apsis:Ganymede` instead fixes the angle of B in the B-plane so that
+`e_hat = cos(beta) s + sin(beta) B_hat` (cos beta = 1/e) has no component along the plane
+normal; the arrival inclination is then larger (Perun 2: ~17 deg) but comes out entirely at
+apoapsis for `2 v_apo sin(i/2)`, ~22 m/s folded into the perijove raise. The FLOWN block prints
+both numbers: the inclination to the plane and the periapsis latitude.
+
 The scan in `correct` samples burn dates from 2 % of the way to the encounter, which is ten
 days out on a Jupiter cruise. **`--burn-at +1h` (or `+2d`, or a date)** solves the one burn
 time you name instead, for when the burn has to happen before tomorrow's launch window.
