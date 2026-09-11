@@ -19,7 +19,10 @@ from rss_ephem import DAY, System, fmt_ut
 
 VID = "744a14e4-901e-446b-a9a1-d108bf2f01c0"
 PUSH = "--push" in sys.argv
-BURN2 = "--burn2" in sys.argv          # burn 1 flown and probe released: solve/push the orbiter deflection only
+BURN2 = "--burn2" in sys.argv
+CAPTURE_GM = None                      # --capture 40 : push the orbit-insertion burn into a 40 Gm apoapsis
+if "--capture" in sys.argv:
+    CAPTURE_GM = float(sys.argv[sys.argv.index("--capture") + 1])          # burn 1 flown and probe released: solve/push the orbiter deflection only
 PROBE_VID = "dca47272-53e1-4afc-befd-24c9036bfc50"
 
 PROBE_PE_KM = 59_745.0      # 7 deg inertial path at 1,400 km -- the designed corridor
@@ -127,6 +130,67 @@ def fly_check(r_b, v_b, ut_b, label):
             print(f"      {m:10s} closest {d / 1e3:12,.0f} km at {fmt_ut(t)}  (SOI {soi / 1e3:,.0f} km){flag}")
     return traj
 
+
+if CAPTURE_GM is not None:
+    # Chain through whatever nodes the game already holds (burn 2 if it has not fired yet).
+    pending = sorted(info.get("nodes") or [], key=lambda n: n["ut"])
+    r, v, t = r0.copy(), v0.copy(), ut0
+    for n in pending:
+        r, v = astro.propagate(MU, r, v, n["ut"] - t)
+        comps = (n.get("radial", 0.0), n.get("normal", 0.0), n.get("prograde", 0.0))
+        v = v + astro.from_node(r, v, comps)
+        t = n["ut"]
+        print(f"chained through pending node at {fmt_ut(t)}: {math.sqrt(sum(c * c for c in comps)):.3f} m/s")
+    tp, elh = peri_time(r, v, t)
+    rp, vp = astro.propagate(MU, r, v, tp - t)
+    rpn, vp_hyp = np.linalg.norm(rp), np.linalg.norm(vp)
+    apo = CAPTURE_GM * 1e9
+    a_cap = 0.5 * (rpn + apo)
+    vp_ell = math.sqrt(MU * (2 / rpn - 1 / a_cap))
+    dv_cap = vp_hyp - vp_ell
+    node_c = np.array([0.0, 0.0, -dv_cap])                 # pure retrograde at periapsis
+    v_after = vp + astro.from_node(rp, vp, node_c)
+    el_c = astro.elements(MU, rp, v_after)
+    period = 2 * math.pi * math.sqrt(a_cap ** 3 / MU)
+    print(f"\nCAPTURE  {fmt_ut(tp)}   (T+{(tp - ut0) / DAY:.1f} d)   incoming peri {elh.peR / 1e3:,.1f} km  v_inf {astro.vinf_from_state(MU, r, v):,.1f}")
+    print(f"    prograde {node_c[2]:+9.2f}   normal {node_c[1]:+9.2f}   radial {node_c[0]:+9.2f}   |dv| {dv_cap:,.2f} m/s")
+    print(f"    -> {el_c.peR / 1e3:,.0f} x {el_c.apR / 1e3:,.0f} km  e {el_c.ecc:.5f}  i {math.degrees(el_c.inc):.3f}  "
+          f"period {period / DAY:,.1f} d  apoapsis {fmt_ut(tp + period / 2)}  ({apo / sat.soi * 100:.0f}% of the SOI)")
+    for gm in (20.0, 40.0):
+        a2 = 0.5 * (rpn + gm * 1e9)
+        print(f"    (for reference, {gm:.0f} Gm: {vp_hyp - math.sqrt(MU * (2 / rpn - 1 / a2)):,.1f} m/s)")
+    m_orb = M_STACK - M_SAT_PROBE - 0.012
+    burn_s = m_orb * 1e3 * (1 - math.exp(-dv_cap / VE)) * VE / THRUST
+    print(f"    {m_orb:.3f} t, burn {burn_s:.0f} s at {THRUST / 1e3:.2f} kN -> starts {burn_s / 2:.0f} s before periapsis")
+    traj = patched.shoot(system, "Saturn", rp, v_after, tp, tp + 1.05 * period, watch=MOONS)
+    print("    shooter [one full rev after capture]: " + " | ".join(f"{p.body.name} {p.end}" for p in traj.patches))
+    for m in MOONS:
+        tt, d, vr = patched.closest_approach(system, traj, m, tp, tp + 1.05 * period)
+        soi = system.body(m).soi
+        flag = "  <-- INSIDE SOI" if d < soi else ""
+        if d < 60 * soi or flag:
+            print(f"      {m:10s} closest {d / 1e3:12,.0f} km at {fmt_ut(tt)}  (SOI {soi / 1e3:,.0f} km){flag}")
+    if PUSH:
+        res = br.place_nodes([(tp, node_c[0], node_c[1], node_c[2])], vid=VID, replace=not pending)
+        print(f"\nPUSHED to {res['vessel']}: {res['placed']} node(s)" + ("  (appended after the pending node)" if pending else ""))
+        for n in res.get("nodes", []):
+            print(f"    node {fmt_ut(n['ut'])}  prograde {n['prograde']:+.3f}  normal {n['normal']:+.3f}  radial {n['radial']:+.3f}  |{n['magnitude']:.3f}|")
+        for i, pt in enumerate(res.get("flight_plan") or []):
+            pe, ap = pt.get("peR"), pt.get("apR")
+            print(f"    plan {i}: {pt.get('body'):8s} {fmt_ut(pt.get('start_ut'))} -> {pt.get('transition')}"
+                  + (f"   pe {pe / 1e3:,.1f} km" if pe else "") + (f"  ap {ap / 1e3:,.0f} km" if ap and ap > 0 else ""))
+        al = br.alarm(tp, name=f"Saturnalija: SATURN ORBIT INSERTION {dv_cap:,.0f} m/s", margin=3600,
+                      notes=f"Retrograde at periapsis into 80,000 km x {CAPTURE_GM:,.0f} Gm, {burn_s:.0f} s burn centred on the node. "
+                            f"Capture FIRST, then switch to Saturnalija Probe before it tops the atmosphere ~10 min later "
+                            f"(KSP will not switch away from a vessel in atmosphere). Re-run saturn_arrival.py --capture {CAPTURE_GM:.0f} --push "
+                            f"after burn 2 has flown to re-align the node with the real periapsis.",
+                      type="Raw", action="KillWarp", vessel="Saturnalija")
+        print(f"    alarm {al.get('id')} via {al.get('backend')}")
+        if pending:
+            print("    NOTE: chained on the un-flown burn 2; after burn 2 flies, re-run --capture to re-time the node.")
+    else:
+        print("\n(dry run -- pass --push to place the capture node and set the alarm)")
+    sys.exit(0)
 
 if BURN2:
     # The probe is its own vessel now: its trajectory sets the entry clock, not the orbiter's.
