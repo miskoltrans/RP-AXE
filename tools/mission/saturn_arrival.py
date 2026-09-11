@@ -19,6 +19,8 @@ from rss_ephem import DAY, System, fmt_ut
 
 VID = "744a14e4-901e-446b-a9a1-d108bf2f01c0"
 PUSH = "--push" in sys.argv
+BURN2 = "--burn2" in sys.argv          # burn 1 flown and probe released: solve/push the orbiter deflection only
+PROBE_VID = "dca47272-53e1-4afc-befd-24c9036bfc50"
 
 PROBE_PE_KM = 59_745.0      # 7 deg inertial path at 1,400 km -- the designed corridor
 ORB_PE_KM = 80_000.0        # orbiter capture periapsis radius
@@ -125,6 +127,78 @@ def fly_check(r_b, v_b, ut_b, label):
             print(f"      {m:10s} closest {d / 1e3:12,.0f} km at {fmt_ut(t)}  (SOI {soi / 1e3:,.0f} km){flag}")
     return traj
 
+
+if BURN2:
+    # The probe is its own vessel now: its trajectory sets the entry clock, not the orbiter's.
+    pb, rpr, vpr, utpr = br.state(system, vid=PROBE_VID)
+    assert pb.name == "Saturn"
+    rpr, vpr = astro.propagate(MU, rpr, vpr, ut0 - utpr)
+    tpp, elp = peri_time(rpr, vpr, ut0)
+    print(f"probe: peri {elp.peR / 1e3:,.1f} km (alt {(elp.peR - R) / 1e3:,.1f})  i {math.degrees(elp.inc):.3f}  "
+          f"periapsis {fmt_ut(tpp)}   (corridor asked {PROBE_PE_KM:,.0f} km)")
+    t_atm = radius_crossing(rpr, vpr, ut0, R + ATM, tpp)
+    t_1200 = radius_crossing(rpr, vpr, ut0, R + 1200e3, tpp)
+    for name, t in (("2,000 km atmosphere top", t_atm), ("1,400 km", radius_crossing(rpr, vpr, ut0, R + 1400e3, tpp)),
+                    ("1,200 km band top", t_1200), ("1,100 km band bottom", radius_crossing(rpr, vpr, ut0, R + 1100e3, tpp))):
+        rr, vv = astro.propagate(MU, rpr, vpr, t - ut0)
+        rn = np.linalg.norm(rr)
+        gam = math.degrees(math.asin(float(rr @ vv) / (rn * np.linalg.norm(vv))))
+        vrel = vv - np.cross(np.array([0, 0, OMEGA]), rr)
+        gam_rel = math.degrees(math.asin(float(rr @ vrel) / (rn * np.linalg.norm(vrel))))
+        print(f"    {name:24s} {fmt_ut(t)}  T-peri {tpp - t:7.0f} s   v {np.linalg.norm(vv):,.0f} m/s "
+              f"gamma {gam:+.2f}   rel {np.linalg.norm(vrel):,.0f} m/s gamma {gam_rel:+.2f}")
+    tpo, elo = peri_time(r0, v0, ut0)
+    print(f"orbiter now: peri {elo.peR / 1e3:,.1f} km  i {math.degrees(elo.inc):.3f}  periapsis {fmt_ut(tpo)}  "
+          f"separation from probe {np.linalg.norm(r0 - rpr) / 1e3:,.1f} km, {np.linalg.norm(v0 - vpr):.3f} m/s")
+    t2 = ut0 + T1_OFFSET
+    r2, v2 = astro.propagate(MU, r0, v0, t2 - ut0)
+    t_pe_want = t_atm - LEAD_S
+    dv2, node2, el2, tp2 = solve(r2, v2, t2, ORB_PE_KM, t_pe_want=t_pe_want,
+                                 label=f"BURN 2  (orbiter -> {ORB_PE_KM:,.0f} km, periapsis {LEAD_S:.0f} s before the probe tops the atmosphere)")
+    v2p = v2 + dv2
+    fly_check(r2, v2p, t2, "after burn 2")
+    rp, vp = astro.propagate(MU, r2, v2p, tp2 - t2)
+    rpn, vp_hyp = np.linalg.norm(rp), np.linalg.norm(vp)
+    a_cap = 0.5 * (rpn + CAPTURE_APO_M)
+    vp_ell = math.sqrt(MU * (2 / rpn - 1 / a_cap))
+    dv_cap = vp_hyp - vp_ell
+    m_orb = M_STACK - M_SAT_PROBE - 0.006
+    burn_s = m_orb * 1e3 * (1 - math.exp(-dv_cap / VE)) * VE / THRUST
+    print(f"\nCAPTURE at {fmt_ut(tp2)}: dV {dv_cap:,.1f} m/s retrograde, {burn_s:.0f} s burn; ends "
+          f"{(t_atm - tp2) - burn_s / 2:.0f} s before the probe tops the atmosphere")
+    v_cap = vp * (vp_ell / vp_hyp)
+    r_hold, _ = astro.propagate(MU, rpr, vpr, t_1200 - ut0)
+    print("RELAY (orbiter after capture vs probe, probe held at its 1,200 km point):")
+    for dt in (0, 300, 600, 900, 1200):
+        t = t_atm + dt
+        ro, _ = astro.propagate(MU, rp, v_cap, t - tp2)
+        rpb = astro.propagate(MU, rpr, vpr, t - ut0)[0] if t <= t_1200 else r_hold
+        d = ro - rpb
+        elev = math.degrees(math.asin(float(d @ (rpb / np.linalg.norm(rpb))) / np.linalg.norm(d)))
+        print(f"    atm+{dt:5d} s  range {np.linalg.norm(d) / 1e3:9,.0f} km   elevation {elev:+6.1f} deg")
+    pred = br.predict(vid=VID, ut=t2, dv=(node2[0], node2[1], node2[2]), horizon=120)
+    print("\nKSP /predict for burn 2:")
+    for i, p in enumerate(pred.get("patches") or pred.get("flight_plan") or []):
+        print(f"    {i}: {p.get('body')} {p.get('transition')}  pe {p.get('peR', 0) / 1e3:,.1f} km  "
+              f"start {fmt_ut(p.get('start_ut')) if p.get('start_ut') else '-'}")
+    if PUSH:
+        res = br.place_nodes([(t2, node2[0], node2[1], node2[2])], vid=VID, replace=True)
+        print(f"\nPUSHED to {res['vessel']}: {res['placed']} node(s)")
+        for n in res.get("nodes", []):
+            print(f"    node {fmt_ut(n['ut'])}  prograde {n['prograde']:+.3f}  normal {n['normal']:+.3f}  radial {n['radial']:+.3f}  |{n['magnitude']:.3f}|")
+        for i, pt in enumerate(res.get("flight_plan") or []):
+            pe = pt.get("peR")
+            print(f"    plan {i}: {pt.get('body'):8s} {fmt_ut(pt.get('start_ut'))} -> {pt.get('transition')}"
+                  + (f"   pe {pe / 1e3:,.1f} km" if pe else ""))
+        al = br.alarm(t2, name="Saturnalija: orbiter deflection burn", margin=600,
+                      notes=f"Burn 2 of the arrival sequence, {np.linalg.norm(dv2):.2f} m/s, orbiter only. Periapsis "
+                            f"{ORB_PE_KM:,.0f} km timed {LEAD_S:.0f} s BEFORE the probe tops the atmosphere ({fmt_ut(t_atm)}). "
+                            f"Capture {dv_cap:,.0f} m/s retrograde at {fmt_ut(tp2)}, THEN switch to the probe.",
+                      type="Raw", action="KillWarp", vessel="Saturnalija")
+        print(f"    alarm {al.get('id')} via {al.get('backend')}")
+    else:
+        print("\n(dry run -- pass --push to place burn 2 and set the alarm)")
+    sys.exit(0)
 
 # ---------------------------------------------------------------- as it flies now
 tp0, el0 = peri_time(r0, v0, ut0)
