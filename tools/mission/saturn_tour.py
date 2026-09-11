@@ -69,42 +69,6 @@ def rel_inc(r, v, ut):
     return math.degrees(math.acos(max(-1.0, min(1.0, float(unit(np.cross(r, v)) @ titan_normal(ut))))))
 
 
-def rp_for_vinf(ra, i_rel_deg, vinf):
-    """Periapsis (m) giving `vinf` at Titan for an orbit with apoapsis `ra` and inclination i_rel."""
-    T_want = 3.0 - (vinf / V_TITAN) ** 2
-    ci = math.cos(math.radians(i_rel_deg))
-
-    def tiss(rp):
-        a = 0.5 * (ra + rp)
-        p = 2 * ra * rp / (ra + rp)
-        return titan.a / a + 2 * math.sqrt(p / titan.a) * ci
-    lo, hi = 0.2e9, titan.a
-    for _ in range(80):
-        mid = 0.5 * (lo + hi)
-        if tiss(mid) < T_want:
-            lo = mid
-        else:
-            hi = mid
-    return 0.5 * (lo + hi)
-
-
-def guess_burn(t_b):
-    """Analytic seed: rotate into the plane through the burn point nearest Titan's, raise periapsis."""
-    r_b, v_b = astro.propagate(MU, r0, v0, t_b - ut0)
-    r_hat = unit(r_b)
-    n_T = titan_normal(t_b)
-    n_new = unit(n_T - float(n_T @ r_hat) * r_hat)
-    i_min = math.degrees(math.asin(abs(float(n_T @ r_hat))))
-    v_hat = unit(np.cross(n_new, r_hat))
-    if float(v_hat @ v_b) < 0:
-        v_hat = -v_hat
-    ra = float(np.linalg.norm(r_b))
-    rp = RP_SEED
-    v_mag = math.sqrt(MU * (2 / ra - 2 / (ra + rp)))
-    dv = v_mag * v_hat - v_b
-    return r_b, v_b, dv, rp, i_min
-
-
 def post_flyby(rep_patch, ut_exit):
     """Saturn-centric elements after leaving Titan's SOI."""
     r, v = rep_patch.state(ut_exit)
