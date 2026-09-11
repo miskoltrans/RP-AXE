@@ -134,7 +134,15 @@ def fly_check(r_b, v_b, ut_b, label):
 
 if CAPTURE_GM is not None:
     # Chain through whatever nodes the game already holds (burn 2 if it has not fired yet).
-    pending = sorted(info.get("nodes") or [], key=lambda n: n["ut"])
+    # Chain only the deflection burns that come BEFORE periapsis; a capture node already sitting
+    # at periapsis is the thing being re-solved, so it is replaced, not flown through.
+    tp_now, _ = peri_time(r0, v0, ut0)
+    allnodes = sorted(info.get("nodes") or [], key=lambda n: n["ut"])
+    pending = [n for n in allnodes if n["ut"] < tp_now - 3600]
+    for n in allnodes:
+        if n not in pending:
+            print(f"existing node at {fmt_ut(n['ut'])} ({math.hypot(n.get('radial', 0), n.get('prograde', 0)):,.1f} m/s) "
+                  f"is {n['ut'] - tp_now:+.1f} s from the live periapsis -- will be replaced")
     r, v, t = r0.copy(), v0.copy(), ut0
     for n in pending:
         r, v = astro.propagate(MU, r, v, n["ut"] - t)
@@ -163,6 +171,15 @@ if CAPTURE_GM is not None:
     m_orb = M_STACK - M_SAT_PROBE - 0.012
     burn_s = m_orb * 1e3 * (1 - math.exp(-dv_cap / VE)) * VE / THRUST
     print(f"    {m_orb:.3f} t, burn {burn_s:.0f} s at {THRUST / 1e3:.2f} kN -> starts {burn_s / 2:.0f} s before periapsis")
+    try:
+        pb, rpr, vpr, utpr = br.state(system, vid=PROBE_VID, name=None if PROBE_VID else PROBE_NAME)
+        rpr, vpr = astro.propagate(MU, rpr, vpr, ut0 - utpr)
+        tpp, elp = peri_time(rpr, vpr, ut0)
+        t_atm = radius_crossing(rpr, vpr, ut0, R + ATM, tpp)
+        print(f"    probe: peri {elp.peR / 1e3:,.1f} km, tops the atmosphere {fmt_ut(t_atm)} = "
+              f"{(t_atm - tp) / 60:+.1f} min after the orbiter's periapsis; burn ends {(t_atm - tp) - burn_s / 2:.0f} s before that")
+    except bridge_mod.BridgeError as exc:
+        print(f"    (probe not readable: {exc})")
     traj = patched.shoot(system, "Saturn", rp, v_after, tp, tp + 1.05 * period, watch=MOONS)
     print("    shooter [one full rev after capture]: " + " | ".join(f"{p.body.name} {p.end}" for p in traj.patches))
     for m in MOONS:
@@ -172,7 +189,10 @@ if CAPTURE_GM is not None:
         if d < 60 * soi or flag:
             print(f"      {m:10s} closest {d / 1e3:12,.0f} km at {fmt_ut(tt)}  (SOI {soi / 1e3:,.0f} km){flag}")
     if PUSH:
-        res = br.place_nodes([(tp, node_c[0], node_c[1], node_c[2])], vid=VID, replace=not pending)
+        res = br.place_nodes([(tp, node_c[0], node_c[1], node_c[2])], vid=VID, replace=True)
+        if pending:
+            res = br.place_nodes([(n["ut"], n.get("radial", 0.0), n.get("normal", 0.0), n.get("prograde", 0.0)) for n in pending]
+                                 + [(tp, node_c[0], node_c[1], node_c[2])], vid=VID, replace=True)
         print(f"\nPUSHED to {res['vessel']}: {res['placed']} node(s)" + ("  (appended after the pending node)" if pending else ""))
         for n in res.get("nodes", []):
             print(f"    node {fmt_ut(n['ut'])}  prograde {n['prograde']:+.3f}  normal {n['normal']:+.3f}  radial {n['radial']:+.3f}  |{n['magnitude']:.3f}|")
