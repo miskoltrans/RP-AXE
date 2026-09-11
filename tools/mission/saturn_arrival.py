@@ -6,8 +6,9 @@ checked against KSP's own PatchedConics through /predict before it is pushed.
 """
 import math
 import sys
+import os
 
-sys.path.insert(0, r"C:\git\ksp\RP-AXE\tools\mission")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 from scipy.optimize import minimize
 
