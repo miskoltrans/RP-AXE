@@ -36,6 +36,7 @@ until the flown B-plane target is hit → shoot again and print the result.
 | file | what it owns |
 |---|---|
 | `cfgnode.py` | KSP ConfigNode reader, with the game's own one-key-per-line splitting |
+| `return_home.py` | return-to-parent (TEI) from a moon orbit — `depart` cannot target the parent body |
 | `rss_ephem.py` | every body: Kopernicus elements, plus index and SOI as the game computed them |
 | `astro.py` | Shepperd propagator, elements, the maneuver-node basis, B-plane |
 | `lambert.py` | Izzo 2015, zero- and multi-revolution |
@@ -512,6 +513,33 @@ time you name instead, for when the burn has to happen before tomorrow's launch 
 nodes and is the only place that prints "*** that periapsis is INSIDE Jupiter ***"; the bridge's
 `/nodes` reports a periapsis radius with no comment. Both Perun 2 buses carried MCC nodes at
 0.90 and 0.77 Rj -- a 6.8 m/s burn each, into the planet -- and looked fine in the map view.
+
+## Returning to the parent body
+
+`plan.py depart --target Earth` does **not** work from a moon orbit. Earth is the parent
+frame's origin, so the target's position in that frame is the zero vector and `lambert.py`
+divides by `r2_norm == 0`: you get `invalid value encountered in divide` and NaN, not an error.
+
+**Use MechJeb first.** The install's MechJeb has `ReturnFromMoon` / `MoonReturnEjection`
+(verified in `MechJeb2.dll` and `MechJebLib.dll`); its maneuver planner's *return from a moon*
+takes a perigee altitude and places the node in one click. That is the fast path when KSP is up.
+
+`return_home.py` is the offline equivalent, and solves it as a shoot rather than a Lambert arc:
+scan the burn point around one orbit, bisect the burn magnitude along velocity until the flown
+geocentric periapsis lands on the target radius, then least-squares polish all three components.
+
+```
+python return_home.py --vessel-id <guid> --peri 60km --samples 36 --push --alarm "TEI"
+```
+
+Measured on Svarog Ferry out of a 74 x 134 km polar lunar orbit: **806.79 m/s, pure prograde**,
+to a 60 km Earth perigee, entry 10,987 m/s at the 120 km interface — KSP's own flight plan
+agreed on the escape (e 1.2328) and the perigee radius (6,431,029 m).
+
+**Known defect: the printed periapsis *date* is unreliable.** Periapsis time comes from an
+argmin over a 4,000-point grid on the arrival patch, and on a 189,000 km-SMA return arc two
+perigee passes sit near that minimum — two runs of the same burn printed 3.87 d and 22.88 d
+of coast. The node, the periapsis radius and the entry speed are sound; the arrival date is not.
 
 ## Where the algorithms come from
 
