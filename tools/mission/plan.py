@@ -1083,6 +1083,28 @@ def cmd_encounter(args):
         for a in alts:
             print(f"    {fmt_ut(a['t_k'])[:16]}  burn {a['off']:+.1f} d from apoapsis  "
                   f"{a['mag']:,.1f} m/s  v-inf {a['vinf']:,.0f}  {a['irel']:.2f} deg off plane")
+    # THE AIM. A flyby costs the same at every B-plane angle and the outcome swings from
+    # ejection out of the planet's SOI to a halved period, so the default aim (whatever miss
+    # direction the trajectory already had) is not a choice, it is an accident. Measured on
+    # Perun 2 Bus A: the default aim pumped the orbit UP to a 50.5 Gm apoapsis against
+    # Jupiter's 48.2 Gm SOI -- the bus would have left the system after one pass.
+    if args.aim != "none":
+        print(f"\n  AIM SCAN at {moon.name} (each angle flown, not modelled -- apoapsis here is "
+              f"hypersensitive to the outgoing velocity)")
+        angles = [a * 360.0 / args.aim_steps for a in range(args.aim_steps)]
+        flown = tour.aim_fly(system, body, moon, best["r_b"], best["v_b"], best["t_b"],
+                             best["dv"], per, best["soi_ut"], angles, max_dv=args.max_dv)
+        usable = [a for a in flown if a["bound"] and a["returns"]]
+        if not usable:
+            print("  WARNING: no aim angle leaves a bound orbit that still reaches the moon.")
+        else:
+            chosen = tour.pick_aim(usable, args.aim)
+            print(f"  -> {args.aim} aim psi {chosen['psi']:.0f} deg: "
+                  f"{chosen['peR'] / 1e6:,.0f} x {chosen['apR'] / 1e6:,.0f} Mm, period "
+                  f"{chosen['period'] / DAY:.2f} d = {chosen['resonance']:.3f} {moon.name} periods, "
+                  f"{chosen['irel']:.2f} deg off its plane")
+            best = dict(best, dv=chosen["dv"], mag=chosen["mag"], vinf=chosen["vinf"],
+                        peR=chosen["flyby_peR"], post=chosen)
     node = astro.to_node(best["r_b"], best["v_b"], best["dv"])
     print()
     print(f"  BURN  {fmt_ut(best['t_b'])}   ({best['off']:+.1f} d from apoapsis, "
@@ -1801,6 +1823,12 @@ def main(argv=None):
     p.add_argument("--after", type=float, default=45.0, help="days after it to stop")
     p.add_argument("--step", type=float, default=0.5, help="epoch scan step, days")
     p.add_argument("--refine", type=int, default=6, help="how many seeds to refine through the shooter")
+    p.add_argument("--aim", choices=["pump", "resonance", "none"], default="pump",
+                   help="B-plane aim at the encounter, each angle FLOWN. `pump` takes the deepest "
+                        "pump-down that still returns to the moon; `resonance` prefers a near-integer "
+                        "moon-period ratio. `none` keeps whatever aim the solver happened to land on "
+                        "-- which on Perun 2 ejected the bus from Jupiter, so do not use it.")
+    p.add_argument("--aim-steps", type=int, default=24, help="B-plane angles to fly (default 24)")
     p.add_argument("--prefer", choices=["vinf", "coplanar", "cheap"], default="vinf",
                    help="which converged solution to fly. `coplanar` minimises the inclination to "
                         "the moon's plane, which for a multi-moon tour usually beats a few tens of "

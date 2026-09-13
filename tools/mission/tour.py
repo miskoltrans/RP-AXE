@@ -180,6 +180,120 @@ def solve(system, body, moon, r0, v0, ut0, per_want, *, before=30.0, after=45.0,
     return t_apo, seeds, sols
 
 
+def aim_scan(system, body, moon, traj, per_want, n=180):
+    """Post-flyby orbit as a function of the B-plane aim angle at the encounter.
+
+    THE flight rule this encodes: across the full range of aim angles a flyby costs the same
+    and the outcome swings from ejection out of the planet's SOI to a halved period. The
+    default aim `maneuver.refine` uses just preserves the existing miss direction, so it
+    picks one of those outcomes at random -- measured on Perun 2 Bus A, it pumped the orbit
+    UP to a 50.8 Gm apoapsis against Jupiter's 48.2 Gm SOI, i.e. straight out of the system.
+
+    Gravity bends the velocity TOWARD the body, hence away from B:
+        v_out = vinf * (cos(turn) * s_hat - sin(turn) * b_hat)
+    """
+    p_in = traj.enters(moon.name)
+    if p_in is None:
+        return None, []
+    bp = astro.bplane(moon.mu, p_in.r0, p_in.v0)
+    s_hat, t_hat, r_hat = bp["s_hat"], bp["t_hat"], bp["r_hat"]
+    vinf = bp["vinf"]
+    turn = astro.turn_angle(moon.mu, vinf, per_want)
+    t_enc = p_in.ut0 + 3600.0
+    rm, vm = (np.asarray(x, float) for x in system.rel(moon.name, t_enc))
+    t_moon = 2 * math.pi * math.sqrt(moon.a ** 3 / body.mu)
+    psi_now = math.degrees(math.atan2(bp["B_R"], bp["B_T"])) % 360.0
+    out = []
+    for i in range(n):
+        psi = 360.0 * i / n
+        b_hat = math.cos(math.radians(psi)) * t_hat + math.sin(math.radians(psi)) * r_hat
+        v_out = vinf * (math.cos(turn) * s_hat - math.sin(turn) * b_hat)
+        vs = vm + v_out
+        el = astro.elements(body.mu, rm, vs)
+        bound = el.ecc < 1.0 and el.apR < body.soi
+        out.append({"psi": psi, "peR": el.peR, "apR": el.apR if el.ecc < 1 else float("inf"),
+                    "ecc": el.ecc, "bound": bound,
+                    "period": el.period if el.ecc < 1 else float("inf"),
+                    "resonance": (el.period / t_moon) if el.ecc < 1 else float("inf"),
+                    "irel": rel_inc(system, moon.name, rm, vs, t_enc),
+                    "returns": bool(el.ecc < 1 and el.peR <= moon.a <= el.apR)})
+    return {"vinf": vinf, "turn_deg": math.degrees(turn), "psi_now": psi_now,
+            "moon_period": t_moon, "t_enc": t_enc}, out
+
+
+def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_dv=60.0,
+            verbose=True):
+    """Fly each B-plane aim angle and READ the post-flyby orbit, rather than modelling it.
+
+    The analytic scan above is only a pre-filter and must not be trusted for the answer: after
+    the flyby the vessel is near Jupiter's escape speed at the moon's radius, so apoapsis is
+    hypersensitive to the outgoing velocity. Evaluating the moon's own velocity an hour off the
+    flyby periapsis moved the predicted apoapsis from 35 to 50 Gm -- the difference between a
+    tour and leaving the system. So refine each aim and report what the trajectory actually does.
+    """
+    out = []
+    t_moon = 2 * math.pi * math.sqrt(moon.a ** 3 / body.mu)
+    if verbose:
+        print(f"  {'psi':>5s} {'dV':>8s} {'peri Mm':>9s} {'apo Mm':>10s} {'period d':>9s} "
+              f"{'/moon':>8s} {'i_rel':>6s}  outcome")
+    for psi in angles:
+        b_dir = np.array([math.cos(math.radians(psi)), math.sin(math.radians(psi))])
+        try:
+            res = maneuver.refine(system, body.name, r_b, v_b + dv0, t_b, moon.name,
+                                  t_ca + 60 * DAY, per_want, b_dir=b_dir, ut_want=t_ca,
+                                  watch=[moon.name], max_dv=max_dv, max_nfev=80)
+        except Exception:                                           # noqa: BLE001
+            continue
+        rep = res["report"]
+        if not rep.get("captured") or abs(rep["peR"] - per_want) / per_want > 0.08:
+            continue
+        traj = res["traj"]
+        p_in = traj.enters(moon.name)
+        post = [q for q in traj.patches if q.body.name == body.name and q.ut0 > p_in.ut0]
+        if not post:
+            continue
+        el = astro.elements(body.mu, post[0].r0, post[0].v0)
+        dv = dv0 + res["dv"]
+        bound = el.ecc < 1.0 and el.apR < body.soi
+        rec = {"psi": psi, "dv": dv, "mag": float(np.linalg.norm(dv)),
+               "peR": el.peR, "apR": el.apR if el.ecc < 1 else float("inf"), "ecc": el.ecc,
+               "bound": bound, "period": el.period if el.ecc < 1 else float("inf"),
+               "resonance": (el.period / t_moon) if el.ecc < 1 else float("inf"),
+               "irel": rel_inc(system, moon.name, post[0].r0, post[0].v0, post[0].ut0),
+               "returns": bool(el.ecc < 1 and el.peR <= moon.a <= el.apR),
+               "vinf": rep["vinf"], "flyby_peR": rep["peR"], "traj": traj, "res": res}
+        out.append(rec)
+        if verbose:
+            ap = f"{rec['apR'] / 1e6:10,.0f}" if bound else "    ESCAPE"
+            pe = f"{rec['period'] / DAY:9.2f}" if bound else "        -"
+            rr = f"{rec['resonance']:8.3f}" if bound else "       -"
+            st = ("returns to " + moon.name) if rec["returns"] else (
+                "bound, misses the moon" if bound else "LEAVES " + body.name.upper())
+            print(f"  {psi:5.0f} {rec['mag']:8.1f} {rec['peR'] / 1e6:9,.0f} {ap} {pe} {rr} "
+                  f"{rec['irel']:6.2f}  {st}")
+    return out
+
+
+def pick_aim(scan, mode="pump"):
+    """Choose a B-plane aim angle from the scan. `pump` = the deepest pump-down that still
+    returns to the moon; `resonance` = the nearest near-integer moon-period ratio below it."""
+    usable = [a for a in scan if a["bound"] and a["returns"]]
+    if not usable:
+        return None
+    if mode == "resonance":
+        best = None
+        for a in usable:
+            k = round(a["resonance"])
+            if k < 1:
+                continue
+            err = abs(a["resonance"] - k)
+            if err < 0.02 and (best is None or a["period"] < best["period"]):
+                best = a
+        if best is not None:
+            return best
+    return min(usable, key=lambda a: a["apR"])
+
+
 def free_dv(moon, vinf, per):
     """Velocity change a single flyby at that periapsis imposes -- the whole point of the tour."""
     turn = astro.turn_angle(moon.mu, vinf, per)

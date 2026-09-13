@@ -594,6 +594,22 @@ Titan v-infinity floored at 4,500 instead of 2,708. Perun 2's was aimed with `--
 apsis:Ganymede` and reproduced the design: v-infinity 4,242-4,297 against a designed 4,109,
 1,330 m/s of free velocity change per pass against 1,371.
 
+**THE AIM IS NOT OPTIONAL, AND IT MUST BE FLOWN, NOT MODELLED.** A flyby costs the same at
+every B-plane angle and the outcome swings from ejection to a halved period, so the default
+aim -- whatever miss direction the trajectory already had -- is an accident, not a choice.
+Measured on Perun 2 Bus A at Ganymede: psi 180 sends the bus out of Jupiter's SOI (apoapsis
+50.5 Gm against a 48.2 Gm SOI) and psi 0 pumps it down to 1,051 x 14,114 Mm, a 135 d period
+from 582 d, for the same 267 m/s. `--aim pump` (the default) flies every angle and takes the
+deepest pump-down that still returns to the moon; `--aim resonance` prefers a near-integer
+moon-period ratio.
+
+The scan is FLOWN because the analytic two-body version failed validation: after the flyby
+the vessel is near Jupiter's escape speed at Ganymede's radius, so apoapsis is hypersensitive
+to the outgoing velocity, and evaluating the moon's own velocity an hour off the flyby
+periapsis moved the predicted apoapsis from 35 to 50 Gm. The rotation formula itself was
+right to 0.08 degrees; the epoch was not. When an answer sits near an escape boundary,
+model nothing -- fly it.
+
 **`--prefer coplanar` is usually right for a multi-moon tour.** The default picks lowest
 v-infinity; the inclination to the moon's plane normally matters more. At Ganymede's orbital
 radius 1.3 degrees of relative inclination is 23,500 km of cross-track against a 24,359 km
