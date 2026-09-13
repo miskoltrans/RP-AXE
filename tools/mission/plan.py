@@ -938,6 +938,117 @@ def cmd_correct(args):
               f"do not assume sooner is better.")
 
 
+def parse_apo(system, body, text):
+    """'20Gm', '400Mm', or anything parse_radius takes; a body NAME means that body's orbit radius."""
+    t = str(text).strip().lower().replace(",", "")
+    if t.endswith("gm"):
+        return float(t[:-2]) * 1e9
+    if t.endswith("mm"):
+        return float(t[:-2]) * 1e6
+    for b in system.bodies.values():
+        if b.name.lower() == t and getattr(b, "parent", None) == body.name:
+            return b.a
+    return parse_radius(system, body, text)
+
+
+def cmd_capture(args):
+    """Orbit insertion: the retrograde burn at the periapsis of the current hyperbola."""
+    system, save = load(args)
+    body, r0, v0, ut0, who, _ = origin_state(system, save, args)
+    mu = body.mu
+    r0 = np.asarray(r0, float)
+    v0 = np.asarray(v0, float)
+    rn = float(np.linalg.norm(r0))
+    energy = float(v0 @ v0) / 2 - mu / rn
+    if energy <= 0:
+        sys.exit(f"  {who} is already bound to {body.name}; capture needs a hyperbola")
+    a_h = -mu / (2 * energy)
+    h = np.cross(r0, v0)
+    e_vec = np.cross(v0, h) / mu - r0 / rn
+    ecc = float(np.linalg.norm(e_vec))
+    vinf = math.sqrt(2 * energy)
+    nu = math.acos(max(-1.0, min(1.0, float(e_vec @ r0) / (ecc * rn))))
+    if float(r0 @ v0) < 0:
+        nu = -nu
+    F = 2 * math.atanh(math.sqrt((ecc - 1) / (ecc + 1)) * math.tan(nu / 2))
+    M = ecc * math.sinh(F) - F
+    t_p = ut0 - M / math.sqrt(mu / abs(a_h) ** 3)      # hyperbolic a is negative
+    moons = [b.name for b in system.bodies.values() if getattr(b, "parent", None) == body.name]
+
+    print(f"CAPTURE  {who}  at  {body.name}   (state at {fmt_ut(ut0)})")
+    print(f"  inbound hyperbola: v-infinity {vinf:,.1f} m/s  e {ecc:.4f}  "
+          f"periapsis {a_h * (1 - ecc) / 1e3:,.0f} km = {a_h * (1 - ecc) / body.radius:.3f} "
+          f"R{body.name[0].lower()}  at {fmt_ut(t_p)} (T+{(t_p - ut0) / DAY:.2f} d)")
+    # Fly the inbound leg with the moons watched: a moon SOI before periapsis changes everything.
+    traj = patched.shoot(system, body.name, r0, v0, ut0, t_p + DAY, watch=moons)
+    passes = [p.body.name for p in traj.patches if p.body.name != body.name]
+    if passes:
+        print(f"  NOTE: the inbound leg passes through {', '.join(passes)}'s SOI first")
+    b_at, r_p, v_p = traj.state(t_p)
+    if b_at.name != body.name:
+        sys.exit(f"  at the nominal periapsis time the vessel is inside {b_at.name}'s SOI -- "
+                 "re-aim the arrival past it, then capture")
+    r_p = np.asarray(r_p, float)
+    v_p = np.asarray(v_p, float)
+    rp = float(np.linalg.norm(r_p))
+    vp = float(np.linalg.norm(v_p))
+    ra = parse_apo(system, body, args.apo)
+    if ra <= rp:
+        sys.exit(f"  --apo {args.apo} is inside the periapsis ({rp / 1e3:,.0f} km)")
+    if ra >= body.soi:
+        sys.exit(f"  --apo {args.apo} is outside {body.name}'s SOI ({body.soi / 1e9:,.2f} Gm)")
+    a_new = (rp + ra) / 2
+    v_ell = math.sqrt(mu * (2 / rp - 1 / a_new))
+    dv = vp - v_ell
+    dv_vec = -dv * v_p / vp
+    node = astro.to_node(r_p, v_p, dv_vec)
+    period = 2 * math.pi * math.sqrt(a_new ** 3 / mu)
+    print(f"\n  --- capturing into {rp / 1e3:,.0f} x {ra / 1e6:,.0f} Mm "
+          f"(apoapsis {ra / body.soi * 100:.0f}% of the SOI), period {period / DAY:,.1f} d ---")
+    print(f"  BURN  {fmt_ut(t_p)}   periapsis speed {vp:,.1f} -> {v_ell:,.1f} m/s")
+    print(f"    prograde {node[2]:+12,.2f} m/s")
+    print(f"    normal   {node[1]:+12,.2f} m/s")
+    print(f"    radial   {node[0]:+12,.2f} m/s")
+    print(f"    total    {dv:12,.2f} m/s")
+    if args.mass and args.thrust:
+        isp = args.isp
+        m0 = args.mass * 1e3
+        m1 = m0 * math.exp(-dv / (isp * 9.80665))
+        print(f"    {m0 / 1e3:.3f} t at {args.thrust:.2f} kN: burn {(m0 - m1) * isp * 9.80665 / (args.thrust * 1e3):,.0f} s, "
+              f"{(m0 - m1):,.0f} kg of propellant, {m1 / 1e3:.3f} t after")
+    # Fly one full revolution after the burn, moons watched.
+    traj2 = patched.shoot(system, body.name, r_p, v_p + dv_vec, t_p, t_p + 1.05 * period, watch=moons)
+    hh = np.cross(r_p, v_p + dv_vec)
+    ev = np.cross(v_p + dv_vec, hh) / mu - r_p / rp
+    e2 = float(np.linalg.norm(ev))
+    a2 = 1 / (2 / rp - float((v_p + dv_vec) @ (v_p + dv_vec)) / mu)
+    inc2 = math.degrees(math.acos(hh[2] / np.linalg.norm(hh)))
+    hits = [(p.body.name, p.ut0) for p in traj2.patches if p.body.name != body.name]
+    print(f"    FLOWN: {a2 * (1 - e2) / 1e3:,.0f} x {a2 * (1 + e2) / 1e6:,.0f} Mm  e {e2:.4f}  "
+          f"i {inc2:.2f} deg  period {2 * math.pi * math.sqrt(a2 ** 3 / mu) / DAY:,.1f} d; "
+          + (f"first revolution enters {', '.join(f'{n} at {fmt_ut(t)}' for n, t in hits)}"
+             if hits else "first revolution meets no moon"))
+    t_apo = t_p + period / 2
+    v_apo = math.sqrt(mu * (2 / ra - 1 / a_new))
+    if args.plane:
+        i_rel = maneuver.inc_to_plane(system, traj2, body.name, t_p, args.plane)
+        lat = maneuver.periapsis_latitude(system, traj2, body.name, t_p, args.plane)
+        print(f"           {i_rel:.2f} deg off {args.plane}'s orbital plane; periapsis latitude {lat:+.2f} deg")
+    print(f"\n  apoapsis {fmt_ut(t_apo)} (T+{(t_apo - ut0) / DAY:.1f} d), speed there {v_apo:,.1f} m/s")
+    if args.raise_to:
+        rr = parse_apo(system, body, args.raise_to)
+        v1 = math.sqrt(mu * (2 / ra - 1 / ((rr + ra) / 2)))
+        line = f"  raising periapsis to {rr / 1e6:,.0f} Mm ({args.raise_to}) at apoapsis: {v1 - v_apo:,.1f} m/s coplanar"
+        if args.plane:
+            fold = math.sqrt(v_apo ** 2 + v1 ** 2 - 2 * v_apo * v1 * math.cos(math.radians(i_rel)))
+            line += (f", {fold:,.1f} m/s with the {i_rel:.2f} deg plane change folded in "
+                     f"(+{fold - (v1 - v_apo):,.1f}); total with capture {dv + fold:,.0f} m/s")
+        print(line)
+        print("  (that burn's TIMING must be solved against the moon's phase when the time comes -- "
+              "the periapsis pass has to be a real encounter, not just the right radius)")
+    push_burns(args, [(t_p, node)], what="capture")
+
+
 def cmd_flyby(args):
     system, save = load(args)
     body, r0, v0, ut0, who, free_park = origin_state(system, save, args)
@@ -1611,6 +1722,19 @@ def main(argv=None):
     p.add_argument("--max-nfev", type=int, default=60, help="shots per arrival epoch")
     p.add_argument("--verbose", action="store_true")
     p.set_defaults(func=cmd_correct)
+
+    p = sub.add_parser("capture", help="orbit insertion at the periapsis of the current hyperbola")
+    common(p)
+    p.add_argument("--apo", required=True,
+                   help="apoapsis radius of the capture orbit: 20Gm, 400Mm, 2.5Rj, or a moon's name")
+    p.add_argument("--plane", metavar="BODY",
+                   help="report the orbit's inclination to this moon's plane and the periapsis latitude")
+    p.add_argument("--raise", dest="raise_to", metavar="RADIUS|BODY",
+                   help="preview the apoapsis burn that raises periapsis to this radius (or moon)")
+    p.add_argument("--mass", type=float, help="stack mass in t, for the burn duration")
+    p.add_argument("--thrust", type=float, help="engine thrust in kN, for the burn duration")
+    p.add_argument("--isp", type=float, default=312.0, help="engine Isp in s (default 312)")
+    p.set_defaults(func=cmd_capture)
 
     p = sub.add_parser("flyby", help="evaluate or aim a flyby")
     common(p)

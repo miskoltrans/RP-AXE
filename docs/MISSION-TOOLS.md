@@ -541,6 +541,38 @@ argmin over a 4,000-point grid on the arrival patch, and on a 189,000 km-SMA ret
 perigee passes sit near that minimum — two runs of the same burn printed 3.87 d and 22.88 d
 of coast. The node, the periapsis radius and the entry speed are sound; the arrival date is not.
 
+### `capture` -- orbit insertion at the periapsis of the current hyperbola (2026-09-13)
+
+```
+plan.py capture --live --vessel-id <id> --apo 20Gm --plane Ganymede --raise Ganymede                 --mass 7.6 --thrust 18.89 [--push --alarm]
+```
+
+Solves the periapsis time from the hyperbolic mean anomaly (note the mean motion uses
+`|a|`; a hyperbolic semi-major axis is negative), prices the retrograde burn into an
+ellipse of the apoapsis you name, then FLIES one full revolution with every moon of the
+body watched, so a surprise encounter on the first rev shows up before you commit.
+`--apo` takes `20Gm`, `400Mm`, `2.5Rj` or a moon's NAME. `--plane` reports the
+inclination and the periapsis latitude relative to that moon; `--raise` prices the
+apoapsis burn that lifts periapsis to a moon's orbit, with the plane change folded in.
+
+**Bigger apoapsis is cheaper at BOTH ends**, so the capture trade is purely delta-v
+against schedule. Measured on Perun 2 Bus B arriving at v-infinity 5,132 with periapsis
+2.004 Rj, capture plus the Ganymede-raising burn:
+
+| apojove | % of SOI | capture | period | total with the raise |
+|---|---|---|---|---|
+| 10 Gm | 21 % | 608 | 74 d | 1,620 |
+| 20 Gm | 41 % | 460 | 207 d | 984 |
+| 30 Gm | 62 % | 410 | 378 d | 764 |
+| 40 Gm | 83 % | 386 | 581 d | 653 |
+
+**An inbound moon flyby is almost never available and cannot be bought.** Galileo cut its
+insertion with an Io pass, but that was designed into the approach years out. Measured on
+both Perun 2 buses 85 days from periapsis: the nearest moon at its own orbital radius was
+419 Mm away (36 degrees of its orbit), and `correct --target Ganymede` reached the moon only
+by turning the arrival retrograde at v-infinity 16 km/s, destroying the aimed perijove.
+Check the phase error before spending time on an assist.
+
 ## Where the algorithms come from
 
 Decompiled from the install's own `MechJeb2.dll` / `MechJebLib.dll` and `Assembly-CSharp.dll`:
