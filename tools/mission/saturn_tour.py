@@ -32,6 +32,8 @@ from rss_ephem import DAY, System, fmt_ut
 
 VID = "744a14e4-901e-446b-a9a1-d108bf2f01c0"
 PUSH = "--push" in sys.argv
+MODE = next((a for a in sys.argv[1:] if not a.startswith("-")), "apo")
+WANT_RES = sys.argv[sys.argv.index("--resonance") + 1] if "--resonance" in sys.argv else None
 ALT_KM = float(sys.argv[sys.argv.index("--alt") + 1]) if "--alt" in sys.argv else 1000.0
 
 system = System()
@@ -76,6 +78,107 @@ def post_flyby(rep_patch, ut_exit):
     rs, vs = np.asarray(r) + np.asarray(rt), np.asarray(v) + np.asarray(vt)
     return astro.elements(MU, rs, vs), rs, vs
 
+
+# ------------------------------------------------------------------ mcc: clean up the Titan aim
+if MODE == "mcc":
+    t_end = ut0 + 800 * DAY
+    traj = patched.shoot(system, "Saturn", r0, v0, ut0, t_end, watch=["Titan"])
+    p_in = traj.enters("Titan")
+    if p_in is None:
+        rep = patched.arrival_report(system, traj, "Titan", t_end)
+        sys.exit(f"no Titan encounter on the current trajectory: closest {rep['ca_dist'] / 1e6:,.1f} Mm")
+    bp = astro.bplane(titan.mu, p_in.r0, p_in.v0)
+    vinf, s_hat = bp["vinf"], bp["s_hat"]
+    k_hat = np.array([0.0, 0.0, 1.0])
+    t_hat = unit(np.cross(s_hat, k_hat))
+    r_hat = np.cross(s_hat, t_hat)
+    psi_now = math.degrees(math.atan2(bp["B_R"], bp["B_T"])) % 360
+    b_want = maneuver.b_for_periapsis(titan.mu, vinf, PER_WANT)
+    delta = astro.turn_angle(titan.mu, vinf, PER_WANT)
+    print(f"\nTITAN ENCOUNTER {fmt_ut(p_in.ut0)}  ({(p_in.ut0 - ut0) / DAY:.0f} d of coast)")
+    print(f"  v_inf {vinf:,.0f} m/s   flown periapsis {bp['peR'] / 1e3:,.0f} km, |B| {bp['b'] / 1e3:,.0f} km at psi {psi_now:.1f} deg")
+    print(f"  asked {PER_WANT / 1e3:,.0f} km (alt {ALT_KM:,.0f}): |B| {b_want / 1e3:,.0f} km, turn "
+          f"{math.degrees(delta):.2f} deg vs the {math.degrees(astro.turn_angle(titan.mu, vinf, bp['peR'])):.2f} deg it would turn now")
+
+    # what each B-plane angle does to the post-flyby orbit, at the asked periapsis
+    t_enc = p_in.ut0 + 2600.0
+    rt, vt = (np.asarray(x) for x in system.rel("Titan", t_enc))
+    fine = []
+    for x in range(0, 3600, 5):
+        psi = x / 10.0
+        b_hat = math.cos(math.radians(psi)) * t_hat + math.sin(math.radians(psi)) * r_hat
+        v_out = vinf * (math.cos(delta) * s_hat - math.sin(delta) * b_hat)
+        vs = vt + v_out
+        el = astro.elements(MU, rt, vs)
+        if el.ecc >= 1:
+            continue
+        irel = math.degrees(math.acos(max(-1, min(1, float(unit(np.cross(rt, vs)) @ titan_normal(t_enc))))))
+        fine.append((psi, el, irel, el.period / T_TITAN))
+    if not fine:
+        sys.exit("every aim at this periapsis leaves Saturn -- pump down first")
+    print(f"  reachable in one pass: period {min(f[1].period for f in fine) / DAY:.1f} to "
+          f"{max(f[1].period for f in fine) / DAY:,.0f} d ({min(f[3] for f in fine):.2f} to {max(f[3] for f in fine):,.1f} Titan periods)")
+    print("\n  resonances reachable in ONE pass:")
+    opts = {}
+    for num, den, name in ((2, 1, "2:1"), (5, 2, "5:2"), (3, 1, "3:1"), (7, 2, "7:2"), (4, 1, "4:1"),
+                           (9, 2, "9:2"), (5, 1, "5:1"), (11, 2, "11:2"), (6, 1, "6:1"), (7, 1, "7:1")):
+        near = [f for f in fine if abs(f[3] - num / den) < 0.02]
+        if near:
+            f = min(near, key=lambda f: f[2])
+            opts[name] = f
+            print(f"    {name:>4s}: psi {f[0]:6.1f}   {f[1].peR / 1e6:,.0f} x {f[1].apR / 1e6:,.0f} Mm   "
+                  f"{f[1].period / DAY:6.2f} d   i_rel {f[2]:.2f} deg")
+    if not opts:
+        sys.exit("no resonance is reachable in one pass at this periapsis")
+    if WANT_RES and WANT_RES not in opts:
+        sys.exit(f"{WANT_RES} is not reachable; have {', '.join(opts)}")
+    name = WANT_RES or min(opts, key=lambda n: opts[n][1].period)
+    f = opts[name]
+    psi_best = f[0]
+    print(f"  -> aiming {name} at psi {psi_best:.1f} deg: {f[1].peR / 1e6:,.0f} x {f[1].apR / 1e6:,.0f} Mm, "
+          f"{f[1].period / DAY:.2f} d, i_rel {f[2]:.2f} deg")
+    b_dir = np.array([math.cos(math.radians(psi_best)), math.sin(math.radians(psi_best))])
+
+    print(f"\nCORRECTION SCAN (each row is a converged shot):")
+    best, scan = maneuver.cheapest_correction(system, "Saturn", r0, v0, ut0, "Titan", p_in.ut0, PER_WANT,
+                                              t_end=p_in.ut0 + 80 * DAY, n_times=10, watch=["Titan"],
+                                              max_dv=60.0, b_dir=b_dir)
+    for o in scan:
+        print(f"  {fmt_ut(o['ut'])[:16]:>16s}  T+{(o['ut'] - ut0) / DAY:7.1f} d  {o['mag']:8.2f} m/s  "
+              f"{'hits the aim point' if o['ok'] else 'did not converge'}")
+    if best is None:
+        sys.exit("no burn time reached the aim point")
+    r_b, v_b = astro.propagate(MU, r0, v0, best["ut"] - ut0)
+    node = astro.to_node(r_b, v_b, best["dv"])
+    fr = maneuver.flyby_report(system, best["res"]["traj"], "Titan", p_in.ut0 + 80 * DAY)
+    print(f"\nMIDCOURSE  {fmt_ut(best['ut'])}   (T+{(best['ut'] - ut0) / DAY:.1f} d)")
+    print(f"    prograde {node[2]:+9.3f}   normal {node[1]:+9.3f}   radial {node[0]:+9.3f}   |dv| {best['mag']:.3f} m/s")
+    print(f"    TITAN 1: SOI {fmt_ut(fr['soi_in'])}, periapsis {fr['peR'] / 1e3:,.0f} km (alt {fr['peAlt'] / 1e3:,.0f}), "
+          f"v_inf {fr['vinf']:,.0f}, turn {fr['turn']:.2f} deg, free dV {fr.get('dv_equiv', 0):,.0f}")
+    if "soi_out" in fr:
+        el_x, rs, vs = post_flyby(best["res"]["traj"].enters("Titan"), fr["soi_out"])
+        print(f"    after:   {el_x.peR / 1e6:,.0f} x {el_x.apR / 1e6:,.0f} Mm, {el_x.period / DAY:.2f} d = "
+              f"{el_x.period / T_TITAN:.3f} Titan periods, i_rel "
+              f"{math.degrees(math.acos(float(unit(np.cross(rs, vs)) @ titan_normal(fr['soi_out'])))):.2f} deg")
+    if PUSH:
+        out = br.place_nodes([(best["ut"], node[0], node[1], node[2])], vid=VID, replace=True)
+        print(f"\nPUSHED to {out['vessel']}: {out['placed']} node(s)")
+        for n in out.get("nodes", []):
+            print(f"    node {fmt_ut(n['ut'])}  prograde {n['prograde']:+.4f}  normal {n['normal']:+.4f}  "
+                  f"radial {n['radial']:+.4f}  |{n['magnitude']:.4f}|")
+        for i, pt in enumerate(out.get("flight_plan") or []):
+            pe, ap = pt.get("peR"), pt.get("apR")
+            print(f"    plan {i}: {pt.get('body'):8s} {fmt_ut(pt.get('start_ut'))} -> {pt.get('transition')}"
+                  + (f"   pe {pe / 1e3:,.0f} km" if pe else "") + (f"  ap {ap / 1e6:,.0f} Mm" if ap and ap > 0 else ""))
+        al = br.alarm(best["ut"], name=f"Saturnalija: Titan aim MCC {best['mag']:.2f} m/s", margin=DAY,
+                      notes=f"Cleans the Titan-1 aim from {bp['peR'] / 1e3:,.0f} km to {PER_WANT / 1e3:,.0f} km and sets the "
+                            f"{name} resonance (psi {psi_best:.1f}). Encounter {fmt_ut(p_in.ut0)}. Tiny burn -- use RCS. "
+                            f"Re-run `saturn_tour.py mcc --push` afterwards to re-check the aim.",
+                      type="Raw", action="KillWarp", vessel="Saturnalija")
+        print(f"    alarm {al.get('id')} via {al.get('backend')}")
+    else:
+        print("\n(dry run -- pass --push to place the node and set the alarm)")
+    sys.exit(0)
 
 # ------------------------------------------------------------------ exact two-body seed for a Titan encounter at t_k
 def anomaly_time(a, e, nu):
