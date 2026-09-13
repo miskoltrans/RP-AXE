@@ -13,7 +13,7 @@ MOONS = ("Io", "Europa", "Ganymede", "Callisto")
 
 class Tour:
     def __init__(self, S=None):
-        self.S = S or System(r"C:/git/ksp/Instance/GameData")
+        self.S = S or System()
         self.J = self.S.bodies["Jupiter"]
         self.mu = self.J.mu
         self.R = self.J.radius
@@ -59,7 +59,7 @@ def report(vinf_kms=5.69, rp_rj=3.0):
     Rj = t.R
     rp = rp_rj * Rj
     vinf = vinf_kms * 1000
-    print(f"Jupiter  R = {Rj/1e3:,.0f} km   mu = {t.mu:.4e}   SOI = {t.S.soi('Jupiter')/1e9:.1f} Gm")
+    print(f"Jupiter  R = {Rj/1e3:,.0f} km   mu = {t.mu:.4e}   SOI = {t.S.body('Jupiter').soi/1e9:.1f} Gm")
     print(f"arrival v-inf = {vinf_kms} km/s,  perijove = {rp_rj} Rj = {rp/1e3:,.0f} km\n")
 
     print("CAPTURE  (burn at perijove; contract cap is perijove <= 3.0 Rj)")
@@ -86,7 +86,7 @@ def report(vinf_kms=5.69, rp_rj=3.0):
     for m in MOONS:
         v_sc, v_moon, vi = t.encounter(m, t.S.bodies[m].a, ra_m)
         dv, turn = t.flyby_turn(m, vi)
-        soi_alt = (t.S.soi(m) - t.S.bodies[m].radius) / 1e3
+        soi_alt = (t.S.body(m).soi - t.S.bodies[m].radius) / 1e3
         print(f"{m:>10s} {v_sc:8.0f} {v_moon:8.0f} {vi:8.0f} {dv:8.0f} {turn:9.1f} {soi_alt:11,.0f}")
 
     print("\nGANYMEDE PUMP-DOWN  (one 300 km flyby, orbit rp=Ganymede)")
