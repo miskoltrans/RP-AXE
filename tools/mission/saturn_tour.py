@@ -319,8 +319,47 @@ if MODE == "mcc":
     name = WANT_RES or min(opts, key=lambda n: opts[n][1].period)
     f = opts[name]
     psi_best = f[0]
-    print(f"  -> aiming {name} at psi {psi_best:.1f} deg: {f[1].peR / 1e6:,.0f} x {f[1].apR / 1e6:,.0f} Mm, "
-          f"{f[1].period / DAY:.2f} d, i_rel {f[2]:.2f} deg")
+    want_ratio = f[3]
+    print(f"  -> asking {name} ({want_ratio:.3f} Titan periods); analytic angle psi {psi_best:.1f} deg")
+
+    # The analytic scan above turns v_inf at ONE epoch with Titan's state at ONE epoch, so its
+    # psi -> outcome map is systematically ~10 deg off what the shooter actually flies (measured).
+    # Calibrate against the flown trajectory before committing: sample, interpolate, verify.
+    t_cal = ut0 + 0.2 * DAY
+    _, r_cal, v_cal = patched.shoot(system, "Saturn", r0, v0, ut0, t_cal + DAY,
+                                    watch=["Titan"]).state(t_cal)
+
+    def flown_ratio(psi):
+        bd = np.array([math.cos(math.radians(psi)), math.sin(math.radians(psi))])
+        try:
+            rr = maneuver.refine(system, "Saturn", r_cal, v_cal, t_cal, "Titan", p_in.ut0 + 80 * DAY,
+                                 PER_WANT, b_dir=bd, watch=["Titan"], max_dv=60.0, max_nfev=80)
+        except Exception:                                            # noqa: BLE001
+            return None
+        fr = maneuver.flyby_report(system, rr["traj"], "Titan", p_in.ut0 + 80 * DAY)
+        if not fr or "soi_out" not in fr:
+            return None
+        el_, _, _ = post_flyby(rr["traj"].enters("Titan"), fr["soi_out"])
+        return el_.period / T_TITAN if el_.ecc < 1 else None
+
+    print("     calibrating psi against the FLOWN trajectory:")
+    samples = []
+    for dp in (-25.0, -15.0, -5.0, 5.0, 15.0):
+        psi = (psi_best + dp) % 360
+        rr = flown_ratio(psi)
+        if rr is not None:
+            samples.append((psi_best + dp, rr))
+            print(f"       psi {psi:6.1f} -> {rr:.3f} Titan periods")
+    hit = [(a, b) for a, b in zip(samples, samples[1:]) if (a[1] - want_ratio) * (b[1] - want_ratio) <= 0]
+    if hit:
+        (p1, r1), (p2, r2) = hit[0]
+        psi_best = (p1 + (want_ratio - r1) * (p2 - p1) / (r2 - r1)) % 360
+        got = flown_ratio(psi_best)
+        print(f"     -> calibrated psi {psi_best:.1f} deg gives {got:.3f} Titan periods"
+              if got else f"     -> calibrated psi {psi_best:.1f} deg")
+    elif samples:
+        psi_best = min(samples, key=lambda s: abs(s[1] - want_ratio))[0] % 360
+        print(f"     -> {want_ratio:.2f} not bracketed; taking the nearest sampled psi {psi_best:.1f} deg")
     b_dir = np.array([math.cos(math.radians(psi_best)), math.sin(math.radians(psi_best))])
 
     print(f"\nCORRECTION SCAN (each row is a converged shot):")
