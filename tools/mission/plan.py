@@ -33,6 +33,7 @@ import ksptot as ksptot_mod
 import launch as launch_mod
 import maneuver
 import patched
+import tour
 from lambert import lambert
 from rss_ephem import DAY, System, date_of, fmt_ut, parse_date
 from sfs import Save, find_save
@@ -1049,6 +1050,60 @@ def cmd_capture(args):
     push_burns(args, [(t_p, node)], what="capture")
 
 
+def cmd_encounter(args):
+    """The apoapsis burn that turns the next periapsis into a real moon encounter."""
+    system, save = load(args)
+    body, r0, v0, ut0, who, _ = origin_state(system, save, args)
+    moon = system.body(args.moon)
+    if getattr(moon, "parent", None) != body.name:
+        sys.exit(f"  {moon.name} does not orbit {body.name}")
+    per = parse_radius(system, moon, args.peri, default_alt=300e3)
+    print(f"ENCOUNTER  {who}  ->  {moon.name}   (state at {fmt_ut(ut0)})")
+    t_apo, seeds, sols = tour.solve(system, body, moon, np.asarray(r0, float),
+                                    np.asarray(v0, float), ut0, per,
+                                    before=args.before, after=args.after, step=args.step,
+                                    refine_n=args.refine, max_dv=args.max_dv)
+    if not seeds:
+        sys.exit("  no elliptic seed reaches the moon in that window; widen --before/--after")
+    good = [s for s in sols if s["ok"]]
+    if not good:
+        sys.exit("  no converged solution; widen the window or raise --max-dv")
+    # Which solution to fly is a real choice, so expose it. For a multi-moon tour the
+    # inclination to the moon's plane usually matters MORE than a few tens of m/s of v_inf:
+    # at Ganymede's orbit radius 1.3 deg of relative inclination is 23,500 km of cross-track
+    # against a 24,359 km SOI, so encounters are only possible near the nodes. Near-coplanar
+    # lets the tour meet the moon anywhere in its orbit.
+    pick = {"vinf": lambda s: s["vinf"] + 2.0 * s["mag"],
+            "coplanar": lambda s: s["irel"],
+            "cheap": lambda s: s["mag"]}[args.prefer]
+    best = min(good, key=pick)
+    if len(good) > 1:
+        alts = sorted(good, key=pick)[1:4]
+        print("\n  other converged solutions:")
+        for a in alts:
+            print(f"    {fmt_ut(a['t_k'])[:16]}  burn {a['off']:+.1f} d from apoapsis  "
+                  f"{a['mag']:,.1f} m/s  v-inf {a['vinf']:,.0f}  {a['irel']:.2f} deg off plane")
+    node = astro.to_node(best["r_b"], best["v_b"], best["dv"])
+    print()
+    print(f"  BURN  {fmt_ut(best['t_b'])}   ({best['off']:+.1f} d from apoapsis, "
+          f"T+{(best['t_b'] - ut0) / DAY:.1f} d)")
+    print(f"    prograde {node[2]:+12,.2f} m/s")
+    print(f"    normal   {node[1]:+12,.2f} m/s")
+    print(f"    radial   {node[0]:+12,.2f} m/s")
+    print(f"    total    {best['mag']:12,.2f} m/s")
+    dv_free, turn = tour.free_dv(moon, best["vinf"], best["peR"])
+    print(f"    FLOWN: {moon.name} SOI {fmt_ut(best['soi_ut'])}, periapsis {best['peR'] / 1e3:,.0f} km "
+          f"(altitude {(best['peR'] - moon.radius) / 1e3:,.0f} km)")
+    print(f"           v-infinity {best['vinf']:,.0f} m/s, {best['irel']:.2f} deg off {moon.name}'s plane")
+    print(f"           that pass turns {turn:.1f} deg = {dv_free:,.0f} m/s of FREE velocity change")
+    if args.mass and args.thrust:
+        m0 = args.mass * 1e3
+        m1 = m0 * math.exp(-best["mag"] / (args.isp * 9.80665))
+        print(f"           {m0 / 1e3:.3f} t at {args.thrust:.2f} kN: burn "
+              f"{(m0 - m1) * args.isp * 9.80665 / (args.thrust * 1e3):,.0f} s, {m0 - m1:,.0f} kg")
+    push_burns(args, [(best["t_b"], node)], what="encounter burn")
+
+
 def cmd_flyby(args):
     system, save = load(args)
     body, r0, v0, ut0, who, free_park = origin_state(system, save, args)
@@ -1735,6 +1790,27 @@ def main(argv=None):
     p.add_argument("--thrust", type=float, help="engine thrust in kN, for the burn duration")
     p.add_argument("--isp", type=float, default=312.0, help="engine Isp in s (default 312)")
     p.set_defaults(func=cmd_capture)
+
+    p = sub.add_parser("encounter",
+                       help="apoapsis burn that makes the next periapsis a real moon encounter")
+    common(p)
+    p.add_argument("--moon", required=True, help="moon to encounter, e.g. Ganymede")
+    p.add_argument("--peri", help="flyby periapsis, e.g. 300km or 1.2Rg (default 300 km altitude)")
+    p.add_argument("--before", type=float, default=30.0,
+                   help="days before the natural periapsis pass to start the epoch scan")
+    p.add_argument("--after", type=float, default=45.0, help="days after it to stop")
+    p.add_argument("--step", type=float, default=0.5, help="epoch scan step, days")
+    p.add_argument("--refine", type=int, default=6, help="how many seeds to refine through the shooter")
+    p.add_argument("--prefer", choices=["vinf", "coplanar", "cheap"], default="vinf",
+                   help="which converged solution to fly. `coplanar` minimises the inclination to "
+                        "the moon's plane, which for a multi-moon tour usually beats a few tens of "
+                        "m/s of v-infinity: 1.3 deg at Ganymede's radius is 23,500 km of cross-track "
+                        "against a 24,359 km SOI, so encounters are then only possible near the nodes.")
+    p.add_argument("--max-dv", type=float, default=400.0, help="bound on the correction, m/s per axis")
+    p.add_argument("--mass", type=float, help="stack mass in t, for the burn duration")
+    p.add_argument("--thrust", type=float, help="engine thrust in kN, for the burn duration")
+    p.add_argument("--isp", type=float, default=312.0, help="engine Isp in s (default 312)")
+    p.set_defaults(func=cmd_encounter)
 
     p = sub.add_parser("flyby", help="evaluate or aim a flyby")
     common(p)

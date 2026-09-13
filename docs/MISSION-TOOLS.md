@@ -573,6 +573,34 @@ both Perun 2 buses 85 days from periapsis: the nearest moon at its own orbital r
 by turning the arrival retrograde at v-infinity 16 km/s, destroying the aimed perijove.
 Check the phase error before spending time on an assist.
 
+### `encounter` -- the apoapsis burn that makes the next periapsis a real moon pass (2026-09-13)
+
+```
+plan.py encounter --live --vessel "Perun 2 Bus A" --moon Ganymede --peri 300km                   --prefer coplanar [--push --alarm]
+```
+
+Raising periapsis to a moon's orbital radius is the easy half; the burn has to be timed and
+aimed so the crossing happens where the moon actually is. `tour.py` holds the solver, which
+was written for Saturnalija and is now general. For a candidate encounter epoch the seed is
+EXACT in two-body terms: the plane is span(burn point, moon at that epoch), the apsidal line
+stays along the burn point, and the periapsis radius is solved so the conic crosses the
+moon's radius at the moon's direction, iterating the burn time onto the epoch. The epoch is
+scanned continuously, the lowest-v-infinity seeds are least-squares corrected on the FLOWN
+trajectory through the moon's SOI, and the free velocity change the pass buys is reported.
+
+**This only works if the capture periapsis was aimed INTO the moons' plane.** The burn cannot
+leave the burn point, so the apsidal line is fixed; Saturnalija's was 21 degrees out and its
+Titan v-infinity floored at 4,500 instead of 2,708. Perun 2's was aimed with `--bplane
+apsis:Ganymede` and reproduced the design: v-infinity 4,242-4,297 against a designed 4,109,
+1,330 m/s of free velocity change per pass against 1,371.
+
+**`--prefer coplanar` is usually right for a multi-moon tour.** The default picks lowest
+v-infinity; the inclination to the moon's plane normally matters more. At Ganymede's orbital
+radius 1.3 degrees of relative inclination is 23,500 km of cross-track against a 24,359 km
+SOI, so encounters are then only possible near the nodes and every later moon needs nodal
+phasing. Measured on Perun 2: 0.07 degrees instead of 1.26 cost 0.3 m/s of burn and 49 m/s
+of v-infinity.
+
 ## Where the algorithms come from
 
 Decompiled from the install's own `MechJeb2.dll` / `MechJebLib.dll` and `Assembly-CSharp.dll`:
