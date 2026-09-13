@@ -126,6 +126,13 @@ class System:
         self.bodies = {}
         self.log_path = None
         self._load_configs(gamedata)
+        if not self.bodies:
+            raise RuntimeError(
+                f"no bodies found under {os.path.join(gamedata, 'RealSolarSystem', 'RSSKopernicus')!r}. "
+                f"System(instance=...) takes the INSTALL ROOT, not a GameData directory -- passing a "
+                f"GameData path positionally silently looks in <gamedata>/GameData. "
+                f"Use System(gamedata=...) for a GameData directory, or System() for the default "
+                f"{DEFAULT_INSTANCE!r}.")
         self._load_cache_radii(gamedata)
         self._load_epoch(gamedata)
         self.by_index = {}

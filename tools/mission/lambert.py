@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
     # 2) Pioneer 10 Earth->Jupiter, real dates, against the install's own ephemeris
     from rss_ephem import System, ut_of
-    S = System(r"C:/git/ksp/Instance/GameData")
+    S = System()
     t0 = ut_of(1972, 3, 3, 1, 49)
     t1 = ut_of(1973, 12, 4, 2, 26)
     rE, vE = S.helio("Earth", t0)

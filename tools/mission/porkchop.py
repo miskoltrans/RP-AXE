@@ -78,9 +78,11 @@ def main():
     ap.add_argument("--tof", nargs=2, type=float, default=[300, 1600])
     ap.add_argument("--step", type=float, default=5.0)
     ap.add_argument("--tofstep", type=float, default=5.0)
-    ap.add_argument("--gamedata", default=r"C:/git/ksp/Instance/GameData")
+    ap.add_argument("--instance", default=None, help="KSP install root")
+    ap.add_argument("--gamedata", default=None, help="GameData directory; overrides --instance")
     a = ap.parse_args()
-    S = System(a.gamedata)
+    S = System(gamedata=a.gamedata) if a.gamedata else (
+        System(a.instance) if a.instance else System())
     deps, tofs, out = scan(S, a.dep, a.arr, parse_date(a.start), parse_date(a.end),
                            a.tof[0], a.tof[1], a.step, a.tofstep)
     print(f"{a.dep} -> {a.arr}   grid {len(deps)} departures x {len(tofs)} TOFs")

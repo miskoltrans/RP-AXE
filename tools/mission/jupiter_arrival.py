@@ -92,7 +92,7 @@ def main():
     ap.add_argument("--top", type=int, default=20)
     ap.add_argument("--sort", default="total", choices=["total", "c3", "vinf", "incl"])
     a = ap.parse_args()
-    S = System(r"C:/git/ksp/Instance/GameData")
+    S = System()
     jov = Jovian(S)
     y, m, d = map(int, a.dep_from.split("-"))
     t0 = ut_of(y, m, d)
