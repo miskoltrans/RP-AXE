@@ -881,9 +881,27 @@ def cmd_correct(args):
         print(f"\n  --- correcting to periapsis {peR / target.radius:.3f} "
               f"R{target.name[0].lower()} ({(peR - target.radius) / 1e3:,.0f} km altitude), "
               f"burning at {fmt_ut(ut_b)} (T+{(ut_b - ut0) / DAY:.2f} d) ---")
-        res = maneuver.refine(system, b_at.name, rb, vb, ut_b, target.name, t_end, peR,
-                              b_dir=_b_dir(args), watch=watch, max_dv=args.max_dv,
-                              diff_step=args.diff_step, verbose=args.verbose)
+        if getattr(args, "aim", "none") not in (None, "none"):
+            # A trim onto a moon has the same B-plane freedom as the burn that set the
+            # encounter up, and the same consequences: the aim decides whether the flyby
+            # pumps the orbit down or throws the vessel out of the planet's SOI. Fly them.
+            parent = system.body(target.parent) if getattr(target, "parent", None) else body
+            print(f"\n  AIM SCAN at {target.name} (each angle flown)")
+            angles = [a * 360.0 / args.aim_steps for a in range(args.aim_steps)]
+            flown = tour.aim_fly(system, parent, target, rb, vb, ut_b, np.zeros(3), peR,
+                                 rep.get("soi_ut") or t_arr, angles, max_dv=args.max_dv)
+            usable = [a for a in flown if a["bound"] and a["returns"]]
+            if not usable:
+                sys.exit("  no aim angle leaves a bound orbit that still reaches the moon")
+            chosen = tour.pick_aim(usable, args.aim)
+            print(f"  -> {args.aim} aim psi {chosen['psi']:.0f} deg: {chosen['peR'] / 1e6:,.0f} x "
+                  f"{chosen['apR'] / 1e6:,.0f} Mm, period {chosen['period'] / DAY:.2f} d = "
+                  f"{chosen['resonance']:.3f} {target.name} periods, {chosen['irel']:.2f} deg off its plane")
+            res = chosen["res"]
+        else:
+            res = maneuver.refine(system, b_at.name, rb, vb, ut_b, target.name, t_end, peR,
+                                  b_dir=_b_dir(args), watch=watch, max_dv=args.max_dv,
+                                  diff_step=args.diff_step, verbose=args.verbose)
         rp = res["report"]
         if not (rp.get("captured") and abs(rp["peR"] - peR) / peR < 0.02):
             print_arrival(system, target.name, rp)
@@ -1772,6 +1790,11 @@ def main(argv=None):
                         "'+1d' from the state epoch, or a date. The scan's earliest sample "
                         "is 2 percent of the way to the encounter (10 days out on a Jupiter "
                         "cruise), so this is how you burn NOW.")
+    p.add_argument("--aim", choices=["pump", "resonance", "none"], default="none",
+                   help="for a trim onto a MOON: fly every B-plane angle and pick one by what the "
+                        "flyby then does. `pump` takes the deepest pump-down that still returns to "
+                        "the moon. Needs --burn-at, and overrides --bplane.")
+    p.add_argument("--aim-steps", type=int, default=24, help="B-plane angles to fly (default 24)")
     p.add_argument("--bplane", metavar="AIM",
                    help="which side of the target to pass. --peri fixes only how CLOSE you pass; "
                         "without this the solver keeps whichever side it already has, which for "
