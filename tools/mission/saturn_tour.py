@@ -46,7 +46,14 @@ PER_WANT = titan.radius + ALT_KM * 1e3
 br = bridge_mod.Bridge()
 info = br.nodes(vid=VID)
 if not info.get("nodes_available"):
-    sys.exit(f"not the active vessel: {info.get('why')}")
+    # /vessel reads the Orbit object and is valid for any vessel; only the SOLVER (and therefore
+    # pushing a node) needs the craft to be active. So solve read-only and refuse only the push.
+    # /vessel reads the Orbit object and is valid for ANY vessel; only KSP's patched-conic SOLVER
+    # (and therefore pushing a node) needs the craft to be active. So solve read-only, refuse the push.
+    print("NOTE: " + str(info.get("why")))
+    print("      Solving read-only; --push needs Saturnalija active in flight.")
+    if PUSH:
+        sys.exit("  refusing to push: nodes written to a non-active vessel are discarded by KSP.")
 body, r0, v0, ut0 = br.state(system, vid=VID)
 assert body.name == "Saturn"
 el0 = astro.elements(MU, r0, v0)
@@ -78,6 +85,181 @@ def post_flyby(rep_patch, ut_exit):
     rs, vs = np.asarray(r) + np.asarray(rt), np.asarray(v) + np.asarray(vt)
     return astro.elements(MU, rs, vs), rs, vs
 
+
+# ------------------------------------------------------------------ titan1: probe corridor, release, orbiter deflection
+if MODE == "titan1":
+    # Deep enough that a shallow execution error still enters: Titan's surface is at 2,573 km, so a
+    # 2,173 km aim keeps ~0.7 m/s of margin on the side that would skip out, and going deeper only
+    # steepens an entry that the chute flattens anyway.
+    CORRIDOR = titan.radius - 400e3
+    ATM = 600e3                                # Titan's atmosphere tops here (maxAltitude, merged cache)
+    LEAD_D = float(sys.argv[sys.argv.index("--lead") + 1]) if "--lead" in sys.argv else 10.0
+    PSI = float(sys.argv[sys.argv.index("--psi") + 1]) if "--psi" in sys.argv else 170.0
+    # Where the orbiter's periapsis should sit relative to the drone hitting the atmosphere. The drone
+    # decelerates, opens its chute near 200 km, then needs 343 s between 100 and 80 km at beta 50; that
+    # band is expected around entry+500..850 s, so centre the radio pass on it.
+    # Opt-in only. Forcing the radio pass onto the science band means retiming the orbiter's arrival by
+    # ~900 s, which costs ~36 m/s this late, and the contract does NOT need it: CollectScience only
+    # requires the FlyingHigh SUBJECT to be transmitted eventually, so the drone can sit on its chute
+    # (2 RTGs, 0.3 m S-band dish) and squirt 450 bits at the orbiter on the next resonant pass.
+    RELAY_C = float(sys.argv[sys.argv.index("--relay") + 1]) if "--relay" in sys.argv else None
+    M_STACK, M_DRONE, PROP = 1.9385, 0.7361, 0.2776          # t, live from the save
+    VE, THRUST = 315 * 9.80665, 18890.0
+    mu_t = titan.mu
+
+    t_end = ut0 + 800 * DAY
+    traj = patched.shoot(system, "Saturn", r0, v0, ut0, t_end, watch=["Titan"])
+    p_in = traj.enters("Titan")
+    if p_in is None:
+        sys.exit("no Titan encounter on the current trajectory")
+    t_enc, bp0 = p_in.ut0, astro.bplane(titan.mu, p_in.r0, p_in.v0)
+    t_b = t_enc - LEAD_D * DAY
+    _, r_b, v_b = traj.state(t_b)
+    b_dir = np.array([math.cos(math.radians(PSI)), math.sin(math.radians(PSI))])
+    print("\nTITAN 1  encounter " + fmt_ut(t_enc) + "   burns at " + fmt_ut(t_b) + f" (E-{LEAD_D:.0f} d)")
+    print(f"  uncorrected: periapsis {bp0['peR'] / 1e3:,.0f} km, v_inf {bp0['vinf']:,.0f} m/s")
+
+    def peri_time(r, v, ut):
+        el = astro.elements(mu_t, r, v)
+        return ut - el.mna / math.sqrt(mu_t / abs(el.sma) ** 3)
+
+    def crossing(r, v, ut, rad, t_hi):
+        f = lambda t: float(np.linalg.norm(astro.propagate(mu_t, r, v, t - ut)[0])) - rad
+        lo, hi = ut, t_hi
+        if f(lo) < 0 or f(hi) > 0:
+            return None
+        for _ in range(80):
+            m = 0.5 * (lo + hi)
+            lo, hi = (m, hi) if f(m) > 0 else (lo, m)
+        return 0.5 * (lo + hi)
+
+    def solve(rb, vb, tb, peR, label, ut_want=None):
+        res = maneuver.refine(system, "Saturn", rb, vb, tb, "Titan", t_enc + 80 * DAY, peR,
+                              b_dir=b_dir, ut_want=ut_want, watch=["Titan"], max_dv=60.0, max_nfev=120)
+        node = astro.to_node(rb, vb, res["dv"])
+        pp = res["traj"].enters("Titan")
+        bpx = astro.bplane(titan.mu, pp.r0, pp.v0)
+        if label:
+            print("\n" + label + "  " + fmt_ut(tb))
+            print(f"    prograde {node[2]:+9.3f}   normal {node[1]:+9.3f}   radial {node[0]:+9.3f}   "
+                  f"|dv| {float(np.linalg.norm(res['dv'])):.3f} m/s")
+            print(f"    -> Titan periapsis {bpx['peR'] / 1e3:,.1f} km (alt {(bpx['peR'] - titan.radius) / 1e3:+,.1f} km), "
+                  f"v_inf {bpx['vinf']:,.0f}, SOI entry {fmt_ut(pp.ut0)}")
+        return res, node, pp, bpx
+
+    # --- burn A: the whole stack onto the drone's entry corridor
+    resA, nodeA, ppA, bpA = solve(r_b, v_b, t_b, CORRIDOR, "BURN A  (stack -> drone entry corridor)")
+    tpA = peri_time(ppA.r0, ppA.v0, ppA.ut0)
+    t_atm = crossing(ppA.r0, ppA.v0, ppA.ut0, titan.radius + ATM, tpA)
+    print("\n  DRONE ENTRY (ballistic, no drag -- the chute sets everything below 200 km):")
+    for name, alt in (("atmosphere top", ATM), ("chute deploy", 200e3), ("band top", 100e3), ("band bottom", 80e3)):
+        t = crossing(ppA.r0, ppA.v0, ppA.ut0, titan.radius + alt, tpA)
+        if t is None:
+            print(f"    {name:18s} alt {alt / 1e3:5,.0f} km  not reached ballistically")
+            continue
+        rr, vv = astro.propagate(mu_t, ppA.r0, ppA.v0, t - ppA.ut0)
+        rn = float(np.linalg.norm(rr))
+        gam = math.degrees(math.asin(float(rr @ vv) / (rn * float(np.linalg.norm(vv)))))
+        print(f"    {name:18s} alt {alt / 1e3:5,.0f} km  {fmt_ut(t)}  entry{t - t_atm:+6.0f} s  "
+              f"v {float(np.linalg.norm(vv)):,.0f} m/s  gamma {gam:+.1f} deg  "
+              f"lat {math.degrees(math.asin(rr[2] / rn)):+.1f}")
+    marginA = (titan.radius - CORRIDOR) / 1e3 / ((bp0['peR'] - CORRIDOR) / 1e3 / float(np.linalg.norm(resA["dv"])))
+    print(f"    execution margin: {marginA:.2f} m/s too little and the drone skips out instead of entering")
+
+    # --- burn B: the orbiter alone, back out to the flyby aim, TIMED so the radio pass covers the band
+    r_b2, v_b2 = astro.propagate(MU, r_b, v_b + resA["dv"], 600.0)
+    t_b2 = t_b + 600.0
+    resB, nodeB, ppB, bpB = solve(r_b2, v_b2, t_b2, PER_WANT, None)
+    if RELAY_C is not None:
+        # The pass PEAKS when the orbiter goes over the drone's descent point, which has nothing to do
+        # with the orbiter's own Titan periapsis -- so iterate on the over-flight, not on periapsis.
+        for _ in range(3):
+            t_hold = crossing(ppA.r0, ppA.v0, ppA.ut0, titan.radius + 200e3, tpA) or t_atm
+            rh = astro.propagate(mu_t, ppA.r0, ppA.v0, t_hold - ppA.ut0)[0]
+            ts_ = np.arange(t_atm - 1800, t_atm + 3600, 10.0)
+            el_ = [float(astro.propagate(mu_t, ppB.r0, ppB.v0, t - ppB.ut0)[0] @ unit(rh)) /
+                   float(np.linalg.norm(astro.propagate(mu_t, ppB.r0, ppB.v0, t - ppB.ut0)[0] - rh)) for t in ts_]
+            t_peak = float(ts_[int(np.argmax(el_))])
+            shift = (t_atm + RELAY_C) - t_peak
+            if abs(shift) < 10.0:
+                break
+            resB, nodeB, ppB, bpB = solve(r_b2, v_b2, t_b2, PER_WANT, None, ut_want=ppB.ut0 + shift)
+    tpB = peri_time(ppB.r0, ppB.v0, ppB.ut0)
+    print("\nBURN B  (orbiter alone -> flyby aim, 10 min after the release)  " + fmt_ut(t_b2))
+    print(f"    prograde {nodeB[2]:+9.3f}   normal {nodeB[1]:+9.3f}   radial {nodeB[0]:+9.3f}   "
+          f"|dv| {float(np.linalg.norm(resB['dv'])):.3f} m/s")
+    print(f"    -> Titan periapsis {bpB['peR'] / 1e3:,.1f} km (alt {(bpB['peR'] - titan.radius) / 1e3:+,.1f} km), "
+          f"periapsis at drone entry{tpB - t_atm:+.0f} s"
+          + (f" (asked {RELAY_C:+.0f})" if RELAY_C is not None else ""))
+    frB = maneuver.flyby_report(system, resB["traj"], "Titan", t_enc + 80 * DAY)
+    print(f"    v_inf {frB['vinf']:,.0f}, turn {frB['turn']:.2f} deg, free dV {frB.get('dv_equiv', 0):,.0f} m/s")
+    if "soi_out" in frB:
+        el_x, rs, vs = post_flyby(resB["traj"].enters("Titan"), frB["soi_out"])
+        print(f"    after:  {el_x.peR / 1e6:,.0f} x {el_x.apR / 1e6:,.0f} Mm, {el_x.period / DAY:.2f} d = "
+              f"{el_x.period / T_TITAN:.3f} Titan periods, i_rel "
+              f"{math.degrees(math.acos(float(unit(np.cross(rs, vs)) @ titan_normal(frB['soi_out'])))):.2f} deg")
+
+    # --- relay visibility, drone held at its 200 km point (chute descent barely moves it)
+    t_200 = crossing(ppA.r0, ppA.v0, ppA.ut0, titan.radius + 200e3, tpA) or t_atm
+    r_hold = astro.propagate(mu_t, ppA.r0, ppA.v0, t_200 - ppA.ut0)[0]
+
+    def elev_at(t):
+        ro = astro.propagate(mu_t, ppB.r0, ppB.v0, t - ppB.ut0)[0]
+        rp_ = astro.propagate(mu_t, ppA.r0, ppA.v0, t - ppA.ut0)[0] if t <= t_200 else r_hold
+        d = ro - rp_
+        return math.degrees(math.asin(float(d @ unit(rp_)) / float(np.linalg.norm(d)))), float(np.linalg.norm(d))
+
+    ts = np.arange(t_atm - 600, t_atm + 3600, 10.0)
+    vis = [t for t in ts if elev_at(t)[0] > 0]
+    print("\n  RELAY (drone to orbiter, UHF both ends):")
+    if vis:
+        peak = max(ts, key=lambda t: elev_at(t)[0])
+        print(f"    above the drone's horizon entry{vis[0] - t_atm:+.0f} s to entry{vis[-1] - t_atm:+.0f} s "
+              f"({(vis[-1] - vis[0]) / 60:.1f} min), peaking {elev_at(peak)[0]:+.0f} deg at entry{peak - t_atm:+.0f} s")
+        print("    NOT a hard requirement: the contract's CollectScience only needs the FlyingHigh subject")
+        print("    transmitted eventually, so a miss here just defers it to the next resonant Titan pass.")
+    else:
+        print("    orbiter never rises above the drone's horizon; the data waits for the next Titan pass")
+    for dt in (0, 300, 500, 650, 850, 1000, 1400):
+        e, rng = elev_at(t_atm + dt)
+        print(f"    entry+{dt:5d} s   range {rng / 1e3:7,.0f} km   elevation {e:+6.1f} deg")
+
+    # --- ledger
+    dvA, dvB = float(np.linalg.norm(resA["dv"])), float(np.linalg.norm(resB["dv"]))
+    usedA = M_STACK * (1 - math.exp(-dvA / VE))
+    m_rel = M_STACK - usedA - M_DRONE
+    usedB = m_rel * (1 - math.exp(-dvB / VE))
+    m_fin = m_rel - usedB
+    prop_left = PROP - usedA - usedB
+    print(f"\n  LEDGER: stack {M_STACK:.3f} t -> burn A {dvA:.2f} m/s ({usedA * 1e3:.1f} kg, "
+          f"{usedA * 1e3 * VE / THRUST:.1f} s of main engine) -> release drone {M_DRONE:.3f} t "
+          f"-> burn B {dvB:.2f} m/s ({usedB * 1e3:.2f} kg)")
+    print(f"          orbiter {m_fin:.3f} t, propellant {prop_left:.3f} t = "
+          f"{VE * math.log(m_fin / (m_fin - prop_left)):,.0f} m/s left for the tour")
+
+    if PUSH:
+        out = br.place_nodes([(t_b, nodeA[0], nodeA[1], nodeA[2])], vid=VID, replace=True)
+        print(f"\nPUSHED to {out['vessel']}: {out['placed']} node(s)  (burn A only -- B needs the release first)")
+        for n in out.get("nodes", []):
+            print("    node " + fmt_ut(n['ut']) + f"  prograde {n['prograde']:+.4f}  normal {n['normal']:+.4f}  "
+                  f"radial {n['radial']:+.4f}  |{n['magnitude']:.4f}|")
+        for i, pt in enumerate(out.get("flight_plan") or []):
+            pe = pt.get("peR")
+            print(f"    plan {i}: " + f"{pt.get('body'):8s} " + fmt_ut(pt.get('start_ut')) + f" -> {pt.get('transition')}"
+                  + (f"   pe {pe / 1e3:,.0f} km" if pe else ""))
+        al = br.alarm(t_b, name=f"Saturnalija: TITAN 1 sequence (burn A {dvA:.1f} m/s)", margin=DAY,
+                      notes=(f"1) fly the placed node, {dvA:.2f} m/s -- it aims the STACK at the drone's entry corridor "
+                             f"(Titan periapsis {CORRIDOR / 1e3:,.0f} km); {marginA:.2f} m/s short and the drone skips out. "
+                             f"2) right-click the STACK decoupler, release the Titan drone. 3) re-run "
+                             f"`saturn_tour.py titan1 --push` for burn B, {dvB:.2f} m/s, which returns the orbiter to "
+                             f"{ALT_KM:,.0f} km AND times its periapsis onto the drone's science band. 4) the orbiter needs "
+                             f"NO action at the flyby -- switch to the drone before 600 km altitude and ride it down: chute "
+                             f"~200 km, arm the experiment only below 100 km. Encounter {fmt_ut(t_enc)}."),
+                      type="Raw", action="KillWarp", vessel="Saturnalija")
+        print(f"    alarm {al.get('id')} via {al.get('backend')}")
+    else:
+        print("\n(dry run -- pass --push to place burn A and set the alarm)")
+    sys.exit(0)
 
 # ------------------------------------------------------------------ mcc: clean up the Titan aim
 if MODE == "mcc":
