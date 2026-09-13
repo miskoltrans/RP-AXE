@@ -252,9 +252,11 @@ if MODE == "titan1":
                              f"(Titan periapsis {CORRIDOR / 1e3:,.0f} km); {marginA:.2f} m/s short and the drone skips out. "
                              f"2) right-click the STACK decoupler, release the Titan drone. 3) re-run "
                              f"`saturn_tour.py titan1 --push` for burn B, {dvB:.2f} m/s, which returns the orbiter to "
-                             f"{ALT_KM:,.0f} km AND times its periapsis onto the drone's science band. 4) the orbiter needs "
+                             f"{ALT_KM:,.0f} km. 4) the orbiter needs "
                              f"NO action at the flyby -- switch to the drone before 600 km altitude and ride it down: chute "
-                             f"~200 km, arm the experiment only below 100 km. Encounter {fmt_ut(t_enc)}."),
+                             f"~200 km, arm the experiment only below 100 km. Encounter {fmt_ut(t_enc)}. The relay sets about "
+                             f"400 s after entry, so the 450-bit transmit most likely lands on the NEXT resonant Titan "
+                             f"pass; that is fine, the contract only needs the FlyingHigh subject transmitted eventually."),
                       type="Raw", action="KillWarp", vessel="Saturnalija")
         print(f"    alarm {al.get('id')} via {al.get('backend')}")
     else:
