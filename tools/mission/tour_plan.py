@@ -156,7 +156,8 @@ def phasing_options(system, body, r, v, ut, moon_name, horizon, dv_grid):
             rm, _ = (np.asarray(x, float) for x in system.rel(moon_name, t))
             miss = float(np.linalg.norm(np.asarray(rr, float) - rm))
             if miss <= moon.soi:
-                found.append({"dv": abs(dv), "t_burn": t_apo, "t_enc": t, "miss": miss,
+                found.append({"dv": abs(dv), "dv_signed": dv, "t_burn": t_apo,
+                              "t_enc": t, "miss": miss,
                               "r_e": np.asarray(rr, float), "v_e": np.asarray(vv, float),
                               "wait": t - ut})
                 break                                    # first reachable crossing per dv
@@ -224,6 +225,8 @@ def expand(system, body, node, moons, angles, alt_m, horizon, dv_grid):
                                  node.hist + [{"moon": mname, "ut": opt["t_enc"], "psi": psi,
                                                "vinf": vinf, "turn": turn, "n": 0, "k": 0,
                                                "phase_dv": opt["dv"],
+                                               "dv_signed": opt["dv_signed"],
+                                               "t_burn": opt["t_burn"],
                                                "wait_d": opt["wait"] / DAY}], node))
     return kids
 
@@ -277,6 +280,71 @@ def closes(system, body, node, moon_name, lander_dv):
     return cross <= moon.soi
 
 
+def verify(system, body, root_r, root_v, root_ut, node, alt_m, moons):
+    """Re-fly the itinerary through the patched-conic shooter, leg by leg.
+
+    The search flies analytic flybys, which is what makes it fast and also what makes it
+    untrustworthy on its own -- that model already moved a predicted apoapsis by 15 Gm once.
+    So every leg is replayed here: the phasing burn is applied at its apoapsis, the arc is
+    shot with the moon's SOI watched, and the aim is solved with `maneuver.refine` against the
+    real geometry. What comes out is measured, not modelled.
+    """
+    import maneuver
+    r = np.asarray(root_r, float)
+    v = np.asarray(root_v, float)
+    ut = root_ut
+    legs = [h for h in node.hist if h["moon"] != "start"]
+    total = 0.0
+    print(f"  {'leg':>3s} {'moon':9s} {'planned':16s} {'flown':16s} {'alt km':>8s} "
+          f"{'v_inf':>7s} {'plan v_inf':>10s} {'dV':>8s}")
+    for i, h in enumerate(legs):
+        moon = system.body(h["moon"])
+        if h.get("t_burn"):
+            el = astro.elements(body.mu, r, v)
+            if el.ecc >= 1:
+                print(f"  {i + 1:3d}  hyperbolic before the burn -- chain broken")
+                return False
+            rb, vb = astro.propagate(body.mu, r, v, h["t_burn"] - ut)
+            rb = np.asarray(rb, float)
+            vb = np.asarray(vb, float)
+            vb = vb * (1.0 + h["dv_signed"] / float(np.linalg.norm(vb)))
+            r, v, ut = rb, vb, h["t_burn"]
+            total += abs(h["dv_signed"])
+        t_end = h["ut"] + 400 * DAY
+        try:
+            res = maneuver.refine(system, body.name, r, v, ut, moon.name, t_end,
+                                  moon.radius + alt_m, b_dir=np.array(
+                                      [math.cos(math.radians(h["psi"])),
+                                       math.sin(math.radians(h["psi"]))]),
+                                  watch=[moon.name], max_dv=120.0, max_nfev=120)
+        except Exception as exc:                                    # noqa: BLE001
+            print(f"  {i + 1:3d} {moon.name:9s} {fmt_ut(h['ut'])[:16]:16s} aim solve failed: {exc}")
+            return False
+        rep = res["report"]
+        if not rep.get("captured"):
+            print(f"  {i + 1:3d} {moon.name:9s} {fmt_ut(h['ut'])[:16]:16s} NO ENCOUNTER "
+                  f"(miss {rep.get('ca_dist', 0) / 1e6:,.1f} Mm)")
+            return False
+        trim = float(np.linalg.norm(res["dv"]))
+        total += trim
+        tr = res["traj"]
+        p_in = tr.enters(moon.name)
+        post = [q for q in tr.patches if q.body.name == body.name and q.ut0 > p_in.ut0]
+        if not post:
+            print(f"  {i + 1:3d} {moon.name:9s} left {body.name} after the flyby -- chain broken")
+            return False
+        r = np.asarray(post[0].r0, float)
+        v = np.asarray(post[0].v0, float)
+        ut = post[0].ut0
+        print(f"  {i + 1:3d} {moon.name:9s} {fmt_ut(h['ut'])[:16]:16s} {fmt_ut(rep['soi_ut'])[:16]:16s} "
+              f"{(rep['peR'] - moon.radius) / 1e3:8,.0f} {rep['vinf']:7,.0f} {h['vinf']:10,.0f} "
+              f"{trim + abs(h.get('dv_signed', 0.0)):7,.1f}")
+    el = astro.elements(body.mu, r, v)
+    print(f"  FLOWN end orbit {el.peR / 1e6:,.0f} x {el.apR / 1e6:,.0f} Mm, total {total:,.0f} m/s "
+          f"(search said {node.dv:,.0f})")
+    return True
+
+
 def report(system, body, node, targets):
     print(f"    total dv {node.dv:,.0f} m/s over {len(node.hist)} flybys, "
           f"{(node.hist[-1]['ut'] - node.hist[0]['ut']) / DAY:,.0f} days")
@@ -318,6 +386,8 @@ def main(argv=None):
     ap.add_argument("--dv-cap", type=float, default=200.0, help="m/s cap on one phasing burn")
     ap.add_argument("--port", type=int, default=8284)
     ap.add_argument("--show", type=int, default=3)
+    ap.add_argument("--verify", action="store_true",
+                    help="re-fly the best itinerary through the patched-conic shooter")
     args = ap.parse_args(argv)
 
     system = System()
@@ -376,6 +446,11 @@ def main(argv=None):
     for nd in pool[:args.show]:
         print()
         report(system, body, nd, targets)
+    if args.verify and pool:
+        print("")
+        print("VERIFY (patched-conic shooter, aims solved against the real geometry)")
+        ok = verify(system, body, r, v, ut, pool[0], args.alt * 1e3, args.moons)
+        print("  -> itinerary VERIFIED" if ok else "  -> itinerary DID NOT survive the shooter")
     if not done:
         print("\n  No sequence reaches every target. Read the SHORT / NODE ONLY flags above:")
         print("  SHORT means the lander cannot afford the arrival; NODE ONLY means the plane")
