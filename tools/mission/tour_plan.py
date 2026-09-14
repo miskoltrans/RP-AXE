@@ -38,6 +38,7 @@ import numpy as np
 
 import astro
 import bridge as bridge_mod
+import sfs as sfs_mod
 import maneuver
 import patched
 import tour
@@ -511,10 +512,42 @@ def report(system, body, node, targets):
               f"{'reachable' if cross <= moon.soi else 'NODE ONLY'}")
 
 
+def origin(system, args):
+    """Where the tour starts: the running game, or the save when KSP is not up.
+
+    A tour is solved on rails and the vessel is not being flown while it is solved, so the
+    save is a perfectly good source -- and refusing to plan because KSP happens to be closed
+    is the tool failing for a reason that has nothing to do with the mission.
+    """
+    if not args.save:
+        try:
+            return bridge_mod.Bridge(port=args.port).state(system, vid=args.vessel_id,
+                                                           name=args.vessel)
+        except bridge_mod.BridgeError:
+            print("  [the AXE bridge is not answering -- planning from the save instead]")
+    save = sfs_mod.Save(sfs_mod.find_save(args.save), system)
+    key = (args.vessel_id or "").replace("-", "").lower()
+    ves = None
+    if key:
+        for w in save.vessels:
+            if (w.node.get("pid") or "").replace("-", "").lower() == key:
+                ves = w
+                break
+    if ves is None:
+        if not args.vessel:
+            raise SystemExit("  no vessel: give --vessel-id matching the save, or --vessel NAME")
+        ves = save.vessel(args.vessel)
+    r, v = ves.state(save.ut)
+    print(f"  [save {save.path}: {ves.name} at {fmt_ut(save.ut)}]")
+    return ves.body, np.asarray(r, float), np.asarray(v, float), save.ut
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--vessel-id", required=True)
+    ap.add_argument("--vessel-id")
+    ap.add_argument("--vessel", help="vessel name, when there is no id (save lookup only)")
+    ap.add_argument("--save", help="plan from this save instead of the running game")
     ap.add_argument("--body", default="Jupiter")
     ap.add_argument("--moons", nargs="+", default=["Io", "Europa", "Ganymede", "Callisto"])
     ap.add_argument("--targets", nargs="+", required=True,
@@ -540,8 +573,7 @@ def main(argv=None):
     for t in args.targets:
         name, _, dv = t.partition("=")
         targets[name] = float(dv)
-    br = bridge_mod.Bridge(port=args.port)
-    b, r, v, ut = br.state(system, vid=args.vessel_id)
+    b, r, v, ut = origin(system, args)
     if args.status:
         # Report where the vessel IS. The pending-encounter hop below rewrites r/v/ut
         # to the future encounter, which is the right start for a SEARCH and exactly
