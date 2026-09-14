@@ -42,6 +42,7 @@ until the flown B-plane target is hit → shoot again and print the result.
 | `lambert.py` | Izzo 2015, zero- and multi-revolution |
 | `sfs.py` | the save: game clock, vessel orbits, planned nodes |
 | `patched.py` | the shooter — propagation through SOI entry and exit |
+| `oracle.py` | the same flight flown by KSP's own `Orbit`/`PatchedConics`, headless and ~7,000x faster |
 | `maneuver.py` | ejection / midcourse / flyby solvers and the differential corrector |
 | `ksptot.py` | client for KSPTOT Connect — live vessel state, no new plugin needed |
 | `launch.py` | launch sites, launch azimuth, and when a pad crosses an orbit plane |
@@ -49,6 +50,66 @@ until the flown B-plane target is hit → shoot again and print the result.
 | `mga.py` | multi-gravity-assist sequence search: Lambert legs joined by v-infinity matching |
 | `plan.py` | the CLI |
 | `selftest.py` | 64 checks; run before trusting a number |
+
+## `oracle.py` — KSP's own solver, outside the game (2026-09-14)
+
+`patched.shoot` is a replica, and a faithful one: 0.000 s against the live game on SOI
+transitions. The problem was never accuracy, it was **cost** — 3.4 s for a four-patch flight.
+That one number is why `tour_plan.py` models flybys analytically instead of flying them, and the
+analytic flyby is exactly what this project already measured as failing: *the rotation formula
+was right to 0.08 degrees; the epoch was not.* So the tour search optimises a quantity that does
+not survive being flown, which is why a flyby has to actually happen before the next one can be
+planned.
+
+`Assembly-CSharp.dll`'s `Orbit` and `PatchedConics` run **outside the game** — no Unity runtime,
+no KSP, no save. `tools/ksp-oracle/` is the worker; `oracle.py` is the client, and `oracle.shoot`
+returns a real `patched.Trajectory`, so `enters`, `closest_approach` and `arrival_report` work
+unchanged.
+
+```
+pwsh tools/ksp-oracle/build.ps1        # compiles and runs its own selftest
+```
+
+| | replica | oracle |
+|---|---|---|
+| one 4-patch flight | 3,285.7 ms | 36.8 ms |
+| batched, per flight | — | **0.462 ms** |
+| an 86,400-shot flown tour search | 79 hours | **40 s** |
+
+Measured against the replica on the lunar intercept fixture: identical patch chain
+(`Earth/enter:Moon -> Moon/exit -> Earth/exit -> Sun/horizon`), all three SOI transitions
+**0.000 s** apart, patch starts **0.0 m** apart, ephemeris within **9.1e-13** of `rss_ephem`
+across six bodies.
+
+**Use `shoot_many` for a search.** Per-request overhead, not the arithmetic, is what would
+otherwise set the runtime.
+
+Two deliberate differences, both reported rather than silent: `watch` is ignored, because KSP
+considers everything in `Planetarium.Orbits` and has no minimum-SOI cutoff — so Phobos-class
+bodies are not skipped the way the replica skips them by default; and a horizon past one
+revolution is *not* what the game does, since KSP gives patch 0 exactly one period, which is why
+the map view never shows an encounter two orbits out.
+
+### The trap, which is the same shape as every other trap in this file
+
+`Planetarium.Zup` must be built with `PlanetaryFrame(0, 90, 0)`, **not** `SetFrame(0, 90, 0)` —
+`SetFrame` takes radians and that 90 is degrees. At `InverseRotAngle = 0` the correct call works
+out to exactly the identity, which is what makes the element frame and the frame
+`getRelativePositionAtUT` returns coincide.
+
+Get it wrong and **every element stays bit-perfect.** `UpdateFromStateVectors` applies
+`Zup.LocalToWorld` to its input and `getRelativePositionAtUT` applies `WorldToLocal` on the way
+out, so a state vector round-trips cleanly through *any* Zup. But a body's orbit is built from
+elements and never passes through Zup at all, so the vessel ends up in a rotated frame from the
+bodies — and the only symptom is that no encounter is ever found. The selftest now asserts that
+`Zup` **is** the identity rather than that a round trip survives it, which is the difference
+between a check and a tautology.
+
+The rest of the recipe — `GetUninitializedObject`, writing backing fields because the setters
+reach into Unity while the getters are pure, faking `m_CachedPtr` so
+`if (!orbitDriver.celestialBody)` stops skipping every body, and setting `StartUT`/`EndUT` or the
+solver reports `ORBIT_INTERSECT` forever and never `ENCOUNTER` — is in
+`tools/ksp-oracle/README.md`.
 
 ## `mga.py` — finding a trajectory that does not exist yet
 
