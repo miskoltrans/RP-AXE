@@ -286,18 +286,23 @@ def pick_aim(scan, mode="pump"):
             k = round(a["resonance"])
             if k < 1:
                 continue
-            err = abs(a["resonance"] - k)
-            if err < 0.02 and (best is None or a["period"] < best["period"]):
+            if abs(a["resonance"] - k) < 0.02 and (best is None or a["period"] < best["period"]):
                 best = a
         if best is not None:
+            best["picked_by"] = "resonance"
             return best
+        # No integer ratio is reachable at this v_inf and periapsis -- the achievable ratios
+        # simply do not span one. Say so rather than silently reporting a pump aim as resonant.
+        mode = "pump (no integer resonance reachable)"
     # Pump-down is nearly flat near its minimum, and the inclination to the moon's plane is
     # not: on Perun 2 Bus B the strict apoapsis minimum bought 0.07 % of apoapsis for 1.27 deg
     # of relative inclination, which at Ganymede's radius is 28,000 km of cross-track against a
     # 24,359 km SOI -- it would have cost the NEXT encounter. Break the near-tie on inclination.
     lo = min(a["apR"] for a in usable)
     near = [a for a in usable if a["apR"] <= lo * 1.02]
-    return min(near, key=lambda a: a["irel"])
+    chosen = min(near, key=lambda a: a["irel"])
+    chosen["picked_by"] = mode if mode != "pump" else "pump"
+    return chosen
 
 
 def free_dv(moon, vinf, per):
