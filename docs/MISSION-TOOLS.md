@@ -711,6 +711,32 @@ periapsis moved the predicted apoapsis from 35 to 50 Gm. The rotation formula it
 right to 0.08 degrees; the epoch was not. When an answer sits near an escape boundary,
 model nothing -- fly it.
 
+## `plan.py phase` — wait revolutions, do not force the next pass
+
+`encounter` scans only the first periapsis pass after apoapsis, so its cheapest answer is
+always a *one-revolution* answer — and on a non-resonant orbit that is the expensive one.
+`phase` looks many revolutions out instead, because changing the period by `d` shifts the
+j-th crossing by about `j*d`: the further ahead you are willing to look, the smaller the
+burn that lands the moon on it. It prints the whole dv-versus-wait frontier rather than a
+single number, because which end of it you want is a mission decision, not an optimisation.
+
+```
+python plan.py phase --vessel "Perun 2 Bus B" --moon Ganymede --revs 14 --dv-cap 120
+```
+
+Measured on Perun 2 Bus B after its first Ganymede pass (period 1.130 Ganymede periods):
+
+| burn | encounter | wait | revs |
+|---|---|---|---|
+| **−2.3 m/s** | 1983-09-01 | 140 d | 16.7 |
+| −14.1 m/s | 1983-06-28 | 76 d | 8.7 |
+| −23.2 m/s | 1983-06-17 | 64 d | 7.3 |
+
+Earlier, on Bus B at a 6.759 period ratio, forcing the next pass cost **335 m/s** where the
+4:27 resonance cost **175.8** and gave a better plane and a deeper pump-down for 143 extra
+days. A resonant wait only REPEATS an encounter you already have, though — it cannot invent a
+first encounter with a new moon.
+
 **`--prefer coplanar` is usually right for a multi-moon tour.** The default picks lowest
 v-infinity; the inclination to the moon's plane normally matters more. At Ganymede's orbital
 radius 1.3 degrees of relative inclination is 23,500 km of cross-track against a 24,359 km
@@ -733,7 +759,7 @@ Decompiled from the install's own `MechJeb2.dll` / `MechJebLib.dll` and `Assembl
 
 ## What `selftest` checks
 
-78 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
+81 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
 to 4e-12 over 400 random states, 37 circular orbits land exactly back on the start, energy
 holds to 6e-16 over 3,000 days, elements and the node basis round-trip, a Lambert arc really
 lands on its target position, the pad is exactly in the plane at every crossing reported, and

@@ -911,6 +911,64 @@ def test_handoff_vinf(S):
           if got2 else "returned None")
 
 
+def test_phasing(S):
+    """Multi-revolution phasing: the crossings must be real, and the burn must reproduce them.
+
+    `solve` scans only the first periapsis pass after apoapsis, so its answer is always a
+    one-revolution answer -- which on a non-resonant orbit is the expensive one. `phase_options`
+    looks j revolutions out, where a period change of d moves the crossing by about j*d. Both
+    halves are easy to get subtly wrong, so check the geometry exactly and then check that the
+    burn it hands back really does put the moon where it said.
+    """
+    J = S.bodies["Jupiter"]
+    G = S.bodies["Ganymede"]
+    ut = 1_000_000_000.0
+    rg, vg = (np.asarray(x, float) for x in S.rel("Ganymede", ut))
+    n_hat = np.cross(rg, vg) / np.linalg.norm(np.cross(rg, vg))
+    r_hat = rg / np.linalg.norm(rg)
+    t_hat = np.cross(n_hat, r_hat)
+    # an orbit that crosses Ganymede's radius, sitting at apoapsis above it
+    ra, rp = 1.9e9, 0.75e9
+    a = (ra + rp) / 2
+    r0 = r_hat * ra
+    v0 = t_hat * math.sqrt(J.mu * (2 / ra - 1 / a))
+
+    worst = 0.0
+    times = tour.radius_crossings(J.mu, r0, v0, ut, G.a, ut + 200 * DAY)
+    for t in times:
+        rr, _ = astro.propagate(J.mu, r0, v0, t - ut)
+        worst = max(worst, abs(float(np.linalg.norm(rr)) - G.a))
+    per = 2 * math.pi * math.sqrt(a ** 3 / J.mu)
+    n_expect = 2 * int((200 * DAY) / per)
+    check("radius crossings land exactly on the moon's orbit radius",
+          times and worst < 1.0 and abs(len(times) - n_expect) <= 2,
+          f"{len(times)} crossings in 200 d (expected ~{n_expect}), worst radius error {worst * 1e3:.3f} mm")
+
+    opts = tour.phase_options(S, J, G, r0, v0, ut, max_revs=10, dv_cap=150.0, steps=600)
+    ok = False
+    detail = "no option found"
+    if opts:
+        o = opts[0]
+        rb, vb = astro.propagate(J.mu, r0, v0, o["t_burn"] - ut)
+        vb = np.asarray(vb, float)
+        vb2 = vb * (1.0 + o["dv_signed"] / float(np.linalg.norm(vb)))
+        rr, _ = astro.propagate(J.mu, np.asarray(rb, float), vb2, o["t_enc"] - o["t_burn"])
+        rm, _ = S.rel("Ganymede", o["t_enc"])
+        flown = float(np.linalg.norm(np.asarray(rr, float) - np.asarray(rm, float)))
+        ok = flown <= G.soi and abs(flown - o["miss"]) < 1.0
+        detail = (f"cheapest {o['dv_signed']:+,.2f} m/s waits {o['wait'] / DAY:,.0f} d "
+                  f"({o['revs']:.1f} revs), miss {flown / 1e3:,.0f} km vs SOI {G.soi / 1e3:,.0f}")
+    check("a phasing burn reproduces the encounter it promised", ok, detail)
+
+    # and the point of the whole thing: waiting longer is cheaper
+    cheap = min(opts, key=lambda d: d["dv"]) if opts else None
+    quick = min(opts, key=lambda d: d["wait"]) if opts else None
+    check("looking further ahead buys a smaller burn",
+          cheap is not None and quick is not None and cheap["dv"] <= quick["dv"],
+          f"cheapest {cheap['dv']:,.1f} m/s at {cheap['wait'] / DAY:,.0f} d vs soonest "
+          f"{quick['dv']:,.1f} m/s at {quick['wait'] / DAY:,.0f} d" if cheap else "n/a")
+
+
 def run(S=None, verbose=True):
     _results.clear()
     S = S or System()
@@ -933,6 +991,7 @@ def run(S=None, verbose=True):
     test_assist_targeting(S)
     test_mga_sequence_search(S)
     test_handoff_vinf(S)
+    test_phasing(S)
     save = test_save(S)
     test_node_sign_against_game(S, save)
     return _report(verbose)

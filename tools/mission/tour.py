@@ -191,6 +191,115 @@ def seed_for(system, body, moon, r0, v0, ut0, t_apo, t_k, iters=8):
             "branch": "outbound" if nu_of_q > 0 else "inbound"}
 
 
+def radius_crossings(mu, r_a, v_a, t_apo, radius, t_end, max_revs=400):
+    """Every time this conic crosses `radius`, from t_apo out to t_end. Two per revolution."""
+    el = astro.elements(mu, r_a, v_a)
+    if el.ecc >= 1 or not (el.peR <= radius <= el.apR):
+        return []
+    p_semi = el.sma * (1 - el.ecc ** 2)
+    c = (p_semi / radius - 1.0) / el.ecc if el.ecc > 1e-12 else 0.0
+    if abs(c) > 1.0:
+        return []
+    nu = math.acos(max(-1.0, min(1.0, c)))
+    t_pe = t_apo + el.period / 2.0
+    out = []
+    for sgn in (-1.0, 1.0):
+        t0 = t_pe + _anomaly_time(mu, el.sma, el.ecc, sgn * nu)
+        j = 0
+        while j < max_revs:
+            t = t0 + j * el.period
+            if t > t_end:
+                break
+            if t > t_apo + 60.0:
+                out.append(t)
+            j += 1
+    return sorted(out)
+
+
+def phase_options(system, body, moon, r0, v0, ut0, *, max_revs=12, dv_cap=250.0,
+                  steps=1200, keep=8):
+    """Apoapsis burns that put the MOON at one of our crossings, n revolutions from now.
+
+    WAIT REVOLUTIONS, DO NOT FORCE THE NEXT PASS. `solve` scans only the first periapsis pass
+    after apoapsis, so its cheapest answer is always a one-revolution answer -- and on a
+    non-resonant orbit that is the expensive one. Measured on Perun 2 Bus B at Ganymede: forcing
+    the next pass cost 335 m/s, while letting the orbit come back on a 4:27 resonance cost 175.8
+    and gave a better plane and a deeper pump-down, for 143 extra days.
+
+    The physics is just that changing the period by d shifts the j-th crossing by about j*d, so
+    the further out you are willing to look, the smaller the burn that lands the moon on it. This
+    scans the burn magnitude against every crossing inside the horizon and reports the frontier,
+    which is a dv-versus-wait trade for the caller to pick from -- not a single number.
+    """
+    mu = body.mu
+    el0 = astro.elements(mu, r0, v0)
+    if el0.ecc >= 1:
+        return []
+    n0 = math.sqrt(mu / el0.sma ** 3)
+    t_apo = ut0 - el0.mna / n0 + el0.period / 2
+    while t_apo < ut0 + 60.0:
+        t_apo += el0.period
+    r_a, v_a = astro.propagate(mu, np.asarray(r0, float), np.asarray(v0, float), t_apo - ut0)
+    r_a, v_a = np.asarray(r_a, float), np.asarray(v_a, float)
+    va = float(np.linalg.norm(v_a))
+    t_end = t_apo + max_revs * el0.period * 1.6 + moon_period(system, moon)
+
+    def miss_at(dv, t):
+        rr, _ = astro.propagate(mu, r_a, v_a * (1.0 + dv / va), t - t_apo)
+        rm, _ = system.rel(moon.name, t)
+        return float(np.linalg.norm(np.asarray(rr, float) - np.asarray(rm, float)))
+
+    def best_cross(dv):
+        v_new = v_a * (1.0 + dv / va)
+        el = astro.elements(mu, r_a, v_new)
+        if el.ecc >= 1 or el.apR >= body.soi:
+            return None
+        best = None
+        for t in radius_crossings(mu, r_a, v_new, t_apo, moon.a, t_end):
+            m = miss_at(dv, t)
+            if best is None or m < best[0]:
+                best = (m, t)
+        return best
+
+    grid = [-dv_cap + 2 * dv_cap * i / steps for i in range(steps + 1)]
+    curve = [(dv, best_cross(dv)) for dv in grid]
+    found = []
+    for i in range(1, len(curve) - 1):
+        a_, b_, c_ = curve[i - 1][1], curve[i][1], curve[i + 1][1]
+        if b_ is None:
+            continue
+        if (a_ is not None and a_[0] < b_[0]) or (c_ is not None and c_[0] < b_[0]):
+            continue                                   # not a local minimum in dv
+        step = 2 * dv_cap / steps
+        cand = None
+        for j in range(81):                            # refine on a 40x finer grid
+            d2 = curve[i][0] - step + 2 * step * j / 80
+            bc = best_cross(d2)
+            if bc and (cand is None or bc[0] < cand[0]):
+                cand = (bc[0], d2, bc[1])
+        if not cand or cand[0] > moon.soi:
+            continue
+        m, d2, t = cand
+        v2 = v_a * (1.0 + d2 / va)
+        rr, vv = astro.propagate(mu, r_a, v2, t - t_apo)
+        el2 = astro.elements(mu, r_a, v2)
+        found.append({"dv": abs(d2), "dv_signed": d2, "t_burn": t_apo, "t_enc": t,
+                      "miss": m, "wait": t - ut0, "revs": (t - t_apo) / el2.period,
+                      "period": el2.period, "peR": el2.peR, "apR": el2.apR,
+                      "r_e": np.asarray(rr, float), "v_e": np.asarray(vv, float),
+                      "irel": rel_inc(system, moon.name, rr, vv, t)})
+    found.sort(key=lambda d: (round(d["t_enc"] / 3600.0), d["dv"]))
+    uniq, seen = [], set()
+    for f in found:
+        k = round(f["t_enc"] / 7200.0)
+        if k in seen:
+            continue
+        seen.add(k)
+        uniq.append(f)
+    uniq.sort(key=lambda d: d["dv"])
+    return uniq[:keep]
+
+
 def solve(system, body, moon, r0, v0, ut0, per_want, *, before=30.0, after=45.0,
           step=0.5, refine_n=6, max_dv=400.0, verbose=True):
     """Scan encounter epochs, refine the best seeds on the flown trajectory, return them sorted."""

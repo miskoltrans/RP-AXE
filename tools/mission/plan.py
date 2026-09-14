@@ -1136,6 +1136,56 @@ def cmd_capture(args):
     push_burns(args, [(t_p, node)], what="capture")
 
 
+def cmd_phase(args):
+    """The dv-versus-wait trade for getting the moon to BE at one of our crossings."""
+    system, save = load(args)
+    body, r0, v0, ut0, who, _free = origin_state(system, save, args)
+    moon = system.body(args.moon)
+    parent = system.body(moon.parent)
+    if body.name != parent.name:
+        # mid-flyby is a normal moment to ask; fly out to the parent and phase from there
+        tr0 = patched.shoot(system, body.name, r0, v0, ut0, ut0 + 30 * DAY, watch=[parent.name])
+        out = next((q for q in tr0.patches if q.body.name == parent.name), None)
+        if out is None:
+            sys.exit(f"  {who} is in {body.name}'s SOI and does not leave it within 30 days")
+        print(f"  (in {body.name}'s SOI; propagated out to {fmt_ut(out.ut0)})")
+        r0, v0, ut0, body = out.r0, out.v0, out.ut0, parent
+    el = astro.elements(body.mu, r0, v0)
+    t_moon = tour.moon_period(system, moon)
+    print(f"PHASE  {who}  ->  {moon.name}   (state at {fmt_ut(ut0)})")
+    print(f"  orbit {el.peR / 1e6:,.0f} x {el.apR / 1e6:,.0f} Mm, period {tour.dhms(el.period)} = "
+          f"{el.period / t_moon:.3f} {moon.name} periods")
+    if not (el.peR <= moon.a <= el.apR):
+        print(f"  NOTE: the orbit does not cross {moon.name}'s radius ({moon.a / 1e6:,.0f} Mm) -- "
+              f"a phasing burn cannot invent a crossing, only time one.")
+    opts = tour.phase_options(system, body, moon, r0, v0, ut0,
+                              max_revs=args.revs, dv_cap=args.dv_cap, steps=args.steps)
+    if not opts:
+        sys.exit(f"  no burn within {args.dv_cap:,.0f} m/s puts {moon.name} at a crossing inside "
+                 f"{args.revs} revolutions -- raise --revs or --dv-cap")
+    print("")
+    print(f"  {len(opts)} options, cheapest first. The trade is dv against WAIT: changing the "
+          f"period by d shifts the j-th crossing by about j*d, so looking further out is"
+          f" what makes the burn small.")
+    print(f"  {'burn':>17s} {'dV':>9s} {'encounter':>17s} {'wait d':>8s} {'revs':>7s} "
+          f"{'miss km':>9s} {'i_rel':>6s}  resulting orbit")
+    for o in opts:
+        print(f"  {fmt_ut(o['t_burn'])[:17]} {o['dv_signed']:+9.2f} {fmt_ut(o['t_enc'])[:17]} "
+              f"{o['wait'] / DAY:8.1f} {o['revs']:7.2f} {o['miss'] / 1e3:9,.0f} {o['irel']:6.2f}  "
+              f"{o['peR'] / 1e6:,.0f} x {o['apR'] / 1e6:,.0f} Mm")
+    best = opts[0]
+    rb, vb = astro.propagate(body.mu, np.asarray(r0, float), np.asarray(v0, float),
+                             best["t_burn"] - ut0)
+    dv = np.asarray(vb, float) * (best["dv_signed"] / float(np.linalg.norm(vb)))
+    node, _ = print_node(system, body, rb, vb, dv, best["t_burn"],
+                         now=(save.ut if save else None), label="PHASING BURN")
+    print(f"    FLOWN: {moon.name} at {fmt_ut(best['t_enc'])}, miss {best['miss'] / 1e3:,.0f} km "
+          f"against a {moon.soi / 1e3:,.0f} km SOI, {best['irel']:.2f} deg off its plane")
+    print(f"           then AIM it: plan.py correct --target {moon.name} --peri <alt> "
+          f"--burn-at <date> --aim handoff:<NextMoon> --aim-alts ...")
+    push_burns(args, [(best["t_burn"], node)], what="phasing burn")
+
+
 def cmd_encounter(args):
     """The apoapsis burn that turns the next periapsis into a real moon encounter."""
     system, save = load(args)
@@ -1919,6 +1969,20 @@ def main(argv=None):
     p.add_argument("--thrust", type=float, help="engine thrust in kN, for the burn duration")
     p.add_argument("--isp", type=float, default=312.0, help="engine Isp in s (default 312)")
     p.set_defaults(func=cmd_capture)
+
+    p = sub.add_parser("phase",
+                       help="the dv-vs-WAIT trade for meeting a moon, over many revolutions")
+    common(p)
+    p.add_argument("--moon", required=True, help="moon to meet, e.g. Ganymede")
+    p.add_argument("--revs", type=int, default=14,
+                   help="how many revolutions ahead to look (default 14). `encounter` scans only "
+                        "the FIRST periapsis pass after apoapsis, so its answer is always a "
+                        "one-revolution answer -- and on a non-resonant orbit that is the "
+                        "expensive one. Measured on Perun 2 Bus B: forcing the next pass cost "
+                        "335 m/s, coming back 16 revolutions later cost 2.3.")
+    p.add_argument("--dv-cap", type=float, default=250.0, help="bound on the phasing burn, m/s")
+    p.add_argument("--steps", type=int, default=1200, help="dv grid resolution")
+    p.set_defaults(func=cmd_phase)
 
     p = sub.add_parser("encounter",
                        help="apoapsis burn that makes the next periapsis a real moon encounter")
