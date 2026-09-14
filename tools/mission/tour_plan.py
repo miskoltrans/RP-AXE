@@ -95,7 +95,16 @@ def crossing_vinf(system, body, moon, r, v):
     v_inplane = math.sqrt(vs ** 2 + vm ** 2 - 2 * vs * vm * cosg)
     irel = math.radians(plane_error(system, moon.name, r, v, 0.0))
     cross = 2 * vs * math.sin(irel / 2)
-    return math.hypot(v_inplane, cross)
+    v_rel = math.hypot(v_inplane, cross)
+    # ...but the relative speed at the moon's orbit radius is NOT the hyperbolic excess a
+    # landing burn is priced on. The encounter happens at the edge of a real SOI, so the well
+    # from r_soi outward is already spent: v_inf^2 = v_rel^2 - 2*mu/r_soi. At the inner moons
+    # that term is large -- at Io it is 1.52e6 m^2/s^2. Measured on Perun 2 Bus B's 421 x 734 Mm
+    # orbit: this returned 2,276 m/s and priced the landing at 3,601 against a 3,778 m/s lander,
+    # a "SHORT by 177" verdict on the flown encounter that actually arrives at 1,897 and lands
+    # for 3,350 with 428 m/s spare. Reporting the pre-SOI speed cancels missions that close.
+    excess = v_rel * v_rel - 2 * moon.mu / moon.soi
+    return math.sqrt(excess) if excess > 0 else 0.0
 
 
 def landing_burn(moon, vinf):

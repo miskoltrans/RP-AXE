@@ -113,9 +113,21 @@ def handoff_vinf(system, body, moon, r, v, ut):
         vv = np.asarray(vv, float)
         n_hat = moon_normal(system, b.name, ut + dt)
         v_moon = math.sqrt(body.mu / b.a) * _unit(np.cross(n_hat, rr))
-        vinf = float(np.linalg.norm(vv - v_moon))
+        # The relative speed AT the moon's orbit radius is not the hyperbolic excess, and the
+        # difference is what a landing burn is priced on. A real encounter happens at the edge
+        # of a real SOI, so the well between r_soi and infinity has already been spent by the
+        # time the vessel is "far" from the moon in the patched-conic sense:
+        #     v_inf^2 = v_rel^2 - 2*mu_moon/r_soi
+        # It is not a small correction at the inner moons. Measured on Perun 2 Bus B's 421 x 734
+        # Mm orbit: this function reported 2,276 m/s at Io and `landing_dv` turned that into a
+        # 3,601 m/s landing against a 3,778 m/s lander -- 177 m/s of margin. The encounter, when
+        # actually flown, arrived at 1,897 and lands for 3,350, with 428 m/s in hand. The old
+        # number would have cancelled a mission that closes comfortably.
+        v_rel = float(np.linalg.norm(vv - v_moon))
+        excess = v_rel * v_rel - 2 * b.mu / b.soi
+        vinf = math.sqrt(excess) if excess > 0 else 0.0
         irel = rel_inc(system, b.name, rr, vv, ut + dt)
-        rec = {"vinf": vinf, "dt": dt, "outbound": nu > 0, "irel": irel,
+        rec = {"vinf": vinf, "v_rel": v_rel, "dt": dt, "outbound": nu > 0, "irel": irel,
                # Cross-track at the moon's own radius, against its SOI: the number that says
                # whether the encounter can happen ANYWHERE in the moon's orbit or only near a
                # node. Degrees hide this -- 1.3 deg at Ganymede is already 23,500 km.
@@ -567,6 +579,31 @@ def usable_aims(flown, mode="pump"):
     return [a for a in flown if a["bound"] and a["returns"]]
 
 
+def resonance_return(ratio, moon_period, drift_tol, max_revs=6):
+    """Find the RATIONAL resonance p:q a post-flyby orbit is closest to, not just an integer one.
+
+    `ratio` is the vessel period over the moon period. A return needs p vessel revolutions to
+    equal q moon revolutions; only p = 1 gives the integer test this used to do, and insisting
+    on it throws away every 3:2 and 5:3 -- which are the accessible ones. Measured on Perun 2
+    Bus B at Europa: the integer-only test rejected all 70 converged aims except one at
+    ratio 1.961, picked it for 112.8 m/s, and that aim RAISED perijove 665 -> 668 Mm. The 3:2
+    returns it discarded reached 638 Mm for 73 m/s.
+
+    Returns the shortest-wait p:q whose accumulated drift is inside `drift_tol`, or None.
+    """
+    best = None
+    for p in range(1, int(max_revs) + 1):
+        q = round(p * ratio)
+        if q < 1:
+            continue
+        drift = abs(p * ratio - q) * moon_period
+        if drift > drift_tol:
+            continue
+        if best is None or p < best["p"]:
+            best = {"p": p, "q": q, "drift": drift}
+    return best
+
+
 def pick_aim(scan, mode="pump", moon_period=None, drift_tol=0.3 * DAY):
     """Choose a B-plane aim angle from the scan.
 
@@ -645,12 +682,11 @@ def pick_aim(scan, mode="pump", moon_period=None, drift_tol=0.3 * DAY):
             if not moon_period:
                 cand.append((0.0, a))
                 continue
-            k = round(a["resonance"])
-            if k < 1:
-                continue
-            drift = abs(a["resonance"] - k) * moon_period
-            if drift <= drift_tol:
-                cand.append((drift, a))
+            r = resonance_return(a["resonance"], moon_period, drift_tol)
+            if r is not None:
+                cand.append((r["drift"], a))
+                a["res_pq"] = (r["p"], r["q"])
+                a["res_wait"] = r["p"] * a["period"]
         if cand:
             reach = [(d, a) for d, a in cand
                      if a.get("cross_self") is not None and a["cross_self"] <= a["soi_self"]]

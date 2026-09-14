@@ -908,11 +908,21 @@ def test_handoff_vinf(S):
     r0 = -r_hat * G.a                                   # periapsis, opposite Callisto
     v0 = -t_hat * math.sqrt(J.mu * (2 / G.a - 1 / a))   # tangential, same sense as the moon
     want = math.sqrt(J.mu * (2 / C.a - 1 / a))
-    want = abs(want - math.sqrt(J.mu / C.a))
+    v_rel = abs(want - math.sqrt(J.mu / C.a))
+    # ...and that speed-difference is the RELATIVE speed at the moon's orbit radius, not the
+    # hyperbolic excess. A real encounter starts at the edge of a real SOI, so the well from
+    # r_soi outward is already spent: v_inf^2 = v_rel^2 - 2*mu/r_soi. Both are checked, because
+    # confusing them is a mission-scale error -- at Io the two differ by ~380 m/s, which is the
+    # width of a lander's whole margin.
+    want = math.sqrt(v_rel ** 2 - 2 * C.mu / C.soi)
     got = tour.handoff_vinf(S, J, "Callisto", r0, v0, ut)
-    check("handoff v-infinity matches vis-viva at a tangential arrival",
+    check("handoff relative speed matches vis-viva at a tangential arrival",
+          got is not None and abs(got["v_rel"] - v_rel) < 1.0,
+          f"{got['v_rel']:,.2f} vs {v_rel:,.2f} m/s" if got else "returned None")
+    check("handoff v-infinity is the hyperbolic excess, not the pre-SOI speed",
           got is not None and abs(got["vinf"] - want) < 1.0,
-          f"{got['vinf']:,.2f} vs {want:,.2f} m/s" if got else "returned None")
+          f"{got['vinf']:,.2f} vs {want:,.2f} m/s (relative speed {v_rel:,.2f})"
+          if got else "returned None")
 
     # An apsis that falls just SHORT of the moon's orbit is still an encounter: the moon's SOI
     # is 37,703 km wide. The strict crossing test that this replaced threw away exactly the
