@@ -511,7 +511,8 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
         el = astro.elements(body.mu, post[0].r0, post[0].v0)
         dv = dv0 + res["dv"]
         bound = el.ecc < 1.0 and el.apR < body.soi
-        rec = {"psi": psi, "dv": dv, "mag": float(np.linalg.norm(dv)),
+        rec = {"psi": psi, "per_want": per_want,
+               "dv": dv, "mag": float(np.linalg.norm(dv)),
                "peR": el.peR, "apR": el.apR if el.ecc < 1 else float("inf"), "ecc": el.ecc,
                "bound": bound, "period": el.period if el.ecc < 1 else float("inf"),
                "resonance": (el.period / t_moon) if el.ecc < 1 else float("inf"),

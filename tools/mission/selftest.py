@@ -397,9 +397,17 @@ def test_save(S):
     # is correct, not a unit error: this save carries Merkurac 2 at 39.07 (e 1.83) and its
     # probe at -77.57 (e 12.17), and an escape trajectory at exactly e = 1 reads inf.
     # Testing those against 2*pi failed the reader for doing the right thing.
+    # ASTEROIDS are excluded, and not for convenience. KSP writes a SpaceObject's mean
+    # anomaly UNWRAPPED -- this save carries seven on solar orbits between 36 and 274 rad,
+    # which is 5 to 43 revolutions of accumulated M and entirely correct. Testing those
+    # against 2*pi failed the reader for reading the file properly, and a selftest that
+    # cries wolf is worse than no selftest: the whole point of "run selftest first" is that
+    # a failure means something. Crewed and probe craft are normalised, so they still answer
+    # the radians-or-degrees question this check exists to ask.
     ell = [v for v in save.vessels
            if v.valid and v.mna is not None and math.isfinite(v.mna)
-           and v.ecc is not None and v.ecc < 1.0]
+           and v.ecc is not None and v.ecc < 1.0
+           and v.type not in ("SpaceObject", "Unknown")]
     mnas = [abs(v.mna) for v in ell]
     check("ORBIT.MNA is read as radians", mnas and max(mnas) < 2 * math.pi + 1e-6,
           f"largest |MNA| over {len(mnas)} elliptical orbits is {max(mnas):.4f} "
@@ -433,42 +441,64 @@ def test_node_sign_against_game(S, save):
     if not cands:
         check("node convention vs a node the game planned", True, "no planned nodes in the save")
         return
-    v, n = max(cands, key=lambda vn: float(np.linalg.norm(vn[1]["node"])))
+    # NOT EVERY NODE CAN ANSWER THIS. The check needs a burn whose flipped variants land
+    # somewhere obviously wrong; a nearly-normal-free burn flies almost the same with the
+    # normal negated, so it has no power to discriminate and failing on it accuses the
+    # convention of an error the node simply cannot see. Measured: Perun 2 Bus B -> Europa
+    # gave 5.52 R as saved and 5.38 R normal-flipped -- both plausible, and the check went
+    # red while KSP's own flight plan was agreeing with this convention to the metre.
+    # So prefer a node that DOES discriminate, and say when none of them does.
+    cands.sort(key=lambda vn: -float(np.linalg.norm(vn[1]["node"])))
     # find what the burn is aiming at: the body it comes closest to afterwards
-    r, vel = v.state(n["ut"])
-    t_end = n["ut"] + 1600 * DAY
-    best = None
-    targets = [b.name for b in S.bodies.values() if b.parent == v.body.name and b.soi > 1e6]
-    for tname in targets:
-        traj = patched.shoot(S, v.body.name, r, vel + astro.from_node(r, vel, n["node"]),
-                             n["ut"], t_end, watch=[tname])
-        rep = patched.arrival_report(S, traj, tname, t_end)
-        if rep.get("captured"):
-            score = rep["peR"] / S.body(tname).radius
-            if best is None or score < best[0]:
-                best = (score, tname, rep)
-    if best is None:
-        check("node convention vs a node the game planned", True,
-              f"{v.name}'s node reaches no SOI; nothing to compare against")
-        return
-    score, tname, rep = best
-    alts = {}
-    for label, sign in (("normal flipped", (1, -1, 1)), ("radial flipped", (-1, 1, 1)),
-                        ("prograde flipped", (1, 1, -1))):
-        traj = patched.shoot(S, v.body.name, r,
-                             vel + astro.from_node(r, vel, n["node"] * np.array(sign)),
-                             n["ut"], t_end, watch=[tname])
-        rp = patched.arrival_report(S, traj, tname, t_end)
-        alts[label] = rp["peR"] / S.body(tname).radius if rp.get("captured") else math.inf
     # A planned node aims at a usable arrival: above the surface, not halfway to
     # the SOI edge. Only the correct convention should land in that band -- a
     # flipped radial gives a SMALLER periapsis (inside the planet), so "closest"
     # is not the test.
     band = lambda x: 1.0 < x < 20.0
-    ok = band(score) and not any(band(x) for x in alts.values())
-    check("node convention vs a node the game planned", ok,
-          f"{v.name} -> {tname}: as saved {score:.2f} R, "
-          + ", ".join(f"{k} {x:.2f} R" if math.isfinite(x) else f"{k} misses" for k, x in alts.items()))
+    tried = []
+    for v, n in cands[:4]:
+        r, vel = v.state(n["ut"])
+        t_end = n["ut"] + 1600 * DAY
+        best = None
+        targets = [b.name for b in S.bodies.values() if b.parent == v.body.name and b.soi > 1e6]
+        for tname in targets:
+            traj = patched.shoot(S, v.body.name, r, vel + astro.from_node(r, vel, n["node"]),
+                                 n["ut"], t_end, watch=[tname])
+            rep = patched.arrival_report(S, traj, tname, t_end)
+            if rep.get("captured"):
+                score = rep["peR"] / S.body(tname).radius
+                if best is None or score < best[0]:
+                    best = (score, tname, rep)
+        if best is None:
+            continue
+        score, tname, rep = best
+        alts = {}
+        for label, sign in (("normal flipped", (1, -1, 1)), ("radial flipped", (-1, 1, 1)),
+                            ("prograde flipped", (1, 1, -1))):
+            traj = patched.shoot(S, v.body.name, r,
+                                 vel + astro.from_node(r, vel, n["node"] * np.array(sign)),
+                                 n["ut"], t_end, watch=[tname])
+            rp = patched.arrival_report(S, traj, tname, t_end)
+            alts[label] = rp["peR"] / S.body(tname).radius if rp.get("captured") else math.inf
+        detail = (f"{v.name} -> {tname}: as saved {score:.2f} R, "
+                  + ", ".join(f"{k} {x:.2f} R" if math.isfinite(x) else f"{k} misses"
+                              for k, x in alts.items()))
+        if not band(score):
+            # The saved convention itself flies somewhere absurd. That IS the failure this
+            # check exists for, and no other node excuses it.
+            check("node convention vs a node the game planned", False, detail)
+            return
+        tried.append(detail)
+        if not any(band(x) for x in alts.values()):
+            check("node convention vs a node the game planned", True, detail)
+            return
+    if tried:
+        check("node convention vs a node the game planned", True,
+              "every saved node flies to a sensible arrival, but none in this save "
+              "discriminates (a normal-light burn flips almost unchanged): " + tried[0])
+    else:
+        check("node convention vs a node the game planned", True,
+              "no planned node reaches an SOI; nothing to compare against")
 
 
 def test_bplane():

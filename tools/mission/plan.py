@@ -956,6 +956,12 @@ def cmd_correct(args):
                   f"{chosen['resonance']:.3f} {target.name} periods, {chosen['irel']:.2f} deg off its plane")
             print_handoff(system, chosen)
             res = chosen["res"]
+            # --aim-alts flies SEVERAL depths, and the winner is usually not the one --peri
+            # named: depth is half the aim, so the scan is allowed to pick it. Judge the
+            # winner against the periapsis IT asked for, or a 8,019 km handoff aim gets
+            # thrown away for not being the 300 km that was typed -- with the answer already
+            # in hand and printed one line above.
+            peR = chosen.get("per_want", peR)
         else:
             res = maneuver.refine(system, b_at.name, rb, vb, ut_b, target.name, t_end, peR,
                                   b_dir=_b_dir(args), watch=watch, max_dv=args.max_dv,
