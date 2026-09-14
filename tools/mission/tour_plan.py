@@ -44,7 +44,8 @@ import tour
 from rss_ephem import DAY, System, fmt_ut
 
 G0 = 9.80665
-NOMINAL_TRIM = 25.0          # m/s charged per flyby for the approach trim that sets the aim
+NOMINAL_TRIM = 25.0          # m/s placeholder, replaced by the real solve in price_aims
+MIN_FLYBY_ALT = 50e3         # never plan a pass below this; the solver does not check the ground
 
 
 def unit(x):
@@ -274,6 +275,11 @@ def price_aims(system, body, nodes, alt_m, max_dv=300.0):
             continue
         rp = res["report"]
         if not rp.get("captured"):
+            continue
+        # The solver will happily converge on a periapsis INSIDE the moon -- it is optimising a
+        # B-plane magnitude, not checking the ground. Measured: a priced Bus A plan contained
+        # Ganymede passes at -1,312 km and -363 km altitude and still scored well.
+        if rp["peR"] < moon.radius + MIN_FLYBY_ALT:
             continue
         traj = res["traj"]
         p_in = traj.enters(moon.name)
