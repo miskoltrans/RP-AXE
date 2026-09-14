@@ -894,7 +894,7 @@ def cmd_correct(args):
             if not usable:
                 sys.exit("  no aim angle leaves a bound orbit that still reaches the moon")
             chosen = tour.pick_aim(usable, args.aim,
-                                   moon_period=tour.moon_period(system, moon))
+                                   moon_period=tour.moon_period(system, target))
             print(f"  -> {chosen.get('picked_by', args.aim)} aim psi {chosen['psi']:.0f} deg: {chosen['peR'] / 1e6:,.0f} x "
                   f"{chosen['apR'] / 1e6:,.0f} Mm, period {tour.dhms(chosen['period'])} = "
                   f"{chosen['resonance']:.3f} {target.name} periods, {chosen['irel']:.2f} deg off its plane")
