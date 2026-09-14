@@ -664,6 +664,37 @@ from 582 d, for the same 267 m/s. `--aim pump` (the default) flies every angle a
 deepest pump-down that still returns to the moon; `--aim resonance` prefers a near-integer
 moon-period ratio.
 
+**`--aim handoff:<Moon>` is the third mode, and the only one that can buy a landing on a
+DIFFERENT moon.** A flyby never changes v-infinity at the body doing the flying, so a run of
+Ganymede passes leaves a Ganymede landing exactly as expensive as it was; all it can do is
+reshape the orbit until the crossing of some OTHER moon is nearly tangential. `pump` walks
+straight past that orbit -- the deepest pump-down stops reaching the outer moon at all -- and
+`resonance` only repeats the encounter already had. `handoff` scores each flown aim by the
+v-infinity the post-flyby orbit would arrive at the named moon with, prints it and the landing
+burn it implies next to the usual columns, and picks the best.
+
+Measured on Perun 2 Bus A at the 1983-03-30 Ganymede pass, same burn, same cost to within
+27 m/s across the whole scan:
+
+| psi | post-flyby orbit | v-inf at Callisto | off Callisto's plane |
+|---|---|---|---|
+| 0 | 981 x 2,144 Mm | **2,640** | 2.43 deg = 92,000 km vs a 37,703 km SOI |
+| **345 (chosen)** | 980 x 2,170 Mm | 2,727 | **0.42 deg = 13,912 km** |
+| 180 | 1,068 x 4,765 Mm | 5,372 | 0.35 deg |
+
+**The plane is a GATE in this mode, not a tie-break.** Bus A's plane error went 0.07 -> 8.56
+-> 13.26 degrees across three aims that were each defensible on their own metric, and at
+13.26 degrees the orbit missed Callisto's plane by 432,000 km against a 37,703 km SOI -- the
+handoff it had spent 800 m/s working toward was simply gone. So `handoff` first keeps only the
+aims whose cross-track at the next moon is inside that moon's SOI (reachable at any longitude
+rather than only near a node), and minimises v-infinity within that set. Above, that is the
+difference between psi 0 and psi 345, and it costs 87 m/s of v-infinity.
+
+**The reachability test is the SOI, not the orbit radius.** The lowest v-infinity is always at
+a tangential crossing, so a strict "does the conic cross r_moon" test discards exactly the
+useful band. An apsis 10,000 km short of Callisto's orbit is still an encounter; 200,000 km
+short is not.
+
 The scan is FLOWN because the analytic two-body version failed validation: after the flyby
 the vessel is near Jupiter's escape speed at Ganymede's radius, so apoapsis is hypersensitive
 to the outgoing velocity, and evaluating the moon's own velocity an hour off the flyby
@@ -693,7 +724,7 @@ Decompiled from the install's own `MechJeb2.dll` / `MechJebLib.dll` and `Assembl
 
 ## What `selftest` checks
 
-64 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
+78 checks, in two kinds. Internal ones catch arithmetic: two independent propagators agree
 to 4e-12 over 400 random states, 37 circular orbits land exactly back on the start, energy
 holds to 6e-16 over 3,000 days, elements and the node basis round-trip, a Lambert arc really
 lands on its target position, the pad is exactly in the plane at every crossing reported, and

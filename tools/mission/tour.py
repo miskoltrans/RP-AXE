@@ -68,6 +68,73 @@ def rel_inc(system, moon, r, v, ut):
     return math.degrees(math.acos(max(-1.0, min(1.0, n))))
 
 
+def handoff_vinf(system, body, moon, r, v, ut):
+    """v-infinity this orbit would arrive with at `moon`, if the moon were at the crossing.
+
+    The number that decides a MOON HANDOFF, and the one neither `pump` nor `resonance` looks at.
+    A flyby cannot change v-infinity at the body doing the flying, so the only thing a Ganymede
+    pass can do for a Callisto landing is reshape the orbit until the Callisto crossing is
+    nearly tangential. `pump` walks straight past that point -- the deepest pump-down stops
+    reaching the outer moon at all -- and `resonance` only repeats the encounter already had.
+
+    Phasing is deliberately ignored: this answers "how fast would we meet it", not "would we".
+    The moon's velocity is taken as circular in its own instantaneous plane at the crossing
+    point, so a plane error shows up here as extra v-infinity, which is exactly how it is paid.
+
+    Returns None when the orbit does not reach the moon's radius at all.
+    """
+    b = system.body(moon) if isinstance(moon, str) else moon
+    el = astro.elements(body.mu, r, v)
+    if el.ecc >= 1.0:
+        return None
+    rm = b.a
+    # The test is NOT "does the conic cross the moon's orbit radius" -- it is "does it come
+    # within the moon's SOI". Those differ exactly where the best handoffs live: the lowest
+    # v-infinity is at a TANGENTIAL crossing, and a strict crossing test throws away every
+    # orbit whose apsis sits just short of the moon's radius, which is the whole useful band.
+    # Ganymede's SOI is 24,359 km on a 1,070,800 km orbit; Callisto's 37,703 on 1,883,800.
+    if rm > el.apR:
+        if rm - el.apR > b.soi:
+            return None
+        rm = el.apR                                   # evaluate at apoapsis, just inside
+    elif rm < el.peR:
+        if el.peR - rm > b.soi:
+            return None
+        rm = el.peR
+    p_semi = el.sma * (1 - el.ecc ** 2)
+    c = (p_semi / rm - 1.0) / el.ecc if el.ecc > 1e-12 else 0.0
+    nu_x = math.acos(max(-1.0, min(1.0, c)))
+    t0 = _anomaly_time(body.mu, el.sma, el.ecc, el.nu)
+    best = None
+    for nu in (nu_x, -nu_x):                      # outbound and inbound crossing
+        dt = (_anomaly_time(body.mu, el.sma, el.ecc, nu) - t0) % el.period
+        rr, vv = astro.propagate(body.mu, r, v, dt)
+        rr = np.asarray(rr, float)
+        vv = np.asarray(vv, float)
+        n_hat = moon_normal(system, b.name, ut + dt)
+        v_moon = math.sqrt(body.mu / b.a) * _unit(np.cross(n_hat, rr))
+        vinf = float(np.linalg.norm(vv - v_moon))
+        irel = rel_inc(system, b.name, rr, vv, ut + dt)
+        rec = {"vinf": vinf, "dt": dt, "outbound": nu > 0, "irel": irel,
+               # Cross-track at the moon's own radius, against its SOI: the number that says
+               # whether the encounter can happen ANYWHERE in the moon's orbit or only near a
+               # node. Degrees hide this -- 1.3 deg at Ganymede is already 23,500 km.
+               "cross": b.a * math.sin(math.radians(irel)), "soi": b.soi}
+        if best is None or vinf < best["vinf"]:
+            best = rec
+    return best
+
+
+def landing_dv(moon, vinf, margin=1.05):
+    """Deceleration to land from a hyperbolic arrival -- sqrt(v_inf^2 + v_esc^2), with margin.
+
+    Capturing first and then descending costs the same to within a few m/s, so the square root
+    is the honest price either way.
+    """
+    vesc = math.sqrt(2 * moon.mu / moon.radius)
+    return margin * math.hypot(vinf, vesc)
+
+
 def seed_for(system, body, moon, r0, v0, ut0, t_apo, t_k, iters=8):
     """Exact two-body burn near apoapsis whose orbit reaches the moon's position at t_k."""
     mu = body.mu
@@ -236,7 +303,7 @@ def aim_scan(system, body, moon, traj, per_want, n=180):
 
 
 def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_dv=60.0,
-            verbose=True):
+            verbose=True, handoff=None):
     """Fly each B-plane aim angle and READ the post-flyby orbit, rather than modelling it.
 
     The analytic scan above is only a pre-filter and must not be trusted for the answer: after
@@ -247,9 +314,12 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
     """
     out = []
     t_moon = 2 * math.pi * math.sqrt(moon.a ** 3 / body.mu)
+    hand = system.body(handoff) if handoff else None
     if verbose:
+        extra = (f" {'v_inf ' + hand.name[:4]:>11s} {'off ' + hand.name[:4]:>9s}"
+                 if hand else "")
         print(f"  {'psi':>5s} {'dV':>8s} {'peri Mm':>9s} {'apo Mm':>10s} {'period':>17s} "
-              f"{'/moon':>8s} {'i_rel':>6s}  outcome")
+              f"{'/moon':>8s} {'i_rel':>6s}{extra}  outcome")
         print(f"  (one {moon.name} period = {dhms(t_moon)})")
     for psi in angles:
         b_dir = np.array([math.cos(math.radians(psi)), math.sin(math.radians(psi))])
@@ -277,6 +347,14 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
                "irel": rel_inc(system, moon.name, post[0].r0, post[0].v0, post[0].ut0),
                "returns": bool(el.ecc < 1 and el.peR <= moon.a <= el.apR),
                "vinf": rep["vinf"], "flyby_peR": rep["peR"], "traj": traj, "res": res}
+        if hand is not None:
+            h = handoff_vinf(system, body, hand, post[0].r0, post[0].v0, post[0].ut0)
+            rec["handoff"] = hand.name
+            rec["vinf_next"] = h["vinf"] if h else None
+            rec["irel_next"] = h["irel"] if h else None
+            rec["cross_next"] = h["cross"] if h else None
+            rec["soi_next"] = h["soi"] if h else None
+            rec["land_next"] = landing_dv(hand, h["vinf"]) if h else None
         out.append(rec)
         if verbose:
             ap = f"{rec['apR'] / 1e6:10,.0f}" if bound else "    ESCAPE"
@@ -284,9 +362,30 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
             rr = f"{rec['resonance']:8.3f}" if bound else "       -"
             st = ("returns to " + moon.name) if rec["returns"] else (
                 "bound, misses the moon" if bound else "LEAVES " + body.name.upper())
+            extra = ""
+            if hand is not None:
+                # Print the plane next to the speed. A tour spends TWO currencies and the aim
+                # that wins on v-infinity is regularly the one that wrecks the plane: on this
+                # very scan psi 0 beat psi 345 by 87 m/s of v-infinity and cost 2.1 degrees,
+                # which at Callisto's radius is 79,900 km of cross-track against a 37,703 km
+                # SOI -- an encounter only near a node, if at all.
+                extra = (f" {rec['vinf_next']:11,.0f} {rec['irel_next']:9.2f}"
+                         if rec.get("vinf_next") else f" {'no cross':>11s} {'-':>9s}")
             print(f"  {psi:5.0f} {rec['mag']:8.1f} {rec['peR'] / 1e6:9,.0f} {ap} {pe} {rr} "
-                  f"{rec['irel']:6.2f}  {st}")
+                  f"{rec['irel']:6.2f}{extra}  {st}")
     return out
+
+
+def usable_aims(flown, mode="pump"):
+    """Which flown aims are candidates at all, which depends on what the aim is FOR.
+
+    `pump` and `resonance` need the flyby to hand back an orbit that meets the same moon again.
+    A HANDOFF does not: its whole purpose is to leave for a different moon, and insisting on a
+    return would throw away the answer. It needs the post-flyby orbit to reach the next moon.
+    """
+    if str(mode).startswith("handoff"):
+        return [a for a in flown if a["bound"] and a.get("vinf_next")]
+    return [a for a in flown if a["bound"] and a["returns"]]
 
 
 def pick_aim(scan, mode="pump", moon_period=None, drift_tol=0.3 * DAY):
@@ -295,10 +394,32 @@ def pick_aim(scan, mode="pump", moon_period=None, drift_tol=0.3 * DAY):
     `pump` takes the deepest pump-down that still returns to the moon. `resonance` takes the
     SHORTEST period whose return drifts less than `drift_tol` against the moon, which is what
     makes the following encounter nearly free; it falls back to `pump` when none qualifies.
+    `handoff` takes the lowest v-infinity at the NEXT moon, which is the only one of the three
+    that can make a landing on that moon affordable -- see `handoff_vinf`.
     """
-    usable = [a for a in scan if a["bound"] and a["returns"]]
+    usable = usable_aims(scan, mode)
     if not usable:
         return None
+    if str(mode).startswith("handoff"):
+        # TWO currencies, and the cheapest v-infinity is regularly the one that spends the
+        # other. Perun 2 Bus A's plane went 0.07 -> 8.56 -> 13.26 deg across three aims that
+        # were each defensible on their own metric, and at 13.26 deg the orbit missed
+        # Callisto's plane by 432,000 km against a 37,703 km SOI -- the handoff it had spent
+        # 800 m/s working toward was simply gone. So the plane is a GATE here, not a
+        # tie-break: prefer the aims that leave the next moon reachable anywhere in its
+        # orbit, and only give that up when nothing does.
+        reachable = [a for a in usable
+                     if a.get("cross_next") is not None and a["cross_next"] <= a["soi_next"]]
+        pool = reachable or usable
+        lo = min(a["vinf_next"] for a in pool)
+        near = [a for a in pool if a["vinf_next"] <= lo * 1.02]
+        best = min(near, key=lambda a: (not a["returns"],
+                                        a.get("irel_next") if a.get("irel_next") is not None
+                                        else a["irel"]))
+        best["picked_by"] = (f"handoff:{best.get('handoff', '?')}" if reachable else
+                             f"handoff:{best.get('handoff', '?')} (NO aim keeps it in-plane -- "
+                             f"this one needs a node crossing)")
+        return best
     if mode == "resonance" and not moon_period:
         mode = "pump (no moon period given)"
     if mode == "resonance":

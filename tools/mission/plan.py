@@ -855,6 +855,46 @@ def parse_burn_at(text, ut0):
     return parse_date(text)
 
 
+def print_handoff(system, chosen):
+    """What the chosen aim leaves for the NEXT moon -- the number a handoff is bought with."""
+    if not chosen.get("handoff") or not chosen.get("vinf_next"):
+        return
+    moon = system.body(chosen["handoff"])
+    land = tour.landing_dv(moon, chosen["vinf_next"])
+    cross, soi = chosen.get("cross_next"), chosen.get("soi_next")
+    where = ""
+    if cross is not None:
+        where = (f", {cross / 1e3:,.0f} km cross-track vs SOI {soi / 1e3:,.0f} -- "
+                 + ("reachable at any longitude" if cross <= soi else "only near a node"))
+    print(f"     hands off to {moon.name}: v-infinity {chosen['vinf_next']:,.0f} m/s, "
+          f"landing burn {land:,.0f} m/s, {chosen['irel_next']:.2f} deg off its plane{where}")
+
+
+AIM_MODES = ("pump", "resonance", "none")
+
+
+def aim_mode(text):
+    """`pump`, `resonance`, `none`, or `handoff:<Moon>`.
+
+    The handoff form names the moon the flyby is FOR. It exists because the other two modes
+    optimise quantities that cannot make a landing on a different moon affordable: a flyby
+    never changes v-infinity at the moon doing the flying, so the only thing a Ganymede pass
+    buys a Callisto lander is a gentler Callisto crossing -- and `pump`, left to itself, walks
+    straight past the orbit that gives one.
+    """
+    t = str(text).strip()
+    if t in AIM_MODES:
+        return t
+    if t.lower().startswith("handoff:") and t.split(":", 1)[1].strip():
+        return "handoff:" + t.split(":", 1)[1].strip()
+    raise argparse.ArgumentTypeError(
+        f"aim must be one of {', '.join(AIM_MODES)}, or handoff:<Moon> (e.g. handoff:Callisto)")
+
+
+def aim_handoff(mode):
+    return mode.split(":", 1)[1] if str(mode).startswith("handoff:") else None
+
+
 def cmd_correct(args):
     system, save = load(args)
     body, r0, v0, ut0, who, free_park = origin_state(system, save, args)
@@ -886,28 +926,42 @@ def cmd_correct(args):
             # encounter up, and the same consequences: the aim decides whether the flyby
             # pumps the orbit down or throws the vessel out of the planet's SOI. Fly them.
             parent = system.body(target.parent) if getattr(target, "parent", None) else body
+            hand = aim_handoff(args.aim)
             print(f"\n  AIM SCAN at {target.name} (each angle flown)")
             angles = [a * 360.0 / args.aim_steps for a in range(args.aim_steps)]
             flown = tour.aim_fly(system, parent, target, rb, vb, ut_b, np.zeros(3), peR,
-                                 rep.get("soi_ut") or t_arr, angles, max_dv=args.max_dv)
-            usable = [a for a in flown if a["bound"] and a["returns"]]
+                                 rep.get("soi_ut") or t_arr, angles, max_dv=args.max_dv,
+                                 handoff=hand)
+            usable = tour.usable_aims(flown, args.aim)
             if not usable:
-                sys.exit("  no aim angle leaves a bound orbit that still reaches the moon")
+                sys.exit("  no aim angle leaves a bound orbit that still reaches the moon"
+                         + (f" and crosses {hand}" if hand else ""))
             chosen = tour.pick_aim(usable, args.aim,
                                    moon_period=tour.moon_period(system, target))
             print(f"  -> {chosen.get('picked_by', args.aim)} aim psi {chosen['psi']:.0f} deg: {chosen['peR'] / 1e6:,.0f} x "
                   f"{chosen['apR'] / 1e6:,.0f} Mm, period {tour.dhms(chosen['period'])} = "
                   f"{chosen['resonance']:.3f} {target.name} periods, {chosen['irel']:.2f} deg off its plane")
+            print_handoff(system, chosen)
             res = chosen["res"]
         else:
             res = maneuver.refine(system, b_at.name, rb, vb, ut_b, target.name, t_end, peR,
                                   b_dir=_b_dir(args), watch=watch, max_dv=args.max_dv,
                                   diff_step=args.diff_step, verbose=args.verbose)
         rp = res["report"]
-        if not (rp.get("captured") and abs(rp["peR"] - peR) / peR < 0.02):
+        # An AIM is judged on the aim scan's own tolerance, not the tighter one a plain
+        # correction uses. The scan already flew every angle and kept only solves within 8
+        # percent of the requested periapsis; re-testing the winner at 2 percent here threw
+        # away a perfectly good 224 km Ganymede pass for not being the 300 km that was typed,
+        # and told the user to go find another burn date for an answer it already had.
+        tol = 0.08 if getattr(args, "aim", "none") not in (None, "none") else 0.02
+        if not (rp.get("captured") and abs(rp["peR"] - peR) / peR < tol):
             print_arrival(system, target.name, rp)
             sys.exit("  the correction did not converge at that burn time; try another "
                      "--burn-at, or drop it and let the scan pick one")
+        if abs(rp["peR"] - peR) / peR > 0.02:
+            print(f"  note: the aim lands at {(rp['peR'] - target.radius) / 1e3:,.0f} km altitude, "
+                  f"not the {(peR - target.radius) / 1e3:,.0f} km asked for -- that is the flyby "
+                  f"this aim actually buys, and what everything below is computed from")
         node, _ = print_node(system, b_at, rb, vb, res["dv"], ut_b,
                              now=(save.ut if save else None), label="CORRECTION")
         print_arrival(system, target.name, rp)
@@ -1111,11 +1165,14 @@ def cmd_encounter(args):
         print(f"\n  AIM SCAN at {moon.name} (each angle flown, not modelled -- apoapsis here is "
               f"hypersensitive to the outgoing velocity)")
         angles = [a * 360.0 / args.aim_steps for a in range(args.aim_steps)]
+        hand = aim_handoff(args.aim)
         flown = tour.aim_fly(system, body, moon, best["r_b"], best["v_b"], best["t_b"],
-                             best["dv"], per, best["soi_ut"], angles, max_dv=args.max_dv)
-        usable = [a for a in flown if a["bound"] and a["returns"]]
+                             best["dv"], per, best["soi_ut"], angles, max_dv=args.max_dv,
+                             handoff=hand)
+        usable = tour.usable_aims(flown, args.aim)
         if not usable:
-            print("  WARNING: no aim angle leaves a bound orbit that still reaches the moon.")
+            print("  WARNING: no aim angle leaves a bound orbit that still reaches the moon"
+                  + (f" and crosses {hand}." if hand else "."))
         else:
             chosen = tour.pick_aim(usable, args.aim,
                                    moon_period=tour.moon_period(system, moon))
@@ -1123,6 +1180,7 @@ def cmd_encounter(args):
                   f"{chosen['peR'] / 1e6:,.0f} x {chosen['apR'] / 1e6:,.0f} Mm, period "
                   f"{tour.dhms(chosen['period'])} = {chosen['resonance']:.3f} {moon.name} periods, "
                   f"{chosen['irel']:.2f} deg off its plane")
+            print_handoff(system, chosen)
             best = dict(best, dv=chosen["dv"], mag=chosen["mag"], vinf=chosen["vinf"],
                         peR=chosen["flyby_peR"], post=chosen)
     node = astro.to_node(best["r_b"], best["v_b"], best["dv"])
@@ -1792,10 +1850,12 @@ def main(argv=None):
                         "'+1d' from the state epoch, or a date. The scan's earliest sample "
                         "is 2 percent of the way to the encounter (10 days out on a Jupiter "
                         "cruise), so this is how you burn NOW.")
-    p.add_argument("--aim", choices=["pump", "resonance", "none"], default="none",
+    p.add_argument("--aim", type=aim_mode, default="none",
                    help="for a trim onto a MOON: fly every B-plane angle and pick one by what the "
                         "flyby then does. `pump` takes the deepest pump-down that still returns to "
-                        "the moon. Needs --burn-at, and overrides --bplane.")
+                        "the moon; `handoff:<Moon>` takes the lowest v-infinity at that NEXT moon, "
+                        "which is the only one of these that can make a landing there affordable. "
+                        "Needs --burn-at, and overrides --bplane.")
     p.add_argument("--aim-steps", type=int, default=24, help="B-plane angles to fly (default 24)")
     p.add_argument("--bplane", metavar="AIM",
                    help="which side of the target to pass. --peri fixes only how CLOSE you pass; "
@@ -1848,11 +1908,13 @@ def main(argv=None):
     p.add_argument("--after", type=float, default=45.0, help="days after it to stop")
     p.add_argument("--step", type=float, default=0.5, help="epoch scan step, days")
     p.add_argument("--refine", type=int, default=6, help="how many seeds to refine through the shooter")
-    p.add_argument("--aim", choices=["pump", "resonance", "none"], default="pump",
+    p.add_argument("--aim", type=aim_mode, default="pump",
                    help="B-plane aim at the encounter, each angle FLOWN. `pump` takes the deepest "
                         "pump-down that still returns to the moon; `resonance` prefers a near-integer "
-                        "moon-period ratio. `none` keeps whatever aim the solver happened to land on "
-                        "-- which on Perun 2 ejected the bus from Jupiter, so do not use it.")
+                        "moon-period ratio; `handoff:<Moon>` takes the lowest v-infinity at that NEXT "
+                        "moon, which is what a lander on it can afford. `none` keeps whatever aim the "
+                        "solver happened to land on -- which on Perun 2 ejected the bus from Jupiter, "
+                        "so do not use it.")
     p.add_argument("--aim-steps", type=int, default=24, help="B-plane angles to fly (default 24)")
     p.add_argument("--prefer", choices=["vinf", "coplanar", "cheap"], default="vinf",
                    help="which converged solution to fly. `coplanar` minimises the inclination to "

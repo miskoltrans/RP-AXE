@@ -20,6 +20,7 @@ import kepler_uv
 import launch as launch_mod
 import maneuver
 import patched
+import tour
 from lambert import lambert
 from rss_ephem import System, date_of, ut_of
 from sfs import Save, find_save
@@ -854,6 +855,62 @@ def test_mga_sequence_search(S):
 
 
 
+def test_handoff_vinf(S):
+    """The number a moon HANDOFF is bought with, against closed-form vis-viva.
+
+    `tour.handoff_vinf` answers "how fast would we arrive at the next moon", which is what
+    decides whether a lander on that moon can afford the descent. It is easy to get subtly
+    wrong -- the moon's speed at the wrong radius, the wrong crossing of the two, the plane
+    quietly dropped -- and every one of those failures is self-consistent. So build an orbit
+    whose answer is known in closed form: periapsis at Ganymede's radius, apoapsis exactly on
+    Callisto's, laid IN Callisto's own plane. Arriving at apoapsis tangentially, v-infinity is
+    just the speed difference.
+    """
+    J = S.bodies["Jupiter"]
+    G, C = S.bodies["Ganymede"], S.bodies["Callisto"]
+    ut = 1_000_000_000.0
+    rc, vc = (np.asarray(x, float) for x in S.rel("Callisto", ut))
+    n_hat = np.cross(rc, vc)
+    n_hat = n_hat / np.linalg.norm(n_hat)
+    r_hat = rc / np.linalg.norm(rc)
+    t_hat = np.cross(n_hat, r_hat)
+    a = (G.a + C.a) / 2
+    r0 = -r_hat * G.a                                   # periapsis, opposite Callisto
+    v0 = -t_hat * math.sqrt(J.mu * (2 / G.a - 1 / a))   # tangential, same sense as the moon
+    want = math.sqrt(J.mu * (2 / C.a - 1 / a))
+    want = abs(want - math.sqrt(J.mu / C.a))
+    got = tour.handoff_vinf(S, J, "Callisto", r0, v0, ut)
+    check("handoff v-infinity matches vis-viva at a tangential arrival",
+          got is not None and abs(got["vinf"] - want) < 1.0,
+          f"{got['vinf']:,.2f} vs {want:,.2f} m/s" if got else "returned None")
+
+    # An apsis that falls just SHORT of the moon's orbit is still an encounter: the moon's SOI
+    # is 37,703 km wide. The strict crossing test that this replaced threw away exactly the
+    # tangential orbits, which are the ones with the lowest v-infinity.
+    def apo_at(gap):
+        ra = C.a - gap
+        aa = (G.a + ra) / 2
+        return tour.handoff_vinf(S, J, "Callisto", -r_hat * G.a,
+                                 -t_hat * math.sqrt(J.mu * (2 / G.a - 1 / aa)), ut)
+    inside, outside = apo_at(10_000e3), apo_at(200_000e3)
+    check("an apsis inside the moon's SOI still counts as reachable",
+          inside is not None and outside is None,
+          f"10,000 km short -> {'reach' if inside else 'none'}, "
+          f"200,000 km short -> {'reach' if outside else 'none'} (SOI {C.soi / 1e3:,.0f} km)")
+
+    # And the plane has to survive into the answer, in the units that decide an encounter.
+    tilt = 2.0
+    speed = math.sqrt(J.mu * (2 / G.a - 1 / a))
+    v_tilt = -speed * (math.cos(math.radians(tilt)) * t_hat
+                       + math.sin(math.radians(tilt)) * n_hat)
+    got2 = tour.handoff_vinf(S, J, "Callisto", r0, v_tilt, ut)
+    check("a tilted orbit reports its cross-track at the moon, not just degrees",
+          got2 is not None and abs(got2["irel"] - tilt) < 0.35
+          and abs(got2["cross"] - C.a * math.sin(math.radians(got2["irel"]))) < 1.0,
+          f"{got2['irel']:.2f} deg = {got2['cross'] / 1e3:,.0f} km vs SOI {got2['soi'] / 1e3:,.0f} km"
+          if got2 else "returned None")
+
+
 def run(S=None, verbose=True):
     _results.clear()
     S = S or System()
@@ -875,6 +932,7 @@ def run(S=None, verbose=True):
     test_soi_exit_window(S)
     test_assist_targeting(S)
     test_mga_sequence_search(S)
+    test_handoff_vinf(S)
     save = test_save(S)
     test_node_sign_against_game(S, save)
     return _report(verbose)
