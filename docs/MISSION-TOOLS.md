@@ -737,6 +737,20 @@ Earlier, on Bus B at a 6.759 period ratio, forcing the next pass cost **335 m/s*
 days. A resonant wait only REPEATS an encounter you already have, though — it cannot invent a
 first encounter with a new moon.
 
+**THE PHASING BURN IS THE AIM — `phase --handoff <Moon>`.** On a multi-revolution phasing
+there are many crossings to choose from and each arrives at the moon with a different
+B-vector, so the aim is already decided by *which option you pick*. Re-aiming afterwards is
+the expensive way round. Measured on Perun 2 Bus B's second Ganymede pass: every B-plane
+angle that reached Europa cost **162–190 m/s**, and that did not change at 5, 12 or 45 days
+of lead time — it is not amplification, the aim genuinely costs that. Choosing a different
+phasing option instead put the *unaimed* flyby on a better handoff for **18 m/s**, and the
+flyby is free. `--handoff` flies each option's flyby and ranks by what it leaves.
+
+**Phase to the flyby you want, not to the moon's centre** — `--peri 6600km`. Minimising the
+miss puts the moon's centre on the nose, i.e. a periapsis below the surface, and the miss
+magnitude is also what sets the turn angle. Bus B wanted 7 degrees of bend, which is a
+6,600 km pass; asking for it up front costs the same as asking for zero.
+
 **`--prefer coplanar` is usually right for a multi-moon tour.** The default picks lowest
 v-infinity; the inclination to the moon's plane normally matters more. At Ganymede's orbital
 radius 1.3 degrees of relative inclination is 23,500 km of cross-track against a 24,359 km

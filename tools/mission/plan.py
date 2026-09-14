@@ -1175,6 +1175,30 @@ def cmd_phase(args):
         print(f"  {fmt_ut(o['t_burn'])[:17]} {o['dv_signed']:+9.2f} {fmt_ut(o['t_enc'])[:17]} "
               f"{o['wait'] / DAY:8.1f} {o['revs']:7.2f} {o['miss'] / 1e3:9,.0f} {o['irel']:6.2f}  "
               f"{o['peR'] / 1e6:,.0f} x {o['apR'] / 1e6:,.0f} Mm")
+    if getattr(args, "handoff", None):
+        ranked = tour.rank_by_handoff(system, body, moon, opts, args.handoff)
+        if not ranked:
+            sys.exit(f"  none of the phasing options produced a flown {moon.name} encounter")
+        hand = system.body(args.handoff)
+        print("")
+        print(f"  RANKED BY THE HANDOFF TO {hand.name.upper()} -- each flyby FLOWN, no aim burn.")
+        print(f"  The phasing burn IS the aim: every crossing arrives with a different "
+              f"B-vector, and re-aiming afterwards")
+        print(f"  cost 162-190 m/s on Bus B at every lead time tried, while a different "
+              f"option was free.")
+        print(f"  {'dV':>9s} {'encounter':>17s} {'wait d':>8s} {'alt km':>9s} {'turn':>6s} "
+              f"{'post-flyby orbit':>24s} {'v_inf':>8s} {'landing':>8s} {'cross km':>9s}")
+        for o in ranked[:12]:
+            line = (f"  {o['dv_signed']:+9.2f} {fmt_ut(o['t_enc'])[:17]} {o['wait'] / DAY:8.1f} "
+                    f"{o['flyby_alt'] / 1e3:9,.0f} {o['turn_deg']:6.1f} "
+                    f"{o['post_peR'] / 1e6:>11,.0f} x {o['post_apR'] / 1e6:<10,.0f}")
+            if o.get("vinf_next"):
+                line += (f" {o['vinf_next']:8,.0f} {o['land_next']:8,.0f} {o['cross_next'] / 1e3:9,.0f}"
+                         + ("" if o["cross_next"] <= o["soi_next"] else "  NODE ONLY"))
+            else:
+                line += f" {'no ' + hand.name:>8s}"
+            print(line)
+        opts = ranked
     best = opts[0]
     rb, vb = astro.propagate(body.mu, np.asarray(r0, float), np.asarray(v0, float),
                              best["t_burn"] - ut0)
@@ -1984,6 +2008,11 @@ def main(argv=None):
                         "335 m/s, coming back 16 revolutions later cost 2.3.")
     p.add_argument("--dv-cap", type=float, default=250.0, help="bound on the phasing burn, m/s")
     p.add_argument("--steps", type=int, default=1200, help="dv grid resolution")
+    p.add_argument("--handoff", metavar="MOON",
+                   help="rank the options by what the UNAIMED flyby then hands off to this moon, "
+                        "flying each one. Use it whenever the point of the encounter is to reach a "
+                        "different moon: the phasing burn already decides the B-vector, so picking "
+                        "the right option is free where re-aiming afterwards is not.")
     p.add_argument("--peri", help="phase to a MISS of this size rather than to the moon's centre, "
                                   "e.g. 7000km or 1.2Rg. Aiming at the centre leaves a periapsis "
                                   "below the surface, and a multi-revolution phasing burn cannot "

@@ -299,6 +299,7 @@ def phase_options(system, body, moon, r0, v0, ut0, *, max_revs=12, dv_cap=250.0,
                       "miss": m, "wait": t - ut0, "revs": (t - t_apo) / el2.period,
                       "period": el2.period, "peR": el2.peR, "apR": el2.apR,
                       "r_e": np.asarray(rr, float), "v_e": np.asarray(vv, float),
+                      "r_burn": r_a, "v_burn": v_a,
                       "irel": rel_inc(system, moon.name, rr, vv, t)})
     found.sort(key=lambda d: (round(d["t_enc"] / 3600.0), d["dv"]))
     uniq, seen = [], set()
@@ -310,6 +311,45 @@ def phase_options(system, body, moon, r0, v0, ut0, *, max_revs=12, dv_cap=250.0,
         uniq.append(f)
     uniq.sort(key=lambda d: d["dv"])
     return uniq[:keep]
+
+
+def rank_by_handoff(system, body, moon, opts, handoff, horizon_d=120.0):
+    """Fly each phasing option's UNAIMED flyby and score it by what it hands off to `handoff`.
+
+    THE PHASING BURN IS THE AIM. On a multi-revolution phasing there are many crossings to
+    choose from, and each one arrives at the moon with a different B-vector -- so the aim is
+    already decided by which crossing you pick. Re-aiming afterwards is the expensive way round:
+    on Perun 2 Bus B every B-plane angle that reached Europa cost 162-190 m/s at 5, 12 and 45
+    days of lead time alike, while simply choosing a different phasing option landed the natural
+    flyby on a better handoff for 18 m/s -- and the flyby itself is free.
+    """
+    hand = system.body(handoff) if isinstance(handoff, str) else handoff
+    out = []
+    for o in opts:
+        rb, vb = o["r_burn"], o["v_burn"]
+        vb2 = np.asarray(vb, float) * (1.0 + o["dv_signed"] / float(np.linalg.norm(vb)))
+        tr = patched.shoot(system, body.name, np.asarray(rb, float), vb2, o["t_burn"],
+                           o["t_enc"] + horizon_d * DAY, watch=[moon.name])
+        p_in = tr.enters(moon.name)
+        if p_in is None:
+            continue
+        bp = astro.bplane(moon.mu, p_in.r0, p_in.v0)
+        after = [q for q in tr.patches if q.body.name == body.name and q.ut0 > p_in.ut0]
+        if not after:
+            continue
+        el = astro.elements(body.mu, after[0].r0, after[0].v0)
+        rec = dict(o)
+        rec.update({"flyby_alt": bp["peR"] - moon.radius, "flyby_vinf": bp["vinf"],
+                    "turn_deg": math.degrees(astro.turn_angle(moon.mu, bp["vinf"], bp["peR"])),
+                    "post_peR": el.peR, "post_apR": el.apR, "post_period": el.period})
+        h = handoff_vinf(system, body, hand, after[0].r0, after[0].v0, after[0].ut0)
+        if h:
+            rec.update({"handoff": hand.name, "vinf_next": h["vinf"], "irel_next": h["irel"],
+                        "cross_next": h["cross"], "soi_next": h["soi"],
+                        "land_next": landing_dv(hand, h["vinf"])})
+        out.append(rec)
+    out.sort(key=lambda d: (d.get("vinf_next") is None, d.get("vinf_next", 9e9)))
+    return out
 
 
 def solve(system, body, moon, r0, v0, ut0, per_want, *, before=30.0, after=45.0,
