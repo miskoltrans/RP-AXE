@@ -46,6 +46,8 @@ from rss_ephem import DAY, System, fmt_ut
 G0 = 9.80665
 NOMINAL_TRIM = 25.0          # m/s placeholder, replaced by the real solve in price_aims
 MIN_FLYBY_ALT = 50e3         # never plan a pass below this; the solver does not check the ground
+AIM_TOL = 0.06               # a solve that misses the requested periapsis by more than this is
+                             # NOT the flyby that was asked for, and must not enter the plan
 
 
 def unit(x):
@@ -276,10 +278,17 @@ def price_aims(system, body, nodes, alt_m, max_dv=300.0):
         rp = res["report"]
         if not rp.get("captured"):
             continue
-        # The solver will happily converge on a periapsis INSIDE the moon -- it is optimising a
-        # B-plane magnitude, not checking the ground. Measured: a priced Bus A plan contained
-        # Ganymede passes at -1,312 km and -363 km altitude and still scored well.
+        # THE CHECK THAT EVERYTHING ELSE DEPENDED ON. `refine` does not fail when it cannot
+        # reach the requested aim within max_dv -- it returns its best effort, which has been
+        # measured at a 14,473 km graze and at a periapsis 1,312 km BELOW Ganymede's surface.
+        # Accepting those put flybys into the plan that bear no relation to the pass that was
+        # asked for, and every number downstream -- bending, arrival speed, plane, the delta-v
+        # it would buy -- described the request rather than the result. A branch may only
+        # survive if its aim is genuinely reachable.
+        want = moon.radius + alt_m
         if rp["peR"] < moon.radius + MIN_FLYBY_ALT:
+            continue
+        if abs(rp["peR"] - want) / want > AIM_TOL:
             continue
         traj = res["traj"]
         p_in = traj.enters(moon.name)
@@ -331,9 +340,15 @@ def search(system, body, start, moons, targets, depth, beam, angles, alt_m, hori
         if not kids:
             break
         kids.sort(key=lambda n: score(system, body, n, targets, weights))
-        frontier = price_aims(system, body, kids[:beam * 2], alt_m)
-        frontier.sort(key=lambda n: score(system, body, n, targets, weights))
-        frontier = frontier[:beam]
+        priced = price_aims(system, body, kids[:beam * 2], alt_m)
+        if not priced:
+            # Nothing at this depth had a reachable aim. That is an answer, not a crash: keep the
+            # deepest frontier that did survive and report it.
+            print(f"  depth {d + 1}: {len(kids):5d} branches, none with a reachable aim -- "
+                  f"stopping at depth {d}")
+            break
+        priced.sort(key=lambda n: score(system, body, n, targets, weights))
+        frontier = priced[:beam]
         for nd in frontier:
             if all(closes(system, body, nd, t, targets[t]) for t in targets):
                 best_done.append(nd)
@@ -385,15 +400,23 @@ def status(system, body, r, v, ut, targets, moons, horizon_d=400.0):
         print(f"  {t:9s} v_inf {vinf:6,.0f}  landing {need:6,.0f} vs lander {lander:,.0f}  {flag:<16s}"
               f" plane {irel:5.2f} deg = {cross / 1e3:8,.0f} km cross-track vs SOI "
               f"{moon.soi / 1e3:,.0f} {'any longitude' if cross <= moon.soi else 'near a node'}")
-    tr = patched.shoot(system, body.name, r, v, ut, ut + horizon_d * DAY, watch=list(moons))
+    # Look ahead in REVOLUTIONS, not in a fixed number of days. A fixed 400-day window is
+    # nothing on a 24-day orbit whose encounters recur on a ten-month synodic beat: it reported
+    # "no encounter, a phasing burn is owed" for a Bus A that had a free Ganymede pass waiting
+    # 414 days out, and the phasing burn it asked for was not owed at all.
+    el0 = astro.elements(body.mu, r, v)
+    look = max(horizon_d * DAY, 40 * el0.period) if el0.ecc < 1 else horizon_d * DAY
+    tr = patched.shoot(system, body.name, r, v, ut, ut + look, watch=list(moons))
     hits = [p for p in tr.patches if p.body.name in moons]
     if hits:
         for p in hits[:3]:
             bp = astro.bplane(p.body.mu, p.r0, p.v0)
             print(f"  next: {p.body.name} {fmt_ut(p.ut0)} at "
-                  f"{(bp['peR'] - p.body.radius) / 1e3:,.0f} km, v_inf {bp['vinf']:,.0f} m/s")
+                  f"{(bp['peR'] - p.body.radius) / 1e3:,.0f} km, v_inf {bp['vinf']:,.0f} m/s"
+                  f"  (T+{(p.ut0 - ut) / DAY:,.0f} d)")
     else:
-        print(f"  next: NO encounter within {horizon_d:,.0f} days -- a phasing burn is owed")
+        print(f"  next: no encounter in the next {look / DAY:,.0f} days "
+              f"({look / el0.period:,.0f} revolutions) -- a phasing burn is owed")
     print(f"  verdict: {worst}")
     return worst
 
