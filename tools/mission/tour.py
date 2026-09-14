@@ -329,7 +329,8 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
         depth = f" {'alt km':>9s}" if len(pers) > 1 else ""
         print(f"  {'psi':>5s}{depth} {'dV':>8s} {'peri Mm':>9s} {'apo Mm':>10s} {'period':>17s} "
               f"{'/moon':>8s} {'i_rel':>6s}{extra}  outcome")
-        print(f"  (one {moon.name} period = {dhms(t_moon)})")
+        print(f"  (one {moon.name} period = {dhms(t_moon)}; * = still inside {moon.name}'s "
+              f"{moon.soi / 1e3:,.0f} km SOI at any longitude)")
     for per_want, psi in ((p, a) for p in pers for a in angles):
         b_dir = np.array([math.cos(math.radians(psi)), math.sin(math.radians(psi))])
         try:
@@ -356,6 +357,8 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
                "irel": rel_inc(system, moon.name, post[0].r0, post[0].v0, post[0].ut0),
                "returns": bool(el.ecc < 1 and el.peR <= moon.a <= el.apR),
                "vinf": rep["vinf"], "flyby_peR": rep["peR"], "traj": traj, "res": res}
+        rec["cross_self"] = moon.a * math.sin(math.radians(rec["irel"]))
+        rec["soi_self"] = moon.soi
         if hand is not None:
             h = handoff_vinf(system, body, hand, post[0].r0, post[0].v0, post[0].ut0)
             rec["handoff"] = hand.name
@@ -382,8 +385,9 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
                          if rec.get("vinf_next") else f" {'no cross':>11s} {'-':>9s}")
             depth = (f" {(rec['flyby_peR'] - moon.radius) / 1e3:9,.0f}" if len(pers) > 1
                      else "")
+            plane = f"{rec['irel']:6.2f}{'*' if rec['cross_self'] <= rec['soi_self'] else ' '}"
             print(f"  {psi:5.0f}{depth} {rec['mag']:8.1f} {rec['peR'] / 1e6:9,.0f} {ap} {pe} {rr} "
-                  f"{rec['irel']:6.2f}{extra}  {st}")
+                  f"{plane}{extra}  {st}")
     return out
 
 
@@ -457,14 +461,23 @@ def pick_aim(scan, mode="pump", moon_period=None, drift_tol=0.3 * DAY):
         # No integer ratio is reachable at this v_inf and periapsis within the drift tolerance.
         # Say so rather than silently reporting a pump aim as resonant.
         mode = "pump (no usable resonance)"
-    # Pump-down is nearly flat near its minimum, and the inclination to the moon's plane is
-    # not: on Perun 2 Bus B the strict apoapsis minimum bought 0.07 % of apoapsis for 1.27 deg
-    # of relative inclination, which at Ganymede's radius is 28,000 km of cross-track against a
-    # 24,359 km SOI -- it would have cost the NEXT encounter. Break the near-tie on inclination.
-    lo = min(a["apR"] for a in usable)
-    near = [a for a in usable if a["apR"] <= lo * 1.02]
+    # THE PLANE IS A GATE HERE TOO, not a tie-break on a 2 percent window.
+    # Pump-down is nearly flat near its minimum and the inclination to the moon's plane is not,
+    # so the strict apoapsis minimum keeps buying fractions of a percent of apoapsis with whole
+    # degrees of plane. Measured on Perun 2 Bus B at Ganymede: psi 330 pumps to 1,556 Mm at
+    # 2.62 deg = 48,950 km of cross-track against a 24,359 km SOI (encounters only near a node),
+    # psi 315 pumps to 1,595 Mm -- 2.5 percent worse, so just outside the old window -- at
+    # 0.48 deg = 8,970 km, reachable anywhere, for 1.7 m/s more. The 2 percent rule was tuned on
+    # a case where the plane cost 1.27 deg; it is not a general answer. Cross-track against the
+    # SOI is, because that is the number that decides whether the next encounter exists.
+    reachable = [a for a in usable
+                 if a.get("cross_self") is not None and a["cross_self"] <= a["soi_self"]]
+    pool = reachable or usable
+    lo = min(a["apR"] for a in pool)
+    near = [a for a in pool if a["apR"] <= lo * 1.02]
     chosen = min(near, key=lambda a: a["irel"])
-    chosen["picked_by"] = mode if mode != "pump" else "pump"
+    chosen["picked_by"] = (mode if mode != "pump" else "pump") + (
+        "" if reachable else " (NO aim keeps it in-plane -- this one needs a node crossing)")
     return chosen
 
 
