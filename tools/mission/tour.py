@@ -561,6 +561,8 @@ def usable_aims(flown, mode="pump"):
     """
     if str(mode).startswith("handoff"):
         return [a for a in flown if a["bound"] and a.get("vinf_next")]
+    # `descend` walks perijove DOWN toward an inner moon and, like pump/resonance, is only
+    # worth anything if the flyby hands back an orbit that meets the same moon again.
     return [a for a in flown if a["bound"] and a["returns"]]
 
 
@@ -572,6 +574,8 @@ def pick_aim(scan, mode="pump", moon_period=None, drift_tol=0.3 * DAY):
     makes the following encounter nearly free; it falls back to `pump` when none qualifies.
     `handoff` takes the lowest v-infinity at the NEXT moon, which is the only one of the three
     that can make a landing on that moon affordable -- see `handoff_vinf`.
+    `descend` is `resonance` with the tie broken on the LOWEST PERIJOVE instead of the shortest
+    period: it is the aim for walking inward toward a moon below the current perijove.
     """
     usable = usable_aims(scan, mode)
     if not usable:
@@ -622,6 +626,39 @@ def pick_aim(scan, mode="pump", moon_period=None, drift_tol=0.3 * DAY):
         # No integer ratio is reachable at this v_inf and periapsis within the drift tolerance.
         # Say so rather than silently reporting a pump aim as resonant.
         mode = "pump (no usable resonance)"
+    if mode == "descend":
+        # WALKING INWARD IS NOT PUMPING DOWN. `pump` minimises APOAPSIS, which is the right
+        # objective when the next target is outside; to reach an INNER moon what has to fall is
+        # PERIJOVE, and the two objectives pick different aims. Measured on Perun 2 Bus B at
+        # Europa: scoring by apoapsis (and by "does some encounter exist within N days") kept
+        # taking shallow phasing-safe aims that spent the flyby's turn on crank, moving perijove
+        # 4-13 Mm a pass against the 243 Mm it owed -- a twentieth of the job the geometry says
+        # four deep passes should do.
+        #
+        # So: require a SHORT resonant return, which is what makes the next encounter nearly
+        # free, then among those take the LOWEST PERIJOVE. The plane stays a gate, for the same
+        # reason it is one everywhere else -- an aim whose cross-track exceeds the SOI has no
+        # next encounter to be efficient about.
+        cand = []
+        for a in usable:
+            if not moon_period:
+                cand.append((0.0, a))
+                continue
+            k = round(a["resonance"])
+            if k < 1:
+                continue
+            drift = abs(a["resonance"] - k) * moon_period
+            if drift <= drift_tol:
+                cand.append((drift, a))
+        if cand:
+            reach = [(d, a) for d, a in cand
+                     if a.get("cross_self") is not None and a["cross_self"] <= a["soi_self"]]
+            pool = reach or cand
+            best = min(pool, key=lambda da: da[1]["peR"])[1]
+            best["picked_by"] = ("descend" if reach else
+                                 "descend (NO aim keeps it in-plane -- needs a node crossing)")
+            return best
+        mode = "pump (no usable resonance for descend)"
     # THE PLANE IS A GATE HERE TOO, not a tie-break on a 2 percent window.
     # Pump-down is nearly flat near its minimum and the inclination to the moon's plane is not,
     # so the strict apoapsis minimum keeps buying fractions of a percent of apoapsis with whole
