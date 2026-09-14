@@ -48,6 +48,7 @@ until the flown B-plane target is hit → shoot again and print the result.
 | `launch.py` | launch sites, launch azimuth, and when a pad crosses an orbit plane |
 | `bridge.py` | client for the AXE bridge — queries, and the node/alarm writes |
 | `mga.py` | multi-gravity-assist sequence search: Lambert legs joined by v-infinity matching |
+| `tisserand.py` | does a moon ladder close on assists alone? Closed-form, screens a system in a second |
 | `plan.py` | the CLI |
 | `selftest.py` | 64 checks; run before trusting a number |
 
