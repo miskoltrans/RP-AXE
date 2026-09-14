@@ -217,7 +217,7 @@ def radius_crossings(mu, r_a, v_a, t_apo, radius, t_end, max_revs=400):
 
 
 def phase_options(system, body, moon, r0, v0, ut0, *, max_revs=12, dv_cap=250.0,
-                  steps=1200, keep=8):
+                  steps=1200, keep=8, target_miss=0.0):
     """Apoapsis burns that put the MOON at one of our crossings, n revolutions from now.
 
     WAIT REVOLUTIONS, DO NOT FORCE THE NEXT PASS. `solve` scans only the first periapsis pass
@@ -249,6 +249,15 @@ def phase_options(system, body, moon, r0, v0, ut0, *, max_revs=12, dv_cap=250.0,
         rm, _ = system.rel(moon.name, t)
         return float(np.linalg.norm(np.asarray(rr, float) - np.asarray(rm, float)))
 
+    def score(dv, t):
+        # PHASE TO THE FLYBY YOU WANT, not to the moon's centre. Phasing to a 1,390 km miss on
+        # Perun 2 Bus B put Ganymede's centre on the nose -- a periapsis below the surface --
+        # and every aim angle then cost 162-190 m/s just to pull the periapsis back out. A
+        # multi-revolution phasing burn cannot be re-aimed cheaply afterwards either, because
+        # any later burn is amplified by the revolutions still to come. So ask for the miss
+        # you actually want up front; it costs the same.
+        return abs(miss_at(dv, t) - target_miss)
+
     def best_cross(dv):
         v_new = v_a * (1.0 + dv / va)
         el = astro.elements(mu, r_a, v_new)
@@ -256,7 +265,7 @@ def phase_options(system, body, moon, r0, v0, ut0, *, max_revs=12, dv_cap=250.0,
             return None
         best = None
         for t in radius_crossings(mu, r_a, v_new, t_apo, moon.a, t_end):
-            m = miss_at(dv, t)
+            m = score(dv, t)
             if best is None or m < best[0]:
                 best = (m, t)
         return best
@@ -279,7 +288,10 @@ def phase_options(system, body, moon, r0, v0, ut0, *, max_revs=12, dv_cap=250.0,
                 cand = (bc[0], d2, bc[1])
         if not cand or cand[0] > moon.soi:
             continue
-        m, d2, t = cand
+        _err, d2, t = cand
+        m = miss_at(d2, t)
+        if m > moon.soi:
+            continue
         v2 = v_a * (1.0 + d2 / va)
         rr, vv = astro.propagate(mu, r_a, v2, t - t_apo)
         el2 = astro.elements(mu, r_a, v2)

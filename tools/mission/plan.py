@@ -1158,8 +1158,10 @@ def cmd_phase(args):
     if not (el.peR <= moon.a <= el.apR):
         print(f"  NOTE: the orbit does not cross {moon.name}'s radius ({moon.a / 1e6:,.0f} Mm) -- "
               f"a phasing burn cannot invent a crossing, only time one.")
+    want_miss = parse_radius(system, moon, args.peri) if getattr(args, "peri", None) else 0.0
     opts = tour.phase_options(system, body, moon, r0, v0, ut0,
-                              max_revs=args.revs, dv_cap=args.dv_cap, steps=args.steps)
+                              max_revs=args.revs, dv_cap=args.dv_cap, steps=args.steps,
+                              target_miss=want_miss)
     if not opts:
         sys.exit(f"  no burn within {args.dv_cap:,.0f} m/s puts {moon.name} at a crossing inside "
                  f"{args.revs} revolutions -- raise --revs or --dv-cap")
@@ -1982,6 +1984,11 @@ def main(argv=None):
                         "335 m/s, coming back 16 revolutions later cost 2.3.")
     p.add_argument("--dv-cap", type=float, default=250.0, help="bound on the phasing burn, m/s")
     p.add_argument("--steps", type=int, default=1200, help="dv grid resolution")
+    p.add_argument("--peri", help="phase to a MISS of this size rather than to the moon's centre, "
+                                  "e.g. 7000km or 1.2Rg. Aiming at the centre leaves a periapsis "
+                                  "below the surface, and a multi-revolution phasing burn cannot "
+                                  "be re-aimed cheaply afterwards -- on Perun 2 Bus B pulling the "
+                                  "periapsis back out cost 162-190 m/s at every aim angle.")
     p.set_defaults(func=cmd_phase)
 
     p = sub.add_parser("encounter",
