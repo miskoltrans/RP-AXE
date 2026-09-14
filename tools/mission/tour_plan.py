@@ -444,6 +444,19 @@ def main(argv=None):
         targets[name] = float(dv)
     br = bridge_mod.Bridge(port=args.port)
     b, r, v, ut = br.state(system, vid=args.vessel_id)
+    if args.status:
+        # Report where the vessel IS. The pending-encounter hop below rewrites r/v/ut
+        # to the future encounter, which is the right start for a SEARCH and exactly
+        # the wrong thing to call "status" -- it showed the pre-flyby plane error as
+        # though the burn had not helped.
+        rr, vv, uu = np.asarray(r, float), np.asarray(v, float), ut
+        if b.name != body.name:
+            t0 = patched.shoot(system, b.name, rr, vv, uu, uu + 30 * DAY, watch=[body.name])
+            o = next((q for q in t0.patches if q.body.name == body.name), None)
+            if o is not None:
+                rr, vv, uu = np.asarray(o.r0, float), np.asarray(o.v0, float), o.ut0
+        status(system, body, rr, vv, uu, targets, args.moons, args.horizon)
+        return
     if b.name != body.name:
         # Mid-flyby is a perfectly normal moment to ask; fly out to the parent and plan from there.
         tr0 = patched.shoot(system, b.name, np.asarray(r, float), np.asarray(v, float), ut,
@@ -476,9 +489,6 @@ def main(argv=None):
         print(f"  target {t}: lander {lander:,.0f} m/s, "
               + (f"v_inf now {vinf:,.0f} -> landing {landing_burn(moon, vinf):,.0f}"
                  if vinf else "orbit does not cross it"))
-    if args.status:
-        status(system, body, r, v, ut, targets, args.moons, args.horizon)
-        return
     angles = [a * 360.0 / args.angles for a in range(args.angles)]
     weights = {"dv": 1.0, "time": 0.5, "landing": 4.0, "plane": 60.0, "unreachable": 5000.0}
     start = Node(r, v, ut, 0.0, [{"moon": "start", "ut": ut, "psi": 0, "vinf": 0,
