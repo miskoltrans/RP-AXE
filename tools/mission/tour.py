@@ -43,6 +43,20 @@ def _anomaly_time(mu, a, e, nu):
     return (E - e * math.sin(E)) / math.sqrt(mu / a ** 3)
 
 
+def dhms(seconds):
+    """A tour is a conversation about periods, and decimal days hide the resonance."""
+    if seconds is None or seconds == float("inf") or seconds != seconds:
+        return "        -"
+    t = int(round(seconds))
+    return f"{t // 86400:3d}d {t % 86400 // 3600:02d}h {t % 3600 // 60:02d}m {t % 60:02d}s"
+
+
+def moon_period(system, moon):
+    """Orbital period of a moon about its parent -- the unit a tour's resonances are counted in."""
+    b = system.body(moon) if isinstance(moon, str) else moon
+    return 2 * math.pi * math.sqrt(b.a ** 3 / system.body(b.parent).mu)
+
+
 def moon_normal(system, moon, ut):
     r, v = system.rel(moon, ut)
     return _unit(np.cross(np.asarray(r, float), np.asarray(v, float)))
@@ -234,8 +248,9 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
     out = []
     t_moon = 2 * math.pi * math.sqrt(moon.a ** 3 / body.mu)
     if verbose:
-        print(f"  {'psi':>5s} {'dV':>8s} {'peri Mm':>9s} {'apo Mm':>10s} {'period d':>9s} "
+        print(f"  {'psi':>5s} {'dV':>8s} {'peri Mm':>9s} {'apo Mm':>10s} {'period':>17s} "
               f"{'/moon':>8s} {'i_rel':>6s}  outcome")
+        print(f"  (one {moon.name} period = {dhms(t_moon)})")
     for psi in angles:
         b_dir = np.array([math.cos(math.radians(psi)), math.sin(math.radians(psi))])
         try:
@@ -265,7 +280,7 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
         out.append(rec)
         if verbose:
             ap = f"{rec['apR'] / 1e6:10,.0f}" if bound else "    ESCAPE"
-            pe = f"{rec['period'] / DAY:9.2f}" if bound else "        -"
+            pe = dhms(rec["period"]) if bound else "                -"
             rr = f"{rec['resonance']:8.3f}" if bound else "       -"
             st = ("returns to " + moon.name) if rec["returns"] else (
                 "bound, misses the moon" if bound else "LEAVES " + body.name.upper())
@@ -274,26 +289,42 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
     return out
 
 
-def pick_aim(scan, mode="pump"):
-    """Choose a B-plane aim angle from the scan. `pump` = the deepest pump-down that still
-    returns to the moon; `resonance` = the nearest near-integer moon-period ratio below it."""
+def pick_aim(scan, mode="pump", moon_period=None, drift_tol=0.3 * DAY):
+    """Choose a B-plane aim angle from the scan.
+
+    `pump` takes the deepest pump-down that still returns to the moon. `resonance` takes the
+    SHORTEST period whose return drifts less than `drift_tol` against the moon, which is what
+    makes the following encounter nearly free; it falls back to `pump` when none qualifies.
+    """
     usable = [a for a in scan if a["bound"] and a["returns"]]
     if not usable:
         return None
+    if mode == "resonance" and not moon_period:
+        mode = "pump (no moon period given)"
     if mode == "resonance":
-        best = None
+        # Score the ratio error as DRIFT IN TIME, not as a fraction of the ratio. A 70:1 return
+        # that is 0.003 periods off drifts less per revolution than a 6:1 that is 0.03 off, so a
+        # fractional tolerance makes long useless resonances look better than short good ones --
+        # measured on Perun 2 Bus A, it picked a 70:1 at 501 days over a near-6:1 at 42 days and
+        # threw the whole pump-down away. What the tour wants is the SHORTEST period whose drift
+        # is small enough that the next phasing burn is cheap.
+        cand = []
         for a in usable:
             k = round(a["resonance"])
             if k < 1:
                 continue
-            if abs(a["resonance"] - k) < 0.02 and (best is None or a["period"] < best["period"]):
-                best = a
-        if best is not None:
+            drift = abs(a["resonance"] - k) * moon_period
+            if drift <= drift_tol:
+                cand.append((drift, a))
+        if cand:
+            lo = min(a["period"] for _d, a in cand)
+            near = [(d, a) for d, a in cand if a["period"] <= lo * 1.05]
+            best = min(near, key=lambda da: (da[1]["irel"], da[0]))[1]
             best["picked_by"] = "resonance"
             return best
-        # No integer ratio is reachable at this v_inf and periapsis -- the achievable ratios
-        # simply do not span one. Say so rather than silently reporting a pump aim as resonant.
-        mode = "pump (no integer resonance reachable)"
+        # No integer ratio is reachable at this v_inf and periapsis within the drift tolerance.
+        # Say so rather than silently reporting a pump aim as resonant.
+        mode = "pump (no usable resonance)"
     # Pump-down is nearly flat near its minimum, and the inclination to the moon's plane is
     # not: on Perun 2 Bus B the strict apoapsis minimum bought 0.07 % of apoapsis for 1.27 deg
     # of relative inclination, which at Ganymede's radius is 28,000 km of cross-track against a

@@ -893,9 +893,10 @@ def cmd_correct(args):
             usable = [a for a in flown if a["bound"] and a["returns"]]
             if not usable:
                 sys.exit("  no aim angle leaves a bound orbit that still reaches the moon")
-            chosen = tour.pick_aim(usable, args.aim)
+            chosen = tour.pick_aim(usable, args.aim,
+                                   moon_period=tour.moon_period(system, moon))
             print(f"  -> {chosen.get('picked_by', args.aim)} aim psi {chosen['psi']:.0f} deg: {chosen['peR'] / 1e6:,.0f} x "
-                  f"{chosen['apR'] / 1e6:,.0f} Mm, period {chosen['period'] / DAY:.2f} d = "
+                  f"{chosen['apR'] / 1e6:,.0f} Mm, period {tour.dhms(chosen['period'])} = "
                   f"{chosen['resonance']:.3f} {target.name} periods, {chosen['irel']:.2f} deg off its plane")
             res = chosen["res"]
         else:
@@ -1116,10 +1117,11 @@ def cmd_encounter(args):
         if not usable:
             print("  WARNING: no aim angle leaves a bound orbit that still reaches the moon.")
         else:
-            chosen = tour.pick_aim(usable, args.aim)
+            chosen = tour.pick_aim(usable, args.aim,
+                                   moon_period=tour.moon_period(system, moon))
             print(f"  -> {chosen.get('picked_by', args.aim)} aim psi {chosen['psi']:.0f} deg: "
                   f"{chosen['peR'] / 1e6:,.0f} x {chosen['apR'] / 1e6:,.0f} Mm, period "
-                  f"{chosen['period'] / DAY:.2f} d = {chosen['resonance']:.3f} {moon.name} periods, "
+                  f"{tour.dhms(chosen['period'])} = {chosen['resonance']:.3f} {moon.name} periods, "
                   f"{chosen['irel']:.2f} deg off its plane")
             best = dict(best, dv=chosen["dv"], mag=chosen["mag"], vinf=chosen["vinf"],
                         peR=chosen["flyby_peR"], post=chosen)
