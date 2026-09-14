@@ -38,6 +38,7 @@ import numpy as np
 
 import astro
 import bridge as bridge_mod
+import maneuver
 import patched
 import tour
 from rss_ephem import DAY, System, fmt_ut
@@ -52,10 +53,14 @@ def unit(x):
 
 
 class Node:
-    __slots__ = ("r", "v", "ut", "dv", "hist", "parent", "at_moon")
+    __slots__ = ("r", "v", "ut", "dv", "hist", "parent", "at_moon", "pending", "priced",
+                 "trim_from")
 
-    def __init__(self, r, v, ut, dv, hist, parent=None, at_moon=None):
+    def __init__(self, r, v, ut, dv, hist, parent=None, at_moon=None, pending=None):
         self.at_moon = at_moon
+        self.pending = pending
+        self.priced = False
+        self.trim_from = None       # (r, v, ut) the vessel is really at, for the first aim
         self.r = np.asarray(r, float)
         self.v = np.asarray(v, float)
         self.ut = ut
@@ -206,7 +211,11 @@ def expand(system, body, node, moons, angles, alt_m, horizon, dv_grid):
             kids.append(Node(node.r, v_new, node.ut, node.dv + NOMINAL_TRIM,
                              node.hist + [{"moon": node.at_moon, "ut": node.ut, "psi": psi,
                                            "vinf": vinf, "turn": turn, "n": 0, "k": 0,
-                                           "phase_dv": 0.0, "wait_d": 0.0}], node))
+                                           "phase_dv": 0.0, "wait_d": 0.0}], node,
+                             pending=({"r": node.trim_from[0], "v": node.trim_from[1],
+                                       "t": node.trim_from[2] + 3600.0, "moon": node.at_moon,
+                                       "psi": psi, "t_enc": node.ut}
+                                      if node.trim_from else None)))
         return kids
     for mname in moons:
         moon = system.body(mname)
@@ -227,8 +236,65 @@ def expand(system, body, node, moons, angles, alt_m, horizon, dv_grid):
                                                "phase_dv": opt["dv"],
                                                "dv_signed": opt["dv_signed"],
                                                "t_burn": opt["t_burn"],
-                                               "wait_d": opt["wait"] / DAY}], node))
+                                               "wait_d": opt["wait"] / DAY}], node,
+                                 pending={"r": node.r, "v": node.v, "t": opt["t_burn"],
+                                          "moon": mname, "psi": psi, "t_enc": opt["t_enc"]}))
     return kids
+
+
+def price_aims(system, body, nodes, alt_m, max_dv=300.0):
+    """Swap the assumed trim for the burn that ACTUALLY achieves each aim, and carry the FLOWN
+    post-flyby state forward.
+
+    The flat NOMINAL_TRIM is what made these plans fiction. On Perun 2 Bus A the aim the plan
+    wanted at Callisto really cost 425 m/s -- seventeen times the assumption and more than the
+    whole itinerary it appeared in -- because what it demanded was a plane rotation, not a
+    periapsis change. Pricing only the surviving beam keeps it affordable: one shooter solve per
+    beam member per depth, not one per branch. It also makes the plan EXACT, since every kept
+    node now sits on a trajectory the shooter flew rather than on the point-mass approximation
+    that made the first Bus A itinerary fail verification at leg one.
+    """
+    out = []
+    for nd in nodes:
+        if nd.priced or not nd.pending:
+            out.append(nd)
+            continue
+        q = nd.pending
+        moon = system.body(q["moon"])
+        bd = np.array([math.cos(math.radians(q["psi"])), math.sin(math.radians(q["psi"]))])
+        try:
+            res = maneuver.refine(system, body.name, np.asarray(q["r"], float),
+                                  np.asarray(q["v"], float), q["t"], moon.name,
+                                  q["t_enc"] + 300 * DAY, moon.radius + alt_m, b_dir=bd,
+                                  watch=[moon.name], max_dv=max_dv, max_nfev=90)
+        except (ValueError, RuntimeError, ArithmeticError):
+            # Only numerical failures are expected here. A bare `except Exception` hid a
+            # NameError (maneuver was never imported at module level) behind "no candidate
+            # converged" for an hour -- every branch died silently and the search looked broken.
+            continue
+        rp = res["report"]
+        if not rp.get("captured"):
+            continue
+        traj = res["traj"]
+        p_in = traj.enters(moon.name)
+        post = [x for x in traj.patches if x.body.name == body.name and x.ut0 > p_in.ut0]
+        if not post:
+            continue
+        el = astro.elements(body.mu, post[0].r0, post[0].v0)
+        if el.ecc >= 1 or el.apR >= body.soi:
+            continue
+        true_dv = float(np.linalg.norm(res["dv"]))
+        nd.dv = nd.dv - NOMINAL_TRIM + true_dv
+        nd.r = np.asarray(post[0].r0, float)
+        nd.v = np.asarray(post[0].v0, float)
+        nd.ut = post[0].ut0
+        nd.hist[-1]["vinf"] = rp["vinf"]
+        nd.hist[-1]["aim_dv"] = true_dv
+        nd.hist[-1]["ut"] = rp["soi_ut"]
+        nd.hist[-1]["alt"] = (rp["peR"] - moon.radius) / 1e3
+        nd.priced, nd.pending = True, None
+        out.append(nd)
+    return out
 
 
 def score(system, body, node, targets, weights):
@@ -259,7 +325,9 @@ def search(system, body, start, moons, targets, depth, beam, angles, alt_m, hori
         if not kids:
             break
         kids.sort(key=lambda n: score(system, body, n, targets, weights))
-        frontier = kids[:beam]
+        frontier = price_aims(system, body, kids[:beam * 2], alt_m)
+        frontier.sort(key=lambda n: score(system, body, n, targets, weights))
+        frontier = frontier[:beam]
         for nd in frontier:
             if all(closes(system, body, nd, t, targets[t]) for t in targets):
                 best_done.append(nd)
@@ -395,7 +463,8 @@ def report(system, body, node, targets):
     for h in node.hist:
         print(f"      {h['moon']:9s} {fmt_ut(h['ut'])[:16]}  psi {h['psi']:5.0f}  "
               f"v_inf {h['vinf']:6,.0f}  turn {h['turn']:5.1f}  "
-              f"{h['n']}:{h['k']} wait {h['wait_d']:6.1f} d  phasing {h['phase_dv']:6.1f} m/s")
+              f"alt {h.get('alt', -1):7,.0f} km  phasing {h['phase_dv']:6.1f}  "
+              f"aim {h.get('aim_dv', -1):7.1f} m/s")
     el = astro.elements(body.mu, node.r, node.v)
     print(f"      end orbit {el.peR / 1e6:,.0f} x {el.apR / 1e6:,.0f} Mm")
     for t, lander in targets.items():
@@ -466,6 +535,7 @@ def main(argv=None):
             sys.exit(f"vessel is in {b.name}'s SOI and does not leave it within 30 days")
         print(f"  (in {b.name}'s SOI; propagated out to {fmt_ut(out.ut0)})")
         r, v, ut = np.asarray(out.r0, float), np.asarray(out.v0, float), out.ut0
+    r0_real, v0_real, ut0_real = np.asarray(r, float), np.asarray(v, float), ut
     r = np.asarray(r, float)
     v = np.asarray(v, float)
     el = astro.elements(body.mu, r, v)
@@ -494,6 +564,7 @@ def main(argv=None):
     start = Node(r, v, ut, 0.0, [{"moon": "start", "ut": ut, "psi": 0, "vinf": 0,
                                   "turn": 0, "n": 0, "k": 0, "phase_dv": 0, "wait_d": 0}],
                  at_moon=at_moon)
+    start.trim_from = (np.asarray(r0_real, float), np.asarray(v0_real, float), ut0_real)
     print("\nSEARCH")
     dv_grid = list(np.arange(-args.dv_cap, args.dv_cap + 1e-9, args.dv_step))
     frontier, done = search(system, body, start, args.moons, targets, args.depth, args.beam,
