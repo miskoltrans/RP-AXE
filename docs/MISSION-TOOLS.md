@@ -690,6 +690,15 @@ aims whose cross-track at the next moon is inside that moon's SOI (reachable at 
 rather than only near a node), and minimises v-infinity within that set. Above, that is the
 difference between psi 0 and psi 345, and it costs 87 m/s of v-infinity.
 
+**DEPTH IS THE OTHER HALF OF THE AIM, and for a handoff it is usually the bigger half.**
+The B-plane angle picks which way v-infinity turns; the periapsis picks how far. `--aim-alts
+300,2000,5000,12000,22000` flies the depths as well as the angles. Measured on Bus A's free
+1983-12-22 Callisto pass: the orbit that hands off to Ganymede is **7 degrees of turn away,
+which is a 12,000 km altitude.** Flown at the habitual 300 km that pass turns 30 degrees,
+sails straight past the useful orbit, and every angle in the scan lands somewhere WORSE than
+doing nothing -- the best of 24 gave Ganymede v-infinity 2,914 against 2,663 for leaving the
+pass alone. Deeper is not better; it is only more, and a handoff wants the right amount.
+
 **The reachability test is the SOI, not the orbit radius.** The lowest v-infinity is always at
 a tangential crossing, so a strict "does the conic cross r_moon" test discards exactly the
 useful band. An apsis 10,000 km short of Callisto's orbit is still an encounter; 200,000 km

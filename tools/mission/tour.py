@@ -303,7 +303,7 @@ def aim_scan(system, body, moon, traj, per_want, n=180):
 
 
 def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_dv=60.0,
-            verbose=True, handoff=None):
+            verbose=True, handoff=None, pers=None):
     """Fly each B-plane aim angle and READ the post-flyby orbit, rather than modelling it.
 
     The analytic scan above is only a pre-filter and must not be trusted for the answer: after
@@ -315,13 +315,22 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
     out = []
     t_moon = 2 * math.pi * math.sqrt(moon.a ** 3 / body.mu)
     hand = system.body(handoff) if handoff else None
+    # DEPTH IS THE OTHER HALF OF THE AIM, and for a handoff it is usually the bigger half.
+    # The B-plane angle chooses the DIRECTION v-infinity rotates; the periapsis chooses HOW
+    # FAR. Measured on Perun 2 Bus A's free 1983-12-22 Callisto pass: the orbit that hands off
+    # to Ganymede is 7 degrees of turn away, which is a 12,000 km altitude. Flown at the
+    # habitual 300 km the pass turns 30 degrees, sails straight past it, and every angle in
+    # the scan lands somewhere worse than doing nothing. Deeper is not better -- it is only
+    # more, and a handoff wants the right amount.
+    pers = list(pers) if pers else [per_want]
     if verbose:
         extra = (f" {'v_inf ' + hand.name[:4]:>11s} {'off ' + hand.name[:4]:>9s}"
                  if hand else "")
-        print(f"  {'psi':>5s} {'dV':>8s} {'peri Mm':>9s} {'apo Mm':>10s} {'period':>17s} "
+        depth = f" {'alt km':>9s}" if len(pers) > 1 else ""
+        print(f"  {'psi':>5s}{depth} {'dV':>8s} {'peri Mm':>9s} {'apo Mm':>10s} {'period':>17s} "
               f"{'/moon':>8s} {'i_rel':>6s}{extra}  outcome")
         print(f"  (one {moon.name} period = {dhms(t_moon)})")
-    for psi in angles:
+    for per_want, psi in ((p, a) for p in pers for a in angles):
         b_dir = np.array([math.cos(math.radians(psi)), math.sin(math.radians(psi))])
         try:
             res = maneuver.refine(system, body.name, r_b, v_b + dv0, t_b, moon.name,
@@ -371,7 +380,9 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
                 # SOI -- an encounter only near a node, if at all.
                 extra = (f" {rec['vinf_next']:11,.0f} {rec['irel_next']:9.2f}"
                          if rec.get("vinf_next") else f" {'no cross':>11s} {'-':>9s}")
-            print(f"  {psi:5.0f} {rec['mag']:8.1f} {rec['peR'] / 1e6:9,.0f} {ap} {pe} {rr} "
+            depth = (f" {(rec['flyby_peR'] - moon.radius) / 1e3:9,.0f}" if len(pers) > 1
+                     else "")
+            print(f"  {psi:5.0f}{depth} {rec['mag']:8.1f} {rec['peR'] / 1e6:9,.0f} {ap} {pe} {rr} "
                   f"{rec['irel']:6.2f}{extra}  {st}")
     return out
 

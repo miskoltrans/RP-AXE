@@ -870,6 +870,17 @@ def print_handoff(system, chosen):
           f"landing burn {land:,.0f} m/s, {chosen['irel_next']:.2f} deg off its plane{where}")
 
 
+def alt_list(text):
+    """`300,1000,3000,12000` -- flyby altitudes in km, for scanning depth as well as angle."""
+    try:
+        out = [float(x) for x in str(text).replace(" ", "").split(",") if x]
+    except ValueError:
+        out = []
+    if not out:
+        raise argparse.ArgumentTypeError("give altitudes in km, comma separated, e.g. 300,3000,12000")
+    return out
+
+
 AIM_MODES = ("pump", "resonance", "none")
 
 
@@ -929,9 +940,11 @@ def cmd_correct(args):
             hand = aim_handoff(args.aim)
             print(f"\n  AIM SCAN at {target.name} (each angle flown)")
             angles = [a * 360.0 / args.aim_steps for a in range(args.aim_steps)]
+            pers = ([target.radius + a * 1e3 for a in args.aim_alts]
+                    if getattr(args, "aim_alts", None) else None)
             flown = tour.aim_fly(system, parent, target, rb, vb, ut_b, np.zeros(3), peR,
                                  rep.get("soi_ut") or t_arr, angles, max_dv=args.max_dv,
-                                 handoff=hand)
+                                 handoff=hand, pers=pers)
             usable = tour.usable_aims(flown, args.aim)
             if not usable:
                 sys.exit("  no aim angle leaves a bound orbit that still reaches the moon"
@@ -1166,9 +1179,11 @@ def cmd_encounter(args):
               f"hypersensitive to the outgoing velocity)")
         angles = [a * 360.0 / args.aim_steps for a in range(args.aim_steps)]
         hand = aim_handoff(args.aim)
+        pers = ([moon.radius + a * 1e3 for a in args.aim_alts]
+                if getattr(args, "aim_alts", None) else None)
         flown = tour.aim_fly(system, body, moon, best["r_b"], best["v_b"], best["t_b"],
                              best["dv"], per, best["soi_ut"], angles, max_dv=args.max_dv,
-                             handoff=hand)
+                             handoff=hand, pers=pers)
         usable = tour.usable_aims(flown, args.aim)
         if not usable:
             print("  WARNING: no aim angle leaves a bound orbit that still reaches the moon"
@@ -1857,6 +1872,13 @@ def main(argv=None):
                         "which is the only one of these that can make a landing there affordable. "
                         "Needs --burn-at, and overrides --bplane.")
     p.add_argument("--aim-steps", type=int, default=24, help="B-plane angles to fly (default 24)")
+    p.add_argument("--aim-alts", type=alt_list, default=None, metavar="KM,KM,...",
+                   help="also fly these flyby ALTITUDES (km), not just the one --peri asks for. "
+                        "Depth is the other half of an aim: the angle picks which way v-infinity "
+                        "turns, the periapsis picks how far. A handoff usually wants a SHALLOW "
+                        "pass -- on Perun 2 the Callisto pass that hands off to Ganymede is 7 deg "
+                        "of turn, i.e. 12,000 km altitude, and flown at 300 km it turns 30 deg and "
+                        "every angle lands worse than doing nothing.")
     p.add_argument("--bplane", metavar="AIM",
                    help="which side of the target to pass. --peri fixes only how CLOSE you pass; "
                         "without this the solver keeps whichever side it already has, which for "
@@ -1916,6 +1938,13 @@ def main(argv=None):
                         "solver happened to land on -- which on Perun 2 ejected the bus from Jupiter, "
                         "so do not use it.")
     p.add_argument("--aim-steps", type=int, default=24, help="B-plane angles to fly (default 24)")
+    p.add_argument("--aim-alts", type=alt_list, default=None, metavar="KM,KM,...",
+                   help="also fly these flyby ALTITUDES (km), not just the one --peri asks for. "
+                        "Depth is the other half of an aim: the angle picks which way v-infinity "
+                        "turns, the periapsis picks how far. A handoff usually wants a SHALLOW "
+                        "pass -- on Perun 2 the Callisto pass that hands off to Ganymede is 7 deg "
+                        "of turn, i.e. 12,000 km altitude, and flown at 300 km it turns 30 deg and "
+                        "every angle lands worse than doing nothing.")
     p.add_argument("--prefer", choices=["vinf", "coplanar", "cheap"], default="vinf",
                    help="which converged solution to fly. `coplanar` minimises the inclination to "
                         "the moon's plane, which for a multi-moon tour usually beats a few tens of "
