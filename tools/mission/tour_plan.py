@@ -280,6 +280,50 @@ def closes(system, body, node, moon_name, lander_dv):
     return cross <= moon.soi
 
 
+def status(system, body, r, v, ut, targets, moons, horizon_d=400.0):
+    """The three numbers that decide the mission, for a state you can hand it after any burn.
+
+    This exists because nothing was checking them. Every burn on Bus A passed its own local
+    test -- a resonance ratio, an arrival speed, a pump-down -- while the plane error went
+    0.07 -> 8.56 -> 13.26 degrees and took the Callisto handoff with it. Printing a period
+    ratio looked excellent at the exact moment the tour was being lost. Run this after EVERY
+    burn and paste it whether or not it looks good; that is the whole point.
+    """
+    r = np.asarray(r, float)
+    v = np.asarray(v, float)
+    el = astro.elements(body.mu, r, v)
+    print(f"STATUS {fmt_ut(ut)}   {el.peR / 1e6:,.0f} x {el.apR / 1e6:,.0f} Mm  "
+          f"period {tour.dhms(el.period)}")
+    worst = "OK"
+    for t, lander in targets.items():
+        moon = system.body(t)
+        vinf = crossing_vinf(system, body, moon, r, v)
+        irel = plane_error(system, t, r, v, ut)
+        cross = moon.a * math.sin(math.radians(irel))
+        if vinf is None:
+            print(f"  {t:9s} orbit does not cross it        plane {irel:5.2f} deg")
+            worst = "BLOCKED"
+            continue
+        need = landing_burn(moon, vinf)
+        flag = "OK" if need <= lander else f"SHORT by {need - lander:,.0f}"
+        if need > lander and worst == "OK":
+            worst = "SHORT"
+        print(f"  {t:9s} v_inf {vinf:6,.0f}  landing {need:6,.0f} vs lander {lander:,.0f}  {flag:<16s}"
+              f" plane {irel:5.2f} deg = {cross / 1e3:8,.0f} km cross-track vs SOI "
+              f"{moon.soi / 1e3:,.0f} {'any longitude' if cross <= moon.soi else 'near a node'}")
+    tr = patched.shoot(system, body.name, r, v, ut, ut + horizon_d * DAY, watch=list(moons))
+    hits = [p for p in tr.patches if p.body.name in moons]
+    if hits:
+        for p in hits[:3]:
+            bp = astro.bplane(p.body.mu, p.r0, p.v0)
+            print(f"  next: {p.body.name} {fmt_ut(p.ut0)} at "
+                  f"{(bp['peR'] - p.body.radius) / 1e3:,.0f} km, v_inf {bp['vinf']:,.0f} m/s")
+    else:
+        print(f"  next: NO encounter within {horizon_d:,.0f} days -- a phasing burn is owed")
+    print(f"  verdict: {worst}")
+    return worst
+
+
 def verify(system, body, root_r, root_v, root_ut, node, alt_m, moons):
     """Re-fly the itinerary through the patched-conic shooter, leg by leg.
 
@@ -386,6 +430,8 @@ def main(argv=None):
     ap.add_argument("--dv-cap", type=float, default=200.0, help="m/s cap on one phasing burn")
     ap.add_argument("--port", type=int, default=8284)
     ap.add_argument("--show", type=int, default=3)
+    ap.add_argument("--status", action="store_true",
+                    help="skip the search: just print the numbers that decide the mission")
     ap.add_argument("--verify", action="store_true",
                     help="re-fly the best itinerary through the patched-conic shooter")
     args = ap.parse_args(argv)
@@ -430,6 +476,9 @@ def main(argv=None):
         print(f"  target {t}: lander {lander:,.0f} m/s, "
               + (f"v_inf now {vinf:,.0f} -> landing {landing_burn(moon, vinf):,.0f}"
                  if vinf else "orbit does not cross it"))
+    if args.status:
+        status(system, body, r, v, ut, targets, args.moons, args.horizon)
+        return
     angles = [a * 360.0 / args.angles for a in range(args.angles)]
     weights = {"dv": 1.0, "time": 0.5, "landing": 4.0, "plane": 60.0, "unreachable": 5000.0}
     start = Node(r, v, ut, 0.0, [{"moon": "start", "ut": ut, "psi": 0, "vinf": 0,
