@@ -329,7 +329,14 @@ def main(argv=None):
     br = bridge_mod.Bridge(port=args.port)
     b, r, v, ut = br.state(system, vid=args.vessel_id)
     if b.name != body.name:
-        sys.exit(f"vessel is in {b.name}'s SOI, not {body.name}'s")
+        # Mid-flyby is a perfectly normal moment to ask; fly out to the parent and plan from there.
+        tr0 = patched.shoot(system, b.name, np.asarray(r, float), np.asarray(v, float), ut,
+                            ut + 30 * DAY, watch=[body.name])
+        out = next((p for p in tr0.patches if p.body.name == body.name), None)
+        if out is None:
+            sys.exit(f"vessel is in {b.name}'s SOI and does not leave it within 30 days")
+        print(f"  (in {b.name}'s SOI; propagated out to {fmt_ut(out.ut0)})")
+        r, v, ut = np.asarray(out.r0, float), np.asarray(out.v0, float), out.ut0
     r = np.asarray(r, float)
     v = np.asarray(v, float)
     el = astro.elements(body.mu, r, v)
