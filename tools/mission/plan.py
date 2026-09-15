@@ -895,7 +895,10 @@ def alt_list(text):
     return out
 
 
-AIM_MODES = ("pump", "resonance", "none")
+# `descend` has been implemented in tour.pick_aim since the Bus B ladder needed it, but it
+# was never added here, so `--aim descend` died in the argument parser -- the one mode
+# built for walking perijove INWARD was unreachable from the CLI.
+AIM_MODES = ("pump", "resonance", "descend", "none")
 
 
 def aim_mode(text):
