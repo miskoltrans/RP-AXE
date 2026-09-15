@@ -78,6 +78,44 @@ def contour(mu_p, r_m, v_m, vinf, n=2001):
     return out
 
 
+def contour_point_at_ra(mu_p, r_m, v_m, vinf, target_ra):
+    """The contour point whose apoapsis IS target_ra, solved rather than grid-searched.
+
+    A grid over alpha lands near the wanted apoapsis, not on it, and `vinf_at_radius` then
+    reads the target radius as outside the orbit and returns None -- silently, for exactly
+    the tangential case a handoff cares about most. Bisect alpha instead.
+    """
+    def f(alpha):
+        o = orbit_at(mu_p, r_m, v_m, vinf, alpha)
+        return None if o is None else o['ra'] - target_ra
+
+    lo, hi, flo = None, None, None
+    prev_a, prev_f = None, None
+    for alpha in np.linspace(0.0, math.pi, 721):
+        val = f(float(alpha))
+        if val is None:
+            prev_a, prev_f = None, None
+            continue
+        if prev_f is not None and prev_f * val <= 0.0:
+            lo, hi, flo = prev_a, float(alpha), prev_f
+            break
+        prev_a, prev_f = float(alpha), val
+    if lo is None:
+        return None                                    # apoapsis never reaches target_ra
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        fm = f(mid)
+        if fm is None:
+            return None
+        if flo * fm <= 0.0:
+            hi = mid
+        else:
+            lo, flo = mid, fm
+    o = orbit_at(mu_p, r_m, v_m, vinf, 0.5 * (lo + hi))
+    o['alpha'] = 0.5 * (lo + hi)
+    return o
+
+
 def turn_max(mu_m, r_fly, vinf):
     """Bend available in one unpowered pass at periapsis radius r_fly."""
     if vinf <= 0.0:
@@ -93,8 +131,14 @@ def bend_dv(vinf, delta):
 
 def vinf_at_radius(mu_p, a, e, r, v_m_target):
     """vinf a given orbit hands you when it crosses radius r, against a circular moon there."""
-    if r < a * (1.0 - e) - 1e-6 or (a > 0 and r > a * (1.0 + e) + 1e-6):
+    # Tolerance must be RELATIVE: at Iapetus' 3.6e9 m an absolute 1e-6 m is noise below
+    # double precision, so a tangential crossing (r exactly at apoapsis) read as "never
+    # gets there" and the caller got None for the one case it cared about most.
+    tol = max(1e-6, 1e-9 * r)
+    rp, ra = a * (1.0 - e), a * (1.0 + e)
+    if r < rp - tol or (a > 0 and r > ra + tol):
         return None                                   # the orbit never gets there
+    r = min(max(r, rp), ra) if a > 0 else max(r, rp)   # clamp the tangential case
     v2 = mu_p * (2.0 / r - 1.0 / a)
     if v2 <= 0.0:
         return None
