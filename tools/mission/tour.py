@@ -476,7 +476,7 @@ def aim_scan(system, body, moon, traj, per_want, n=180):
 
 
 def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_dv=60.0,
-            verbose=True, handoff=None, pers=None):
+            verbose=True, handoff=None, pers=None, watch=None):
     """Fly each B-plane aim angle and READ the post-flyby orbit, rather than modelling it.
 
     The analytic scan above is only a pre-filter and must not be trusted for the answer: after
@@ -484,6 +484,14 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
     hypersensitive to the outgoing velocity. Evaluating the moon's own velocity an hour off the
     flyby periapsis moved the predicted apoapsis from 35 to 50 Gm -- the difference between a
     tour and leaving the system. So refine each aim and report what the trajectory actually does.
+
+    `watch` is the SOI list the refine flies against, and defaulting it to the target moon alone
+    is a trap once a tour is deep in a system: if any OTHER moon's SOI sits between the burn and
+    the encounter, the refine flies straight through it (an unwatched moon has no SOI), never
+    reproduces the encounter, and every angle fails to converge. That reads exactly like "the
+    trajectory does not allow it". Measured on Perun 2 Bus B aiming its second Io pass with a
+    free Europa pass in between: **0 of 96 angles converged**; with every moon watched the scan
+    works normally. Pass the whole system's moons.
     """
     out = []
     t_moon = 2 * math.pi * math.sqrt(moon.a ** 3 / body.mu)
@@ -496,6 +504,7 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
     # the scan lands somewhere worse than doing nothing. Deeper is not better -- it is only
     # more, and a handoff wants the right amount.
     pers = list(pers) if pers else [per_want]
+    watch = list(watch) if watch else [moon.name]
     if verbose:
         extra = (f" {'v_inf ' + hand.name[:4]:>11s} {'off ' + hand.name[:4]:>9s}"
                  if hand else "")
@@ -509,7 +518,7 @@ def aim_fly(system, body, moon, r_b, v_b, t_b, dv0, per_want, t_ca, angles, max_
         try:
             res = maneuver.refine(system, body.name, r_b, v_b + dv0, t_b, moon.name,
                                   t_ca + 60 * DAY, per_want, b_dir=b_dir, ut_want=t_ca,
-                                  watch=[moon.name], max_dv=max_dv, max_nfev=80)
+                                  watch=watch, max_dv=max_dv, max_nfev=80)
         except Exception:                                           # noqa: BLE001
             continue
         rep = res["report"]

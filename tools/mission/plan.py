@@ -958,7 +958,7 @@ def cmd_correct(args):
                     if getattr(args, "aim_alts", None) else None)
             flown = tour.aim_fly(system, parent, target, rb, vb, ut_b, np.zeros(3), peR,
                                  rep.get("soi_ut") or t_arr, angles, max_dv=args.max_dv,
-                                 handoff=hand, pers=pers)
+                                 handoff=hand, pers=pers, watch=watch)
             usable = tour.usable_aims(flown, args.aim)
             if not usable:
                 sys.exit("  no aim angle leaves a bound orbit that still reaches the moon"
