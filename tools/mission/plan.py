@@ -392,34 +392,42 @@ def cmd_window(args):
     inc = args.inc
     if args.site:
         site = launch_mod.site(args.site, instance=args.instance, body=dep.name)
-        if inc is None:
-            inc = site.min_inclination()
-    if inc is None:
-        inc = 28.5
+    inc_floor = site.min_inclination() if site else 0.0
 
-    print(f"{dep.name} -> {arr.name}  from a {args.alt:.0f} km x {inc:.2f} deg parking orbit "
+    # A pad's latitude is a FLOOR on inclination, not a ceiling: from latitude phi any
+    # i >= phi is reachable by flying an azimuth off due east, sin(az) = cos(i)/cos(phi).
+    # Pinning the scan to i = phi and then calling every window with |DLA| > phi
+    # "unreachable" inverted that -- it condemned windows a LOW-latitude pad reaches most
+    # easily of all, because a low pad has the most azimuth freedom. The parking plane a
+    # window actually needs is i = max(|DLA|, phi), solved per row.
+    def inc_for(dla):
+        return inc if inc is not None else max(abs(dla), inc_floor, 28.5 if not site else 0.0)
+
+    print(f"{dep.name} -> {arr.name}  from a {args.alt:.0f} km parking orbit "
           f"around {dep.name}   ({len(deps)} departures x {len(tofs)} TOFs)")
     if site:
         print(f"  launch times are for {site.display} ({site.lat:+.3f}, {site.lon:+.3f}); "
-              f"it cannot reach below i {site.min_inclination():.2f} deg")
+              f"it cannot reach below i {inc_floor:.2f} deg, and flies "
+              f"i = max(|DLA|, {inc_floor:.2f}) unless --inc says otherwise")
     head = (f"{'departure':>12s} {'TOF d':>7s} {'arrival':>12s} {'C3':>8s} {'dv dep':>8s} "
-            f"{'vinf arr':>9s} {'DLA':>7s} {'RAAN':>7s}")
+            f"{'vinf arr':>9s} {'DLA':>7s} {'inc':>7s} {'RAAN':>7s}")
     if site:
         head += f" {'launch (UTC)':>17s} {'az':>7s}"
     print(head)
     for i in sorted(picked):
         td, tf, c3, dv, vinf_a, dla = rows[i]
+        inc_row = inc_for(dla)
         r1, v1b = system.state(dep.name, td, centre)
         r2, v2b = system.state(arr.name, td + tf, centre)
         raan = None
         try:
             vt1, _ = lambert(mu, np.array(r1), np.array(r2), tf)
-            cands = align_raan(inc, np.asarray(vt1) - np.asarray(v1b))
+            cands = align_raan(inc_row, np.asarray(vt1) - np.asarray(v1b))
             raan = cands[0] if cands else None
         except Exception:                                           # noqa: BLE001
             raan = None
         line = (f"{date_of(td):%Y-%m-%d}   {tf / DAY:7.0f} {date_of(td + tf):%Y-%m-%d}   "
-                f"{c3:8.2f} {dv:8,.0f} {vinf_a:9,.0f} {dla:7.2f} "
+                f"{c3:8.2f} {dv:8,.0f} {vinf_a:9,.0f} {dla:7.2f} {inc_row:7.2f} "
                 + (f"{raan:7.2f}" if raan is not None else f"{'--':>7s}"))
         if site:
             when = az = None
@@ -428,7 +436,7 @@ def cmd_window(args):
                     # The pad crossing nearest the departure instant, not merely the next
                     # one after it: a window quoted at midnight would otherwise report a
                     # launch most of a day late for no reason.
-                    ps = launch_mod.plane_passes(site, system, inc, raan, td - DAY, count=4)
+                    ps = launch_mod.plane_passes(site, system, inc_row, raan, td - DAY, count=4)
                     if ps:
                         best_p = min(ps, key=lambda q: abs(q["ut"] - td))
                         when, az = best_p["ut"], best_p["azimuth_inertial"]
@@ -450,11 +458,17 @@ def cmd_window(args):
     if not site:
         print("  Pass --site NAME (e.g. --site cape) to get the launch time of day as well.")
     else:
-        unreachable = [i for i in picked if rows[i][5] > inc or rows[i][5] < -inc]
-        if unreachable:
-            print(f"  \"unreachable\" means the departure asymptote leaves at a declination "
-                  f"steeper than i {inc:.2f} deg, so no parking orbit from this pad contains "
-                  f"it: that window costs a plane change or a dogleg on top of the dV above.")
+        steep = [i for i in picked if abs(rows[i][5]) > inc_floor]
+        if steep:
+            print(f"  A window whose |DLA| exceeds the pad's {inc_floor:.2f} deg latitude is "
+                  f"still reachable -- it is flown at i = |DLA| on an azimuth off due east "
+                  f"(sin az = cos i / cos lat), which costs some of the rotation bonus, not "
+                  f"the window. The `inc` column is the plane each row needs.")
+        if inc is not None:
+            missed = [i for i in picked if abs(rows[i][5]) > inc + 1e-9]
+            if missed:
+                print(f"  \"unreachable\" here is only because --inc {inc:.2f} was forced "
+                      f"below those rows' |DLA|; drop --inc to let each row pick its plane.")
         _warn_uncalibrated(site)
 
 
