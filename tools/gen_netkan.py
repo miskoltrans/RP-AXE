@@ -130,7 +130,7 @@ def check_coverage(reg, env):
 def meta(ident, name, abstract, deps, conflicts):
     return collections.OrderedDict([
         ("spec_version", "v1.18"), ("identifier", ident), ("name", name), ("abstract", abstract),
-        ("author", ["miskoltrans"]), ("version", "1.0.0"), ("kind", "metapackage"), ("license", "CC-BY-NC-SA-4.0"),
+        ("author", ["miskoltrans"]), ("version", "0.9.0"), ("kind", "metapackage"), ("license", "CC-BY-NC-SA-4.0"),
         ("ksp_version_min", "1.12.0"), ("ksp_version_max", "1.12.5"),
         ("depends", [{"name": n} for n in deps]), ("conflicts", [{"name": n} for n in conflicts]),
     ])
@@ -146,6 +146,8 @@ def main():
     out = collections.OrderedDict()
     for k in ["spec_version", "identifier", "name", "abstract", "author", "license", "$kref", "$vref", "tags"]:
         out[k] = nk[k]
+    # Beta: GitHub releases are marked pre-release, which netkan skips unless told to use them. Drop this at 1.0.
+    out["x_netkan_github"] = {"prerelease": True}
     out["comment"] = COMMENT
     out["depends"] = [{"name": n} for n in DEPENDS]
     out["recommends"] = [{"name": n} for n in RECOMMENDS]
@@ -176,7 +178,7 @@ def main():
         "reproduces the test install verbatim. Players normally install RP-AXE itself and choose graphics at the "
         "prompts. SCANsat is deliberately absent here (the dev instance runs a fork); RP-AXE.netkan depends on "
         "CKAN SCANsat.")
-    deps_ckan["version"] = "1.0.0"
+    deps_ckan["version"] = "0.9.0"
     dump(os.path.join(REPO, "RP-AXE-deps.ckan"), deps_ckan)
     print("RP-AXE-deps.ckan: abstract + version updated")
     if not ok:

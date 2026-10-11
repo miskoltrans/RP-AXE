@@ -3,6 +3,9 @@
 > Realism, minus the grind. A lightweight career for Realism Overhaul that puts **engineering and
 > exploration** front and centre — and takes an *axe* to the parts of RP-1 that get in the way.
 
+**Status: 0.9 public beta.** Every system below is built and has been played through, but the
+balance has had one pair of eyes on it. Bug reports and balance notes are the point of this release.
+
 RP-AXE is a Kerbal Space Program 1.12 mod built on the same realism stack as
 [RP-1](https://github.com/KSP-RO/RP-1) (Realism Overhaul, Real Solar System, Real Fuels, Kerbalism,
 …) but it **replaces RP-1's career plugin** with a thin, purpose-built layer of its own. It

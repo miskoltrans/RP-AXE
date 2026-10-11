@@ -6,7 +6,7 @@ place the version number lives**), `GameData/RP-AXE/RP-AXE-Changelog.cfg` + `CHA
 
 ## Release checklist
 
-Repo-side, done for 1.0.0 (2026-10-11):
+Repo-side, done for 0.9.0 (2026-10-11):
 
 - [x] `AxeDbsToolbarNreFix.cs` reverted (`dead7bf`) — AXE ships no patches for other mods' bugs.
 - [x] No Squad assets in the payload: the 16 `RDicon_*.png` node icons were extracted stock glyphs;
@@ -18,7 +18,7 @@ Repo-side, done for 1.0.0 (2026-10-11):
       AVC file for KSP compatibility. Graphics are no longer forced on the player.
 - [x] Personal one-off mission scripts removed from `tools/mission/`; the general planner stays.
 - [x] Shipped `_README.md`s describe the folders as they are; `design/` no longer cites deleted docs.
-- [x] Version 1.0.0 in `RP-AXE.version`; changelog in-game and in the repo.
+- [x] Version 0.9.0 (public beta) in `RP-AXE.version`; changelog in-game and in the repo.
 - [x] `tools/package_release.py` builds the archive from git-tracked files + the fresh DLL and
       refuses LFS pointers, stale DLLs and dev artifacts (`craft-prices.csv`, `.gitkeep`).
 
@@ -30,9 +30,10 @@ Still needs you (each is outward-facing or needs credentials):
       main`. The `.version` `URL` and the netkan `$kref` both assume that owner/repo and branch `main`.
       History is already rewritten (see "History rewrite" below); push only `main` and the two tags,
       never `--all` / `--mirror`, or the pre-purge backup refs go up with it.
-- [ ] **Tag + release.** `python tools/package_release.py` → `dist/RP-AXE-v1.0.0.zip` (+ `.sha256`).
-      `git tag v1.0.0 && git push origin v1.0.0`, then
-      `gh release create v1.0.0 dist/RP-AXE-v1.0.0.zip --title "RP-AXE 1.0.0" --notes-file CHANGELOG.md`.
+- [ ] **Tag + release.** `python tools/package_release.py` → `dist/RP-AXE-v0.9.0.zip` (+ `.sha256`).
+      `git tag v0.9.0 && git push origin v0.9.0`, then
+      `gh release create v0.9.0 dist/RP-AXE-v0.9.0.zip --prerelease --title "RP-AXE 0.9.0 (beta)" --notes-file CHANGELOG.md`.
+      Betas are GitHub pre-releases; the netkan carries `x_netkan_github.prerelease = true` so CKAN sees them (drop it at 1.0).
       CKAN's `#/ckan/github/miskoltrans/RP-AXE` `$kref` reads that release asset.
 - [ ] **Clean-room install test** (below) against the published release — the only prove that a
       stranger's CKAN resolves the metadata unattended.
@@ -146,3 +147,30 @@ so a player's install cannot silently differ from the one the tree was built aga
 Ships **disabled** (`Plugins/PluginData/AutoTest.cfg` `enabled = false`); the `-axe-autotest` launch
 flag force-enables it. The localhost bridge (`Bridge.cfg`) is written on first run with
 `enabled = false` and is gitignored, so a player never gets a listener unless they turn it on.
+
+## Publishing
+
+**CKAN.** The listing is a pull request, not an upload: fork https://github.com/KSP-CKAN/NetKAN, copy
+`RP-AXE.netkan` to `NetKAN/RP-AXE.netkan`, open the PR. The NetKAN bot inflates it within minutes and
+comments with any error (unresolvable `depends`, a bad `install` stanza, a license outside CKAN's list);
+a CKAN team member then reviews the first submission of a new mod. What it needs from our side is
+already there: a GitHub release with the zip attached (`$kref`), the AVC file (`$vref`), a listed
+license, and no Squad assets in the archive. While the mod is a GitHub *pre-release*, the netkan's
+`x_netkan_github.prerelease = true` is what lets the bot see it; remove it at 1.0. The graphics
+presets can go in the same PR as `NetKAN/RP-AXE-Graphics-High.netkan` / `-Low.netkan` (they are
+metapackages with a static `version`, like `RP-1-ExpressInstall-Graphics-*`). `RP-AXE-deps.ckan` is a
+dev tool and is not submitted. Once merged, a new GitHub release is picked up automatically.
+
+**SpaceDock** (optional, https://spacedock.info): upload the same zip under the same license and
+KSP 1.12.5. Many players browse it directly, and it gives the mod a page with screenshots.
+
+**Where to post.**
+- KSP Forum, *Kerbal Space Program 1 → Add-on Releases*: the canonical announcement. Title in the
+  house style, e.g. `[1.12.x] RP-AXE 0.9 beta — a science-first career on the RO stack`. Forum rules
+  require the license and a source link in the post; include 3–4 screenshots (the R&D tree, a program
+  charter, the simulator) and the one-paragraph pitch from the README.
+- The KSP-RO Discord (the RO / RP-1 community) in its mod-releases channel: this is the audience that
+  already runs the dependency stack. Expect the sharpest questions there (what exactly diverges from
+  RP-1 — `docs/CHANGES-VS-RP1.md` answers that).
+- r/KerbalSpaceProgram (Mod flair) and r/RealSolarSystem: screenshots first, link second.
+- Link all of them to the GitHub Issues page; that is where the beta feedback should land.

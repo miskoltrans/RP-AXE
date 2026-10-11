@@ -3,7 +3,7 @@
 The in-game copy (shown once per new version by KerbalChangelog) is
 `GameData/RP-AXE/RP-AXE-Changelog.cfg`; keep the two in step.
 
-## 1.0.0 — first public release
+## 0.9.0 — public beta (first release)
 
 - **Tech tree:** a from-scratch, discipline-based tree of ~530 breakthrough nodes compiled from
   `tree/nodes.yaml`, science-gated, with an in-game R&D render (discipline colours, hover lineage,
