@@ -198,7 +198,7 @@ a CKAN team member then reviews the first submission of a new mod. What it needs
 already there: a GitHub release with the zip attached (`$kref`), the AVC file (`$vref`), a listed
 license, and no Squad assets in the archive. While the mod is a GitHub *pre-release*, the netkan's
 `x_netkan_github.prerelease = true` is what lets the bot see it; remove it at 1.0. The graphics
-presets can go in the same PR as `NetKAN/RP-AXE-Graphics-High.netkan` / `-Low.netkan` (they are
+presets can go in the same PR as `NetKAN/RP-AXE-Express-High.netkan` / `-Low.netkan` (they are
 metapackages with a static `version`, like `RP-1-ExpressInstall-Graphics-*`). `RP-AXE-deps.ckan` is a
 dev tool and is not submitted. Once merged, a new GitHub release is picked up automatically.
 
