@@ -3,7 +3,7 @@
 This folder is **imported, pristine RP-1 config** that RP-AXE ships and loads as-is. **Never
 hand-edit anything here.** All RP-AXE changes live in `../design/` as ModuleManager patches that
 apply *after* the seed (`:AFTER[...]` / `:FINAL`). Keeping the seed untouched makes the periodic
-upstream refresh a clean diff. See `docs/ARCHITECTURE.md` section 8.
+upstream refresh a clean diff. See `docs/WORKFLOW.md` ("Vendoring & keeping it fresh").
 
 Refreshed by `tools/sync-seed.ps1`. Committed to the repo so the mod is self-contained.
 (Keep this file ASCII-only -- the sync script round-trips it through PowerShell 5.1.)

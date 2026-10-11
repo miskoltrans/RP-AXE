@@ -8,8 +8,7 @@
     ],
     "license": "CC-BY-NC-SA-4.0",
     "$kref": "#/ckan/github/miskoltrans/RP-AXE",
-    "ksp_version_min": "1.12.0",
-    "ksp_version_max": "1.12.5",
+    "$vref": "#/ckan/ksp-avc",
     "tags": [
         "config",
         "career",
@@ -17,7 +16,7 @@
         "career-scaling",
         "physics"
     ],
-    "comment": "RP-AXE = the exact mod set of the curated 'perfect environment' test instance. depends lists EVERY installed module of that base (91, incl. MakingHistory-DLC + BreakingGround-DLC), so installing RP-AXE reproduces that stack verbatim. Graphics = the HIGH preset (ported from RP-1-ExpressInstall-Graphics-High): Parallax + Parallax-StockTextures, Scatterer + config + sunflare, RSSTextures16K (NOT 4096 -- they conflict), RSSVE-HR, DistantObject, PlanetShine, CanaveralPads -- plus PoodsMilkyWaySkybox (AXE addition, not in the Express preset; its deps ModuleManager + TextureReplacer were already present). Regenerated from Instance/CKAN/registry.json; no version pins (latest mutually-compatible). Conflicts with RP-1 (RP-AXE replaces the RP-1 career plugin). NOTE: this list is the 91-module base only -- the 21 curated expansion part-mods live in RP-AXE-deps.ckan and have not been folded in here yet.",
+    "comment": "depends = the complete RP-AXE environment, one name per installed module: (everything RP-1 Express installs MINUS RP-1) + the 21 curated expansion part mods + SCANsat, exactly the list RP-AXE-deps.ckan carries (regenerated from the live test instance's CKAN registry; tools/rebuild-instance.ps1 proves it installs headless). Transitive deps (Kopernicus, FAR, AJE, DynamicBatteryStorage, KerbalKonstructs, ...) are left to CKAN. GRAPHICS = RP-1 Express's HIGH preset (Parallax, Scatterer, RSSTextures16K, RSSVE-HR, DistantObject, PlanetShine, CanaveralPads) + PoodsMilkyWaySkybox: ~8 GB more than the Low preset. 'Scatterer-config-default' / 'Scatterer-sunflare-default' are used on purpose: the bare virtual names have many providers and a headless resolver silently drops them. SCANsat: the dev instance runs the miskoltrans/SCANsat-GPU fork (not on CKAN); the public dependency is stock CKAN SCANsat, which carries the same part names the tree places. Conflicts with RP-1: RP-AXE replaces RP-1's career plugin.",
     "depends": [
         {
             "name": "AdvancedJetEngine"
@@ -35,6 +34,9 @@
             "name": "BDAnimationModules"
         },
         {
+            "name": "BetterTimeWarpCont"
+        },
+        {
             "name": "BreakingGround-DLC"
         },
         {
@@ -42,6 +44,9 @@
         },
         {
             "name": "ClickThroughBlocker"
+        },
+        {
+            "name": "Coatl-Aerospace-Redux"
         },
         {
             "name": "CommunityCategoryKit"
@@ -56,6 +61,9 @@
             "name": "ContractConfigurator"
         },
         {
+            "name": "CryoEngines"
+        },
+        {
             "name": "CustomBarnKit"
         },
         {
@@ -68,7 +76,13 @@
             "name": "EditorExtensionsRedux"
         },
         {
+            "name": "FarFutureTechnologies"
+        },
+        {
             "name": "FerramAerospaceResearchContinued"
+        },
+        {
+            "name": "Firefly"
         },
         {
             "name": "FirespitterCore"
@@ -83,7 +97,13 @@
             "name": "Harmony2"
         },
         {
+            "name": "HullcamVDSContinued"
+        },
+        {
             "name": "KerbalAlarmClock"
+        },
+        {
+            "name": "KerbalAtomics"
         },
         {
             "name": "KerbalChangelog"
@@ -102,6 +122,9 @@
         },
         {
             "name": "KerbalRenamer"
+        },
+        {
+            "name": "KerwisChinaAerospacePack"
         },
         {
             "name": "Kopernicus"
@@ -138,6 +161,30 @@
         },
         {
             "name": "ModuleManager"
+        },
+        {
+            "name": "NearFutureAeronautics"
+        },
+        {
+            "name": "NearFutureConstruction"
+        },
+        {
+            "name": "NearFutureElectrical"
+        },
+        {
+            "name": "NearFutureExploration"
+        },
+        {
+            "name": "NearFutureLaunchVehicles"
+        },
+        {
+            "name": "NearFuturePropulsion"
+        },
+        {
+            "name": "NearFutureSolar"
+        },
+        {
+            "name": "NewTantares"
         },
         {
             "name": "Parallax"
@@ -200,7 +247,16 @@
             "name": "RetractableLiftingSurface"
         },
         {
+            "name": "RN-SovietProbes"
+        },
+        {
+            "name": "RN-USProbesPack"
+        },
+        {
             "name": "ROCapsules"
+        },
+        {
+            "name": "RocketMotorMenagerie"
         },
         {
             "name": "ROEngines"
@@ -233,10 +289,13 @@
             "name": "RSSVE-HR"
         },
         {
+            "name": "SCANsat"
+        },
+        {
             "name": "Scatterer"
         },
         {
-            "name": "Scatterer-config"
+            "name": "Scatterer-config-default"
         },
         {
             "name": "Scatterer-sunflare-default"
@@ -255,6 +314,9 @@
         },
         {
             "name": "StagedAnimation"
+        },
+        {
+            "name": "StationPartsExpansionRedux"
         },
         {
             "name": "StockAlarmClockDisabler"
@@ -284,6 +346,9 @@
             "name": "TweakScaleRescaled-Redist"
         },
         {
+            "name": "UniversalStorage2"
+        },
+        {
             "name": "VenStockRevamp-Core"
         },
         {
@@ -291,6 +356,9 @@
         },
         {
             "name": "Waterfall"
+        },
+        {
+            "name": "ZTheme"
         }
     ],
     "conflicts": [
