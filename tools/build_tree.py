@@ -363,10 +363,11 @@ def node_block(disc, n, indent="\t", flip_y=None):
     a(f"{indent}\tanyToUnlock = {'True' if n.get('anyToUnlock') else 'False'}")
     if n.get("impl_todo"):   # placed + researchable, but its in-game effect still needs wiring (docs/IMPL-TODO.md)
         a(f"{indent}\t// NEEDS-IMPL: {n['impl_todo']}")
-    # Full GameData path (not the bare name): most discipline icons aren't stock SimpleIcons,
-    # so a bare `RDicon_x` would fall back in-game. The PNGs ship in GameData/RP-AXE/design/Tree/icons/
-    # (copied from tree/render/prototype/icons/), resolved by KSP like RP-1's RP-1/Tree/Icons/ nodes.
-    a(f"{indent}\ticon = RP-AXE/design/Tree/icons/{disc[n['discipline']]['icon']}")
+    # Bare stock icon name. RDController.iconLoader.GetIcon() answers from the game's built-in atlas
+    # first, and disciplines.yaml spells every icon the way Squad/Resources/TechTree.cfg does (the
+    # KSP 1.0-era names like RDicon_aerodynamics no longer exist there, which is why a bare name once
+    # fell back to generic). Nothing ships under design/Tree/icons/: those PNGs were Squad assets.
+    a(f"{indent}\ticon = {disc[n['discipline']]['icon']}")
     a(f"{indent}\tpos = {n['_x']},{yv},-1")
     a(f"{indent}\tscale = 1.0")
     for p in n.get("parents", []) or []:

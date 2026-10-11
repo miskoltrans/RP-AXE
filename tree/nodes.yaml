@@ -6104,13 +6104,6 @@ nodes:
     parents: [nuc_modernFissionReactor]
     flavor: "Storing the fuel for a nuclear engine — fissile-material magazines that feed a fission-fragment or gas-core drive, the tankage an advanced nuclear stage carries its reactor charge in."
     parts: [fft-fueltank-fission-25-1, fft-fueltank-fission-25-2, fft-fueltank-fission-25-3, fft-fueltank-fission-radial-1, fft-fueltank-fission-radial-2, fft-fueltank-fission-radial-3, fft-fueltank-fission-5-1, fft-fueltank-fission-5-2]
-  - id: nuc_fuelReprocessing
-    title: "Nuclear Fuel Reprocessing"
-    discipline: NuclearEngineering
-    tier: 13
-    parents: [nuc_modernFissionReactor]
-    flavor: "A power reactor fills with fission products as it runs, and its enriched-uranium charge burns down — left alone it has a fixed lifespan. Fuel drums top the charge back up, and a reprocessor pulls the still-fissile material out of spent fuel to load again — the difference between a plant a crew has to replace and one they keep running on station for years."
-    parts: [nuclear-recycler-25, nuclearfuel-0625, nuclearfuel-125, nuclearfuel-25]
 
   # ================================================================================================
   # =============== BAND 5 * ISS-COMPLETION -> COMMERCIAL/REUSABLE ERA -- ENGINE-ONLY PASS ===========
