@@ -152,8 +152,8 @@ Things worth knowing before trusting an answer:
 * `--by-arrival` groups the output by final-arrival date instead of by departure, which is only
   useful when the destination window is wide.
 
-Older single-purpose scripts (`porkchop.py`, `jupiter_arrival.py`, `jovian_tour.py`,
-`link_budget.py`, `mass_budget.py`) still work and share `rss_ephem`.
+Older single-purpose scripts (`porkchop.py`, `jovian_tour.py`,
+`link_budget.py`) still work and share `rss_ephem`.
 
 ## The live bridge
 
