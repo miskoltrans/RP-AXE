@@ -52,13 +52,18 @@ The full inventory of what differs from RP-1 (removed, replaced, ported, changed
 
 ## Install
 
-**CKAN (recommended).** Until RP-AXE is on the CKAN registry, add its metadata locally: *CKAN →
-Settings → … → Add netkan* and point it at `RP-AXE.netkan` from this repository, then install
-`RP-AXE`. CKAN pulls the dependencies, offers the recommended tools (MechJeb, TestFlight, alarm
-clock, transfer planners, editor helpers — untick what you don't want) and asks you to pick the RSS
+**CKAN (recommended).** Until RP-AXE is on the CKAN registry, download `RP-AXE-<version>.ckan`
+from the [release page](https://github.com/miskoltrans/RP-AXE/releases) and use *CKAN → File →
+Install from .ckan file*. CKAN pulls the dependencies, offers the recommended mods (ours — MechJeb,
+TestFlight, alarm clock, transfer planners, editor helpers — and what RO and RSS themselves
+recommend, such as Parallax and RSSVE; untick what you don't want) and asks you to pick the RSS
 texture pack. It refuses the install if `RP-1` is present (the `conflicts` rule). For the graphics
-presets in one go, also import `RP-AXE-Graphics-High.ckan` or `RP-AXE-Graphics-Low.ckan` (*CKAN →
-File → Install from .ckan file*). Expect a long download the first time.
+presets in one go, also install `RP-AXE-Graphics-High.ckan` or `RP-AXE-Graphics-Low.ckan` from this
+repository the same way. Expect a long download the first time.
+
+> Installing into a KSP folder that already holds mods installed by hand? CKAN refuses to overwrite
+> any file it did not install itself, and part mods ship example craft into `Ships/`. If it stops with
+> "tried to overwrite a file", delete that file and retry.
 
 **Manual.** Install the dependency set first — the metapackage `RP-AXE-deps.ckan` (*CKAN → File →
 Install from .ckan file*) is the author's complete environment, High graphics included — then unzip

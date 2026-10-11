@@ -17,6 +17,12 @@ LFS; a checkout without `git lfs pull` would ship 130-byte stubs that look like 
 refuses a missing or stale DLL, and refuses to overwrite an existing archive for the
 same version unless --force.
 
+Also writes dist/RP-AXE-<version>.ckan: the netkan "inflated" against the GitHub release
+asset the zip will be uploaded as (download URL from the tag convention, size and hashes
+from the zip). The CKAN client cannot read a netkan; until RP-AXE is on the CKAN registry
+this .ckan is what a player feeds to "File -> Install from .ckan file" (or `ckan install -c`),
+so it ships as a release asset next to the zip.
+
 The version is read from GameData/RP-AXE/RP-AXE.version (KSP-AVC) -- bump it there,
 that single file drives the archive name, the in-game version and CKAN's $vref.
 """
@@ -61,6 +67,29 @@ def build():
     r = subprocess.run(["dotnet", "build", CSPROJ, "-c", "Release", "-nologo", "-v", "q"], cwd=REPO)
     if r.returncode:
         sys.exit("dotnet build failed")
+
+
+def write_ckan(ver, zip_path, data, sha256):
+    """Inflate RP-AXE.netkan the way the NetKAN bot would, against the release asset for this version."""
+    with open(os.path.join(REPO, "RP-AXE.netkan"), encoding="utf-8") as f:
+        nk = json.load(f)
+    with open(AVC, encoding="utf-8") as f:
+        avc = json.load(f)
+    ck = {k: v for k, v in nk.items() if k not in ("$kref", "$vref", "x_netkan_github", "comment")}
+    mn, mx = avc["KSP_VERSION_MIN"], avc["KSP_VERSION_MAX"]
+    ck["version"] = ver
+    ck["ksp_version_min"] = "%d.%d.%d" % (mn["MAJOR"], mn["MINOR"], mn["PATCH"])
+    ck["ksp_version_max"] = "%d.%d.%d" % (mx["MAJOR"], mx["MINOR"], mx["PATCH"])
+    ck["release_status"] = "testing" if ver.startswith("0.") else "stable"
+    ck["download"] = "https://github.com/miskoltrans/RP-AXE/releases/download/v%s/%s" % (ver, os.path.basename(zip_path))
+    ck["download_size"] = len(data)
+    ck["download_hash"] = {"sha1": hashlib.sha1(data).hexdigest().upper(), "sha256": sha256.upper()}
+    ck["download_content_type"] = "application/zip"
+    path = os.path.join(DIST, "RP-AXE-%s.ckan" % ver)
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(ck, f, indent=4, ensure_ascii=False)
+        f.write("\n")
+    return path
 
 
 def main():
@@ -121,11 +150,14 @@ def main():
         assert not bad, "entries outside %s/: %s" % (MOD_DIR, bad[:5])
         assert DLL in names, "AXE.dll missing from archive"
         assert MOD_DIR + "/RP-AXE.version" in names
-    sha = hashlib.sha256(open(out, "rb").read()).hexdigest()
+    data = open(out, "rb").read()
+    sha = hashlib.sha256(data).hexdigest()
     with open(out + ".sha256", "w") as f:
         f.write("%s  %s\n" % (sha, os.path.basename(out)))
+    ckan_path = write_ckan(ver, out, data, sha)
 
     print("wrote %s" % out)
+    print("wrote %s  (CKAN -> File -> Install from .ckan file)" % ckan_path)
     print("  %d files, %.1f MB uncompressed, %.1f MB zipped" % (len(names), total / 1e6, os.path.getsize(out) / 1e6))
     print("  sha256 %s" % sha)
     print("  excluded: %s" % ", ".join(sorted(os.path.basename(e) for e in EXCLUDE)))
