@@ -89,18 +89,44 @@ droppings (`@thumbs/`, `Bridge.cfg`, MM caches) can never leak in. Bump the vers
 Goal: a stranger installs from metadata with **zero manual steps** and gets a working, RP-1-free,
 RP-1-conflicting install.
 
-1. New CKAN instance on a **fresh KSP 1.12.5** with both DLCs (`../ksp_instance_clean` is the snapshot).
-2. *CKAN → Settings → Add netkan* → `RP-AXE.netkan`; install `RP-AXE`.
-3. Verify CKAN pulls the realism stack + part packs and **refuses** if `RP-1` is selected.
-4. Verify `GameData/RP-AXE/` exists, `GameData/RP-1/` does not, no `RP0.dll` / `CC_RP0.dll`, and
-   `GameData/Scatterer/config/` is populated (the silent-drop symptom is an empty one).
-5. Launch with `-axe-autotest`: it starts a career, walks R&D + Mission Control and quits. Then
-   `python tools/check_liveness.py` against that install's cache (`--instance <path>`).
+The CKAN client cannot read a netkan; it installs `.ckan` files. `tools/package_release.py` writes
+`dist/RP-AXE-<ver>.ckan` (the netkan inflated against the release asset) and that is what both the
+player and this test feed to CKAN. Run as of 0.9.0 (2026-10-11), twice, headless:
+
+```
+robocopy ..\ksp_instance_clean ..\ksp_instance_cleanroom /E          # fresh stock 1.12.5 + DLCs, no CKAN registry
+# the snapshot is not pristine: B9PWings and ModularLaunchPads left 29 example craft in Ships\, and
+# CKAN refuses to overwrite a file it did not install -- delete every .craft without a .loadmeta twin
+..\ckan.exe install -c dist\RP-AXE-0.9.0.ckan --gamedir ..\ksp_instance_cleanroom --headless
+python tools\check_cleanroom.py --instance ..\ksp_instance_cleanroom   # depends / recommends / conflicts / GameData vs the netkan
+..\ksp_instance_cleanroom\KSP_x64.exe -axe-autotest                   # career, R&D, Mission Control, quit
+python tools\check_liveness.py --instance ..\ksp_instance_cleanroom
+```
+
+The GUI path is the same `.ckan` through *File → Install from .ckan file* on a fresh instance added
+under *Manage instances* (`../ksp_instance_cleanroom_gui` is prepared for it); it shows what headless
+decides silently: the texture-pack chooser and the recommendations dialog.
+
+What the first two runs found, and fixed (`99ddd29`, `98e7fad`):
+- **VenStockRevamp** — the resolver failed outright: VenStockRevamp-Core *recommends* the full
+  VenStockRevamp, which conflicts with ReStock. Now in `conflicts`.
+- **No planet textures, exit 0** — RSS's virtual `RSSTextures` was dropped by the headless resolver.
+  An `any_of` in `depends` gives the GUI a proper chooser, but the third run showed headless drops
+  the `any_of` just the same: a choice it cannot ask about is skipped, exit 0. So the CLI path is
+  either an Express preset (which names the pack) or `ckan install RSSTextures4096` afterwards, and
+  `check_cleanroom.py` fails the install until a pack is present.
+- **Scatterer without config** — same mechanism, via RSS → Parallax → Scatterer. Now `recommends`
+  Scatterer + its `-default` config aliases.
+- **164 modules installed, 86 not named by the netkan** — the recommends closure of the dependencies
+  (BDB, KSCExtended, KerbinSide, the RN rocket packs, CLS, RPM/ASET IVAs, Trajectories, …). Not a bug,
+  but the Express presets exist so a player can decline it in one go.
+- `KSPBurst` (recommended) is skipped by the resolver — it `provides Harmony2`, which collides with
+  the real Harmony2 dependency. Cosmetic (a performance plugin); left as a WARN.
 
 > The dev `Instance/` is the reference working set: its installed modules are captured verbatim in
-> `RP-AXE-deps.ckan` and mirrored into the netkan `depends` (regeneration snippet in
-> `docs/WORKFLOW.md`), and `tools/rebuild-instance.ps1` proves that list installs headless. The
-> clean-room run adds only the `$kref` download of the published zip.
+> `RP-AXE-deps.ckan`, and `tools/rebuild-instance.ps1` proves that list installs headless with
+> `--no-recommends`. The clean-room run is the other half: the *player's* resolution of the netkan,
+> recommends on, from the published asset.
 
 ## Dependency model
 
@@ -111,18 +137,24 @@ so a player's install cannot silently differ from the one the tree was built aga
 
 | list | rule | count |
 |---|---|---|
-| `depends` | the stack AXE's configs and plugin bind to directly (RO, RSS, Kerbalism + RO config, Contract Configurator, CustomBarnKit, RealAntennas, KSCSwitcher, Skopos; ROUtils, Harmony, MFI for `AXE.dll`) **plus every mod the tree places parts from** (`manifest/curated-parts.tsv`). The tree is balanced against exactly that part set; a missing one leaves nodes you pay science for and get nothing from. | 52 |
-| `recommends` | tools AXE integrates with when present and runs without: MechJeb, TestFlight, alarm clock, transfer planners, editor QoL, visual polish. CKAN installs them by default, untickable. | 23 |
-| `suggests` | the author's graphics preset (RP-1 Express High) and the two DLCs, which CKAN cannot install. Breaking Ground matters: 28 robotics parts are placed. | 13 |
-| `conflicts` | what RP-AXE replaces: RP-1 / RP-0 / RONoCareer (career layer), KCT, CommunityTechTree and HideEmptyTechNodes (tree), KRASH (simulator), NFE-DecayingRTGs (RTG model), MechJebForAll, CrowdSourcedScience. | 10 |
+| `depends` | the stack AXE's configs and plugin bind to directly (RO, RSS, Kerbalism + RO config, Contract Configurator, CustomBarnKit, RealAntennas, KSCSwitcher, Skopos; ROUtils, Harmony, MFI for `AXE.dll`) **plus every mod the tree places parts from** (`manifest/curated-parts.tsv`), plus an `any_of` over the four RSS texture packs, light one first. The tree is balanced against exactly that part set; a missing one leaves nodes you pay science for and get nothing from. | 52 + 1 |
+| `recommends` | tools AXE integrates with when present and runs without: MechJeb, TestFlight, alarm clock, transfer planners, editor QoL, visual polish, and Scatterer **with** its config. CKAN installs them by default, untickable. | 26 |
+| `suggests` | the author's graphics preset (RP-1 Express High) and the two DLCs, which CKAN cannot install. Breaking Ground matters: 28 robotics parts are placed. | 9 |
+| `conflicts` | what RP-AXE replaces: RP-1 / RP-0 / RONoCareer (career layer), KCT, CommunityTechTree and HideEmptyTechNodes (tree), KRASH (simulator), NFE-DecayingRTGs (RTG model), MechJebForAll, CrowdSourcedScience; and the full VenStockRevamp, which ReStock conflicts with and VenStockRevamp-Core recommends. | 11 |
 
-- **Graphics are not forced.** RSS hard-depends on a virtual `RSSTextures`, so CKAN prompts for the
-  pack. `RP-AXE-Graphics-High.ckan` (the author's set, ~8 GB more) and `RP-AXE-Graphics-Low.ckan`
-  (4K textures + Scatterer + DistantObject + PlanetShine) are importable metapackages for one-click
-  presets; they conflict with each other.
-- `Scatterer-config-default` / `Scatterer-sunflare-default`, never the bare virtual names: a
-  metapackage `depends` on a name with many providers is dropped silently, exit 0 (A/B-verified on
-  ckan 1.36.4; the result is a Scatterer that renders no atmosphere at all).
+- **Graphics are not forced.** The texture pack is an `any_of` (4K is the headless default; the GUI
+  asks). `RP-AXE-Express-High.ckan` / `RP-AXE-Express-Low.ckan` are the one-click presets in the RP-1
+  Express mould: RP-AXE + its recommends + a graphics set as hard deps; they conflict with each other
+  and ship on the release page.
+- **A headless resolver silently drops any virtual dependency with several providers — of a
+  dependency too, not just of a metapackage.** Clean-room run 2026-10-11: RSS installed with no
+  texture pack (exit 0), and Scatterer (pulled in by RSS → Parallax → Scatterer) with no config.
+  Hence the `any_of` and the `-default` Scatterer aliases above; never the bare virtual names.
+- **The recommends closure is large.** CKAN also offers the recommendations of every dependency:
+  ModularLaunchPads recommends Bluedog Design Bureau and KSCExtended, which recommends KerbinSide
+  and Tundra, RN-SovietProbes recommends the RN rocket packs, US2 recommends CLS, and so on — ~50
+  part mods the tree never placed, ~10 GB. A headless "yes" takes them all. The Express presets with
+  `--no-recommends` give exactly the curated set; GUI users decline the second dialog.
 - SCANsat: the dev instance runs the `miskoltrans/SCANsat-GPU` fork (to be merged upstream); the
   public dependency is stock CKAN `SCANsat`, which carries the same part names the tree places.
 - Transitive deps (Kopernicus, FAR, AJE, RealFuels, DynamicBatteryStorage, KerbalKonstructs,

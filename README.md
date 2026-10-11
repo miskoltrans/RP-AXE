@@ -53,13 +53,30 @@ The full inventory of what differs from RP-1 (removed, replaced, ported, changed
 ## Install
 
 **CKAN (recommended).** Until RP-AXE is on the CKAN registry, download `RP-AXE-<version>.ckan`
-from the [release page](https://github.com/miskoltrans/RP-AXE/releases) and use *CKAN → File →
-Install from .ckan file*. CKAN pulls the dependencies, offers the recommended mods (ours — MechJeb,
-TestFlight, alarm clock, transfer planners, editor helpers — and what RO and RSS themselves
-recommend, such as Parallax and RSSVE; untick what you don't want) and asks you to pick the RSS
-texture pack. It refuses the install if `RP-1` is present (the `conflicts` rule). For the graphics
-presets in one go, also install `RP-AXE-Graphics-High.ckan` or `RP-AXE-Graphics-Low.ckan` from this
-repository the same way. Expect a long download the first time.
+**and** one of `RP-AXE-Express-Low.ckan` / `RP-AXE-Express-High.ckan` from the
+[release page](https://github.com/miskoltrans/RP-AXE/releases), then *CKAN → File → Install from
+.ckan file* with both selected. The Express file is the one-click preset: RP-AXE, its recommended
+tools (MechJeb, TestFlight, alarm clock, transfer planners, editor helpers, Scatterer) and a graphics
+set — Low is 4K planet textures, High is the author's RP-1-Express-High set (Parallax, 16K textures,
+RSSVE-HR, about 8 GB more). When CKAN then offers *further* recommendations, those come from the
+dependencies themselves (ModularLaunchPads recommends Bluedog Design Bureau, RSS recommends Parallax,
+and so on) — **decline them** unless you want them; the tree places nothing from them. CKAN refuses
+the install if `RP-1` is present (the `conflicts` rule). Expect a long download the first time.
+
+Command line, same thing:
+
+```
+ckan install -c RP-AXE-0.9.0.ckan -c RP-AXE-Express-Low.ckan --no-recommends --gamedir <your KSP folder>
+```
+
+Installing `RP-AXE-<version>.ckan` on its own also works in the CKAN window: it asks for the texture
+pack and offers the recommendations one by one. On the command line a headless install cannot ask,
+and silently skips the choice — add the pack yourself afterwards:
+
+```
+ckan install -c RP-AXE-0.9.0.ckan --gamedir <your KSP folder> --headless
+ckan install RSSTextures4096 --gamedir <your KSP folder> --headless
+```
 
 > Installing into a KSP folder that already holds mods installed by hand? CKAN refuses to overwrite
 > any file it did not install itself, and part mods ship example craft into `Ships/`. If it stops with
