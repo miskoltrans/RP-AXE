@@ -59,6 +59,11 @@ SUGGESTS = GRAPHICS_HIGH + ["BreakingGround-DLC", "MakingHistory-DLC"]
 CONFLICTS = [
     "RP-1", "RP-0", "RONoCareer", "KerbalConstructionTime", "CommunityTechTree", "HideEmptyTechNodes",
     "MechJebForAll", "KRASH", "NearFutureElectrical-DecayingRTGs", "CrowdSourcedScience",
+    # The curated part set is ReStock + VenStockRevamp-NewParts. The full VenStockRevamp (stock-model
+    # replacement) conflicts with ReStock, and VenStockRevamp-Core RECOMMENDS it -- a headless CKAN install
+    # of RP-AXE adds the recommends of every dependency and then fails on that pair (clean-room run,
+    # 2026-10-11). Declaring the conflict here keeps the resolver from reaching for it.
+    "VenStockRevamp",
 ]
 # `provides` aliases the registry records under the provider's own name
 ALIAS = {"Scatterer-config-default": "Scatterer-config", "Scatterer-sunflare-default": "Scatterer-sunflare"}

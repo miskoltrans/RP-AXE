@@ -320,6 +320,9 @@
         },
         {
             "name": "CrowdSourcedScience"
+        },
+        {
+            "name": "VenStockRevamp"
         }
     ],
     "install": [
