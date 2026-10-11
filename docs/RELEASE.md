@@ -24,6 +24,7 @@ Repo-side, done for 1.0.0 (2026-10-11):
 
 Still needs you (each is outward-facing or needs credentials):
 
+- [x] History rewritten and `main` swapped onto it; backups stay until the push has succeeded.
 - [ ] **GitHub.** `gh auth login`; create `miskoltrans/RP-AXE` (public); `git remote add origin
       git@github.com:miskoltrans/RP-AXE.git`; `git lfs push --all origin main` then `git push -u origin
       main`. The `.version` `URL` and the netkan `$kref` both assume that owner/repo and branch `main`.
@@ -56,7 +57,7 @@ gitignored renders. The repository went from 700 MB to 55 MB.
 | `tree/render/axe-tree.png` / `.svg` (162 versions each) | generated renders, 390 MB of a 430 MB repo; now gitignored |
 | git-lfs pointers → plain blobs | RP-1 ships its assets in-repo too; GitHub's LFS bandwidth quota would throttle clones |
 
-**Swap (run once, while no other session is committing):**
+**Swap — DONE 2026-10-11 (`main` = `d698839`; `main-prepurge` = the old `1288c63` line). For the record:**
 
 ```
 git log --oneline main-prepurge..main        # anything here was committed after the rewrite: cherry-pick it after the swap
