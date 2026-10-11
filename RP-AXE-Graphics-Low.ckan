@@ -1,0 +1,39 @@
+{
+    "spec_version": "v1.18",
+    "identifier": "RP-AXE-Graphics-Low",
+    "name": "RP-AXE: graphics preset (Low)",
+    "abstract": "A light graphics set for RP-AXE: 4K RSS textures plus Scatterer, DistantObject and PlanetShine. For a machine that struggles with RP-1 Express High. Import via CKAN -> File -> Install from .ckan file.",
+    "author": [
+        "miskoltrans"
+    ],
+    "version": "1.0.0",
+    "kind": "metapackage",
+    "license": "CC-BY-NC-SA-4.0",
+    "ksp_version_min": "1.12.0",
+    "ksp_version_max": "1.12.5",
+    "depends": [
+        {
+            "name": "RSSTextures4096"
+        },
+        {
+            "name": "Scatterer"
+        },
+        {
+            "name": "Scatterer-config-default"
+        },
+        {
+            "name": "Scatterer-sunflare-default"
+        },
+        {
+            "name": "DistantObject"
+        },
+        {
+            "name": "PlanetShine"
+        }
+    ],
+    "conflicts": [
+        {
+            "name": "RP-AXE-Graphics-High"
+        }
+    ]
+}

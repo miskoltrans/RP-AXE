@@ -36,24 +36,31 @@ The full inventory of what differs from RP-1 (removed, replaced, ported, changed
 
 ## Requirements
 
-- KSP **1.12.x** (tested on 1.12.5) with the **Making History** and **Breaking Ground** DLCs.
-- The full RO/RSS dependency stack — CKAN installs it for you (below). It is the RP-1 Express set
-  minus RP-1, plus a curated expansion of part mods (Nertea's Near Future and Far Future suites,
-  CryoEngines, KerbalAtomics, SSPXr, Tantares, Coatl, the RN probe packs, Universal Storage 2,
-  Rocket Motor Menagerie, SCANsat, …).
-- The graphics preset is RP-1 Express **High** (Parallax, Scatterer, 16K RSS textures, RSSVE-HR).
-  Budget **40+ GB** of disk and a machine that already runs RP-1 at that preset comfortably.
+- KSP **1.12.x** (tested on 1.12.5). **Breaking Ground** is strongly recommended: the Robotics
+  discipline places its 28 robotics parts. Making History is optional.
+- The RO/RSS realism stack plus the part mods the tree is built on — CKAN installs all of it as
+  hard dependencies (below): the RP-1 Express part set minus RP-1, plus a curated expansion
+  (Nertea's Near Future and Far Future suites, CryoEngines, KerbalAtomics, SSPXr, Tantares, Coatl,
+  the RN probe packs, Universal Storage 2, Rocket Motor Menagerie, SCANsat, …). Every one of them
+  has parts placed in the tree, which is why none is optional.
+- Graphics are **your choice**. RSS needs one texture pack and CKAN asks which; the author plays on
+  the RP-1 Express **High** preset (Parallax, Scatterer, 16K textures, RSSVE-HR — about 8 GB more
+  than Low). Budget **40+ GB** of disk for the full High install.
 
 ## Install
 
 **CKAN (recommended).** Until RP-AXE is on the CKAN registry, add its metadata locally: *CKAN →
 Settings → … → Add netkan* and point it at `RP-AXE.netkan` from this repository, then install
-`RP-AXE`. CKAN pulls every dependency and refuses the install if `RP-1` is present (the `conflicts`
-rule). Expect a long download the first time.
+`RP-AXE`. CKAN pulls the dependencies, offers the recommended tools (MechJeb, TestFlight, alarm
+clock, transfer planners, editor helpers — untick what you don't want) and asks you to pick the RSS
+texture pack. It refuses the install if `RP-1` is present (the `conflicts` rule). For the graphics
+presets in one go, also import `RP-AXE-Graphics-High.ckan` or `RP-AXE-Graphics-Low.ckan` (*CKAN →
+File → Install from .ckan file*). Expect a long download the first time.
 
-**Manual.** Install the dependency set first — the CKAN metapackage `RP-AXE-deps.ckan` (*CKAN →
-File → Install from .ckan file*) is the exact list — then unzip the release so that
-`GameData/RP-AXE/` sits in your KSP folder. Make sure **`GameData/RP-1/` does not exist**.
+**Manual.** Install the dependency set first — the metapackage `RP-AXE-deps.ckan` (*CKAN → File →
+Install from .ckan file*) is the author's complete environment, High graphics included — then unzip
+the release so that `GameData/RP-AXE/` sits in your KSP folder. Make sure **`GameData/RP-1/` does
+not exist**.
 
 Then start a **new Career** game. The difficulty presets are AXE's own; Normal is the balanced one.
 
@@ -81,7 +88,8 @@ Then start a **new Career** game. The difficulty presets are AXE's own; Normal i
 | `tree/` | The tree source — `nodes.yaml` + `disciplines.yaml`, compiled by `tools/build_tree.py` into the game cfgs and a browser viewer (`tree/render/prototype/axe-tree-standalone.html`). |
 | `manifest/` | The curated part list (`curated-parts.tsv`), upgrade curation and capability data. |
 | `docs/` | Architecture, workflow, decisions. **Start with [`docs/RESTART.md`](docs/RESTART.md)**, the single source of truth; then [`docs/WORKFLOW.md`](docs/WORKFLOW.md) (build, deploy, test) and [`docs/TREE.md`](docs/TREE.md). |
-| `tools/` | Build, audit and packaging scripts. `package_release.py` builds the release zip; `rebuild-instance.ps1` recreates the test install from CKAN metadata and boots it through the automated checks. |
+| `tools/` | Build, audit and packaging scripts. `package_release.py` builds the release zip; `gen_netkan.py` writes the CKAN relationships from one classification; `rebuild-instance.ps1` recreates the test install from CKAN metadata and boots it through the automated checks. |
+| `tools/mission/` | A mission planner for this install: reads your save, plans ejection / midcourse / flyby / capture burns and moon tours on the install's own ephemeris, and can verify them against the running game through the localhost bridge. See [`docs/MISSION-TOOLS.md`](docs/MISSION-TOOLS.md). |
 
 Releases: see [`docs/RELEASE.md`](docs/RELEASE.md). Changes: [`CHANGELOG.md`](CHANGELOG.md).
 

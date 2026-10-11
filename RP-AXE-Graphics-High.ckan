@@ -1,0 +1,54 @@
+{
+    "spec_version": "v1.18",
+    "identifier": "RP-AXE-Graphics-High",
+    "name": "RP-AXE: graphics preset (High)",
+    "abstract": "The author's graphics set for RP-AXE, ported from RP-1 Express High: Parallax, Scatterer, 16K RSS textures, RSSVE-HR, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox. About 8 GB more than Low. Import via CKAN -> File -> Install from .ckan file, alongside RP-AXE.",
+    "author": [
+        "miskoltrans"
+    ],
+    "version": "1.0.0",
+    "kind": "metapackage",
+    "license": "CC-BY-NC-SA-4.0",
+    "ksp_version_min": "1.12.0",
+    "ksp_version_max": "1.12.5",
+    "depends": [
+        {
+            "name": "Parallax"
+        },
+        {
+            "name": "Parallax-StockTextures"
+        },
+        {
+            "name": "Scatterer"
+        },
+        {
+            "name": "Scatterer-config-default"
+        },
+        {
+            "name": "Scatterer-sunflare-default"
+        },
+        {
+            "name": "RSSTextures16K"
+        },
+        {
+            "name": "RSSVE-HR"
+        },
+        {
+            "name": "DistantObject"
+        },
+        {
+            "name": "PlanetShine"
+        },
+        {
+            "name": "CanaveralPads"
+        },
+        {
+            "name": "PoodsMilkyWaySkybox"
+        }
+    ],
+    "conflicts": [
+        {
+            "name": "RP-AXE-Graphics-Low"
+        }
+    ]
+}

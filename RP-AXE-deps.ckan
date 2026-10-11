@@ -2,11 +2,11 @@
     "spec_version": "v1.18",
     "identifier": "RP-AXE-deps",
     "name": "RP-AXE: all dependencies (metapackage)",
-    "abstract": "Installs the complete RP-AXE 'perfect environment' mod set. Import into a clean CKAN instance ('Install from .ckan file'), then add RP-AXE itself (junction/zip). Mirrors RP-AXE.netkan depends; regenerated from the live test-instance registry.",
+    "abstract": "The author's complete RP-AXE development environment as ONE hard-dependency set: every module RP-AXE.netkan lists under depends/recommends/suggests (High graphics included), so a clean CKAN instance reproduces the test install verbatim. Players normally install RP-AXE itself and choose graphics at the prompts. SCANsat is deliberately absent here (the dev instance runs a fork); RP-AXE.netkan depends on CKAN SCANsat.",
     "author": [
         "miskoltrans"
     ],
-    "version": "0.6.4",
+    "version": "1.0.0",
     "kind": "metapackage",
     "license": "CC-BY-NC-SA-4.0",
     "ksp_version_min": "1.12.0",
@@ -289,27 +289,69 @@
         {
             "name": "Waterfall"
         },
-        { "name": "Coatl-Aerospace-Redux" },
-        { "name": "CryoEngines" },
-        { "name": "FarFutureTechnologies" },
-        { "name": "Firefly" },
-        { "name": "HullcamVDSContinued" },
-        { "name": "KerbalAtomics" },
-        { "name": "KerwisChinaAerospacePack" },
-        { "name": "NearFutureAeronautics" },
-        { "name": "NearFutureConstruction" },
-        { "name": "NearFutureElectrical" },
-        { "name": "NearFutureExploration" },
-        { "name": "NearFutureLaunchVehicles" },
-        { "name": "NearFuturePropulsion" },
-        { "name": "NearFutureSolar" },
-        { "name": "NewTantares" },
-        { "name": "RN-SovietProbes" },
-        { "name": "RN-USProbesPack" },
-        { "name": "RocketMotorMenagerie" },
-        { "name": "StationPartsExpansionRedux" },
-        { "name": "UniversalStorage2" },
-        { "name": "ZTheme" }
+        {
+            "name": "Coatl-Aerospace-Redux"
+        },
+        {
+            "name": "CryoEngines"
+        },
+        {
+            "name": "FarFutureTechnologies"
+        },
+        {
+            "name": "Firefly"
+        },
+        {
+            "name": "HullcamVDSContinued"
+        },
+        {
+            "name": "KerbalAtomics"
+        },
+        {
+            "name": "KerwisChinaAerospacePack"
+        },
+        {
+            "name": "NearFutureAeronautics"
+        },
+        {
+            "name": "NearFutureConstruction"
+        },
+        {
+            "name": "NearFutureElectrical"
+        },
+        {
+            "name": "NearFutureExploration"
+        },
+        {
+            "name": "NearFutureLaunchVehicles"
+        },
+        {
+            "name": "NearFuturePropulsion"
+        },
+        {
+            "name": "NearFutureSolar"
+        },
+        {
+            "name": "NewTantares"
+        },
+        {
+            "name": "RN-SovietProbes"
+        },
+        {
+            "name": "RN-USProbesPack"
+        },
+        {
+            "name": "RocketMotorMenagerie"
+        },
+        {
+            "name": "StationPartsExpansionRedux"
+        },
+        {
+            "name": "UniversalStorage2"
+        },
+        {
+            "name": "ZTheme"
+        }
     ],
     "conflicts": [
         {
