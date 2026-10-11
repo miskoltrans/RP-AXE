@@ -992,6 +992,18 @@ def cmd_correct(args):
         tol = 0.08 if getattr(args, "aim", "none") not in (None, "none") else 0.02
         if not (rp.get("captured") and abs(rp["peR"] - peR) / peR < tol):
             print_arrival(system, target.name, rp)
+            # PRINT THE BURN ANYWAY. A partial solve is still the best answer in hand, and
+            # withholding it sends the user off to re-derive a number this already has --
+            # which is exactly what happened diving Perun 2 Bus A onto Ganymede 10 h out:
+            # the solve reached 862 km of a requested 50 and reported only failure.
+            if res.get("dv") is not None:
+                nd = astro.to_node(rb, vb, res["dv"])
+                print("")
+                print("  BEST EFFORT (did NOT reach the requested periapsis -- treat as a seed)")
+                print(f"    radial   {nd[0]:+10.2f} m/s")
+                print(f"    normal   {nd[1]:+10.2f} m/s")
+                print(f"    prograde {nd[2]:+10.2f} m/s")
+                print(f"    total    {float(np.linalg.norm(res['dv'])):10.2f} m/s")
             sys.exit("  the correction did not converge at that burn time; try another "
                      "--burn-at, or drop it and let the scan pick one")
         if abs(rp["peR"] - peR) / peR > 0.02:
