@@ -28,8 +28,13 @@ Still needs you (each is outward-facing or needs credentials):
 - [x] **Pushed** 2026-10-11: `origin = git@github.com:miskoltrans/RP-AXE.git`, `main` + tags `v0.9.0`, `pre-restart-mvp`, `tree-v2-spine`; old history and the LFS store dropped locally afterwards (`.git` = 55 MB).
 - [ ] **GitHub release.** `gh auth login`, then `gh release create v0.9.0 dist/RP-AXE-v0.9.0.zip dist/RP-AXE-v0.9.0.zip.sha256 --prerelease --title "RP-AXE 0.9.0 (beta)" --notes-file CHANGELOG.md` (or upload the zip to the v0.9.0 tag in the web UI, ticking *pre-release*). CKAN's `$kref` needs that asset.
 - [x] Tagged `v0.9.0` (annotated) and pushed; `dist/RP-AXE-v0.9.0.zip` + `.sha256` built from it.
-- [ ] **Clean-room install test** (below) against the published release — the only prove that a
-      stranger's CKAN resolves the metadata unattended.
+- [x] **Clean-room install test, install half** (below): the published 0.9.0 asset + Express-Low
+      resolve headless into 125 modules, 54/54 depends, 25/25 recommends, GameData as shipped
+      (`tools/check_cleanroom.py` OK on `../ksp_instance_cleanroom3`).
+- [ ] **Clean-room boot** — needs an unlocked session (see the last finding below):
+      `..\ksp_instance_cleanroom3\KSP_x64.exe -axe-autotest`, then
+      `python tools\check_liveness.py --instance ..\ksp_instance_cleanroom3`. `../ksp_instance_cleanroom_gui`
+      is a fresh copy for the GUI run (*Manage instances → Add*, then the two `.ckan` installs).
 - [ ] **CKAN listing** (optional): run the netkan through the inflator (`netkan.exe RP-AXE.netkan`, or
       the NetKAN-bot on a PR) and submit it to https://github.com/KSP-CKAN/NetKAN. Until then players
       add it locally via *CKAN → Settings → Add netkan*.
@@ -123,8 +128,14 @@ What the first two runs found, and fixed (`99ddd29`, `98e7fad`):
   but the Express presets exist so a player can decline it in one go.
 - **FAR dead, RealAntennas types unloadable, Skopos down with them** (third run, the boot) — both
   hard-depend on the virtual `KSPBurst`, which has two providers, so the headless resolver dropped it
-  and nothing shipped `Unity.Burst`. `KSPBurst-Lite` is now a named hard dependency (`65b3533`); it
-  co-installs with the real Harmony2.
+  and nothing shipped `Unity.Burst`. The full `KSPBurst` (runtime + compiler, what the dev instance and
+  RP-1 Express run) is now a named hard dependency; it co-installs with the real Harmony2.
+- **A boot launched on a locked Windows session never leaves the first frames.** Unity stops
+  presenting frames when the session is locked (`LogonUI.exe` running), and KSP's asset loader only
+  advances per frame — so KSP.log and Player.log go silent right after the addon `Awake`s while
+  ModuleManager's background thread still finishes and the process burns two cores. Three runs were
+  spent on that before it was recognised. **Run the boot step from an unlocked session**, and check
+  `Get-Process LogonUI` before believing a "hang".
 - **One local file per `ckan install -c`** — passing two `-c` files installs only the last one, and a
   metapackage naming `RP-AXE` failed "Unsatisfied dependency RP-AXE" because a local file is an
   install target, not a registry entry. The presets now list only the recommends + graphics, and the
