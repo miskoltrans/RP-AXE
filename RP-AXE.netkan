@@ -1,5 +1,5 @@
 {
-    "spec_version": "v1.18",
+    "spec_version": "v1.26",
     "identifier": "RP-AXE",
     "name": "RP-AXE: Ahistorical Xploration & Engineering",
     "abstract": "RP-1's realism stack with a lightweight, science-driven, exploration-first career replacing the RP-1 career plugin. Parts unlock free with science; engineering and exploration are the focus, not management.",
@@ -68,6 +68,22 @@
         },
         {
             "name": "Skopos"
+        },
+        {
+            "any_of": [
+                {
+                    "name": "RSSTextures4096"
+                },
+                {
+                    "name": "RSSTextures8192"
+                },
+                {
+                    "name": "RSSTextures16K"
+                },
+                {
+                    "name": "RSSTextures2048"
+                }
+            ]
         },
         {
             "name": "SXTContinued"
@@ -247,14 +263,6 @@
         },
         {
             "name": "KSPTextureLoader"
-        }
-    ],
-    "suggests": [
-        {
-            "name": "Parallax"
-        },
-        {
-            "name": "Parallax-StockTextures"
         },
         {
             "name": "Scatterer"
@@ -264,9 +272,14 @@
         },
         {
             "name": "Scatterer-sunflare-default"
+        }
+    ],
+    "suggests": [
+        {
+            "name": "Parallax"
         },
         {
-            "name": "RSSTextures16K"
+            "name": "Parallax-StockTextures"
         },
         {
             "name": "RSSVE-HR"

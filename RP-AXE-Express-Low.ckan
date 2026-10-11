@@ -1,0 +1,120 @@
+{
+    "spec_version": "v1.26",
+    "identifier": "RP-AXE-Express-Low",
+    "name": "RP-AXE Express (Low graphics)",
+    "abstract": "RP-AXE with its recommended tools and a light graphics set (4K RSS textures, Scatterer, DistantObject, PlanetShine) as one hard set. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until RP-AXE is on the registry; decline the further recommendations CKAN offers.",
+    "author": [
+        "miskoltrans"
+    ],
+    "version": "0.9.0",
+    "kind": "metapackage",
+    "license": "CC-BY-NC-SA-4.0",
+    "ksp_version_min": "1.12.0",
+    "ksp_version_max": "1.12.5",
+    "depends": [
+        {
+            "name": "RP-AXE"
+        },
+        {
+            "name": "MechJeb2"
+        },
+        {
+            "name": "TestFlight"
+        },
+        {
+            "name": "KerbalAlarmClock"
+        },
+        {
+            "name": "StockAlarmClockDisabler"
+        },
+        {
+            "name": "TransferWindowPlannerFork"
+        },
+        {
+            "name": "TargetInterceptPlanner"
+        },
+        {
+            "name": "BetterTimeWarpCont"
+        },
+        {
+            "name": "RSSDateTimeFormatter"
+        },
+        {
+            "name": "KerbalRenamer"
+        },
+        {
+            "name": "TextureReplacer"
+        },
+        {
+            "name": "AtmosphereAutopilot"
+        },
+        {
+            "name": "RCSBuildAid"
+        },
+        {
+            "name": "EditorExtensionsRedux"
+        },
+        {
+            "name": "HangerExtenderExtended"
+        },
+        {
+            "name": "Waterfall"
+        },
+        {
+            "name": "TexturesUnlimited"
+        },
+        {
+            "name": "Shabby"
+        },
+        {
+            "name": "Resurfaced"
+        },
+        {
+            "name": "Firefly"
+        },
+        {
+            "name": "ZTheme"
+        },
+        {
+            "name": "ROLoadingImages"
+        },
+        {
+            "name": "KSPBurst"
+        },
+        {
+            "name": "KSPTextureLoader"
+        },
+        {
+            "name": "Scatterer"
+        },
+        {
+            "name": "Scatterer-config-default"
+        },
+        {
+            "name": "Scatterer-sunflare-default"
+        },
+        {
+            "name": "RSSTextures4096"
+        },
+        {
+            "name": "DistantObject"
+        },
+        {
+            "name": "PlanetShine"
+        }
+    ],
+    "conflicts": [
+        {
+            "name": "RP-AXE-Express-High"
+        },
+        {
+            "name": "RSSTextures16K"
+        },
+        {
+            "name": "RSSTextures8192"
+        },
+        {
+            "name": "RSSTextures2048"
+        }
+    ]
+}

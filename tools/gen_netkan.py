@@ -26,11 +26,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.normpath(os.path.join(HERE, ".."))
 REGISTRY = os.path.normpath(os.path.join(REPO, "..", "Instance", "CKAN", "registry.json"))
 
+RSS_TEXTURES = {"any_of": [{"name": "RSSTextures4096"}, {"name": "RSSTextures8192"}, {"name": "RSSTextures16K"},
+                           {"name": "RSSTextures2048"}]}
 DEPENDS = [
     # the stack AXE's configs and plugin bind to directly
     "ModuleManager", "Harmony2", "ROUtils", "ModularFlightIntegrator", "KerbalChangelog",
     "RealismOverhaul", "RealSolarSystem", "Kerbalism", "Kerbalism-Config-RO", "ContractConfigurator",
     "CustomBarnKit", "ClickThroughBlocker", "ToolbarController", "KSCSwitcher", "RealAntennas", "Skopos",
+    # RSS needs a texture pack and declares it as the virtual `RSSTextures`. A headless CKAN resolver DROPS a
+    # virtual dependency that has several providers (exit 0, no planet textures -- clean-room run 2026-10-11),
+    # so the choice is named here: an any_of, light pack first (the headless default; the GUI prompts).
+    RSS_TEXTURES,
     # every mod the tree places parts from (manifest/curated-parts.tsv)
     "SXTContinued", "VenStockRevamp-NewParts", "ROEngines", "ROCapsules", "ROTanks", "ROSolar", "ROHeatshields",
     "ProceduralParts", "ProceduralFairings", "B9-PWings-Fork", "ReStock", "ReStockPlus", "ModularLaunchPads",
@@ -46,16 +52,18 @@ RECOMMENDS = [
     "AtmosphereAutopilot", "RCSBuildAid", "EditorExtensionsRedux", "HangerExtenderExtended", "Waterfall",
     "TexturesUnlimited", "Shabby", "Resurfaced", "Firefly", "ZTheme", "ROLoadingImages", "KSPBurst",
     "KSPTextureLoader",
+    # Scatterer comes in regardless (RealSolarSystem recommends Parallax, Parallax recommends Scatterer) and
+    # then renders NOTHING, because `Scatterer-config` is a many-provider virtual that a headless resolver
+    # drops silently (clean-room run 2026-10-11). Recommending the `-default` aliases keeps it coherent.
+    "Scatterer", "Scatterer-config-default", "Scatterer-sunflare-default",
 ]
 GRAPHICS_HIGH = [
-    "Parallax", "Parallax-StockTextures", "Scatterer", "Scatterer-config-default", "Scatterer-sunflare-default",
-    "RSSTextures16K", "RSSVE-HR", "DistantObject", "PlanetShine", "CanaveralPads", "PoodsMilkyWaySkybox",
+    "Parallax", "Parallax-StockTextures", "RSSTextures16K", "RSSVE-HR", "DistantObject", "PlanetShine",
+    "CanaveralPads", "PoodsMilkyWaySkybox",
 ]
-GRAPHICS_LOW = [
-    "RSSTextures4096", "Scatterer", "Scatterer-config-default", "Scatterer-sunflare-default", "DistantObject",
-    "PlanetShine",
-]
-SUGGESTS = GRAPHICS_HIGH + ["BreakingGround-DLC", "MakingHistory-DLC"]
+GRAPHICS_LOW = ["RSSTextures4096", "DistantObject", "PlanetShine"]
+# (the texture pack is already offered through the any_of in DEPENDS)
+SUGGESTS = [g for g in GRAPHICS_HIGH if not g.startswith("RSSTextures")] + ["BreakingGround-DLC", "MakingHistory-DLC"]
 CONFLICTS = [
     "RP-1", "RP-0", "RONoCareer", "KerbalConstructionTime", "CommunityTechTree", "HideEmptyTechNodes",
     "MechJebForAll", "KRASH", "NearFutureElectrical-DecayingRTGs", "CrowdSourcedScience",
@@ -105,8 +113,10 @@ def dep_names(reg, m):
 
 
 def check_coverage(reg, env):
-    listed = set(DEPENDS) | set(RECOMMENDS) | set(SUGGESTS)
-    assert len(listed) == len(DEPENDS) + len(RECOMMENDS) + len(SUGGESTS), "an identifier is in two lists"
+    plain = [d for d in DEPENDS if isinstance(d, str)]
+    anyof = [x["name"] for d in DEPENDS if isinstance(d, dict) for x in d["any_of"]]
+    listed = set(plain) | set(anyof) | set(RECOMMENDS) | set(SUGGESTS)
+    assert len(listed) == len(plain) + len(anyof) + len(RECOMMENDS) + len(SUGGESTS), "an identifier is in two lists"
     reach, stack = set(), list(listed)
     while stack:
         m = stack.pop()
@@ -134,7 +144,7 @@ def check_coverage(reg, env):
 
 def meta(ident, name, abstract, deps, conflicts):
     return collections.OrderedDict([
-        ("spec_version", "v1.18"), ("identifier", ident), ("name", name), ("abstract", abstract),
+        ("spec_version", "v1.26"), ("identifier", ident), ("name", name), ("abstract", abstract),
         ("author", ["miskoltrans"]), ("version", "0.9.0"), ("kind", "metapackage"), ("license", "CC-BY-NC-SA-4.0"),
         ("ksp_version_min", "1.12.0"), ("ksp_version_max", "1.12.5"),
         ("depends", [{"name": n} for n in deps]), ("conflicts", [{"name": n} for n in conflicts]),
@@ -151,31 +161,39 @@ def main():
     out = collections.OrderedDict()
     for k in ["spec_version", "identifier", "name", "abstract", "author", "license", "$kref", "$vref", "tags"]:
         out[k] = nk[k]
+    out["spec_version"] = "v1.26"   # any_of in depends
     # Beta: GitHub releases are marked pre-release, which netkan skips unless told to use them. Drop this at 1.0.
     out["x_netkan_github"] = {"prerelease": True}
     out["comment"] = COMMENT
-    out["depends"] = [{"name": n} for n in DEPENDS]
+    out["depends"] = [d if isinstance(d, dict) else {"name": d} for d in DEPENDS]
     out["recommends"] = [{"name": n} for n in RECOMMENDS]
     out["suggests"] = [{"name": n} for n in SUGGESTS]
     out["conflicts"] = [{"name": n} for n in CONFLICTS]
     out["install"] = nk["install"]
     out["resources"] = nk["resources"]
     dump(os.path.join(REPO, "RP-AXE.netkan"), out)
-    print("RP-AXE.netkan: depends %d, recommends %d, suggests %d, conflicts %d"
-          % (len(DEPENDS), len(RECOMMENDS), len(SUGGESTS), len(CONFLICTS)))
+    print("RP-AXE.netkan: depends %d (+1 any_of), recommends %d, suggests %d, conflicts %d"
+          % (len(DEPENDS) - 1, len(RECOMMENDS), len(SUGGESTS), len(CONFLICTS)))
 
-    dump(os.path.join(REPO, "RP-AXE-Graphics-High.ckan"), meta(
-        "RP-AXE-Graphics-High", "RP-AXE: graphics preset (High)",
-        "The author's graphics set for RP-AXE, ported from RP-1 Express High: Parallax, Scatterer, 16K RSS "
-        "textures, RSSVE-HR, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox. About 8 GB more "
-        "than Low. Import via CKAN -> File -> Install from .ckan file, alongside RP-AXE.",
-        GRAPHICS_HIGH, ["RP-AXE-Graphics-Low"]))
-    dump(os.path.join(REPO, "RP-AXE-Graphics-Low.ckan"), meta(
-        "RP-AXE-Graphics-Low", "RP-AXE: graphics preset (Low)",
-        "A light graphics set for RP-AXE: 4K RSS textures plus Scatterer, DistantObject and PlanetShine. For a "
-        "machine that struggles with RP-1 Express High. Import via CKAN -> File -> Install from .ckan file.",
-        GRAPHICS_LOW, ["RP-AXE-Graphics-High"]))
-    print("wrote RP-AXE-Graphics-High.ckan (%d) and RP-AXE-Graphics-Low.ckan (%d)" % (len(GRAPHICS_HIGH), len(GRAPHICS_LOW)))
+    # One-click presets in the RP-1 Express mould: RP-AXE + its recommends + a graphics set, all as hard
+    # deps. Installed WITH --no-recommends (CLI) or by declining the dependencies' own recommendations
+    # (GUI), they give exactly the curated environment and nothing the tree never placed.
+    express = ["RP-AXE"] + RECOMMENDS
+    dump(os.path.join(REPO, "RP-AXE-Express-High.ckan"), meta(
+        "RP-AXE-Express-High", "RP-AXE Express (High graphics)",
+        "RP-AXE with its recommended tools and the author's graphics set (RP-1 Express High: Parallax, 16K RSS "
+        "textures, RSSVE-HR, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox) as one hard set. "
+        "About 8 GB more than Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until "
+        "RP-AXE is on the registry; decline the further recommendations CKAN offers.",
+        express + GRAPHICS_HIGH, ["RP-AXE-Express-Low", "RSSTextures4096", "RSSTextures8192", "RSSTextures2048"]))
+    dump(os.path.join(REPO, "RP-AXE-Express-Low.ckan"), meta(
+        "RP-AXE-Express-Low", "RP-AXE Express (Low graphics)",
+        "RP-AXE with its recommended tools and a light graphics set (4K RSS textures, Scatterer, DistantObject, "
+        "PlanetShine) as one hard set. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan "
+        "until RP-AXE is on the registry; decline the further recommendations CKAN offers.",
+        express + GRAPHICS_LOW, ["RP-AXE-Express-High", "RSSTextures16K", "RSSTextures8192", "RSSTextures2048"]))
+    print("wrote RP-AXE-Express-High.ckan (%d) and RP-AXE-Express-Low.ckan (%d)"
+          % (len(express) + len(GRAPHICS_HIGH), len(express) + len(GRAPHICS_LOW)))
 
     deps_ckan["abstract"] = (
         "The author's complete RP-AXE development environment as ONE hard-dependency set: every module "
