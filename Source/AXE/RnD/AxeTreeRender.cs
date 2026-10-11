@@ -815,7 +815,7 @@ namespace RPAxe.RnD
                 btn.Image.color = tile;
             }
             // Draw the discipline glyph in its NATIVE colours — the prototype draws the icon untinted, and
-            // the shipped RDicon_* PNGs (GameData/RP-AXE/design/Tree/icons, wired via each node's cfg `icon`)
+            // the stock RDicon_* glyphs (resolved from the game's own icon atlas via each node's cfg `icon`)
             // are dark line-art that reads on every (bright) discipline tile. White = no multiply; carry the
             // tile's alpha so faded / ghosted nodes dim the icon in step with the tile.
             rd.graphics.SetIconColor(new Color(1f, 1f, 1f, tile.a));
