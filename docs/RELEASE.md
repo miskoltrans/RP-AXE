@@ -27,10 +27,8 @@ Still needs you (each is outward-facing or needs credentials):
 - [ ] **GitHub.** `gh auth login`; create `miskoltrans/RP-AXE` (public); `git remote add origin
       git@github.com:miskoltrans/RP-AXE.git`; `git lfs push --all origin main` then `git push -u origin
       main`. The `.version` `URL` and the netkan `$kref` both assume that owner/repo and branch `main`.
-      **Before the first push**, decide about history: commits `0117cd3` and `77d534a` added the Squad
-      icon PNGs, and they stay reachable in history after `3ab97d1` removed them. Shipping the release
-      zip is clean either way; if you want the repo itself free of them, that is a `git filter-repo`
-      before anyone has cloned — a history rewrite, so coordinate with any other session on `main`.
+      History is already rewritten (see "History rewrite" below); push only `main` and the two tags,
+      never `--all` / `--mirror`, or the pre-purge backup refs go up with it.
 - [ ] **Tag + release.** `python tools/package_release.py` → `dist/RP-AXE-v1.0.0.zip` (+ `.sha256`).
       `git tag v1.0.0 && git push origin v1.0.0`, then
       `gh release create v1.0.0 dist/RP-AXE-v1.0.0.zip --title "RP-AXE 1.0.0" --notes-file CHANGELOG.md`.
@@ -43,6 +41,44 @@ Still needs you (each is outward-facing or needs credentials):
 - [ ] Eyeball the R&D screen once: every node should show a discipline glyph, not the generic
       flask. (The names are the ones `Squad/Resources/TechTree.cfg` uses, and the decompiled
       `IconLoader.GetIcon` answers from the atlas first, but nothing in the log would say otherwise.)
+
+## History rewrite (2026-10-11, before the first push)
+
+Done with `git filter-repo` + `git lfs migrate export` in a scratch clone, then fetched back as
+`main-rewritten` (backups: branch `main-prepurge`, `refs/backup/tags/*`, and a bundle in the
+session scratchpad). 965 commits kept, every tree identical to the old one except the two
+gitignored renders. The repository went from 700 MB to 55 MB.
+
+| purged from every commit | why |
+|---|---|
+| `GameData/RP-AXE/design/Tree/icons/*.png`, `tree/render/prototype/icons/*.png` | Squad's own R&D glyphs (EULA) |
+| `tree/render/prototype/axe-tree-standalone.html` (106 versions) | base64-embedded the same icons; regenerated and re-added |
+| `tree/render/axe-tree.png` / `.svg` (162 versions each) | generated renders, 390 MB of a 430 MB repo; now gitignored |
+| git-lfs pointers → plain blobs | RP-1 ships its assets in-repo too; GitHub's LFS bandwidth quota would throttle clones |
+
+**Swap (run once, while no other session is committing):**
+
+```
+git log --oneline main-prepurge..main        # anything here was committed after the rewrite: cherry-pick it after the swap
+git update-ref refs/heads/main refs/heads/main-rewritten
+git reset -q
+git checkout HEAD -- .gitattributes .gitignore docs/TREE.md docs/RELEASE.md
+git lfs uninstall --local
+git update-ref refs/tags/pre-restart-mvp refs/rewritten/tags/pre-restart-mvp
+git update-ref refs/tags/tree-v2-spine refs/rewritten/tags/tree-v2-spine
+git status --short                            # expect clean
+```
+
+**After the push has succeeded**, drop the old history locally:
+
+```
+git update-ref -d refs/heads/main-prepurge
+git update-ref -d refs/heads/main-rewritten
+git update-ref -d refs/backup/tags/pre-restart-mvp;  git update-ref -d refs/backup/tags/tree-v2-spine
+git update-ref -d refs/rewritten/tags/pre-restart-mvp; git update-ref -d refs/rewritten/tags/tree-v2-spine
+git reflog expire --expire=now --all && git gc --prune=now
+git lfs prune                                 # the 512 MB .git/lfs store, incl. the 16 icon objects, is unreferenced
+```
 
 ## Build the release payload
 
