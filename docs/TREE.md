@@ -62,7 +62,7 @@ vehicle-function/era lanes (that's RP-1/ETT).
 1. `GameData/RP-AXE/design/Tree/AxeTechTree.cfg` — game form (`@TechTree:FOR[ZZZZZ-AXE-Tree]{ !RDNode,*{} … }`).
 2. `AxeTreeMeta.cfg` — `id→{discipline,tier,cost}` + the discipline table, read by the in-game render plugin.
 3. `AxePartPlacement.cfg` — `@PART{%TechRequired}` / `@PARTUPGRADE{%techRequired}` (how parts attach in-game).
-4. `tree/render/axe-tree.{svg,png}` (graphviz) + `axe-tree.html` (interactive: click node → its parts).
+4. `tree/render/axe-tree.{svg,png}` (graphviz; generated locally, gitignored) + `axe-tree.html` (interactive: click node → its parts).
 
 `build_tree.py` also: validates (unique ids / known disc / parents exist / no cycles); `validate_design()`
 non-fatal checks (unreachable, non-forward edge, no-op anyToUnlock, stray roots — **caught several flat-tier
