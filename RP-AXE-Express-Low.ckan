@@ -2,7 +2,7 @@
     "spec_version": "v1.26",
     "identifier": "RP-AXE-Express-Low",
     "name": "RP-AXE Express (Low graphics)",
-    "abstract": "RP-AXE with its recommended tools and a light graphics set (4K RSS textures, Scatterer, DistantObject, PlanetShine) as one hard set. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until RP-AXE is on the registry; decline the further recommendations CKAN offers.",
+    "abstract": "The recommended tools for RP-AXE plus a light graphics set (4K RSS textures, Scatterer, DistantObject, PlanetShine) as one hard set. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan; decline the further recommendations CKAN offers.",
     "author": [
         "miskoltrans"
     ],
@@ -12,9 +12,6 @@
     "ksp_version_min": "1.12.0",
     "ksp_version_max": "1.12.5",
     "depends": [
-        {
-            "name": "RP-AXE"
-        },
         {
             "name": "MechJeb2"
         },

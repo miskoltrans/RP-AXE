@@ -185,19 +185,22 @@ def main():
     # One-click presets in the RP-1 Express mould: RP-AXE + its recommends + a graphics set, all as hard
     # deps. Installed WITH --no-recommends (CLI) or by declining the dependencies' own recommendations
     # (GUI), they give exactly the curated environment and nothing the tree never placed.
-    express = ["RP-AXE"] + RECOMMENDS
+    # They do NOT depend on "RP-AXE": a local .ckan passed with -c is an install target, not a
+    # registry entry, so a metapackage naming it fails "Unsatisfied dependency RP-AXE" until the
+    # mod is on the CKAN registry (clean-room run 4, 2026-10-11). Install both files together.
+    express = RECOMMENDS
     dump(os.path.join(REPO, "RP-AXE-Express-High.ckan"), meta(
         "RP-AXE-Express-High", "RP-AXE Express (High graphics)",
-        "RP-AXE with its recommended tools and the author's graphics set (RP-1 Express High: Parallax, 16K RSS "
+        "The recommended tools for RP-AXE plus the author's graphics set (RP-1 Express High: Parallax, 16K RSS "
         "textures, RSSVE-HR, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox) as one hard set. "
         "About 8 GB more than Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until "
         "RP-AXE is on the registry; decline the further recommendations CKAN offers.",
         express + GRAPHICS_HIGH, ["RP-AXE-Express-Low", "RSSTextures4096", "RSSTextures8192", "RSSTextures2048"]))
     dump(os.path.join(REPO, "RP-AXE-Express-Low.ckan"), meta(
         "RP-AXE-Express-Low", "RP-AXE Express (Low graphics)",
-        "RP-AXE with its recommended tools and a light graphics set (4K RSS textures, Scatterer, DistantObject, "
-        "PlanetShine) as one hard set. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan "
-        "until RP-AXE is on the registry; decline the further recommendations CKAN offers.",
+        "The recommended tools for RP-AXE plus a light graphics set (4K RSS textures, Scatterer, DistantObject, "
+        "PlanetShine) as one hard set. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan; "
+        "decline the further recommendations CKAN offers.",
         express + GRAPHICS_LOW, ["RP-AXE-Express-High", "RSSTextures16K", "RSSTextures8192", "RSSTextures2048"]))
     print("wrote RP-AXE-Express-High.ckan (%d) and RP-AXE-Express-Low.ckan (%d)"
           % (len(express) + len(GRAPHICS_HIGH), len(express) + len(GRAPHICS_LOW)))

@@ -97,7 +97,8 @@ player and this test feed to CKAN. Run as of 0.9.0 (2026-10-11), twice, headless
 robocopy ..\ksp_instance_clean ..\ksp_instance_cleanroom /E          # fresh stock 1.12.5 + DLCs, no CKAN registry
 # the snapshot is not pristine: B9PWings and ModularLaunchPads left 29 example craft in Ships\, and
 # CKAN refuses to overwrite a file it did not install -- delete every .craft without a .loadmeta twin
-..\ckan.exe install -c dist\RP-AXE-0.9.0.ckan --gamedir ..\ksp_instance_cleanroom --headless
+..\ckan.exe install -c RP-AXE-Express-Low.ckan --no-recommends --gamedir ..\ksp_instance_cleanroom --headless
+..\ckan.exe install -c dist\RP-AXE-0.9.0.ckan   --no-recommends --gamedir ..\ksp_instance_cleanroom --headless
 python tools\check_cleanroom.py --instance ..\ksp_instance_cleanroom   # depends / recommends / conflicts / GameData vs the netkan
 ..\ksp_instance_cleanroom\KSP_x64.exe -axe-autotest                   # career, R&D, Mission Control, quit
 python tools\check_liveness.py --instance ..\ksp_instance_cleanroom
@@ -120,8 +121,14 @@ What the first two runs found, and fixed (`99ddd29`, `98e7fad`):
 - **164 modules installed, 86 not named by the netkan** — the recommends closure of the dependencies
   (BDB, KSCExtended, KerbinSide, the RN rocket packs, CLS, RPM/ASET IVAs, Trajectories, …). Not a bug,
   but the Express presets exist so a player can decline it in one go.
-- `KSPBurst` (recommended) is skipped by the resolver — it `provides Harmony2`, which collides with
-  the real Harmony2 dependency. Cosmetic (a performance plugin); left as a WARN.
+- **FAR dead, RealAntennas types unloadable, Skopos down with them** (third run, the boot) — both
+  hard-depend on the virtual `KSPBurst`, which has two providers, so the headless resolver dropped it
+  and nothing shipped `Unity.Burst`. `KSPBurst-Lite` is now a named hard dependency (`65b3533`); it
+  co-installs with the real Harmony2.
+- **One local file per `ckan install -c`** — passing two `-c` files installs only the last one, and a
+  metapackage naming `RP-AXE` failed "Unsatisfied dependency RP-AXE" because a local file is an
+  install target, not a registry entry. The presets now list only the recommends + graphics, and the
+  documented path is two installs (preset first, then `RP-AXE-<ver>.ckan`), GUI and CLI alike.
 
 > The dev `Instance/` is the reference working set: its installed modules are captured verbatim in
 > `RP-AXE-deps.ckan`, and `tools/rebuild-instance.ps1` proves that list installs headless with
