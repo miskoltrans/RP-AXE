@@ -27,19 +27,13 @@ Still needs you (each is outward-facing or needs credentials):
 - [x] History rewritten and `main` swapped onto it; backups stay until the push has succeeded.
 - [x] **Pushed** 2026-10-11: `origin = git@github.com:miskoltrans/RP-AXE.git`, `main` + tags `v0.9.0`, `pre-restart-mvp`, `tree-v2-spine`; old history and the LFS store dropped locally afterwards (`.git` = 55 MB).
 - [ ] **GitHub release.** `gh auth login`, then `gh release create v0.9.0 dist/RP-AXE-v0.9.0.zip dist/RP-AXE-v0.9.0.zip.sha256 --prerelease --title "RP-AXE 0.9.0 (beta)" --notes-file CHANGELOG.md` (or upload the zip to the v0.9.0 tag in the web UI, ticking *pre-release*). CKAN's `$kref` needs that asset.
-- [ ] **Tag + release.** `python tools/package_release.py` → `dist/RP-AXE-v0.9.0.zip` (+ `.sha256`).
-      `git tag v0.9.0 && git push origin v0.9.0`, then
-      `gh release create v0.9.0 dist/RP-AXE-v0.9.0.zip --prerelease --title "RP-AXE 0.9.0 (beta)" --notes-file CHANGELOG.md`.
-      Betas are GitHub pre-releases; the netkan carries `x_netkan_github.prerelease = true` so CKAN sees them (drop it at 1.0).
-      CKAN's `#/ckan/github/miskoltrans/RP-AXE` `$kref` reads that release asset.
+- [x] Tagged `v0.9.0` (annotated) and pushed; `dist/RP-AXE-v0.9.0.zip` + `.sha256` built from it.
 - [ ] **Clean-room install test** (below) against the published release — the only prove that a
       stranger's CKAN resolves the metadata unattended.
 - [ ] **CKAN listing** (optional): run the netkan through the inflator (`netkan.exe RP-AXE.netkan`, or
       the NetKAN-bot on a PR) and submit it to https://github.com/KSP-CKAN/NetKAN. Until then players
       add it locally via *CKAN → Settings → Add netkan*.
-- [ ] Eyeball the R&D screen once: every node should show a discipline glyph, not the generic
-      flask. (The names are the ones `Squad/Resources/TechTree.cfg` uses, and the decompiled
-      `IconLoader.GetIcon` answers from the atlas first, but nothing in the log would say otherwise.)
+- [x] R&D screen eyeballed via the AutoTest screenshot (`Instance/axe-shot-RD.png`, 2026-10-11): every node shows its stock discipline glyph.
 
 ## History rewrite (2026-10-11, before the first push)
 
