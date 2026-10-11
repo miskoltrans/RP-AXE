@@ -25,11 +25,8 @@ Repo-side, done for 0.9.0 (2026-10-11):
 Still needs you (each is outward-facing or needs credentials):
 
 - [x] History rewritten and `main` swapped onto it; backups stay until the push has succeeded.
-- [ ] **GitHub.** `gh auth login`; create `miskoltrans/RP-AXE` (public); `git remote add origin
-      git@github.com:miskoltrans/RP-AXE.git`; `git lfs push --all origin main` then `git push -u origin
-      main`. The `.version` `URL` and the netkan `$kref` both assume that owner/repo and branch `main`.
-      History is already rewritten (see "History rewrite" below); push only `main` and the two tags,
-      never `--all` / `--mirror`, or the pre-purge backup refs go up with it.
+- [x] **Pushed** 2026-10-11: `origin = git@github.com:miskoltrans/RP-AXE.git`, `main` + tags `v0.9.0`, `pre-restart-mvp`, `tree-v2-spine`; old history and the LFS store dropped locally afterwards (`.git` = 55 MB).
+- [ ] **GitHub release.** `gh auth login`, then `gh release create v0.9.0 dist/RP-AXE-v0.9.0.zip dist/RP-AXE-v0.9.0.zip.sha256 --prerelease --title "RP-AXE 0.9.0 (beta)" --notes-file CHANGELOG.md` (or upload the zip to the v0.9.0 tag in the web UI, ticking *pre-release*). CKAN's `$kref` needs that asset.
 - [ ] **Tag + release.** `python tools/package_release.py` → `dist/RP-AXE-v0.9.0.zip` (+ `.sha256`).
       `git tag v0.9.0 && git push origin v0.9.0`, then
       `gh release create v0.9.0 dist/RP-AXE-v0.9.0.zip --prerelease --title "RP-AXE 0.9.0 (beta)" --notes-file CHANGELOG.md`.
