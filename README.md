@@ -31,6 +31,9 @@ RP-AXE is a Kerbal Space Program 1.12 mod built on the same realism stack as
 - **Ahistorical.** There is no timeline to match. Near- and far-future parts are first-class
   citizens of the tree, and crewed-station science (KerbalismLab) is integrated and balanced.
 
+The full inventory of what differs from RP-1 (removed, replaced, ported, changed) is
+[`docs/CHANGES-VS-RP1.md`](docs/CHANGES-VS-RP1.md).
+
 ## Requirements
 
 - KSP **1.12.x** (tested on 1.12.5) with the **Making History** and **Breaking Ground** DLCs.
