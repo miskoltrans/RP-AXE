@@ -28,24 +28,17 @@ launches, and hand you missions worth flying.
 
 ## The vision
 
-Three words, and each one is a design rule.
+- **Ahistorical.** I balance for gameplay, not for a ride along history. A part goes where it makes
+  the progression interesting, whatever year it flew, and near- and far-future parts are in the tree
+  as equals.
+- **Exploration.** The core of the fun in KSP is exploring the solar system. Science comes from going
+  places, and the tree is paid for by going places.
+- **Engineering.** The focus is on engineering challenges, not management challenges. No build times,
+  no facility maintenance, no tooling, no crew training, no reliability grind.
 
-- **Ahistorical.** There is no timeline to match. Everything is balanced for gameplay, never for
-  historical fidelity: a node costs what makes the progression interesting, not what the year it
-  happened in says it should. Near- and far-future parts are first-class citizens of the tree, and you
-  can gamble on hydrolox before you have reached orbit.
-- **Exploration.** The fun of KSP is going places. The tree unlocks with science, and science comes
-  from flying somewhere new and doing something there, not from farming the launch pad. The solar
-  system holds far more science than the tree costs, so you progress by going wider.
-- **Engineering.** The challenges are engineering challenges, not management ones. No build times, no
-  facility maintenance, no tooling, no crew training, no reliability run-data. Mass, power, heat,
-  delta-v, control authority and comms range are what stand between you and the target.
-
-The biggest single change is the tech tree. It is organised by engineering discipline rather than by
-era, every node is a real industrial breakthrough with its own flavour text, and a spacecraft is
-assembled from nodes all over the tree. It is also big and cross-linked enough that the stock R&D
-screen could not draw it, so AXE lays it out with its own renderer in-game and ships a standalone
-browser viewer (`tree/render/prototype/axe-tree-standalone.html`; download it and open it locally).
+The biggest change is the tech tree. I designed it from scratch, by engineering discipline rather
+than by era, and it got complicated enough that I had to design a new way of rendering it: in the R&D
+screen, and as a standalone browser viewer (`tree/render/prototype/axe-tree-standalone.html`).
 
 **Who this is for.** If you like deep tech trees, want to play RO/RSS or any career in the real Sol
 system, and do not need RP-1's career management to make it interesting, this mod is for you. Fair
@@ -56,23 +49,18 @@ design ([below](#coming-from-rp-1-what-changed-in-avionics)).
 
 ## What you get
 
-- **A tech tree built from scratch.** ~530 nodes organised by engineering discipline — metallurgy,
-  propellant chemistry, cryogenics, microelectronics, guidance, telecommunications, nuclear
-  engineering, life support and so on. Each node is a real industrial *breakthrough*, not an era or an
-  "Advanced Engines III". Parts land on the breakthrough that made them hard, so a lander is assembled
-  from nodes across the tree.
-- **Science is the gate.** The tree unlocks with science, and science comes from real spaceflight
-  and exploration — home-planet science below 40 km is removed. Crewed-station science (KerbalismLab)
-  is integrated and balanced.
-- **No management treadmill.** Parts carry an entry cost (R&D) and launching costs money (ops);
-  timewarp is free, so **the launch is the gate**, never the calendar.
-- **Engineering that bites.** Avionics have a steerable-mass capacity; overload one and your
-  control inputs degrade instead of locking out. Engines improve through tech-gated config
-  ladders. The tracking station climbs an 11-level Deep Space Network ladder. Parts that aren't
-  rated for re-entry burn up.
-- **Tools that respect your time.** An in-editor flight simulator (test a craft in an orbit you
-  haven't reached yet before committing the mission), tech-gated airlaunch from the SPH, free
-  switching between launch sites, a program switcher that charters RP-1's 35 programs in any order.
+- **A tech tree built from scratch.** ~530 nodes by engineering discipline: metallurgy, propellant
+  chemistry, cryogenics, microelectronics, guidance, telecommunications, nuclear, life support and so
+  on. Every node is a real breakthrough with its own flavour text, not "Advanced Engines III". Parts
+  sit on the breakthrough that made them hard, so a lander comes together from nodes across the tree.
+- **Science is the gate.** Science on Earth below 40 km is removed. The solar system holds far more
+  science than the tree costs, so you progress by going wider, not by farming. KerbalismLab station
+  science is in and balanced.
+- **No management.** Parts cost money to unlock and launches cost money. Timewarp is free; the launch
+  is the gate, not the calendar.
+- **Engineering that bites.** Avionics have a steerable-mass capacity, and overload degrades your
+  control instead of locking it. Engines improve through tech-gated config ladders. The tracking
+  station climbs an 11-level Deep Space Network ladder. Parts not rated for re-entry burn up.
 
 The full inventory of what differs from RP-1 (removed, replaced, ported, changed) is
 [`docs/CHANGES-VS-RP1.md`](docs/CHANGES-VS-RP1.md).
@@ -101,16 +89,10 @@ rating. Frankly, I could have done better, but it is usable. What you will notic
   outgrows its avionics. AXE corrupts your control inputs instead, scaled by how far over you are:
   hands off and the craft sits still, touch the stick and it fights you. Throttle and staging always
   work. Crewed pods and bare probe cores bypass this, as in RP-1.
-- **MAX, not SUM.** The vessel's capacity is the largest core aboard, as in RP-1. Stacking cores buys
-  nothing.
 - **Power follows the vessel.** EC draw is computed from the live dry mass, drops on staging and to
   the hibernate rate on rails, and feeds stock `ModuleCommand` (or Kerbalism), so an empty battery
   loses control exactly as before. Heaters appear as their own Kerbalism line. Mass and cost freeze at
   launch.
-- **Named parts keep their numbers.** Capsules, probe buses and guidance rings carry RP-1's
-  hand-authored controllable-mass table as a fixed steerable mass.
-- **Hard-drive data storage moved.** Kerbalism storage upgrades live on the data-handling spine (tape
-  recorder → transistors → flight computers), not on the avionics nodes.
 
 ## Requirements
 
