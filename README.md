@@ -4,7 +4,7 @@
 > and takes an *axe* to everything in RP-1 that is not engineering or exploration.
 
 <p align="center">
-  <a href="tree/render/prototype/axe-tree-standalone.html">
+  <a href="https://miskoltrans.github.io/RP-AXE/">
     <img src="docs/screenshots/entire-tree.png" width="400" alt="The whole RP-AXE tech tree, zoomed out: ~530 nodes in 21 discipline lanes">
   </a>
   <br><sub>The whole tree. Click through for the standalone viewer.</sub>
@@ -57,7 +57,7 @@ design ([below](#coming-from-rp-1-what-changed-in-avionics)).
   chemistry, cryogenics, microelectronics, guidance, telecommunications, nuclear, life support and so
   on. Every node is a real breakthrough with its own flavour text, not "Advanced Engines III". Parts
   sit on the breakthrough that made them hard, so a lander comes together from nodes across the tree.
-  Browse it in the [standalone viewer](tree/render/prototype/axe-tree-standalone.html).
+  Browse it in the [standalone viewer](https://miskoltrans.github.io/RP-AXE/).
 - **Science is the gate.** Science on Earth below 40 km is removed. The solar system holds far more
   science than the tree costs, so you progress by going wider, not by farming. KerbalismLab station
   science is in and balanced.
