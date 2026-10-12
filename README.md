@@ -51,6 +51,8 @@ months. I think it is in a good enough state to be played, especially if you alr
 experience. Every RO tutorial applies here unchanged, with one exception: avionics, which is AXE's own
 design ([below](#coming-from-rp-1-what-changed-in-avionics)).
 
+![The R&D screen in-game: discipline lanes down the left, a node's flavour text and its parts on the right](docs/screenshots/ingame-tree.png)
+
 ## What you get
 
 - **A tech tree built from scratch.** ~530 nodes by engineering discipline: metallurgy, propellant
