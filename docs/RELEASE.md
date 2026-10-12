@@ -43,8 +43,8 @@ Still needs you (each is outward-facing or needs credentials):
       two `.ckan` installs).
 - [x] **Indexer dry run** (2026-10-12): all three netkans inflate with `netkan.exe v1.36.5`; the Express
       presets became marker zips on the release because a metapackage cannot be indexed (see "Publishing").
-- [ ] **CKAN listing**: PR from the `miskoltrans/NetKAN` fork adding the three metanetkan stubs; the bot
-      validates on the PR. Until it is merged, players install the `.ckan` files from the release page.
+- [ ] **CKAN listing**: https://github.com/KSP-CKAN/NetKAN/pull/11689 (opened 2026-10-12 from the
+      `miskoltrans/NetKAN` fork, branch `rp-axe`, the three metanetkan stubs); the bot validates on the PR. Until it is merged, players install the `.ckan` files from the release page.
       After the merge: README "Install" becomes "tick RP-AXE Express High or Low in CKAN".
 - [x] R&D screen eyeballed via the AutoTest screenshot (`Instance/axe-shot-RD.png`, 2026-10-11): every node shows its stock discipline glyph.
 
