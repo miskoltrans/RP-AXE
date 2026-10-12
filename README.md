@@ -1,8 +1,7 @@
 # RP-AXE — Ahistorical Xploration & Engineering
 
-> Realism, minus the grind. A career for Realism Overhaul that keeps the real solar system, the real
-> rockets and the real physics, and takes an *axe* to everything in RP-1 that is not engineering or
-> exploration.
+> A career for RO that keeps the real solar system, the real rockets and the real physics,
+> and takes an *axe* to everything in RP-1 that is not engineering or exploration.
 
 **Status: 0.9 public beta.** Every system below is built and has been played through, but by one
 person, once. Bug reports and balance notes are the point of this release.
@@ -15,11 +14,9 @@ tree built from scratch. It **conflicts with RP-1** — install one or the other
 ## Why this exists
 
 I wanted more challenge out of KSP, and specifically I wanted to learn what makes real spaceflight
-hard. RP-1 teaches exactly that, but it overwhelmed me, and the further I got the more it felt like a
-ride along history: the programs, the dates, the parts you are supposed to fly next. What I actually
-wanted was the KSP experience — pick a target, build something, go find out — at real-world scale.
-[LRTR](https://github.com/pehvbot/LRTR) goes the other way and drops Realism Overhaul, which left it
-feeling too close to stock.
+hard. RP-1 teaches that, but it was overwhelming for me. What I actually wanted was the KSP 
+experience — pick a target, build something, go find out — at real-world scale.
+[LRTR](https://github.com/pehvbot/LRTR) goes the other way and but it feels too stockish.
 
 So I sat down and designed the game I wanted to play. The idea is LRTR's, aimed differently: take
 RP-1, come in with the axe, cut off everything that is not the point, and replace the tech tree. The
@@ -28,9 +25,9 @@ launches, and hand you missions worth flying.
 
 ## The vision
 
-- **Ahistorical.** I balance for gameplay, not for a ride along history. A part goes where it makes
-  the progression interesting, whatever year it flew, and near- and far-future parts are in the tree
-  as equals.
+- **Ahistorical.** I wanted to allow for balancing to what would be fun gameplay, not what would be
+  historical. So just imagine that in late 40s whole kerbalkind decided to be united with appreciation
+  for space exploration and colonization.
 - **Exploration.** The core of the fun in KSP is exploring the solar system. Science comes from going
   places, and the tree is paid for by going places.
 - **Engineering.** The focus is on engineering challenges, not management challenges. No build times,
@@ -56,11 +53,8 @@ design ([below](#coming-from-rp-1-what-changed-in-avionics)).
 - **Science is the gate.** Science on Earth below 40 km is removed. The solar system holds far more
   science than the tree costs, so you progress by going wider, not by farming. KerbalismLab station
   science is in and balanced.
-- **No management.** Parts cost money to unlock and launches cost money. Timewarp is free; the launch
-  is the gate, not the calendar.
-- **Engineering that bites.** Avionics have a steerable-mass capacity, and overload degrades your
-  control instead of locking it. Engines improve through tech-gated config ladders. The tracking
-  station climbs an 11-level Deep Space Network ladder. Parts not rated for re-entry burn up.
+- **No management.** Stockalike career with RP1 missions.
+- **Engineering challenges.** RO curated parts, in real solar system.
 
 The full inventory of what differs from RP-1 (removed, replaced, ported, changed) is
 [`docs/CHANGES-VS-RP1.md`](docs/CHANGES-VS-RP1.md).
