@@ -3,6 +3,13 @@
 > A career for RO that keeps the real solar system, the real rockets and the real physics,
 > and takes an *axe* to everything in RP-1 that is not engineering or exploration.
 
+<p align="center">
+  <a href="tree/render/prototype/axe-tree-standalone.html">
+    <img src="docs/screenshots/entire-tree.png" width="400" alt="The whole RP-AXE tech tree, zoomed out: ~530 nodes in 21 discipline lanes">
+  </a>
+  <br><sub>The whole tree. Click through for the standalone viewer.</sub>
+</p>
+
 **Status: 0.9 public beta.** Every system below is built and has been played through, but by one
 person, once. Bug reports and balance notes are the point of this release.
 
