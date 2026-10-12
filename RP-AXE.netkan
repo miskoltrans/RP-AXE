@@ -3,6 +3,7 @@
     "identifier": "RP-AXE",
     "name": "RP-AXE: Ahistorical Xploration & Engineering",
     "abstract": "RP-1's realism stack with a lightweight, science-driven, exploration-first career replacing the RP-1 career plugin. Parts unlock free with science; engineering and exploration are the focus, not management.",
+    "description": "RP-AXE is a career for the Realism Overhaul stack that replaces RP-1's career plugin: a tech tree of about 530 nodes built from scratch and organised by engineering discipline, science as the only gate, no build times, facility upkeep, tooling or crew training. It conflicts with RP-1; install one or the other.\n\nINSTALLING. The easy path is an RP-AXE Express preset (High or Low graphics; on the GitHub release page until the presets reach the CKAN registry): it carries the recommended tools and a graphics set as hard dependencies. Install the preset first, then RP-AXE. Every mod the tree places parts from is a hard dependency of RP-AXE, so nothing in the recommendations CKAN offers afterwards is needed: those come from the dependencies themselves (ModularLaunchPads recommends Bluedog Design Bureau, RSS recommends Parallax, the capsule mods recommend IVAs) and the tree places nothing from them. Untick them and continue unless you want them for your own building. Then start a new Career.",
     "author": [
         "miskoltrans"
     ],

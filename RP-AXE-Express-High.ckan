@@ -3,6 +3,7 @@
     "identifier": "RP-AXE-Express-High",
     "name": "RP-AXE Express (High graphics)",
     "abstract": "The recommended tools for RP-AXE plus the author's graphics set (RP-1 Express High: Parallax, 16K RSS textures, RSSVE-HR with Scatterer, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox) as one hard set. About 8 GB more than Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until RP-AXE is on the registry; decline the further recommendations CKAN offers.",
+    "description": "Install this preset FIRST, then RP-AXE-<version>.ckan, both from the RP-AXE release page until RP-AXE is on the CKAN registry (CKAN -> File -> Install from .ckan file, one file per install). Everything RP-AXE needs is a hard dependency of the preset or of the mod. The further recommendations CKAN offers come from the dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, which aborts the whole install.",
     "author": [
         "miskoltrans"
     ],
