@@ -150,8 +150,8 @@ All of these lived in RP0.dll / KCT and are **REMOVED** with it (`docs/RESTART.m
   polynomial gives **capacity**. RP-1 has the player type a `controllableMass` rating and derives the
   box from it. MAX across active cores (RP-1's anti-stacking rule) is kept.
 - **Same 13 tech tiers**, 1:1 by node, plus RP-1's `start` floor rung. Two orthogonal VAB toggles:
-  Guided / Unguided (RP-1's Near-Earth / Science-Core) and Standard / **Shielded** (RP-1's
-  Deep-Space, now a radiation-hardening axis with its own 10-rung ladder on the `shd_*` lane). The
+  Guided / Unguided (RP-1's Near-Earth / Science-Core) and Standard / **Deep-Space Bus** (RP-1's
+  Deep-Space, now a whole-bus premium with its own 10-rung ladder on the `shd_*` lane). The
   separate Deep-Space range model is gone; range is comms' job.
 - **CHANGED — over capacity never locks the procedural core.** RP-1 hard-locks attitude **and
   throttle** in three states. AXE corrupts control instead: zero stick in → zero out, any input →
