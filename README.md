@@ -132,8 +132,8 @@ rating. Frankly, I could have done better, but it is usable. What you will notic
 `RP-AXE-Express-Low.ckan` / `RP-AXE-Express-High.ckan`. Install them one after the other with
 *CKAN → File → Install from .ckan file* (CKAN takes one file per install). The Express file is the
 preset that goes with the mod: its recommended tools (MechJeb, TestFlight, alarm clock, transfer
-planners, editor helpers, Scatterer) and a graphics set — Low is 4K planet textures, High is my
-RP-1-Express-High set (Parallax, 16K textures, RSSVE-HR, about 8 GB more). When CKAN offers
+planners, editor helpers) and a graphics set — Low is 4K planet textures and nothing else (RP-1's own
+Low), High is my RP-1-Express-High set (Parallax, Scatterer, 16K textures, RSSVE-HR, about 8 GB more). When CKAN offers
 *further* recommendations, those come from the dependencies themselves (ModularLaunchPads recommends
 Bluedog Design Bureau, RSS recommends Parallax, and so on) — **decline them** unless you want them;
 the tree places nothing from them. CKAN refuses the install if `RP-1` is present (the `conflicts`

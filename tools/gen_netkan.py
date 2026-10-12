@@ -59,14 +59,18 @@ RECOMMENDS = [
     "AtmosphereAutopilot", "RCSBuildAid", "EditorExtensionsRedux", "HangerExtenderExtended", "Waterfall",
     "TexturesUnlimited", "Shabby", "Resurfaced", "Firefly", "ZTheme", "ROLoadingImages",
     "KSPTextureLoader",
-    # Scatterer comes in regardless (RealSolarSystem recommends Parallax, Parallax recommends Scatterer) and
-    # then renders NOTHING, because `Scatterer-config` is a many-provider virtual that a headless resolver
-    # drops silently (clean-room run 2026-10-11). Recommending the `-default` aliases keeps it coherent.
-    "Scatterer", "Scatterer-config-default", "Scatterer-sunflare-default",
 ]
 GRAPHICS_HIGH = [
-    "Parallax", "Parallax-StockTextures", "RSSTextures16K", "RSSVE-HR", "DistantObject", "PlanetShine",
-    "CanaveralPads", "PoodsMilkyWaySkybox",
+    "Parallax", "Parallax-StockTextures", "RSSTextures16K", "RSSVE-HR",
+    # Scatterer belongs WITH RSSVE, not on its own. Its `-config` is StockScattererConfigs, a planet list of
+    # STOCK bodies; it is RSSVE's patch (@Scatterer_planetsList:FOR[RSSVE]) that retargets the list to RSS.
+    # Without RSSVE it logs "ScattererCelestialBody Kerbin not found" for every stock body and renders
+    # nothing (clean-room run 5, 2026-10-12, the first unlocked boot). Recommending it alone (runs 2-4)
+    # bought a 7 MB no-op, so it sits next to RSSVE-HR here and the Low preset mirrors RP-1 Express
+    # Graphics-Low: textures only. The `-default` aliases, never the bare virtual names: a headless resolver
+    # drops a many-provider virtual silently (run 2026-10-11).
+    "Scatterer", "Scatterer-config-default", "Scatterer-sunflare-default",
+    "DistantObject", "PlanetShine", "CanaveralPads", "PoodsMilkyWaySkybox",
 ]
 GRAPHICS_LOW = ["RSSTextures4096", "DistantObject", "PlanetShine"]
 # (the texture pack is already offered through the any_of in DEPENDS)
@@ -90,10 +94,12 @@ COMMENT = (
     "ROUtils+Harmony+MFI for AXE.dll) plus EVERY mod the tree places parts from (manifest/curated-parts.tsv): the "
     "tree is balanced against exactly that part set, and a missing one leaves nodes you pay science for and get "
     "nothing from. recommends = tools AXE integrates with when present and runs without. suggests = the author's "
-    "RP-1-Express-High graphics preset (heavy; RP-AXE-Graphics-High.ckan / -Low.ckan import one in a go) and the "
+    "RP-1-Express-High graphics preset (heavy; RP-AXE-Express-High.ckan / -Low.ckan import one in a go) and the "
     "DLCs, which CKAN cannot install (Breaking Ground carries the 28 robotics parts the tree places). Transitive "
-    "deps are left to CKAN. 'Scatterer-config-default'/'-sunflare-default' on purpose: the bare virtual names have "
-    "many providers and a headless resolver silently drops them. SCANsat = stock CKAN SCANsat. RP-AXE-deps.ckan is "
+    "deps are left to CKAN. Scatterer is in suggests, with RSSVE-HR: its default config lists stock bodies and only "
+    "RSSVE's patch retargets it to RSS, so alone it renders nothing. 'Scatterer-config-default'/'-sunflare-default' "
+    "on purpose: the bare virtual names have many providers and a headless resolver silently drops them. "
+    "SCANsat = stock CKAN SCANsat. RP-AXE-deps.ckan is "
     "the author's full dev environment (everything here as hard deps, High graphics). Conflicts: RP-AXE replaces "
     "the RP-1 career layer and ships its own tree, simulator and RTG model."
 )
@@ -193,14 +199,16 @@ def main():
     dump(os.path.join(REPO, "RP-AXE-Express-High.ckan"), meta(
         "RP-AXE-Express-High", "RP-AXE Express (High graphics)",
         "The recommended tools for RP-AXE plus the author's graphics set (RP-1 Express High: Parallax, 16K RSS "
-        "textures, RSSVE-HR, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox) as one hard set. "
+        "textures, RSSVE-HR with Scatterer, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox) as "
+        "one hard set. "
         "About 8 GB more than Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until "
         "RP-AXE is on the registry; decline the further recommendations CKAN offers.",
         express + GRAPHICS_HIGH, ["RP-AXE-Express-Low", "RSSTextures4096", "RSSTextures8192", "RSSTextures2048"]))
     dump(os.path.join(REPO, "RP-AXE-Express-Low.ckan"), meta(
         "RP-AXE-Express-Low", "RP-AXE Express (Low graphics)",
-        "The recommended tools for RP-AXE plus a light graphics set (4K RSS textures, Scatterer, DistantObject, "
-        "PlanetShine) as one hard set. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan; "
+        "The recommended tools for RP-AXE plus a light graphics set (4K RSS textures, DistantObject, PlanetShine; "
+        "no Scatterer or clouds, like RP-1 Express Graphics-Low) as one hard set. CKAN -> File -> Install from "
+        ".ckan file, together with RP-AXE-<ver>.ckan; "
         "decline the further recommendations CKAN offers.",
         express + GRAPHICS_LOW, ["RP-AXE-Express-High", "RSSTextures16K", "RSSTextures8192", "RSSTextures2048"]))
     print("wrote RP-AXE-Express-High.ckan (%d) and RP-AXE-Express-Low.ckan (%d)"

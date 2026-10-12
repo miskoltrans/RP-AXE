@@ -26,18 +26,24 @@ Still needs you (each is outward-facing or needs credentials):
 
 - [x] History rewritten and `main` swapped onto it; backups stay until the push has succeeded.
 - [x] **Pushed** 2026-10-11: `origin = git@github.com:miskoltrans/RP-AXE.git`, `main` + tags `v0.9.0`, `pre-restart-mvp`, `tree-v2-spine`; old history and the LFS store dropped locally afterwards (`.git` = 55 MB).
-- [ ] **GitHub release.** `gh auth login`, then `gh release create v0.9.0 dist/RP-AXE-v0.9.0.zip dist/RP-AXE-v0.9.0.zip.sha256 --prerelease --title "RP-AXE 0.9.0 (beta)" --notes-file CHANGELOG.md` (or upload the zip to the v0.9.0 tag in the web UI, ticking *pre-release*). CKAN's `$kref` needs that asset.
+- [x] **GitHub release** v0.9.0 (pre-release) with `RP-AXE-v0.9.0.zip` + `.sha256`, `RP-AXE-0.9.0.ckan`
+      and the two Express presets attached; the `.ckan` files are re-uploaded (`gh release upload --clobber`)
+      whenever `gen_netkan.py` changes a list. CKAN's `$kref` reads the zip.
 - [x] Tagged `v0.9.0` (annotated) and pushed; `dist/RP-AXE-v0.9.0.zip` + `.sha256` built from it.
 - [x] **Clean-room install test, install half** (below): the published 0.9.0 asset + Express-Low
       resolve headless into 125 modules, 54/54 depends, 25/25 recommends, GameData as shipped
       (`tools/check_cleanroom.py` OK on `../ksp_instance_cleanroom3`).
-- [ ] **Clean-room boot** — needs an unlocked session (see the last finding below):
-      `..\ksp_instance_cleanroom3\KSP_x64.exe -axe-autotest`, then
-      `python tools\check_liveness.py --instance ..\ksp_instance_cleanroom3`. `../ksp_instance_cleanroom_gui`
-      is a fresh copy for the GUI run (*Manage instances → Add*, then the two `.ckan` installs).
-- [ ] **CKAN listing** (optional): run the netkan through the inflator (`netkan.exe RP-AXE.netkan`, or
-      the NetKAN-bot on a PR) and submit it to https://github.com/KSP-CKAN/NetKAN. Until then players
-      add it locally via *CKAN → Settings → Add netkan*.
+- [x] **Clean-room boot** (run 5, 2026-10-12, unlocked session): `-axe-autotest` on
+      `../ksp_instance_cleanroom3` reached the menu in 18 min cold, started a career, walked R&D and
+      Mission Control, `SUCCESS`, quit itself; `check_liveness.py --instance` green; the `[ECON]` and
+      exception lines are identical to the dev instance's. Only two log signatures were clean-room-only:
+      Scatterer's stock planet list (fixed, see "Scatterer without config" below) and a benign
+      `ADDON BINDER: Cannot resolve assembly: SCANsat.Unity` from stock SCANsat (the assembly loads).
+      `../ksp_instance_cleanroom_gui` is a fresh copy for the GUI run (*Manage instances → Add*, then the
+      two `.ckan` installs).
+- [ ] **CKAN listing**: a PR adding `NetKAN/RP-AXE.netkan` (+ the Express netkans) to
+      https://github.com/KSP-CKAN/NetKAN; the bot inflates and validates it on the PR (see "Publishing").
+      Until it is merged, players install the inflated `RP-AXE-<ver>.ckan` from the release page.
 - [x] R&D screen eyeballed via the AutoTest screenshot (`Instance/axe-shot-RD.png`, 2026-10-11): every node shows its stock discipline glyph.
 
 ## History rewrite (2026-10-11, before the first push)
@@ -121,8 +127,12 @@ What the first two runs found, and fixed (`99ddd29`, `98e7fad`):
   the `any_of` just the same: a choice it cannot ask about is skipped, exit 0. So the CLI path is
   either an Express preset (which names the pack) or `ckan install RSSTextures4096` afterwards, and
   `check_cleanroom.py` fails the install until a pack is present.
-- **Scatterer without config** — same mechanism, via RSS → Parallax → Scatterer. Now `recommends`
-  Scatterer + its `-default` config aliases.
+- **Scatterer without config** — same mechanism, via RSS → Parallax → Scatterer. Runs 2–4 answered it by
+  recommending Scatterer + its `-default` config aliases. Run 5 (2026-10-12, the first boot on an unlocked
+  session) showed that is a no-op on RSS anyway: the default config is a list of *stock* bodies
+  (`ScattererCelestialBody Kerbin not found` for each one) and only RSSVE's `@Scatterer_planetsList`
+  patch retargets it. Scatterer now sits in `suggests` next to RSSVE-HR and in the High preset; Low
+  mirrors RP-1 Express Graphics-Low, textures only.
 - **164 modules installed, 86 not named by the netkan** — the recommends closure of the dependencies
   (BDB, KSCExtended, KerbinSide, the RN rocket packs, CLS, RPM/ASET IVAs, Trajectories, …). Not a bug,
   but the Express presets exist so a player can decline it in one go.
@@ -156,8 +166,8 @@ so a player's install cannot silently differ from the one the tree was built aga
 | list | rule | count |
 |---|---|---|
 | `depends` | the stack AXE's configs and plugin bind to directly (RO, RSS, Kerbalism + RO config, Contract Configurator, CustomBarnKit, RealAntennas, KSCSwitcher, Skopos; ROUtils, Harmony, MFI for `AXE.dll`) **plus every mod the tree places parts from** (`manifest/curated-parts.tsv`), plus an `any_of` over the four RSS texture packs, light one first. The tree is balanced against exactly that part set; a missing one leaves nodes you pay science for and get nothing from. | 52 + 1 |
-| `recommends` | tools AXE integrates with when present and runs without: MechJeb, TestFlight, alarm clock, transfer planners, editor QoL, visual polish, and Scatterer **with** its config. CKAN installs them by default, untickable. | 26 |
-| `suggests` | the author's graphics preset (RP-1 Express High) and the two DLCs, which CKAN cannot install. Breaking Ground matters: 28 robotics parts are placed. | 9 |
+| `recommends` | tools AXE integrates with when present and runs without: MechJeb, TestFlight, alarm clock, transfer planners, editor QoL, visual polish. CKAN installs them by default, untickable. | 22 |
+| `suggests` | the author's graphics preset (RP-1 Express High, Scatterer included: it only works on RSS through RSSVE) and the two DLCs, which CKAN cannot install. Breaking Ground matters: 28 robotics parts are placed. | 12 |
 | `conflicts` | what RP-AXE replaces: RP-1 / RP-0 / RONoCareer (career layer), KCT, CommunityTechTree and HideEmptyTechNodes (tree), KRASH (simulator), NFE-DecayingRTGs (RTG model), MechJebForAll, CrowdSourcedScience; and the full VenStockRevamp, which ReStock conflicts with and VenStockRevamp-Core recommends. | 11 |
 
 - **Graphics are not forced.** The texture pack is an `any_of` (4K is the headless default; the GUI

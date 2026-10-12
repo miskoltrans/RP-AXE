@@ -106,10 +106,15 @@ def main():
     for f in ("Plugins/AXE.dll", "design/Tree/AxeTechTree.cfg", "seed/Parts/_SYNC_PROVENANCE.txt"):
         ok = os.path.exists(os.path.join(gd, "RP-AXE", f))
         print("  %s %s" % ("ok  " if ok else "FAIL", f)); fail |= not ok
-    sc = os.path.join(gd, "Scatterer", "config")
     if os.path.isdir(os.path.join(gd, "Scatterer")):
-        print("  %s Scatterer present, config %s" % ("ok  " if os.path.isdir(sc) else "FAIL", "populated" if os.path.isdir(sc) else "MISSING -- the silent-drop symptom"))
-        fail |= not os.path.isdir(sc)
+        # `Scatterer/config` is the plugin's own folder and is always there; the planet list the
+        # resolver drops is StockScattererConfigs (run 2), and that list names STOCK bodies: only
+        # RSSVE's patch retargets it to RSS, so Scatterer without RSSVE renders nothing (run 5).
+        cfg = os.path.isdir(os.path.join(gd, "StockScattererConfigs"))
+        rssve = os.path.isdir(os.path.join(gd, "RSSVE"))
+        print("  %s Scatterer present, planet config %s" % ("ok  " if cfg else "FAIL", "present" if cfg else "MISSING -- the silent-drop symptom"))
+        print("  %s Scatterer %s RSSVE%s" % ("ok  " if rssve else "FAIL", "with" if rssve else "WITHOUT", "" if rssve else " -- its planet list is stock bodies; inert on RSS"))
+        fail |= not (cfg and rssve)
 
     print("\n" + ("FAIL" if fail else "OK -- the install matches the netkan"))
     return 1 if fail else 0

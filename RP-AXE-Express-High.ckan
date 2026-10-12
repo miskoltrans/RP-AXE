@@ -2,7 +2,7 @@
     "spec_version": "v1.26",
     "identifier": "RP-AXE-Express-High",
     "name": "RP-AXE Express (High graphics)",
-    "abstract": "The recommended tools for RP-AXE plus the author's graphics set (RP-1 Express High: Parallax, 16K RSS textures, RSSVE-HR, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox) as one hard set. About 8 GB more than Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until RP-AXE is on the registry; decline the further recommendations CKAN offers.",
+    "abstract": "The recommended tools for RP-AXE plus the author's graphics set (RP-1 Express High: Parallax, 16K RSS textures, RSSVE-HR with Scatterer, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox) as one hard set. About 8 GB more than Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until RP-AXE is on the registry; decline the further recommendations CKAN offers.",
     "author": [
         "miskoltrans"
     ],
@@ -79,15 +79,6 @@
             "name": "KSPTextureLoader"
         },
         {
-            "name": "Scatterer"
-        },
-        {
-            "name": "Scatterer-config-default"
-        },
-        {
-            "name": "Scatterer-sunflare-default"
-        },
-        {
             "name": "Parallax"
         },
         {
@@ -98,6 +89,15 @@
         },
         {
             "name": "RSSVE-HR"
+        },
+        {
+            "name": "Scatterer"
+        },
+        {
+            "name": "Scatterer-config-default"
+        },
+        {
+            "name": "Scatterer-sunflare-default"
         },
         {
             "name": "DistantObject"
