@@ -1,0 +1,124 @@
+{
+    "spec_version": "v1.26",
+    "identifier": "RP-AXE-Express-Low",
+    "name": "RP-AXE Express (Low graphics)",
+    "abstract": "One-click RP-AXE: the mod, its stack and tools, and the Low (4K textures only) graphics set.",
+    "description": "A one-click RP-AXE install: the mod, the Realism Overhaul stack and every part mod the tree places, the recommended tools, and a graphics set, all as hard dependencies. Everything RP-AXE needs is in here. The recommendations CKAN offers on top come from the dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, which aborts the whole install. Then start a new Career.",
+    "author": [
+        "miskoltrans"
+    ],
+    "license": "CC-BY-NC-SA-4.0",
+    "tags": [
+        "config",
+        "career",
+        "graphics"
+    ],
+    "$kref": "#/ckan/github/miskoltrans/RP-AXE/asset_match/Express-Low.zip",
+    "$vref": "#/ckan/ksp-avc",
+    "x_netkan_force_v": true,
+    "resources": {
+        "homepage": "https://github.com/miskoltrans/RP-AXE",
+        "repository": "https://github.com/miskoltrans/RP-AXE",
+        "bugtracker": "https://github.com/miskoltrans/RP-AXE/issues"
+    },
+    "depends": [
+        {
+            "name": "RP-AXE"
+        },
+        {
+            "name": "MechJeb2"
+        },
+        {
+            "name": "TestFlight"
+        },
+        {
+            "name": "KerbalAlarmClock"
+        },
+        {
+            "name": "StockAlarmClockDisabler"
+        },
+        {
+            "name": "TransferWindowPlannerFork"
+        },
+        {
+            "name": "TargetInterceptPlanner"
+        },
+        {
+            "name": "BetterTimeWarpCont"
+        },
+        {
+            "name": "RSSDateTimeFormatter"
+        },
+        {
+            "name": "KerbalRenamer"
+        },
+        {
+            "name": "TextureReplacer"
+        },
+        {
+            "name": "AtmosphereAutopilot"
+        },
+        {
+            "name": "RCSBuildAid"
+        },
+        {
+            "name": "EditorExtensionsRedux"
+        },
+        {
+            "name": "HangerExtenderExtended"
+        },
+        {
+            "name": "Waterfall"
+        },
+        {
+            "name": "TexturesUnlimited"
+        },
+        {
+            "name": "Shabby"
+        },
+        {
+            "name": "Resurfaced"
+        },
+        {
+            "name": "Firefly"
+        },
+        {
+            "name": "ZTheme"
+        },
+        {
+            "name": "ROLoadingImages"
+        },
+        {
+            "name": "KSPTextureLoader"
+        },
+        {
+            "name": "RSSTextures4096"
+        },
+        {
+            "name": "DistantObject"
+        },
+        {
+            "name": "PlanetShine"
+        }
+    ],
+    "conflicts": [
+        {
+            "name": "RP-AXE-Express-High"
+        },
+        {
+            "name": "RSSTextures16K"
+        },
+        {
+            "name": "RSSTextures8192"
+        },
+        {
+            "name": "RSSTextures2048"
+        }
+    ],
+    "install": [
+        {
+            "find": "RP-AXE-Express-Low",
+            "install_to": "GameData"
+        }
+    ]
+}

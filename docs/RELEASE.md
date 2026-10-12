@@ -41,9 +41,11 @@ Still needs you (each is outward-facing or needs credentials):
       `ADDON BINDER: Cannot resolve assembly: SCANsat.Unity` from stock SCANsat (the assembly loads).
       `../ksp_instance_cleanroom_gui` is a fresh copy for the GUI run (*Manage instances → Add*, then the
       two `.ckan` installs).
-- [ ] **CKAN listing**: a PR adding `NetKAN/RP-AXE.netkan` (+ the Express netkans) to
-      https://github.com/KSP-CKAN/NetKAN; the bot inflates and validates it on the PR (see "Publishing").
-      Until it is merged, players install the inflated `RP-AXE-<ver>.ckan` from the release page.
+- [x] **Indexer dry run** (2026-10-12): all three netkans inflate with `netkan.exe v1.36.5`; the Express
+      presets became marker zips on the release because a metapackage cannot be indexed (see "Publishing").
+- [ ] **CKAN listing**: PR from the `miskoltrans/NetKAN` fork adding the three metanetkan stubs; the bot
+      validates on the PR. Until it is merged, players install the `.ckan` files from the release page.
+      After the merge: README "Install" becomes "tick RP-AXE Express High or Low in CKAN".
 - [x] R&D screen eyeballed via the AutoTest screenshot (`Instance/axe-shot-RD.png`, 2026-10-11): every node shows its stock discipline glyph.
 
 ## History rewrite (2026-10-11, before the first push)
@@ -201,16 +203,35 @@ flag force-enables it. The localhost bridge (`Bridge.cfg`) is written on first r
 
 ## Publishing
 
-**CKAN.** The listing is a pull request, not an upload: fork https://github.com/KSP-CKAN/NetKAN, copy
-`RP-AXE.netkan` to `NetKAN/RP-AXE.netkan`, open the PR. The NetKAN bot inflates it within minutes and
-comments with any error (unresolvable `depends`, a bad `install` stanza, a license outside CKAN's list);
-a CKAN team member then reviews the first submission of a new mod. What it needs from our side is
-already there: a GitHub release with the zip attached (`$kref`), the AVC file (`$vref`), a listed
-license, and no Squad assets in the archive. While the mod is a GitHub *pre-release*, the netkan's
-`x_netkan_github.prerelease = true` is what lets the bot see it; remove it at 1.0. The graphics
-presets can go in the same PR as `NetKAN/RP-AXE-Express-High.netkan` / `-Low.netkan` (they are
-metapackages with a static `version`, like `RP-1-ExpressInstall-Graphics-*`). `RP-AXE-deps.ckan` is a
-dev tool and is not submitted. Once merged, a new GitHub release is picked up automatically.
+**CKAN.** The listing is a pull request to https://github.com/KSP-CKAN/NetKAN, done the way RP-1 does
+it (the *metanetkan* pattern): the NetKAN repo holds a three-line YAML stub per module whose `$kref`
+is `#/ckan/netkan/<raw URL of our netkan on main>`, and the full metadata stays in this repo, so later
+list changes are a push here, not another PR. Three stubs: `RP-AXE`, `RP-AXE-Express-High`,
+`RP-AXE-Express-Low`. The bot inflates them on the PR and comments with any error; a CKAN team member
+reviews a new mod's first submission. Once merged, every new GitHub release is picked up automatically.
+
+What the indexer taught us (netkan.exe is at https://ksp-ckan.s3-us-west-2.amazonaws.com/netkan.exe,
+run `netkan.exe --verbose --outputdir <dir> --github-token $(gh auth token) <file>.netkan` before any PR):
+- **A metapackage cannot be indexed**: "has no $kref field, this is required when no download url is
+  specified". So the registry presets are not the local `kind: metapackage` files but 700-byte marker
+  zips (`package_release.py --express-only` writes `dist/RP-AXE-Express-{High,Low}.zip`: a folder with an
+  AVC file and a README) that ride on the mod's release, exactly like `RP-1-ExpressInstall-Graphics`.
+  `gen_netkan.py` writes their netkans with `$kref .../asset_match/Express-High.zip`, `$vref ksp-avc`
+  and `x_netkan_force_v`, and with **`RP-AXE` as a hard dependency**, so one tick installs everything.
+- With three zips on one release, every netkan names its asset: the mod's `$kref` ends in
+  `asset_match/RP-AXE-v.*zip$` (the `zip$` keeps the `.sha256` out).
+- The version the registry shows is the GitHub tag's `v0.9.0`, and CKAN orders `v0.9.0` above `0.9.0`,
+  so the local `RP-AXE-<ver>.ckan` now says `v0.9.0` too.
+- `x_netkan_github.prereleases` is a filter (true = skip regular releases); absent = use both, which
+  is what a beta that becomes a release wants. The earlier `prerelease` key was a misspelling.
+- Warnings left as they are: `No plugin matching the identifier` (CKAN detects manual installs by a DLL
+  named after the identifier; ours is `AXE.dll`), harmless.
+`RP-AXE-deps.ckan` is a dev tool and is not submitted.
+
+**Release assets, seven of them**: `RP-AXE-v<ver>.zip` + `.sha256`, `RP-AXE-<ver>.ckan`,
+`RP-AXE-Express-{High,Low}.ckan` (pre-registry presets, no RP-AXE dependency) and
+`RP-AXE-Express-{High,Low}.zip` (the registry markers). Re-upload with `gh release upload v<ver> ... --clobber`
+after any `gen_netkan.py` change.
 
 **SpaceDock** (optional, https://spacedock.info): upload the same zip under the same license and
 KSP 1.12.5. Many players browse it directly, and it gives the mod a page with screenshots.

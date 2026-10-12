@@ -77,7 +77,7 @@ def write_ckan(ver, zip_path, data, sha256):
         avc = json.load(f)
     ck = {k: v for k, v in nk.items() if k not in ("$kref", "$vref", "x_netkan_github", "comment")}
     mn, mx = avc["KSP_VERSION_MIN"], avc["KSP_VERSION_MAX"]
-    ck["version"] = ver
+    ck["version"] = "v" + ver   # what the registry shows: netkan prefers the GitHub tag's "v0.9.0"
     ck["ksp_version_min"] = "%d.%d.%d" % (mn["MAJOR"], mn["MINOR"], mn["PATCH"])
     ck["ksp_version_max"] = "%d.%d.%d" % (mx["MAJOR"], mx["MINOR"], mx["PATCH"])
     ck["release_status"] = "testing" if ver.startswith("0.") else "stable"
@@ -92,13 +92,51 @@ def write_ckan(ver, zip_path, data, sha256):
     return path
 
 
+EXPRESS = ("RP-AXE-Express-High", "RP-AXE-Express-Low")
+
+
+def write_express_zips(ver):
+    """dist/RP-AXE-Express-{High,Low}.zip: a marker folder with an AVC file, so the registry presets have
+    a download (NetKAN refuses to index a metapackage) and a version that tracks the mod's. Mirrors
+    RP-1-ExpressInstall-Graphics (install_size 776 bytes). Uploaded to the same release as the mod."""
+    with open(AVC, encoding="utf-8") as f:
+        avc = json.load(f)
+    paths = []
+    for ident in EXPRESS:
+        tier = ident.rsplit("-", 1)[1]
+        marker = {
+            "NAME": "RP-AXE Express (%s graphics)" % tier,
+            "VERSION": avc["VERSION"],
+            "KSP_VERSION": avc.get("KSP_VERSION", avc["KSP_VERSION_MAX"]),
+            "KSP_VERSION_MIN": avc["KSP_VERSION_MIN"],
+            "KSP_VERSION_MAX": avc["KSP_VERSION_MAX"],
+        }
+        readme = (
+            "%s %s\n\nThis folder is a marker left by the CKAN preset '%s'. It installs nothing itself: the preset is a\n"
+            "list of dependencies (RP-AXE, its stack, the recommended tools and the %s graphics set). Safe to\n"
+            "delete; CKAN removes it with the preset.\n" % (ident, ver, ident, tier))
+        out = os.path.join(DIST, ident + ".zip")
+        with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
+            z.writestr("GameData/%s/%s.version" % (ident, ident), json.dumps(marker, indent=4) + "\n")
+            z.writestr("GameData/%s/README.txt" % ident, readme)
+        paths.append(out)
+    return paths
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--no-build", action="store_true", help="do not run dotnet build first")
     ap.add_argument("--force", action="store_true", help="overwrite an existing archive for this version")
+    ap.add_argument("--express-only", action="store_true",
+                    help="only (re)write dist/RP-AXE-Express-{High,Low}.zip for the current version")
     args = ap.parse_args()
 
     ver = version()
+    if args.express_only:
+        os.makedirs(DIST, exist_ok=True)
+        for p in write_express_zips(ver):
+            print("wrote %s (%d bytes)" % (p, os.path.getsize(p)))
+        return
     out = os.path.join(DIST, "RP-AXE-v%s.zip" % ver)
     if os.path.exists(out) and not args.force:
         sys.exit("%s exists -- bump RP-AXE.version or pass --force" % out)
@@ -155,9 +193,12 @@ def main():
     with open(out + ".sha256", "w") as f:
         f.write("%s  %s\n" % (sha, os.path.basename(out)))
     ckan_path = write_ckan(ver, out, data, sha)
+    express = write_express_zips(ver)
 
     print("wrote %s" % out)
     print("wrote %s  (CKAN -> File -> Install from .ckan file)" % ckan_path)
+    print("wrote %s  (release assets for the registry presets)" % ", ".join(os.path.basename(e) for e in express))
+    print("release assets: the zip, its .sha256, the .ckan, the two Express .zip and the two Express .ckan files")
     print("  %d files, %.1f MB uncompressed, %.1f MB zipped" % (len(names), total / 1e6, os.path.getsize(out) / 1e6))
     print("  sha256 %s" % sha)
     print("  excluded: %s" % ", ".join(sorted(os.path.basename(e) for e in EXCLUDE)))
