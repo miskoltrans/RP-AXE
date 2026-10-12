@@ -4,6 +4,34 @@ Artifacts: `RP-AXE.netkan` (CKAN metadata), `GameData/RP-AXE/RP-AXE.version` (KS
 place the version number lives**), `GameData/RP-AXE/RP-AXE-Changelog.cfg` + `CHANGELOG.md`,
 `LICENSE.md` (CC-BY-NC-SA-4.0). Target: **KSP 1.12.0–1.12.5**. Only `GameData/RP-AXE/` ships.
 
+## Resume here (state as of 2026-10-12)
+
+**0.9.0 public beta is live** at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.0 (pre-release,
+seven assets). The clean-room install and boot are proven. **The CKAN listing is waiting on a human:**
+https://github.com/KSP-CKAN/NetKAN/pull/11689, opened 2026-10-12 from the fork `miskoltrans/NetKAN`,
+branch `rp-axe` (three metanetkan stubs; the real metadata is `RP-AXE.netkan` and
+`RP-AXE-Express-{High,Low}.netkan` on `main`). Expect weeks; nobody is polling it.
+
+When something happens on the PR:
+- **Reviewer asks for a change in a stub** → edit `NetKAN/RP-AXE*.netkan` on the fork's `rp-axe` branch
+  and push; the PR updates itself.
+- **Reviewer asks for a change in the metadata** (lists, install stanza, description) → edit
+  `tools/gen_netkan.py`, run `python tools/gen_netkan.py`, re-inflate with netkan.exe (see "Publishing"),
+  commit + push `main`, re-upload the `.ckan` assets (`gh release upload v0.9.0 ... --clobber`). No PR
+  change needed: the stubs read `main`.
+- **Merged** → (1) README "Install" becomes: *in CKAN, tick `RP-AXE Express High` or `RP-AXE Express Low`
+  and install; untick the further recommendations* (keep the two-file path as the fallback for people
+  who read old posts); (2) announce — KSP forum Add-on Releases, KSP-RO Discord, r/KerbalSpaceProgram,
+  r/RealSolarSystem (texts drafted from the README; needs 3–4 in-game screenshots); (3) tick the
+  checklist below.
+- **Closed / stalled** → ask in the PR; the fallback stays the release-page `.ckan` files, which work today.
+
+Independent of the PR: delete `..\ksp_instance_cleanroom_gui` once the GUI run is done; RP-1 upstream is
+v4.5.0.0 against seed v4.4.0.0 (a sync pass, not a blocker).
+
+To pick this up in a fresh session: *"Resume the RP-AXE release: read docs/RELEASE.md 'Resume here',
+then check https://github.com/KSP-CKAN/NetKAN/pull/11689 with `gh pr view 11689 --repo KSP-CKAN/NetKAN`."*
+
 ## Release checklist
 
 Repo-side, done for 0.9.0 (2026-10-11):
