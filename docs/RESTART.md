@@ -3,6 +3,9 @@
 Landing pad for the tree-first rebuild (see [`../VISION.md`](../VISION.md)) until the full
 roadmap is written.
 
+> **Release state:** 0.9.0 public beta is live on GitHub; the CKAN listing is a pending pull request.
+> Pick that thread up at [`RELEASE.md`](RELEASE.md) → "Resume here".
+
 **Keep & refine:** contracts (port-and-strip); avionics (rename → RP-1 names + rebalance);
 deploy/rebuild tooling (improve).
 **Rebuild from scratch:** tech tree; part baseline + placement; economy.
