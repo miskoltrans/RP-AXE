@@ -50,6 +50,7 @@ design ([below](#coming-from-rp-1-what-changed-in-avionics)).
   chemistry, cryogenics, microelectronics, guidance, telecommunications, nuclear, life support and so
   on. Every node is a real breakthrough with its own flavour text, not "Advanced Engines III". Parts
   sit on the breakthrough that made them hard, so a lander comes together from nodes across the tree.
+  Browse it in the [standalone viewer](tree/render/prototype/axe-tree-standalone.html).
 - **Science is the gate.** Science on Earth below 40 km is removed. The solar system holds far more
   science than the tree costs, so you progress by going wider, not by farming. KerbalismLab station
   science is in and balanced.
