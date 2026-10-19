@@ -1,6 +1,6 @@
 # RP-AXE vs RP-1 — the changelist
 
-What RP-AXE 1.0.0 changes relative to RP-1 **v4.4.0.0** (the version its vendored config was synced
+What RP-AXE 0.9 changes relative to RP-1 **v4.4.0.0** (the version its vendored config was synced
 from, 2026-06-28). AXE runs on the same realism stack (RO / RSS / RealFuels / Kerbalism / RealAntennas
 / TestFlight / FAR …) and **replaces** RP-1's career plugin; it conflicts with RP-1 and never
 depends on it. Everything not listed here is RP-1 as-is: the vendored contracts and science configs
@@ -27,7 +27,7 @@ Design rationale lives in the docs each section links to; this file is the inven
 | Science | PORTED + NEW | RP-1's instrument suite + crewed science; KerbalismLab (65) integrated; Orbital Geochemistry added |
 | Facilities | CHANGED | Launchpad mass ladder, 11-level DSN, 8-level R&D science cap; VAB/SPH uncapped |
 | Simulator, airlaunch, launch-site switching | REPLACED / PORTED / KEPT | Free sim; airlaunch re-authored; KSCSwitcher free |
-| Dependencies | CHANGED | RP-1 Express **High** minus RP-1, plus 21 curated part mods |
+| Dependencies | CHANGED | RP-1 Express's part set minus RP-1, plus 21 curated part mods; graphics are a Low/High preset choice |
 
 ---
 
@@ -35,14 +35,16 @@ Design rationale lives in the docs each section links to; this file is the inven
 
 - **REMOVED — `RP0.dll`, `CC_RP0.dll`, `RP-1/`, `RP-1-ExpressInstall`.** `AXE.dll` provides what the
   contracts, tree and economy need. The netkan lists `RP-1` under `conflicts`.
-- **CHANGED — dependency set.** The RP-1 Express **High** graphics preset (Parallax, Scatterer,
-  EVE/RSSVE-HR, 16K RSS textures) minus RP-1, **minus LunarTransferPlanner** (TargetInterceptPlanner
-  instead), **plus** the curated expansion: Near Future Aeronautics / Construction / Electrical /
-  Exploration / Launch Vehicles / Propulsion / Solar, Far Future Technologies, Kerbal Atomics,
-  CryoEngines, Station Parts Expansion Redux, Tantares, Coatl Aerospace, RN US + Soviet probe packs,
-  Universal Storage 2, Rocket Motor Menagerie, Kerwis Chinese Aerospace Pack, SCANsat, Canaveral
-  Pads, BetterTimeWarp, and cosmetics (Firefly, ZTheme, DistantObject, PlanetShine, Pood's skybox,
-  Hullcam VDS). 114 modules in `depends`; both DLCs are hard dependencies.
+- **CHANGED — dependency set.** RP-1 Express's part and realism set minus RP-1, **minus
+  LunarTransferPlanner** (TargetInterceptPlanner instead), **plus** the curated expansion: Near Future
+  Aeronautics / Construction / Electrical / Exploration / Launch Vehicles / Propulsion / Solar, Far
+  Future Technologies, Kerbal Atomics, CryoEngines, Station Parts Expansion Redux, Tantares, Coatl
+  Aerospace, RN US + Soviet probe packs, Universal Storage 2, Rocket Motor Menagerie, Kerwis Chinese
+  Aerospace Pack, SCANsat, Hullcam VDS. 54 entries in `depends` (one of them the RSS texture-pack
+  choice). Tools and graphics ride on the `RP-AXE-Express-{Low,High}` presets the way they ride on
+  RP-1 Express: Low is 4K textures only, High adds Parallax, Scatterer, RSSVE-HR and 16K textures.
+  Both DLCs are suggestions; Breaking Ground is strongly recommended (the Robotics discipline places
+  its parts).
 - **Evaluated and not added:** DMagic Orbital Science (its instruments duplicate RP-1's), Near Future
   Spacecraft, TantaresLV.
 - **KEPT — RO's `HardRemoveNonRO` plausibility floor** (RP-1 Express ships the same flag; ~825
@@ -327,4 +329,4 @@ All of these lived in RP0.dll / KCT and are **REMOVED** with it (`docs/RESTART.m
 - TestFlight's RP-1 config (`TestFlightRnD.cfg`) and optional `zTweakScale.cfg` — not vendored.
 - A Space-Center-scene launch-site switcher (KSCSwitcher's UI is Tracking-Station only).
 - Everything in `docs/BUG-CLASSES.md` is the taxonomy of *unintended* divergence found so far; the
-  parity gate `tools/check_settings_parity.py` reports 0 open items as of 1.0.0.
+  parity gate `tools/check_settings_parity.py` reports 0 open items as of 0.9.0.
