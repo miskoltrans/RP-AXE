@@ -21,10 +21,17 @@ When something happens on the PR:
   change needed: the stubs read `main`.
 - **Merged** → (1) README "Install" becomes: *in CKAN, tick `RP-AXE Express High` or `RP-AXE Express Low`
   and install; untick the further recommendations* (keep the two-file path as the fallback for people
-  who read old posts); (2) announce — KSP forum Add-on Releases, KSP-RO Discord, r/KerbalSpaceProgram,
-  r/RealSolarSystem (texts drafted from the README; needs 3–4 in-game screenshots); (3) tick the
-  checklist below.
+  who read old posts); (2) edit the forum thread and the SpaceDock description: "installing becomes a
+  single tick" is now true; (3) tick the checklist below.
 - **Closed / stalled** → ask in the PR; the fallback stays the release-page `.ckan` files, which work today.
+
+**Promotion did not wait for the merge (decided 2026-10-19).** SpaceDock and the announcements go out
+now, with the two-`.ckan`-file install. The working copy of every text (SpaceDock form values + long
+description, forum thread, r/KerbalSpaceProgram, r/RealSolarSystem, KSP-RO Discord) and the posting
+order is the launch kit: https://claude.ai/artifact/Fpc8vSDwqW7PjJAPApioGS (private to the owner; a
+fresh session reads it with the Artifact tool). Once the SpaceDock and forum URLs exist: add them to
+`resources` in `tools/gen_netkan.py` (`spacedock`, and `homepage` → the forum thread), regenerate,
+push `main`, re-upload the `.ckan` assets; link both from the README.
 
 Independent of the PR: delete `..\ksp_instance_cleanroom_gui` once the GUI run is done; RP-1 upstream is
 v4.5.0.0 against seed v4.4.0.0 (a sync pass, not a blocker).
@@ -261,8 +268,12 @@ run `netkan.exe --verbose --outputdir <dir> --github-token $(gh auth token) <fil
 `RP-AXE-Express-{High,Low}.zip` (the registry markers). Re-upload with `gh release upload v<ver> ... --clobber`
 after any `gen_netkan.py` change.
 
-**SpaceDock** (optional, https://spacedock.info): upload the same zip under the same license and
-KSP 1.12.5. Many players browse it directly, and it gives the mod a page with screenshots.
+**SpaceDock** (https://spacedock.info): upload the same zip (byte-identical to the GitHub asset) as
+version `0.9.0`, KSP 1.12.5, license `CC-BY-NC-SA`. **Leave "Request addition to CKAN" unticked**:
+SpaceDock's bot would open a second NetKAN PR for the `RP-AXE` identifier with a SpaceDock `$kref`,
+colliding with ours (GitHub kref). A new mod is private until *Publish*; SpaceDock refuses to create
+one from a private profile. Later versions: *Update* on the mod page (version, KSP version,
+changelog, zip, notify followers).
 
 **Where to post.**
 - KSP Forum, *Kerbal Space Program 1 → Add-on Releases*: the canonical announcement. Title in the
