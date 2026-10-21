@@ -76,6 +76,8 @@ the same Near-Earth / Deep-Space / Science-Core models — but the interface is 
 consequences differ. I wanted something simpler to reason about than a typed controllable-mass
 rating. Frankly, I could have done better, but it is usable. What you will notice:
 
+![A procedural probe bus in the editor. The Avionics section of its PAW shows the Split slider, the steerable Capacity, Vessel vs rating, and the guidance and bus toggles](docs/screenshots/paw.png)
+
 - **You size the box, not the rating.** There is no `controllableMass` to type. The procedural
   avionics core has a *Split* slider dividing its volume between hardware, battery and empty space;
   hardware volume gives mass, and the inverse of RP-1's Near-Earth formula gives the **Steerable
