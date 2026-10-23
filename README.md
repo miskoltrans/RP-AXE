@@ -148,6 +148,10 @@ so that `GameData/RP-AXE/` sits in your KSP folder. Make sure **`GameData/RP-1/`
 
 Then start a **new Career** game. The difficulty presets are AXE's own; Normal is the balanced one.
 
+**Sol instead of RSS?** RP-AXE runs on [Sol](https://github.com/RSS-Reborn/Sol-Configs/wiki) too, with
+its own preset (`RP-AXE-Express-Sol.ckan`) and a compatibility layer that keeps a Sol career on the
+RSS balance. Sol needs its own CKAN repository added first. Steps and caveats: [docs/SOL.md](docs/SOL.md).
+
 > SCANsat: the dependency is the standard CKAN SCANsat. I also maintain a GPU-rendered fork
 > ([miskoltrans/SCANsat-GPU](https://github.com/miskoltrans/SCANsat-GPU)) with the same parts; it is
 > an optional drop-in replacement, not required.
