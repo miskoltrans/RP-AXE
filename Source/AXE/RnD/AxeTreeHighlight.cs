@@ -13,22 +13,10 @@ namespace RPAxe.RnD
     /// (this is exactly stock's own recolour path). Restore = re-run each node's UpdateGraphics(), which
     /// recomputes the stock research-state colours.
     ///
-    /// NOTE: compiles against the Instance KSP assemblies; needs an in-game smoke pass (the R&amp;D scene,
-    /// e.g. via -axe-autotest) to confirm runtime behaviour — it has not been run in-game yet.
+    /// The two [HarmonyPatch] classes below are applied by <see cref="AxeHarmony"/> with every other AXE
+    /// patch. This file used to run its own PatchAll over the whole assembly, which applied EVERY AXE patch
+    /// a second time under a second Harmony id.
     /// </summary>
-    [KSPAddon(KSPAddon.Startup.MainMenu, true)]
-    public class AxeTreeHighlight : MonoBehaviour
-    {
-        private static bool patched;
-        private void Awake()
-        {
-            if (patched) return;
-            patched = true;
-            new Harmony("rpaxe.tree.highlight").PatchAll(typeof(AxeTreeHighlight).Assembly);
-            Debug.Log("[AXE] R&D tree lineage-highlight patches applied.");
-        }
-    }
-
     [HarmonyPatch(typeof(RDController), "ShowNodePanel")]
     internal static class Patch_RDController_ShowNodePanel
     {

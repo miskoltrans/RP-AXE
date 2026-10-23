@@ -90,8 +90,8 @@ namespace RPAxe.RnD
             {
                 RDTechTree.OnTechTreeSpawn.Add(OnTreeSpawn);   // INSTANCE method -> non-null delegate Target
                 var h = new Harmony("rpaxe.tree.render");
-                // Manual patch (no [HarmonyPatch] attr) so AxeTreeHighlight's assembly-wide PatchAll
-                // can't also grab it -> applied exactly once.
+                // Manual patch (no [HarmonyPatch] attr) so AxeHarmony's assembly-wide pass can't also
+                // grab it -> applied exactly once.
                 MethodInfo orig = AccessTools.Method(typeof(RDNode), "GetVectorArray", new[] { typeof(RDNode.Parent) });
                 if (orig == null)
                     Debug.LogError("[AXE] render-port: RDNode.GetVectorArray(Parent) not found; lane routing disabled (reposition still active).");

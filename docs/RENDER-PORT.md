@@ -32,7 +32,7 @@ In-game R&D tree, enhance-stock (no scene replacement), driven by a config:
 - Endpoint fan: distribute incident edges along a node side (`computeSlots`).
 
 ## KSP hooks (Harmony, enhance-stock)
-Model after the working `Source/AXE/RnD/AxeTreeHighlight.cs` (Harmony postfix, applied at MainMenu once).
+Model after the working `Source/AXE/RnD/AxeTreeHighlight.cs` (Harmony postfix, applied once by `AxeHarmony`).
 - **Node positions**: `RDController.Instance.nodes` (`List<RDNode>`); each `RDNode` has `pos`/`transform.localPosition`. Reposition after the tree spawns (patch `RDTechTree` spawn or `RDController` Start/Setup), then trigger arrow (re)draw.
 - **Arrow routing**: `RDNode.GetVectorArray(Parent)` builds each edge's flat point list; `RDNode.DrawArrow` creates the Vectrosity `VectorLine`s; endpoints via `RDNode.GetPosition(anchor,…)`. To lane-route, Harmony-replace `GetVectorArray` (or post-process in `DrawArrow`) to emit the lane-routed points. Colour = `Color32`, uniform width, build once (don't vary width → mesh rebuild).
 - Re-decompile if needed: `~/.dotnet/tools/ilspycmd.exe "<KSP>/KSP_x64_Data/Managed/Assembly-CSharp.dll" -p -o <out>` then read `KSP.UI.Screens/RDNode.cs`, `RDNodePrefab.cs`, `RDController.cs`, `UIGridArea.cs`. (Vectrosity is in `Assembly-CSharp-firstpass.dll`.)

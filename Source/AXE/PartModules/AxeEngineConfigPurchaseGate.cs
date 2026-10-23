@@ -1,6 +1,8 @@
 using HarmonyLib;
 using RealFuels;
 using System;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 namespace RPAxe
@@ -35,12 +37,19 @@ namespace RPAxe
     /// *launch* until you settle up, which needs a PreFlightCheck subsystem and a pay-to-resolve dialog it
     /// builds itself; blocking the switch gets the same guarantee in one patch, gives feedback at the moment
     /// of the click, and leaves the Buy button -- which RealFuels already wired correctly -- as the way in.
+    ///
+    /// DrawActionCell has two shapes, one patch class each; Prepare() keeps exactly one of them:
+    ///   RealFuels &lt;= 15.15  DrawActionCell(Rect, ConfigNode node, bool isSelected, Action apply)
+    ///   RealFuels &gt;= 15.16  DrawActionCell(Rect, CachedRow cached) -- node and apply live in
+    ///                       cached.Row (a ConfigRowDefinition struct), see AxeEngineConfigPurchaseGateRows.
     /// </summary>
     [HarmonyPatch(typeof(EngineConfigGUI), "DrawActionCell")]
     internal static class AxeEngineConfigPurchaseGate
     {
         private static readonly AccessTools.FieldRef<EngineConfigGUI, ModuleEngineConfigsBase> ModuleOf =
             AccessTools.FieldRefAccess<EngineConfigGUI, ModuleEngineConfigsBase>("_module");
+
+        private static bool Prepare() => AxeEngineConfigGateShared.HasParameter("apply");
 
         /// <summary>
         /// Wrap the caller's apply delegate so the switch only lands when the config is owned. The check has
@@ -50,17 +59,23 @@ namespace RPAxe
         [HarmonyPrefix]
         internal static void Prefix(EngineConfigGUI __instance, ConfigNode node, ref Action apply)
         {
-            if (apply == null || node == null) return;
+            Action gated = Gate(__instance, node, apply);
+            if (gated != null) apply = gated;
+        }
+
+        /// <summary>The gated replacement for <paramref name="apply"/>, or null to leave it alone.</summary>
+        internal static Action Gate(EngineConfigGUI gui, ConfigNode node, Action apply)
+        {
+            if (apply == null || node == null) return null;
 
             ModuleEngineConfigsBase module;
-            try { module = ModuleOf(__instance); }
-            catch (Exception e) { Debug.LogError("[AXE] Engine config gate: cannot read _module: " + e); return; }
-            if (module == null) return;
+            try { module = ModuleOf(gui); }
+            catch (Exception e) { Debug.LogError("[AXE] Engine config gate: cannot read _module: " + e); return null; }
+            if (module == null) return null;
 
-            Action original = apply;
-            apply = () =>
+            return () =>
             {
-                if (EngineConfigTechLevels.UnlockedConfig(node, module.part)) { original(); return; }
+                if (EngineConfigTechLevels.UnlockedConfig(node, module.part)) { apply(); return; }
                 Refuse(node, module);
             };
         }
@@ -91,6 +106,62 @@ namespace RPAxe
             }
 
             ScreenMessages.PostScreenMessage(message, 4f, ScreenMessageStyle.UPPER_CENTER);
+        }
+    }
+
+    /// <summary>
+    /// The same gate for RealFuels &gt;= 15.16, whose DrawActionCell takes a private CachedRow. The row is
+    /// CACHED across frames, so the gated delegate is swapped into cached.Row.Apply only for the duration
+    /// of the call and the original is put back in the finalizer -- writing it permanently would wrap the
+    /// wrapper again on every OnGUI pass. ConfigRowDefinition is a struct and absent from the RealFuels
+    /// this compiles against, hence reflection on a boxed copy that is written back.
+    /// </summary>
+    [HarmonyPatch(typeof(EngineConfigGUI), "DrawActionCell")]
+    internal static class AxeEngineConfigPurchaseGateRows
+    {
+        private static FieldInfo _row, _node, _apply;
+
+        private static bool Prepare()
+        {
+            if (!AxeEngineConfigGateShared.HasParameter("cached")) return false;
+            _row = AccessTools.Field(AccessTools.Inner(typeof(EngineConfigGUI), "CachedRow"), "Row");
+            if (_row == null) return false;
+            _node = AccessTools.Field(_row.FieldType, "Node");
+            _apply = AccessTools.Field(_row.FieldType, "Apply");
+            return _node != null && _apply != null;
+        }
+
+        [HarmonyPrefix]
+        internal static void Prefix(EngineConfigGUI __instance, object cached, out Action __state)
+        {
+            __state = null;
+            if (cached == null) return;
+            object row = _row.GetValue(cached);
+            Action apply = _apply.GetValue(row) as Action;
+            Action gated = AxeEngineConfigPurchaseGate.Gate(__instance, _node.GetValue(row) as ConfigNode, apply);
+            if (gated == null) return;
+            _apply.SetValue(row, gated);
+            _row.SetValue(cached, row);
+            __state = apply;
+        }
+
+        [HarmonyFinalizer]
+        internal static void Finalizer(object cached, Action __state)
+        {
+            if (cached == null || __state == null) return;
+            object row = _row.GetValue(cached);
+            _apply.SetValue(row, __state);
+            _row.SetValue(cached, row);
+        }
+    }
+
+    internal static class AxeEngineConfigGateShared
+    {
+        /// <summary>Does EngineConfigGUI.DrawActionCell, in the RealFuels actually loaded, take a parameter of this name?</summary>
+        internal static bool HasParameter(string name)
+        {
+            MethodInfo m = AccessTools.Method(typeof(EngineConfigGUI), "DrawActionCell");
+            return m != null && m.GetParameters().Any(p => p.Name == name);
         }
     }
 }
