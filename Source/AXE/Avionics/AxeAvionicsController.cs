@@ -37,6 +37,10 @@ namespace RPAxe
         AxeControlLockerUtils.LockLevel _level = AxeControlLockerUtils.LockLevel.Unlocked;
         float _noise = 0f;
 
+        /// <summary>AutoTest only (AxeAvionicsFlightTest): pins sigma whatever the vessel's capacity, so the
+        /// corruption can be measured at chosen overloads. Negative = off, which is the shipped behaviour.</summary>
+        internal static float TestNoiseOverride = -1f;
+
         // A3 regime callouts. Remembering the previous capacity is what lets "mass rose past capacity" be
         // told apart from "capacity fell because you staged the primary unit" -- both land in the degraded
         // regime, both look identical from the cockpit, and they have different remedies.
@@ -211,13 +215,15 @@ namespace RPAxe
         internal void ApplyDegradation(FlightCtrlState st)
         {
             if (st == null) return;
-            if (_level != AxeControlLockerUtils.LockLevel.Unlocked) { ApplyLock(st); return; }
-            if (_noise <= 0f) return;
+            float noise = _noise;
+            if (TestNoiseOverride >= 0f) noise = TestNoiseOverride;
+            else if (_level != AxeControlLockerUtils.LockLevel.Unlocked) { ApplyLock(st); return; }
+            if (noise <= 0f) return;
 
             // Disarmed passes sigma = 0 rather than skipping Apply: every stateful move still advances,
             // so re-arming cannot read a stale delay buffer or a cold EMA and jump. Zero sigma is a
             // no-op inside every penalty by construction.
-            float sigma = AxeControlLockerUtils.ComputeArmed(st, AutopilotTargetActive()) ? _noise : 0f;
+            float sigma = AxeControlLockerUtils.ComputeArmed(st, AutopilotTargetActive()) ? noise : 0f;
             AxeControlLockerUtils.ApplyAdversarial(ref st.pitch, ref st.yaw, ref st.roll, sigma);
             // Base layer 1: full-amplitude additive chaos, independent of what was commanded. The policy
             // above and the rotation below are both proportional to the command, so without this an

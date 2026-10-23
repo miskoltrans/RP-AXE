@@ -50,6 +50,9 @@ namespace RPAxe.AutoTest
         // scene is required because procedural part costs only resolve on a loaded ShipConstruct.
         // See AxeCraftPricer.
         public static bool PriceCraftTest = false;
+        // Opt-in: after the screen walk, launch a probe into orbit and measure the over-capacity control
+        // corruption (shipped vs the 0.9.0 double application). See AxeAvionicsFlightTest.
+        public static bool AvionicsTest = false;
 
         // Per-session state (statics persist until the assembly reloads, i.e. KSP restart).
         public static bool CareerStarted;
@@ -73,6 +76,12 @@ namespace RPAxe.AutoTest
                 bool envOn = !string.IsNullOrEmpty(env) &&
                              (env == "1" || env.Equals("true", StringComparison.OrdinalIgnoreCase) || env.Equals("yes", StringComparison.OrdinalIgnoreCase));
                 if (flag || envOn) { Enabled = true; Debug.Log("[AXE][AutoTest] force-enabled via " + (flag ? CmdFlag : EnvVar) + "."); }
+                if (Environment.GetCommandLineArgs().Any(a => string.Equals(a, AxeAvionicsFlightTest.CmdFlag, StringComparison.OrdinalIgnoreCase)))
+                {
+                    Enabled = true;
+                    AvionicsTest = true;
+                    Debug.Log("[AXE][AutoTest] avionics flight test enabled via " + AxeAvionicsFlightTest.CmdFlag + ".");
+                }
             }
             catch { /* args/env unavailable */ }
 
@@ -115,6 +124,7 @@ namespace RPAxe.AutoTest
             QuitDelaySeconds = ParseFloat(n.GetValue("quitDelaySeconds"), QuitDelaySeconds);
             KscSwitchTest = ParseBool(n.GetValue("kscSwitchTest"), KscSwitchTest);
             PriceCraftTest = ParseBool(n.GetValue("priceCraftTest"), PriceCraftTest);
+            AvionicsTest = ParseBool(n.GetValue("avionicsTest"), AvionicsTest);
 
             if (n.HasValue("screens"))
             {
@@ -194,6 +204,12 @@ AXE_AUTOTEST
     // writing a per-part cost breakdown to PluginData/craft-prices.csv. Procedural part costs only
     // resolve on a loaded ShipConstruct, so this has to run in the editor scene.
     priceCraftTest = false
+
+    // Opt-in dev test: after the screens, launch a one-part probe into orbit and measure the
+    // over-capacity control corruption at 2/5/10/20% over budget, as shipped and as 0.9.0 applied it
+    // (twice). Results: [AXE][AutoTest][AVI-FLIGHT] lines + <KSP>/axe_autotest/avionics-flight.csv.
+    // Also: -axe-autotest-avionics on the command line.
+    avionicsTest = false
 }
 ";
     }
@@ -393,6 +409,14 @@ AXE_AUTOTEST
         {
             yield return RunSteps();
 
+            // Avionics flight test: launch the probe; its flight-scene driver measures, reports and quits.
+            if (AxeAvionicsFlightTest.FlightPhaseRequested)
+            {
+                Debug.Log("[AXE][AutoTest] Launching a probe for the avionics flight test...");
+                yield return AutoTestUtil.Dwell(1f);
+                if (AxeAvionicsFlightTest.Launch()) yield break;
+            }
+
             // If the screen walk asked for the KSC-switch test, load the Tracking Station and let its
             // driver finish + quit (do NOT quit here).
             if (AxeKscSwitchSelfTest.TrackingStationPhaseRequested)
@@ -492,6 +516,11 @@ AXE_AUTOTEST
             // Opt-in: hand off to the VAB for the craft-pricing sweep (economy-pass ground truth).
             if (AutoTestConfig.PriceCraftTest)
                 AxeCraftPricer.RequestEditorPhase();
+
+            // Opt-in: launch a probe and measure the avionics corruption in flight. Takes precedence over
+            // the two hand-offs above (one scene change per run).
+            if (AutoTestConfig.AvionicsTest)
+                AxeAvionicsFlightTest.RequestFlightPhase();
         }
 
         /// <summary>Enter a facility, dwell, then exit it. Sets <see cref="_ok"/>.</summary>
