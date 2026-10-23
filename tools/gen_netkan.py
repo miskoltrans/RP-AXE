@@ -87,7 +87,12 @@ SOL_PACKS = ["Sol-Core", "Sol-Configs", "Sol-Visuals", "Sol-Launchsites-256x"] +
                               "SaturnSystem", "UranusSystem", "NeptuneSystem", "AsteroidBelt", "KuiperBelt")]
 GRAPHICS_SOL = SOL_PACKS + [
     "ParallaxContinued-KTL", "ParallaxContinued-Terrain-Textures", "ParallaxContinued-Scatter-Textures",
-    "ParallaxContinued-Planet-Textures", "DistantObject", "PlanetShine"]
+    "ParallaxContinued-Planet-Textures", "DistantObject", "PlanetShine",
+    # Sol-Core, BurstPQS and KSPTextureLoader depend on the virtual KSPBurst (KSPBurst + KSPBurst-Lite).
+    # Named so the GUI installs it without asking. Headless does NOT honour it: the published-0.9.1 Sol
+    # clean-room ended with neither KSPBurst nor ParallaxContinued-Planet-Textures, named here and in
+    # RP-AXE, exit 0 -- docs/SOL.md has the follow-up `ckan install` and check_cleanroom.py catches it.
+    "KSPBurst"]
 # identifiers that live only in the Sol repository (https://github.com/RSS-Reborn/CKAN-meta)
 SOL_REPO_ONLY = set(SOL_PACKS) | {"ParallaxContinued-KTL"}
 # (the texture pack is already offered through the any_of in DEPENDS)

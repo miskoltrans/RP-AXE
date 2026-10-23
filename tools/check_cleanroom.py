@@ -105,6 +105,21 @@ def main():
         print("  FAIL conflicting module installed:", n)
     fail |= bool(bad)
 
+    # Every dependency of every INSTALLED module, not just ours. A headless `ckan install -c` exits 0
+    # having skipped dependencies it could not settle without asking -- RSS's texture pack, Scatterer's
+    # config, KSPBurst, the ParallaxContinued texture packs (2026-10-11 .. 10-24) -- and each surfaced
+    # only as a broken game. This is the general gate for all of them.
+    dropped = []
+    for m, v in sorted(inst.items()):
+        for d in v.get("source_module", {}).get("depends", []):
+            alts = [d["name"]] if "name" in d else [x["name"] for x in d.get("any_of", []) if "name" in x]
+            if alts and not any(present(x) for x in alts):
+                dropped.append("%s -> %s" % (m, "|".join(alts)))
+    print("\n=== dependencies of installed modules -- missing: %d ===" % len(dropped))
+    for x in dropped:
+        print("  FAIL", x, "-- skipped by the resolver; `ckan install` it by name")
+    fail |= bool(dropped)
+
     named = set()
     for k in ("depends", "recommends", "suggests"):
         for n in names(nk.get(k, [])):

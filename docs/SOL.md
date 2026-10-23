@@ -53,13 +53,21 @@ want 8K or 16K planets, swap the packs in CKAN afterwards.
 > `Failed to load map Parallax_StockScatterTextures/...`. Install `ParallaxContinued-Terrain-Textures`,
 > `ParallaxContinued-Scatter-Textures` and `ParallaxContinued-Planet-Textures`.
 
-Command line, same order:
+Command line, same order, **plus a third command**:
 
 ```
 ckan install -c RP-AXE-Express-Sol.ckan --no-recommends --gamedir <KSP folder> --headless
 ckan install -c RP-AXE-<version>.ckan   --no-recommends --gamedir <KSP folder> --headless
+ckan install KSPBurst ParallaxContinued-Planet-Textures --no-recommends --gamedir <KSP folder> --headless
 python tools/check_cleanroom.py --instance <KSP folder>     # optional, from a clone of this repo
 ```
+
+With Sol's repository added, headless CKAN (1.36.4) skipped `KSPBurst` and
+`ParallaxContinued-Planet-Textures` in testing. Both are named by the preset and by RP-AXE, and
+CKAN still exited 0. Naming them on the command line installs them. Without KSPBurst, FAR and
+RealAntennas cannot load. In the CKAN window, if it asks which mod should provide `KSPBurst`, pick
+**KSPBurst Compiler**. Afterwards, check that `GameData/000_KSPBurst/` and
+`GameData/Parallax_StockPlanetTextures/` exist.
 
 Don't use `RP-AXE-Express-Low` or `-High` with Sol. They carry RSS textures and RSSVE, and they
 conflict with Sol-Core.
@@ -174,3 +182,8 @@ repository, RealFuels 15.16.1, CKAN 1.36.4, headless.
    `--verify` matched everything except the Sun's high-space boundary, which the generator then
    started snapshotting. That last change has not been re-booted on Sol yet.
 3. `check_cleanroom.py --instance ksp_sol`: OK in Sol mode.
+4. **Published 0.9.1, fresh instance** (`ksp_sol_cleanroom`: the two release `.ckan` files, headless):
+   both installs exited 0, but `KSPBurst` and `ParallaxContinued-Planet-Textures` were missing.
+   Naming `KSPBurst` in the preset did not change that. The third command above completed the
+   install: 144 modules, and `check_cleanroom.py` OK, including its new check that every dependency
+   of every installed module is present.

@@ -4,10 +4,19 @@ Artifacts: `RP-AXE.netkan` (CKAN metadata), `GameData/RP-AXE/RP-AXE.version` (KS
 place the version number lives**), `GameData/RP-AXE/RP-AXE-Changelog.cfg` + `CHANGELOG.md`,
 `LICENSE.md` (CC-BY-NC-SA-4.0). Target: **KSP 1.12.0–1.12.5**. Only `GameData/RP-AXE/` ships.
 
-## Resume here (state as of 2026-10-12)
+## Resume here (state as of 2026-10-24)
 
-**0.9.0 public beta is live** at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.0 (pre-release,
-seven assets). The clean-room install and boot are proven. **The CKAN listing is waiting on a human:**
+**0.9.1 is live** at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.1 (pre-release, eight
+assets: + `RP-AXE-Express-Sol.ckan`; zip sha256 `8447d55d…dfc2`). It fixes AXE's Harmony patching on
+RealFuels 15.16 (every fresh CKAN install of 0.9.0 lost its patches) and the doubled patches, and adds
+Sol support (`docs/SOL.md`). Built from a clean worktree at the tag, because another session had
+uncommitted avionics work in the shared tree. Proven: RSS dev instance boot (legacy RealFuels path, Sol
+layer inert, cache byte-identical), Sol boots on `ksp_sol`, published-asset Sol clean-room install
+(`ksp_sol_cleanroom`) — which needs the third `ckan install` in docs/SOL.md (headless drops KSPBurst +
+Planet textures with Sol's repo added). The CKAN indexer dry run inflates the new netkan
+(`Sol-Core` in the texture any_of) cleanly.
+
+**0.9.0 public beta** went out 2026-10-11 (seven assets). **The CKAN listing is waiting on a human:**
 https://github.com/KSP-CKAN/NetKAN/pull/11689, opened 2026-10-12 from the fork `miskoltrans/NetKAN`,
 branch `rp-axe` (three metanetkan stubs; the real metadata is `RP-AXE.netkan` and
 `RP-AXE-Express-{High,Low}.netkan` on `main`). Expect weeks; nobody is polling it.
