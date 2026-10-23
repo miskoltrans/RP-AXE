@@ -8,9 +8,9 @@ compatibility layer that puts a Sol career back on the RSS numbers.
 **Status (2026-10-24):** tested on Sol **0.9.5** (public CKAN release) with KSP 1.12.5. A new career
 starts, R&D and Mission Control open, the editor loads, launch-site switching and the ground-station
 network work, and the merged configuration matches the RSS install on everything listed under
-"What RP-AXE adjusts" below. Not yet flown end to end. Needs the RP-AXE release that ships
-`GameData/RP-AXE/design/Sol/` (after 0.9.0). On 0.9.0, Sol installs and boots but plays with Sol's
-own science values (see below).
+"What RP-AXE adjusts" below. Not yet flown end to end. Needs **RP-AXE 0.9.1 or later**, the
+first release with `GameData/RP-AXE/design/Sol/`. On 0.9.0, Sol installs and boots but plays with
+Sol's own science values (see below).
 
 > RP-1's own wiki says Sol "may cause issues with some aspects of RP-1" and the KSP-RO Discord does
 > not support it. RP-AXE carries some of RP-1's configuration, so report Sol problems on the

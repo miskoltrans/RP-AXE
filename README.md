@@ -131,7 +131,7 @@ Command line, same thing, in the same order:
 
 ```
 ckan install -c RP-AXE-Express-Low.ckan --no-recommends --gamedir <your KSP folder> --headless
-ckan install -c RP-AXE-0.9.0.ckan       --no-recommends --gamedir <your KSP folder> --headless
+ckan install -c RP-AXE-0.9.1.ckan       --no-recommends --gamedir <your KSP folder> --headless
 ```
 
 Installing `RP-AXE-<version>.ckan` on its own also works in the CKAN window: it asks for the texture

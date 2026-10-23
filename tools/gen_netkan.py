@@ -216,10 +216,16 @@ def check_coverage(reg, env):
     return not missing
 
 
+def mod_version():
+    """The one place the version lives: GameData/RP-AXE/RP-AXE.version (KSP-AVC)."""
+    v = load(os.path.join(REPO, "GameData", "RP-AXE", "RP-AXE.version"))["VERSION"]
+    return "%d.%d.%d" % (v["MAJOR"], v["MINOR"], v["PATCH"])
+
+
 def meta(ident, name, abstract, deps, conflicts, description=EXPRESS_DESCRIPTION):
     return collections.OrderedDict([
         ("spec_version", "v1.26"), ("identifier", ident), ("name", name), ("abstract", abstract),
-        ("description", description), ("author", ["miskoltrans"]), ("version", "0.9.0"), ("kind", "metapackage"), ("license", "CC-BY-NC-SA-4.0"),
+        ("description", description), ("author", ["miskoltrans"]), ("version", mod_version()), ("kind", "metapackage"), ("license", "CC-BY-NC-SA-4.0"),
         ("ksp_version_min", "1.12.0"), ("ksp_version_max", "1.12.5"),
         ("depends", [{"name": n} for n in deps]), ("conflicts", [{"name": n} for n in conflicts]),
     ])
@@ -330,7 +336,7 @@ def main():
         "reproduces the test install verbatim. Players normally install RP-AXE itself and choose graphics at the "
         "prompts. SCANsat is deliberately absent here (the dev instance runs a fork); RP-AXE.netkan depends on "
         "CKAN SCANsat.")
-    deps_ckan["version"] = "0.9.0"
+    deps_ckan["version"] = mod_version()
     dump(os.path.join(REPO, "RP-AXE-deps.ckan"), deps_ckan)
     print("RP-AXE-deps.ckan: abstract + version updated")
     if not ok:

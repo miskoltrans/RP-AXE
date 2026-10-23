@@ -263,8 +263,9 @@ run `netkan.exe --verbose --outputdir <dir> --github-token $(gh auth token) <fil
   named after the identifier; ours is `AXE.dll`), harmless.
 `RP-AXE-deps.ckan` is a dev tool and is not submitted.
 
-**Release assets, seven of them**: `RP-AXE-v<ver>.zip` + `.sha256`, `RP-AXE-<ver>.ckan`,
-`RP-AXE-Express-{High,Low}.ckan` (pre-registry presets, no RP-AXE dependency) and
+**Release assets, eight of them (0.9.1+)**: `RP-AXE-v<ver>.zip` + `.sha256`, `RP-AXE-<ver>.ckan`,
+`RP-AXE-Express-{High,Low,Sol}.ckan` (pre-registry presets, no RP-AXE dependency; Sol is a release
+asset only, its packs live in Sol's own CKAN repo, docs/SOL.md) and
 `RP-AXE-Express-{High,Low}.zip` (the registry markers). Re-upload with `gh release upload v<ver> ... --clobber`
 after any `gen_netkan.py` change.
 
