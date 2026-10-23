@@ -19,7 +19,8 @@ namespace RPAxe.AutoTest
     ///   * TRANSFER -- a scripted command (a held yaw plus a moving pitch) goes in, the corrupted command
     ///     comes out: how far the signal is bent, in stick units and in degrees off-axis;
     ///   * HOLD -- a PD attitude controller (full stick at 10 deg of error, gains from a measured
-    ///     authority matrix) holds a fixed inertial direction: how far off it ends up.
+    ///     authority matrix) holds a fixed inertial direction through a "burn" (throttle commanded, which
+    ///     is what keeps the corruption armed; the probe has no engine): how far off it ends up.
     /// Every level runs twice: SINGLE, as shipped, and DOUBLE, with AxeFlightControlLast registered a
     /// second time under another Harmony id -- exactly what 0.9.0 did -- so the before/after is measured
     /// on the same craft, not estimated.
@@ -67,23 +68,31 @@ namespace RPAxe.AutoTest
             return true;
         }
 
+        /// <summary>The candidate with the most wheel torque per tonne. NOT the lightest: RO wheels are
+        /// realistic, and the lightest bus (SSTL-150, 0.1 t) measured 0.001 rad/s^2 per unit stick -- far
+        /// too slow for a hold to settle inside the test's windows (first run, 2026-10-24).</summary>
         static AvailablePart PickProbe()
         {
             AvailablePart best = null;
+            float bestScore = 0f;
             foreach (AvailablePart ap in PartLoader.LoadedPartsList)
             {
                 Part p = ap?.partPrefab;
-                if (p == null || ap.TechHidden) continue;
-                bool cmd = false, wheel = false, axe = false;
+                if (p == null || ap.TechHidden || p.mass <= 0f) continue;
+                bool cmd = false, axe = false;
+                float torque = 0f;
                 foreach (PartModule m in p.Modules)
                 {
                     if (m is ModuleCommand mc && mc.minimumCrew == 0) cmd = true;
-                    else if (m is ModuleReactionWheel) wheel = true;
+                    else if (m is ModuleReactionWheel rw) torque = Mathf.Min(rw.PitchTorque, Mathf.Min(rw.YawTorque, rw.RollTorque));
                     else if (m.moduleName == "ModuleAxeAvionics" || m.moduleName == "ModuleAxeFixedAvionics") axe = true;
                 }
-                if (!(cmd && wheel && axe) || !p.Resources.Contains("ElectricCharge")) continue;
-                if (best == null || p.mass < best.partPrefab.mass) best = ap;
+                if (!(cmd && axe) || torque <= 0f || !p.Resources.Contains("ElectricCharge")) continue;
+                float score = torque / p.mass;
+                if (score > bestScore) { best = ap; bestScore = score; }
             }
+            if (best != null)
+                Debug.Log(Tag + "picked for wheel torque per tonne: " + bestScore.ToString("0.###") + " kN·m/t");
             return best;
         }
 
@@ -136,6 +145,7 @@ namespace RPAxe.AutoTest
         static class Hooks
         {
             internal static Func<Vessel, Vector3> Command;   // null = pass-through, nothing recorded
+            internal static float Throttle;                  // commanded throttle; > deadband ARMS the corruption
             internal static List<Sample> Sink;
             static Vector3 _in;
 
@@ -145,6 +155,7 @@ namespace RPAxe.AutoTest
                 _in = Command(__instance);
                 FlightCtrlState st = __instance.ctrlState;
                 st.pitch = _in.x; st.yaw = _in.y; st.roll = _in.z;
+                st.mainThrottle = Throttle;
             }
 
             static void Postfix(Vessel __instance)
@@ -281,7 +292,7 @@ namespace RPAxe.AutoTest
             _authInv = a.inverse;
             _kp = authMean / (FullStickErrDeg * Mathf.Deg2Rad);
             _kd = 1.6f * Mathf.Sqrt(_kp);
-            bool controllable = auth.All(x => x.magnitude > 1e-3f) && Mathf.Abs(a.determinant) > 1e-9f;
+            bool controllable = auth.All(x => x.magnitude > 1e-2f) && Mathf.Abs(a.determinant) > 1e-9f;
             Check(controllable, "probe has three-axis authority (" + authMean.ToString("0.###") + " rad/s^2 mean)");
 
             var rows = new List<string>();
@@ -322,11 +333,15 @@ namespace RPAxe.AutoTest
                         Hooks.Command = HoldCommand;
                         yield return Ticks(RecoverSec);
 
-                        // HOLD
+                        // HOLD through a burn. Throttle is what arms it: a settled hold commands ~0, below
+                        // the arming deadband, so without it the corruption never switches on (run 2,
+                        // 2026-10-24: 0.00 deg at every sigma). The probe has no engine; throttle only arms.
                         AxeControlLockerUtils.ResetAdversarial();
                         AxeAvionicsController.TestNoiseOverride = sigma;
+                        Hooks.Throttle = 1f;
                         buf.Clear();
                         yield return Ticks(HoldSec);
+                        Hooks.Throttle = 0f;
                         var hold = buf.Skip(buf.Count / 4).ToList();
                         Dump(mode, sigma, "hold", buf);
 
@@ -361,6 +376,7 @@ namespace RPAxe.AutoTest
             }
 
             Hooks.Command = null;
+            Hooks.Throttle = 0f;
             Hooks.Sink = null;
             AxeAvionicsController.TestNoiseOverride = -1f;
             hooks.UnpatchAll(TestHarmonyId);
