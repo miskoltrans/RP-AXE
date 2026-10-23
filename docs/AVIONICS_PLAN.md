@@ -272,6 +272,14 @@ under-fuelling hole in one line: launch with tanks emptied to save mass, fill on
 configured-mass-only warning was computed against a craft that never flies. Covers ISRU, orbital
 assembly and launched-dry with no ISRU-specific machinery.
 
+**Red = over budget (2026-10-24).** Every row that means "this vessel lacks capacity" is painted one
+alarm red (`AxeControlLockerUtils.Alarm`): Capacity (which then also quotes the vessel mass), Control
+Noise, a `degraded` verdict, and on named parts Steerable Mass + Guidance. The rule is that red never
+fires on a weaker test than the one that corrupts `ctrlState`, so the readouts now ask `ShouldLock` for
+what they used to guess: a **seated** crewed pod bypasses (`crewed pod has control`, never red), another
+unit out-rating this one is `a larger unit is steering`, and launch clamps are dropped from the VAB mass
+the way `ShouldLock` drops them on the pad. A Guided box too small to rate at all is red regardless.
+
 ### A5 `useThrottle` bypass — **DONE**
 Stock `ModuleRCS` uses `mainThrottle` as the axial command when `Z` is idle and `useThrottle` is set,
 so **an avionics-locked vessel can translate axially on RCS via the throttle today**. RP-1 patched it

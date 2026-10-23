@@ -241,6 +241,28 @@ namespace RPAxe
             => sigma <= 0f ? "clean"
              : $"{AdversarialRegimeName} {sigma * 100f:F0}% +{sigma * MisdirectMaxDeg:F0}° off-axis — haywire on ANY input";
 
+        // PAW rich text for every avionics row that means "this vessel is over its steerable-mass budget".
+        // One colour, used for nothing else in the group, so an undersized design is recognised at a glance
+        // instead of read row by row -- the readouts were already honest, they just looked like all the
+        // others. Never paint a row from a weaker test than the one that corrupts ctrlState: a red row on a
+        // craft that flies clean teaches the player to ignore red.
+        public const string AlarmColor = "#FF5A4A";
+        public static string Alarm(string s) => $"<color={AlarmColor}>{s}</color>";
+
+        /// <summary>A4 editor verdict, "mass (ratio — meaning)", shared by both avionics modules.
+        /// <paramref name="cap"/> is the rating the ratio is quoted against (this unit's, for a named part);
+        /// <paramref name="vesselCap"/> is the vessel's MAX budget, which is what actually decides whether
+        /// the craft flies degraded -- the two only differ when another unit out-rates this one.</summary>
+        public static string Verdict(float mass, float cap, float vesselCap, bool bypassed)
+        {
+            float r = mass / cap;
+            string head = $"{mass:N2} t  ({r:0.00}x — ";
+            if (r <= 1f) return head + "clean)";
+            if (bypassed) return head + "crewed pod has control)";
+            if (mass <= vesselCap) return head + "a larger unit is steering)";
+            return Alarm(head + "degraded)");
+        }
+
         // The sustained component, shared by the washout move and by the regime split -- one EMA, so the
         // two can never disagree about what "holding" means.
         static float _wp, _wy, _wr;
@@ -665,7 +687,7 @@ namespace RPAxe
             for (int i = 0; i < parts.Count; i++)
             {
                 Part p = parts[i];
-                if (p == null) continue;
+                if (p == null || IsClamp(p)) continue;
                 t += PartDryMassTons(p);
                 for (int j = 0; j < p.Resources.Count; j++)
                 {
@@ -677,6 +699,23 @@ namespace RPAxe
             return t;
         }
 
+        // Launch clamps never fly: ShouldLock zeroes them on the pad and they are gone after liftoff. The
+        // editor's own mass total counts them, so a VAB readout built on that total has to take them back
+        // out -- 0.1 t a tower is enough to put a small sounding rocket "over capacity" when it flies clean.
+        public static float ClampMassTons(List<Part> parts)
+        {
+            if (parts == null) return 0f;
+            float t = 0f;
+            for (int i = 0; i < parts.Count; i++)
+            {
+                Part p = parts[i];
+                if (p != null && IsClamp(p)) t += PartDryMassTons(p) + (float)p.GetResourceMass();
+            }
+            return t;
+        }
+
+        static bool IsClamp(Part p) => p.FindModuleImplementing<LaunchClamp>() != null;
+
         public static LockLevel ShouldLock(List<Part> parts) => ShouldLock(parts, out _, out _, out _);
 
         public static LockLevel ShouldLock(List<Part> parts, out float maxCapacity, out float vesselMass)
@@ -687,10 +726,18 @@ namespace RPAxe
         /// <param name="noise">Control-noise amplitude in [0..1]; 0 unless over capacity.</param>
         public static LockLevel ShouldLock(List<Part> parts, out float maxCapacity, out float vesselMass,
                                            out float noise)
+            => ShouldLock(parts, out maxCapacity, out vesselMass, out noise, out _);
+
+        /// <param name="bypassed">A crewed pod or bare command source is granting full control outright, so
+        /// the vessel flies clean at ANY ratio. The PAW readouts need this to stay truthful; the controller
+        /// does not, since it only ever acts on the returned level and noise.</param>
+        public static LockLevel ShouldLock(List<Part> parts, out float maxCapacity, out float vesselMass,
+                                           out float noise, out bool bypassed)
         {
             noise = 0f;
             maxCapacity = 0f;
             vesselMass = 0f;
+            bypassed = false;
             if (parts == null || parts.Count == 0) return LockLevel.Unlocked;
             if (!HighLogic.LoadedSceneIsFlight && !HighLogic.LoadedSceneIsEditor) return LockLevel.Unlocked;
 
@@ -743,7 +790,7 @@ namespace RPAxe
                         // capacity path already gets from CapacityTons.
                         if (fix.allowAxial && !fix.dead) fixedAxial = true;
                     }
-                    else if (m is ModuleCommand mc && (IsValidCommand(mc) || HighLogic.LoadedSceneIsEditor))
+                    else if (m is ModuleCommand mc && (HighLogic.LoadedSceneIsEditor ? IsEditorCommand(mc) : IsValidCommand(mc)))
                     {
                         cmd = true;
                     }
@@ -765,7 +812,7 @@ namespace RPAxe
             }
 
             // A crewed pod / bare command source still bypasses everything, unconditionally (RP-1's rule).
-            if (bypass) return LockLevel.Unlocked;
+            if (bypass) { bypassed = true; return LockLevel.Unlocked; }
 
             // THE DEGRADED BAND. Under capacity, clean control. Over it the craft still steers, but its
             // commands are corrupted by the regime-matching policy at a strength rising with overload.
@@ -793,5 +840,18 @@ namespace RPAxe
             mc.ModuleState == ModuleCommand.ModuleControlState.Nominal ||
             mc.ModuleState == ModuleCommand.ModuleControlState.PartialProbe ||
             mc.ModuleState == ModuleCommand.ModuleControlState.PartialManned;
+
+        // The editor has no ModuleState to read, so stand in for it: an uncrewed command part counts as
+        // live, a crewed one only with someone seated in the crew manifest. Without the seat test an
+        // UNCREWED test flight of a capsule reads as crew-bypassed in the VAB, and then flies degraded.
+        // The crew dialog's live manifest first (the crew tab edits that one), then the editor's copy of it.
+        // No manifest to consult -> assume crewed, which was this branch's behaviour before it asked.
+        static bool IsEditorCommand(ModuleCommand mc)
+        {
+            if (mc.minimumCrew <= 0) return true;
+            VesselCrewManifest vcm = KSP.UI.CrewAssignmentDialog.Instance?.GetManifest(false) ?? ShipConstruction.ShipManifest;
+            PartCrewManifest pcm = vcm?.GetPartCrewManifest(mc.part.craftID);
+            return pcm == null || pcm.AnySeatTaken();
+        }
     }
 }

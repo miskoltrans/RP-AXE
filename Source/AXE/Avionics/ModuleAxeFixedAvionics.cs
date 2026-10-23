@@ -420,10 +420,10 @@ namespace RPAxe
 
         void OnDestroy() => GameEvents.onPartCouple.Remove(OnCouple);
 
-                // Reports THIS unit against the vessel, in the same vocabulary the procedural core uses: capacity is
-        // "guided up to this mass; over it, unguided", and allowAxial decides whether unguided keeps axial
-        // thrust. Locked and Axial are not separate concepts here -- they ARE unguided-without-axial and
-        // unguided-with-axial.
+        // Reports THIS unit against the vessel, in the same vocabulary the procedural core uses: capacity is
+        // "guided up to this mass; over it, degraded", and allowAxial decides whether a capacity-0 (unguided)
+        // unit keeps axial thrust. Locked and Axial are not separate concepts here -- they ARE
+        // unguided-without-axial and unguided-with-axial.
         //
         // Two things this replaces, both of which were the readout contradicting the mechanic:
         //   * it used to report the VESSEL-wide lock level, so a 0.875 t Voyager bus riding a 40 t stack
@@ -431,7 +431,8 @@ namespace RPAxe
         //   * capacity 0 short-circuited to "payload only -- cannot steer" even with allowAxial set, while
         //     ShouldLock was actually granting that part Axial. A Vostok flew retro-capable and said it
         //     could not steer at all.
-        // Judging this unit locally also drops the per-second ShouldLock walk over every part.
+        // Judging this unit locally also drops the per-second ShouldLock walk over every part -- it comes back
+        // only while this unit is over its own rating, to decide whether that is the vessel's problem too.
         void UpdateGui()
         {
             UpdateDraw();
@@ -479,12 +480,25 @@ namespace RPAxe
 
             // mass 0 means there is nothing to judge against yet (empty editor); report the capability
             // rather than a verdict.
+            //
+            // Over THIS unit's rating is not yet over the vessel's: the budget is a MAX across units and a
+            // crewed pod bypasses it outright, so ask ShouldLock -- the controller's own function -- before
+            // going red. Walked only here, so a unit inside its rating stays a purely local judgement.
+            // (The status used to say "unguided" here. Over capacity has not locked since 40cef85 -- it
+            // corrupts the command -- so that text described a mechanic that no longer exists.)
             float mass = VesselMassTons();
             if (mass > capacityTons)
             {
-                guidanceStatus = allowAxial ? "Over capacity — unguided, axial thrust only"
-                                            : "Over capacity — unguided, no steering";
-                return;
+                VesselVerdict(out float vesselCap, out float noise, out bool bypassed);
+                if (bypassed) { guidanceStatus = "Over this unit's rating — crewed pod has control"; return; }
+                if (noise > 0f)
+                {
+                    capacityDisplay = AxeControlLockerUtils.Alarm($"{capacityTons:N2} t — vessel {mass:N2} t");
+                    guidanceStatus = AxeControlLockerUtils.Alarm("Over capacity — guidance degraded");
+                    return;
+                }
+                if (vesselCap > capacityTons) { guidanceStatus = "Over this unit's rating — a larger unit is steering"; return; }
+                // Otherwise the two mass totals disagree at the margin; ShouldLock's is the one that flies.
             }
 
             guidanceStatus = shielded
@@ -499,20 +513,26 @@ namespace RPAxe
             if (capacityTons <= 0f) { vesselRatioDisplay = fullTankDisplay = "n/a"; return; }
             float now = VesselMassTons();
             float full = AxeControlLockerUtils.FullTankMassTons(EditorLogic.fetch?.ship?.parts);
-            vesselRatioDisplay = Verdict(now, capacityTons);
-            fullTankDisplay = full > now + 0.01f ? Verdict(full, capacityTons) : "same as configured";
+            float vesselCap = capacityTons;
+            bool bypassed = false;
+            if (Mathf.Max(now, full) > capacityTons) VesselVerdict(out vesselCap, out _, out bypassed);
+            vesselRatioDisplay = AxeControlLockerUtils.Verdict(now, capacityTons, vesselCap, bypassed);
+            fullTankDisplay = full > now + 0.01f ? AxeControlLockerUtils.Verdict(full, capacityTons, vesselCap, bypassed)
+                                                 : "same as configured";
         }
 
-        static string Verdict(float mass, float cap)
+        void VesselVerdict(out float vesselCap, out float noise, out bool bypassed)
         {
-            float r = mass / cap;
-            return $"{mass:N2} t  ({r:0.00}x — {(r <= 1f ? "clean" : "degraded")})";
+            List<Part> parts = HighLogic.LoadedSceneIsEditor ? EditorLogic.fetch?.ship?.parts : vessel?.parts;
+            AxeControlLockerUtils.ShouldLock(parts, out vesselCap, out _, out noise, out bypassed);
         }
 
         float VesselMassTons()
         {
             if (HighLogic.LoadedSceneIsEditor)
-                return EditorLogic.fetch?.ship != null ? EditorLogic.fetch.ship.GetTotalMass() : 0f;
+                return EditorLogic.fetch?.ship != null
+                    ? EditorLogic.fetch.ship.GetTotalMass() - AxeControlLockerUtils.ClampMassTons(EditorLogic.fetch.ship.parts)
+                    : 0f;
             return vessel != null ? (float)vessel.totalMass : 0f;
         }
 
@@ -523,7 +543,7 @@ namespace RPAxe
                 : "<b>Unguided</b> — provides command and telemetry, but never steers.\n";
             if (capacityTons > 0f)
             {
-                s += "Over that mass it becomes <b>unguided</b>: attitude control is lost, staging and throttle keep working.\n";
+                s += "Over that mass guidance <b>degrades</b>: steering commands are corrupted, the worse the further over.\n";
             }
             if (allowAxial) s += "Axial thrust stays available while unguided (spin-stabilized).\n";
             if (capacityTons > 0f)

@@ -656,6 +656,9 @@ namespace RPAxe
             if (HighLogic.LoadedSceneIsEditor)
             {
                 GameEvents.onEditorShipModified.Add(OnShipModified);
+                // Seating or unseating crew decides whether a capsule's pod bypasses avionics, and the crew
+                // tab fires no ship-modified event -- without this the overload readout goes stale.
+                GameEvents.onEditorShipCrewModified.Add(OnCrewModified);
                 // ProceduralPart's own shape/volume isn't necessarily settled the same frame this part
                 // starts (its shape application can run across a frame boundary) -- reading volume
                 // synchronously here can catch it before that settles, producing a near-zero cached
@@ -708,6 +711,7 @@ namespace RPAxe
         void OnDestroy()
         {
             GameEvents.onEditorShipModified.Remove(OnShipModified);
+            GameEvents.onEditorShipCrewModified.Remove(OnCrewModified);
             GameEvents.onStageActivate.Remove(OnStage);
             GameEvents.onPartCouple.Remove(OnCouple);
             GameEvents.onVesselGoOnRails.Remove(GoOnRails);
@@ -726,6 +730,11 @@ namespace RPAxe
             UpdateHardwareMass();
             PushBatteryToTank();
             UpdateRate();
+        }
+
+        void OnCrewModified(VesselCrewManifest _)
+        {
+            if (HighLogic.LoadedSceneIsEditor) UpdateRate();
         }
 
         // The authoritative "the box changed size" signal, and the ONLY one ROTanks gives us.
@@ -1640,7 +1649,9 @@ namespace RPAxe
         float VesselMassTons()
         {
             if (HighLogic.LoadedSceneIsEditor)
-                return EditorLogic.fetch?.ship != null ? EditorLogic.fetch.ship.GetTotalMass() : 0f;
+                return EditorLogic.fetch?.ship != null
+                    ? EditorLogic.fetch.ship.GetTotalMass() - AxeControlLockerUtils.ClampMassTons(EditorLogic.fetch.ship.parts)
+                    : 0f;
             return vessel != null ? (float)vessel.totalMass : 0f;
         }
 
@@ -1710,12 +1721,20 @@ namespace RPAxe
             return max;
         }
 
+        // Set by UpdateAuthorityDisplay, read by SetGui and the editor verdicts. _overloaded is the very test
+        // that corrupts ctrlState (sigma > 0), so a red row always means a craft that will fly degraded.
+        bool _overloaded;
+        bool _bypassed;
+
         // The player-facing overload readout. In flight the controller's value is authoritative (it is what
         // actually corrupts ctrlState); in the editor there is no controller, so recompute from the same
         // numbers. Unguided has no capacity concept and therefore no authority concept.
         void UpdateAuthorityDisplay()
         {
-            if (ScienceCoreMode) { authorityDisplay = "n/a — unguided"; return; }
+            _overloaded = _bypassed = false;
+            // The ratios too: they answer "n/a" for Unguided, and skipping them left a guided core's last
+            // verdict on screen after switching models -- now possibly a red one.
+            if (ScienceCoreMode) { authorityDisplay = "n/a — unguided"; UpdateEditorRatios(); return; }
 
             float sigma;
             if (HighLogic.LoadedSceneIsFlight && AxeAvionicsController.Instance != null
@@ -1731,13 +1750,22 @@ namespace RPAxe
                 sigma = (capacity <= 0f || mass <= 0f)
                     ? (mass > 0f ? 1f : 0f)
                     : AxeControlLockerUtils.NoiseFor(mass / capacity);
+                // A crewed pod grants full control outright, whatever the ratio -- ShouldLock's bypass, which
+                // the controller's value above already has folded in. Ask the same function here, or every
+                // crewed stack carrying a core reads red in the VAB and then flies clean.
+                List<Part> parts = HighLogic.LoadedSceneIsEditor ? EditorLogic.fetch?.ship?.parts : vessel?.parts;
+                AxeControlLockerUtils.ShouldLock(parts, out _, out _, out _, out _bypassed);
+                if (_bypassed) sigma = 0f;
             }
 
-            authorityDisplay = AxeControlLockerUtils.DescribePenalty(sigma);
+            _overloaded = sigma > 0f;
+            authorityDisplay = _bypassed ? "clean — crewed pod has control"
+                             : AxeControlLockerUtils.DescribePenalty(sigma);
             // Over capacity but not currently armed is NOT "clean", and saying so would read as "this mod is
             // broken" the moment the player touched the stick and the craft misbehaved.
             if (sigma > 0f && HighLogic.LoadedSceneIsFlight && !AxeControlLockerUtils.Armed)
                 authorityDisplay = "over capacity — clean while nothing is commanded";
+            if (_overloaded) authorityDisplay = AxeControlLockerUtils.Alarm(authorityDisplay);
             UpdateEditorRatios();
         }
 
@@ -1753,14 +1781,10 @@ namespace RPAxe
             System.Collections.Generic.List<Part> parts = EditorLogic.fetch?.ship?.parts;
             float now = VesselMassTons();
             float full = AxeControlLockerUtils.FullTankMassTons(parts);
-            vesselRatioDisplay = Verdict(now, cap);
-            fullTankDisplay = full > now + 0.01f ? Verdict(full, cap) : "same as configured";
-        }
-
-        static string Verdict(float mass, float cap)
-        {
-            float r = mass / cap;
-            return $"{mass:N2} t  ({r:0.00}x — {(r <= 1f ? "clean" : "degraded")})";
+            // cap is already the vessel-wide MAX here, so it is also the vessel budget.
+            vesselRatioDisplay = AxeControlLockerUtils.Verdict(now, cap, cap, _bypassed);
+            fullTankDisplay = full > now + 0.01f ? AxeControlLockerUtils.Verdict(full, cap, cap, _bypassed)
+                                                 : "same as configured";
         }
 
 
@@ -2038,8 +2062,13 @@ namespace RPAxe
             capacityDisplay = dead      ? "none — permanently disabled"
                             : ScienceCoreMode ? "n/a — unguided"
                             : hibernating     ? "none — shut down"
-                            : capacityTons > 0f ? $"{capacityTons:N2} t"
+                            : capacityTons > 0f ? (_overloaded ? $"{capacityTons:N2} t — vessel {VesselMassTons():N2} t"
+                                                               : $"{capacityTons:N2} t")
                             : "none — box too small for this tier";
+            // Red whenever the vessel is over budget -- and always for a guided box too small to rate at
+            // all, which costs mass and power for zero capacity whoever else is steering.
+            if (_overloaded || (!dead && !ScienceCoreMode && !hibernating && capacityTons <= 0f))
+                capacityDisplay = AxeControlLockerUtils.Alarm(capacityDisplay);
 
             guidanceStatus = dead ? "permanently disabled — no command, no control, no power"
                            : hibernating ? "shut down — no guidance, out of the steerable-mass budget"
