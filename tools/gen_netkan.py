@@ -26,8 +26,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.normpath(os.path.join(HERE, ".."))
 REGISTRY = os.path.normpath(os.path.join(REPO, "..", "Instance", "CKAN", "registry.json"))
 
+# Sol-Core (RSS-Reborn's planet pack, its own CKAN repo) `provides: RealSolarSystem` and ships its own
+# textures, so it closes this choice too. Without it a GUI player on Sol is asked to pick an RSS texture
+# pack, which then loads gigabytes of textures for bodies that do not exist. Unknown on the default
+# registry, where it is simply never chosen. docs/SOL.md.
 RSS_TEXTURES = {"any_of": [{"name": "RSSTextures4096"}, {"name": "RSSTextures8192"}, {"name": "RSSTextures16K"},
-                           {"name": "RSSTextures2048"}]}
+                           {"name": "RSSTextures2048"}, {"name": "Sol-Core"}]}
 DEPENDS = [
     # the stack AXE's configs and plugin bind to directly
     "ModuleManager", "Harmony2", "ROUtils", "ModularFlightIntegrator", "KerbalChangelog",
@@ -73,6 +77,19 @@ GRAPHICS_HIGH = [
     "DistantObject", "PlanetShine", "CanaveralPads", "PoodsMilkyWaySkybox",
 ]
 GRAPHICS_LOW = ["RSSTextures4096", "DistantObject", "PlanetShine"]
+# Sol instead of RSS (docs/SOL.md). Every pack NAMED: Sol-Core depends on virtual per-system packs
+# (Sol-EarthSystem has 4k/8k/16k providers) and on the virtual ParallaxContinued, all of which a headless
+# resolver drops; and the three ParallaxContinued texture packs, hard deps of ParallaxContinued-KTL that
+# Sol's Parallax configs read ~2,500 times, were dropped too, exit 0 (Sol run, 2026-10-23). Scatterer and
+# EVE arrive through Sol-Visuals, which also provides their Sol configs.
+SOL_PACKS = ["Sol-Core", "Sol-Configs", "Sol-Visuals", "Sol-Launchsites-256x"] + [
+    "Sol-%s-4k" % s for s in ("Sun", "Mercury", "Venus", "EarthSystem", "MarsSystem", "JupiterSystem",
+                              "SaturnSystem", "UranusSystem", "NeptuneSystem", "AsteroidBelt", "KuiperBelt")]
+GRAPHICS_SOL = SOL_PACKS + [
+    "ParallaxContinued-KTL", "ParallaxContinued-Terrain-Textures", "ParallaxContinued-Scatter-Textures",
+    "ParallaxContinued-Planet-Textures", "DistantObject", "PlanetShine"]
+# identifiers that live only in the Sol repository (https://github.com/RSS-Reborn/CKAN-meta)
+SOL_REPO_ONLY = set(SOL_PACKS) | {"ParallaxContinued-KTL"}
 # (the texture pack is already offered through the any_of in DEPENDS)
 SUGGESTS = [g for g in GRAPHICS_HIGH if not g.startswith("RSSTextures")] + ["BreakingGround-DLC", "MakingHistory-DLC"]
 CONFLICTS = [
@@ -111,6 +128,15 @@ EXPRESS_DESCRIPTION = (
     "dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the "
     "capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, "
     "which aborts the whole install."
+)
+
+EXPRESS_SOL_DESCRIPTION = (
+    "RP-AXE on Sol instead of Real Solar System. FIRST add Sol's metadata repository to CKAN (Settings -> "
+    "Metadata Repositories -> New -> Sol, or the URL https://github.com/RSS-Reborn/CKAN-meta/archive/main.tar.gz) "
+    "and refresh. Then install this preset, then RP-AXE-<version>.ckan (CKAN -> File -> Install from .ckan file, "
+    "one file per install). The preset names Sol's 4K packs and every texture pack Sol reads, so no choice is "
+    "left for CKAN to skip. Decline the further recommendations CKAN offers; do not press Cancel. Full notes: "
+    "docs/SOL.md in the RP-AXE repository."
 )
 
 EXPRESS_DESCRIPTION_REGISTRY = (
@@ -180,19 +206,20 @@ def check_coverage(reg, env):
         reach |= provides.get(name, set())
     reach |= {ALIAS[a] for a in ALIAS if a in reach}
     missing = sorted(env - reach - {"RP-AXE-deps"})
-    extra = sorted(listed - env - set(ALIAS) - {"RSSTextures4096"})
+    extra = sorted(listed - env - set(ALIAS) - {"RSSTextures4096"} - SOL_REPO_ONLY)
     unknown = sorted(x for x in listed | set(CONFLICTS)
-                     if x not in reg and x not in ALIAS and not x.endswith("-DLC") and x != "RSSTextures4096")
+                     if x not in reg and x not in ALIAS and not x.endswith("-DLC") and x != "RSSTextures4096"
+                     and x not in SOL_REPO_ONLY)
     print("dev-environment modules neither listed nor reachable through depends edges:", missing or "none")
     print("listed but not in the dev environment:", extra or "none")
     print("identifiers not installed here (must exist on CKAN -- verify by hand):", unknown or "none")
     return not missing
 
 
-def meta(ident, name, abstract, deps, conflicts):
+def meta(ident, name, abstract, deps, conflicts, description=EXPRESS_DESCRIPTION):
     return collections.OrderedDict([
         ("spec_version", "v1.26"), ("identifier", ident), ("name", name), ("abstract", abstract),
-        ("description", EXPRESS_DESCRIPTION), ("author", ["miskoltrans"]), ("version", "0.9.0"), ("kind", "metapackage"), ("license", "CC-BY-NC-SA-4.0"),
+        ("description", description), ("author", ["miskoltrans"]), ("version", "0.9.0"), ("kind", "metapackage"), ("license", "CC-BY-NC-SA-4.0"),
         ("ksp_version_min", "1.12.0"), ("ksp_version_max", "1.12.5"),
         ("depends", [{"name": n} for n in deps]), ("conflicts", [{"name": n} for n in conflicts]),
     ])
@@ -242,16 +269,30 @@ def main():
         "one hard set. "
         "About 8 GB more than Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until "
         "RP-AXE is on the registry; decline the further recommendations CKAN offers.",
-        express + GRAPHICS_HIGH, ["RP-AXE-Express-Low", "RSSTextures4096", "RSSTextures8192", "RSSTextures2048"]))
+        express + GRAPHICS_HIGH,
+        ["RP-AXE-Express-Low", "RP-AXE-Express-Sol", "RSSTextures4096", "RSSTextures8192", "RSSTextures2048", "Sol-Core"]))
     dump(os.path.join(REPO, "RP-AXE-Express-Low.ckan"), meta(
         "RP-AXE-Express-Low", "RP-AXE Express (Low graphics)",
         "The recommended tools for RP-AXE plus a light graphics set (4K RSS textures, DistantObject, PlanetShine; "
         "no Scatterer or clouds, like RP-1 Express Graphics-Low) as one hard set. CKAN -> File -> Install from "
         ".ckan file, together with RP-AXE-<ver>.ckan; "
         "decline the further recommendations CKAN offers.",
-        express + GRAPHICS_LOW, ["RP-AXE-Express-High", "RSSTextures16K", "RSSTextures8192", "RSSTextures2048"]))
-    print("wrote RP-AXE-Express-High.ckan (%d) and RP-AXE-Express-Low.ckan (%d)"
-          % (len(express) + len(GRAPHICS_HIGH), len(express) + len(GRAPHICS_LOW)))
+        express + GRAPHICS_LOW,
+        ["RP-AXE-Express-High", "RP-AXE-Express-Sol", "RSSTextures16K", "RSSTextures8192", "RSSTextures2048", "Sol-Core"]))
+    # Sol: a release asset only, never a registry netkan -- its packs live in Sol's own CKAN repository,
+    # which the default registry cannot resolve. RSSVE would stack a second EVE/Scatterer config on
+    # Sol-Visuals' own.
+    dump(os.path.join(REPO, "RP-AXE-Express-Sol.ckan"), meta(
+        "RP-AXE-Express-Sol", "RP-AXE Express (Sol)",
+        "The recommended tools for RP-AXE plus the Sol planet pack (4K) instead of Real Solar System, with every "
+        "Sol texture pack named. Needs Sol's CKAN repository added first. CKAN -> File -> Install from .ckan file, "
+        "then RP-AXE-<ver>.ckan; decline the further recommendations CKAN offers.",
+        express + GRAPHICS_SOL,
+        ["RP-AXE-Express-High", "RP-AXE-Express-Low", "RSSTextures4096", "RSSTextures8192", "RSSTextures16K",
+         "RSSTextures2048", "RSSVE-HR", "RSSVE-LR"],
+        description=EXPRESS_SOL_DESCRIPTION))
+    print("wrote RP-AXE-Express-High.ckan (%d), RP-AXE-Express-Low.ckan (%d), RP-AXE-Express-Sol.ckan (%d)"
+          % (len(express) + len(GRAPHICS_HIGH), len(express) + len(GRAPHICS_LOW), len(express) + len(GRAPHICS_SOL)))
 
     # Registry variants, submitted to KSP-CKAN/NetKAN the way RP-1 does it: a one-line stub there
     # (`$kref: #/ckan/netkan/<raw URL of this file>`) and the full metadata here. These DO depend on

@@ -130,6 +130,9 @@
             "name": "RP-AXE-Express-Low"
         },
         {
+            "name": "RP-AXE-Express-Sol"
+        },
+        {
             "name": "RSSTextures4096"
         },
         {
@@ -137,6 +140,9 @@
         },
         {
             "name": "RSSTextures2048"
+        },
+        {
+            "name": "Sol-Core"
         }
     ],
     "install": [

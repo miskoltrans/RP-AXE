@@ -13,6 +13,9 @@ Reads the instance's CKAN/registry.json and GameData, and reports against the ne
 
 Exit 1 on any FAIL. This is the "release prove" of docs/RELEASE.md: a stranger's CKAN resolving
 the metadata unattended must produce the part set the tree was balanced against.
+
+An instance with Sol-Core installed is checked as a Sol install (docs/SOL.md): Sol's own packs and
+the texture folders it reads instead of the RSS texture pack / RSSVE / Scatterer checks.
 """
 import argparse
 import json
@@ -36,6 +39,29 @@ def names(rel):
         elif "any_of" in d:
             out.append("|".join(x["name"] for x in d["any_of"]))
     return out
+
+
+def check_sol(reg, inst, present, gd):
+    """Sol in place of RSS (docs/SOL.md). Sol-Core's per-system packs are virtual and the ParallaxContinued
+    texture packs got dropped by a headless resolver with exit 0 (2026-10-23), so check what Sol READS."""
+    fail = 0
+    print("  --   Sol install (Sol-Core %s)" % inst["Sol-Core"]["source_module"].get("version"))
+    for d in names(inst["Sol-Core"]["source_module"].get("depends", [])):
+        if not present(d):
+            print("  FAIL Sol-Core dependency missing:", d); fail = 1
+    # Sol's Parallax configs read these folders (~2,500 references); nothing else ships them
+    for folder in ("Parallax_StockScatterTextures", "Parallax_StockTerrainTextures"):
+        ok = os.path.isdir(os.path.join(gd, folder))
+        print("  %s %s%s" % ("ok  " if ok else "FAIL", folder, "" if ok else " -- Sol's terrain/scatter textures; install the ParallaxContinued-*-Textures packs"))
+        fail |= not ok
+    # Sol-Visuals carries the EVE and Scatterer configs for Sol's bodies; RSS's would stack a second set
+    for folder, want in (("Sol-Visuals", True), ("RSSVE", False), ("RealSolarSystem", False), ("RSS-Textures", False)):
+        ok = os.path.isdir(os.path.join(gd, folder)) == want
+        print("  %s %s %s" % ("ok  " if ok else "FAIL", folder, "present" if want else "absent"))
+        fail |= not ok
+    ok = os.path.isdir(os.path.join(gd, "RP-AXE", "design", "Sol"))
+    print("  %s RP-AXE/design/Sol (the Sol compatibility layer, 0.9.1+)" % ("ok  " if ok else "FAIL"))
+    return fail | (not ok)
 
 
 def main():
@@ -106,7 +132,9 @@ def main():
     for f in ("Plugins/AXE.dll", "design/Tree/AxeTechTree.cfg", "seed/Parts/_SYNC_PROVENANCE.txt"):
         ok = os.path.exists(os.path.join(gd, "RP-AXE", f))
         print("  %s %s" % ("ok  " if ok else "FAIL", f)); fail |= not ok
-    if os.path.isdir(os.path.join(gd, "Scatterer")):
+    if "Sol-Core" in inst:
+        fail |= check_sol(reg, inst, present, gd)
+    elif os.path.isdir(os.path.join(gd, "Scatterer")):
         # `Scatterer/config` is the plugin's own folder and is always there; the planet list the
         # resolver drops is StockScattererConfigs (run 2), and that list names STOCK bodies: only
         # RSSVE's patch retargets it to RSS, so Scatterer without RSSVE renders nothing (run 5).

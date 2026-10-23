@@ -1,0 +1,172 @@
+{
+    "spec_version": "v1.26",
+    "identifier": "RP-AXE-Express-Sol",
+    "name": "RP-AXE Express (Sol)",
+    "abstract": "The recommended tools for RP-AXE plus the Sol planet pack (4K) instead of Real Solar System, with every Sol texture pack named. Needs Sol's CKAN repository added first. CKAN -> File -> Install from .ckan file, then RP-AXE-<ver>.ckan; decline the further recommendations CKAN offers.",
+    "description": "RP-AXE on Sol instead of Real Solar System. FIRST add Sol's metadata repository to CKAN (Settings -> Metadata Repositories -> New -> Sol, or the URL https://github.com/RSS-Reborn/CKAN-meta/archive/main.tar.gz) and refresh. Then install this preset, then RP-AXE-<version>.ckan (CKAN -> File -> Install from .ckan file, one file per install). The preset names Sol's 4K packs and every texture pack Sol reads, so no choice is left for CKAN to skip. Decline the further recommendations CKAN offers; do not press Cancel. Full notes: docs/SOL.md in the RP-AXE repository.",
+    "author": [
+        "miskoltrans"
+    ],
+    "version": "0.9.0",
+    "kind": "metapackage",
+    "license": "CC-BY-NC-SA-4.0",
+    "ksp_version_min": "1.12.0",
+    "ksp_version_max": "1.12.5",
+    "depends": [
+        {
+            "name": "MechJeb2"
+        },
+        {
+            "name": "TestFlight"
+        },
+        {
+            "name": "KerbalAlarmClock"
+        },
+        {
+            "name": "StockAlarmClockDisabler"
+        },
+        {
+            "name": "TransferWindowPlannerFork"
+        },
+        {
+            "name": "TargetInterceptPlanner"
+        },
+        {
+            "name": "BetterTimeWarpCont"
+        },
+        {
+            "name": "RSSDateTimeFormatter"
+        },
+        {
+            "name": "KerbalRenamer"
+        },
+        {
+            "name": "TextureReplacer"
+        },
+        {
+            "name": "AtmosphereAutopilot"
+        },
+        {
+            "name": "RCSBuildAid"
+        },
+        {
+            "name": "EditorExtensionsRedux"
+        },
+        {
+            "name": "HangerExtenderExtended"
+        },
+        {
+            "name": "Waterfall"
+        },
+        {
+            "name": "TexturesUnlimited"
+        },
+        {
+            "name": "Shabby"
+        },
+        {
+            "name": "Resurfaced"
+        },
+        {
+            "name": "Firefly"
+        },
+        {
+            "name": "ZTheme"
+        },
+        {
+            "name": "ROLoadingImages"
+        },
+        {
+            "name": "KSPTextureLoader"
+        },
+        {
+            "name": "Sol-Core"
+        },
+        {
+            "name": "Sol-Configs"
+        },
+        {
+            "name": "Sol-Visuals"
+        },
+        {
+            "name": "Sol-Launchsites-256x"
+        },
+        {
+            "name": "Sol-Sun-4k"
+        },
+        {
+            "name": "Sol-Mercury-4k"
+        },
+        {
+            "name": "Sol-Venus-4k"
+        },
+        {
+            "name": "Sol-EarthSystem-4k"
+        },
+        {
+            "name": "Sol-MarsSystem-4k"
+        },
+        {
+            "name": "Sol-JupiterSystem-4k"
+        },
+        {
+            "name": "Sol-SaturnSystem-4k"
+        },
+        {
+            "name": "Sol-UranusSystem-4k"
+        },
+        {
+            "name": "Sol-NeptuneSystem-4k"
+        },
+        {
+            "name": "Sol-AsteroidBelt-4k"
+        },
+        {
+            "name": "Sol-KuiperBelt-4k"
+        },
+        {
+            "name": "ParallaxContinued-KTL"
+        },
+        {
+            "name": "ParallaxContinued-Terrain-Textures"
+        },
+        {
+            "name": "ParallaxContinued-Scatter-Textures"
+        },
+        {
+            "name": "ParallaxContinued-Planet-Textures"
+        },
+        {
+            "name": "DistantObject"
+        },
+        {
+            "name": "PlanetShine"
+        }
+    ],
+    "conflicts": [
+        {
+            "name": "RP-AXE-Express-High"
+        },
+        {
+            "name": "RP-AXE-Express-Low"
+        },
+        {
+            "name": "RSSTextures4096"
+        },
+        {
+            "name": "RSSTextures8192"
+        },
+        {
+            "name": "RSSTextures16K"
+        },
+        {
+            "name": "RSSTextures2048"
+        },
+        {
+            "name": "RSSVE-HR"
+        },
+        {
+            "name": "RSSVE-LR"
+        }
+    ]
+}
