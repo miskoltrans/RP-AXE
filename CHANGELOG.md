@@ -3,7 +3,7 @@
 The in-game copy (shown once per new version by KerbalChangelog) is
 `GameData/RP-AXE/RP-AXE-Changelog.cfg`; keep the two in step.
 
-## Unreleased
+## 0.9.2 — avionics strength restored
 
 - **Avionics overload is back to 0.9.0 strength.** 0.9.1's Harmony fix halved the overload penalty,
   but every value had been tuned, and the career played, with the corruption running twice per tick.
@@ -11,6 +11,11 @@ The in-game copy (shown once per new version by KerbalChangelog) is
   off-axis (the controls reverse from about 6% over), twice the noise, overgain squared. The PAW's
   off-axis figure shows the real bound. RCS translation is doubled the same way, without 0.9.0's leak
   from one thruster to the next.
+- **Over-capacity avionics rows are red in the PAW.** Every row that means "this vessel lacks
+  capacity" uses one alarm colour, and Capacity quotes the vessel mass next to the rating. The rows ask
+  the same test that corrupts the controls: a seated crewed pod reads "crewed pod has control", a unit
+  over its own rating while a larger unit steers says so, and launch clamps no longer count toward VAB
+  mass.
 - **Express presets renamed** so the planet pack is in the name: `RP-AXE-Express-High` / `-Low` are
   now `RP-AXE-Express-RSS-High` / `RP-AXE-Express-RSS-Low`, next to `RP-AXE-Express-Sol`. Same
   contents.
