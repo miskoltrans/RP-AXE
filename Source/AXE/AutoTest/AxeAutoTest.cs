@@ -53,6 +53,9 @@ namespace RPAxe.AutoTest
         // Opt-in: after the screen walk, launch a probe into orbit and measure the over-capacity control
         // corruption (shipped vs the 0.9.0 double application). See AxeAvionicsFlightTest.
         public static bool AvionicsTest = false;
+        // Opt-in: before the screen walk, sample every body's biome map through ScienceUtil and check it
+        // resolves to the biomes it defines (Sol ships its maps in the texture packs). See AxeBiomeSelfTest.
+        public static bool BiomeTest = false;
 
         // Per-session state (statics persist until the assembly reloads, i.e. KSP restart).
         public static bool CareerStarted;
@@ -81,6 +84,12 @@ namespace RPAxe.AutoTest
                     Enabled = true;
                     AvionicsTest = true;
                     Debug.Log("[AXE][AutoTest] avionics flight test enabled via " + AxeAvionicsFlightTest.CmdFlag + ".");
+                }
+                if (Environment.GetCommandLineArgs().Any(a => string.Equals(a, AxeBiomeSelfTest.CmdFlag, StringComparison.OrdinalIgnoreCase)))
+                {
+                    Enabled = true;
+                    BiomeTest = true;
+                    Debug.Log("[AXE][AutoTest] biome map test enabled via " + AxeBiomeSelfTest.CmdFlag + ".");
                 }
             }
             catch { /* args/env unavailable */ }
@@ -125,6 +134,7 @@ namespace RPAxe.AutoTest
             KscSwitchTest = ParseBool(n.GetValue("kscSwitchTest"), KscSwitchTest);
             PriceCraftTest = ParseBool(n.GetValue("priceCraftTest"), PriceCraftTest);
             AvionicsTest = ParseBool(n.GetValue("avionicsTest"), AvionicsTest);
+            BiomeTest = ParseBool(n.GetValue("biomeTest"), BiomeTest);
 
             if (n.HasValue("screens"))
             {
@@ -210,6 +220,11 @@ AXE_AUTOTEST
     // (twice). Results: [AXE][AutoTest][AVI-FLIGHT] lines + <KSP>/axe_autotest/avionics-flight.csv.
     // Also: -axe-autotest-avionics on the command line.
     avionicsTest = false
+
+    // Opt-in check: before the screens, sample every body's biome map through ScienceUtil on a
+    // 1-degree grid and check each resolves to the biomes it defines (Sol ships its maps in the texture
+    // packs). Results: [AXE][AutoTest][BIOME] lines. Also: -axe-autotest-biomes on the command line.
+    biomeTest = false
 }
 ";
     }
@@ -498,6 +513,10 @@ AXE_AUTOTEST
             // dangling CompleteContract deps, strategy reputation gate un-re-broken.
             try { Debug.Log("[AXE][AutoTest][ECON] " + AxeEconomySelfTest.SelfTestReport()); }
             catch (Exception e) { Debug.LogError("[AXE][AutoTest][ECON] self-test threw: " + e); }
+
+            // Biome maps resolve on every body (opt-in; ~51 bodies x 64,800 lookups).
+            if (AutoTestConfig.BiomeTest)
+                yield return AxeBiomeSelfTest.Run();
 
             foreach (ScreenDef s in defs)
             {
