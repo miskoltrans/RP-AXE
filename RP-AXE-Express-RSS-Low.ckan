@@ -2,8 +2,8 @@
     "spec_version": "v1.26",
     "identifier": "RP-AXE-Express-RSS-Low",
     "name": "RP-AXE Express (RSS, Low graphics)",
-    "abstract": "The recommended tools for RP-AXE on Real Solar System plus a light graphics set (4K RSS textures, DistantObject, PlanetShine; no Scatterer or clouds, like RP-1 Express Graphics-Low) as one hard set. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan; decline the further recommendations CKAN offers.",
-    "description": "Install this preset FIRST, then RP-AXE-<version>.ckan, both from the RP-AXE release page until RP-AXE is on the CKAN registry (CKAN -> File -> Install from .ckan file, one file per install). Everything RP-AXE needs is a hard dependency of the preset or of the mod. The further recommendations CKAN offers come from the dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, which aborts the whole install.",
+    "abstract": "The recommended tools for RP-AXE on Real Solar System plus a light graphics set (DistantObject, PlanetShine; no Scatterer or clouds, like RP-1 Express Graphics-Low) and the RSS texture pack of your choice: 4K is offered ticked, untick it to choose another size. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan; decline the other recommendations CKAN offers.",
+    "description": "Install this preset FIRST, then RP-AXE-<version>.ckan, both from the RP-AXE release page until RP-AXE is on the CKAN registry (CKAN -> File -> Install from .ckan file, one file per install). Everything RP-AXE needs is a hard dependency of the preset or of the mod. TEXTURE SIZE: one recommendation is the RSS planet texture pack, ticked at this preset's size (RSSTextures4096 on Low, RSSTextures16K on High). Keep it, or untick it and CKAN asks which pack you want: 2K (0.1 GB), 4K (0.4 GB), 8K (1.0 GB) or 16K (1.9 GB); one size covers every planet. The other recommendations CKAN offers come from the dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, which aborts the whole install.",
     "author": [
         "miskoltrans"
     ],
@@ -80,13 +80,15 @@
             "name": "KSPTextureLoader"
         },
         {
-            "name": "RSSTextures4096"
-        },
-        {
             "name": "DistantObject"
         },
         {
             "name": "PlanetShine"
+        }
+    ],
+    "recommends": [
+        {
+            "name": "RSSTextures4096"
         }
     ],
     "conflicts": [
@@ -95,15 +97,6 @@
         },
         {
             "name": "RP-AXE-Express-Sol"
-        },
-        {
-            "name": "RSSTextures16K"
-        },
-        {
-            "name": "RSSTextures8192"
-        },
-        {
-            "name": "RSSTextures2048"
         },
         {
             "name": "Sol-Core"

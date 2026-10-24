@@ -112,11 +112,11 @@ rating. Frankly, I could have done better, but it is usable. What you will notic
 - **A planet pack: RSS or Sol.** RP-AXE is built and balanced on Real Solar System. It also runs on
   [Sol](https://github.com/RSS-Reborn/Sol-Configs/wiki) (RSS-Reborn), through a compatibility layer
   that keeps a Sol career on the RSS numbers. [Install](#install) has a section for each.
-- Graphics are **your choice**. RSS needs one texture pack and CKAN asks which; I play on the
-  **RSS-High** preset, RP-1 Express High's set (Parallax, Scatterer, 16K textures, RSSVE-HR — about
-  8 GB more than RSS-Low). Budget **40+ GB** of disk for the full RSS-High install. The Sol preset
-  installs Sol at Sol's recommended texture sizes (16K Earth and Mars, 8K Mercury, Venus, Jupiter and
-  Saturn, 4K the rest; about 6 GB of planet textures).
+- Graphics are **your choice**, texture size included. RSS has one texture pack for every planet
+  (2K to 16K); I play on the **RSS-High** preset, RP-1 Express High's set (Parallax, Scatterer,
+  RSSVE-HR, 16K textures — about 8 GB more than RSS-Low). Budget **40+ GB** of disk for the full
+  RSS-High install. The Sol preset lets you pick a size per system, with Sol's recommended sizes
+  pre-ticked (16K Earth and Mars, 8K Mercury, Venus, Jupiter and Saturn, 4K the rest; about 6 GB).
 
 ## Install
 
@@ -129,9 +129,11 @@ orbit in the save would point at the wrong body).
 pack and `RP-AXE-<version>.ckan`. Install them one after the other, preset first, with
 *CKAN → File → Install from .ckan file* (CKAN takes one file per install). The Express file is the
 preset that goes with the mod: its recommended tools (MechJeb, TestFlight, alarm clock, transfer
-planners, editor helpers) and a graphics set. When CKAN offers *further* recommendations, those come
-from the dependencies themselves (ModularLaunchPads recommends Bluedog Design Bureau, RSS recommends
-Parallax, and so on) — **decline them** unless you want them; the tree places nothing from them. Do
+planners, editor helpers) and a graphics set. Its **planet textures** come as recommendations, ticked
+at the preset's size: keep them, or untick one and CKAN asks which size you want (see RSS and Sol
+below). The other recommendations come from the dependencies themselves (ModularLaunchPads recommends
+Bluedog Design Bureau, RSS recommends Parallax, and so on) — **decline them** unless you want them;
+the tree places nothing from them. Do
 not press Cancel, which aborts the whole install. CKAN refuses the install if `RP-1` is present (the
 `conflicts` rule). Expect a long download the first time.
 
@@ -141,15 +143,29 @@ not press Cancel, which aborts the whole install. CKAN refuses the install if `R
 
 ### RSS
 
-Presets: `RP-AXE-Express-RSS-Low.ckan` is 4K planet textures and nothing else (RP-1's own Low);
-`RP-AXE-Express-RSS-High.ckan` is my RP-1-Express-High set (Parallax, Scatterer, 16K textures,
-RSSVE-HR, about 8 GB more).
+Presets: `RP-AXE-Express-RSS-Low.ckan` is planet textures and nothing else (RP-1's own Low);
+`RP-AXE-Express-RSS-High.ckan` is my RP-1-Express-High set (Parallax, Scatterer, RSSVE-HR, about
+8 GB more).
 
-Command line, same order:
+**Texture size is your choice.** RSS has one texture pack covering every planet. The preset offers it
+ticked, 4K on RSS-Low and 16K on RSS-High; keep it, or untick it and CKAN asks which pack you want:
+
+| `RSSTextures2048` | `RSSTextures4096` | `RSSTextures8192` | `RSSTextures16K` |
+|---|---|---|---|
+| 0.1 GB | 0.4 GB (RSS-Low) | 1.0 GB | 1.9 GB (RSS-High) |
+
+On RSS-Low the question may only come with the second file, `RP-AXE-<version>.ckan`. To change the
+size later, tick the other pack in CKAN's mod list and untick the installed one, then apply both
+together.
+
+Command line, same order. The last line is the texture pack: a headless install cannot ask, and
+without it RSS has no planet textures. Change the name to pick another size (`RSSTextures16K` is
+RSS-High's):
 
 ```
 ckan install -c RP-AXE-Express-RSS-Low.ckan --no-recommends --gamedir <your KSP folder> --headless
 ckan install -c RP-AXE-0.9.3.ckan           --no-recommends --gamedir <your KSP folder> --headless
+ckan install RSSTextures4096                --no-recommends --gamedir <your KSP folder> --headless
 ```
 
 Installing `RP-AXE-<version>.ckan` on its own also works in the CKAN window: it asks for the texture

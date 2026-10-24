@@ -41,8 +41,10 @@ Design rationale lives in the docs each section links to; this file is the inven
   Future Technologies, Kerbal Atomics, CryoEngines, Station Parts Expansion Redux, Tantares, Coatl
   Aerospace, RN US + Soviet probe packs, Universal Storage 2, Rocket Motor Menagerie, Kerwis Chinese
   Aerospace Pack, SCANsat, Hullcam VDS. 54 entries in `depends` (one of them the RSS texture-pack
-  choice). Tools and graphics ride on the `RP-AXE-Express-{Low,High}` presets the way they ride on
-  RP-1 Express: Low is 4K textures only, High adds Parallax, Scatterer, RSSVE-HR and 16K textures.
+  choice). Tools and graphics ride on the `RP-AXE-Express-RSS-{Low,High}` presets the way they ride on
+  RP-1 Express: Low is textures only, High adds Parallax, Scatterer and RSSVE-HR. Unlike RP-1 Express,
+  the texture pack is a pre-ticked recommendation (4K on Low, 16K on High), so the player can pick
+  another size.
   Both DLCs are suggestions; Breaking Ground is strongly recommended (the Robotics discipline places
   its parts).
 - **Evaluated and not added:** DMagic Orbital Science (its instruments duplicate RP-1's), Near Future

@@ -65,7 +65,7 @@ RECOMMENDS = [
     "KSPTextureLoader",
 ]
 GRAPHICS_HIGH = [
-    "Parallax", "Parallax-StockTextures", "RSSTextures16K", "RSSVE-HR",
+    "Parallax", "Parallax-StockTextures", "RSSVE-HR",
     # Scatterer belongs WITH RSSVE, not on its own. Its `-config` is StockScattererConfigs, a planet list of
     # STOCK bodies; it is RSSVE's patch (@Scatterer_planetsList:FOR[RSSVE]) that retargets the list to RSS.
     # Without RSSVE it logs "ScattererCelestialBody Kerbin not found" for every stock body and renders
@@ -76,7 +76,13 @@ GRAPHICS_HIGH = [
     "Scatterer", "Scatterer-config-default", "Scatterer-sunflare-default",
     "DistantObject", "PlanetShine", "CanaveralPads", "PoodsMilkyWaySkybox",
 ]
-GRAPHICS_LOW = ["RSSTextures4096", "DistantObject", "PlanetShine"]
+GRAPHICS_LOW = ["DistantObject", "PlanetShine"]
+# The RSS texture pack is the player's choice: one pack covers every body (2K/4K/8K/16K), and
+# RealSolarSystem depends on the virtual RSSTextures. The RSS presets RECOMMEND their size rather than
+# depend on it, the Sol preset's pattern: CKAN's window offers it ticked and asks for the size if it is
+# unticked; swapping later no longer drags the preset out. Headless with --no-recommends drops it, so the
+# README names the pack on a follow-up `ckan install` line -- keep it in step.
+RSS_TEXTURES_HIGH, RSS_TEXTURES_LOW = "RSSTextures16K", "RSSTextures4096"
 # Sol instead of RSS (docs/SOL.md). Sol-Core depends on the virtual ParallaxContinued, which a headless
 # resolver drops, and the three ParallaxContinued texture packs, hard deps of ParallaxContinued-KTL that
 # Sol's Parallax configs read ~2,500 times, were dropped too, exit 0 (Sol run, 2026-10-23): all named.
@@ -108,7 +114,7 @@ GRAPHICS_SOL = ["Sol-Core", "Sol-Configs", "Sol-Visuals"] + [
 # identifiers that live only in the Sol repository (https://github.com/RSS-Reborn/CKAN-meta)
 SOL_REPO_ONLY = set(SOL_PACKS) | {"ParallaxContinued-KTL"}
 # (the texture pack is already offered through the any_of in DEPENDS)
-SUGGESTS = [g for g in GRAPHICS_HIGH if not g.startswith("RSSTextures")] + ["BreakingGround-DLC", "MakingHistory-DLC"]
+SUGGESTS = GRAPHICS_HIGH + ["BreakingGround-DLC", "MakingHistory-DLC"]
 CONFLICTS = [
     "RP-1", "RP-0", "RONoCareer", "KerbalConstructionTime", "CommunityTechTree", "HideEmptyTechNodes",
     "MechJebForAll", "KRASH", "NearFutureElectrical-DecayingRTGs", "CrowdSourcedScience",
@@ -138,13 +144,18 @@ DESCRIPTION = (
     "the capsule mods recommend IVAs) and the tree places nothing from them. Untick them and continue unless "
     "you want them for your own building. Then start a new Career."
 )
+RSS_TEXTURE_CHOICE = (
+    "TEXTURE SIZE: one recommendation is the RSS planet texture pack, ticked at this preset's size (RSSTextures4096 "
+    "on Low, RSSTextures16K on High). Keep it, or untick it and CKAN asks which pack you want: 2K (0.1 GB), 4K "
+    "(0.4 GB), 8K (1.0 GB) or 16K (1.9 GB); one size covers every planet. "
+)
 EXPRESS_DESCRIPTION = (
     "Install this preset FIRST, then RP-AXE-<version>.ckan, both from the RP-AXE release page until RP-AXE is on "
     "the CKAN registry (CKAN -> File -> Install from .ckan file, one file per install). Everything RP-AXE needs is "
-    "a hard dependency of the preset or of the mod. The further recommendations CKAN offers come from the "
-    "dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the "
-    "capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, "
-    "which aborts the whole install."
+    "a hard dependency of the preset or of the mod. " + RSS_TEXTURE_CHOICE + "The other recommendations CKAN "
+    "offers come from the dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, "
+    "IVA mods via the capsules) and the tree places nothing from them: untick them and press Continue. Do not "
+    "press Cancel, which aborts the whole install."
 )
 
 EXPRESS_SOL_DESCRIPTION = (
@@ -161,10 +172,11 @@ EXPRESS_SOL_DESCRIPTION = (
 
 EXPRESS_DESCRIPTION_REGISTRY = (
     "A one-click RP-AXE install: the mod, the Realism Overhaul stack and every part mod the tree places, the "
-    "recommended tools, and a graphics set, all as hard dependencies. Everything RP-AXE needs is in here. The "
-    "recommendations CKAN offers on top come from the dependencies themselves (Bluedog Design Bureau via "
-    "ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing from them: "
-    "untick them and press Continue. Do not press Cancel, which aborts the whole install. Then start a new Career."
+    "recommended tools, and a graphics set, all as hard dependencies. Everything RP-AXE needs is in here. "
+    + RSS_TEXTURE_CHOICE + "The other recommendations CKAN offers come from the dependencies themselves (Bluedog "
+    "Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing "
+    "from them: untick them and press Continue. Do not press Cancel, which aborts the whole install. Then start a "
+    "new Career."
 )
 
 COMMENT = (
@@ -302,20 +314,20 @@ def main():
     dump(os.path.join(REPO, EXPRESS_HIGH + ".ckan"), meta(
         EXPRESS_HIGH, "RP-AXE Express (RSS, High graphics)",
         "The recommended tools for RP-AXE on Real Solar System plus the author's graphics set (RP-1 Express High: "
-        "Parallax, 16K RSS textures, RSSVE-HR with Scatterer, DistantObject, PlanetShine, CanaveralPads, Pood's "
-        "Milky Way skybox) as one hard set. "
-        "About 8 GB more than RSS-Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until "
-        "RP-AXE is on the registry; decline the further recommendations CKAN offers.",
+        "Parallax, RSSVE-HR with Scatterer, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox) "
+        "as one hard set, and the RSS texture pack of your choice: 16K is offered ticked, untick it to choose "
+        "another size. About 8 GB more than RSS-Low. CKAN -> File -> Install from .ckan file, together with "
+        "RP-AXE-<ver>.ckan until RP-AXE is on the registry; decline the other recommendations CKAN offers.",
         express + GRAPHICS_HIGH,
-        [EXPRESS_LOW, EXPRESS_SOL, "RSSTextures4096", "RSSTextures8192", "RSSTextures2048", "Sol-Core"]))
+        [EXPRESS_LOW, EXPRESS_SOL, "Sol-Core"], recommends=[RSS_TEXTURES_HIGH]))
     dump(os.path.join(REPO, EXPRESS_LOW + ".ckan"), meta(
         EXPRESS_LOW, "RP-AXE Express (RSS, Low graphics)",
-        "The recommended tools for RP-AXE on Real Solar System plus a light graphics set (4K RSS textures, "
-        "DistantObject, PlanetShine; no Scatterer or clouds, like RP-1 Express Graphics-Low) as one hard set. "
-        "CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan; "
-        "decline the further recommendations CKAN offers.",
+        "The recommended tools for RP-AXE on Real Solar System plus a light graphics set (DistantObject, "
+        "PlanetShine; no Scatterer or clouds, like RP-1 Express Graphics-Low) and the RSS texture pack of your "
+        "choice: 4K is offered ticked, untick it to choose another size. CKAN -> File -> Install from .ckan "
+        "file, together with RP-AXE-<ver>.ckan; decline the other recommendations CKAN offers.",
         express + GRAPHICS_LOW,
-        [EXPRESS_HIGH, EXPRESS_SOL, "RSSTextures16K", "RSSTextures8192", "RSSTextures2048", "Sol-Core"]))
+        [EXPRESS_HIGH, EXPRESS_SOL, "Sol-Core"], recommends=[RSS_TEXTURES_LOW]))
     # Sol: a release asset only, never a registry netkan -- its packs live in Sol's own CKAN repository,
     # which the default registry cannot resolve. RSSVE would stack a second EVE/Scatterer config on
     # Sol-Visuals' own.
@@ -329,7 +341,7 @@ def main():
         [EXPRESS_HIGH, EXPRESS_LOW, "RSSTextures4096", "RSSTextures8192", "RSSTextures16K",
          "RSSTextures2048", "RSSVE-HR", "RSSVE-LR"],
         description=EXPRESS_SOL_DESCRIPTION, recommends=SOL_SIZED))
-    print("wrote %s.ckan (%d), %s.ckan (%d), %s.ckan (%d + %d texture recommends)"
+    print("wrote %s.ckan (%d + 1 texture recommend), %s.ckan (%d + 1), %s.ckan (%d + %d texture recommends)"
           % (EXPRESS_HIGH, len(express) + len(GRAPHICS_HIGH), EXPRESS_LOW, len(express) + len(GRAPHICS_LOW),
              EXPRESS_SOL, len(express) + len(GRAPHICS_SOL), len(SOL_SIZED)))
 
@@ -341,8 +353,9 @@ def main():
     # RP-1-ExpressInstall-Graphics, each preset is a 1 KB marker zip (package_release.py writes them,
     # they ride on the mod's release) selected by `asset_match`, with the version read from its AVC
     # file and `x_netkan_force_v` so it shows as "v0.9.0" like the mod.
-    for ident, tier in ((EXPRESS_HIGH, "RSS High (RP-1 Express High: Parallax, 16K textures, RSSVE-HR, Scatterer)"),
-                        (EXPRESS_LOW, "RSS Low (4K textures only)")):
+    for ident, tier in ((EXPRESS_HIGH, "RSS High (RP-1 Express High: Parallax, RSSVE-HR, Scatterer; 16K textures "
+                                       "offered, size your choice)"),
+                        (EXPRESS_LOW, "RSS Low (textures only: 4K offered, size your choice)")):
         m = load(os.path.join(REPO, ident + ".ckan"))
         r = collections.OrderedDict()
         r["spec_version"] = "v1.26"
@@ -358,6 +371,7 @@ def main():
         r["x_netkan_force_v"] = True
         r["resources"] = nk["resources"]
         r["depends"] = [{"name": "RP-AXE"}] + m["depends"]
+        r["recommends"] = m["recommends"]
         r["conflicts"] = m["conflicts"]
         r["install"] = [{"find": ident, "install_to": "GameData"}]
         dump(os.path.join(REPO, ident + ".netkan"), r)

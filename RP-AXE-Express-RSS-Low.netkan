@@ -2,8 +2,8 @@
     "spec_version": "v1.26",
     "identifier": "RP-AXE-Express-RSS-Low",
     "name": "RP-AXE Express (RSS, Low graphics)",
-    "abstract": "One-click RP-AXE: the mod, its stack and tools, and the RSS Low (4K textures only) graphics set.",
-    "description": "A one-click RP-AXE install: the mod, the Realism Overhaul stack and every part mod the tree places, the recommended tools, and a graphics set, all as hard dependencies. Everything RP-AXE needs is in here. The recommendations CKAN offers on top come from the dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, which aborts the whole install. Then start a new Career.",
+    "abstract": "One-click RP-AXE: the mod, its stack and tools, and the RSS Low (textures only: 4K offered, size your choice) graphics set.",
+    "description": "A one-click RP-AXE install: the mod, the Realism Overhaul stack and every part mod the tree places, the recommended tools, and a graphics set, all as hard dependencies. Everything RP-AXE needs is in here. TEXTURE SIZE: one recommendation is the RSS planet texture pack, ticked at this preset's size (RSSTextures4096 on Low, RSSTextures16K on High). Keep it, or untick it and CKAN asks which pack you want: 2K (0.1 GB), 4K (0.4 GB), 8K (1.0 GB) or 16K (1.9 GB); one size covers every planet. The other recommendations CKAN offers come from the dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, which aborts the whole install. Then start a new Career.",
     "author": [
         "miskoltrans"
     ],
@@ -92,13 +92,15 @@
             "name": "KSPTextureLoader"
         },
         {
-            "name": "RSSTextures4096"
-        },
-        {
             "name": "DistantObject"
         },
         {
             "name": "PlanetShine"
+        }
+    ],
+    "recommends": [
+        {
+            "name": "RSSTextures4096"
         }
     ],
     "conflicts": [
@@ -107,15 +109,6 @@
         },
         {
             "name": "RP-AXE-Express-Sol"
-        },
-        {
-            "name": "RSSTextures16K"
-        },
-        {
-            "name": "RSSTextures8192"
-        },
-        {
-            "name": "RSSTextures2048"
         },
         {
             "name": "Sol-Core"
