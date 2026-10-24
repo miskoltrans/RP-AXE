@@ -197,7 +197,7 @@ Patreon download); CKAN's EVE gives flat clouds. Adding V5 is a manual folder co
 above: [docs/SOL.md, step 6](docs/SOL.md#6-optional-blackracks-volumetric-clouds-v5).
 
 Before the first career, read [docs/SOL.md](docs/SOL.md): it covers the Sol settings to keep (Real
-scale, ICRF frame), switching TransferWindowPlanner to Earth dates, what the compatibility layer
+scale, ICRF frame), switching TransferWindowPlanner and Kerbal Alarm Clock to Earth dates, what the compatibility layer
 restores, and what still differs from RSS: Earth biomes, 18 extra bodies, launch-window dates, a
 much tighter Mimas flyby, and the **lunar impactor contract, which may not complete on Sol 0.9.5**
 (a known Sol bug; Sol's next release fixes it). Sol's own guide is its
@@ -237,7 +237,6 @@ want to fly next. Keep a save from before big research decisions.
 | `manifest/` | The curated part list (`curated-parts.tsv`), upgrade curation and capability data. |
 | `docs/` | Architecture, workflow, decisions. **Start with [`docs/RESTART.md`](docs/RESTART.md)**, the single source of truth; then [`docs/WORKFLOW.md`](docs/WORKFLOW.md) (build, deploy, test) and [`docs/TREE.md`](docs/TREE.md). |
 | `tools/` | Build, audit and packaging scripts. `package_release.py` builds the release zip; `gen_netkan.py` writes the CKAN relationships from one classification; `rebuild-instance.ps1` recreates the test install from CKAN metadata and boots it through the automated checks. |
-| `tools/mission/` | A mission planner for this install: reads your save, plans ejection / midcourse / flyby / capture burns and moon tours on the install's own ephemeris, and can verify them against the running game through the localhost bridge. See [`docs/MISSION-TOOLS.md`](docs/MISSION-TOOLS.md). |
 
 Releases: see [`docs/RELEASE.md`](docs/RELEASE.md). Changes: [`CHANGELOG.md`](CHANGELOG.md).
 

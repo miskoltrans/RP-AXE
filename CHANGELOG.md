@@ -5,6 +5,14 @@ The in-game copy (shown once per new version by KerbalChangelog) is
 
 ## Unreleased
 
+- **No more localhost bridge in AXE.dll.** Up to 0.9.2 the plugin carried a dev-only query bridge (a
+  listener on 127.0.0.1, off unless switched on by config, flag or environment variable). It is a
+  developer tool, so it now lives outside the mod entirely, and the release script refuses an
+  `AXE.dll` that contains it. Nothing changes for players.
+- **Sol preset installs Sol's recommended texture sizes:** 16K Earth and Mars, 8K Mercury, Venus,
+  Jupiter and Saturn, 4K the rest (about 6 GB of planet textures).
+- **Sol docs:** volumetric clouds (Blackrack's V5), the lunar impactor contract that may not complete
+  on Sol 0.9.5, and the much tighter Mimas flyby.
 - **The Mission Control "RP-1" folder is now called "Contracts".**
 - **Parking and Experimental are gone from the tech tree.** Both were developer holding pens. Parts the
   tree does not place can no longer be researched at all, and the Travers SAR is removed: a first-tier

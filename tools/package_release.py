@@ -7,15 +7,16 @@
 What goes in (and the archive root is GameData/RP-AXE/, which is what the netkan's
 `find: RP-AXE` + `install_to: GameData` expects):
   * every git-TRACKED file under GameData/RP-AXE -- so runtime droppings (@thumbs/,
-    Bridge.cfg, ModuleManager caches) and anything gitignored can never leak in, and
+    ModuleManager caches) and anything gitignored can never leak in, and
   * Plugins/AXE.dll, which is gitignored build output and so has to be added by hand,
   * minus EXCLUDE: dev artifacts that are tracked for the tools but have no business
     on a player's disk.
 
 Guards: refuses a git-lfs POINTER (the ~120 MB of vendored RP-1 part models/textures are
 LFS; a checkout without `git lfs pull` would ship 130-byte stubs that look like files),
-refuses a missing or stale DLL, and refuses to overwrite an existing archive for the
-same version unless --force.
+refuses a missing or stale DLL, refuses an AXE.dll carrying the dev bridge (or any socket
+listener) and any other tracked plugin binary, and refuses to overwrite an existing archive
+for the same version unless --force.
 
 Also writes dist/RP-AXE-<version>.ckan: the netkan "inflated" against the GitHub release
 asset the zip will be uploaded as (download URL from the tag convention, size and hashes
@@ -49,6 +50,8 @@ EXCLUDE = {
     MOD_DIR + "/Plugins/PluginData/craft-prices.csv",   # AutoTest dev sweep output, read by tools/analyze_craft_costs.py
 }
 LFS_MAGIC = b"version https://git-lfs"
+# Must never appear in a shipped AXE.dll (see the check in main).
+BRIDGE_MARKERS = (b"RPAxe.Bridge", b"AxeBridgeServer", b"TcpListener", b"HttpListener")
 
 
 def version():
@@ -153,8 +156,21 @@ def main():
                      for f in fs if f.endswith(".cs"))
     if os.path.getmtime(dll) < newest_src:
         sys.exit("%s is older than Source/AXE/*.cs -- rebuild (drop --no-build)" % DLL)
+    # The localhost dev bridge is dev-only and lives in ksp-mission-tools (AxeDevBridge.dll): no shipped
+    # build may carry a listener into the game, not even a disabled one (AXE.dll did up to 0.9.2). Type
+    # and API names survive compilation in the assembly metadata, so a byte search catches it coming back.
+    with open(dll, "rb") as f:
+        blob = f.read()
+    leaked = [m.decode() for m in BRIDGE_MARKERS if m in blob]
+    if leaked:
+        sys.exit("%s contains bridge/listener code (%s) -- the dev bridge belongs in ksp-mission-tools"
+                 % (DLL, ", ".join(leaked)))
 
     files = [p for p in tracked_files() if p not in EXCLUDE]
+    extra = [p for p in files if p.lower().endswith((".dll", ".kbin"))]
+    if extra:
+        sys.exit("tracked plugin binaries under %s would ship: %s -- only the built AXE.dll belongs in the "
+                 "release" % (MOD_DIR, ", ".join(extra)))
     files.append(DLL)
     files.sort()
 

@@ -157,7 +157,7 @@ python tools/package_release.py --no-build
 ```
 
 The script zips **git-tracked** files under `GameData/RP-AXE` plus `Plugins/AXE.dll`, so runtime
-droppings (`@thumbs/`, `Bridge.cfg`, MM caches) can never leak in. Bump the version only in
+droppings (`@thumbs/`, MM caches) can never leak in. Bump the version only in
 `RP-AXE.version` (and add the matching `VERSION {}` block to `RP-AXE-Changelog.cfg`).
 
 ## Clean-room install test (the release "prove")
@@ -258,8 +258,10 @@ so a player's install cannot silently differ from the one the tree was built aga
 ## AutoTest harness
 
 Ships **disabled** (`Plugins/PluginData/AutoTest.cfg` `enabled = false`); the `-axe-autotest` launch
-flag force-enables it. The localhost bridge (`Bridge.cfg`) is written on first run with
-`enabled = false` and is gitignored, so a player never gets a listener unless they turn it on.
+flag force-enables it. RP-AXE has no localhost bridge: the dev-only query bridge the mission planner
+uses was compiled into `AXE.dll` up to 0.9.2 (off unless enabled) and moved on 2026-10-24 to the
+private ksp-mission-tools repo as its own plugin, `AxeDevBridge.dll`. `package_release.py` refuses an
+`AXE.dll` that contains it.
 
 ## Publishing
 

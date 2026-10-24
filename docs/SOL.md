@@ -93,11 +93,14 @@ conflict with Sol-Core.
 The first boot compiles and patches everything. A cold start took 8 to 14 minutes in testing. If loading seems to stop right after the shader lines, look for a KSPCommunityFixes
 question ("cache PNG textures?") hidden behind the loading screen. Then start a **new Career**.
 
-### 5. TransferWindowPlanner: switch it to Earth dates
+### 5. TransferWindowPlanner and Kerbal Alarm Clock: switch them to Earth dates
 
-TransferWindowPlanner turns on its Earth calendar only when it detects RSS's plugin, which Sol does not
-have. Without the Earth calendar it prints dates in Kerbin days. Edit
-`GameData/TriggerTech/TransferWindowPlanner/PluginData/settings.cfg` (KSP closed):
+Both TriggerTech mods turn on their Earth calendar only when they detect RSS's plugin, which Sol does
+not have, so on Sol they print dates in Kerbin days (`SelectedCalendar = KSPStock` on a fresh install).
+With KSP closed, edit both settings files:
+
+- `GameData/TriggerTech/TransferWindowPlanner/PluginData/settings.cfg`
+- `GameData/TriggerTech/KerbalAlarmClock/Plugins/PluginData/settings.cfg`
 
 ```
 SelectedCalendar = Earth
