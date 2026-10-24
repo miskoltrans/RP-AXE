@@ -26,6 +26,12 @@ fourth `ckan install` line (README, docs/SOL.md); proven on a stock copy: all tw
 finding:** a headless install of the PUBLISHED 0.9.3 RSS-Low preset + mod ends without KSPBurst (A/B on a
 stock copy, 2026-10-24; FAR, RealAntennas and RP-AXE report it unsatisfied). CKAN's KSPBurst now provides
 `KSPBurst-Full` and depends on KSPBurst-Lite; naming `KSPBurst` on the command line installs both.
+**Clean room (2026-10-24, stock copy, the README's RSS command line with `RSSTextures8192 KSPBurst`, so a
+non-default size):** `check_cleanroom.py` OK; boot with `-axe-autotest` SUCCESS (career, R&D, Mission
+Control), "RP-AXE v0.9.3 online", Harmony 21/0, CC 373/373, Unity.Burst loaded from `000_KSPBurst`,
+`check_liveness.py --instance` OK, `[ECON]` line identical to the dev instance. Only clean-room-only log
+signature: DBS's `SystemsMonitorUI` toolbar NRE on the editor load (known, README Known Issues; the dev
+log had no editor visit). A popup needed one click during loading (KSPCF's was pre-seeded); 18 min cold.
 
 **0.9.2 was released** the same day at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.2 (pre-release, tag
 `v0.9.2` = `6197a3a`, eight assets; zip sha256 `31dfe40c…6e95`, 55.3 MB). Avionics overload back to 0.9.0
