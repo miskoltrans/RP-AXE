@@ -206,10 +206,6 @@ advice.
 
 Start a **new Career** game. The difficulty presets are AXE's own; Normal is the balanced one.
 
-> SCANsat: the dependency is the standard CKAN SCANsat. I also maintain a GPU-rendered fork
-> ([miskoltrans/SCANsat-GPU](https://github.com/miskoltrans/SCANsat-GPU)) with the same parts; it is
-> an optional drop-in replacement, not required.
-
 ## Known issues
 
 - DynamicBatteryStorage (a dependency of the Near Future mods) logs one `NullReferenceException`
