@@ -3,6 +3,18 @@
 The in-game copy (shown once per new version by KerbalChangelog) is
 `GameData/RP-AXE/RP-AXE-Changelog.cfg`; keep the two in step.
 
+## Unreleased
+
+- **The Mission Control "RP-1" folder is now called "Contracts".**
+- **Parking and Experimental are gone from the tech tree.** Both were developer holding pens. Parts the
+  tree does not place can no longer be researched at all, and the Travers SAR is removed: a first-tier
+  scanner that outclassed the whole tier-9 radar node.
+- **Upper-Atmosphere Sounding's description no longer suggests it unlocks the thermometer and
+  barometer.** You start with both; the node unlocks no hardware and leads to the mass spectrometer and
+  magnetometer.
+- **README warns that this is a hard career** and a bad run of tree picks can leave you
+  without a way to earn the science to recover.
+
 ## 0.9.2 — avionics strength restored
 
 - **Avionics overload is back to 0.9.0 strength.** 0.9.1's Harmony fix halved the overload penalty,

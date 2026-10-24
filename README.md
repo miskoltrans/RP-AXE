@@ -209,6 +209,13 @@ recommended texture sizes.
 
 Start a **new Career** game. The difficulty presets are AXE's own; Normal is the balanced one.
 
+**This is a hard career, and you can dead-end yourself in the tree.** Science pays for every node,
+research is never refunded, and the cheap science near home runs out fast. A string of picks that
+doesn't get you to orbit, or doesn't give your next mission the hardware it needs, can leave you
+with no way to earn the science to dig back out. Before you spend, look a few nodes ahead in the
+[standalone viewer](https://miskoltrans.github.io/RP-AXE/) and check that the path reaches what you
+want to fly next. Keep a save from before big research decisions.
+
 ## Known issues
 
 - DynamicBatteryStorage (a dependency of the Near Future mods) logs one `NullReferenceException`
