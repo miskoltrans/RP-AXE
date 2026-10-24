@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
     Rebuild the KSP test Instance from a pristine snapshot: nuke -> copy clean -> install
-    RP-AXE CKAN deps -> install our SCANsat fork -> install local non-CKAN mods -> deploy
+    RP-AXE CKAN deps -> install local non-CKAN mods -> deploy
     RP-AXE. No RP-1 anywhere.
 
 .DESCRIPTION
-    Seven steps:
+    Six steps:
       1. NUKE     - delete C:\git\ksp\Instance (after first unlinking the RP-AXE junction so the
                     recursive delete can't follow it into the repo and wipe GameData\RP-AXE).
       2. COPY     - mirror the pristine snapshot (..\ksp_instance_clean) into a fresh Instance.
@@ -14,26 +14,24 @@
                     $InstancePath, and preflight refuses to run if the snapshot is under it.
       3. DEPS     - ckan install the RP-AXE perfect-environment mod set from RP-AXE-deps.ckan,
                     targeting the instance directly via --gamedir (no CKAN registration needed).
-      4. SCANSAT  - build our SCANsat fork (C:\git\ksp\SCANsat, not on CKAN) and copy its
-                    GameData\SCANsat into the instance. NOT a CKAN dependency on purpose.
-      5. LOCAL    - copy the non-CKAN mods we develop or vendor locally (see -LocalModGameData)
+      4. LOCAL    - copy the non-CKAN mods we develop or vendor locally (see -LocalModGameData)
                     into GameData. These live in sibling repos, not on CKAN, so step 3 cannot
                     bring them back and a rebuild silently DELETES them -- which is exactly what
                     happened on 2026-08-17: FuelTankOptimizer and KSPTOTConnect vanished in a
                     rebuild and nothing noticed, because a missing mod looks identical to a mod
                     that was never installed. Anything not in RP-AXE-deps.ckan belongs here.
-      6. DEPLOY   - junction GameData\RP-AXE in via deploy.ps1 (AXE.dll ships in the repo, so no
+      5. DEPLOY   - junction GameData\RP-AXE in via deploy.ps1 (AXE.dll ships in the repo, so no
                     build step is required).
-      7. VERIFY   - boot the instance once with -axe-autotest (hands-free: new career, walk R&D +
+      6. VERIFY   - boot the instance once with -axe-autotest (hands-free: new career, walk R&D +
                     Mission Control, quit), then run tools\check_liveness.py and
                     tools\check_settings_parity.py against the cache that boot produced.
                     Skip with -NoVerify.
 
     The pristine snapshot does NOT contain RP-1, so nothing has to be disabled.
 
-    WHY STEP 7 IS PART OF THE REBUILD. Every liveness question -- does this node grant a part, does
+    WHY STEP 6 IS PART OF THE REBUILD. Every liveness question -- does this node grant a part, does
     this MODULE exist, does this tech gate resolve -- can only be answered from the MERGED cache,
-    which does not exist until KSP has booted. A rebuild that stops at step 6 leaves an instance
+    which does not exist until KSP has booted. A rebuild that stops at step 5 leaves an instance
     nobody has checked, and the checks then run when someone remembers, which is how 702 RCS engine
     configs stayed locked (docs\BUG-CLASSES.md). Booting here is the cheapest moment: the cache has
     to be built on first launch anyway.
@@ -46,29 +44,24 @@
     NOTE: this carries settings.cfg too, so a rebuild resets per-instance graphics/UI tweaks
     (AERO_FX_QUALITY, UI_SCALE, LOG_*_TO_SCREEN, ...) to whatever the snapshot has.
 
-.PARAMETER ScanSatForkPath
-    Our SCANsat fork checkout (miskoltrans/SCANsat-GPU). Default C:\git\ksp\SCANsat. Built with
-    `dotnet build SCANsat\SCANsat.csproj -c Release` (not the .sln -- SCANmechjeb in the same
-    solution doesn't build against the current MechJeb API and isn't needed).
-
 .PARAMETER LocalModGameData
-    GameData roots of mods that are NOT on CKAN and NOT built by step 4, so nothing else in this
-    script would reinstall them. Each entry is a directory that CONTAINS mod folders (i.e. a
-    "GameData"), and every child of it is copied into the instance's GameData.
+    GameData roots of mods that are NOT on CKAN, so nothing else in this script would reinstall
+    them. Each entry is a directory that CONTAINS mod folders (i.e. a "GameData"), and every child
+    of it is copied into the instance's GameData.
 
     Defaults:
       C:\git\ksp\FuelTankOptimizer\GameData                          -> FuelTankOptimizer
       C:\git\ksp\KSP_Trajectory_Optimization_Tool-1.6.10.1\GameData  -> KSPTOTConnect
 
-    NB the FuelTankOptimizer DLL under its GameData is gitignored build output -- same trap as
-    SCANsat (step 4). This step copies whatever is there; it does NOT build. If you changed FTO
-    source, build it first or you will ship a stale DLL that looks perfectly installed.
+    NB the FuelTankOptimizer DLL under its GameData is gitignored build output. This step copies
+    whatever is there; it does NOT build. If you changed FTO source, build it first or you will
+    ship a stale DLL that looks perfectly installed.
 
 .PARAMETER Force
     Skip the "are you sure" confirmation before the destructive nuke.
 
 .PARAMETER NoVerify
-    Skip step 7 (boot + liveness gate). The instance is then unverified -- run
+    Skip step 6 (boot + liveness gate). The instance is then unverified -- run
     `python tools\check_liveness.py` yourself after the first launch.
 
 .PARAMETER VerifyTimeoutMinutes
@@ -84,8 +77,8 @@
 [CmdletBinding()]
 param(
     # Everything below hangs off these two roots. Derive, never re-count Split-Paths by hand:
-    # getting the nesting wrong silently produced defaults one directory too high (C:\git\ksp_instance_clean
-    # and C:\git\SCANsat), which nothing on disk matched, so preflight threw on every bare run.
+    # getting the nesting wrong silently produced defaults one directory too high (e.g.
+    # C:\git\ksp_instance_clean), which nothing on disk matched, so preflight threw on every bare run.
     #   $PSScriptRoot = C:\git\ksp\RP-AXE\tools
     #   $AxeRepo      = C:\git\ksp\RP-AXE
     #   $KspRoot      = C:\git\ksp
@@ -95,7 +88,6 @@ param(
     [string]$CleanSnapshot   = (Join-Path $KspRoot 'ksp_instance_clean'),
     [string]$CkanExe         = (Join-Path $KspRoot 'ckan.exe'),
     [string]$DepsCkan        = (Join-Path $AxeRepo 'RP-AXE-deps.ckan'),
-    [string]$ScanSatForkPath = (Join-Path $KspRoot 'SCANsat'),
     [string[]]$LocalModGameData = @(
         (Join-Path $KspRoot 'FuelTankOptimizer\GameData')
         (Join-Path $KspRoot 'KSP_Trajectory_Optimization_Tool-1.6.10.1\GameData')
@@ -108,7 +100,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $deployScript = Join-Path $PSScriptRoot 'deploy.ps1'
 
-function Step($n, $msg) { Write-Host "`n[$n/7] $msg" -ForegroundColor Cyan }
+function Step($n, $msg) { Write-Host "`n[$n/6] $msg" -ForegroundColor Cyan }
 
 # Unlink a directory junction / reparse point WITHOUT deleting its target contents.
 function Remove-JunctionLink([string]$path) {
@@ -127,9 +119,6 @@ if (-not (Test-Path (Join-Path $CleanSnapshot 'KSP_x64.exe'))) { throw "Clean sn
 if (-not (Test-Path $CkanExe))   { throw "ckan.exe not found: $CkanExe" }
 if (-not (Test-Path $DepsCkan))  { throw "deps metapackage not found: $DepsCkan" }
 if (-not (Test-Path $deployScript)) { throw "deploy.ps1 not found: $deployScript" }
-$scanSatCsproj = Join-Path $ScanSatForkPath 'SCANsat\SCANsat.csproj'
-if (-not (Test-Path $scanSatCsproj)) { throw "SCANsat fork not found: $scanSatCsproj  (-ScanSatForkPath wrong?)" }
-if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) { throw "dotnet CLI not found on PATH (needed to build the SCANsat fork)" }
 # Check the local (non-CKAN) mod sources BEFORE the nuke: they are the one class of mod nothing
 # else can restore, so a bad path here has to stop the run, not lose the mod.
 foreach ($lm in $LocalModGameData) {
@@ -149,7 +138,6 @@ Write-Host "Rebuild plan:" -ForegroundColor White
 Write-Host "  instance : $instFull   (will be DELETED and recreated)"
 Write-Host "  snapshot : $cleanFull"
 Write-Host "  deps     : $DepsCkan"
-Write-Host "  scansat  : $ScanSatForkPath (our fork, built fresh)"
 if (-not $Force) {
     $ans = Read-Host "`nThis DELETES $instFull. Type 'yes' to continue"
     if ($ans -ne 'yes') { Write-Host 'Aborted.' -ForegroundColor Yellow; return }
@@ -230,52 +218,11 @@ if ($missingDeps) {
 }
 Write-Host "  verified: all $($declared.Count) declared dependencies present in the CKAN registry."
 
-# --- step 4: build + install our SCANsat fork (not a CKAN dependency) -------------------------
-Step 4 "Build and install SCANsat fork"
-# Version source of truth = SCANsat.version.props, same as the fork's build-release.ps1. The csproj
-# does NOT import that props file, so $(Version) has to be passed explicitly or the DLL is stamped
-# 1.0.0; $(RepoRootPath) has to be passed or KSPBuildTools can't find GameData\SCANsat\SCANsat.version
-# and silently leaves it as the unstamped template (no VERSION field -> KSP-AVC sees no version).
-[xml]$scanSatVerProps = Get-Content (Join-Path $ScanSatForkPath 'SCANsat.version.props')
-$scanSatVersion = ([string]($scanSatVerProps.Project.PropertyGroup.Version | Select-Object -First 1)).Trim()
-Push-Location $ScanSatForkPath
-try {
-    # Build just SCANsat.csproj (pulls in SCANsat.Unity via ProjectReference). Not the .sln --
-    # SCANmechjeb in the same solution targets a MechJeb API that's since changed and won't build,
-    # and we don't ship it.
-    & dotnet build 'SCANsat\SCANsat.csproj' -c Release -p:Version=$scanSatVersion -p:RepoRootPath="$($ScanSatForkPath -replace '\\','/')/"
-    if ($LASTEXITCODE -ne 0) { throw "dotnet build failed (exit $LASTEXITCODE)" }
-} finally {
-    Pop-Location
-}
-$scanSatSrc = Join-Path $ScanSatForkPath 'GameData\SCANsat'
-$scanSatDst = Join-Path $instFull 'GameData\SCANsat'
-if (-not (Test-Path $scanSatSrc)) { throw "SCANsat build did not produce $scanSatSrc" }
-# Overlay the freshly built DLLs into the fork's GameData before copying it out. NOTHING does this
-# for us: the DLLs under GameData\SCANsat\Plugins are gitignored build output that no post-build
-# target writes, so without this they are whatever a past manual copy left behind. That is exactly
-# how the instance ended up running SCANsat 21.1.1 while the fork was 11 commits ahead at 21.2.1 --
-# and stale binaries here are invisible, because the robocopy below reports a perfectly happy sync.
-$scanSatBin = Join-Path $ScanSatForkPath 'SCANsat\bin\Release\net4.8'
-$scanSatPlugins = Join-Path $scanSatSrc 'Plugins'
-New-Item -ItemType Directory -Path $scanSatPlugins -Force | Out-Null
-foreach ($f in 'SCANsat.dll','SCANsat.pdb','SCANsat.Unity.dll','SCANsat.Unity.pdb') {
-    $built = Join-Path $scanSatBin $f
-    if (-not (Test-Path $built)) { throw "SCANsat build did not produce $built" }
-    Copy-Item $built $scanSatPlugins -Force
-}
-$builtVer = (Get-Item (Join-Path $scanSatPlugins 'SCANsat.dll')).VersionInfo.ProductVersion
-Write-Host "  built SCANsat $builtVer"
-robocopy $scanSatSrc $scanSatDst /E /COPY:DAT /DCOPY:DAT /R:1 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null
-if ($LASTEXITCODE -ge 8) { throw "robocopy (SCANsat) failed (exit $LASTEXITCODE)" }
-$global:LASTEXITCODE = 0
-Write-Host "  SCANsat fork built and installed -> $scanSatDst"
-
-# --- step 5: install local (non-CKAN) mods ----------------------------------------------------
-Step 5 "Install local (non-CKAN) mods"
-# Step 3 only knows what is in RP-AXE-deps.ckan and step 4 only knows SCANsat, so a mod that lives
-# in a sibling repo is invisible to both and the nuke in step 1 is the end of it. Copy each one in
-# and NAME it -- a silent step here just moves the failure to the next rebuild.
+# --- step 4: install local (non-CKAN) mods ----------------------------------------------------
+Step 4 "Install local (non-CKAN) mods"
+# Step 3 only knows what is in RP-AXE-deps.ckan, so a mod that lives in a sibling repo is
+# invisible to it and the nuke in step 1 is the end of it. Copy each one in and NAME it -- a
+# silent step here just moves the failure to the next rebuild.
 $localInstalled = 0
 foreach ($lm in $LocalModGameData) {
     foreach ($modDir in Get-ChildItem $lm -Directory) {
@@ -289,12 +236,12 @@ foreach ($lm in $LocalModGameData) {
 }
 Write-Host "  $localInstalled local mod(s) installed."
 
-# --- step 6: deploy RP-AXE -------------------------------------------------------------------
-Step 6 "Deploy RP-AXE (junction in)"
+# --- step 5: deploy RP-AXE -------------------------------------------------------------------
+Step 5 "Deploy RP-AXE (junction in)"
 & $deployScript -InstancePath $instFull
 
-# --- step 7: boot once, then judge what the boot produced -------------------------------------
-Step 7 "Verify (boot with -axe-autotest, then run the liveness gate)"
+# --- step 6: boot once, then judge what the boot produced -------------------------------------
+Step 6 "Verify (boot with -axe-autotest, then run the liveness gate)"
 if ($NoVerify) {
     Write-Host "  skipped (-NoVerify). The instance is UNVERIFIED -- after the first launch run:" -ForegroundColor Yellow
     Write-Host "    python tools\check_liveness.py" -ForegroundColor Yellow
@@ -355,4 +302,4 @@ if ($NoVerify) {
     }
 }
 
-Write-Host "`nInstance rebuilt. RP-AXE deployed, our SCANsat fork installed, no RP-1." -ForegroundColor Green
+Write-Host "`nInstance rebuilt. RP-AXE deployed, no RP-1." -ForegroundColor Green

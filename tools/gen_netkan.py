@@ -356,8 +356,7 @@ def main():
         "The author's complete RP-AXE development environment as ONE hard-dependency set: every module "
         "RP-AXE.netkan lists under depends/recommends/suggests (High graphics included), so a clean CKAN instance "
         "reproduces the test install verbatim. Players normally install RP-AXE itself and choose graphics at the "
-        "prompts. SCANsat is deliberately absent here (the dev instance runs a fork); RP-AXE.netkan depends on "
-        "CKAN SCANsat.")
+        "prompts.")
     deps_ckan["version"] = mod_version()
     dump(os.path.join(REPO, "RP-AXE-deps.ckan"), deps_ckan)
     print("RP-AXE-deps.ckan: abstract + version updated")

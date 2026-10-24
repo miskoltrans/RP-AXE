@@ -251,8 +251,7 @@ so a player's install cannot silently differ from the one the tree was built aga
 - Transitive deps (Kopernicus, FAR, AJE, RealFuels, DynamicBatteryStorage, KerbalKonstructs,
   SystemHeat, …) are left to CKAN; listing them would only make the file harder to read.
 - `RP-AXE-deps.ckan` stays the dev-instance "perfect environment" (everything as hard deps, High
-  graphics, no SCANsat because the rebuild script builds it from source). It is what
-  `tools/rebuild-instance.ps1` consumes.
+  graphics). It is what `tools/rebuild-instance.ps1` consumes.
 - Upstream RP-1 is at v4.5.0.0 on CKAN; the seed is vendored from v4.4.0.0. Not a release blocker
   (the seed is self-contained), but a `tools/sync-seed.ps1` pass is due.
 
