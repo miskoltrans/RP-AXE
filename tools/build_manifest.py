@@ -189,13 +189,15 @@ ADD={  # our divergences (names; mod/title resolved from ro_expanded)
   "ro_priroda_adapter_s2_s0p5_1","ro_priroda_adapter_s2_s1p5_1","ro_priroda_crew_s1p5_2","aquila_experiment_rack_s1p5_1","aquila_lab_s1p5_2",
   "rana_mount_srf_1","rana_truss_srf_1","rana_truss_srf_2",
   "aquila_control_s2_1","ro_TKS_adapter_s2_s0p5_1","ro_TKS_adapter_s2_s1p5_1","ro_TKS_crew_s1p5_2","alnair_les_s0_2","sargas_decoupler_s1p5_1",
-  "aquila_sensor_synthetic_aperture_radar_srf_1",
+  # DROPPED 2026-10-24 with the `experimental` node it sat on: aquila_sensor_synthetic_aperture_radar_srf_1
+  # (Travers SAR) is a SCANsat hi-res altimeter with a 35-degree FOV -- wider than every rung of
+  # opt_syntheticApertureRadar (T9: Seasat 1.7, Magellan 11, PAZ 15), so it had no honest home on the tree.
   # DROPPED 2026-07-29 (tier-balance audit, docs/TIER-BALANCE.md B): aquila_sensor_visible_light_telescope_s0_1
   # ("Priroda 5 Earth Resources Camera") carried RP0visibleImaging4 (cap 6) as a BARE Experiment module, so
   # its gate was whatever node it sat on -- `experimental`, T1, 1 science. That made the gen-4 camera
   # cheaper and earlier than VI01/VI02/VI03 and killed three optics nodes outright. RO-AdvancedImager
   # already carries VI04 at its proper place in the ladder, so this part was pure duplicate.
-  # (Its sibling SAR part carries no experiment at all and stays.)
+  # (Its sibling SAR part carried no experiment and stayed -- until 2026-10-24, see above.)
   # RN-US (16)
   "rn_heliosa_b","rn_juno_spacecraft","rn_lcross_mb","rn_ladee","rn_lro","rn_mariner10","rn_mariner3-4","rn_mariner5",
   "rn_mariner6-7","rn_mariner8-9","rn_mars_observer","rn_sphinx_t3e","rn_tdrs_ag","rn_galileo_scanner","rn_ladee_scanner","rn_magellan_scanner",

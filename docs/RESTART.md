@@ -14,6 +14,9 @@ deploy/rebuild tooling (improve).
 - **Mod parts** — curate a canonical part **manifest** (single source of truth); uncurated /
   3rd-party parts fall to a **standalone Experimental side-node** (visible, low science, *off*
   the main tree, excluded from balance). Player flexibility via a later `allowUncurated` toggle.
+  **Superseded 2026-10-24 (user call, public release):** the `experimental` and `parking` nodes are
+  gone from the tree. Uncurated parts still fall through to the `parking` id, which now has no node,
+  so they can never be researched; `experimental`'s one part (Travers SAR) left the manifest.
 - **Part boundary** — **RO-config floor + author our own configs** to fill sparse late-tree paths
   (Nertea/Orion/probes). Strict-RO is the start state; config-authoring is the deliberate value-add.
 - **Probe/capsule cross-branch "prerequisite-tech checklist"** — **post-MVP** plugin layer.

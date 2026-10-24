@@ -87,38 +87,20 @@ nodes:
     # (`TechRequired = start`, entryCost 0); RP-1 puts it at earlyLifeSupport, which works there because
     # its own EVA content sits behind that same node. The AMU-realism story (RO balances this part as
     # Gemini's 76 kg nitrogen AMU) is not worth a silent one-way trip.
-  - id: parking
-    title: "Unsorted Parts (Parking)"
-    discipline: SystemsIntegration
-    tier: 0
-    cost: 999
-    parents: []
-    flavor: "Everything unplaced or purely cosmetic — a dev holding pen, off the main tree."
-    # Emptied 2026-07: the 3 YF-21/CZ-2 boattail shells -> fd_longMarchBoattail (dead-end off their
-    # clustered-first-stage king), ROE-Agena_EquipmentRack -> gnc_rcs (RCS mechanism), RP0HumanRatedFlag ->
-    # int_mercuryCapsule (its intended home per human-orbital design). Kept as an empty holding pen.
-    parts: []
-  - id: experimental
-    title: "Experimental Hardware"
-    discipline: SystemsIntegration
-    tier: 1
-    parents: []
-    flavor: "Off-program hardware that never earned a place in the main tree — redundant instruments, third-party curiosities, flight-proven gear with nothing new left to teach. Available to build, not required to progress; a side branch for flavour and player choice, not the story the rest of the tree tells."
-    parts: [aquila_sensor_synthetic_aperture_radar_srf_1]
-    # aquila_sensor_visible_light_telescope_s0_1 DROPPED from the manifest 2026-07-29 (tier-balance
-    # audit, docs/TIER-BALANCE.md B): it carried RP0visibleImaging4 (cap 6) as a bare Experiment
-    # module, so this node - T1, 1 science, explicitly 'excluded from balance' - was handing out a
-    # gen-4 camera better than anything the optics lane delivers through T6. Nothing strips science
-    # from parts that land here, so a science-bearing part must not be homed on it.
-    # 2026-07: the standalone Experimental side-node from docs/RESTART.md ("uncurated/3rd-party parts fall
-    # to a standalone Experimental side-node - visible, low science, off the main tree, excluded from
-    # balance") - designed but never actually built until now. First tenants: Spektr's SAR radar and
-    # Priroda's visible-light telescope (Tantares), both explicitly remapped here at T1 curation
-    # (docs/PARTLIST.md) as redundant with instruments already in the main science backbone. A permanent
-    # player-facing home (unlike `parking` above, a temporary dev holding pen meant to end up empty) - a
-    # root node like parking/hire_JPL/hire_OKB, available immediately, gates nothing, isn't gated by
-    # anything. Future uncurated/3rd-party additions belong here too; excluded from the deferred science-
-    # budget/balance pass (P3) when that lands.
+  # REMOVED 2026-10-24 (user call, "now that we are sharing the game with others"): the `parking` and
+  # `experimental` dev nodes.
+  # - `parking` is still the build's fall-through TechRequired (AxePartPlacement.cfg wildcards every
+  #   PART/PARTUPGRADE onto it, then overrides the placed ones) -- but it no longer has an RDNode, so
+  #   nothing on it can ever be researched: GetTechnologyState() answers Unavailable for an unknown id,
+  #   the same answer as an unresearched node (stock's `Unresearcheable` works the same way). The live
+  #   node was a 999-science root holding ~498 uncurated parts and 13 upgrades -- buyable by anyone. The
+  #   only CURATED parts parked there are editor-hidden (kerbalEVA*, flag, Potato*, NFE Legacy fuel
+  #   drums, SCANsat_Scanner32), so nothing a player builds with is lost. Allow-listed as intentionally
+  #   node-less in tools/check_tech_refs.py.
+  # - `experimental` held one part, aquila_sensor_synthetic_aperture_radar_srf_1 (Travers SAR). It was
+  #   a T1 hi-res altimeter with a 35-degree FOV against opt_syntheticApertureRadar's 1.7-15 (T9), so it
+  #   could not move there either -- it would have outclassed PAZ. DROPPED from the manifest instead, like
+  #   its Priroda telescope sibling 2026-07-29 (docs/TIER-BALANCE.md B).
   - id: hire_JPL
     title: "Charter a Deep-Space Probe Lab (JPL)"
     discipline: SystemsIntegration

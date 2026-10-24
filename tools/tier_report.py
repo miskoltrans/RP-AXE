@@ -122,7 +122,7 @@ def internal_spread(rows, nodes, thresh=1.5):
     """Within one node, how far apart are members of the same family on the intensive axis."""
     g = collections.defaultdict(list)
     for r in rows:
-        if r["tier"] is None or r["node"] in ("parking", "experimental"):
+        if r["tier"] is None or r["node"] == "parking":
             continue
         ax = tb.FAMILY_AXES.get(r["family"], (None, None))[0]
         if not ax:

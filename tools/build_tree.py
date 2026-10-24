@@ -323,13 +323,15 @@ def validate_design(disc, nodes, by):
             if any(p2 != p and reaches(p, p2) for p2 in ps):
                 warns.append(f"redundant (transitively-implied) edge: {p} -> {n['id']} "
                              f"(reaches it via another parent)")
-    # Intentional off-start roots: start/parking/experimental, the charter gates (hire_*) and the MLP
-    # subtree (gs_soundingStands) — each a standalone-but-startable line detached from the main tree by
-    # design. us2_serviceSandbox was a sixth until 2026-08-27, when the US2 trial was resolved: 19 parts
+    # Intentional off-start roots: start, the charter gates (hire_*) and the MLP subtree
+    # (gs_soundingStands) — each a standalone-but-startable line detached from the main tree by
+    # design. The `parking`/`experimental` dev nodes were two more until 2026-10-24, when they were
+    # removed for public play (`parking` survives as a node-less fall-through id; see nodes.yaml).
+    # us2_serviceSandbox was another until 2026-08-27, when the US2 trial was resolved: 19 parts
     # promoted into str_wedgeRack/str_tankedServiceCore/str_largeServiceCore + the two ECLSS nodes, 18
     # deleted by design/Parts/AxeCutParts.cfg. Nothing should be off-start-and-uncurated again.
     for r in roots:
-        if r not in ("start", "parking", "experimental", "gs_soundingStands") and not r.startswith("hire_"):
+        if r not in ("start", "gs_soundingStands") and not r.startswith("hire_"):
             warns.append(f"extra root (no parents besides start): {r}")
     # MEMBERSHIP: a placed part must be in manifest/curated-parts.tsv. The manifest is the single
     # source of truth for what AXE ships (docs/PARTLIST.md); a part name that reaches nodes.yaml by

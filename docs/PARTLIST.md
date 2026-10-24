@@ -175,6 +175,7 @@ solar covers them); **mod-specific science instruments** (→ DMagic); **part-sp
 - **Sofora truss (3):** `rana_mount_srf_1` `rana_truss_srf_1` `rana_truss_srf_2`
 - **TKS ferry (6):** `aquila_control_s2_1` `ro_TKS_adapter_s2_s0p5_1` `ro_TKS_adapter_s2_s1p5_1` `ro_TKS_crew_s1p5_2` `alnair_les_s0_2` `sargas_decoupler_s1p5_1`
 - **Remap → Experimental (2):** `aquila_sensor_synthetic_aperture_radar_srf_1` (Travers SAR) · `aquila_sensor_visible_light_telescope_s0_1` (Priroda cam)
+  — both since DROPPED: the camera 2026-07-29 (TIER-BALANCE.md B), the SAR 2026-10-24 with the `experimental` node itself.
 
 ### NearFutureSolar — 6 kept (advanced-solar tier)
 - **Concentrating PV:** `nfs-panel-deploying-concentrator-1x4-juno-1` (K12-K, Juno-style)

@@ -295,9 +295,11 @@ def solar_rung(wkg):
 
 
 
-# NON-SHIPPING SCAFFOLD. Three nodes exist so parts are reachable IN GAME while the author decides
-# what to do with them; none of their contents ships today, so no balance statement about them is
-# meaningful. The pipeline runs parking -> experimental -> tree:
+# NON-SHIPPING SCAFFOLD. Since 2026-10-24 only `parking` is left, and it is no longer a node: the
+# fall-through TechRequired with no RDNode behind it, so nothing on it can be researched. `experimental`
+# was removed the same day (its one part dropped from the manifest). History below. These held parts
+# while the author decided what to do with them; no balance statement about them is meaningful. The
+# pipeline ran parking -> experimental -> tree:
 #   parking            the build fall-through -- every part is wildcarded here by AxePartPlacement.cfg
 #                      and then overridden onto its real node, so this is "whatever the tree did not
 #                      place". Held for P2 reconsideration; most of it is expected to be sacked.
@@ -309,7 +311,7 @@ def solar_rung(wkg):
 #    into the tree, 18 deleted by design/Parts/AxeCutParts.cfg, and the node retired.)
 # Tools must treat both as invisible: a part promoted to the shortlist for testing must not
 # start generating findings. (Author, 2026-07-29; updated 2026-08-27.)
-SCAFFOLD = {"parking", "experimental"}
+SCAFFOLD = {"parking"}
 
 # ---------------------------------------------------------------- families
 def classify(m):

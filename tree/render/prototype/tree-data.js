@@ -2,9 +2,9 @@
 window.TREE = {
  "meta": {
   "generated": "2026-10-24 15:53",
-  "commit": "b92c46a",
-  "nodes": 534,
-  "parts": 1801,
+  "commit": "6f2aa60",
+  "nodes": 532,
+  "parts": 1800,
   "grants": 33,
   "experiments": 169
  },
@@ -375,46 +375,6 @@ window.TREE = {
    ]
   },
   {
-   "id": "parking",
-   "title": "Unsorted Parts (Parking)",
-   "discipline": "SystemsIntegration",
-   "tier": 0,
-   "cost": 999,
-   "anyToUnlock": false,
-   "flavor": "Everything unplaced or purely cosmetic — a dev holding pen, off the main tree.",
-   "parts": [],
-   "upgrades": [],
-   "grants": [],
-   "experiments": [],
-   "pos": [
-    -5264,
-    6232
-   ]
-  },
-  {
-   "id": "experimental",
-   "title": "Experimental Hardware",
-   "discipline": "SystemsIntegration",
-   "tier": 1,
-   "cost": 1,
-   "anyToUnlock": false,
-   "flavor": "Off-program hardware that never earned a place in the main tree — redundant instruments, third-party curiosities, flight-proven gear with nothing new left to teach. Available to build, not required to progress; a side branch for flavour and player choice, not the story the rest of the tree tells.",
-   "parts": [
-    {
-     "name": "aquila_sensor_synthetic_aperture_radar_srf_1",
-     "mod": "Tantares",
-     "title": "Travers Synthetic Aperture Radar"
-    }
-   ],
-   "upgrades": [],
-   "grants": [],
-   "experiments": [],
-   "pos": [
-    -4960,
-    11562
-   ]
-  },
-  {
    "id": "hire_JPL",
    "title": "Charter a Deep-Space Probe Lab (JPL)",
    "discipline": "SystemsIntegration",
@@ -428,7 +388,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -4960,
-    11842
+    11804
    ]
   },
   {
@@ -445,7 +405,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -4960,
-    11992
+    11954
    ]
   },
   {
@@ -561,7 +521,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -4048,
-    11842
+    11804
    ]
   },
   {
@@ -628,7 +588,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -3744,
-    11842
+    11804
    ]
   },
   {
@@ -714,7 +674,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -3440,
-    11842
+    11804
    ]
   },
   {
@@ -917,7 +877,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -3136,
-    11842
+    11804
    ]
   },
   {
@@ -1008,7 +968,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -2832,
-    11842
+    11804
    ]
   },
   {
@@ -1041,7 +1001,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -2528,
-    11842
+    11804
    ]
   },
   {
@@ -1157,7 +1117,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -2224,
-    11842
+    11804
    ]
   },
   {
@@ -1361,7 +1321,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -1920,
-    11842
+    11804
    ]
   },
   {
@@ -1589,7 +1549,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -1616,
-    11842
+    11804
    ]
   },
   {
@@ -1651,7 +1611,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -4048,
-    11992
+    11954
    ]
   },
   {
@@ -1679,7 +1639,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -3744,
-    11992
+    11954
    ]
   },
   {
@@ -1843,7 +1803,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -3440,
-    11992
+    11954
    ]
   },
   {
@@ -1974,7 +1934,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -3136,
-    11992
+    11954
    ]
   },
   {
@@ -1997,7 +1957,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -2224,
-    11992
+    11954
    ]
   },
   {
@@ -10176,7 +10136,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -4960,
-    11917
+    11879
    ]
   },
   {
@@ -10498,7 +10458,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -4656,
-    11917
+    11879
    ]
   },
   {
@@ -10581,7 +10541,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -4352,
-    11917
+    11879
    ]
   },
   {
@@ -10829,7 +10789,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -4048,
-    11917
+    11879
    ]
   },
   {
@@ -10957,7 +10917,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -3440,
-    11917
+    11879
    ]
   },
   {
@@ -11175,7 +11135,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -2832,
-    11917
+    11879
    ]
   },
   {
@@ -11347,7 +11307,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -2224,
-    11917
+    11879
    ]
   },
   {
@@ -11480,7 +11440,7 @@ window.TREE = {
    "experiments": [],
    "pos": [
     -1920,
-    11917
+    11879
    ]
   },
   {
@@ -41990,19 +41950,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     11842
+     11804
     ],
     [
      -4656,
-     11842
+     11804
     ],
     [
      -4352,
-     11842
+     11804
     ],
     [
      -4048,
-     11842
+     11804
     ]
    ]
   },
@@ -42013,11 +41973,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     11842
+     11804
     ],
     [
      -3744,
-     11842
+     11804
     ]
    ]
   },
@@ -42028,11 +41988,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11842
+     11804
     ],
     [
      -3440,
-     11842
+     11804
     ]
    ]
   },
@@ -42043,11 +42003,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     11842
+     11804
     ],
     [
      -3136,
-     11842
+     11804
     ]
    ]
   },
@@ -42058,11 +42018,11 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11842
+     11804
     ],
     [
      -2832,
-     11842
+     11804
     ]
    ]
   },
@@ -42073,11 +42033,11 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     11842
+     11804
     ],
     [
      -2528,
-     11842
+     11804
     ]
    ]
   },
@@ -42088,11 +42048,11 @@ window.TREE = {
    "waypoints": [
     [
      -2528,
-     11842
+     11804
     ],
     [
      -2224,
-     11842
+     11804
     ]
    ]
   },
@@ -42103,11 +42063,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     11842
+     11804
     ],
     [
      -1920,
-     11842
+     11804
     ]
    ]
   },
@@ -42118,11 +42078,11 @@ window.TREE = {
    "waypoints": [
     [
      -1920,
-     11842
+     11804
     ],
     [
      -1616,
-     11842
+     11804
     ]
    ]
   },
@@ -42133,19 +42093,19 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     11992
+     11954
     ],
     [
      -4656,
-     11992
+     11954
     ],
     [
      -4352,
-     11992
+     11954
     ],
     [
      -4048,
-     11992
+     11954
     ]
    ]
   },
@@ -42156,11 +42116,11 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     11992
+     11954
     ],
     [
      -3744,
-     11992
+     11954
     ]
    ]
   },
@@ -42171,11 +42131,11 @@ window.TREE = {
    "waypoints": [
     [
      -3744,
-     11992
+     11954
     ],
     [
      -3440,
-     11992
+     11954
     ]
    ]
   },
@@ -42186,11 +42146,11 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     11992
+     11954
     ],
     [
      -3136,
-     11992
+     11954
     ]
    ]
   },
@@ -42201,19 +42161,19 @@ window.TREE = {
    "waypoints": [
     [
      -3136,
-     11992
+     11954
     ],
     [
      -2832,
-     11992
+     11954
     ],
     [
      -2528,
-     11992
+     11954
     ],
     [
      -2224,
-     11992
+     11954
     ]
    ]
   },
@@ -43763,11 +43723,11 @@ window.TREE = {
    "waypoints": [
     [
      -4960,
-     11917
+     11879
     ],
     [
      -4656,
-     11917
+     11879
     ]
    ]
   },
@@ -43778,11 +43738,11 @@ window.TREE = {
    "waypoints": [
     [
      -4656,
-     11917
+     11879
     ],
     [
      -4352,
-     11917
+     11879
     ]
    ]
   },
@@ -43793,11 +43753,11 @@ window.TREE = {
    "waypoints": [
     [
      -4352,
-     11917
+     11879
     ],
     [
      -4048,
-     11917
+     11879
     ]
    ]
   },
@@ -43808,15 +43768,15 @@ window.TREE = {
    "waypoints": [
     [
      -4048,
-     11917
+     11879
     ],
     [
      -3744,
-     11917
+     11879
     ],
     [
      -3440,
-     11917
+     11879
     ]
    ]
   },
@@ -43827,15 +43787,15 @@ window.TREE = {
    "waypoints": [
     [
      -3440,
-     11917
+     11879
     ],
     [
      -3136,
-     11917
+     11879
     ],
     [
      -2832,
-     11917
+     11879
     ]
    ]
   },
@@ -43846,15 +43806,15 @@ window.TREE = {
    "waypoints": [
     [
      -2832,
-     11917
+     11879
     ],
     [
      -2528,
-     11917
+     11879
     ],
     [
      -2224,
-     11917
+     11879
     ]
    ]
   },
@@ -43865,11 +43825,11 @@ window.TREE = {
    "waypoints": [
     [
      -2224,
-     11917
+     11879
     ],
     [
      -1920,
-     11917
+     11879
     ]
    ]
   },

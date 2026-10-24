@@ -36,6 +36,9 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # / fallback, not a break). Kept minimal + documented.
 INTENTIONAL = {
     "ORPHANS",   # ProceduralParts orphan-catcher: deprecated part variants gate here on purpose
+    "parking",   # AXE's own fall-through: AxePartPlacement.cfg parks every PART/PARTUPGRADE here before
+                 # overriding the placed ones. No RDNode since 2026-10-24 ON PURPOSE -- an unknown id
+                 # reads Unavailable, so whatever the tree did not place can never be researched.
 }
 DEFAULT_TREE = os.path.join(REPO, "GameData", "RP-AXE", "design", "Tree", "AxeTechTree.cfg")
 DEFAULT_ROOTS = [os.path.join(REPO, "GameData", "RP-AXE")]
