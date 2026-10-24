@@ -6,7 +6,18 @@ place the version number lives**), `GameData/RP-AXE/RP-AXE-Changelog.cfg` + `CHA
 
 ## Resume here (state as of 2026-10-24)
 
-**0.9.2 is live** at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.2 (pre-release, tag
+**0.9.3 is live** at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.3 (pre-release, tag `v0.9.3` =
+`95608e9`, eight assets; zip sha256 `bd39feb0…80fb`, 55.3 MB, a copy in `dist/` for SpaceDock). Tree
+cleanup (Parking and Experimental gone, Travers SAR dropped), "Contracts" folder, no dev bridge in
+`AXE.dll` (the release script's new guard passed), Sol preset at Sol's recommended texture sizes, Sol
+docs (V5 clouds, lunar impactor and Mimas caveats). Proven before tagging, on the dev instance at the
+release commit: `-axe-autotest` SUCCESS, "RP-AXE v0.9.3 online", Harmony 21/0, CC 373/373,
+`check_tech_refs` and `check_liveness` OK; zip checked (AVC 0.9.3, no bridge markers, no other binaries,
+no dev files, `.ckan` URL/size/sha256). SpaceDock 0.9.3 + forum update: the launch kit's "Update to
+0.9.3" section. Worktree gotcha: `dotnet build-server shutdown` before `git worktree remove`, or the
+compiler server keeps the checkout locked ("Permission denied").
+
+**0.9.2 was released** the same day at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.2 (pre-release, tag
 `v0.9.2` = `6197a3a`, eight assets; zip sha256 `31dfe40c…6e95`, 55.3 MB). Avionics overload back to 0.9.0
 strength (`CorruptionPasses = 2`), over-capacity PAW rows red, presets renamed `Express-RSS-{High,Low}`.
 Built from a clean worktree at the tag. Proven: the avionics flight test on the dev instance (same source,
