@@ -109,25 +109,41 @@ rating. Frankly, I could have done better, but it is usable. What you will notic
   (Nertea's Near Future and Far Future suites, CryoEngines, KerbalAtomics, SSPXr, Tantares, Coatl,
   the RN probe packs, Universal Storage 2, Rocket Motor Menagerie, SCANsat, …). Every one of them
   has parts placed in the tree, which is why none is optional.
+- **A planet pack: RSS or Sol.** RP-AXE is built and balanced on Real Solar System. It also runs on
+  [Sol](https://github.com/RSS-Reborn/Sol-Configs/wiki) (RSS-Reborn), through a compatibility layer
+  that keeps a Sol career on the RSS numbers. [Install](#install) has a section for each.
 - Graphics are **your choice**. RSS needs one texture pack and CKAN asks which; I play on the RP-1
   Express **High** preset (Parallax, Scatterer, 16K textures, RSSVE-HR — about 8 GB more than Low).
-  Budget **40+ GB** of disk for the full High install.
+  Budget **40+ GB** of disk for the full High install. The Sol preset installs Sol at 4K.
 
 ## Install
 
+Pick RSS or Sol and use a **fresh KSP 1.12.5 folder**. The two cannot be installed side by side, and
+a career started on one cannot be moved to the other (the bodies are numbered differently, so every
+orbit in the save would point at the wrong body).
+
 **CKAN (recommended).** Until RP-AXE is on the CKAN registry, download two files from the
-[release page](https://github.com/miskoltrans/RP-AXE/releases): `RP-AXE-<version>.ckan` and one of
-`RP-AXE-Express-Low.ckan` / `RP-AXE-Express-High.ckan`. Install them one after the other with
+[release page](https://github.com/miskoltrans/RP-AXE/releases): the Express preset for your planet
+pack and `RP-AXE-<version>.ckan`. Install them one after the other, preset first, with
 *CKAN → File → Install from .ckan file* (CKAN takes one file per install). The Express file is the
 preset that goes with the mod: its recommended tools (MechJeb, TestFlight, alarm clock, transfer
-planners, editor helpers) and a graphics set — Low is 4K planet textures and nothing else (RP-1's own
-Low), High is my RP-1-Express-High set (Parallax, Scatterer, 16K textures, RSSVE-HR, about 8 GB more). When CKAN offers
-*further* recommendations, those come from the dependencies themselves (ModularLaunchPads recommends
-Bluedog Design Bureau, RSS recommends Parallax, and so on) — **decline them** unless you want them;
-the tree places nothing from them. CKAN refuses the install if `RP-1` is present (the `conflicts`
-rule). Expect a long download the first time.
+planners, editor helpers) and a graphics set. When CKAN offers *further* recommendations, those come
+from the dependencies themselves (ModularLaunchPads recommends Bluedog Design Bureau, RSS recommends
+Parallax, and so on) — **decline them** unless you want them; the tree places nothing from them. Do
+not press Cancel, which aborts the whole install. CKAN refuses the install if `RP-1` is present (the
+`conflicts` rule). Expect a long download the first time.
 
-Command line, same thing, in the same order:
+> Installing into a KSP folder that already holds mods installed by hand? CKAN refuses to overwrite
+> any file it did not install itself, and part mods ship example craft into `Ships/`. If it stops with
+> "tried to overwrite a file", delete that file and retry.
+
+### RSS
+
+Presets: `RP-AXE-Express-Low.ckan` is 4K planet textures and nothing else (RP-1's own Low);
+`RP-AXE-Express-High.ckan` is my RP-1-Express-High set (Parallax, Scatterer, 16K textures, RSSVE-HR,
+about 8 GB more).
+
+Command line, same order:
 
 ```
 ckan install -c RP-AXE-Express-Low.ckan --no-recommends --gamedir <your KSP folder> --headless
@@ -138,19 +154,49 @@ Installing `RP-AXE-<version>.ckan` on its own also works in the CKAN window: it 
 pack and offers the recommendations one by one. On the command line a headless install cannot ask
 and silently skips the choice, so add the pack yourself: `ckan install RSSTextures4096`.
 
-> Installing into a KSP folder that already holds mods installed by hand? CKAN refuses to overwrite
-> any file it did not install itself, and part mods ship example craft into `Ships/`. If it stops with
-> "tried to overwrite a file", delete that file and retry.
-
 **Manual.** Install the dependency set first — the metapackage `RP-AXE-deps.ckan` (*CKAN → File →
 Install from .ckan file*) is my complete environment, High graphics included — then unzip the release
 so that `GameData/RP-AXE/` sits in your KSP folder. Make sure **`GameData/RP-1/` does not exist**.
 
-Then start a **new Career** game. The difficulty presets are AXE's own; Normal is the balanced one.
+### Sol
 
-**Sol instead of RSS?** RP-AXE runs on [Sol](https://github.com/RSS-Reborn/Sol-Configs/wiki) too, with
-its own preset (`RP-AXE-Express-Sol.ckan`) and a compatibility layer that keeps a Sol career on the
-RSS balance. Sol needs its own CKAN repository added first. Steps and caveats: [docs/SOL.md](docs/SOL.md).
+Needs **RP-AXE 0.9.1 or later** (the first release with the Sol layer); tested on Sol 0.9.5. A career
+starts and plays on the RSS numbers, but no one has flown a Sol career end to end yet, so reports are
+especially welcome. RP-1's own wiki says Sol "may cause issues" and the KSP-RO Discord does not support
+it: report Sol problems [here](https://github.com/miskoltrans/RP-AXE/issues), not to KSP-RO.
+
+1. **Add Sol's CKAN repository.** Sol is not on CKAN's default repository: *Settings → CKAN
+   settings → Metadata repositories → New*, choose **Sol**, then *Refresh*.
+2. **Install** `RP-AXE-Express-Sol.ckan`, then `RP-AXE-<version>.ckan`. The Sol preset is the
+   Express-Low tool set plus Sol at 4K, with every Sol and Parallax texture pack named. If CKAN asks
+   which mod should provide `KSPBurst`, pick **KSPBurst Compiler**. Don't use `RP-AXE-Express-Low` or
+   `-High` with Sol: they carry RSS textures and conflict with Sol-Core.
+3. **Check** that `GameData/000_KSPBurst/` and `GameData/Parallax_StockPlanetTextures/` exist. CKAN
+   skipped both in testing, silently. Without KSPBurst, FAR and RealAntennas cannot load. Fix:
+   `ckan install KSPBurst ParallaxContinued-Planet-Textures`.
+
+Command line, same order; the last line is the step-3 fix, which headless CKAN needed in testing:
+
+```
+ckan repo add --gamedir <your KSP folder> Sol https://github.com/RSS-Reborn/CKAN-meta/archive/main.tar.gz
+ckan update --gamedir <your KSP folder>
+ckan install -c RP-AXE-Express-Sol.ckan --no-recommends --gamedir <your KSP folder> --headless
+ckan install -c RP-AXE-0.9.1.ckan       --no-recommends --gamedir <your KSP folder> --headless
+ckan install KSPBurst ParallaxContinued-Planet-Textures --no-recommends --gamedir <your KSP folder> --headless
+```
+
+**Magenta triangles on the ground** around the space center mean Parallax texture packs are missing.
+Install `ParallaxContinued-Terrain-Textures`, `ParallaxContinued-Scatter-Textures` and
+`ParallaxContinued-Planet-Textures`.
+
+Before the first career, read [docs/SOL.md](docs/SOL.md): it covers the Sol settings to keep (Real
+scale, ICRF frame), switching TransferWindowPlanner to Earth dates, what the compatibility layer
+restores, and what still differs from RSS (Earth biomes, 18 extra bodies, launch-window dates; the
+offline mission planner in `tools/mission/` is RSS-only).
+
+### After installing
+
+Start a **new Career** game. The difficulty presets are AXE's own; Normal is the balanced one.
 
 > SCANsat: the dependency is the standard CKAN SCANsat. I also maintain a GPU-rendered fork
 > ([miskoltrans/SCANsat-GPU](https://github.com/miskoltrans/SCANsat-GPU)) with the same parts; it is
@@ -161,7 +207,7 @@ RSS balance. Sol needs its own CKAN repository added first. Steps and caveats: [
 - DynamicBatteryStorage (a dependency of the Near Future mods) logs one `NullReferenceException`
   pair on every editor and flight scene load when Kerbalism is present. It is cosmetic, it is DBS's
   bug, and RP-1 installs show the same lines.
-- RSSVE-HR 3.1.0 declares a `NeptuneClouds` cubemap it does not ship, which silently disables the
+- RSS, High preset: RSSVE-HR 3.1.0 declares a `NeptuneClouds` cubemap it does not ship, which silently disables the
   Saturn, Titan, Uranus and Venus cloud layers. Copy the six `NeptuneClouds*.dds` from the RSSVE-LR
   archive into `GameData/RSSVE/Textures/` to restore them.
 - The first launch after install compiles every part and takes several minutes.
