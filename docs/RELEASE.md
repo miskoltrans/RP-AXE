@@ -6,7 +6,16 @@ place the version number lives**), `GameData/RP-AXE/RP-AXE-Changelog.cfg` + `CHA
 
 ## Resume here (state as of 2026-10-24)
 
-**0.9.1 is live** at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.1 (pre-release, eight
+**0.9.2 is live** at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.2 (pre-release, tag
+`v0.9.2` = `6197a3a`, eight assets; zip sha256 `31dfe40c…6e95`, 55.3 MB). Avionics overload back to 0.9.0
+strength (`CorruptionPasses = 2`), over-capacity PAW rows red, presets renamed `Express-RSS-{High,Low}`.
+Built from a clean worktree at the tag. Proven: the avionics flight test on the dev instance (same source,
+PASS 7/7, matches a faithful 0.9.0 rebuild); the release zip checked (AVC 0.9.2, DLL carries
+`CorruptionPasses`, in-game changelog, no dev files, `.ckan` URL/size/sha256 = the uploaded asset). Not booted
+from the zip itself. SpaceDock 0.9.2 = the user's manual upload. NetKAN needs nothing: once #11689 merges the
+bot reads the latest release.
+
+**0.9.1 was released** the same day at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.1 (pre-release, eight
 assets: + `RP-AXE-Express-Sol.ckan`; zip sha256 `8447d55d…dfc2`). It fixes AXE's Harmony patching on
 RealFuels 15.16 (every fresh CKAN install of 0.9.0 lost its patches) and the doubled patches, and adds
 Sol support (`docs/SOL.md`). Built from a clean worktree at the tag, because another session had
