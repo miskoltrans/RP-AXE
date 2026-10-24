@@ -148,10 +148,10 @@
     ],
     "conflicts": [
         {
-            "name": "RP-AXE-Express-High"
+            "name": "RP-AXE-Express-RSS-High"
         },
         {
-            "name": "RP-AXE-Express-Low"
+            "name": "RP-AXE-Express-RSS-Low"
         },
         {
             "name": "RSSTextures4096"

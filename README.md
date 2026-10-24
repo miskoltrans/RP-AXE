@@ -112,9 +112,10 @@ rating. Frankly, I could have done better, but it is usable. What you will notic
 - **A planet pack: RSS or Sol.** RP-AXE is built and balanced on Real Solar System. It also runs on
   [Sol](https://github.com/RSS-Reborn/Sol-Configs/wiki) (RSS-Reborn), through a compatibility layer
   that keeps a Sol career on the RSS numbers. [Install](#install) has a section for each.
-- Graphics are **your choice**. RSS needs one texture pack and CKAN asks which; I play on the RP-1
-  Express **High** preset (Parallax, Scatterer, 16K textures, RSSVE-HR — about 8 GB more than Low).
-  Budget **40+ GB** of disk for the full High install. The Sol preset installs Sol at 4K.
+- Graphics are **your choice**. RSS needs one texture pack and CKAN asks which; I play on the
+  **RSS-High** preset, RP-1 Express High's set (Parallax, Scatterer, 16K textures, RSSVE-HR — about
+  8 GB more than RSS-Low). Budget **40+ GB** of disk for the full RSS-High install. The Sol preset
+  installs Sol at 4K.
 
 ## Install
 
@@ -139,15 +140,15 @@ not press Cancel, which aborts the whole install. CKAN refuses the install if `R
 
 ### RSS
 
-Presets: `RP-AXE-Express-Low.ckan` is 4K planet textures and nothing else (RP-1's own Low);
-`RP-AXE-Express-High.ckan` is my RP-1-Express-High set (Parallax, Scatterer, 16K textures, RSSVE-HR,
-about 8 GB more).
+Presets: `RP-AXE-Express-RSS-Low.ckan` is 4K planet textures and nothing else (RP-1's own Low);
+`RP-AXE-Express-RSS-High.ckan` is my RP-1-Express-High set (Parallax, Scatterer, 16K textures,
+RSSVE-HR, about 8 GB more).
 
 Command line, same order:
 
 ```
-ckan install -c RP-AXE-Express-Low.ckan --no-recommends --gamedir <your KSP folder> --headless
-ckan install -c RP-AXE-0.9.1.ckan       --no-recommends --gamedir <your KSP folder> --headless
+ckan install -c RP-AXE-Express-RSS-Low.ckan --no-recommends --gamedir <your KSP folder> --headless
+ckan install -c RP-AXE-0.9.1.ckan           --no-recommends --gamedir <your KSP folder> --headless
 ```
 
 Installing `RP-AXE-<version>.ckan` on its own also works in the CKAN window: it asks for the texture
@@ -155,7 +156,7 @@ pack and offers the recommendations one by one. On the command line a headless i
 and silently skips the choice, so add the pack yourself: `ckan install RSSTextures4096`.
 
 **Manual.** Install the dependency set first — the metapackage `RP-AXE-deps.ckan` (*CKAN → File →
-Install from .ckan file*) is my complete environment, High graphics included — then unzip the release
+Install from .ckan file*) is my complete environment, RSS-High graphics included — then unzip the release
 so that `GameData/RP-AXE/` sits in your KSP folder. Make sure **`GameData/RP-1/` does not exist**.
 
 ### Sol
@@ -168,9 +169,9 @@ it: report Sol problems [here](https://github.com/miskoltrans/RP-AXE/issues), no
 1. **Add Sol's CKAN repository.** Sol is not on CKAN's default repository: *Settings → CKAN
    settings → Metadata repositories → New*, choose **Sol**, then *Refresh*.
 2. **Install** `RP-AXE-Express-Sol.ckan`, then `RP-AXE-<version>.ckan`. The Sol preset is the
-   Express-Low tool set plus Sol at 4K, with every Sol and Parallax texture pack named. If CKAN asks
-   which mod should provide `KSPBurst`, pick **KSPBurst Compiler**. Don't use `RP-AXE-Express-Low` or
-   `-High` with Sol: they carry RSS textures and conflict with Sol-Core.
+   RSS-Low tool set plus Sol at 4K, with every Sol and Parallax texture pack named. If CKAN asks
+   which mod should provide `KSPBurst`, pick **KSPBurst Compiler**. The two `RP-AXE-Express-RSS-*`
+   presets are for RSS only: they carry RSS textures and conflict with Sol-Core.
 3. **Check** that `GameData/000_KSPBurst/` and `GameData/Parallax_StockPlanetTextures/` exist. CKAN
    skipped both in testing, silently. Without KSPBurst, FAR and RealAntennas cannot load. Fix:
    `ckan install KSPBurst ParallaxContinued-Planet-Textures`.
@@ -207,7 +208,7 @@ Start a **new Career** game. The difficulty presets are AXE's own; Normal is the
 - DynamicBatteryStorage (a dependency of the Near Future mods) logs one `NullReferenceException`
   pair on every editor and flight scene load when Kerbalism is present. It is cosmetic, it is DBS's
   bug, and RP-1 installs show the same lines.
-- RSS, High preset: RSSVE-HR 3.1.0 declares a `NeptuneClouds` cubemap it does not ship, which silently disables the
+- RSS-High preset: RSSVE-HR 3.1.0 declares a `NeptuneClouds` cubemap it does not ship, which silently disables the
   Saturn, Titan, Uranus and Venus cloud layers. Copy the six `NeptuneClouds*.dds` from the RSSVE-LR
   archive into `GameData/RSSVE/Textures/` to restore them.
 - The first launch after install compiles every part and takes several minutes.

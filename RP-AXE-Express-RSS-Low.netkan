@@ -1,18 +1,30 @@
 {
     "spec_version": "v1.26",
-    "identifier": "RP-AXE-Express-High",
-    "name": "RP-AXE Express (High graphics)",
-    "abstract": "The recommended tools for RP-AXE plus the author's graphics set (RP-1 Express High: Parallax, 16K RSS textures, RSSVE-HR with Scatterer, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox) as one hard set. About 8 GB more than Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until RP-AXE is on the registry; decline the further recommendations CKAN offers.",
-    "description": "Install this preset FIRST, then RP-AXE-<version>.ckan, both from the RP-AXE release page until RP-AXE is on the CKAN registry (CKAN -> File -> Install from .ckan file, one file per install). Everything RP-AXE needs is a hard dependency of the preset or of the mod. The further recommendations CKAN offers come from the dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, which aborts the whole install.",
+    "identifier": "RP-AXE-Express-RSS-Low",
+    "name": "RP-AXE Express (RSS, Low graphics)",
+    "abstract": "One-click RP-AXE: the mod, its stack and tools, and the RSS Low (4K textures only) graphics set.",
+    "description": "A one-click RP-AXE install: the mod, the Realism Overhaul stack and every part mod the tree places, the recommended tools, and a graphics set, all as hard dependencies. Everything RP-AXE needs is in here. The recommendations CKAN offers on top come from the dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, which aborts the whole install. Then start a new Career.",
     "author": [
         "miskoltrans"
     ],
-    "version": "0.9.1",
-    "kind": "metapackage",
     "license": "CC-BY-NC-SA-4.0",
-    "ksp_version_min": "1.12.0",
-    "ksp_version_max": "1.12.5",
+    "tags": [
+        "config",
+        "career",
+        "graphics"
+    ],
+    "$kref": "#/ckan/github/miskoltrans/RP-AXE/asset_match/Express-RSS-Low.zip",
+    "$vref": "#/ckan/ksp-avc",
+    "x_netkan_force_v": true,
+    "resources": {
+        "homepage": "https://github.com/miskoltrans/RP-AXE",
+        "repository": "https://github.com/miskoltrans/RP-AXE",
+        "bugtracker": "https://github.com/miskoltrans/RP-AXE/issues"
+    },
     "depends": [
+        {
+            "name": "RP-AXE"
+        },
         {
             "name": "MechJeb2"
         },
@@ -80,48 +92,24 @@
             "name": "KSPTextureLoader"
         },
         {
-            "name": "Parallax"
-        },
-        {
-            "name": "Parallax-StockTextures"
-        },
-        {
-            "name": "RSSTextures16K"
-        },
-        {
-            "name": "RSSVE-HR"
-        },
-        {
-            "name": "Scatterer"
-        },
-        {
-            "name": "Scatterer-config-default"
-        },
-        {
-            "name": "Scatterer-sunflare-default"
+            "name": "RSSTextures4096"
         },
         {
             "name": "DistantObject"
         },
         {
             "name": "PlanetShine"
-        },
-        {
-            "name": "CanaveralPads"
-        },
-        {
-            "name": "PoodsMilkyWaySkybox"
         }
     ],
     "conflicts": [
         {
-            "name": "RP-AXE-Express-Low"
+            "name": "RP-AXE-Express-RSS-High"
         },
         {
             "name": "RP-AXE-Express-Sol"
         },
         {
-            "name": "RSSTextures4096"
+            "name": "RSSTextures16K"
         },
         {
             "name": "RSSTextures8192"
@@ -131,6 +119,12 @@
         },
         {
             "name": "Sol-Core"
+        }
+    ],
+    "install": [
+        {
+            "find": "RP-AXE-Express-RSS-Low",
+            "install_to": "GameData"
         }
     ]
 }

@@ -92,11 +92,11 @@ def write_ckan(ver, zip_path, data, sha256):
     return path
 
 
-EXPRESS = ("RP-AXE-Express-High", "RP-AXE-Express-Low")
+EXPRESS = ("RP-AXE-Express-RSS-High", "RP-AXE-Express-RSS-Low")   # = gen_netkan.EXPRESS_HIGH / EXPRESS_LOW
 
 
 def write_express_zips(ver):
-    """dist/RP-AXE-Express-{High,Low}.zip: a marker folder with an AVC file, so the registry presets have
+    """dist/RP-AXE-Express-RSS-{High,Low}.zip: a marker folder with an AVC file, so the registry presets have
     a download (NetKAN refuses to index a metapackage) and a version that tracks the mod's. Mirrors
     RP-1-ExpressInstall-Graphics (install_size 776 bytes). Uploaded to the same release as the mod."""
     with open(AVC, encoding="utf-8") as f:
@@ -105,7 +105,7 @@ def write_express_zips(ver):
     for ident in EXPRESS:
         tier = ident.rsplit("-", 1)[1]
         marker = {
-            "NAME": "RP-AXE Express (%s graphics)" % tier,
+            "NAME": "RP-AXE Express (RSS, %s graphics)" % tier,
             "VERSION": avc["VERSION"],
             "KSP_VERSION": avc.get("KSP_VERSION", avc["KSP_VERSION_MAX"]),
             "KSP_VERSION_MIN": avc["KSP_VERSION_MIN"],
@@ -113,7 +113,7 @@ def write_express_zips(ver):
         }
         readme = (
             "%s %s\n\nThis folder is a marker left by the CKAN preset '%s'. It installs nothing itself: the preset is a\n"
-            "list of dependencies (RP-AXE, its stack, the recommended tools and the %s graphics set). Safe to\n"
+            "list of dependencies (RP-AXE, its stack, the recommended tools and the RSS %s graphics set). Safe to\n"
             "delete; CKAN removes it with the preset.\n" % (ident, ver, ident, tier))
         out = os.path.join(DIST, ident + ".zip")
         with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as z:
@@ -128,7 +128,7 @@ def main():
     ap.add_argument("--no-build", action="store_true", help="do not run dotnet build first")
     ap.add_argument("--force", action="store_true", help="overwrite an existing archive for this version")
     ap.add_argument("--express-only", action="store_true",
-                    help="only (re)write dist/RP-AXE-Express-{High,Low}.zip for the current version")
+                    help="only (re)write dist/RP-AXE-Express-RSS-{High,Low}.zip for the current version")
     args = ap.parse_args()
 
     ver = version()
@@ -198,7 +198,8 @@ def main():
     print("wrote %s" % out)
     print("wrote %s  (CKAN -> File -> Install from .ckan file)" % ckan_path)
     print("wrote %s  (release assets for the registry presets)" % ", ".join(os.path.basename(e) for e in express))
-    print("release assets: the zip, its .sha256, the .ckan, the two Express .zip and the two Express .ckan files")
+    print("release assets: the zip, its .sha256, the .ckan, the two Express RSS .zip and the three Express .ckan "
+          "files (RSS-High, RSS-Low, Sol)")
     print("  %d files, %.1f MB uncompressed, %.1f MB zipped" % (len(names), total / 1e6, os.path.getsize(out) / 1e6))
     print("  sha256 %s" % sha)
     print("  excluded: %s" % ", ".join(sorted(os.path.basename(e) for e in EXCLUDE)))

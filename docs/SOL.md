@@ -43,7 +43,7 @@ From the [release page](https://github.com/miskoltrans/RP-AXE/releases), downloa
 from the dependencies; the tree places nothing from them). Do not press Cancel, which aborts the whole
 install.
 
-The Sol preset is the Express-Low tool set plus Sol at 4K, with every Sol and Parallax texture pack
+The Sol preset is the RSS-Low tool set plus Sol at 4K, with every Sol and Parallax texture pack
 named. That matters: Sol's per-system packs are virtual (4K/8K/16K), and the three ParallaxContinued
 texture packs that Sol's terrain reads were silently skipped by CKAN in testing, with no error. If you
 want 8K or 16K planets, swap the packs in CKAN afterwards.
@@ -69,7 +69,7 @@ RealAntennas cannot load. In the CKAN window, if it asks which mod should provid
 **KSPBurst Compiler**. Afterwards, check that `GameData/000_KSPBurst/` and
 `GameData/Parallax_StockPlanetTextures/` exist.
 
-Don't use `RP-AXE-Express-Low` or `-High` with Sol. They carry RSS textures and RSSVE, and they
+Don't use `RP-AXE-Express-RSS-Low` or `-RSS-High` with Sol. They carry RSS textures and RSSVE, and they
 conflict with Sol-Core.
 
 ### 3. Leave Sol's settings on "RSS"

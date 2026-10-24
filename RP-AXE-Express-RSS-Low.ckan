@@ -1,8 +1,8 @@
 {
     "spec_version": "v1.26",
-    "identifier": "RP-AXE-Express-Low",
-    "name": "RP-AXE Express (Low graphics)",
-    "abstract": "The recommended tools for RP-AXE plus a light graphics set (4K RSS textures, DistantObject, PlanetShine; no Scatterer or clouds, like RP-1 Express Graphics-Low) as one hard set. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan; decline the further recommendations CKAN offers.",
+    "identifier": "RP-AXE-Express-RSS-Low",
+    "name": "RP-AXE Express (RSS, Low graphics)",
+    "abstract": "The recommended tools for RP-AXE on Real Solar System plus a light graphics set (4K RSS textures, DistantObject, PlanetShine; no Scatterer or clouds, like RP-1 Express Graphics-Low) as one hard set. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan; decline the further recommendations CKAN offers.",
     "description": "Install this preset FIRST, then RP-AXE-<version>.ckan, both from the RP-AXE release page until RP-AXE is on the CKAN registry (CKAN -> File -> Install from .ckan file, one file per install). Everything RP-AXE needs is a hard dependency of the preset or of the mod. The further recommendations CKAN offers come from the dependencies themselves (Bluedog Design Bureau via ModularLaunchPads, Parallax via RSS, IVA mods via the capsules) and the tree places nothing from them: untick them and press Continue. Do not press Cancel, which aborts the whole install.",
     "author": [
         "miskoltrans"
@@ -91,7 +91,7 @@
     ],
     "conflicts": [
         {
-            "name": "RP-AXE-Express-High"
+            "name": "RP-AXE-Express-RSS-High"
         },
         {
             "name": "RP-AXE-Express-Sol"

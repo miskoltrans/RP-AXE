@@ -10,8 +10,8 @@ The classification lives here, not in the JSON, so the reasoning travels with it
                from (manifest/curated-parts.tsv). The tree is balanced against exactly that part set; a
                missing one leaves nodes you pay science for and get nothing from.
   recommends = tools AXE integrates with when present and runs without (installed by default, untickable).
-  suggests   = the author's graphics preset (heavy; RP-AXE-Graphics-High.ckan / -Low.ckan import one in
-               a go) and the DLCs, which CKAN cannot install.
+  suggests   = the author's graphics preset (heavy; RP-AXE-Express-RSS-High.ckan / -RSS-Low.ckan import one
+               in a go) and the DLCs, which CKAN cannot install.
   conflicts  = what RP-AXE replaces (RP-1's career layer, other trees, other simulators, other RTG models).
 
 Coverage check: every module in RP-AXE-deps.ckan (the dev environment) must be listed here or reachable
@@ -118,7 +118,7 @@ DESCRIPTION = (
     "RP-AXE is a career for the Realism Overhaul stack that replaces RP-1's career plugin: a tech tree of about "
     "530 nodes built from scratch and organised by engineering discipline, science as the only gate, no build "
     "times, facility upkeep, tooling or crew training. It conflicts with RP-1; install one or the other.\n\n"
-    "INSTALLING. The easy path is an RP-AXE Express preset (High or Low graphics; on the GitHub release page "
+    "INSTALLING. The easy path is an RP-AXE Express preset (RSS-High, RSS-Low, or Sol; on the GitHub release page "
     "until the presets reach the CKAN registry): it carries the recommended tools and a graphics set as hard "
     "dependencies. Install the preset first, then RP-AXE. Every mod the tree places parts from is a hard "
     "dependency of RP-AXE, so nothing in the recommendations CKAN offers afterwards is needed: those come from "
@@ -158,7 +158,7 @@ COMMENT = (
     "ROUtils+Harmony+MFI for AXE.dll) plus EVERY mod the tree places parts from (manifest/curated-parts.tsv): the "
     "tree is balanced against exactly that part set, and a missing one leaves nodes you pay science for and get "
     "nothing from. recommends = tools AXE integrates with when present and runs without. suggests = the author's "
-    "RP-1-Express-High graphics preset (heavy; RP-AXE-Express-High.ckan / -Low.ckan import one in a go) and the "
+    "RP-1-Express-High graphics preset (heavy; RP-AXE-Express-RSS-High.ckan / -RSS-Low.ckan import one in a go) and the "
     "DLCs, which CKAN cannot install (Breaking Ground carries the 28 robotics parts the tree places). Transitive "
     "deps are left to CKAN. Scatterer is in suggests, with RSSVE-HR: its default config lists stock bodies and only "
     "RSSVE's patch retargets it to RSS, so alone it renders nothing. 'Scatterer-config-default'/'-sunflare-default' "
@@ -167,6 +167,13 @@ COMMENT = (
     "the author's full dev environment (everything here as hard deps, High graphics). Conflicts: RP-AXE replaces "
     "the RP-1 career layer and ships its own tree, simulator and RTG model."
 )
+
+
+# Preset identifiers. The planet pack is in the name so an RSS preset and the Sol one cannot be mistaken
+# for each other (they conflict). package_release.py's EXPRESS names the same two RSS presets.
+EXPRESS_HIGH = "RP-AXE-Express-RSS-High"
+EXPRESS_LOW = "RP-AXE-Express-RSS-Low"
+EXPRESS_SOL = "RP-AXE-Express-Sol"
 
 
 def load(path):
@@ -273,37 +280,38 @@ def main():
     # registry entry, so a metapackage naming it fails "Unsatisfied dependency RP-AXE" until the
     # mod is on the CKAN registry (clean-room run 4, 2026-10-11). Install both files together.
     express = RECOMMENDS
-    dump(os.path.join(REPO, "RP-AXE-Express-High.ckan"), meta(
-        "RP-AXE-Express-High", "RP-AXE Express (High graphics)",
-        "The recommended tools for RP-AXE plus the author's graphics set (RP-1 Express High: Parallax, 16K RSS "
-        "textures, RSSVE-HR with Scatterer, DistantObject, PlanetShine, CanaveralPads, Pood's Milky Way skybox) as "
-        "one hard set. "
-        "About 8 GB more than Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until "
+    dump(os.path.join(REPO, EXPRESS_HIGH + ".ckan"), meta(
+        EXPRESS_HIGH, "RP-AXE Express (RSS, High graphics)",
+        "The recommended tools for RP-AXE on Real Solar System plus the author's graphics set (RP-1 Express High: "
+        "Parallax, 16K RSS textures, RSSVE-HR with Scatterer, DistantObject, PlanetShine, CanaveralPads, Pood's "
+        "Milky Way skybox) as one hard set. "
+        "About 8 GB more than RSS-Low. CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan until "
         "RP-AXE is on the registry; decline the further recommendations CKAN offers.",
         express + GRAPHICS_HIGH,
-        ["RP-AXE-Express-Low", "RP-AXE-Express-Sol", "RSSTextures4096", "RSSTextures8192", "RSSTextures2048", "Sol-Core"]))
-    dump(os.path.join(REPO, "RP-AXE-Express-Low.ckan"), meta(
-        "RP-AXE-Express-Low", "RP-AXE Express (Low graphics)",
-        "The recommended tools for RP-AXE plus a light graphics set (4K RSS textures, DistantObject, PlanetShine; "
-        "no Scatterer or clouds, like RP-1 Express Graphics-Low) as one hard set. CKAN -> File -> Install from "
-        ".ckan file, together with RP-AXE-<ver>.ckan; "
+        [EXPRESS_LOW, EXPRESS_SOL, "RSSTextures4096", "RSSTextures8192", "RSSTextures2048", "Sol-Core"]))
+    dump(os.path.join(REPO, EXPRESS_LOW + ".ckan"), meta(
+        EXPRESS_LOW, "RP-AXE Express (RSS, Low graphics)",
+        "The recommended tools for RP-AXE on Real Solar System plus a light graphics set (4K RSS textures, "
+        "DistantObject, PlanetShine; no Scatterer or clouds, like RP-1 Express Graphics-Low) as one hard set. "
+        "CKAN -> File -> Install from .ckan file, together with RP-AXE-<ver>.ckan; "
         "decline the further recommendations CKAN offers.",
         express + GRAPHICS_LOW,
-        ["RP-AXE-Express-High", "RP-AXE-Express-Sol", "RSSTextures16K", "RSSTextures8192", "RSSTextures2048", "Sol-Core"]))
+        [EXPRESS_HIGH, EXPRESS_SOL, "RSSTextures16K", "RSSTextures8192", "RSSTextures2048", "Sol-Core"]))
     # Sol: a release asset only, never a registry netkan -- its packs live in Sol's own CKAN repository,
     # which the default registry cannot resolve. RSSVE would stack a second EVE/Scatterer config on
     # Sol-Visuals' own.
-    dump(os.path.join(REPO, "RP-AXE-Express-Sol.ckan"), meta(
-        "RP-AXE-Express-Sol", "RP-AXE Express (Sol)",
+    dump(os.path.join(REPO, EXPRESS_SOL + ".ckan"), meta(
+        EXPRESS_SOL, "RP-AXE Express (Sol)",
         "The recommended tools for RP-AXE plus the Sol planet pack (4K) instead of Real Solar System, with every "
         "Sol texture pack named. Needs Sol's CKAN repository added first. CKAN -> File -> Install from .ckan file, "
         "then RP-AXE-<ver>.ckan; decline the further recommendations CKAN offers.",
         express + GRAPHICS_SOL,
-        ["RP-AXE-Express-High", "RP-AXE-Express-Low", "RSSTextures4096", "RSSTextures8192", "RSSTextures16K",
+        [EXPRESS_HIGH, EXPRESS_LOW, "RSSTextures4096", "RSSTextures8192", "RSSTextures16K",
          "RSSTextures2048", "RSSVE-HR", "RSSVE-LR"],
         description=EXPRESS_SOL_DESCRIPTION))
-    print("wrote RP-AXE-Express-High.ckan (%d), RP-AXE-Express-Low.ckan (%d), RP-AXE-Express-Sol.ckan (%d)"
-          % (len(express) + len(GRAPHICS_HIGH), len(express) + len(GRAPHICS_LOW), len(express) + len(GRAPHICS_SOL)))
+    print("wrote %s.ckan (%d), %s.ckan (%d), %s.ckan (%d)"
+          % (EXPRESS_HIGH, len(express) + len(GRAPHICS_HIGH), EXPRESS_LOW, len(express) + len(GRAPHICS_LOW),
+             EXPRESS_SOL, len(express) + len(GRAPHICS_SOL)))
 
     # Registry variants, submitted to KSP-CKAN/NetKAN the way RP-1 does it: a one-line stub there
     # (`$kref: #/ckan/netkan/<raw URL of this file>`) and the full metadata here. These DO depend on
@@ -313,8 +321,8 @@ def main():
     # RP-1-ExpressInstall-Graphics, each preset is a 1 KB marker zip (package_release.py writes them,
     # they ride on the mod's release) selected by `asset_match`, with the version read from its AVC
     # file and `x_netkan_force_v` so it shows as "v0.9.0" like the mod.
-    for ident, tier in (("RP-AXE-Express-High", "High (RP-1 Express High: Parallax, 16K textures, RSSVE-HR, Scatterer)"),
-                        ("RP-AXE-Express-Low", "Low (4K textures only)")):
+    for ident, tier in ((EXPRESS_HIGH, "RSS High (RP-1 Express High: Parallax, 16K textures, RSSVE-HR, Scatterer)"),
+                        (EXPRESS_LOW, "RSS Low (4K textures only)")):
         m = load(os.path.join(REPO, ident + ".ckan"))
         r = collections.OrderedDict()
         r["spec_version"] = "v1.26"
@@ -325,7 +333,7 @@ def main():
         r["author"] = m["author"]
         r["license"] = m["license"]
         r["tags"] = ["config", "career", "graphics"]   # the indexer warns on a tagless module
-        r["$kref"] = "#/ckan/github/miskoltrans/RP-AXE/asset_match/%s.zip" % ident.rsplit("-", 1)[1].join(("Express-", ""))
+        r["$kref"] = "#/ckan/github/miskoltrans/RP-AXE/asset_match/%s.zip" % ident[len("RP-AXE-"):]
         r["$vref"] = "#/ckan/ksp-avc"
         r["x_netkan_force_v"] = True
         r["resources"] = nk["resources"]
@@ -333,7 +341,7 @@ def main():
         r["conflicts"] = m["conflicts"]
         r["install"] = [{"find": ident, "install_to": "GameData"}]
         dump(os.path.join(REPO, ident + ".netkan"), r)
-    print("wrote RP-AXE-Express-High.netkan and RP-AXE-Express-Low.netkan (registry variants, depend on RP-AXE)")
+    print("wrote %s.netkan and %s.netkan (registry variants, depend on RP-AXE)" % (EXPRESS_HIGH, EXPRESS_LOW))
 
     deps_ckan["abstract"] = (
         "The author's complete RP-AXE development environment as ONE hard-dependency set: every module "

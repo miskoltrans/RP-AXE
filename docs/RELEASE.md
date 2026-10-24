@@ -16,10 +16,16 @@ layer inert, cache byte-identical), Sol boots on `ksp_sol`, published-asset Sol 
 Planet textures with Sol's repo added). The CKAN indexer dry run inflates the new netkan
 (`Sol-Core` in the texture any_of) cleanly.
 
+**Presets renamed 2026-10-24:** `RP-AXE-Express-{High,Low}` → `RP-AXE-Express-RSS-{High,Low}`, so neither
+reads as the Sol one. The identifiers were never on the registry (the PR is still open), so the rename is
+free now and would not be after the merge. It has three outward halves: push `main`; on the fork's `rp-axe`
+branch rename the two preset stubs and point their `$kref` raw URLs at the new netkan names; upload the
+renamed `.ckan` presets and marker `.zip`s to v0.9.1 (`package_release.py --express-only` for the zips).
+
 **0.9.0 public beta** went out 2026-10-11 (seven assets). **The CKAN listing is waiting on a human:**
 https://github.com/KSP-CKAN/NetKAN/pull/11689, opened 2026-10-12 from the fork `miskoltrans/NetKAN`,
 branch `rp-axe` (three metanetkan stubs; the real metadata is `RP-AXE.netkan` and
-`RP-AXE-Express-{High,Low}.netkan` on `main`). Expect weeks; nobody is polling it.
+`RP-AXE-Express-RSS-{High,Low}.netkan` on `main`). Expect weeks; nobody is polling it.
 
 When something happens on the PR:
 - **Reviewer asks for a change in a stub** → edit `NetKAN/RP-AXE*.netkan` on the fork's `rp-axe` branch
@@ -28,8 +34,8 @@ When something happens on the PR:
   `tools/gen_netkan.py`, run `python tools/gen_netkan.py`, re-inflate with netkan.exe (see "Publishing"),
   commit + push `main`, re-upload the `.ckan` assets (`gh release upload v0.9.0 ... --clobber`). No PR
   change needed: the stubs read `main`.
-- **Merged** → (1) README "Install" becomes: *in CKAN, tick `RP-AXE Express High` or `RP-AXE Express Low`
-  and install; untick the further recommendations* (keep the two-file path as the fallback for people
+- **Merged** → (1) README "Install" becomes: *in CKAN, tick `RP-AXE Express (RSS, High graphics)` or
+  `RP-AXE Express (RSS, Low graphics)` and install; untick the further recommendations* (keep the two-file path as the fallback for people
   who read old posts); (2) edit the forum thread and the SpaceDock description: "installing becomes a
   single tick" is now true; (3) tick the checklist below.
 - **Closed / stalled** → ask in the PR; the fallback stays the release-page `.ckan` files, which work today.
@@ -89,7 +95,7 @@ Still needs you (each is outward-facing or needs credentials):
       presets became marker zips on the release because a metapackage cannot be indexed (see "Publishing").
 - [ ] **CKAN listing**: https://github.com/KSP-CKAN/NetKAN/pull/11689 (opened 2026-10-12 from the
       `miskoltrans/NetKAN` fork, branch `rp-axe`, the three metanetkan stubs); the bot validates on the PR. Until it is merged, players install the `.ckan` files from the release page.
-      After the merge: README "Install" becomes "tick RP-AXE Express High or Low in CKAN".
+      After the merge: README "Install" becomes "tick RP-AXE Express RSS-High or RSS-Low in CKAN".
 - [x] R&D screen eyeballed via the AutoTest screenshot (`Instance/axe-shot-RD.png`, 2026-10-11): every node shows its stock discipline glyph.
 
 ## History rewrite (2026-10-11, before the first push)
@@ -154,8 +160,8 @@ player and this test feed to CKAN. Run as of 0.9.0 (2026-10-11), twice, headless
 robocopy ..\ksp_instance_clean ..\ksp_instance_cleanroom /E          # fresh stock 1.12.5 + DLCs, no CKAN registry
 # the snapshot is not pristine: B9PWings and ModularLaunchPads left 29 example craft in Ships\, and
 # CKAN refuses to overwrite a file it did not install -- delete every .craft without a .loadmeta twin
-..\ckan.exe install -c RP-AXE-Express-Low.ckan --no-recommends --gamedir ..\ksp_instance_cleanroom --headless
-..\ckan.exe install -c dist\RP-AXE-0.9.0.ckan   --no-recommends --gamedir ..\ksp_instance_cleanroom --headless
+..\ckan.exe install -c RP-AXE-Express-RSS-Low.ckan --no-recommends --gamedir ..\ksp_instance_cleanroom --headless
+..\ckan.exe install -c dist\RP-AXE-0.9.0.ckan       --no-recommends --gamedir ..\ksp_instance_cleanroom --headless
 python tools\check_cleanroom.py --instance ..\ksp_instance_cleanroom   # depends / recommends / conflicts / GameData vs the netkan
 ..\ksp_instance_cleanroom\KSP_x64.exe -axe-autotest                   # career, R&D, Mission Control, quit
 python tools\check_liveness.py --instance ..\ksp_instance_cleanroom
@@ -177,8 +183,8 @@ What the first two runs found, and fixed (`99ddd29`, `98e7fad`):
   recommending Scatterer + its `-default` config aliases. Run 5 (2026-10-12, the first boot on an unlocked
   session) showed that is a no-op on RSS anyway: the default config is a list of *stock* bodies
   (`ScattererCelestialBody Kerbin not found` for each one) and only RSSVE's `@Scatterer_planetsList`
-  patch retargets it. Scatterer now sits in `suggests` next to RSSVE-HR and in the High preset; Low
-  mirrors RP-1 Express Graphics-Low, textures only.
+  patch retargets it. Scatterer now sits in `suggests` next to RSSVE-HR and in the RSS-High preset;
+  RSS-Low mirrors RP-1 Express Graphics-Low, textures only.
 - **164 modules installed, 86 not named by the netkan** — the recommends closure of the dependencies
   (BDB, KSCExtended, KerbinSide, the RN rocket packs, CLS, RPM/ASET IVAs, Trajectories, …). Not a bug,
   but the Express presets exist so a player can decline it in one go.
@@ -217,9 +223,9 @@ so a player's install cannot silently differ from the one the tree was built aga
 | `conflicts` | what RP-AXE replaces: RP-1 / RP-0 / RONoCareer (career layer), KCT, CommunityTechTree and HideEmptyTechNodes (tree), KRASH (simulator), NFE-DecayingRTGs (RTG model), MechJebForAll, CrowdSourcedScience; and the full VenStockRevamp, which ReStock conflicts with and VenStockRevamp-Core recommends. | 11 |
 
 - **Graphics are not forced.** The texture pack is an `any_of` (4K is the headless default; the GUI
-  asks). `RP-AXE-Express-High.ckan` / `RP-AXE-Express-Low.ckan` are the one-click presets in the RP-1
-  Express mould: RP-AXE + its recommends + a graphics set as hard deps; they conflict with each other
-  and ship on the release page.
+  asks). `RP-AXE-Express-RSS-High.ckan` / `RP-AXE-Express-RSS-Low.ckan` (and `RP-AXE-Express-Sol.ckan`)
+  are the one-click presets in the RP-1 Express mould: RP-AXE + its recommends + a graphics set as hard
+  deps; they conflict with each other and ship on the release page.
 - **A headless resolver silently drops any virtual dependency with several providers — of a
   dependency too, not just of a metapackage.** Clean-room run 2026-10-11: RSS installed with no
   texture pack (exit 0), and Scatterer (pulled in by RSS → Parallax → Scatterer) with no config.
@@ -250,17 +256,17 @@ flag force-enables it. The localhost bridge (`Bridge.cfg`) is written on first r
 **CKAN.** The listing is a pull request to https://github.com/KSP-CKAN/NetKAN, done the way RP-1 does
 it (the *metanetkan* pattern): the NetKAN repo holds a three-line YAML stub per module whose `$kref`
 is `#/ckan/netkan/<raw URL of our netkan on main>`, and the full metadata stays in this repo, so later
-list changes are a push here, not another PR. Three stubs: `RP-AXE`, `RP-AXE-Express-High`,
-`RP-AXE-Express-Low`. The bot inflates them on the PR and comments with any error; a CKAN team member
+list changes are a push here, not another PR. Three stubs: `RP-AXE`, `RP-AXE-Express-RSS-High`,
+`RP-AXE-Express-RSS-Low`. The bot inflates them on the PR and comments with any error; a CKAN team member
 reviews a new mod's first submission. Once merged, every new GitHub release is picked up automatically.
 
 What the indexer taught us (netkan.exe is at https://ksp-ckan.s3-us-west-2.amazonaws.com/netkan.exe,
 run `netkan.exe --verbose --outputdir <dir> --github-token $(gh auth token) <file>.netkan` before any PR):
 - **A metapackage cannot be indexed**: "has no $kref field, this is required when no download url is
   specified". So the registry presets are not the local `kind: metapackage` files but 700-byte marker
-  zips (`package_release.py --express-only` writes `dist/RP-AXE-Express-{High,Low}.zip`: a folder with an
-  AVC file and a README) that ride on the mod's release, exactly like `RP-1-ExpressInstall-Graphics`.
-  `gen_netkan.py` writes their netkans with `$kref .../asset_match/Express-High.zip`, `$vref ksp-avc`
+  zips (`package_release.py --express-only` writes `dist/RP-AXE-Express-RSS-{High,Low}.zip`: a folder with
+  an AVC file and a README) that ride on the mod's release, exactly like `RP-1-ExpressInstall-Graphics`.
+  `gen_netkan.py` writes their netkans with `$kref .../asset_match/Express-RSS-High.zip`, `$vref ksp-avc`
   and `x_netkan_force_v`, and with **`RP-AXE` as a hard dependency**, so one tick installs everything.
 - With three zips on one release, every netkan names its asset: the mod's `$kref` ends in
   `asset_match/RP-AXE-v.*zip$` (the `zip$` keeps the `.sha256` out).
@@ -273,9 +279,9 @@ run `netkan.exe --verbose --outputdir <dir> --github-token $(gh auth token) <fil
 `RP-AXE-deps.ckan` is a dev tool and is not submitted.
 
 **Release assets, eight of them (0.9.1+)**: `RP-AXE-v<ver>.zip` + `.sha256`, `RP-AXE-<ver>.ckan`,
-`RP-AXE-Express-{High,Low,Sol}.ckan` (pre-registry presets, no RP-AXE dependency; Sol is a release
-asset only, its packs live in Sol's own CKAN repo, docs/SOL.md) and
-`RP-AXE-Express-{High,Low}.zip` (the registry markers). Re-upload with `gh release upload v<ver> ... --clobber`
+`RP-AXE-Express-{RSS-High,RSS-Low,Sol}.ckan` (pre-registry presets, no RP-AXE dependency; Sol is a
+release asset only, its packs live in Sol's own CKAN repo, docs/SOL.md) and
+`RP-AXE-Express-RSS-{High,Low}.zip` (the registry markers). Re-upload with `gh release upload v<ver> ... --clobber`
 after any `gen_netkan.py` change.
 
 **SpaceDock** (https://spacedock.info): upload the same zip (byte-identical to the GitHub asset) as
