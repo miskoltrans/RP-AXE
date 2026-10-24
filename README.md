@@ -149,7 +149,7 @@ Command line, same order:
 
 ```
 ckan install -c RP-AXE-Express-RSS-Low.ckan --no-recommends --gamedir <your KSP folder> --headless
-ckan install -c RP-AXE-0.9.2.ckan           --no-recommends --gamedir <your KSP folder> --headless
+ckan install -c RP-AXE-0.9.3.ckan           --no-recommends --gamedir <your KSP folder> --headless
 ```
 
 Installing `RP-AXE-<version>.ckan` on its own also works in the CKAN window: it asks for the texture
@@ -184,7 +184,7 @@ Command line, same order; the last line is the step-3 fix, which headless CKAN n
 ckan repo add --gamedir <your KSP folder> Sol https://github.com/RSS-Reborn/CKAN-meta/archive/main.tar.gz
 ckan update --gamedir <your KSP folder>
 ckan install -c RP-AXE-Express-Sol.ckan --no-recommends --gamedir <your KSP folder> --headless
-ckan install -c RP-AXE-0.9.2.ckan       --no-recommends --gamedir <your KSP folder> --headless
+ckan install -c RP-AXE-0.9.3.ckan       --no-recommends --gamedir <your KSP folder> --headless
 ckan install KSPBurst ParallaxContinued-Planet-Textures --no-recommends --gamedir <your KSP folder> --headless
 ```
 

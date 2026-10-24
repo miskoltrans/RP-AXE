@@ -3,7 +3,7 @@
 The in-game copy (shown once per new version by KerbalChangelog) is
 `GameData/RP-AXE/RP-AXE-Changelog.cfg`; keep the two in step.
 
-## Unreleased
+## 0.9.3 — tree cleanup, Sol textures, dev bridge removed
 
 - **No more localhost bridge in AXE.dll.** Up to 0.9.2 the plugin carried a dev-only query bridge (a
   listener on 127.0.0.1, off unless switched on by config, flag or environment variable). It is a
