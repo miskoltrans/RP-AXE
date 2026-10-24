@@ -170,15 +170,20 @@ it: report Sol problems [here](https://github.com/miskoltrans/RP-AXE/issues), no
 1. **Add Sol's CKAN repository.** Sol is not on CKAN's default repository: *Settings → CKAN
    settings → Metadata repositories → New*, choose **Sol**, then *Refresh*.
 2. **Install** `RP-AXE-Express-Sol.ckan`, then `RP-AXE-<version>.ckan`. The Sol preset is the
-   RSS-Low tool set plus Sol at Sol's recommended texture sizes, with every Sol and Parallax texture
-   pack named. If CKAN asks
-   which mod should provide `KSPBurst`, pick **KSPBurst Compiler**. The two `RP-AXE-Express-RSS-*`
-   presets are for RSS only: they carry RSS textures and conflict with Sol-Core.
+   RSS-Low tool set plus Sol. **Texture size is your choice per system:** CKAN's first screen lists
+   twelve Sol texture packs ticked at Sol's recommended sizes (16K Earth and Mars, 8K Mercury, Venus,
+   Jupiter and Saturn, 4K the rest; about 6 GB). Keep them, or untick one and CKAN asks which size you
+   want for that system ([sizes and downloads](docs/SOL.md#2-install-two-files-in-this-order)). Untick
+   the other recommendations. If CKAN asks which mod should provide `KSPBurst`, pick **KSPBurst
+   Compiler**. The two `RP-AXE-Express-RSS-*` presets are for RSS only: they carry RSS textures and
+   conflict with Sol-Core.
 3. **Check** that `GameData/000_KSPBurst/` and `GameData/Parallax_StockPlanetTextures/` exist. CKAN
    skipped both in testing, silently. Without KSPBurst, FAR and RealAntennas cannot load. Fix:
    `ckan install KSPBurst ParallaxContinued-Planet-Textures`.
 
-Command line, same order; the last line is the step-3 fix, which headless CKAN needed in testing:
+Command line, same order. The next-to-last line is the step-3 fix, which headless CKAN needed in
+testing. The last line is the texture packs at the recommended sizes; headless CKAN cannot ask, so
+without it Sol has no planet textures. Change a size in it to choose another:
 
 ```
 ckan repo add --gamedir <your KSP folder> Sol https://github.com/RSS-Reborn/CKAN-meta/archive/main.tar.gz
@@ -186,6 +191,7 @@ ckan update --gamedir <your KSP folder>
 ckan install -c RP-AXE-Express-Sol.ckan --no-recommends --gamedir <your KSP folder> --headless
 ckan install -c RP-AXE-0.9.3.ckan       --no-recommends --gamedir <your KSP folder> --headless
 ckan install KSPBurst ParallaxContinued-Planet-Textures --no-recommends --gamedir <your KSP folder> --headless
+ckan install Sol-Launchsites-256x Sol-Sun-4k Sol-Mercury-8k Sol-Venus-8k Sol-EarthSystem-16k Sol-MarsSystem-16k Sol-JupiterSystem-8k Sol-SaturnSystem-8k Sol-UranusSystem-4k Sol-NeptuneSystem-4k Sol-AsteroidBelt-4k Sol-KuiperBelt-4k --no-recommends --gamedir <your KSP folder> --headless
 ```
 
 **Magenta triangles on the ground** around the space center mean Parallax texture packs are missing.

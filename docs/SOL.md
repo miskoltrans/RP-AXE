@@ -24,8 +24,9 @@ save points at the wrong body).
 
 Sol's own guide is the [Installation page of its wiki](https://github.com/RSS-Reborn/Sol-Configs/wiki/Installation)
 (marked as still in development). Its RP-1 path starts from `RP-1 Express Install`, which brings RP-1,
-and RP-1 conflicts with RP-AXE, so follow the steps below instead. The RP-AXE Sol preset installs the
-texture sizes Sol's guide recommends (step 2), and Blackrack's volumetric clouds are step 6.
+and RP-1 conflicts with RP-AXE, so follow the steps below instead. The RP-AXE Sol preset offers the
+texture sizes Sol's guide recommends and lets you pick another per system (step 2), and Blackrack's
+volumetric clouds are step 6.
 
 ### 1. Add Sol's CKAN repository
 
@@ -44,32 +45,66 @@ ckan update --gamedir <KSP folder>
 
 From the [release page](https://github.com/miskoltrans/RP-AXE/releases), download
 `RP-AXE-Express-Sol.ckan` and `RP-AXE-<version>.ckan`. Install them one after the other with
-**CKAN → File → Install from .ckan file**. Decline the further recommendations CKAN offers (they come
-from the dependencies; the tree places nothing from them). Do not press Cancel, which aborts the whole
+**CKAN → File → Install from .ckan file**. Do not press Cancel at any point, which aborts the whole
 install.
 
-The Sol preset is the RSS-Low tool set plus Sol at the texture sizes Sol's guide recommends for its
+**Texture sizes are your choice, per system.** The preset is the RSS-Low tool set plus Sol, and the
+first screen CKAN shows for it is a list of recommendations. Twelve of them are Sol's texture packs
+(`Sol-EarthSystem-16k`, `Sol-Mercury-8k`, and so on), ticked at the sizes Sol's guide recommends for its
 RP-1 preset: 16K for Earth and Mars, 8K for Mercury, Venus, Jupiter and Saturn, 4K for the rest (the
-Sun, which Sol's table leaves out, is 4K). About 6 GB of planet textures. Every Sol and Parallax texture
-pack is named. That matters: Sol's per-system packs are virtual (4K/8K/16K), and the three
-ParallaxContinued texture packs that Sol's terrain reads were silently skipped by CKAN in testing, with
-no error. For other sizes, swap the packs in CKAN afterwards (each system's sizes replace each other).
+Sun, which Sol's table leaves out, is 4K), and the smallest launch-site pack. About 6 GB in all.
+
+- **Keep a pack ticked** to take that size.
+- **Untick it** to choose another: after the list, CKAN asks for that system, in Sol's words ("Choose an
+  Earth system texture resolution"). Its list is sorted by popularity, not by size, so pick by name.
+- **Untick the other recommendations.** They come from the dependencies and the tree places nothing
+  from them. On the second file, `RP-AXE-<version>.ckan`, untick all of them.
+
+Download per pack (recommended in bold); all 4K is about 1.8 GB, the largest of each about 11 GB:
+
+| System | 4K | 8K | 16K |
+|---|---|---|---|
+| Sun | **12 MB** | 39 MB | 146 MB |
+| Mercury | 30 MB | **106 MB** | 366 MB |
+| Venus | 32 MB | **121 MB** | 456 MB |
+| Earth system | 135 MB | 515 MB | **1.9 GB** |
+| Mars system | 187 MB | 420 MB | **1.3 GB** |
+| Jupiter system | 231 MB | **652 MB** | 1.9 GB |
+| Saturn system | 381 MB | **1.2 GB** | none |
+| Uranus system | **237 MB** | 623 MB | 625 MB |
+| Neptune system | **127 MB** | 342 MB | 716 MB |
+| Asteroid belt | **247 MB** | 689 MB | 1.5 GB |
+| Kuiper belt | **173 MB** | 366 MB | 1.0 GB |
+
+Launch sites: **256x 22 MB**, 512x 76 MB, 1024x 271 MB.
+
+To change a size later, tick the other size of that system in CKAN's mod list and untick the installed
+one, then apply both together. Sol-Core needs one size of every system, so removing a pack on its own
+would remove Sol with it.
+
+The rest of the Sol and Parallax packs are named outright. That matters: the three ParallaxContinued
+texture packs that Sol's terrain reads were silently skipped by CKAN in testing, with no error.
 
 > **Magenta triangles on the ground** around the space center mean those Parallax texture packs are
 > missing: the grass and rock scatters render without textures. `KSP.log` shows
 > `Failed to load map Parallax_StockScatterTextures/...`. Install `ParallaxContinued-Terrain-Textures`,
 > `ParallaxContinued-Scatter-Textures` and `ParallaxContinued-Planet-Textures`.
 
-Command line, same order, **plus a third command**:
+Command line, same order, **plus two more commands**:
 
 ```
 ckan install -c RP-AXE-Express-Sol.ckan --no-recommends --gamedir <KSP folder> --headless
 ckan install -c RP-AXE-<version>.ckan   --no-recommends --gamedir <KSP folder> --headless
 ckan install KSPBurst ParallaxContinued-Planet-Textures --no-recommends --gamedir <KSP folder> --headless
+ckan install Sol-Launchsites-256x Sol-Sun-4k Sol-Mercury-8k Sol-Venus-8k Sol-EarthSystem-16k Sol-MarsSystem-16k Sol-JupiterSystem-8k Sol-SaturnSystem-8k Sol-UranusSystem-4k Sol-NeptuneSystem-4k Sol-AsteroidBelt-4k Sol-KuiperBelt-4k --no-recommends --gamedir <KSP folder> --headless
 python tools/check_cleanroom.py --instance <KSP folder>     # optional, from a clone of this repo
 ```
 
-With Sol's repository added, headless CKAN (1.36.4) skipped `KSPBurst` and
+The last `ckan install` line is the texture packs: change a size in it to choose another (table
+above). `--no-recommends` skips the preset's recommended packs, and headless CKAN cannot ask which
+size you want, so without that line Sol has no planet textures, and CKAN still exits 0.
+
+With Sol's repository added, headless CKAN (1.36.4) also skipped `KSPBurst` and
 `ParallaxContinued-Planet-Textures` in testing. Both are named by the preset and by RP-AXE, and
 CKAN still exited 0. Naming them on the command line installs them. Without KSPBurst, FAR and
 RealAntennas cannot load. In the CKAN window, if it asks which mod should provide `KSPBurst`, pick

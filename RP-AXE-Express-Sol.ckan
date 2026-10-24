@@ -2,8 +2,8 @@
     "spec_version": "v1.26",
     "identifier": "RP-AXE-Express-Sol",
     "name": "RP-AXE Express (Sol)",
-    "abstract": "The recommended tools for RP-AXE plus the Sol planet pack at Sol's recommended texture sizes (16K Earth and Mars, 8K Mercury, Venus, Jupiter and Saturn, 4K the rest; about 6 GB) instead of Real Solar System, with every Sol texture pack named. Needs Sol's CKAN repository added first. CKAN -> File -> Install from .ckan file, then RP-AXE-<ver>.ckan; decline the further recommendations CKAN offers.",
-    "description": "RP-AXE on Sol instead of Real Solar System. FIRST add Sol's metadata repository to CKAN (Settings -> Metadata Repositories -> New -> Sol, or the URL https://github.com/RSS-Reborn/CKAN-meta/archive/main.tar.gz) and refresh. Then install this preset, then RP-AXE-<version>.ckan (CKAN -> File -> Install from .ckan file, one file per install). The preset names Sol's packs at Sol's recommended sizes (16K Earth and Mars, 8K Mercury, Venus, Jupiter and Saturn, 4K the rest) and every texture pack Sol reads, so no choice is left for CKAN to skip. Decline the further recommendations CKAN offers; do not press Cancel. Full notes: docs/SOL.md in the RP-AXE repository.",
+    "abstract": "The recommended tools for RP-AXE plus the Sol planet pack instead of Real Solar System. Texture size is your choice per system: CKAN offers Sol's recommended sizes ticked (16K Earth and Mars, 8K Mercury, Venus, Jupiter and Saturn, 4K the rest; about 6 GB), and asks for any you untick. Needs Sol's CKAN repository added first. CKAN -> File -> Install from .ckan file, then RP-AXE-<ver>.ckan.",
+    "description": "RP-AXE on Sol instead of Real Solar System. FIRST add Sol's metadata repository to CKAN (Settings -> Metadata Repositories -> New -> Sol, or the URL https://github.com/RSS-Reborn/CKAN-meta/archive/main.tar.gz) and refresh. Then install this preset, then RP-AXE-<version>.ckan (CKAN -> File -> Install from .ckan file, one file per install). TEXTURE SIZES: the recommendations CKAN shows first include twelve Sol texture packs (Sol-EarthSystem-16k, Sol-Mercury-8k, ...), ticked at Sol's recommended sizes (16K Earth and Mars, 8K Mercury, Venus, Jupiter and Saturn, 4K the rest; about 6 GB). Keep them ticked, or untick any system to choose its size: CKAN then asks for it (4K, 8K or 16K; all-4K is about 1.8 GB). Untick the other recommendations, which come from the dependencies and are not needed. Do not press Cancel, which aborts the whole install. Full notes: docs/SOL.md in the RP-AXE repository.",
     "author": [
         "miskoltrans"
     ],
@@ -89,6 +89,29 @@
             "name": "Sol-Visuals"
         },
         {
+            "name": "ParallaxContinued-KTL"
+        },
+        {
+            "name": "ParallaxContinued-Terrain-Textures"
+        },
+        {
+            "name": "ParallaxContinued-Scatter-Textures"
+        },
+        {
+            "name": "ParallaxContinued-Planet-Textures"
+        },
+        {
+            "name": "DistantObject"
+        },
+        {
+            "name": "PlanetShine"
+        },
+        {
+            "name": "KSPBurst"
+        }
+    ],
+    "recommends": [
+        {
             "name": "Sol-Launchsites-256x"
         },
         {
@@ -123,27 +146,6 @@
         },
         {
             "name": "Sol-KuiperBelt-4k"
-        },
-        {
-            "name": "ParallaxContinued-KTL"
-        },
-        {
-            "name": "ParallaxContinued-Terrain-Textures"
-        },
-        {
-            "name": "ParallaxContinued-Scatter-Textures"
-        },
-        {
-            "name": "ParallaxContinued-Planet-Textures"
-        },
-        {
-            "name": "DistantObject"
-        },
-        {
-            "name": "PlanetShine"
-        },
-        {
-            "name": "KSPBurst"
         }
     ],
     "conflicts": [
