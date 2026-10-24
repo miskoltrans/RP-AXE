@@ -24,9 +24,8 @@ save points at the wrong body).
 
 Sol's own guide is the [Installation page of its wiki](https://github.com/RSS-Reborn/Sol-Configs/wiki/Installation)
 (marked as still in development). Its RP-1 path starts from `RP-1 Express Install`, which brings RP-1,
-and RP-1 conflicts with RP-AXE, so follow the steps below instead. Two things from Sol's guide still
-apply: its recommended texture resolution per planet (step 2) and Blackrack's volumetric clouds
-(step 6).
+and RP-1 conflicts with RP-AXE, so follow the steps below instead. The RP-AXE Sol preset installs the
+texture sizes Sol's guide recommends (step 2), and Blackrack's volumetric clouds are step 6.
 
 ### 1. Add Sol's CKAN repository
 
@@ -49,11 +48,12 @@ From the [release page](https://github.com/miskoltrans/RP-AXE/releases), downloa
 from the dependencies; the tree places nothing from them). Do not press Cancel, which aborts the whole
 install.
 
-The Sol preset is the RSS-Low tool set plus Sol at 4K, with every Sol and Parallax texture pack
-named. That matters: Sol's per-system packs are virtual (4K/8K/16K), and the three ParallaxContinued
-texture packs that Sol's terrain reads were silently skipped by CKAN in testing, with no error. If you
-want 8K or 16K planets, swap the packs in CKAN afterwards. Sol's guide recommends, for its RP-1 preset,
-16K for Earth and Mars, 8K for Mercury, Venus, Jupiter and Saturn, and 4K for the rest.
+The Sol preset is the RSS-Low tool set plus Sol at the texture sizes Sol's guide recommends for its
+RP-1 preset: 16K for Earth and Mars, 8K for Mercury, Venus, Jupiter and Saturn, 4K for the rest (the
+Sun, which Sol's table leaves out, is 4K). About 6 GB of planet textures. Every Sol and Parallax texture
+pack is named. That matters: Sol's per-system packs are virtual (4K/8K/16K), and the three
+ParallaxContinued texture packs that Sol's terrain reads were silently skipped by CKAN in testing, with
+no error. For other sizes, swap the packs in CKAN afterwards (each system's sizes replace each other).
 
 > **Magenta triangles on the ground** around the space center mean those Parallax texture packs are
 > missing: the grass and rock scatters render without textures. `KSP.log` shows
@@ -218,3 +218,12 @@ repository, RealFuels 15.16.1, CKAN 1.36.4, headless.
    Naming `KSPBurst` in the preset did not change that. The third command above completed the
    install: 144 modules, and `check_cleanroom.py` OK, including its new check that every dependency
    of every installed module is present.
+5. **Biome maps** (2026-10-24, `-axe-autotest -axe-autotest-biomes` on `ksp_sol`, 4K packs): `RESULT
+   PASS`. Every mapped body's `ScienceUtil` lookup, sampled on a 1-degree grid, resolves to the biomes
+   its map defines (Earth 31 of 32; the 32nd, Cool Mediterranean, is smaller than the grid). The other
+   32 RSS bodies carry exactly RSS's biome names. Earth's 16K biome map (the recommended pack) is the 4K
+   map at four times the resolution: same 32 values, 98.25% pixel agreement when scaled down. All other
+   biome maps are byte-identical across pack sizes. **Phobos and Deimos have no biome map, on RSS too:**
+   RP-1's `seed/Science/BodyScienceParams.cfg` points them at `RP-1/PluginData/blankbiomes.dds`, which
+   RP-AXE does not ship. Kerbalism then gives them one biome-agnostic subject per situation, the same
+   payout RP-1's single real biome would give.

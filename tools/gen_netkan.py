@@ -82,9 +82,15 @@ GRAPHICS_LOW = ["RSSTextures4096", "DistantObject", "PlanetShine"]
 # resolver drops; and the three ParallaxContinued texture packs, hard deps of ParallaxContinued-KTL that
 # Sol's Parallax configs read ~2,500 times, were dropped too, exit 0 (Sol run, 2026-10-23). Scatterer and
 # EVE arrive through Sol-Visuals, which also provides their Sol configs.
+# Sizes = Sol's own recommendation for its RP-1 preset (wiki "Installation", 2026-10-24): 16k Earth and Mars,
+# 8k Mercury/Venus/Jupiter/Saturn, 4k the rest. The Sun is not in Sol's table and stays 4k. About 6.1 GB of
+# texture download (all-4k: 1.8 GB).
+SOL_TEXTURES = collections.OrderedDict([
+    ("Sun", "4k"), ("Mercury", "8k"), ("Venus", "8k"), ("EarthSystem", "16k"), ("MarsSystem", "16k"),
+    ("JupiterSystem", "8k"), ("SaturnSystem", "8k"), ("UranusSystem", "4k"), ("NeptuneSystem", "4k"),
+    ("AsteroidBelt", "4k"), ("KuiperBelt", "4k")])
 SOL_PACKS = ["Sol-Core", "Sol-Configs", "Sol-Visuals", "Sol-Launchsites-256x"] + [
-    "Sol-%s-4k" % s for s in ("Sun", "Mercury", "Venus", "EarthSystem", "MarsSystem", "JupiterSystem",
-                              "SaturnSystem", "UranusSystem", "NeptuneSystem", "AsteroidBelt", "KuiperBelt")]
+    "Sol-%s-%s" % sz for sz in SOL_TEXTURES.items()]
 GRAPHICS_SOL = SOL_PACKS + [
     "ParallaxContinued-KTL", "ParallaxContinued-Terrain-Textures", "ParallaxContinued-Scatter-Textures",
     "ParallaxContinued-Planet-Textures", "DistantObject", "PlanetShine",
@@ -139,7 +145,8 @@ EXPRESS_SOL_DESCRIPTION = (
     "RP-AXE on Sol instead of Real Solar System. FIRST add Sol's metadata repository to CKAN (Settings -> "
     "Metadata Repositories -> New -> Sol, or the URL https://github.com/RSS-Reborn/CKAN-meta/archive/main.tar.gz) "
     "and refresh. Then install this preset, then RP-AXE-<version>.ckan (CKAN -> File -> Install from .ckan file, "
-    "one file per install). The preset names Sol's 4K packs and every texture pack Sol reads, so no choice is "
+    "one file per install). The preset names Sol's packs at Sol's recommended sizes (16K Earth and Mars, 8K "
+    "Mercury, Venus, Jupiter and Saturn, 4K the rest) and every texture pack Sol reads, so no choice is "
     "left for CKAN to skip. Decline the further recommendations CKAN offers; do not press Cancel. Full notes: "
     "docs/SOL.md in the RP-AXE repository."
 )
@@ -302,7 +309,9 @@ def main():
     # Sol-Visuals' own.
     dump(os.path.join(REPO, EXPRESS_SOL + ".ckan"), meta(
         EXPRESS_SOL, "RP-AXE Express (Sol)",
-        "The recommended tools for RP-AXE plus the Sol planet pack (4K) instead of Real Solar System, with every "
+        "The recommended tools for RP-AXE plus the Sol planet pack at Sol's recommended texture sizes (16K "
+        "Earth and Mars, 8K Mercury, Venus, Jupiter and Saturn, 4K the rest; about 6 GB) instead of Real Solar "
+        "System, with every "
         "Sol texture pack named. Needs Sol's CKAN repository added first. CKAN -> File -> Install from .ckan file, "
         "then RP-AXE-<ver>.ckan; decline the further recommendations CKAN offers.",
         express + GRAPHICS_SOL,

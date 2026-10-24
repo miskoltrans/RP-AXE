@@ -115,7 +115,8 @@ rating. Frankly, I could have done better, but it is usable. What you will notic
 - Graphics are **your choice**. RSS needs one texture pack and CKAN asks which; I play on the
   **RSS-High** preset, RP-1 Express High's set (Parallax, Scatterer, 16K textures, RSSVE-HR — about
   8 GB more than RSS-Low). Budget **40+ GB** of disk for the full RSS-High install. The Sol preset
-  installs Sol at 4K.
+  installs Sol at Sol's recommended texture sizes (16K Earth and Mars, 8K Mercury, Venus, Jupiter and
+  Saturn, 4K the rest; about 6 GB of planet textures).
 
 ## Install
 
@@ -169,7 +170,8 @@ it: report Sol problems [here](https://github.com/miskoltrans/RP-AXE/issues), no
 1. **Add Sol's CKAN repository.** Sol is not on CKAN's default repository: *Settings → CKAN
    settings → Metadata repositories → New*, choose **Sol**, then *Refresh*.
 2. **Install** `RP-AXE-Express-Sol.ckan`, then `RP-AXE-<version>.ckan`. The Sol preset is the
-   RSS-Low tool set plus Sol at 4K, with every Sol and Parallax texture pack named. If CKAN asks
+   RSS-Low tool set plus Sol at Sol's recommended texture sizes, with every Sol and Parallax texture
+   pack named. If CKAN asks
    which mod should provide `KSPBurst`, pick **KSPBurst Compiler**. The two `RP-AXE-Express-RSS-*`
    presets are for RSS only: they carry RSS textures and conflict with Sol-Core.
 3. **Check** that `GameData/000_KSPBurst/` and `GameData/Parallax_StockPlanetTextures/` exist. CKAN
@@ -199,8 +201,8 @@ scale, ICRF frame), switching TransferWindowPlanner to Earth dates, what the com
 restores, and what still differs from RSS (Earth biomes, 18 extra bodies, launch-window dates; the
 offline mission planner in `tools/mission/` is RSS-only). Sol's own guide is its
 [wiki Installation page](https://github.com/RSS-Reborn/Sol-Configs/wiki/Installation); its RP-1 path
-installs RP-1, which conflicts with RP-AXE, so use the steps here and take only its texture and cloud
-advice.
+installs RP-1, which conflicts with RP-AXE, so use the steps here. The preset already installs its
+recommended texture sizes.
 
 ### After installing
 
