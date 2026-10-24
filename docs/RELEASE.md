@@ -18,9 +18,13 @@ Planet textures with Sol's repo added). The CKAN indexer dry run inflates the ne
 
 **Presets renamed 2026-10-24:** `RP-AXE-Express-{High,Low}` → `RP-AXE-Express-RSS-{High,Low}`, so neither
 reads as the Sol one. The identifiers were never on the registry (the PR is still open), so the rename is
-free now and would not be after the merge. It has three outward halves: push `main`; on the fork's `rp-axe`
-branch rename the two preset stubs and point their `$kref` raw URLs at the new netkan names; upload the
-renamed `.ckan` presets and marker `.zip`s to v0.9.1 (`package_release.py --express-only` for the zips).
+free now and would not be after the merge. All three outward halves are DONE (2026-10-24): `main` pushed;
+fork branch `rp-axe` commit `e46fc68` renames the two preset stubs (PR description updated to match); on
+v0.9.1 the renamed `.ckan` presets and marker `.zip`s are uploaded, `RP-AXE-Express-Sol.ckan` re-uploaded
+(its conflicts name the new identifiers), the four old-name assets deleted, release notes updated. Not
+re-inflated with netkan.exe (running the downloaded exe was blocked this session); checked by hand instead:
+each `asset_match` selects exactly one v0.9.1 asset and its zip holds the `find` folder. The PR showed no
+checks after the push (fork workflows likely await maintainer approval).
 
 **0.9.0 public beta** went out 2026-10-11 (seven assets). **The CKAN listing is waiting on a human:**
 https://github.com/KSP-CKAN/NetKAN/pull/11689, opened 2026-10-12 from the fork `miskoltrans/NetKAN`,
