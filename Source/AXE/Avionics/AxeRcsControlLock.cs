@@ -82,8 +82,16 @@ namespace RPAxe
                 // Safe to run here despite this prefix firing once PER THRUSTER MODULE, because both moves
                 // are pure functions of Time.time with no state to advance -- every thruster in a frame gets
                 // the same numbers, which is also the correct fiction (one drifting IMU, one wrong frame).
-                AxeControlLockerUtils.ApplyChaos(ref st.X, ref st.Y, ref st.Z, sigma);
-                AxeControlLockerUtils.ApplyMisdirect(ref st.X, ref st.Y, ref st.Z, sigma);
+                //
+                // CorruptionPasses times, like the rotation path, because 0.9.0 flew it doubled. NOT 0.9.0's
+                // compounding, though: its duplicate prefix overwrote the save slot, so each ModuleRCS left the
+                // once-corrupted X/Y/Z behind for the next thruster to corrupt again. That was a leak, not a
+                // feel -- every thruster here starts from the real command.
+                for (int pass = 0; pass < AxeControlLockerUtils.CorruptionPasses; pass++)
+                {
+                    AxeControlLockerUtils.ApplyChaos(ref st.X, ref st.Y, ref st.Z, sigma);
+                    AxeControlLockerUtils.ApplyMisdirect(ref st.X, ref st.Y, ref st.Z, sigma);
+                }
                 return;   // the postfix restores, so nothing outside ModuleRCS sees the corrupted command
             }
 

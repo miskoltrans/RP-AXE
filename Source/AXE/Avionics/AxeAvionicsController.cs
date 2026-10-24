@@ -41,6 +41,10 @@ namespace RPAxe
         /// corruption can be measured at chosen overloads. Negative = off, which is the shipped behaviour.</summary>
         internal static float TestNoiseOverride = -1f;
 
+        /// <summary>AutoTest only: replaces <see cref="AxeControlLockerUtils.CorruptionPasses"/>, so the test can
+        /// rebuild 0.9.0 the way it actually happened (one pass, registered twice). Zero or negative = off.</summary>
+        internal static int TestPassesOverride = -1;
+
         // A3 regime callouts. Remembering the previous capacity is what lets "mass rose past capacity" be
         // told apart from "capacity fell because you staged the primary unit" -- both land in the degraded
         // regime, both look identical from the cockpit, and they have different remedies.
@@ -224,16 +228,22 @@ namespace RPAxe
             // so re-arming cannot read a stale delay buffer or a cold EMA and jump. Zero sigma is a
             // no-op inside every penalty by construction.
             float sigma = AxeControlLockerUtils.ComputeArmed(st, AutopilotTargetActive()) ? noise : 0f;
-            AxeControlLockerUtils.ApplyAdversarial(ref st.pitch, ref st.yaw, ref st.roll, sigma);
-            // Base layer 1: full-amplitude additive chaos, independent of what was commanded. The policy
-            // above and the rotation below are both proportional to the command, so without this an
-            // autopilot that commands almost nothing pays almost nothing -- which was the whole bug.
-            AxeControlLockerUtils.ApplyChaos(ref st.pitch, ref st.yaw, ref st.roll, sigma);
-            // Base layer 2, AFTER the rest: the frame is wrong for whatever ends up being commanded, so
-            // it rotates the corrupted command rather than the requested one. Rotation only here --
-            // translation is not part of ctrlState's autopilot path in any way that gimbals care about,
-            // and is handled where it is actually consumed (AxeRcsControlLock).
-            AxeControlLockerUtils.ApplyMisdirect(ref st.pitch, ref st.yaw, ref st.roll, sigma);
+            // The pipeline as 0.9.0 flew it: every pass corrupts the previous pass's output (see
+            // CorruptionPasses for why there is more than one).
+            int passes = TestPassesOverride > 0 ? TestPassesOverride : AxeControlLockerUtils.CorruptionPasses;
+            for (int pass = 0; pass < passes; pass++)
+            {
+                AxeControlLockerUtils.ApplyAdversarial(ref st.pitch, ref st.yaw, ref st.roll, sigma);
+                // Base layer 1: full-amplitude additive chaos, independent of what was commanded. The policy
+                // above and the rotation below are both proportional to the command, so without this an
+                // autopilot that commands almost nothing pays almost nothing -- which was the whole bug.
+                AxeControlLockerUtils.ApplyChaos(ref st.pitch, ref st.yaw, ref st.roll, sigma);
+                // Base layer 2, AFTER the rest: the frame is wrong for whatever ends up being commanded, so
+                // it rotates the corrupted command rather than the requested one. Rotation only here --
+                // translation is not part of ctrlState's autopilot path in any way that gimbals care about,
+                // and is handled where it is actually consumed (AxeRcsControlLock).
+                AxeControlLockerUtils.ApplyMisdirect(ref st.pitch, ref st.yaw, ref st.roll, sigma);
+            }
         }
 
         /// <summary>

@@ -80,6 +80,18 @@ namespace RPAxe
         // margin -- nobody flies 20% over what the control system was characterised for.
         public const float NoiseK = 11.5f;
 
+        // THE WHOLE CORRUPTION RUNS TWICE PER TICK -- policy, chaos, misdirect, then all three again on the
+        // first pass's output. Not a design, a history: until 0.9.1 a stray second Harmony PatchAll
+        // registered every AXE patch twice, so every number in this file was found by feel, and a career
+        // flown, with the pipeline doubled. 0.9.1 fixed the registration and the mechanic went soft (AutoTest
+        // probe, hold-through-burn error at 10% over: 39 deg doubled, 3 deg single). What was played is what
+        // ships, so the doubling is back on purpose, as its own number, rather than re-tuned into the others.
+        // What it means in the units below: misdirect up to 2 x MisdirectMaxDeg (past 90 the intended axis
+        // REVERSES), chaos up to 2 sigma, overgain squared, and the regime EMA and dwell advancing twice a
+        // tick on an input that already carries one pass's corruption. It is also what makes k's anchor
+        // sentence true: doubled, 20% over loses attitude outright (69 deg mean); single, it held within 5.
+        public const int CorruptionPasses = 2;
+
         // C in Hz = C / mass^(1/3). NOT a frequency itself -- see HzForMass.
         public const float NoiseHz = 2f;
 
@@ -239,7 +251,7 @@ namespace RPAxe
         /// them -- reading "drift" while the craft is also pointing 40° wrong is otherwise misleading.</summary>
         public static string DescribePenalty(float sigma)
             => sigma <= 0f ? "clean"
-             : $"{AdversarialRegimeName} {sigma * 100f:F0}% +{sigma * MisdirectMaxDeg:F0}° off-axis — haywire on ANY input";
+             : $"{AdversarialRegimeName} {sigma * 100f:F0}% +{sigma * MisdirectMaxDeg * CorruptionPasses:F0}° off-axis — haywire on ANY input";
 
         // PAW rich text for every avionics row that means "this vessel is over its steerable-mass budget".
         // One colour, used for nothing else in the group, so an undersized design is recognised at a glance
@@ -441,8 +453,9 @@ namespace RPAxe
         //
         // Three independent Perlin channels form a ROTATION VECTOR -- its direction is the axis, its length
         // the angle. Because the channels evolve independently the axis precesses rather than the angle
-        // merely pulsing on a fixed axis. Bounded by sigma * MisdirectMaxDeg, so overload sets how far wrong
-        // it can get while the rate knob sets how fast it moves.
+        // merely pulsing on a fixed axis. Bounded by sigma * MisdirectMaxDeg per pass (CorruptionPasses passes
+        // apply the same rotation, so the angles add), so overload sets how far wrong it can get while the
+        // rate knob sets how fast it moves.
         //
         // WHAT THE FIRST CUT GOT WRONG, from flying it: the precession was too slow and too SMOOTH to read
         // as a failing gyro -- a slow sweep you could sit and wait out. Three fixes, all aimed at the same
@@ -462,7 +475,8 @@ namespace RPAxe
         // angle actually flown ran at well under half what the PAW advertised. Typical is now ~0.7 of the bound, with excursions that clamp at it.
         //
         // 90 is the edge case on purpose: at exactly 90 the intended-axis component is zero and everything
-        // commanded lands somewhere else, and past it control would REVERSE. The layer used to be switchable
+        // commanded lands somewhere else, and past it control would REVERSE -- which, with CorruptionPasses = 2,
+        // it does from sigma 0.5 (about 6% over), as it always did in play. The layer used to be switchable
         // off (0) for A/B against the bare policy; that comparison is settled and the switch is gone.
         public const float MisdirectMaxDeg = 90f;
         public const float MisdirectRateHz = 0.6f;   // ~1.5 s to noticeably change character

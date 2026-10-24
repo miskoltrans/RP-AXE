@@ -106,6 +106,7 @@ independent of which perturbation won, and improves the shipped lock system on i
 > | `DelayTicksMax` | 10 | 200 ms at 50 Hz — already past what destabilises most controllers |
 > | `MisdirectMaxDeg` / `MisdirectRateHz` | 90° / 0.6 Hz | 90 = the intended axis gets nothing; 0.6 Hz = too fast to adapt to, too slow to be filtered |
 > | `ArmDeadband` | 0.01 | reads post-autopilot, so a strict `> 0` would arm always |
+> | `CorruptionPasses` | 2 | *added 2026-10-24.* Not tuned: every value above was found, and a career played, with the pipeline running twice per tick (0.9.0's duplicate Harmony registration). 0.9.1 removed the duplicate and the mechanic went soft, so the second pass is back on purpose |
 >
 > **Three A/B switches are gone rather than frozen**, because each one's comparison is settled and each
 > shipped in its OFF position: `NoiseMax` (a ceiling on a curve that already asymptotes to 1), `NoiseDrift`

@@ -21,9 +21,9 @@ namespace RPAxe.AutoTest
     ///   * HOLD -- a PD attitude controller (full stick at 10 deg of error, gains from a measured
     ///     authority matrix) holds a fixed inertial direction through a "burn" (throttle commanded, which
     ///     is what keeps the corruption armed; the probe has no engine): how far off it ends up.
-    /// Every level runs twice: SINGLE, as shipped, and DOUBLE, with AxeFlightControlLast registered a
-    /// second time under another Harmony id -- exactly what 0.9.0 did -- so the before/after is measured
-    /// on the same craft, not estimated.
+    /// Every level runs twice: SHIPPED (CorruptionPasses inside one registration) and 0.9.0 REBUILT the way
+    /// it actually happened (one pass, AxeFlightControlLast registered a second time under another Harmony
+    /// id), so "the restore matches what was played" is measured on the same craft, not argued.
     ///
     /// Hard checks (RESULT FAIL if any breaks): one AXE prefix + postfix on Vessel.FeedInputFeed and on
     /// ModuleRCS.Update; sigma 0 passes the command through untouched; a zero command at full sigma
@@ -305,8 +305,12 @@ namespace RPAxe.AutoTest
                 foreach (bool dbl in new[] { false, true })
                 {
                     var twice = new Harmony(DoubleHarmonyId);
-                    if (dbl) twice.CreateClassProcessor(typeof(AxeFlightControlLast)).Patch();
-                    string mode = dbl ? "double(0.9.0)" : "single(0.9.1)";
+                    if (dbl)
+                    {
+                        AxeAvionicsController.TestPassesOverride = 1;
+                        twice.CreateClassProcessor(typeof(AxeFlightControlLast)).Patch();
+                    }
+                    string mode = dbl ? "0.9.0(ref)" : "shipped(x" + AxeControlLockerUtils.CorruptionPasses + ")";
                     foreach (float over in Overloads)
                     {
                         float sigma = AxeControlLockerUtils.NoiseFor(1f + over);
@@ -362,7 +366,11 @@ namespace RPAxe.AutoTest
                             Check(p95 < 1f, "clean controller holds the target (p95 error " + p95.ToString("0.00") + " deg) -- HOLD numbers valid");
                         }
                     }
-                    if (dbl) twice.UnpatchAll(DoubleHarmonyId);
+                    if (dbl)
+                    {
+                        twice.UnpatchAll(DoubleHarmonyId);
+                        AxeAvionicsController.TestPassesOverride = -1;
+                    }
                 }
 
                 // ZERO IN, ZERO OUT at full sigma (disarmed: no stick, no throttle, no autopilot target)
@@ -379,6 +387,7 @@ namespace RPAxe.AutoTest
             Hooks.Throttle = 0f;
             Hooks.Sink = null;
             AxeAvionicsController.TestNoiseOverride = -1f;
+            AxeAvionicsController.TestPassesOverride = -1;
             hooks.UnpatchAll(TestHarmonyId);
 
             try
