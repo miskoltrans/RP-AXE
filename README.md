@@ -198,8 +198,9 @@ above: [docs/SOL.md, step 6](docs/SOL.md#6-optional-blackracks-volumetric-clouds
 
 Before the first career, read [docs/SOL.md](docs/SOL.md): it covers the Sol settings to keep (Real
 scale, ICRF frame), switching TransferWindowPlanner to Earth dates, what the compatibility layer
-restores, and what still differs from RSS (Earth biomes, 18 extra bodies, launch-window dates; the
-offline mission planner in `tools/mission/` is RSS-only). Sol's own guide is its
+restores, and what still differs from RSS: Earth biomes, 18 extra bodies, launch-window dates, a
+much tighter Mimas flyby, and the **lunar impactor contract, which may not complete on Sol 0.9.5**
+(a known Sol bug; Sol's next release fixes it). Sol's own guide is its
 [wiki Installation page](https://github.com/RSS-Reborn/Sol-Configs/wiki/Installation); its RP-1 path
 installs RP-1, which conflicts with RP-AXE, so use the steps here. The preset already installs its
 recommended texture sizes.

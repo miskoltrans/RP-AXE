@@ -159,17 +159,24 @@ switching (Sol has 34 sites; RP-AXE's default Cape Canaveral exists).
   Hyperion, Phoebe, Puck, Proteus, Nereid, Nix, Hydra, Kerberos, Styx) keep Sol's science
   multipliers. They are extra places to do science that RSS does not have.
 - **Ephemeris.** Sol positions the planets from J2000-era elements; RSS uses B1950. Launch windows
-  fall on slightly different dates than RSS's. RP-AXE's offline mission planner (`tools/mission/`)
-  reads RSS's configs and does not support Sol.
+  fall on slightly different dates than RSS's.
 - **Launch-site names.** Sol fixes two of RSS's misspelled site IDs (`us_vandenberg`,
   `ru_kapustin_yar`) and adds `us_edwards`, `us_guam`, `us_whitesands`, `no_andoya`,
   `ca_saint_lawrence` and `uk_shetland_island`. Sol's own tracker reports missing radios at some of
   the new sites.
-- **Lunar impactor contract.** Newer Sol versions (after 0.9.5) patch RP-1's `LunarImpactor`
-  contracts to allow 8,500 m above the terrain instead of 3,500 m. RP-AXE's ported contract has the
-  same name, so the patch will apply to it too. RP-1's wiki mentions a Sol bug where the first lunar
-  impactor does not complete. ContractConfigurator 2.13.4 (in the stack) fixed the altitude reading
-  behind it.
+- **Lunar impactor contract: may not complete on Sol 0.9.5.** `LunarImpactor` and
+  `LunarImpactorOptional` only count the impact if the probe first registers within 3,500 m of the
+  lunar terrain (`ReachMoonSurface`, `maxTerrainAltitude = 3500`). RP-1's wiki reports a Sol bug where
+  the first lunar impactor does not complete, and Sol's development branch already raises the limit to
+  8,500 m for these two contracts (`Sol-Configs/Patches/Sol-RP1.cfg`, after 0.9.5). RP-AXE's ported
+  contracts have the same names and parameter structure, so that patch will apply to them once Sol
+  releases it. Until then, on Sol 0.9.5: if the impact happens and the contract stays open, that is
+  this bug, not your trajectory. Not yet reproduced with RP-AXE.
+- **Mimas flyby is much tighter.** Sol's Mimas has a 250 km sphere of influence (RSS: 396 km),
+  measured from its centre, and the `Mimas Flyby` contract only counts inside it. On Sol that means
+  passing within about 50 km of the surface instead of about 200 km. Mimas is the only body whose
+  sphere of influence differs from RSS by more than 2%. Every other body-specific contract loads and
+  resolves its target on Sol (373 of 373 contract types, as on RSS); none requires a specific biome.
 - **Gas giants are oblate** by default (`OblateGasGiants = True`). Sol warns this can make EVE
   clouds and Scatterer misbehave close up.
 - **Cosmetic:** RealPlume's real-scale plume expansion (`atmDensityExp = 1`) and ZTheme's HUD colours
