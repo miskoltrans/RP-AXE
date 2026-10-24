@@ -9,10 +9,13 @@ The in-game copy (shown once per new version by KerbalChangelog) is
   listener on 127.0.0.1, off unless switched on by config, flag or environment variable). It is a
   developer tool, so it now lives outside the mod entirely, and the release script refuses an
   `AXE.dll` that contains it. Nothing changes for players.
-- **Sol preset: texture size is your choice, per system.** CKAN offers Sol's recommended sizes ticked
-  (16K Earth and Mars, 8K Mercury, Venus, Jupiter and Saturn, 4K the rest; about 6 GB) and asks for any
-  system you untick. The preset asset was re-uploaded to the 0.9.3 release with this on 2026-10-24;
-  the first 0.9.3 upload fixed those sizes.
+- **Presets: texture size is your choice.** The Sol preset offers Sol's recommended sizes ticked per
+  system (16K Earth and Mars, 8K Mercury, Venus, Jupiter and Saturn, 4K the rest; about 6 GB) and asks
+  for any system you untick. The RSS presets offer their one texture pack ticked (4K on RSS-Low, 16K
+  on RSS-High) and ask for another size if you untick it. The preset assets were re-uploaded to the
+  0.9.3 release with this on 2026-10-24; the first 0.9.3 upload fixed the sizes.
+- **README: the RSS command-line install names `KSPBurst`.** Headless CKAN skipped it (2026-10-24,
+  on the published 0.9.3 files too), leaving FAR and RealAntennas unable to load.
 - **Sol docs:** volumetric clouds (Blackrack's V5), the lunar impactor contract that may not complete
   on Sol 0.9.5, and the much tighter Mimas flyby.
 - **The Mission Control "RP-1" folder is now called "Contracts".**

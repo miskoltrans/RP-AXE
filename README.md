@@ -158,19 +158,20 @@ On RSS-Low the question may only come with the second file, `RP-AXE-<version>.ck
 size later, tick the other pack in CKAN's mod list and untick the installed one, then apply both
 together.
 
-Command line, same order. The last line is the texture pack: a headless install cannot ask, and
-without it RSS has no planet textures. Change the name to pick another size (`RSSTextures16K` is
-RSS-High's):
+Command line, same order. The last line names what a headless install skips without saying so:
+the texture pack (it cannot ask which, and without one RSS has no planet textures) and `KSPBurst`
+(without it FAR and RealAntennas cannot load; skipped in testing, 2026-10-24, on 0.9.3 too). Change
+the texture name to pick another size (`RSSTextures16K` is RSS-High's):
 
 ```
 ckan install -c RP-AXE-Express-RSS-Low.ckan --no-recommends --gamedir <your KSP folder> --headless
 ckan install -c RP-AXE-0.9.3.ckan           --no-recommends --gamedir <your KSP folder> --headless
-ckan install RSSTextures4096                --no-recommends --gamedir <your KSP folder> --headless
+ckan install RSSTextures4096 KSPBurst       --no-recommends --gamedir <your KSP folder> --headless
 ```
 
 Installing `RP-AXE-<version>.ckan` on its own also works in the CKAN window: it asks for the texture
 pack and offers the recommendations one by one. On the command line a headless install cannot ask
-and silently skips the choice, so add the pack yourself: `ckan install RSSTextures4096`.
+and silently skips the choice, so add the pack yourself: `ckan install RSSTextures4096 KSPBurst`.
 
 **Manual.** Install the dependency set first — the metapackage `RP-AXE-deps.ckan` (*CKAN → File →
 Install from .ckan file*) is my complete environment, RSS-High graphics included — then unzip the release

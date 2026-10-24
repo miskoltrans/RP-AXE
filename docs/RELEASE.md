@@ -21,7 +21,11 @@ compiler server keeps the checkout locked ("Permission denied").
 `recommends`, not `depends`, so CKAN's window offers them ticked and asks Sol's own per-system question
 for any unticked (the user clicked through and kept it). Command-line installs need the packs named on a
 fourth `ckan install` line (README, docs/SOL.md); proven on a stock copy: all twelve present,
-`check_cleanroom.py` exit 0.
+`check_cleanroom.py` exit 0. **RSS presets, same pattern:** the one texture pack is a recommend (4K Low,
+16K High); the README's RSS command line gains `ckan install RSSTextures4096 KSPBurst`. **KSPBurst
+finding:** a headless install of the PUBLISHED 0.9.3 RSS-Low preset + mod ends without KSPBurst (A/B on a
+stock copy, 2026-10-24; FAR, RealAntennas and RP-AXE report it unsatisfied). CKAN's KSPBurst now provides
+`KSPBurst-Full` and depends on KSPBurst-Lite; naming `KSPBurst` on the command line installs both.
 
 **0.9.2 was released** the same day at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.2 (pre-release, tag
 `v0.9.2` = `6197a3a`, eight assets; zip sha256 `31dfe40c…6e95`, 55.3 MB). Avionics overload back to 0.9.0
