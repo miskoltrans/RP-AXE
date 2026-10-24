@@ -752,8 +752,11 @@ nodes:
     discipline: Microelectronics
     tier: 1
     parents: [start]
-    flavor: "Fly the thermometer and the barometer up a sounding rocket and read them where balloons can't reach — the first instruments to tell us what the air is doing at the edge of space. The measurement is turn one; carrying it above the atmosphere is the breakthrough."
+    flavor: "The thermometer and barometer you start with already fly — this is learning to read them on a sounding rocket's arc, where balloons can't reach and the air thins into the edge of space. No new hardware here: what it buys is the know-how the mass spectrometer and the magnetometer are built on."
     parts: []
+    # FLAVOR REWRITTEN 2026-10-24: the old text opened "Fly the thermometer and the barometer up a
+    # sounding rocket", which a player reads as "this node unlocks them" -- and then finds it empty.
+    # Both are `start` parts; the flavor now says so and names what the node actually leads to.
     # DELIBERATELY EMPTY (2026-07-29). Its one part, USThermoBaroWedge, granted nothing: both of its
     # Kerbalism SETUPs are `tech = start` and `start` already ships sensorBarometer + sensorThermometer
     # as standalone parts — and proceduralAvionics carries the same instrument menu, so packaging
