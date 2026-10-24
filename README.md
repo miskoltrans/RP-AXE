@@ -190,10 +190,17 @@ ckan install KSPBurst ParallaxContinued-Planet-Textures --no-recommends --gamedi
 Install `ParallaxContinued-Terrain-Textures`, `ParallaxContinued-Scatter-Textures` and
 `ParallaxContinued-Planet-Textures`.
 
+**Volumetric clouds.** Sol's cloud configs are made for Blackrack's volumetric clouds **V5** (a
+Patreon download); CKAN's EVE gives flat clouds. Adding V5 is a manual folder copy after the steps
+above: [docs/SOL.md, step 6](docs/SOL.md#6-optional-blackracks-volumetric-clouds-v5).
+
 Before the first career, read [docs/SOL.md](docs/SOL.md): it covers the Sol settings to keep (Real
 scale, ICRF frame), switching TransferWindowPlanner to Earth dates, what the compatibility layer
 restores, and what still differs from RSS (Earth biomes, 18 extra bodies, launch-window dates; the
-offline mission planner in `tools/mission/` is RSS-only).
+offline mission planner in `tools/mission/` is RSS-only). Sol's own guide is its
+[wiki Installation page](https://github.com/RSS-Reborn/Sol-Configs/wiki/Installation); its RP-1 path
+installs RP-1, which conflicts with RP-AXE, so use the steps here and take only its texture and cloud
+advice.
 
 ### After installing
 

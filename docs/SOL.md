@@ -22,6 +22,12 @@ Use a fresh KSP 1.12.5 folder. Sol and RSS cannot be installed side by side, and
 on one cannot be moved to the other (the bodies are numbered differently, so every orbit in the
 save points at the wrong body).
 
+Sol's own guide is the [Installation page of its wiki](https://github.com/RSS-Reborn/Sol-Configs/wiki/Installation)
+(marked as still in development). Its RP-1 path starts from `RP-1 Express Install`, which brings RP-1,
+and RP-1 conflicts with RP-AXE, so follow the steps below instead. Two things from Sol's guide still
+apply: its recommended texture resolution per planet (step 2) and Blackrack's volumetric clouds
+(step 6).
+
 ### 1. Add Sol's CKAN repository
 
 Sol is not on CKAN's default repository. In CKAN: **Settings → CKAN settings → Metadata
@@ -46,7 +52,8 @@ install.
 The Sol preset is the RSS-Low tool set plus Sol at 4K, with every Sol and Parallax texture pack
 named. That matters: Sol's per-system packs are virtual (4K/8K/16K), and the three ParallaxContinued
 texture packs that Sol's terrain reads were silently skipped by CKAN in testing, with no error. If you
-want 8K or 16K planets, swap the packs in CKAN afterwards.
+want 8K or 16K planets, swap the packs in CKAN afterwards. Sol's guide recommends, for its RP-1 preset,
+16K for Earth and Mars, 8K for Mercury, Venus, Jupiter and Saturn, and 4K for the rest.
 
 > **Magenta triangles on the ground** around the space center mean those Parallax texture packs are
 > missing: the grass and rock scatters render without textures. `KSP.log` shows
@@ -97,6 +104,29 @@ SelectedCalendar = Earth
 ShowCalendarToggle = True
 ```
 
+### 6. Optional: Blackrack's volumetric clouds (V5)
+
+Sol's cloud configs (`GameData/Sol-Visuals/`) are written for Blackrack's volumetric clouds **V5**:
+each cloud layer has a volumetric `layerRaymarchedVolumeV5` node and a flat `layer2D` fallback. The
+EVE and Scatterer that CKAN installs (EVE 1.11.7.2 and Scatterer 0.0878 in testing) do not draw the
+V5 layers, so a CKAN install has flat clouds. Sol's guide: "Install blackrack's volumetric clouds V5
+manually, the V3 version on CKAN will not work." V5 is distributed on
+[Blackrack's Patreon](https://www.patreon.com/c/blackrack/posts).
+
+With KSP closed, after the install above:
+
+1. From the V5 download, copy `EnvironmentalVisualEnhancements`, `Scatterer` and
+   `StockVolumetricClouds` into `GameData`, replacing the folders CKAN installed. Sol's cloud configs
+   load their textures and lightning sounds from `StockVolumetricClouds/`, so that folder is needed too.
+2. Keep `Sol-Visuals` as it is: it already contains the V5 configs. Do not add RSSVE or another cloud
+   pack on top of it.
+
+CKAN still lists its own EVE and Scatterer as installed (`Sol-Visuals` depends on both), so a CKAN
+upgrade of either can overwrite the V5 files. If one gets upgraded, copy V5 back. RP-AXE reads nothing
+from EVE or Scatterer, so the clouds do not change a career, but volumetric clouds are heavy on the
+GPU. This step is untested with RP-AXE (V5 is a paid download): report cloud problems to Sol or
+Blackrack, and anything RP-AXE-related here.
+
 ## What RP-AXE adjusts on Sol
 
 Sol satisfies CKAN's `RealSolarSystem` dependency (`provides`), but inside the game it is a different
@@ -123,7 +153,8 @@ switching (Sol has 34 sites; RP-AXE's default Cape Canaveral exists).
 
 - **Earth's biomes** are Sol's own: climate zones (deserts, tundra, rainforest...) instead of RSS's
   11. Earth below 40 km pays nearly nothing in RP-AXE, so the effect is small. Moon and Mars biomes
-  match RSS.
+  match RSS. Sol's guide mentions an "RP-1 Biomes Addon" that cuts the biomes to RSS's count. It is
+  not part of Sol 0.9.5 on CKAN and has not been tried with RP-AXE.
 - **18 extra bodies** (Pallas, Psyche, Eros, Ida and Dactyl, Ryugu, Arrokoth, Amalthea, Thebe,
   Hyperion, Phoebe, Puck, Proteus, Nereid, Nix, Hydra, Kerberos, Styx) keep Sol's science
   multipliers. They are extra places to do science that RSS does not have.
