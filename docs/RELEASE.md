@@ -17,6 +17,12 @@ no dev files, `.ckan` URL/size/sha256). SpaceDock 0.9.3 + forum update: the laun
 0.9.3" section. Worktree gotcha: `dotnet build-server shutdown` before `git worktree remove`, or the
 compiler server keeps the checkout locked ("Permission denied").
 
+**Sol preset re-uploaded to v0.9.3 (later 2026-10-24):** the twelve per-system texture packs are
+`recommends`, not `depends`, so CKAN's window offers them ticked and asks Sol's own per-system question
+for any unticked (the user clicked through and kept it). Command-line installs need the packs named on a
+fourth `ckan install` line (README, docs/SOL.md); proven on a stock copy: all twelve present,
+`check_cleanroom.py` exit 0.
+
 **0.9.2 was released** the same day at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.2 (pre-release, tag
 `v0.9.2` = `6197a3a`, eight assets; zip sha256 `31dfe40c…6e95`, 55.3 MB). Avionics overload back to 0.9.0
 strength (`CorruptionPasses = 2`), over-capacity PAW rows red, presets renamed `Express-RSS-{High,Low}`.
