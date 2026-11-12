@@ -83,9 +83,13 @@ GRAPHICS_LOW = ["DistantObject", "PlanetShine"]
 # unticked; swapping later no longer drags the preset out. Headless with --no-recommends drops it, so the
 # README names the pack on a follow-up `ckan install` line -- keep it in step.
 RSS_TEXTURES_HIGH, RSS_TEXTURES_LOW = "RSSTextures16K", "RSSTextures4096"
-# Sol instead of RSS (docs/SOL.md). Sol-Core depends on the virtual ParallaxContinued, which a headless
-# resolver drops, and the three ParallaxContinued texture packs, hard deps of ParallaxContinued-KTL that
-# Sol's Parallax configs read ~2,500 times, were dropped too, exit 0 (Sol run, 2026-10-23): all named.
+# Sol instead of RSS (docs/SOL.md). Parallax is the mainline ParallaxContinued, which is what Sol-Core
+# depends on (>= 1.0.3). This used to name the ParallaxContinued-KTL fork from Sol's repository; Sol
+# marked every version of it `development` on 2026-11-10 (RSS-Reborn/CKAN-meta#8), which hides it from a
+# normal install, and the preset failed with "Unsatisfied dependency ParallaxContinued-KTL". The fork
+# `provides` ParallaxContinued, so an install that already has it still satisfies this name.
+# The three ParallaxContinued texture packs, hard deps of ParallaxContinued that Sol's Parallax configs
+# read ~2,500 times, were dropped by a headless resolver, exit 0 (Sol run, 2026-10-23): all named.
 # Scatterer and EVE arrive through Sol-Visuals, which also provides their Sol configs.
 # Sizes = Sol's own recommendation for its RP-1 preset (wiki "Installation", 2026-10-24): 16k Earth and Mars,
 # 8k Mercury/Venus/Jupiter/Saturn, 4k the rest. The Sun is not in Sol's table and stays 4k. About 6.1 GB of
@@ -104,7 +108,7 @@ SOL_TEXTURES = collections.OrderedDict([
 SOL_SIZED = ["Sol-Launchsites-256x"] + ["Sol-%s-%s" % sz for sz in SOL_TEXTURES.items()]
 SOL_PACKS = ["Sol-Core", "Sol-Configs", "Sol-Visuals"] + SOL_SIZED
 GRAPHICS_SOL = ["Sol-Core", "Sol-Configs", "Sol-Visuals"] + [
-    "ParallaxContinued-KTL", "ParallaxContinued-Terrain-Textures", "ParallaxContinued-Scatter-Textures",
+    "ParallaxContinued", "ParallaxContinued-Terrain-Textures", "ParallaxContinued-Scatter-Textures",
     "ParallaxContinued-Planet-Textures", "DistantObject", "PlanetShine",
     # Sol-Core, BurstPQS and KSPTextureLoader depend on the virtual KSPBurst (KSPBurst + KSPBurst-Lite).
     # Named so the GUI installs it without asking. Headless does NOT honour it: the published-0.9.1 Sol
@@ -112,7 +116,7 @@ GRAPHICS_SOL = ["Sol-Core", "Sol-Configs", "Sol-Visuals"] + [
     # RP-AXE, exit 0 -- docs/SOL.md has the follow-up `ckan install` and check_cleanroom.py catches it.
     "KSPBurst"]
 # identifiers that live only in the Sol repository (https://github.com/RSS-Reborn/CKAN-meta)
-SOL_REPO_ONLY = set(SOL_PACKS) | {"ParallaxContinued-KTL"}
+SOL_REPO_ONLY = set(SOL_PACKS)
 # (the texture pack is already offered through the any_of in DEPENDS)
 SUGGESTS = GRAPHICS_HIGH + ["BreakingGround-DLC", "MakingHistory-DLC"]
 CONFLICTS = [
