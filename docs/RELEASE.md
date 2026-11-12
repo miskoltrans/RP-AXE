@@ -33,6 +33,15 @@ Control), "RP-AXE v0.9.3 online", Harmony 21/0, CC 373/373, Unity.Burst loaded f
 signature: DBS's `SystemsMonitorUI` toolbar NRE on the editor load (known, README Known Issues; the dev
 log had no editor visit). A popup needed one click during loading (KSPCF's was pre-seeded); 18 min cold.
 
+**Sol preset re-uploaded again (2026-11-13):** it names `ParallaxContinued` in place of
+`ParallaxContinued-KTL`. Sol's repository marked every version of that fork `development` on 2026-11-10
+(RSS-Reborn/CKAN-meta#8), which hides it from a normal install, so the published preset failed for every
+new install with `Unsatisfied dependency ParallaxContinued-KTL` (a player's report). Sol-Core depends on
+the mainline mod, and the fork `provides` its name, so an install that already has the fork still
+satisfies the preset. Proven on a fresh instance before the upload: docs/SOL.md, "Verification", item 6.
+The popup in the paragraph above was most likely KSPCommunityFixes' own: its answer file is two plain
+lines with no wrapper node, and a wrapped one is ignored.
+
 **0.9.2 was released** the same day at https://github.com/miskoltrans/RP-AXE/releases/tag/v0.9.2 (pre-release, tag
 `v0.9.2` = `6197a3a`, eight assets; zip sha256 `31dfe40c…6e95`, 55.3 MB). Avionics overload back to 0.9.0
 strength (`CorruptionPasses = 2`), over-capacity PAW rows red, presets renamed `Express-RSS-{High,Low}`.

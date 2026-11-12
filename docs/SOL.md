@@ -235,7 +235,9 @@ switching (Sol has 34 sites; RP-AXE's default Cape Canaveral exists).
   at the RSS datum.
 - A new `@Kopernicus` patch anywhere in RP-AXE needs a Sol twin, for the reason above.
 - Test install: copy `ksp_instance_clean` to a new folder, delete `Ships/*.craft` without a
-  `.loadmeta` twin, add the Sol repo, install the two `.ckan` files, and boot with `-axe-autotest`
+  `.loadmeta` twin, add the Sol repo, install the two `.ckan` files, copy
+  `GameData/KSPCommunityFixes/PluginData/PNGTextureCache.cfg` from a working install (without it
+  KSPCommunityFixes' first-run question stops an unattended boot), and boot with `-axe-autotest`
   (set `kscSwitchTest = true` in `PluginData/AutoTest.cfg` to also exercise launch sites and ground
   stations). `check_cleanroom.py` checks a Sol install by its own rules: Sol's packs, the Parallax
   texture folders, Sol-Visuals present, no RSS, RSSVE or RSS-Textures.
@@ -272,3 +274,18 @@ repository, RealFuels 15.16.1, CKAN 1.36.4, headless.
    RP-1's `seed/Science/BodyScienceParams.cfg` points them at `RP-1/PluginData/blankbiomes.dds`, which
    RP-AXE does not ship. Kerbalism then gives them one biome-agnostic subject per situation, the same
    payout RP-1's single real biome would give.
+6. **Mainline Parallax Continued** (2026-11-13, fresh instance, the command line above). On
+   2026-11-10 Sol's repository marked every version of `ParallaxContinued-KTL` as `development`
+   (RSS-Reborn/CKAN-meta#8), which hides it from a normal install. The preset named that fork, so it
+   failed for every new install with `Unsatisfied dependency ParallaxContinued-KTL`. Sol-Core itself
+   depends on `ParallaxContinued` (1.0.3 or later), and the preset now names that. The fork `provides`
+   the same name, so an install that already has it still satisfies the preset (not tested).
+   Result with Parallax Continued 1.1.1, BurstPQS 1.0.31 and KSPTextureLoader 1.0.42: 144 modules,
+   `check_cleanroom.py` OK, `check_liveness.py` OK, `--verify` matches in all seven groups.
+   `-axe-autotest` passed twice, the second time with the launch-site test (`PASS`, 56 stations);
+   `Harmony patches applied: 21 class(es), 0 failed`, ContractConfigurator `Loaded 373 out of 373`.
+   Parallax loaded Earth's ten terrain textures at the space center and its scaled-space maps in the
+   Tracking Station from the Sol pack, with no load errors and no `Failed to load map`. The only
+   exceptions are ones `ksp_sol` also logs with the fork (`Parallax.BiomeLoader.Start`,
+   `ROCManager.ValidCBBiome`) and DBS's toolbar error on the editor load. Not checked: the ground in
+   daylight, and any body other than Earth up close.
